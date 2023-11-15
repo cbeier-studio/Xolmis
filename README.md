@@ -68,6 +68,6 @@ If you want to help in Xolmis development, please send me a message to [hello@ch
 
 ## License
 
-Xolmis is available through the [GPL-3.0 license](https://github.com/cbeier-studio/xolmis/blob/main/LICENSE).
+Xolmis is available under the [GPL-3.0 license](https://github.com/cbeier-studio/xolmis/blob/main/LICENSE).
 
-Icons used in Xolmis were adapted from [Fluent UI System Icons](https://github.com/microsoft/fluentui-system-icons) and [Fluent Emoji](https://github.com/microsoft/fluentui-emoji). Both were made available by Microsoft Corporation through [MIT license](https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE).
+Icons used in Xolmis were adapted from [Fluent UI System Icons](https://github.com/microsoft/fluentui-system-icons) and [Fluent Emoji](https://github.com/microsoft/fluentui-emoji). Both were made available by Microsoft Corporation under the [MIT license](https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE).
