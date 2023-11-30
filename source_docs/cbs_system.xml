@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_system"><element name="TPartialDate"><short>Date type that allows blank day and month.</short>
+      </element><element name="TPartialDate.ToString"><short>Displays the date as string, with zeros for blank day or month.</short><descr>Displays date as DD.MM.YYYY. If <var>YearFirst</var> is <var>True</var>, it displays as YYYY.MM.DD.
+</descr>
+      </element><element name="TPartialDate.Separator"><short>Defines the date separator. Period (.) is the default.</short>
+      </element><element name="TPartialDate.Clear"><short>Reset date and params.</short>
+      </element><element name="TPartialDate.Today"><short>Get current date.</short>
+      </element><element name="TPartialDate.RomanMonth"><short>If <var>True</var> (default), displays the month in roman numerals, or zero for blank.</short>
+      </element><element name="TDialogPosition"><short>Type to store position and size.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

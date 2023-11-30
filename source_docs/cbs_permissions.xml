@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_permissions"><element name="GetUserPref"><short>Get a specified user preference</short>
+      </element><element name="GetUserPermission"><short>Get a specified user permission</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

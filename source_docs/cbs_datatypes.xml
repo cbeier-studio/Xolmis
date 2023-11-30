@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_datatypes"><element name="TDBManager"><short>Supported RDBMS types</short>
+      </element><element name="TDBParams"><short>Database connection parameters</short>
+      </element><element name="TCriteriaType"><short>Search criteria types</short>
+      </element><element name="CriteriaOperators"><short>Operators for each search criteria type</short>
+      </element><element name="TTableType"><short>Table types</short>
+      </element><element name="TableNames"><short>Table names for each table type</short>
+      </element>
+    <element name="TableAliases"><short>Table aliases for each table type.</short>
+      </element><element name="TSearchDataType"><short>Types of data used in searches.</short>
+      </element><element name="TSeparator"><short>Types of separators.</short>
+      </element><element name="SearchDataTypes"><short>Strings for search data types.</short>
+      </element><element name="StrSeparators"><short>Strings for types of separators.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

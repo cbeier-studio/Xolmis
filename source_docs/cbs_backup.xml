@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_backup"><element name="NewBackup"><short>Create a new database backup.</short>
+      </element><element name="RestoreBackup"><short>Restore the database from a backup file.</short>
+      </element><element name="OnBackupProgress"><short>Event OnProgress for the backup/restore process.</short>
+      </element><element name="RunStartupBackup"><short>Create a database backup at Application start.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

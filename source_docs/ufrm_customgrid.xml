@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="ufrm_customgrid"><element name="TfrmCustomGrid.SetGridAndChild"><short>Set datasource connection of parent and child grids.</short>
+      </element><element name="TfrmCustomGrid.SetGridColumns"><short>Set columns properties of a grid.</short>
+      </element><element name="TfrmCustomGrid.SetSearchBar"><short>Set the search bar visible or not.</short>
+      </element><element name="TfrmCustomGrid.SetSidePanel"><short>Set the (right) side panel visible or not.</short>
+      </element><element name="TfrmCustomGrid.SetSideIndex"><short>Set the active tab index of the side panel.</short>
+      </element><element name="TfrmCustomGrid.LoadRecordColumns"><short>Loads the column names in the record view.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanels"><short>Set visible the filter panels for the current table type.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

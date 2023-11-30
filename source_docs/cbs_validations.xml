@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_validations"><element name="CheckEmail"><short>Check if an e-mail address is valid or not.</short>
+      </element><element name="ValueInRange"><short>Check if a value is within the specified range.</short>
+      </element><element name="ValueInSet"><short>Check if a value is within the specified array of values.</short>
+      </element><element name="CheckCPF"><short>Check if a CPF number (Brazil) is valid or not.</short>
+      </element><element name="CheckCNPJ"><short>Check if a CNPJ number (Brazil) is valid or not.</short>
+      </element><element name="ValidDate"><short>Check if a date string is valid or not.</short>
+      </element><element name="ValidPartialDate"><short>Check if a partial date is valid or not.</short>
+      </element><element name="PartialDateIsEmpty"><short>Check if a partial date is empty or not.</short>
+      </element><element name="IsFutureDate"><short>Check if a date is a future date or not.</short>
+      </element><element name="IsFuturePartialDate"><short>Check if a partial date is a future partial date or not.</short>
+      </element><element name="DiffCampos"><short>Check for differences between two values.</short>
+      </element><element name="CodigoExiste"><short>Check if a key value already exists.</short>
+      </element><element name="CheckRequiredFilled"><short>Check if a required field is filled or not.</short>
+      </element><element name="RegistroExiste"><short>Check if a field value already exists in the specified table.</short>
+      </element><element name="ForeignValueExists"><short>Check if a foreign key already exists in its original table.</short>
+      </element><element name="RegistroDuplicado"><short>Check if a record is duplicated or not.</short>
+      </element><element name="RegistroAtivo"><short>Check if a record is active or not.</short>
+      </element><element name="SpuhAllowed"><short>Determine if the use of abreviation <b>sp.</b> is allowed or not.</short>
+      </element><element name="EpithetIsEmpty"><short>Check if the epithet of a name is empty or not.</short>
+      </element><element name="CoordenadaIsOk"><short>Check if a geographic coordinate is valid or not.</short>
+      </element><short>Library with validation functions for various types and values.</short>
+    </module>
+  </package>
+</fpdoc-descriptions>

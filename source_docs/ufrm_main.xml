@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="ufrm_main"><element name="TfrmMain.OpenForm"><short>Open a TfrmCustomGrid instance in a new tab or show tab if already open.</short>
+      </element><element name="TfrmMain.OpenTab"><short>Open a form in a new tab or show tab if already open.</short>
+      </element><element name="TfrmMain.CloseAllTabs"><short>Close all open tabs.</short><descr><p><var>ClosePinned</var> If <b>True</b>, closes even the pinned tabs. Otherwise, closes only non pinned tabs. The default value is <b>False</b>.</p>
+        </descr>
+      </element><element name="TfrmMain.CarregaPref"><short>Apply saved settings.</short>
+      </element><element name="TfrmMain.UpdateStatusBar"><short>Update status bar text.</short>
+      </element><element name="TfrmMain.UpdateMenu"><short>Update status of menu items in the context of active tab.</short>
+      </element><element name="TfrmMain.UpdateQueryButtons"><short>Update buttons in the context of the active tab query status.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

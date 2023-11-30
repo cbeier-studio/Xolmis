@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_global"><short>Global methods and variables</short><descr><p>Constants used through the system:</p><ul><li>Default filenames </li><li>Format masks </li><li>Hashtags </li><li>History action types </li>
+        </ul><p>Global variables:</p><ul><li>MemIni </li><li>ConexaoDB </li><li>Parar </li><li>EditSourceStr </li>
+        </ul><p>Methods for logging, usage data collection, system paths, database and system settings.</p>
+      </descr><element name="Parar"><short>Global variable that indicates when the user cancelled a process.</short>
+      </element><element name="ConexaoDB"><short>Current database connection settings.</short>
+      </element><element name="Closing"><short>Indicates when the system is closing</short>
+      </element><element name="Finalizado"><short>It is <b>True</b> if the application was terminated correctly</short>
+      </element>
+    <element name="TXolmisSettings"><short>Stores and manage Xolmis settings</short>
+      </element><element name="TXolmisSettings.LoadFromFile"><short>Load all settings from file to fields</short>
+      </element><element name="TXolmisSettings.SaveToFile"><short>Save all settings from fields to file</short>
+      </element><element name="TXolmisSettings.Reset"><short>Restore the default settings</short>
+      </element><element name="TXolmisSettings.Delete"><short>Delete a specified Ini key</short>
+      </element>
+    <element name="LoadDatabaseParams"><short>Load the database connection parameters.</short>
+      </element><element name="ConnectDatabase"><short>Open the database connection dialog.</short>
+      </element><element name="CloseDatabase"><short>Close the active database connection.</short>
+      </element><element name="DatabaseConfig"><short>Open the connection settings dialog.</short>
+      </element><element name="InstallDir"><short>Get the Application installation path.</short>
+      </element><element name="AppDataDir"><short>Get the user app data path.</short>
+      </element><element name="TempDir"><short>Get the user temp path.</short>
+      </element><element name="HelpDir"><short>Get the help files path.</short>
+      </element><element name="WriteRecHistory"><short>Adds record history entry.</short><descr><p><var>aTable</var> Table type.</p><p><var>aAction</var> Type of action executed.</p><p><var>aCodigo</var> Record key value, zero (default) for new records.</p><p><var>aField</var> Primary key field name.</p><p><var>aOldValue</var> Old value of the edited record.</p><p><var>aNewValue</var> New value of the edited record.</p><p><var>aNote</var> Event comments.</p>
+        </descr>
+      </element><element name="GravaStat"><short>Write usage data event.</short>
+      </element><element name="LogError"><short>Write error to the log file.</short>
+      </element><element name="LogSQL"><short>Write SQL command to the log file</short>
+      </element><element name="LogEvent"><short>Write system activity to the log file.</short>
+      </element><element name="LogWarning"><short>Write warning to the log file.</short>
+      </element><element name="LogInfo"><short>Write info message to the log file.</short>
+      </element><element name="LogDebug"><short>Write debug info to the log file.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

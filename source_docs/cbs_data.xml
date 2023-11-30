@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_data"><element name="GravaNumInterno"><short>Save the next value of Numero Interno used</short>
+      </element><element name="IncNumInterno"><short>Get the next value for Numero Interno</short>
+      </element><element name="Incrementa"><short>Get the next autoincrement value from a generator of a Firebird database</short>
+      </element><element name="GetNomeCampo"><short>Get from field mapping the DisplayName using a FieldName</short>
+      </element><element name="GetCampo"><short>Get from field mapping the FieldName using a DisplayName</short>
+      </element><element name="SetSelect"><short>Load SQL Select for the specified table type</short>
+      </element><element name="GetModifier"><short>Load variable corresponding to the specified constant</short>
+      </element><element name="EditBand"><short>Insert or edit a band record</short>
+      </element><element name="CancelRecord"><short>Discard changes to the record in insert or edit mode</short>
+      </element><element name="RestoreRecord"><short>Set the record status to active (active_status = True)</short>
+      </element><element name="DeleteRecord"><short>Set the record status to inactive (active_status = False)</short>
+      </element><element name="CanEdit"><short>If not editing, set the dataset in insert/edit mode</short>
+      </element>
+    <element name="EditBand.IsNew"><short>It is <b>True</b> if inserting, <b>False</b> if editing</short>
+      </element><element name="EditUser"><short>Insert or edit a user</short>
+      </element><element name="EditUser.IsNew"><short>It is <b>True</b> if inserting, <b>False</b> if editing</short>
+      </element><element name="ChangeUserPassword"><short>Change the password of a user</short>
+      </element><element name="ChangeUserPassword.IsNew"><short>It is <b>True</b> if inserting, <b>False</b> if editing</short>
+      </element><element name="EditBand.aDataSet"><short>The dataset being used</short>
+      </element><element name="CancelRecord.aDataSet"><short>The dataset being used</short>
+      </element><element name="CancelRecord.aFocusControl"><short>A control to set focus after cancel editing</short>
+      </element><element name="TableSearch"><short>Search query using the specified parameters</short>
+      </element><element name="TableSearch.aQuery"><short>The query dataset being used</short>
+      </element><element name="TableSearch.aTabela"><short>Table being searched</short>
+      </element><element name="TableSearch.aSearch"><short>Search criteria</short>
+      </element><element name="TableSearch.aQuickFilter"><short>List of quick filter parameters</short>
+      </element><element name="TableSearch.aModifier"><short>Search modifiers for records status</short>
+      </element><element name="TableSearch.aOrder"><short>Array of fields to sort the search</short>
+      </element><element name="TableSearch.aWhere"><short>A list variable with all search parameters to be used in other methods</short>
+      </element><element name="SetSelect.aAlias"><short>Output variable with the table alias used in the SQL command</short>
+      </element>
+    <element name="OpenLookupDataSets"><short>Open the lookup datasets for each lookup field of a specified dataset.</short>
+      </element><element name="SetRecordDateUser"><short>Set the user and the date of record creation/modification.</short>
+      </element>
+    <element name="TDBManager"><short>Types of RDBMS.</short>
+      <descr><p><var>dbSqlite</var> SQLite 3 database (default).</p><p><var>dbFirebird</var> Firebird database.</p><p><var>dbPostgre</var> PostgreSQL database.</p><p><var>dbMaria</var> MySQL/MariaDB database.</p>
+        </descr>
+      </element>
+    <element name="TDBParams"><short>Database connection parameters.</short>
+      </element><element name="TDBParams.Clear"><short>Reset database parameters.</short>
+      </element><element name="TSearch"><short>Search parameters and helpers.</short><descr><remark><var>Value2</var> is used only when searching for an interval of values, using <var>Criteria = crBetween</var>.
+                                    </remark>
+        </descr><seealso><link id="TFilterType">TFilterType</link><link id="TCriteriaType">TCriteriaType</link>
+        </seealso>
+      </element><element name="TSearch.FieldNames"><short>List of fields to search.</short>
+      </element><element name="TSearch.FilterType"><short>The type of data to search.</short>
+      </element><element name="TSearch.Criteria"><short>The type of criteria to use in the search.</short>
+      </element><element name="TSearch.Value1"><short>The only value or the first of an interval to search.</short>
+      </element><element name="TSearch.Value2"><short>The last value of an interval to search. Optional.</short>
+      </element><element name="TCriteriaType"><short>Types of criteria used to search.</short><descr><p><var>crNone</var> Not searching</p><p><var>crLike</var> Search in any position (field <b>LIKE</b> %value%)</p><p><var>crStartLike</var> Search from the start (field <b>LIKE</b> value%)</p><p><var>crEqual</var> Search the exact value (field <b>=</b> value)</p><p><var>crBetween</var> Search an interval of values (field <b>BETWEEN</b> value <b>AND</b> value)</p><p><var>crMoreThan</var> Search more than or equal to value (field <b>&gt;=</b> value)</p><p><var>crLessThan</var> Search less than or equal to value (field <b>&lt;=</b> value)</p><p><var>crNull</var> Search null values (field <b>ISNULL</b>)
+                              </p><p><var>crNotNull</var> Search not null values (field <b>NOTNULL</b>)
+                              </p>
+        </descr>
+      </element><element name="TFilterType"><short>Types of data to search and filter.</short><descr><p><var>tcTexto</var> String</p><p><var>tcInteiro</var> Integer</p><p><var>tcDecimal</var> Float</p><p><var>tcData</var> Date</p><p><var>tcHora</var> Time</p><p><var>tcDataHora</var> Date and time</p><p><var>tcLista</var> List of values</p><p><var>tcBool</var> Boolean</p><p><var>tcLookup</var> Lookup field</p>
+        </descr>
+      </element><element name="TSearch.SQLString"><short>Translate search parameters to SQL code.</short>
+      </element><element name="TSearch.FilterString"><short>Translate the search parameters to a readable (formatted) string.</short>
+      </element><element name="TSearch.Clear"><short>Clear all search parameters.</short>
+      </element><element name="TSearch.IsEmpty"><short>Check if the search parameters are empty.</short><descr>Returns <var>True</var> if all parameters are empty; otherwise returns <var>False</var>.
+</descr>
+      </element><element name="TSearch.Create"><short>Constructor of the search.</short><descr>Creates the list of <var>FieldNames</var> in the memory.
+</descr>
+      </element><element name="TSearch.Destroy"><short>Destructor of the search.</short><descr>Free up the list of <var>FieldNames</var> from the memory.
+</descr>
+      </element>
+    <element name="CreateSystemDatabase"><short>Creates the system database if do not exist</short>
+      </element><element name="CreateConnectionsTable"><short>Creates and populates the connections table in the system database.</short>
+      </element><element name="CreateTablesMappingTable"><short>Creates and populates the tables mapping table in the system database.</short>
+      </element><element name="CreateFieldsMappingTable"><short>Creates and populates the fields mapping table in the system database.</short>
+      </element><element name="CreateUsageDataTable"><short>Creates the usage data table in the system database.</short>
+      </element><element name="UpdateBand"><short>Update the status of a band.</short>
+      </element><element name="UpdateIndividual"><short>Update the banding date of an individual.</short>
+      </element><element name="ChangeIndividualBand"><short>Change the band of an individual.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

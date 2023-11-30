@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_gis"><element name="UtmBands"><short>Array of UTM band letters.</short>
+      </element><element name="RemoveSymbolsDMS"><short>Remove the symbols of degrees, minutes and seconds from a DMS coordinate.</short>
+      </element><element name="DecimalToDms"><short>Convert a decimal coordinate to DMS coordinate.</short>
+      </element><element name="UtmToDms"><short>Convert a UTM coordinate to DMS coordinate.</short>
+      </element><element name="DmsToDecimal"><short>Convert a DMS coordinate to Decimal coordinate.</short>
+      </element><element name="UtmToDecimal"><short>Convert a UTM coordinate to decimal coordinate.</short>
+      </element><element name="DecimalToUtm"><short>Convert a decimal coordinate to UTM coordinate.</short>
+      </element><element name="DmsToUtm"><short>Convert a DMS coordinate to UTM coordinate.</short>
+      </element><element name="AxisDecToDMS"><short>Convert a decimal Longitude or Latitude to DMS.</short>
+      </element><element name="AxisDMSToDec"><short>Convert a DMS Longitude or Latitude to decimal.</short>
+      </element><element name="SaveToKML"><short>Create a KML file with points.</short>
+      </element><element name="ViewMapPoint"><short>Show a point in the map.</short>
+      </element><element name="LoadSiteTree"><short>Load a list of countries, states and municipalities in a tree.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

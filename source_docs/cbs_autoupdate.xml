@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions>
+  <package name="Xolmis">
+    <module name="cbs_autoupdate">
+      <element name="GetBuildInfoAsString">
+        <short>Get the version info from the Application as string.</short>
+      </element>
+      <element name="CompareVersion">
+        <short>Compare between two version numbers</short>
+        <descr>
+          <p>
+            <var>NewVersion</var> the version number to compare</p>
+          <p>
+            <var>CurrentVersion</var> the reference version number</p>
+          <p>Returns <b>1</b> if the <var>NewVersion</var> is greater than <var>CurrentVersion</var>, <b>-1</b> if the <var>NewVersion</var> is lesser than the <var>CurrentVersion</var>, and <b>0</b> if they are equal.</p>
+        </descr>
+      </element>
+      <element name="IsNewVersion">
+        <short>Compare two version numbers and returns <var>True</var> if it is a new version. Otherwise returns <var>False</var>.
+        </short>
+        <descr>
+          <p>
+            <var>NewVersion</var> The supposed new version string.</p>
+          <p>
+            <var>CurrentVersion</var> The reference version string.</p>
+        </descr>
+      </element>
+    <element name="CheckUpdates"><short>Check for updates online.</short>
+      </element><element name="RunUpdate"><short>Download and install an update.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
