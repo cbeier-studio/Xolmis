@@ -1,0 +1,15 @@
+{"version":1,"strings":[
+{"hash":124379284,"name":"tedtpermit.caption","sourcebytes":[78,101,119,32,112,101,114,109,105,116],"value":"New permit"},
+{"hash":366789,"name":"tedtpermit.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tedtpermit.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":89566314,"name":"tedtpermit.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
+{"hash":75730042,"name":"tedtpermit.lblname.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
+{"hash":48641226,"name":"tedtpermit.lbldispatcher.caption","sourcebytes":[68,105,115,112,97,116,99,104,101,114,58,32,42],"value":"Dispatcher: *"},
+{"hash":201631466,"name":"tedtpermit.lbldispatchdate.caption","sourcebytes":[68,105,115,112,97,116,99,104,32,100,97,116,101,58,32,42],"value":"Dispatch date: *"},
+{"hash":61209098,"name":"tedtpermit.lblexpiredate.caption","sourcebytes":[69,120,112,105,114,101,32,100,97,116,101,58],"value":"Expire date:"},
+{"hash":33581481,"name":"tedtpermit.edispatchdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":33581481,"name":"tedtpermit.eexpiredate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":154636106,"name":"tedtpermit.lblpermitnumber.caption","sourcebytes":[80,101,114,109,105,116,32,110,117,109,98,101,114,58],"value":"Permit number:"},
+{"hash":201755770,"name":"tedtpermit.lblpermittype.caption","sourcebytes":[84,121,112,101,58,32,42],"value":"Type: *"},
+{"hash":157335306,"name":"tedtpermit.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"}
+]}

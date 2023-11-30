@@ -1,0 +1,148 @@
+object dlgDestTaxon: TdlgDestTaxon
+  Left = 373
+  Height = 161
+  Top = 34
+  Width = 699
+  BorderStyle = bsDialog
+  Caption = 'Lump/move taxon'
+  ClientHeight = 161
+  ClientWidth = 699
+  DesignTimePPI = 120
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 111
+    Width = 699
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 48
+    Top = 113
+    Width = 699
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ClientHeight = 48
+    ClientWidth = 699
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object sbClose: TButton
+      Left = 553
+      Height = 32
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Cancel'
+      ModalResult = 2
+      TabOrder = 0
+    end
+    object sbApply: TBitBtn
+      Left = 415
+      Height = 32
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Apply'
+      ImageWidth = 24
+      TabOrder = 1
+    end
+  end
+  object BCPanel1: TBCPanel
+    Left = 160
+    Height = 76
+    Top = 16
+    Width = 525
+    BorderSpacing.Bottom = 16
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.VerticalSpacing = 4
+    Background.Color = 16448250
+    Background.Gradient1.StartColor = clWhite
+    Background.Gradient1.EndColor = clBlack
+    Background.Gradient1.GradientType = gtLinear
+    Background.Gradient1.Point1XPercent = 0
+    Background.Gradient1.Point1YPercent = 0
+    Background.Gradient1.Point2XPercent = 0
+    Background.Gradient1.Point2YPercent = 100
+    Background.Gradient2.StartColor = clWhite
+    Background.Gradient2.EndColor = clBlack
+    Background.Gradient2.GradientType = gtLinear
+    Background.Gradient2.Point1XPercent = 0
+    Background.Gradient2.Point1YPercent = 0
+    Background.Gradient2.Point2XPercent = 0
+    Background.Gradient2.Point2YPercent = 100
+    Background.Gradient1EndPercent = 35
+    Background.Style = bbsColor
+    BevelInner = bvNone
+    BevelOuter = bvRaised
+    BevelWidth = 1
+    Border.Color = 13750737
+    Border.Style = bboSolid
+    BorderBCStyle = bpsBorder
+    FontEx.Color = clDefault
+    FontEx.FontQuality = fqSystemClearType
+    FontEx.Shadow = False
+    FontEx.ShadowRadius = 5
+    FontEx.ShadowOffsetX = 5
+    FontEx.ShadowOffsetY = 5
+    FontEx.Style = []
+    ParentBackground = False
+    Rounding.RoundX = 8
+    Rounding.RoundY = 8
+    TabOrder = 1
+    object lblDestinationTaxon: TLabel
+      Left = 17
+      Height = 20
+      Top = 9
+      Width = 491
+      Align = alTop
+      Caption = 'Destination taxon'
+      Layout = tlCenter
+    end
+    object eDestinationTaxon: TEditButton
+      Left = 17
+      Height = 28
+      Top = 33
+      Width = 491
+      Align = alTop
+      ButtonWidth = 29
+      Images = frmTaxaEditor.bMenu
+      ImageIndex = 6
+      ImageWidth = 20
+      MaxLength = 0
+      NumGlyphs = 1
+      PasswordChar = #0
+      Spacing = 0
+      TabOrder = 0
+    end
+  end
+  object cklTaxonomy: TCheckListBox
+    Left = 16
+    Height = 76
+    Top = 16
+    Width = 125
+    BorderStyle = bsNone
+    Color = clBtnFace
+    Items.Strings = (
+      'Clements'
+      'IOC'
+      'CBRO'
+    )
+    ItemHeight = 23
+    TabOrder = 2
+    Data = {
+      03000000000000
+    }
+  end
+end

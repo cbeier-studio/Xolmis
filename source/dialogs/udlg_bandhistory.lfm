@@ -1,0 +1,223 @@
+object dlgBandHistory: TdlgBandHistory
+  Left = 352
+  Height = 475
+  Top = 33
+  Width = 1095
+  Caption = 'Band history'
+  ClientHeight = 475
+  ClientWidth = 1095
+  DesignTimePPI = 120
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  object pHeader: TPanel
+    Left = 0
+    Height = 50
+    Top = 0
+    Width = 1095
+    Align = alTop
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ClientHeight = 50
+    ClientWidth = 1095
+    Color = 16444392
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object lblBandNameCaption: TLabel
+      Left = 16
+      Height = 34
+      Top = 8
+      Width = 37
+      Align = alLeft
+      Alignment = taRightJustify
+      Caption = 'Band:'
+      Font.Color = 6579300
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblBandName: TDBText
+      Left = 61
+      Height = 34
+      Top = 8
+      Width = 139
+      Align = alLeft
+      DataField = 'full_name'
+      DataSource = DMG.dsBands
+      Font.Color = 13066075
+      Font.Height = -23
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 48
+    Top = 427
+    Width = 1095
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ClientHeight = 48
+    ClientWidth = 1095
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    object sbClose: TButton
+      Left = 949
+      Height = 32
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Close'
+      ModalResult = 11
+      TabOrder = 0
+    end
+  end
+  object DBG: TDBGrid
+    Left = 0
+    Height = 377
+    Top = 50
+    Width = 1095
+    Align = alClient
+    Color = clWindow
+    Columns = <    
+      item
+        Alignment = taCenter
+        Title.Caption = 'Marked'
+        Width = 0
+        Visible = False
+        FieldName = 'marked_status'
+      end    
+      item
+        Title.Caption = 'Band (Id)'
+        Width = 0
+        Visible = False
+        FieldName = 'band_id'
+      end    
+      item
+        Alignment = taCenter
+        Title.Caption = 'Date'
+        Width = 125
+        FieldName = 'event_date'
+      end    
+      item
+        Alignment = taCenter
+        PickList.Strings = (
+          'Pedido'
+          'Recebimento'
+          'Transferência'
+          'Recuperação'
+          'Relatório'
+          'Uso'
+          'Baixa'
+        )
+        Title.Caption = 'Type'
+        Width = 125
+        FieldName = 'event_type'
+      end    
+      item
+        Alignment = taCenter
+        Title.Caption = 'Order number'
+        Width = 130
+        FieldName = 'order_number'
+      end    
+      item
+        Title.Caption = 'Supplier (Id)'
+        Width = 0
+        Visible = False
+        FieldName = 'supplier_id'
+      end    
+      item
+        Title.Caption = 'Supplier'
+        Width = 125
+        FieldName = 'supplier_name'
+      end    
+      item
+        Title.Caption = 'Sender (Id)'
+        Width = 0
+        Visible = False
+        FieldName = 'sender_id'
+      end    
+      item
+        Title.Caption = 'Sender'
+        Width = 250
+        FieldName = 'sender_name'
+      end    
+      item
+        Title.Caption = 'Requester (Id)'
+        Width = 0
+        Visible = False
+        FieldName = 'requester_id'
+      end    
+      item
+        Title.Caption = 'Requester'
+        Width = 250
+        FieldName = 'requester_name'
+      end    
+      item
+        Title.Caption = 'Id'
+        Width = 0
+        Visible = False
+        FieldName = 'event_id'
+      end    
+      item
+        Title.Caption = 'Notes'
+        Width = 350
+        FieldName = 'notes'
+      end    
+      item
+        Title.Caption = 'Created by'
+        Width = 0
+        Visible = False
+        FieldName = 'user_inserted'
+      end    
+      item
+        Title.Caption = 'Modified by'
+        Width = 0
+        Visible = False
+        FieldName = 'user_updated'
+      end    
+      item
+        Title.Caption = 'Creation date'
+        Width = 0
+        Visible = False
+        FieldName = 'insert_date'
+      end    
+      item
+        Title.Caption = 'Last modified'
+        Width = 0
+        Visible = False
+        FieldName = 'update_date'
+      end    
+      item
+        Alignment = taCenter
+        Title.Caption = 'Exported'
+        Width = 0
+        Visible = False
+        FieldName = 'exported_status'
+      end    
+      item
+        Alignment = taCenter
+        Title.Caption = 'Active'
+        Width = 0
+        Visible = False
+        FieldName = 'active_status'
+      end>
+    DataSource = DMG.dsBandHistory
+    FixedCols = 0
+    Options = [dgEditing, dgTitles, dgColumnResize, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgDisableDelete, dgDisableInsert, dgCellEllipsis, dgRowHighlight, dgThumbTracking, dgDisplayMemoText]
+    ReadOnly = True
+    Scrollbars = ssAutoBoth
+    TabOrder = 2
+    TitleFont.Color = 6579300
+  end
+end

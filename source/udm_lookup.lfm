@@ -1,0 +1,944 @@
+object DML: TDML
+  OldCreateOrder = False
+  Height = 619
+  HorizontalOffset = 440
+  VerticalOffset = 41
+  Width = 1010
+  PPI = 120
+  object dsLkPeople: TDataSource
+    AutoEdit = False
+    DataSet = lkPeople
+    Left = 70
+    Top = 60
+  end
+  object lkPeople: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'person_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'citation'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT person_id, full_name, acronym, citation'
+      'FROM people'
+      'WHERE (active_status = 1)'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 200
+    Top = 60
+    object lkPeopleperson_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'person_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkPeoplefull_name: TStringField
+      DisplayLabel = 'Nome completo'
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object lkPeopleacronym: TStringField
+      DisplayLabel = 'Abreviatura'
+      FieldKind = fkData
+      FieldName = 'acronym'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 10
+    end
+    object lkPeoplecitation: TStringField
+      DisplayLabel = 'Citação'
+      FieldKind = fkData
+      FieldName = 'citation'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+  end
+  object dsLkInstitutions: TDataSource
+    AutoEdit = False
+    DataSet = lkInstitutions
+    Left = 70
+    Top = 128
+  end
+  object lkInstitutions: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'institution_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT institution_id, full_name, acronym'
+      'FROM institutions'
+      'WHERE (active_status = 1)'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 200
+    Top = 128
+    object lkInstitutionsinstitution_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'institution_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkInstitutionsfull_name: TStringField
+      DisplayLabel = 'Nome completo'
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object lkInstitutionsacronym: TStringField
+      DisplayLabel = 'Abreviatura'
+      FieldKind = fkData
+      FieldName = 'acronym'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+  end
+  object dsLkIndividuals: TDataSource
+    AutoEdit = False
+    DataSet = lkIndividuals
+    Left = 70
+    Top = 200
+  end
+  object lkIndividuals: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'formatted_name'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT individual_id, full_name, formatted_name'
+      'FROM individuals'
+      'WHERE (active_status = 1)'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 200
+    Top = 200
+    object lkIndividualsindividual_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkIndividualsfull_name: TStringField
+      DisplayLabel = 'Nome completo'
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
+    end
+    object lkIndividualsformatted_name: TStringField
+      DisplayLabel = 'Nome formatado'
+      FieldKind = fkData
+      FieldName = 'formatted_name'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+  end
+  object lkProjects: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_title'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT project_id, project_title, short_title'
+      'FROM projects'
+      'WHERE (active_status = 1)'
+      'ORDER BY project_title ASC'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 200
+    Top = 272
+    object lkProjectsproject_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkProjectsproject_title: TStringField
+      DisplayLabel = 'Título'
+      FieldKind = fkData
+      FieldName = 'project_title'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 150
+    end
+    object lkProjectsshort_title: TStringField
+      FieldKind = fkData
+      FieldName = 'short_title'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+  end
+  object dsLkProjects: TDataSource
+    AutoEdit = False
+    DataSet = lkProjects
+    Left = 70
+    Top = 272
+  end
+  object lkRanks: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'rank_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'rank_name'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT rank_id, rank_name FROM taxon_ranks'
+      'WHERE (active_status = 1)'
+      'ORDER BY rank_seq ASC'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 520
+    Top = 60
+    object lkRanksrank_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'rank_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkRanksrank_name: TStringField
+      FieldKind = fkData
+      FieldName = 'rank_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 30
+    end
+  end
+  object lkSites: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'site_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'site_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'site_acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 180
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT site_id, site_name, site_acronym, full_name'
+      'FROM gazetteer'
+      'WHERE active_status = 1'
+      'ORDER BY site_name ASC'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 520
+    Top = 128
+    object lkSitessite_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'site_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkSitessite_name: TStringField
+      FieldKind = fkData
+      FieldName = 'site_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 60
+    end
+    object lkSitessite_acronym: TStringField
+      FieldKind = fkData
+      FieldName = 'site_acronym'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object lkSitesfull_name: TStringField
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 180
+    end
+  end
+  object dsLkRanks: TDataSource
+    AutoEdit = False
+    DataSet = lkRanks
+    Left = 410
+    Top = 60
+  end
+  object dsLkSites: TDataSource
+    AutoEdit = False
+    DataSet = lkSites
+    Left = 410
+    Top = 128
+  end
+  object dsLkZooTaxa: TDataSource
+    AutoEdit = False
+    DataSet = lkZooTaxa
+    Left = 410
+    Top = 200
+  end
+  object lkZooTaxa: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'formatted_name'
+        DataType = ftString
+        Precision = -1
+        Size = 250
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT taxon_id, full_name, formatted_name'
+      'FROM zoo_taxa'
+      'WHERE (active_status = 1)'
+      'ORDER BY full_name ASC'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 520
+    Top = 200
+    object lkZooTaxataxon_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkZooTaxafull_name: TStringField
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object lkZooTaxaformatted_name: TStringField
+      FieldKind = fkData
+      FieldName = 'formatted_name'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 250
+    end
+  end
+  object dsLkBands: TDataSource
+    AutoEdit = False
+    DataSet = lkBands
+    Left = 410
+    Top = 272
+  end
+  object lkBands: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'band_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 40
+      end    
+      item
+        Name = 'short_name'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT band_id, full_name,'
+      '(band_size||'' ''||band_number) AS short_name'
+      'FROM bands'
+      'WHERE (active_status = 1)'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 520
+    Top = 272
+    object lkBandsband_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'band_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkBandsfull_name: TStringField
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 40
+    end
+    object lkBandsshort_name: TStringField
+      FieldKind = fkData
+      FieldName = 'short_name'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+  end
+  object dsLkNests: TDataSource
+    AutoEdit = False
+    DataSet = lkNests
+    Left = 696
+    Top = 60
+  end
+  object lkNests: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'nest_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT nest_id, full_name'
+      'FROM nests'
+      'WHERE (active_status = 1)'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 808
+    Top = 60
+    object lkNestsnest_id: TLargeintField
+      FieldKind = fkData
+      FieldName = 'nest_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkNestsfull_name: TStringField
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+  end
+  object dsLkNetStations: TDataSource
+    AutoEdit = False
+    DataSet = lkNetStations
+    Left = 696
+    Top = 128
+  end
+  object lkNetStations: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'net_station_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'station_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'station_acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT net_station_id, station_name, station_acronym'
+      'FROM net_stations'
+      'WHERE (active_status = 1)'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 808
+    Top = 128
+    object lkNetStationsnet_station_id: TLargeintField
+      FieldKind = fkData
+      FieldName = 'net_station_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkNetStationsstation_name: TStringField
+      FieldKind = fkData
+      FieldName = 'station_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object lkNetStationsstation_acronym: TStringField
+      FieldKind = fkData
+      FieldName = 'station_acronym'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 10
+    end
+  end
+  object dsLkMethods: TDataSource
+    AutoEdit = False
+    DataSet = lkMethods
+    Left = 696
+    Top = 200
+  end
+  object lkMethods: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'method_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'method_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'method_acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT method_id, method_name, method_acronym'
+      'FROM methods'
+      'WHERE (active_status = 1)'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 808
+    Top = 200
+    object lkMethodsmethod_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'method_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkMethodsmethod_name: TStringField
+      FieldKind = fkData
+      FieldName = 'method_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object lkMethodsmethod_acronym: TStringField
+      FieldKind = fkData
+      FieldName = 'method_acronym'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+  end
+  object dsLkNetsEffort: TDataSource
+    AutoEdit = False
+    DataSet = lkNetsEffort
+    Left = 696
+    Top = 272
+  end
+  object lkNetsEffort: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'net_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'net_number'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 40
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT net_id, net_number, full_name'
+      'FROM nets_effort'
+      'WHERE (active_status = 1)'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 808
+    Top = 272
+    object lkNetsEffortnet_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'net_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkNetsEffortnet_number: TLongintField
+      FieldKind = fkData
+      FieldName = 'net_number'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object lkNetsEffortfull_name: TStringField
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 40
+    end
+  end
+  object lkEggs: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'egg_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT egg_id, full_name'
+      'FROM eggs'
+      'WHERE (active_status = 1)'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 200
+    Top = 344
+    object lkEggsegg_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'egg_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkEggsfull_name: TStringField
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+  end
+  object dsLkEggs: TDataSource
+    AutoEdit = False
+    DataSet = lkEggs
+    Left = 70
+    Top = 344
+  end
+  object dsLkBotanicTaxa: TDataSource
+    AutoEdit = False
+    DataSet = lkBotanicTaxa
+    Left = 410
+    Top = 344
+  end
+  object lkBotanicTaxa: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'formatted_name'
+        DataType = ftString
+        Precision = -1
+        Size = 180
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT taxon_id, taxon_name, formatted_name'
+      'FROM botanic_taxa'
+      'WHERE (active_status = 1)'
+      'ORDER BY taxon_name ASC'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 520
+    Top = 344
+    object lkBotanicTaxataxon_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object lkBotanicTaxataxon_name: TStringField
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object lkBotanicTaxaformatted_name: TStringField
+      FieldKind = fkData
+      FieldName = 'formatted_name'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 180
+    end
+  end
+end

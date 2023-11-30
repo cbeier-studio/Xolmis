@@ -1,0 +1,15 @@
+{"version":1,"strings":[
+{"hash":9332915,"name":"tdlgabout.caption","sourcebytes":[83,111,98,114,101,32,111,32,88,111,108,109,105,115],"value":"Sobre o Xolmis"},
+{"hash":80453250,"name":"tdlgabout.sbclose.caption","sourcebytes":[70,101,99,104,97,114],"value":"Fechar"},
+{"hash":78016386,"name":"tdlgabout.sbcopy.caption","sourcebytes":[67,111,112,105,97,114],"value":"Copiar"},
+{"hash":130561893,"name":"tdlgabout.linkprivacy.caption","sourcebytes":[80,114,105,118,97,99,105,100,97,100,101],"value":"Privacidade"},
+{"hash":257838737,"name":"tdlgabout.linklicense.caption","sourcebytes":[84,101,114,109,111,115,32,100,101,32,108,105,99,101,110,195,167,97],"value":"Termos de licen\u00E7a"},
+{"hash":116250035,"name":"tdlgabout.linkthirdparty.caption","sourcebytes":[65,118,105,115,111,115,32,100,101,32,116,101,114,99,101,105,114,111,115],"value":"Avisos de terceiros"},
+{"hash":215738914,"name":"tdlgabout.lblappcopyright.caption","sourcebytes":[194,169,32,50,48,50,51,32,67,104,114,105,115,116,105,97,110,32,66,101,105,101,114],"value":"\u00A9 2023 Christian Beier"},
+{"hash":91650015,"name":"tdlgabout.linkwebsite.hint","sourcebytes":[104,116,116,112,58,47,47,120,111,108,109,105,115,46,103,105,116,104,117,98,46,105,111],"value":"http://xolmis.github.io"},
+{"hash":230269173,"name":"tdlgabout.linkwebsite.caption","sourcebytes":[87,101,98,115,105,116,101],"value":"Website"},
+{"hash":13073,"name":"tdlgabout.pappversion.caption","sourcebytes":[48,46,49],"value":"0.1"},
+{"hash":214564303,"name":"tdlgabout.lblappversion.caption","sourcebytes":[86,101,114,115,195,163,111],"value":"Vers\u00E3o"},
+{"hash":27556434,"name":"tdlgabout.lblappname.caption","sourcebytes":[84,97,120,111,110,111,109,105,101,115,32,69,100,105,116,111,114],"value":"Taxonomies Editor"},
+{"hash":100021251,"name":"tdlgabout.lblappname1.caption","sourcebytes":[88,111,108,109,105,115],"value":"Xolmis"}
+]}

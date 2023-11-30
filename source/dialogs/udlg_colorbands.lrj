@@ -1,0 +1,21 @@
+{"version":1,"strings":[
+{"hash":74110179,"name":"tdlgcolorbands.caption","sourcebytes":[65,117,120,105,108,105,97,114,121,32,98,97,110,100,115],"value":"Auxiliary bands"},
+{"hash":4749113,"name":"tdlgcolorbands.sbok.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":77089212,"name":"tdlgcolorbands.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":77,"name":"tdlgcolorbands.pcolor_m.caption","sourcebytes":[77],"value":"M"},
+{"hash":65,"name":"tdlgcolorbands.pcolor_a.caption","sourcebytes":[65],"value":"A"},
+{"hash":89,"name":"tdlgcolorbands.pcolor_y.caption","sourcebytes":[89],"value":"Y"},
+{"hash":79,"name":"tdlgcolorbands.pcolor_o.caption","sourcebytes":[79],"value":"O"},
+{"hash":82,"name":"tdlgcolorbands.pcolor_r.caption","sourcebytes":[82],"value":"R"},
+{"hash":67,"name":"tdlgcolorbands.pcolor_c.caption","sourcebytes":[67],"value":"C"},
+{"hash":75,"name":"tdlgcolorbands.pcolor_k.caption","sourcebytes":[75],"value":"K"},
+{"hash":86,"name":"tdlgcolorbands.pcolor_v.caption","sourcebytes":[86],"value":"V"},
+{"hash":80,"name":"tdlgcolorbands.pcolor_p.caption","sourcebytes":[80],"value":"P"},
+{"hash":66,"name":"tdlgcolorbands.pcolor_b.caption","sourcebytes":[66],"value":"B"},
+{"hash":71,"name":"tdlgcolorbands.pcolor_g.caption","sourcebytes":[71],"value":"G"},
+{"hash":76,"name":"tdlgcolorbands.pcolor_l.caption","sourcebytes":[76],"value":"L"},
+{"hash":85,"name":"tdlgcolorbands.pcolor_u.caption","sourcebytes":[85],"value":"U"},
+{"hash":87,"name":"tdlgcolorbands.pcolor_w.caption","sourcebytes":[87],"value":"W"},
+{"hash":83,"name":"tdlgcolorbands.pcolor_s.caption","sourcebytes":[83],"value":"S"},
+{"hash":78,"name":"tdlgcolorbands.pcolor_n.caption","sourcebytes":[78],"value":"N"}
+]}

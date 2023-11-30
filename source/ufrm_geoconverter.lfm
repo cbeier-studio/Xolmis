@@ -1,0 +1,1863 @@
+object frmGeoConverter: TfrmGeoConverter
+  Left = 352
+  Height = 720
+  Top = 33
+  Width = 1193
+  Caption = 'Coordinates converter'
+  ClientHeight = 720
+  ClientWidth = 1193
+  DesignTimePPI = 120
+  OnCreate = FormCreate
+  OnResize = FormResize
+  OnShow = FormShow
+  object SplitSynEdit: TSplitter
+    Left = 794
+    Height = 712
+    Top = 8
+    Width = 6
+    AutoSnap = False
+    Color = 15987699
+    MinSize = 250
+    ParentColor = False
+  end
+  object PBar: TProgressBar
+    Left = 0
+    Height = 8
+    Top = 0
+    Width = 1193
+    Align = alTop
+    Step = 1
+    TabOrder = 1
+    Visible = False
+  end
+  object pLeft: TPanel
+    Left = 0
+    Height = 712
+    Top = 8
+    Width = 312
+    Align = alLeft
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 712
+    ClientWidth = 312
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 2
+    object Label1: TLabel
+      Left = 16
+      Height = 28
+      Top = 232
+      Width = 280
+      Align = alTop
+      BorderSpacing.Top = 16
+      Caption = 'Options'
+      Font.Color = 13066075
+      Font.Height = -20
+      ParentColor = False
+      ParentFont = False
+    end
+    object pConvertFromToolbar1: TBCPanel
+      Left = 16
+      Height = 134
+      Top = 8
+      Width = 280
+      Align = alTop
+      BorderSpacing.Top = 8
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 8
+      ChildSizing.VerticalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 0
+      object cbConvertFrom: TComboBox
+        Left = 17
+        Height = 28
+        Top = 9
+        Width = 246
+        Align = alTop
+        AutoComplete = True
+        AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+        Constraints.MinWidth = 245
+        ItemHeight = 20
+        Items.Strings = (
+          'Decimal degrees'
+          'Degrees, minutes and seconds'
+          'UTM'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Formato de origem'
+      end
+      object cbConvertTo: TComboBox
+        Left = 17
+        Height = 28
+        Top = 45
+        Width = 246
+        Align = alTop
+        AutoComplete = True
+        AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+        Constraints.MinWidth = 245
+        ItemHeight = 20
+        Items.Strings = (
+          'Decimal degrees'
+          'Degrees, minutes and seconds'
+          'UTM'
+        )
+        Style = csDropDownList
+        TabOrder = 1
+        TextHint = 'Formato de destino'
+        OnChange = cbConvertToChange
+      end
+      object sbConvert: TSpeedButton
+        Left = 17
+        Height = 36
+        Top = 89
+        Width = 246
+        Align = alTop
+        BorderSpacing.Top = 16
+        Caption = 'Convert'
+        Flat = True
+        Images = frmMain.mPopup
+        ImageIndex = 67
+        ImageWidth = 32
+        OnClick = sbConvertClick
+        ParentFont = False
+      end
+    end
+    object pConvertFromToolbar2: TBCPanel
+      Left = 16
+      Height = 46
+      Top = 268
+      Width = 280
+      Align = alTop
+      BorderSpacing.Top = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 1
+      object lblUTMZone: TLabel
+        Left = 17
+        Height = 28
+        Top = 9
+        Width = 70
+        Align = alLeft
+        Caption = 'UTM zone:'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object eUTMZone: TEdit
+        Left = 183
+        Height = 28
+        Top = 9
+        Width = 80
+        Align = alRight
+        Constraints.MaxWidth = 80
+        TabOrder = 0
+        TextHint = 'e.g.: 22J'
+      end
+    end
+    object pConvertFromToolbar3: TBCPanel
+      Left = 16
+      Height = 46
+      Top = 314
+      Width = 280
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Color = 15987699
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 2
+      object lblUTMHemisphere: TLabel
+        Left = 17
+        Height = 28
+        Top = 9
+        Width = 83
+        Align = alLeft
+        Caption = 'Hemisphere:'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object Panel2: TPanel
+        Left = 128
+        Height = 28
+        Top = 9
+        Width = 135
+        Align = alRight
+        BevelOuter = bvNone
+        ChildSizing.HorizontalSpacing = 8
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 28
+        ClientWidth = 135
+        Color = 16448250
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 0
+        object rbNorth: TRadioButton
+          Left = 9
+          Height = 28
+          Top = 0
+          Width = 59
+          Align = alRight
+          Caption = 'North'
+          Color = 16448250
+          ParentColor = False
+          TabOrder = 0
+        end
+        object rbSouth: TRadioButton
+          Left = 76
+          Height = 28
+          Top = 0
+          Width = 59
+          Align = alRight
+          Caption = 'South'
+          Checked = True
+          Color = 16448250
+          ParentColor = False
+          TabOrder = 1
+          TabStop = True
+        end
+      end
+    end
+    object pConvertFromToolbar4: TBCPanel
+      Left = 16
+      Height = 46
+      Top = 368
+      Width = 280
+      Align = alTop
+      BorderSpacing.Top = 8
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 3
+      object ckAddUnitsZone: TCheckBox
+        Left = 17
+        Height = 28
+        Top = 9
+        Width = 205
+        Align = alLeft
+        Caption = 'Add units/zone to the result'
+        TabOrder = 0
+      end
+    end
+    object icoConverter: TImage
+      Left = 16
+      Height = 228
+      Top = 422
+      Width = 280
+      Align = alClient
+      Center = True
+      ImageIndex = 4
+      ImageWidth = 128
+      Images = DMM.iLogos
+      Proportional = True
+    end
+    object pConvertFromToolbar5: TBCPanel
+      Left = 16
+      Height = 66
+      Top = 150
+      Width = 280
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Top = 8
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 8
+      ChildSizing.VerticalSpacing = 4
+      Background.Color = 16444392
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 4
+      object Label2: TLabel
+        Left = 17
+        Height = 20
+        Top = 9
+        Width = 246
+        Align = alTop
+        Caption = 'Use this format:'
+        Font.Color = 12017408
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label3: TLabel
+        Left = 17
+        Height = 20
+        Top = 33
+        Width = 246
+        Align = alTop
+        Caption = 'longitude (X axis); latitude (Y axis)'
+      end
+    end
+    object pConvertFromToolbar6: TBCPanel
+      Left = 16
+      Height = 46
+      Top = 658
+      Width = 280
+      Align = alBottom
+      BorderSpacing.Top = 8
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 5
+      object lblLineCol: TLabel
+        Left = 17
+        Height = 28
+        Top = 9
+        Width = 246
+        Align = alClient
+        Alignment = taCenter
+        Layout = tlCenter
+      end
+    end
+  end
+  object pConvertFrom: TPanel
+    Left = 312
+    Height = 712
+    Top = 8
+    Width = 482
+    Align = alLeft
+    BevelOuter = bvNone
+    ClientHeight = 712
+    ClientWidth = 482
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 3
+    inline seConvertFrom: TSynEdit
+      Left = 0
+      Height = 652
+      Top = 60
+      Width = 482
+      Align = alClient
+      Font.Height = -18
+      Font.Name = 'Consolas'
+      Font.Pitch = fpFixed
+      Font.Quality = fqCleartype
+      ParentColor = False
+      ParentFont = False
+      PopupMenu = pmConvertFrom
+      TabOrder = 0
+      OnClick = seConvertFromClick
+      OnKeyUp = seConvertFromKeyUp
+      Gutter.Color = clWhite
+      Gutter.RightOffset = 16
+      Gutter.Width = 69
+      Gutter.MouseActions = <>
+      RightGutter.Width = 0
+      RightGutter.MouseActions = <>
+      Highlighter = SynGeo
+      Keystrokes = <      
+        item
+          Command = ecUp
+          ShortCut = 38
+        end      
+        item
+          Command = ecSelUp
+          ShortCut = 8230
+        end      
+        item
+          Command = ecScrollUp
+          ShortCut = 16422
+        end      
+        item
+          Command = ecDown
+          ShortCut = 40
+        end      
+        item
+          Command = ecSelDown
+          ShortCut = 8232
+        end      
+        item
+          Command = ecScrollDown
+          ShortCut = 16424
+        end      
+        item
+          Command = ecLeft
+          ShortCut = 37
+        end      
+        item
+          Command = ecSelLeft
+          ShortCut = 8229
+        end      
+        item
+          Command = ecWordLeft
+          ShortCut = 16421
+        end      
+        item
+          Command = ecSelWordLeft
+          ShortCut = 24613
+        end      
+        item
+          Command = ecRight
+          ShortCut = 39
+        end      
+        item
+          Command = ecSelRight
+          ShortCut = 8231
+        end      
+        item
+          Command = ecWordRight
+          ShortCut = 16423
+        end      
+        item
+          Command = ecSelWordRight
+          ShortCut = 24615
+        end      
+        item
+          Command = ecPageDown
+          ShortCut = 34
+        end      
+        item
+          Command = ecSelPageDown
+          ShortCut = 8226
+        end      
+        item
+          Command = ecPageBottom
+          ShortCut = 16418
+        end      
+        item
+          Command = ecSelPageBottom
+          ShortCut = 24610
+        end      
+        item
+          Command = ecPageUp
+          ShortCut = 33
+        end      
+        item
+          Command = ecSelPageUp
+          ShortCut = 8225
+        end      
+        item
+          Command = ecPageTop
+          ShortCut = 16417
+        end      
+        item
+          Command = ecSelPageTop
+          ShortCut = 24609
+        end      
+        item
+          Command = ecLineStart
+          ShortCut = 36
+        end      
+        item
+          Command = ecSelLineStart
+          ShortCut = 8228
+        end      
+        item
+          Command = ecEditorTop
+          ShortCut = 16420
+        end      
+        item
+          Command = ecSelEditorTop
+          ShortCut = 24612
+        end      
+        item
+          Command = ecLineEnd
+          ShortCut = 35
+        end      
+        item
+          Command = ecSelLineEnd
+          ShortCut = 8227
+        end      
+        item
+          Command = ecEditorBottom
+          ShortCut = 16419
+        end      
+        item
+          Command = ecSelEditorBottom
+          ShortCut = 24611
+        end      
+        item
+          Command = ecToggleMode
+          ShortCut = 45
+        end      
+        item
+          Command = ecCopy
+          ShortCut = 16429
+        end      
+        item
+          Command = ecPaste
+          ShortCut = 8237
+        end      
+        item
+          Command = ecDeleteChar
+          ShortCut = 46
+        end      
+        item
+          Command = ecCut
+          ShortCut = 8238
+        end      
+        item
+          Command = ecDeleteLastChar
+          ShortCut = 8
+        end      
+        item
+          Command = ecDeleteLastChar
+          ShortCut = 8200
+        end      
+        item
+          Command = ecDeleteLastWord
+          ShortCut = 16392
+        end      
+        item
+          Command = ecUndo
+          ShortCut = 32776
+        end      
+        item
+          Command = ecRedo
+          ShortCut = 40968
+        end      
+        item
+          Command = ecLineBreak
+          ShortCut = 13
+        end      
+        item
+          Command = ecSelectAll
+          ShortCut = 16449
+        end      
+        item
+          Command = ecCopy
+          ShortCut = 16451
+        end      
+        item
+          Command = ecBlockIndent
+          ShortCut = 24649
+        end      
+        item
+          Command = ecLineBreak
+          ShortCut = 16461
+        end      
+        item
+          Command = ecInsertLine
+          ShortCut = 16462
+        end      
+        item
+          Command = ecDeleteWord
+          ShortCut = 16468
+        end      
+        item
+          Command = ecBlockUnindent
+          ShortCut = 24661
+        end      
+        item
+          Command = ecPaste
+          ShortCut = 16470
+        end      
+        item
+          Command = ecCut
+          ShortCut = 16472
+        end      
+        item
+          Command = ecDeleteLine
+          ShortCut = 16473
+        end      
+        item
+          Command = ecDeleteEOL
+          ShortCut = 24665
+        end      
+        item
+          Command = ecUndo
+          ShortCut = 16474
+        end      
+        item
+          Command = ecRedo
+          ShortCut = 24666
+        end      
+        item
+          Command = ecGotoMarker0
+          ShortCut = 16432
+        end      
+        item
+          Command = ecGotoMarker1
+          ShortCut = 16433
+        end      
+        item
+          Command = ecGotoMarker2
+          ShortCut = 16434
+        end      
+        item
+          Command = ecGotoMarker3
+          ShortCut = 16435
+        end      
+        item
+          Command = ecGotoMarker4
+          ShortCut = 16436
+        end      
+        item
+          Command = ecGotoMarker5
+          ShortCut = 16437
+        end      
+        item
+          Command = ecGotoMarker6
+          ShortCut = 16438
+        end      
+        item
+          Command = ecGotoMarker7
+          ShortCut = 16439
+        end      
+        item
+          Command = ecGotoMarker8
+          ShortCut = 16440
+        end      
+        item
+          Command = ecGotoMarker9
+          ShortCut = 16441
+        end      
+        item
+          Command = ecSetMarker0
+          ShortCut = 24624
+        end      
+        item
+          Command = ecSetMarker1
+          ShortCut = 24625
+        end      
+        item
+          Command = ecSetMarker2
+          ShortCut = 24626
+        end      
+        item
+          Command = ecSetMarker3
+          ShortCut = 24627
+        end      
+        item
+          Command = ecSetMarker4
+          ShortCut = 24628
+        end      
+        item
+          Command = ecSetMarker5
+          ShortCut = 24629
+        end      
+        item
+          Command = ecSetMarker6
+          ShortCut = 24630
+        end      
+        item
+          Command = ecSetMarker7
+          ShortCut = 24631
+        end      
+        item
+          Command = ecSetMarker8
+          ShortCut = 24632
+        end      
+        item
+          Command = ecSetMarker9
+          ShortCut = 24633
+        end      
+        item
+          Command = EcFoldLevel1
+          ShortCut = 41009
+        end      
+        item
+          Command = EcFoldLevel2
+          ShortCut = 41010
+        end      
+        item
+          Command = EcFoldLevel3
+          ShortCut = 41011
+        end      
+        item
+          Command = EcFoldLevel4
+          ShortCut = 41012
+        end      
+        item
+          Command = EcFoldLevel5
+          ShortCut = 41013
+        end      
+        item
+          Command = EcFoldLevel6
+          ShortCut = 41014
+        end      
+        item
+          Command = EcFoldLevel7
+          ShortCut = 41015
+        end      
+        item
+          Command = EcFoldLevel8
+          ShortCut = 41016
+        end      
+        item
+          Command = EcFoldLevel9
+          ShortCut = 41017
+        end      
+        item
+          Command = EcFoldLevel0
+          ShortCut = 41008
+        end      
+        item
+          Command = EcFoldCurrent
+          ShortCut = 41005
+        end      
+        item
+          Command = EcUnFoldCurrent
+          ShortCut = 41003
+        end      
+        item
+          Command = EcToggleMarkupWord
+          ShortCut = 32845
+        end      
+        item
+          Command = ecNormalSelect
+          ShortCut = 24654
+        end      
+        item
+          Command = ecColumnSelect
+          ShortCut = 24643
+        end      
+        item
+          Command = ecLineSelect
+          ShortCut = 24652
+        end      
+        item
+          Command = ecTab
+          ShortCut = 9
+        end      
+        item
+          Command = ecShiftTab
+          ShortCut = 8201
+        end      
+        item
+          Command = ecMatchBracket
+          ShortCut = 24642
+        end      
+        item
+          Command = ecColSelUp
+          ShortCut = 40998
+        end      
+        item
+          Command = ecColSelDown
+          ShortCut = 41000
+        end      
+        item
+          Command = ecColSelLeft
+          ShortCut = 40997
+        end      
+        item
+          Command = ecColSelRight
+          ShortCut = 40999
+        end      
+        item
+          Command = ecColSelPageDown
+          ShortCut = 40994
+        end      
+        item
+          Command = ecColSelPageBottom
+          ShortCut = 57378
+        end      
+        item
+          Command = ecColSelPageUp
+          ShortCut = 40993
+        end      
+        item
+          Command = ecColSelPageTop
+          ShortCut = 57377
+        end      
+        item
+          Command = ecColSelLineStart
+          ShortCut = 40996
+        end      
+        item
+          Command = ecColSelLineEnd
+          ShortCut = 40995
+        end      
+        item
+          Command = ecColSelEditorTop
+          ShortCut = 57380
+        end      
+        item
+          Command = ecColSelEditorBottom
+          ShortCut = 57379
+        end>
+      MouseActions = <>
+      MouseTextActions = <>
+      MouseSelActions = <>
+      Options = [eoAutoIndent, eoBracketHighlight, eoEnhanceHomeKey, eoGroupUndo, eoShowScrollHint, eoTabsToSpaces, eoTrimTrailingSpaces, eoDoubleClickSelectsLine]
+      Options2 = [eoEnhanceEndKey, eoFoldedCopyPaste, eoOverwriteBlock, eoAcceptDragDropEditing]
+      MouseOptions = [emDoubleClickSelectsLine]
+      VisibleSpecialChars = [vscSpace, vscTabAtLast]
+      RightEdge = 40
+      ScrollBars = ssAutoBoth
+      SelectedColor.BackPriority = 50
+      SelectedColor.ForePriority = 50
+      SelectedColor.FramePriority = 50
+      SelectedColor.BoldPriority = 50
+      SelectedColor.ItalicPriority = 50
+      SelectedColor.UnderlinePriority = 50
+      SelectedColor.StrikeOutPriority = 50
+      BracketHighlightStyle = sbhsBoth
+      BracketMatchColor.Background = clNone
+      BracketMatchColor.Foreground = clNone
+      BracketMatchColor.Style = [fsBold]
+      FoldedCodeColor.Background = clNone
+      FoldedCodeColor.Foreground = clGray
+      FoldedCodeColor.FrameColor = clGray
+      MouseLinkColor.Background = clNone
+      MouseLinkColor.Foreground = clBlue
+      LineHighlightColor.Background = clNone
+      LineHighlightColor.Foreground = clNone
+      OnChange = seConvertFromChange
+      OnPaste = seConvertFromPaste
+      inline SynLeftGutterPartList1: TSynGutterPartList
+        object SynGutterMarks1: TSynGutterMarks
+          Width = 24
+          MouseActions = <>
+        end
+        object SynGutterLineNumber1: TSynGutterLineNumber
+          Width = 27
+          MouseActions = <>
+          MarkupInfo.Background = clWhite
+          MarkupInfo.Foreground = clSilver
+          DigitCount = 2
+          ShowOnlyLineNumbersMultiplesOf = 1
+          ZeroStart = False
+          LeadingZeros = False
+        end
+        object SynGutterChanges1: TSynGutterChanges
+          Width = 5
+          Visible = False
+          MouseActions = <>
+          ModifiedColor = 59900
+          SavedColor = clGreen
+        end
+        object SynGutterSeparator1: TSynGutterSeparator
+          Width = 2
+          MouseActions = <>
+          MarkupInfo.Background = clWhite
+          MarkupInfo.Foreground = clWhite
+        end
+        object SynGutterCodeFolding1: TSynGutterCodeFolding
+          Width = 13
+          Visible = False
+          MouseActions = <>
+          MarkupInfo.Background = clNone
+          MarkupInfo.Foreground = clGray
+          MouseActionsExpanded = <>
+          MouseActionsCollapsed = <>
+        end
+      end
+    end
+    object pConvertFromToolbar: TBCPanel
+      Left = 0
+      Height = 44
+      Top = 8
+      Width = 482
+      Align = alTop
+      BorderSpacing.Top = 8
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 1
+      object sbOpenFile: TSpeedButton
+        Left = 17
+        Height = 26
+        Top = 9
+        Width = 68
+        Align = alLeft
+        AutoSize = True
+        Caption = 'Open'
+        Flat = True
+        Images = frmMain.mPopup
+        ImageIndex = 43
+        ImageWidth = 24
+        OnClick = sbOpenFileClick
+      end
+      object sbPaste: TSpeedButton
+        Left = 93
+        Height = 26
+        Top = 9
+        Width = 66
+        Align = alLeft
+        AutoSize = True
+        Caption = 'Paste'
+        Flat = True
+        Images = frmMain.mPopup
+        ImageIndex = 24
+        ImageWidth = 24
+        OnClick = sbPasteClick
+      end
+      object sbClear: TSpeedButton
+        Left = 379
+        Height = 26
+        Top = 9
+        Width = 86
+        Align = alRight
+        AutoSize = True
+        Caption = 'Clear all'
+        Flat = True
+        Images = frmMain.mPopup
+        ImageIndex = 17
+        ImageWidth = 24
+        OnClick = sbClearClick
+      end
+    end
+  end
+  object pConverted: TPanel
+    Left = 800
+    Height = 712
+    Top = 8
+    Width = 393
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 712
+    ClientWidth = 393
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 4
+    inline seConverted: TSynEdit
+      Left = 0
+      Height = 652
+      Top = 60
+      Width = 393
+      Align = alClient
+      Font.Height = -18
+      Font.Name = 'Consolas'
+      Font.Pitch = fpFixed
+      Font.Quality = fqCleartype
+      ParentColor = False
+      ParentFont = False
+      PopupMenu = pmConverted
+      TabOrder = 0
+      Gutter.Color = clWhite
+      Gutter.RightOffset = 16
+      Gutter.Width = 69
+      Gutter.MouseActions = <>
+      RightGutter.Width = 0
+      RightGutter.MouseActions = <>
+      Highlighter = SynGeo
+      Keystrokes = <      
+        item
+          Command = ecUp
+          ShortCut = 38
+        end      
+        item
+          Command = ecSelUp
+          ShortCut = 8230
+        end      
+        item
+          Command = ecScrollUp
+          ShortCut = 16422
+        end      
+        item
+          Command = ecDown
+          ShortCut = 40
+        end      
+        item
+          Command = ecSelDown
+          ShortCut = 8232
+        end      
+        item
+          Command = ecScrollDown
+          ShortCut = 16424
+        end      
+        item
+          Command = ecLeft
+          ShortCut = 37
+        end      
+        item
+          Command = ecSelLeft
+          ShortCut = 8229
+        end      
+        item
+          Command = ecWordLeft
+          ShortCut = 16421
+        end      
+        item
+          Command = ecSelWordLeft
+          ShortCut = 24613
+        end      
+        item
+          Command = ecRight
+          ShortCut = 39
+        end      
+        item
+          Command = ecSelRight
+          ShortCut = 8231
+        end      
+        item
+          Command = ecWordRight
+          ShortCut = 16423
+        end      
+        item
+          Command = ecSelWordRight
+          ShortCut = 24615
+        end      
+        item
+          Command = ecPageDown
+          ShortCut = 34
+        end      
+        item
+          Command = ecSelPageDown
+          ShortCut = 8226
+        end      
+        item
+          Command = ecPageBottom
+          ShortCut = 16418
+        end      
+        item
+          Command = ecSelPageBottom
+          ShortCut = 24610
+        end      
+        item
+          Command = ecPageUp
+          ShortCut = 33
+        end      
+        item
+          Command = ecSelPageUp
+          ShortCut = 8225
+        end      
+        item
+          Command = ecPageTop
+          ShortCut = 16417
+        end      
+        item
+          Command = ecSelPageTop
+          ShortCut = 24609
+        end      
+        item
+          Command = ecLineStart
+          ShortCut = 36
+        end      
+        item
+          Command = ecSelLineStart
+          ShortCut = 8228
+        end      
+        item
+          Command = ecEditorTop
+          ShortCut = 16420
+        end      
+        item
+          Command = ecSelEditorTop
+          ShortCut = 24612
+        end      
+        item
+          Command = ecLineEnd
+          ShortCut = 35
+        end      
+        item
+          Command = ecSelLineEnd
+          ShortCut = 8227
+        end      
+        item
+          Command = ecEditorBottom
+          ShortCut = 16419
+        end      
+        item
+          Command = ecSelEditorBottom
+          ShortCut = 24611
+        end      
+        item
+          Command = ecToggleMode
+          ShortCut = 45
+        end      
+        item
+          Command = ecCopy
+          ShortCut = 16429
+        end      
+        item
+          Command = ecPaste
+          ShortCut = 8237
+        end      
+        item
+          Command = ecDeleteChar
+          ShortCut = 46
+        end      
+        item
+          Command = ecCut
+          ShortCut = 8238
+        end      
+        item
+          Command = ecDeleteLastChar
+          ShortCut = 8
+        end      
+        item
+          Command = ecDeleteLastChar
+          ShortCut = 8200
+        end      
+        item
+          Command = ecDeleteLastWord
+          ShortCut = 16392
+        end      
+        item
+          Command = ecUndo
+          ShortCut = 32776
+        end      
+        item
+          Command = ecRedo
+          ShortCut = 40968
+        end      
+        item
+          Command = ecLineBreak
+          ShortCut = 13
+        end      
+        item
+          Command = ecSelectAll
+          ShortCut = 16449
+        end      
+        item
+          Command = ecCopy
+          ShortCut = 16451
+        end      
+        item
+          Command = ecBlockIndent
+          ShortCut = 24649
+        end      
+        item
+          Command = ecLineBreak
+          ShortCut = 16461
+        end      
+        item
+          Command = ecInsertLine
+          ShortCut = 16462
+        end      
+        item
+          Command = ecDeleteWord
+          ShortCut = 16468
+        end      
+        item
+          Command = ecBlockUnindent
+          ShortCut = 24661
+        end      
+        item
+          Command = ecPaste
+          ShortCut = 16470
+        end      
+        item
+          Command = ecCut
+          ShortCut = 16472
+        end      
+        item
+          Command = ecDeleteLine
+          ShortCut = 16473
+        end      
+        item
+          Command = ecDeleteEOL
+          ShortCut = 24665
+        end      
+        item
+          Command = ecUndo
+          ShortCut = 16474
+        end      
+        item
+          Command = ecRedo
+          ShortCut = 24666
+        end      
+        item
+          Command = ecGotoMarker0
+          ShortCut = 16432
+        end      
+        item
+          Command = ecGotoMarker1
+          ShortCut = 16433
+        end      
+        item
+          Command = ecGotoMarker2
+          ShortCut = 16434
+        end      
+        item
+          Command = ecGotoMarker3
+          ShortCut = 16435
+        end      
+        item
+          Command = ecGotoMarker4
+          ShortCut = 16436
+        end      
+        item
+          Command = ecGotoMarker5
+          ShortCut = 16437
+        end      
+        item
+          Command = ecGotoMarker6
+          ShortCut = 16438
+        end      
+        item
+          Command = ecGotoMarker7
+          ShortCut = 16439
+        end      
+        item
+          Command = ecGotoMarker8
+          ShortCut = 16440
+        end      
+        item
+          Command = ecGotoMarker9
+          ShortCut = 16441
+        end      
+        item
+          Command = ecSetMarker0
+          ShortCut = 24624
+        end      
+        item
+          Command = ecSetMarker1
+          ShortCut = 24625
+        end      
+        item
+          Command = ecSetMarker2
+          ShortCut = 24626
+        end      
+        item
+          Command = ecSetMarker3
+          ShortCut = 24627
+        end      
+        item
+          Command = ecSetMarker4
+          ShortCut = 24628
+        end      
+        item
+          Command = ecSetMarker5
+          ShortCut = 24629
+        end      
+        item
+          Command = ecSetMarker6
+          ShortCut = 24630
+        end      
+        item
+          Command = ecSetMarker7
+          ShortCut = 24631
+        end      
+        item
+          Command = ecSetMarker8
+          ShortCut = 24632
+        end      
+        item
+          Command = ecSetMarker9
+          ShortCut = 24633
+        end      
+        item
+          Command = EcFoldLevel1
+          ShortCut = 41009
+        end      
+        item
+          Command = EcFoldLevel2
+          ShortCut = 41010
+        end      
+        item
+          Command = EcFoldLevel3
+          ShortCut = 41011
+        end      
+        item
+          Command = EcFoldLevel4
+          ShortCut = 41012
+        end      
+        item
+          Command = EcFoldLevel5
+          ShortCut = 41013
+        end      
+        item
+          Command = EcFoldLevel6
+          ShortCut = 41014
+        end      
+        item
+          Command = EcFoldLevel7
+          ShortCut = 41015
+        end      
+        item
+          Command = EcFoldLevel8
+          ShortCut = 41016
+        end      
+        item
+          Command = EcFoldLevel9
+          ShortCut = 41017
+        end      
+        item
+          Command = EcFoldLevel0
+          ShortCut = 41008
+        end      
+        item
+          Command = EcFoldCurrent
+          ShortCut = 41005
+        end      
+        item
+          Command = EcUnFoldCurrent
+          ShortCut = 41003
+        end      
+        item
+          Command = EcToggleMarkupWord
+          ShortCut = 32845
+        end      
+        item
+          Command = ecNormalSelect
+          ShortCut = 24654
+        end      
+        item
+          Command = ecColumnSelect
+          ShortCut = 24643
+        end      
+        item
+          Command = ecLineSelect
+          ShortCut = 24652
+        end      
+        item
+          Command = ecTab
+          ShortCut = 9
+        end      
+        item
+          Command = ecShiftTab
+          ShortCut = 8201
+        end      
+        item
+          Command = ecMatchBracket
+          ShortCut = 24642
+        end      
+        item
+          Command = ecColSelUp
+          ShortCut = 40998
+        end      
+        item
+          Command = ecColSelDown
+          ShortCut = 41000
+        end      
+        item
+          Command = ecColSelLeft
+          ShortCut = 40997
+        end      
+        item
+          Command = ecColSelRight
+          ShortCut = 40999
+        end      
+        item
+          Command = ecColSelPageDown
+          ShortCut = 40994
+        end      
+        item
+          Command = ecColSelPageBottom
+          ShortCut = 57378
+        end      
+        item
+          Command = ecColSelPageUp
+          ShortCut = 40993
+        end      
+        item
+          Command = ecColSelPageTop
+          ShortCut = 57377
+        end      
+        item
+          Command = ecColSelLineStart
+          ShortCut = 40996
+        end      
+        item
+          Command = ecColSelLineEnd
+          ShortCut = 40995
+        end      
+        item
+          Command = ecColSelEditorTop
+          ShortCut = 57380
+        end      
+        item
+          Command = ecColSelEditorBottom
+          ShortCut = 57379
+        end>
+      MouseActions = <>
+      MouseTextActions = <>
+      MouseSelActions = <>
+      Options = [eoAutoIndent, eoBracketHighlight, eoEnhanceHomeKey, eoGroupUndo, eoSmartTabs, eoTabsToSpaces, eoTrimTrailingSpaces, eoDoubleClickSelectsLine]
+      Options2 = [eoEnhanceEndKey, eoFoldedCopyPaste, eoOverwriteBlock, eoAcceptDragDropEditing]
+      MouseOptions = [emDoubleClickSelectsLine]
+      VisibleSpecialChars = [vscSpace, vscTabAtLast]
+      ReadOnly = True
+      RightEdge = 40
+      ScrollBars = ssAutoBoth
+      SelectedColor.BackPriority = 50
+      SelectedColor.ForePriority = 50
+      SelectedColor.FramePriority = 50
+      SelectedColor.BoldPriority = 50
+      SelectedColor.ItalicPriority = 50
+      SelectedColor.UnderlinePriority = 50
+      SelectedColor.StrikeOutPriority = 50
+      BracketHighlightStyle = sbhsBoth
+      BracketMatchColor.Background = clNone
+      BracketMatchColor.Foreground = clNone
+      BracketMatchColor.Style = [fsBold]
+      FoldedCodeColor.Background = clNone
+      FoldedCodeColor.Foreground = clGray
+      FoldedCodeColor.FrameColor = clGray
+      MouseLinkColor.Background = clNone
+      MouseLinkColor.Foreground = clBlue
+      LineHighlightColor.Background = clNone
+      LineHighlightColor.Foreground = clNone
+      inline SynLeftGutterPartList1: TSynGutterPartList
+        object SynGutterMarks1: TSynGutterMarks
+          Width = 24
+          MouseActions = <>
+        end
+        object SynGutterLineNumber1: TSynGutterLineNumber
+          Width = 27
+          MouseActions = <>
+          MarkupInfo.Background = clWhite
+          MarkupInfo.Foreground = clSilver
+          DigitCount = 2
+          ShowOnlyLineNumbersMultiplesOf = 1
+          ZeroStart = False
+          LeadingZeros = False
+        end
+        object SynGutterChanges1: TSynGutterChanges
+          Width = 5
+          Visible = False
+          MouseActions = <>
+          ModifiedColor = 59900
+          SavedColor = clGreen
+        end
+        object SynGutterSeparator1: TSynGutterSeparator
+          Width = 2
+          MouseActions = <>
+          MarkupInfo.Background = clWhite
+          MarkupInfo.Foreground = clWhite
+        end
+        object SynGutterCodeFolding1: TSynGutterCodeFolding
+          Width = 13
+          Visible = False
+          MouseActions = <>
+          MarkupInfo.Background = clNone
+          MarkupInfo.Foreground = clGray
+          MouseActionsExpanded = <>
+          MouseActionsCollapsed = <>
+        end
+      end
+    end
+    object pConvertedToolbar: TBCPanel
+      Left = 0
+      Height = 44
+      Top = 8
+      Width = 393
+      Align = alTop
+      BorderSpacing.Top = 8
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 1
+      object sbSaveFile: TSpeedButton
+        Left = 17
+        Height = 26
+        Top = 9
+        Width = 63
+        Align = alLeft
+        AutoSize = True
+        Caption = 'Save'
+        Flat = True
+        Images = frmMain.mPopup
+        ImageIndex = 96
+        ImageWidth = 24
+        OnClick = sbSaveFileClick
+      end
+      object sbCopy: TSpeedButton
+        Left = 88
+        Height = 26
+        Top = 9
+        Width = 66
+        Align = alLeft
+        AutoSize = True
+        Caption = 'Copy'
+        Flat = True
+        Images = frmMain.mPopup
+        ImageIndex = 27
+        ImageWidth = 24
+        OnClick = sbCopyClick
+      end
+      object sbAddToGeoEditor: TSpeedButton
+        Left = 162
+        Height = 26
+        Top = 9
+        Width = 122
+        Align = alLeft
+        AutoSize = True
+        Caption = 'Add to Editor'
+        Flat = True
+        Images = frmMain.mPopup
+        ImageIndex = 65
+        ImageWidth = 24
+        OnClick = sbAddToGeoEditorClick
+      end
+    end
+  end
+  object imgSBar: TImageList
+    Height = 20
+    Scaled = True
+    Width = 20
+    Left = 352
+    Top = 296
+    Bitmap = {
+      4C7A020000001400000014000000CA0100000000000078DAD5943F4842411CC7
+      0DE2112811484320547364924B900DFD9B5B6A69B1C1FE6C2DCDBEA9A5B186A0
+      C906B7C22532176948102AB47A0EA9450E81D5100D120E7AFDEE38E1F1B8BBF7
+      7B5A420F3ECBE3EEC3FDEEF7BBAFCBD5DD2F19766940109803063AF06C00B740
+      1D20269E8003A01FE9F101298B43440558B0710D026F08578B26B0A4F09D8AF6
+      65F420C91FAECA9C55C02B70ADC8CEF159CE12FAA5B78764CEB8C07722F36577
+      678811DB52D5FD0DF45A7C2FB2F5A9481FB9DC19B5BBCB80C9E555AD2D2574F2
+      55C9D9F92258DFF3F91EA9558B689F5DBD485F00DB0F844FD40FE9BC18B14DF2
+      719F54F9E29279169F71AD87F5D8C93C9BDE5BF5B7DE9B290F2E907930EF20AF
+      D6811B4B5ED1F394807D6C5E49F2741298ED244FFFCBE71BBBF200218EA74D87
+      06E84001680284D3E4FFA2740DD23501E44D0E1939BA16E1AA235C2DEA3227AF
+      F14EB46FC49F61489C7951EDFCBE847B1267EF0CC539A3025F41B6BE58AE3114
+      3E4330138D0E7C74AFDBE40BA9EE1DE1A34C637D8FA51AC3814F59EF72F88181
+      ADD7AE1F538BD70C6C3FECE6E5E8F895E1705E34D93B1B1ECF3014EF4EFBEBF7
+      D6661EF81DE415CD24C3D2F706FF87CE2B81DB4D678BE3EE769EFF0074B8D9B7
+    }
+    BitmapAdv = {
+      4C69010000004C7A020000001000000010000000650100000000000078DA6360
+      A03ED81ECF200DC4E140DC0DC4D3803805887588D0C704C4C540FC1D88FF63C1
+      F380980F875E4620DE8C431F32BE0FC4C258F467A2AB3D5024FFFF5487133633
+      56A0E9E506E2CFE8EA2ECF49FAFFE4C8425CEEB047D26F8BCBBD3B925870E9AF
+      45D25F884DCDF929A1FF1FEE998A4BFF4642FAAF2DC9FBFFE2CC3A62F4DB92A1
+      BF9650F85D5990F1FFD9891504C30F57FCED4C66FBBF37579C60FC21A59F4DE4
+      A61FA4F45B8427FDCEC5957ED1CC9102E23020EE82E69F6420D66618224046FB
+      880A10C701F1242806B15588D0C701C49D40FC1788FFA3E1BF50390E3C7ACF62
+      D1878ECF6233036A368A5A2D8B13FF35CD8F6333A3038B7F31DCBC7AE34B30C6
+      E1176524FD71D8DCBA65E71B30C6E18F5824FD93C8D03F9190FE551B70BA1F5D
+      3F56F783C20E47F8A1BB1F6BF815D7DCFE5F527B9B60F8E18A3F0DA0DD1A44C4
+      1F35D20F92191D78D26F072EBD68E62883C20714C6501C8BEE5F6A0100B20D83
+      CE
+    }
+  end
+  object SaveDlg: TSaveDialog
+    DefaultExt = '.csv'
+    Filter = 'All files (*.*)|*.*|CSV file (*.csv)|*.csv|Text file (*.txt)|*.txt'
+    Left = 448
+    Top = 304
+  end
+  object OpenDlg: TOpenDialog
+    Title = 'Open file'
+    DefaultExt = '.csv'
+    Filter = 'All files (*.*)|*.*|CSV file (*.csv)|*.csv|Text file (*.txt)|*.txt'
+    Left = 456
+    Top = 200
+  end
+  object pmConvertFrom: TPopupMenu
+    Images = frmMain.mPopup
+    ImagesWidth = 20
+    Left = 352
+    Top = 184
+    object pmfOpenFile: TMenuItem
+      Caption = 'Open file'
+      ImageIndex = 43
+      OnClick = sbOpenFileClick
+    end
+    object pmfPaste: TMenuItem
+      Caption = 'Paste'
+      ImageIndex = 24
+      OnClick = sbPasteClick
+    end
+    object Separator1: TMenuItem
+      Caption = '-'
+    end
+    object pmfClear: TMenuItem
+      Caption = 'Clear'
+      ImageIndex = 17
+      OnClick = sbClearClick
+    end
+  end
+  object pmConverted: TPopupMenu
+    Images = frmMain.mPopup
+    ImagesWidth = 20
+    Left = 600
+    Top = 192
+    object pmtSaveFile: TMenuItem
+      Caption = 'Save file'
+      ImageIndex = 96
+    end
+    object pmtCopy: TMenuItem
+      Caption = 'Copy'
+      ImageIndex = 27
+    end
+    object pmtAddToGeoBank: TMenuItem
+      Caption = 'Add to Coordinates Editor'
+      ImageIndex = 65
+    end
+    object Separator2: TMenuItem
+      Caption = '-'
+    end
+    object pmtClear: TMenuItem
+      Caption = 'Clear'
+      ImageIndex = 17
+    end
+  end
+  object SynGeo: TSynAnySyn
+    Enabled = False
+    Comments = []
+    DetectPreprocessor = False
+    IdentifierChars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'
+    ConstantAttri.Foreground = clBlue
+    Constants.Strings = (
+      'E'
+      'N'
+      'S'
+      'W'
+    )
+    SymbolAttri.Foreground = clRed
+    Markup = False
+    Entity = False
+    DollarVariables = False
+    ActiveDot = False
+    Left = 579
+    Top = 299
+  end
+end

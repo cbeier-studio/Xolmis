@@ -1,0 +1,178 @@
+object dlgBandsBalance: TdlgBandsBalance
+  Left = 352
+  Height = 536
+  Top = 33
+  Width = 400
+  BorderStyle = bsDialog
+  Caption = 'Bands balance'
+  ClientHeight = 536
+  ClientWidth = 400
+  DesignTimePPI = 120
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  object pBottom: TPanel
+    Left = 0
+    Height = 48
+    Top = 488
+    Width = 400
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ClientHeight = 48
+    ClientWidth = 400
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object sbClose: TButton
+      Left = 254
+      Height = 32
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Close'
+      ModalResult = 11
+      TabOrder = 0
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 486
+    Width = 400
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object dbgSaldo: TDBGrid
+    Left = 0
+    Height = 486
+    Top = 0
+    Width = 400
+    Align = alClient
+    AutoFillColumns = True
+    BorderStyle = bsNone
+    Color = clWindow
+    Columns = <    
+      item
+        Font.Style = [fsBold]
+        Title.Alignment = taCenter
+        Title.Caption = 'Size'
+        Width = 100
+        FieldName = 'band_size'
+      end    
+      item
+        Title.Alignment = taCenter
+        Title.Caption = 'Leftover'
+        Width = 100
+        FieldName = 'saldo'
+      end    
+      item
+        Title.Alignment = taCenter
+        Title.Caption = 'Avg./day'
+        Width = 100
+        FieldName = 'media_dia'
+      end    
+      item
+        Title.Alignment = taCenter
+        Title.Caption = 'Max./day'
+        Width = 100
+        FieldName = 'maximo_dia'
+      end>
+    DataSource = DMC.dsBandsBalance
+    FixedCols = 0
+    Flat = True
+    Options = [dgTitles, dgColumnResize, dgRowLines, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgDisableDelete, dgDisableInsert, dgThumbTracking]
+    PopupMenu = pmGrid
+    ReadOnly = True
+    Scrollbars = ssAutoBoth
+    TabOrder = 1
+    TitleFont.Color = 6579300
+    OnPrepareCanvas = dbgSaldoPrepareCanvas
+  end
+  object pMsg: TBCPanel
+    AnchorSideLeft.Control = dbgSaldo
+    AnchorSideLeft.Side = asrCenter
+    AnchorSideTop.Control = dbgSaldo
+    AnchorSideTop.Side = asrCenter
+    Left = 32
+    Height = 30
+    Top = 228
+    Width = 336
+    ChildSizing.LeftRightSpacing = 4
+    ChildSizing.TopBottomSpacing = 1
+    ChildSizing.HorizontalSpacing = 8
+    Background.Color = 16448250
+    Background.Gradient1.StartColor = clWhite
+    Background.Gradient1.EndColor = clBlack
+    Background.Gradient1.GradientType = gtLinear
+    Background.Gradient1.Point1XPercent = 0
+    Background.Gradient1.Point1YPercent = 0
+    Background.Gradient1.Point2XPercent = 0
+    Background.Gradient1.Point2YPercent = 100
+    Background.Gradient2.StartColor = clWhite
+    Background.Gradient2.EndColor = clBlack
+    Background.Gradient2.GradientType = gtLinear
+    Background.Gradient2.Point1XPercent = 0
+    Background.Gradient2.Point1YPercent = 0
+    Background.Gradient2.Point2XPercent = 0
+    Background.Gradient2.Point2YPercent = 100
+    Background.Gradient1EndPercent = 35
+    Background.Style = bbsColor
+    BevelInner = bvNone
+    BevelOuter = bvNone
+    BevelWidth = 1
+    Border.Color = 13158600
+    Border.Style = bboSolid
+    BorderBCStyle = bpsBorder
+    Caption = 'Calculating band balance...'
+    FontEx.Color = clDefault
+    FontEx.FontQuality = fqSystemClearType
+    FontEx.Shadow = False
+    FontEx.ShadowRadius = 5
+    FontEx.ShadowOffsetX = 5
+    FontEx.ShadowOffsetY = 5
+    FontEx.Style = []
+    FontEx.PaddingLeft = 8
+    FontEx.PaddingRight = 8
+    ParentBackground = False
+    Rounding.RoundX = 4
+    Rounding.RoundY = 4
+    TabOrder = 2
+  end
+  object TimerLoad: TTimer
+    Enabled = False
+    Interval = 500
+    OnTimer = TimerLoadTimer
+    Left = 215
+    Top = 265
+  end
+  object pmGrid: TPopupMenu
+    Images = frmMain.mPopup
+    ImagesWidth = 20
+    Left = 219
+    Top = 333
+    object pmgRefresh: TMenuItem
+      Caption = 'Refresh'
+      ImageIndex = 1
+      ShortCut = 116
+      OnClick = pmgRefreshClick
+    end
+    object Separator1: TMenuItem
+      Caption = '-'
+    end
+    object pmgSavesAs: TMenuItem
+      Caption = 'Save as...'
+      ImageIndex = 97
+      OnClick = pmgSavesAsClick
+    end
+  end
+  object SaveDlg: TSaveDialog
+    Left = 219
+    Top = 405
+  end
+end

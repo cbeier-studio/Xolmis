@@ -1,0 +1,20 @@
+{"version":1,"strings":[
+{"hash":184026309,"name":"tfrmmaintenance.caption","sourcebytes":[77,97,105,110,116,101,110,97,110,99,101],"value":"Maintenance"},
+{"hash":147264323,"name":"tfrmmaintenance.lbltitletaxahierarchy.caption","sourcebytes":[72,105,101,114,97,114,99,104,105,101,115],"value":"Hierarchies"},
+{"hash":237406497,"name":"tfrmmaintenance.lblrewritetaxahierarchy.caption","sourcebytes":[67,104,101,99,107,32,97,110,100,32,99,111,114,114,101,99,116,32,104,105,101,114,97,114,99,104,121,32,111,102,32,116,97,120,97],"value":"Check and correct hierarchy of taxa"},
+{"hash":56356636,"name":"tfrmmaintenance.cbtaxahierarchy.text","sourcebytes":[90,111,111,108,111,103,105,99,97,108],"value":"Zoological"},
+{"hash":4844443,"name":"tfrmmaintenance.sbrewritetaxahierarchy.caption","sourcebytes":[67,104,101,99,107],"value":"Check"},
+{"hash":181034997,"name":"tfrmmaintenance.lblrewritetaxasequence.caption","sourcebytes":[82,101,118,105,101,119,32,116,97,120,97,32,115,101,113,117,101,110,99,101],"value":"Review taxa sequence"},
+{"hash":56356636,"name":"tfrmmaintenance.cbtaxasequence.text","sourcebytes":[90,111,111,108,111,103,105,99,97,108],"value":"Zoological"},
+{"hash":93114311,"name":"tfrmmaintenance.sbrewritetaxasequence.caption","sourcebytes":[82,101,118,105,101,119],"value":"Review"},
+{"hash":147264323,"name":"tfrmmaintenance.lbltitlegeohierarchy.caption","sourcebytes":[72,105,101,114,97,114,99,104,105,101,115],"value":"Hierarchies"},
+{"hash":225078755,"name":"tfrmmaintenance.lblrewritegeohierarchy.caption","sourcebytes":[67,104,101,99,107,32,97,110,100,32,99,111,114,114,101,99,116,32,116,104,101,32,104,105,101,114,97,114,99,104,121,32,111,102,32,116,111,112,111,110,121,109,115],"value":"Check and correct the hierarchy of toponyms"},
+{"hash":4844443,"name":"tfrmmaintenance.sbrewritegeohierarchy.caption","sourcebytes":[67,104,101,99,107],"value":"Check"},
+{"hash":242270179,"name":"tfrmmaintenance.lbltitlegeohierarchy1.caption","sourcebytes":[70,117,108,108,32,110,97,109,101,115],"value":"Full names"},
+{"hash":101355269,"name":"tfrmmaintenance.lblrewritegeohierarchy1.caption","sourcebytes":[82,101,119,114,105,116,101,32,116,104,101,32,105,110,100,105,118,105,100,117,97,108,115,39,32,102,117,108,108,32,110,97,109,101],"value":"Rewrite the individuals' full name"},
+{"hash":147755253,"name":"tfrmmaintenance.sbrewriteindividualsfullname.caption","sourcebytes":[82,101,119,114,105,116,101],"value":"Rewrite"},
+{"hash":59888115,"name":"tfrmmaintenance.lbltitleimagethumbnails.caption","sourcebytes":[84,104,117,109,98,110,97,105,108,115],"value":"Thumbnails"},
+{"hash":101769061,"name":"tfrmmaintenance.lblrecreateimagethumbnails.caption","sourcebytes":[82,101,99,114,101,97,116,101,32,105,109,97,103,101,32,116,104,117,109,98,110,97,105,108,115,32,105,110,32,116,104,101,32,100,97,116,97,98,97,115,101],"value":"Recreate image thumbnails in the database"},
+{"hash":195607845,"name":"tfrmmaintenance.sbrecreateimagethumbnails.caption","sourcebytes":[82,101,99,114,101,97,116,101],"value":"Recreate"},
+{"hash":4863637,"name":"tfrmmaintenance.sbclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"}
+]}

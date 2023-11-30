@@ -1,0 +1,141 @@
+object lstMoltLimits: TlstMoltLimits
+  Left = 352
+  Height = 413
+  Top = 33
+  Width = 466
+  Caption = 'Molt limits'
+  ClientHeight = 413
+  ClientWidth = 466
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  LCLVersion = '3.0.0.2'
+  object cklLimits: TCheckListBox
+    Left = 8
+    Height = 302
+    Top = 8
+    Width = 450
+    Align = alClient
+    BorderSpacing.Around = 8
+    Items.Strings = (
+      'N - No molt limits found after examination'
+      'U - Molt limits are Undetermined after examination'
+      'P - Primary flight feathers'
+      'S - Secondary flight feathers'
+      'D - primary coverts'
+      'G - Greater coverts'
+      'V - primaries Vs. greater coverts'
+      'R - Rectrices'
+      'L - Lesser coverts'
+      'M - Median coverts'
+      'B - Body plumage'
+      'C - Carpal covert vs. alula covert/lesser alula'
+      'A - Alula covert vs. lesser alula'
+      'Y - It has limits, but is not determined where'
+    )
+    ItemHeight = 21
+    TabOrder = 0
+    OnClickCheck = cklLimitsClickCheck
+    Data = {
+      0E0000000000000000000000000000000000
+    }
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 50
+    Top = 363
+    Width = 466
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 50
+    ClientWidth = 466
+    TabOrder = 1
+    object sbOK: TBitBtn
+      Left = 16
+      Height = 34
+      Top = 8
+      Width = 213
+      Caption = 'Apply'
+      Constraints.MinWidth = 213
+      Default = True
+      Font.Color = 14120960
+      Font.Name = 'Segoe UI Semibold'
+      OnClick = sbOKClick
+      ParentFont = False
+      TabOrder = 0
+    end
+    object sbCancel: TBitBtn
+      Left = 237
+      Height = 34
+      Top = 8
+      Width = 213
+      Caption = 'Cancel'
+      Constraints.MinWidth = 213
+      OnClick = sbCancelClick
+      TabOrder = 1
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 361
+    Width = 466
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pCode: TBCPanel
+    Left = 8
+    Height = 35
+    Top = 318
+    Width = 450
+    Align = alBottom
+    BorderSpacing.Left = 8
+    BorderSpacing.Right = 8
+    BorderSpacing.Bottom = 8
+    Background.Color = 16226706
+    Background.Gradient1.StartColor = clWhite
+    Background.Gradient1.EndColor = clBlack
+    Background.Gradient1.GradientType = gtLinear
+    Background.Gradient1.Point1XPercent = 0
+    Background.Gradient1.Point1YPercent = 0
+    Background.Gradient1.Point2XPercent = 0
+    Background.Gradient1.Point2YPercent = 100
+    Background.Gradient2.StartColor = clWhite
+    Background.Gradient2.EndColor = clBlack
+    Background.Gradient2.GradientType = gtLinear
+    Background.Gradient2.Point1XPercent = 0
+    Background.Gradient2.Point1YPercent = 0
+    Background.Gradient2.Point2XPercent = 0
+    Background.Gradient2.Point2YPercent = 100
+    Background.Gradient1EndPercent = 35
+    Background.Style = bbsColor
+    BevelInner = bvNone
+    BevelOuter = bvRaised
+    BevelWidth = 1
+    Border.Style = bboNone
+    BorderBCStyle = bpsBorder
+    FontEx.Color = 9520964
+    FontEx.FontQuality = fqSystemClearType
+    FontEx.Height = 24
+    FontEx.Shadow = False
+    FontEx.ShadowRadius = 5
+    FontEx.ShadowOffsetX = 5
+    FontEx.ShadowOffsetY = 5
+    FontEx.Style = []
+    ParentBackground = False
+    Rounding.RoundX = 8
+    Rounding.RoundY = 8
+    TabOrder = 2
+  end
+end

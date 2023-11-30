@@ -1,0 +1,522 @@
+object batchNetEffort: TbatchNetEffort
+  Left = 352
+  Height = 507
+  Top = 33
+  Width = 488
+  BorderIcons = [biSystemMenu]
+  Caption = 'New series of mistnets'
+  ClientHeight = 507
+  ClientWidth = 488
+  DesignTimePPI = 120
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 459
+    Width = 488
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 46
+    Top = 461
+    Width = 488
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 46
+    ClientWidth = 488
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    object sbSave: TButton
+      Left = 16
+      Height = 30
+      Top = 8
+      Width = 224
+      Caption = 'Save'
+      Constraints.MinWidth = 224
+      Enabled = False
+      TabOrder = 0
+      OnClick = sbSaveClick
+    end
+    object sbCancel: TButton
+      Left = 248
+      Height = 30
+      Top = 8
+      Width = 224
+      Caption = 'Cancel'
+      Constraints.MinWidth = 224
+      ModalResult = 2
+      TabOrder = 1
+    end
+  end
+  object pEdit: TPanel
+    Left = 0
+    Height = 459
+    Top = 0
+    Width = 488
+    Align = alClient
+    BevelOuter = bvNone
+    ChildSizing.TopBottomSpacing = 8
+    ClientHeight = 459
+    ClientWidth = 488
+    Color = 16444392
+    Constraints.MinHeight = 458
+    Font.Color = 6579300
+    ParentBackground = False
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 0
+    object pNetSize: TPanel
+      Left = 0
+      Height = 58
+      Top = 326
+      Width = 488
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 58
+      ClientWidth = 488
+      ParentBackground = False
+      TabOrder = 4
+      object lblNetLength: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 220
+        AutoSize = False
+        BorderSpacing.Top = 4
+        Caption = 'Mistnet length:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object lblNetHeight: TLabel
+        Left = 252
+        Height = 20
+        Top = 4
+        Width = 220
+        AutoSize = False
+        BorderSpacing.Top = 4
+        Caption = 'Mistnet height:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eNetLength: TFloatSpinEdit
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 220
+        Constraints.MinWidth = 220
+        DecimalPlaces = 1
+        TabOrder = 0
+      end
+      object eNetHeight: TFloatSpinEdit
+        Left = 252
+        Height = 28
+        Top = 28
+        Width = 220
+        Constraints.MinWidth = 220
+        DecimalPlaces = 1
+        TabOrder = 1
+      end
+    end
+    object pFromToNumber: TPanel
+      Left = 0
+      Height = 58
+      Top = 94
+      Width = 488
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 58
+      ClientWidth = 488
+      ParentBackground = False
+      TabOrder = 0
+      object lblStartNumber: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Start number:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object lblEndNumber: TLabel
+        Left = 252
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Final number:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eStartNumber: TSpinEdit
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 220
+        Constraints.MinWidth = 220
+        MaxValue = 9999
+        MinValue = 1
+        TabOrder = 0
+        Value = 1
+      end
+      object eEndNumber: TSpinEdit
+        Left = 252
+        Height = 28
+        Top = 28
+        Width = 220
+        Constraints.MinWidth = 220
+        MaxValue = 9999
+        MinValue = 1
+        TabOrder = 1
+        Value = 1
+      end
+    end
+    object pNetMesh: TPanel
+      Left = 0
+      Height = 58
+      Top = 384
+      Width = 488
+      Align = alTop
+      BorderSpacing.Bottom = 16
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 58
+      ClientWidth = 488
+      ParentBackground = False
+      TabOrder = 5
+      object lblNetMesh: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Mesh size:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object cbNetMesh: TComboBox
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 220
+        Constraints.MinWidth = 220
+        ItemHeight = 20
+        Items.Strings = (
+          '14x14'
+          '16x16'
+          '19x19'
+          '20x20'
+          '22x22'
+          '30x30'
+          '45x45'
+          '60x60'
+          '70x70'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+      end
+    end
+    object pOpenCloseTime1: TPanel
+      Left = 0
+      Height = 58
+      Top = 152
+      Width = 488
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 58
+      ClientWidth = 488
+      ParentBackground = False
+      TabOrder = 1
+      object lblOpenTime1: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Opening time 1:'
+        ParentColor = False
+      end
+      object lblCloseTime1: TLabel
+        Left = 252
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Closing time 1:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eOpenTime1: TTimeEdit
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 220
+        ButtonWidth = 29
+        Constraints.MinWidth = 220
+        NumGlyphs = 1
+        MaxLength = 0
+        Spacing = 0
+        TabOrder = 0
+        TextHint = 'HH:MM'
+      end
+      object eCloseTime1: TTimeEdit
+        Left = 252
+        Height = 28
+        Top = 28
+        Width = 220
+        ButtonWidth = 29
+        Constraints.MinWidth = 220
+        NumGlyphs = 1
+        MaxLength = 0
+        Spacing = 0
+        TabOrder = 1
+        TextHint = 'HH:MM'
+      end
+    end
+    object pOpenCloseTime2: TPanel
+      Left = 0
+      Height = 58
+      Top = 210
+      Width = 488
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 58
+      ClientWidth = 488
+      ParentBackground = False
+      TabOrder = 2
+      object lblOpenTime2: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Opening time 2:'
+        ParentColor = False
+      end
+      object lblCloseTime2: TLabel
+        Left = 252
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Closing time 2:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eOpenTime2: TTimeEdit
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 220
+        ButtonWidth = 29
+        Constraints.MinWidth = 220
+        NumGlyphs = 1
+        MaxLength = 0
+        Spacing = 0
+        TabOrder = 0
+        TextHint = 'HH:MM'
+      end
+      object eCloseTime2: TTimeEdit
+        Left = 252
+        Height = 28
+        Top = 28
+        Width = 220
+        ButtonWidth = 29
+        Constraints.MinWidth = 220
+        NumGlyphs = 1
+        MaxLength = 0
+        Spacing = 0
+        TabOrder = 1
+        TextHint = 'HH:MM'
+      end
+    end
+    object pOpenCloseTime3: TPanel
+      Left = 0
+      Height = 58
+      Top = 268
+      Width = 488
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 58
+      ClientWidth = 488
+      ParentBackground = False
+      TabOrder = 3
+      object lblOpenTime3: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Opening time 3:'
+        ParentColor = False
+      end
+      object lblCloseTime3: TLabel
+        Left = 252
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Closing time 3:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eOpenTime3: TTimeEdit
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 220
+        ButtonWidth = 29
+        Constraints.MinWidth = 220
+        NumGlyphs = 1
+        MaxLength = 0
+        Spacing = 0
+        TabOrder = 0
+        TextHint = 'HH:MM'
+      end
+      object eCloseTime3: TTimeEdit
+        Left = 252
+        Height = 28
+        Top = 28
+        Width = 220
+        ButtonWidth = 29
+        Constraints.MinWidth = 220
+        NumGlyphs = 1
+        MaxLength = 0
+        Spacing = 0
+        TabOrder = 1
+        TextHint = 'HH:MM'
+      end
+    end
+    object pSurvey: TBCPanel
+      Left = 16
+      Height = 70
+      Top = 8
+      Width = 456
+      Align = alTop
+      BorderSpacing.Left = 16
+      BorderSpacing.Right = 16
+      BorderSpacing.Bottom = 16
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 6
+      object lblSurvey: TLabel
+        Left = 17
+        Height = 20
+        Top = 9
+        Width = 422
+        Align = alTop
+        BorderSpacing.Bottom = 4
+        Caption = 'Copy mistnets from survey:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eSurvey: TEditButton
+        Left = 17
+        Height = 28
+        Top = 33
+        Width = 422
+        Align = alTop
+        BorderSpacing.Bottom = 8
+        ButtonWidth = 29
+        Color = clWhite
+        Images = frmMain.mPopup
+        ImageIndex = 99
+        ImageWidth = 20
+        MaxLength = 0
+        NumGlyphs = 1
+        OnButtonClick = eSurveyButtonClick
+        OnKeyPress = eSurveyKeyPress
+        PasswordChar = #0
+        Spacing = 0
+        TabOrder = 0
+      end
+    end
+  end
+end

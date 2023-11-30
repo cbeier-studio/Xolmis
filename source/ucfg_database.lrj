@@ -1,0 +1,7 @@
+{"version":1,"strings":[
+{"hash":79227731,"name":"tcfgdatabase.caption","sourcebytes":[88,111,108,109,105,115,32,45,32,77,97,110,97,103,101,32,99,111,110,110,101,99,116,105,111,110,115],"value":"Xolmis - Manage connections"},
+{"hash":26183829,"name":"tcfgdatabase.vtconnections.header.columns[0].text","sourcebytes":[99,111,110,110,101,99,116,105,111,110,95,110,97,109,101],"value":"connection_name"},
+{"hash":87468659,"name":"tcfgdatabase.sbrefreshrecords.hint","sourcebytes":[82,101,102,114,101,115,104,32,114,101,99,111,114,100,115],"value":"Refresh records"},
+{"hash":4863637,"name":"tcfgdatabase.sbclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
+{"hash":249319630,"name":"tcfgdatabase.mmtestconnection.caption","sourcebytes":[84,101,115,116,32,99,111,110,110,101,99,116,105,111,110],"value":"Test connection"}
+]}

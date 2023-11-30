@@ -1,0 +1,5 @@
+{"version":1,"strings":[
+{"hash":101465726,"name":"tdlgplantminer.caption","sourcebytes":[67,104,101,99,107,105,110,103,32,98,111,116,97,110,105,99,32,116,97,120,111,110],"value":"Checking botanic taxon"},
+{"hash":4749113,"name":"tdlgplantminer.sbsave.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":77089212,"name":"tdlgplantminer.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+]}

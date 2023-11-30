@@ -1,0 +1,11 @@
+{"version":1,"strings":[
+{"hash":159046558,"name":"tedtbotanictaxon.caption","sourcebytes":[78,101,119,32,116,97,120,111,110],"value":"New taxon"},
+{"hash":366789,"name":"tedtbotanictaxon.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tedtbotanictaxon.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":18886954,"name":"tedtbotanictaxon.lblparenttaxon.caption","sourcebytes":[80,97,114,101,110,116,32,116,97,120,111,110,58],"value":"Parent taxon:"},
+{"hash":187073898,"name":"tedtbotanictaxon.lblname.caption","sourcebytes":[83,99,105,101,110,116,105,102,105,99,32,110,97,109,101,58,32,42],"value":"Scientific name: *"},
+{"hash":114375370,"name":"tedtbotanictaxon.lblauthorship.caption","sourcebytes":[65,117,116,104,111,114,115,104,105,112,58],"value":"Authorship:"},
+{"hash":2887066,"name":"tedtbotanictaxon.lblvernacularname.caption","sourcebytes":[86,101,114,110,97,99,117,108,97,114,32,110,97,109,101,58],"value":"Vernacular name:"},
+{"hash":105447802,"name":"tedtbotanictaxon.lblvalidname.caption","sourcebytes":[86,97,108,105,100,32,110,97,109,101,58],"value":"Valid name:"},
+{"hash":226334266,"name":"tedtbotanictaxon.lblrank.caption","sourcebytes":[84,97,120,111,110,111,109,105,99,32,114,97,110,107,58,32,42],"value":"Taxonomic rank: *"}
+]}

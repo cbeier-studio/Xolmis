@@ -1,0 +1,10 @@
+{"version":1,"strings":[
+{"hash":225214707,"name":"tdlgauthorship.caption","sourcebytes":[83,111,114,116,32,97,117,116,104,111,114,115],"value":"Sort authors"},
+{"hash":4749113,"name":"tdlgauthorship.sbok.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":77089212,"name":"tdlgauthorship.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":19252649,"name":"tdlgauthorship.lbltotal.caption","sourcebytes":[48,32,114,101,115,101,97,114,99,104,101,114,40,115,41],"value":"0 researcher(s)"},
+{"hash":78392485,"name":"tdlgauthorship.sbdel.hint","sourcebytes":[68,101,108,101,116,101],"value":"Delete"},
+{"hash":74217360,"name":"tdlgauthorship.sbup.hint","sourcebytes":[77,111,118,101,32,117,112],"value":"Move up"},
+{"hash":209126078,"name":"tdlgauthorship.sbdown.hint","sourcebytes":[77,111,118,101,32,100,111,119,110],"value":"Move down"},
+{"hash":18340,"name":"tdlgauthorship.sbadd.hint","sourcebytes":[65,100,100],"value":"Add"}
+]}

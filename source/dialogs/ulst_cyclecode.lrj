@@ -1,0 +1,8 @@
+{"version":1,"strings":[
+{"hash":41044485,"name":"tlstcyclecode.caption","sourcebytes":[67,121,99,108,101,32,99,111,100,101],"value":"Cycle code"},
+{"hash":4749113,"name":"tlstcyclecode.sbok.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":77089212,"name":"tlstcyclecode.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":4913701,"name":"tlstcyclecode.rgfirst.caption","sourcebytes":[67,121,99,108,101],"value":"Cycle"},
+{"hash":345652,"name":"tlstcyclecode.rgsecond.caption","sourcebytes":[77,111,108,116],"value":"Molt"},
+{"hash":121386885,"name":"tlstcyclecode.rgthird.caption","sourcebytes":[80,108,117,109,97,103,101],"value":"Plumage"}
+]}

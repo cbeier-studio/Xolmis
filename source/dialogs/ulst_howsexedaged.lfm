@@ -1,0 +1,161 @@
+object lstHowSexedAged: TlstHowSexedAged
+  Left = 352
+  Height = 751
+  Top = 33
+  Width = 600
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'How sexed/aged'
+  ClientHeight = 751
+  ClientWidth = 600
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PopupMode = pmAuto
+  Position = poOwnerFormCenter
+  LCLVersion = '3.0.0.2'
+  object pBottom: TPanel
+    Left = 0
+    Height = 50
+    Top = 701
+    Width = 600
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 50
+    ClientWidth = 600
+    TabOrder = 0
+    object sbOK: TBitBtn
+      Left = 16
+      Height = 34
+      Top = 8
+      Width = 280
+      Caption = 'Apply'
+      Constraints.MinWidth = 280
+      Font.Color = 14120960
+      Font.Name = 'Segoe UI Semibold'
+      OnClick = sbOKClick
+      ParentFont = False
+      TabOrder = 0
+    end
+    object sbCancel: TBitBtn
+      Left = 304
+      Height = 34
+      Top = 8
+      Width = 280
+      Caption = 'Cancel'
+      Constraints.MinWidth = 280
+      OnClick = sbCancelClick
+      TabOrder = 1
+    end
+  end
+  object cklAged: TCheckListBox
+    Left = 8
+    Height = 640
+    Top = 8
+    Width = 584
+    Align = alClient
+    BorderSpacing.Around = 8
+    Items.Strings = (
+      'Physical differences'
+      'B - Brood patch'
+      'C - Cloacal protuberance'
+      '@ - egg in oviduct'
+      'E - Eye color'
+      'I - mouth/bill color or striations on bill (in hummingbirds)'
+      'G - Gape'
+      '$ - feet or legs'
+      'S - Skull ossification'
+      'Q - measurements (details in notes)'
+      'Y - symmetrical flight feather molt'
+      'Plumage characters'
+      'K - definitive basic plumage'
+      'A - definitve Alternate plumage'
+      'F - Formative plumage (applies to first alternate plumage as well)'
+      'J - Juvenal plumage'
+      'M - Molt limits'
+      'P - Plumage (only for sexual dimorphism)'
+      'L - plumage color patch Length or extent (details in notes)'
+      'Feather characters'
+      'W - feather Wear'
+      'V - feather shape'
+      'R - Prejuvenal (first prebasic) molt'
+      '= - fault bar alignment'
+      '# - growth bar alignment'
+      'Undetermined or remaining'
+      'O - Other (such as behavior/copulation; put in notes)'
+      'U - Undetermined after examination'
+      'X - age or sex determination not attempted'
+      'Z - less precise age (< 95%) but high certainty'
+    )
+    ItemHeight = 21
+    TabOrder = 1
+    OnClickCheck = cklAgedClickCheck
+    Data = {
+      1E00000000000000000000000000000000000000000000000000000000000000
+      0000
+    }
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 699
+    Width = 600
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pCode: TBCPanel
+    Left = 8
+    Height = 35
+    Top = 656
+    Width = 584
+    Align = alBottom
+    BorderSpacing.Left = 8
+    BorderSpacing.Right = 8
+    BorderSpacing.Bottom = 8
+    Background.Color = 16226706
+    Background.Gradient1.StartColor = clWhite
+    Background.Gradient1.EndColor = clBlack
+    Background.Gradient1.GradientType = gtLinear
+    Background.Gradient1.Point1XPercent = 0
+    Background.Gradient1.Point1YPercent = 0
+    Background.Gradient1.Point2XPercent = 0
+    Background.Gradient1.Point2YPercent = 100
+    Background.Gradient2.StartColor = clWhite
+    Background.Gradient2.EndColor = clBlack
+    Background.Gradient2.GradientType = gtLinear
+    Background.Gradient2.Point1XPercent = 0
+    Background.Gradient2.Point1YPercent = 0
+    Background.Gradient2.Point2XPercent = 0
+    Background.Gradient2.Point2YPercent = 100
+    Background.Gradient1EndPercent = 35
+    Background.Style = bbsColor
+    BevelInner = bvNone
+    BevelOuter = bvRaised
+    BevelWidth = 1
+    Border.Style = bboNone
+    BorderBCStyle = bpsBorder
+    FontEx.Color = 9520964
+    FontEx.FontQuality = fqSystemClearType
+    FontEx.Height = 24
+    FontEx.Shadow = False
+    FontEx.ShadowRadius = 5
+    FontEx.ShadowOffsetX = 5
+    FontEx.ShadowOffsetY = 5
+    FontEx.Style = []
+    ParentBackground = False
+    Rounding.RoundX = 8
+    Rounding.RoundY = 8
+    TabOrder = 2
+  end
+end

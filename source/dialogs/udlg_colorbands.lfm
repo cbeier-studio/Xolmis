@@ -1,0 +1,1304 @@
+object dlgColorBands: TdlgColorBands
+  Left = 352
+  Height = 217
+  Top = 33
+  Width = 324
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsNone
+  Caption = 'Auxiliary bands'
+  ClientHeight = 217
+  ClientWidth = 324
+  Color = clWhite
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PopupMode = pmAuto
+  LCLVersion = '3.0.0.2'
+  object pBottom: TPanel
+    Left = 0
+    Height = 46
+    Top = 171
+    Width = 324
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 46
+    ClientWidth = 324
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object sbOK: TBitBtn
+      Left = 16
+      Height = 30
+      Top = 8
+      Width = 142
+      Caption = 'Apply'
+      Constraints.MinWidth = 142
+      Font.Color = 14120960
+      Font.Name = 'Segoe UI Semibold'
+      OnClick = sbOKClick
+      ParentFont = False
+      TabOrder = 0
+    end
+    object sbCancel: TBitBtn
+      Left = 166
+      Height = 30
+      Top = 8
+      Width = 142
+      Caption = 'Cancel'
+      Constraints.MinWidth = 142
+      OnClick = sbCancelClick
+      TabOrder = 1
+    end
+  end
+  object pBands: TPanel
+    Left = 0
+    Height = 169
+    Top = 0
+    Width = 125
+    Align = alClient
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 8
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.VerticalSpacing = 1
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 169
+    ClientWidth = 125
+    Color = 16444392
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    object Band1: TBCPanel
+      Left = 8
+      Height = 38
+      Top = 8
+      Width = 109
+      BorderSpacing.Left = 8
+      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.TopBottomSpacing = 4
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 100
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 0
+      object sbDelBand1: TSpeedButton
+        Left = 74
+        Height = 28
+        Top = 5
+        Width = 26
+        Align = alRight
+        BorderSpacing.Top = 4
+        BorderSpacing.Bottom = 4
+        Flat = True
+        Images = bBands
+        ImageIndex = 0
+        ImageWidth = 20
+        Visible = False
+        OnClick = sbDelBand1Click
+      end
+    end
+    object Band2: TBCPanel
+      Left = 8
+      Height = 38
+      Top = 47
+      Width = 109
+      BorderSpacing.Left = 8
+      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.TopBottomSpacing = 4
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 100
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 1
+      object sbDelBand2: TSpeedButton
+        Left = 74
+        Height = 28
+        Top = 5
+        Width = 26
+        Align = alRight
+        BorderSpacing.Top = 4
+        BorderSpacing.Bottom = 4
+        Flat = True
+        Images = bBands
+        ImageIndex = 0
+        ImageWidth = 20
+        Visible = False
+        OnClick = sbDelBand1Click
+      end
+    end
+    object Band3: TBCPanel
+      Left = 8
+      Height = 38
+      Top = 86
+      Width = 109
+      BorderSpacing.Left = 8
+      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.TopBottomSpacing = 4
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 100
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 2
+      object sbDelBand3: TSpeedButton
+        Left = 74
+        Height = 28
+        Top = 5
+        Width = 26
+        Align = alRight
+        BorderSpacing.Top = 4
+        BorderSpacing.Bottom = 4
+        Flat = True
+        Images = bBands
+        ImageIndex = 0
+        ImageWidth = 20
+        Visible = False
+        OnClick = sbDelBand1Click
+      end
+    end
+    object Band4: TBCPanel
+      Left = 8
+      Height = 36
+      Top = 125
+      Width = 109
+      BorderSpacing.Left = 8
+      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.TopBottomSpacing = 4
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 100
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 3
+      object sbDelBand4: TSpeedButton
+        Left = 74
+        Height = 26
+        Top = 5
+        Width = 26
+        Align = alRight
+        BorderSpacing.Top = 4
+        BorderSpacing.Bottom = 4
+        Flat = True
+        Images = bBands
+        ImageIndex = 0
+        ImageWidth = 20
+        Visible = False
+        OnClick = sbDelBand1Click
+      end
+    end
+  end
+  object pCenter: TPanel
+    Left = 125
+    Height = 169
+    Top = 0
+    Width = 30
+    Align = alRight
+    BevelOuter = bvNone
+    ChildSizing.TopBottomSpacing = 8
+    ClientHeight = 169
+    ClientWidth = 30
+    Color = 16444392
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 2
+    object sbClear: TSpeedButton
+      Left = 0
+      Height = 30
+      Top = 131
+      Width = 30
+      Align = alBottom
+      Enabled = False
+      Flat = True
+      Images = frmMain.mPopup
+      ImageIndex = 17
+      ImageWidth = 16
+      OnClick = sbClearClick
+    end
+    object sbUp: TSpeedButton
+      Left = 0
+      Height = 30
+      Top = 8
+      Width = 30
+      Align = alTop
+      Enabled = False
+      Flat = True
+      Images = frmMain.bMenu
+      ImageIndex = 88
+      ImageWidth = 16
+    end
+    object sbDown: TSpeedButton
+      Left = 0
+      Height = 30
+      Top = 38
+      Width = 30
+      Align = alTop
+      Enabled = False
+      Flat = True
+      Images = frmMain.bMenu
+      ImageIndex = 89
+      ImageWidth = 16
+    end
+  end
+  object pColors: TBCPanel
+    Left = 155
+    Height = 169
+    Top = 0
+    Width = 169
+    Align = alRight
+    AutoSize = True
+    ChildSizing.LeftRightSpacing = 8
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 4
+    ChildSizing.VerticalSpacing = 4
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 4
+    Background.Color = 16444392
+    Background.Gradient1.StartColor = clWhite
+    Background.Gradient1.EndColor = clBlack
+    Background.Gradient1.GradientType = gtLinear
+    Background.Gradient1.Point1XPercent = 0
+    Background.Gradient1.Point1YPercent = 0
+    Background.Gradient1.Point2XPercent = 0
+    Background.Gradient1.Point2YPercent = 100
+    Background.Gradient2.StartColor = clWhite
+    Background.Gradient2.EndColor = clBlack
+    Background.Gradient2.GradientType = gtLinear
+    Background.Gradient2.Point1XPercent = 0
+    Background.Gradient2.Point1YPercent = 0
+    Background.Gradient2.Point2XPercent = 0
+    Background.Gradient2.Point2YPercent = 100
+    Background.Gradient1EndPercent = 35
+    Background.Style = bbsColor
+    BevelInner = bvNone
+    BevelOuter = bvRaised
+    BevelWidth = 1
+    Border.Style = bboNone
+    BorderBCStyle = bpsBorder
+    Color = 16444392
+    FontEx.Color = clDefault
+    FontEx.FontQuality = fqSystemClearType
+    FontEx.Shadow = False
+    FontEx.ShadowRadius = 5
+    FontEx.ShadowOffsetX = 5
+    FontEx.ShadowOffsetY = 5
+    FontEx.Style = []
+    ParentBackground = False
+    Rounding.RoundX = 1
+    Rounding.RoundY = 1
+    TabOrder = 3
+    object pColor_M: TBCPanel
+      Left = 8
+      Height = 36
+      Top = 8
+      Width = 36
+      Background.Color = clSilver
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'M'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 0
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_A: TBCPanel
+      Tag = 1
+      Left = 48
+      Height = 36
+      Top = 8
+      Width = 35
+      Background.Color = clOlive
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'A'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clWhite
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 1
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_Y: TBCPanel
+      Tag = 2
+      Left = 87
+      Height = 36
+      Top = 8
+      Width = 35
+      Background.Color = clYellow
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'Y'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 2
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_O: TBCPanel
+      Tag = 3
+      Left = 126
+      Height = 36
+      Top = 8
+      Width = 35
+      Background.Color = 1750527
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'O'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 3
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_R: TBCPanel
+      Tag = 4
+      Left = 8
+      Height = 35
+      Top = 48
+      Width = 36
+      Background.Color = clRed
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'R'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 4
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_C: TBCPanel
+      Tag = 5
+      Left = 48
+      Height = 35
+      Top = 48
+      Width = 35
+      Background.Color = clFuchsia
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'C'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 5
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_K: TBCPanel
+      Tag = 6
+      Left = 87
+      Height = 35
+      Top = 48
+      Width = 35
+      Background.Color = 13805311
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'K'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 6
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_V: TBCPanel
+      Tag = 7
+      Left = 126
+      Height = 35
+      Top = 48
+      Width = 35
+      Background.Color = 16727197
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'V'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clWhite
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 7
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_P: TBCPanel
+      Tag = 8
+      Left = 8
+      Height = 35
+      Top = 87
+      Width = 36
+      Background.Color = 16753994
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'P'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 8
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_B: TBCPanel
+      Tag = 9
+      Left = 48
+      Height = 35
+      Top = 87
+      Width = 35
+      Background.Color = clBlue
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'B'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clWhite
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 9
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_G: TBCPanel
+      Tag = 10
+      Left = 87
+      Height = 35
+      Top = 87
+      Width = 35
+      Background.Color = clGreen
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'G'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clWhite
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 10
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_L: TBCPanel
+      Tag = 11
+      Left = 126
+      Height = 35
+      Top = 87
+      Width = 35
+      Background.Color = clLime
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'L'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 11
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_U: TBCPanel
+      Tag = 12
+      Left = 8
+      Height = 35
+      Top = 126
+      Width = 36
+      Background.Color = 16512
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'U'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clWhite
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare]
+      TabOrder = 12
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_W: TBCPanel
+      Tag = 13
+      Left = 48
+      Height = 35
+      Top = 126
+      Width = 35
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'W'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 13
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_S: TBCPanel
+      Tag = 14
+      Left = 87
+      Height = 35
+      Top = 126
+      Width = 35
+      Background.Color = clGray
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'S'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clWhite
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      TabOrder = 14
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+    object pColor_N: TBCPanel
+      Tag = 15
+      Left = 126
+      Height = 35
+      Top = 126
+      Width = 35
+      Background.Color = 1776411
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      Caption = 'N'
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
+      FontEx.Color = clWhite
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomLeftSquare]
+      TabOrder = 15
+      OnClick = pColor_MClick
+      OnMouseEnter = pColor_MMouseEnter
+      OnMouseLeave = pColor_MMouseLeave
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 169
+    Width = 324
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object bBands: TImageList
+    Height = 20
+    Scaled = True
+    Width = 20
+    Left = 128
+    Top = 80
+    Bitmap = {
+      4C7A020000001400000014000000FB0100000000000078DADD943F48026114C0
+      15290A9B9A0A5A4488147409C283C0A65A0AB125ACAD9A6A111C6A69CEDD6A8E
+      A07F4B4379E2965A112481270439D66038DCDD20957743D77BA2721DE7DD3B95
+      A00E7EDCFBE47DBFF7CEEF8FCDF6FB8FCBE59A0466007B0F5C49E011C836DE7D
+      5DB8A6807CB32F785F008BC4B9E780A0E1039054E34FA0A69377ABFD2F603C08
+      AC320CF350A954440AE1703807737600679B1E199FCFF724CBB24221180CDEC3
+      9C25836F1E73BBDD15F51C8EE35A71B158FCE1C3DAD88381CF01C8D56A5552CD
+      51789EAFC77EBF5F1104A1E5C3DAD883C9BABC944AA5573D9F3AC69A581B7B30
+      F1DDA4D3E982990F6B626DC2BE394E241277663EAC89B509BE78341ACD98F9B0
+      26E49E107C1BA1502867E6C39A589BE05B080402F9A68F6559A556ABD5E3542A
+      A54892548FB126E46E127C2ED80765F59ED1824EAFD7FB0CA9D3C4B37C148944
+      B278A6B42E5114DF63B1187E6B867A7F41DE28B007E07E1535F0C02130DEC17D
+      D50F0C6B18B0FDE307D6C001CC3770F4C08567996DC075E36CF4C4AAC649FC8D
+      38F79A7A2FEB9005EC3ACEB50E5CEB063DCE76E09B33F04DB4F916BDB889C7C0
+      E7D4C9B7B7899B0C99AC0B6FC12710D6B960C1C7117C97167C5704DFBE05DF01
+      C1B765C1B74DF02D5BD82F2B041FEEC12FE25EF610CFF229C17566E15E190176
+      81B28EE70D8863CE5FBCCFBF012C1EA7A5
+    }
+    BitmapAdv = {
+      4C69040000004C7A020000000C0000000C000000420100000000000078DAAD91
+      CF4A845014876D330D35AB7A02DFA16DB57313B471DF2BB4A87D6DF409D43708
+      0C0A23A84D4493D36C94215A280D827F605072516D4CC6216E3FE30A223791EA
+      C0C7D573BECB3DF75C8EFB5BF03CBF016EC103D8ECE0DF813DB00B1EC112C3B9
+      041985800FC6F7A8DA8B75192CD2347D47644DA8BFDE382389A2E8258E631286
+      214992E47BA57EDEEC0BFF4F96654D5555259224114DD3882CCBC4F3BC196A11
+      E30E3786614C2ABF5A4DD37450B319FE89A22863DFF789E338240802E2BA2ED1
+      75DD42ED8AE1EF0B8230CEB26C51140529C9F3FC5314C57BD48E18FE0AB8A8CD
+      35A3B3BC066B2DEFD507AB943EF7CF81BEB7814DD9EAE04FC00EC5FEC1195633
+      696158F37B1DFC5EE38C379A0F1B94B957464F535A3B6E50E69E19FEA8C53719
+      FE794B3F670CFFB0E5AE070C7F004EC1BCE6CD696EF0DBF7FF02CBABBD384C7A
+      020000001000000010000000900100000000000078DABD94BF4B026118C7B520
+      1AACB5A149A1AD2C6EC8ADCCA128AE411C8A86205C6A68BDBDBFA0B9559A0D1A
+      9A2A22C8128E86A825A8E68443480B34CABEDFF08D97E3DEC753AA830F3CDCF3
+      FD1CEFCF8B44FEE689C7E3D3E0049C82540FFE055803ABA0D4213B0B5E7CB440
+      AD8DAAF5FE9CE647C1663A9D2E799E57936006D92D3ABE31CC2493C99B66B3D9
+      926086D980398C2612898ACAE5F3F9965E371A8DEF9A196603FC3EF056AD565F
+      99E39C95A36AF69861D6B08E77AEEBDE9B7CF69811F6E1B050285C997CF69811
+      FC5DC771CE4C3E7BCC08FE76369B3DA763DBF6CFFAB1A6CF1E3382BF6859D6B5
+      7FCFD438D8436649F007C163B1587495A37CBE638F990E6739C3F30EEADAF9AD
+      B7DF65BAB83F3130DC2616F9E707F3B600F7E216D83DF8476003A4C003E817B2
+      E3E0B3D3DDF3B1E2FBC64217AE133086B12EFC5C803F003EB4CC32A807D464CA
+      B00E4F5A66043C07D464C8E01F87F02BC23EEC85F02F05DF09E1EF0B7E2EC4FA
+      ED08FE6488BD5B17FC28280B6EC5B4F6DA3726C00178F7B9FC2FCEFFF63DFD02
+      934640114C7A020000001800000018000000C60200000000000078DAED965D68
+      526118C7B5201A7DD1C75581A4A09199885DD88551120C11DBC0AB2008365874
+      2144B028902457248841205D5482D04519BB72B01B13DA326C95D1622D2B7631
+      FB208AC808BFDB3AFDDFF14ECC9C7B5E8F4144077E70DE97E7F99D73DEF3BCCF
+      390AC5DF71A8D5EA7DE022380F2C1D76FB8004BE8379F0030C76C86DE6EE61B0
+      15A8C02898033A01CF1A9EDBC810F7DBEAE67AF8DCA92572BA1ADC4A90E4399D
+      60B4C9FD1B413F2898CDE6A7C160302982D1689C42EE67EED8D9629D5EDB6CB6
+      54B55A9544B0582C69E43E26BC877193C934599F5B2A957EF335CEE9F5FA97C8
+      1D21F86FEB74BAD9C5BC72B92C399D4E299148D45CB1584C72B95CBFF8351ACD
+      27E45E23F82F83FC625E3E9F5F7867A150A8E6F2FBFD12EEA1362E168B737C4F
+      F808FED3CC97CBE50A547F369BFDC8EBE638C17F94C56632992CD59F4AA532DC
+      DF4BF077B3D8783CFE8CEA8F46A38FB8DF42F0EF66B1E170F801D51F080416F7
+      A68AE0DFC262BD5EEF38D5EF76BBC7B87F15C1BF0254FBFAFAC6A87ED4EA3DB6
+      77057ADD5BBBDD7E9FE5562A15C9E3F148D3D3D3355F3A9D967C3E5F6D6CB55A
+      2790F35CC09FC47ECC30F7727D01FB785EABD5CE36EB692DFC67D99A44229189
+      566E767DD6DBF8DA9F10F0AF030B356D30185E381C8E6433F08CAFB8FB09582D
+      F8DDDA00023CF7CD12B0BABF00D62AFE1F7FF440BD6C03FDC00D7675D87D087C
+      ABABCD7970A643EE4DE00B60FDF400BB7730C2AFB3B7037E2777F5D6CDA9F833
+      F8043C5744FF195AF010AC6CF0EF01E7C00799EE21D0D3E239EEC8707F25ACD3
+      0D19FE0CC11F6892770C0CD78DA740372837C4DD25F84F36F1B3BD355037BECE
+      63DF37C4DD24F80FCBF05F22F8F7CBF00F12FC3A19FE2304FF7A19FE8304BF12
+      14DAF4EB89BD62A64DFF46A23FD946FDB37325D17FAB8DBD3B23D04B07DAF087
+      05FC5D6052C0CDBE3FDB05BF2B9BC155F06E196F0CECF857FF3B7E0298ACE3A3
+      4C7A020000002000000020000000BA0300000000000078DAED975F48535118C0
+      D5CA8CE80F9585850F9A7F0651A1E21A483D1409594652F8600495659646F4D8
+      4304993D088AD1536491323541EC218D0882A923D6A6E2FFD4A9C31A6ACC5A9A
+      D626D5EDFBE4BB31E7EEDC3DE75E2BF0C0EFE19EB3EFFB9D7BCFBDE77C0B0AFA
+      7F5B5454D446E42F788F02BD8040F401C797C87DC1C3EB26C4EBCB2ABBB701D3
+      E4BA0B6C05C28102EA9B012254F49F24CF0010E2D11F4C6B8063991CF9C3008D
+      1F4AC951E663EC018DDD5F2447981F7F97C75AAAC53B7C5E12FE627A8E13F45B
+      675C5CDC300F90E333E59AA0DCA501ACC3158C494F4F6F9E9D9D1578C8C8C868
+      22FF5519EFC1318CD16AB52DBC7E9D4E6726FF0919FEBD18131F1F3FC4EBD768
+      3403E44F94E1DF4431D36EB77B5EBEAAAA2A41AFD72FF05457570B9595950BFA
+      21C717CA152EC31F4C7B89E07038263DF3C133116262620497CBE57D9F426C6C
+      ACE0395FA7D33943EEEF52EFBC9F39E07722B4B6B65A3D3DD1D1D173DF91B7DF
+      577F4747C710F9AD0C7BD12B8CADA9A9B1B0FAEBEAEA5AC8FF9AC1FF08630B0B
+      0B9B58FD454545CDE47FC2E0BF85B1D9D9D906567F6E6EAE81FC050CFEF3189B
+      9A9A6A64F5A7A5A589F79FC3E03F8CB1090909EDACFEA4A4A436F21F61F0E359
+      85DFD47B563FECFF36F2EF62F0AF156B1CC8F94BAE1FF701B8FE4639D633D603
+      9F30DE6EB73BE4FAC7C7C7C5736F92A31E69C71C46A3B157F42427270B898989
+      82F7BE8CFDB0DE7FAE4D2693580F7573F89F638EF2F2729398D76AB5CEE1BDCF
+      0F0E0ECEEB8773423CF75E70F8B11E113233331BE59E7B5959598DE4BFC7E13F
+      48395C369B6D2C50F7C8C8C8473A73303695C3BF12788379E0CCB3E7E5E519CC
+      66737F6767E7B02F2C164B7F7E7EBE017EFB81DC6F81559C35F70EA087B1CE8C
+      54A8EE0FC5FA0DA8A3B9F4498063CF806B1813B4DC969B0A0DBEF17D400380E7
+      029E8F4F819D4BE43E03FCF4B1EFCC00292ABBB70353E42B03F600FB817AEA1B
+      0456ABE83F479E6E20D8A37F1DF095C6742AFA4BC871C3C758058DE530E60E01
+      4CBCFFF702A0E25FF47BCDE58E0ADED332D6E2920AFE0332FC692AF8A364F877
+      FBC9D320F19ED4FB797FB07E0F95E1DF209107F7B850BC1789FE6889B85186EF
+      71CA479E091ADB1260BFC85B067F8F82FE5A06FF4B05FD250CFE870AFAAF33F8
+      6F2AE83FC5E03FABA05FCBE03FA4A03F82C11FA7901F5B08837F8D427E1B47BD
+      E108709FF3B7FF3572F8DB64ECFF52FD7A0E7FAD02E7DE6D0EFF4505FC291CFE
+      CDC018871BD76F0567CD8BF5FD34837B544ECDB1C81C2281C7C000D51252CE1F
+      4017508C35C4F23FD5C5DB6F757DDED9
+    }
+  end
+end

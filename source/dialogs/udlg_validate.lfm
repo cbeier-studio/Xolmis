@@ -1,0 +1,75 @@
+object dlgValidate: TdlgValidate
+  Left = 352
+  Height = 285
+  Top = 33
+  Width = 630
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Xolmis'
+  ClientHeight = 285
+  ClientWidth = 630
+  DesignTimePPI = 120
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PopupMode = pmAuto
+  Position = poMainFormCenter
+  object pBottom: TPanel
+    Left = 0
+    Height = 48
+    Top = 237
+    Width = 630
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ClientHeight = 48
+    ClientWidth = 630
+    TabOrder = 0
+    object sbOK: TButton
+      Left = 484
+      Height = 32
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'OK'
+      Default = True
+      TabOrder = 0
+      OnClick = sbOKClick
+      OnKeyPress = FormKeyPress
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 235
+    Width = 630
+    Align = alBottom
+    Visible = False
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object LV: THtmlViewer
+    Left = 0
+    Height = 235
+    Top = 0
+    Width = 630
+    BorderStyle = htNone
+    DefBackground = clWindow
+    DefFontName = 'Default'
+    DefFontSize = 0
+    HistoryMaxCount = 0
+    HtOptions = [htPrintTableBackground, htPrintMonochromeBlack, htShowVScroll, htNoFocusRect]
+    NoSelect = False
+    PrintMarginBottom = 2
+    PrintMarginLeft = 2
+    PrintMarginRight = 2
+    PrintMarginTop = 2
+    PrintScale = 1
+    ScrollBars = ssAutoVertical
+    Align = alClient
+    TabOrder = 1
+  end
+end

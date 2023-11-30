@@ -1,0 +1,6 @@
+{"version":1,"strings":[
+{"hash":100021251,"name":"tdlgprogress.caption","sourcebytes":[88,111,108,109,105,115],"value":"Xolmis"},
+{"hash":77089212,"name":"tdlgprogress.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":218001722,"name":"tdlgprogress.lstatus.caption","sourcebytes":[80,114,111,99,101,115,115,105,110,103,58],"value":"Processing:"},
+{"hash":164620055,"name":"tdlgprogress.lbltitle.caption","sourcebytes":[80,114,111,99,101,115,115,105,110,103],"value":"Processing"}
+]}

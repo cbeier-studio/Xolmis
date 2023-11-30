@@ -1,0 +1,243 @@
+object cfgUsers: TcfgUsers
+  Left = 352
+  Height = 545
+  Top = 33
+  Width = 430
+  BorderStyle = bsDialog
+  Caption = 'Manage users'
+  ClientHeight = 545
+  ClientWidth = 430
+  DesignTimePPI = 120
+  OnDestroy = FormDestroy
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  object pBottom: TPanel
+    Left = 0
+    Height = 50
+    Top = 495
+    Width = 430
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ClientHeight = 50
+    ClientWidth = 430
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object sbClose: TButton
+      Left = 284
+      Height = 34
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Close'
+      ModalResult = 11
+      TabOrder = 0
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 493
+    Width = 430
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pClient: TPanel
+    Left = 0
+    Height = 493
+    Top = 0
+    Width = 430
+    Align = alClient
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 16
+    ClientHeight = 493
+    ClientWidth = 430
+    Color = 16444392
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    object gridUsers: TDBGrid
+      Left = 16
+      Height = 415
+      Top = 62
+      Width = 398
+      Align = alClient
+      AutoFillColumns = True
+      Color = clWindow
+      Columns = <      
+        item
+          Title.Caption = 'Username'
+          Width = 197
+          FieldName = 'user_name'
+        end      
+        item
+          Alignment = taCenter
+          PickList.Strings = (
+            'Administrador'
+            'Padrão'
+            'Visitante'
+          )
+          Title.Caption = 'Access level'
+          Width = 197
+          FieldName = 'user_rank'
+        end>
+      DataSource = dsUsers
+      FixedCols = 0
+      Options = [dgTitles, dgColumnResize, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgCellHints, dgTruncCellHints, dgCellEllipsis, dgThumbTracking]
+      PopupMenu = pmGrid
+      Scrollbars = ssAutoBoth
+      TabOrder = 0
+      TitleStyle = tsNative
+    end
+    object pChildToolbar: TBCPanel
+      Left = 16
+      Height = 46
+      Top = 16
+      Width = 398
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 4
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 1
+      object sbNew: TSpeedButton
+        Left = 17
+        Height = 28
+        Top = 9
+        Width = 29
+        Align = alLeft
+        BorderSpacing.Bottom = 8
+        Flat = True
+        Images = frmMain.mPopup
+        ImageIndex = 0
+        ImageWidth = 24
+        OnClick = sbNewClick
+      end
+      object sbEdit: TSpeedButton
+        Left = 50
+        Height = 28
+        Top = 9
+        Width = 29
+        Align = alLeft
+        BorderSpacing.Right = 16
+        BorderSpacing.Bottom = 8
+        Flat = True
+        Images = frmMain.mPopup
+        ImageIndex = 39
+        ImageWidth = 24
+        OnClick = sbEditClick
+      end
+      object sbChangePassword: TSpeedButton
+        Left = 114
+        Height = 28
+        Hint = 'Change password'
+        Top = 9
+        Width = 29
+        Align = alLeft
+        BorderSpacing.Left = 16
+        BorderSpacing.Right = 16
+        BorderSpacing.Bottom = 8
+        Flat = True
+        Images = frmMain.mPopup
+        ImageIndex = 149
+        ImageWidth = 24
+        OnClick = sbChangePasswordClick
+      end
+      object sbDelete: TSpeedButton
+        Left = 352
+        Height = 28
+        Top = 9
+        Width = 29
+        Align = alRight
+        BorderSpacing.Bottom = 8
+        Flat = True
+        Images = frmMain.mPopup
+        ImageIndex = 141
+        ImageWidth = 24
+        OnClick = sbDeleteClick
+      end
+      object Separator7: TShapeLineBGRA
+        Left = 95
+        Height = 28
+        Top = 9
+        Width = 3
+        Align = alLeft
+        Direction = drUpDown
+        LineColor = 12829635
+        ArrowColor = clBlack
+        LineWidth = 1
+      end
+    end
+  end
+  object pmGrid: TPopupMenu
+    Images = frmMain.mPopup
+    ImagesWidth = 20
+    Left = 169
+    Top = 222
+    object pmgEdit: TMenuItem
+      Caption = 'Edit'
+      ImageIndex = 39
+      OnClick = sbEditClick
+    end
+    object pmgChangePassword: TMenuItem
+      Caption = 'Change password'
+      ImageIndex = 61
+      OnClick = sbChangePasswordClick
+    end
+    object Separator1: TMenuItem
+      Caption = '-'
+    end
+    object pmgDelete: TMenuItem
+      Caption = 'Delete'
+      ImageIndex = 34
+      OnClick = sbDeleteClick
+    end
+  end
+  object dsUsers: TDataSource
+    DataSet = DMM.qUsers
+    Left = 337
+    Top = 149
+  end
+end

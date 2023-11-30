@@ -1,0 +1,770 @@
+object dlgImportCaptures: TdlgImportCaptures
+  Left = 382
+  Height = 364
+  Top = 32
+  Width = 784
+  Caption = 'Import data'
+  ClientHeight = 364
+  ClientWidth = 784
+  LCLVersion = '3.0.0.2'
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 312
+    Width = 784
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 50
+    Top = 314
+    Width = 784
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsScaleChilds
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 50
+    ClientWidth = 784
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object sbCancel: TButton
+      AnchorSideLeft.Side = asrBottom
+      Left = 500
+      Height = 34
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Cancel'
+      TabOrder = 0
+      Visible = False
+      OnClick = sbCancelClick
+    end
+    object sbRun: TButton
+      AnchorSideLeft.Side = asrBottom
+      Left = 362
+      Height = 34
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Import'
+      Enabled = False
+      TabOrder = 1
+      OnClick = sbRunClick
+    end
+    object sbClose: TButton
+      AnchorSideLeft.Side = asrBottom
+      Left = 638
+      Height = 34
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Close'
+      ModalResult = 11
+      TabOrder = 2
+    end
+  end
+  object nbContent: TNotebook
+    Left = 0
+    Height = 312
+    Top = 0
+    Width = 784
+    PageIndex = 0
+    Align = alClient
+    TabOrder = 1
+    object pgImportFiles: TPage
+      object pContentFiles: TPanel
+        Left = 0
+        Height = 312
+        Top = 0
+        Width = 784
+        Align = alClient
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 16
+        ClientHeight = 312
+        ClientWidth = 784
+        Color = 16444392
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 0
+        object lblTitleImportFiles: TLabel
+          Left = 16
+          Height = 28
+          Top = 16
+          Width = 752
+          Align = alTop
+          BorderSpacing.Top = 16
+          BorderSpacing.Bottom = 8
+          Caption = 'Files to import'
+          Font.Color = 13066075
+          Font.Height = -20
+          ParentColor = False
+          ParentFont = False
+        end
+        object pJournalFile: TBCPanel
+          Left = 16
+          Height = 52
+          Top = 88
+          Width = 752
+          Align = alTop
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = False
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+          TabOrder = 0
+          object icoJournalFile: TImage
+            Left = 16
+            Height = 28
+            Top = 12
+            Width = 27
+            Align = alLeft
+            Center = True
+            ImageIndex = 133
+            ImageWidth = 24
+            Images = frmMain.mPopup
+            Proportional = True
+          end
+          object lblJournalFile: TLabel
+            Left = 51
+            Height = 28
+            Top = 12
+            Width = 82
+            Align = alLeft
+            Caption = 'Field journal'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object eJournalFile: TFileNameEdit
+            Left = 205
+            Height = 28
+            Top = 12
+            Width = 494
+            DialogTitle = 'Import from file'
+            DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
+            Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
+            FilterIndex = 1
+            HideDirectories = False
+            ButtonWidth = 29
+            NumGlyphs = 1
+            Images = frmMain.mPopup
+            ImageIndex = 43
+            ImageWidth = 20
+            Align = alRight
+            MaxLength = 0
+            Spacing = 0
+            TabOrder = 0
+            OnButtonClick = eJournalFileButtonClick
+            OnChange = eJournalFileChange
+            TextHint = 'Select a file...'
+          end
+          object sbClearJournalFile: TSpeedButton
+            Left = 707
+            Height = 28
+            Top = 12
+            Width = 29
+            Align = alRight
+            Images = frmMain.mPopup
+            ImageIndex = 17
+            ImageWidth = 20
+            OnClick = sbClearJournalFileClick
+          end
+        end
+        object pEffortFile: TBCPanel
+          Left = 16
+          Height = 52
+          Top = 140
+          Width = 752
+          Align = alTop
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = False
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+          TabOrder = 1
+          object icoEffortFile: TImage
+            Left = 16
+            Height = 28
+            Top = 12
+            Width = 27
+            Align = alLeft
+            Center = True
+            ImageIndex = 134
+            ImageWidth = 24
+            Images = frmMain.mPopup
+            Proportional = True
+          end
+          object lblEffortFile: TLabel
+            Left = 51
+            Height = 28
+            Top = 12
+            Width = 43
+            Align = alLeft
+            Caption = 'Efforts'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object eEffortFile: TFileNameEdit
+            Left = 205
+            Height = 28
+            Top = 12
+            Width = 494
+            DialogTitle = 'Import from file'
+            DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
+            Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
+            FilterIndex = 1
+            HideDirectories = False
+            ButtonWidth = 29
+            NumGlyphs = 1
+            Images = frmMain.mPopup
+            ImageIndex = 43
+            ImageWidth = 20
+            Align = alRight
+            MaxLength = 0
+            Spacing = 0
+            TabOrder = 0
+            OnButtonClick = eJournalFileButtonClick
+            OnChange = eEffortFileChange
+            TextHint = 'Select a file...'
+          end
+          object sbClearEffortFile: TSpeedButton
+            Tag = 1
+            Left = 707
+            Height = 28
+            Top = 12
+            Width = 29
+            Align = alRight
+            Images = frmMain.mPopup
+            ImageIndex = 17
+            ImageWidth = 20
+            OnClick = sbClearJournalFileClick
+          end
+        end
+        object pCaptureFile: TBCPanel
+          Left = 16
+          Height = 52
+          Top = 192
+          Width = 752
+          Align = alTop
+          BorderSpacing.Bottom = 16
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = False
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+          TabOrder = 2
+          object icoCaptureFile: TImage
+            Left = 16
+            Height = 28
+            Top = 12
+            Width = 27
+            Align = alLeft
+            Center = True
+            ImageIndex = 135
+            ImageWidth = 24
+            Images = frmMain.mPopup
+            Proportional = True
+          end
+          object lblCaptureFile: TLabel
+            Left = 51
+            Height = 28
+            Top = 12
+            Width = 58
+            Align = alLeft
+            Caption = 'Captures'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object eCaptureFile: TFileNameEdit
+            Left = 205
+            Height = 28
+            Top = 12
+            Width = 494
+            DialogTitle = 'Import from file'
+            DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
+            Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
+            FilterIndex = 1
+            HideDirectories = False
+            ButtonWidth = 29
+            NumGlyphs = 1
+            Images = frmMain.mPopup
+            ImageIndex = 43
+            ImageWidth = 20
+            Align = alRight
+            MaxLength = 0
+            Spacing = 0
+            TabOrder = 0
+            OnButtonClick = eJournalFileButtonClick
+            OnChange = eCaptureFileChange
+            TextHint = 'Select a file...'
+          end
+          object sbClearCaptureFile: TSpeedButton
+            Tag = 2
+            Left = 707
+            Height = 28
+            Top = 12
+            Width = 29
+            Align = alRight
+            Images = frmMain.mPopup
+            ImageIndex = 17
+            ImageWidth = 20
+            OnClick = sbClearJournalFileClick
+          end
+        end
+        object lblSubtitleImportFiles: TLabel
+          Left = 16
+          Height = 20
+          Top = 52
+          Width = 752
+          Align = alTop
+          BorderSpacing.Bottom = 16
+          Caption = 'Select at least one file to start importing.'
+          Layout = tlCenter
+          ParentColor = False
+        end
+      end
+    end
+    object pgImportProgress: TPage
+      object pContentProgress: TBCPanel
+        Left = 0
+        Height = 304
+        Top = 8
+        Width = 784
+        Align = alClient
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 16
+        Background.Color = 16444392
+        Background.Gradient1.StartColor = clWhite
+        Background.Gradient1.EndColor = clBlack
+        Background.Gradient1.GradientType = gtLinear
+        Background.Gradient1.Point1XPercent = 0
+        Background.Gradient1.Point1YPercent = 0
+        Background.Gradient1.Point2XPercent = 0
+        Background.Gradient1.Point2YPercent = 100
+        Background.Gradient2.StartColor = clWhite
+        Background.Gradient2.EndColor = clBlack
+        Background.Gradient2.GradientType = gtLinear
+        Background.Gradient2.Point1XPercent = 0
+        Background.Gradient2.Point1YPercent = 0
+        Background.Gradient2.Point2XPercent = 0
+        Background.Gradient2.Point2YPercent = 100
+        Background.Gradient1EndPercent = 35
+        Background.Style = bbsColor
+        BevelInner = bvNone
+        BevelOuter = bvRaised
+        BevelWidth = 1
+        Border.Style = bboNone
+        BorderBCStyle = bpsBorder
+        FontEx.Color = clDefault
+        FontEx.FontQuality = fqSystemClearType
+        FontEx.Shadow = False
+        FontEx.ShadowRadius = 5
+        FontEx.ShadowOffsetX = 5
+        FontEx.ShadowOffsetY = 5
+        FontEx.Style = []
+        ParentBackground = False
+        Rounding.RoundX = 1
+        Rounding.RoundY = 1
+        TabOrder = 0
+        object pProgress: TBCPanel
+          Left = 17
+          Height = 270
+          Top = 17
+          Width = 750
+          Align = alClient
+          BorderSpacing.Bottom = 16
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          ChildSizing.VerticalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = False
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          TabOrder = 0
+          object hvProgress: THtmlViewer
+            Left = 16
+            Height = 246
+            Top = 12
+            Width = 718
+            BorderStyle = htNone
+            DefBackground = 16448250
+            DefFontName = 'Default'
+            HistoryMaxCount = 0
+            HtOptions = [htPrintTableBackground, htPrintMonochromeBlack, htShowVScroll, htNoFocusRect]
+            NoSelect = True
+            PrintMarginBottom = 2
+            PrintMarginLeft = 2
+            PrintMarginRight = 2
+            PrintMarginTop = 2
+            PrintScale = 1
+            ScrollBars = ssAutoVertical
+            Align = alClient
+            TabOrder = 0
+          end
+        end
+      end
+      object barProgress: TProgressBar
+        Left = 0
+        Height = 8
+        Top = 0
+        Width = 784
+        Align = alTop
+        TabOrder = 1
+      end
+    end
+    object pgImportFinished: TPage
+      object pContentFinished: TBCPanel
+        Left = 0
+        Height = 312
+        Top = 0
+        Width = 784
+        Align = alClient
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 16
+        Background.Color = 16444392
+        Background.Gradient1.StartColor = clWhite
+        Background.Gradient1.EndColor = clBlack
+        Background.Gradient1.GradientType = gtLinear
+        Background.Gradient1.Point1XPercent = 0
+        Background.Gradient1.Point1YPercent = 0
+        Background.Gradient1.Point2XPercent = 0
+        Background.Gradient1.Point2YPercent = 100
+        Background.Gradient2.StartColor = clWhite
+        Background.Gradient2.EndColor = clBlack
+        Background.Gradient2.GradientType = gtLinear
+        Background.Gradient2.Point1XPercent = 0
+        Background.Gradient2.Point1YPercent = 0
+        Background.Gradient2.Point2XPercent = 0
+        Background.Gradient2.Point2YPercent = 100
+        Background.Gradient1EndPercent = 35
+        Background.Style = bbsColor
+        BevelInner = bvNone
+        BevelOuter = bvRaised
+        BevelWidth = 1
+        Border.Style = bboNone
+        BorderBCStyle = bpsBorder
+        FontEx.Color = clDefault
+        FontEx.FontQuality = fqSystemClearType
+        FontEx.Shadow = False
+        FontEx.ShadowRadius = 5
+        FontEx.ShadowOffsetX = 5
+        FontEx.ShadowOffsetY = 5
+        FontEx.Style = []
+        ParentBackground = False
+        Rounding.RoundX = 1
+        Rounding.RoundY = 1
+        TabOrder = 0
+        object lblTitleImportFinished: TLabel
+          Left = 17
+          Height = 41
+          Top = 17
+          Width = 750
+          Align = alTop
+          Alignment = taCenter
+          BorderSpacing.Top = 16
+          BorderSpacing.Bottom = 8
+          Caption = 'Finished importing!'
+          Font.Color = 13066075
+          Font.Height = -30
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblSubtitleImportFinished: TLabel
+          Left = 17
+          Height = 20
+          Top = 66
+          Width = 750
+          Align = alTop
+          Alignment = taCenter
+          BorderSpacing.Bottom = 16
+          Caption = 'The selected files data were sucessfully imported.'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object icoImportFinished: TImage
+          Left = 17
+          Height = 149
+          Top = 102
+          Width = 750
+          Align = alClient
+          BorderSpacing.Bottom = 8
+          Center = True
+          Images = imgFinished
+        end
+        object pRetry: TBCPanel
+          Left = 17
+          Height = 36
+          Top = 259
+          Width = 750
+          Align = alBottom
+          AutoSize = True
+          Background.Color = 16444392
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvRaised
+          BevelWidth = 1
+          Border.Style = bboNone
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = False
+          Rounding.RoundX = 1
+          Rounding.RoundY = 1
+          TabOrder = 0
+          Visible = False
+          object sbRetry: TBitBtn
+            AnchorSideLeft.Control = pRetry
+            AnchorSideLeft.Side = asrCenter
+            Left = 318
+            Height = 34
+            Top = 1
+            Width = 115
+            AutoSize = True
+            Caption = 'Try again'
+            Images = frmMain.mPopup
+            ImageIndex = 1
+            ImageWidth = 24
+            OnClick = sbRetryClick
+            TabOrder = 0
+          end
+        end
+      end
+    end
+  end
+  object imgFinished: TImageList
+    Height = 96
+    Scaled = True
+    Width = 96
+    Left = 32
+    Top = 264
+    Bitmap = {
+      4C7A020000006000000060000000D50800000000000078DAED9D6B6C54451480
+      B72545014DA144DB1FDB4742EA9F92D836408110A0DA120D3F88620294441A4D
+      90878184A28995D0067CB7FA03A1F107C19016418B8A45CAC35030C1624AB08D
+      9898B2185041E81B28AFB6A4D773965928DB2EDBDDCEBD7366EE39C99734DBEE
+      BD33DF6CEFDE997B66C6E3E1E0E0E0E0E0E0E0E0E0E0E0A011F1EFC6C7024F01
+      CF022F02AF011B800A609FA042BC86BF7B41FC2DBE27960D46EC3B06C8008A81
+      06A017B0A2A4571CA3581C33860D0FE97C14300B28077C23F01D0E9F38079E6B
+      147B8F4F05BE005A6D741E8A5671EE54177A4F109FC31E05DE83B923CA92E002
+      EF6380B7812E02DE83E912651B63E8F5BD10F897A0F760FE11651D6588FB44E0
+      8406DE83C132276AEE3E4B7C9E2C4DC1B2676AEA7E21705363F701B00E0B35EB
+      AF9618E03D988DD4FB6F50BE7140B581EE037C8375247C8F536BB0FB000728DE
+      1B4199CA5CE03EC027C4DC2F7391FB00AF12713F83C83882D3609DA72B769F0C
+      5C71A1FB005877AF22F76381D32E761F001D8C55E0BF84DD3FE81B2818D3B9C1
+      DEEFD30D3CEDA0FF6DEC7C105B1D729F0EF4B1EF41A0937407FC57B3EBD0E313
+      36BBCF61C7619966A3FF3AF61B96A336F6B5D8EFF0F0DAE07FB5699E0AF7145A
+      F5E7EBADF31DE7AD8D87365A49A549B28EBDCA06FF3F99E4BEE2970A2B388A6B
+      8B651DFF8864F7E34DBAE71CCA3D86AFCD27F35E74BC44FF05A6BBC7A8F3D5C9
+      3CD71289FEBF36DD3DC6E2CAC532CFB74792FBC7C4F886D1EECB8E95C93EE775
+      74C77D2E25EE03E448F0FF32BB8F9A9724F87F93DD47CD6A09FE3F60F751F3BE
+      04FF5FDA51B6F9DBE75B07FF3C685DBE7ED92A3F5E6EA57F986E9A7B648704FF
+      8765972B7973B275ABF7D6434E2E745EB032CA324C728F1C92E0FF8CEC72ADAF
+      593FA49B91B60131F7C8EF12FC77C82ED7A2CA45211D45DB0604DD23ED12FC4B
+      CFAD9AB06182DFB3AC3620EADE9FA325C1FFDF76946DC6961956DB8DB611B701
+      61F7C80509FE4FDA55BE91B60171F748BD04FFDFDA59C668DB4003F7C85E09FE
+      3FB7BB9C91B68126EE912D12FC173B51D6E1B4C1E4B2C93AB947DE91E0BFD0A9
+      F2866B83EE3BDD3AB9479649F03FCFC932876B038DDC23F912FCA7395DEE48DB
+      80A87B244DD233B03FA8B60161F767243EFF7D4F451DC2B50161F7C86689FEA7
+      AAAA47A83620EE1E9922794EFB455575C9FE2CDBAA3A5D65DDEEBD6D355E6AB4
+      96572FA7EEFEA2ECB9F214E65C249626BA762E86D3F7A19A936F83FFD1C05576
+      1B167434DAA61CF452F61B96121BE75F3C09B4B0E347CEC77EC2E63948ABD873
+      48563A30FF2E0E38CBAE07D18C6E1C9A83FA0AFB1E84636B9489359A7F65E7F7
+      39E9F4DA64620DE57E76EF77304BD11A286FB1FFF8F50AD7FFC1EBD04E17BBDF
+      A97A4D4438FFE376E6A810A61EEBEE2110508E244DD6769605D635C94328A03C
+      D9C02D17B8C73A66790806CEB7317C2DBE1E19738A6C6E8399868E11619D667A
+      340828670AD068907BAC4B8A47A3106B41EF35C07D35D5359F87F9DC58E77512
+      B1ECDAEF2106755880B9F01A79C7B22EF01814A29F56047412F68E655B47A55F
+      65533B4C003E8EBFB7EF1315EFB7818F64AE19A3413B248BB9C5FD8AC72E7760
+      593C2E0DA8FB24318E7AC2A1B6E817E7C2734EF2700C6C0B5CD7F87560BFE4EB
+      135E5F6AC4B113D9F4B0FB0F389EB109D81E7F6F6F93A6307DEB16D157AA15EF
+      D9248E318E8D4ACF054B166B13E5889F47B3190E0E0E0E0E0E0E0E0E0E0E0E0E
+      0E0E0E0E0E0E0E0E0EFAE1CD389100CC01960045C0A7C06EE067C007DC14F8C4
+      6BBBC5DF1489F7E07B13D86444CED380B5C031E02E608D103C469D38661A1B1E
+      E43B06C8024A812609BEC3D124CE85E78C71B1F75860A9B876588AF08932C4BA
+      CC7D3EF09B42EFC16059F25DE01DFFE78F10F21E0C962DCB40EF29401561EFC1
+      6059530C719F0B7468E43E0096395773F72B813E0DDD07C0B2AFD0D07B1CB04D
+      63EFC1605DE234713F51F4772CC3388A7523EEFE19E02F03DD0738877524FCB9
+      37D9FDC0369848F07A5FE702F703AF457184FC6F7391FB005B89B85FE942F701
+      5628769F2B698C58E7FEC15C85630A1D2E763FB09F9CA2C07F15BBBF4FA58271
+      4CF6FE807E20D341FF4AC790A7CF3B65D51C6CB3DADA7BFDFC50DB664DCF3FA5
+      BA0D0E3BF8EC449D7BF0DCD9D537683F0C7C2D274F791BE439F0CC50E973AB7D
+      075A43EE07F3FD8FAD149EA3C5DAE87FA9EA6BEDB5EB7D21FDE3EF087C1714D8
+      98A7E0535DBF7041C0BFCF8EBC0A2AF73C1AF8B7ECB817123933EC7F7894D8E0
+      BF89FD0F9B461B72022DF61F11A912FDAF65FF11B346A2FF3AF61FF9331A49EE
+      13288D316BE4FFAE8CDC7791436FB1FFA8982DC1FF12F61F358B25F82F62FF51
+      B34E82FF729DFC274F26E5BF4C82FFAFD87FD4EC92E0FF38FB8F9A6312FC9F65
+      FF51D32CC1FF0DF61F35DDEC5F7BFF7CFD517BFDE1EF5FB5DFBF7CFFA9F6FE93
+      54FFABEB6AE8E7EFDDDD77A9F57FCB4C1B7FF86E7FE8FC13CCC33270FC81D4F8
+      1BE6587574F60E997F452007CE8EF1B739C4EAE4F78C9F757FFE6147AF3F1711
+      731209E685CA187F26F5FC4523A43C7FA1F6FC51A73962263E7FD70899CFDFD3
+      D8A7BAFC134AF95748F6DC066B6F4D8B75E9F21DEBBF2B3DFE7BD229B90D94DC
+      4BCDBFA2947F88EEDB43DC7F126A033BF20F49E4DFE2E79E70FEBF9DF9B724F2
+      CFF17A132A5A5A7B8CCD3FA732FFE251FE5BDB48F8B765FE0595F947C4C77F4E
+      DBBD96A2EAF977F81D3BD4FCBBABD7FAAC69CF9B3DFF8ECAFCD3A9CF35F8E7E1
+      E1F51EAF3938FE43C0BD23F34F79FEB5FAF9D7BCFE80DAF50778FD8D87680794
+      EC9F2DD69FE973B17B65EBCFF0FA4BEAD75F1AD006BCFE985AFFBCFE9EFA3698
+      28D66674C3FA9324F73411EBAF9E33DC3DC9F55783FE0F78FD61F5DF075B4DFA
+      AEF56AB2FE76503BACF0EABFFEFC1B1E8DC3ABF7FE0B733D068418ABA814E354
+      3A8CA5557A0DD97F24A81D32719C96B0FBC34E8F632A6A873C2FBDFDA7F23C2E
+      0AF12CB3C0AB7EFFB502AFCBF65F1B22AF02AF4B2598B7E4446E943857A6D7C5
+      FB0F86C9755C23FA70B2F6DF3C2A8E99CA86236A0BCC7D9F8DF318702E89980B
+      B5CB7B6F6FD4669CDF296816AFED127FB34EBC67B697F79FE5E0E0E0E0E0E0E0
+      E0E0E02012FF03145D8294
+    }
+  end
+end

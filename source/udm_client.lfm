@@ -1,0 +1,628 @@
+object DMC: TDMC
+  OnCreate = DataModuleCreate
+  OldCreateOrder = False
+  Height = 650
+  HorizontalOffset = 440
+  VerticalOffset = 41
+  Width = 954
+  PPI = 120
+  object qBandsBalance: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'band_size'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'saldo'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'media_dia'
+        DataType = ftFloat
+        Precision = 15
+      end    
+      item
+        Name = 'maximo_dia'
+        DataType = ftInteger
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT band_size, saldo, media_dia, maximo_dia'
+      'FROM get_bands_leftover'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 80
+    Top = 40
+    object qBandsBalanceband_size: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Tamanho'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'band_size'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qBandsBalancesaldo: TLongintField
+      DisplayLabel = 'Saldo'
+      FieldKind = fkInternalCalc
+      FieldName = 'saldo'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0'
+    end
+    object qBandsBalancemedia_dia: TFloatField
+      DisplayLabel = 'Média/dia'
+      FieldKind = fkInternalCalc
+      FieldName = 'media_dia'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.0'
+    end
+    object qBandsBalancemaximo_dia: TLongintField
+      DisplayLabel = 'Máx./dia'
+      FieldKind = fkInternalCalc
+      FieldName = 'maximo_dia'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0'
+    end
+  end
+  object qBandsRunningOut: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'band_size'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'saldo'
+        DataType = ftInteger
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'media_dia'
+        DataType = ftFloat
+        Precision = 15
+      end    
+      item
+        Name = 'media_expedicao'
+        DataType = ftFloat
+        Precision = 15
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT band_size, saldo, media_dia, media_expedicao'
+      'FROM get_bands_running_out'
+      'ORDER BY saldo ASC'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 78
+    Top = 131
+    object qBandsRunningOutband_size: TStringField
+      DisplayLabel = 'Tamanho'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'band_size'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qBandsRunningOutsaldo: TLongintField
+      DisplayLabel = 'Saldo'
+      FieldKind = fkInternalCalc
+      FieldName = 'saldo'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0'
+    end
+    object qBandsRunningOutmedia_dia: TFloatField
+      DisplayLabel = 'Média/dia'
+      FieldKind = fkInternalCalc
+      FieldName = 'media_dia'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.0'
+    end
+    object qBandsRunningOutmedia_expedicao: TFloatField
+      DisplayLabel = 'Média/expedição'
+      FieldKind = fkInternalCalc
+      FieldName = 'media_expedicao'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.0'
+    end
+  end
+  object qLastLifers: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'taxon'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'nome_taxon'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'data_registro'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'ativo'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'tipo'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end>
+    AfterClose = qLastLifersAfterClose
+    AfterOpen = qLastLifersAfterOpen
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT taxon, nome_taxon, data_registro, ativo, tipo'
+      'FROM get_last_lifers'
+      'LIMIT 7'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 81
+    Top = 228
+    object qLastLiferstaxon: TLongintField
+      FieldKind = fkData
+      FieldName = 'taxon'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qLastLifersnome_taxon: TStringField
+      DisplayLabel = 'Táxon'
+      FieldKind = fkData
+      FieldName = 'nome_taxon'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object qLastLifersdata_registro: TStringField
+      DisplayLabel = 'Data'
+      FieldKind = fkData
+      FieldName = 'data_registro'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qLastLifersativo: TBooleanField
+      DisplayLabel = 'Ativo'
+      FieldKind = fkData
+      FieldName = 'ativo'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qLastLiferstipo: TStringField
+      DisplayLabel = 'Tipo'
+      FieldKind = fkData
+      FieldName = 'tipo'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+  end
+  object qLastSurveys: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'survey_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'start_longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'start_latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'method_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 180
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT'
+      '  survey_date,'
+      '  start_longitude,'
+      '  start_latitude,'
+      '  method_name,'
+      '  locality_name'
+      'FROM get_last_surveys'
+      'LIMIT 10'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 80
+    Top = 321
+    object qLastSurveyssurvey_date: TDateField
+      DisplayLabel = 'Data'
+      FieldKind = fkData
+      FieldName = 'survey_date'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qLastSurveysstart_longitude: TFloatField
+      FieldKind = fkData
+      FieldName = 'start_longitude'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qLastSurveysstart_latitude: TFloatField
+      FieldKind = fkData
+      FieldName = 'start_latitude'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qLastSurveysmethod_name: TStringField
+      FieldKind = fkData
+      FieldName = 'method_name'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object qLastSurveyslocality_name: TStringField
+      FieldKind = fkData
+      FieldName = 'locality_name'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 180
+    end
+  end
+  object qBirthdays: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'birth_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'aniver'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'days_remaining'
+        DataType = ftInteger
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT full_name, birth_date, aniver, days_remaining'
+      'FROM get_next_birthdays'
+      'LIMIT 6'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 81
+    Top = 419
+    object qBirthdaysfull_name: TStringField
+      DisplayLabel = 'Nome'
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object qBirthdaysbirth_date: TDateField
+      DisplayLabel = 'Data de nascimento'
+      FieldKind = fkData
+      FieldName = 'birth_date'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBirthdaysaniver: TStringField
+      DisplayLabel = 'Aniversário'
+      FieldKind = fkData
+      FieldName = 'aniver'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qBirthdaysdays_remaining: TLongintField
+      DisplayLabel = 'Dias restantes'
+      FieldKind = fkInternalCalc
+      FieldName = 'days_remaining'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+  end
+  object qExpiredPermits: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'expire_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'permit_name'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end    
+      item
+        Name = 'days_remaining'
+        DataType = ftInteger
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT expire_date, permit_name, days_remaining'
+      'FROM get_expired_permits'
+      'LIMIT 7'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 83
+    Top = 521
+    object qExpiredPermitsexpire_date: TDateField
+      DisplayLabel = 'Data de validade'
+      FieldKind = fkData
+      FieldName = 'expire_date'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qExpiredPermitspermit_name: TStringField
+      DisplayLabel = 'Licença'
+      FieldKind = fkData
+      FieldName = 'permit_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+    object qExpiredPermitsdays_remaining: TLongintField
+      DisplayLabel = 'Dias restantes'
+      FieldKind = fkInternalCalc
+      FieldName = 'days_remaining'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+  end
+  object dsBandsBalance: TDataSource
+    AutoEdit = False
+    DataSet = qBandsBalance
+    Left = 230
+    Top = 40
+  end
+  object dsBandsRunningOut: TDataSource
+    AutoEdit = False
+    DataSet = qBandsRunningOut
+    Left = 230
+    Top = 131
+  end
+  object dsLastLifers: TDataSource
+    AutoEdit = False
+    DataSet = qLastLifers
+    Left = 230
+    Top = 228
+  end
+  object dsLastSurveys: TDataSource
+    AutoEdit = False
+    DataSet = qLastSurveys
+    Left = 230
+    Top = 321
+  end
+  object dsBirthdays: TDataSource
+    AutoEdit = False
+    DataSet = qBirthdays
+    Left = 230
+    Top = 419
+  end
+  object dsExpiredPermits: TDataSource
+    AutoEdit = False
+    DataSet = qExpiredPermits
+    Left = 230
+    Top = 521
+  end
+  object qIndividualsMonth: TSQLQuery
+    PacketRecords = 1
+    IndexName = 'DEFAULT_ORDER'
+    MaxIndexesCount = 4
+    FieldDefs = <    
+      item
+        Name = 'id'
+        DataType = ftLargeint
+        Precision = -1
+      end    
+      item
+        Name = 'record_month'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end    
+      item
+        Name = 'quantity'
+        DataType = ftLargeint
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT'
+      '  CAST(ROW_NUMBER() OVER(ORDER BY record_month) AS INTEGER) AS id,'
+      '  record_month,'
+      '  quantity'
+      'FROM'
+      '('
+      '  SELECT'
+      '    STRFTIME("%Y-%m", capture_date) AS record_month,'
+      '    CAST(COUNT(capture_id) AS INTEGER) AS quantity'
+      '  FROM captures'
+      '  GROUP BY'
+      '    STRFTIME("%Y-%m", capture_date)'
+      '  ORDER BY record_month DESC'
+      '  LIMIT 12'
+      ')'
+      'ORDER BY record_month ASC'
+    )
+    Params = <>
+    Macros = <>
+    Left = 688
+    Top = 131
+    object qIndividualsMonthid: TLongintField
+      FieldKind = fkData
+      FieldName = 'id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qIndividualsMonthrecord_month: TStringField
+      FieldKind = fkData
+      FieldName = 'record_month'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qIndividualsMonthquantity: TLongintField
+      FieldKind = fkData
+      FieldName = 'quantity'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+  end
+  object dsIndividualsMonth: TDataSource
+    AutoEdit = False
+    DataSet = qIndividualsMonth
+    Left = 560
+    Top = 128
+  end
+end

@@ -1,0 +1,6290 @@
+object DMI: TDMI
+  OldCreateOrder = False
+  Height = 529
+  HorizontalOffset = 440
+  VerticalOffset = 41
+  Width = 558
+  PPI = 120
+  object qCaptures: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'capture_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'internal_id'
+        DataType = ftLargeint
+        Precision = -1
+      end    
+      item
+        Name = 'survey_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'capture_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'capture_time'
+        DataType = ftTime
+        Precision = -1
+      end    
+      item
+        Name = 'locality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'net_station_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'net_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'bander_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'annotator_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'subject_status'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'capture_type'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'subject_sex'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'how_sexed'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'band_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'removed_band_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'right_leg_below'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'left_leg_below'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'right_leg_above'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'left_leg_above'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'weight'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'tarsus_length'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'tarsus_diameter'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'culmen_length'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'exposed_culmen'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'bill_width'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'bill_height'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'nostril_bill_tip'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'skull_length'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'halux_length_total'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'halux_length_finger'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'halux_length_claw'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'right_wing_chord'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'first_secondary_chord'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'tail_length'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'central_retrix_length'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'external_retrix_length'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'total_length'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'feather_mites'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end    
+      item
+        Name = 'fat'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'brood_patch'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'cloacal_protuberance'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'old_molt'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'old_primaries_molt'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'old_secondaries_molt'
+        DataType = ftString
+        Precision = -1
+        Size = 40
+      end    
+      item
+        Name = 'old_retrices_molt'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'old_body_molt'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'body_molt'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'flight_feathers_molt'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'flight_feathers_wear'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'molt_limits'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'cycle_code'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'subject_age'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'how_aged'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'skull_ossification'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'kipps_index'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'glucose'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'hemoglobin'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'hematocrit'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'philornis_larvae_tally'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'blood_sample'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'feather_sample'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'claw_sample'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'feces_sample'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'parasite_sample'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'subject_collected'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'subject_recorded'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'subject_photographed'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'field_number'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'photographer_1_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'photographer_2_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'start_photo_number'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'end_photo_number'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'camera_name'
+        DataType = ftString
+        Precision = -1
+        Size = 50
+      end    
+      item
+        Name = 'escaped'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'needs_review'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'data_owner'
+        DataType = ftLargeint
+        Precision = -1
+      end>
+    AfterCancel = qCapturesAfterCancel
+    AfterInsert = qCapturesAfterInsert
+    AfterPost = qCapturesAfterPost
+    BeforeEdit = qCapturesBeforeEdit
+    BeforePost = qCapturesBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT m.*,'
+      '  (SELECT t.full_name FROM zoo_taxa AS t'
+      '    WHERE t.taxon_id = m.taxon_id) AS taxon_name,'
+      '  (SELECT h.formatted_name FROM zoo_taxa AS h'
+      '    WHERE h.taxon_id = m.taxon_id) AS taxon_formatted_name,'
+      '  (SELECT s.full_name FROM surveys AS s'
+      '    WHERE s.survey_id = m.survey_id) AS survey_name,'
+      '  (SELECT ns.station_name FROM net_stations AS ns'
+      '    WHERE ns.net_station_id = m.net_station_id) AS net_station_name,'
+      '  (SELECT n.net_number FROM nets_effort AS n'
+      '    WHERE n.net_id = m.net_id) AS net_number,'
+      '  (SELECT g.site_name FROM gazetteer As g'
+      '    WHERE g.site_id = m.locality_id) AS locality_name,'
+      '  (SELECT b.acronym FROM people AS b'
+      '    WHERE b.person_id = m.bander_id) AS bander_name,'
+      '  (SELECT w.acronym FROM people AS w'
+      '    WHERE w.person_id = m.annotator_id) AS annotator_name,'
+      '  (SELECT (a.band_size||'' ''||a.band_number) FROM bands AS a'
+      '    WHERE a.band_id = m.band_id) AS band_name,'
+      '  (SELECT (r.band_size||'' ''||r.band_number) FROM bands AS r'
+      '    WHERE r.band_id = m.removed_band_id) AS removed_band_name,'
+      '  (SELECT f.acronym FROM people AS f'
+      '    WHERE f.person_id = m.photographer_1_id) AS photographer_1_name,'
+      '  (SELECT f2.acronym FROM people AS f2'
+      '    WHERE f2.person_id = m.photographer_2_id) AS photographer_2_name'
+      'FROM captures AS m'
+      'WHERE (m.individual_id = :individual_id)'
+      '  AND (m.active_status = 1)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'individual_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = DMG.dsIndividuals
+    Sequence.FieldName = 'capture_id'
+    Left = 50
+    Top = 40
+    object qCapturesmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      DisplayWidth = 8
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturessurvey_id: TLongintField
+      DisplayLabel = 'Survey (ID)'
+      FieldKind = fkData
+      FieldName = 'survey_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesproject_id: TLongintField
+      DisplayLabel = 'Project (ID)'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesindividual_id: TLongintField
+      DisplayLabel = 'Individual (ID)'
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCaptureslocality_id: TLongintField
+      DisplayLabel = 'Locality (ID)'
+      FieldKind = fkData
+      FieldName = 'locality_id'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCaptureslocality_name: TStringField
+      DisplayLabel = 'Locality'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'locality_name'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 180
+    end
+    object qCapturesnet_station_id: TLongintField
+      DisplayLabel = 'Sampling plot (ID)'
+      FieldKind = fkData
+      FieldName = 'net_station_id'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesnet_station_name: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Sampling plot'
+      DisplayWidth = 20
+      FieldKind = fkData
+      FieldName = 'net_station_name'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qCapturesnet_id: TLongintField
+      DisplayLabel = 'Mistnet (ID)'
+      FieldKind = fkData
+      FieldName = 'net_id'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesnet_number: TLongintField
+      Alignment = taCenter
+      DisplayLabel = 'Mistnet nr.'
+      FieldKind = fkData
+      FieldName = 'net_number'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qCapturesbander_id: TLongintField
+      DisplayLabel = 'Bander (ID)'
+      FieldKind = fkData
+      FieldName = 'bander_id'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesbander_name: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Bander'
+      FieldKind = fkData
+      FieldName = 'bander_name'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qCapturesannotator_id: TLongintField
+      DisplayLabel = 'Annotator (ID)'
+      FieldKind = fkData
+      FieldName = 'annotator_id'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesannotator_name: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Annotator'
+      FieldKind = fkData
+      FieldName = 'annotator_name'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qCapturescapture_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'capture_date'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qCapturescapture_time: TTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Time'
+      FieldKind = fkData
+      FieldName = 'capture_time'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = 'hh:nn'
+    end
+    object qCapturestaxon_id: TLongintField
+      DisplayLabel = 'Taxon (ID)'
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Visible = False
+    end
+    object qCapturestaxon_name: TStringField
+      DisplayLabel = 'Taxon'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qCapturescapture_type: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Type'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'capture_type'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      OnGetText = qCapturescapture_typeGetText
+      OnSetText = qCapturescapture_typeSetText
+      Size = 5
+    end
+    object qCapturesband_id: TLongintField
+      DisplayLabel = 'Band (ID)'
+      FieldKind = fkData
+      FieldName = 'band_id'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesband_name: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Band'
+      FieldKind = fkData
+      FieldName = 'band_name'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qCapturesremoved_band_id: TLongintField
+      DisplayLabel = 'Removed band (ID)'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'removed_band_id'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesremoved_band_name: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Removed band'
+      DisplayWidth = 18
+      FieldKind = fkData
+      FieldName = 'removed_band_name'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qCapturesright_leg_below: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Right tarsus'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'right_leg_below'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qCapturesleft_leg_below: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Left tarsus'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'left_leg_below'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qCapturesright_leg_above: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Right tibia'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'right_leg_above'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 10
+    end
+    object qCapturesleft_leg_above: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Left tibia'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'left_leg_above'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 10
+    end
+    object qCaptureslongitude: TFloatField
+      DisplayLabel = 'Longitude'
+      FieldKind = fkData
+      FieldName = 'longitude'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCaptureslatitude: TFloatField
+      DisplayLabel = 'Latitude'
+      FieldKind = fkData
+      FieldName = 'latitude'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturescloacal_protuberance: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Cloacal protub.'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'cloacal_protuberance'
+      Index = 29
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qCapturesbrood_patch: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Brood patch'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'brood_patch'
+      Index = 30
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qCapturesfat: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Fat'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'fat'
+      Index = 31
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qCapturesbody_molt: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Body molt'
+      FieldKind = fkData
+      FieldName = 'body_molt'
+      Index = 32
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qCapturesflight_feathers_molt: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Flight feathers molt'
+      FieldKind = fkData
+      FieldName = 'flight_feathers_molt'
+      Index = 33
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qCapturesflight_feathers_wear: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Flight feathers wear'
+      FieldKind = fkData
+      FieldName = 'flight_feathers_wear'
+      Index = 34
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qCapturesright_wing_chord: TFloatField
+      DisplayLabel = 'Right wing chord'
+      FieldKind = fkData
+      FieldName = 'right_wing_chord'
+      Index = 35
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturesfirst_secondary_chord: TFloatField
+      DisplayLabel = '1st secondary chord'
+      FieldKind = fkData
+      FieldName = 'first_secondary_chord'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCaptureskipps_index: TFloatField
+      DisplayLabel = 'Kipp''s distance'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'kipps_index'
+      Index = 37
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturestail_length: TFloatField
+      DisplayLabel = 'Tail length'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'tail_length'
+      Index = 38
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturestarsus_length: TFloatField
+      DisplayLabel = 'Tarsus length'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'tarsus_length'
+      Index = 39
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturestarsus_diameter: TFloatField
+      DisplayLabel = 'Tarsus diameter'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'tarsus_diameter'
+      Index = 40
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturesweight: TFloatField
+      DisplayLabel = 'Weight'
+      FieldKind = fkData
+      FieldName = 'weight'
+      Index = 41
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturesskull_length: TFloatField
+      DisplayLabel = 'Skull length'
+      FieldKind = fkData
+      FieldName = 'skull_length'
+      Index = 42
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturesexposed_culmen: TFloatField
+      DisplayLabel = 'Exposed culmen'
+      FieldKind = fkData
+      FieldName = 'exposed_culmen'
+      Index = 43
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturesculmen_length: TFloatField
+      DisplayLabel = 'Total culmen'
+      FieldKind = fkData
+      FieldName = 'culmen_length'
+      Index = 44
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Precision = -1
+    end
+    object qCapturesnostril_bill_tip: TFloatField
+      DisplayLabel = 'Nostril to bill tip'
+      FieldKind = fkData
+      FieldName = 'nostril_bill_tip'
+      Index = 45
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturesbill_width: TFloatField
+      DisplayLabel = 'Bill width'
+      FieldKind = fkData
+      FieldName = 'bill_width'
+      Index = 46
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturesbill_height: TFloatField
+      DisplayLabel = 'Bill height'
+      FieldKind = fkData
+      FieldName = 'bill_height'
+      Index = 47
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturestotal_length: TFloatField
+      DisplayLabel = 'Total length'
+      FieldKind = fkData
+      FieldName = 'total_length'
+      Index = 48
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturesmolt_limits: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Molt limits'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'molt_limits'
+      Index = 49
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qCapturesskull_ossification: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Skull ossification'
+      FieldKind = fkData
+      FieldName = 'skull_ossification'
+      Index = 50
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qCapturescycle_code: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Molt cycle'
+      FieldKind = fkData
+      FieldName = 'cycle_code'
+      Index = 51
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qCaptureshow_aged: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'How was aged'
+      FieldKind = fkData
+      FieldName = 'how_aged'
+      Index = 52
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qCapturessubject_age: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Age'
+      FieldKind = fkData
+      FieldName = 'subject_age'
+      Index = 53
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qCapturessubject_ageGetText
+      OnSetText = qCapturessubject_ageSetText
+      Size = 5
+    end
+    object qCapturessubject_sex: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Sex'
+      FieldKind = fkData
+      FieldName = 'subject_sex'
+      Index = 54
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qCapturessubject_sexGetText
+      OnSetText = qCapturessubject_sexSetText
+      Size = 5
+    end
+    object qCaptureshow_sexed: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'How was sexed'
+      FieldKind = fkData
+      FieldName = 'how_sexed'
+      Index = 55
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qCapturessubject_status: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Status'
+      FieldKind = fkData
+      FieldName = 'subject_status'
+      Index = 56
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qCapturessubject_statusGetText
+      OnSetText = qCapturessubject_statusSetText
+      Size = 5
+    end
+    object qCapturesglucose: TFloatField
+      DisplayLabel = 'Glucose'
+      FieldKind = fkData
+      FieldName = 'glucose'
+      Index = 57
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCaptureshemoglobin: TFloatField
+      DisplayLabel = 'Hemoglobin'
+      FieldKind = fkData
+      FieldName = 'hemoglobin'
+      Index = 58
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCaptureshematocrit: TFloatField
+      DisplayLabel = 'Hematocrit'
+      FieldKind = fkData
+      FieldName = 'hematocrit'
+      Index = 59
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qCapturesphilornis_larvae_tally: TLongintField
+      DisplayLabel = '# Philornis larvae'
+      FieldKind = fkData
+      FieldName = 'philornis_larvae_tally'
+      Index = 60
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qCapturesfield_number: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Field number'
+      FieldKind = fkData
+      FieldName = 'field_number'
+      Index = 61
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qCapturesblood_sample: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Blood'
+      FieldKind = fkData
+      FieldName = 'blood_sample'
+      Index = 62
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturesfeather_sample: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Feathers'
+      FieldKind = fkData
+      FieldName = 'feather_sample'
+      Index = 63
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturesclaw_sample: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Claw'
+      FieldKind = fkData
+      FieldName = 'claw_sample'
+      Index = 64
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturesfeces_sample: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Feces'
+      FieldKind = fkData
+      FieldName = 'feces_sample'
+      Index = 65
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturesparasite_sample: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Parasites'
+      FieldKind = fkData
+      FieldName = 'parasite_sample'
+      Index = 66
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturessubject_collected: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Collected (whole)'
+      FieldKind = fkData
+      FieldName = 'subject_collected'
+      Index = 67
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturessubject_recorded: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Recorded'
+      FieldKind = fkData
+      FieldName = 'subject_recorded'
+      Index = 68
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturessubject_photographed: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Photographed'
+      FieldKind = fkData
+      FieldName = 'subject_photographed'
+      Index = 69
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturesphotographer_1_id: TLongintField
+      DisplayLabel = 'Photographer 1 (ID)'
+      FieldKind = fkData
+      FieldName = 'photographer_1_id'
+      Index = 70
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesphotographer_1_name: TStringField
+      DisplayLabel = 'Photographer 1'
+      FieldKind = fkData
+      FieldName = 'photographer_1_name'
+      Index = 71
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qCapturesphotographer_2_id: TLongintField
+      DisplayLabel = 'Photographer 2 (ID)'
+      FieldKind = fkData
+      FieldName = 'photographer_2_id'
+      Index = 72
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesphotographer_2_name: TStringField
+      DisplayLabel = 'Photographer 2'
+      FieldKind = fkData
+      FieldName = 'photographer_2_name'
+      Index = 73
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qCapturescamera_name: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Camera'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'camera_name'
+      Index = 74
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 50
+    end
+    object qCapturesstart_photo_number: TStringField
+      DisplayLabel = 'Initial photo nr.'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'start_photo_number'
+      Index = 75
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qCapturesend_photo_number: TStringField
+      DisplayLabel = 'Final photo nr.'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'end_photo_number'
+      Index = 76
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qCapturesescaped: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Escaped'
+      FieldKind = fkData
+      FieldName = 'escaped'
+      Index = 77
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturesneeds_review: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Needs review'
+      FieldKind = fkData
+      FieldName = 'needs_review'
+      Index = 78
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturesnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 79
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qCapturescapture_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'capture_id'
+      Index = 80
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qCapturesfull_name: TStringField
+      DisplayLabel = 'Full name'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 81
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 120
+    end
+    object qCapturesorder_id: TLongintField
+      DisplayLabel = 'Order (ID)'
+      FieldKind = fkData
+      FieldName = 'order_id'
+      Index = 82
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesfamily_id: TLongintField
+      DisplayLabel = 'Family (ID)'
+      FieldKind = fkData
+      FieldName = 'family_id'
+      Index = 83
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesgenus_id: TLongintField
+      DisplayLabel = 'Genus (ID)'
+      FieldKind = fkData
+      FieldName = 'genus_id'
+      Index = 84
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesspecies_id: TLongintField
+      DisplayLabel = 'Species (ID)'
+      FieldKind = fkData
+      FieldName = 'species_id'
+      Index = 85
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturescountry_id: TLongintField
+      DisplayLabel = 'Country (ID)'
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 86
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesstate_id: TLongintField
+      DisplayLabel = 'State (ID)'
+      FieldKind = fkData
+      FieldName = 'state_id'
+      Index = 87
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesmunicipality_id: TLongintField
+      DisplayLabel = 'Municipality (ID)'
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 88
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 89
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 90
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 91
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 92
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qCapturesexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 93
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qCapturesactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 94
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qMolts: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'molt_id'
+        DataType = ftAutoInc
+        Precision = -1
+      end    
+      item
+        Name = 'survey_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 40
+      end    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'capture_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sample_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'sample_time'
+        DataType = ftTime
+        Precision = -1
+      end    
+      item
+        Name = 'bander_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'band_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'p1_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'p2_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'p3_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'p4_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'p5_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'p6_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'p7_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'p8_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'p9_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'p10_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 's1_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 's2_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 's3_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 's4_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 's5_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 's6_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 's7_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 's8_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 's9_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'r1_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'r2_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'r3_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'r4_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'r5_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'r6_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'pc1_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'pc2_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'pc3_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'pc4_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'pc5_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'pc6_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'pc7_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'pc8_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'pc9_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'cc_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'gc1_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'gc2_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'gc3_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'gc4_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'gc5_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'gc6_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'gc7_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'gc8_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'gc9_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'gc10_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'al1_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'al2_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'al3_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'lc_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'mc_molt'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'growth_bar_size'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    AfterCancel = qMoltsAfterCancel
+    AfterPost = qMoltsAfterPost
+    BeforeEdit = qMoltsBeforeEdit
+    BeforePost = qMoltsBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT m.*,'
+      '  (SELECT p.acronym FROM people AS p'
+      '    WHERE p.person_id = m.bander_id) AS bander_name,'
+      '  (SELECT b.band_size||'' ''||b.band_number FROM bands AS b'
+      '    WHERE b.band_id = m.band_id) AS band_name'
+      'FROM molts AS m'
+      'WHERE (m.individual_id = :individual_id)'
+      '  AND (m.active_status = 1)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'individual_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = DMG.dsIndividuals
+    Sequence.FieldName = 'molt_id'
+    Left = 50
+    Top = 128
+    object qMoltsmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qMoltssurvey_id: TLongintField
+      DisplayLabel = 'Survey (ID)'
+      FieldKind = fkData
+      FieldName = 'survey_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltscapture_id: TLongintField
+      DisplayLabel = 'Capture (ID)'
+      FieldKind = fkData
+      FieldName = 'capture_id'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltstaxon_id: TLongintField
+      DisplayLabel = 'Taxon (ID)'
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Visible = False
+    end
+    object qMoltsindividual_id: TLongintField
+      DisplayLabel = 'Individual (ID)'
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsbander_id: TLongintField
+      DisplayLabel = 'Bander (ID)'
+      FieldKind = fkData
+      FieldName = 'bander_id'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsbander_name: TStringField
+      DisplayLabel = 'Bander'
+      FieldKind = fkData
+      FieldName = 'bander_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qMoltsband_id: TLongintField
+      DisplayLabel = 'Band (ID)'
+      FieldKind = fkData
+      FieldName = 'band_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsband_name: TStringField
+      DisplayLabel = 'Band'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'band_name'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 255
+    end
+    object qMoltssample_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'sample_date'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qMoltssample_time: TTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Time'
+      FieldKind = fkData
+      FieldName = 'sample_time'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qMoltsp1_molt: TFloatField
+      DisplayLabel = 'P1'
+      FieldKind = fkData
+      FieldName = 'p1_molt'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsp2_molt: TFloatField
+      DisplayLabel = 'P2'
+      FieldKind = fkData
+      FieldName = 'p2_molt'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsp3_molt: TFloatField
+      DisplayLabel = 'P3'
+      FieldKind = fkData
+      FieldName = 'p3_molt'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsp4_molt: TFloatField
+      DisplayLabel = 'P4'
+      FieldKind = fkData
+      FieldName = 'p4_molt'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsp5_molt: TFloatField
+      DisplayLabel = 'P5'
+      FieldKind = fkData
+      FieldName = 'p5_molt'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsp6_molt: TFloatField
+      DisplayLabel = 'P6'
+      FieldKind = fkData
+      FieldName = 'p6_molt'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsp7_molt: TFloatField
+      DisplayLabel = 'P7'
+      FieldKind = fkData
+      FieldName = 'p7_molt'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsp8_molt: TFloatField
+      DisplayLabel = 'P8'
+      FieldKind = fkData
+      FieldName = 'p8_molt'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsp9_molt: TFloatField
+      DisplayLabel = 'P9'
+      FieldKind = fkData
+      FieldName = 'p9_molt'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsp10_molt: TFloatField
+      DisplayLabel = 'P10'
+      FieldKind = fkData
+      FieldName = 'p10_molt'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltss1_molt: TFloatField
+      DisplayLabel = 'S1'
+      FieldKind = fkData
+      FieldName = 's1_molt'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltss2_molt: TFloatField
+      DisplayLabel = 'S2'
+      FieldKind = fkData
+      FieldName = 's2_molt'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltss3_molt: TFloatField
+      DisplayLabel = 'S3'
+      FieldKind = fkData
+      FieldName = 's3_molt'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltss4_molt: TFloatField
+      DisplayLabel = 'S4'
+      FieldKind = fkData
+      FieldName = 's4_molt'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltss5_molt: TFloatField
+      DisplayLabel = 'S5'
+      FieldKind = fkData
+      FieldName = 's5_molt'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltss6_molt: TFloatField
+      DisplayLabel = 'S6'
+      FieldKind = fkData
+      FieldName = 's6_molt'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltss7_molt: TFloatField
+      DisplayLabel = 'S7'
+      FieldKind = fkData
+      FieldName = 's7_molt'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltss8_molt: TFloatField
+      DisplayLabel = 'S8'
+      FieldKind = fkData
+      FieldName = 's8_molt'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltss9_molt: TFloatField
+      DisplayLabel = 'S9'
+      FieldKind = fkData
+      FieldName = 's9_molt'
+      Index = 29
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsr1_molt: TFloatField
+      DisplayLabel = 'R1'
+      FieldKind = fkData
+      FieldName = 'r1_molt'
+      Index = 30
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsr2_molt: TFloatField
+      DisplayLabel = 'R2'
+      FieldKind = fkData
+      FieldName = 'r2_molt'
+      Index = 31
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsr3_molt: TFloatField
+      DisplayLabel = 'R3'
+      FieldKind = fkData
+      FieldName = 'r3_molt'
+      Index = 32
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsr4_molt: TFloatField
+      DisplayLabel = 'R4'
+      FieldKind = fkData
+      FieldName = 'r4_molt'
+      Index = 33
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsr5_molt: TFloatField
+      DisplayLabel = 'R5'
+      FieldKind = fkData
+      FieldName = 'r5_molt'
+      Index = 34
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsr6_molt: TFloatField
+      DisplayLabel = 'R6'
+      FieldKind = fkData
+      FieldName = 'r6_molt'
+      Index = 35
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltspc1_molt: TFloatField
+      DisplayLabel = 'PC1'
+      FieldKind = fkData
+      FieldName = 'pc1_molt'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltspc2_molt: TFloatField
+      DisplayLabel = 'PC2'
+      FieldKind = fkData
+      FieldName = 'pc2_molt'
+      Index = 37
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltspc3_molt: TFloatField
+      DisplayLabel = 'PC3'
+      FieldKind = fkData
+      FieldName = 'pc3_molt'
+      Index = 38
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltspc4_molt: TFloatField
+      DisplayLabel = 'PC4'
+      FieldKind = fkData
+      FieldName = 'pc4_molt'
+      Index = 39
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltspc5_molt: TFloatField
+      DisplayLabel = 'PC5'
+      FieldKind = fkData
+      FieldName = 'pc5_molt'
+      Index = 40
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltspc6_molt: TFloatField
+      DisplayLabel = 'PC6'
+      FieldKind = fkData
+      FieldName = 'pc6_molt'
+      Index = 41
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltspc7_molt: TFloatField
+      DisplayLabel = 'PC7'
+      FieldKind = fkData
+      FieldName = 'pc7_molt'
+      Index = 42
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltspc8_molt: TFloatField
+      DisplayLabel = 'PC8'
+      FieldKind = fkData
+      FieldName = 'pc8_molt'
+      Index = 43
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltspc9_molt: TFloatField
+      DisplayLabel = 'PC9'
+      FieldKind = fkData
+      FieldName = 'pc9_molt'
+      Index = 44
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsgc1_molt: TFloatField
+      DisplayLabel = 'GC1'
+      FieldKind = fkData
+      FieldName = 'gc1_molt'
+      Index = 45
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsgc2_molt: TFloatField
+      DisplayLabel = 'GC2'
+      FieldKind = fkData
+      FieldName = 'gc2_molt'
+      Index = 46
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsgc3_molt: TFloatField
+      DisplayLabel = 'GC3'
+      FieldKind = fkData
+      FieldName = 'gc3_molt'
+      Index = 47
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsgc4_molt: TFloatField
+      DisplayLabel = 'GC4'
+      FieldKind = fkData
+      FieldName = 'gc4_molt'
+      Index = 48
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsgc5_molt: TFloatField
+      DisplayLabel = 'GC5'
+      FieldKind = fkData
+      FieldName = 'gc5_molt'
+      Index = 49
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsgc6_molt: TFloatField
+      DisplayLabel = 'GC6'
+      FieldKind = fkData
+      FieldName = 'gc6_molt'
+      Index = 50
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsgc7_molt: TFloatField
+      DisplayLabel = 'GC7'
+      FieldKind = fkData
+      FieldName = 'gc7_molt'
+      Index = 51
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsgc8_molt: TFloatField
+      DisplayLabel = 'GC8'
+      FieldKind = fkData
+      FieldName = 'gc8_molt'
+      Index = 52
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsgc9_molt: TFloatField
+      DisplayLabel = 'GC9'
+      FieldKind = fkData
+      FieldName = 'gc9_molt'
+      Index = 53
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsgc10_molt: TFloatField
+      DisplayLabel = 'GC10'
+      FieldKind = fkData
+      FieldName = 'gc10_molt'
+      Index = 54
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltscc_molt: TFloatField
+      DisplayLabel = 'CC'
+      FieldKind = fkData
+      FieldName = 'cc_molt'
+      Index = 55
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsal1_molt: TFloatField
+      DisplayLabel = 'Al1'
+      FieldKind = fkData
+      FieldName = 'al1_molt'
+      Index = 56
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsal2_molt: TFloatField
+      DisplayLabel = 'Al2'
+      FieldKind = fkData
+      FieldName = 'al2_molt'
+      Index = 57
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsal3_molt: TFloatField
+      DisplayLabel = 'Al3'
+      FieldKind = fkData
+      FieldName = 'al3_molt'
+      Index = 58
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsmc_molt: TFloatField
+      DisplayLabel = 'MC'
+      FieldKind = fkData
+      FieldName = 'mc_molt'
+      Index = 59
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltslc_molt: TFloatField
+      DisplayLabel = 'LC'
+      FieldKind = fkData
+      FieldName = 'lc_molt'
+      Index = 60
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '##0.00'
+      Precision = -1
+    end
+    object qMoltsgrowth_bar_size: TFloatField
+      DisplayLabel = 'Growth bar (mm)'
+      FieldKind = fkData
+      FieldName = 'growth_bar_size'
+      Index = 61
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.00'
+      Precision = -1
+    end
+    object qMoltsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 62
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qMoltsmolt_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'molt_id'
+      Index = 63
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qMoltsfull_name: TStringField
+      DisplayLabel = 'Full name'
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 64
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 40
+    end
+    object qMoltsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 65
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 66
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 67
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 68
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 69
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qMoltsactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 70
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsCaptures: TDataSource
+    DataSet = qCaptures
+    Left = 180
+    Top = 40
+  end
+  object dsMolts: TDataSource
+    DataSet = qMolts
+    Left = 180
+    Top = 128
+  end
+  object qSightings: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'sighting_id'
+        DataType = ftAutoInc
+        Precision = -1
+      end    
+      item
+        Name = 'survey_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sighting_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'sighting_time'
+        DataType = ftTime
+        Precision = -1
+      end    
+      item
+        Name = 'locality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'method_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'mackinnon_list_num'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'observer_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'subjects_tally'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'subject_distance'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'subject_seen'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'subject_heard'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'subject_photographed'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'subject_recorded'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'subject_captured'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'males_tally'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'females_tally'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'not_sexed_tally'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'adults_tally'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'immatures_tally'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'not_aged_tally'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'new_captures_tally'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'recaptures_tally'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'unbanded_tally'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'detection_type'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'breeding_status'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'not_surveying'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'ebird_available'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    AfterCancel = qSightingsAfterCancel
+    AfterInsert = qSightingsAfterInsert
+    AfterPost = qSightingsAfterPost
+    BeforeEdit = qSightingsBeforeEdit
+    BeforePost = qSightingsBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT c.*,'
+      '  (SELECT t.full_name FROM zoo_taxa AS t'
+      '    WHERE t.taxon_id = c.taxon_id) AS taxon_name,'
+      '  (SELECT h.formatted_name FROM zoo_taxa AS h'
+      '    WHERE h.taxon_id = c.taxon_id) AS taxon_formatted_name,'
+      '  (SELECT i.full_name FROM individuals AS i'
+      '    WHERE i.individual_id = c.individual_id) AS individual_name,'
+      '  (SELECT p.full_name FROM people AS p'
+      '    WHERE p.person_id = c.observer_id) AS observer_name,'
+      '  (SELECT a.full_name FROM surveys AS a'
+      '    WHERE a.survey_id = c.survey_id) AS survey_name,'
+      '  (SELECT m.method_name FROM methods AS m'
+      '    WHERE m.method_id = c.method_id) AS method_name,'
+      '  (SELECT g.full_name FROM gazetteer AS g'
+      '    WHERE g.site_id = c.locality_id) AS locality_name'
+      'FROM sightings AS c'
+      'WHERE (c.individual_id = :individual_id)'
+      '  AND (c.active_status = 1)'
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'individual_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = DMG.dsIndividuals
+    Sequence.FieldName = 'sighting_id'
+    Left = 50
+    Top = 220
+    object qSightingsmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingssurvey_id: TLongintField
+      DisplayLabel = 'Survey (ID)'
+      FieldKind = fkData
+      FieldName = 'survey_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingssighting_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'sighting_date'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingssighting_time: TTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Time'
+      FieldKind = fkData
+      FieldName = 'sighting_time'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingslocality_id: TLongintField
+      DisplayLabel = 'Locality (ID)'
+      FieldKind = fkData
+      FieldName = 'locality_id'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingslongitude: TFloatField
+      DisplayLabel = 'Longitude'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'longitude'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qSightingslatitude: TFloatField
+      DisplayLabel = 'Latitude'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'latitude'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qSightingsmethod_id: TLongintField
+      DisplayLabel = 'Method (ID)'
+      FieldKind = fkData
+      FieldName = 'method_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsmackinnon_list_num: TLongintField
+      Alignment = taCenter
+      DisplayLabel = 'Mackinnon list nr.'
+      FieldKind = fkData
+      FieldName = 'mackinnon_list_num'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingsobserver_id: TLongintField
+      DisplayLabel = 'Observer (ID)'
+      FieldKind = fkData
+      FieldName = 'observer_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingstaxon_id: TLongintField
+      DisplayLabel = 'Taxon (ID)'
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsindividual_id: TLongintField
+      DisplayLabel = 'Individual (ID)'
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingssubjects_tally: TLongintField
+      DisplayLabel = '# individuals'
+      FieldKind = fkData
+      FieldName = 'subjects_tally'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingssubject_distance: TFloatField
+      DisplayLabel = 'Distance'
+      FieldKind = fkData
+      FieldName = 'subject_distance'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qSightingssubject_seen: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Seen'
+      FieldKind = fkData
+      FieldName = 'subject_seen'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingssubject_heard: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Heard'
+      FieldKind = fkData
+      FieldName = 'subject_heard'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingssubject_photographed: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Photographed'
+      FieldKind = fkData
+      FieldName = 'subject_photographed'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingssubject_recorded: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Recorded'
+      FieldKind = fkData
+      FieldName = 'subject_recorded'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingssubject_captured: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Captured'
+      FieldKind = fkData
+      FieldName = 'subject_captured'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingsmales_tally: TStringField
+      DisplayLabel = '# males'
+      FieldKind = fkData
+      FieldName = 'males_tally'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qSightingsfemales_tally: TStringField
+      DisplayLabel = '# females'
+      FieldKind = fkData
+      FieldName = 'females_tally'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qSightingsnot_sexed_tally: TStringField
+      DisplayLabel = '# not sexed'
+      FieldKind = fkData
+      FieldName = 'not_sexed_tally'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qSightingsadults_tally: TStringField
+      DisplayLabel = '# adults'
+      FieldKind = fkData
+      FieldName = 'adults_tally'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qSightingsimmatures_tally: TStringField
+      DisplayLabel = '# immatures'
+      FieldKind = fkData
+      FieldName = 'immatures_tally'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qSightingsnot_aged_tally: TStringField
+      DisplayLabel = '# not aged'
+      FieldKind = fkData
+      FieldName = 'not_aged_tally'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qSightingsnew_captures_tally: TLongintField
+      DisplayLabel = '# new captures'
+      FieldKind = fkData
+      FieldName = 'new_captures_tally'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingsrecaptures_tally: TLongintField
+      DisplayLabel = '# recaptures'
+      FieldKind = fkData
+      FieldName = 'recaptures_tally'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingsunbanded_tally: TLongintField
+      DisplayLabel = '# unbanded'
+      FieldKind = fkData
+      FieldName = 'unbanded_tally'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingsdetection_type: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Detection type'
+      FieldKind = fkData
+      FieldName = 'detection_type'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 30
+    end
+    object qSightingsbreeding_status: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Breeding and behavior'
+      FieldKind = fkData
+      FieldName = 'breeding_status'
+      Index = 29
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 30
+    end
+    object qSightingsnot_surveying: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Out of the sample'
+      FieldKind = fkData
+      FieldName = 'not_surveying'
+      Index = 30
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingsebird_available: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'It''s in eBird'
+      FieldKind = fkData
+      FieldName = 'ebird_available'
+      Index = 31
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 32
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qSightingssighting_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'sighting_id'
+      Index = 33
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingsfull_name: TStringField
+      DisplayLabel = 'Full name'
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 34
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qSightingsorder_id: TLongintField
+      DisplayLabel = 'Order (ID)'
+      FieldKind = fkData
+      FieldName = 'order_id'
+      Index = 35
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsfamily_id: TLongintField
+      DisplayLabel = 'Family (ID)'
+      FieldKind = fkData
+      FieldName = 'family_id'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsgenus_id: TLongintField
+      DisplayLabel = 'Genus (ID)'
+      FieldKind = fkData
+      FieldName = 'genus_id'
+      Index = 37
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsspecies_id: TLongintField
+      DisplayLabel = 'Species (ID)'
+      FieldKind = fkData
+      FieldName = 'species_id'
+      Index = 38
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingscountry_id: TLongintField
+      DisplayLabel = 'Country (ID)'
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 39
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsstate_id: TLongintField
+      DisplayLabel = 'State (ID)'
+      FieldKind = fkData
+      FieldName = 'state_id'
+      Index = 40
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsmunicipality_id: TLongintField
+      DisplayLabel = 'Municipality (ID)'
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 41
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 42
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 43
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 44
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 45
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 46
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingsactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 47
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsSightings: TDataSource
+    DataSet = qSightings
+    Left = 180
+    Top = 220
+  end
+  object qNests: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'nest_id'
+        DataType = ftAutoInc
+        Precision = -1
+      end    
+      item
+        Name = 'field_number'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'observer_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'locality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'male_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'female_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'helper_1_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'helper_2_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'helper_3_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'nest_shape'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'support_type'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'support_plant_1_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'support_plant_2_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'other_support'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'height_above_ground'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'internal_diameter'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'external_diameter'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'internal_height'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'external_height'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'edge_distance'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'center_distance'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'nest_cover'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'plant_max_diameter'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'plant_min_diameter'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'plant_height'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'plant_dbh'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'construction_days'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'incubation_days'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'nestling_days'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'active_days'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'nest_fate'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 1
+      end    
+      item
+        Name = 'nest_productivity'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'found_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'last_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'subfamily_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'description'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    AfterCancel = qNestsAfterCancel
+    AfterPost = qNestsAfterPost
+    BeforeEdit = qNestsBeforeEdit
+    BeforePost = qNestsBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT n.*,'
+      '  (SELECT p.full_name FROM people AS p'
+      '    WHERE p.person_id = n.observer_id) AS observer_name,'
+      '  (SELECT j.project_title FROM projects AS j'
+      '    WHERE j.project_id = n.project_id) AS project_name,'
+      '  (SELECT g.site_name FROM gazetteer AS g'
+      '    WHERE g.site_id = n.locality_id) AS locality_name,'
+      '  (SELECT t.full_name FROM zoo_taxa AS t'
+      '    WHERE t.taxon_id = n.taxon_id) AS taxon_name,'
+      '  (SELECT t.formatted_name FROM zoo_taxa AS t'
+      '    WHERE t.taxon_id = n.taxon_id) AS taxon_formatted_name,'
+      '  (SELECT m.full_name FROM individuals AS m'
+      '    WHERE m.individual_id = n.male_id) AS male_name,'
+      '  (SELECT f.full_name FROM individuals As f'
+      '    WHERE f.individual_id = n.female_id) AS female_name,'
+      '  (SELECT h1.full_name FROM individuals AS h1'
+      '    WHERE h1.individual_id = n.helper_1_id) AS helper_1_name,'
+      '  (SELECT h2.full_name FROM individuals AS h2'
+      '    WHERE h2.individual_id = n.helper_2_id) AS helper_2_name,'
+      '  (SELECT h3.full_name FROM individuals AS h3'
+      '    WHERE h3.individual_id = n.helper_3_id) AS helper_3_name,'
+      '  (SELECT b.taxon_name FROM botanic_taxa AS b'
+      '    WHERE b.taxon_id = n.support_plant_1_id) AS support_plant_1_name,'
+      '  (SELECT b2.taxon_name FROM botanic_taxa AS b2'
+      '    WHERE b2.taxon_id = n.support_plant_2_id) AS support_plant_2_name'
+      'FROM nests AS n'
+      'WHERE (n.male_id = :individual_id'
+      '    OR n.female_id = :individual_id'
+      '    OR n.helper_1_id = :individual_id'
+      '    OR n.helper_2_id = :individual_id'
+      '    OR n.helper_3_id = :individual_id)'
+      '  AND (n.active_status = 1)'
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'individual_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = DMG.dsIndividuals
+    Left = 50
+    Top = 320
+    object qNestsmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qNestsfield_number: TStringField
+      DisplayLabel = 'Field number'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'field_number'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qNeststaxon_id: TLongintField
+      DisplayLabel = 'Taxon (Id)'
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNeststaxon_name: TStringField
+      DisplayLabel = 'Taxon'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qNestslocality_id: TLongintField
+      DisplayLabel = 'Locality (Id)'
+      FieldKind = fkData
+      FieldName = 'locality_id'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestslocality_name: TStringField
+      DisplayLabel = 'Locality'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'locality_name'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 180
+    end
+    object qNestslongitude: TFloatField
+      DisplayLabel = 'Longitude'
+      FieldKind = fkData
+      FieldName = 'longitude'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestslatitude: TFloatField
+      DisplayLabel = 'Latitude'
+      FieldKind = fkData
+      FieldName = 'latitude'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsobserver_id: TLongintField
+      DisplayLabel = 'Observer (Id)'
+      FieldKind = fkData
+      FieldName = 'observer_id'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsobserver_name: TStringField
+      DisplayLabel = 'Observer'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'observer_name'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qNestsproject_id: TLongintField
+      DisplayLabel = 'Project (Id)'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsproject_name: TStringField
+      DisplayLabel = 'Project'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'project_name'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+    object qNestsnest_shape: TStringField
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'nest_shape'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qNestssupport_type: TStringField
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'support_type'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qNestssupport_plant_1_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'support_plant_1_id'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestssupport_plant_1_name: TStringField
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'support_plant_1_name'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qNestssupport_plant_2_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'support_plant_2_id'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestssupport_plant_2_name: TStringField
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'support_plant_2_name'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qNestsother_support: TStringField
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'other_support'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qNestsheight_above_ground: TFloatField
+      FieldKind = fkData
+      FieldName = 'height_above_ground'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsinternal_diameter: TFloatField
+      FieldKind = fkData
+      FieldName = 'internal_diameter'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsexternal_diameter: TFloatField
+      FieldKind = fkData
+      FieldName = 'external_diameter'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsinternal_height: TFloatField
+      FieldKind = fkData
+      FieldName = 'internal_height'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsexternal_height: TFloatField
+      FieldKind = fkData
+      FieldName = 'external_height'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsedge_distance: TFloatField
+      FieldKind = fkData
+      FieldName = 'edge_distance'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestscenter_distance: TFloatField
+      FieldKind = fkData
+      FieldName = 'center_distance'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsnest_cover: TLongintField
+      FieldKind = fkData
+      FieldName = 'nest_cover'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qNestsplant_max_diameter: TFloatField
+      FieldKind = fkData
+      FieldName = 'plant_max_diameter'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsplant_min_diameter: TFloatField
+      FieldKind = fkData
+      FieldName = 'plant_min_diameter'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsplant_height: TFloatField
+      FieldKind = fkData
+      FieldName = 'plant_height'
+      Index = 29
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsplant_dbh: TFloatField
+      FieldKind = fkData
+      FieldName = 'plant_dbh'
+      Index = 30
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsconstruction_days: TFloatField
+      FieldKind = fkData
+      FieldName = 'construction_days'
+      Index = 31
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsincubation_days: TFloatField
+      FieldKind = fkData
+      FieldName = 'incubation_days'
+      Index = 32
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsnestling_days: TFloatField
+      FieldKind = fkData
+      FieldName = 'nestling_days'
+      Index = 33
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsactive_days: TFloatField
+      FieldKind = fkData
+      FieldName = 'active_days'
+      Index = 34
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsnest_fate: TStringField
+      Alignment = taCenter
+      FieldKind = fkData
+      FieldName = 'nest_fate'
+      Index = 35
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 1
+    end
+    object qNestsnest_productivity: TLongintField
+      FieldKind = fkData
+      FieldName = 'nest_productivity'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qNestsfound_date: TDateField
+      Alignment = taCenter
+      FieldKind = fkData
+      FieldName = 'found_date'
+      Index = 37
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qNestslast_date: TDateField
+      Alignment = taCenter
+      FieldKind = fkData
+      FieldName = 'last_date'
+      Index = 38
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qNestsdescription: TMemoField
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'description'
+      Index = 39
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qNestsnotes: TMemoField
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 40
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qNestsnest_id: TAutoIncField
+      FieldKind = fkData
+      FieldName = 'nest_id'
+      Index = 41
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qNestsfull_name: TStringField
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 42
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qNestsorder_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'order_id'
+      Index = 43
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsfamily_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'family_id'
+      Index = 44
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestssubfamily_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'subfamily_id'
+      Index = 45
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsgenus_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'genus_id'
+      Index = 46
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsspecies_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'species_id'
+      Index = 47
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestscountry_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 48
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsstate_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'state_id'
+      Index = 49
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsmunicipality_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 50
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsuser_inserted: TLongintField
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 51
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsuser_updated: TLongintField
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 52
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsinsert_date: TDateTimeField
+      Alignment = taCenter
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 53
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsupdate_date: TDateTimeField
+      Alignment = taCenter
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 54
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestsexported_status: TBooleanField
+      Alignment = taCenter
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 55
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qNestsactive_status: TBooleanField
+      Alignment = taCenter
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 56
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsNests: TDataSource
+    DataSet = qNests
+    Left = 180
+    Top = 320
+  end
+  object qSpecimens: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'specimen_id'
+        DataType = ftAutoInc
+        Precision = -1
+      end    
+      item
+        Name = 'field_number'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'sample_type'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'nest_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'egg_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'collection_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'collection_day'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'collection_month'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'collection_year'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'locality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'collectors'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'collector_1'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'collector_2'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'collector_3'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'collector_4'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'subfamily_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    AfterCancel = qSpecimensAfterCancel
+    AfterPost = qSpecimensAfterPost
+    BeforeEdit = qSpecimensBeforeEdit
+    BeforePost = qSpecimensBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT s.*,'
+      '  (SELECT t.full_name FROM zoo_taxa AS t'
+      '    WHERE t.taxon_id = s.taxon_id) AS taxon_name,'
+      '  (SELECT g.site_name FROM gazetteer AS g'
+      '    WHERE g.site_id = s.locality_id) AS locality_name,'
+      '  (SELECT i.full_name FROM individuals AS i'
+      '    WHERE i.individual_id = s.individual_id) AS individual_name,'
+      '  (SELECT n.full_name FROM nests AS n'
+      '    WHERE n.nest_id = s.nest_id) AS nest_name,'
+      '  (SELECT o.full_name FROM eggs AS o'
+      '    WHERE o.egg_id = s.egg_id) AS egg_name'
+      'FROM specimens AS s'
+      'WHERE (s.individual_id = :individual_id)'
+      '  AND (s.active_status = 1)'
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'individual_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = DMG.dsIndividuals
+    Left = 48
+    Top = 411
+    object qSpecimensmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSpecimensfield_number: TStringField
+      DisplayLabel = 'Field number'
+      FieldKind = fkData
+      FieldName = 'field_number'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSpecimenstaxon_id: TLongintField
+      DisplayLabel = 'Taxon (Id)'
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimenstaxon_name: TStringField
+      DisplayLabel = 'Taxon'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qSpecimenssample_type: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Type'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'sample_type'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qSpecimenscollection_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Collection date'
+      FieldKind = fkData
+      FieldName = 'collection_date'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSpecimenscollection_day: TLongintField
+      DisplayLabel = 'Collection day'
+      FieldKind = fkData
+      FieldName = 'collection_day'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimenscollection_month: TLongintField
+      DisplayLabel = 'Collection month'
+      FieldKind = fkData
+      FieldName = 'collection_month'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimenscollection_year: TLongintField
+      DisplayLabel = 'Collection year'
+      FieldKind = fkData
+      FieldName = 'collection_year'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimenslocality_id: TLongintField
+      DisplayLabel = 'Locality (Id)'
+      FieldKind = fkData
+      FieldName = 'locality_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimenslocality_name: TStringField
+      DisplayLabel = 'Locality'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'locality_name'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 180
+    end
+    object qSpecimenslongitude: TFloatField
+      DisplayLabel = 'Longitude'
+      FieldKind = fkData
+      FieldName = 'longitude'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qSpecimenslatitude: TFloatField
+      DisplayLabel = 'Latitude'
+      FieldKind = fkData
+      FieldName = 'latitude'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qSpecimensindividual_id: TLongintField
+      DisplayLabel = 'Individual (Id)'
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensindividual_name: TStringField
+      DisplayLabel = 'Individual'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'individual_name'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 120
+    end
+    object qSpecimensnest_id: TLongintField
+      DisplayLabel = 'Nest (Id)'
+      FieldKind = fkData
+      FieldName = 'nest_id'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensnest_name: TStringField
+      DisplayLabel = 'Nest'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'nest_name'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qSpecimensegg_id: TLongintField
+      DisplayLabel = 'Egg (Id)'
+      FieldKind = fkData
+      FieldName = 'egg_id'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensegg_name: TStringField
+      DisplayLabel = 'Egg'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'egg_name'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qSpecimenscollectors: TStringField
+      DisplayLabel = 'Collectors'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'collectors'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
+    end
+    object qSpecimensnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qSpecimensspecimen_id: TAutoIncField
+      DisplayLabel = 'Specimen (Id)'
+      FieldKind = fkData
+      FieldName = 'specimen_id'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qSpecimensfull_name: TStringField
+      DisplayLabel = 'Full name'
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qSpecimensorder_id: TLongintField
+      DisplayLabel = 'Order (Id)'
+      FieldKind = fkData
+      FieldName = 'order_id'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensfamily_id: TLongintField
+      DisplayLabel = 'Family (Id)'
+      FieldKind = fkData
+      FieldName = 'family_id'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimenssubfamily_id: TLongintField
+      DisplayLabel = 'Subfamily (Id)'
+      FieldKind = fkData
+      FieldName = 'subfamily_id'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensgenus_id: TLongintField
+      DisplayLabel = 'Genus (Id)'
+      FieldKind = fkData
+      FieldName = 'genus_id'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensspecies_id: TLongintField
+      DisplayLabel = 'Species (Id)'
+      FieldKind = fkData
+      FieldName = 'species_id'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimenscountry_id: TLongintField
+      DisplayLabel = 'Country (Id)'
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensstate_id: TLongintField
+      DisplayLabel = 'State (Id)'
+      FieldKind = fkData
+      FieldName = 'state_id'
+      Index = 29
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensmunicipality_id: TLongintField
+      DisplayLabel = 'Municipality (Id)'
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 30
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 31
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensuser_updated: TLongintField
+      DisplayLabel = 'Modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 32
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Date of creation'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 33
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 34
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSpecimensexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 35
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qSpecimensactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsSpecimens: TDataSource
+    DataSet = qSpecimens
+    Left = 180
+    Top = 411
+  end
+  object qImages: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'image_id'
+        DataType = ftAutoInc
+        Precision = -1
+      end    
+      item
+        Name = 'image_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'image_time'
+        DataType = ftTime
+        Precision = -1
+      end    
+      item
+        Name = 'image_type'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'capture_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'locality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'author_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'survey_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sighting_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'nest_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'nest_revision_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'egg_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'specimen_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'image_filename'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'coordinate_precision'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 1
+      end    
+      item
+        Name = 'longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'license_type'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'license_year'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'license_uri'
+        DataType = ftString
+        Precision = -1
+        Size = 200
+      end    
+      item
+        Name = 'license_notes'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'license_owner'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end    
+      item
+        Name = 'subtitle'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'image_thumbnail'
+        DataType = ftTypedBinary
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'capture_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'author_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'survey_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'sighting_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'nest_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'revision_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'egg_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'specimen_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end>
+    BeforePost = qImagesBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT i.*,'
+      '(SELECT t.full_name FROM zoo_taxa AS t WHERE t.taxon_id = i.taxon_id) AS taxon_name,'
+      '(SELECT d.full_name FROM individuals AS d WHERE d.individual_id = i.individual_id) AS individual_name,'
+      '(SELECT m.full_name FROM captures AS m WHERE m.capture_id = i.capture_id) AS capture_name,'
+      '(SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = i.locality_id) AS locality_name,'
+      '(SELECT p.full_name FROM people AS p WHERE p.person_id = i.author_id) AS author_name,'
+      '(SELECT a.full_name FROM surveys AS a WHERE a.survey_id = i.survey_id) AS survey_name,'
+      '(SELECT o.full_name FROM sightings AS o WHERE o.sighting_id = i.sighting_id) AS sighting_name,'
+      '(SELECT n.full_name FROM nests AS n WHERE n.nest_id = i.nest_id) AS nest_name,'
+      '(SELECT r.full_name FROM nest_revisions AS r WHERE r.nest_revision_id = i.nest_revision_id) AS revision_name,'
+      '(SELECT e.full_name FROM eggs AS e WHERE e.egg_id = i.egg_id) AS egg_name,'
+      '(SELECT s.full_name FROM specimens AS s WHERE s.specimen_id = i.specimen_id) AS specimen_name'
+      'FROM images AS i'
+      'WHERE (i.individual_id = :individual_id) AND (i.active_status = 1)'
+      'ORDER BY i.image_date, i.image_time ASC'
+    )
+    UpdateSQL.Strings = (
+      'update  set "marked_status"=:"marked_status","image_thumbnail"=:"image_thumbnail","image_date"=:"image_date","image_time"=:"image_time","image_type"=:"image_type","author_id"=:"author_id","taxon_id"=:"taxon_id","subtitle"=:"subtitle","locality_id"=:"locality_id","coordinate_precision"=:"coordinate_precision","longitude"=:"longitude","latitude"=:"latitude","individual_id"=:"individual_id","capture_id"=:"capture_id","survey_id"=:"survey_id","sighting_id"=:"sighting_id","nest_id"=:"nest_id","nest_revision_id"=:"nest_revision_id","egg_id"=:"egg_id","specimen_id"=:"specimen_id","license_type"=:"license_type","license_year"=:"license_year","license_uri"=:"license_uri","license_notes"=:"license_notes","license_owner"=:"license_owner","image_filename"=:"image_filename","order_id"=:"order_id","family_id"=:"family_id","genus_id"=:"genus_id","species_id"=:"species_id","country_id"=:"country_id","state_id"=:"state_id","municipality_id"=:"municipality_id","user_inserted"=:"user_inserted","user_updated"=:"user_updated","insert_date"=:"insert_date","update_date"=:"update_date","exported_status"=:"exported_status","active_status"=:"active_status" where ("image_id"= :"OLD_image_id") '
+    )
+    DeleteSQL.Strings = (
+      'delete from  where ("image_id"= :"OLD_image_id") '
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftInteger
+        Name = 'individual_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = DMG.dsIndividuals
+    Left = 368
+    Top = 40
+    object qImagesmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qImagesimage_thumbnail: TBlobField
+      DisplayLabel = 'Image'
+      FieldKind = fkData
+      FieldName = 'image_thumbnail'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate]
+      ReadOnly = False
+      Required = False
+      BlobType = ftGraphic
+    end
+    object qImagesimage_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'image_date'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qImagesimage_time: TTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Time'
+      FieldKind = fkData
+      FieldName = 'image_time'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qImagesimage_type: TStringField
+      DisplayLabel = 'Type'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'image_type'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qImagesimage_typeGetText
+      OnSetText = qImagesimage_typeSetText
+      Size = 5
+    end
+    object qImagesauthor_id: TLongintField
+      DisplayLabel = 'Author (ID)'
+      FieldKind = fkData
+      FieldName = 'author_id'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesauthor_name: TStringField
+      DisplayLabel = 'Author'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'author_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object qImagestaxon_id: TLongintField
+      DisplayLabel = 'Taxon (ID)'
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagestaxon_name: TStringField
+      DisplayLabel = 'Taxon'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object qImagessubtitle: TMemoField
+      DisplayLabel = 'Subtitle'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'subtitle'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qImageslocality_id: TLongintField
+      DisplayLabel = 'Locality (ID)'
+      FieldKind = fkData
+      FieldName = 'locality_id'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImageslocality_name: TStringField
+      DisplayLabel = 'Locality'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'locality_name'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 60
+    end
+    object qImagescoordinate_precision: TStringField
+      DisplayLabel = 'Site precision'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'coordinate_precision'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qImagescoordinate_precisionGetText
+      OnSetText = qImagescoordinate_precisionSetText
+      Size = 1
+    end
+    object qImageslongitude: TFloatField
+      DisplayLabel = 'Longitude'
+      FieldKind = fkData
+      FieldName = 'longitude'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qImageslatitude: TFloatField
+      DisplayLabel = 'Latitude'
+      FieldKind = fkData
+      FieldName = 'latitude'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qImagesindividual_id: TLongintField
+      DisplayLabel = 'Individual (ID)'
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesindividual_name: TStringField
+      DisplayLabel = 'Individual'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'individual_name'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
+    end
+    object qImagescapture_id: TLongintField
+      DisplayLabel = 'Capture (ID)'
+      FieldKind = fkData
+      FieldName = 'capture_id'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagescapture_name: TStringField
+      DisplayLabel = 'Capture'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'capture_name'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
+    end
+    object qImagessurvey_id: TLongintField
+      DisplayLabel = 'Survey (ID)'
+      FieldKind = fkData
+      FieldName = 'survey_id'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagessurvey_name: TStringField
+      DisplayLabel = 'Survey'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'survey_name'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qImagessighting_id: TLongintField
+      DisplayLabel = 'Sighting (ID)'
+      FieldKind = fkData
+      FieldName = 'sighting_id'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagessighting_name: TStringField
+      DisplayLabel = 'Sighting'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'sighting_name'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qImagesnest_id: TLongintField
+      DisplayLabel = 'Nest (ID)'
+      FieldKind = fkData
+      FieldName = 'nest_id'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesnest_name: TStringField
+      DisplayLabel = 'Nest'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'nest_name'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qImagesnest_revision_id: TLongintField
+      DisplayLabel = 'Nest revision (ID)'
+      FieldKind = fkData
+      FieldName = 'nest_revision_id'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesrevision_name: TStringField
+      DisplayLabel = 'Nest revision'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'revision_name'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qImagesegg_id: TLongintField
+      DisplayLabel = 'Egg (ID)'
+      FieldKind = fkData
+      FieldName = 'egg_id'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesegg_name: TStringField
+      DisplayLabel = 'Egg'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'egg_name'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qImagesspecimen_id: TLongintField
+      DisplayLabel = 'Specimen (ID)'
+      FieldKind = fkData
+      FieldName = 'specimen_id'
+      Index = 29
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesspecimen_name: TStringField
+      DisplayLabel = 'Specimen'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'specimen_name'
+      Index = 30
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qImageslicense_type: TStringField
+      DisplayLabel = 'License'
+      FieldKind = fkData
+      FieldName = 'license_type'
+      Index = 31
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qImageslicense_year: TLongintField
+      DisplayLabel = 'License year'
+      FieldKind = fkData
+      FieldName = 'license_year'
+      Index = 32
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qImageslicense_uri: TStringField
+      DisplayLabel = 'License URI'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'license_uri'
+      Index = 33
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 200
+    end
+    object qImageslicense_notes: TStringField
+      DisplayLabel = 'License notes'
+      DisplayWidth = 20
+      FieldKind = fkData
+      FieldName = 'license_notes'
+      Index = 34
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qImageslicense_owner: TStringField
+      DisplayLabel = 'Rights owner'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'license_owner'
+      Index = 35
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+    object qImagesimage_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'image_id'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qImagesimage_filename: TStringField
+      DisplayLabel = 'File path'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'image_filename'
+      Index = 37
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 300
+    end
+    object qImagesorder_id: TLongintField
+      DisplayLabel = 'Order (ID)'
+      FieldKind = fkData
+      FieldName = 'order_id'
+      Index = 38
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesfamily_id: TLongintField
+      DisplayLabel = 'Family (ID)'
+      FieldKind = fkData
+      FieldName = 'family_id'
+      Index = 39
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesgenus_id: TLongintField
+      DisplayLabel = 'Genus (ID)'
+      FieldKind = fkData
+      FieldName = 'genus_id'
+      Index = 40
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesspecies_id: TLongintField
+      DisplayLabel = 'Species (ID)'
+      FieldKind = fkData
+      FieldName = 'species_id'
+      Index = 41
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagescountry_id: TLongintField
+      DisplayLabel = 'Country (ID)'
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 42
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesstate_id: TLongintField
+      DisplayLabel = 'State (ID)'
+      FieldKind = fkData
+      FieldName = 'state_id'
+      Index = 43
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesmunicipality_id: TLongintField
+      DisplayLabel = 'Municipality (ID)'
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 44
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 45
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 46
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 47
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 48
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qImagesexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 49
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qImagesactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 50
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsImages: TDataSource
+    DataSet = qImages
+    Left = 480
+    Top = 40
+  end
+end

@@ -1,0 +1,13 @@
+{"version":1,"strings":[
+{"hash":211274882,"name":"tedtuser.caption","sourcebytes":[78,101,119,32,117,115,101,114],"value":"New user"},
+{"hash":366789,"name":"tedtuser.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tedtuser.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":71241914,"name":"tedtuser.lblusername.caption","sourcebytes":[85,115,101,114,110,97,109,101,58,32,42],"value":"Username: *"},
+{"hash":242270122,"name":"tedtuser.lblfullname.caption","sourcebytes":[70,117,108,108,32,110,97,109,101,58],"value":"Full name:"},
+{"hash":84012698,"name":"tedtuser.lblrank.caption","sourcebytes":[65,99,99,101,115,115,32,108,101,118,101,108,58,32,42],"value":"Access level: *"},
+{"hash":267702634,"name":"tedtuser.lblpermissions.caption","sourcebytes":[80,101,114,109,105,115,115,105,111,110,115,58],"value":"Permissions:"},
+{"hash":262114878,"name":"tedtuser.ckallowcollectionedit.caption","sourcebytes":[77,97,110,97,103,101,32,99,111,108,108,101,99,116,105,111,110],"value":"Manage collection"},
+{"hash":257376147,"name":"tedtuser.ckallowprint.caption","sourcebytes":[80,114,105,110,116,32,114,101,112,111,114,116,115],"value":"Print reports"},
+{"hash":153771969,"name":"tedtuser.ckallowexport.caption","sourcebytes":[69,120,112,111,114,116,32,100,97,116,97],"value":"Export data"},
+{"hash":154595265,"name":"tedtuser.ckallowimport.caption","sourcebytes":[73,109,112,111,114,116,32,100,97,116,97],"value":"Import data"}
+]}

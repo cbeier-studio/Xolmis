@@ -1,0 +1,16 @@
+{"version":1,"strings":[
+{"hash":132301524,"name":"tedtproject.caption","sourcebytes":[78,101,119,32,112,114,111,106,101,99,116],"value":"New project"},
+{"hash":366789,"name":"tedtproject.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tedtproject.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":89566314,"name":"tedtproject.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
+{"hash":11700634,"name":"tedtproject.lbltitle.caption","sourcebytes":[84,105,116,108,101,58,32,42],"value":"Title: *"},
+{"hash":266071658,"name":"tedtproject.lblshorttitle.caption","sourcebytes":[83,104,111,114,116,32,116,105,116,108,101,58,32,42],"value":"Short title: *"},
+{"hash":179846634,"name":"tedtproject.lblabstract.caption","sourcebytes":[65,98,115,116,114,97,99,116,58],"value":"Abstract:"},
+{"hash":103817754,"name":"tedtproject.lblstartdate.caption","sourcebytes":[83,116,97,114,116,32,100,97,116,101,58],"value":"Start date:"},
+{"hash":107661002,"name":"tedtproject.lblenddate.caption","sourcebytes":[69,110,100,32,100,97,116,101,58],"value":"End date:"},
+{"hash":33581481,"name":"tedtproject.estartdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":33581481,"name":"tedtproject.eenddate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":194645850,"name":"tedtproject.lblwebsite.caption","sourcebytes":[87,101,98,115,105,116,101,58],"value":"Website:"},
+{"hash":138641338,"name":"tedtproject.lblemail.caption","sourcebytes":[69,45,109,97,105,108,58],"value":"E-mail:"},
+{"hash":57575946,"name":"tedtproject.lblcontactname.caption","sourcebytes":[67,111,110,116,97,99,116,32,112,101,114,115,111,110,58],"value":"Contact person:"}
+]}

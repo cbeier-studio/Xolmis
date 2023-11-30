@@ -1,0 +1,7903 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4\n"
+
+#: cbs_locale.rsaccepted
+msgctxt "cbs_locale.rsaccepted"
+msgid "Accepted"
+msgstr ""
+
+#: cbs_locale.rsacceptedidentifier
+msgctxt "cbs_locale.rsacceptedidentifier"
+msgid "Accepted identifier"
+msgstr ""
+
+#: cbs_locale.rsactioncannotbeundone
+msgctxt "cbs_locale.rsactioncannotbeundone"
+msgid "This action cannot be undone."
+msgstr ""
+
+#: cbs_locale.rsactioncreated
+msgctxt "cbs_locale.rsactioncreated"
+msgid "Created"
+msgstr ""
+
+#: cbs_locale.rsactiondeleted
+msgctxt "cbs_locale.rsactiondeleted"
+msgid "Deleted"
+msgstr ""
+
+#: cbs_locale.rsactionedited
+msgctxt "cbs_locale.rsactionedited"
+msgid "Edited"
+msgstr ""
+
+#: cbs_locale.rsactionrestored
+msgctxt "cbs_locale.rsactionrestored"
+msgid "Restored"
+msgstr ""
+
+#: cbs_locale.rsactiverecordduplicated
+#, object-pascal-format
+msgctxt "cbs_locale.rsactiverecordduplicated"
+msgid "A record with the same <b>%s</b> value already exists (<font color=\"blue\">%s</font>)."
+msgstr ""
+
+#: cbs_locale.rsadminuser
+msgctxt "cbs_locale.rsadminuser"
+msgid "Administrator"
+msgstr ""
+
+#: cbs_locale.rsageadult
+msgctxt "cbs_locale.rsageadult"
+msgid "Adult"
+msgstr ""
+
+#: cbs_locale.rsagefifthyear
+msgctxt "cbs_locale.rsagefifthyear"
+msgid "Fifth year"
+msgstr ""
+
+#: cbs_locale.rsagefirstyear
+msgctxt "cbs_locale.rsagefirstyear"
+msgid "First year"
+msgstr ""
+
+#: cbs_locale.rsagefledgling
+msgctxt "cbs_locale.rsagefledgling"
+msgid "Fledgling"
+msgstr ""
+
+#: cbs_locale.rsagefourthyear
+msgctxt "cbs_locale.rsagefourthyear"
+msgid "Fourth year"
+msgstr ""
+
+#: cbs_locale.rsageimmature
+msgctxt "cbs_locale.rsageimmature"
+msgid "Immature"
+msgstr ""
+
+#: cbs_locale.rsagenestling
+msgctxt "cbs_locale.rsagenestling"
+msgid "Nestling"
+msgstr ""
+
+#: cbs_locale.rsagesecondyear
+msgctxt "cbs_locale.rsagesecondyear"
+msgid "Second year"
+msgstr ""
+
+#: cbs_locale.rsagethirdyear
+msgctxt "cbs_locale.rsagethirdyear"
+msgid "Third year"
+msgstr ""
+
+#: cbs_locale.rsageunknown
+msgctxt "cbs_locale.rsageunknown"
+msgid "Unknown"
+msgstr ""
+
+#: cbs_locale.rsapproximatedcoordinate
+msgctxt "cbs_locale.rsapproximatedcoordinate"
+msgid "Approximated"
+msgstr ""
+
+#: cbs_locale.rsaudiorecorded
+msgctxt "cbs_locale.rsaudiorecorded"
+msgid "Audio recorded"
+msgstr ""
+
+#: cbs_locale.rsauthorship
+msgctxt "cbs_locale.rsauthorship"
+msgid "Authorship"
+msgstr ""
+
+#: cbs_locale.rsbandacquiredfromsupplier
+msgid "Acquired from supplier"
+msgstr ""
+
+#: cbs_locale.rsbandavailable
+msgctxt "cbs_locale.rsbandavailable"
+msgid "Available"
+msgstr ""
+
+#: cbs_locale.rsbandbroken
+msgctxt "cbs_locale.rsbandbroken"
+msgid "Broken"
+msgstr ""
+
+#: cbs_locale.rsbandclosed
+msgctxt "cbs_locale.rsbandclosed"
+msgid "Closed"
+msgstr ""
+
+#: cbs_locale.rsbandcolorlist
+msgid "\"yellow\",\"orange\",\"red\",\"carmine\",\"pink\",\"violet\",\"pale blue\",\"blue\",\"green\",\"lime green\",\"umber\",\"white\",\"gray\",\"black\",\"other\""
+msgstr ""
+
+#: cbs_locale.rsbanddeadbirdbandedbyothers
+msgctxt "cbs_locale.rsbanddeadbirdbandedbyothers"
+msgid "Dead bird banded by others"
+msgstr ""
+
+#: cbs_locale.rsbandeventdischarge
+msgctxt "cbs_locale.rsbandeventdischarge"
+msgid "Discharge"
+msgstr ""
+
+#: cbs_locale.rsbandeventorder
+msgctxt "cbs_locale.rsbandeventorder"
+msgid "Order"
+msgstr ""
+
+#: cbs_locale.rsbandeventreceive
+msgctxt "cbs_locale.rsbandeventreceive"
+msgid "Receive"
+msgstr ""
+
+#: cbs_locale.rsbandeventreport
+msgctxt "cbs_locale.rsbandeventreport"
+msgid "Report"
+msgstr ""
+
+#: cbs_locale.rsbandeventretrieve
+msgctxt "cbs_locale.rsbandeventretrieve"
+msgid "Retrieve"
+msgstr ""
+
+#: cbs_locale.rsbandeventtransfer
+msgctxt "cbs_locale.rsbandeventtransfer"
+msgid "Transfer"
+msgstr ""
+
+#: cbs_locale.rsbandeventtypelist
+msgctxt "cbs_locale.rsbandeventtypelist"
+msgid "Order,Receive,Transfer,Retrieve,Report,Use,Discharge"
+msgstr ""
+
+#: cbs_locale.rsbandeventuse
+msgctxt "cbs_locale.rsbandeventuse"
+msgid "Use"
+msgstr ""
+
+#: cbs_locale.rsbandflag
+msgid "Flag"
+msgstr ""
+
+#: cbs_locale.rsbandfoundloose
+msgctxt "cbs_locale.rsbandfoundloose"
+msgid "Found in the field (loose)"
+msgstr ""
+
+#: cbs_locale.rsbandlivingbirdbandedbyothers
+msgctxt "cbs_locale.rsbandlivingbirdbandedbyothers"
+msgid "Bird banded by others (alive)"
+msgstr ""
+
+#: cbs_locale.rsbandlockon
+msgid "Lock on"
+msgstr ""
+
+#: cbs_locale.rsbandlost
+msgctxt "cbs_locale.rsbandlost"
+msgid "Lost"
+msgstr ""
+
+#: cbs_locale.rsbandneck
+msgctxt "cbs_locale.rsbandneck"
+msgid "Neck collar"
+msgstr ""
+
+#: cbs_locale.rsbandopen
+msgctxt "cbs_locale.rsbandopen"
+msgid "Butt-end"
+msgstr ""
+
+#: cbs_locale.rsbandother
+msgctxt "cbs_locale.rsbandother"
+msgid "Other"
+msgstr ""
+
+#: cbs_locale.rsbandremoved
+msgctxt "cbs_locale.rsbandremoved"
+msgid "Removed"
+msgstr ""
+
+#: cbs_locale.rsbandrivet
+msgid "Rivet"
+msgstr ""
+
+#: cbs_locale.rsbandstatuslist
+msgctxt "cbs_locale.rsbandstatuslist"
+msgid "Available,Used,Removed,Transfered,Broken,Lost"
+msgstr ""
+
+#: cbs_locale.rsbandtransferbetweenbanders
+msgctxt "cbs_locale.rsbandtransferbetweenbanders"
+msgid "Transfer between banders"
+msgstr ""
+
+#: cbs_locale.rsbandtransfered
+msgctxt "cbs_locale.rsbandtransfered"
+msgid "Transfered"
+msgstr ""
+
+#: cbs_locale.rsbandtriangular
+msgctxt "cbs_locale.rsbandtriangular"
+msgid "Triangular"
+msgstr ""
+
+#: cbs_locale.rsbandtypelist
+msgid "\"Butt-end\",\"Flag\",\"Neck collar\",\"Wing tag\",\"Triangular\",\"Lock on\",\"Rivet\",\"Closed\",\"Other\""
+msgstr ""
+
+#: cbs_locale.rsbandused
+msgctxt "cbs_locale.rsbandused"
+msgid "Used"
+msgstr ""
+
+#: cbs_locale.rsbandwingtag
+msgid "Wing tag"
+msgstr ""
+
+#: cbs_locale.rsbatchcanceledbyuser
+msgctxt "cbs_locale.rsbatchcanceledbyuser"
+msgid "Operation was canceled by user."
+msgstr ""
+
+#: cbs_locale.rsbirdegg
+msgctxt "cbs_locale.rsbirdegg"
+msgid "Egg"
+msgstr ""
+
+#: cbs_locale.rsbirdflock
+msgctxt "cbs_locale.rsbirdflock"
+msgid "Flock"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandback
+msgctxt "cbs_locale.rsbirdinhandback"
+msgid "Bird in hand - back"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandbelly
+msgctxt "cbs_locale.rsbirdinhandbelly"
+msgid "Bird in hand - belly"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandfeet
+msgctxt "cbs_locale.rsbirdinhandfeet"
+msgid "Bird in hand - feet/bands"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandflank
+msgctxt "cbs_locale.rsbirdinhandflank"
+msgid "Bird in hand - flank"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandhead
+msgctxt "cbs_locale.rsbirdinhandhead"
+msgid "Bird in hand - head"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandtail
+msgctxt "cbs_locale.rsbirdinhandtail"
+msgid "Bird in hand - tail spread"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandwing
+msgctxt "cbs_locale.rsbirdinhandwing"
+msgid "Bird in hand - wing spread"
+msgstr ""
+
+#: cbs_locale.rsbirdnest
+msgctxt "cbs_locale.rsbirdnest"
+msgid "Nest"
+msgstr ""
+
+#: cbs_locale.rsbirdnestling
+msgctxt "cbs_locale.rsbirdnestling"
+msgid "Nestling"
+msgstr ""
+
+#: cbs_locale.rsbodymolt
+msgctxt "cbs_locale.rsbodymolt"
+msgid "body molt"
+msgstr ""
+
+#: cbs_locale.rsbreedingcodes
+msgid "\"Confirmed\",\"NY - Nest with Young\",\"NE - Nest with Eggs\",\"FS - carrying Fecal Sac\",\"FY - Feeding Young\",\"CF - Carrying Food\",\"FL - recently Fledged young\",\"ON - Occupied Nest\",\"UN - Used Nest\",\"DD - Distraction Display,\"Confirmed/Probable\",\"NB - Nest Building\",\"CN - Carrying Nesting material\",\"Probable\",\"PE - Physiological Evidence\",\"B - wren/woodpecker nest Building\",\"A - Agitated behavior\",\"N - visiting probable Nest site\",\"C - Courtship, display or copulation\",\"T - Territorial defense\",\"P - Pair in suitable habitat\",\"M - Multiple singing birds (7+)\",\"S7 - Singing bird present 7+ days\",\"Possible\",\"S - Singing bird\",\"H - in appropriate Habitat\",\"Observed\",\"F - Flyover\""
+msgstr ""
+
+#: cbs_locale.rsbroodpatch
+msgctxt "cbs_locale.rsbroodpatch"
+msgid "brood patch"
+msgstr ""
+
+#: cbs_locale.rscanceleditingprompt
+msgctxt "cbs_locale.rscanceleditingprompt"
+msgid ""
+"There are unsaved changes.\n"
+"Do you really want to discard it?"
+msgstr ""
+
+#: cbs_locale.rscantdeleterecord
+msgctxt "cbs_locale.rscantdeleterecord"
+msgid "This record cannot be deleted, because it is linked to other records."
+msgstr ""
+
+#: cbs_locale.rscantdeleteuser
+#, object-pascal-format
+msgctxt "cbs_locale.rscantdeleteuser"
+msgid "User %s should not be deleted, because it could compromise the Xolmis functioning!"
+msgstr ""
+
+#: cbs_locale.rscaptionaudiolibrary
+msgctxt "cbs_locale.rscaptionaudiolibrary"
+msgid "Audio recordings"
+msgstr ""
+
+#: cbs_locale.rscaptionband
+msgctxt "cbs_locale.rscaptionband"
+msgid "Band"
+msgstr ""
+
+#: cbs_locale.rscaptioncapture
+msgid "Capture"
+msgstr ""
+
+#: cbs_locale.rscaptioncountry
+msgctxt "cbs_locale.rscaptioncountry"
+msgid "Country"
+msgstr ""
+
+#: cbs_locale.rscaptiondate
+msgctxt "cbs_locale.rscaptiondate"
+msgid "Date"
+msgstr ""
+
+#: cbs_locale.rscaptiondistrict
+msgctxt "cbs_locale.rscaptiondistrict"
+msgid "District"
+msgstr ""
+
+#: cbs_locale.rscaptiondoubleband
+msgctxt "cbs_locale.rscaptiondoubleband"
+msgid "Double band"
+msgstr ""
+
+#: cbs_locale.rscaptionegg
+msgctxt "cbs_locale.rscaptionegg"
+msgid "Egg"
+msgstr ""
+
+#: cbs_locale.rscaptionexpedition
+msgid "Expedition"
+msgstr ""
+
+#: cbs_locale.rscaptionexpeditions
+msgctxt "cbs_locale.rscaptionexpeditions"
+msgid "Expeditions"
+msgstr ""
+
+#: cbs_locale.rscaptionfamily
+msgctxt "cbs_locale.rscaptionfamily"
+msgid "Family"
+msgstr ""
+
+#: cbs_locale.rscaptionfather
+msgctxt "cbs_locale.rscaptionfather"
+msgid "Father"
+msgstr ""
+
+#: cbs_locale.rscaptionfind
+msgctxt "cbs_locale.rscaptionfind"
+msgid "Find"
+msgstr ""
+
+#: cbs_locale.rscaptionfinish
+msgctxt "cbs_locale.rscaptionfinish"
+msgid "Finish"
+msgstr ""
+
+#: cbs_locale.rscaptiongenus
+msgctxt "cbs_locale.rscaptiongenus"
+msgid "Genus"
+msgstr ""
+
+#: cbs_locale.rscaptionhigh
+msgctxt "cbs_locale.rscaptionhigh"
+msgid "High"
+msgstr ""
+
+#: cbs_locale.rscaptionimages
+msgctxt "cbs_locale.rscaptionimages"
+msgid "Images"
+msgstr ""
+
+#: cbs_locale.rscaptionindividual
+msgctxt "cbs_locale.rscaptionindividual"
+msgid "Individual"
+msgstr ""
+
+#: cbs_locale.rscaptioninstitution
+msgctxt "cbs_locale.rscaptioninstitution"
+msgid "Institution"
+msgstr ""
+
+#: cbs_locale.rscaptionlocality
+msgctxt "cbs_locale.rscaptionlocality"
+msgid "Locality"
+msgstr ""
+
+#: cbs_locale.rscaptionlow
+msgctxt "cbs_locale.rscaptionlow"
+msgid "Low"
+msgstr ""
+
+#: cbs_locale.rscaptionmedium
+msgctxt "cbs_locale.rscaptionmedium"
+msgid "Medium"
+msgstr ""
+
+#: cbs_locale.rscaptionmethod
+msgctxt "cbs_locale.rscaptionmethod"
+msgid "Method"
+msgstr ""
+
+#: cbs_locale.rscaptionmistnet
+msgid "Mistnet"
+msgstr ""
+
+#: cbs_locale.rscaptionmolt
+msgctxt "cbs_locale.rscaptionmolt"
+msgid "Molt"
+msgstr ""
+
+#: cbs_locale.rscaptionmother
+msgctxt "cbs_locale.rscaptionmother"
+msgid "Mother"
+msgstr ""
+
+#: cbs_locale.rscaptionmunicipality
+msgctxt "cbs_locale.rscaptionmunicipality"
+msgid "Municipality"
+msgstr ""
+
+#: cbs_locale.rscaptionname
+msgctxt "cbs_locale.rscaptionname"
+msgid "Name"
+msgstr ""
+
+#: cbs_locale.rscaptionnest
+msgctxt "cbs_locale.rscaptionnest"
+msgid "Nest"
+msgstr ""
+
+#: cbs_locale.rscaptionnestrevision
+msgid "Nest revision"
+msgstr ""
+
+#: cbs_locale.rscaptionnext
+msgctxt "cbs_locale.rscaptionnext"
+msgid "Next"
+msgstr ""
+
+#: cbs_locale.rscaptionno
+msgctxt "cbs_locale.rscaptionno"
+msgid "No"
+msgstr ""
+
+#: cbs_locale.rscaptionobserver
+msgctxt "cbs_locale.rscaptionobserver"
+msgid "Observer"
+msgstr ""
+
+#: cbs_locale.rscaptionorder
+msgctxt "cbs_locale.rscaptionorder"
+msgid "Order"
+msgstr ""
+
+#: cbs_locale.rscaptionparentsite
+msgid "Parent toponym"
+msgstr ""
+
+#: cbs_locale.rscaptionpermanentnet
+msgid "Permanent mistnet"
+msgstr ""
+
+#: cbs_locale.rscaptionpermit
+msgctxt "cbs_locale.rscaptionpermit"
+msgid "Permit"
+msgstr ""
+
+#: cbs_locale.rscaptionperson
+msgid "Researcher"
+msgstr ""
+
+#: cbs_locale.rscaptionproject
+msgctxt "cbs_locale.rscaptionproject"
+msgid "Project"
+msgstr ""
+
+#: cbs_locale.rscaptionrank
+msgctxt "cbs_locale.rscaptionrank"
+msgid "Rank"
+msgstr ""
+
+#: cbs_locale.rscaptionregion
+msgctxt "cbs_locale.rscaptionregion"
+msgid "Region"
+msgstr ""
+
+#: cbs_locale.rscaptionremovedband
+msgctxt "cbs_locale.rscaptionremovedband"
+msgid "Removed band"
+msgstr ""
+
+#: cbs_locale.rscaptionsamplingplot
+msgid "Sampling plot"
+msgstr ""
+
+#: cbs_locale.rscaptionsighting
+msgid "Sighting"
+msgstr ""
+
+#: cbs_locale.rscaptionspecies
+msgctxt "cbs_locale.rscaptionspecies"
+msgid "Species"
+msgstr ""
+
+#: cbs_locale.rscaptionsspgroup
+msgctxt "cbs_locale.rscaptionsspgroup"
+msgid "Subspecific group"
+msgstr ""
+
+#: cbs_locale.rscaptionstate
+msgctxt "cbs_locale.rscaptionstate"
+msgid "State"
+msgstr ""
+
+#: cbs_locale.rscaptionsubfamily
+msgctxt "cbs_locale.rscaptionsubfamily"
+msgid "Subfamily"
+msgstr ""
+
+#: cbs_locale.rscaptionsubspecifictaxa
+msgctxt "cbs_locale.rscaptionsubspecifictaxa"
+msgid "Subspecific taxa"
+msgstr ""
+
+#: cbs_locale.rscaptionsupplier
+msgctxt "cbs_locale.rscaptionsupplier"
+msgid "Supplier"
+msgstr ""
+
+#: cbs_locale.rscaptionsurvey
+msgid "Survey"
+msgstr ""
+
+#: cbs_locale.rscaptiontaxon
+msgctxt "cbs_locale.rscaptiontaxon"
+msgid "Taxon"
+msgstr ""
+
+#: cbs_locale.rscaptiontoponym
+msgid "Toponym"
+msgstr ""
+
+#: cbs_locale.rscaptionuser
+msgid "User"
+msgstr ""
+
+#: cbs_locale.rscaptionversion
+msgctxt "cbs_locale.rscaptionversion"
+msgid "Version"
+msgstr ""
+
+#: cbs_locale.rscaptionweatherlogentry
+msgid "Weather log entry"
+msgstr ""
+
+#: cbs_locale.rscaptionyes
+msgctxt "cbs_locale.rscaptionyes"
+msgid "Yes"
+msgstr ""
+
+#: cbs_locale.rscapturechangeband
+msgctxt "cbs_locale.rscapturechangeband"
+msgid "Change band"
+msgstr ""
+
+#: cbs_locale.rscaptured
+msgctxt "cbs_locale.rscaptured"
+msgid "Captured"
+msgstr ""
+
+#: cbs_locale.rscapturenew
+msgctxt "cbs_locale.rscapturenew"
+msgid "New capture"
+msgstr ""
+
+#: cbs_locale.rscapturerecapture
+msgctxt "cbs_locale.rscapturerecapture"
+msgid "Recapture"
+msgstr ""
+
+#: cbs_locale.rscapturesameday
+msgctxt "cbs_locale.rscapturesameday"
+msgid "Same day"
+msgstr ""
+
+#: cbs_locale.rscapturetypelist
+msgctxt "cbs_locale.rscapturetypelist"
+msgid "\"New capture\",\"Recapture\",\"Same day\",\"Change band\",\"Unbanded\""
+msgstr ""
+
+#: cbs_locale.rscaptureunbanded
+msgctxt "cbs_locale.rscaptureunbanded"
+msgid "Unbanded"
+msgstr ""
+
+#: cbs_locale.rscheckuncheckall
+msgctxt "cbs_locale.rscheckuncheckall"
+msgid "Mark/unmark all records"
+msgstr ""
+
+#: cbs_locale.rscloacalprotuberance
+msgctxt "cbs_locale.rscloacalprotuberance"
+msgid "cloacal protuberance"
+msgstr ""
+
+#: cbs_locale.rscnpjincpf
+msgctxt "cbs_locale.rscnpjincpf"
+msgid "A CNPJ number was entered in the CPF field."
+msgstr ""
+
+#: cbs_locale.rscnpjtooshort
+msgctxt "cbs_locale.rscnpjtooshort"
+msgid "CNPJ number must have 14 digits."
+msgstr ""
+
+#: cbs_locale.rscolorbandsrightleft
+#, object-pascal-format
+msgctxt "cbs_locale.rscolorbandsrightleft"
+msgid "r %s / l %s"
+msgstr ""
+
+#: cbs_locale.rscompressingbackup
+msgctxt "cbs_locale.rscompressingbackup"
+msgid "Compressing backup..."
+msgstr ""
+
+#: cbs_locale.rsconfidencelevel
+msgctxt "cbs_locale.rsconfidencelevel"
+msgid "Confidence level"
+msgstr ""
+
+#: cbs_locale.rsconfirmpassword
+msgctxt "cbs_locale.rsconfirmpassword"
+msgid "Confirm password"
+msgstr ""
+
+#: cbs_locale.rsconfirmpassworderror
+msgctxt "cbs_locale.rsconfirmpassworderror"
+msgid "Incorrect password confirmation. Try to retype it."
+msgstr ""
+
+#: cbs_locale.rscoordinatesavailabletouse
+msgctxt "cbs_locale.rscoordinatesavailabletouse"
+msgid "Coordinates are available at the Coordinates Editor."
+msgstr ""
+
+#: cbs_locale.rscoordinatesnameinput
+msgctxt "cbs_locale.rscoordinatesnameinput"
+msgid "Give a name to the coordinates set:"
+msgstr ""
+
+#: cbs_locale.rscpfincnpj
+msgctxt "cbs_locale.rscpfincnpj"
+msgid "A CPF number was entered in the CNPJ field."
+msgstr ""
+
+#: cbs_locale.rscpftooshort
+msgctxt "cbs_locale.rscpftooshort"
+msgid "CPF number must have 11 digits."
+msgstr ""
+
+#: cbs_locale.rscreatingbackup
+msgctxt "cbs_locale.rscreatingbackup"
+msgid "Creating backup..."
+msgstr ""
+
+#: cbs_locale.rscyclenotselected
+msgctxt "cbs_locale.rscyclenotselected"
+msgid "No item were selected in one or more columns."
+msgstr ""
+
+#: cbs_locale.rsdatebanding
+msgctxt "cbs_locale.rsdatebanding"
+msgid "Banding date"
+msgstr ""
+
+#: cbs_locale.rsdatebirth
+msgctxt "cbs_locale.rsdatebirth"
+msgid "Birth date"
+msgstr ""
+
+#: cbs_locale.rsdatecapture
+msgctxt "cbs_locale.rsdatecapture"
+msgid "capture date"
+msgstr ""
+
+#: cbs_locale.rsdatecollection
+msgid "Collection date"
+msgstr ""
+
+#: cbs_locale.rsdatedeath
+msgctxt "cbs_locale.rsdatedeath"
+msgid "Death date"
+msgstr ""
+
+#: cbs_locale.rsdatedischarge
+msgctxt "cbs_locale.rsdatedischarge"
+msgid "Discharge date"
+msgstr ""
+
+#: cbs_locale.rsdatedispatch
+msgid "Dispatch date"
+msgstr ""
+
+#: cbs_locale.rsdateend
+msgctxt "cbs_locale.rsdateend"
+msgid "End date"
+msgstr ""
+
+#: cbs_locale.rsdateexpiration
+msgctxt "cbs_locale.rsdateexpiration"
+msgid "Expiration date"
+msgstr ""
+
+#: cbs_locale.rsdateexpire
+msgid "Expire date"
+msgstr ""
+
+#: cbs_locale.rsdateissue
+msgctxt "cbs_locale.rsdateissue"
+msgid "Issue date"
+msgstr ""
+
+#: cbs_locale.rsdatemeasured
+msgctxt "cbs_locale.rsdatemeasured"
+msgid "Measurement date"
+msgstr ""
+
+#: cbs_locale.rsdatenestrevision
+msgid "Nest revision date"
+msgstr ""
+
+#: cbs_locale.rsdatepreparation
+msgid "Preparation date"
+msgstr ""
+
+#: cbs_locale.rsdatereceipt
+msgctxt "cbs_locale.rsdatereceipt"
+msgid "Receipt date"
+msgstr ""
+
+#: cbs_locale.rsdatereport
+msgctxt "cbs_locale.rsdatereport"
+msgid "Report date"
+msgstr ""
+
+#: cbs_locale.rsdatestart
+msgctxt "cbs_locale.rsdatestart"
+msgid "Start date"
+msgstr ""
+
+#: cbs_locale.rsdatetoday
+msgctxt "cbs_locale.rsdatetoday"
+msgid "today"
+msgstr ""
+
+#: cbs_locale.rsdeadbird
+msgctxt "cbs_locale.rsdeadbird"
+msgid "Dead bird"
+msgstr ""
+
+#: cbs_locale.rsdecompressingbackup
+msgctxt "cbs_locale.rsdecompressingbackup"
+msgid "Decompressing backup..."
+msgstr ""
+
+#: cbs_locale.rsdeleteconnectionprompt
+msgctxt "cbs_locale.rsdeleteconnectionprompt"
+msgid "Do you really want to delete this connection?"
+msgstr ""
+
+#: cbs_locale.rsdeleteconnectiontitle
+msgid "Delete connection"
+msgstr ""
+
+#: cbs_locale.rsdeleteimageprompt
+msgctxt "cbs_locale.rsdeleteimageprompt"
+msgid ""
+"Dow you really want to delete this record?\n"
+"This action cannot be undone."
+msgstr ""
+
+#: cbs_locale.rsdeleterecordfooter
+msgctxt "cbs_locale.rsdeleterecordfooter"
+msgid "Deleted record stay in recycle bin for the time period defined in Settings before being permanently deleted."
+msgstr ""
+
+#: cbs_locale.rsdeleterecordprompt
+msgctxt "cbs_locale.rsdeleterecordprompt"
+msgid "Do you really want to delete this record?"
+msgstr ""
+
+#: cbs_locale.rsdeleterecordtitle
+msgctxt "cbs_locale.rsdeleterecordtitle"
+msgid "Delete record"
+msgstr ""
+
+#: cbs_locale.rsdetectiontypes
+msgid "\"S - song\",\"C - call\",\"V - seen\",\"W - wing flapping\",\"D - drumming\",\"F - flying\""
+msgstr ""
+
+#: cbs_locale.rsdiscardchangestitle
+msgid "Discard changes"
+msgstr ""
+
+#: cbs_locale.rsectoparasite
+msgctxt "cbs_locale.rsectoparasite"
+msgid "Ectoparasite"
+msgstr ""
+
+#: cbs_locale.rseditedbybatch
+msgctxt "cbs_locale.rseditedbybatch"
+msgid "Edited by batch"
+msgstr ""
+
+#: cbs_locale.rseditedbyform
+msgctxt "cbs_locale.rseditedbyform"
+msgid "Edited by form"
+msgstr ""
+
+#: cbs_locale.rseditedbygrid
+msgctxt "cbs_locale.rseditedbygrid"
+msgid "Edited by grid"
+msgstr ""
+
+#: cbs_locale.rseditedbyimport
+msgctxt "cbs_locale.rseditedbyimport"
+msgid "Edited by import"
+msgstr ""
+
+#: cbs_locale.rseggeliptic
+msgctxt "cbs_locale.rseggeliptic"
+msgid "Eliptic"
+msgstr ""
+
+#: cbs_locale.rseggovoid
+msgctxt "cbs_locale.rseggovoid"
+msgid "Ovoid"
+msgstr ""
+
+#: cbs_locale.rseggpiriform
+msgctxt "cbs_locale.rseggpiriform"
+msgid "Piriform"
+msgstr ""
+
+#: cbs_locale.rseggspheric
+msgctxt "cbs_locale.rseggspheric"
+msgid "Spheric"
+msgstr ""
+
+#: cbs_locale.rseggunknown
+msgctxt "cbs_locale.rseggunknown"
+msgid "Unknown"
+msgstr ""
+
+#: cbs_locale.rsenvironment
+msgctxt "cbs_locale.rsenvironment"
+msgid "Environment"
+msgstr ""
+
+#: cbs_locale.rsepithetonlyininfrasp
+msgctxt "cbs_locale.rsepithetonlyininfrasp"
+msgid "The <b>Infraspecific epithet</b> must be filled when an <b>Infraspecific category</b> was selected."
+msgstr ""
+
+#: cbs_locale.rserrorbackupfailed
+msgctxt "cbs_locale.rserrorbackupfailed"
+msgid "Backup file creation failed."
+msgstr ""
+
+#: cbs_locale.rserrorbackupnotfound
+#, object-pascal-format
+msgctxt "cbs_locale.rserrorbackupnotfound"
+msgid "Backup file not found: %s"
+msgstr ""
+
+#: cbs_locale.rserrorconnectingdatabase
+msgctxt "cbs_locale.rserrorconnectingdatabase"
+msgid ""
+"Unable to connect to database.\n"
+"Check if the connection settings and the database path are correct."
+msgstr ""
+
+#: cbs_locale.rserrorconnectionnotfound
+#, object-pascal-format
+msgctxt "cbs_locale.rserrorconnectionnotfound"
+msgid "Connection '%s' not found."
+msgstr ""
+
+#: cbs_locale.rserrorcreatefolder
+msgctxt "cbs_locale.rserrorcreatefolder"
+msgid "Not able to create folder:"
+msgstr ""
+
+#: cbs_locale.rserrorcreatingsystemdatabase
+msgctxt "cbs_locale.rserrorcreatingsystemdatabase"
+msgid "Unable to create the system database."
+msgstr ""
+
+#: cbs_locale.rserrorcsvindexnotfound
+msgctxt "cbs_locale.rserrorcsvindexnotfound"
+msgid "Field index of CSV record not exists!"
+msgstr ""
+
+#: cbs_locale.rserrordatabasecorrupted
+msgctxt "cbs_locale.rserrordatabasecorrupted"
+msgid ""
+"The database file is corrupted.\n"
+"Restoring a database backup is recommended."
+msgstr ""
+
+#: cbs_locale.rserrordatabasenotfound
+#, object-pascal-format
+msgctxt "cbs_locale.rserrordatabasenotfound"
+msgid ""
+"Database file not found:\n"
+"%s"
+msgstr ""
+
+#: cbs_locale.rserrordatabasesweep
+msgctxt "cbs_locale.rserrordatabasesweep"
+msgid "Error running database Sweep and Analyze"
+msgstr ""
+
+#: cbs_locale.rserroremptyfieldname
+msgid "Error loading field info: the field name is blank."
+msgstr ""
+
+#: cbs_locale.rserrorfilenotfound
+#, object-pascal-format
+msgctxt "cbs_locale.rserrorfilenotfound"
+msgid "File %s not found."
+msgstr ""
+
+#: cbs_locale.rserrorfound
+#, object-pascal-format
+msgctxt "cbs_locale.rserrorfound"
+msgid "<p><b>%d error</b> found! Please fix it before proceeding.</p>"
+msgstr ""
+
+#: cbs_locale.rserrorgeneratingmap
+msgctxt "cbs_locale.rserrorgeneratingmap"
+msgid "Error generating map."
+msgstr ""
+
+#: cbs_locale.rserrorhelpnotfound
+#, object-pascal-format
+msgctxt "cbs_locale.rserrorhelpnotfound"
+msgid ""
+"Check if the help files are in the folder:\n"
+"%s"
+msgstr ""
+
+#: cbs_locale.rserrorimporting
+#, object-pascal-format
+msgctxt "cbs_locale.rserrorimporting"
+msgid ""
+"An error occurred importing:\n"
+"%s"
+msgstr ""
+
+#: cbs_locale.rserrorinvaliddate
+msgctxt "cbs_locale.rserrorinvaliddate"
+msgid "Invalid date. Check if it was typed correctly."
+msgstr ""
+
+#: cbs_locale.rserrormontadata
+#, object-pascal-format
+msgctxt "cbs_locale.rserrormontadata"
+msgid "Error in year digits (%d). Send this issue to the Support."
+msgstr ""
+
+#: cbs_locale.rserrorrestorefailed
+msgctxt "cbs_locale.rserrorrestorefailed"
+msgid "Backup restore failed."
+msgstr ""
+
+#: cbs_locale.rserrorrewritinghierarchy
+msgctxt "cbs_locale.rserrorrewritinghierarchy"
+msgid "Error rewriting the hierarchy. All rewriting changes were discarded."
+msgstr ""
+
+#: cbs_locale.rserrorsfound
+#, object-pascal-format
+msgctxt "cbs_locale.rserrorsfound"
+msgid "<p><b>%d errors</b> found! Please fix it before proceeding.</p>"
+msgstr ""
+
+#: cbs_locale.rserrortablenotfound
+#, object-pascal-format
+msgctxt "cbs_locale.rserrortablenotfound"
+msgid "Table '%s' not found."
+msgstr ""
+
+#: cbs_locale.rserrortitlehelpnotfound
+msgctxt "cbs_locale.rserrortitlehelpnotfound"
+msgid "Help files not found!"
+msgstr ""
+
+#: cbs_locale.rsexactcoordinate
+msgctxt "cbs_locale.rsexactcoordinate"
+msgid "Exact"
+msgstr ""
+
+#: cbs_locale.rsexportcancelled
+msgctxt "cbs_locale.rsexportcancelled"
+msgid "Export was cancelled by user."
+msgstr ""
+
+#: cbs_locale.rsexportempty
+msgctxt "cbs_locale.rsexportempty"
+msgid "No records found! Export cancelled."
+msgstr ""
+
+#: cbs_locale.rsexportfieldsnotfound
+msgctxt "cbs_locale.rsexportfieldsnotfound"
+msgid "No fields selected to export!"
+msgstr ""
+
+#: cbs_locale.rsexportfinished
+#, object-pascal-format
+msgctxt "cbs_locale.rsexportfinished"
+msgid "Export to %s: Finished!"
+msgstr ""
+
+#: cbs_locale.rsfeather
+msgctxt "cbs_locale.rsfeather"
+msgid "Feather"
+msgstr ""
+
+#: cbs_locale.rsfeces
+msgctxt "cbs_locale.rsfeces"
+msgid "Feces"
+msgstr ""
+
+#: cbs_locale.rsfieldwork
+msgctxt "cbs_locale.rsfieldwork"
+msgid "Fieldwork"
+msgstr ""
+
+#: cbs_locale.rsfilterand
+msgctxt "cbs_locale.rsfilterand"
+msgid "and "
+msgstr ""
+
+#: cbs_locale.rsfilterbetween
+msgctxt "cbs_locale.rsfilterbetween"
+msgid "between"
+msgstr ""
+
+#: cbs_locale.rsfilterequal
+msgctxt "cbs_locale.rsfilterequal"
+msgid "equal to"
+msgstr ""
+
+#: cbs_locale.rsfilterlessthan
+msgctxt "cbs_locale.rsfilterlessthan"
+msgid "lesser than or equal to"
+msgstr ""
+
+#: cbs_locale.rsfilterlike
+msgctxt "cbs_locale.rsfilterlike"
+msgid "contains"
+msgstr ""
+
+#: cbs_locale.rsfiltermorethan
+msgctxt "cbs_locale.rsfiltermorethan"
+msgid "greater than or equal to"
+msgstr ""
+
+#: cbs_locale.rsfilternotnull
+msgctxt "cbs_locale.rsfilternotnull"
+msgid "not empty"
+msgstr ""
+
+#: cbs_locale.rsfilternull
+msgctxt "cbs_locale.rsfilternull"
+msgid "empty"
+msgstr ""
+
+#: cbs_locale.rsfilteror
+msgctxt "cbs_locale.rsfilteror"
+msgid "or "
+msgstr ""
+
+#: cbs_locale.rsfilterstartlike
+msgctxt "cbs_locale.rsfilterstartlike"
+msgid "start with"
+msgstr ""
+
+#: cbs_locale.rsflightmolt
+msgctxt "cbs_locale.rsflightmolt"
+msgid "flight feathers molt"
+msgstr ""
+
+#: cbs_locale.rsflightwear
+msgctxt "cbs_locale.rsflightwear"
+msgid "flight feathers wear"
+msgstr ""
+
+#: cbs_locale.rsfood
+msgctxt "cbs_locale.rsfood"
+msgid "Food"
+msgstr ""
+
+#: cbs_locale.rsfootprint
+msgctxt "cbs_locale.rsfootprint"
+msgid "Footprint"
+msgstr ""
+
+#: cbs_locale.rsforeignnotexist
+#, object-pascal-format
+msgctxt "cbs_locale.rsforeignnotexist"
+msgid "Selected <b>%s</b> does not exist. Select a valid record."
+msgstr ""
+
+#: cbs_locale.rsfound
+msgctxt "cbs_locale.rsfound"
+msgid "found"
+msgstr ""
+
+#: cbs_locale.rsfoundfiles
+#, object-pascal-format
+msgctxt "cbs_locale.rsfoundfiles"
+msgid "Files found: %d"
+msgstr ""
+
+#: cbs_locale.rsfoundplural
+msgctxt "cbs_locale.rsfoundplural"
+msgid "found"
+msgstr ""
+
+#: cbs_locale.rsfreebirdagonistic
+msgctxt "cbs_locale.rsfreebirdagonistic"
+msgid "Free bird - agonistic behavior"
+msgstr ""
+
+#: cbs_locale.rsfreebirdbuildingnest
+msgctxt "cbs_locale.rsfreebirdbuildingnest"
+msgid "Free bird - building nest"
+msgstr ""
+
+#: cbs_locale.rsfreebirdcopulating
+msgctxt "cbs_locale.rsfreebirdcopulating"
+msgid "Free bird - copulating"
+msgstr ""
+
+#: cbs_locale.rsfreebirddisplaying
+msgctxt "cbs_locale.rsfreebirddisplaying"
+msgid "Free bird - displaying"
+msgstr ""
+
+#: cbs_locale.rsfreebirdflying
+msgctxt "cbs_locale.rsfreebirdflying"
+msgid "Free bird - flying"
+msgstr ""
+
+#: cbs_locale.rsfreebirdforraging
+msgctxt "cbs_locale.rsfreebirdforraging"
+msgid "Free bird - forraging/feeding"
+msgstr ""
+
+#: cbs_locale.rsfreebirdincubating
+msgctxt "cbs_locale.rsfreebirdincubating"
+msgid "Free bird - in nest"
+msgstr ""
+
+#: cbs_locale.rsfreebirdstanding
+msgctxt "cbs_locale.rsfreebirdstanding"
+msgid "Free bird - perched"
+msgstr ""
+
+#: cbs_locale.rsfreebirdswimming
+msgctxt "cbs_locale.rsfreebirdswimming"
+msgid "Free bird - swimming"
+msgstr ""
+
+#: cbs_locale.rsfreebirdvocalizing
+msgctxt "cbs_locale.rsfreebirdvocalizing"
+msgid "Free bird - vocalizing"
+msgstr ""
+
+#: cbs_locale.rsfromnumberlessthanzero
+msgctxt "cbs_locale.rsfromnumberlessthanzero"
+msgid "The start number must be greater than zero."
+msgstr ""
+
+#: cbs_locale.rsfuturedate
+#, object-pascal-format
+msgctxt "cbs_locale.rsfuturedate"
+msgid "<b>%s</b> must be after <b>%s</b> (<font color=\"green\">%s</font>)."
+msgstr ""
+
+#: cbs_locale.rsfuturedatefromtoday
+msgctxt "cbs_locale.rsfuturedatefromtoday"
+msgid "The date must be today or earlier."
+msgstr ""
+
+#: cbs_locale.rsfuturepartialdate
+#, object-pascal-format
+msgctxt "cbs_locale.rsfuturepartialdate"
+msgid "<b>%s</b> must be before or equal to <b>%s</b> (<font color=\"green\">%s</font>)."
+msgstr ""
+
+#: cbs_locale.rsguestuser
+msgctxt "cbs_locale.rsguestuser"
+msgid "Guest"
+msgstr ""
+
+#: cbs_locale.rsheard
+msgctxt "cbs_locale.rsheard"
+msgid "Heard"
+msgstr ""
+
+#: cbs_locale.rshintcheckuncheckall
+msgctxt "cbs_locale.rshintcheckuncheckall"
+msgid "Mark/unmark all"
+msgstr ""
+
+#: cbs_locale.rshintheaderallmarked
+#, object-pascal-format
+msgctxt "cbs_locale.rshintheaderallmarked"
+msgid "All %d records marked"
+msgstr ""
+
+#: cbs_locale.rshintheaderallunmarked
+msgctxt "cbs_locale.rshintheaderallunmarked"
+msgid "No marked records"
+msgstr ""
+
+#: cbs_locale.rshintheadersomemarked
+#, object-pascal-format
+msgctxt "cbs_locale.rshintheadersomemarked"
+msgid "%d of %d records marked"
+msgstr ""
+
+#: cbs_locale.rshome
+msgctxt "cbs_locale.rshome"
+msgid "Home"
+msgstr ""
+
+#: cbs_locale.rshowagedsexedlist
+msgid "\"Physical differences\",\"B - Brood patch\",\"C - Cloacal protuberance\",\"@ - egg in oviduct\",\"E - Eye color\",\"I - mouth/bill color or striations on bill (in hummingbirds)\",\"G - Gape\",\"$ - feet or legs\",\"S - Skull ossification\",\"Q - measurements (details in notes)\",\"Y - symmetrical flight feather molt\",\"Plumage characters\",\"K - definitive basic plumage\",\"A - definitve Alternate plumage\",\"F - Formative plumage (applies to first alternate plumage as well)\",\"J - Juvenal plumage\",\"M - Molt limits\",\"P - Plumage (only for sexual dimorphism)\",\"L - plumage color patch Length or extent (details in notes)\",\"Feather characters\",\"W - feather Wear\",\"V - feather shape\",\"R - Prejuvenal (first prebasic) molt\",\"= - fault bar alignment\",\"# - growth bar alignment\",\"Undetermined or remaining\",\"O - Other (such as behavior/copulation; put in notes)\",\"U - Undetermined after examination\",\"X - age or sex determination not attempted\",\"Z - less precise age (< 95%) but high certainty\""
+msgstr ""
+
+#: cbs_locale.rsidentifier
+msgctxt "cbs_locale.rsidentifier"
+msgid "Identifier"
+msgstr ""
+
+#: cbs_locale.rsimagenotfound
+#, object-pascal-format
+msgctxt "cbs_locale.rsimagenotfound"
+msgid "Image not found: %s"
+msgstr ""
+
+#: cbs_locale.rsimagenotsupported
+#, object-pascal-format
+msgctxt "cbs_locale.rsimagenotsupported"
+msgid "Image type not supported: %s"
+msgstr ""
+
+#: cbs_locale.rsimportcanceledbyuser
+msgctxt "cbs_locale.rsimportcanceledbyuser"
+msgid "Import cancelled by the user."
+msgstr ""
+
+#: cbs_locale.rsimportimagestitle
+msgctxt "cbs_locale.rsimportimagestitle"
+msgid "Import images"
+msgstr ""
+
+#: cbs_locale.rsinactiverecordduplicated
+#, object-pascal-format
+msgctxt "cbs_locale.rsinactiverecordduplicated"
+msgid "An <b>inactive</b> record with the same <b>%s</b> value already exists (<font color=\"blue\">%s</font>)."
+msgstr ""
+
+#: cbs_locale.rsincorrectpassword
+msgctxt "cbs_locale.rsincorrectpassword"
+msgid "Incorrect password."
+msgstr ""
+
+#: cbs_locale.rsinformutmzone
+msgctxt "cbs_locale.rsinformutmzone"
+msgid "Inform the origin UTM Zone and the Hemisphere."
+msgstr ""
+
+#: cbs_locale.rsinfraepithet
+msgctxt "cbs_locale.rsinfraepithet"
+msgid "Infraspecific epithet"
+msgstr ""
+
+#: cbs_locale.rsinfrarank
+msgctxt "cbs_locale.rsinfrarank"
+msgid "Infraspecific rank"
+msgstr ""
+
+#: cbs_locale.rsinsertedbybatch
+msgctxt "cbs_locale.rsinsertedbybatch"
+msgid "Inserted by batch"
+msgstr ""
+
+#: cbs_locale.rsinsertedbydrop
+msgctxt "cbs_locale.rsinsertedbydrop"
+msgid "Inserted by drag and drop"
+msgstr ""
+
+#: cbs_locale.rsinsertedbyform
+msgctxt "cbs_locale.rsinsertedbyform"
+msgid "Inserted by form"
+msgstr ""
+
+#: cbs_locale.rsinsertedbygrid
+msgctxt "cbs_locale.rsinsertedbygrid"
+msgid "Inserted by grid"
+msgstr ""
+
+#: cbs_locale.rsinsertedbyimport
+msgctxt "cbs_locale.rsinsertedbyimport"
+msgid "Inserted by import"
+msgstr ""
+
+#: cbs_locale.rsinvalidcpf
+msgctxt "cbs_locale.rsinvalidcpf"
+msgid "The <b>CPF number</b> entered is invalid."
+msgstr ""
+
+#: cbs_locale.rsinvaliddate
+#, object-pascal-format
+msgctxt "cbs_locale.rsinvaliddate"
+msgid "The <b>%s</b> is not a valid date."
+msgstr ""
+
+#: cbs_locale.rsinvalidemail
+#, object-pascal-format
+msgctxt "cbs_locale.rsinvalidemail"
+msgid "The address <font color=\"blue\">%s</font> is not a valid <b>e-mail</b>."
+msgstr ""
+
+#: cbs_locale.rsinvalidlatitude
+msgctxt "cbs_locale.rsinvalidlatitude"
+msgid "The <b>Latitude</b> entered is not a valid decimal number."
+msgstr ""
+
+#: cbs_locale.rsinvalidlogin
+msgctxt "cbs_locale.rsinvalidlogin"
+msgid "User not found."
+msgstr ""
+
+#: cbs_locale.rsinvalidlongitude
+msgctxt "cbs_locale.rsinvalidlongitude"
+msgid "The <b>Longitude</b> entered is not a valid decimal number."
+msgstr ""
+
+#: cbs_locale.rsinvalidpartialdate
+#, object-pascal-format
+msgctxt "cbs_locale.rsinvalidpartialdate"
+msgid "The <b>%s</b> is not a valid date."
+msgstr ""
+
+#: cbs_locale.rsinvalidtimerange
+msgctxt "cbs_locale.rsinvalidtimerange"
+msgid "The end time must be later than the start time."
+msgstr ""
+
+#: cbs_locale.rsisuptodate
+#, object-pascal-format
+msgctxt "cbs_locale.rsisuptodate"
+msgid "You are running the most recent %s version!"
+msgstr ""
+
+#: cbs_locale.rslabelfile
+msgctxt "cbs_locale.rslabelfile"
+msgid "Database file: *"
+msgstr ""
+
+#: cbs_locale.rslabelname
+msgctxt "cbs_locale.rslabelname"
+msgid "Database name: *"
+msgstr ""
+
+#: cbs_locale.rslatitude
+msgctxt "cbs_locale.rslatitude"
+msgid "Latitude"
+msgstr ""
+
+#: cbs_locale.rslatitudecaption
+#, object-pascal-format
+msgctxt "cbs_locale.rslatitudecaption"
+msgid "Latitude: <font color=\"$00C75F5B\">%s</font>"
+msgstr ""
+
+#: cbs_locale.rsleftleg
+#, object-pascal-format
+msgctxt "cbs_locale.rsleftleg"
+msgid "l%s"
+msgstr ""
+
+#: cbs_locale.rsleftlegempty
+msgctxt "cbs_locale.rsleftlegempty"
+msgid "l-"
+msgstr ""
+
+#: cbs_locale.rslibreofficeerror
+#, object-pascal-format
+msgctxt "cbs_locale.rslibreofficeerror"
+msgid "Error running LibreOffice: %d"
+msgstr ""
+
+#: cbs_locale.rslibreofficeerrorwrongext
+#, object-pascal-format
+msgctxt "cbs_locale.rslibreofficeerrorwrongext"
+msgid "File extension not supported: %s"
+msgstr ""
+
+#: cbs_locale.rslibreofficenotfound
+msgctxt "cbs_locale.rslibreofficenotfound"
+msgid "LibreOffice not found!"
+msgstr ""
+
+#: cbs_locale.rsline
+#, object-pascal-format
+msgctxt "cbs_locale.rsline"
+msgid "Line: %d"
+msgstr ""
+
+#: cbs_locale.rslistcheckednone
+msgctxt "cbs_locale.rslistcheckednone"
+msgid "No list items were checked!"
+msgstr ""
+
+#: cbs_locale.rsloading
+msgid "Loading"
+msgstr ""
+
+#: cbs_locale.rsloadingcsvfile
+msgctxt "cbs_locale.rsloadingcsvfile"
+msgid "Loading CSV file..."
+msgstr ""
+
+#: cbs_locale.rsloadingform
+#, object-pascal-format
+msgctxt "cbs_locale.rsloadingform"
+msgid "Loading %s..."
+msgstr ""
+
+#: cbs_locale.rsloadingrecords
+msgctxt "cbs_locale.rsloadingrecords"
+msgid "Loading records..."
+msgstr ""
+
+#: cbs_locale.rsloginbutton
+msgctxt "cbs_locale.rsloginbutton"
+msgid "Sign in"
+msgstr ""
+
+#: cbs_locale.rslongitude
+msgctxt "cbs_locale.rslongitude"
+msgid "Longitude"
+msgstr ""
+
+#: cbs_locale.rslongitudecaption
+#, object-pascal-format
+msgctxt "cbs_locale.rslongitudecaption"
+msgid "Longitude: <font color=\"$00C75F5B\">%s</font>"
+msgstr ""
+
+#: cbs_locale.rsmarked
+msgctxt "cbs_locale.rsmarked"
+msgid "marked"
+msgstr ""
+
+#: cbs_locale.rsmarkedplural
+msgctxt "cbs_locale.rsmarkedplural"
+msgid "marked"
+msgstr ""
+
+#: cbs_locale.rsmaxcollectorsreached
+#, object-pascal-format
+msgctxt "cbs_locale.rsmaxcollectorsreached"
+msgid "The maximum number of authors (%d) was reached!"
+msgstr ""
+
+#: cbs_locale.rsminpasswordlength
+msgctxt "cbs_locale.rsminpasswordlength"
+msgid "The password must have 8 characters or more."
+msgstr ""
+
+#: cbs_locale.rsmodificationsnotsaved
+msgctxt "cbs_locale.rsmodificationsnotsaved"
+msgid "Changes not saved"
+msgstr ""
+
+#: cbs_locale.rsmoltcycles
+msgid "\"U - Unknown molt cycle\",\"D - Definitive molt cycle\",\"F - First molt cycle\",\"S - Second molt cycle\",\"T - Third molt cycle\",\"4 - Fourth molt cycle\",\"5 - Fifth molt cycle\""
+msgstr ""
+
+#: cbs_locale.rsmoltings
+msgid "\"C - not molting (Cycle)\",\"P - molting (Pre)\",\"A - After a given plumage\""
+msgstr ""
+
+#: cbs_locale.rsmoltlimitslist
+msgid "\"N - No molt limits found after examination\",\"U - Molt limits are Undetermined after examination\",\"P - Primary flight feathers\",\"S - Secondary flight feathers\",\"D - primary coverts\",\"G - Greater coverts\",\"V - primaries Vs. greater coverts\",\"R - Rectrices\",\"L - Lesser coverts\",\"M - Median coverts\",\"B - Body plumage\",\"C - Carpal covert vs. alula covert/lesser alula\",\"A - Alula covert vs. lesser alula\",\"Y - It has limits but is not determined where\""
+msgstr ""
+
+#: cbs_locale.rsmoreselected
+#, object-pascal-format
+msgctxt "cbs_locale.rsmoreselected"
+msgid "%d selected"
+msgstr ""
+
+#: cbs_locale.rsmoreselectedfemale
+#, object-pascal-format
+msgctxt "cbs_locale.rsmoreselectedfemale"
+msgid "%d selected"
+msgstr ""
+
+#: cbs_locale.rsnamenotfound
+msgctxt "cbs_locale.rsnamenotfound"
+msgid "not found"
+msgstr ""
+
+#: cbs_locale.rsnestactive
+msgctxt "cbs_locale.rsnestactive"
+msgid "Active"
+msgstr ""
+
+#: cbs_locale.rsnestbuilding
+msgctxt "cbs_locale.rsnestbuilding"
+msgid "Building"
+msgstr ""
+
+#: cbs_locale.rsnesthatching
+msgctxt "cbs_locale.rsnesthatching"
+msgid "Hatching"
+msgstr ""
+
+#: cbs_locale.rsnestinactive
+msgctxt "cbs_locale.rsnestinactive"
+msgid "Inactive"
+msgstr ""
+
+#: cbs_locale.rsnestincubating
+msgid "Incubating"
+msgstr ""
+
+#: cbs_locale.rsnestlaying
+msgctxt "cbs_locale.rsnestlaying"
+msgid "Laying"
+msgstr ""
+
+#: cbs_locale.rsnestlost
+msgctxt "cbs_locale.rsnestlost"
+msgid "Lost"
+msgstr ""
+
+#: cbs_locale.rsnestnestling
+msgctxt "cbs_locale.rsnestnestling"
+msgid "Nestling"
+msgstr ""
+
+#: cbs_locale.rsnestsuccess
+msgctxt "cbs_locale.rsnestsuccess"
+msgid "Success"
+msgstr ""
+
+#: cbs_locale.rsnestunknown
+msgctxt "cbs_locale.rsnestunknown"
+msgid "Unknown"
+msgstr ""
+
+#: cbs_locale.rsnewpassword
+msgctxt "cbs_locale.rsnewpassword"
+msgid "New password"
+msgstr ""
+
+#: cbs_locale.rsnewupdateavailable
+#, object-pascal-format
+msgctxt "cbs_locale.rsnewupdateavailable"
+msgid ""
+"A new %s version is available!\n"
+"Do you want to download it now?"
+msgstr ""
+
+#: cbs_locale.rsnoneselected
+msgctxt "cbs_locale.rsnoneselected"
+msgid "none selected"
+msgstr ""
+
+#: cbs_locale.rsnoneselectedfemale
+msgctxt "cbs_locale.rsnoneselectedfemale"
+msgid "none selected"
+msgstr ""
+
+#: cbs_locale.rsnorecordsfound
+msgid "No records found!"
+msgstr ""
+
+#: cbs_locale.rsnotestr
+msgctxt "cbs_locale.rsnotestr"
+msgid "Note"
+msgstr ""
+
+#: cbs_locale.rsnotfullname
+msgctxt "cbs_locale.rsnotfullname"
+msgid "not fullname"
+msgstr ""
+
+#: cbs_locale.rsnothumbnails
+msgctxt "cbs_locale.rsnothumbnails"
+msgid "There are no images to recreate the thumbnails!"
+msgstr ""
+
+#: cbs_locale.rsnouserfound
+msgctxt "cbs_locale.rsnouserfound"
+msgid "no user found"
+msgstr ""
+
+#: cbs_locale.rsoneselected
+#, object-pascal-format
+msgctxt "cbs_locale.rsoneselected"
+msgid "%d selected"
+msgstr ""
+
+#: cbs_locale.rsoneselectedfemale
+#, object-pascal-format
+msgctxt "cbs_locale.rsoneselectedfemale"
+msgid "%d selected"
+msgstr ""
+
+#: cbs_locale.rsoriginalsearch
+msgctxt "cbs_locale.rsoriginalsearch"
+msgid "Original search"
+msgstr ""
+
+#: cbs_locale.rspartialdateempty
+#, object-pascal-format
+msgctxt "cbs_locale.rspartialdateempty"
+msgid "At least the <font color=\"blue\">year</font> of <b>%s</b> must be entered."
+msgstr ""
+
+#: cbs_locale.rsphotographed
+msgctxt "cbs_locale.rsphotographed"
+msgid "Photographed"
+msgstr ""
+
+#: cbs_locale.rsplantminergenusspeciesonly
+msgctxt "cbs_locale.rsplantminergenusspeciesonly"
+msgid "Plantminer query works only for Genera and Species."
+msgstr ""
+
+#: cbs_locale.rsplumages
+msgid "\"U - Unknown plumage\",\"J - Juvenal plumage\",\"S - Supplemental plumage\",\"F - Formative plumage\",\"B - Basic plumage\",\"A - Alternate plumage\""
+msgstr ""
+
+#: cbs_locale.rspostbeforecloseprompt
+msgctxt "cbs_locale.rspostbeforecloseprompt"
+msgid "There are unsaved changes. Do you want to save it?"
+msgstr ""
+
+#: cbs_locale.rspreparingbackup
+msgctxt "cbs_locale.rspreparingbackup"
+msgid "Preparing backup..."
+msgstr ""
+
+#: cbs_locale.rspreparingrestore
+msgctxt "cbs_locale.rspreparingrestore"
+msgid "Preparing backup restore..."
+msgstr ""
+
+#: cbs_locale.rsprogressexporting
+#, object-pascal-format
+msgctxt "cbs_locale.rsprogressexporting"
+msgid "Exporting data: %d%%"
+msgstr ""
+
+#: cbs_locale.rsprogressfinishing
+msgctxt "cbs_locale.rsprogressfinishing"
+msgid "Finishing..."
+msgstr ""
+
+#: cbs_locale.rsprogressimportimages
+#, object-pascal-format
+msgctxt "cbs_locale.rsprogressimportimages"
+msgid "Processing %d of %d images..."
+msgstr ""
+
+#: cbs_locale.rsprogressloadingcsvfile
+#, object-pascal-format
+msgctxt "cbs_locale.rsprogressloadingcsvfile"
+msgid "Loading CSV file... %d%%"
+msgstr ""
+
+#: cbs_locale.rsprogressnewbandsbatch
+msgctxt "cbs_locale.rsprogressnewbandsbatch"
+msgid "Inserting new bands..."
+msgstr ""
+
+#: cbs_locale.rsprogresspreparing
+msgctxt "cbs_locale.rsprogresspreparing"
+msgid "Preparing..."
+msgstr ""
+
+#: cbs_locale.rsprogressrecords
+#, object-pascal-format
+msgctxt "cbs_locale.rsprogressrecords"
+msgid "Processing %d of %d records..."
+msgstr ""
+
+#: cbs_locale.rsprogressrewritinghierarchy
+#, object-pascal-format
+msgctxt "cbs_locale.rsprogressrewritinghierarchy"
+msgid "Rewriting %s..."
+msgstr ""
+
+#: cbs_locale.rsprogressstarting
+msgctxt "cbs_locale.rsprogressstarting"
+msgid "Starting..."
+msgstr ""
+
+#: cbs_locale.rsprogressunpreparing
+msgctxt "cbs_locale.rsprogressunpreparing"
+msgid "Unpreparing..."
+msgstr ""
+
+#: cbs_locale.rsqualifieronlyingenus
+msgctxt "cbs_locale.rsqualifieronlyingenus"
+msgid "The <font color=\"green\">sp.</font> <b>qualifier</b> can only be used with genera rank."
+msgstr ""
+
+#: cbs_locale.rsrecnoempty
+msgctxt "cbs_locale.rsrecnoempty"
+msgid "record 0 of 0"
+msgstr ""
+
+#: cbs_locale.rsrecordnumber
+#, object-pascal-format
+msgctxt "cbs_locale.rsrecordnumber"
+msgid "record %d of %d"
+msgstr ""
+
+#: cbs_locale.rsrecords
+msgctxt "cbs_locale.rsrecords"
+msgid "record"
+msgstr ""
+
+#: cbs_locale.rsrecordsfound
+#, object-pascal-format
+msgctxt "cbs_locale.rsrecordsfound"
+msgid "%d %s found"
+msgstr ""
+
+#: cbs_locale.rsrecordsplural
+msgctxt "cbs_locale.rsrecordsplural"
+msgid "records"
+msgstr ""
+
+#: cbs_locale.rsrecreatethumbnailsprompt
+msgctxt "cbs_locale.rsrecreatethumbnailsprompt"
+msgid ""
+"Do you really want to recreate all image thumbnails?\n"
+"Once completed, this operation cannot be undone."
+msgstr ""
+
+#: cbs_locale.rsreferencecoordinate
+msgctxt "cbs_locale.rsreferencecoordinate"
+msgid "Reference coordinate"
+msgstr ""
+
+#: cbs_locale.rsreplacedsynonym
+msgctxt "cbs_locale.rsreplacedsynonym"
+msgid "replaced synonym"
+msgstr ""
+
+#: cbs_locale.rsrequiredbandsize
+msgctxt "cbs_locale.rsrequiredbandsize"
+msgid "A band size must be selected."
+msgstr ""
+
+#: cbs_locale.rsrequiredbandtype
+msgctxt "cbs_locale.rsrequiredbandtype"
+msgid "A band type must be selected."
+msgstr ""
+
+#: cbs_locale.rsrequiredclosetime1
+msgctxt "cbs_locale.rsrequiredclosetime1"
+msgid "The Close time 1 must be entered."
+msgstr ""
+
+#: cbs_locale.rsrequiredfield
+#, object-pascal-format
+msgctxt "cbs_locale.rsrequiredfield"
+msgid "Field %s must be filled."
+msgstr ""
+
+#: cbs_locale.rsrequiredfromnetnumber
+msgctxt "cbs_locale.rsrequiredfromnetnumber"
+msgid "The Start number must be entered."
+msgstr ""
+
+#: cbs_locale.rsrequiredopentime1
+msgctxt "cbs_locale.rsrequiredopentime1"
+msgid "The Open time 1 must be entered."
+msgstr ""
+
+#: cbs_locale.rsrequiredtonetnumber
+msgctxt "cbs_locale.rsrequiredtonetnumber"
+msgid "The Final number must be entered."
+msgstr ""
+
+#: cbs_locale.rsrequiredtonumber
+msgctxt "cbs_locale.rsrequiredtonumber"
+msgid "The Final number must be entered."
+msgstr ""
+
+#: cbs_locale.rsrestorebackupprompt
+msgctxt "cbs_locale.rsrestorebackupprompt"
+msgid ""
+"Do you really want to restore this backup?\n"
+"This operation will overwrite the database and records may be lost."
+msgstr ""
+
+#: cbs_locale.rsrestorerecordprompt
+msgctxt "cbs_locale.rsrestorerecordprompt"
+msgid "Do you really want to restore this record?"
+msgstr ""
+
+#: cbs_locale.rsrestorerecordtitle
+msgctxt "cbs_locale.rsrestorerecordtitle"
+msgid "Restore record"
+msgstr ""
+
+#: cbs_locale.rsrestoringbackup
+msgctxt "cbs_locale.rsrestoringbackup"
+msgid "Restoring backup..."
+msgstr ""
+
+#: cbs_locale.rsrewritefullnamesprompt
+msgid ""
+"Do you really want to rewrite all individuals' full names?\n"
+"Once completed, this operation cannot be undone."
+msgstr ""
+
+#: cbs_locale.rsrightleg
+#, object-pascal-format
+msgctxt "cbs_locale.rsrightleg"
+msgid "r%s"
+msgstr ""
+
+#: cbs_locale.rsrightlegempty
+msgctxt "cbs_locale.rsrightlegempty"
+msgid "r-"
+msgstr ""
+
+#: cbs_locale.rsrunningstartupbackup
+msgctxt "cbs_locale.rsrunningstartupbackup"
+msgid "Creating startup backup..."
+msgstr ""
+
+#: cbs_locale.rssamecoordinateformat
+msgctxt "cbs_locale.rssamecoordinateformat"
+msgid "Select a destination coordinate type that is different from the origin type."
+msgstr ""
+
+#: cbs_locale.rssampleblooddry
+msgctxt "cbs_locale.rssampleblooddry"
+msgid "Blood (dry)"
+msgstr ""
+
+#: cbs_locale.rssamplebloodsmear
+msgctxt "cbs_locale.rssamplebloodsmear"
+msgid "Blood (smear)"
+msgstr ""
+
+#: cbs_locale.rssamplebloodwet
+msgctxt "cbs_locale.rssamplebloodwet"
+msgid "Blood (wet)"
+msgstr ""
+
+#: cbs_locale.rssampleegg
+msgctxt "cbs_locale.rssampleegg"
+msgid "Egg"
+msgstr ""
+
+#: cbs_locale.rssampleeyes
+msgctxt "cbs_locale.rssampleeyes"
+msgid "Eyes"
+msgstr ""
+
+#: cbs_locale.rssamplefeathers
+msgctxt "cbs_locale.rssamplefeathers"
+msgid "Feathers"
+msgstr ""
+
+#: cbs_locale.rssamplegeneticsequence
+msgctxt "cbs_locale.rssamplegeneticsequence"
+msgid "Genetic sequencing"
+msgstr ""
+
+#: cbs_locale.rssamplegonads
+msgctxt "cbs_locale.rssamplegonads"
+msgid "Gonads"
+msgstr ""
+
+#: cbs_locale.rssamplemicrobialculture
+msgctxt "cbs_locale.rssamplemicrobialculture"
+msgid "Microbial culture"
+msgstr ""
+
+#: cbs_locale.rssamplenest
+msgctxt "cbs_locale.rssamplenest"
+msgid "Nest"
+msgstr ""
+
+#: cbs_locale.rssampleopenedwing
+msgctxt "cbs_locale.rssampleopenedwing"
+msgid "Wing open"
+msgstr ""
+
+#: cbs_locale.rssampleparasites
+msgctxt "cbs_locale.rssampleparasites"
+msgid "Parasites"
+msgstr ""
+
+#: cbs_locale.rssamplesexing
+msgctxt "cbs_locale.rssamplesexing"
+msgid "Sexing"
+msgstr ""
+
+#: cbs_locale.rssampleskeletonpartial
+msgctxt "cbs_locale.rssampleskeletonpartial"
+msgid "Skeleton (partial)"
+msgstr ""
+
+#: cbs_locale.rssampleskeletonwhole
+msgctxt "cbs_locale.rssampleskeletonwhole"
+msgid "Skeleton (whole)"
+msgstr ""
+
+#: cbs_locale.rssampleskinmounted
+msgctxt "cbs_locale.rssampleskinmounted"
+msgid "Skin (mounted)"
+msgstr ""
+
+#: cbs_locale.rssampleskinshmoo
+msgctxt "cbs_locale.rssampleskinshmoo"
+msgid "Skin (shmoo)"
+msgstr ""
+
+#: cbs_locale.rssampleskinstandard
+msgctxt "cbs_locale.rssampleskinstandard"
+msgid "Skin (standard)"
+msgstr ""
+
+#: cbs_locale.rssamplestomach
+msgctxt "cbs_locale.rssamplestomach"
+msgid "Stomach"
+msgstr ""
+
+#: cbs_locale.rssamplesyrinx
+msgctxt "cbs_locale.rssamplesyrinx"
+msgid "Syrinx"
+msgstr ""
+
+#: cbs_locale.rssampletissues
+msgctxt "cbs_locale.rssampletissues"
+msgid "Tissues"
+msgstr ""
+
+#: cbs_locale.rssampletongue
+msgctxt "cbs_locale.rssampletongue"
+msgid "Tongue"
+msgstr ""
+
+#: cbs_locale.rsseen
+msgctxt "cbs_locale.rsseen"
+msgid "Seen"
+msgstr ""
+
+#: cbs_locale.rsselectcoordinatestypes
+msgctxt "cbs_locale.rsselectcoordinatestypes"
+msgid "Select the origin and destination coordinate types."
+msgstr ""
+
+#: cbs_locale.rssexfemale
+msgctxt "cbs_locale.rssexfemale"
+msgid "Female"
+msgstr ""
+
+#: cbs_locale.rssexmale
+msgctxt "cbs_locale.rssexmale"
+msgid "Male"
+msgstr ""
+
+#: cbs_locale.rssexunknown
+msgctxt "cbs_locale.rssexunknown"
+msgid "Unknown"
+msgstr ""
+
+#: cbs_locale.rsskullossification
+msgctxt "cbs_locale.rsskullossification"
+msgid "skull ossification"
+msgstr ""
+
+#: cbs_locale.rssourcereference
+msgctxt "cbs_locale.rssourcereference"
+msgid "Reference source"
+msgstr ""
+
+#: cbs_locale.rsspecimenblood
+msgctxt "cbs_locale.rsspecimenblood"
+msgid "Blood"
+msgstr ""
+
+#: cbs_locale.rsspecimenbones
+msgctxt "cbs_locale.rsspecimenbones"
+msgid "Bones"
+msgstr ""
+
+#: cbs_locale.rsspecimencarcasspartial
+msgctxt "cbs_locale.rsspecimencarcasspartial"
+msgid "Partial carcass"
+msgstr ""
+
+#: cbs_locale.rsspecimencarcasswhole
+msgctxt "cbs_locale.rsspecimencarcasswhole"
+msgid "Whole carcass"
+msgstr ""
+
+#: cbs_locale.rsspecimenclaw
+msgctxt "cbs_locale.rsspecimenclaw"
+msgid "Claw"
+msgstr ""
+
+#: cbs_locale.rsspecimenegg
+msgctxt "cbs_locale.rsspecimenegg"
+msgid "Egg"
+msgstr ""
+
+#: cbs_locale.rsspecimenfeathers
+msgctxt "cbs_locale.rsspecimenfeathers"
+msgid "Feathers"
+msgstr ""
+
+#: cbs_locale.rsspecimenfeces
+msgctxt "cbs_locale.rsspecimenfeces"
+msgid "Feces"
+msgstr ""
+
+#: cbs_locale.rsspecimennest
+msgctxt "cbs_locale.rsspecimennest"
+msgid "Nest"
+msgstr ""
+
+#: cbs_locale.rsspecimenparasites
+msgctxt "cbs_locale.rsspecimenparasites"
+msgid "Parasites"
+msgstr ""
+
+#: cbs_locale.rsspecimenregurgite
+msgctxt "cbs_locale.rsspecimenregurgite"
+msgid "Regurgite"
+msgstr ""
+
+#: cbs_locale.rsspecimenswab
+msgctxt "cbs_locale.rsspecimenswab"
+msgid "Swab"
+msgstr ""
+
+#: cbs_locale.rsspecimentissues
+msgctxt "cbs_locale.rsspecimentissues"
+msgid "Tissues"
+msgstr ""
+
+#: cbs_locale.rsstandarduser
+msgctxt "cbs_locale.rsstandarduser"
+msgid "Standard"
+msgstr ""
+
+#: cbs_locale.rsstatusdead
+msgctxt "cbs_locale.rsstatusdead"
+msgid "D - dead"
+msgstr ""
+
+#: cbs_locale.rsstatusinjured
+msgctxt "cbs_locale.rsstatusinjured"
+msgid "I - injured"
+msgstr ""
+
+#: cbs_locale.rsstatusnormal
+msgctxt "cbs_locale.rsstatusnormal"
+msgid "N - normal"
+msgstr ""
+
+#: cbs_locale.rsstatusstressed
+msgctxt "cbs_locale.rsstatusstressed"
+msgid "X - stressed (not flying)"
+msgstr ""
+
+#: cbs_locale.rsstatuswingsprain
+msgctxt "cbs_locale.rsstatuswingsprain"
+msgid "W - wing sprain"
+msgstr ""
+
+#: cbs_locale.rssubcutaneousfat
+msgctxt "cbs_locale.rssubcutaneousfat"
+msgid "subcutaneous fat"
+msgstr ""
+
+#: cbs_locale.rssuccessfulbackup
+#, object-pascal-format
+msgctxt "cbs_locale.rssuccessfulbackup"
+msgid "Backup file created successfully: %s"
+msgstr ""
+
+#: cbs_locale.rssuccessfulconnectiontest
+msgid "Connection to database was successful!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportcaptures
+msgctxt "cbs_locale.rssuccessfulimportcaptures"
+msgid "Captures file imported successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportcoordinates
+msgctxt "cbs_locale.rssuccessfulimportcoordinates"
+msgid "Coordinates imported successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportebird
+msgctxt "cbs_locale.rssuccessfulimportebird"
+msgid "eBird file imported successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulnewbatch
+msgctxt "cbs_locale.rssuccessfulnewbatch"
+msgid "New batch inserted successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulrecreatethumbnails
+msgctxt "cbs_locale.rssuccessfulrecreatethumbnails"
+msgid "Image thumbnails recreated successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulrestore
+#, object-pascal-format
+msgctxt "cbs_locale.rssuccessfulrestore"
+msgid "Backup restored successfully: %s"
+msgstr ""
+
+#: cbs_locale.rssuccessfulupdate
+#, object-pascal-format
+msgctxt "cbs_locale.rssuccessfulupdate"
+msgid "%s was updated successfully!"
+msgstr ""
+
+#: cbs_locale.rssupportartificial
+msgctxt "cbs_locale.rssupportartificial"
+msgid "Artificial"
+msgstr ""
+
+#: cbs_locale.rssupportbranchfork
+msgctxt "cbs_locale.rssupportbranchfork"
+msgid "Branch/fork"
+msgstr ""
+
+#: cbs_locale.rssupportcavity
+msgctxt "cbs_locale.rssupportcavity"
+msgid "Cavity"
+msgstr ""
+
+#: cbs_locale.rssupportground
+msgctxt "cbs_locale.rssupportground"
+msgid "Ground"
+msgstr ""
+
+#: cbs_locale.rssupportherbbush
+msgctxt "cbs_locale.rssupportherbbush"
+msgid "Herb/bush"
+msgstr ""
+
+#: cbs_locale.rssupportother
+msgctxt "cbs_locale.rssupportother"
+msgid "Other"
+msgstr ""
+
+#: cbs_locale.rssupportplatform
+msgctxt "cbs_locale.rssupportplatform"
+msgid "Platform"
+msgstr ""
+
+#: cbs_locale.rssupportsuspended
+msgctxt "cbs_locale.rssupportsuspended"
+msgid "Suspended"
+msgstr ""
+
+#: cbs_locale.rssynonym
+msgctxt "cbs_locale.rssynonym"
+msgid "Synonym"
+msgstr ""
+
+#: cbs_locale.rstabbreeding
+msgid "Breeding"
+msgstr ""
+
+#: cbs_locale.rstabentities
+msgid "Entities"
+msgstr ""
+
+#: cbs_locale.rstabgeo
+msgid "Geo"
+msgstr ""
+
+#: cbs_locale.rstabhelp
+msgctxt "cbs_locale.rstabhelp"
+msgid "Help"
+msgstr ""
+
+#: cbs_locale.rstabindividuals
+msgctxt "cbs_locale.rstabindividuals"
+msgid "Individuals"
+msgstr ""
+
+#: cbs_locale.rstabmedia
+msgctxt "cbs_locale.rstabmedia"
+msgid "Media"
+msgstr ""
+
+#: cbs_locale.rstabsampling
+msgid "Sampling"
+msgstr ""
+
+#: cbs_locale.rstabtaxonomy
+msgid "Taxonomy"
+msgstr ""
+
+#: cbs_locale.rsteam
+msgctxt "cbs_locale.rsteam"
+msgid "Team"
+msgstr ""
+
+#: cbs_locale.rstitleautoupdate
+msgctxt "cbs_locale.rstitleautoupdate"
+msgid "Autoupdate"
+msgstr ""
+
+#: cbs_locale.rstitlebackup
+msgctxt "cbs_locale.rstitlebackup"
+msgid "Backup"
+msgstr ""
+
+#: cbs_locale.rstitlebands
+msgctxt "cbs_locale.rstitlebands"
+msgid "Bands"
+msgstr ""
+
+#: cbs_locale.rstitlebotanictaxa
+msgctxt "cbs_locale.rstitlebotanictaxa"
+msgid "Botanic taxa"
+msgstr ""
+
+#: cbs_locale.rstitlecaptures
+msgctxt "cbs_locale.rstitlecaptures"
+msgid "Captures"
+msgstr ""
+
+#: cbs_locale.rstitlecaution
+msgctxt "cbs_locale.rstitlecaution"
+msgid "Caution!"
+msgstr ""
+
+#: cbs_locale.rstitlecollectors
+msgid "Collectors"
+msgstr ""
+
+#: cbs_locale.rstitleconfirmation
+msgctxt "cbs_locale.rstitleconfirmation"
+msgid "Confirmation"
+msgstr ""
+
+#: cbs_locale.rstitleconnectiontest
+msgctxt "cbs_locale.rstitleconnectiontest"
+msgid "Test connection"
+msgstr ""
+
+#: cbs_locale.rstitlecoordinateconverter
+msgctxt "cbs_locale.rstitlecoordinateconverter"
+msgid "Coordinates converter"
+msgstr ""
+
+#: cbs_locale.rstitleediting
+#, object-pascal-format
+msgid "Editing %s"
+msgstr ""
+
+#: cbs_locale.rstitleeggs
+msgctxt "cbs_locale.rstitleeggs"
+msgid "Eggs"
+msgstr ""
+
+#: cbs_locale.rstitleerror
+msgctxt "cbs_locale.rstitleerror"
+msgid "Error"
+msgstr ""
+
+#: cbs_locale.rstitlegazetteer
+msgctxt "cbs_locale.rstitlegazetteer"
+msgid "Gazetteer"
+msgstr ""
+
+#: cbs_locale.rstitlehistory
+msgctxt "cbs_locale.rstitlehistory"
+msgid "History"
+msgstr ""
+
+#: cbs_locale.rstitleimportcoordinates
+msgctxt "cbs_locale.rstitleimportcoordinates"
+msgid "Import coordinates"
+msgstr ""
+
+#: cbs_locale.rstitleimportfile
+msgctxt "cbs_locale.rstitleimportfile"
+msgid "Import file"
+msgstr ""
+
+#: cbs_locale.rstitleindividuals
+msgctxt "cbs_locale.rstitleindividuals"
+msgid "Individuals"
+msgstr ""
+
+#: cbs_locale.rstitleinformation
+msgctxt "cbs_locale.rstitleinformation"
+msgid "Information"
+msgstr ""
+
+#: cbs_locale.rstitleinstitutions
+msgctxt "cbs_locale.rstitleinstitutions"
+msgid "Institutions"
+msgstr ""
+
+#: cbs_locale.rstitlelogin
+msgctxt "cbs_locale.rstitlelogin"
+msgid "Login"
+msgstr ""
+
+#: cbs_locale.rstitlemethods
+msgctxt "cbs_locale.rstitlemethods"
+msgid "Methods"
+msgstr ""
+
+#: cbs_locale.rstitlemolts
+msgctxt "cbs_locale.rstitlemolts"
+msgid "Molts"
+msgstr ""
+
+#: cbs_locale.rstitlenestrevisions
+msgctxt "cbs_locale.rstitlenestrevisions"
+msgid "Revisions"
+msgstr ""
+
+#: cbs_locale.rstitlenests
+msgctxt "cbs_locale.rstitlenests"
+msgid "Nests"
+msgstr ""
+
+#: cbs_locale.rstitlenetseffort
+msgctxt "cbs_locale.rstitlenetseffort"
+msgid "Nets"
+msgstr ""
+
+#: cbs_locale.rstitlenew
+#, object-pascal-format
+msgid "New %s"
+msgstr ""
+
+#: cbs_locale.rstitlenewbandsbatch
+msgctxt "cbs_locale.rstitlenewbandsbatch"
+msgid "New batch of bands"
+msgstr ""
+
+#: cbs_locale.rstitlepermanentnets
+msgctxt "cbs_locale.rstitlepermanentnets"
+msgid "Permanent nets"
+msgstr ""
+
+#: cbs_locale.rstitlepermits
+msgctxt "cbs_locale.rstitlepermits"
+msgid "Permits"
+msgstr ""
+
+#: cbs_locale.rstitleprojects
+msgctxt "cbs_locale.rstitleprojects"
+msgid "Projects"
+msgstr ""
+
+#: cbs_locale.rstitlerecreatethumbnails
+msgctxt "cbs_locale.rstitlerecreatethumbnails"
+msgid "Recreate thumbnails"
+msgstr ""
+
+#: cbs_locale.rstitleresearchers
+msgctxt "cbs_locale.rstitleresearchers"
+msgid "Researchers"
+msgstr ""
+
+#: cbs_locale.rstitlerestore
+msgctxt "cbs_locale.rstitlerestore"
+msgid "Restore backup"
+msgstr ""
+
+#: cbs_locale.rstitlerewritefullnames
+msgid "Rewrite full names"
+msgstr ""
+
+#: cbs_locale.rstitlesamplepreps
+msgctxt "cbs_locale.rstitlesamplepreps"
+msgid "Preparations"
+msgstr ""
+
+#: cbs_locale.rstitlesamplingplots
+msgctxt "cbs_locale.rstitlesamplingplots"
+msgid "Sampling plots"
+msgstr ""
+
+#: cbs_locale.rstitleselectdatabasefile
+msgctxt "cbs_locale.rstitleselectdatabasefile"
+msgid "Select database"
+msgstr ""
+
+#: cbs_locale.rstitlesightings
+msgctxt "cbs_locale.rstitlesightings"
+msgid "Sightings"
+msgstr ""
+
+#: cbs_locale.rstitlespecimens
+msgctxt "cbs_locale.rstitlespecimens"
+msgid "Specimens"
+msgstr ""
+
+#: cbs_locale.rstitlesurveys
+msgctxt "cbs_locale.rstitlesurveys"
+msgid "Surveys"
+msgstr ""
+
+#: cbs_locale.rstitletaxonhierarchy
+msgctxt "cbs_locale.rstitletaxonhierarchy"
+msgid "Taxa hierarchy"
+msgstr ""
+
+#: cbs_locale.rstitletaxonranks
+msgctxt "cbs_locale.rstitletaxonranks"
+msgid "Taxonomic ranks"
+msgstr ""
+
+#: cbs_locale.rstitleteam
+msgctxt "cbs_locale.rstitleteam"
+msgid "Team"
+msgstr ""
+
+#: cbs_locale.rstitleusers
+msgctxt "cbs_locale.rstitleusers"
+msgid "Users"
+msgstr ""
+
+#: cbs_locale.rstitleweather
+msgid "Weather"
+msgstr ""
+
+#: cbs_locale.rstitlezootaxa
+msgctxt "cbs_locale.rstitlezootaxa"
+msgid "Taxa"
+msgstr ""
+
+#: cbs_locale.rstonumberlessthanfromnumber
+msgctxt "cbs_locale.rstonumberlessthanfromnumber"
+msgid "The final number must be greater than the start number."
+msgstr ""
+
+#: cbs_locale.rstonumberlessthanzero
+msgctxt "cbs_locale.rstonumberlessthanzero"
+msgid "The final number must be greater than zero."
+msgstr ""
+
+#: cbs_locale.rstotalmarked
+#, object-pascal-format
+msgctxt "cbs_locale.rstotalmarked"
+msgid "%d of %d %s"
+msgstr ""
+
+#: cbs_locale.rstotalrecords
+#, object-pascal-format
+msgctxt "cbs_locale.rstotalrecords"
+msgid "%s %d of %d %s"
+msgstr ""
+
+#: cbs_locale.rstotalresearchers
+#, object-pascal-format
+msgctxt "cbs_locale.rstotalresearchers"
+msgid "%d researcher(s)"
+msgstr ""
+
+#: cbs_locale.rsunresolved
+msgctxt "cbs_locale.rsunresolved"
+msgid "Unresolved"
+msgstr ""
+
+#: cbs_locale.rsupdatednewversion
+#, object-pascal-format
+msgctxt "cbs_locale.rsupdatednewversion"
+msgid "New version: %s"
+msgstr ""
+
+#: cbs_locale.rsupdatesumcaptures
+msgctxt "cbs_locale.rsupdatesumcaptures"
+msgid ""
+"The sum of new captures, recaptures and unmarked individuals differs from the total number of individuals.\n"
+"Do you want to update it?"
+msgstr ""
+
+#: cbs_locale.rsusernumberandtotal
+#, object-pascal-format
+msgctxt "cbs_locale.rsusernumberandtotal"
+msgid "user %d of %d"
+msgstr ""
+
+#: cbs_locale.rsvaluenotinrange
+#, object-pascal-format
+msgctxt "cbs_locale.rsvaluenotinrange"
+msgid "The value of <b>%s</b> must be between <font color=\"green\">%d</font> and <font color=\"green\">%d</font>."
+msgstr ""
+
+#: cbs_locale.rsvaluenotinset
+#, object-pascal-format
+msgctxt "cbs_locale.rsvaluenotinset"
+msgid "The value of <b>%s</b> must be one of the following: <font color=\"green\">%s</font>."
+msgstr ""
+
+#: cbs_locale.rsversionplusstr
+#, object-pascal-format
+msgctxt "cbs_locale.rsversionplusstr"
+msgid "Version %s (%s)"
+msgstr ""
+
+#: cbs_locale.rsversionstr
+#, object-pascal-format
+msgctxt "cbs_locale.rsversionstr"
+msgid "Version %s"
+msgstr ""
+
+#: cbs_locale.rswasmisspelled
+msgctxt "cbs_locale.rswasmisspelled"
+msgid "was misspelled"
+msgstr ""
+
+#: tbatchbands.caption
+msgctxt "tbatchbands.caption"
+msgid "New batch of bands"
+msgstr ""
+
+#: tbatchbands.eorderdate.texthint
+msgctxt "tbatchbands.eorderdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tbatchbands.ereceiptdate.texthint
+msgctxt "tbatchbands.ereceiptdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tbatchbands.lblbandsize.caption
+msgid "Size:"
+msgstr ""
+
+#: tbatchbands.lblbandsource.caption
+msgid "Source:"
+msgstr ""
+
+#: tbatchbands.lblbandtype.caption
+msgctxt "tbatchbands.lblbandtype.caption"
+msgid "Type:"
+msgstr ""
+
+#: tbatchbands.lblcarrier.caption
+msgctxt "tbatchbands.lblcarrier.caption"
+msgid "Carrier:"
+msgstr ""
+
+#: tbatchbands.lblendnumber.caption
+msgctxt "tbatchbands.lblendnumber.caption"
+msgid "Final number:"
+msgstr ""
+
+#: tbatchbands.lblorderdate.caption
+msgid "Order date:"
+msgstr ""
+
+#: tbatchbands.lblordernumber.caption
+msgid "Order number:"
+msgstr ""
+
+#: tbatchbands.lblproject.caption
+msgctxt "tbatchbands.lblproject.caption"
+msgid "Project:"
+msgstr ""
+
+#: tbatchbands.lblreceiptdate.caption
+msgid "Receipt date:"
+msgstr ""
+
+#: tbatchbands.lblrequester.caption
+msgid "Requester:"
+msgstr ""
+
+#: tbatchbands.lblsender.caption
+msgid "Sender:"
+msgstr ""
+
+#: tbatchbands.lblstartnumber.caption
+msgctxt "tbatchbands.lblstartnumber.caption"
+msgid "Start number:"
+msgstr ""
+
+#: tbatchbands.lblsupplier.caption
+msgid "Supplier:"
+msgstr ""
+
+#: tbatchbands.sbcancel.caption
+msgctxt "tbatchbands.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tbatchbands.sbsave.caption
+msgctxt "tbatchbands.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tbatchneteffort.caption
+msgid "New series of mistnets"
+msgstr ""
+
+#: tbatchneteffort.eclosetime1.texthint
+msgctxt "tbatchneteffort.eclosetime1.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tbatchneteffort.eclosetime2.texthint
+msgctxt "tbatchneteffort.eclosetime2.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tbatchneteffort.eclosetime3.texthint
+msgctxt "tbatchneteffort.eclosetime3.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tbatchneteffort.eopentime1.texthint
+msgctxt "tbatchneteffort.eopentime1.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tbatchneteffort.eopentime2.texthint
+msgctxt "tbatchneteffort.eopentime2.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tbatchneteffort.eopentime3.texthint
+msgctxt "tbatchneteffort.eopentime3.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tbatchneteffort.lblclosetime1.caption
+msgctxt "tbatchneteffort.lblclosetime1.caption"
+msgid "Closing time 1:"
+msgstr ""
+
+#: tbatchneteffort.lblclosetime2.caption
+msgctxt "tbatchneteffort.lblclosetime2.caption"
+msgid "Closing time 2:"
+msgstr ""
+
+#: tbatchneteffort.lblclosetime3.caption
+msgctxt "tbatchneteffort.lblclosetime3.caption"
+msgid "Closing time 3:"
+msgstr ""
+
+#: tbatchneteffort.lblendnumber.caption
+msgctxt "tbatchneteffort.lblendnumber.caption"
+msgid "Final number:"
+msgstr ""
+
+#: tbatchneteffort.lblnetheight.caption
+msgid "Mistnet height:"
+msgstr ""
+
+#: tbatchneteffort.lblnetlength.caption
+msgid "Mistnet length:"
+msgstr ""
+
+#: tbatchneteffort.lblnetmesh.caption
+msgctxt "tbatchneteffort.lblnetmesh.caption"
+msgid "Mesh size:"
+msgstr ""
+
+#: tbatchneteffort.lblopentime1.caption
+msgctxt "tbatchneteffort.lblopentime1.caption"
+msgid "Opening time 1:"
+msgstr ""
+
+#: tbatchneteffort.lblopentime2.caption
+msgctxt "tbatchneteffort.lblopentime2.caption"
+msgid "Opening time 2:"
+msgstr ""
+
+#: tbatchneteffort.lblopentime3.caption
+msgctxt "tbatchneteffort.lblopentime3.caption"
+msgid "Opening time 3:"
+msgstr ""
+
+#: tbatchneteffort.lblstartnumber.caption
+msgctxt "tbatchneteffort.lblstartnumber.caption"
+msgid "Start number:"
+msgstr ""
+
+#: tbatchneteffort.lblsurvey.caption
+msgid "Copy mistnets from survey:"
+msgstr ""
+
+#: tbatchneteffort.sbcancel.caption
+msgctxt "tbatchneteffort.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tbatchneteffort.sbsave.caption
+msgctxt "tbatchneteffort.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tcfgdatabase.caption
+msgid "Xolmis - Manage connections"
+msgstr ""
+
+#: tcfgdatabase.mmtestconnection.caption
+msgctxt "tcfgdatabase.mmtestconnection.caption"
+msgid "Test connection"
+msgstr ""
+
+#: tcfgdatabase.sbclose.caption
+msgctxt "tcfgdatabase.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tcfgdatabase.sbrefreshrecords.hint
+msgctxt "tcfgdatabase.sbrefreshrecords.hint"
+msgid "Refresh records"
+msgstr ""
+
+#: tcfgdatabase.vtconnections.header.columns[0].text
+msgid "connection_name"
+msgstr ""
+
+#: tcfgdelimiters.caption
+msgid "Delimitation options"
+msgstr ""
+
+#: tcfgdelimiters.cbdecimalseparator.text
+msgid "Colon"
+msgstr ""
+
+#: tcfgdelimiters.cbdelimiter.text
+msgid "Semicolon"
+msgstr ""
+
+#: tcfgdelimiters.lbldecimalseparator.caption
+msgid "Decimal separator"
+msgstr ""
+
+#: tcfgdelimiters.lbldelimiter.caption
+msgid "Delimiter"
+msgstr ""
+
+#: tcfgdelimiters.lblhaveheader.caption
+msgid "First row as header"
+msgstr ""
+
+#: tcfgdelimiters.lblquotedastext.caption
+msgid "Quoted values as text"
+msgstr ""
+
+#: tcfgdelimiters.lbltitlefields.caption
+msgctxt "tcfgdelimiters.lbltitlefields.caption"
+msgid "Columns"
+msgstr ""
+
+#: tcfgdelimiters.lbltitlenumbers.caption
+msgid "Numbers"
+msgstr ""
+
+#: tcfgdelimiters.sbcancel.caption
+msgctxt "tcfgdelimiters.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tcfgdelimiters.sbok.caption
+msgctxt "tcfgdelimiters.sbok.caption"
+msgid "Apply"
+msgstr ""
+
+#: tcfgoptions.caption
+msgctxt "tcfgoptions.caption"
+msgid "Settings"
+msgstr ""
+
+#: tcfgoptions.lblallowusagedata.caption
+msgid "Allow Xolmis to collect anonymous usage data"
+msgstr ""
+
+#: tcfgoptions.lblallowusagedata1.caption
+msgid "Privacy terms"
+msgstr ""
+
+#: tcfgoptions.lblallowwritelog.caption
+msgid "Allow Xolmis to log events for technical support"
+msgstr ""
+
+#: tcfgoptions.lblattachmentspath.caption
+msgid "Documents location"
+msgstr ""
+
+#: tcfgoptions.lblaudiospath.caption
+msgid "Audio files location"
+msgstr ""
+
+#: tcfgoptions.lblbackuppath.caption
+msgid "Backup files folder"
+msgstr ""
+
+#: tcfgoptions.lblcheckupdates.caption
+msgid "Check for Xolmis updates"
+msgstr ""
+
+#: tcfgoptions.lblcleardeleted.caption
+msgid "Clear deleted records automatically (in days)"
+msgstr ""
+
+#: tcfgoptions.lblconfirmcancel.caption
+msgid "Confirm data insert/edit cancelation"
+msgstr ""
+
+#: tcfgoptions.lblenterastab.caption
+msgid "Use <Enter/Return> keys to jump to the next control"
+msgstr ""
+
+#: tcfgoptions.lblimagespath.caption
+msgid "Images location"
+msgstr ""
+
+#: tcfgoptions.lblmaintaxonomy.caption
+msgid "Prefered taxonomy"
+msgstr ""
+
+#: tcfgoptions.lblmanagebackups.caption
+msgid "Manage backups"
+msgstr ""
+
+#: tcfgoptions.lblrememberconnection.caption
+msgid "Remember connection from last session"
+msgstr ""
+
+#: tcfgoptions.lblrememberuser.caption
+msgid "Remember user from last session"
+msgstr ""
+
+#: tcfgoptions.lblshowsynonyms.caption
+msgid "Show synonyms in search results"
+msgstr ""
+
+#: tcfgoptions.lblstartupbackup.caption
+msgid "Create a database copy when Xolmis starts"
+msgstr ""
+
+#: tcfgoptions.lbltitlebackup.caption
+msgctxt "tcfgoptions.lbltitlebackup.caption"
+msgid "Backup and restore"
+msgstr ""
+
+#: tcfgoptions.lbltitlecollection.caption
+msgctxt "tcfgoptions.lbltitlecollection.caption"
+msgid "Collection"
+msgstr ""
+
+#: tcfgoptions.lbltitleinterface.caption
+msgctxt "tcfgoptions.lbltitleinterface.caption"
+msgid "General"
+msgstr ""
+
+#: tcfgoptions.lbltitlemedia.caption
+msgctxt "tcfgoptions.lbltitlemedia.caption"
+msgid "Media"
+msgstr ""
+
+#: tcfgoptions.lbltitlesecurity.caption
+msgctxt "tcfgoptions.lbltitlesecurity.caption"
+msgid "Security and privacy"
+msgstr ""
+
+#: tcfgoptions.lblvernacularnames.caption
+msgid "Language of vernacular names"
+msgstr ""
+
+#: tcfgoptions.sbcheckupdatesnow.caption
+msgid "Check now"
+msgstr ""
+
+#: tcfgoptions.sbclose.caption
+msgctxt "tcfgoptions.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tcfgoptions.sbnewbackup.caption
+msgid "Create backup"
+msgstr ""
+
+#: tcfgoptions.sbrestorebackup.caption
+msgctxt "tcfgoptions.sbrestorebackup.caption"
+msgid "Restore"
+msgstr ""
+
+#: tcfgoptions.tabbackup.hint
+msgctxt "tcfgoptions.tabbackup.hint"
+msgid "Backup and restore"
+msgstr ""
+
+#: tcfgoptions.tabcollection.hint
+msgctxt "tcfgoptions.tabcollection.hint"
+msgid "Collection"
+msgstr ""
+
+#: tcfgoptions.tabgeneral.hint
+msgctxt "tcfgoptions.tabgeneral.hint"
+msgid "General"
+msgstr ""
+
+#: tcfgoptions.tabmedia.hint
+msgctxt "tcfgoptions.tabmedia.hint"
+msgid "Media"
+msgstr ""
+
+#: tcfgoptions.tabsecurity.hint
+msgctxt "tcfgoptions.tabsecurity.hint"
+msgid "Security and privacy"
+msgstr ""
+
+#: tcfgusers.caption
+msgctxt "tcfgusers.caption"
+msgid "Manage users"
+msgstr ""
+
+#: tcfgusers.gridusers.columns[0].title.caption
+msgctxt "tcfgusers.gridusers.columns[0].title.caption"
+msgid "Username"
+msgstr ""
+
+#: tcfgusers.gridusers.columns[1].title.caption
+msgctxt "tcfgusers.gridusers.columns[1].title.caption"
+msgid "Access level"
+msgstr ""
+
+#: tcfgusers.pmgchangepassword.caption
+msgctxt "tcfgusers.pmgchangepassword.caption"
+msgid "Change password"
+msgstr ""
+
+#: tcfgusers.pmgdelete.caption
+msgctxt "tcfgusers.pmgdelete.caption"
+msgid "Delete"
+msgstr ""
+
+#: tcfgusers.pmgedit.caption
+msgctxt "tcfgusers.pmgedit.caption"
+msgid "Edit"
+msgstr ""
+
+#: tcfgusers.sbchangepassword.hint
+msgctxt "tcfgusers.sbchangepassword.hint"
+msgid "Change password"
+msgstr ""
+
+#: tcfgusers.sbclose.caption
+msgctxt "tcfgusers.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tdlgabout.caption
+msgctxt "tdlgabout.caption"
+msgid "About"
+msgstr ""
+
+#: tdlgabout.lblappdescription.caption
+msgid "A free, open source ornithological data manager"
+msgstr ""
+
+#: tdlgabout.lblappversion.caption
+msgctxt "tdlgabout.lblappversion.caption"
+msgid "Version"
+msgstr ""
+
+#: tdlgabout.linklicense.caption
+msgid "License terms"
+msgstr ""
+
+#: tdlgabout.linkprivacy.caption
+msgid "Privacy"
+msgstr ""
+
+#: tdlgabout.linkthirdparty.caption
+msgid "Third-party announcements"
+msgstr ""
+
+#: tdlgabout.linkwebsite.caption
+msgid "Website"
+msgstr ""
+
+#: tdlgabout.linkwebsite.hint
+msgid "http://xolmis.github.io"
+msgstr ""
+
+#: tdlgabout.pappprerelease.caption
+msgid "Alpha"
+msgstr ""
+
+#: tdlgabout.sbclose.caption
+msgctxt "tdlgabout.sbclose.caption"
+msgid "Fechar"
+msgstr ""
+
+#: tdlgabout.sbcopy.caption
+msgctxt "tdlgabout.sbcopy.caption"
+msgid "Copiar"
+msgstr ""
+
+#: tdlgauthorship.caption
+msgid "Sort authors"
+msgstr ""
+
+#: tdlgauthorship.lbltotal.caption
+msgid "0 researcher(s)"
+msgstr ""
+
+#: tdlgauthorship.sbadd.hint
+msgctxt "tdlgauthorship.sbadd.hint"
+msgid "Add"
+msgstr ""
+
+#: tdlgauthorship.sbcancel.caption
+msgctxt "tdlgauthorship.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgauthorship.sbdel.hint
+msgctxt "tdlgauthorship.sbdel.hint"
+msgid "Delete"
+msgstr ""
+
+#: tdlgauthorship.sbdown.hint
+msgid "Move down"
+msgstr ""
+
+#: tdlgauthorship.sbok.caption
+msgctxt "tdlgauthorship.sbok.caption"
+msgid "Apply"
+msgstr ""
+
+#: tdlgauthorship.sbup.hint
+msgid "Move up"
+msgstr ""
+
+#: tdlgbandhistory.caption
+msgid "Band history"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[0].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[0].title.caption"
+msgid "Marked"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[10].title.caption
+msgid "Requester"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[11].title.caption
+msgid "Id"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[12].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[12].title.caption"
+msgid "Notes"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[13].title.caption
+msgid "Created by"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[14].title.caption
+msgid "Modified by"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[15].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[15].title.caption"
+msgid "Creation date"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[16].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[16].title.caption"
+msgid "Last modified"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[17].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[17].title.caption"
+msgid "Exported"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[18].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[18].title.caption"
+msgid "Active"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[1].title.caption
+msgid "Band (Id)"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[2].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[2].title.caption"
+msgid "Date"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[3].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[3].title.caption"
+msgid "Type"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[4].title.caption
+msgid "Order number"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[5].title.caption
+msgid "Supplier (Id)"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[6].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[6].title.caption"
+msgid "Supplier"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[7].title.caption
+msgid "Sender (Id)"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[8].title.caption
+msgid "Sender"
+msgstr ""
+
+#: tdlgbandhistory.dbg.columns[9].title.caption
+msgid "Requester (Id)"
+msgstr ""
+
+#: tdlgbandhistory.lblbandnamecaption.caption
+msgctxt "tdlgbandhistory.lblbandnamecaption.caption"
+msgid "Band:"
+msgstr ""
+
+#: tdlgbandhistory.sbclose.caption
+msgctxt "tdlgbandhistory.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tdlgbandsbalance.caption
+msgctxt "tdlgbandsbalance.caption"
+msgid "Bands balance"
+msgstr ""
+
+#: tdlgbandsbalance.dbgsaldo.columns[0].title.caption
+msgctxt "tdlgbandsbalance.dbgsaldo.columns[0].title.caption"
+msgid "Size"
+msgstr ""
+
+#: tdlgbandsbalance.dbgsaldo.columns[1].title.caption
+msgctxt "tdlgbandsbalance.dbgsaldo.columns[1].title.caption"
+msgid "Leftover"
+msgstr ""
+
+#: tdlgbandsbalance.dbgsaldo.columns[2].title.caption
+msgid "Avg./day"
+msgstr ""
+
+#: tdlgbandsbalance.dbgsaldo.columns[3].title.caption
+msgid "Max./day"
+msgstr ""
+
+#: tdlgbandsbalance.pmgrefresh.caption
+msgctxt "tdlgbandsbalance.pmgrefresh.caption"
+msgid "Refresh"
+msgstr ""
+
+#: tdlgbandsbalance.pmgsavesas.caption
+msgctxt "tdlgbandsbalance.pmgsavesas.caption"
+msgid "Save as..."
+msgstr ""
+
+#: tdlgbandsbalance.pmsg.caption
+msgid "Calculating band balance..."
+msgstr ""
+
+#: tdlgbandsbalance.sbclose.caption
+msgctxt "tdlgbandsbalance.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tdlgcalendar.caption
+msgid "Select date"
+msgstr ""
+
+#: tdlgcalendar.lbldays.caption
+msgid "Days:"
+msgstr ""
+
+#: tdlgcalendar.lblmonths.caption
+msgid "Months:"
+msgstr ""
+
+#: tdlgcalendar.lblyears.caption
+msgid "Years:"
+msgstr ""
+
+#: tdlgcalendar.sbcancel.caption
+msgctxt "tdlgcalendar.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgcalendar.sbok.caption
+msgctxt "tdlgcalendar.sbok.caption"
+msgid "Apply"
+msgstr ""
+
+#: tdlgchangepassword.caption
+msgctxt "tdlgchangepassword.caption"
+msgid "Change password"
+msgstr ""
+
+#: tdlgchangepassword.econfirmpassword.buttonhint
+msgctxt "tdlgchangepassword.econfirmpassword.buttonhint"
+msgid "Mostrar/ocultar senha"
+msgstr ""
+
+#: tdlgchangepassword.enewpassword.buttonhint
+msgctxt "tdlgchangepassword.enewpassword.buttonhint"
+msgid "Mostrar/ocultar senha"
+msgstr ""
+
+#: tdlgchangepassword.lblconfirmpassword.caption
+msgid "Confirm password:"
+msgstr ""
+
+#: tdlgchangepassword.lblnewpassword.caption
+msgid "New password:"
+msgstr ""
+
+#: tdlgchangepassword.sbcancel.caption
+msgctxt "tdlgchangepassword.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgchangepassword.sbsave.caption
+msgctxt "tdlgchangepassword.sbsave.caption"
+msgid "Apply"
+msgstr ""
+
+#: tdlgcolorbands.caption
+msgid "Auxiliary bands"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_a.caption
+msgid "A"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_b.caption
+msgid "B"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_c.caption
+msgid "C"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_g.caption
+msgid "G"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_k.caption
+msgid "K"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_l.caption
+msgid "L"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_m.caption
+msgid "M"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_n.caption
+msgid "N"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_o.caption
+msgid "O"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_p.caption
+msgid "P"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_r.caption
+msgid "R"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_s.caption
+msgid "S"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_u.caption
+msgid "U"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_v.caption
+msgid "V"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_w.caption
+msgid "W"
+msgstr ""
+
+#: tdlgcolorbands.pcolor_y.caption
+msgid "Y"
+msgstr ""
+
+#: tdlgcolorbands.sbcancel.caption
+msgctxt "tdlgcolorbands.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgcolorbands.sbok.caption
+msgctxt "tdlgcolorbands.sbok.caption"
+msgid "Apply"
+msgstr ""
+
+#: tdlgconnect.epassword.buttonhint
+msgctxt "tdlgconnect.epassword.buttonhint"
+msgid "Mostrar/ocultar senha"
+msgstr ""
+
+#: tdlgconnect.lblconnection.caption
+msgid "Select a connection:"
+msgstr ""
+
+#: tdlgconnect.lbllogin.caption
+msgctxt "tdlgconnect.lbllogin.caption"
+msgid "Connect"
+msgstr ""
+
+#: tdlgconnect.lblpassword.caption
+msgctxt "tdlgconnect.lblpassword.caption"
+msgid "Password:"
+msgstr ""
+
+#: tdlgconnect.lblusername.caption
+msgctxt "tdlgconnect.lblusername.caption"
+msgid "Username:"
+msgstr ""
+
+#: tdlgconnect.linkmanageconn.caption
+msgctxt "tdlgconnect.linkmanageconn.caption"
+msgid "Manage connections"
+msgstr ""
+
+#: tdlgconnect.sbcancel.caption
+msgctxt "tdlgconnect.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgconnect.sbok.caption
+msgctxt "tdlgconnect.sbok.caption"
+msgid "Connect"
+msgstr ""
+
+#: tdlgfind.caption
+msgctxt "tdlgfind.caption"
+msgid "Find"
+msgstr ""
+
+#: tdlgfind.ep.texthint
+msgctxt "tdlgfind.ep.texthint"
+msgid "Find..."
+msgstr ""
+
+#: tdlgfind.ulist.columns[0].title.caption
+msgctxt "tdlgfind.ulist.columns[0].title.caption"
+msgid "Name"
+msgstr ""
+
+#: tdlgfindtaxon.caption
+msgid "Find taxon"
+msgstr ""
+
+#: tdlgfindtaxon.ep.texthint
+msgctxt "tdlgfindtaxon.ep.texthint"
+msgid "Find..."
+msgstr ""
+
+#: tdlggeoeditor.caption
+msgid "Coordinates editor"
+msgstr ""
+
+#: tdlggeoeditor.lbllatitude.caption
+msgctxt "tdlggeoeditor.lbllatitude.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tdlggeoeditor.lbllongitude.caption
+msgctxt "tdlggeoeditor.lbllongitude.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tdlggeoeditor.sbcancel.caption
+msgctxt "tdlggeoeditor.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlggeoeditor.sbok.caption
+msgctxt "tdlggeoeditor.sbok.caption"
+msgid "Apply"
+msgstr ""
+
+#: tdlgimportcaptures.caption
+msgctxt "tdlgimportcaptures.caption"
+msgid "Import data"
+msgstr ""
+
+#: tdlgimportcaptures.ecapturefile.texthint
+msgctxt "tdlgimportcaptures.ecapturefile.texthint"
+msgid "Select a file..."
+msgstr ""
+
+#: tdlgimportcaptures.eeffortfile.texthint
+msgctxt "tdlgimportcaptures.eeffortfile.texthint"
+msgid "Select a file..."
+msgstr ""
+
+#: tdlgimportcaptures.ejournalfile.texthint
+msgctxt "tdlgimportcaptures.ejournalfile.texthint"
+msgid "Select a file..."
+msgstr ""
+
+#: tdlgimportcaptures.lblcapturefile.caption
+msgctxt "tdlgimportcaptures.lblcapturefile.caption"
+msgid "Captures"
+msgstr ""
+
+#: tdlgimportcaptures.lbleffortfile.caption
+msgid "Efforts"
+msgstr ""
+
+#: tdlgimportcaptures.lbljournalfile.caption
+msgid "Field journal"
+msgstr ""
+
+#: tdlgimportcaptures.lblsubtitleimportfiles.caption
+msgid "Select at least one file to start importing."
+msgstr ""
+
+#: tdlgimportcaptures.lblsubtitleimportfinished.caption
+msgid "The selected files data were sucessfully imported."
+msgstr ""
+
+#: tdlgimportcaptures.lbltitleimportfiles.caption
+msgid "Files to import"
+msgstr ""
+
+#: tdlgimportcaptures.lbltitleimportfinished.caption
+msgid "Finished importing!"
+msgstr ""
+
+#: tdlgimportcaptures.sbcancel.caption
+msgctxt "tdlgimportcaptures.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgimportcaptures.sbclose.caption
+msgctxt "tdlgimportcaptures.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tdlgimportcaptures.sbretry.caption
+msgid "Try again"
+msgstr ""
+
+#: tdlgimportcaptures.sbrun.caption
+msgctxt "tdlgimportcaptures.sbrun.caption"
+msgid "Import"
+msgstr ""
+
+#: tdlglogin.epassword.buttonhint
+msgctxt "tdlglogin.epassword.buttonhint"
+msgid "Mostrar/ocultar senha"
+msgstr ""
+
+#: tdlglogin.lbllogin.caption
+msgid "Authenticate"
+msgstr ""
+
+#: tdlglogin.lblpassword.caption
+msgctxt "tdlglogin.lblpassword.caption"
+msgid "Password:"
+msgstr ""
+
+#: tdlglogin.lblusername.caption
+msgctxt "tdlglogin.lblusername.caption"
+msgid "Username:"
+msgstr ""
+
+#: tdlglogin.sbcancel.caption
+msgctxt "tdlglogin.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlglogin.sbok.caption
+msgctxt "tdlglogin.sbok.caption"
+msgid "Sign in"
+msgstr ""
+
+#: tdlgplantminer.caption
+msgid "Checking botanic taxon"
+msgstr ""
+
+#: tdlgplantminer.sbcancel.caption
+msgctxt "tdlgplantminer.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgplantminer.sbsave.caption
+msgctxt "tdlgplantminer.sbsave.caption"
+msgid "Apply"
+msgstr ""
+
+#: tdlgprogress.sbcancel.caption
+msgctxt "tdlgprogress.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgrechistory.caption
+msgctxt "tdlgrechistory.caption"
+msgid "History"
+msgstr ""
+
+#: tdlgrechistory.ckativo.caption
+msgctxt "tdlgrechistory.ckativo.caption"
+msgid "Active"
+msgstr ""
+
+#: tdlgrechistory.ckexportado.caption
+msgctxt "tdlgrechistory.ckexportado.caption"
+msgid "Exported"
+msgstr ""
+
+#: tdlgrechistory.ckmarcado.caption
+msgctxt "tdlgrechistory.ckmarcado.caption"
+msgid "Marked"
+msgstr ""
+
+#: tdlgrechistory.dbghistory.columns[0].title.caption
+msgctxt "tdlgrechistory.dbghistory.columns[0].title.caption"
+msgid "Date"
+msgstr ""
+
+#: tdlgrechistory.dbghistory.columns[1].title.caption
+msgid "Action"
+msgstr ""
+
+#: tdlgrechistory.dbghistory.columns[2].title.caption
+msgid "Property"
+msgstr ""
+
+#: tdlgrechistory.dbghistory.columns[3].title.caption
+msgid "Old value"
+msgstr ""
+
+#: tdlgrechistory.dbghistory.columns[4].title.caption
+msgid "New value"
+msgstr ""
+
+#: tdlgrechistory.dbghistory.columns[5].title.caption
+msgctxt "tdlgrechistory.dbghistory.columns[5].title.caption"
+msgid "Notes"
+msgstr ""
+
+#: tdlgrechistory.dbghistory.columns[6].title.caption
+msgctxt "tdlgrechistory.dbghistory.columns[6].title.caption"
+msgid "Username"
+msgstr ""
+
+#: tdlgrechistory.label1.caption
+msgid "Record id:"
+msgstr ""
+
+#: tdlgrechistory.sbclose.caption
+msgctxt "tdlgrechistory.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tdlgvalidate.sbok.caption
+msgid "OK"
+msgstr ""
+
+#: tdmm.openimgs.title
+msgid "Adicionar imagens"
+msgstr ""
+
+#: tedtbands.ckreported.caption
+msgctxt "tedtbands.ckreported.caption"
+msgid "Reported"
+msgstr ""
+
+#: tedtbands.lblbandcolor.caption
+msgctxt "tedtbands.lblbandcolor.caption"
+msgid "Color:"
+msgstr ""
+
+#: tedtbands.lblbandnumber.caption
+msgctxt "tedtbands.lblbandnumber.caption"
+msgid "Number: *"
+msgstr ""
+
+#: tedtbands.lblbandprefix.caption
+msgctxt "tedtbands.lblbandprefix.caption"
+msgid "Prefix:"
+msgstr ""
+
+#: tedtbands.lblbandsize.caption
+msgctxt "tedtbands.lblbandsize.caption"
+msgid "Size: *"
+msgstr ""
+
+#: tedtbands.lblbandsource.caption
+msgctxt "tedtbands.lblbandsource.caption"
+msgid "Source: *"
+msgstr ""
+
+#: tedtbands.lblbandstatus.caption
+msgctxt "tedtbands.lblbandstatus.caption"
+msgid "Status: *"
+msgstr ""
+
+#: tedtbands.lblbandsuffix.caption
+msgctxt "tedtbands.lblbandsuffix.caption"
+msgid "Suffix:"
+msgstr ""
+
+#: tedtbands.lblbandtype.caption
+msgctxt "tedtbands.lblbandtype.caption"
+msgid "Type: *"
+msgstr ""
+
+#: tedtbands.lblcarrier.caption
+msgctxt "tedtbands.lblcarrier.caption"
+msgid "Carrier:"
+msgstr ""
+
+#: tedtbands.lblnotes.caption
+msgctxt "tedtbands.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtbands.lblproject.caption
+msgctxt "tedtbands.lblproject.caption"
+msgid "Project:"
+msgstr ""
+
+#: tedtbands.lblsupplier.caption
+msgctxt "tedtbands.lblsupplier.caption"
+msgid "Supplier: *"
+msgstr ""
+
+#: tedtbands.sbcancel.caption
+msgctxt "tedtbands.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtbands.sbsave.caption
+msgctxt "tedtbands.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtbotanictaxon.lblauthorship.caption
+msgctxt "tedtbotanictaxon.lblauthorship.caption"
+msgid "Authorship:"
+msgstr ""
+
+#: tedtbotanictaxon.lblname.caption
+msgid "Scientific name: *"
+msgstr ""
+
+#: tedtbotanictaxon.lblparenttaxon.caption
+msgctxt "tedtbotanictaxon.lblparenttaxon.caption"
+msgid "Parent taxon:"
+msgstr ""
+
+#: tedtbotanictaxon.lblrank.caption
+msgid "Taxonomic rank: *"
+msgstr ""
+
+#: tedtbotanictaxon.lblvalidname.caption
+msgctxt "tedtbotanictaxon.lblvalidname.caption"
+msgid "Valid name:"
+msgstr ""
+
+#: tedtbotanictaxon.lblvernacularname.caption
+msgctxt "tedtbotanictaxon.lblvernacularname.caption"
+msgid "Vernacular name:"
+msgstr ""
+
+#: tedtbotanictaxon.sbcancel.caption
+msgctxt "tedtbotanictaxon.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtbotanictaxon.sbsave.caption
+msgctxt "tedtbotanictaxon.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtcapture.ckaudiorecordings.caption
+msgid "Audio(s)"
+msgstr ""
+
+#: tedtcapture.ckbloodsample.caption
+msgctxt "tedtcapture.ckbloodsample.caption"
+msgid "Blood"
+msgstr ""
+
+#: tedtcapture.ckclaw.caption
+msgctxt "tedtcapture.ckclaw.caption"
+msgid "Claw"
+msgstr ""
+
+#: tedtcapture.ckescaped.caption
+msgctxt "tedtcapture.ckescaped.caption"
+msgid "Escaped"
+msgstr ""
+
+#: tedtcapture.ckfeathers.caption
+msgid "Feather(s)"
+msgstr ""
+
+#: tedtcapture.ckfeces.caption
+msgctxt "tedtcapture.ckfeces.caption"
+msgid "Feces"
+msgstr ""
+
+#: tedtcapture.ckparasites.caption
+msgid "Parasite(s)"
+msgstr ""
+
+#: tedtcapture.ckphotos.caption
+msgid "Photos"
+msgstr ""
+
+#: tedtcapture.ckwholespecimen.caption
+msgid "Specimen (whole)"
+msgstr ""
+
+#: tedtcapture.ecapturedate.texthint
+msgctxt "tedtcapture.ecapturedate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtcapture.ecapturetime.texthint
+msgctxt "tedtcapture.ecapturetime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtcapture.label44.caption
+msgid "Skull length:"
+msgstr ""
+
+#: tedtcapture.lblage.caption
+msgctxt "tedtcapture.lblage.caption"
+msgid "Age:"
+msgstr ""
+
+#: tedtcapture.lblannotator.caption
+msgid "Annotator: *"
+msgstr ""
+
+#: tedtcapture.lblband.caption
+msgctxt "tedtcapture.lblband.caption"
+msgid "Band:"
+msgstr ""
+
+#: tedtcapture.lblbander.caption
+msgctxt "tedtcapture.lblbander.caption"
+msgid "Bander: *"
+msgstr ""
+
+#: tedtcapture.lblbillheight.caption
+msgid "Bill height:"
+msgstr ""
+
+#: tedtcapture.lblbillwidth.caption
+msgid "Bill width:"
+msgstr ""
+
+#: tedtcapture.lblbodymolt.caption
+msgid "Body molt:"
+msgstr ""
+
+#: tedtcapture.lblbroodpatch.caption
+msgid "Brood patch:"
+msgstr ""
+
+#: tedtcapture.lblcamera.caption
+msgid "Camera:"
+msgstr ""
+
+#: tedtcapture.lblcapturedate.caption
+msgid "Capture date: *"
+msgstr ""
+
+#: tedtcapture.lblcapturetime.caption
+msgid "Capture time:"
+msgstr ""
+
+#: tedtcapture.lblcapturetype.caption
+msgctxt "tedtcapture.lblcapturetype.caption"
+msgid "Type: *"
+msgstr ""
+
+#: tedtcapture.lblcloacalprotuberance.caption
+msgid "Cloacal protuberance:"
+msgstr ""
+
+#: tedtcapture.lblcyclecode.caption
+msgid "Molt cycle:"
+msgstr ""
+
+#: tedtcapture.lblendphoto.caption
+msgid "Last photo number:"
+msgstr ""
+
+#: tedtcapture.lblexposedculmen.caption
+msgid "Exposed culmen:"
+msgstr ""
+
+#: tedtcapture.lblfat.caption
+msgid "Subcutaneous fat:"
+msgstr ""
+
+#: tedtcapture.lblfieldnumber.caption
+msgctxt "tedtcapture.lblfieldnumber.caption"
+msgid "Field number:"
+msgstr ""
+
+#: tedtcapture.lblfirstsecondarychord.caption
+msgid "First secondary chord:"
+msgstr ""
+
+#: tedtcapture.lblflightfeathermolt.caption
+msgid "Flight feathers molt:"
+msgstr ""
+
+#: tedtcapture.lblflightfeatherwear.caption
+msgid "Flight feathers wear:"
+msgstr ""
+
+#: tedtcapture.lblglucose.caption
+msgid "Glucose (mg/dL):"
+msgstr ""
+
+#: tedtcapture.lblhematocrit.caption
+msgid "Hematocrit (mm³):"
+msgstr ""
+
+#: tedtcapture.lblhemoglobin.caption
+msgid "Hemoglobin (g/dL):"
+msgstr ""
+
+#: tedtcapture.lblhowaged.caption
+msgid "How was aged:"
+msgstr ""
+
+#: tedtcapture.lblhowsexed.caption
+msgid "How was sexed:"
+msgstr ""
+
+#: tedtcapture.lblkippsindex.caption
+msgid "Kipp's Index:"
+msgstr ""
+
+#: tedtcapture.lbllatitude.caption
+msgctxt "tedtcapture.lbllatitude.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtcapture.lblleftlegbelow.caption
+msgctxt "tedtcapture.lblleftlegbelow.caption"
+msgid "Left tarsus:"
+msgstr ""
+
+#: tedtcapture.lbllocality.caption
+msgctxt "tedtcapture.lbllocality.caption"
+msgid "Locality: *"
+msgstr ""
+
+#: tedtcapture.lbllongitude.caption
+msgctxt "tedtcapture.lbllongitude.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtcapture.lblmoltlimits.caption
+msgid "Molt limits:"
+msgstr ""
+
+#: tedtcapture.lblnet.caption
+msgid "Mistnet:"
+msgstr ""
+
+#: tedtcapture.lblnostrilbilltip.caption
+msgid "Nostril to bill tip:"
+msgstr ""
+
+#: tedtcapture.lblnotes.caption
+msgctxt "tedtcapture.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtcapture.lblphilornislarvae.caption
+msgid "Philornis larvae quantity:"
+msgstr ""
+
+#: tedtcapture.lblphotographer1.caption
+msgid "Photographer 1:"
+msgstr ""
+
+#: tedtcapture.lblphotographer2.caption
+msgid "Photographer 2:"
+msgstr ""
+
+#: tedtcapture.lblremovedband.caption
+msgctxt "tedtcapture.lblremovedband.caption"
+msgid "Removed band:"
+msgstr ""
+
+#: tedtcapture.lblrightlegbelow.caption
+msgctxt "tedtcapture.lblrightlegbelow.caption"
+msgid "Right tarsus:"
+msgstr ""
+
+#: tedtcapture.lblrightwingchord.caption
+msgid "Right wing chord:"
+msgstr ""
+
+#: tedtcapture.lblsex.caption
+msgctxt "tedtcapture.lblsex.caption"
+msgid "Sex:"
+msgstr ""
+
+#: tedtcapture.lblskullossification.caption
+msgid "Skull ossification:"
+msgstr ""
+
+#: tedtcapture.lblstartphoto.caption
+msgid "First photo number:"
+msgstr ""
+
+#: tedtcapture.lblstatus.caption
+msgctxt "tedtcapture.lblstatus.caption"
+msgid "Status:"
+msgstr ""
+
+#: tedtcapture.lblsurvey.caption
+msgctxt "tedtcapture.lblsurvey.caption"
+msgid "Survey:"
+msgstr ""
+
+#: tedtcapture.lbltaillength.caption
+msgid "Tail length:"
+msgstr ""
+
+#: tedtcapture.lbltarsusdiameter.caption
+msgid "Tarsus diameter:"
+msgstr ""
+
+#: tedtcapture.lbltarsuslength.caption
+msgid "Tarsus length:"
+msgstr ""
+
+#: tedtcapture.lbltaxon.caption
+msgctxt "tedtcapture.lbltaxon.caption"
+msgid "Taxon:"
+msgstr ""
+
+#: tedtcapture.lbltitlecapture.caption
+msgid "Capture info"
+msgstr ""
+
+#: tedtcapture.lbltitlecollection.caption
+msgid "Samples"
+msgstr ""
+
+#: tedtcapture.lbltitlemetrics.caption
+msgid "Measurements"
+msgstr ""
+
+#: tedtcapture.lbltotalculmen.caption
+msgid "Total culmen:"
+msgstr ""
+
+#: tedtcapture.lbltotallength.caption
+msgid "Total length:"
+msgstr ""
+
+#: tedtcapture.lblweight.caption
+msgid "Weight:"
+msgstr ""
+
+#: tedtcapture.sbcancel.caption
+msgctxt "tedtcapture.sbcancel.caption"
+msgid "Cancelar"
+msgstr ""
+
+#: tedtcapture.sbsave.caption
+msgctxt "tedtcapture.sbsave.caption"
+msgid "Salvar"
+msgstr ""
+
+#: tedtdatabase.ckremotedb.caption
+msgid "Remote database"
+msgstr ""
+
+#: tedtdatabase.lbldbfile.caption
+msgctxt "tedtdatabase.lbldbfile.caption"
+msgid "Database file: *"
+msgstr ""
+
+#: tedtdatabase.lbldbmanager.caption
+msgid "Database type: *"
+msgstr ""
+
+#: tedtdatabase.lbldbpass.caption
+msgctxt "tedtdatabase.lbldbpass.caption"
+msgid "Password:"
+msgstr ""
+
+#: tedtdatabase.lbldbport.caption
+msgid "Port:"
+msgstr ""
+
+#: tedtdatabase.lbldbserver.caption
+msgid "Server:"
+msgstr ""
+
+#: tedtdatabase.lbldbuser.caption
+msgctxt "tedtdatabase.lbldbuser.caption"
+msgid "Username:"
+msgstr ""
+
+#: tedtdatabase.lblname.caption
+msgid "Connection name: *"
+msgstr ""
+
+#: tedtdatabase.opendlg.title
+msgctxt "tedtdatabase.opendlg.title"
+msgid "Abrir"
+msgstr ""
+
+#: tedtdatabase.ptitleauthentication.caption
+msgid "Authentication"
+msgstr ""
+
+#: tedtdatabase.sbcancel.caption
+msgctxt "tedtdatabase.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtdatabase.sbsave.caption
+msgctxt "tedtdatabase.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtegg.ckhatched.caption
+msgid "Hatched"
+msgstr ""
+
+#: tedtegg.lbleggseq.caption
+msgid "Egg number: *"
+msgstr ""
+
+#: tedtegg.lblfieldnumber.caption
+msgctxt "tedtegg.lblfieldnumber.caption"
+msgid "Field number:"
+msgstr ""
+
+#: tedtegg.lblindividual.caption
+msgid "Individual hatched:"
+msgstr ""
+
+#: tedtegg.lbllength.caption
+msgid "Length:"
+msgstr ""
+
+#: tedtegg.lblmeasuredate.caption
+msgid "Measurement date:"
+msgstr ""
+
+#: tedtegg.lblnotes.caption
+msgctxt "tedtegg.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtegg.lblobserver.caption
+msgctxt "tedtegg.lblobserver.caption"
+msgid "Observer: *"
+msgstr ""
+
+#: tedtegg.lblshape.caption
+msgid "Format:"
+msgstr ""
+
+#: tedtegg.lblshellcolor.caption
+msgid "Eggshell color:"
+msgstr ""
+
+#: tedtegg.lblshellpattern.caption
+msgid "Eggshell pattern:"
+msgstr ""
+
+#: tedtegg.lblshelltexture.caption
+msgid "Eggshell texture:"
+msgstr ""
+
+#: tedtegg.lblstage.caption
+msgid "Phase:"
+msgstr ""
+
+#: tedtegg.lbltaxon.caption
+msgctxt "tedtegg.lbltaxon.caption"
+msgid "Taxon: *"
+msgstr ""
+
+#: tedtegg.lblvolume.caption
+msgid "Volume:"
+msgstr ""
+
+#: tedtegg.lblweight.caption
+msgid "Mass:"
+msgstr ""
+
+#: tedtegg.lblwidth.caption
+msgid "Width:"
+msgstr ""
+
+#: tedtegg.sbcancel.caption
+msgctxt "tedtegg.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtegg.sbsave.caption
+msgctxt "tedtegg.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtexpedition.eenddate.texthint
+msgctxt "tedtexpedition.eenddate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtexpedition.estartdate.texthint
+msgctxt "tedtexpedition.estartdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtexpedition.lbldescription.caption
+msgctxt "tedtexpedition.lbldescription.caption"
+msgid "Description:"
+msgstr ""
+
+#: tedtexpedition.lblduration.caption
+msgid "Duration (days):"
+msgstr ""
+
+#: tedtexpedition.lblenddate.caption
+msgid "End date: *"
+msgstr ""
+
+#: tedtexpedition.lbllocality.caption
+msgctxt "tedtexpedition.lbllocality.caption"
+msgid "Locality: *"
+msgstr ""
+
+#: tedtexpedition.lblname.caption
+msgctxt "tedtexpedition.lblname.caption"
+msgid "Name: *"
+msgstr ""
+
+#: tedtexpedition.lblproject.caption
+msgctxt "tedtexpedition.lblproject.caption"
+msgid "Project:"
+msgstr ""
+
+#: tedtexpedition.lblstartdate.caption
+msgid "Start date: *"
+msgstr ""
+
+#: tedtexpedition.sbcancel.caption
+msgctxt "tedtexpedition.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtexpedition.sbsave.caption
+msgctxt "tedtexpedition.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtimageinfo.eimagedate.texthint
+msgctxt "tedtimageinfo.eimagedate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtimageinfo.eimagetime.texthint
+msgctxt "tedtimageinfo.eimagetime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtimageinfo.lblbandnumber1.caption
+msgctxt "tedtimageinfo.lblbandnumber1.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtimageinfo.lblbandprefix1.caption
+msgid "Image date: *"
+msgstr ""
+
+#: tedtimageinfo.lblbandsize1.caption
+msgctxt "tedtimageinfo.lblbandsize1.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtimageinfo.lblbandstatus1.caption
+msgid "Image type:"
+msgstr ""
+
+#: tedtimageinfo.lblbandstatus2.caption
+msgid "Coordinates precision:"
+msgstr ""
+
+#: tedtimageinfo.lblbandsuffix1.caption
+msgid "Image time:"
+msgstr ""
+
+#: tedtimageinfo.lblnotes1.caption
+msgid "Subtitle:"
+msgstr ""
+
+#: tedtimageinfo.lblproject.caption
+msgctxt "tedtimageinfo.lblproject.caption"
+msgid "Individual:"
+msgstr ""
+
+#: tedtimageinfo.lblproject1.caption
+msgid "Capture:"
+msgstr ""
+
+#: tedtimageinfo.lblproject2.caption
+msgctxt "tedtimageinfo.lblproject2.caption"
+msgid "Survey:"
+msgstr ""
+
+#: tedtimageinfo.lblproject3.caption
+msgid "Sighting:"
+msgstr ""
+
+#: tedtimageinfo.lblproject4.caption
+msgid "Image file: *"
+msgstr ""
+
+#: tedtimageinfo.lblproject5.caption
+msgid "Specimen:"
+msgstr ""
+
+#: tedtimageinfo.lblproject6.caption
+msgctxt "tedtimageinfo.lblproject6.caption"
+msgid "Egg:"
+msgstr ""
+
+#: tedtimageinfo.lblproject7.caption
+msgid "Nest revision:"
+msgstr ""
+
+#: tedtimageinfo.lblproject8.caption
+msgctxt "tedtimageinfo.lblproject8.caption"
+msgid "Nest:"
+msgstr ""
+
+#: tedtimageinfo.lblrequester.caption
+msgid "Author:"
+msgstr ""
+
+#: tedtimageinfo.lblsender1.caption
+msgctxt "tedtimageinfo.lblsender1.caption"
+msgid "Taxon:"
+msgstr ""
+
+#: tedtimageinfo.lblsupplier.caption
+msgctxt "tedtimageinfo.lblsupplier.caption"
+msgid "Locality:"
+msgstr ""
+
+#: tedtimageinfo.sbcancel.caption
+msgctxt "tedtimageinfo.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtimageinfo.sbsave.caption
+msgctxt "tedtimageinfo.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtindividual.ebandchangedate.texthint
+msgctxt "tedtindividual.ebandchangedate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtindividual.ebandingdate.texthint
+msgctxt "tedtindividual.ebandingdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtindividual.ebirthday.texthint
+msgctxt "tedtindividual.ebirthday.texthint"
+msgid "DD"
+msgstr ""
+
+#: tedtindividual.ebirthmonth.texthint
+msgctxt "tedtindividual.ebirthmonth.texthint"
+msgid "MM"
+msgstr ""
+
+#: tedtindividual.ebirthyear.texthint
+msgctxt "tedtindividual.ebirthyear.texthint"
+msgid "YYYY"
+msgstr ""
+
+#: tedtindividual.edeathday.texthint
+msgctxt "tedtindividual.edeathday.texthint"
+msgid "DD"
+msgstr ""
+
+#: tedtindividual.edeathmonth.texthint
+msgctxt "tedtindividual.edeathmonth.texthint"
+msgid "MM"
+msgstr ""
+
+#: tedtindividual.edeathyear.texthint
+msgctxt "tedtindividual.edeathyear.texthint"
+msgid "YYYY"
+msgstr ""
+
+#: tedtindividual.lblage.caption
+msgctxt "tedtindividual.lblage.caption"
+msgid "Age:"
+msgstr ""
+
+#: tedtindividual.lblband.caption
+msgctxt "tedtindividual.lblband.caption"
+msgid "Band:"
+msgstr ""
+
+#: tedtindividual.lblbandchangedate.caption
+msgctxt "tedtindividual.lblbandchangedate.caption"
+msgid "Band change date:"
+msgstr ""
+
+#: tedtindividual.lblbandingdate.caption
+msgctxt "tedtindividual.lblbandingdate.caption"
+msgid "Banding date:"
+msgstr ""
+
+#: tedtindividual.lblbirthdate.caption
+msgctxt "tedtindividual.lblbirthdate.caption"
+msgid "Birth date:"
+msgstr ""
+
+#: tedtindividual.lbldeathdate.caption
+msgctxt "tedtindividual.lbldeathdate.caption"
+msgid "Death date:"
+msgstr ""
+
+#: tedtindividual.lbldoubleband.caption
+msgctxt "tedtindividual.lbldoubleband.caption"
+msgid "Double band:"
+msgstr ""
+
+#: tedtindividual.lblfather.caption
+msgctxt "tedtindividual.lblfather.caption"
+msgid "Father:"
+msgstr ""
+
+#: tedtindividual.lbllefttarsus.caption
+msgctxt "tedtindividual.lbllefttarsus.caption"
+msgid "Left tarsus (below):"
+msgstr ""
+
+#: tedtindividual.lbllefttibia.caption
+msgctxt "tedtindividual.lbllefttibia.caption"
+msgid "Left leg (above):"
+msgstr ""
+
+#: tedtindividual.lblmother.caption
+msgctxt "tedtindividual.lblmother.caption"
+msgid "Mother:"
+msgstr ""
+
+#: tedtindividual.lblnest.caption
+msgctxt "tedtindividual.lblnest.caption"
+msgid "Nest:"
+msgstr ""
+
+#: tedtindividual.lblnotes.caption
+msgctxt "tedtindividual.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtindividual.lblrecognizablemarkings.caption
+msgctxt "tedtindividual.lblrecognizablemarkings.caption"
+msgid "Recognizable markings:"
+msgstr ""
+
+#: tedtindividual.lblremovedband.caption
+msgctxt "tedtindividual.lblremovedband.caption"
+msgid "Removed band:"
+msgstr ""
+
+#: tedtindividual.lblrighttarsus.caption
+msgctxt "tedtindividual.lblrighttarsus.caption"
+msgid "Right tarsus (below):"
+msgstr ""
+
+#: tedtindividual.lblrighttibia.caption
+msgctxt "tedtindividual.lblrighttibia.caption"
+msgid "Right leg (above):"
+msgstr ""
+
+#: tedtindividual.lblsex.caption
+msgctxt "tedtindividual.lblsex.caption"
+msgid "Sex:"
+msgstr ""
+
+#: tedtindividual.lbltaxon.caption
+msgctxt "tedtindividual.lbltaxon.caption"
+msgid "Taxon: *"
+msgstr ""
+
+#: tedtindividual.sbcancel.caption
+msgctxt "tedtindividual.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtindividual.sbsave.caption
+msgctxt "tedtindividual.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtinstitution.lblacronym.caption
+msgctxt "tedtinstitution.lblacronym.caption"
+msgid "Acronym: *"
+msgstr ""
+
+#: tedtinstitution.lbladdress.caption
+msgctxt "tedtinstitution.lbladdress.caption"
+msgid "Address:"
+msgstr ""
+
+#: tedtinstitution.lblcomplement.caption
+msgctxt "tedtinstitution.lblcomplement.caption"
+msgid "Complement:"
+msgstr ""
+
+#: tedtinstitution.lblcountry.caption
+msgctxt "tedtinstitution.lblcountry.caption"
+msgid "Country:"
+msgstr ""
+
+#: tedtinstitution.lblemail.caption
+msgctxt "tedtinstitution.lblemail.caption"
+msgid "E-mail:"
+msgstr ""
+
+#: tedtinstitution.lblfullname.caption
+msgctxt "tedtinstitution.lblfullname.caption"
+msgid "Name: *"
+msgstr ""
+
+#: tedtinstitution.lblmanagername.caption
+msgctxt "tedtinstitution.lblmanagername.caption"
+msgid "Contact person:"
+msgstr ""
+
+#: tedtinstitution.lblmunicipality.caption
+msgctxt "tedtinstitution.lblmunicipality.caption"
+msgid "Municipality:"
+msgstr ""
+
+#: tedtinstitution.lblneighborhood.caption
+msgctxt "tedtinstitution.lblneighborhood.caption"
+msgid "Neighborhood:"
+msgstr ""
+
+#: tedtinstitution.lblnotes.caption
+msgctxt "tedtinstitution.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtinstitution.lblphone.caption
+msgctxt "tedtinstitution.lblphone.caption"
+msgid "Telephone:"
+msgstr ""
+
+#: tedtinstitution.lblpostalcode.caption
+msgctxt "tedtinstitution.lblpostalcode.caption"
+msgid "Postal code:"
+msgstr ""
+
+#: tedtinstitution.lblstate.caption
+msgctxt "tedtinstitution.lblstate.caption"
+msgid "State:"
+msgstr ""
+
+#: tedtinstitution.sbcancel.caption
+msgctxt "tedtinstitution.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtinstitution.sbsave.caption
+msgctxt "tedtinstitution.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtmethod.lblacronym.caption
+msgctxt "tedtmethod.lblacronym.caption"
+msgid "Acronym: *"
+msgstr ""
+
+#: tedtmethod.lbldescription.caption
+msgctxt "tedtmethod.lbldescription.caption"
+msgid "Description:"
+msgstr ""
+
+#: tedtmethod.lblebirdname.caption
+msgid "Method name on eBird:"
+msgstr ""
+
+#: tedtmethod.lblname.caption
+msgctxt "tedtmethod.lblname.caption"
+msgid "Name: *"
+msgstr ""
+
+#: tedtmethod.sbcancel.caption
+msgctxt "tedtmethod.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtmethod.sbsave.caption
+msgctxt "tedtmethod.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtmolt.ecapturetime.texthint
+msgctxt "tedtmolt.ecapturetime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtmolt.edate.texthint
+msgctxt "tedtmolt.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtmolt.lblbandcolor.caption
+msgid "P2:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor1.caption
+msgid "P3:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor10.caption
+msgid "S4:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor11.caption
+msgid "S5:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor12.caption
+msgid "S7:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor13.caption
+msgid "S8:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor14.caption
+msgid "S9:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor16.caption
+msgid "R2:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor17.caption
+msgid "R3:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor18.caption
+msgid "R4:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor19.caption
+msgid "R5:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor2.caption
+msgid "P4:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor24.caption
+msgid "PC2:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor25.caption
+msgid "PC3:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor26.caption
+msgid "PC4:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor27.caption
+msgid "PC5:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor28.caption
+msgid "PC7:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor29.caption
+msgid "PC8:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor3.caption
+msgid "P5:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor30.caption
+msgid "PC9:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor32.caption
+msgid "Al2:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor33.caption
+msgid "Al3:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor4.caption
+msgid "P7:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor40.caption
+msgid "GC2:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor41.caption
+msgid "GC3:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor42.caption
+msgid "GC4:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor43.caption
+msgid "GC5:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor44.caption
+msgid "GC7:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor45.caption
+msgid "GC8:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor46.caption
+msgid "GC9:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor47.caption
+msgid "GC10:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor48.caption
+msgid "LC:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor5.caption
+msgid "P8:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor50.caption
+msgid "CC:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor6.caption
+msgid "P9:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor7.caption
+msgid "P10:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor8.caption
+msgid "S2:"
+msgstr ""
+
+#: tedtmolt.lblbandcolor9.caption
+msgid "S3:"
+msgstr ""
+
+#: tedtmolt.lblbandprefix.caption
+msgctxt "tedtmolt.lblbandprefix.caption"
+msgid "Date: *"
+msgstr ""
+
+#: tedtmolt.lblbandsuffix.caption
+msgctxt "tedtmolt.lblbandsuffix.caption"
+msgid "Time:"
+msgstr ""
+
+#: tedtmolt.lblbandtype.caption
+msgid "P1:"
+msgstr ""
+
+#: tedtmolt.lblbandtype1.caption
+msgid "P6:"
+msgstr ""
+
+#: tedtmolt.lblbandtype10.caption
+msgid "GC1:"
+msgstr ""
+
+#: tedtmolt.lblbandtype11.caption
+msgid "GC6:"
+msgstr ""
+
+#: tedtmolt.lblbandtype12.caption
+msgid "MC:"
+msgstr ""
+
+#: tedtmolt.lblbandtype14.caption
+msgid "Growth bar width:"
+msgstr ""
+
+#: tedtmolt.lblbandtype2.caption
+msgid "S1:"
+msgstr ""
+
+#: tedtmolt.lblbandtype3.caption
+msgid "S6:"
+msgstr ""
+
+#: tedtmolt.lblbandtype4.caption
+msgid "R1:"
+msgstr ""
+
+#: tedtmolt.lblbandtype5.caption
+msgid "R6:"
+msgstr ""
+
+#: tedtmolt.lblbandtype6.caption
+msgid "PC1:"
+msgstr ""
+
+#: tedtmolt.lblbandtype7.caption
+msgid "PC6:"
+msgstr ""
+
+#: tedtmolt.lblbandtype8.caption
+msgid "Al1:"
+msgstr ""
+
+#: tedtmolt.lblnotes.caption
+msgctxt "tedtmolt.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtmolt.lblrequester.caption
+msgctxt "tedtmolt.lblrequester.caption"
+msgid "Bander: *"
+msgstr ""
+
+#: tedtmolt.lblsupplier.caption
+msgctxt "tedtmolt.lblsupplier.caption"
+msgid "Survey:"
+msgstr ""
+
+#: tedtmolt.lbltitlemetrics.caption
+msgid "Primaries"
+msgstr ""
+
+#: tedtmolt.lbltitlemetrics1.caption
+msgid "Secondaries"
+msgstr ""
+
+#: tedtmolt.lbltitlemetrics2.caption
+msgid "Rectrices"
+msgstr ""
+
+#: tedtmolt.lbltitlemetrics3.caption
+msgid "Alula"
+msgstr ""
+
+#: tedtmolt.lbltitlemetrics4.caption
+msgid "Primary coverts"
+msgstr ""
+
+#: tedtmolt.lbltitlemetrics5.caption
+msgid "Greater coverts"
+msgstr ""
+
+#: tedtmolt.lbltitlemetrics6.caption
+msgid "Other coverts"
+msgstr ""
+
+#: tedtmolt.lbltitlemetrics7.caption
+msgid "Growth bars"
+msgstr ""
+
+#: tedtmolt.sbcancel.caption
+msgctxt "tedtmolt.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtmolt.sbsave.caption
+msgctxt "tedtmolt.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtnest.efounddate.texthint
+msgctxt "tedtnest.efounddate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtnest.elastdate.texthint
+msgctxt "tedtnest.elastdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtnest.lblbandstatus1.caption
+msgctxt "tedtnest.lblbandstatus1.caption"
+msgid "Taxon:"
+msgstr ""
+
+#: tedtnest.lblbandstatus11.caption
+msgid "Stem thickness:"
+msgstr ""
+
+#: tedtnest.lblbandstatus12.caption
+msgid "Lesser plant diameter:"
+msgstr ""
+
+#: tedtnest.lblbandstatus13.caption
+msgid "Days building:"
+msgstr ""
+
+#: tedtnest.lblbandstatus14.caption
+msgid "Days incubating:"
+msgstr ""
+
+#: tedtnest.lblbandstatus15.caption
+msgid "Nestling-days:"
+msgstr ""
+
+#: tedtnest.lblbandstatus16.caption
+msgid "Total active-days:"
+msgstr ""
+
+#: tedtnest.lblbandstatus17.caption
+msgid "Internal diameter:"
+msgstr ""
+
+#: tedtnest.lblbandstatus18.caption
+msgid "External diameter:"
+msgstr ""
+
+#: tedtnest.lblbandstatus19.caption
+msgid "Distance from plant edge:"
+msgstr ""
+
+#: tedtnest.lblbandstatus20.caption
+msgid "Distance from plant center:"
+msgstr ""
+
+#: tedtnest.lblbandstatus21.caption
+msgid "Internal height:"
+msgstr ""
+
+#: tedtnest.lblbandstatus22.caption
+msgid "External height:"
+msgstr ""
+
+#: tedtnest.lblbandstatus3.caption
+msgid "Nest encounter date:"
+msgstr ""
+
+#: tedtnest.lblbandstatus4.caption
+msgctxt "tedtnest.lblbandstatus4.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtnest.lblbandstatus6.caption
+msgid "Plant height:"
+msgstr ""
+
+#: tedtnest.lblbandstatus7.caption
+msgid "Greater plant diameter:"
+msgstr ""
+
+#: tedtnest.lblbandstatus8.caption
+msgid "Last date:"
+msgstr ""
+
+#: tedtnest.lblbandstatus9.caption
+msgctxt "tedtnest.lblbandstatus9.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtnest.lblheightaboveground.caption
+msgctxt "tedtnest.lblheightaboveground.caption"
+msgid "Height at ground level:"
+msgstr ""
+
+#: tedtnest.lblnotes.caption
+msgctxt "tedtnest.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtnest.lblnotes1.caption
+msgid "Nest description:"
+msgstr ""
+
+#: tedtnest.lblothersupport.caption
+msgctxt "tedtnest.lblothersupport.caption"
+msgid "Other support:"
+msgstr ""
+
+#: tedtnest.lblrequester.caption
+msgctxt "tedtnest.lblrequester.caption"
+msgid "Field number:"
+msgstr ""
+
+#: tedtnest.lblrequester1.caption
+msgctxt "tedtnest.lblrequester1.caption"
+msgid "Observer:"
+msgstr ""
+
+#: tedtnest.lblrequester2.caption
+msgid "Productivity:"
+msgstr ""
+
+#: tedtnest.lblrequester3.caption
+msgid "Fate:"
+msgstr ""
+
+#: tedtnest.lblrequester4.caption
+msgid "Cover (%):"
+msgstr ""
+
+#: tedtnest.lblsupplier.caption
+msgctxt "tedtnest.lblsupplier.caption"
+msgid "Locality:"
+msgstr ""
+
+#: tedtnest.lblsupplier1.caption
+msgctxt "tedtnest.lblsupplier1.caption"
+msgid "Project:"
+msgstr ""
+
+#: tedtnest.lblsupportplant1.caption
+msgctxt "tedtnest.lblsupportplant1.caption"
+msgid "Support plant 1:"
+msgstr ""
+
+#: tedtnest.lblsupportplant2.caption
+msgctxt "tedtnest.lblsupportplant2.caption"
+msgid "Support plant 2:"
+msgstr ""
+
+#: tedtnest.lblsupporttype.caption
+msgctxt "tedtnest.lblsupporttype.caption"
+msgid "Support type:"
+msgstr ""
+
+#: tedtnest.sbcancel.caption
+msgctxt "tedtnest.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtnest.sbsave.caption
+msgctxt "tedtnest.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtnestrevision.ckhasphilornislarvae.caption
+msgctxt "tedtnestrevision.ckhasphilornislarvae.caption"
+msgid "Parasitized by Philornis sp. larvae"
+msgstr ""
+
+#: tedtnestrevision.erevisiontime.texthint
+msgctxt "tedtnestrevision.erevisiontime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtnestrevision.lblhosteggstally.caption
+msgctxt "tedtnestrevision.lblhosteggstally.caption"
+msgid "Number of eggs (host):"
+msgstr ""
+
+#: tedtnestrevision.lblhostnestlingstally.caption
+msgctxt "tedtnestrevision.lblhostnestlingstally.caption"
+msgid "Number of nestlings (host):"
+msgstr ""
+
+#: tedtnestrevision.lblneststage.caption
+msgid "Stage: *"
+msgstr ""
+
+#: tedtnestrevision.lblneststatus.caption
+msgctxt "tedtnestrevision.lblneststatus.caption"
+msgid "Status: *"
+msgstr ""
+
+#: tedtnestrevision.lblnidoparasite.caption
+msgctxt "tedtnestrevision.lblnidoparasite.caption"
+msgid "Nidoparasite taxon:"
+msgstr ""
+
+#: tedtnestrevision.lblnidoparasiteeggstally.caption
+msgctxt "tedtnestrevision.lblnidoparasiteeggstally.caption"
+msgid "Number of nidoparasite eggs:"
+msgstr ""
+
+#: tedtnestrevision.lblnidoparasitenestlingstally.caption
+msgctxt "tedtnestrevision.lblnidoparasitenestlingstally.caption"
+msgid "Number of nidoparasite nestlings:"
+msgstr ""
+
+#: tedtnestrevision.lblnotes.caption
+msgctxt "tedtnestrevision.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtnestrevision.lblobserver1.caption
+msgid "Observer 1: *"
+msgstr ""
+
+#: tedtnestrevision.lblobserver2.caption
+msgctxt "tedtnestrevision.lblobserver2.caption"
+msgid "Observer 2:"
+msgstr ""
+
+#: tedtnestrevision.lblrevisiondate.caption
+msgid "Nest revision date: *"
+msgstr ""
+
+#: tedtnestrevision.lblrevisiontime.caption
+msgctxt "tedtnestrevision.lblrevisiontime.caption"
+msgid "Nest revision time:"
+msgstr ""
+
+#: tedtnestrevision.sbcancel.caption
+msgctxt "tedtnestrevision.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtnestrevision.sbsave.caption
+msgctxt "tedtnestrevision.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtneteffort.edate.texthint
+msgctxt "tedtneteffort.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtneteffort.enetclose1.texthint
+msgctxt "tedtneteffort.enetclose1.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtneteffort.enetclose2.texthint
+msgctxt "tedtneteffort.enetclose2.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtneteffort.enetclose3.texthint
+msgctxt "tedtneteffort.enetclose3.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtneteffort.enetopen1.texthint
+msgctxt "tedtneteffort.enetopen1.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtneteffort.enetopen2.texthint
+msgctxt "tedtneteffort.enetopen2.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtneteffort.enetopen3.texthint
+msgctxt "tedtneteffort.enetopen3.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtneteffort.lblendnumber1.caption
+msgctxt "tedtneteffort.lblendnumber1.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtneteffort.lblendnumber2.caption
+msgid "Mistnet height (m):"
+msgstr ""
+
+#: tedtneteffort.lblendnumber3.caption
+msgctxt "tedtneteffort.lblendnumber3.caption"
+msgid "Mesh size:"
+msgstr ""
+
+#: tedtneteffort.lblendnumber4.caption
+msgid "Total open time (h):"
+msgstr ""
+
+#: tedtneteffort.lblendnumber5.caption
+msgctxt "tedtneteffort.lblendnumber5.caption"
+msgid "Closing time 1: *"
+msgstr ""
+
+#: tedtneteffort.lblendnumber6.caption
+msgctxt "tedtneteffort.lblendnumber6.caption"
+msgid "Closing time 2:"
+msgstr ""
+
+#: tedtneteffort.lblendnumber7.caption
+msgctxt "tedtneteffort.lblendnumber7.caption"
+msgid "Closing time 3:"
+msgstr ""
+
+#: tedtneteffort.lblnetnumber.caption
+msgctxt "tedtneteffort.lblnetnumber.caption"
+msgid "Mistnet number: *"
+msgstr ""
+
+#: tedtneteffort.lblnotes.caption
+msgctxt "tedtneteffort.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtneteffort.lblstartnumber.caption
+msgid "Permanent mistnet:"
+msgstr ""
+
+#: tedtneteffort.lblstartnumber1.caption
+msgctxt "tedtneteffort.lblstartnumber1.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtneteffort.lblstartnumber2.caption
+msgid "Mistnet length (m):"
+msgstr ""
+
+#: tedtneteffort.lblstartnumber3.caption
+msgid "Mistnet area (m²):"
+msgstr ""
+
+#: tedtneteffort.lblstartnumber4.caption
+msgctxt "tedtneteffort.lblstartnumber4.caption"
+msgid "Survey date: *"
+msgstr ""
+
+#: tedtneteffort.lblstartnumber5.caption
+msgctxt "tedtneteffort.lblstartnumber5.caption"
+msgid "Opening time 1: *"
+msgstr ""
+
+#: tedtneteffort.lblstartnumber6.caption
+msgctxt "tedtneteffort.lblstartnumber6.caption"
+msgid "Opening time 2:"
+msgstr ""
+
+#: tedtneteffort.lblstartnumber7.caption
+msgctxt "tedtneteffort.lblstartnumber7.caption"
+msgid "Opening time 3:"
+msgstr ""
+
+#: tedtneteffort.lblsurvey.caption
+msgctxt "tedtneteffort.lblsurvey.caption"
+msgid "Survey:"
+msgstr ""
+
+#: tedtneteffort.sbcancel.caption
+msgctxt "tedtneteffort.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtneteffort.sbsave.caption
+msgctxt "tedtneteffort.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtnetstation.lblbandstatus3.caption
+msgctxt "tedtnetstation.lblbandstatus3.caption"
+msgid "Acronym: *"
+msgstr ""
+
+#: tedtnetstation.lblbandstatus4.caption
+msgctxt "tedtnetstation.lblbandstatus4.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtnetstation.lblbandstatus9.caption
+msgctxt "tedtnetstation.lblbandstatus9.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtnetstation.lblnotes.caption
+msgctxt "tedtnetstation.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtnetstation.lblnotes1.caption
+msgctxt "tedtnetstation.lblnotes1.caption"
+msgid "Description:"
+msgstr ""
+
+#: tedtnetstation.lblrequester1.caption
+msgctxt "tedtnetstation.lblrequester1.caption"
+msgid "Name: *"
+msgstr ""
+
+#: tedtnetstation.lblsupplier.caption
+msgctxt "tedtnetstation.lblsupplier.caption"
+msgid "Locality: *"
+msgstr ""
+
+#: tedtnetstation.sbcancel.caption
+msgctxt "tedtnetstation.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtnetstation.sbsave.caption
+msgctxt "tedtnetstation.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtpermanentnet.lblendnumber.caption
+msgctxt "tedtpermanentnet.lblendnumber.caption"
+msgid "Mistnet number: *"
+msgstr ""
+
+#: tedtpermanentnet.lblendnumber1.caption
+msgctxt "tedtpermanentnet.lblendnumber1.caption"
+msgid "Latitude: *"
+msgstr ""
+
+#: tedtpermanentnet.lblnotes.caption
+msgctxt "tedtpermanentnet.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtpermanentnet.lblstartnumber1.caption
+msgctxt "tedtpermanentnet.lblstartnumber1.caption"
+msgid "Longitude: *"
+msgstr ""
+
+#: tedtpermanentnet.sbcancel.caption
+msgctxt "tedtpermanentnet.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtpermanentnet.sbsave.caption
+msgctxt "tedtpermanentnet.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtpermit.edispatchdate.texthint
+msgctxt "tedtpermit.edispatchdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtpermit.eexpiredate.texthint
+msgctxt "tedtpermit.eexpiredate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtpermit.lbldispatchdate.caption
+msgid "Dispatch date: *"
+msgstr ""
+
+#: tedtpermit.lbldispatcher.caption
+msgid "Dispatcher: *"
+msgstr ""
+
+#: tedtpermit.lblexpiredate.caption
+msgid "Expire date:"
+msgstr ""
+
+#: tedtpermit.lblname.caption
+msgctxt "tedtpermit.lblname.caption"
+msgid "Name: *"
+msgstr ""
+
+#: tedtpermit.lblnotes.caption
+msgctxt "tedtpermit.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtpermit.lblpermitnumber.caption
+msgid "Permit number:"
+msgstr ""
+
+#: tedtpermit.lblpermittype.caption
+msgctxt "tedtpermit.lblpermittype.caption"
+msgid "Type: *"
+msgstr ""
+
+#: tedtpermit.lblproject.caption
+msgctxt "tedtpermit.lblproject.caption"
+msgid "Project:"
+msgstr ""
+
+#: tedtpermit.sbcancel.caption
+msgctxt "tedtpermit.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtpermit.sbsave.caption
+msgctxt "tedtpermit.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtperson.ebirthdate.texthint
+msgctxt "tedtperson.ebirthdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtperson.edeathdate.texthint
+msgctxt "tedtperson.edeathdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtperson.lblacronym.caption
+msgctxt "tedtperson.lblacronym.caption"
+msgid "Acronym: *"
+msgstr ""
+
+#: tedtperson.lbladdress1.caption
+msgctxt "tedtperson.lbladdress1.caption"
+msgid "Address:"
+msgstr ""
+
+#: tedtperson.lbladdress2.caption
+msgctxt "tedtperson.lbladdress2.caption"
+msgid "Complement:"
+msgstr ""
+
+#: tedtperson.lblbirthdate.caption
+msgctxt "tedtperson.lblbirthdate.caption"
+msgid "Date of birth:"
+msgstr ""
+
+#: tedtperson.lblcitation.caption
+msgid "Citation: *"
+msgstr ""
+
+#: tedtperson.lblcountry.caption
+msgctxt "tedtperson.lblcountry.caption"
+msgid "Country:"
+msgstr ""
+
+#: tedtperson.lblcpf.caption
+msgid "CPF:"
+msgstr ""
+
+#: tedtperson.lbldeathdate.caption
+msgctxt "tedtperson.lbldeathdate.caption"
+msgid "Date of death:"
+msgstr ""
+
+#: tedtperson.lbldepartment.caption
+msgid "Department:"
+msgstr ""
+
+#: tedtperson.lblemail.caption
+msgctxt "tedtperson.lblemail.caption"
+msgid "E-mail:"
+msgstr ""
+
+#: tedtperson.lblfullname.caption
+msgctxt "tedtperson.lblfullname.caption"
+msgid "Name: *"
+msgstr ""
+
+#: tedtperson.lblgenre.caption
+msgid "Gender:"
+msgstr ""
+
+#: tedtperson.lblinstagram.caption
+msgid "Instagram:"
+msgstr ""
+
+#: tedtperson.lblinstitution.caption
+msgid "Institution:"
+msgstr ""
+
+#: tedtperson.lbljobrole.caption
+msgid "Role:"
+msgstr ""
+
+#: tedtperson.lbllattes.caption
+msgid "Lattes:"
+msgstr ""
+
+#: tedtperson.lblmunicipality.caption
+msgctxt "tedtperson.lblmunicipality.caption"
+msgid "Municipality:"
+msgstr ""
+
+#: tedtperson.lblneighborhood.caption
+msgctxt "tedtperson.lblneighborhood.caption"
+msgid "Neighborhood:"
+msgstr ""
+
+#: tedtperson.lblnotes.caption
+msgctxt "tedtperson.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtperson.lblorcid.caption
+msgid "Orcid:"
+msgstr ""
+
+#: tedtperson.lblphone1.caption
+msgctxt "tedtperson.lblphone1.caption"
+msgid "Telephone:"
+msgstr ""
+
+#: tedtperson.lblphone2.caption
+msgid "Cell phone:"
+msgstr ""
+
+#: tedtperson.lblrg.caption
+msgid "RG:"
+msgstr ""
+
+#: tedtperson.lblstate.caption
+msgctxt "tedtperson.lblstate.caption"
+msgid "State:"
+msgstr ""
+
+#: tedtperson.lbltreatment.caption
+msgid "Treatment:"
+msgstr ""
+
+#: tedtperson.lbltwitter.caption
+msgid "Twitter:"
+msgstr ""
+
+#: tedtperson.lblwebsite.caption
+msgctxt "tedtperson.lblwebsite.caption"
+msgid "Website:"
+msgstr ""
+
+#: tedtperson.lblzipcode.caption
+msgctxt "tedtperson.lblzipcode.caption"
+msgid "Postal code:"
+msgstr ""
+
+#: tedtperson.menuitem1.caption
+msgid "Adicionar imagem do arquivo..."
+msgstr ""
+
+#: tedtperson.menuitem2.caption
+msgid "Salvar imagem como..."
+msgstr ""
+
+#: tedtperson.menuitem3.caption
+msgid "Copiar imagem"
+msgstr ""
+
+#: tedtperson.menuitem4.caption
+msgid "Colar imagem"
+msgstr ""
+
+#: tedtperson.menuitem5.caption
+msgid "Apagar imagem"
+msgstr ""
+
+#: tedtperson.sbcancel.caption
+msgctxt "tedtperson.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtperson.sbsave.caption
+msgctxt "tedtperson.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtproject.eenddate.texthint
+msgctxt "tedtproject.eenddate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtproject.estartdate.texthint
+msgctxt "tedtproject.estartdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtproject.lblabstract.caption
+msgid "Abstract:"
+msgstr ""
+
+#: tedtproject.lblcontactname.caption
+msgctxt "tedtproject.lblcontactname.caption"
+msgid "Contact person:"
+msgstr ""
+
+#: tedtproject.lblemail.caption
+msgctxt "tedtproject.lblemail.caption"
+msgid "E-mail:"
+msgstr ""
+
+#: tedtproject.lblenddate.caption
+msgid "End date:"
+msgstr ""
+
+#: tedtproject.lblnotes.caption
+msgctxt "tedtproject.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtproject.lblshorttitle.caption
+msgid "Short title: *"
+msgstr ""
+
+#: tedtproject.lblstartdate.caption
+msgid "Start date:"
+msgstr ""
+
+#: tedtproject.lbltitle.caption
+msgid "Title: *"
+msgstr ""
+
+#: tedtproject.lblwebsite.caption
+msgctxt "tedtproject.lblwebsite.caption"
+msgid "Website:"
+msgstr ""
+
+#: tedtproject.sbcancel.caption
+msgctxt "tedtproject.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtproject.sbsave.caption
+msgctxt "tedtproject.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtsampleprep.epreparationdate.texthint
+msgctxt "tedtsampleprep.epreparationdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtsampleprep.lblaccessionnumber.caption
+msgid "Accession number: *"
+msgstr ""
+
+#: tedtsampleprep.lblaccessionseq.caption
+msgctxt "tedtsampleprep.lblaccessionseq.caption"
+msgid "Duplicate/part number:"
+msgstr ""
+
+#: tedtsampleprep.lblnotes.caption
+msgctxt "tedtsampleprep.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtsampleprep.lblpreparationdate.caption
+msgctxt "tedtsampleprep.lblpreparationdate.caption"
+msgid "Preparation date:"
+msgstr ""
+
+#: tedtsampleprep.lblpreparer.caption
+msgid "Preparer:"
+msgstr ""
+
+#: tedtsampleprep.lblsampletype.caption
+msgctxt "tedtsampleprep.lblsampletype.caption"
+msgid "Type: *"
+msgstr ""
+
+#: tedtsampleprep.sbcancel.caption
+msgctxt "tedtsampleprep.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtsampleprep.sbsave.caption
+msgctxt "tedtsampleprep.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtsighting.ckaudiorecording.caption
+msgctxt "tedtsighting.ckaudiorecording.caption"
+msgid "Audio recorded"
+msgstr ""
+
+#: tedtsighting.ckcaptured.caption
+msgctxt "tedtsighting.ckcaptured.caption"
+msgid "Captured"
+msgstr ""
+
+#: tedtsighting.ckheard.caption
+msgctxt "tedtsighting.ckheard.caption"
+msgid "Heard"
+msgstr ""
+
+#: tedtsighting.ckisinebird.caption
+msgctxt "tedtsighting.ckisinebird.caption"
+msgid "Record is on eBird"
+msgstr ""
+
+#: tedtsighting.cknotsurveying.caption
+msgctxt "tedtsighting.cknotsurveying.caption"
+msgid "Outside the sampling"
+msgstr ""
+
+#: tedtsighting.ckphotographed.caption
+msgctxt "tedtsighting.ckphotographed.caption"
+msgid "Photographed"
+msgstr ""
+
+#: tedtsighting.ckseen.caption
+msgctxt "tedtsighting.ckseen.caption"
+msgid "Seen"
+msgstr ""
+
+#: tedtsighting.edate.texthint
+msgctxt "tedtsighting.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtsighting.etime.texthint
+msgctxt "tedtsighting.etime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtsighting.lblbandcolor.caption
+msgid "Distance (m):"
+msgstr ""
+
+#: tedtsighting.lblbandnumber.caption
+msgctxt "tedtsighting.lblbandnumber.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtsighting.lblbandprefix.caption
+msgctxt "tedtsighting.lblbandprefix.caption"
+msgid "Date: *"
+msgstr ""
+
+#: tedtsighting.lblbandsize.caption
+msgctxt "tedtsighting.lblbandsize.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtsighting.lblbandsource.caption
+msgid "Detection type:"
+msgstr ""
+
+#: tedtsighting.lblbandstatus.caption
+msgid "Mackinnon list number:"
+msgstr ""
+
+#: tedtsighting.lblbandsuffix.caption
+msgctxt "tedtsighting.lblbandsuffix.caption"
+msgid "Time:"
+msgstr ""
+
+#: tedtsighting.lblbandtype.caption
+msgid "Quantity:"
+msgstr ""
+
+#: tedtsighting.lblcarrier.caption
+msgctxt "tedtsighting.lblcarrier.caption"
+msgid "Method: *"
+msgstr ""
+
+#: tedtsighting.lblnotes.caption
+msgctxt "tedtsighting.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtsighting.lblorderdate.caption
+msgid "Number of new captures:"
+msgstr ""
+
+#: tedtsighting.lblorderdate1.caption
+msgid "Number of recaptures:"
+msgstr ""
+
+#: tedtsighting.lblorderdate2.caption
+msgid "Number of unbanded:"
+msgstr ""
+
+#: tedtsighting.lblordernumber.caption
+msgid "Breeding/behavior code:"
+msgstr ""
+
+#: tedtsighting.lblproject.caption
+msgctxt "tedtsighting.lblproject.caption"
+msgid "Individual:"
+msgstr ""
+
+#: tedtsighting.lblreportdate.caption
+msgid "Number of males:"
+msgstr ""
+
+#: tedtsighting.lblreportdate1.caption
+msgid "Number of females:"
+msgstr ""
+
+#: tedtsighting.lblreportdate2.caption
+msgid "Number of birds not sexed:"
+msgstr ""
+
+#: tedtsighting.lblreportdate3.caption
+msgid "Number of adults:"
+msgstr ""
+
+#: tedtsighting.lblreportdate4.caption
+msgid "Number of immatures:"
+msgstr ""
+
+#: tedtsighting.lblreportdate5.caption
+msgid "Number of birds not aged:"
+msgstr ""
+
+#: tedtsighting.lblrequester.caption
+msgctxt "tedtsighting.lblrequester.caption"
+msgid "Observer:"
+msgstr ""
+
+#: tedtsighting.lblsender.caption
+msgctxt "tedtsighting.lblsender.caption"
+msgid "Taxon: *"
+msgstr ""
+
+#: tedtsighting.lblsupplier.caption
+msgctxt "tedtsighting.lblsupplier.caption"
+msgid "Locality: *"
+msgstr ""
+
+#: tedtsighting.lblsurvey.caption
+msgctxt "tedtsighting.lblsurvey.caption"
+msgid "Survey:"
+msgstr ""
+
+#: tedtsighting.lblusedate.caption
+msgid "How was recorded:"
+msgstr ""
+
+#: tedtsighting.sbcancel.caption
+msgctxt "tedtsighting.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtsighting.sbsave.caption
+msgctxt "tedtsighting.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtsite.lblbandnumber1.caption
+msgctxt "tedtsite.lblbandnumber1.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtsite.lblbandsize1.caption
+msgctxt "tedtsite.lblbandsize1.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtsite.lblbandstatus1.caption
+msgctxt "tedtsite.lblbandstatus1.caption"
+msgid "Acronym:"
+msgstr ""
+
+#: tedtsite.lblbandstatus2.caption
+msgid "Altitude:"
+msgstr ""
+
+#: tedtsite.lblproject.caption
+msgid "Site name on eBird:"
+msgstr ""
+
+#: tedtsite.lblproject1.caption
+msgctxt "tedtsite.lblproject1.caption"
+msgid "Full name: *"
+msgstr ""
+
+#: tedtsite.lblproject4.caption
+msgctxt "tedtsite.lblproject4.caption"
+msgid "Type: *"
+msgstr ""
+
+#: tedtsite.lblrequester.caption
+msgctxt "tedtsite.lblrequester.caption"
+msgid "Name: *"
+msgstr ""
+
+#: tedtsite.lblsupplier.caption
+msgid "Parent toponym:"
+msgstr ""
+
+#: tedtsite.sbcancel.caption
+msgctxt "tedtsite.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtsite.sbsave.caption
+msgctxt "tedtsite.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtspecimen.ecollectionday.texthint
+msgctxt "tedtspecimen.ecollectionday.texthint"
+msgid "DD"
+msgstr ""
+
+#: tedtspecimen.ecollectionmonth.texthint
+msgctxt "tedtspecimen.ecollectionmonth.texthint"
+msgid "MM"
+msgstr ""
+
+#: tedtspecimen.ecollectionyear.texthint
+msgctxt "tedtspecimen.ecollectionyear.texthint"
+msgid "YYYY"
+msgstr ""
+
+#: tedtspecimen.lblbandstatus4.caption
+msgctxt "tedtspecimen.lblbandstatus4.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtspecimen.lblbandstatus9.caption
+msgctxt "tedtspecimen.lblbandstatus9.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtspecimen.lblcollectiondate.caption
+msgctxt "tedtspecimen.lblcollectiondate.caption"
+msgid "Collection date: *"
+msgstr ""
+
+#: tedtspecimen.lblegg.caption
+msgctxt "tedtspecimen.lblegg.caption"
+msgid "Egg:"
+msgstr ""
+
+#: tedtspecimen.lblfieldnumber.caption
+msgid "Field number: *"
+msgstr ""
+
+#: tedtspecimen.lblindividual.caption
+msgctxt "tedtspecimen.lblindividual.caption"
+msgid "Individual:"
+msgstr ""
+
+#: tedtspecimen.lbllocality.caption
+msgctxt "tedtspecimen.lbllocality.caption"
+msgid "Locality: *"
+msgstr ""
+
+#: tedtspecimen.lblnest.caption
+msgctxt "tedtspecimen.lblnest.caption"
+msgid "Nest:"
+msgstr ""
+
+#: tedtspecimen.lblnotes.caption
+msgctxt "tedtspecimen.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtspecimen.lblsampletype.caption
+msgctxt "tedtspecimen.lblsampletype.caption"
+msgid "Type: *"
+msgstr ""
+
+#: tedtspecimen.lbltaxon.caption
+msgctxt "tedtspecimen.lbltaxon.caption"
+msgid "Taxon: *"
+msgstr ""
+
+#: tedtspecimen.sbcancel.caption
+msgctxt "tedtspecimen.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtspecimen.sbsave.caption
+msgctxt "tedtspecimen.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtsurvey.edate.texthint
+msgctxt "tedtsurvey.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtsurvey.eendtime.texthint
+msgctxt "tedtsurvey.eendtime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtsurvey.estarttime.texthint
+msgctxt "tedtsurvey.estarttime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtsurvey.lblarea.caption
+msgid "Area (ha):"
+msgstr ""
+
+#: tedtsurvey.lbldistance.caption
+msgid "Distance (km):"
+msgstr ""
+
+#: tedtsurvey.lblduration.caption
+msgid "Duration (minutes):"
+msgstr ""
+
+#: tedtsurvey.lblendlatitude.caption
+msgid "End latitude:"
+msgstr ""
+
+#: tedtsurvey.lblendlongitude.caption
+msgid "End longitude:"
+msgstr ""
+
+#: tedtsurvey.lblendtime.caption
+msgid "Ending time:"
+msgstr ""
+
+#: tedtsurvey.lblexpedition.caption
+msgid "Expedition:"
+msgstr ""
+
+#: tedtsurvey.lblhabitat.caption
+msgid "Environment description:"
+msgstr ""
+
+#: tedtsurvey.lbllocality.caption
+msgctxt "tedtsurvey.lbllocality.caption"
+msgid "Locality: *"
+msgstr ""
+
+#: tedtsurvey.lblmethod.caption
+msgctxt "tedtsurvey.lblmethod.caption"
+msgid "Method: *"
+msgstr ""
+
+#: tedtsurvey.lblneteffort.caption
+msgid "Mistnet effort (h•m²):"
+msgstr ""
+
+#: tedtsurvey.lblnetrounds.caption
+msgid "Mistnets checking times:"
+msgstr ""
+
+#: tedtsurvey.lblnetstation.caption
+msgid "Mistnet station:"
+msgstr ""
+
+#: tedtsurvey.lblnetstotal.caption
+msgid "Number of mistnets:"
+msgstr ""
+
+#: tedtsurvey.lblnotes.caption
+msgctxt "tedtsurvey.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtsurvey.lblobserverstally.caption
+msgid "Number of observers:"
+msgstr ""
+
+#: tedtsurvey.lblproject.caption
+msgctxt "tedtsurvey.lblproject.caption"
+msgid "Project:"
+msgstr ""
+
+#: tedtsurvey.lblsampleid.caption
+msgid "Sample identifier:"
+msgstr ""
+
+#: tedtsurvey.lblstartlatitude.caption
+msgid "Latitude (initial):"
+msgstr ""
+
+#: tedtsurvey.lblstartlongitude.caption
+msgid "Longitude (initial):"
+msgstr ""
+
+#: tedtsurvey.lblstarttime.caption
+msgid "Starting time:"
+msgstr ""
+
+#: tedtsurvey.lblsurveydate.caption
+msgctxt "tedtsurvey.lblsurveydate.caption"
+msgid "Survey date: *"
+msgstr ""
+
+#: tedtsurvey.sbcancel.caption
+msgctxt "tedtsurvey.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtsurvey.sbsave.caption
+msgctxt "tedtsurvey.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtuser.ckallowcollectionedit.caption
+msgid "Manage collection"
+msgstr ""
+
+#: tedtuser.ckallowexport.caption
+msgid "Export data"
+msgstr ""
+
+#: tedtuser.ckallowimport.caption
+msgctxt "tedtuser.ckallowimport.caption"
+msgid "Import data"
+msgstr ""
+
+#: tedtuser.ckallowprint.caption
+msgid "Print reports"
+msgstr ""
+
+#: tedtuser.lblfullname.caption
+msgctxt "tedtuser.lblfullname.caption"
+msgid "Full name:"
+msgstr ""
+
+#: tedtuser.lblpermissions.caption
+msgid "Permissions:"
+msgstr ""
+
+#: tedtuser.lblrank.caption
+msgid "Access level: *"
+msgstr ""
+
+#: tedtuser.lblusername.caption
+msgid "Username: *"
+msgstr ""
+
+#: tedtuser.sbcancel.caption
+msgctxt "tedtuser.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtuser.sbsave.caption
+msgctxt "tedtuser.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtweatherlog.esampledate.texthint
+msgctxt "tedtweatherlog.esampledate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtweatherlog.esampletime.texthint
+msgctxt "tedtweatherlog.esampletime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtweatherlog.lblatmosphericpressure.caption
+msgid "Atmospheric pressure (mPa):"
+msgstr ""
+
+#: tedtweatherlog.lblcloudcover.caption
+msgid "Cloud cover (%):"
+msgstr ""
+
+#: tedtweatherlog.lblnotes.caption
+msgctxt "tedtweatherlog.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtweatherlog.lblprecipitation.caption
+msgid "Precipitation:"
+msgstr ""
+
+#: tedtweatherlog.lblrainfall.caption
+msgid "Accumulated rainfall (mm):"
+msgstr ""
+
+#: tedtweatherlog.lblrelativehumidity.caption
+msgid "Relative humidity (%):"
+msgstr ""
+
+#: tedtweatherlog.lblsampledate.caption
+msgctxt "tedtweatherlog.lblsampledate.caption"
+msgid "Date: *"
+msgstr ""
+
+#: tedtweatherlog.lblsamplemoment.caption
+msgid "Moment: *"
+msgstr ""
+
+#: tedtweatherlog.lblsampletime.caption
+msgctxt "tedtweatherlog.lblsampletime.caption"
+msgid "Time:"
+msgstr ""
+
+#: tedtweatherlog.lbltemperature.caption
+msgid "Temperature (°C):"
+msgstr ""
+
+#: tedtweatherlog.lblwindspeedbft.caption
+msgid "Wind speed (Beaufort):"
+msgstr ""
+
+#: tedtweatherlog.lblwindspeedkmh.caption
+msgid "Wind speed (km/h):"
+msgstr ""
+
+#: tedtweatherlog.sbcancel.caption
+msgctxt "tedtweatherlog.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtweatherlog.sbsave.caption
+msgctxt "tedtweatherlog.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tfrmcustomgrid.cbagefilter.text
+msgctxt "tfrmcustomgrid.cbagefilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbagefilter.texthint
+msgctxt "tfrmcustomgrid.cbagefilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbbandsizefilter.text
+msgctxt "tfrmcustomgrid.cbbandsizefilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbbandsizefilter.texthint
+msgctxt "tfrmcustomgrid.cbbandsizefilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbbandstatusfilter.text
+msgctxt "tfrmcustomgrid.cbbandstatusfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbbandstatusfilter.texthint
+msgctxt "tfrmcustomgrid.cbbandstatusfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbbodymoltfilter.text
+msgctxt "tfrmcustomgrid.cbbodymoltfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbbodymoltfilter.texthint
+msgctxt "tfrmcustomgrid.cbbodymoltfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbbroodpatchfilter.text
+msgctxt "tfrmcustomgrid.cbbroodpatchfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbbroodpatchfilter.texthint
+msgctxt "tfrmcustomgrid.cbbroodpatchfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbcloacalprotuberancefilter.text
+msgctxt "tfrmcustomgrid.cbcloacalprotuberancefilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbcloacalprotuberancefilter.texthint
+msgctxt "tfrmcustomgrid.cbcloacalprotuberancefilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbfatfilter.text
+msgctxt "tfrmcustomgrid.cbfatfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbfatfilter.texthint
+msgctxt "tfrmcustomgrid.cbfatfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbffmoltfilter.text
+msgctxt "tfrmcustomgrid.cbffmoltfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbffmoltfilter.texthint
+msgctxt "tfrmcustomgrid.cbffmoltfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbffwearfilter.text
+msgctxt "tfrmcustomgrid.cbffwearfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbffwearfilter.texthint
+msgctxt "tfrmcustomgrid.cbffwearfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbmaterialfilter.text
+msgctxt "tfrmcustomgrid.cbmaterialfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbmaterialfilter.texthint
+msgctxt "tfrmcustomgrid.cbmaterialfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbmethodfilter.texthint
+msgctxt "tfrmcustomgrid.cbmethodfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbnestfatefilter.text
+msgctxt "tfrmcustomgrid.cbnestfatefilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbnestfatefilter.texthint
+msgctxt "tfrmcustomgrid.cbnestfatefilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbnestsupportfilter.text
+msgctxt "tfrmcustomgrid.cbnestsupportfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbnestsupportfilter.texthint
+msgctxt "tfrmcustomgrid.cbnestsupportfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbsexfilter.text
+msgctxt "tfrmcustomgrid.cbsexfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbsexfilter.texthint
+msgctxt "tfrmcustomgrid.cbsexfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbsiterankfilter.text
+msgctxt "tfrmcustomgrid.cbsiterankfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbsiterankfilter.texthint
+msgctxt "tfrmcustomgrid.cbsiterankfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.cbskullossificationfilter.text
+msgctxt "tfrmcustomgrid.cbskullossificationfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbskullossificationfilter.texthint
+msgctxt "tfrmcustomgrid.cbskullossificationfilter.texthint"
+msgid "Nenhum"
+msgstr ""
+
+#: tfrmcustomgrid.eaddchild.texthint
+msgctxt "tfrmcustomgrid.eaddchild.texthint"
+msgid "Quick add"
+msgstr ""
+
+#: tfrmcustomgrid.lblagefilter.caption
+msgctxt "tfrmcustomgrid.lblagefilter.caption"
+msgid "Age"
+msgstr ""
+
+#: tfrmcustomgrid.lblbandsizefilter.caption
+msgctxt "tfrmcustomgrid.lblbandsizefilter.caption"
+msgid "Size"
+msgstr ""
+
+#: tfrmcustomgrid.lblbandstatusfilter.caption
+msgctxt "tfrmcustomgrid.lblbandstatusfilter.caption"
+msgid "Status"
+msgstr ""
+
+#: tfrmcustomgrid.lblbodymoltfilter.caption
+msgid "Body molt"
+msgstr ""
+
+#: tfrmcustomgrid.lblbroodpatchfilter.caption
+msgid "Brood patch"
+msgstr ""
+
+#: tfrmcustomgrid.lblchildstatus.caption
+msgctxt "tfrmcustomgrid.lblchildstatus.caption"
+msgid "Loading records..."
+msgstr ""
+
+#: tfrmcustomgrid.lblchildtag1.caption
+msgctxt "tfrmcustomgrid.lblchildtag1.caption"
+msgid "Captures"
+msgstr ""
+
+#: tfrmcustomgrid.lblchildtag2.caption
+msgctxt "tfrmcustomgrid.lblchildtag2.caption"
+msgid "Molts"
+msgstr ""
+
+#: tfrmcustomgrid.lblchildtag3.caption
+msgctxt "tfrmcustomgrid.lblchildtag3.caption"
+msgid "Sightings"
+msgstr ""
+
+#: tfrmcustomgrid.lblchildtag4.caption
+msgctxt "tfrmcustomgrid.lblchildtag4.caption"
+msgid "Nests"
+msgstr ""
+
+#: tfrmcustomgrid.lblchildtag5.caption
+msgctxt "tfrmcustomgrid.lblchildtag5.caption"
+msgid "Specimens"
+msgstr ""
+
+#: tfrmcustomgrid.lblclementsfilter.caption
+msgctxt "tfrmcustomgrid.lblclementsfilter.caption"
+msgid "Clements/eBird"
+msgstr ""
+
+#: tfrmcustomgrid.lblcloacalprotuberancefilter.caption
+msgid "Cloacal protuberance"
+msgstr ""
+
+#: tfrmcustomgrid.lblcountdatefilter.caption
+msgctxt "tfrmcustomgrid.lblcountdatefilter.caption"
+msgid "none selected"
+msgstr ""
+
+#: tfrmcustomgrid.lblcountsitefilter.caption
+msgctxt "tfrmcustomgrid.lblcountsitefilter.caption"
+msgid "none selected"
+msgstr ""
+
+#: tfrmcustomgrid.lblcounttaxonfilter.caption
+msgctxt "tfrmcustomgrid.lblcounttaxonfilter.caption"
+msgid "none selected"
+msgstr ""
+
+#: tfrmcustomgrid.lblcounttaxonranksfilter.caption
+msgctxt "tfrmcustomgrid.lblcounttaxonranksfilter.caption"
+msgid "none selected"
+msgstr ""
+
+#: tfrmcustomgrid.lblcyclecodefilter.caption
+msgid "Molt cycle"
+msgstr ""
+
+#: tfrmcustomgrid.lbldatefilter.caption
+msgctxt "tfrmcustomgrid.lbldatefilter.caption"
+msgid "Dates"
+msgstr ""
+
+#: tfrmcustomgrid.lblemptyquery.caption
+msgid "Result query is empty"
+msgstr ""
+
+#: tfrmcustomgrid.lblendtimefilter.caption
+msgid "and"
+msgstr ""
+
+#: tfrmcustomgrid.lblextinctfilter.caption
+msgid "Extinct"
+msgstr ""
+
+#: tfrmcustomgrid.lblfatfilter.caption
+msgid "Subcutaneous fat"
+msgstr ""
+
+#: tfrmcustomgrid.lblffmoltfilter.caption
+msgid "Flight feathers molt"
+msgstr ""
+
+#: tfrmcustomgrid.lblffwearfilter.caption
+msgid "Flight feathers wear"
+msgstr ""
+
+#: tfrmcustomgrid.lblhassynonymsfilter.caption
+msgid "Have synonyms"
+msgstr ""
+
+#: tfrmcustomgrid.lblhowagedfilter.caption
+msgid "How was aged"
+msgstr ""
+
+#: tfrmcustomgrid.lblhowsexedfilter.caption
+msgid "How was sexed"
+msgstr ""
+
+#: tfrmcustomgrid.lblmarkedfilter.caption
+msgctxt "tfrmcustomgrid.lblmarkedfilter.caption"
+msgid "Marked records"
+msgstr ""
+
+#: tfrmcustomgrid.lblmaterialfilter.caption
+msgid "Material"
+msgstr ""
+
+#: tfrmcustomgrid.lblmethodfilter.caption
+msgctxt "tfrmcustomgrid.lblmethodfilter.caption"
+msgid "Method"
+msgstr ""
+
+#: tfrmcustomgrid.lblmoltlimitsfilter.caption
+msgctxt "tfrmcustomgrid.lblmoltlimitsfilter.caption"
+msgid "Molt limits"
+msgstr ""
+
+#: tfrmcustomgrid.lblnestfatefilter.caption
+msgid "Fate"
+msgstr ""
+
+#: tfrmcustomgrid.lblnestsupportfilter.caption
+msgid "Support type"
+msgstr ""
+
+#: tfrmcustomgrid.lblnotreportedfilter.caption
+msgid "Not reported"
+msgstr ""
+
+#: tfrmcustomgrid.lblrecordstatus.caption
+msgctxt "tfrmcustomgrid.lblrecordstatus.caption"
+msgid "Loading records..."
+msgstr ""
+
+#: tfrmcustomgrid.lblreportedfilter.caption
+msgctxt "tfrmcustomgrid.lblreportedfilter.caption"
+msgid "Reported"
+msgstr ""
+
+#: tfrmcustomgrid.lblsexfilter.caption
+msgctxt "tfrmcustomgrid.lblsexfilter.caption"
+msgid "Sex"
+msgstr ""
+
+#: tfrmcustomgrid.lblsitefilter.caption
+msgid "Locations"
+msgstr ""
+
+#: tfrmcustomgrid.lblsiterankfilter.caption
+msgctxt "tfrmcustomgrid.lblsiterankfilter.caption"
+msgid "Location rank"
+msgstr ""
+
+#: tfrmcustomgrid.lblskullossificationfilter.caption
+msgid "Skull ossification"
+msgstr ""
+
+#: tfrmcustomgrid.lblstarttimefilter.caption
+msgid "Time between"
+msgstr ""
+
+#: tfrmcustomgrid.lblsynonymfilter.caption
+msgid "Is a synonym"
+msgstr ""
+
+#: tfrmcustomgrid.lbltaxonfilter.caption
+msgctxt "tfrmcustomgrid.lbltaxonfilter.caption"
+msgid "Taxa"
+msgstr ""
+
+#: tfrmcustomgrid.lbltaxonomycbrofilter.caption
+msgctxt "tfrmcustomgrid.lbltaxonomycbrofilter.caption"
+msgid "CBRO"
+msgstr ""
+
+#: tfrmcustomgrid.lbltaxonomyiocfilter.caption
+msgctxt "tfrmcustomgrid.lbltaxonomyiocfilter.caption"
+msgid "IOC"
+msgstr ""
+
+#: tfrmcustomgrid.lbltaxonranksfilter.caption
+msgid "Ranks"
+msgstr ""
+
+#: tfrmcustomgrid.lblunmarkedfilter.caption
+msgctxt "tfrmcustomgrid.lblunmarkedfilter.caption"
+msgid "Unmarked records"
+msgstr ""
+
+#: tfrmcustomgrid.lblwithcolorbandsfilter.caption
+msgctxt "tfrmcustomgrid.lblwithcolorbandsfilter.caption"
+msgid "Have colored rings"
+msgstr ""
+
+#: tfrmcustomgrid.lblwithrecapturesfilter.caption
+msgctxt "tfrmcustomgrid.lblwithrecapturesfilter.caption"
+msgid "Have recaptures"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewcapture.caption
+msgctxt "tfrmcustomgrid.pmcnewcapture.caption"
+msgid "New capture"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewcollector.caption
+msgid "New collector"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewegg.caption
+msgctxt "tfrmcustomgrid.pmcnewegg.caption"
+msgid "New egg"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewmistnet.caption
+msgid "New mistnet"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewmolt.caption
+msgctxt "tfrmcustomgrid.pmcnewmolt.caption"
+msgid "New molt"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewnest.caption
+msgctxt "tfrmcustomgrid.pmcnewnest.caption"
+msgid "New nest"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewnestrevision.caption
+msgctxt "tfrmcustomgrid.pmcnewnestrevision.caption"
+msgid "New nest revision"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewpermanentnet.caption
+msgctxt "tfrmcustomgrid.pmcnewpermanentnet.caption"
+msgid "New permanent mistnet"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewprojectmember.caption
+msgid "New project member"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewsampleprep.caption
+msgctxt "tfrmcustomgrid.pmcnewsampleprep.caption"
+msgid "New sample preparation"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewsighting.caption
+msgctxt "tfrmcustomgrid.pmcnewsighting.caption"
+msgid "New sighting"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewspecimen.caption
+msgctxt "tfrmcustomgrid.pmcnewspecimen.caption"
+msgid "New specimen"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewsurvey.caption
+msgctxt "tfrmcustomgrid.pmcnewsurvey.caption"
+msgid "New survey"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewsurveymember.caption
+msgid "New survey member"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewweatherlog.caption
+msgid "New weather log"
+msgstr ""
+
+#: tfrmcustomgrid.pmfadvancedfilter.caption
+msgctxt "tfrmcustomgrid.pmfadvancedfilter.caption"
+msgid "Advanced filters"
+msgstr ""
+
+#: tfrmcustomgrid.pmfclearfilters.caption
+msgctxt "tfrmcustomgrid.pmfclearfilters.caption"
+msgid "Clear filters"
+msgstr ""
+
+#: tfrmcustomgrid.pmffilterselected.caption
+msgid "Add selected to filter"
+msgstr ""
+
+#: tfrmcustomgrid.pmgdel.caption
+msgctxt "tfrmcustomgrid.pmgdel.caption"
+msgid "Delete"
+msgstr ""
+
+#: tfrmcustomgrid.pmgedit.caption
+msgctxt "tfrmcustomgrid.pmgedit.caption"
+msgid "Edit"
+msgstr ""
+
+#: tfrmcustomgrid.pmginsert.caption
+msgctxt "tfrmcustomgrid.pmginsert.caption"
+msgid "New record"
+msgstr ""
+
+#: tfrmcustomgrid.pmgrecordhistory.caption
+msgctxt "tfrmcustomgrid.pmgrecordhistory.caption"
+msgid "Record history"
+msgstr ""
+
+#: tfrmcustomgrid.pmgrefresh.caption
+msgctxt "tfrmcustomgrid.pmgrefresh.caption"
+msgid "Refresh"
+msgstr ""
+
+#: tfrmcustomgrid.pmssortalphabetic.caption
+msgctxt "tfrmcustomgrid.pmssortalphabetic.caption"
+msgid "Alphabetic"
+msgstr ""
+
+#: tfrmcustomgrid.pmssortascending.caption
+msgctxt "tfrmcustomgrid.pmssortascending.caption"
+msgid "Ascending"
+msgstr ""
+
+#: tfrmcustomgrid.pmssortcreationdate.caption
+msgctxt "tfrmcustomgrid.pmssortcreationdate.caption"
+msgid "Creation date"
+msgstr ""
+
+#: tfrmcustomgrid.pmssortdescending.caption
+msgctxt "tfrmcustomgrid.pmssortdescending.caption"
+msgid "Descending"
+msgstr ""
+
+#: tfrmcustomgrid.pmssortlastmodifieddate.caption
+msgctxt "tfrmcustomgrid.pmssortlastmodifieddate.caption"
+msgid "Last modified date"
+msgstr ""
+
+#: tfrmcustomgrid.pmssorttaxonomic.caption
+msgctxt "tfrmcustomgrid.pmssorttaxonomic.caption"
+msgid "Taxonomic"
+msgstr ""
+
+#: tfrmcustomgrid.pmtclearselection.caption
+msgctxt "tfrmcustomgrid.pmtclearselection.caption"
+msgid "Clear selection"
+msgstr ""
+
+#: tfrmcustomgrid.pmtcolapseall.caption
+msgctxt "tfrmcustomgrid.pmtcolapseall.caption"
+msgid "Colapse all"
+msgstr ""
+
+#: tfrmcustomgrid.pmtexpandall.caption
+msgctxt "tfrmcustomgrid.pmtexpandall.caption"
+msgid "Expand all"
+msgstr ""
+
+#: tfrmcustomgrid.pmtrefresh.caption
+msgctxt "tfrmcustomgrid.pmtrefresh.caption"
+msgid "Refresh"
+msgstr ""
+
+#: tfrmcustomgrid.sbaddchild.hint
+msgctxt "tfrmcustomgrid.sbaddchild.hint"
+msgid "New related record"
+msgstr ""
+
+#: tfrmcustomgrid.sbcancelrecord.caption
+msgctxt "tfrmcustomgrid.sbcancelrecord.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tfrmcustomgrid.sbcancelrecord.hint
+msgid "Cancel editing"
+msgstr ""
+
+#: tfrmcustomgrid.sbchildhistory.hint
+msgctxt "tfrmcustomgrid.sbchildhistory.hint"
+msgid "View record history"
+msgstr ""
+
+#: tfrmcustomgrid.sbcolumnhide.hint
+msgid "Hide the selected column"
+msgstr ""
+
+#: tfrmcustomgrid.sbcolumnwidthautoadjust.hint
+msgid "Autoadjust the columns width"
+msgstr ""
+
+#: tfrmcustomgrid.sbdelchild.hint
+msgctxt "tfrmcustomgrid.sbdelchild.hint"
+msgid "Delete selected record"
+msgstr ""
+
+#: tfrmcustomgrid.sbdelrecord.hint
+msgctxt "tfrmcustomgrid.sbdelrecord.hint"
+msgid "Delete selected record"
+msgstr ""
+
+#: tfrmcustomgrid.sbeditchild.hint
+msgctxt "tfrmcustomgrid.sbeditchild.hint"
+msgid "Edit selected record"
+msgstr ""
+
+#: tfrmcustomgrid.sbeditrecord.hint
+msgctxt "tfrmcustomgrid.sbeditrecord.hint"
+msgid "Edit selected record"
+msgstr ""
+
+#: tfrmcustomgrid.sbeditrecord10.hint
+msgid "Delete image"
+msgstr ""
+
+#: tfrmcustomgrid.sbeditrecord5.hint
+msgid "Move the column position down"
+msgstr ""
+
+#: tfrmcustomgrid.sbeditrecord6.hint
+msgid "Move the column position up"
+msgstr ""
+
+#: tfrmcustomgrid.sbeditrecord7.hint
+msgid "View and edit image info"
+msgstr ""
+
+#: tfrmcustomgrid.sbeditrecord8.hint
+msgid "Save image as..."
+msgstr ""
+
+#: tfrmcustomgrid.sbeditrecord9.hint
+msgid "View image"
+msgstr ""
+
+#: tfrmcustomgrid.sbfilterrecords.hint
+msgid "Filters"
+msgstr ""
+
+#: tfrmcustomgrid.sbfirstchild.hint
+msgctxt "tfrmcustomgrid.sbfirstchild.hint"
+msgid "First record"
+msgstr ""
+
+#: tfrmcustomgrid.sbfirstrecord.hint
+msgctxt "tfrmcustomgrid.sbfirstrecord.hint"
+msgid "First record"
+msgstr ""
+
+#: tfrmcustomgrid.sbinsertrecord.hint
+msgctxt "tfrmcustomgrid.sbinsertrecord.hint"
+msgid "New record"
+msgstr ""
+
+#: tfrmcustomgrid.sbinsertrecord2.hint
+msgid "Add image"
+msgstr ""
+
+#: tfrmcustomgrid.sblastchild.hint
+msgctxt "tfrmcustomgrid.sblastchild.hint"
+msgid "Last record"
+msgstr ""
+
+#: tfrmcustomgrid.sblastrecord.hint
+msgctxt "tfrmcustomgrid.sblastrecord.hint"
+msgid "Last record"
+msgstr ""
+
+#: tfrmcustomgrid.sbnextchild.hint
+msgctxt "tfrmcustomgrid.sbnextchild.hint"
+msgid "Next record"
+msgstr ""
+
+#: tfrmcustomgrid.sbnextrecord.hint
+msgctxt "tfrmcustomgrid.sbnextrecord.hint"
+msgid "Next record"
+msgstr ""
+
+#: tfrmcustomgrid.sbpriorchild.hint
+msgctxt "tfrmcustomgrid.sbpriorchild.hint"
+msgid "Previous record"
+msgstr ""
+
+#: tfrmcustomgrid.sbpriorrecord.hint
+msgctxt "tfrmcustomgrid.sbpriorrecord.hint"
+msgid "Previous record"
+msgstr ""
+
+#: tfrmcustomgrid.sbrecordhistory.caption
+msgctxt "tfrmcustomgrid.sbrecordhistory.caption"
+msgid "History"
+msgstr ""
+
+#: tfrmcustomgrid.sbrecordhistory.hint
+msgctxt "tfrmcustomgrid.sbrecordhistory.hint"
+msgid "View record history"
+msgstr ""
+
+#: tfrmcustomgrid.sbrecycledelete.hint
+msgid "Delete record permanently"
+msgstr ""
+
+#: tfrmcustomgrid.sbrecyclerestore.hint
+msgctxt "tfrmcustomgrid.sbrecyclerestore.hint"
+msgid "Restore record"
+msgstr ""
+
+#: tfrmcustomgrid.sbrefreshrecords.hint
+msgctxt "tfrmcustomgrid.sbrefreshrecords.hint"
+msgid "Refresh records"
+msgstr ""
+
+#: tfrmcustomgrid.sbrowheightdecrease.hint
+msgid "Decrease the row height"
+msgstr ""
+
+#: tfrmcustomgrid.sbrowheightdefault.hint
+msgid "Set the default row height"
+msgstr ""
+
+#: tfrmcustomgrid.sbrowheightincrease.hint
+msgid "Increase the row height"
+msgstr ""
+
+#: tfrmcustomgrid.sbsaverecord.caption
+msgctxt "tfrmcustomgrid.sbsaverecord.caption"
+msgid "Save"
+msgstr ""
+
+#: tfrmcustomgrid.sbsaverecord.hint
+msgid "Save changes"
+msgstr ""
+
+#: tfrmcustomgrid.sbshowaudio.hint
+msgctxt "tfrmcustomgrid.sbshowaudio.hint"
+msgid "Audio recordings"
+msgstr ""
+
+#: tfrmcustomgrid.sbshowcolumns.hint
+msgctxt "tfrmcustomgrid.sbshowcolumns.hint"
+msgid "Columns"
+msgstr ""
+
+#: tfrmcustomgrid.sbshowdocs.hint
+msgctxt "tfrmcustomgrid.sbshowdocs.hint"
+msgid "Documents and links"
+msgstr ""
+
+#: tfrmcustomgrid.sbshowimages.hint
+msgctxt "tfrmcustomgrid.sbshowimages.hint"
+msgid "Images"
+msgstr ""
+
+#: tfrmcustomgrid.sbshowquickfilters.hint
+msgctxt "tfrmcustomgrid.sbshowquickfilters.hint"
+msgid "Quick filters"
+msgstr ""
+
+#: tfrmcustomgrid.sbshowrecord.hint
+msgctxt "tfrmcustomgrid.sbshowrecord.hint"
+msgid "Record"
+msgstr ""
+
+#: tfrmcustomgrid.sbshowrecycle.hint
+msgctxt "tfrmcustomgrid.sbshowrecycle.hint"
+msgid "Recycle bin"
+msgstr ""
+
+#: tfrmcustomgrid.sbshowsummary.hint
+msgctxt "tfrmcustomgrid.sbshowsummary.hint"
+msgid "Summary"
+msgstr ""
+
+#: tfrmcustomgrid.sbsortchilds.hint
+msgctxt "tfrmcustomgrid.sbsortchilds.hint"
+msgid "Sort records"
+msgstr ""
+
+#: tfrmcustomgrid.sbsortchilds1.hint
+msgid "Open records in a new tab"
+msgstr ""
+
+#: tfrmcustomgrid.sbsortrecords.hint
+msgctxt "tfrmcustomgrid.sbsortrecords.hint"
+msgid "Sort records"
+msgstr ""
+
+#: tfrmcustomgrid.titleaudios.caption
+msgctxt "tfrmcustomgrid.titleaudios.caption"
+msgid "Audio recordings"
+msgstr ""
+
+#: tfrmcustomgrid.titlecolumns.caption
+msgctxt "tfrmcustomgrid.titlecolumns.caption"
+msgid "Columns"
+msgstr ""
+
+#: tfrmcustomgrid.titledocs.caption
+msgctxt "tfrmcustomgrid.titledocs.caption"
+msgid "Documents and links"
+msgstr ""
+
+#: tfrmcustomgrid.titleimages.caption
+msgctxt "tfrmcustomgrid.titleimages.caption"
+msgid "Images"
+msgstr ""
+
+#: tfrmcustomgrid.titlequickfilters.caption
+msgctxt "tfrmcustomgrid.titlequickfilters.caption"
+msgid "Quick filters"
+msgstr ""
+
+#: tfrmcustomgrid.titlerecycle.caption
+msgctxt "tfrmcustomgrid.titlerecycle.caption"
+msgid "Recycle bin"
+msgstr ""
+
+#: tfrmcustomgrid.titlesummary.caption
+msgctxt "tfrmcustomgrid.titlesummary.caption"
+msgid "Summary"
+msgstr ""
+
+#: tfrmcustomgrid.titleviewrecord.caption
+msgid "Record details"
+msgstr ""
+
+#: tfrmcustomlist.lblmarkedfilter.caption
+msgctxt "tfrmcustomlist.lblmarkedfilter.caption"
+msgid "Marked records"
+msgstr ""
+
+#: tfrmcustomlist.lblrecordstatus.caption
+msgctxt "tfrmcustomlist.lblrecordstatus.caption"
+msgid "Loading records..."
+msgstr ""
+
+#: tfrmcustomlist.lblunmarkedfilter.caption
+msgctxt "tfrmcustomlist.lblunmarkedfilter.caption"
+msgid "Unmarked records"
+msgstr ""
+
+#: tfrmcustomlist.pmgdel.caption
+msgctxt "tfrmcustomlist.pmgdel.caption"
+msgid "Delete"
+msgstr ""
+
+#: tfrmcustomlist.pmgedit.caption
+msgctxt "tfrmcustomlist.pmgedit.caption"
+msgid "Edit"
+msgstr ""
+
+#: tfrmcustomlist.pmgrecordhistory.caption
+msgctxt "tfrmcustomlist.pmgrecordhistory.caption"
+msgid "Record history"
+msgstr ""
+
+#: tfrmcustomlist.pmgrefresh.caption
+msgctxt "tfrmcustomlist.pmgrefresh.caption"
+msgid "Refresh"
+msgstr ""
+
+#: tfrmcustomlist.sbcancelrecord.caption
+msgctxt "tfrmcustomlist.sbcancelrecord.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tfrmcustomlist.sbrecordhistory.caption
+msgctxt "tfrmcustomlist.sbrecordhistory.caption"
+msgid "History"
+msgstr ""
+
+#: tfrmcustomlist.sbsaverecord.caption
+msgctxt "tfrmcustomlist.sbsaverecord.caption"
+msgid "Save"
+msgstr ""
+
+#: tfrmcustomlist.titleaudio.caption
+msgid "Audios"
+msgstr ""
+
+#: tfrmcustomlist.titleimages.caption
+msgctxt "tfrmcustomlist.titleimages.caption"
+msgid "Images"
+msgstr ""
+
+#: tfrmcustomlist.titleimages1.caption
+msgctxt "tfrmcustomlist.titleimages1.caption"
+msgid "Attachments"
+msgstr ""
+
+#: tfrmcustomlist.titlequickfilters.caption
+msgctxt "tfrmcustomlist.titlequickfilters.caption"
+msgid "Quick filters"
+msgstr ""
+
+#: tfrmcustomlist.titlerecycle.caption
+msgctxt "tfrmcustomlist.titlerecycle.caption"
+msgid "Recycle bin"
+msgstr ""
+
+#: tfrmcustomlist.titlesummary.caption
+msgctxt "tfrmcustomlist.titlesummary.caption"
+msgid "Summary"
+msgstr ""
+
+#: tfrmdashboard.caption
+msgctxt "tfrmdashboard.caption"
+msgid "Home"
+msgstr ""
+
+#: tfrmdashboard.chartindividuals.axislist[0].title.caption
+msgid "nr. of individuals"
+msgstr ""
+
+#: tfrmdashboard.chartindividuals.axislist[1].title.caption
+msgctxt "tfrmdashboard.chartindividuals.axislist[1].title.caption"
+msgid "month"
+msgstr ""
+
+#: tfrmdashboard.dbglifers.columns[0].title.caption
+msgctxt "tfrmdashboard.dbglifers.columns[0].title.caption"
+msgid "Tipo"
+msgstr ""
+
+#: tfrmdashboard.dbglifers.columns[1].title.caption
+msgctxt "tfrmdashboard.dbglifers.columns[1].title.caption"
+msgid "Táxon"
+msgstr ""
+
+#: tfrmdashboard.dbglifers.columns[2].title.caption
+msgctxt "tfrmdashboard.dbglifers.columns[2].title.caption"
+msgid "Data"
+msgstr ""
+
+#: tfrmdashboard.lbltitleappupdate.caption
+msgctxt "tfrmdashboard.lbltitleappupdate.caption"
+msgid "Software update"
+msgstr ""
+
+#: tfrmdashboard.lbltitlebandsbalance.caption
+msgctxt "tfrmdashboard.lbltitlebandsbalance.caption"
+msgid "Bands balance"
+msgstr ""
+
+#: tfrmdashboard.lbltitlebirthdays.caption
+msgctxt "tfrmdashboard.lbltitlebirthdays.caption"
+msgid "Next birthdays"
+msgstr ""
+
+#: tfrmdashboard.lbltitlemapsurveys.caption
+msgctxt "tfrmdashboard.lbltitlemapsurveys.caption"
+msgid "Last surveys"
+msgstr ""
+
+#: tfrmdashboard.lbltitlepermitsexpiring.caption
+msgctxt "tfrmdashboard.lbltitlepermitsexpiring.caption"
+msgid "Permits expiring"
+msgstr ""
+
+#: tfrmdashboard.lbltitlerevisenests.caption
+msgctxt "tfrmdashboard.lbltitlerevisenests.caption"
+msgid "Check nests"
+msgstr ""
+
+#: tfrmdashboard.linkshowmorelifers.caption
+msgctxt "tfrmdashboard.linkshowmorelifers.caption"
+msgid "Mostrar mais"
+msgstr ""
+
+#: tfrmdashboard.ploading.caption
+msgctxt "tfrmdashboard.ploading.caption"
+msgid "Loading..."
+msgstr ""
+
+#: tfrmdashboard.pmrefresh.caption
+msgctxt "tfrmdashboard.pmrefresh.caption"
+msgid "Atualizar"
+msgstr ""
+
+#: tfrmdashboard.ptitlelifers.caption
+msgid "Last lifers"
+msgstr ""
+
+#: tfrmdashboard.ptitlenotificationcenter.caption
+msgid "Notifications"
+msgstr ""
+
+#: tfrmdashboard.sbupdatelater.caption
+msgid "Remember later"
+msgstr ""
+
+#: tfrmdashboard.sbupdatenow.caption
+msgid "Update now"
+msgstr ""
+
+#: tfrmdashboard.txtshortcutconverter.caption
+msgid ""
+"Coordinates\n"
+"converter"
+msgstr ""
+
+#: tfrmdashboard.txtshortcutnewsighting.caption
+msgid ""
+"New\n"
+"sighting"
+msgstr ""
+
+#: tfrmdashboard.txttotalindividuals.caption
+msgid ""
+"individuals\n"
+"recorded"
+msgstr ""
+
+#: tfrmdashboard.txttotalnests.caption
+msgid ""
+"nests \n"
+"found"
+msgstr ""
+
+#: tfrmdashboard.txttotalsamplings.caption
+msgid ""
+"samplings\n"
+"carried out"
+msgstr ""
+
+#: tfrmdashboard.txttotalspecies.caption
+msgctxt "tfrmdashboard.txttotalspecies.caption"
+msgid ""
+"species\n"
+"recorded"
+msgstr ""
+
+#: tfrmgeoconverter.caption
+msgctxt "tfrmgeoconverter.caption"
+msgid "Coordinates converter"
+msgstr ""
+
+#: tfrmgeoconverter.cbconvertfrom.texthint
+msgid "Formato de origem"
+msgstr ""
+
+#: tfrmgeoconverter.cbconvertto.texthint
+msgid "Formato de destino"
+msgstr ""
+
+#: tfrmgeoconverter.ckaddunitszone.caption
+msgid "Add units/zone to the result"
+msgstr ""
+
+#: tfrmgeoconverter.eutmzone.texthint
+msgid "e.g.: 22J"
+msgstr ""
+
+#: tfrmgeoconverter.label1.caption
+msgctxt "tfrmgeoconverter.label1.caption"
+msgid "Options"
+msgstr ""
+
+#: tfrmgeoconverter.label2.caption
+msgid "Use this format:"
+msgstr ""
+
+#: tfrmgeoconverter.label3.caption
+msgid "longitude (X axis); latitude (Y axis)"
+msgstr ""
+
+#: tfrmgeoconverter.lblutmhemisphere.caption
+msgid "Hemisphere:"
+msgstr ""
+
+#: tfrmgeoconverter.lblutmzone.caption
+msgid "UTM zone:"
+msgstr ""
+
+#: tfrmgeoconverter.opendlg.title
+msgctxt "tfrmgeoconverter.opendlg.title"
+msgid "Open file"
+msgstr ""
+
+#: tfrmgeoconverter.pmfclear.caption
+msgctxt "tfrmgeoconverter.pmfclear.caption"
+msgid "Clear"
+msgstr ""
+
+#: tfrmgeoconverter.pmfopenfile.caption
+msgctxt "tfrmgeoconverter.pmfopenfile.caption"
+msgid "Open file"
+msgstr ""
+
+#: tfrmgeoconverter.pmfpaste.caption
+msgctxt "tfrmgeoconverter.pmfpaste.caption"
+msgid "Paste"
+msgstr ""
+
+#: tfrmgeoconverter.pmtaddtogeobank.caption
+msgid "Add to Coordinates Editor"
+msgstr ""
+
+#: tfrmgeoconverter.pmtclear.caption
+msgctxt "tfrmgeoconverter.pmtclear.caption"
+msgid "Clear"
+msgstr ""
+
+#: tfrmgeoconverter.pmtcopy.caption
+msgctxt "tfrmgeoconverter.pmtcopy.caption"
+msgid "Copy"
+msgstr ""
+
+#: tfrmgeoconverter.pmtsavefile.caption
+msgid "Save file"
+msgstr ""
+
+#: tfrmgeoconverter.rbnorth.caption
+msgid "North"
+msgstr ""
+
+#: tfrmgeoconverter.rbsouth.caption
+msgid "South"
+msgstr ""
+
+#: tfrmgeoconverter.sbaddtogeoeditor.caption
+msgid "Add to Editor"
+msgstr ""
+
+#: tfrmgeoconverter.sbclear.caption
+msgid "Clear all"
+msgstr ""
+
+#: tfrmgeoconverter.sbconvert.caption
+msgctxt "tfrmgeoconverter.sbconvert.caption"
+msgid "Convert"
+msgstr ""
+
+#: tfrmgeoconverter.sbcopy.caption
+msgctxt "tfrmgeoconverter.sbcopy.caption"
+msgid "Copy"
+msgstr ""
+
+#: tfrmgeoconverter.sbopenfile.caption
+msgctxt "tfrmgeoconverter.sbopenfile.caption"
+msgid "Open"
+msgstr ""
+
+#: tfrmgeoconverter.sbpaste.caption
+msgctxt "tfrmgeoconverter.sbpaste.caption"
+msgid "Paste"
+msgstr ""
+
+#: tfrmgeoconverter.sbsavefile.caption
+msgctxt "tfrmgeoconverter.sbsavefile.caption"
+msgid "Save"
+msgstr ""
+
+#: tfrmmain.actabout.caption
+msgctxt "tfrmmain.actabout.caption"
+msgid "About"
+msgstr ""
+
+#: tfrmmain.actcheckupdates.caption
+msgid "Check updates"
+msgstr ""
+
+#: tfrmmain.actcoordinatesconverter.caption
+msgctxt "tfrmmain.actcoordinatesconverter.caption"
+msgid "Converter"
+msgstr ""
+
+#: tfrmmain.actcoordinateseditor.caption
+msgid "Editor"
+msgstr ""
+
+#: tfrmmain.actdbconnect.caption
+msgid "Connect to database"
+msgstr ""
+
+#: tfrmmain.actdbsettings.caption
+msgctxt "tfrmmain.actdbsettings.caption"
+msgid "Manage connections"
+msgstr ""
+
+#: tfrmmain.actexit.caption
+msgctxt "tfrmmain.actexit.caption"
+msgid "Exit"
+msgstr ""
+
+#: tfrmmain.actexport.caption
+msgctxt "tfrmmain.actexport.caption"
+msgid "Export"
+msgstr ""
+
+#: tfrmmain.actgivefeedback.caption
+msgid "Feedback"
+msgstr ""
+
+#: tfrmmain.actimport.caption
+msgctxt "tfrmmain.actimport.caption"
+msgid "Import"
+msgstr ""
+
+#: tfrmmain.actimportcaptures.caption
+msgctxt "tfrmmain.actimportcaptures.caption"
+msgid "Captures"
+msgstr ""
+
+#: tfrmmain.actimportebird.caption
+msgid "eBird records"
+msgstr ""
+
+#: tfrmmain.actimportnests.caption
+msgctxt "tfrmmain.actimportnests.caption"
+msgid "Nests"
+msgstr ""
+
+#: tfrmmain.actimportwizard.caption
+msgid "Import wizard"
+msgstr ""
+
+#: tfrmmain.actinsertrecord.caption
+msgid "New"
+msgstr ""
+
+#: tfrmmain.actinsertrecord.hint
+msgid "Novo registro"
+msgstr ""
+
+#: tfrmmain.actlogoff.caption
+msgid "Logoff"
+msgstr ""
+
+#: tfrmmain.actmaintenance.caption
+msgctxt "tfrmmain.actmaintenance.caption"
+msgid "Maintenance"
+msgstr ""
+
+#: tfrmmain.actmanageusers.caption
+msgctxt "tfrmmain.actmanageusers.caption"
+msgid "Manage users"
+msgstr ""
+
+#: tfrmmain.actnewbands.caption
+msgid "New batch"
+msgstr ""
+
+#: tfrmmain.actopenbandhistory.caption
+msgctxt "tfrmmain.actopenbandhistory.caption"
+msgid "History"
+msgstr ""
+
+#: tfrmmain.actopenbands.caption
+msgctxt "tfrmmain.actopenbands.caption"
+msgid "Bands"
+msgstr ""
+
+#: tfrmmain.actopenbotany.caption
+msgctxt "tfrmmain.actopenbotany.caption"
+msgid "Botanic taxa"
+msgstr ""
+
+#: tfrmmain.actopencaptures.caption
+msgctxt "tfrmmain.actopencaptures.caption"
+msgid "Captures"
+msgstr ""
+
+#: tfrmmain.actopendocumentslist.caption
+msgctxt "tfrmmain.actopendocumentslist.caption"
+msgid "Attachments"
+msgstr ""
+
+#: tfrmmain.actopeneggs.caption
+msgctxt "tfrmmain.actopeneggs.caption"
+msgid "Eggs"
+msgstr ""
+
+#: tfrmmain.actopenexpeditions.caption
+msgctxt "tfrmmain.actopenexpeditions.caption"
+msgid "Expeditions"
+msgstr ""
+
+#: tfrmmain.actopengazetteer.caption
+msgctxt "tfrmmain.actopengazetteer.caption"
+msgid "Gazetteer"
+msgstr ""
+
+#: tfrmmain.actopenimageslist.caption
+msgid "Image gallery"
+msgstr ""
+
+#: tfrmmain.actopenindividuals.caption
+msgctxt "tfrmmain.actopenindividuals.caption"
+msgid "Individuals"
+msgstr ""
+
+#: tfrmmain.actopeninstitutions.caption
+msgctxt "tfrmmain.actopeninstitutions.caption"
+msgid "Institutions"
+msgstr ""
+
+#: tfrmmain.actopenliterature.caption
+msgid "Literature"
+msgstr ""
+
+#: tfrmmain.actopenmanual.caption
+msgctxt "tfrmmain.actopenmanual.caption"
+msgid "Help"
+msgstr ""
+
+#: tfrmmain.actopenmethods.caption
+msgctxt "tfrmmain.actopenmethods.caption"
+msgid "Methods"
+msgstr ""
+
+#: tfrmmain.actopenmolts.caption
+msgctxt "tfrmmain.actopenmolts.caption"
+msgid "Molts"
+msgstr ""
+
+#: tfrmmain.actopennestrevisions.caption
+msgid "Nest revisions"
+msgstr ""
+
+#: tfrmmain.actopennests.caption
+msgctxt "tfrmmain.actopennests.caption"
+msgid "Nests"
+msgstr ""
+
+#: tfrmmain.actopennetstations.caption
+msgctxt "tfrmmain.actopennetstations.caption"
+msgid "Sampling plots"
+msgstr ""
+
+#: tfrmmain.actopenpermits.caption
+msgctxt "tfrmmain.actopenpermits.caption"
+msgid "Permits"
+msgstr ""
+
+#: tfrmmain.actopenprojects.caption
+msgctxt "tfrmmain.actopenprojects.caption"
+msgid "Projects"
+msgstr ""
+
+#: tfrmmain.actopenrecordingslist.caption
+msgid "Audio library"
+msgstr ""
+
+#: tfrmmain.actopenresearchers.caption
+msgctxt "tfrmmain.actopenresearchers.caption"
+msgid "Researchers"
+msgstr ""
+
+#: tfrmmain.actopensightings.caption
+msgctxt "tfrmmain.actopensightings.caption"
+msgid "Sightings"
+msgstr ""
+
+#: tfrmmain.actopenspecimens.caption
+msgctxt "tfrmmain.actopenspecimens.caption"
+msgid "Specimens"
+msgstr ""
+
+#: tfrmmain.actopensurveys.caption
+msgctxt "tfrmmain.actopensurveys.caption"
+msgid "Surveys"
+msgstr ""
+
+#: tfrmmain.actopentaxa.caption
+msgctxt "tfrmmain.actopentaxa.caption"
+msgid "Taxa"
+msgstr ""
+
+#: tfrmmain.actopentaxonranks.caption
+msgctxt "tfrmmain.actopentaxonranks.caption"
+msgid "Taxonomic ranks"
+msgstr ""
+
+#: tfrmmain.actprint.caption
+msgctxt "tfrmmain.actprint.caption"
+msgid "Print"
+msgstr ""
+
+#: tfrmmain.actsettings.caption
+msgctxt "tfrmmain.actsettings.caption"
+msgid "Settings"
+msgstr ""
+
+#: tfrmmain.actviewbandsbalance.caption
+msgctxt "tfrmmain.actviewbandsbalance.caption"
+msgid "Balance"
+msgstr ""
+
+#: tfrmmain.esearch.texthint
+msgctxt "tfrmmain.esearch.texthint"
+msgid "Search"
+msgstr ""
+
+#: tfrmmain.lblloading.caption
+msgctxt "tfrmmain.lblloading.caption"
+msgid "Welcome"
+msgstr ""
+
+#: tfrmmain.pmanewband.caption
+msgctxt "tfrmmain.pmanewband.caption"
+msgid "New band"
+msgstr ""
+
+#: tfrmmain.pmanewcapture.caption
+msgctxt "tfrmmain.pmanewcapture.caption"
+msgid "New capture"
+msgstr ""
+
+#: tfrmmain.pmanewegg.caption
+msgctxt "tfrmmain.pmanewegg.caption"
+msgid "New egg"
+msgstr ""
+
+#: tfrmmain.pmanewexpedition.caption
+msgctxt "tfrmmain.pmanewexpedition.caption"
+msgid "New expedition"
+msgstr ""
+
+#: tfrmmain.pmanewindividual.caption
+msgctxt "tfrmmain.pmanewindividual.caption"
+msgid "New individual"
+msgstr ""
+
+#: tfrmmain.pmanewinstitution.caption
+msgctxt "tfrmmain.pmanewinstitution.caption"
+msgid "New institution"
+msgstr ""
+
+#: tfrmmain.pmanewmolt.caption
+msgctxt "tfrmmain.pmanewmolt.caption"
+msgid "New molt"
+msgstr ""
+
+#: tfrmmain.pmanewnest.caption
+msgctxt "tfrmmain.pmanewnest.caption"
+msgid "New nest"
+msgstr ""
+
+#: tfrmmain.pmanewnetstation.caption
+msgctxt "tfrmmain.pmanewnetstation.caption"
+msgid "New mistnet station"
+msgstr ""
+
+#: tfrmmain.pmanewpermit.caption
+msgctxt "tfrmmain.pmanewpermit.caption"
+msgid "New permit"
+msgstr ""
+
+#: tfrmmain.pmanewproject.caption
+msgctxt "tfrmmain.pmanewproject.caption"
+msgid "New project"
+msgstr ""
+
+#: tfrmmain.pmanewresearcher.caption
+msgctxt "tfrmmain.pmanewresearcher.caption"
+msgid "New researcher"
+msgstr ""
+
+#: tfrmmain.pmanewsighting.caption
+msgctxt "tfrmmain.pmanewsighting.caption"
+msgid "New sighting"
+msgstr ""
+
+#: tfrmmain.pmanewspecimen.caption
+msgctxt "tfrmmain.pmanewspecimen.caption"
+msgid "New specimen"
+msgstr ""
+
+#: tfrmmain.pmanewsurvey.caption
+msgctxt "tfrmmain.pmanewsurvey.caption"
+msgid "New survey"
+msgstr ""
+
+#: tfrmmain.pmanewtoponym.caption
+msgctxt "tfrmmain.pmanewtoponym.caption"
+msgid "New toponym"
+msgstr ""
+
+#: tfrmmain.pmtcloseallothertabs.caption
+msgid "Close all other tabs"
+msgstr ""
+
+#: tfrmmain.pmtclosealltabs.caption
+msgid "Close all tabs"
+msgstr ""
+
+#: tfrmmain.pmtclosetab.caption
+msgid "Close tab"
+msgstr ""
+
+#: tfrmmain.sbclearsearch.hint
+msgid "Clear search"
+msgstr ""
+
+#: tfrmmain.sbfilemenu.caption
+msgid "File"
+msgstr ""
+
+#: tfrmmain.sbhome.hint
+msgctxt "tfrmmain.sbhome.hint"
+msgid "Home"
+msgstr ""
+
+#: tfrmmain.sbinsertrecord.hint
+msgctxt "tfrmmain.sbinsertrecord.hint"
+msgid "New record"
+msgstr ""
+
+#: tfrmmaintenance.caption
+msgctxt "tfrmmaintenance.caption"
+msgid "Maintenance"
+msgstr ""
+
+#: tfrmmaintenance.cbtaxahierarchy.text
+msgctxt "tfrmmaintenance.cbtaxahierarchy.text"
+msgid "Zoological"
+msgstr ""
+
+#: tfrmmaintenance.cbtaxasequence.text
+msgctxt "tfrmmaintenance.cbtaxasequence.text"
+msgid "Zoological"
+msgstr ""
+
+#: tfrmmaintenance.lblrecreateimagethumbnails.caption
+msgid "Recreate image thumbnails in the database"
+msgstr ""
+
+#: tfrmmaintenance.lblrewritegeohierarchy.caption
+msgid "Check and correct the hierarchy of toponyms"
+msgstr ""
+
+#: tfrmmaintenance.lblrewritegeohierarchy1.caption
+msgid "Rewrite the individuals' full name"
+msgstr ""
+
+#: tfrmmaintenance.lblrewritetaxahierarchy.caption
+msgid "Check and correct hierarchy of taxa"
+msgstr ""
+
+#: tfrmmaintenance.lblrewritetaxasequence.caption
+msgid "Review taxa sequence"
+msgstr ""
+
+#: tfrmmaintenance.lbltitlegeohierarchy.caption
+msgctxt "tfrmmaintenance.lbltitlegeohierarchy.caption"
+msgid "Hierarchies"
+msgstr ""
+
+#: tfrmmaintenance.lbltitlegeohierarchy1.caption
+msgid "Full names"
+msgstr ""
+
+#: tfrmmaintenance.lbltitleimagethumbnails.caption
+msgid "Thumbnails"
+msgstr ""
+
+#: tfrmmaintenance.lbltitletaxahierarchy.caption
+msgctxt "tfrmmaintenance.lbltitletaxahierarchy.caption"
+msgid "Hierarchies"
+msgstr ""
+
+#: tfrmmaintenance.sbclose.caption
+msgctxt "tfrmmaintenance.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tfrmmaintenance.sbrecreateimagethumbnails.caption
+msgid "Recreate"
+msgstr ""
+
+#: tfrmmaintenance.sbrewritegeohierarchy.caption
+msgctxt "tfrmmaintenance.sbrewritegeohierarchy.caption"
+msgid "Check"
+msgstr ""
+
+#: tfrmmaintenance.sbrewriteindividualsfullname.caption
+msgid "Rewrite"
+msgstr ""
+
+#: tfrmmaintenance.sbrewritetaxahierarchy.caption
+msgctxt "tfrmmaintenance.sbrewritetaxahierarchy.caption"
+msgid "Check"
+msgstr ""
+
+#: tfrmmaintenance.sbrewritetaxasequence.caption
+msgid "Review"
+msgstr ""
+
+#: tlstbreedingstatus.caption
+msgid "Breeding and behavior code"
+msgstr ""
+
+#: tlstbreedingstatus.sbcancel.caption
+msgctxt "tlstbreedingstatus.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tlstbreedingstatus.sbok.caption
+msgctxt "tlstbreedingstatus.sbok.caption"
+msgid "Apply"
+msgstr ""
+
+#: tlstcyclecode.caption
+msgid "Cycle code"
+msgstr ""
+
+#: tlstcyclecode.rgfirst.caption
+msgid "Cycle"
+msgstr ""
+
+#: tlstcyclecode.rgsecond.caption
+msgctxt "tlstcyclecode.rgsecond.caption"
+msgid "Molt"
+msgstr ""
+
+#: tlstcyclecode.rgthird.caption
+msgid "Plumage"
+msgstr ""
+
+#: tlstcyclecode.sbcancel.caption
+msgctxt "tlstcyclecode.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tlstcyclecode.sbok.caption
+msgctxt "tlstcyclecode.sbok.caption"
+msgid "Apply"
+msgstr ""
+
+#: tlstdetectiontype.caption
+msgid "Detection type"
+msgstr ""
+
+#: tlstdetectiontype.sbcancel.caption
+msgctxt "tlstdetectiontype.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tlstdetectiontype.sbok.caption
+msgctxt "tlstdetectiontype.sbok.caption"
+msgid "Apply"
+msgstr ""
+
+#: tlsthowsexedaged.caption
+msgid "How sexed/aged"
+msgstr ""
+
+#: tlsthowsexedaged.sbcancel.caption
+msgctxt "tlsthowsexedaged.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tlsthowsexedaged.sbok.caption
+msgctxt "tlsthowsexedaged.sbok.caption"
+msgid "Apply"
+msgstr ""
+
+#: tlstmoltlimits.caption
+msgctxt "tlstmoltlimits.caption"
+msgid "Molt limits"
+msgstr ""
+
+#: tlstmoltlimits.sbcancel.caption
+msgctxt "tlstmoltlimits.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tlstmoltlimits.sbok.caption
+msgctxt "tlstmoltlimits.sbok.caption"
+msgid "Apply"
+msgstr ""
+

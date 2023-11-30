@@ -1,0 +1,11 @@
+{"version":1,"strings":[
+{"hash":17224117,"name":"tdlgbandsbalance.caption","sourcebytes":[66,97,110,100,115,32,98,97,108,97,110,99,101],"value":"Bands balance"},
+{"hash":4863637,"name":"tdlgbandsbalance.sbclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
+{"hash":368901,"name":"tdlgbandsbalance.dbgsaldo.columns[0].title.caption","sourcebytes":[83,105,122,101],"value":"Size"},
+{"hash":198928866,"name":"tdlgbandsbalance.dbgsaldo.columns[1].title.caption","sourcebytes":[76,101,102,116,111,118,101,114],"value":"Leftover"},
+{"hash":211901961,"name":"tdlgbandsbalance.dbgsaldo.columns[2].title.caption","sourcebytes":[65,118,103,46,47,100,97,121],"value":"Avg./day"},
+{"hash":145842105,"name":"tdlgbandsbalance.dbgsaldo.columns[3].title.caption","sourcebytes":[77,97,120,46,47,100,97,121],"value":"Max./day"},
+{"hash":248189006,"name":"tdlgbandsbalance.pmsg.caption","sourcebytes":[67,97,108,99,117,108,97,116,105,110,103,32,98,97,110,100,32,98,97,108,97,110,99,101,46,46,46],"value":"Calculating band balance..."},
+{"hash":146640072,"name":"tdlgbandsbalance.pmgrefresh.caption","sourcebytes":[82,101,102,114,101,115,104],"value":"Refresh"},
+{"hash":124639694,"name":"tdlgbandsbalance.pmgsavesas.caption","sourcebytes":[83,97,118,101,32,97,115,46,46,46],"value":"Save as..."}
+]}

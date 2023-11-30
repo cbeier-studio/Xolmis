@@ -1,0 +1,1040 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <SaveClosedFiles Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <AutoCreateForms Value="False"/>
+      <Title Value="Xolmis"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <XPManifest>
+        <DpiAware Value="True/PM_V2"/>
+        <TextDesc Value=""/>
+      </XPManifest>
+      <Icon Value="0"/>
+    </General>
+    <LazDoc Paths="..\docs"/>
+    <i18n>
+      <EnableI18N Value="True"/>
+      <OutDir Value="..\languages"/>
+      <ExcludedIdentifiers Count="72">
+        <Item1 Value="tfrmCustomGrid.Caption"/>
+        <Item2 Value="tfrmCustomList.Caption"/>
+        <Item3 Value="tdlgProgress.lblTitle.Caption"/>
+        <Item4 Value="tdlgProgress.lStatus.Caption"/>
+        <Item5 Value="tdlgProgress.Caption"/>
+        <Item6 Value="tlstCycleCode.pSigla.Caption"/>
+        <Item7 Value="tdlgCalendar.rbAdicionar.Caption"/>
+        <Item8 Value="tdlgCalendar.rbSubtrair.Caption"/>
+        <Item9 Value="tdlgConnect.Caption"/>
+        <Item10 Value="tdlgLogin.Caption"/>
+        <Item11 Value="tdlgValidate.Caption"/>
+        <Item12 Value="tedtEgg.Caption"/>
+        <Item13 Value="tedtEgg.eMeasureDate.Text"/>
+        <Item14 Value="tedtEgg.eMeasureDate.TextHint"/>
+        <Item15 Value="tedtNestRevision.Caption"/>
+        <Item16 Value="tedtNestRevision.eRevisionDate.Text"/>
+        <Item17 Value="tedtNestRevision.eRevisionDate.TextHint"/>
+        <Item18 Value="tedtBands.Caption"/>
+        <Item19 Value="tedtBands.eDischargeDate.Text"/>
+        <Item20 Value="tedtBands.eDischargeDate.TextHint"/>
+        <Item21 Value="tedtBands.eOrderDate.Text"/>
+        <Item22 Value="tedtBands.eOrderDate.TextHint"/>
+        <Item23 Value="tedtBands.eReceiptDate.Text"/>
+        <Item24 Value="tedtBands.eReceiptDate.TextHint"/>
+        <Item25 Value="tedtBands.eReportDate.Text"/>
+        <Item26 Value="tedtBands.eReportDate.TextHint"/>
+        <Item27 Value="tedtBands.eUseDate.Text"/>
+        <Item28 Value="tedtBands.eUseDate.TextHint"/>
+        <Item29 Value="tedtBotanicTaxon.Caption"/>
+        <Item30 Value="tedtCapture.Caption"/>
+        <Item31 Value="tedtImageInfo.Caption"/>
+        <Item32 Value="tedtIndividual.Caption"/>
+        <Item33 Value="tedtInstitution.Caption"/>
+        <Item34 Value="tedtMethod.Caption"/>
+        <Item35 Value="tedtMolt.Caption"/>
+        <Item36 Value="tedtNest.Caption"/>
+        <Item37 Value="tedtNetEffort.Caption"/>
+        <Item38 Value="tedtNetStation.Caption"/>
+        <Item39 Value="tedtPermanentNet.Caption"/>
+        <Item40 Value="tedtPermit.Caption"/>
+        <Item41 Value="tedtPerson.Caption"/>
+        <Item42 Value="tedtProject.Caption"/>
+        <Item43 Value="tedtExpedition.Caption"/>
+        <Item44 Value="tedtSurvey.Caption"/>
+        <Item45 Value="tedtSighting.Caption"/>
+        <Item46 Value="tedtWeatherLog.Caption"/>
+        <Item47 Value="tedtSite.Caption"/>
+        <Item48 Value="tedtSpecimen.Caption"/>
+        <Item49 Value="tedtSamplePrep.Caption"/>
+        <Item50 Value="tedtUser.Caption"/>
+        <Item51 Value="tedtDatabase.Caption"/>
+        <Item52 Value="tfrmMain.Caption"/>
+        <Item53 Value="tdlgAbout.lblAppName.Caption"/>
+        <Item54 Value="tdlgAbout.lblAppCopyright.Caption"/>
+        <Item55 Value="tdlgAbout.pAppVersion.Caption"/>
+        <Item56 Value="tdlgAbout.pClementsVersion.Caption"/>
+        <Item57 Value="tdlgAbout.pIocVersion.Caption"/>
+        <Item58 Value="tdlgAbout.pCbroVersion.Caption"/>
+        <Item59 Value="tdlgAbout.lblClementsVersion.Caption"/>
+        <Item60 Value="tdlgAbout.lblIocVersion.Caption"/>
+        <Item61 Value="tdlgAbout.lblCbroVersion.Caption"/>
+        <Item62 Value="tfrmdashboard.lbltotalindividuals.caption"/>
+        <Item63 Value="tfrmdashboard.lbltotalnests.caption"/>
+        <Item64 Value="tfrmdashboard.lbltotalsamplings.caption"/>
+        <Item65 Value="tfrmdashboard.lbltotalspecies.caption"/>
+        <Item66 Value="tfrmdashboard.txtAppUpdate.caption"/>
+        <Item67 Value="tfrmcustomgrid.lblchildcount1.caption"/>
+        <Item68 Value="tfrmcustomgrid.lblchildcount2.caption"/>
+        <Item69 Value="tfrmcustomgrid.lblchildcount3.caption"/>
+        <Item70 Value="tfrmcustomgrid.lblchildcount4.caption"/>
+        <Item71 Value="tfrmcustomgrid.lblchildcount5.caption"/>
+        <Item72 Value="tdlgGeoEditor.pDecimal.caption"/>
+      </ExcludedIdentifiers>
+    </i18n>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <MinorVersionNr Value="1"/>
+      <BuildNr Value="86"/>
+      <Attributes pvaPreRelease="True"/>
+      <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
+    </VersionInfo>
+    <BuildModes>
+      <Item Name="Default" Default="True"/>
+      <Item Name="Debug">
+        <MacroValues Count="1">
+          <Macro1 Name="LCLWidgetType" Value="win32"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="../$(TargetOS)/$(TargetCPU)/Xolmis"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="types;dialogs;edit_dialogs"/>
+            <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf3"/>
+              <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <Verbosity>
+              <ShowHintsForUnusedUnitsInMainSrc Value="True"/>
+              <ShowHintsForSenderNotUsed Value="True"/>
+            </Verbosity>
+            <WriteFPCLogo Value="False"/>
+            <OtherDefines Count="1">
+              <Define0 Value="DEBUG"/>
+            </OtherDefines>
+            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Beta">
+        <MacroValues Count="1">
+          <Macro1 Name="LCLWidgetType" Value="win32"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="../$(TargetOS)/$(BuildMode)-$(TargetCPU)/Xolmis"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="types;dialogs;edit_dialogs"/>
+            <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <RunWithoutDebug Value="True"/>
+              <DebugInfoType Value="dsDwarf3"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <Verbosity>
+              <ShowHintsForUnusedUnitsInMainSrc Value="True"/>
+              <ShowHintsForSenderNotUsed Value="True"/>
+            </Verbosity>
+            <OtherDefines Count="1">
+              <Define0 Value="DEBUG"/>
+            </OtherDefines>
+            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Release_Candidate">
+        <MacroValues Count="1">
+          <Macro1 Name="LCLWidgetType" Value="win32"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="../$(TargetOS)/RC-$(TargetCPU)/Xolmis"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="types;dialogs;edit_dialogs"/>
+            <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <RunWithoutDebug Value="True"/>
+              <DebugInfoType Value="dsDwarf3"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <Verbosity>
+              <ShowHintsForUnusedUnitsInMainSrc Value="True"/>
+              <ShowHintsForSenderNotUsed Value="True"/>
+            </Verbosity>
+            <OtherDefines Count="1">
+              <Define0 Value="DEBUG"/>
+            </OtherDefines>
+            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Release">
+        <MacroValues Count="1">
+          <Macro1 Name="LCLWidgetType" Value="win32"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="../$(TargetOS)/$(BuildMode)-$(TargetCPU)/Xolmis"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="types;dialogs;edit_dialogs"/>
+            <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <RunWithoutDebug Value="True"/>
+              <DebugInfoType Value="dsDwarf3"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <OtherDefines Count="1">
+              <Define0 Value="RELEASE"/>
+            </OtherDefines>
+            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <SharedMatrixOptions Count="3">
+        <Item1 ID="288401778200" Modes="Debug,Release,Release_Candidate,Beta" Type="IDEMacro" MacroName="LCLWidgetType" Value="win32"/>
+        <Item2 ID="812119036646" Modes="Release,Beta,Release_Candidate" Value="-dRELEASE"/>
+        <Item3 ID="448770670711" Modes="Debug" Value="-dDEBUG"/>
+      </SharedMatrixOptions>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <DestinationDirectory Value="D:\Desenv\Xolmis\published"/>
+      <CompressFinally Value="False"/>
+      <OpenInFileMan Value="True"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+    </RunParams>
+    <RequiredPackages>
+      <Item>
+        <PackageName Value="lazupdate"/>
+      </Item>
+      <Item>
+        <PackageName Value="cbs_library"/>
+      </Item>
+      <Item>
+        <PackageName Value="SQLDBLaz"/>
+      </Item>
+      <Item>
+        <PackageName Value="TAChartLazarusPkg"/>
+      </Item>
+      <Item>
+        <PackageName Value="FrameViewer09"/>
+      </Item>
+      <Item>
+        <PackageName Value="SynEditDsgn"/>
+      </Item>
+      <Item>
+        <PackageName Value="dclibx"/>
+      </Item>
+      <Item>
+        <PackageName Value="fpexif_pkg"/>
+      </Item>
+      <Item>
+        <PackageName Value="ibcontrols"/>
+      </Item>
+      <Item>
+        <PackageName Value="SynEdit"/>
+      </Item>
+      <Item>
+        <PackageName Value="virtualdbgrid_package"/>
+      </Item>
+      <Item>
+        <PackageName Value="bgracontrols"/>
+      </Item>
+      <Item>
+        <PackageName Value="atflatcontrols_package"/>
+      </Item>
+      <Item>
+        <PackageName Value="LazUtils"/>
+      </Item>
+      <Item>
+        <PackageName Value="SDFLaz"/>
+      </Item>
+      <Item>
+        <PackageName Value="lazMapViewerPkg"/>
+      </Item>
+      <Item>
+        <PackageName Value="dcpcrypt"/>
+      </Item>
+      <Item>
+        <PackageName Value="laz.virtualtreeview_package"/>
+      </Item>
+      <Item>
+        <PackageName Value="BGRABitmapPack"/>
+      </Item>
+      <Item>
+        <PackageName Value="FCL"/>
+      </Item>
+      <Item>
+        <PackageName Value="rxnew"/>
+      </Item>
+      <Item>
+        <PackageName Value="LCL"/>
+      </Item>
+    </RequiredPackages>
+    <Units>
+      <Unit>
+        <Filename Value="Xolmis.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ufrm_main.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_system.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_filters.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_gis.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_backup.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_global.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_fullnames.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_entities.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udm_grid.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMG"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udm_main.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMM"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucfg_database.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="cfgDatabase"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucfg_users.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="cfgUsers"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udm_client.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMC"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ufrm_geoconverter.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmGeoConverter"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ufrm_dashboard.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmDashboard"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucfg_delimiters.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="cfgDelimiters"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucfg_options.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="cfgOptions"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udm_lookup.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DML"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_dialogs.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_taxonomy.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_botany.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_birds.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_sampling.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_breeding.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_graphics.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_import.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_locale.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_data.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_conversions.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_themes.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_validations.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_export.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_permissions.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_getvalue.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_autoupdate.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_finddialogs.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_count.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_user.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtUser"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_survey.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtSurvey"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_site.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtSite"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_sighting.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtSighting"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_person.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtPerson"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_permanentnet.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtPermanentNet"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_netstation.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtNetStation"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_neteffort.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtNetEffort"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_nestrevision.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtNestRevision"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_nest.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtNest"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_molt.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtMolt"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_institution.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtInstitution"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_individual.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtIndividual"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_imageinfo.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtImageInfo"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_expedition.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtExpedition"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_egg.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtEgg"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_database.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtDatabase"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_capture.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtCapture"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_botanictaxon.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtBotanicTaxon"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_bands.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtBands"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_about.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgAbout"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_authorship.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgAuthorship"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_bandhistory.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgBandHistory"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_bandsbalance.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgBandsBalance"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_calendar.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgCalendar"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_changepassword.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgChangePassword"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_colorbands.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgColorBands"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_connect.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgConnect"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_find.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgFind"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_findtaxon.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgFindTaxon"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_geoeditor.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgGeoEditor"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_login.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgLogin"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_plantminer.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgPlantminer"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_progress.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgProgress"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_rechistory.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgRecHistory"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_validate.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgValidate"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\ulst_breedingstatus.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="lstBreedingStatus"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\ulst_cyclecode.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="lstCycleCode"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\ulst_detectiontype.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="lstDetectionType"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\ulst_howsexedaged.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="lstHowSexedAged"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\ulst_moltlimits.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="lstMoltLimits"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\ubatch_bands.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="batchBands"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\ubatch_neteffort.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="batchNetEffort"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_record_types.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udm_individuals.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMI"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ufrm_maintenance.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmMaintenance"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_blobs.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_debug.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ufrm_customgrid.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmCustomGrid"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_datatypes.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_editdialogs.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_datasearch.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ufrm_customlist.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmCustomList"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_importcaptures.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgImportCaptures"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udm_breeding.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMB"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_method.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtMethod"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udm_sampling.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMS"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_weatherlog.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtWeatherLog"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_project.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtProject"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_permit.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtPermit"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_sampleprep.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtSamplePrep"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_specimen.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtSpecimen"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+    </Units>
+    <Debugger>
+      <StoreDebuggerClassConfInSession Value="True"/>
+      <StoreBackendConverterConfigInSession Value="True"/>
+    </Debugger>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="../$(TargetOS)/$(TargetCPU)/Xolmis"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="types;dialogs;edit_dialogs"/>
+      <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+      </Debugging>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+    <Other>
+      <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions>
+      <Item>
+        <Name Value="EAbort"/>
+      </Item>
+      <Item>
+        <Name Value="ECodetoolError"/>
+      </Item>
+      <Item>
+        <Name Value="EFOpenError"/>
+      </Item>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

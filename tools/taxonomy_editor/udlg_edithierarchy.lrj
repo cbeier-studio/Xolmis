@@ -1,0 +1,19 @@
+{"version":1,"strings":[
+{"hash":49683833,"name":"tdlgedithierarchy.caption","sourcebytes":[69,100,105,116,105,110,103,32,115,101,108,101,99,116,101,100,47,109,97,114,107,101,100,32,116,97,120,111,110,32,104,105,101,114,97,114,99,104,121],"value":"Editing selected/marked taxon hierarchy"},
+{"hash":77089212,"name":"tdlgedithierarchy.sbclose.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":4749113,"name":"tdlgedithierarchy.sbapply.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":51512078,"name":"tdlgedithierarchy.lbldestinationtaxon.caption","sourcebytes":[80,97,114,101,110,116,32,116,97,120,111,110],"value":"Parent taxon"},
+{"hash":4860802,"name":"tdlgedithierarchy.checkbox1.caption","sourcebytes":[67,108,101,97,114],"value":"Clear"},
+{"hash":5671618,"name":"tdlgedithierarchy.lbldestinationtaxon1.caption","sourcebytes":[79,114,100,101,114],"value":"Order"},
+{"hash":4860802,"name":"tdlgedithierarchy.checkbox2.caption","sourcebytes":[67,108,101,97,114],"value":"Clear"},
+{"hash":80232505,"name":"tdlgedithierarchy.lbldestinationtaxon2.caption","sourcebytes":[70,97,109,105,108,121],"value":"Family"},
+{"hash":4860802,"name":"tdlgedithierarchy.checkbox3.caption","sourcebytes":[67,108,101,97,114],"value":"Clear"},
+{"hash":147351177,"name":"tdlgedithierarchy.lbldestinationtaxon3.caption","sourcebytes":[83,117,98,102,97,109,105,108,121],"value":"Subfamily"},
+{"hash":4860802,"name":"tdlgedithierarchy.checkbox4.caption","sourcebytes":[67,108,101,97,114],"value":"Clear"},
+{"hash":5096899,"name":"tdlgedithierarchy.lbldestinationtaxon4.caption","sourcebytes":[71,101,110,117,115],"value":"Genus"},
+{"hash":4860802,"name":"tdlgedithierarchy.checkbox5.caption","sourcebytes":[67,108,101,97,114],"value":"Clear"},
+{"hash":174825363,"name":"tdlgedithierarchy.lbldestinationtaxon5.caption","sourcebytes":[83,112,101,99,105,101,115],"value":"Species"},
+{"hash":4860802,"name":"tdlgedithierarchy.checkbox6.caption","sourcebytes":[67,108,101,97,114],"value":"Clear"},
+{"hash":251708048,"name":"tdlgedithierarchy.lbldestinationtaxon6.caption","sourcebytes":[83,117,98,115,112,101,99,105,101,115,32,103,114,111,117,112],"value":"Subspecies group"},
+{"hash":4860802,"name":"tdlgedithierarchy.checkbox7.caption","sourcebytes":[67,108,101,97,114],"value":"Clear"}
+]}

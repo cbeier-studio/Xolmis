@@ -1,0 +1,350 @@
+object dlgRecHistory: TdlgRecHistory
+  Left = 352
+  Height = 670
+  Top = 33
+  Width = 1100
+  BorderIcons = [biSystemMenu]
+  Caption = 'History'
+  ClientHeight = 670
+  ClientWidth = 1100
+  OnClose = FormClose
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PopupMode = pmAuto
+  Position = poMainFormCenter
+  LCLVersion = '3.0.0.2'
+  object pTop: TPanel
+    Left = 0
+    Height = 50
+    Top = 0
+    Width = 1100
+    Align = alTop
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ClientHeight = 50
+    ClientWidth = 1100
+    Color = 16444392
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 16
+      Height = 34
+      Top = 8
+      Width = 67
+      Align = alLeft
+      Alignment = taRightJustify
+      Caption = 'Record id:'
+      Font.Color = 6579300
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblNumInterno: TDBText
+      Left = 91
+      Height = 34
+      Top = 8
+      Width = 96
+      Align = alLeft
+      Font.Color = 13066075
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object ckAtivo: TDBCheckBox
+      Left = 854
+      Height = 34
+      Top = 8
+      Width = 62
+      Align = alRight
+      AutoSize = True
+      Caption = 'Active'
+      DataField = 'active_status'
+      ReadOnly = True
+      TabOrder = 0
+      ValueChecked = 'True'
+      ValueUnchecked = 'False'
+    end
+    object ckMarcado: TDBCheckBox
+      Left = 924
+      Height = 34
+      Top = 8
+      Width = 71
+      Align = alRight
+      AutoSize = True
+      Caption = 'Marked'
+      DataField = 'marked_status'
+      ReadOnly = True
+      TabOrder = 1
+      ValueChecked = 'True'
+      ValueUnchecked = 'False'
+    end
+    object ckExportado: TDBCheckBox
+      Left = 1003
+      Height = 34
+      Top = 8
+      Width = 81
+      Align = alRight
+      AutoSize = True
+      Caption = 'Exported'
+      DataField = 'exported_status'
+      ReadOnly = True
+      TabOrder = 2
+      ValueChecked = 'True'
+      ValueUnchecked = 'False'
+    end
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 50
+    Top = 620
+    Width = 1100
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ClientHeight = 50
+    ClientWidth = 1100
+    TabOrder = 1
+    object sbClose: TBitBtn
+      Left = 954
+      Height = 34
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Close'
+      Default = True
+      ModalResult = 11
+      TabOrder = 0
+    end
+  end
+  object dbgHistory: TDBGrid
+    Left = 0
+    Height = 570
+    Top = 50
+    Width = 1100
+    Align = alClient
+    Color = clWindow
+    Columns = <    
+      item
+        Alignment = taCenter
+        Title.Caption = 'Date'
+        Width = 140
+        FieldName = 'event_date'
+      end    
+      item
+        Title.Caption = 'Action'
+        Width = 120
+        FieldName = 'event_action'
+      end    
+      item
+        Title.Caption = 'Property'
+        Width = 140
+        FieldName = 'event_field'
+      end    
+      item
+        Title.Caption = 'Old value'
+        Width = 180
+        FieldName = 'old_value'
+      end    
+      item
+        Title.Caption = 'New value'
+        Width = 180
+        FieldName = 'new_value'
+      end    
+      item
+        Title.Caption = 'Notes'
+        Width = 180
+        FieldName = 'notes'
+      end    
+      item
+        Title.Caption = 'Username'
+        Width = 120
+        FieldName = 'user_name'
+      end>
+    DataSource = dsHistory
+    FixedColor = 15987699
+    FixedCols = 0
+    FixedHotColor = 14737632
+    Options = [dgTitles, dgColumnResize, dgColumnMove, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgDisableDelete, dgDisableInsert, dgCellEllipsis, dgDblClickAutoSize, dgDisplayMemoText]
+    ReadOnly = True
+    Scrollbars = ssAutoBoth
+    TabOrder = 2
+    TitleFont.Color = 6579300
+  end
+  object dsHistory: TDataSource
+    AutoEdit = False
+    DataSet = qHistory
+    Left = 344
+    Top = 175
+  end
+  object qHistory: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'event_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'event_action'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'event_field'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'old_value'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'new_value'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_name'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT h.event_date, h.event_action, h.event_field,'
+      '  h.old_value, h.new_value, h.notes, h.user_id,'
+      '  (SELECT u.user_name FROM users AS u'
+      '    WHERE u.user_id = h.user_id) AS user_name'
+      'FROM record_history AS h'
+      'WHERE h.event_table = :tabname'
+      '  AND h.record_id = :cod'
+      ''
+    )
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'tabname'
+        ParamType = ptInput
+      end    
+      item
+        DataType = ftUnknown
+        Name = 'cod'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    MacroCheck = True
+    Left = 432
+    Top = 176
+    object qHistoryevent_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'event_date'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qHistoryevent_action: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Action'
+      FieldKind = fkData
+      FieldName = 'event_action'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qHistoryevent_actionGetText
+      Size = 30
+    end
+    object qHistoryevent_field: TStringField
+      DisplayLabel = 'Property'
+      FieldKind = fkData
+      FieldName = 'event_field'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qHistoryold_value: TMemoField
+      DisplayLabel = 'Old value'
+      FieldKind = fkData
+      FieldName = 'old_value'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qHistorynew_value: TMemoField
+      DisplayLabel = 'New value'
+      FieldKind = fkData
+      FieldName = 'new_value'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qHistorynotes: TMemoField
+      DisplayLabel = 'Notes'
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qHistoryuser_id: TLongintField
+      DisplayLabel = 'User (ID)'
+      FieldKind = fkData
+      FieldName = 'user_id'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qHistoryuser_name: TStringField
+      DisplayLabel = 'Username'
+      FieldKind = fkData
+      FieldName = 'user_name'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 30
+    end
+  end
+end

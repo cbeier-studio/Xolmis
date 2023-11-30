@@ -1,0 +1,22 @@
+{"version":1,"strings":[
+{"hash":4691652,"name":"tdlgabout.caption","sourcebytes":[65,98,111,117,116],"value":"About"},
+{"hash":80453250,"name":"tdlgabout.sbclose.caption","sourcebytes":[70,101,99,104,97,114],"value":"Fechar"},
+{"hash":78016386,"name":"tdlgabout.sbcopy.caption","sourcebytes":[67,111,112,105,97,114],"value":"Copiar"},
+{"hash":126928889,"name":"tdlgabout.linkprivacy.caption","sourcebytes":[80,114,105,118,97,99,121],"value":"Privacy"},
+{"hash":92475011,"name":"tdlgabout.linklicense.caption","sourcebytes":[76,105,99,101,110,115,101,32,116,101,114,109,115],"value":"License terms"},
+{"hash":101580163,"name":"tdlgabout.linkthirdparty.caption","sourcebytes":[84,104,105,114,100,45,112,97,114,116,121,32,97,110,110,111,117,110,99,101,109,101,110,116,115],"value":"Third-party announcements"},
+{"hash":254714418,"name":"tdlgabout.lblappcopyright.caption","sourcebytes":[194,169,32,50,48,50,48,45,50,48,50,51,32,67,104,114,105,115,116,105,97,110,32,66,101,105,101,114],"value":"\u00A9 2020-2023 Christian Beier"},
+{"hash":91650015,"name":"tdlgabout.linkwebsite.hint","sourcebytes":[104,116,116,112,58,47,47,120,111,108,109,105,115,46,103,105,116,104,117,98,46,105,111],"value":"http://xolmis.github.io"},
+{"hash":230269173,"name":"tdlgabout.linkwebsite.caption","sourcebytes":[87,101,98,115,105,116,101],"value":"Website"},
+{"hash":13073,"name":"tdlgabout.pappversion.caption","sourcebytes":[48,46,49],"value":"0.1"},
+{"hash":214540302,"name":"tdlgabout.lblappversion.caption","sourcebytes":[86,101,114,115,105,111,110],"value":"Version"},
+{"hash":4732641,"name":"tdlgabout.pappprerelease.caption","sourcebytes":[65,108,112,104,97],"value":"Alpha"},
+{"hash":217937,"name":"tdlgabout.pclementsversion.caption","sourcebytes":[50,48,50,49],"value":"2021"},
+{"hash":144331156,"name":"tdlgabout.lblclementsversion.caption","sourcebytes":[67,108,101,109,101,110,116,115,47,101,66,105,114,100],"value":"Clements/eBird"},
+{"hash":214034,"name":"tdlgabout.piocversion.caption","sourcebytes":[49,49,46,50],"value":"11.2"},
+{"hash":20019,"name":"tdlgabout.lbliocversion.caption","sourcebytes":[73,79,67],"value":"IOC"},
+{"hash":217937,"name":"tdlgabout.pcbroversion.caption","sourcebytes":[50,48,50,49],"value":"2021"},
+{"hash":292719,"name":"tdlgabout.lblcbroversion.caption","sourcebytes":[67,66,82,79],"value":"CBRO"},
+{"hash":100021251,"name":"tdlgabout.lblappname.caption","sourcebytes":[88,111,108,109,105,115],"value":"Xolmis"},
+{"hash":246920946,"name":"tdlgabout.lblappdescription.caption","sourcebytes":[65,32,102,114,101,101,44,32,111,112,101,110,32,115,111,117,114,99,101,32,111,114,110,105,116,104,111,108,111,103,105,99,97,108,32,100,97,116,97,32,109,97,110,97,103,101,114],"value":"A free, open source ornithological data manager"}
+]}

@@ -1,0 +1,20 @@
+{"version":1,"strings":[
+{"hash":93148515,"name":"tbatchbands.caption","sourcebytes":[78,101,119,32,98,97,116,99,104,32,111,102,32,98,97,110,100,115],"value":"New batch of bands"},
+{"hash":366789,"name":"tbatchbands.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tbatchbands.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":5902474,"name":"tbatchbands.lblbandsize.caption","sourcebytes":[83,105,122,101,58],"value":"Size:"},
+{"hash":6030986,"name":"tbatchbands.lblbandtype.caption","sourcebytes":[84,121,112,101,58],"value":"Type:"},
+{"hash":254482970,"name":"tbatchbands.lblstartnumber.caption","sourcebytes":[83,116,97,114,116,32,110,117,109,98,101,114,58],"value":"Start number:"},
+{"hash":147321450,"name":"tbatchbands.lblendnumber.caption","sourcebytes":[70,105,110,97,108,32,110,117,109,98,101,114,58],"value":"Final number:"},
+{"hash":157335306,"name":"tbatchbands.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"},
+{"hash":174885338,"name":"tbatchbands.lblbandsource.caption","sourcebytes":[83,111,117,114,99,101,58],"value":"Source:"},
+{"hash":55134234,"name":"tbatchbands.lblordernumber.caption","sourcebytes":[79,114,100,101,114,32,110,117,109,98,101,114,58],"value":"Order number:"},
+{"hash":71041098,"name":"tbatchbands.lblorderdate.caption","sourcebytes":[79,114,100,101,114,32,100,97,116,101,58],"value":"Order date:"},
+{"hash":248728234,"name":"tbatchbands.lblreceiptdate.caption","sourcebytes":[82,101,99,101,105,112,116,32,100,97,116,101,58],"value":"Receipt date:"},
+{"hash":33581481,"name":"tbatchbands.eorderdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":33581481,"name":"tbatchbands.ereceiptdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":124954266,"name":"tbatchbands.lblsupplier.caption","sourcebytes":[83,117,112,112,108,105,101,114,58],"value":"Supplier:"},
+{"hash":198123738,"name":"tbatchbands.lblrequester.caption","sourcebytes":[82,101,113,117,101,115,116,101,114,58],"value":"Requester:"},
+{"hash":144242890,"name":"tbatchbands.lblcarrier.caption","sourcebytes":[67,97,114,114,105,101,114,58],"value":"Carrier:"},
+{"hash":163884042,"name":"tbatchbands.lblsender.caption","sourcebytes":[83,101,110,100,101,114,58],"value":"Sender:"}
+]}

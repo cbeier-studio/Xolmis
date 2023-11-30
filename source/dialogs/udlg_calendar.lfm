@@ -1,0 +1,466 @@
+object dlgCalendar: TdlgCalendar
+  Left = 352
+  Height = 271
+  Top = 33
+  Width = 484
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsNone
+  Caption = 'Select date'
+  ClientHeight = 271
+  ClientWidth = 484
+  DesignTimePPI = 120
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PopupMode = pmAuto
+  LCLVersion = '3.0.0.2'
+  object pBottom: TPanel
+    Left = 0
+    Height = 46
+    Top = 225
+    Width = 484
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 46
+    ClientWidth = 484
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object sbOK: TBitBtn
+      Left = 16
+      Height = 30
+      Top = 8
+      Width = 222
+      Caption = 'Apply'
+      Constraints.MinWidth = 222
+      Font.Color = 14120960
+      Font.Name = 'Segoe UI Semibold'
+      OnClick = sbOKClick
+      ParentFont = False
+      TabOrder = 0
+    end
+    object sbCancel: TBitBtn
+      Left = 246
+      Height = 30
+      Top = 8
+      Width = 222
+      Caption = 'Cancel'
+      Constraints.MinWidth = 222
+      OnClick = sbCancelClick
+      TabOrder = 1
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 223
+    Width = 484
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pRight: TBCPanel
+    Left = 280
+    Height = 223
+    Top = 0
+    Width = 204
+    Align = alRight
+    ChildSizing.LeftRightSpacing = 8
+    ChildSizing.TopBottomSpacing = 14
+    Background.Color = 16444392
+    Background.Gradient1.StartColor = clWhite
+    Background.Gradient1.EndColor = clBlack
+    Background.Gradient1.GradientType = gtLinear
+    Background.Gradient1.Point1XPercent = 0
+    Background.Gradient1.Point1YPercent = 0
+    Background.Gradient1.Point2XPercent = 0
+    Background.Gradient1.Point2YPercent = 100
+    Background.Gradient2.StartColor = clWhite
+    Background.Gradient2.EndColor = clBlack
+    Background.Gradient2.GradientType = gtLinear
+    Background.Gradient2.Point1XPercent = 0
+    Background.Gradient2.Point1YPercent = 0
+    Background.Gradient2.Point2XPercent = 0
+    Background.Gradient2.Point2YPercent = 100
+    Background.Gradient1EndPercent = 35
+    Background.Style = bbsColor
+    BevelInner = bvNone
+    BevelOuter = bvRaised
+    BevelWidth = 1
+    Border.Style = bboNone
+    BorderBCStyle = bpsBorder
+    FontEx.Color = clDefault
+    FontEx.FontQuality = fqSystemClearType
+    FontEx.Shadow = False
+    FontEx.ShadowRadius = 5
+    FontEx.ShadowOffsetX = 5
+    FontEx.ShadowOffsetY = 5
+    FontEx.Style = []
+    ParentBackground = False
+    Rounding.RoundX = 1
+    Rounding.RoundY = 1
+    TabOrder = 1
+    object pOperations: TBCPanel
+      Left = 9
+      Height = 46
+      Top = 15
+      Width = 186
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+      ChildSizing.ShrinkVertical = crsHomogenousChildResize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 0
+      object rbAdd: TSpeedButton
+        Left = 8
+        Height = 30
+        Top = 8
+        Width = 83
+        Down = True
+        GroupIndex = 1
+        Images = iCalendar
+        ImageIndex = 0
+        ImageWidth = 24
+      end
+      object rbSubtract: TSpeedButton
+        Left = 95
+        Height = 30
+        Top = 8
+        Width = 83
+        GroupIndex = 1
+        Images = iCalendar
+        ImageIndex = 1
+        ImageWidth = 24
+      end
+    end
+    object pYears: TBCPanel
+      Left = 9
+      Height = 46
+      Top = 69
+      Width = 186
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 1
+      object lblYears: TLabel
+        Left = 9
+        Height = 28
+        Top = 9
+        Width = 63
+        Align = alLeft
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Years:'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object eYears: TSpinEdit
+        Left = 80
+        Height = 28
+        Top = 9
+        Width = 97
+        Align = alClient
+        MaxValue = 99999
+        OnChange = eYearsChange
+        TabOrder = 0
+      end
+    end
+    object pMonths: TBCPanel
+      Left = 9
+      Height = 46
+      Top = 115
+      Width = 186
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 2
+      object lblMonths: TLabel
+        Left = 9
+        Height = 28
+        Top = 9
+        Width = 63
+        Align = alLeft
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Months:'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object eMonths: TSpinEdit
+        Left = 80
+        Height = 28
+        Top = 9
+        Width = 97
+        Align = alClient
+        MaxValue = 999999
+        TabOrder = 0
+      end
+    end
+    object pDays: TBCPanel
+      Left = 9
+      Height = 46
+      Top = 161
+      Width = 186
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.TopBottomSpacing = 8
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 3
+      object lblDays: TLabel
+        Left = 9
+        Height = 28
+        Top = 9
+        Width = 63
+        Align = alLeft
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Days:'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object eDays: TSpinEdit
+        Left = 80
+        Height = 28
+        Top = 9
+        Width = 97
+        Align = alClient
+        MaxValue = 999999999
+        TabOrder = 0
+      end
+    end
+  end
+  object pCalendar: TBCPanel
+    Left = 0
+    Height = 223
+    Top = 0
+    Width = 280
+    Align = alClient
+    ChildSizing.TopBottomSpacing = 8
+    Background.Color = 16444392
+    Background.Gradient1.StartColor = clWhite
+    Background.Gradient1.EndColor = clBlack
+    Background.Gradient1.GradientType = gtLinear
+    Background.Gradient1.Point1XPercent = 0
+    Background.Gradient1.Point1YPercent = 0
+    Background.Gradient1.Point2XPercent = 0
+    Background.Gradient1.Point2YPercent = 100
+    Background.Gradient2.StartColor = clWhite
+    Background.Gradient2.EndColor = clBlack
+    Background.Gradient2.GradientType = gtLinear
+    Background.Gradient2.Point1XPercent = 0
+    Background.Gradient2.Point1YPercent = 0
+    Background.Gradient2.Point2XPercent = 0
+    Background.Gradient2.Point2YPercent = 100
+    Background.Gradient1EndPercent = 35
+    Background.Style = bbsColor
+    BevelInner = bvNone
+    BevelOuter = bvRaised
+    BevelWidth = 1
+    Border.Style = bboNone
+    BorderBCStyle = bpsBorder
+    FontEx.Color = clDefault
+    FontEx.FontQuality = fqSystemClearType
+    FontEx.Shadow = False
+    FontEx.ShadowRadius = 5
+    FontEx.ShadowOffsetX = 5
+    FontEx.ShadowOffsetY = 5
+    FontEx.Style = []
+    ParentBackground = False
+    Rounding.RoundX = 1
+    Rounding.RoundY = 1
+    TabOrder = 2
+    object Cal: TCalendar
+      Left = 9
+      Height = 205
+      Top = 9
+      Width = 267
+      AutoSize = True
+      BorderSpacing.Left = 8
+      DateTime = 44826
+      TabOrder = 0
+    end
+  end
+  object iCalendar: TImageList
+    Height = 48
+    Width = 48
+    Left = 24
+    Top = 208
+    Bitmap = {
+      4C7A020000003000000030000000B70000000000000078DAEDDAC10983300086
+      516F9D23F77427C1390457A81375134BF7283642A4ED517B3091F7E0BFD6EF22
+      3492A601F81542B8A4B569D74AFBBBB439ED5969FF90FB67FDFAF5EBD7AF5FBF
+      7EFDFACFDC9FCF1E5D6ED8BBFBDAFFE7EFF46971637FFBF5EC12366DEC8FCBB9
+      A990F657DACDFBAB5FBF7EFDFAF5EBD7AF5F7FD1FDFDFAFFBDD2FEE50C341D71
+      F6000000000038B310C298EF7E9470FF64DCD1FFA8F5FE4FEE8FF91BFE70F036
+      DFBF02000000E0E30DDADB8039
+    }
+    BitmapAdv = {
+      4C69040000004C7A020000001000000010000000360000000000000078DA6360
+      18BC405151F10085FAFF8F14FDA0B002A927021F180D3FFAA4BF51300AE85C5E
+      26007103019C402BFDA360E801008C5A2D4B4C7A020000001400000014000000
+      3F0000000000000078DA636018FA405151F10095CDFB3F6ADED0360F942640FA
+      C8C00746C36FD43C5A962FA360148C8221D1AE4800E206127102BDCC1B05A360
+      A803003E1F3F734C7A020000001800000018000000740000000000000078DA63
+      601805D4028A8A8A9B80D89386E6FF07E28651F347CD1F08F3817A7740CD2017
+      FF04622B3CE63B80DC870783CC388047BE16887946E377D4FC0132FF0F1057D2
+      D07C5B20E61CAD6947C1281805A380EEEDFBF514B67F40783D1EF3ED09B47F88
+      C1F6A331350A46C1282006000047A172124C7A0200000020000000200000005F
+      0000000000000078DAEDD7410A802014455137E2C045B5541BBB33CB41F3A03E
+      2A9C036FEA2588B094D85529E51C9BD8EF63FAFAFAFAFA9FCFABCF9981ABABF6
+      BD7FFAFAFAFADBF4EB9FDF73008049779A7CEF085A7ED16F81FFDE6DF5E70700
+      E25D5B09CA4D
+    }
+  end
+end

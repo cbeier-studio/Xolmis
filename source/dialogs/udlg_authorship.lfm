@@ -1,0 +1,158 @@
+object dlgAuthorship: TdlgAuthorship
+  Left = 352
+  Height = 240
+  Top = 33
+  Width = 492
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsNone
+  Caption = 'Sort authors'
+  ClientHeight = 240
+  ClientWidth = 492
+  OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  OnShow = FormShow
+  PopupMode = pmAuto
+  ShowInTaskBar = stNever
+  LCLVersion = '3.0.0.2'
+  object pBottom: TPanel
+    Left = 0
+    Height = 40
+    Top = 200
+    Width = 492
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 8
+    ChildSizing.TopBottomSpacing = 4
+    ChildSizing.HorizontalSpacing = 8
+    ClientHeight = 40
+    ClientWidth = 492
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object sbOK: TBitBtn
+      Left = 216
+      Height = 32
+      Top = 4
+      Width = 130
+      Align = alRight
+      Caption = 'Apply'
+      Font.Color = 14120960
+      Font.Name = 'Segoe UI Semibold'
+      OnClick = sbOKClick
+      ParentFont = False
+      TabOrder = 0
+    end
+    object sbCancel: TBitBtn
+      Left = 354
+      Height = 32
+      Top = 4
+      Width = 130
+      Align = alRight
+      Caption = 'Cancel'
+      OnClick = sbCancelClick
+      TabOrder = 1
+    end
+    object lblTotal: TLabel
+      Left = 8
+      Height = 32
+      Top = 4
+      Width = 96
+      Align = alLeft
+      Caption = '0 researcher(s)'
+      Layout = tlCenter
+      ParentColor = False
+    end
+  end
+  object pRight: TPanel
+    Left = 446
+    Height = 200
+    Top = 0
+    Width = 46
+    Align = alRight
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 8
+    ChildSizing.TopBottomSpacing = 8
+    ClientHeight = 200
+    ClientWidth = 46
+    TabOrder = 1
+    object sbDel: TSpeedButton
+      Left = 8
+      Height = 30
+      Hint = 'Delete'
+      Top = 54
+      Width = 30
+      Align = alTop
+      BorderSpacing.Top = 16
+      Flat = True
+      Images = frmMain.mPopup
+      ImageIndex = 34
+      ImageWidth = 20
+      OnClick = sbDelClick
+      ShowCaption = False
+      ShowHint = True
+      ParentShowHint = False
+    end
+    object sbUp: TSpeedButton
+      Left = 8
+      Height = 30
+      Hint = 'Move up'
+      Top = 132
+      Width = 30
+      Align = alBottom
+      Flat = True
+      Images = frmMain.bMenu
+      ImageIndex = 88
+      ImageWidth = 16
+      OnClick = sbUpClick
+      ShowCaption = False
+      ShowHint = True
+      ParentShowHint = False
+    end
+    object sbDown: TSpeedButton
+      Left = 8
+      Height = 30
+      Hint = 'Move down'
+      Top = 162
+      Width = 30
+      Align = alBottom
+      Flat = True
+      Images = frmMain.bMenu
+      ImageIndex = 89
+      ImageWidth = 16
+      OnClick = sbDownClick
+      ShowCaption = False
+      ShowHint = True
+      ParentShowHint = False
+    end
+    object sbAdd: TSpeedButton
+      Left = 8
+      Height = 30
+      Hint = 'Add'
+      Top = 8
+      Width = 30
+      Align = alTop
+      Flat = True
+      Images = frmMain.mPopup
+      ImageIndex = 0
+      ImageWidth = 20
+      OnClick = sbAddClick
+      ShowCaption = False
+      ShowHint = True
+      ParentShowHint = False
+    end
+  end
+  object lbColetor: TListBox
+    Left = 4
+    Height = 196
+    Top = 4
+    Width = 442
+    Align = alClient
+    BorderSpacing.Left = 4
+    BorderSpacing.Top = 4
+    ItemHeight = 0
+    TabOrder = 2
+    OnClick = lbColetorClick
+    OnKeyPress = lbColetorKeyPress
+  end
+end

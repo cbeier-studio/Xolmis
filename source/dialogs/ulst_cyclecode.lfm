@@ -1,0 +1,203 @@
+object lstCycleCode: TlstCycleCode
+  Left = 352
+  Height = 303
+  Top = 33
+  Width = 693
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Cycle code'
+  ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+  ChildSizing.Layout = cclLeftToRightThenTopToBottom
+  ChildSizing.ControlsPerLine = 3
+  ClientHeight = 303
+  ClientWidth = 693
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PopupMode = pmAuto
+  Position = poOwnerFormCenter
+  LCLVersion = '3.0.0.2'
+  object pBottom: TPanel
+    Left = 0
+    Height = 50
+    Top = 253
+    Width = 693
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ClientHeight = 50
+    ClientWidth = 693
+    TabOrder = 0
+    object sbOK: TBitBtn
+      Left = 409
+      Height = 34
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Apply'
+      Font.Color = 14120960
+      Font.Name = 'Segoe UI Semibold'
+      OnClick = sbOKClick
+      ParentFont = False
+      TabOrder = 0
+    end
+    object sbCancel: TBitBtn
+      Left = 547
+      Height = 34
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Cancel'
+      OnClick = sbCancelClick
+      TabOrder = 1
+    end
+  end
+  object rgFirst: TRadioGroup
+    Left = 8
+    Height = 193
+    Top = 8
+    Width = 212
+    AutoFill = True
+    BorderSpacing.Left = 8
+    BorderSpacing.Top = 8
+    BorderSpacing.Right = 8
+    BorderSpacing.Bottom = 8
+    Caption = 'Cycle'
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 168
+    ClientWidth = 208
+    ItemIndex = 0
+    Items.Strings = (
+      'U - Unknown molt cycle'
+      'D - Definitive molt cycle'
+      'F - First molt cycle'
+      'S - Second molt cycle'
+      'T - Third molt cycle'
+      '4 - Fourth molt cycle'
+      '5 - Fifth molt cycle'
+    )
+    OnClick = rgFirstClick
+    TabOrder = 1
+  end
+  object rgSecond: TRadioGroup
+    Left = 228
+    Height = 193
+    Top = 8
+    Width = 223
+    AutoFill = True
+    BorderSpacing.Top = 8
+    BorderSpacing.Right = 8
+    BorderSpacing.Bottom = 8
+    Caption = 'Molt'
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 168
+    ClientWidth = 219
+    ItemIndex = 0
+    Items.Strings = (
+      'C - not molting (Cycle)'
+      'P - molting (Pre)'
+      'A - After a given plumage'
+    )
+    OnClick = rgFirstClick
+    TabOrder = 2
+  end
+  object rgThird: TRadioGroup
+    Left = 459
+    Height = 193
+    Top = 8
+    Width = 226
+    AutoFill = True
+    BorderSpacing.Top = 8
+    BorderSpacing.Right = 8
+    BorderSpacing.Bottom = 8
+    Caption = 'Plumage'
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 168
+    ClientWidth = 222
+    ItemIndex = 0
+    Items.Strings = (
+      'U - Unknown plumage'
+      'J - Juvenal plumage'
+      'S - Supplemental plumage'
+      'F - Formative plumage'
+      'B - Basic plumage'
+      'A - Alternate plumage'
+    )
+    OnClick = rgFirstClick
+    TabOrder = 3
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 251
+    Width = 693
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pCode: TBCPanel
+    Left = 8
+    Height = 35
+    Top = 208
+    Width = 677
+    Align = alBottom
+    BorderSpacing.Left = 8
+    BorderSpacing.Right = 8
+    BorderSpacing.Bottom = 8
+    Background.Color = 16226706
+    Background.Gradient1.StartColor = clWhite
+    Background.Gradient1.EndColor = clBlack
+    Background.Gradient1.GradientType = gtLinear
+    Background.Gradient1.Point1XPercent = 0
+    Background.Gradient1.Point1YPercent = 0
+    Background.Gradient1.Point2XPercent = 0
+    Background.Gradient1.Point2YPercent = 100
+    Background.Gradient2.StartColor = clWhite
+    Background.Gradient2.EndColor = clBlack
+    Background.Gradient2.GradientType = gtLinear
+    Background.Gradient2.Point1XPercent = 0
+    Background.Gradient2.Point1YPercent = 0
+    Background.Gradient2.Point2XPercent = 0
+    Background.Gradient2.Point2YPercent = 100
+    Background.Gradient1EndPercent = 35
+    Background.Style = bbsColor
+    BevelInner = bvNone
+    BevelOuter = bvRaised
+    BevelWidth = 1
+    Border.Style = bboNone
+    BorderBCStyle = bpsBorder
+    FontEx.Color = 9520964
+    FontEx.FontQuality = fqSystemClearType
+    FontEx.Height = 24
+    FontEx.Shadow = False
+    FontEx.ShadowRadius = 5
+    FontEx.ShadowOffsetX = 5
+    FontEx.ShadowOffsetY = 5
+    FontEx.Style = []
+    ParentBackground = False
+    Rounding.RoundX = 8
+    Rounding.RoundY = 8
+    TabOrder = 4
+  end
+end

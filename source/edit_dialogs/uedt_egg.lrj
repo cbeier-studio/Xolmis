@@ -1,0 +1,23 @@
+{"version":1,"strings":[
+{"hash":80309127,"name":"tedtegg.caption","sourcebytes":[78,101,119,32,101,103,103],"value":"New egg"},
+{"hash":366789,"name":"tedtegg.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tedtegg.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":157264490,"name":"tedtegg.lblfieldnumber.caption","sourcebytes":[70,105,101,108,100,32,110,117,109,98,101,114,58],"value":"Field number:"},
+{"hash":139799082,"name":"tedtegg.lbleggseq.caption","sourcebytes":[69,103,103,32,110,117,109,98,101,114,58,32,42],"value":"Egg number: *"},
+{"hash":179506810,"name":"tedtegg.lblmeasuredate.caption","sourcebytes":[77,101,97,115,117,114,101,109,101,110,116,32,100,97,116,101,58],"value":"Measurement date:"},
+{"hash":33581481,"name":"tedtegg.emeasuredate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":150346122,"name":"tedtegg.lbltaxon.caption","sourcebytes":[84,97,120,111,110,58,32,42],"value":"Taxon: *"},
+{"hash":161072618,"name":"tedtegg.lblobserver.caption","sourcebytes":[79,98,115,101,114,118,101,114,58,32,42],"value":"Observer: *"},
+{"hash":55902522,"name":"tedtegg.lblindividual.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,32,104,97,116,99,104,101,100,58],"value":"Individual hatched:"},
+{"hash":224999482,"name":"tedtegg.lblshape.caption","sourcebytes":[70,111,114,109,97,116,58],"value":"Format:"},
+{"hash":91130250,"name":"tedtegg.lblstage.caption","sourcebytes":[80,104,97,115,101,58],"value":"Phase:"},
+{"hash":136003434,"name":"tedtegg.lblshellcolor.caption","sourcebytes":[69,103,103,115,104,101,108,108,32,99,111,108,111,114,58],"value":"Eggshell color:"},
+{"hash":129233642,"name":"tedtegg.lblshellpattern.caption","sourcebytes":[69,103,103,115,104,101,108,108,32,112,97,116,116,101,114,110,58],"value":"Eggshell pattern:"},
+{"hash":224642010,"name":"tedtegg.lblvolume.caption","sourcebytes":[86,111,108,117,109,101,58],"value":"Volume:"},
+{"hash":5474922,"name":"tedtegg.lblweight.caption","sourcebytes":[77,97,115,115,58],"value":"Mass:"},
+{"hash":46459626,"name":"tedtegg.lbllength.caption","sourcebytes":[76,101,110,103,116,104,58],"value":"Length:"},
+{"hash":98548410,"name":"tedtegg.lblwidth.caption","sourcebytes":[87,105,100,116,104,58],"value":"Width:"},
+{"hash":89566314,"name":"tedtegg.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
+{"hash":243965684,"name":"tedtegg.ckhatched.caption","sourcebytes":[72,97,116,99,104,101,100],"value":"Hatched"},
+{"hash":66253242,"name":"tedtegg.lblshelltexture.caption","sourcebytes":[69,103,103,115,104,101,108,108,32,116,101,120,116,117,114,101,58],"value":"Eggshell texture:"}
+]}

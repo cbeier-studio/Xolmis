@@ -1,0 +1,4290 @@
+object Frame1: TFrame1
+  Left = 0
+  Height = 1051
+  Top = 0
+  Width = 502
+  ClientHeight = 1051
+  ClientWidth = 502
+  DesignTimePPI = 120
+  ParentFont = False
+  TabOrder = 0
+  DesignLeft = 382
+  DesignTop = 32
+  object scrollFilter: TScrollBox
+    Left = 0
+    Height = 1051
+    Top = 0
+    Width = 502
+    HorzScrollBar.Page = 233
+    VertScrollBar.Page = 1051
+    VertScrollBar.Tracking = True
+    Align = alClient
+    BorderStyle = bsNone
+    ChildSizing.LeftRightSpacing = 8
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.VerticalSpacing = 2
+    ClientHeight = 1051
+    ClientWidth = 481
+    ParentBackground = False
+    TabOrder = 0
+    object bvSpacerFilters: TBevel
+      Left = 8
+      Height = 12
+      Top = 3232
+      Width = 465
+      Align = alTop
+      Shape = bsSpacer
+    end
+    object pLixoFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 122
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 16
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 0
+      object icoDeletedFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B47726170686963FB03000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+          E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+          A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+          F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+          6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+          BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+          F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+          FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+          A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+          DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+          F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+          000220494441544889DD953F8813511087BFC8458F48A2C8C959883275126269
+          A5559A5416368282884D40ACD42A20F6923A95292CB414048B6093E6AE489743
+          5192ECC8A671DDC44B60254BB2C95A982C31973F9B52079665667EF3BE99F7E0
+          3DF8D72D12462422BBC073E02E700678073C53D5DEA6DA53211B29024F8143E0
+          3D700F7823221B1BDCD9249876FF1028A9EAA369EC33F01210C0080D10915BC0
+          9505CD45200A9C1691C7D3D8DEF4FF4444BE2CE87BC06B55F561EE0C44240E1C
+          0157374DB5C1FAC03555FDB6342B22F745C4B72CEB78381CFA613F11E989C88B
+          C5F5961D721BC034CD1F615B761CE717706E561B0AD06AB5FAB340B3D9A4D3E9
+          0482C16040BD5E0F7CD334ADF9DA508066B3E9CE0285428162B11808CAE532F9
+          7C3EF00DC3389EB13602547500740CC398CC629EE7311A8D98F73DCF0BFC46A3
+          31D866028076BBDD8EAEC89D30C330C6404F559DB000D3B6EDB36101A669EEB0
+          647BD601DA8EE35C080BB02C2BC692ED590B188FC7972693891F06306D662B80
+          09446DDBEEACC807E6FB3EA3D1689F6DB70840556D80542A453A9D0E92C96492
+          4C260340B7DBFD09ECAE9A60A989C86511F14BA5D2C17038F45DD73D7135CC62
+          D56AF59388F8227263D95A2BEF7311F9188FC7F76BB55A2A12597DEDE772B983
+          56ABB5072455D55BCCAF035C070E63B1D8D76C36FB3D9148FCA5755DD7AF542A
+          E7FBFD7E06B8A3AA6FB79A600AB9093C006E03B185B4C79FD7ED15F0415527FC
+          97F61BC1FE21F8791D761F0000000049454E44AE426082
+        }
+      end
+      object lblLixoFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 131
+        Align = alLeft
+        Caption = 'Registros apagados'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object tsfLixo: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Style = swsHorizontal
+      end
+    end
+    object pSiteFilters: TBCPanel
+      Left = 8
+      Height = 300
+      Top = 190
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 1
+      Visible = False
+      object pTitleSiteFilter: TPanel
+        Left = 16
+        Height = 46
+        Top = 0
+        Width = 433
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.TopBottomSpacing = 8
+        ChildSizing.HorizontalSpacing = 8
+        ClientHeight = 46
+        ClientWidth = 433
+        Color = clWhite
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 0
+        Visible = False
+        object lblSiteFilter: TLabel
+          Left = 32
+          Height = 30
+          Top = 8
+          Width = 41
+          Align = alLeft
+          Caption = 'Locais'
+          Layout = tlCenter
+          ParentColor = False
+          Visible = False
+        end
+        object lblCountSiteFilter: TLabel
+          Left = 296
+          Height = 30
+          Top = 8
+          Width = 137
+          Align = alRight
+          Caption = 'nenhum selecionado'
+          Font.Color = 6579300
+          Layout = tlCenter
+          ParentColor = False
+          ParentFont = False
+          Visible = False
+        end
+        object icoSiteFilter: TImage
+          Left = 0
+          Height = 30
+          Top = 8
+          Width = 24
+          Align = alLeft
+          Center = True
+          Picture.Data = {
+            1754506F727461626C654E6574776F726B47726170686963D104000089504E47
+            0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+            8169434350735247422049454336313936362D322E31000028917591BB4B0341
+            1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+            E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+            CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+            A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+            F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+            6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+            BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+            F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+            FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+            A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+            DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+            F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+            0002F6494441544889D5554D481461187E5A83A2358681583231791C56EAA007
+            8B0C3C5462288E11E50FEAA1E8A687BA25D5253A34B77ECE5E3AEA450F124B27
+            29F250A21D925514F55B48DAD9947574776D6658F7EBD066B3DBBA2BD1A517BE
+            C33CDFF33ECFFBBDF37E33C0FF1E874A11489E03700DC03900E7B3F00C805900
+            1342884FC5F2CB8A081F5555F52980578AA29C686868C8F4F7F7279A9A9AAC4C
+            267338914834388EF34855D563AAAA4E5996953EF0B14856900C6B9A161D1F1F
+            9F755D57165A636363B39AA6454986495614D2FAA345240F0198282F2FE7E4E4
+            E46945518E172B666B6B2BD1DCDCFC25994CAE00B82E8490DE7D5F819CDB005A
+            464747CB4B890380A228C7474646FC00AE02B895BF9F6390ADFE695757D77430
+            18ACCE276F6E6E5AF178DCCAC76B6B6BAB3B3B3BA7011845AB21594952CECFCF
+            47BCBD364D33DED6D63645F23BC9EFADADAD53A669C6BD9C70381C2129499EDA
+            F704F83986899A9A9A9CEA0DC3F8BCB8B8A800B80CE0D2D2D2926218C6672F47
+            D3B46A0049FC1EE5820667FD7EFF9ACF970B8742A11A00CF85101F8510D3009E
+            8542212D47C8E783DFEFFF02E06C3183D8CECECE49297306018140C00450E781
+            EA028140D4CB915222954A9D04102B66B02CA5544DD3FCE605878686CA00DC25
+            F99AE404807B596C2FA2D1680C800A60D98BE7905455FD0AE0CEF6F6F6724B4B
+            CBDE7B08068315EDEDED6BABABAB3B555555478687870F3736369EF1E61A86F1
+            696161C107E0BE655919EC17241F924C452291D87E37387F45229118C914C907
+            F97A852EDA0B002B3D3D3D6BAEEB96FCBEB8AE9BEEEEEE5E03B002E065490321
+            840DE0E6FAFA7A654747C7CCEEEEAECCE7FC8A743A9DD1757D666363E314809B
+            D9DC8305C93A92715DD7DFDBB6FD475B6CDB96BAAE4F918C93AC2BAD58D8A491
+            64B2AFAFEF9DE3387BE28EE3C8DEDEDE772413242FFC95B8C7E40A497B7070F0
+            ED2F83818181B7246D92974BE597FCA3654DAE0118AFAFAFFF20A5C4DCDCDC45
+            00378410AFFF8941D6A40DC093ECE36321C49B83E6FEDFF103F8E79B35059EC3
+            950000000049454E44AE426082
+          }
+          Visible = False
+        end
+      end
+      object tvSiteFilter: TLazVirtualStringTree
+        Left = 16
+        Height = 242
+        Top = 46
+        Width = 433
+        Align = alClient
+        BorderSpacing.Bottom = 12
+        DefaultText = 'Node'
+        EmptyListMessage = 'Não há locais para mostrar'
+        Header.AutoSizeIndex = 0
+        Header.Columns = <        
+          item
+            Position = 0
+          end>
+        TabOrder = 1
+        TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes, toAutoChangeScale]
+        TreeOptions.ExportMode = emChecked
+        TreeOptions.MiscOptions = [toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
+        Visible = False
+      end
+    end
+    object pBandSizeFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 566
+      Width = 465
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 12
+      Visible = False
+      object lblBandSizeFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 60
+        Align = alLeft
+        Caption = 'Tamanho'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object icoBandSizeFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B477261706869636703000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248AAF48042D2C2C82A855941825686391E00BD4228960D426B9BC843C
+          8EBB8888AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B28AD64F43A3764B2792D30E9732E84179D0D2FD868
+          C2CE30EE88A2ABB3C1891035EDF31E8B196FFBCD5AB5CFFD6B2DB1B8AE80A551
+          784C51B5BCF094F0CC5A5E357947B843494562C267C22E4D2E287C67EAD112BF
+          9A9C2CF1B7C95A28E0076B9BB03359C5D12A56525A46585E4E4F26BDAA94EF63
+          BEC41ECFCE0725768B77A11360121F4EA619C78F97414665F6D28F8701595123
+          DF5DCC9F2327B98ACC2AEB68AC9024451E97A8AB523D2E31217A5C469A75B3FF
+          7FFBAA27863CA5EA761FD43F1BC67B2F346CC34FC130BE8E0CE3E7186C4F7099
+          ADE4E70E61E443F44245EB3900C7269C5F55B4E82E5C6C41E7A31AD12245C926
+          6E4D24E0ED145AC3D07E03CD4BA59E95F7397980D0867CD535ECED439F9C772C
+          FF02A6B868037C72716B000000097048597300000B1300000B1301009A9C1800
+          00018C494441544889636018EA80119FA4A2A2A2160303431F0303831B0EB5FB
+          1918184AEFDFBF7F1697192C041CD028292929545D5D7D91898909C382EEEE6E
+          8EFBF7EF77303030B81230073B5054547CB378F1E293BF7EFDFA8F0DEFD8B1E3
+          82A2A2E25F7C663011B083B1BEBE5E594B4BEBA99393D3495C6AF01940288818
+          8C8D8DAF5A595931EBEBEBF313524B96057E7E7E1CE1E1E166E4184E94052D2D
+          2D427D7D7D17617C5555D58F4B962CB1A39A05525252AF3534347EC1F8666666
+          1CC41A4E9405494949CCE1E1E1F6A4188A0C08A52286FEFE7E363F3FBFA3D5D5
+          D5076962010C3032E24D8D3801C1202A2C2CFC151E1E6E4D96E9C458306FDEBC
+          BFC78E1D83078F999919477474B439D52C78F6EC99E8870F1FBEC2F8EFDFBFFF
+          181D1D4DACF9842DA8A9A97947D38CB669D3A61F6FDEBC39AAAFAFCF6F6363A3
+          43750BCE9E3DAB7DFEFCF91F1212124FF6EDDB47AAF9042DF8DFD8D878171A44
+          D2B8D45062C1FEE9D3A7CB0B09095DC051E17C636060C0EB2D62AACC1E060606
+          0F1C6AF731303094E1AB32873E0000CA5889646DEFB8880000000049454E44AE
+          426082
+        }
+        Visible = False
+      end
+      object cbBandSizeFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'A'
+          'C'
+          'D'
+          'E'
+          'F'
+          'G'
+          'H'
+          'J'
+          'L'
+          'M'
+          'N'
+          'P'
+          'R'
+          'S'
+          'T'
+          'U'
+          'V'
+          'X'
+          'Z'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pBandStatusFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1094
+      Width = 465
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 13
+      Visible = False
+      object icoBandStatusFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B47726170686963B204000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248AAF48042D2C2C82A855941825686391E00BD4228960D426B9BC843C
+          8EBB8888AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B28AD64F43A3764B2792D30E9732E84179D0D2FD868
+          C2CE30EE88A2ABB3C1891035EDF31E8B196FFBCD5AB5CFFD6B2DB1B8AE80A551
+          784C51B5BCF094F0CC5A5E357947B843494562C267C22E4D2E287C67EAD112BF
+          9A9C2CF1B7C95A28E0076B9BB03359C5D12A56525A46585E4E4F26BDAA94EF63
+          BEC41ECFCE0725768B77A11360121F4EA619C78F97414665F6D28F8701595123
+          DF5DCC9F2327B98ACC2AEB68AC9024451E97A8AB523D2E31217A5C469A75B3FF
+          7FFBAA27863CA5EA761FD43F1BC67B2F346CC34FC130BE8E0CE3E7186C4F7099
+          ADE4E70E61E443F44245EB3900C7269C5F55B4E82E5C6C41E7A31AD12245C926
+          6E4D24E0ED145AC3D07E03CD4BA59E95F7397980D0867CD535ECED439F9C772C
+          FF02A6B868037C72716B000000097048597300000B1300000B1301009A9C1800
+          0002D7494441544889ED954D48545114C77F494C6F46C5AF7219DEC428A1121A
+          2885C668F750172228D1E255AB70934544D007D126222441A89D34522D72E3A2
+          7828CC334C18FCA864329021E6A00C41AB0C1A8B99A7D3E2CDC0EBF91A5BB409
+          3ACB7BCFF9DDF3FFBF73EF837F3D76FC0D88522A025C059A81E7C03D11F902B0
+          73DB6AC38C00A780A34018280312C01C705B4DF79F061E070281544343C3A764
+          323900AC03774A2B30CC6A60083000BB007D037C071A816135DDBF0718ADABAB
+          7B675956B3A6695A4F4FCFCCD2D25203B05744F2FE0A0CB3151803EA811BC020
+          51FD87C7963340B4B6B67631168B1DD4344DCB66B3B9542AB51B782F22797F8B
+          9CCEC7800C1026AA27BC294AA9D3C0684D4D4DC2B2AC03C1603098CBE56C5DD7
+          DFAEAFAF1F03068AB97E0A860A9DFF0EDE073CA9AEAE4E5896B5DF055F48A7D3
+          C7818B2232E1EB0C8619C130F318E675BF6DA554AF52CA6E6969595C5B5BCB64
+          B3D97C2693C9B5B7B7C7955279A5D4008659E6AE29F3304E013960D007DE023C
+          ABAAAAFA303535D5140A8542B66D6F747474CCAFAEAE1E072E4BE4611CB8E9AE
+          F35A741478EFFDA085380BE462B1D8BEF2F2F2906DDB1B9D9D9D732B2B2BADC0
+          151179408471A0A2948230CE28FA855E5F5FFFA1B2B2B2C2B6ED8DAEAEAE5911
+          6905AE8A4851F10A70A894020DD8D2BD52AA11D81F080466BBBBBB679697979B
+          363737DB806B2272DF951A04364A1DF011E7126DE91E209D4E1F03BE0213C0A8
+          88BCF4E4858105F782D7A204D086615678D693C05D2002EC1691BE2D70C3D470
+          ECF9C562AF8247C079E01C305C5C14914960D247993BAE1478967B71EB5B6498
+          AF80C338172DB50DB458730498079E12D5CFB9B7BC1681D37D1E788161AA3F84
+          3F073EE37A228AE1FF9A1AE60960BCB07F1B1821AA7FF3E46838B6DC2AC07B89
+          EAF13F3BC00128600438893339719C29DB85332D87703C7F0C5C22AAAFF961B6
+          FFA3196618B8500036E1DC93059C69B188EAAFB765FC8F52F11343A606117894
+          80A30000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblBandStatusFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 40
+        Align = alLeft
+        Caption = 'Status'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbBandStatusFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'Disponível'
+          'Usada'
+          'Removida'
+          'Quebrada'
+          'Perdida'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pNestSupportFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1214
+      Width = 465
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 16
+      Visible = False
+      object icoNestSupportFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B47726170686963EB03000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+          E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+          A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+          F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+          6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+          BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+          F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+          FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+          A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+          DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+          F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+          000210494441544889D595B18BD3501CC7BF57B3BCEA72A00827B47CA5A2830A
+          198B2D37B6D12C76D3411C75EE3F7043D6E2A26415078510EAACD0E9221EDCA9
+          156C9714DF215144851B12DB6B0A772E891E6DAFF7E24DF783DF92BCF7F9FC7E
+          3F5E5E80931E4B2A8B485E047017C09DE4D10B00CFA5949F8F2D205904F0299F
+          CF078D46E30700B4DBEDF3C3E17005C05529E517952217095E57ABD58D388EF7
+          0F66A552D920F9EA38E03CC92724E37EBFBF3D2DE8F57ADB2463928F49E6B3C2
+          CB2407A55229701C67731A9EA6E3389BA5522920392059CE22E89AA6B91E86E1
+          F830789A61188E4DD35C27F941157E85E4DE6030F87A143C4DDFF703927B242F
+          4FF372731C3785107EA1505851EDB8582C5E1042F8006E2D1490CC0158D5342D
+          5685A7A169DA04C06AC2982F00F00840C5B6ED535905B66DE7005412C66C903C
+          4332765D774B75F6D3E9BAEE5672744FCFEBE0068049BD5EBF9EB5FA346AB5DA
+          35009384352318031041107CFF5F41B25724AC19C13B0043CBB28EBCC00E0BCB
+          B22480DF00DECF5D40F221C95DC3303CCFF3FAAAB3F73CAF6F1886477297E483
+          83CC99DB94E43D002D00673336F00B40534AF96CA120912C01B80420FDD8EE0B
+          21CAAD566B0400CD66538C46A3B7009E26EFBF01F0A594FB198BFA2B5CD375BD
+          9B8E44D7F52EC93595BD9AA263278AA2E54EA7F31100A2285A06B0A3B251F597
+          790EC04BFC3BDF6F00DC9652FE542CF004C71F43C28F879E117A750000000049
+          454E44AE426082
+        }
+        Visible = False
+      end
+      object lblNestSupportFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 105
+        Align = alLeft
+        Caption = 'Tipo de suporte'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbNestSupportFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'Solo'
+          'Plataforma'
+          'Herbácea/arbusto'
+          'Galho/forquilha'
+          'Suspenso'
+          'Cavidade'
+          'Artificial'
+          'Outro'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pNestFateFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1154
+      Width = 465
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 15
+      Visible = False
+      object icoNestFateFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B47726170686963FA02000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8069434350735247422049454336313936362D322E31000028917591CF2B4451
+          14C73FF38688116161214DC20AF95162633162282CC6537E6D669E37336A7EBC
+          DE9B49B255B65394D8F8B5E02F60ABAC952252B29435B141CF79DED44C32E776
+          EEF9DCEFBDE774EFB9A0A8092D6995F54032953143C1807F6E7EC15FF18C0F85
+          7A1A68096B96313533A652D23EEEF038F1A6CBA955FADCBF56BDAC5B1A782A85
+          8735C3CC088F0B4FAE660C87B7851BB5787859F854B8D3940B0ADF3A7AC4E517
+          87632E7F396CAAA11150EA84FDB1228E14B1163793C2F272DA9289AC96BF8FF3
+          129F9E9A9D91D82ADE8C45882001FC4C30CA0803F43224F3005DF4D12D2B4AE4
+          F7FCE64F93965C4D6683354C5688112743A7A859A9AE4B8C8AAECB48B0E6F4FF
+          6F5FAD687F9F5BDD1780F227DB7E6B878A2DF8CED9F6E7A16D7F1F81F7112E52
+          85FCF4010CBE8B9E2B686DFB50BB016797052DB203E79BD0F46084CDF0AFE415
+          57A251783D819A7968B886AA45B767F97D8EEF415D97AFBA82DD3DE890F3B54B
+          3F463667D78C8B648D000000097048597300000B1300000B1301009A9C180000
+          0120494441544889EDD2AD4E9C611005E08702ABD6ACC1A0E60A206940202937
+          B0E9156C30181A2CBD071282C702020A586A0A4911041274CD2830085690A6AE
+          88FD6A08DF5F4282E81EF566E69C3399F30E63BC37269A9022621E1BF858946E
+          B09D99B775DAC906E6EB38C42CAEF180157CE9F57A8FC3E1F0AA4A5FB941442C
+          E2124758CDCCA7A2DEC52E3E6329334B877CA859E02BEE30F8670EC57B50F436
+          AB0CEA062CE02C337FBF6C14B5EF05A714533503768CE22943077FAA0C1A5DD1
+          6B888849DC633F3337CA7875119599777080197CABE2D645F49A7917C7F884B5
+          CCBCA8E2B78A2822A6F113734697B557A769BBC1B2D1D5F433F3A489A0ED1FF4
+          8D3EF6B4A9A0ED805FD8CACCBF2D75FF0B22E23C227EB4D1B4BDA23B8CF37F5B
+          3C0303EF4FE9C3C0608E0000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblNestFateFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 51
+        Align = alLeft
+        Caption = 'Destino'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbNestFateFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'Perdido'
+          'Sucesso'
+          'Indeterminado'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pNotReportedFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2536
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 14
+      Visible = False
+      object lblNotReportedFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 98
+        Align = alLeft
+        Caption = 'Não reportada'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object tsBandNotReported: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        Visible = False
+        Style = swsHorizontal
+      end
+      object icoBandSizeFilter1: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+    end
+    object pFatFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1034
+      Width = 465
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 6
+      Rounding.RoundY = 6
+      TabOrder = 11
+      Visible = False
+      object icoFatFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B47726170686963A404000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248AAF48042D2C2C82A855941825686391E00BD4228960D426B9BC843C
+          8EBB8888AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B28AD64F43A3764B2792D30E9732E84179D0D2FD868
+          C2CE30EE88A2ABB3C1891035EDF31E8B196FFBCD5AB5CFFD6B2DB1B8AE80A551
+          784C51B5BCF094F0CC5A5E357947B843494562C267C22E4D2E287C67EAD112BF
+          9A9C2CF1B7C95A28E0076B9BB03359C5D12A56525A46585E4E4F26BDAA94EF63
+          BEC41ECFCE0725768B77A11360121F4EA619C78F97414665F6D28F8701595123
+          DF5DCC9F2327B98ACC2AEB68AC9024451E97A8AB523D2E31217A5C469A75B3FF
+          7FFBAA27863CA5EA761FD43F1BC67B2F346CC34FC130BE8E0CE3E7186C4F7099
+          ADE4E70E61E443F44245EB3900C7269C5F55B4E82E5C6C41E7A31AD12245C926
+          6E4D24E0ED145AC3D07E03CD4BA59E95F7397980D0867CD535ECED439F9C772C
+          FF02A6B868037C72716B000000097048597300000B1300000B1301009A9C1800
+          0002C9494441544889ED925F48537114C73F39D92CAD1E1A940C83E3AE913590
+          2829ED25342849A807E9A53F836285F512D883F450F612BED54311614512657F
+          081494A530EBA51612954DF312D31B33376213242AEDC7743D74579739D122A8
+          870E1CB8E7F73BE7FB39E7770FFCB7BF6D8B320F44C405340115C06A6010E806
+          9A0DC398327316038DC00E603D100182C019C330C6E60488C82EE016905B5454
+          1472B95C2A1C0E2F4D24121B001DD86BA6DE07D6389DCE972525259FC6C6C61C
+          9148C40324817D866174CD1A45440A4424EAF178DE84C3E1A8522A95F6EEEEEE
+          D76EB73B2622091149B8DDEE584F4FCF6B6BCEF0F070D4E3F10C8A484C440AB2
+          019A4424150C06754BE10DA5D44AA554D5C0C04048D3B4A8A669515DD747ADE2
+          690F0683BA88A444E46C36C0504545459FA520567F23B402AFFF395EFF61A5D4
+          B16CA2995E5959D927227A5A37C7C298CACBCB4B5AE2F3971FBD3F006C049A0F
+          B60CB401EFCCBB38B01F580BDCB436EA703892C06436C097783CBEDCFC9EE8EA
+          8F5F071A8061C079A7EFC311BE6FD70CB0D7EE0B14DA7D818EA5F58F4E03B7D3
+          22A6C60FC0AC35FD615EFF21E01AB01338016C2A9765EE27A7CA6BEDBE400478
+          0CD88021A092D69A896C323F015E7F3BB03BE3FE856AA9DE66F705D601CFF8BE
+          FB57807E4099E0078023A3AE83D69A3D00B996C30BC02B4B3CE37115DC05AEAA
+          96EACB765FE0217012D80214E6E62CDAFAE54A55CAEE0B6C07B667001ECF9EC0
+          3411C9018E03CEF6F6F6ADA5A5A5D5C0D325477B1B9233A9A099D6A85AAA3F01
+          1743A1505B5D5DDD5B601CB86418C6CCAC77CA02291391F18C9DDF8DD7DF8AD7
+          7FEFF3E4D466A594D2757D54D3B4A8888C8B485936AD397FB259D06BB3D9BE76
+          76764E171717AF02CE01F9806F6464E4636D6DAD6D7A7ADA01541986D13F6FE7
+          0B9C24B590CEE79D60AE49007EA5F379019910805F79960501AC1033FCBD375F
+          00245F44F2FFB8F03F6DDF00D1B691431EC977C70000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblFatFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 133
+        Align = alLeft
+        Caption = 'Gordura subcutânea'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbFatFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'N'
+          'T'
+          'L'
+          'H'
+          'F'
+          'B'
+          'G'
+          'V'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pExtinctFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2146
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 10
+      Visible = False
+      object icoExtinctFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B477261706869634005000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248AAF48042D2C2C82A855941825686391E00BD4228960D426B9BC843C
+          8EBB8888AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B28AD64F43A3764B2792D30E9732E84179D0D2FD868
+          C2CE30EE88A2ABB3C1891035EDF31E8B196FFBCD5AB5CFFD6B2DB1B8AE80A551
+          784C51B5BCF094F0CC5A5E357947B843494562C267C22E4D2E287C67EAD112BF
+          9A9C2CF1B7C95A28E0076B9BB03359C5D12A56525A46585E4E4F26BDAA94EF63
+          BEC41ECFCE0725768B77A11360121F4EA619C78F97414665F6D28F8701595123
+          DF5DCC9F2327B98ACC2AEB68AC9024451E97A8AB523D2E31217A5C469A75B3FF
+          7FFBAA27863CA5EA761FD43F1BC67B2F346CC34FC130BE8E0CE3E7186C4F7099
+          ADE4E70E61E443F44245EB3900C7269C5F55B4E82E5C6C41E7A31AD12245C926
+          6E4D24E0ED145AC3D07E03CD4BA59E95F7397980D0867CD535ECED439F9C772C
+          FF02A6B868037C72716B000000097048597300000B1300000B1301009A9C1800
+          000365494441544889D5946F48645518879FBDEEDD499666768636580CF18029
+          D62483AD6026BB61441A2EF8C50459452144220892510959BF181144D046F829
+          12515C2A411164C0A8281D1D8599D53170D0DDB32CB32D13DAEC38EEE4FCD97B
+          FBE09DB80E8D287DDA1F5CEEE177CF799FF39EF7BC179E769DC9F741085102DC
+          00DE06D2C00FC09094F2F1FF0608212E01BF298A52A8699AC362B18493C96411
+          E003DE94526A270528A6A01785101F0B21B6807B050505E71616169E595C5C4C
+          D86CB6686B6BEB0AF00670ED341928A6F12DE013A0B4A7A767657979F9C2DCDC
+          9CC366B339DC6EB702A028CA9FC0E5530384104EA03E6BB6B7B7BF64B55A9F6D
+          6A6A425555D6D7D71F171717AB9AA6D981E06900678DB7C36C0E0E0E06AD562B
+          0D0D0D1796969662F3F3F316A7D37900E8C0CFA7019C3132380B78816AE02F20
+          095800474949C9D2C8C8C80B8D8D8DCF015F029F0376E0BE943275228001390F
+          BC0BDC9252FE2D84F808F86C7A7AFA7E7F7FFFC35028F4BA090CF004B8CB61ED
+          6E028F8006200EFC2AA5D4CD478471BFBF35600EE0467575B5B7A2A2E24A4D4D
+          4D786767C75F565616AFADAD554B4B4BCFAFADADC557565634BFDFFF21D00B44
+          006184FBDED8EC7F4B08715D08918C4422D1542AA59B1FAFD7AB0F0D0DE9A3A3
+          A37A341AD5239148B4ADADED97F2F2F2ED8D8D0D393E3EEE1342E84288978F03
+          8CBA5CAEDBB9C17D3E9FDED7D7A74B29758FC7A3F7F6F6EAB973FC7EFF9601B8
+          0C47FBC0ACDAAAAAAA47B9E6C4C404030303141515515F5FCFFEFE3E07070747
+          E6CCCECEFE01EC03812335C851381C0E9FCB3593C9E4BFE3BDBD3D767777D175
+          1D80743A9DE9EAEAF26E6E6EDA810529E593E332F06D6F6F97C562B13DB35959
+          59C9D4D41400AAAAE2743AE9ECEC0420140ADD5B5D5DBD128FC75F01C2D935F9
+          005FE8BA4E4B4BCBEFA9542A9D353B3A3A0806830C0F0F130804501485E6E666
+          00C6C6C61E70D8431F009F66D71CF7BB6E02BEB3582C0FBABBBB2375757517AD
+          566B21402291B0050201ABCBE5D23399CCD6E4E4E4C3999999D780F7A594DF98
+          E3E40518901781AF81AB80B926896030A8BADD6EAFC7E3B90A480EBBFC66B6C1
+          4E0430812CC05BC024500814D8EDF6DBB158EC794DD3368077B245CDD5890026
+          D01C90007E04BE027EE2F058EEE45B93EF9AE606BE06BC07BC0A6400D5D8DC25
+          A012C80B78FAF50F10988321D7AEBDE50000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblExtinctFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 46
+        Align = alLeft
+        Caption = 'Extinto'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object tsTaxonExtinct: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Visible = False
+        Style = swsHorizontal
+      end
+    end
+    object pDatesFilters: TBCPanel
+      Left = 8
+      Height = 300
+      Top = 1616
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 9
+      Visible = False
+      object tvDateFilter: TLazVirtualStringTree
+        Left = 16
+        Height = 242
+        Top = 46
+        Width = 433
+        Align = alClient
+        BorderSpacing.Bottom = 12
+        DefaultText = 'Node'
+        DragOperations = [doCopy]
+        EmptyListMessage = 'Não há datas para mostrar'
+        Header.AutoSizeIndex = -1
+        Header.Columns = <        
+          item
+            CheckBox = True
+            Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coShowDropMark, coVisible, coAllowFocus]
+            Position = 0
+            Width = 400
+          end>
+        Header.Options = [hoColumnResize, hoDrag, hoShowImages, hoShowSortGlyphs]
+        Header.Style = hsFlatButtons
+        TabOrder = 1
+        TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes, toAutoChangeScale]
+        TreeOptions.ExportMode = emChecked
+        TreeOptions.MiscOptions = [toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
+        Visible = False
+      end
+      object pDateFilter: TPanel
+        Left = 16
+        Height = 46
+        Top = 0
+        Width = 433
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.TopBottomSpacing = 8
+        ChildSizing.HorizontalSpacing = 8
+        ClientHeight = 46
+        ClientWidth = 433
+        Color = clWhite
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 0
+        Visible = False
+        object lblDateFilter: TLabel
+          Left = 32
+          Height = 30
+          Top = 8
+          Width = 38
+          Align = alLeft
+          Caption = 'Datas'
+          Layout = tlCenter
+          ParentColor = False
+          Visible = False
+        end
+        object lblCountDateFilter: TLabel
+          Left = 289
+          Height = 30
+          Top = 8
+          Width = 144
+          Align = alRight
+          Caption = 'nenhuma selecionada'
+          Font.Color = 6579300
+          Layout = tlCenter
+          ParentColor = False
+          ParentFont = False
+          Visible = False
+        end
+        object icoDateFilter: TImage
+          Left = 0
+          Height = 30
+          Top = 8
+          Width = 24
+          Align = alLeft
+          Center = True
+          Picture.Data = {
+            1754506F727461626C654E6574776F726B47726170686963BE03000089504E47
+            0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+            8169434350735247422049454336313936362D322E31000028917591BB4B0341
+            1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+            E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+            CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+            A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+            F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+            6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+            BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+            F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+            FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+            A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+            DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+            F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+            0001E3494441544889ED953FABDA5018871F6D9D9D74D02C199C541C3A064A6B
+            C451D20B7772EA1042BF817E926E6E0E4231224240CCF11271BC60E70C59CC07
+            704DA876B08698ABF76ABADE0702393F4EDE3FFC4ECE0BEFBC4126BE9065F903
+            F000FC00BEDE196B09FC04C69EE7FD39891F139B1E8041BBDD7EEE743A9B6C36
+            9BE106F6FBFD613A9D66E7F3F9003800BF2E6E9465796918C653100487348FAE
+            EB4FB22CDBF198D9448E2F9D4E277F4BD597D0342D0F34E35AD28343DAE0713C
+            CF8BE2263DA0DBED3A8AA2A4EA62BD5EEF86C3E1E7B8F62281A2287955551B69
+            1200BF87C3E19990F420220C434CD3C475DD48731C07C771A2B5EBBA98A64918
+            865733BEE8E0C46C36A3D7EB214912B66DB3DD6ED1751D00DBB6912409C330F0
+            7D9F4C2683A669F725A8D56A489244B3793C14C5629146A311BD03A8AA8A1082
+            6AB57AB5833364593E5896B549FB1F5896B5499EC4AB1E0441C0783C3EF360B5
+            5AB15AAD6EABF61FAF7AD0EFF72997CB0821F07D3FF2400841A954FABF04F57A
+            9D72B98CAAAAC0B9078542217D07FBFDFE0050A9541042447A2E9763341ABD1A
+            ECF46D9CA407CBE974BABBB9BC0493C9640788B896BC8B1E8141ABD57AD6342D
+            7FCF753D994C768BC5E213F0DDF3BCE8BABE3470BE711C384DEE43701C38667C
+            E0BCF3267F013079185B4BCFEE290000000049454E44AE426082
+          }
+          Visible = False
+        end
+      end
+    end
+    object pWithRecapturesFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1388
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 6
+      Rounding.RoundY = 6
+      TabOrder = 8
+      Visible = False
+      object icoWithRecapturesFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B47726170686963D704000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+          E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+          A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+          F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+          6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+          BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+          F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+          FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+          A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+          DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+          F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+          0002FC494441544889B5D55F489E651806F09F9B73AD4979F0D54156ECC9B65A
+          4D2D16E8565A27ADB92514B4A483688C90F48B1811D449A43B30243AB34F2A28
+          84A283C13A282B161DB4CA166135FBB75AF33EF22067E528A5C99A1DF86EFBF8
+          72FE21F69CBCF03CD77D5DF7F53EF7FDDC5CE455B654604AE951DC8BDD1131B9
+          D4B815CB48662C13F830A554B5D4A0F2850E534A65D8886DB80767701B9E47C7
+          FF12482955A28087B3AD1FF00656E28B22DC2A5C12117FCEC733EF1DA4943661
+          3F3664D9BE1611A31E79BF120CB4FC5584EDCF1C3644C4C4A20229A5CBB26C2B
+          F05034170EA31B3B3341F80983E84A873A37E293CCD5B68898594CA00F9D688C
+          E6C2E9CCC9BAEAAAD5C35BD7574DC3D0B1C9B56393A7366314BB329137F10A1E
+          8B88D97905524A9BF1250AD15C781A232B575873205F7FA2A52E57578C1D1C99
+          1879E0A52357FC73C634EAD3A1CE7D78123511317A16575AA6DB33D1E7B00FEB
+          DE7EBC7EA2941C6EBFB6BC6E7F67DD095C872EBC7EF6A818572A702B8E47C46F
+          D8515DB57A787B6DAEB694BCA7A74743438386ABD45557AD1EC60E73F736893B
+          1613F826AB960D67FFF9CCCCF97BEBE9E9313030A0ADAD4D2E97D35873F9146E
+          8CE6C21A7C86A662C2D23E388D55C51BE3E3E39A9A9A747474989E9E3E47DEDD
+          DDADACEC3F3532531A5FEA60085BD2A1CE29FC3C746CF2D25C2EA7B5B5557F7F
+          FFBCE4878F9F5C8BA3065AA6700BBE5EC8C1E7D88D1ABC3736796AEFC1EF7FFF
+          B6B7B7B736A5A4BCBC5C7B7BFB39F2C1918991AC5C5F4C29E590F0EA42029F66
+          DF4E3C8BFBEEEF3B923B90AF1FC9E7F3F395E995E67AA10B2F60161F14E32ED4
+          6879EC8AE6C2A8F38DF6D5D6F55553666767877E395959D2681599FBBE887862
+          31810A7C8C4DA88FE6C2AF59863B7143062B7E2AB6E02DFC8D9B4A1FBD0B3D76
+          5767569F8A88F3968B1EBB94D2F5D8836770140F46C477A55CCB99687B7097B9
+          526E3437276000F988989A2F6EC18153B2EE34371B66F0115EC6C188F871A1A0
+          E508ECC5CDE66ABD3F22DE594AD092677244FC81BBF12EAE5946621777FD0B18
+          5C0F157440CC0A0000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblWithRecapturesFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 113
+        Align = alLeft
+        Caption = 'Possui recapturas'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object tsfWithRecapturesFilter: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Visible = False
+        Style = swsHorizontal
+      end
+    end
+    object pWithColorBandsFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2596
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 7
+      Visible = False
+      object icoWithColorBandsFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B477261706869638A05000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+          E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+          A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+          F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+          6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+          BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+          F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+          FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+          A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+          DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+          F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+          0003AF494441544889D5955F4864551CC7BFF78C73E7DEEBFC5177B5D8D4F8B1
+          8BAE1293641A441989A48DCC5308BE292DB20F45F51281546444D04320621264
+          ECD283586C0CF4640FC1A6FD85D49DE4AEE9AA6799C45D9DF1DF3A7367EE71E6
+          9E1ED6C06C26ADDD977EF07B38BFDF8FEFE79CDF8F730EF07F37A5508288CE03
+          0803A806F030802A004900B1039F07F025E73CF5AF0044D404E03D00CFE9BA6E
+          353434F0CACACA545555956D59168BC562FAF2F272E9C2C20201D801300AE06D
+          CE79FAD8E310914E44BCBBBBDB5C5A5AFA4908610921643EB72C2B36313171B5
+          BEBE3E45446F1D2B7E00B8404432954ADD2C247CD4C7C7C7AF12914544EE7C9A
+          ECC8DA0700EDEDEDEACCCCCCA4E338F1027BC9C6E3F1E9C1C1C1EFFBFBFB5B00
+          E879B4F202C0187342A110EFEDED6DAEABAB2B374DF33B008846A3533D3D3DD7
+          DBDADAD682C160AEA5A5A5311A8D9684C3E19913B5070088E8B59A9A1A218490
+          B66DEFB6B6B6C6868787278510B2B9B939DED9D9B93C343434353D3D3D95C964
+          368410727676768A88241179F269161582298AE2F7FBFDB70FC7FAFAFA7E0F85
+          42CF9C78C728D0B7FB69F70A88DAB6FD2980A700ECE72B28D8A263CC01703149
+          1F7C5B1BD87DF95A757B1F2BDF73291DC15F587972C478F79BEB7F16FED713F4
+          ACFB463272DB754D26D557A4703D8922E709A558BCA478ED99CCE86317EF0530
+          193DF7D9EC1D431DCDECEB864C6AC0BE0B70E7A0F83250CA2C8F5292FE68FF6B
+          6A3A11606565458BC5623FA7D369ED203492D0D5371301CDB35EAA43EC7A2153
+          2A147D1FECC13DB08A3DB08A3D97723AF90E70CC0C1CC751229148532412391C
+          9EDBF46BEFEFE61C6CF9346CF93434CC3BD0FA7E80EB9135B0B214A0E6A0B873
+          4DCE9A47F94700634C02B802E05500D18370321ED07D922910450CA2C8854B1D
+          7578FA7913CF966EC0E7CA4163368A18BC0C0AFB1B404A79F409DFE29CAF1191
+          73B0AE4D04B4694B7377247537D64B75FC4AA710BBD585DDAC1FB5C60D94AB09
+          785DA9D947CF98B9A333F82A9BCDCAB1B1B1492965A18FA42B5EA27F120FE8B8
+          556660ED5431F60C15B74505CCE479CCA76A70C33A8B9BE9EA51E0C89039E72B
+          005E1F181808363636627171B1F22FCD9F9B534DD3AC357F7B637EDBE719DDF1
+          7A70C75061BB5DB07206E2E23456ED87B09A39F3C5BAA8B80C14F83289C800D0
+          05E045009739E79788680A776FAC0DE047E6F187BD17AEBCB0E5D7FA374AF49A
+          D2E24D9C35F872B5B6FAE103EAC6C7838FF7CB828002D062DC7DF73739E7F270
+          4EFD3C11F01B3B2C113EB77D52BDFB667F0052C4B4B64F65C405000000004945
+          4E44AE426082
+        }
+        Visible = False
+      end
+      object lblWithColorBandsFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 146
+        Align = alLeft
+        Caption = 'Com anilhas coloridas'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object tsfWithColorBandsFilter: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Visible = False
+        Style = swsHorizontal
+      end
+    end
+    object pTaxonFilters: TBCPanel
+      Left = 8
+      Height = 300
+      Top = 2656
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 6
+      Visible = False
+      object pTitleTaxonFilter: TPanel
+        Left = 16
+        Height = 46
+        Top = 0
+        Width = 433
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.TopBottomSpacing = 8
+        ChildSizing.HorizontalSpacing = 8
+        ClientHeight = 46
+        ClientWidth = 433
+        ParentBackground = False
+        TabOrder = 0
+        Visible = False
+        object lblTaxonFilter: TLabel
+          Left = 32
+          Height = 30
+          Top = 8
+          Width = 44
+          Align = alLeft
+          Caption = 'Táxons'
+          Layout = tlCenter
+          ParentColor = False
+          Visible = False
+        end
+        object lblCountTaxonFilter: TLabel
+          Left = 296
+          Height = 30
+          Top = 8
+          Width = 137
+          Align = alRight
+          Caption = 'nenhum selecionado'
+          Font.Color = 6579300
+          Layout = tlCenter
+          ParentColor = False
+          ParentFont = False
+          Visible = False
+        end
+        object icoTaxaFilter: TImage
+          Left = 0
+          Height = 30
+          Top = 8
+          Width = 24
+          Align = alLeft
+          Center = True
+          Picture.Data = {
+            1754506F727461626C654E6574776F726B47726170686963C404000089504E47
+            0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+            8169434350735247422049454336313936362D322E31000028917591BB4B0341
+            1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+            E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+            CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+            A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+            F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+            6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+            BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+            F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+            FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+            A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+            DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+            F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+            0002E9494441544889D5954148545114863F9F4D328359BEF786CCD0E9D880A6
+            418826441083B570A781534AF1186995E9AA9D3B9359B8C97DBB16B909372E72
+            911815511835588415E41D098B52443227A69C372D7ACACCF89C993641072E5C
+            CEBDFFF9CE39F7BD7BE17FB792DD1644C40F5C074E01D52E7B3F029794529FF2
+            01F6EC12FC2470BFA4A46433180CBEABA9A959CA5C8FC7E39E85858510701AB8
+            FB571588C83EE0437979F9D7E9E9E9C395959507B6D6666767E7FBFBFB37D7D7
+            D76B8114204AA96FF9009A8BEF2AE08F46A33F338303B4B5B51D4BA7D31AF00D
+            682A143C0B20222744E41E30EAF3F9DE76747434A752A91D82DEDEDE55A00AF8
+            5928F83640444CE0516969E97180FAFAFA6580D1D151666666B2049148A4C9D1
+            9D2F1A00AC016BE9747A2F402010B0010606060885425902D334755DD75F01E1
+            A2014AA94D2064DB760220180C7A002A2A2AD0B49DC7D4DDDDFD1D382B227AB1
+            15A09452C04507509E4FE4B4095CDA24224744E4D00E80631500757575463E80
+            6118BA6118AF800B19814322320528607EABBA5C400D605757571FCC74CECDCD
+            BDCF8584C3E104D02E2296883C031EF87CBE235D5D5D0F81FD40BD1BA056D3B4
+            658FC793F5870F0E0EEEF8DE2DCB6A74A6B7755DDF3B3636F632168B35F4F5F5
+            D566EECBBD2A0E949595AD01591578BDDE5F2B2B2BABA6696E1FAA6118BA699A
+            2F4746464ADBDBDB9B7313D8B2DC0ABE2693C9FDB99BA2D16865241299CFF587
+            C3E1C4D2D2D28FDD82BB019ED8B65D353131F13CD3D9DADADAD0D2D292EAE9E9
+            79B4B1B191D8F25B96D5343E3E6EE70364B54829F55844268686863AE2F1F863
+            CBB21AFD7EBF01303C3C7C667272F2456767E7EB6432B92710086C689AC6E2E2
+            6230914824BC5EAFCF0DE0769B96013781FE7C9915B04DA05629F539DF836302
+            6DC00D20063C058E02978161174966AB624AA9B9A25211913722D2E2CCAF88C8
+            9DA2848EB956E0B4E916700E38047C7132DCE76896816B4AA9A94200D727933F
+            3D1C71C66EB65E28F83FB1DFDFC2DF61FBFA62C40000000049454E44AE426082
+          }
+          Visible = False
+        end
+      end
+      object tvTaxaFilter: TLazVirtualStringTree
+        Left = 16
+        Height = 242
+        Top = 46
+        Width = 433
+        Align = alClient
+        BorderSpacing.Bottom = 12
+        DefaultText = 'Node'
+        EmptyListMessage = 'Não há táxons para mostrar'
+        Header.AutoSizeIndex = 0
+        Header.Columns = <        
+          item
+            Position = 0
+          end>
+        TabOrder = 1
+        TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes, toAutoChangeScale]
+        TreeOptions.ExportMode = emChecked
+        TreeOptions.MiscOptions = [toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
+        Visible = False
+      end
+    end
+    object pSiteRankFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 498
+      Width = 465
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Bottom = 16
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 5
+      Visible = False
+      object icoSiteRankFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B47726170686963D004000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+          E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+          A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+          F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+          6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+          BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+          F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+          FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+          A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+          DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+          F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+          0002F5494441544889D5D54B689C551407F05FCC3449C107B19431C12E6E6D47
+          0DA214265510C764ED4625B11B511B7055A85614C4D7C28A2DA41A4815574651
+          C1286E250B37015BD4B4D116EC43FBB8506AA64182611268F832765CE48E4E43
+          DA465DF5C2858F7BCEF93FCEF9EEF771BDAFA6D52485106EC4CB78221D7D89BD
+          31C6F9FF4D1042E8C108424747C77496656B6666666E45C4408C717C35225754
+          1D42782F84502B140AD9D8D8D87896658B59962D8E8D8D8D170A852C84500B21
+          EC4F0EFF15784F08E16C08A1D6DFDF7F7C6E6EEE549665B5C65DA9544EF5F5F5
+          9D48246793D3FFACBA76857D4D374D0DE0EBF13D36168BC5132323236B5A5B5B
+          37ADC6F1C2C2C2E9818181EAE4E4E45D388DAD31C63FE0864603D898CBE5AA83
+          8383F3AB0587B6B6B64DFBF6EDABE472B92A36E1EE7AEC6F8218E3047656ABD5
+          C5DEDEDEEEE1E1E183B55AAD722DF05AAD56191E1E3ED8DBDBBBB55AAD2EE239
+          7C578F37B628E0026EC74778B0B3B3F3C2E8E8E8F97C3E5F5C097C7A7AFAF0B6
+          6DDB3694CBE53C0E6000E7B13EC678EE3207E8C18F588787B16B6A6AEA9652A9
+          545CEEA6AEBA542A15CBE5F2CD783ED5ACC34F28ACE4209F8279BC8337B0A1EE
+          A6A3A3637A6868E8D7969696A61D3B766C5E41F59B78011574C518CB97112492
+          2E7C862D3889ED38849D781B6D29F5225EC17E74E363DC993AF0548CF1D84A0E
+          4A98C3CFA9F8B5D4C2BA9B9BF0484AFF1AF30DAA2F6137F6E01E34C7180F2F9F
+          41272612F01EDC8FE37829B5EE3E7C8A4FD095CE5EC4316CC5DE543B81963A68
+          23C157F836A99D48AA8A89AC806FF01B7EC73836A7B675A7FA43A9F6308ED641
+          9BEB0FB3B3B397DADBDB4791C3E378368576A796745BBA446B71048FE20BBC9A
+          5CE5938BED31C68B75DC153FD7218407FC33B8A37826C6782484B019628CA742
+          085B52CEBDF8054FC7187F588E75C5FF4108612DDEC22EFC89F7F17972FD98A5
+          77BF19EFE2F546D5AB2268207AC8D25DB86359E84C7276E06AF5CD570BC2ECEC
+          ECB9F6F6F60F2D0DFD36CCE0033C19633C73ADFAEB7FFD05E45753BEB2CE39A4
+          0000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblSiteRankFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 30
+        Align = alLeft
+        Caption = 'Tipo'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbSiteRankFilter: TComboBox
+        Left = 266
+        Height = 28
+        Top = 12
+        Width = 183
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'País'
+          'Estado'
+          'Região'
+          'Município'
+          'Distrito'
+          'Localidade'
+        )
+        ParentFont = False
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pTaxonRanksFilters: TBCPanel
+      Left = 8
+      Height = 280
+      Top = 746
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 4
+      Visible = False
+      object pTitleTaxonRanksFilter: TPanel
+        Left = 16
+        Height = 46
+        Top = 0
+        Width = 433
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.TopBottomSpacing = 8
+        ChildSizing.HorizontalSpacing = 8
+        ClientHeight = 46
+        ClientWidth = 433
+        ParentBackground = False
+        TabOrder = 0
+        Visible = False
+        object lblTaxonRanksFilter: TLabel
+          Left = 32
+          Height = 30
+          Top = 8
+          Width = 40
+          Align = alLeft
+          Caption = 'Níveis'
+          Layout = tlCenter
+          ParentColor = False
+          Visible = False
+        end
+        object lblCountTaxonRanksFilter: TLabel
+          Left = 296
+          Height = 30
+          Top = 8
+          Width = 137
+          Align = alRight
+          Caption = 'nenhum selecionado'
+          Font.Color = 6579300
+          Layout = tlCenter
+          ParentColor = False
+          ParentFont = False
+          Visible = False
+        end
+        object icoTaxonRanksFilter: TImage
+          Left = 0
+          Height = 30
+          Top = 8
+          Width = 24
+          Align = alLeft
+          Center = True
+          Picture.Data = {
+            1754506F727461626C654E6574776F726B477261706869638404000089504E47
+            0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+            8169434350735247422049454336313936362D322E31000028917591BB4B0341
+            1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+            E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+            CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+            A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+            F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+            6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+            BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+            F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+            FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+            A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+            DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+            F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+            0002A9494441544889B595CD4B546114C67FE3352731CA8916E3E0E64451E134
+            9258E2C21084242870578B3E36960CB609CB693643B810A4DA842EFA07244470
+            A04D852E222844C9FC98A4459D1134D445BC365A78479D16CEC46D1C4B511FB8
+            5CEE390FCF73EF39E7BD07F618AEDD10119162A01C580062AA9ADC1503117101
+            11200CB8D3E139E096AABE00C8DB890110B62C2B120C068787868662FDFDFD83
+            757575B3405444AA76A42C228522B2108944DEDBB69D725C2BD5D5D57322F27A
+            DB5F20227922724F44C6812FC0C16030E8CEA2592D2D2D9340E5B60D803AE011
+            30023C07989E9E5ECC264D4C4C1400DF731A88885B440E6D62500F7C066E022D
+            C0645B5B9B2F954AFD31B16D3BDEDDDD7D1678098E291291134017701ED89716
+            7AA0AA5107E7097041554FA79FAB8037454545AB4D4D4D1FE2F1B83B1A8D56AE
+            ADAD7D052A55D5B8D24401C6BC5EEFCF50283459525292D7DEDEEE1D1B1B3B0E
+            5C51D59E5C06E9D849E021708EF5733000B4A9EA0F67597A02814062797979D1
+            39118D8D8D1F45644644AC8C41BAC15B46A60735CDCDCD232E97ABC8990C8542
+            BF001FF04A44A240C376C49D067B868CC1DBAEAEAE33A9546AC999ECE8E82804
+            BE01F5AADA0044B305FE87FCF43D9448242ED6D6D62EB5B6B60EFB7CBE4C93CB
+            81ABAABABA9980A3C955AC37B91F479377754CA7A6A6DC7D7D7D1BC734EB8DDC
+            C07E555DC8917B0C5C024EA54331BFDF5FD0DBDBEBCD0C886DDBF18A8A8AD264
+            32F94C55EF58D922C6985563CC72AE72783C9E147017380AD400973B3B3B635E
+            AFF75886635956B13166707474B4DC18F3343F97D03F3000DC076E0047004A4B
+            4B0F6493FC7EBF0D1CDEA6F6DFD8EAEF7A4389B60A63CC8AC7E3C98BC562D76D
+            DB7E57565696989F9FD77038FC7D7C7C5C806BC69899BD5899B3C0EDCCCADCCD
+            A51F60FD1C7C722EFD3DC76FAED0494C3D92CB620000000049454E44AE426082
+          }
+          Visible = False
+        end
+      end
+      object clbTaxonRanksFilter: TCheckListBox
+        Left = 16
+        Height = 222
+        Top = 46
+        Width = 433
+        Align = alClient
+        BorderSpacing.Bottom = 12
+        ItemHeight = 0
+        TabOrder = 1
+        Visible = False
+      end
+    end
+    object pMethodFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 626
+      Width = 465
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 2
+      Visible = False
+      object icoMethodFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B47726170686963FF04000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+          E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+          A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+          F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+          6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+          BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+          F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+          FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+          A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+          DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+          F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+          000324494441544889C5954F68237514C73FD3C4324D5C5B5AC296DDAABC5037
+          AB14A97F2A89581A6BEC61A1206965052FC5530F5E6AAFE2C55371EF1E3CF524
+          42DA433A5EB283609406C48220AE694BF274BB6EAD84545BE9A0DB693C64A2D3
+          DA5946417C97DF8379BFF799EF7BBFDFFBC17F6CC63FDD20220F0159E065E032
+          A0C047AAFAC5BF0288C803C0735EC21C900622866134138984369BCDC4F1F1B1
+          093CA5AA774303442409DCF0925E007E1B1818F8269BCD1ECECECE0E8E8E8E5E
+          E9EAEA320E0E0E0ED3E9F4A1EBBA9FA9EA6BA1002292030AD168F4974C26A3F9
+          7CFEC2E4E4E413A6699AE7C5CFCDCD7D5AA9544681015575FDDFA20102DE88C7
+          E33FACAFAF274DD37C244865C7F2F9FC83954AA517780638D58BAE803D491169
+          9AA6691E1D1DB1B8B888655981805C2EF738708F769F4E5910E0C75AAD9600A8
+          D56A5896C5EAEA6A2020168BC5FAFAFA6ED1EE572880ED384EAAD16834474646
+          585E5E666969291000303E3EFE33F0BC88C4C3006E025896B5691806E9749A44
+          22715FC0CCCC4C02E806C6030122D2EDB95BC09D62B178EA44DCCFC6C6C652C0
+          0167CA7456410640555B805DAD5693AD562B14201A8D46868686BEE54CA3FF04
+          8888D1A18BC82060BBAE7BA95EAFDF0EAB626A6AEA77E04911B9789E82ABC090
+          E7BF04D8002B2B2BDF8705E4F3F9CE9D993C0FE0979653D53DE0EB52A9D44D48
+          1B1E1E7E341289DCF5E7F203FCCD795144A280BDB3B373D575DD933000C33048
+          A5527520E795BC0DF0266616D8F3627B8131DA65EADDD8D8D80CAB627A7A3A02
+          3C0C3CE657F02CED8969FB6227803270AF5028FC141630313171D97307FD8063
+          6FDDF2C5C655F557A0522E977BC3026CDBBEE3B935F86B9AD6BDF53AF09EE777
+          46B9BDBFBFFFB6E3384E4F4F4FCFD984AD568BEDEDEDEF0A85C2ED52A964EEEE
+          EE66800F815D7F1244E475E015557D55442C20025C039E06BE9C9F9FFF7C6161
+          E1058046A3D15C5B5BDB2C168B6EB55A4D9E9C9C5CF2D27C05BC0F7CE05DD6D3
+          0F8E885C54D53D11B9067C0CBCABAAEF88C80DE0CDFEFEFE5B8EE3C41CC74979
+          5B7668CFAD9BC027AAFAB75E05BD6806EDB1711D58F4E2DE02AED03E0C652FE9
+          56E74FFF37FB03EA351007CA86723E0000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblMethodFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 53
+        Align = alLeft
+        Caption = 'Método'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbMethodFilter: TComboBox
+        Left = 266
+        Height = 28
+        Top = 12
+        Width = 183
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pMaterialFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 686
+      Width = 465
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 3
+      Visible = False
+      object icoMaterialFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B477261706869637603000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BF4B4251
+          14C73F6A619461504343834435699481544383D12FA80635C86AD1D753037F3C
+          DE53425A83D6A0206AE9D7507F41AD417310144510AD3517B554BCCED34089BC
+          977BCFE77EEF398773CF057B24AD648CBA3EC864F37A6822E8998F2E789CCF38
+          64BA19C61B530C6D263C1EA1E6F8B8C366D91B9F95ABB6DFBFA369593514B035
+          088F289A9E179E149E5ECD6B166F0BB729A9D8B2F0A9B0579702856F2D3D5EE6
+          178B9365FEB2588F8446C1DE22EC495671BC8A95949E119697D395491794DF7A
+          AC97B8D4EC5C586CA7AC0E0C424C10C4C314638C12A09F21D903F8F0D32B276A
+          C4F795E267C949AC22BB46119D1592A4C8E315B520D955B109D15599698A56FF
+          FFF6D5480CF8CBD95D41A87F32CDB76E706EC1F7A6697E1E9AE6F711381EE122
+          5B89CF1DC0E0BBE89B15AD6B1FDCEB707659D1E23B70BE01ED0F5A4C8F952487
+          2C7B2201AF27D01C85D66B685C2CF7ECF79EE37B88ACC9575DC1EE1EF488BF7B
+          E907A47B6802CE725255000000097048597300000B1300000B1301009A9C1800
+          00019B494441544889DD942F48044118C57F8A18F58A1804E10593414530291C
+          87706A388B458BF9822062327941AE290862148B062DBBC5B38CAB55118CA761
+          8A51E48AC12B677056D6F376EF0F5A7CB0CCCEB7B3EFC7BE6F66E1DF4B524952
+          4D52A993F7BB928C816C834797D6DAB956013D09CFB2994CE62197CB55C282EF
+          FB29634C2368FB9254F33C2FA856ABB5F0F23C2F70712D49EA6FC5A7BB43FE19
+          F022C9489AFE0BC024B0030C035792D62435EC6747006BEDBDB5761B1803CE81
+          7DA0F86B8008E80D58010E814D49A3BF0A70901AB005BC027BF551256D537CDF
+          4F01D775F346908AA422B00B0C01CFAD002E8D315963CC8F7ACCFA3B378E4401
+          B111B9D35A002897CB61B990708A9F22802F35EBC12D403E9F7F88CE63D4EBC6
+          6F3D6806280107C69801E0C0CDE334E3C69B6831F667D7AE249D00B3C0A0DB59
+          405C93572FD2403AC12FE0783E88982F00CBC04ED43C1E00EBC06202601C089C
+          F90870C4E72E2AD42FEC3822493DC086337D07A6ACB58F8900496992A301E8E3
+          F30B2680F0E09D02A17960AD0DC2C5F511358B264ECB91FBAFF8FE873E000924
+          88E3B6CE20CD0000000049454E44AE426082
+        }
+      end
+      object lblMaterialFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 55
+        Align = alLeft
+        Caption = 'Material'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object cbMaterialFilter: TComboBox
+        Left = 266
+        Height = 28
+        Top = 12
+        Width = 183
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'Carcaça inteira'
+          'Carcaça parcial'
+          'Ninho'
+          'Ossos'
+          'Ovo'
+          'Parasitas'
+          'Penas'
+          'Sangue'
+          'Garra'
+          'Swab'
+          'Tecidos'
+          'Fezes'
+          'Regurgito'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+      end
+    end
+    object pMarkedFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 8
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 17
+      object icoMarkedFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        ImageIndex = 101
+        ImageWidth = 20
+        Images = frmMain.mPopup
+      end
+      object lblMarkedFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 130
+        Align = alLeft
+        Caption = 'Registros marcados'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object tsfMarked: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Style = swsHorizontal
+      end
+    end
+    object pUnmarkedFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 62
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 18
+      object icoUnmarkedFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        ImageIndex = 100
+        ImageWidth = 20
+        Images = frmMain.mPopup
+      end
+      object lblUnmarkedFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 153
+        Align = alLeft
+        Caption = 'Registros desmarcados'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object tsfUnmarked: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Style = swsHorizontal
+      end
+    end
+    object pReportedFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2482
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 19
+      Visible = False
+      object tsBandReported1: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Visible = False
+        Style = swsHorizontal
+      end
+      object icoReportedFilter1: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B477261706869636404000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248AAF48042D2C2C82A855941825686391E00BD4228960D426B9BC843C
+          8EBB8888AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B28AD64F43A3764B2792D30E9732E84179D0D2FD868
+          C2CE30EE88A2ABB3C1891035EDF31E8B196FFBCD5AB5CFFD6B2DB1B8AE80A551
+          784C51B5BCF094F0CC5A5E357947B843494562C267C22E4D2E287C67EAD112BF
+          9A9C2CF1B7C95A28E0076B9BB03359C5D12A56525A46585E4E4F26BDAA94EF63
+          BEC41ECFCE0725768B77A11360121F4EA619C78F97414665F6D28F8701595123
+          DF5DCC9F2327B98ACC2AEB68AC9024451E97A8AB523D2E31217A5C469A75B3FF
+          7FFBAA27863CA5EA761FD43F1BC67B2F346CC34FC130BE8E0CE3E7186C4F7099
+          ADE4E70E61E443F44245EB3900C7269C5F55B4E82E5C6C41E7A31AD12245C926
+          6E4D24E0ED145AC3D07E03CD4BA59E95F7397980D0867CD535ECED439F9C772C
+          FF02A6B868037C72716B000000097048597300000B1300000B1301009A9C1800
+          000289494441544889D5954D48545114C77FF3D4A77D0C95231A24EAE3D50433
+          0BDBA83414A5319858635F6ECA9A66311B898AC46D5008B6B020DE448BA870EB
+          B6602866A06492D4A1A045621FDE44141D82740AC197CF69217ECD3C739ED0A2
+          B33CE7DCFFEFFEEF7BE75EF8DFC3969E5014650F701BF00139EBAC7B05048410
+          339B01DCAFAEAEF6767474CC489294516F6969512627278B8041A07E23881960
+          B8A7A72751595979C86C416363E3A8D3E9FC168944CA745D4F6C0491CCA09224
+          A5FEB6ABD2D252291289D865592E065E288AB2C30A20AB28292929CA06621920
+          CBB2914C2653D94272AD020281C0587B7B7B552C161B005200050505DB745DAF
+          019E298A724408B17CC496013E9FCFE376BB07FBFAFAE653A9659DB96432F946
+          D3B4C380028C6C1A00E4A9AAEA5155754DD2308C84A669199A66DFE056341A0D
+          0276C00D5C029E6F622340FA1CF8C312701938091C00A680C1FC5CE9DECF87B5
+          1E2004EC3413320C23E172B98A81FD42884F990EFCE142E025F0183805540035
+          C095B9F9850F72309A022E5875B0FA8834E0D83A7DDB81A772303A0A3CB10EF0
+          870F02E7CD1A6E36EDE5AAB71C4006EE020FAC03C0F4DEE96C76D276BC82FE91
+          E5ABC6F37AF8C74740B70A7002E4E74A9CABDA8D64B3D1D9ECA4B5AE8CFAAE38
+          FD5FA797FAEDDEAE77BB80B16C014BFFEC10408E642374D1C5CD269572C716EA
+          BBE2BC5D110798990E1D05583B045938E80598D50D6AEF0CF0656AD64C1CA077
+          6B7E8E375BF11507DD0D71FCE147407068E21767B4F766BDB3C08DF1F1F1EB0E
+          87E3737A31168B4D00062032018BD1061402674DC4BF0301A5B7755F5D1DAD98
+          3C542C3EAFD78410BF5727D327D9069C064EB032C971204477C394A2287620CF
+          CC1E302D845858A7F6EFE20FF419D45989C4F9E40000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblReportedFilter1: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 70
+        Align = alLeft
+        Caption = 'Reportada'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+    end
+    object pHowSexedFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2086
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 20
+      Visible = False
+      object icoBandSizeFilter2: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblHowSexedFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 113
+        Align = alLeft
+        Caption = 'Como foi sexado'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object eHowSexedFilter: TEditButton
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        ButtonWidth = 29
+        Images = frmMain.mPopup
+        ImageIndex = 78
+        ImageWidth = 24
+        MaxLength = 0
+        NumGlyphs = 1
+        PasswordChar = #0
+        Spacing = 0
+        TabOrder = 0
+        Visible = False
+      end
+    end
+    object pBroodPatchFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2032
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 21
+      Visible = False
+      object icoBandSizeFilter3: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblBroodPatchFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 128
+        Align = alLeft
+        Caption = 'Placa de incubação'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbBroodPatchFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'F'
+          'N'
+          'V'
+          'W'
+          'O'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pCloacalProtuberanceFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1978
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 22
+      Visible = False
+      object icoBandSizeFilter4: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblCloacalProtuberanceFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 143
+        Align = alLeft
+        Caption = 'Protuberância cloacal'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbCloacalProtuberanceFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'U'
+          'N'
+          'S'
+          'M'
+          'L'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pSexFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1924
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 23
+      Visible = False
+      object icoSexFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B477261706869637F04000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248AAF48042D2C2C82A855941825686391E00BD4228960D426B9BC843C
+          8EBB8888AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B28AD64F43A3764B2792D30E9732E84179D0D2FD868
+          C2CE30EE88A2ABB3C1891035EDF31E8B196FFBCD5AB5CFFD6B2DB1B8AE80A551
+          784C51B5BCF094F0CC5A5E357947B843494562C267C22E4D2E287C67EAD112BF
+          9A9C2CF1B7C95A28E0076B9BB03359C5D12A56525A46585E4E4F26BDAA94EF63
+          BEC41ECFCE0725768B77A11360121F4EA619C78F97414665F6D28F8701595123
+          DF5DCC9F2327B98ACC2AEB68AC9024451E97A8AB523D2E31217A5C469A75B3FF
+          7FFBAA27863CA5EA761FD43F1BC67B2F346CC34FC130BE8E0CE3E7186C4F7099
+          ADE4E70E61E443F44245EB3900C7269C5F55B4E82E5C6C41E7A31AD12245C926
+          6E4D24E0ED145AC3D07E03CD4BA59E95F7397980D0867CD535ECED439F9C772C
+          FF02A6B868037C72716B000000097048597300000B1300000B1301009A9C1800
+          0002A4494441544889E5D55D8816551807F0DFECEBAE6C99A2969691762254FA
+          304C828DEECA9229C28BBA30B67A23A2AEA2BAB10FD08B68BB29A13241B08BA6
+          82BA10FA22DEE84308424851B630D2100E5468B5B5A5AEE646FB4E1733CB4E53
+          FBBE5676D503C370FEF33CFFFF39CFC719FE634B4E275908610E7ACAE5F118E3
+          AF3D9D02FE26F95AFC8CD1F2F94845ED74D87BB80F07CAF500CCE81AD66C9D81
+          09593A5ED96D1F16E1EB18E344099FC4122CC3A1F2FB343568B6FAB111376339
+          DAF2F6BEF9075FFBEAACC31FCF4E8ADDF597A41FE231DC8A0D78AE147832C6D8
+          F8F3099AAD4BF03A9696C16F2613E3FD0BF76DB9ABFFC8C195E3B32E18EBF9ED
+          C450EFC91F23AEC01DF8B48CDE8207316B124B6AE47DD883851894A5EF972979
+          1C1BC6CE59B56D64F9DD839264276E90A57908611E5EC68D581563DC5BA5AC17
+          F9215C867B2AE44BCA146C1ED9B5FD5E49F20856E33688318EE2F6322D43F584
+          D405AEC767B2F4AD0A760D1AD85AAE9F57B4E1EA498718E34FC8705D08A1B793
+          C0CA3245555B8131EC07599A632FAEACF90DA3171775123886B935EC90A268F3
+          2AD85C1CADF99D871C873B090C6340B335B382ED2ADFD782666B3E2E37D53993
+          B60607628C7F10AE0B6CC5B978A282EDC16E3C1B4258AC68C506B64D3A8410D6
+          21C5E61ADF5F0C5AB3F52AD6E1453C2C4BBF0F212CCD93C6DB23CBEE1C3DBEE0
+          AA0179FB292FDDB43E84B008F7633D76604D8CB1DD4D60069EC6032512D1477E
+          BE3C6F2FF8E2851D67FE303CA098E2B31579DF848D31C65FBA9F604A68056E51
+          CCC6093CD3183FF2C6E24F1E9D8DAB71A1A20E3B638C5F4E47D3E9B23B8AED18
+          C4B7786762E69C6331C6FDA60ADFD5A6BBEC2E5574547D0363B858967EF7EF04
+          0A91B58A7E1F524CEE267C234B3F3855F253B366EB73CDD6BBFF34BCFB0F8757
+          14D3FC3FB5DF014892D0149CF074C50000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblSexFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 32
+        Align = alLeft
+        Caption = 'Sexo'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbSexFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'Macho'
+          'Fêmea'
+          'Indeterminado'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pBodyMoltFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2206
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 24
+      Visible = False
+      object icoMoltFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B47726170686963E404000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+          E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+          A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+          F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+          6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+          BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+          F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+          FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+          A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+          DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+          F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+          000309494441544889DD94C14B6C7514C73FF75E6F26BE464DA9C1C7E09C6182
+          0C546C086969BB08AA8120A65D4BC1A68D8B17D21F10F2C4995084164E820851
+          2D24127261086A6ED4858804CF9F3005E3A4E92023CC9D7BEFAFC57B33CC3CC7
+          A73EDAD481BBF89DDF399FEF39E7777F3FF8AF9B71D704116901DE00FADBDADA
+          DE364D33767979F95AA9547AA912D3DCDCBC7A7070F0CE9D0444A419F81CF812
+          B8D7D5D5A5239188110E870987C3B4B7B7A3B566727252170A859CEBBAF79552
+          DABC05D8E8EDEDFDA0A5A5E510F80AB8373434E4ADAFAF1B994C86818101B6B7
+          B789C7E3E4F3794E4F4F0DD7753F534A6980670A8848B4B5B5F557DFF77FB46D
+          BBBBE2B72CCB5A5D5D65747414DBB649A7D36C6E6E924AA500BE514AFD5089BD
+          764422F27A5353D3664F4F4F209D4E9BE3E3E3ECEEEE02609A26BEEF130C06B1
+          6D1BAD35B95CCE755DF71110534A152B9CA66BE062DBF69A8804161616CC4020
+          50B7EFFB3E00B95CAED6AD81442DBCE18844C4B46DFBFB6030F8722693A9C2CB
+          E5F275CD56EC81526AE76967A30E3E2D97CB6F4E4C4CD0D9D909C0F4F434A150
+          88FEFE7E008AC5224B4B4BB5393F03538D54EB0444A4D5B2AC87F1789CC1C141
+          00E6E7E7D15A570E1000CFF3D8DFDFF70F0F0FFFF27DFF13604329E5DFD42222
+          F2B188E8A3A323ED388E5E5E5ED6636363BA542A69C771EABE9595152D225A44
+          DE7A16B3AE03D334137D7D7D5E7777B7B5B7B7C7E2E22233333318C6D59F6D63
+          6303CBB28A9EE7FD7E63E54FAAB7229148697676569F9D9DE94422A18F8F8FAF
+          54EE388EDED9D9D1D168D413912F6EE2D676F08AD6FA856834CAD4D414C96492
+          8E8E8E2B0985428191919132B0054CDC45E03E403E9FE7E2E282582C06C0F9F9
+          39D96CB61A944AA5BC939393BF3DCFFB4829E5DEA903804C26C3DCDC5CD5994C
+          26D9DADAAAAE0DC3286BAD3F544A1DDF0487FA8B66000C0F0F0390CD66595B5B
+          23140AD5C6BFAFB57E5529F5DB6DE055288088BC07FCD420C6037E01BE05BEAB
+          BC92B7B5DA11BDC8E31BF9F593B503FC09FCF1F4FBF2BC02EF0249A5D4A3E785
+          35B2DA3328FFDBF0FF87FD032B425EFE9AA97BED0000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblBodyMoltFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 103
+        Align = alLeft
+        Caption = 'Muda do corpo'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbBodyMoltFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'N'
+          'T'
+          'S'
+          'H'
+          'G'
+          'A'
+          'F'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pFFMoltFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2260
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 25
+      Visible = False
+      object icoBandSizeFilter5: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblFFMoltFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 122
+        Align = alLeft
+        Caption = 'Muda das rêmiges'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbFFMoltFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'N'
+          'S'
+          'A'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pFFWearFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2314
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 26
+      Visible = False
+      object icoBandSizeFilter6: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblFFWearFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 111
+        Align = alLeft
+        Caption = 'Desgaste de voo'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbFFWearFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'N'
+          'S'
+          'L'
+          'M'
+          'H'
+          'X'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pMoltCycleFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2422
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 27
+      Visible = False
+      object icoBandSizeFilter7: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblCycleCodeFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 96
+        Align = alLeft
+        Caption = 'Ciclo de muda'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object eCycleCodeFilter: TEditButton
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        ButtonWidth = 29
+        Images = frmMain.mPopup
+        ImageIndex = 78
+        ImageWidth = 24
+        MaxLength = 0
+        NumGlyphs = 1
+        PasswordChar = #0
+        Spacing = 0
+        TabOrder = 0
+        Visible = False
+      end
+    end
+    object pMoltLimitsFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2368
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 28
+      Visible = False
+      object icoBandSizeFilter8: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblMoltLimitsFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 110
+        Align = alLeft
+        Caption = 'Limites de muda'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object eMoltLimitsFilter: TEditButton
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        ButtonWidth = 29
+        Images = frmMain.mPopup
+        ImageIndex = 78
+        ImageWidth = 24
+        MaxLength = 0
+        NumGlyphs = 1
+        PasswordChar = #0
+        Spacing = 0
+        TabOrder = 0
+        Visible = False
+      end
+    end
+    object pTaxonomyClementsFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 2964
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 29
+      Visible = False
+      object icoTaxonomiesFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B477261706869638404000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+          E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+          A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+          F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+          6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+          BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+          F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+          FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+          A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+          DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+          F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+          0002A9494441544889B595CD4B546114C67FE3352731CA8916E3E0E64451E134
+          9258E2C21084242870578B3E36960CB609CB693643B810A4DA842EFA07244470
+          A04D852E222844C9FC98A4459D1134D445BC365A78479D16CEC46D1C4B511FB8
+          5CEE390FCF73EF39E7BD07F618AEDD10119162A01C580062AA9ADC1503117101
+          11200CB8D3E139E096AABE00C8DB890110B62C2B120C068787868662FDFDFD83
+          757575B3405444AA76A42C228522B2108944DEDBB69D725C2BD5D5D57322F27A
+          DB5F20227922724F44C6812FC0C16030E8CEA2592D2D2D9340E5B60D803AE011
+          30023C07989E9E5ECC264D4C4C1400DF731A88885B440E6D62500F7C066E022D
+          C0645B5B9B2F954AFD31B16D3BDEDDDD7D1678098E291291134017701ED89716
+          7AA0AA5107E7097041554FA79FAB8037454545AB4D4D4D1FE2F1B83B1A8D56AE
+          ADAD7D052A55D5B8D24401C6BC5EEFCF50283459525292D7DEDEEE1D1B1B3B0E
+          5C51D59E5C06E9D849E021708EF5733000B4A9EA0F67597A02814062797979D1
+          39118D8D8D1F45644644AC8C41BAC15B46A60735CDCDCD232E97ABC8990C8542
+          BF001FF04A44A240C376C49D067B868CC1DBAEAEAE33A9546AC999ECE8E82804
+          BE01F5AADA0044B305FE87FCF43D9448242ED6D6D62EB5B6B60EFB7CBE4C93CB
+          81ABAABABA9980A3C955AC37B91F479377754CA7A6A6DC7D7D7D1BC734EB8DDC
+          C07E555DC8917B0C5C024EA54331BFDF5FD0DBDBEBCD0C886DDBF18A8A8AD264
+          32F94C55EF58D922C6985563CC72AE72783C9E147017380AD400973B3B3B635E
+          AFF75886635956B13166707474B4DC18F3343F97D03F3000DC076E0047004A4B
+          4B0F6493FC7EBF0D1CDEA6F6DFD8EAEF7A4389B60A63CC8AC7E3C98BC562D76D
+          DB7E57565696989F9FD77038FC7D7C7C5C806BC69899BD5899B3C0EDCCCADCCD
+          A51F60FD1C7C722EFD3DC76FAED0494C3D92CB620000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblClementsFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 102
+        Align = alLeft
+        Caption = 'Clements/eBird'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object tsTaxonomyClements: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Visible = False
+        Style = swsHorizontal
+      end
+    end
+    object pTaxonomyIocFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 3018
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 30
+      Visible = False
+      object icoBandSizeFilter9: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblTaxonomyIocFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Caption = 'IOC'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object tsTaxonomyIoc: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Visible = False
+        Style = swsHorizontal
+      end
+    end
+    object pTaxonomyCbroFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 3072
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 31
+      Visible = False
+      object icoBandSizeFilter11: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblTaxonomyCbroFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 38
+        Align = alLeft
+        Caption = 'CBRO'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object tsTaxonomyCbro: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Visible = False
+        Style = swsHorizontal
+      end
+    end
+    object pIsSynonymFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 3132
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 32
+      Visible = False
+      object icoSynonymsFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B477261706869633204000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248A6F2268616111245A25A211823616091A05B54822F86A92330F218F
+          E32E4182AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B38A5A4F586214867725A30E0732C2C2E399A5EB061
+          A5030F2D11455767439361EADAE73D1633DEBACD5AF5CFFD6B6DAB315D014BB3
+          F0B8A26A39E129E199F59C6AF28E70B7928CAC0A9F09BB34B9A0F09DA947CBFC
+          6A72A2CCDF266BE1A01FAC9DC28E440D476B58496A69617939CE742AAF54EE63
+          BEA43D96990F49EC13EF452748001F0EA699C08F9761C664F6E296FE0CCA8A3A
+          F943A5FC39B292ABC8AC5240638D044972B844CD4BF598C4B8E83119290A66FF
+          FFF6558F8F78CAD5DB7DD0F86C18EFFDD0B40D3F45C3F83A328C9F63B03DC165
+          A69A9F3D84D10FD18B55CD7900F64D38BFAA6AD15DB8D8829E4735A2454A924D
+          DC1A8FC3DB29742C42D70DB42E977B56D9E7E401C21BF255D7B0B70F0372DEBE
+          F20B3F8F67D4FBEB7A01000000097048597300000B1300000B1301009A9C1800
+          000257494441544889ED954148545114863F157CB8CA81A8078F218E85534160
+          50BA6862DA240CA1B4A91E24DCA05068932D5B94CED616E9A24057CEA27A2ED3
+          E0412D64A8C0A9A0A44D4A741631F288602A09D2025D7847662675105A54F4C3
+          E3BE73EEB9FFFFFEF3B8F7C2DF8EBAF24044BA811BC07EE02D9051D5A98A1526
+          3C0018E03AD9F48F5A02F555E40F5CD78DF7F7F7BF725D370E4C8A485715F934
+          7061DB0E44E4A5EBBAF15C2ED70C3402CBA954EA7314451F54F50826DC03E481
+          DDC08475B800E4C9A6676B3A00F6F9BE3F6FC9011A7DDF9F035A6CBCD792039C
+          03068051E03526BC8B0977D412781C04412BB06CE3E5200812C0A48DA78111FB
+          3E62D7B603E3C059E0F64602E52DEA041EBAAE5BF47D7F3E0882D6288A760227
+          54F5090026AC036E01578026B2E9EF363FCEDA8F6FAB6ED7BA03557D04B44751
+          541C1E1E4E465134031C5A2707C8A65780AB4013B054C673C78E1D1BB9A88088
+          0C8AC84ACDC26A987005130E56A7EB3728FDADF82FF0670A2C0088C8D1F2A488
+          348888F34BB5090F62C2D266F431615B2D81BC1D2F57E54F02DF44E44C19F971
+          E08D17733A32A75B9E7A3127063CC7849D9B0AA8EA2C700FE81191711169B753
+          CF8019E07E99C8452FE67CD2A164F3B55392D4A164B317738AC0A5AD1C94BE7E
+          82B5ED9FB71BEF2B700C68B0220ED0DD9BF22A0EC8BE9437076CEEC0BAF8A2AA
+          3D401BD00764EC536ADF0CF013783F962B541C90A3B942027857E2AAB8D1B682
+          881C065E58F2B4AA2E62C22E60D28B391F7B53DEFC58AED05A282EED02BAC9A6
+          A7B62B9000CE03375575717D624D640048007340A644FE6F601539EDC451161A
+          2F6D0000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object lblSynonymFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 98
+        Align = alLeft
+        Caption = 'É um sinônimo'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object tsIsSynonym: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Visible = False
+        Style = swsHorizontal
+      end
+    end
+    object pHasSynonymsFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 3186
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 33
+      Visible = False
+      object icoBandSizeFilter12: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblHasSynonymsFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 111
+        Align = alLeft
+        Caption = 'Possui sinônimos'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object tsHasSynonyms: TRxSwitch
+        Left = 399
+        Height = 28
+        Top = 12
+        Width = 50
+        Align = alRight
+        Color = clWhite
+        ParentColor = False
+        TabOrder = 0
+        TextPosition = tpLeft
+        Visible = False
+        Style = swsHorizontal
+      end
+    end
+    object pAgeFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1448
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 34
+      Visible = False
+      object cbAgeFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'Indeterminado'
+          'Adulto'
+          'Imaturo'
+          'Fledgling'
+          'Ninhego'
+          'Primeiro ano'
+          'Segundo ano'
+          'Terceiro ano'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+      object lblAgeFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 38
+        Align = alLeft
+        Caption = 'Idade'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object icoAgingFilter: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B47726170686963E905000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248AAF48042D2C2C82A855941825686391E00BD4228960D426B9BC843C
+          8EBB8888AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B28AD64F43A3764B2792D30E9732E84179D0D2FD868
+          C2CE30EE88A2ABB3C1891035EDF31E8B196FFBCD5AB5CFFD6B2DB1B8AE80A551
+          784C51B5BCF094F0CC5A5E357947B843494562C267C22E4D2E287C67EAD112BF
+          9A9C2CF1B7C95A28E0076B9BB03359C5D12A56525A46585E4E4F26BDAA94EF63
+          BEC41ECFCE0725768B77A11360121F4EA619C78F97414665F6D28F8701595123
+          DF5DCC9F2327B98ACC2AEB68AC9024451E97A8AB523D2E31217A5C469A75B3FF
+          7FFBAA27863CA5EA761FD43F1BC67B2F346CC34FC130BE8E0CE3E7186C4F7099
+          ADE4E70E61E443F44245EB3900C7269C5F55B4E82E5C6C41E7A31AD12245C926
+          6E4D24E0ED145AC3D07E03CD4BA59E95F7397980D0867CD535ECED439F9C772C
+          FF02A6B868037C72716B000000097048597300000B1300000B1301009A9C1800
+          00040E494441544889BD946D6C535518C77F170A681D4D1D4C029AC281C87599
+          998B63BC88810436E76258628CF393B9528D7EC064448306867ED0CD89189345
+          E2376716C4C4109266A92B0968D2B57B09ACDB14E80683DD6D4ADC98EBEB7ABB
+          75F7EEFA81556BB78190E8939CDC9C739FF3FB9FFF39CF39F01F8774B70421C4
+          0AE06DA00C289A9BD3039C034EA8AA3A7DDF0242882DC04960B3DD6EBF545050
+          109524896030680B854285C035E0555555BBFE959D2CF83A21C4982CCB833E9F
+          2F984AA5CCCCE6F7FBFB6459BE2E84181542ACBB1F81734288F0C8C8C8AD6C78
+          BA0D0D0D8D0921424288738B71962CB67AA0D4E97406DD6E779EAEEBE8BA8EDB
+          EDC6ED76A3EB3A8661D0D2D2F288D3E9EC034A177361C980AE05F2E6BAFB002A
+          2B2B37A481A74F9FA6B6B6168068344A555515E17098CACACA4D8D8D8D004E21
+          44F3DCFC7155557F87B94316421C063EC9129FECEFEFCF91A4DB75100A8588C4
+          120680DDF6D0D2DCDCDCBF1265598E00F6ACF9475455AD4F3B78C56AB55EADAB
+          ABD300B3A1A1617A7878584EC301726C76BDE458B067892499576A773C9DE95E
+          92A45987C3D179F0E0C1E58054535363D534AD0AA84F9F41A3A669B2CBE58AED
+          2D2B2F346C8E68E65252FAAC9E5FD3DEF36B68BA6478626A6BC1D18EEE943EAB
+          67E618F68D91BD65E5852E972BA6699A0C34C2DF87FC2550E7F57A77385E3F19
+          68B5BD5C66DAC52F59F02D875FD8E07FBF62BD3F5BC4589DDFE3B3BD54EE78E3
+          BB1EAFD7BB1DA8054E002C058844224C3ED7D036B966DBEE84D5F1CC83CB2D83
+          E3ABB6152DB32CEDDCFFF595F1DFC2D3C51FBFB8A9F3E8BE8D3BF7E4E73A80B6
+          E6DE3FB69FEA1C0DC492FA50F3C4E3BBAC2B2C0371729ED45615B6471F2B7D33
+          D4F6CD3F1C82E23985E231EA9B07DAC3F16472F581F3BD281E13C5631C730FB4
+          67DF818F5CD7DA503CB3281EF3D1EA9F2EC61353A963EE8176148F81E2F99679
+          A1786E147FE8F7A50113312DB1FAC0F9DEE33F5CEF58ECA2D5370FB4AFADFEF1
+          623C31954A8F157DE0F7A17806D3584B8644E0C678F2897467E50316EBCD2F76
+          3D25DDE1B57AF7F9F53BDE295F4F668E3A9E7C18B898EE67DEE4AE88A6CBC919
+          23951EB8137CA11C2D654C4793FA66E0C28202C0F2E69EF1CB77C72E1C67BA6E
+          5D0296B188032FD0E96C0CE6C592BA76AFF0883633F95653DF5AA003689B2FD0
+          546100AFCD18665EE9E7DDDDF72AB0E7B3C0CFFAAC990B2873AC790EA0A9E22A
+          70A47724FE6CE9F140EBE4B491BC1B383EA56BBB3FEDF25DBE99D809BC4753C5
+          40E6FF859EEB06E050EBB5C8B635D5DE893381B15ED39C9F346B9A7C7F61B47B
+          4D756BB8E346742B7008F82A3B6FF13A513CF940135022416C55CEB2C122C7CA
+          986942EF48DC164ACC6C326125D009ECA7A9A27F21CC9D0B51F1588072600B50
+          0C940026B72B2E30F73D9BB9E7FF7BFC097C382A87256B95DC0000000049454E
+          44AE426082
+        }
+        Visible = False
+      end
+    end
+    object pHowAgedFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1556
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 35
+      Visible = False
+      object icoBandSizeFilter13: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblHowAgedFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 122
+        Align = alLeft
+        Caption = 'Como foi etariado'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object eHowAgedFilter: TEditButton
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        ButtonWidth = 29
+        Images = frmMain.mPopup
+        ImageIndex = 78
+        ImageWidth = 24
+        MaxLength = 0
+        NumGlyphs = 1
+        PasswordChar = #0
+        Spacing = 0
+        TabOrder = 0
+        Visible = False
+      end
+    end
+    object pSkullOssificationFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1502
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 36
+      Visible = False
+      object icoBandSizeFilter10: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblSkullOssificationFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 135
+        Align = alLeft
+        Caption = 'Ossificação craniana'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object cbSkullOssificationFilter: TComboBox
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        Align = alRight
+        Color = 16119285
+        ItemHeight = 20
+        Items.Strings = (
+          'Tudo'
+          'N'
+          'T'
+          'L'
+          'H'
+          'G'
+          'A'
+          'F'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        TextHint = 'Nenhum'
+        Visible = False
+      end
+    end
+    object pStartTimeFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1274
+      Width = 465
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 37
+      Visible = False
+      object lblStartTimeFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 95
+        Align = alLeft
+        Caption = 'Horários entre'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object icoMarkedFilter12: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Picture.Data = {
+          1754506F727461626C654E6574776F726B477261706869635604000089504E47
+          0D0A1A0A0000000D4948445200000018000000180806000000E0773DF8000001
+          8169434350735247422049454336313936362D322E31000028917591BB4B0341
+          1087BF248AAF48042D2C2C82A855941825686391E00BD4228960D426B9BC843C
+          8EBB8888AD601B50106D7C15FA17682B580B82A20862ABB5A28DCA39970412C4
+          CC323BDFFE7667D89D056B28AD64F43A3764B2792D30E9732E84179D0D2FD868
+          C2CE30EE88A2ABB3C1891035EDF31E8B196FFBCD5AB5CFFD6B2DB1B8AE80A551
+          784C51B5BCF094F0CC5A5E357947B843494562C267C22E4D2E287C67EAD112BF
+          9A9C2CF1B7C95A28E0076B9BB03359C5D12A56525A46585E4E4F26BDAA94EF63
+          BEC41ECFCE0725768B77A11360121F4EA619C78F97414665F6D28F8701595123
+          DF5DCC9F2327B98ACC2AEB68AC9024451E97A8AB523D2E31217A5C469A75B3FF
+          7FFBAA27863CA5EA761FD43F1BC67B2F346CC34FC130BE8E0CE3E7186C4F7099
+          ADE4E70E61E443F44245EB3900C7269C5F55B4E82E5C6C41E7A31AD12245C926
+          6E4D24E0ED145AC3D07E03CD4BA59E95F7397980D0867CD535ECED439F9C772C
+          FF02A6B868037C72716B000000097048597300000B1300000B1301009A9C1800
+          00027B494441544889B595B14F535114C67F100103A10D1A8984A778161795C4
+          E0D2947429913890927470D2A98401E8E85F61D2E5756884FF01E2200E0EBEF4
+          D14512D3E7C2C20DC94306A3B56DD28412C5E1DD579BF2E82B104E72977BCFFD
+          BE73DE3BF7FBE09AA3AF97241119049E00337A6B17282BA54EAE4420224BC0B2
+          061FEC386E020E50504ABDBB10818818C006F03C1A8D9663B1582591480CC7E3
+          F12900DBB60F2CCB6AECECEC8CD56AB569E02390514AB9611D21220B22F25B44
+          AAB95CAED86C364FBBAD5C2E571491AABEB3D0B5035DF9B7D1D151776B6BEBF6
+          E4E4E4DDD08A00D7758F1617177FD5EB750378A4943AF4CFFA3B72D781BE20F0
+          CF7B15D2F97220816118139B9B9BB774C11BED672D02FD43E7B3D9AC1354B9B5
+          57E1FDD71FE7766118C6C4DADA9A03CC8B4826A883E568345A5E5959899F8B12
+          12ABABABF1482452C69BBCFF04FE9CC762B1CA65C1FDD0184F4464A045809EF3
+          4422317C55028D31A4315B043300FE9C5F25DA309E01DCE8F5E2D08057CBE0D2
+          A7D6DEDB970FC9CEDDEB7ACF27D805EF85A6D3E9F1A0C4ECDC7D008E4FFEB6F6
+          524FEF9CC9B36DFB001807BEB4133840D3B2AC463A9D0EACE4E6403F6F5E3CE8
+          5A2D8065590DE058637AFF4029D5049C52A934168A10121AC3F195B6FD1D14AA
+          D5EA743E9FB72F0B6E9AA6ADC5AF10982022DB2252554A1D85895CE7DADFDFFF
+          2E223511F9D08ED9A94519E034954AFD745DF7A8D7CA7DB103FE688C6002ADE7
+          AFEAF5BA914C26474CD30CFD5CA669DAC96472442BE9EB762585EE86B30ECC47
+          229196E1CCCECE4E01148BC503CBB21AA552C9379C6D3CC339ECC40AB3CC0C9E
+          704D73D632FD512C28A5D6CFC3B888E93F463F7FBC47E4F462FAD71EFF00F588
+          3A50FC51328C0000000049454E44AE426082
+        }
+        Visible = False
+      end
+      object eStartTimeFilter: TTimeEdit
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        ButtonWidth = 29
+        Align = alRight
+        NumGlyphs = 1
+        MaxLength = 0
+        Spacing = 0
+        TabOrder = 0
+        Visible = False
+      end
+    end
+    object pEndTimeFilter: TBCPanel
+      Left = 8
+      Height = 52
+      Top = 1328
+      Width = 465
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = clWhite
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Style = bboNone
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 38
+      Visible = False
+      object icoBandSizeFilter14: TImage
+        Left = 16
+        Height = 28
+        Top = 12
+        Width = 24
+        Align = alLeft
+        Center = True
+        Visible = False
+      end
+      object lblEndTimeFilter: TLabel
+        Left = 48
+        Height = 28
+        Top = 12
+        Width = 8
+        Align = alLeft
+        Caption = 'e'
+        Layout = tlCenter
+        ParentColor = False
+        Visible = False
+      end
+      object eEndTimeFilter: TTimeEdit
+        Left = 279
+        Height = 28
+        Top = 12
+        Width = 170
+        ButtonWidth = 29
+        Align = alRight
+        NumGlyphs = 1
+        MaxLength = 0
+        Spacing = 0
+        TabOrder = 0
+        Visible = False
+      end
+    end
+  end
+end

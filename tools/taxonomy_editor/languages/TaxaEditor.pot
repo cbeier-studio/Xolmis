@@ -1,0 +1,324 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: lib_taxa.rserrorrewritinghierarchy
+msgid "An error occurred during hierarchy rewriting. All changes will be reverted back."
+msgstr ""
+
+#: tdlgabout.caption
+msgid "Sobre o Xolmis"
+msgstr ""
+
+#: tdlgabout.lblappcopyright.caption
+msgid "© 2023 Christian Beier"
+msgstr ""
+
+#: tdlgabout.lblappname.caption
+msgid "Taxonomies Editor"
+msgstr ""
+
+#: tdlgabout.lblappname1.caption
+msgid "Xolmis"
+msgstr ""
+
+#: tdlgabout.lblappversion.caption
+msgid "Versão"
+msgstr ""
+
+#: tdlgabout.linklicense.caption
+msgid "Termos de licença"
+msgstr ""
+
+#: tdlgabout.linkprivacy.caption
+msgid "Privacidade"
+msgstr ""
+
+#: tdlgabout.linkthirdparty.caption
+msgid "Avisos de terceiros"
+msgstr ""
+
+#: tdlgabout.linkwebsite.caption
+msgid "Website"
+msgstr ""
+
+#: tdlgabout.linkwebsite.hint
+msgid "http://xolmis.github.io"
+msgstr ""
+
+#: tdlgabout.pappversion.caption
+msgid "0.1"
+msgstr ""
+
+#: tdlgabout.sbclose.caption
+msgctxt "tdlgabout.sbclose.caption"
+msgid "Fechar"
+msgstr ""
+
+#: tdlgabout.sbcopy.caption
+msgid "Copiar"
+msgstr ""
+
+#: tfrmtaxaeditor.actabout.caption
+msgid "About"
+msgstr ""
+
+#: tfrmtaxaeditor.actbatchactions.caption
+msgid "Batch actions"
+msgstr ""
+
+#: tfrmtaxaeditor.actexit.caption
+msgctxt "tfrmtaxaeditor.actexit.caption"
+msgid "Exit"
+msgstr ""
+
+#: tfrmtaxaeditor.actexport.caption
+msgid "Export"
+msgstr ""
+
+#: tfrmtaxaeditor.actformatscinames.caption
+msgid "Format scientific names"
+msgstr ""
+
+#: tfrmtaxaeditor.actimport.caption
+msgid "Import"
+msgstr ""
+
+#: tfrmtaxaeditor.caption
+msgid "Xolmis Taxonomies Editor"
+msgstr ""
+
+#: tfrmtaxaeditor.cktcbro.caption
+msgctxt "tfrmtaxaeditor.cktcbro.caption"
+msgid "CBRO"
+msgstr ""
+
+#: tfrmtaxaeditor.cktclements.caption
+msgctxt "tfrmtaxaeditor.cktclements.caption"
+msgid "Clements/eBird"
+msgstr ""
+
+#: tfrmtaxaeditor.cktextinct.caption
+msgctxt "tfrmtaxaeditor.cktextinct.caption"
+msgid "Extinct"
+msgstr ""
+
+#: tfrmtaxaeditor.cktioc.caption
+msgctxt "tfrmtaxaeditor.cktioc.caption"
+msgid "IOC"
+msgstr ""
+
+#: tfrmtaxaeditor.efindtaxa.texthint
+msgctxt "tfrmtaxaeditor.efindtaxa.texthint"
+msgid "Find..."
+msgstr ""
+
+#: tfrmtaxaeditor.etextinctionyear.texthint
+msgid "Extinction year"
+msgstr ""
+
+#: tfrmtaxaeditor.gridtaxa.columns[0].title.caption
+msgctxt "tfrmtaxaeditor.gridtaxa.columns[0].title.caption"
+msgid "Scientific name"
+msgstr ""
+
+#: tfrmtaxaeditor.lblclementsfilter.caption
+msgctxt "tfrmtaxaeditor.lblclementsfilter.caption"
+msgid "Clements/eBird"
+msgstr ""
+
+#: tfrmtaxaeditor.lblcounttaxonranksfilter.caption
+msgid "none selected"
+msgstr ""
+
+#: tfrmtaxaeditor.lblextinctfilter.caption
+msgctxt "tfrmtaxaeditor.lblextinctfilter.caption"
+msgid "Extinct"
+msgstr ""
+
+#: tfrmtaxaeditor.lblhassynonymsfilter.caption
+msgid "Have synonyms"
+msgstr ""
+
+#: tfrmtaxaeditor.lblmarkedfilter.caption
+msgid "Marked records"
+msgstr ""
+
+#: tfrmtaxaeditor.lblsynonymfilter.caption
+msgid "Is a synonym"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltauthorship.caption
+msgid "Authorship"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltaxonomycbrofilter.caption
+msgctxt "tfrmtaxaeditor.lbltaxonomycbrofilter.caption"
+msgid "CBRO"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltaxonomyiocfilter.caption
+msgctxt "tfrmtaxaeditor.lbltaxonomyiocfilter.caption"
+msgid "IOC"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltaxonranksfilter.caption
+msgid "Ranks"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltcbrootherptnames.caption
+msgid "Other portuguese names"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltcbroparenttaxon.caption
+msgctxt "tfrmtaxaeditor.lbltcbroparenttaxon.caption"
+msgid "Parent taxon"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltcbrorank.caption
+msgctxt "tfrmtaxaeditor.lbltcbrorank.caption"
+msgid "Rank"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltcbrosortnr.caption
+msgctxt "tfrmtaxaeditor.lbltcbrosortnr.caption"
+msgid "Sorting number"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltcbrovalidname.caption
+msgctxt "tfrmtaxaeditor.lbltcbrovalidname.caption"
+msgid "Valid name"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltdistribution.caption
+msgctxt "tfrmtaxaeditor.lbltdistribution.caption"
+msgid "Geographical distribution"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltebirdcode.caption
+msgid "eBird code"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltenglishname.caption
+msgctxt "tfrmtaxaeditor.lbltenglishname.caption"
+msgid "English name"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltfullname.caption
+msgctxt "tfrmtaxaeditor.lbltfullname.caption"
+msgid "Scientific name"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltiocdistribution.caption
+msgctxt "tfrmtaxaeditor.lbltiocdistribution.caption"
+msgid "Geographical distribution"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltiocenglishname.caption
+msgctxt "tfrmtaxaeditor.lbltiocenglishname.caption"
+msgid "English name"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltiocparenttaxon.caption
+msgctxt "tfrmtaxaeditor.lbltiocparenttaxon.caption"
+msgid "Parent taxon"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltiocrank.caption
+msgctxt "tfrmtaxaeditor.lbltiocrank.caption"
+msgid "Rank"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltiocsortnr.caption
+msgctxt "tfrmtaxaeditor.lbltiocsortnr.caption"
+msgid "Sorting number"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltiocvalidname.caption
+msgctxt "tfrmtaxaeditor.lbltiocvalidname.caption"
+msgid "Valid name"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltparenttaxon.caption
+msgctxt "tfrmtaxaeditor.lbltparenttaxon.caption"
+msgid "Parent taxon"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltportuguesename.caption
+msgid "Portuguese name"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltquickcode.caption
+msgid "Quick code"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltrank.caption
+msgctxt "tfrmtaxaeditor.lbltrank.caption"
+msgid "Rank"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltsortnr.caption
+msgctxt "tfrmtaxaeditor.lbltsortnr.caption"
+msgid "Sorting number"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltspanishname.caption
+msgid "Spanish name"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltsubspecificgroup.caption
+msgid "Subspecific group"
+msgstr ""
+
+#: tfrmtaxaeditor.lbltvalidname.caption
+msgctxt "tfrmtaxaeditor.lbltvalidname.caption"
+msgid "Valid name"
+msgstr ""
+
+#: tfrmtaxaeditor.lblunmarkedfilter.caption
+msgid "Unmarked records"
+msgstr ""
+
+#: tfrmtaxaeditor.sbcancelrecord.caption
+msgid "Cancel"
+msgstr ""
+
+#: tfrmtaxaeditor.sbdelrecord.caption
+msgid "Delete"
+msgstr ""
+
+#: tfrmtaxaeditor.sbeditrecord.caption
+msgid "Edit"
+msgstr ""
+
+#: tfrmtaxaeditor.sbfilemenu.caption
+msgid "File"
+msgstr ""
+
+#: tfrmtaxaeditor.sbinsertrecord.caption
+msgid "New"
+msgstr ""
+
+#: tfrmtaxaeditor.sbmoreoptions.hint
+msgid "Mais opções"
+msgstr ""
+
+#: tfrmtaxaeditor.sbrecordhistory.caption
+msgid "History"
+msgstr ""
+
+#: tfrmtaxaeditor.sbrecordhistory1.caption
+msgid "Lump"
+msgstr ""
+
+#: tfrmtaxaeditor.sbrecordhistory2.caption
+msgid "Split"
+msgstr ""
+
+#: tfrmtaxaeditor.sbrecordhistory3.caption
+msgid "Move"
+msgstr ""
+
+#: tfrmtaxaeditor.sbsaverecord.caption
+msgid "Save"
+msgstr ""
+

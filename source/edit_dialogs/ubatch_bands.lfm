@@ -1,0 +1,803 @@
+object batchBands: TbatchBands
+  Left = 352
+  Height = 598
+  Top = 33
+  Width = 490
+  BorderStyle = bsDialog
+  Caption = 'New batch of bands'
+  ClientHeight = 598
+  ClientWidth = 490
+  DesignTimePPI = 120
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  object pBottom: TPanel
+    Left = 0
+    Height = 50
+    Top = 548
+    Width = 490
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 50
+    ClientWidth = 490
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object sbSave: TBCButtonFocus
+      Left = 16
+      Height = 36
+      Top = 8
+      Width = 225
+      StateClicked.Background.Color = 14259089
+      StateClicked.Background.Gradient1.StartColor = 8404992
+      StateClicked.Background.Gradient1.EndColor = 4194304
+      StateClicked.Background.Gradient1.GradientType = gtRadial
+      StateClicked.Background.Gradient1.Point1XPercent = 50
+      StateClicked.Background.Gradient1.Point1YPercent = 100
+      StateClicked.Background.Gradient1.Point2XPercent = 0
+      StateClicked.Background.Gradient1.Point2YPercent = 0
+      StateClicked.Background.Gradient2.StartColor = clWhite
+      StateClicked.Background.Gradient2.EndColor = clBlack
+      StateClicked.Background.Gradient2.GradientType = gtLinear
+      StateClicked.Background.Gradient2.Point1XPercent = 0
+      StateClicked.Background.Gradient2.Point1YPercent = 0
+      StateClicked.Background.Gradient2.Point2XPercent = 0
+      StateClicked.Background.Gradient2.Point2YPercent = 100
+      StateClicked.Background.Gradient1EndPercent = 100
+      StateClicked.Background.Style = bbsColor
+      StateClicked.Border.Color = 13066075
+      StateClicked.Border.Style = bboSolid
+      StateClicked.FontEx.Color = clWhite
+      StateClicked.FontEx.FontQuality = fqSystemClearType
+      StateClicked.FontEx.Shadow = True
+      StateClicked.FontEx.ShadowRadius = 2
+      StateClicked.FontEx.ShadowOffsetX = 1
+      StateClicked.FontEx.ShadowOffsetY = 1
+      StateClicked.FontEx.Style = [fsBold]
+      StateClicked.FontEx.PaddingLeft = 8
+      StateClicked.FontEx.PaddingRight = 4
+      StateHover.Background.Color = 11686479
+      StateHover.Background.Gradient1.StartColor = 16744448
+      StateHover.Background.Gradient1.EndColor = 8404992
+      StateHover.Background.Gradient1.GradientType = gtRadial
+      StateHover.Background.Gradient1.Point1XPercent = 50
+      StateHover.Background.Gradient1.Point1YPercent = 100
+      StateHover.Background.Gradient1.Point2XPercent = 0
+      StateHover.Background.Gradient1.Point2YPercent = 0
+      StateHover.Background.Gradient2.StartColor = clWhite
+      StateHover.Background.Gradient2.EndColor = clBlack
+      StateHover.Background.Gradient2.GradientType = gtLinear
+      StateHover.Background.Gradient2.Point1XPercent = 0
+      StateHover.Background.Gradient2.Point1YPercent = 0
+      StateHover.Background.Gradient2.Point2XPercent = 0
+      StateHover.Background.Gradient2.Point2YPercent = 100
+      StateHover.Background.Gradient1EndPercent = 100
+      StateHover.Background.Style = bbsColor
+      StateHover.Border.Color = 12074335
+      StateHover.Border.Style = bboSolid
+      StateHover.FontEx.Color = clWhite
+      StateHover.FontEx.FontQuality = fqSystemClearType
+      StateHover.FontEx.Shadow = False
+      StateHover.FontEx.ShadowRadius = 2
+      StateHover.FontEx.ShadowOffsetX = 1
+      StateHover.FontEx.ShadowOffsetY = 1
+      StateHover.FontEx.Style = [fsBold]
+      StateHover.FontEx.PaddingLeft = 8
+      StateHover.FontEx.PaddingRight = 4
+      StateNormal.Background.Color = 13066075
+      StateNormal.Background.Gradient1.StartColor = 4194304
+      StateNormal.Background.Gradient1.EndColor = 8405056
+      StateNormal.Background.Gradient1.GradientType = gtLinear
+      StateNormal.Background.Gradient1.Point1XPercent = 0
+      StateNormal.Background.Gradient1.Point1YPercent = 0
+      StateNormal.Background.Gradient1.Point2XPercent = 0
+      StateNormal.Background.Gradient1.Point2YPercent = 100
+      StateNormal.Background.Gradient2.StartColor = 8405056
+      StateNormal.Background.Gradient2.EndColor = 4194304
+      StateNormal.Background.Gradient2.GradientType = gtRadial
+      StateNormal.Background.Gradient2.Point1XPercent = 50
+      StateNormal.Background.Gradient2.Point1YPercent = 100
+      StateNormal.Background.Gradient2.Point2XPercent = 0
+      StateNormal.Background.Gradient2.Point2YPercent = 0
+      StateNormal.Background.Gradient1EndPercent = 60
+      StateNormal.Background.Style = bbsColor
+      StateNormal.Border.Color = 12074335
+      StateNormal.Border.Style = bboSolid
+      StateNormal.FontEx.Color = clWhite
+      StateNormal.FontEx.FontQuality = fqSystemClearType
+      StateNormal.FontEx.Shadow = False
+      StateNormal.FontEx.ShadowRadius = 2
+      StateNormal.FontEx.ShadowOffsetX = 1
+      StateNormal.FontEx.ShadowOffsetY = 1
+      StateNormal.FontEx.Style = []
+      StateNormal.FontEx.PaddingLeft = 8
+      StateNormal.FontEx.PaddingRight = 4
+      Caption = 'Save'
+      Color = 15987699
+      Constraints.MinWidth = 225
+      DropDownWidth = 16
+      DropDownArrowSize = 8
+      GlobalOpacity = 255
+      OnClick = sbSaveClick
+      ParentColor = False
+      Rounding.RoundX = 6
+      Rounding.RoundY = 6
+      RoundingDropDown.RoundX = 8
+      RoundingDropDown.RoundY = 8
+      TextApplyGlobalOpacity = False
+      MemoryUsage = bmuMediumF
+      TabOrder = 0
+    end
+    object sbCancel: TBCButtonFocus
+      Left = 249
+      Height = 36
+      Top = 8
+      Width = 225
+      StateClicked.Background.Color = 16245964
+      StateClicked.Background.Gradient1.StartColor = 16422228
+      StateClicked.Background.Gradient1.EndColor = 14771751
+      StateClicked.Background.Gradient1.GradientType = gtLinear
+      StateClicked.Background.Gradient1.Point1XPercent = 0
+      StateClicked.Background.Gradient1.Point1YPercent = 0
+      StateClicked.Background.Gradient1.Point2XPercent = 0
+      StateClicked.Background.Gradient1.Point2YPercent = 100
+      StateClicked.Background.Gradient2.StartColor = 15716760
+      StateClicked.Background.Gradient2.EndColor = 14398312
+      StateClicked.Background.Gradient2.GradientType = gtLinear
+      StateClicked.Background.Gradient2.Point1XPercent = 0
+      StateClicked.Background.Gradient2.Point1YPercent = 0
+      StateClicked.Background.Gradient2.Point2XPercent = 0
+      StateClicked.Background.Gradient2.Point2YPercent = 100
+      StateClicked.Background.Gradient1EndPercent = 100
+      StateClicked.Background.Style = bbsColor
+      StateClicked.Border.Color = 16481335
+      StateClicked.Border.LightColor = clBlack
+      StateClicked.Border.LightOpacity = 100
+      StateClicked.Border.Style = bboSolid
+      StateClicked.FontEx.Color = clDefault
+      StateClicked.FontEx.FontQuality = fqSystemClearType
+      StateClicked.FontEx.Shadow = True
+      StateClicked.FontEx.ShadowColor = clGray
+      StateClicked.FontEx.ShadowRadius = 2
+      StateClicked.FontEx.ShadowOffsetX = 1
+      StateClicked.FontEx.ShadowOffsetY = 1
+      StateClicked.FontEx.Style = []
+      StateClicked.FontEx.PaddingLeft = 8
+      StateClicked.FontEx.PaddingRight = 4
+      StateHover.Background.Color = 16379616
+      StateHover.Background.Gradient1.StartColor = 16298351
+      StateHover.Background.Gradient1.EndColor = 16547629
+      StateHover.Background.Gradient1.GradientType = gtLinear
+      StateHover.Background.Gradient1.Point1XPercent = 0
+      StateHover.Background.Gradient1.Point1YPercent = 0
+      StateHover.Background.Gradient1.Point2XPercent = 0
+      StateHover.Background.Gradient1.Point2YPercent = 100
+      StateHover.Background.Gradient2.StartColor = 16639678
+      StateHover.Background.Gradient2.EndColor = 16112039
+      StateHover.Background.Gradient2.GradientType = gtLinear
+      StateHover.Background.Gradient2.Point1XPercent = 0
+      StateHover.Background.Gradient2.Point1YPercent = 0
+      StateHover.Background.Gradient2.Point2XPercent = 0
+      StateHover.Background.Gradient2.Point2YPercent = 100
+      StateHover.Background.Gradient1EndPercent = 100
+      StateHover.Background.Style = bbsColor
+      StateHover.Border.Color = 16162899
+      StateHover.Border.LightOpacity = 200
+      StateHover.Border.Style = bboSolid
+      StateHover.FontEx.Color = clDefault
+      StateHover.FontEx.FontQuality = fqSystemClearType
+      StateHover.FontEx.Shadow = False
+      StateHover.FontEx.ShadowRadius = 5
+      StateHover.FontEx.ShadowOffsetX = 5
+      StateHover.FontEx.ShadowOffsetY = 5
+      StateHover.FontEx.Style = []
+      StateHover.FontEx.PaddingLeft = 8
+      StateHover.FontEx.PaddingRight = 4
+      StateNormal.Background.Color = clWhite
+      StateNormal.Background.Gradient1.StartColor = 15921906
+      StateNormal.Background.Gradient1.EndColor = 15461355
+      StateNormal.Background.Gradient1.GradientType = gtLinear
+      StateNormal.Background.Gradient1.Point1XPercent = 0
+      StateNormal.Background.Gradient1.Point1YPercent = 0
+      StateNormal.Background.Gradient1.Point2XPercent = 0
+      StateNormal.Background.Gradient1.Point2YPercent = 100
+      StateNormal.Background.Gradient2.StartColor = 14540253
+      StateNormal.Background.Gradient2.EndColor = 13619151
+      StateNormal.Background.Gradient2.GradientType = gtLinear
+      StateNormal.Background.Gradient2.Point1XPercent = 0
+      StateNormal.Background.Gradient2.Point1YPercent = 0
+      StateNormal.Background.Gradient2.Point2XPercent = 0
+      StateNormal.Background.Gradient2.Point2YPercent = 100
+      StateNormal.Background.Gradient1EndPercent = 50
+      StateNormal.Background.Style = bbsColor
+      StateNormal.Border.Color = 13816530
+      StateNormal.Border.LightOpacity = 200
+      StateNormal.Border.Style = bboSolid
+      StateNormal.FontEx.Color = clBlack
+      StateNormal.FontEx.FontQuality = fqSystemClearType
+      StateNormal.FontEx.Shadow = False
+      StateNormal.FontEx.ShadowRadius = 5
+      StateNormal.FontEx.ShadowOffsetX = 5
+      StateNormal.FontEx.ShadowOffsetY = 5
+      StateNormal.FontEx.Style = []
+      StateNormal.FontEx.PaddingLeft = 8
+      StateNormal.FontEx.PaddingRight = 4
+      Caption = 'Cancel'
+      Color = 15987699
+      Constraints.MinWidth = 225
+      DropDownWidth = 16
+      DropDownArrowSize = 8
+      GlobalOpacity = 255
+      OnClick = sbCancelClick
+      ParentColor = False
+      Rounding.RoundX = 6
+      Rounding.RoundY = 6
+      RoundingDropDown.RoundX = 1
+      RoundingDropDown.RoundY = 1
+      TextApplyGlobalOpacity = False
+      MemoryUsage = bmuMediumF
+      TabOrder = 1
+    end
+  end
+  object pEdit: TPanel
+    Left = 0
+    Height = 546
+    Top = 0
+    Width = 490
+    Align = alClient
+    BevelOuter = bvNone
+    ChildSizing.TopBottomSpacing = 8
+    ClientHeight = 546
+    ClientWidth = 490
+    Color = 16444392
+    Constraints.MinHeight = 546
+    Font.Color = 6579300
+    ParentBackground = False
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 1
+    object pSizeType: TPanel
+      Left = 0
+      Height = 58
+      Top = 8
+      Width = 490
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 58
+      ClientWidth = 490
+      ParentBackground = False
+      TabOrder = 0
+      object lblBandSize: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 220
+        AutoSize = False
+        BorderSpacing.Top = 4
+        Caption = 'Size:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object lblBandType: TLabel
+        Left = 252
+        Height = 20
+        Top = 4
+        Width = 220
+        AutoSize = False
+        BorderSpacing.Top = 4
+        Caption = 'Type:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object cbBandSize: TComboBox
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 220
+        Constraints.MinWidth = 220
+        ItemHeight = 20
+        Items.Strings = (
+          'A'
+          'C'
+          'D'
+          'E'
+          'F'
+          'G'
+          'H'
+          'J'
+          'L'
+          'M'
+          'N'
+          'P'
+          'R'
+          'S'
+          'T'
+          'U'
+          'V'
+          'X'
+          'Z'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        OnChange = cbBandSizeChange
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+      end
+      object cbBandType: TComboBox
+        Left = 252
+        Height = 26
+        Top = 28
+        Width = 220
+        Constraints.MinWidth = 220
+        ItemHeight = 20
+        Items.Strings = (
+          'Aberta'
+          'Fechada'
+          'Triangular'
+          'Bandeira'
+          'Colar'
+          'Vulture'
+        )
+        Style = csOwnerDrawFixed
+        TabOrder = 1
+        OnChange = cbBandSizeChange
+        OnDrawItem = cbBandTypeDrawItem
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+      end
+    end
+    object pFromToNumber: TPanel
+      Left = 0
+      Height = 58
+      Top = 66
+      Width = 490
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 58
+      ClientWidth = 490
+      ParentBackground = False
+      TabOrder = 1
+      object lblStartNumber: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Start number:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object lblEndNumber: TLabel
+        Left = 252
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Final number:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eStartNumber: TSpinEdit
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 220
+        Constraints.MinWidth = 220
+        MaxValue = 999999
+        MinValue = 1
+        OnChange = cbBandSizeChange
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+        TabOrder = 0
+        Value = 1
+      end
+      object eEndNumber: TSpinEdit
+        Left = 252
+        Height = 28
+        Top = 28
+        Width = 220
+        Constraints.MinWidth = 220
+        MaxValue = 999999
+        MinValue = 1
+        OnChange = cbBandSizeChange
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+        TabOrder = 1
+        Value = 1
+      end
+    end
+    object pProject: TPanel
+      Left = 0
+      Height = 58
+      Top = 124
+      Width = 490
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 58
+      ClientWidth = 490
+      ParentBackground = False
+      TabOrder = 2
+      object lblProject: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 49
+        BorderSpacing.Top = 4
+        Caption = 'Project:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eProject: TEditButton
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 458
+        ButtonWidth = 29
+        Images = frmMain.mPopup
+        ImageIndex = 99
+        ImageWidth = 20
+        MaxLength = 0
+        NumGlyphs = 1
+        OnButtonClick = eProjectButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+        PasswordChar = #0
+        Spacing = 0
+        TabOrder = 0
+      end
+    end
+    object pSourceOrderNumber: TPanel
+      Left = 0
+      Height = 58
+      Top = 182
+      Width = 490
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 58
+      ClientWidth = 490
+      ParentBackground = False
+      TabOrder = 3
+      object lblBandSource: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Source:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object lblOrderNumber: TLabel
+        Left = 252
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Order number:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object cbBandSource: TComboBox
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 220
+        Constraints.MinWidth = 220
+        ItemHeight = 20
+        Items.Strings = (
+          'Adquirida do fornecedor'
+          'Transferência entre anilhadores'
+          'Ave anilhada por terceiros (viva)'
+          'Ave morta anilhada por terceiros'
+          'Encontrada no campo (solta)'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        OnChange = cbBandSizeChange
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+      end
+      object eOrderNumber: TEdit
+        Left = 252
+        Height = 28
+        Top = 28
+        Width = 220
+        Constraints.MinWidth = 220
+        TabOrder = 1
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+      end
+    end
+    object pDateOrderReceipt: TPanel
+      Left = 0
+      Height = 58
+      Top = 240
+      Width = 490
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 58
+      ClientWidth = 490
+      ParentBackground = False
+      TabOrder = 4
+      object lblOrderDate: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Order date:'
+        ParentColor = False
+      end
+      object lblReceiptDate: TLabel
+        Left = 252
+        Height = 20
+        Top = 4
+        Width = 220
+        BorderSpacing.Top = 4
+        Caption = 'Receipt date:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eOrderDate: TDateEdit
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 220
+        CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+        DateOrder = doNone
+        ButtonWidth = 29
+        Constraints.MinWidth = 220
+        NumGlyphs = 1
+        MaxLength = 0
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+        TabOrder = 0
+        Spacing = 0
+        TextHint = 'DD/MM/YYYY'
+      end
+      object eReceiptDate: TDateEdit
+        Left = 252
+        Height = 28
+        Top = 28
+        Width = 220
+        CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+        DateOrder = doNone
+        ButtonWidth = 29
+        Constraints.MinWidth = 220
+        NumGlyphs = 1
+        MaxLength = 0
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+        TabOrder = 1
+        Spacing = 0
+        TextHint = 'DD/MM/YYYY'
+      end
+    end
+    object pSupplier: TPanel
+      Left = 0
+      Height = 58
+      Top = 298
+      Width = 490
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 58
+      ClientWidth = 490
+      ParentBackground = False
+      TabOrder = 5
+      object lblSupplier: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 58
+        BorderSpacing.Top = 4
+        Caption = 'Supplier:'
+        ParentColor = False
+      end
+      object eSupplier: TEditButton
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 458
+        ButtonWidth = 29
+        Images = frmMain.mPopup
+        ImageIndex = 99
+        ImageWidth = 20
+        MaxLength = 0
+        NumGlyphs = 1
+        OnButtonClick = eSupplierButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+        PasswordChar = #0
+        Spacing = 0
+        TabOrder = 0
+      end
+    end
+    object pRequester: TPanel
+      Left = 0
+      Height = 58
+      Top = 356
+      Width = 490
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 58
+      ClientWidth = 490
+      ParentBackground = False
+      TabOrder = 6
+      object lblRequester: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 69
+        BorderSpacing.Top = 4
+        Caption = 'Requester:'
+        ParentColor = False
+      end
+      object eRequester: TEditButton
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 458
+        ButtonWidth = 29
+        Images = frmMain.mPopup
+        ImageIndex = 99
+        ImageWidth = 20
+        MaxLength = 0
+        NumGlyphs = 1
+        OnButtonClick = eRequesterButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+        PasswordChar = #0
+        Spacing = 0
+        TabOrder = 0
+      end
+    end
+    object pCarrier: TPanel
+      Left = 0
+      Height = 58
+      Top = 414
+      Width = 490
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 58
+      ClientWidth = 490
+      ParentBackground = False
+      TabOrder = 7
+      object lblCarrier: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 47
+        BorderSpacing.Top = 4
+        Caption = 'Carrier:'
+        ParentColor = False
+      end
+      object eCarrier: TEditButton
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 458
+        ButtonWidth = 29
+        Images = frmMain.mPopup
+        ImageIndex = 99
+        ImageWidth = 20
+        MaxLength = 0
+        NumGlyphs = 1
+        OnButtonClick = eCarrierButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+        PasswordChar = #0
+        Spacing = 0
+        TabOrder = 0
+      end
+    end
+    object pSender: TPanel
+      Left = 0
+      Height = 58
+      Top = 472
+      Width = 490
+      Align = alTop
+      BorderSpacing.Bottom = 16
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 58
+      ClientWidth = 490
+      ParentBackground = False
+      TabOrder = 8
+      object lblSender: TLabel
+        Left = 16
+        Height = 20
+        Top = 4
+        Width = 49
+        BorderSpacing.Top = 4
+        Caption = 'Sender:'
+        FocusControl = eSender
+        ParentColor = False
+      end
+      object eSender: TEditButton
+        Left = 16
+        Height = 28
+        Top = 28
+        Width = 458
+        ButtonWidth = 29
+        Images = frmMain.mPopup
+        ImageIndex = 99
+        ImageWidth = 20
+        MaxLength = 0
+        NumGlyphs = 1
+        OnButtonClick = eSenderButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
+        PasswordChar = #0
+        Spacing = 0
+        TabOrder = 0
+      end
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 546
+    Width = 490
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+end

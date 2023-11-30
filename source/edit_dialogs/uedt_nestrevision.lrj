@@ -1,0 +1,20 @@
+{"version":1,"strings":[
+{"hash":141439662,"name":"tedtnestrevision.caption","sourcebytes":[78,101,119,32,110,101,115,116,32,114,101,118,105,115,105,111,110],"value":"New nest revision"},
+{"hash":366789,"name":"tedtnestrevision.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tedtnestrevision.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":175999370,"name":"tedtnestrevision.lblneststage.caption","sourcebytes":[83,116,97,103,101,58,32,42],"value":"Stage: *"},
+{"hash":11143770,"name":"tedtnestrevision.lblhosteggstally.caption","sourcebytes":[78,117,109,98,101,114,32,111,102,32,101,103,103,115,32,40,104,111,115,116,41,58],"value":"Number of eggs (host):"},
+{"hash":7541850,"name":"tedtnestrevision.lblrevisiondate.caption","sourcebytes":[78,101,115,116,32,114,101,118,105,115,105,111,110,32,100,97,116,101,58,32,42],"value":"Nest revision date: *"},
+{"hash":33581481,"name":"tedtnestrevision.erevisiondate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":198941370,"name":"tedtnestrevision.lblnidoparasite.caption","sourcebytes":[78,105,100,111,112,97,114,97,115,105,116,101,32,116,97,120,111,110,58],"value":"Nidoparasite taxon:"},
+{"hash":165316026,"name":"tedtnestrevision.lblobserver1.caption","sourcebytes":[79,98,115,101,114,118,101,114,32,49,58,32,42],"value":"Observer 1: *"},
+{"hash":89566314,"name":"tedtnestrevision.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
+{"hash":94927189,"name":"tedtnestrevision.ckhasphilornislarvae.caption","sourcebytes":[80,97,114,97,115,105,116,105,122,101,100,32,98,121,32,80,104,105,108,111,114,110,105,115,32,115,112,46,32,108,97,114,118,97,101],"value":"Parasitized by Philornis sp. larvae"},
+{"hash":140515866,"name":"tedtnestrevision.lblrevisiontime.caption","sourcebytes":[78,101,115,116,32,114,101,118,105,115,105,111,110,32,116,105,109,101,58],"value":"Nest revision time:"},
+{"hash":5029661,"name":"tedtnestrevision.erevisiontime.texthint","sourcebytes":[72,72,58,77,77],"value":"HH:MM"},
+{"hash":161077914,"name":"tedtnestrevision.lblobserver2.caption","sourcebytes":[79,98,115,101,114,118,101,114,32,50,58],"value":"Observer 2:"},
+{"hash":146552458,"name":"tedtnestrevision.lblneststatus.caption","sourcebytes":[83,116,97,116,117,115,58,32,42],"value":"Status: *"},
+{"hash":134913450,"name":"tedtnestrevision.lblhostnestlingstally.caption","sourcebytes":[78,117,109,98,101,114,32,111,102,32,110,101,115,116,108,105,110,103,115,32,40,104,111,115,116,41,58],"value":"Number of nestlings (host):"},
+{"hash":7184666,"name":"tedtnestrevision.lblnidoparasiteeggstally.caption","sourcebytes":[78,117,109,98,101,114,32,111,102,32,110,105,100,111,112,97,114,97,115,105,116,101,32,101,103,103,115,58],"value":"Number of nidoparasite eggs:"},
+{"hash":237593914,"name":"tedtnestrevision.lblnidoparasitenestlingstally.caption","sourcebytes":[78,117,109,98,101,114,32,111,102,32,110,105,100,111,112,97,114,97,115,105,116,101,32,110,101,115,116,108,105,110,103,115,58],"value":"Number of nidoparasite nestlings:"}
+]}

@@ -1,0 +1,5 @@
+{"version":1,"strings":[
+{"hash":77371778,"name":"tdlgfind.caption","sourcebytes":[66,117,115,99,97,114],"value":"Buscar"},
+{"hash":218394958,"name":"tdlgfind.ep.texthint","sourcebytes":[70,105,110,100,46,46,46],"value":"Find..."},
+{"hash":346165,"name":"tdlgfind.ulist.columns[0].title.caption","sourcebytes":[78,97,109,101],"value":"Name"}
+]}

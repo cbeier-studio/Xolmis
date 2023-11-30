@@ -1,0 +1,19 @@
+{"version":1,"strings":[
+{"hash":248759465,"name":"tedtweatherlog.caption","sourcebytes":[78,101,119,32,119,101,97,116,104,101,114,32,108,111,103,32,101,110,116,114,121],"value":"New weather log entry"},
+{"hash":366789,"name":"tedtweatherlog.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tedtweatherlog.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":89566314,"name":"tedtweatherlog.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
+{"hash":176852074,"name":"tedtweatherlog.lblsampledate.caption","sourcebytes":[68,97,116,101,58,32,42],"value":"Date: *"},
+{"hash":5964682,"name":"tedtweatherlog.lblsampletime.caption","sourcebytes":[84,105,109,101,58],"value":"Time:"},
+{"hash":33581481,"name":"tedtweatherlog.esampledate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":5029661,"name":"tedtweatherlog.esampletime.texthint","sourcebytes":[72,72,58,77,77],"value":"HH:MM"},
+{"hash":195401402,"name":"tedtweatherlog.lblwindspeedbft.caption","sourcebytes":[87,105,110,100,32,115,112,101,101,100,32,40,66,101,97,117,102,111,114,116,41,58],"value":"Wind speed (Beaufort):"},
+{"hash":43362970,"name":"tedtweatherlog.lblwindspeedkmh.caption","sourcebytes":[87,105,110,100,32,115,112,101,101,100,32,40,107,109,47,104,41,58],"value":"Wind speed (km/h):"},
+{"hash":36766314,"name":"tedtweatherlog.lblprecipitation.caption","sourcebytes":[80,114,101,99,105,112,105,116,97,116,105,111,110,58],"value":"Precipitation:"},
+{"hash":154062394,"name":"tedtweatherlog.lblrainfall.caption","sourcebytes":[65,99,99,117,109,117,108,97,116,101,100,32,114,97,105,110,102,97,108,108,32,40,109,109,41,58],"value":"Accumulated rainfall (mm):"},
+{"hash":63252554,"name":"tedtweatherlog.lblsamplemoment.caption","sourcebytes":[77,111,109,101,110,116,58,32,42],"value":"Moment: *"},
+{"hash":119595626,"name":"tedtweatherlog.lblcloudcover.caption","sourcebytes":[67,108,111,117,100,32,99,111,118,101,114,32,40,37,41,58],"value":"Cloud cover (%):"},
+{"hash":6998794,"name":"tedtweatherlog.lbltemperature.caption","sourcebytes":[84,101,109,112,101,114,97,116,117,114,101,32,40,194,176,67,41,58],"value":"Temperature (\u00B0C):"},
+{"hash":212080010,"name":"tedtweatherlog.lblrelativehumidity.caption","sourcebytes":[82,101,108,97,116,105,118,101,32,104,117,109,105,100,105,116,121,32,40,37,41,58],"value":"Relative humidity (%):"},
+{"hash":48757322,"name":"tedtweatherlog.lblatmosphericpressure.caption","sourcebytes":[65,116,109,111,115,112,104,101,114,105,99,32,112,114,101,115,115,117,114,101,32,40,109,80,97,41,58],"value":"Atmospheric pressure (mPa):"}
+]}

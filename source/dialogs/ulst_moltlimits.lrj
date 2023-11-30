@@ -1,0 +1,5 @@
+{"version":1,"strings":[
+{"hash":125592531,"name":"tlstmoltlimits.caption","sourcebytes":[77,111,108,116,32,108,105,109,105,116,115],"value":"Molt limits"},
+{"hash":4749113,"name":"tlstmoltlimits.sbok.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":77089212,"name":"tlstmoltlimits.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+]}

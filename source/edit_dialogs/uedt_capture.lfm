@@ -1,0 +1,2408 @@
+object edtCapture: TedtCapture
+  Left = 352
+  Height = 655
+  Top = 33
+  Width = 794
+  BorderIcons = [biSystemMenu]
+  Caption = 'New capture'
+  ClientHeight = 655
+  ClientWidth = 794
+  DesignTimePPI = 120
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 603
+    Width = 794
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 50
+    Top = 605
+    Width = 794
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 50
+    ClientWidth = 794
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    object sbSave: TButton
+      Left = 16
+      Height = 34
+      Top = 8
+      Width = 377
+      Caption = 'Salvar'
+      Constraints.MinWidth = 377
+      Enabled = False
+      TabOrder = 0
+      OnClick = sbSaveClick
+    end
+    object sbCancel: TButton
+      Left = 401
+      Height = 34
+      Top = 8
+      Width = 377
+      Caption = 'Cancelar'
+      Constraints.MinWidth = 377
+      ModalResult = 2
+      TabOrder = 1
+    end
+  end
+  object sBox: TScrollBox
+    Left = 0
+    Height = 603
+    Top = 0
+    Width = 794
+    HorzScrollBar.Page = 768
+    VertScrollBar.Page = 603
+    Align = alClient
+    BorderStyle = bsNone
+    ClientHeight = 603
+    ClientWidth = 773
+    TabOrder = 0
+    object pClient: TPanel
+      Left = 0
+      Height = 1190
+      Top = 0
+      Width = 773
+      Align = alTop
+      BevelOuter = bvNone
+      ChildSizing.TopBottomSpacing = 16
+      ClientHeight = 1190
+      ClientWidth = 773
+      Color = 15066599
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 0
+      object pAgeEscapedStatus: TPanel
+        Left = 0
+        Height = 56
+        Top = 326
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 6
+        object lblAge: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Age:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label8: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblStatus: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Status:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label10: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 1
+          BorderSpacing.Top = 4
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbAge: TDBComboBox
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'subject_age'
+          DataSource = dsLink
+          ItemHeight = 20
+          Items.Strings = (
+            ''
+          )
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbAgeKeyPress
+          TabOrder = 0
+        end
+        object ckEscaped: TDBCheckBox
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          Caption = 'Escaped'
+          Constraints.MinWidth = 172
+          DataField = 'escaped'
+          DataSource = dsLink
+          TabOrder = 1
+          ValueChecked = 'True'
+          ValueUnchecked = 'False'
+        end
+        object cbStatus: TDBComboBox
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'subject_status'
+          DataSource = dsLink
+          ItemHeight = 20
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbStatusKeyPress
+          TabOrder = 2
+        end
+      end
+      object pSamples: TPanel
+        Left = 0
+        Height = 56
+        Top = 950
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 17
+        object ckBloodSample: TDBCheckBox
+          Left = 16
+          Height = 24
+          Top = 0
+          Width = 172
+          Caption = 'Blood'
+          Constraints.MinWidth = 172
+          DataField = 'blood_sample'
+          DataSource = dsLink
+          TabOrder = 0
+          ValueChecked = 'True'
+          ValueUnchecked = 'False'
+        end
+        object ckFeathers: TDBCheckBox
+          Left = 204
+          Height = 24
+          Top = 0
+          Width = 172
+          Caption = 'Feather(s)'
+          Constraints.MinWidth = 172
+          DataField = 'feather_sample'
+          DataSource = dsLink
+          TabOrder = 1
+          ValueChecked = 'True'
+          ValueUnchecked = 'False'
+        end
+        object ckFeces: TDBCheckBox
+          Left = 392
+          Height = 24
+          Top = 0
+          Width = 172
+          Caption = 'Feces'
+          Constraints.MinWidth = 172
+          DataField = 'feces_sample'
+          DataSource = dsLink
+          TabOrder = 2
+          ValueChecked = 'True'
+          ValueUnchecked = 'False'
+        end
+        object ckParasites: TDBCheckBox
+          Left = 580
+          Height = 24
+          Top = 0
+          Width = 172
+          Caption = 'Parasite(s)'
+          Constraints.MinWidth = 172
+          DataField = 'parasite_sample'
+          DataSource = dsLink
+          TabOrder = 3
+          ValueChecked = 'True'
+          ValueUnchecked = 'False'
+        end
+        object ckAudioRecordings: TDBCheckBox
+          Left = 16
+          Height = 24
+          Top = 28
+          Width = 172
+          Caption = 'Audio(s)'
+          Constraints.MinWidth = 172
+          DataField = 'subject_recorded'
+          DataSource = dsLink
+          TabOrder = 4
+          ValueChecked = 'True'
+          ValueUnchecked = 'False'
+        end
+        object ckPhotos: TDBCheckBox
+          Left = 204
+          Height = 24
+          Top = 28
+          Width = 172
+          Caption = 'Photos'
+          Constraints.MinWidth = 172
+          DataField = 'subject_photographed'
+          DataSource = dsLink
+          TabOrder = 5
+          ValueChecked = 'True'
+          ValueUnchecked = 'False'
+        end
+        object ckClaw: TDBCheckBox
+          Left = 392
+          Height = 24
+          Top = 28
+          Width = 172
+          Caption = 'Claw'
+          Constraints.MinWidth = 172
+          DataField = 'claw_sample'
+          DataSource = dsLink
+          TabOrder = 6
+          ValueChecked = 'True'
+          ValueUnchecked = 'False'
+        end
+        object ckWholeSpecimen: TDBCheckBox
+          Left = 580
+          Height = 24
+          Top = 28
+          Width = 172
+          Caption = 'Specimen (whole)'
+          Constraints.MinWidth = 172
+          DataField = 'subject_collected'
+          DataSource = dsLink
+          TabOrder = 7
+          ValueChecked = 'True'
+          ValueUnchecked = 'False'
+        end
+      end
+      object pDateTimeBander: TPanel
+        Left = 0
+        Height = 56
+        Top = 102
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 2
+        object lblCaptureDate: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Capture date: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblCaptureTime: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Capture time:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBander: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Bander: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblAnnotator: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Annotator: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eCaptureDate: TDBEditButton
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 0
+          ButtonWidth = 0
+          ImageIndex = 18
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          TextHint = 'DD/MM/YYYY'
+          DataField = 'capture_date'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = eCaptureDateButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eCaptureTime: TDBEdit
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'capture_time'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 1
+          TextHint = 'HH:MM'
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eBander: TDBEditButton
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 2
+          ButtonWidth = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'bander_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = eBanderButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eBanderKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eBanderKeyPress
+        end
+        object eAnnotator: TDBEditButton
+          Left = 580
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 3
+          ButtonWidth = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'annotator_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eAnnotatorKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eAnnotatorKeyPress
+        end
+      end
+      object pSurveyLocality: TPanel
+        Left = 0
+        Height = 56
+        Top = 46
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 1
+        object lblSurvey: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 360
+          BorderSpacing.Top = 4
+          Caption = 'Survey:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblLocality: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 360
+          BorderSpacing.Top = 4
+          Caption = 'Locality: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eSurvey: TDBEditButton
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 360
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 360
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 360
+          ParentBackground = False
+          TabOrder = 0
+          ButtonWidth = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'survey_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eSurveyKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eSurveyKeyPress
+        end
+        object eLocality: TDBEditButton
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 360
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 360
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 360
+          ParentBackground = False
+          TabOrder = 1
+          ButtonWidth = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'locality_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eLocalityKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLocalityKeyPress
+        end
+      end
+      object pColorBands: TPanel
+        Left = 0
+        Height = 56
+        Top = 270
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 5
+        object lblRightLegBelow: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Right tarsus:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label12: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblLeftLegBelow: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Left tarsus:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label14: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eRightTarsus: TDBEditButton
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 0
+          ButtonWidth = 0
+          ImageIndex = 13
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'right_leg_below'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object pRightBands: TPanel
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ChildSizing.HorizontalSpacing = 4
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 1
+          object shpRightBelowBand1: TShape
+            Left = 0
+            Height = 28
+            Top = 0
+            Width = 28
+            Align = alLeft
+            Brush.Style = bsClear
+            Pen.Color = clSilver
+            Pen.Style = psDot
+            Shape = stRoundSquare
+          end
+          object shpRightBelowBand2: TShape
+            Left = 32
+            Height = 28
+            Top = 0
+            Width = 28
+            Align = alLeft
+            Brush.Style = bsClear
+            Pen.Color = clSilver
+            Pen.Style = psDot
+            Shape = stRoundSquare
+          end
+          object shpRightBelowBand3: TShape
+            Left = 64
+            Height = 28
+            Top = 0
+            Width = 28
+            Align = alLeft
+            Brush.Style = bsClear
+            Pen.Color = clSilver
+            Pen.Style = psDot
+            Shape = stRoundSquare
+          end
+          object shpRightBelowBand4: TShape
+            Left = 96
+            Height = 28
+            Top = 0
+            Width = 28
+            Align = alLeft
+            Brush.Style = bsClear
+            Pen.Color = clSilver
+            Pen.Style = psDot
+            Shape = stRoundSquare
+          end
+        end
+        object eLeftTarsus: TDBEditButton
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 2
+          ButtonWidth = 0
+          ImageIndex = 13
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'left_leg_below'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object pLeftBands: TPanel
+          Left = 580
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ChildSizing.HorizontalSpacing = 4
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 3
+          object shpLeftBelowBand1: TShape
+            Left = 0
+            Height = 28
+            Top = 0
+            Width = 28
+            Align = alLeft
+            Brush.Style = bsClear
+            Pen.Color = clSilver
+            Pen.Style = psDot
+            Shape = stRoundSquare
+          end
+          object shpLeftBelowBand2: TShape
+            Left = 32
+            Height = 28
+            Top = 0
+            Width = 28
+            Align = alLeft
+            Brush.Style = bsClear
+            Pen.Color = clSilver
+            Pen.Style = psDot
+            Shape = stRoundSquare
+          end
+          object shpLeftBelowBand3: TShape
+            Left = 64
+            Height = 28
+            Top = 0
+            Width = 28
+            Align = alLeft
+            Brush.Style = bsClear
+            Pen.Color = clSilver
+            Pen.Style = psDot
+            Shape = stRoundSquare
+          end
+          object shpLeftBelowBand4: TShape
+            Left = 96
+            Height = 28
+            Top = 0
+            Width = 28
+            Align = alLeft
+            Brush.Style = bsClear
+            Pen.Color = clSilver
+            Pen.Style = psDot
+            Shape = stRoundSquare
+          end
+        end
+      end
+      object pTaxonBand: TPanel
+        Left = 0
+        Height = 56
+        Top = 214
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 3
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 4
+        object lblTaxon: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 360
+          BorderSpacing.Top = 4
+          Caption = 'Taxon:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBand: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Band:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblRemovedBand: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Removed band:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eTaxon: TDBEditButton
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 360
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 360
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 360
+          ParentBackground = False
+          TabOrder = 0
+          ButtonWidth = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'taxon_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eTaxonKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eTaxonKeyPress
+        end
+        object eBand: TDBEditButton
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 1
+          ButtonWidth = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'band_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eBandKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eBandKeyPress
+        end
+        object eRemovedBand: TDBEditButton
+          Left = 580
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 2
+          ButtonWidth = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'removed_band_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eRemovedBandKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRemovedBandKeyPress
+        end
+      end
+      object pNotes: TPanel
+        Left = 0
+        Height = 84
+        Top = 820
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 84
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 15
+        object lblNotes: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 736
+          BorderSpacing.Top = 4
+          Caption = 'Notes:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object mNotes: TDBMemo
+          Left = 16
+          Height = 56
+          Top = 28
+          Width = 736
+          Constraints.MinHeight = 56
+          Constraints.MinWidth = 736
+          DataField = 'notes'
+          DataSource = dsLink
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
+          ScrollBars = ssAutoVertical
+          TabOrder = 0
+        end
+      end
+      object pPhotographersCamera: TPanel
+        Left = 0
+        Height = 56
+        Top = 1006
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 18
+        object lblPhotographer1: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Photographer 1:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblPhotographer2: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Photographer 2:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblCamera: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Camera:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label58: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 1
+          BorderSpacing.Top = 4
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object ePhotographer1: TDBEditButton
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 0
+          ButtonWidth = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'photographer_1_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = ePhotographer1ButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = ePhotographer1KeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = ePhotographer1KeyPress
+        end
+        object ePhotographer2: TDBEditButton
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 1
+          ButtonWidth = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'photographer_2_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = ePhotographer2ButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = ePhotographer2KeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = ePhotographer2KeyPress
+        end
+        object cbCamera: TDBComboBox
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'camera_name'
+          DataSource = dsLink
+          ItemHeight = 20
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+          TabOrder = 2
+        end
+      end
+      object pTitleCapture: TPanel
+        Left = 0
+        Height = 30
+        Top = 16
+        Width = 773
+        Align = alTop
+        Alignment = taLeftJustify
+        BorderSpacing.Top = 16
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ClientHeight = 30
+        ClientWidth = 773
+        Font.Color = 13066075
+        Font.Height = -20
+        ParentBackground = False
+        ParentFont = False
+        TabOrder = 0
+        object lblTitleCapture: TLabel
+          Left = 16
+          Height = 30
+          Top = 0
+          Width = 108
+          Align = alLeft
+          Caption = 'Capture info'
+          ParentColor = False
+        end
+      end
+      object pTitleMetrics: TPanel
+        Left = 0
+        Height = 30
+        Top = 398
+        Width = 773
+        Align = alTop
+        Alignment = taLeftJustify
+        BorderSpacing.Top = 16
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ClientHeight = 30
+        ClientWidth = 773
+        Font.Color = 13066075
+        Font.Height = -20
+        ParentBackground = False
+        ParentFont = False
+        TabOrder = 7
+        object lblTitleMetrics: TLabel
+          Left = 16
+          Height = 30
+          Top = 0
+          Width = 127
+          Align = alLeft
+          Caption = 'Measurements'
+          ParentColor = False
+        end
+      end
+      object pTitleCollection: TPanel
+        Left = 0
+        Height = 30
+        Top = 920
+        Width = 773
+        Align = alTop
+        Alignment = taLeftJustify
+        BorderSpacing.Top = 16
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ClientHeight = 30
+        ClientWidth = 773
+        Font.Color = 13066075
+        Font.Height = -20
+        ParentBackground = False
+        ParentFont = False
+        TabOrder = 16
+        object lblTitleCollection: TLabel
+          Left = 16
+          Height = 30
+          Top = 0
+          Width = 73
+          Align = alLeft
+          Caption = 'Samples'
+          ParentColor = False
+        end
+      end
+      object pTypeNetLongLat: TPanel
+        Left = 0
+        Height = 56
+        Top = 158
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 3
+        object lblCaptureType: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Type: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblNet: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Mistnet:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblLongitude: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Longitude:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblLatitude: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Latitude:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbCaptureType: TDBComboBox
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'capture_type'
+          DataSource = dsLink
+          ItemHeight = 20
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbCaptureTypeKeyPress
+          Style = csDropDownList
+          TabOrder = 0
+        end
+        object eNet: TDBEditButton
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 1
+          ButtonWidth = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'net_number'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eNetKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetKeyPress
+        end
+        object eLongitude: TDBEditButton
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 2
+          ButtonWidth = 0
+          ImageIndex = 69
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'longitude'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = eLongitudeButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eLongitudeKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eLatitude: TDBEditButton
+          Left = 580
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 3
+          ButtonWidth = 0
+          ImageIndex = 69
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'latitude'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eLongitudeKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+      end
+      object pMetrics1: TPanel
+        Left = 0
+        Height = 56
+        Top = 428
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 8
+        object lblCloacalProtuberance: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Cloacal protuberance:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBroodPatch: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Brood patch:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblFat: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Subcutaneous fat:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBodyMolt: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Body molt:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbCloacalProtuberance: TDBComboBox
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'cloacal_protuberance'
+          DataSource = dsLink
+          ItemHeight = 20
+          Items.Strings = (
+            'U'
+            'N'
+            'S'
+            'M'
+            'L'
+          )
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+          TabOrder = 0
+        end
+        object cbBroodPatch: TDBComboBox
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'brood_patch'
+          DataSource = dsLink
+          ItemHeight = 20
+          Items.Strings = (
+            'F'
+            'N'
+            'V'
+            'W'
+            'O'
+          )
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+          TabOrder = 1
+        end
+        object cbFat: TDBComboBox
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'fat'
+          DataSource = dsLink
+          ItemHeight = 20
+          Items.Strings = (
+            'N'
+            'T'
+            'L'
+            'H'
+            'S'
+            'B'
+            'G'
+            'V'
+          )
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+          TabOrder = 2
+        end
+        object cbBodyMolt: TDBComboBox
+          Left = 580
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'body_molt'
+          DataSource = dsLink
+          ItemHeight = 20
+          Items.Strings = (
+            'N'
+            'T'
+            'S'
+            'H'
+            'G'
+            'A'
+            'F'
+          )
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+          TabOrder = 3
+        end
+      end
+      object pMetrics2: TPanel
+        Left = 0
+        Height = 56
+        Top = 484
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 9
+        object lblFlightFeatherMolt: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Flight feathers molt:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblFlightFeatherWear: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Flight feathers wear:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblRightWingChord: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Right wing chord:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblFirstSecondaryChord: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'First secondary chord:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbFlightFeatherMolt: TDBComboBox
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'flight_feathers_molt'
+          DataSource = dsLink
+          ItemHeight = 20
+          Items.Strings = (
+            'N'
+            'S'
+            'A'
+          )
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+          TabOrder = 0
+        end
+        object cbFlightFeatherWear: TDBComboBox
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'flight_feathers_wear'
+          DataSource = dsLink
+          ItemHeight = 20
+          Items.Strings = (
+            'N'
+            'S'
+            'L'
+            'M'
+            'H'
+            'X'
+          )
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+          TabOrder = 1
+        end
+        object eRightWingChord: TDBEdit
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'right_wing_chord'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 2
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eFirstSecondaryChord: TDBEdit
+          Left = 580
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'first_secondary_chord'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 3
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+      end
+      object pMetrics3: TPanel
+        Left = 0
+        Height = 56
+        Top = 540
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 10
+        object lblTailLength: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Tail length:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblTarsusLength: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Tarsus length:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblTarsusDiameter: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Tarsus diameter:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblWeight: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Weight:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eTailLength: TDBEdit
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'tail_length'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eTarsusLength: TDBEdit
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'tarsus_length'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eTarsusDiameter: TDBEdit
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'tarsus_diameter'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 2
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eWeight: TDBEdit
+          Left = 580
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'weight'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 3
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+      end
+      object pMetrics5: TPanel
+        Left = 0
+        Height = 56
+        Top = 652
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 12
+        object lblBillHeight: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Bill height:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblTotalLength: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Total length:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblTotalCulmen: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Total culmen:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblPhilornisLarvae: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Philornis larvae quantity:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eBillHeight: TDBEdit
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'bill_height'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eTotalLength: TDBEdit
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'total_length'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eTotalCulmen: TDBEdit
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'culmen_length'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 2
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object ePhilornisLarvae: TDBEdit
+          Left = 580
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'philornis_larvae_tally'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 3
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+      end
+      object pMetrics4: TPanel
+        Left = 0
+        Height = 56
+        Top = 596
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 11
+        object Label44: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Skull length:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblExposedCulmen: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Exposed culmen:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblNostrilBillTip: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Nostril to bill tip:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBillWidth: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Bill width:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eSkullLength: TDBEdit
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'skull_length'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eExposedCulmen: TDBEdit
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'exposed_culmen'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eNostrilBillTip: TDBEdit
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'nostril_bill_tip'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 2
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eBillWidth: TDBEdit
+          Left = 580
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'bill_width'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 3
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+      end
+      object pKippMoltLimitsSkull: TPanel
+        Left = 0
+        Height = 56
+        Top = 708
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 13
+        object lblKippsIndex: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Kipp''s Index:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblMoltLimits: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Molt limits:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblSkullOssification: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Skull ossification:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label51: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 1
+          BorderSpacing.Top = 4
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eKippsIndex: TDBEdit
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'kipps_index'
+          DataSource = dsLink
+          ReadOnly = True
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          ParentColor = True
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eMoltLimits: TDBEditButton
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 1
+          ButtonWidth = 0
+          ImageIndex = 78
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'molt_limits'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object cbSkullOssification: TDBComboBox
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'skull_ossification'
+          DataSource = dsLink
+          ItemHeight = 20
+          Items.Strings = (
+            'N'
+            'T'
+            'L'
+            'H'
+            'G'
+            'A'
+            'F'
+          )
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+          TabOrder = 2
+        end
+      end
+      object pCycleSex: TPanel
+        Left = 0
+        Height = 56
+        Top = 764
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 14
+        object lblCycleCode: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Molt cycle:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblHowAged: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'How was aged:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblSex: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Sex:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblHowSexed: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'How was sexed:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eCycleCode: TDBEditButton
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 0
+          ButtonWidth = 0
+          ImageIndex = 78
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'cycle_code'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eHowAged: TDBEditButton
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 1
+          ButtonWidth = 0
+          ImageIndex = 78
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'how_aged'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object cbSex: TDBComboBox
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          Constraints.MinWidth = 172
+          DataField = 'subject_sex'
+          DataSource = dsLink
+          ItemHeight = 20
+          Items.Strings = (
+            'Macho'
+            'Fêmea'
+            'Indeterminado'
+          )
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbSexKeyPress
+          TabOrder = 2
+        end
+        object eHowSexed: TDBEditButton
+          Left = 580
+          Height = 28
+          Top = 28
+          Width = 172
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 172
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 172
+          ParentBackground = False
+          TabOrder = 3
+          ButtonWidth = 0
+          ImageIndex = 78
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'how_sexed'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+      end
+      object pPhotosFieldNumber: TPanel
+        Left = 0
+        Height = 56
+        Top = 1062
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 19
+        object lblStartPhoto: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'First photo number:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblEndPhoto: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Last photo number:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label60: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Constraints.MinWidth = 172
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblFieldNumber: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Field number:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eStartPhoto: TDBEdit
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'start_photo_number'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eEndPhoto: TDBEdit
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'end_photo_number'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object Label62: TLabel
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          BorderSpacing.Top = 4
+          Constraints.MinWidth = 172
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eFieldNumber: TDBEdit
+          Left = 580
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'field_number'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 2
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+      end
+      object pHemoglobinGlucose: TPanel
+        Left = 0
+        Height = 56
+        Top = 1118
+        Width = 773
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 4
+        ClientHeight = 56
+        ClientWidth = 773
+        ParentBackground = False
+        TabOrder = 20
+        object lblHemoglobin: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Hemoglobin (g/dL):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblHematocrit: TLabel
+          Left = 204
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Hematocrit (mm³):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblGlucose: TLabel
+          Left = 392
+          Height = 20
+          Top = 4
+          Width = 172
+          BorderSpacing.Top = 4
+          Caption = 'Glucose (mg/dL):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label65: TLabel
+          Left = 580
+          Height = 20
+          Top = 4
+          Width = 1
+          BorderSpacing.Top = 4
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eHemoglobin: TDBEdit
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'hemoglobin'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eHematocrit: TDBEdit
+          Left = 204
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'hematocrit'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+        object eGlucose: TDBEdit
+          Left = 392
+          Height = 28
+          Top = 28
+          Width = 172
+          DataField = 'glucose'
+          DataSource = dsLink
+          Constraints.MinWidth = 172
+          MaxLength = 0
+          TabOrder = 2
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCaptureTimeKeyPress
+        end
+      end
+    end
+  end
+  object dsLink: TDataSource
+    DataSet = DMG.qCaptures
+    OnDataChange = dsLinkDataChange
+    Left = 672
+    Top = 24
+  end
+end

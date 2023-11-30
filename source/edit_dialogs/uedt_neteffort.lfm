@@ -1,0 +1,806 @@
+object edtNetEffort: TedtNetEffort
+  Left = 352
+  Height = 824
+  Top = 33
+  Width = 488
+  Caption = 'New mistnet effort'
+  ClientHeight = 824
+  ClientWidth = 488
+  DesignTimePPI = 120
+  OnClose = FormClose
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 772
+    Width = 488
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object sBox: TScrollBox
+    Left = 0
+    Height = 772
+    Top = 0
+    Width = 488
+    HorzScrollBar.Page = 488
+    VertScrollBar.Page = 772
+    Align = alClient
+    BorderStyle = bsNone
+    ClientHeight = 772
+    ClientWidth = 488
+    TabOrder = 0
+    object pClient: TPanel
+      Left = 0
+      Height = 772
+      Top = 0
+      Width = 488
+      Align = alTop
+      AutoSize = True
+      BevelOuter = bvNone
+      ChildSizing.TopBottomSpacing = 16
+      ClientHeight = 772
+      ClientWidth = 488
+      Color = 15066599
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 0
+      object pNotes: TPanel
+        Left = 0
+        Height = 142
+        Top = 614
+        Width = 488
+        Align = alTop
+        BorderSpacing.Top = 16
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 142
+        ClientWidth = 488
+        ParentBackground = False
+        TabOrder = 0
+        object lblNotes: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 42
+          AutoSize = False
+          BorderSpacing.Top = 4
+          Caption = 'Notes:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object mNotes: TDBMemo
+          Left = 16
+          Height = 113
+          Top = 29
+          Width = 456
+          Anchors = [akTop, akLeft, akRight]
+          Constraints.MinWidth = 456
+          DataField = 'notes'
+          DataSource = dsLink
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
+          ScrollBars = ssAutoVertical
+          TabOrder = 0
+        end
+      end
+      object pFromToNumber: TPanel
+        Left = 0
+        Height = 58
+        Top = 102
+        Width = 488
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 58
+        ClientWidth = 488
+        ParentBackground = False
+        TabOrder = 1
+        object lblStartNumber: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Permanent mistnet:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblNetNumber: TLabel
+          Left = 252
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Mistnet number: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object ePermanentNet: TDBEditButton
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 220
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 220
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 220
+          ParentBackground = False
+          TabOrder = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'permanent_net_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = ePermanentNetButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = ePermanentNetDBEditKeyPress
+        end
+        object eNetNumber: TDBEdit
+          Left = 252
+          Height = 28
+          Top = 28
+          Width = 220
+          DataField = 'net_number'
+          DataSource = dsLink
+          Constraints.MinWidth = 220
+          MaxLength = 0
+          TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+        end
+      end
+      object pFromToNumber1: TPanel
+        Left = 0
+        Height = 58
+        Top = 160
+        Width = 488
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 58
+        ClientWidth = 488
+        ParentBackground = False
+        TabOrder = 2
+        object lblStartNumber1: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Longitude:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblEndNumber1: TLabel
+          Left = 252
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Latitude:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eLongitude: TDBEditButton
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 220
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 220
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 220
+          ParentBackground = False
+          TabOrder = 0
+          ImageIndex = 69
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'longitude'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = eLongitudeButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eNetNumberKeyPress
+        end
+        object eLatitude: TDBEditButton
+          Left = 252
+          Height = 28
+          Top = 28
+          Width = 220
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 220
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 220
+          ParentBackground = False
+          TabOrder = 1
+          ImageIndex = 69
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'latitude'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = eLongitudeButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eNetNumberKeyPress
+        end
+      end
+      object pFromToNumber2: TPanel
+        Left = 0
+        Height = 58
+        Top = 234
+        Width = 488
+        Align = alTop
+        BorderSpacing.Top = 16
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 58
+        ClientWidth = 488
+        ParentBackground = False
+        TabOrder = 3
+        object lblStartNumber2: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Mistnet length (m):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblEndNumber2: TLabel
+          Left = 252
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Mistnet height (m):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eNetLength: TDBEdit
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 220
+          DataField = 'net_length'
+          DataSource = dsLink
+          Constraints.MinWidth = 220
+          MaxLength = 0
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+        end
+        object eNetHeight: TDBEdit
+          Left = 252
+          Height = 28
+          Top = 28
+          Width = 220
+          DataField = 'net_height'
+          DataSource = dsLink
+          Constraints.MinWidth = 220
+          MaxLength = 0
+          TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+        end
+      end
+      object pFromToNumber3: TPanel
+        Left = 0
+        Height = 58
+        Top = 292
+        Width = 488
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 58
+        ClientWidth = 488
+        ParentBackground = False
+        TabOrder = 4
+        object lblEndNumber3: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Mesh size:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblStartNumber3: TLabel
+          Left = 252
+          Height = 20
+          Top = 4
+          Width = 118
+          BorderSpacing.Top = 4
+          Caption = 'Mistnet area (m²):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbNetMesh: TDBComboBox
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 220
+          Constraints.MinWidth = 220
+          DataField = 'net_mesh'
+          DataSource = dsLink
+          ItemHeight = 20
+          Items.Strings = (
+            '14x14'
+            '16x16'
+            '19x19'
+            '20x20'
+            '22x22'
+            '30x30'
+            '45x45'
+            '60x60'
+            '70x70'
+          )
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+          TabOrder = 0
+        end
+        object txtNetArea: TDBText
+          Left = 252
+          Height = 28
+          Top = 28
+          Width = 118
+          Alignment = taRightJustify
+          DataField = 'net_area'
+          DataSource = dsLink
+          Layout = tlCenter
+          ParentColor = False
+        end
+      end
+      object pFromToNumber4: TPanel
+        Left = 0
+        Height = 58
+        Top = 366
+        Width = 488
+        Align = alTop
+        BorderSpacing.Top = 16
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 58
+        ClientWidth = 488
+        ParentBackground = False
+        TabOrder = 5
+        object lblStartNumber4: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Survey date: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblEndNumber4: TLabel
+          Left = 252
+          Height = 20
+          Top = 4
+          Width = 130
+          BorderSpacing.Top = 4
+          Caption = 'Total open time (h):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eDate: TDBEditButton
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 220
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 220
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 220
+          ParentBackground = False
+          TabOrder = 0
+          ImageIndex = 18
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          TextHint = 'DD/MM/YYYY'
+          DataField = 'sample_date'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = eDateButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eNetNumberKeyPress
+        end
+        object txtTotalOpenTime: TDBText
+          Left = 252
+          Height = 28
+          Top = 28
+          Width = 130
+          Alignment = taRightJustify
+          DataField = 'open_time_total'
+          DataSource = dsLink
+          Layout = tlCenter
+          ParentColor = False
+        end
+      end
+      object pFromToNumber5: TPanel
+        Left = 0
+        Height = 58
+        Top = 424
+        Width = 488
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 58
+        ClientWidth = 488
+        ParentBackground = False
+        TabOrder = 6
+        object lblStartNumber5: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Opening time 1: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblEndNumber5: TLabel
+          Left = 252
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Closing time 1: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eNetOpen1: TDBEdit
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 220
+          DataField = 'net_open_1'
+          DataSource = dsLink
+          Constraints.MinWidth = 220
+          MaxLength = 0
+          TabOrder = 0
+          TextHint = 'HH:MM'
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+        end
+        object eNetClose1: TDBEdit
+          Left = 252
+          Height = 28
+          Top = 28
+          Width = 220
+          DataField = 'net_close_1'
+          DataSource = dsLink
+          Constraints.MinWidth = 220
+          MaxLength = 0
+          TabOrder = 1
+          TextHint = 'HH:MM'
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+        end
+      end
+      object pFromToNumber6: TPanel
+        Left = 0
+        Height = 58
+        Top = 482
+        Width = 488
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 58
+        ClientWidth = 488
+        ParentBackground = False
+        TabOrder = 7
+        object lblStartNumber6: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Opening time 2:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblEndNumber6: TLabel
+          Left = 252
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Closing time 2:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eNetOpen2: TDBEdit
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 220
+          DataField = 'net_open_2'
+          DataSource = dsLink
+          Constraints.MinWidth = 220
+          MaxLength = 0
+          TabOrder = 0
+          TextHint = 'HH:MM'
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+        end
+        object eNetClose2: TDBEdit
+          Left = 252
+          Height = 28
+          Top = 28
+          Width = 220
+          DataField = 'net_close_2'
+          DataSource = dsLink
+          Constraints.MinWidth = 220
+          MaxLength = 0
+          TabOrder = 1
+          TextHint = 'HH:MM'
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+        end
+      end
+      object pFromToNumber7: TPanel
+        Left = 0
+        Height = 58
+        Top = 540
+        Width = 488
+        Align = alTop
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 58
+        ClientWidth = 488
+        ParentBackground = False
+        TabOrder = 8
+        object lblStartNumber7: TLabel
+          Left = 16
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Opening time 3:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblEndNumber7: TLabel
+          Left = 252
+          Height = 20
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
+          Caption = 'Closing time 3:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eNetOpen3: TDBEdit
+          Left = 16
+          Height = 28
+          Top = 28
+          Width = 220
+          DataField = 'net_open_3'
+          DataSource = dsLink
+          Constraints.MinWidth = 220
+          MaxLength = 0
+          TabOrder = 0
+          TextHint = 'HH:MM'
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+        end
+        object eNetClose3: TDBEdit
+          Left = 252
+          Height = 28
+          Top = 28
+          Width = 220
+          DataField = 'net_close_3'
+          DataSource = dsLink
+          Constraints.MinWidth = 220
+          MaxLength = 0
+          TabOrder = 1
+          TextHint = 'HH:MM'
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+        end
+      end
+      object pSurvey: TBCPanel
+        Left = 16
+        Height = 70
+        Top = 16
+        Width = 456
+        Align = alTop
+        BorderSpacing.Left = 16
+        BorderSpacing.Right = 16
+        BorderSpacing.Bottom = 16
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 8
+        Background.Color = 16448250
+        Background.Gradient1.StartColor = clWhite
+        Background.Gradient1.EndColor = clBlack
+        Background.Gradient1.GradientType = gtLinear
+        Background.Gradient1.Point1XPercent = 0
+        Background.Gradient1.Point1YPercent = 0
+        Background.Gradient1.Point2XPercent = 0
+        Background.Gradient1.Point2YPercent = 100
+        Background.Gradient2.StartColor = clWhite
+        Background.Gradient2.EndColor = clBlack
+        Background.Gradient2.GradientType = gtLinear
+        Background.Gradient2.Point1XPercent = 0
+        Background.Gradient2.Point1YPercent = 0
+        Background.Gradient2.Point2XPercent = 0
+        Background.Gradient2.Point2YPercent = 100
+        Background.Gradient1EndPercent = 35
+        Background.Style = bbsColor
+        BevelInner = bvNone
+        BevelOuter = bvRaised
+        BevelWidth = 1
+        Border.Color = 13750737
+        Border.Style = bboSolid
+        BorderBCStyle = bpsBorder
+        FontEx.Color = clDefault
+        FontEx.FontQuality = fqSystemClearType
+        FontEx.Shadow = False
+        FontEx.ShadowRadius = 5
+        FontEx.ShadowOffsetX = 5
+        FontEx.ShadowOffsetY = 5
+        FontEx.Style = []
+        ParentBackground = False
+        Rounding.RoundX = 8
+        Rounding.RoundY = 8
+        TabOrder = 9
+        Visible = False
+        object lblSurvey: TLabel
+          Left = 17
+          Height = 20
+          Top = 9
+          Width = 422
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Survey:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eSurvey: TDBEditButton
+          Left = 17
+          Height = 23
+          Top = 33
+          Width = 422
+          Align = alTop
+          BevelOuter = bvNone
+          ClientHeight = 23
+          ClientWidth = 422
+          Constraints.MaxHeight = 23
+          ParentBackground = False
+          TabOrder = 0
+          ButtonWidth = 0
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = eSurveyButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eSurveyDBEditKeyPress
+        end
+      end
+    end
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 50
+    Top = 774
+    Width = 488
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 50
+    ClientWidth = 488
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    object sbSave: TButton
+      Left = 16
+      Height = 34
+      Top = 8
+      Width = 224
+      Caption = 'Save'
+      Constraints.MinWidth = 224
+      Enabled = False
+      TabOrder = 0
+      OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+    object sbCancel: TButton
+      Left = 248
+      Height = 34
+      Top = 8
+      Width = 224
+      Caption = 'Cancel'
+      Constraints.MinWidth = 224
+      ModalResult = 2
+      TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+  end
+  object dsLink: TDataSource
+    OnDataChange = dsLinkDataChange
+    Left = 392
+    Top = 12
+  end
+end

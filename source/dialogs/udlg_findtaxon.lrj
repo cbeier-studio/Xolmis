@@ -1,0 +1,4 @@
+{"version":1,"strings":[
+{"hash":108945182,"name":"tdlgfindtaxon.caption","sourcebytes":[70,105,110,100,32,116,97,120,111,110],"value":"Find taxon"},
+{"hash":218394958,"name":"tdlgfindtaxon.ep.texthint","sourcebytes":[70,105,110,100,46,46,46],"value":"Find..."}
+]}

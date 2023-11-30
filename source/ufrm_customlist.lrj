@@ -1,0 +1,19 @@
+{"version":1,"strings":[
+{"hash":340132,"name":"tfrmcustomlist.caption","sourcebytes":[76,105,115,116],"value":"List"},
+{"hash":2743283,"name":"tfrmcustomlist.lblmarkedfilter.caption","sourcebytes":[77,97,114,107,101,100,32,114,101,99,111,114,100,115],"value":"Marked records"},
+{"hash":3021811,"name":"tfrmcustomlist.lblunmarkedfilter.caption","sourcebytes":[85,110,109,97,114,107,101,100,32,114,101,99,111,114,100,115],"value":"Unmarked records"},
+{"hash":73150883,"name":"tfrmcustomlist.titlequickfilters.caption","sourcebytes":[81,117,105,99,107,32,102,105,108,116,101,114,115],"value":"Quick filters"},
+{"hash":84114883,"name":"tfrmcustomlist.titleimages.caption","sourcebytes":[73,109,97,103,101,115],"value":"Images"},
+{"hash":76263523,"name":"tfrmcustomlist.titleaudio.caption","sourcebytes":[65,117,100,105,111,115],"value":"Audios"},
+{"hash":163258307,"name":"tfrmcustomlist.titleimages1.caption","sourcebytes":[65,116,116,97,99,104,109,101,110,116,115],"value":"Attachments"},
+{"hash":180631753,"name":"tfrmcustomlist.titlesummary.caption","sourcebytes":[83,117,109,109,97,114,121],"value":"Summary"},
+{"hash":176149006,"name":"tfrmcustomlist.titlerecycle.caption","sourcebytes":[82,101,99,121,99,108,101,32,98,105,110],"value":"Recycle bin"},
+{"hash":252360409,"name":"tfrmcustomlist.sbrecordhistory.caption","sourcebytes":[72,105,115,116,111,114,121],"value":"History"},
+{"hash":366789,"name":"tfrmcustomlist.sbsaverecord.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tfrmcustomlist.sbcancelrecord.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":120172974,"name":"tfrmcustomlist.lblrecordstatus.caption","sourcebytes":[76,111,97,100,105,110,103,32,114,101,99,111,114,100,115,46,46,46],"value":"Loading records..."},
+{"hash":146640072,"name":"tfrmcustomlist.pmgrefresh.caption","sourcebytes":[82,101,102,114,101,115,104],"value":"Refresh"},
+{"hash":310020,"name":"tfrmcustomlist.pmgedit.caption","sourcebytes":[69,100,105,116],"value":"Edit"},
+{"hash":78392485,"name":"tfrmcustomlist.pmgdel.caption","sourcebytes":[68,101,108,101,116,101],"value":"Delete"},
+{"hash":111949177,"name":"tfrmcustomlist.pmgrecordhistory.caption","sourcebytes":[82,101,99,111,114,100,32,104,105,115,116,111,114,121],"value":"Record history"}
+]}

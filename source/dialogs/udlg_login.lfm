@@ -1,0 +1,181 @@
+object dlgLogin: TdlgLogin
+  Left = 352
+  Height = 389
+  Top = 33
+  Width = 306
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Xolmis'
+  ClientHeight = 389
+  ClientWidth = 306
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  ShowInTaskBar = stAlways
+  LCLVersion = '3.0.0.2'
+  object pBottom: TPanel
+    Left = 0
+    Height = 46
+    Top = 343
+    Width = 306
+    Align = alBottom
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 46
+    ClientWidth = 306
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    object sbOK: TButton
+      Left = 16
+      Height = 30
+      Top = 8
+      Width = 133
+      Caption = 'Sign in'
+      Constraints.MinWidth = 133
+      Enabled = False
+      Font.Name = 'Segoe UI Semibold'
+      ParentFont = False
+      TabOrder = 0
+    end
+    object sbCancel: TButton
+      Left = 157
+      Height = 30
+      Top = 8
+      Width = 133
+      Caption = 'Cancel'
+      Constraints.MinWidth = 133
+      ModalResult = 2
+      TabOrder = 1
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 341
+    Width = 306
+    Align = alBottom
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pClient: TPanel
+    Left = 0
+    Height = 341
+    Top = 0
+    Width = 306
+    Align = alClient
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 16
+    ClientHeight = 341
+    ClientWidth = 306
+    Color = 16444392
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object imgLogin: TImage
+      Left = 16
+      Height = 135
+      Top = 16
+      Width = 274
+      AntialiasingMode = amOn
+      Align = alTop
+      BorderSpacing.Bottom = 16
+      Center = True
+      ImageIndex = 3
+      ImageWidth = 128
+      Images = DMM.iLogos
+      Proportional = True
+    end
+    object eUsername: TEdit
+      Left = 16
+      Height = 28
+      Top = 237
+      Width = 274
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      TabOrder = 0
+      OnChange = eUsernameChange
+      OnKeyDown = eUsernameKeyDown
+      OnKeyPress = eUsernameKeyPress
+    end
+    object ePassword: TEditButton
+      Left = 16
+      Height = 28
+      Top = 297
+      Width = 274
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ButtonHint = 'Mostrar/ocultar senha'
+      ButtonWidth = 29
+      EchoMode = emPassword
+      Images = frmMain.bMenu
+      ImageIndex = 92
+      ImageWidth = 20
+      MaxLength = 0
+      NumGlyphs = 1
+      OnButtonClick = ePasswordButtonClick
+      OnKeyDown = eUsernameKeyDown
+      OnKeyPress = eUsernameKeyPress
+      PasswordChar = '*'
+      Spacing = 0
+      TabOrder = 1
+    end
+    object lblLogin: TLabel
+      Left = 16
+      Height = 30
+      Top = 167
+      Width = 274
+      Align = alTop
+      Alignment = taCenter
+      BorderSpacing.Bottom = 16
+      Caption = 'Authenticate'
+      Font.Color = 13066075
+      Font.Height = -21
+      Font.Name = 'Segoe UI Semibold'
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblUsername: TLabel
+      Left = 16
+      Height = 20
+      Top = 213
+      Width = 274
+      Align = alTop
+      BorderSpacing.Bottom = 4
+      Caption = 'Username:'
+      Layout = tlCenter
+      ParentColor = False
+    end
+    object lblPassword: TLabel
+      Left = 16
+      Height = 20
+      Top = 273
+      Width = 274
+      Align = alTop
+      BorderSpacing.Bottom = 4
+      Caption = 'Password:'
+      Layout = tlCenter
+      ParentColor = False
+    end
+  end
+  object BCrypt: TDCP_blowfish
+    Id = 5
+    Algorithm = 'Blowfish'
+    MaxKeySize = 448
+    BlockSize = 64
+    Left = 16
+    Top = 136
+  end
+end

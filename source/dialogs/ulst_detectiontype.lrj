@@ -1,0 +1,5 @@
+{"version":1,"strings":[
+{"hash":179056133,"name":"tlstdetectiontype.caption","sourcebytes":[68,101,116,101,99,116,105,111,110,32,116,121,112,101],"value":"Detection type"},
+{"hash":4749113,"name":"tlstdetectiontype.sbok.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":77089212,"name":"tlstdetectiontype.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+]}
