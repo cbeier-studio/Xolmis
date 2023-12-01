@@ -73,6 +73,7 @@ begin
     dsConn.DataSet.Open;
 
   UpdateButtons;
+  dsConn.DataSet.Refresh;
 end;
 
 procedure TcfgDatabase.mmTestConnectionClick(Sender: TObject);

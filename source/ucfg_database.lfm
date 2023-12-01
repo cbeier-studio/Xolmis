@@ -32,30 +32,20 @@ object cfgDatabase: TcfgDatabase
       Top = 62
       Width = 398
       Align = alClient
-      DefaultNodeHeight = 23
-      DragHeight = 438
-      DragWidth = 250
       Header.AutoSizeIndex = 0
       Header.Columns = <      
         item
-          Margin = 5
           Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus]
           Position = 0
-          Spacing = 4
           Text = 'connection_name'
           Width = 350
           FieldName = 'connection_name'
           ColumnType = ctDBField
         end>
-      Header.DefaultHeight = 24
-      Header.Height = 24
       Header.Options = [hoColumnResize, hoDrag, hoHotTrack, hoShowHint, hoShowSortGlyphs]
       Header.Style = hsFlatButtons
       Images = iconDB
-      Indent = 23
-      Margin = 5
       TabOrder = 0
-      TextMargin = 5
       OnGetImageIndex = vtConnectionsGetImageIndex
       OnKeyPress = FormKeyPress
       DBOptions.DataSource = dsConn
