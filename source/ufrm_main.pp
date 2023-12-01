@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons, ActnList,
-  ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton,
+  ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton, DefaultTranslator,
   ufrm_customgrid, ufrm_customlist, TDICardPanel, udlg_rechistory, cbs_datatypes;
 
 type

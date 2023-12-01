@@ -1410,6 +1410,22 @@ msgid ""
 "determination not attempted\",\"Z - less precise age (< 95%) but high "
 "certainty\""
 msgstr ""
+"\"Diferenças físicas\",\"B - placa de incubação\",\"C - protuberância "
+"Cloacal\",\"@ - ovo no oviduto\",\"E - cor do olho\",\"I - cor da boca/bico "
+"ou estriamento no bico (em beija-flores)\",\"G - ricto\",\"$ - pés ou "
+"pernas\",\"S - ossificação craniana\",\"Q - medidas (detalhes nas notas)\","
+"\"Y - muda de penas de voo simétrica\",\"Caracteres de plumagem\",\"K - "
+"plumagem básica definitiva\",\"A - plumagem básica Alterna\",\"F - plumagem "
+"Formativa (se aplica à primeira plumagem alterna também)\",\"J - plumagem "
+"Juvenil\",\"M - limites de Muda\",\"P - Plumagem (somente para dimorfismo "
+"sexual)\",\"L - extensão de mancha de cor da plumagem (detalhes nas notas)\","
+"\"Caracteres das penas\",\"W - desgaste das penas\",\"V - formato das "
+"penas\",\"R - muda pré-juvenil (primeira pré-básica)\",\"= - alinhamento das "
+"barras de falha\",\"# - alinhamento das barras de crescimento\","
+"\"Indeterminado ou restante\",\"O - Outro (como comportamento/cópula; "
+"incluir nas notas)\",\"U - indeterminado após exame\",\"X - determinação de "
+"idade ou sexo não realizada\",\"Z - idade menos precisa (< 95%) mas alta "
+"certeza\""
 
 #: cbs_locale.rsidentifier
 msgctxt "cbs_locale.rsidentifier"
@@ -1694,6 +1710,13 @@ msgid ""
 "vs. alula covert/lesser alula\",\"A - Alula covert vs. lesser alula\",\"Y - "
 "It has limits but is not determined where\""
 msgstr ""
+"\"N - Nenhum limite de muda encontrado após exame\",\"U - limites de muda "
+"indeterminados após exame\",\"P - penas de voo Primárias\",\"S - penas de "
+"voo Secundárias\",\"D - coberteiras primárias\",\"G - Grandes coberteiras\","
+"\"V - primárias Vs. grandes coberteiras\",\"R - Retrizes\",\"L - coberteiras "
+"menores\",\"M - coberteiras medianas\",\"B - plumagem do corpo\",\"C - "
+"coberteira Carpal vs. coberteira da álula/álula menor\",\"A - coberteira da "
+"álula vs. álula menor\",\"Y - possui limites mas não foi determinado onde\""
 
 #: cbs_locale.rsmoreselected
 #, object-pascal-format
@@ -2074,6 +2097,8 @@ msgctxt "cbs_locale.rssamecoordinateformat"
 msgid ""
 "Select a destination coordinate type that is different from the origin type."
 msgstr ""
+"Selecione um formato de coordenada destino que seja diferente do formato de "
+"origem."
 
 #: cbs_locale.rssampleblooddry
 msgctxt "cbs_locale.rssampleblooddry"
@@ -2193,7 +2218,7 @@ msgstr "Visto"
 #: cbs_locale.rsselectcoordinatestypes
 msgctxt "cbs_locale.rsselectcoordinatestypes"
 msgid "Select the origin and destination coordinate types."
-msgstr ""
+msgstr "Selecione o formato de coordenadas de origem e de destino."
 
 #: cbs_locale.rssexfemale
 msgctxt "cbs_locale.rssexfemale"
@@ -2981,7 +3006,7 @@ msgstr "Atualizar registros"
 
 #: tcfgdatabase.vtconnections.header.columns[0].text
 msgid "connection_name"
-msgstr ""
+msgstr "Conexão"
 
 #: tcfgdelimiters.caption
 msgid "Delimitation options"
@@ -3846,7 +3871,7 @@ msgstr "OK"
 
 #: tdmm.openimgs.title
 msgid "Adicionar imagens"
-msgstr ""
+msgstr "Adicionar imagens"
 
 #: tedtbands.ckreported.caption
 msgctxt "tedtbands.ckreported.caption"
@@ -3930,7 +3955,7 @@ msgstr "Autoria:"
 
 #: tedtbotanictaxon.lblname.caption
 msgid "Scientific name: *"
-msgstr ""
+msgstr "Nome científico: *"
 
 #: tedtbotanictaxon.lblparenttaxon.caption
 msgctxt "tedtbotanictaxon.lblparenttaxon.caption"
@@ -3939,7 +3964,7 @@ msgstr "Táxon superior:"
 
 #: tedtbotanictaxon.lblrank.caption
 msgid "Taxonomic rank: *"
-msgstr ""
+msgstr "Nível taxonômico: *"
 
 #: tedtbotanictaxon.lblvalidname.caption
 msgctxt "tedtbotanictaxon.lblvalidname.caption"
@@ -3963,7 +3988,7 @@ msgstr "Salvar"
 
 #: tedtcapture.ckaudiorecordings.caption
 msgid "Audio(s)"
-msgstr ""
+msgstr "Áudio(s)"
 
 #: tedtcapture.ckbloodsample.caption
 msgctxt "tedtcapture.ckbloodsample.caption"
@@ -3982,7 +4007,7 @@ msgstr "Escapou"
 
 #: tedtcapture.ckfeathers.caption
 msgid "Feather(s)"
-msgstr ""
+msgstr "Pena(s)"
 
 #: tedtcapture.ckfeces.caption
 msgctxt "tedtcapture.ckfeces.caption"
@@ -3991,15 +4016,15 @@ msgstr "Fezes"
 
 #: tedtcapture.ckparasites.caption
 msgid "Parasite(s)"
-msgstr ""
+msgstr "Parasita(s)"
 
 #: tedtcapture.ckphotos.caption
 msgid "Photos"
-msgstr ""
+msgstr "Fotos"
 
 #: tedtcapture.ckwholespecimen.caption
 msgid "Specimen (whole)"
-msgstr ""
+msgstr "Espécime (inteiro)"
 
 #: tedtcapture.ecapturedate.texthint
 msgctxt "tedtcapture.ecapturedate.texthint"
@@ -4013,7 +4038,7 @@ msgstr "HH:MM"
 
 #: tedtcapture.label44.caption
 msgid "Skull length:"
-msgstr ""
+msgstr "Comprimento do crânio:"
 
 #: tedtcapture.lblage.caption
 msgctxt "tedtcapture.lblage.caption"
@@ -4022,7 +4047,7 @@ msgstr "Idade:"
 
 #: tedtcapture.lblannotator.caption
 msgid "Annotator: *"
-msgstr ""
+msgstr "Anotador: *"
 
 #: tedtcapture.lblband.caption
 msgctxt "tedtcapture.lblband.caption"
@@ -4036,31 +4061,31 @@ msgstr "Anilhador: *"
 
 #: tedtcapture.lblbillheight.caption
 msgid "Bill height:"
-msgstr ""
+msgstr "Altura do bico:"
 
 #: tedtcapture.lblbillwidth.caption
 msgid "Bill width:"
-msgstr ""
+msgstr "Largura do bico:"
 
 #: tedtcapture.lblbodymolt.caption
 msgid "Body molt:"
-msgstr ""
+msgstr "Muda do corpo:"
 
 #: tedtcapture.lblbroodpatch.caption
 msgid "Brood patch:"
-msgstr ""
+msgstr "Placa de incubação:"
 
 #: tedtcapture.lblcamera.caption
 msgid "Camera:"
-msgstr ""
+msgstr "Câmera:"
 
 #: tedtcapture.lblcapturedate.caption
 msgid "Capture date: *"
-msgstr ""
+msgstr "Data da captura: *"
 
 #: tedtcapture.lblcapturetime.caption
 msgid "Capture time:"
-msgstr ""
+msgstr "Hora da captura:"
 
 #: tedtcapture.lblcapturetype.caption
 msgctxt "tedtcapture.lblcapturetype.caption"
@@ -4069,23 +4094,23 @@ msgstr "Tipo: *"
 
 #: tedtcapture.lblcloacalprotuberance.caption
 msgid "Cloacal protuberance:"
-msgstr ""
+msgstr "Protuberância cloacal:"
 
 #: tedtcapture.lblcyclecode.caption
 msgid "Molt cycle:"
-msgstr ""
+msgstr "Ciclo de muda:"
 
 #: tedtcapture.lblendphoto.caption
 msgid "Last photo number:"
-msgstr ""
+msgstr "Número da última foto:"
 
 #: tedtcapture.lblexposedculmen.caption
 msgid "Exposed culmen:"
-msgstr ""
+msgstr "Cúlmen exposto:"
 
 #: tedtcapture.lblfat.caption
 msgid "Subcutaneous fat:"
-msgstr ""
+msgstr "Gordura subcutânea:"
 
 #: tedtcapture.lblfieldnumber.caption
 msgctxt "tedtcapture.lblfieldnumber.caption"
@@ -4094,39 +4119,39 @@ msgstr "Número de campo:"
 
 #: tedtcapture.lblfirstsecondarychord.caption
 msgid "First secondary chord:"
-msgstr ""
+msgstr "Corda da primeira secundária:"
 
 #: tedtcapture.lblflightfeathermolt.caption
 msgid "Flight feathers molt:"
-msgstr ""
+msgstr "Muda das penas de voo:"
 
 #: tedtcapture.lblflightfeatherwear.caption
 msgid "Flight feathers wear:"
-msgstr ""
+msgstr "Desgaste das penas de voo:"
 
 #: tedtcapture.lblglucose.caption
 msgid "Glucose (mg/dL):"
-msgstr ""
+msgstr "Glicose (mg/dL):"
 
 #: tedtcapture.lblhematocrit.caption
 msgid "Hematocrit (mm³):"
-msgstr ""
+msgstr "Hematócrito (mm³):"
 
 #: tedtcapture.lblhemoglobin.caption
 msgid "Hemoglobin (g/dL):"
-msgstr ""
+msgstr "Hemoglobina (g/dL):"
 
 #: tedtcapture.lblhowaged.caption
 msgid "How was aged:"
-msgstr ""
+msgstr "Como foi etariado:"
 
 #: tedtcapture.lblhowsexed.caption
 msgid "How was sexed:"
-msgstr ""
+msgstr "Como foi sexado:"
 
 #: tedtcapture.lblkippsindex.caption
 msgid "Kipp's Index:"
-msgstr ""
+msgstr "Índice de Kipp:"
 
 #: tedtcapture.lbllatitude.caption
 msgctxt "tedtcapture.lbllatitude.caption"
@@ -4150,15 +4175,15 @@ msgstr "Longitude:"
 
 #: tedtcapture.lblmoltlimits.caption
 msgid "Molt limits:"
-msgstr ""
+msgstr "Limites de muda:"
 
 #: tedtcapture.lblnet.caption
 msgid "Mistnet:"
-msgstr ""
+msgstr "Rede:"
 
 #: tedtcapture.lblnostrilbilltip.caption
 msgid "Nostril to bill tip:"
-msgstr ""
+msgstr "Narina-ponta do bico:"
 
 #: tedtcapture.lblnotes.caption
 msgctxt "tedtcapture.lblnotes.caption"
@@ -4167,15 +4192,15 @@ msgstr "Anotações:"
 
 #: tedtcapture.lblphilornislarvae.caption
 msgid "Philornis larvae quantity:"
-msgstr ""
+msgstr "Quantidade de larvas de Philornis:"
 
 #: tedtcapture.lblphotographer1.caption
 msgid "Photographer 1:"
-msgstr ""
+msgstr "Fotógrafo 1:"
 
 #: tedtcapture.lblphotographer2.caption
 msgid "Photographer 2:"
-msgstr ""
+msgstr "Fotógrafo 2:"
 
 #: tedtcapture.lblremovedband.caption
 msgctxt "tedtcapture.lblremovedband.caption"
@@ -4189,7 +4214,7 @@ msgstr "Tarso direito:"
 
 #: tedtcapture.lblrightwingchord.caption
 msgid "Right wing chord:"
-msgstr ""
+msgstr "Corda da asa direita:"
 
 #: tedtcapture.lblsex.caption
 msgctxt "tedtcapture.lblsex.caption"
@@ -4198,11 +4223,11 @@ msgstr "Sexo:"
 
 #: tedtcapture.lblskullossification.caption
 msgid "Skull ossification:"
-msgstr ""
+msgstr "Ossificação craniana:"
 
 #: tedtcapture.lblstartphoto.caption
 msgid "First photo number:"
-msgstr ""
+msgstr "Número da primeira foto:"
 
 #: tedtcapture.lblstatus.caption
 msgctxt "tedtcapture.lblstatus.caption"
@@ -4216,15 +4241,15 @@ msgstr "Amostragem:"
 
 #: tedtcapture.lbltaillength.caption
 msgid "Tail length:"
-msgstr ""
+msgstr "Comprimento da cauda:"
 
 #: tedtcapture.lbltarsusdiameter.caption
 msgid "Tarsus diameter:"
-msgstr ""
+msgstr "Diâmetro do tarso:"
 
 #: tedtcapture.lbltarsuslength.caption
 msgid "Tarsus length:"
-msgstr ""
+msgstr "Comprimento do tarso:"
 
 #: tedtcapture.lbltaxon.caption
 msgctxt "tedtcapture.lbltaxon.caption"
@@ -4233,27 +4258,27 @@ msgstr "Táxon:"
 
 #: tedtcapture.lbltitlecapture.caption
 msgid "Capture info"
-msgstr ""
+msgstr "Informações da captura"
 
 #: tedtcapture.lbltitlecollection.caption
 msgid "Samples"
-msgstr ""
+msgstr "Amostras"
 
 #: tedtcapture.lbltitlemetrics.caption
 msgid "Measurements"
-msgstr ""
+msgstr "Medidas"
 
 #: tedtcapture.lbltotalculmen.caption
 msgid "Total culmen:"
-msgstr ""
+msgstr "Cúlmen total:"
 
 #: tedtcapture.lbltotallength.caption
 msgid "Total length:"
-msgstr ""
+msgstr "Comprimento total:"
 
 #: tedtcapture.lblweight.caption
 msgid "Weight:"
-msgstr ""
+msgstr "Peso:"
 
 #: tedtcapture.sbcancel.caption
 msgctxt "tedtcapture.sbcancel.caption"
@@ -4267,7 +4292,7 @@ msgstr "Salvar"
 
 #: tedtdatabase.ckremotedb.caption
 msgid "Remote database"
-msgstr ""
+msgstr "Banco de dados remoto"
 
 #: tedtdatabase.lbldbfile.caption
 msgctxt "tedtdatabase.lbldbfile.caption"
@@ -4276,7 +4301,7 @@ msgstr "Arquivo do banco de dados: *"
 
 #: tedtdatabase.lbldbmanager.caption
 msgid "Database type: *"
-msgstr ""
+msgstr "Tipo de banco de dados: *"
 
 #: tedtdatabase.lbldbpass.caption
 msgctxt "tedtdatabase.lbldbpass.caption"
@@ -4285,11 +4310,11 @@ msgstr "Senha:"
 
 #: tedtdatabase.lbldbport.caption
 msgid "Port:"
-msgstr ""
+msgstr "Porta:"
 
 #: tedtdatabase.lbldbserver.caption
 msgid "Server:"
-msgstr ""
+msgstr "Servidor:"
 
 #: tedtdatabase.lbldbuser.caption
 msgctxt "tedtdatabase.lbldbuser.caption"
@@ -4298,7 +4323,7 @@ msgstr "Nome de usuário:"
 
 #: tedtdatabase.lblname.caption
 msgid "Connection name: *"
-msgstr ""
+msgstr "Nome da conexão: *"
 
 #: tedtdatabase.opendlg.title
 msgctxt "tedtdatabase.opendlg.title"
@@ -4307,7 +4332,7 @@ msgstr "Abrir"
 
 #: tedtdatabase.ptitleauthentication.caption
 msgid "Authentication"
-msgstr ""
+msgstr "Autenticação"
 
 #: tedtdatabase.sbcancel.caption
 msgctxt "tedtdatabase.sbcancel.caption"
@@ -4321,11 +4346,11 @@ msgstr "Salvar"
 
 #: tedtegg.ckhatched.caption
 msgid "Hatched"
-msgstr ""
+msgstr "Eclodiu"
 
 #: tedtegg.lbleggseq.caption
 msgid "Egg number: *"
-msgstr ""
+msgstr "Número do ovo: *"
 
 #: tedtegg.lblfieldnumber.caption
 msgctxt "tedtegg.lblfieldnumber.caption"
@@ -4334,15 +4359,15 @@ msgstr "Número de campo:"
 
 #: tedtegg.lblindividual.caption
 msgid "Individual hatched:"
-msgstr ""
+msgstr "Indivíduo eclodido:"
 
 #: tedtegg.lbllength.caption
 msgid "Length:"
-msgstr ""
+msgstr "Comprimento:"
 
 #: tedtegg.lblmeasuredate.caption
 msgid "Measurement date:"
-msgstr ""
+msgstr "Data de medição:"
 
 #: tedtegg.lblnotes.caption
 msgctxt "tedtegg.lblnotes.caption"
@@ -4356,23 +4381,23 @@ msgstr "Observador: *"
 
 #: tedtegg.lblshape.caption
 msgid "Format:"
-msgstr ""
+msgstr "Formato:"
 
 #: tedtegg.lblshellcolor.caption
 msgid "Eggshell color:"
-msgstr ""
+msgstr "Cor da casca:"
 
 #: tedtegg.lblshellpattern.caption
 msgid "Eggshell pattern:"
-msgstr ""
+msgstr "Padrão da casca:"
 
 #: tedtegg.lblshelltexture.caption
 msgid "Eggshell texture:"
-msgstr ""
+msgstr "Textura da casca:"
 
 #: tedtegg.lblstage.caption
 msgid "Phase:"
-msgstr ""
+msgstr "Fase:"
 
 #: tedtegg.lbltaxon.caption
 msgctxt "tedtegg.lbltaxon.caption"
@@ -4381,15 +4406,15 @@ msgstr "Táxon: *"
 
 #: tedtegg.lblvolume.caption
 msgid "Volume:"
-msgstr ""
+msgstr "Volume:"
 
 #: tedtegg.lblweight.caption
 msgid "Mass:"
-msgstr ""
+msgstr "Massa:"
 
 #: tedtegg.lblwidth.caption
 msgid "Width:"
-msgstr ""
+msgstr "Largura:"
 
 #: tedtegg.sbcancel.caption
 msgctxt "tedtegg.sbcancel.caption"
@@ -4418,11 +4443,11 @@ msgstr "Descrição:"
 
 #: tedtexpedition.lblduration.caption
 msgid "Duration (days):"
-msgstr ""
+msgstr "Duração (dias):"
 
 #: tedtexpedition.lblenddate.caption
 msgid "End date: *"
-msgstr ""
+msgstr "Data final: *"
 
 #: tedtexpedition.lbllocality.caption
 msgctxt "tedtexpedition.lbllocality.caption"
@@ -4441,7 +4466,7 @@ msgstr "Projeto:"
 
 #: tedtexpedition.lblstartdate.caption
 msgid "Start date: *"
-msgstr ""
+msgstr "Data inicial: *"
 
 #: tedtexpedition.sbcancel.caption
 msgctxt "tedtexpedition.sbcancel.caption"
@@ -4470,7 +4495,7 @@ msgstr "Latitude:"
 
 #: tedtimageinfo.lblbandprefix1.caption
 msgid "Image date: *"
-msgstr ""
+msgstr "Data da imagem: *"
 
 #: tedtimageinfo.lblbandsize1.caption
 msgctxt "tedtimageinfo.lblbandsize1.caption"
@@ -4479,19 +4504,19 @@ msgstr "Longitude:"
 
 #: tedtimageinfo.lblbandstatus1.caption
 msgid "Image type:"
-msgstr ""
+msgstr "Tipo da imagem:"
 
 #: tedtimageinfo.lblbandstatus2.caption
 msgid "Coordinates precision:"
-msgstr ""
+msgstr "Precisão da coordenada:"
 
 #: tedtimageinfo.lblbandsuffix1.caption
 msgid "Image time:"
-msgstr ""
+msgstr "Hora da imagem:"
 
 #: tedtimageinfo.lblnotes1.caption
 msgid "Subtitle:"
-msgstr ""
+msgstr "Legenda:"
 
 #: tedtimageinfo.lblproject.caption
 msgctxt "tedtimageinfo.lblproject.caption"
@@ -4500,7 +4525,7 @@ msgstr "Indivíduo:"
 
 #: tedtimageinfo.lblproject1.caption
 msgid "Capture:"
-msgstr ""
+msgstr "Captura:"
 
 #: tedtimageinfo.lblproject2.caption
 msgctxt "tedtimageinfo.lblproject2.caption"
@@ -4509,15 +4534,15 @@ msgstr "Amostragem:"
 
 #: tedtimageinfo.lblproject3.caption
 msgid "Sighting:"
-msgstr ""
+msgstr "Observação:"
 
 #: tedtimageinfo.lblproject4.caption
 msgid "Image file: *"
-msgstr ""
+msgstr "Arquivo da imagem: *"
 
 #: tedtimageinfo.lblproject5.caption
 msgid "Specimen:"
-msgstr ""
+msgstr "Espécime:"
 
 #: tedtimageinfo.lblproject6.caption
 msgctxt "tedtimageinfo.lblproject6.caption"
@@ -4526,7 +4551,7 @@ msgstr "Ovo:"
 
 #: tedtimageinfo.lblproject7.caption
 msgid "Nest revision:"
-msgstr ""
+msgstr "Revisão de ninho:"
 
 #: tedtimageinfo.lblproject8.caption
 msgctxt "tedtimageinfo.lblproject8.caption"
@@ -4535,7 +4560,7 @@ msgstr "Ninho:"
 
 #: tedtimageinfo.lblrequester.caption
 msgid "Author:"
-msgstr ""
+msgstr "Autor:"
 
 #: tedtimageinfo.lblsender1.caption
 msgctxt "tedtimageinfo.lblsender1.caption"
@@ -4789,7 +4814,7 @@ msgstr "Descrição:"
 
 #: tedtmethod.lblebirdname.caption
 msgid "Method name on eBird:"
-msgstr ""
+msgstr "Nome do método no eBird:"
 
 #: tedtmethod.lblname.caption
 msgctxt "tedtmethod.lblname.caption"
@@ -5000,7 +5025,7 @@ msgstr "MC:"
 
 #: tedtmolt.lblbandtype14.caption
 msgid "Growth bar width:"
-msgstr ""
+msgstr "Largura da barra de crescimento:"
 
 #: tedtmolt.lblbandtype2.caption
 msgid "S1:"
@@ -5047,35 +5072,35 @@ msgstr "Amostragem:"
 
 #: tedtmolt.lbltitlemetrics.caption
 msgid "Primaries"
-msgstr ""
+msgstr "Primárias"
 
 #: tedtmolt.lbltitlemetrics1.caption
 msgid "Secondaries"
-msgstr ""
+msgstr "Secundárias"
 
 #: tedtmolt.lbltitlemetrics2.caption
 msgid "Rectrices"
-msgstr ""
+msgstr "Retrizes"
 
 #: tedtmolt.lbltitlemetrics3.caption
 msgid "Alula"
-msgstr ""
+msgstr "Álula"
 
 #: tedtmolt.lbltitlemetrics4.caption
 msgid "Primary coverts"
-msgstr ""
+msgstr "Coberteiras primárias"
 
 #: tedtmolt.lbltitlemetrics5.caption
 msgid "Greater coverts"
-msgstr ""
+msgstr "Grandes coberteiras"
 
 #: tedtmolt.lbltitlemetrics6.caption
 msgid "Other coverts"
-msgstr ""
+msgstr "Outras coberteiras"
 
 #: tedtmolt.lbltitlemetrics7.caption
 msgid "Growth bars"
-msgstr ""
+msgstr "Barras de crescimento"
 
 #: tedtmolt.sbcancel.caption
 msgctxt "tedtmolt.sbcancel.caption"
@@ -5104,55 +5129,55 @@ msgstr "Táxon:"
 
 #: tedtnest.lblbandstatus11.caption
 msgid "Stem thickness:"
-msgstr ""
+msgstr "Espessura do ramo:"
 
 #: tedtnest.lblbandstatus12.caption
 msgid "Lesser plant diameter:"
-msgstr ""
+msgstr "Diâmetro menor da planta:"
 
 #: tedtnest.lblbandstatus13.caption
 msgid "Days building:"
-msgstr ""
+msgstr "Dias de construção:"
 
 #: tedtnest.lblbandstatus14.caption
 msgid "Days incubating:"
-msgstr ""
+msgstr "Dias de incubação:"
 
 #: tedtnest.lblbandstatus15.caption
 msgid "Nestling-days:"
-msgstr ""
+msgstr "Dias de ninhego:"
 
 #: tedtnest.lblbandstatus16.caption
 msgid "Total active-days:"
-msgstr ""
+msgstr "Total de dias ativos:"
 
 #: tedtnest.lblbandstatus17.caption
 msgid "Internal diameter:"
-msgstr ""
+msgstr "Diâmetro interno:"
 
 #: tedtnest.lblbandstatus18.caption
 msgid "External diameter:"
-msgstr ""
+msgstr "Diâmetro externo:"
 
 #: tedtnest.lblbandstatus19.caption
 msgid "Distance from plant edge:"
-msgstr ""
+msgstr "Distância da borda da planta:"
 
 #: tedtnest.lblbandstatus20.caption
 msgid "Distance from plant center:"
-msgstr ""
+msgstr "Distância do centro da planta:"
 
 #: tedtnest.lblbandstatus21.caption
 msgid "Internal height:"
-msgstr ""
+msgstr "Altura interna:"
 
 #: tedtnest.lblbandstatus22.caption
 msgid "External height:"
-msgstr ""
+msgstr "Altura externa:"
 
 #: tedtnest.lblbandstatus3.caption
 msgid "Nest encounter date:"
-msgstr ""
+msgstr "Data de encontro do ninho:"
 
 #: tedtnest.lblbandstatus4.caption
 msgctxt "tedtnest.lblbandstatus4.caption"
@@ -5161,15 +5186,15 @@ msgstr "Longitude:"
 
 #: tedtnest.lblbandstatus6.caption
 msgid "Plant height:"
-msgstr ""
+msgstr "Altura da planta:"
 
 #: tedtnest.lblbandstatus7.caption
 msgid "Greater plant diameter:"
-msgstr ""
+msgstr "Diâmetro maior da planta:"
 
 #: tedtnest.lblbandstatus8.caption
 msgid "Last date:"
-msgstr ""
+msgstr "Última data:"
 
 #: tedtnest.lblbandstatus9.caption
 msgctxt "tedtnest.lblbandstatus9.caption"
@@ -5188,7 +5213,7 @@ msgstr "Anotações:"
 
 #: tedtnest.lblnotes1.caption
 msgid "Nest description:"
-msgstr ""
+msgstr "Descrição do ninho:"
 
 #: tedtnest.lblothersupport.caption
 msgctxt "tedtnest.lblothersupport.caption"
@@ -5207,15 +5232,15 @@ msgstr "Observador:"
 
 #: tedtnest.lblrequester2.caption
 msgid "Productivity:"
-msgstr ""
+msgstr "Produtividade:"
 
 #: tedtnest.lblrequester3.caption
 msgid "Fate:"
-msgstr ""
+msgstr "Destino:"
 
 #: tedtnest.lblrequester4.caption
 msgid "Cover (%):"
-msgstr ""
+msgstr "Cobertura (%):"
 
 #: tedtnest.lblsupplier.caption
 msgctxt "tedtnest.lblsupplier.caption"
@@ -5274,7 +5299,7 @@ msgstr "Nº de ninhegos (hospedeiro):"
 
 #: tedtnestrevision.lblneststage.caption
 msgid "Stage: *"
-msgstr ""
+msgstr "Estágio: *"
 
 #: tedtnestrevision.lblneststatus.caption
 msgctxt "tedtnestrevision.lblneststatus.caption"
@@ -5303,7 +5328,7 @@ msgstr "Anotações:"
 
 #: tedtnestrevision.lblobserver1.caption
 msgid "Observer 1: *"
-msgstr ""
+msgstr "Observador 1: *"
 
 #: tedtnestrevision.lblobserver2.caption
 msgctxt "tedtnestrevision.lblobserver2.caption"
@@ -5312,7 +5337,7 @@ msgstr "Observador 2:"
 
 #: tedtnestrevision.lblrevisiondate.caption
 msgid "Nest revision date: *"
-msgstr ""
+msgstr "Data da revisão do ninho: *"
 
 #: tedtnestrevision.lblrevisiontime.caption
 msgctxt "tedtnestrevision.lblrevisiontime.caption"
@@ -5371,7 +5396,7 @@ msgstr "Latitude:"
 
 #: tedtneteffort.lblendnumber2.caption
 msgid "Mistnet height (m):"
-msgstr ""
+msgstr "Altura da rede (m):"
 
 #: tedtneteffort.lblendnumber3.caption
 msgctxt "tedtneteffort.lblendnumber3.caption"
@@ -5380,7 +5405,7 @@ msgstr "Tamanho da malha:"
 
 #: tedtneteffort.lblendnumber4.caption
 msgid "Total open time (h):"
-msgstr ""
+msgstr "Total de tempo aberta (h):"
 
 #: tedtneteffort.lblendnumber5.caption
 msgctxt "tedtneteffort.lblendnumber5.caption"
@@ -5409,7 +5434,7 @@ msgstr "Anotações:"
 
 #: tedtneteffort.lblstartnumber.caption
 msgid "Permanent mistnet:"
-msgstr ""
+msgstr "Rede permanente:"
 
 #: tedtneteffort.lblstartnumber1.caption
 msgctxt "tedtneteffort.lblstartnumber1.caption"
@@ -5418,11 +5443,11 @@ msgstr "Longitude:"
 
 #: tedtneteffort.lblstartnumber2.caption
 msgid "Mistnet length (m):"
-msgstr ""
+msgstr "Comprimento da rede (m):"
 
 #: tedtneteffort.lblstartnumber3.caption
 msgid "Mistnet area (m²):"
-msgstr ""
+msgstr "Área da rede (m²):"
 
 #: tedtneteffort.lblstartnumber4.caption
 msgctxt "tedtneteffort.lblstartnumber4.caption"
@@ -5546,15 +5571,15 @@ msgstr "DD/MM/YYYY"
 
 #: tedtpermit.lbldispatchdate.caption
 msgid "Dispatch date: *"
-msgstr ""
+msgstr "Data de emissão: *"
 
 #: tedtpermit.lbldispatcher.caption
 msgid "Dispatcher: *"
-msgstr ""
+msgstr "Emissor: *"
 
 #: tedtpermit.lblexpiredate.caption
 msgid "Expire date:"
-msgstr ""
+msgstr "Data de vencimento:"
 
 #: tedtpermit.lblname.caption
 msgctxt "tedtpermit.lblname.caption"
@@ -5568,7 +5593,7 @@ msgstr "Anotações:"
 
 #: tedtpermit.lblpermitnumber.caption
 msgid "Permit number:"
-msgstr ""
+msgstr "Número da licença:"
 
 #: tedtpermit.lblpermittype.caption
 msgctxt "tedtpermit.lblpermittype.caption"
@@ -5622,7 +5647,7 @@ msgstr "Data de nascimento:"
 
 #: tedtperson.lblcitation.caption
 msgid "Citation: *"
-msgstr ""
+msgstr "Citação: *"
 
 #: tedtperson.lblcountry.caption
 msgctxt "tedtperson.lblcountry.caption"
@@ -5640,7 +5665,7 @@ msgstr "Data de óbito:"
 
 #: tedtperson.lbldepartment.caption
 msgid "Department:"
-msgstr ""
+msgstr "Departamento:"
 
 #: tedtperson.lblemail.caption
 msgctxt "tedtperson.lblemail.caption"
@@ -5654,7 +5679,7 @@ msgstr "Nome: *"
 
 #: tedtperson.lblgenre.caption
 msgid "Gender:"
-msgstr ""
+msgstr "Gênero:"
 
 #: tedtperson.lblinstagram.caption
 msgid "Instagram:"
@@ -5662,11 +5687,11 @@ msgstr "Instagram:"
 
 #: tedtperson.lblinstitution.caption
 msgid "Institution:"
-msgstr ""
+msgstr "Instituição:"
 
 #: tedtperson.lbljobrole.caption
 msgid "Role:"
-msgstr ""
+msgstr "Cargo:"
 
 #: tedtperson.lbllattes.caption
 msgid "Lattes:"
@@ -5689,7 +5714,7 @@ msgstr "Anotações:"
 
 #: tedtperson.lblorcid.caption
 msgid "Orcid:"
-msgstr ""
+msgstr "Orcid:"
 
 #: tedtperson.lblphone1.caption
 msgctxt "tedtperson.lblphone1.caption"
@@ -5698,7 +5723,7 @@ msgstr "Telefone:"
 
 #: tedtperson.lblphone2.caption
 msgid "Cell phone:"
-msgstr ""
+msgstr "Celular:"
 
 #: tedtperson.lblrg.caption
 msgid "RG:"
@@ -5711,7 +5736,7 @@ msgstr "Estado:"
 
 #: tedtperson.lbltreatment.caption
 msgid "Treatment:"
-msgstr ""
+msgstr "Tratamento:"
 
 #: tedtperson.lbltwitter.caption
 msgid "Twitter:"
@@ -5729,23 +5754,23 @@ msgstr "Código postal:"
 
 #: tedtperson.menuitem1.caption
 msgid "Adicionar imagem do arquivo..."
-msgstr ""
+msgstr "Adicionar imagem do arquivo..."
 
 #: tedtperson.menuitem2.caption
 msgid "Salvar imagem como..."
-msgstr ""
+msgstr "Salvar imagem como..."
 
 #: tedtperson.menuitem3.caption
 msgid "Copiar imagem"
-msgstr ""
+msgstr "Copiar imagem"
 
 #: tedtperson.menuitem4.caption
 msgid "Colar imagem"
-msgstr ""
+msgstr "Colar imagem"
 
 #: tedtperson.menuitem5.caption
 msgid "Apagar imagem"
-msgstr ""
+msgstr "Apagar imagem"
 
 #: tedtperson.sbcancel.caption
 msgctxt "tedtperson.sbcancel.caption"
@@ -5769,7 +5794,7 @@ msgstr "DD/MM/YYYY"
 
 #: tedtproject.lblabstract.caption
 msgid "Abstract:"
-msgstr ""
+msgstr "Resumo:"
 
 #: tedtproject.lblcontactname.caption
 msgctxt "tedtproject.lblcontactname.caption"
@@ -5783,7 +5808,7 @@ msgstr "E-mail:"
 
 #: tedtproject.lblenddate.caption
 msgid "End date:"
-msgstr ""
+msgstr "Data final:"
 
 #: tedtproject.lblnotes.caption
 msgctxt "tedtproject.lblnotes.caption"
@@ -5792,15 +5817,15 @@ msgstr "Anotações:"
 
 #: tedtproject.lblshorttitle.caption
 msgid "Short title: *"
-msgstr ""
+msgstr "Título curto: *"
 
 #: tedtproject.lblstartdate.caption
 msgid "Start date:"
-msgstr ""
+msgstr "Data inicial:"
 
 #: tedtproject.lbltitle.caption
 msgid "Title: *"
-msgstr ""
+msgstr "Título: *"
 
 #: tedtproject.lblwebsite.caption
 msgctxt "tedtproject.lblwebsite.caption"
@@ -5824,7 +5849,7 @@ msgstr "DD/MM/YYYY"
 
 #: tedtsampleprep.lblaccessionnumber.caption
 msgid "Accession number: *"
-msgstr ""
+msgstr "Número de tombo: *"
 
 #: tedtsampleprep.lblaccessionseq.caption
 msgctxt "tedtsampleprep.lblaccessionseq.caption"
@@ -5843,7 +5868,7 @@ msgstr "Data da preparação:"
 
 #: tedtsampleprep.lblpreparer.caption
 msgid "Preparer:"
-msgstr ""
+msgstr "Preparador:"
 
 #: tedtsampleprep.lblsampletype.caption
 msgctxt "tedtsampleprep.lblsampletype.caption"
@@ -5907,7 +5932,7 @@ msgstr "HH:MM"
 
 #: tedtsighting.lblbandcolor.caption
 msgid "Distance (m):"
-msgstr ""
+msgstr "Distância (m):"
 
 #: tedtsighting.lblbandnumber.caption
 msgctxt "tedtsighting.lblbandnumber.caption"
@@ -5926,11 +5951,11 @@ msgstr "Longitude:"
 
 #: tedtsighting.lblbandsource.caption
 msgid "Detection type:"
-msgstr ""
+msgstr "Tipo de detecção:"
 
 #: tedtsighting.lblbandstatus.caption
 msgid "Mackinnon list number:"
-msgstr ""
+msgstr "Nº da lista de Mackinnon:"
 
 #: tedtsighting.lblbandsuffix.caption
 msgctxt "tedtsighting.lblbandsuffix.caption"
@@ -5939,7 +5964,7 @@ msgstr "Hora:"
 
 #: tedtsighting.lblbandtype.caption
 msgid "Quantity:"
-msgstr ""
+msgstr "Quantidade:"
 
 #: tedtsighting.lblcarrier.caption
 msgctxt "tedtsighting.lblcarrier.caption"
@@ -5953,19 +5978,19 @@ msgstr "Anotações:"
 
 #: tedtsighting.lblorderdate.caption
 msgid "Number of new captures:"
-msgstr ""
+msgstr "Número de novas capturas:"
 
 #: tedtsighting.lblorderdate1.caption
 msgid "Number of recaptures:"
-msgstr ""
+msgstr "Número de recapturas:"
 
 #: tedtsighting.lblorderdate2.caption
 msgid "Number of unbanded:"
-msgstr ""
+msgstr "Número de não marcados:"
 
 #: tedtsighting.lblordernumber.caption
 msgid "Breeding/behavior code:"
-msgstr ""
+msgstr "Código de reprodução/comportamento:"
 
 #: tedtsighting.lblproject.caption
 msgctxt "tedtsighting.lblproject.caption"
@@ -5974,27 +5999,27 @@ msgstr "Indivíduo:"
 
 #: tedtsighting.lblreportdate.caption
 msgid "Number of males:"
-msgstr ""
+msgstr "Número de machos:"
 
 #: tedtsighting.lblreportdate1.caption
 msgid "Number of females:"
-msgstr ""
+msgstr "Número de fêmeas:"
 
 #: tedtsighting.lblreportdate2.caption
 msgid "Number of birds not sexed:"
-msgstr ""
+msgstr "Número de não sexados:"
 
 #: tedtsighting.lblreportdate3.caption
 msgid "Number of adults:"
-msgstr ""
+msgstr "Número de adultos:"
 
 #: tedtsighting.lblreportdate4.caption
 msgid "Number of immatures:"
-msgstr ""
+msgstr "Número de imaturos:"
 
 #: tedtsighting.lblreportdate5.caption
 msgid "Number of birds not aged:"
-msgstr ""
+msgstr "Número de não etariados:"
 
 #: tedtsighting.lblrequester.caption
 msgctxt "tedtsighting.lblrequester.caption"
@@ -6018,7 +6043,7 @@ msgstr "Amostragem:"
 
 #: tedtsighting.lblusedate.caption
 msgid "How was recorded:"
-msgstr ""
+msgstr "Como foi registrado:"
 
 #: tedtsighting.sbcancel.caption
 msgctxt "tedtsighting.sbcancel.caption"
@@ -6051,7 +6076,7 @@ msgstr "Altitude:"
 
 #: tedtsite.lblproject.caption
 msgid "Site name on eBird:"
-msgstr ""
+msgstr "Nome do local no eBird:"
 
 #: tedtsite.lblproject1.caption
 msgctxt "tedtsite.lblproject1.caption"
@@ -6070,7 +6095,7 @@ msgstr "Nome: *"
 
 #: tedtsite.lblsupplier.caption
 msgid "Parent toponym:"
-msgstr ""
+msgstr "Topônimo pai:"
 
 #: tedtsite.sbcancel.caption
 msgctxt "tedtsite.sbcancel.caption"
@@ -6119,7 +6144,7 @@ msgstr "Ovo:"
 
 #: tedtspecimen.lblfieldnumber.caption
 msgid "Field number: *"
-msgstr ""
+msgstr "Número de campo: *"
 
 #: tedtspecimen.lblindividual.caption
 msgctxt "tedtspecimen.lblindividual.caption"
@@ -6178,35 +6203,35 @@ msgstr "HH:MM"
 
 #: tedtsurvey.lblarea.caption
 msgid "Area (ha):"
-msgstr ""
+msgstr "Área (ha):"
 
 #: tedtsurvey.lbldistance.caption
 msgid "Distance (km):"
-msgstr ""
+msgstr "Distância (km):"
 
 #: tedtsurvey.lblduration.caption
 msgid "Duration (minutes):"
-msgstr ""
+msgstr "Duração (minutos):"
 
 #: tedtsurvey.lblendlatitude.caption
 msgid "End latitude:"
-msgstr ""
+msgstr "Latitude final:"
 
 #: tedtsurvey.lblendlongitude.caption
 msgid "End longitude:"
-msgstr ""
+msgstr "Longitude (final):"
 
 #: tedtsurvey.lblendtime.caption
 msgid "Ending time:"
-msgstr ""
+msgstr "Hora de término:"
 
 #: tedtsurvey.lblexpedition.caption
 msgid "Expedition:"
-msgstr ""
+msgstr "Expedição:"
 
 #: tedtsurvey.lblhabitat.caption
 msgid "Environment description:"
-msgstr ""
+msgstr "Descrição do ambiente:"
 
 #: tedtsurvey.lbllocality.caption
 msgctxt "tedtsurvey.lbllocality.caption"
@@ -6224,15 +6249,15 @@ msgstr "Esforço de rede (h•m²):"
 
 #: tedtsurvey.lblnetrounds.caption
 msgid "Mistnets checking times:"
-msgstr ""
+msgstr "Horários de checagem das redes:"
 
 #: tedtsurvey.lblnetstation.caption
 msgid "Mistnet station:"
-msgstr ""
+msgstr "Estação de rede:"
 
 #: tedtsurvey.lblnetstotal.caption
 msgid "Number of mistnets:"
-msgstr ""
+msgstr "Número de redes:"
 
 #: tedtsurvey.lblnotes.caption
 msgctxt "tedtsurvey.lblnotes.caption"
@@ -6241,7 +6266,7 @@ msgstr "Anotações:"
 
 #: tedtsurvey.lblobserverstally.caption
 msgid "Number of observers:"
-msgstr ""
+msgstr "Número de observadores:"
 
 #: tedtsurvey.lblproject.caption
 msgctxt "tedtsurvey.lblproject.caption"
@@ -6250,19 +6275,19 @@ msgstr "Projeto:"
 
 #: tedtsurvey.lblsampleid.caption
 msgid "Sample identifier:"
-msgstr ""
+msgstr "Identificador da amostra:"
 
 #: tedtsurvey.lblstartlatitude.caption
 msgid "Latitude (initial):"
-msgstr ""
+msgstr "Latitude (inicial):"
 
 #: tedtsurvey.lblstartlongitude.caption
 msgid "Longitude (initial):"
-msgstr ""
+msgstr "Longitude (inicial):"
 
 #: tedtsurvey.lblstarttime.caption
 msgid "Starting time:"
-msgstr ""
+msgstr "Hora de início:"
 
 #: tedtsurvey.lblsurveydate.caption
 msgctxt "tedtsurvey.lblsurveydate.caption"
@@ -6281,11 +6306,11 @@ msgstr "Salvar"
 
 #: tedtuser.ckallowcollectionedit.caption
 msgid "Manage collection"
-msgstr ""
+msgstr "Gerenciar acervo"
 
 #: tedtuser.ckallowexport.caption
 msgid "Export data"
-msgstr ""
+msgstr "Exportar dados"
 
 #: tedtuser.ckallowimport.caption
 msgctxt "tedtuser.ckallowimport.caption"
@@ -6294,7 +6319,7 @@ msgstr "Importar dados"
 
 #: tedtuser.ckallowprint.caption
 msgid "Print reports"
-msgstr ""
+msgstr "Imprimir relatórios"
 
 #: tedtuser.lblfullname.caption
 msgctxt "tedtuser.lblfullname.caption"
@@ -6303,15 +6328,15 @@ msgstr "Nome completo:"
 
 #: tedtuser.lblpermissions.caption
 msgid "Permissions:"
-msgstr ""
+msgstr "Permissões:"
 
 #: tedtuser.lblrank.caption
 msgid "Access level: *"
-msgstr ""
+msgstr "Nível de acesso: *"
 
 #: tedtuser.lblusername.caption
 msgid "Username: *"
-msgstr ""
+msgstr "Nome de usuário: *"
 
 #: tedtuser.sbcancel.caption
 msgctxt "tedtuser.sbcancel.caption"
@@ -6335,11 +6360,11 @@ msgstr "HH:MM"
 
 #: tedtweatherlog.lblatmosphericpressure.caption
 msgid "Atmospheric pressure (mPa):"
-msgstr ""
+msgstr "Pressão atmosférica (mPa):"
 
 #: tedtweatherlog.lblcloudcover.caption
 msgid "Cloud cover (%):"
-msgstr ""
+msgstr "Cobertura de nuvens (%):"
 
 #: tedtweatherlog.lblnotes.caption
 msgctxt "tedtweatherlog.lblnotes.caption"
@@ -6348,15 +6373,15 @@ msgstr "Anotações:"
 
 #: tedtweatherlog.lblprecipitation.caption
 msgid "Precipitation:"
-msgstr ""
+msgstr "Precipitação:"
 
 #: tedtweatherlog.lblrainfall.caption
 msgid "Accumulated rainfall (mm):"
-msgstr ""
+msgstr "Chuva acumulada (mm):"
 
 #: tedtweatherlog.lblrelativehumidity.caption
 msgid "Relative humidity (%):"
-msgstr ""
+msgstr "Umidade relativa (%):"
 
 #: tedtweatherlog.lblsampledate.caption
 msgctxt "tedtweatherlog.lblsampledate.caption"
@@ -6365,7 +6390,7 @@ msgstr "Data: *"
 
 #: tedtweatherlog.lblsamplemoment.caption
 msgid "Moment: *"
-msgstr ""
+msgstr "Momento: *"
 
 #: tedtweatherlog.lblsampletime.caption
 msgctxt "tedtweatherlog.lblsampletime.caption"
@@ -6374,15 +6399,15 @@ msgstr "Hora:"
 
 #: tedtweatherlog.lbltemperature.caption
 msgid "Temperature (°C):"
-msgstr ""
+msgstr "Temperatura (°C):"
 
 #: tedtweatherlog.lblwindspeedbft.caption
 msgid "Wind speed (Beaufort):"
-msgstr ""
+msgstr "Velocidade do vento (Beaufort):"
 
 #: tedtweatherlog.lblwindspeedkmh.caption
 msgid "Wind speed (km/h):"
-msgstr ""
+msgstr "Velocidade do vento (km/h):"
 
 #: tedtweatherlog.sbcancel.caption
 msgctxt "tedtweatherlog.sbcancel.caption"
@@ -6571,11 +6596,11 @@ msgstr "Status"
 
 #: tfrmcustomgrid.lblbodymoltfilter.caption
 msgid "Body molt"
-msgstr ""
+msgstr "Muda do corpo"
 
 #: tfrmcustomgrid.lblbroodpatchfilter.caption
 msgid "Brood patch"
-msgstr ""
+msgstr "Placa de incubação"
 
 #: tfrmcustomgrid.lblchildstatus.caption
 msgctxt "tfrmcustomgrid.lblchildstatus.caption"
@@ -6614,7 +6639,7 @@ msgstr "Clements/eBird"
 
 #: tfrmcustomgrid.lblcloacalprotuberancefilter.caption
 msgid "Cloacal protuberance"
-msgstr ""
+msgstr "Protuberância cloacal"
 
 #: tfrmcustomgrid.lblcountdatefilter.caption
 msgctxt "tfrmcustomgrid.lblcountdatefilter.caption"
@@ -6638,7 +6663,7 @@ msgstr "nenhum selecionado"
 
 #: tfrmcustomgrid.lblcyclecodefilter.caption
 msgid "Molt cycle"
-msgstr ""
+msgstr "Ciclo de muda"
 
 #: tfrmcustomgrid.lbldatefilter.caption
 msgctxt "tfrmcustomgrid.lbldatefilter.caption"
@@ -6655,31 +6680,31 @@ msgstr "e"
 
 #: tfrmcustomgrid.lblextinctfilter.caption
 msgid "Extinct"
-msgstr ""
+msgstr "Extinto"
 
 #: tfrmcustomgrid.lblfatfilter.caption
 msgid "Subcutaneous fat"
-msgstr ""
+msgstr "Gordura subcutânea"
 
 #: tfrmcustomgrid.lblffmoltfilter.caption
 msgid "Flight feathers molt"
-msgstr ""
+msgstr "Muda das penas de voo"
 
 #: tfrmcustomgrid.lblffwearfilter.caption
 msgid "Flight feathers wear"
-msgstr ""
+msgstr "Desgaste das penas de voo"
 
 #: tfrmcustomgrid.lblhassynonymsfilter.caption
 msgid "Have synonyms"
-msgstr ""
+msgstr "Possui sinônimos"
 
 #: tfrmcustomgrid.lblhowagedfilter.caption
 msgid "How was aged"
-msgstr ""
+msgstr "Como foi etariado"
 
 #: tfrmcustomgrid.lblhowsexedfilter.caption
 msgid "How was sexed"
-msgstr ""
+msgstr "Como foi sexado"
 
 #: tfrmcustomgrid.lblmarkedfilter.caption
 msgctxt "tfrmcustomgrid.lblmarkedfilter.caption"
@@ -6688,7 +6713,7 @@ msgstr "Registros marcados"
 
 #: tfrmcustomgrid.lblmaterialfilter.caption
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: tfrmcustomgrid.lblmethodfilter.caption
 msgctxt "tfrmcustomgrid.lblmethodfilter.caption"
@@ -6702,15 +6727,15 @@ msgstr "Limites de muda"
 
 #: tfrmcustomgrid.lblnestfatefilter.caption
 msgid "Fate"
-msgstr ""
+msgstr "Destino"
 
 #: tfrmcustomgrid.lblnestsupportfilter.caption
 msgid "Support type"
-msgstr ""
+msgstr "Tipo de suporte"
 
 #: tfrmcustomgrid.lblnotreportedfilter.caption
 msgid "Not reported"
-msgstr ""
+msgstr "Não reportada"
 
 #: tfrmcustomgrid.lblrecordstatus.caption
 msgctxt "tfrmcustomgrid.lblrecordstatus.caption"
@@ -6729,7 +6754,7 @@ msgstr "Sexo"
 
 #: tfrmcustomgrid.lblsitefilter.caption
 msgid "Locations"
-msgstr ""
+msgstr "Locais"
 
 #: tfrmcustomgrid.lblsiterankfilter.caption
 msgctxt "tfrmcustomgrid.lblsiterankfilter.caption"
@@ -6738,15 +6763,15 @@ msgstr "Nível do local"
 
 #: tfrmcustomgrid.lblskullossificationfilter.caption
 msgid "Skull ossification"
-msgstr ""
+msgstr "Ossificação craniana"
 
 #: tfrmcustomgrid.lblstarttimefilter.caption
 msgid "Time between"
-msgstr ""
+msgstr "Hora entre"
 
 #: tfrmcustomgrid.lblsynonymfilter.caption
 msgid "Is a synonym"
-msgstr ""
+msgstr "É um sinônimo"
 
 #: tfrmcustomgrid.lbltaxonfilter.caption
 msgctxt "tfrmcustomgrid.lbltaxonfilter.caption"
@@ -6765,7 +6790,7 @@ msgstr "IOC"
 
 #: tfrmcustomgrid.lbltaxonranksfilter.caption
 msgid "Ranks"
-msgstr ""
+msgstr "Níveis"
 
 #: tfrmcustomgrid.lblunmarkedfilter.caption
 msgctxt "tfrmcustomgrid.lblunmarkedfilter.caption"
@@ -6864,7 +6889,7 @@ msgstr "Limpar filtros"
 
 #: tfrmcustomgrid.pmffilterselected.caption
 msgid "Add selected to filter"
-msgstr ""
+msgstr "Adicionar selecionado ao filtro"
 
 #: tfrmcustomgrid.pmgdel.caption
 msgctxt "tfrmcustomgrid.pmgdel.caption"
@@ -6953,7 +6978,7 @@ msgstr "Cancelar"
 
 #: tfrmcustomgrid.sbcancelrecord.hint
 msgid "Cancel editing"
-msgstr ""
+msgstr "Cancelar edição"
 
 #: tfrmcustomgrid.sbchildhistory.hint
 msgctxt "tfrmcustomgrid.sbchildhistory.hint"
@@ -6962,11 +6987,11 @@ msgstr "Visualizar histórico do registro"
 
 #: tfrmcustomgrid.sbcolumnhide.hint
 msgid "Hide the selected column"
-msgstr ""
+msgstr "Ocultar coluna selecionada"
 
 #: tfrmcustomgrid.sbcolumnwidthautoadjust.hint
 msgid "Autoadjust the columns width"
-msgstr ""
+msgstr "Autoajustar a largura das colunas"
 
 #: tfrmcustomgrid.sbdelchild.hint
 msgctxt "tfrmcustomgrid.sbdelchild.hint"
@@ -6990,27 +7015,27 @@ msgstr "Editar o registro selecionado"
 
 #: tfrmcustomgrid.sbeditrecord10.hint
 msgid "Delete image"
-msgstr ""
+msgstr "Apagar imagem"
 
 #: tfrmcustomgrid.sbeditrecord5.hint
 msgid "Move the column position down"
-msgstr ""
+msgstr "Mover coluna para baixo"
 
 #: tfrmcustomgrid.sbeditrecord6.hint
 msgid "Move the column position up"
-msgstr ""
+msgstr "Mover coluna para cima"
 
 #: tfrmcustomgrid.sbeditrecord7.hint
 msgid "View and edit image info"
-msgstr ""
+msgstr "Visualizar e editar informações da imagem"
 
 #: tfrmcustomgrid.sbeditrecord8.hint
 msgid "Save image as..."
-msgstr ""
+msgstr "Salvar imagem como..."
 
 #: tfrmcustomgrid.sbeditrecord9.hint
 msgid "View image"
-msgstr ""
+msgstr "Visualizar imagem"
 
 #: tfrmcustomgrid.sbfilterrecords.hint
 msgid "Filters"
@@ -7033,7 +7058,7 @@ msgstr "Novo registro"
 
 #: tfrmcustomgrid.sbinsertrecord2.hint
 msgid "Add image"
-msgstr ""
+msgstr "Adicionar imagem"
 
 #: tfrmcustomgrid.sblastchild.hint
 msgctxt "tfrmcustomgrid.sblastchild.hint"
@@ -7077,7 +7102,7 @@ msgstr "Visualizar histórico do registro"
 
 #: tfrmcustomgrid.sbrecycledelete.hint
 msgid "Delete record permanently"
-msgstr ""
+msgstr "Apagar registro permanentemente"
 
 #: tfrmcustomgrid.sbrecyclerestore.hint
 msgctxt "tfrmcustomgrid.sbrecyclerestore.hint"
@@ -7091,15 +7116,15 @@ msgstr "Atualizar registros"
 
 #: tfrmcustomgrid.sbrowheightdecrease.hint
 msgid "Decrease the row height"
-msgstr ""
+msgstr "Diminuir altura da linha"
 
 #: tfrmcustomgrid.sbrowheightdefault.hint
 msgid "Set the default row height"
-msgstr ""
+msgstr "Aplicar a altura de linha padrão"
 
 #: tfrmcustomgrid.sbrowheightincrease.hint
 msgid "Increase the row height"
-msgstr ""
+msgstr "Aumentar altura da linha"
 
 #: tfrmcustomgrid.sbsaverecord.caption
 msgctxt "tfrmcustomgrid.sbsaverecord.caption"
@@ -7157,7 +7182,7 @@ msgstr "Ordenar registros"
 
 #: tfrmcustomgrid.sbsortchilds1.hint
 msgid "Open records in a new tab"
-msgstr ""
+msgstr "Abrir registros em uma nova aba"
 
 #: tfrmcustomgrid.sbsortrecords.hint
 msgctxt "tfrmcustomgrid.sbsortrecords.hint"
@@ -7428,11 +7453,11 @@ msgstr "Conversor de coordenadas"
 
 #: tfrmgeoconverter.cbconvertfrom.texthint
 msgid "Formato de origem"
-msgstr ""
+msgstr "Formato de origem"
 
 #: tfrmgeoconverter.cbconvertto.texthint
 msgid "Formato de destino"
-msgstr ""
+msgstr "Formato de destino"
 
 #: tfrmgeoconverter.ckaddunitszone.caption
 msgid "Add units/zone to the result"
@@ -7612,7 +7637,7 @@ msgstr "Novo"
 
 #: tfrmmain.actinsertrecord.hint
 msgid "Novo registro"
-msgstr ""
+msgstr "Novo registro"
 
 #: tfrmmain.actlogoff.caption
 msgid "Logoff"
@@ -7915,19 +7940,19 @@ msgstr "Zoológica"
 
 #: tfrmmaintenance.lblrecreateimagethumbnails.caption
 msgid "Recreate image thumbnails in the database"
-msgstr ""
+msgstr "Recriar miniaturas das imagens no banco de dados"
 
 #: tfrmmaintenance.lblrewritegeohierarchy.caption
 msgid "Check and correct the hierarchy of toponyms"
-msgstr ""
+msgstr "Verificar e corrigir a hierarquia de topônimos"
 
 #: tfrmmaintenance.lblrewritegeohierarchy1.caption
 msgid "Rewrite the individuals' full name"
-msgstr ""
+msgstr "Rescrever o nome completo dos indivíduos"
 
 #: tfrmmaintenance.lblrewritetaxahierarchy.caption
 msgid "Check and correct hierarchy of taxa"
-msgstr ""
+msgstr "Verificar e corrigir a hierarquia dos táxons"
 
 #: tfrmmaintenance.lblrewritetaxasequence.caption
 msgid "Review taxa sequence"

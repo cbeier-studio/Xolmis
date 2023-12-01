@@ -4,7 +4,7 @@ object frmMain: TfrmMain
   Top = -9
   Width = 1267
   Caption = 'Xolmis'
-  ClientHeight = 1051
+  ClientHeight = 1080
   ClientWidth = 1267
   Constraints.MinWidth = 960
   DesignTimePPI = 120
@@ -13,6 +13,7 @@ object frmMain: TfrmMain
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
+  LCLVersion = '3.0.0.2'
   WindowState = wsMaximized
   object pLeftTabs: TPanel
     Left = 0
