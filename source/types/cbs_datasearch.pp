@@ -459,7 +459,7 @@ begin
   begin
     Clear;
     Add('SELECT sv.*,');
-    Add('(SELECT x.full_name FROM expeditions AS x WHERE x.expedition_id = sv.expedition_id) AS expedition_name,');
+    Add('(SELECT x.expedition_name FROM expeditions AS x WHERE x.expedition_id = sv.expedition_id) AS expedition_name,');
     Add('(SELECT gm.site_name FROM gazetteer AS gm WHERE gm.site_id = sv.municipality_id) AS municipality_name,');
     Add('(SELECT gs.site_name FROM gazetteer AS gs WHERE gs.site_id = sv.state_id) AS state_name,');
     Add('(SELECT gc.site_name FROM gazetteer AS gc WHERE gc.site_id = sv.country_id) AS country_name,');
