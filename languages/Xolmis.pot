@@ -734,6 +734,10 @@ msgctxt "cbs_locale.rscpftooshort"
 msgid "CPF number must have 11 digits."
 msgstr ""
 
+#: cbs_locale.rscreatedatabaseprompt
+msgid "Database file not found. Do you want to create it?"
+msgstr ""
+
 #: cbs_locale.rscreatingbackup
 msgctxt "cbs_locale.rscreatingbackup"
 msgid "Creating backup..."
@@ -7147,6 +7151,15 @@ msgctxt "tfrmdashboard.chartindividuals.axislist[1].title.caption"
 msgid "month"
 msgstr ""
 
+#: tfrmdashboard.chartspecies.axislist[0].title.caption
+msgid "nr. of species"
+msgstr ""
+
+#: tfrmdashboard.chartspecies.axislist[1].title.caption
+msgctxt "tfrmdashboard.chartspecies.axislist[1].title.caption"
+msgid "month"
+msgstr ""
+
 #: tfrmdashboard.dbglifers.columns[0].title.caption
 msgctxt "tfrmdashboard.dbglifers.columns[0].title.caption"
 msgid "Tipo"
@@ -7200,6 +7213,10 @@ msgstr ""
 #: tfrmdashboard.ploading.caption
 msgctxt "tfrmdashboard.ploading.caption"
 msgid "Loading..."
+msgstr ""
+
+#: tfrmdashboard.pmapsurveys.caption
+msgid "No surveys to show"
 msgstr ""
 
 #: tfrmdashboard.pmrefresh.caption

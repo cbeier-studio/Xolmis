@@ -204,9 +204,9 @@ object DMC: TDMC
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
-      'SELECT taxon, nome_taxon, data_registro, ativo, tipo'
+      'SELECT taxon, nome_taxon, STRFTIME(''%d/%m/%Y'', data_registro) AS data_registro, ativo, tipo'
       'FROM get_last_lifers'
-      'LIMIT 7'
+      'LIMIT 9'
       ''
     )
     Params = <>
@@ -582,13 +582,13 @@ object DMC: TDMC
       '  GROUP BY'
       '    STRFTIME("%Y-%m", capture_date)'
       '  ORDER BY record_month DESC'
-      '  LIMIT 12'
       ')'
+      'WHERE record_month > STRFTIME("%Y-%m", "now", "-12 months")'
       'ORDER BY record_month ASC'
     )
     Params = <>
     Macros = <>
-    Left = 688
+    Left = 696
     Top = 131
     object qIndividualsMonthid: TLongintField
       FieldKind = fkData
@@ -622,7 +622,102 @@ object DMC: TDMC
   object dsIndividualsMonth: TDataSource
     AutoEdit = False
     DataSet = qIndividualsMonth
-    Left = 560
-    Top = 128
+    Left = 552
+    Top = 131
+  end
+  object dsSpeciesMonth: TDataSource
+    AutoEdit = False
+    DataSet = qSpeciesMonth
+    Left = 552
+    Top = 216
+  end
+  object qSpeciesMonth: TSQLQuery
+    PacketRecords = 1
+    IndexName = 'DEFAULT_ORDER'
+    MaxIndexesCount = 4
+    FieldDefs = <    
+      item
+        Name = 'id'
+        DataType = ftLargeint
+        Precision = -1
+      end    
+      item
+        Name = 'record_month'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end    
+      item
+        Name = 'quantity'
+        DataType = ftLargeint
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    ReadOnly = True
+    SQL.Strings = (
+      'SELECT'
+      '  CAST(ROW_NUMBER() OVER(ORDER BY record_month) AS INTEGER) AS id,'
+      '  record_month,'
+      '  quantity'
+      'FROM'
+      '('
+      '  SELECT'
+      '    sample_date AS record_month,'
+      '    COUNT(taxon) AS quantity'
+      '  FROM'
+      '  ('
+      '    SELECT'
+      '      STRFTIME(''%Y-%m'', t.capture_date) AS sample_date,'
+      '      t.taxon_id AS taxon,'
+      '      (t.active_status) AS ativo'
+      '    FROM captures AS t'
+      '    UNION'
+      '    SELECT'
+      '      STRFTIME(''%Y-%m'', s.sighting_date) AS sample_date,'
+      '      s.taxon_id AS taxon,'
+      '      (s.active_status) AS ativo'
+      '    FROM sightings AS s'
+      '    WHERE (ativo = 1)'
+      '    GROUP BY sample_date, taxon'
+      '    )'
+      '  GROUP BY record_month'
+      '  ORDER BY record_month DESC'
+      ')'
+      'WHERE record_month > STRFTIME(''%Y-%m'', ''now'', ''-12 months'')'
+      'ORDER BY record_month ASC;'
+    )
+    Params = <>
+    Macros = <>
+    Left = 696
+    Top = 216
+    object qIndividualsMonthid1: TLongintField
+      FieldKind = fkData
+      FieldName = 'id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qIndividualsMonthrecord_month1: TStringField
+      FieldKind = fkData
+      FieldName = 'record_month'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qIndividualsMonthquantity1: TLongintField
+      FieldKind = fkData
+      FieldName = 'quantity'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
   end
 end

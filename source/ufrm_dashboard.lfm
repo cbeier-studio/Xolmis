@@ -19,11 +19,11 @@ object frmDashboard: TfrmDashboard
     Width = 1444
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 461
+    VertScrollBar.Page = 598
     Align = alClient
     BorderStyle = bsNone
     ClientHeight = 598
-    ClientWidth = 1444
+    ClientWidth = 1423
     Constraints.MinWidth = 516
     Color = 15066599
     ParentBackground = False
@@ -32,9 +32,9 @@ object frmDashboard: TfrmDashboard
     OnResize = sBoxResize
     object pFlow: TPanel
       Left = 0
-      Height = 332
+      Height = 648
       Top = 129
-      Width = 1444
+      Width = 1423
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -48,8 +48,8 @@ object frmDashboard: TfrmDashboard
       ChildSizing.ShrinkVertical = crsHomogenousChildResize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 3
-      ClientHeight = 332
-      ClientWidth = 1444
+      ClientHeight = 648
+      ClientWidth = 1423
       Color = 15066599
       ParentBackground = False
       ParentColor = False
@@ -122,23 +122,28 @@ object frmDashboard: TfrmDashboard
           Top = 36
           Width = 432
           Align = alClient
+          AlternateColor = clWhite
+          AutoFillColumns = True
           BorderStyle = bsNone
           Color = 16448250
           Columns = <          
             item
               Alignment = taCenter
+              SizePriority = 0
               Title.Caption = 'Tipo'
               Width = 38
               FieldName = 'tipo'
             end          
             item
               Font.Style = [fsItalic]
+              SizePriority = 1
               Title.Caption = 'Táxon'
-              Width = 240
+              Width = 274
               FieldName = 'nome_taxon'
             end          
             item
               Alignment = taRightJustify
+              SizePriority = 0
               Title.Caption = 'Data'
               Width = 120
               FieldName = 'data_registro'
@@ -158,6 +163,7 @@ object frmDashboard: TfrmDashboard
           Align = alBottom
           Alignment = taCenter
           Caption = 'Mostrar mais'
+          Enabled = False
           Font.Color = 13066075
           ParentColor = False
           ParentFont = False
@@ -263,6 +269,7 @@ object frmDashboard: TfrmDashboard
             end>
           BackColor = 16448250
           Frame.Style = psClear
+          GUIConnector = ChartGUIConnectorBGRA1
           Legend.BackgroundBrush.Color = 16448250
           Legend.Frame.Visible = False
           Margins.Left = 16
@@ -274,13 +281,13 @@ object frmDashboard: TfrmDashboard
           MarginsExternal.Bottom = 0
           Title.Font.Color = 1014543
           Title.Text.Strings = (
-            'Individuals recorded in the last 12 months'
+            'Individuals recorded'
           )
           Title.Visible = True
           Align = alClient
           Color = 16448250
           object barIndividualsMonth: TBarSeries
-            Title = 'Indivíduos'
+            Title = 'Individuals'
             BarBrush.Color = 1014543
             BarPen.Style = psClear
             BarWidthPercent = 65
@@ -326,6 +333,7 @@ object frmDashboard: TfrmDashboard
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
+        Caption = 'No surveys to show'
         Constraints.MaxHeight = 400
         Constraints.MinHeight = 300
         Constraints.MinWidth = 464
@@ -368,12 +376,141 @@ object frmDashboard: TfrmDashboard
           Zoom = 0
         end
       end
+      object pCharts1: TBCPanel
+        Left = 16
+        Height = 300
+        Top = 332
+        Width = 464
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 8
+        ChildSizing.VerticalSpacing = 8
+        Background.Color = 16448250
+        Background.Gradient1.StartColor = clWhite
+        Background.Gradient1.EndColor = clBlack
+        Background.Gradient1.GradientType = gtLinear
+        Background.Gradient1.Point1XPercent = 0
+        Background.Gradient1.Point1YPercent = 0
+        Background.Gradient1.Point2XPercent = 0
+        Background.Gradient1.Point2YPercent = 100
+        Background.Gradient2.StartColor = clWhite
+        Background.Gradient2.EndColor = clBlack
+        Background.Gradient2.GradientType = gtLinear
+        Background.Gradient2.Point1XPercent = 0
+        Background.Gradient2.Point1YPercent = 0
+        Background.Gradient2.Point2XPercent = 0
+        Background.Gradient2.Point2YPercent = 100
+        Background.Gradient1EndPercent = 35
+        Background.Style = bbsColor
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BevelWidth = 1
+        Border.Color = 13750737
+        Border.Style = bboSolid
+        BorderBCStyle = bpsBorder
+        Constraints.MaxHeight = 400
+        Constraints.MinHeight = 300
+        Constraints.MinWidth = 464
+        FontEx.Color = clDefault
+        FontEx.FontQuality = fqSystemClearType
+        FontEx.Shadow = False
+        FontEx.ShadowRadius = 5
+        FontEx.ShadowOffsetX = 5
+        FontEx.ShadowOffsetY = 5
+        FontEx.Style = []
+        ParentBackground = False
+        Rounding.RoundX = 8
+        Rounding.RoundY = 8
+        TabOrder = 3
+        object chartSpecies: TChart
+          Left = 16
+          Height = 284
+          Top = 8
+          Width = 432
+          AxisList = <          
+            item
+              Grid.Color = 13750737
+              Intervals.Options = [aipUseCount, aipUseMinLength, aipUseNiceSteps, aipInteger]
+              TickInnerLength = 2
+              AxisPen.Visible = True
+              Marks.LabelBrush.Style = bsClear
+              Minors = <>
+              Title.LabelFont.Color = 13066075
+              Title.LabelFont.Orientation = 900
+              Title.Visible = True
+              Title.Caption = 'nr. of species'
+              Title.LabelBrush.Style = bsClear
+            end          
+            item
+              Grid.Visible = False
+              Intervals.Count = 12
+              Intervals.MinLength = 12
+              Intervals.Options = [aipUseCount]
+              TickLength = 0
+              Alignment = calBottom
+              AxisPen.Visible = True
+              Marks.Distance = 2
+              Marks.LabelFont.Orientation = 400
+              Marks.Format = '%2:s'
+              Marks.LabelBrush.Style = bsClear
+              Marks.RotationCenter = rcRight
+              Marks.Source = lcsIndividualsMonth
+              Marks.Style = smsLabel
+              Minors = <              
+                item
+                  Grid.Visible = False
+                  Intervals.Count = 1
+                  Intervals.MinLength = 1
+                  Intervals.Options = [aipUseCount, aipUseMinLength]
+                  TickInnerLength = 2
+                  TickLength = 6
+                  Marks.LabelBrush.Style = bsClear
+                end>
+              Title.LabelFont.Color = 13066075
+              Title.Visible = True
+              Title.Caption = 'month'
+              Title.LabelBrush.Style = bsClear
+            end>
+          BackColor = 16448250
+          Frame.Style = psClear
+          GUIConnector = ChartGUIConnectorBGRA1
+          Legend.BackgroundBrush.Color = 16448250
+          Legend.Frame.Visible = False
+          Margins.Left = 16
+          Margins.Right = 16
+          Margins.Bottom = 0
+          MarginsExternal.Left = 0
+          MarginsExternal.Top = 0
+          MarginsExternal.Right = 0
+          MarginsExternal.Bottom = 0
+          Title.Font.Color = 13066075
+          Title.Text.Strings = (
+            'Species recorded'
+          )
+          Title.Visible = True
+          Align = alClient
+          Color = 16448250
+          object barSpeciesMonth: TBarSeries
+            Title = 'Species'
+            BarBrush.Color = 13066075
+            BarPen.Style = psClear
+            BarWidthPercent = 65
+            Marks.Distance = 8
+            Marks.LabelFont.Color = 13066075
+            Marks.Format = '%0:.9g'
+            Marks.Frame.Visible = False
+            Marks.LabelBrush.Style = bsClear
+            Marks.LinkPen.Visible = False
+            Marks.Style = smsValue
+            Source = lcsSpeciesMonth
+          end
+        end
+      end
     end
     object pNumbers: TBCPanel
       Left = 16
       Height = 113
       Top = 16
-      Width = 1412
+      Width = 1391
       Align = alTop
       AutoSize = True
       BorderSpacing.Left = 16
@@ -425,7 +562,7 @@ object frmDashboard: TfrmDashboard
         Left = 0
         Height = 113
         Top = 0
-        Width = 222
+        Width = 219
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = 16448250
@@ -508,10 +645,10 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pTotalIndividuals: TBCPanel
-        Left = 238
+        Left = 235
         Height = 113
         Top = 0
-        Width = 222
+        Width = 219
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = 16448250
@@ -594,10 +731,10 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pTotalNests: TBCPanel
-        Left = 476
+        Left = 470
         Height = 113
         Top = 0
-        Width = 222
+        Width = 219
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = 16448250
@@ -680,10 +817,10 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pTotalSamplings: TBCPanel
-        Left = 714
+        Left = 705
         Height = 113
         Top = 0
-        Width = 222
+        Width = 219
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = 16448250
@@ -766,13 +903,13 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pNewSighting: TBCPanel
-        Left = 952
+        Left = 940
         Height = 113
         Top = 0
-        Width = 222
+        Width = 219
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
-        Background.Color = 16226706
+        Background.Color = clBtnFace
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
         Background.Gradient1.GradientType = gtLinear
@@ -808,6 +945,8 @@ object frmDashboard: TfrmDashboard
         Rounding.RoundX = 8
         Rounding.RoundY = 8
         TabOrder = 4
+        OnMouseEnter = pNewSightingMouseEnter
+        OnMouseLeave = pNewSightingMouseLeave
         object txtShortcutNewSighting: TLabel
           AnchorSideLeft.Control = pNewSighting
           AnchorSideTop.Control = pNewSighting
@@ -817,7 +956,7 @@ object frmDashboard: TfrmDashboard
           Top = 9
           Width = 84
           Caption = 'New'#13#10'sighting'
-          Font.Color = clWhite
+          Font.Color = 13066075
           Font.Height = -23
           ParentFont = False
           ShowAccelChar = False
@@ -828,7 +967,7 @@ object frmDashboard: TfrmDashboard
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = pNewSighting
           AnchorSideBottom.Side = asrBottom
-          Left = 163
+          Left = 160
           Height = 48
           Top = 56
           Width = 50
@@ -841,10 +980,10 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pShortcutConverter: TBCPanel
-        Left = 1190
+        Left = 1175
         Height = 113
         Top = 0
-        Width = 222
+        Width = 216
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = clBtnFace
@@ -883,6 +1022,8 @@ object frmDashboard: TfrmDashboard
         Rounding.RoundX = 8
         Rounding.RoundY = 8
         TabOrder = 5
+        OnMouseEnter = pShortcutConverterMouseEnter
+        OnMouseLeave = pShortcutConverterMouseLeave
         object txtShortcutConverter: TLabel
           AnchorSideLeft.Control = pShortcutConverter
           AnchorSideTop.Control = pShortcutConverter
@@ -903,7 +1044,7 @@ object frmDashboard: TfrmDashboard
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = pShortcutConverter
           AnchorSideBottom.Side = asrBottom
-          Left = 163
+          Left = 157
           Height = 48
           Top = 56
           Width = 50
@@ -1798,5 +1939,13 @@ object frmDashboard: TfrmDashboard
     OnTimer = TimerReloadTimer
     Left = 472
     Top = 160
+  end
+  object ChartGUIConnectorBGRA1: TChartGUIConnectorBGRA
+    Left = 472
+    Top = 410
+  end
+  object lcsSpeciesMonth: TListChartSource
+    Left = 192
+    Top = 240
   end
 end

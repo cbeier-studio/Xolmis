@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, Menus, DB, SQLDB,
-  DBGrids, ATLinkLabel, TAGraph, TATools, TASeries, TASources, BCPanel,
-  BCButton, BCTypes, mvMapViewer, mvTypes, mvGpsObj, mvExtraData, Grids;
+  DBGrids, ATLinkLabel, TAGraph, TATools, TASeries, TASources, TAGUIConnectorBGRA, BCPanel, DateUtils,
+  BCButton, BCTypes, mvMapViewer, mvTypes, mvGpsObj, mvExtraData, Grids, mvDrawingEngine;
 
 type
 
@@ -15,7 +15,10 @@ type
 
   TfrmDashboard = class(TForm)
     barIndividualsMonth: TBarSeries;
+    barSpeciesMonth: TBarSeries;
+    ChartGUIConnectorBGRA1: TChartGUIConnectorBGRA;
     chartIndividuals: TChart;
+    chartSpecies: TChart;
     dbgLifers: TDBGrid;
     icoShortcutConverter: TImage;
     icoShortcutNewSighting: TImage;
@@ -28,6 +31,7 @@ type
     lblTotalNests: TLabel;
     lblTotalSpecies: TLabel;
     lblTotalSamplings: TLabel;
+    lcsSpeciesMonth: TListChartSource;
     lineTotalIndividuals: TShape;
     lineTotalNests: TShape;
     lineTotalSpecies: TShape;
@@ -39,6 +43,7 @@ type
     pBandsContent: TBCPanel;
     pBirthdays: TBCPanel;
     pCharts: TBCPanel;
+    pCharts1: TBCPanel;
     pLifers: TBCPanel;
     pMapSurveys: TBCPanel;
     pNumbers: TBCPanel;
@@ -80,7 +85,11 @@ type
     procedure lblTitleBandsBalanceClick(Sender: TObject);
     procedure pFlowChangeBounds(Sender: TObject);
     procedure pmRefreshClick(Sender: TObject);
+    procedure pNewSightingMouseEnter(Sender: TObject);
+    procedure pNewSightingMouseLeave(Sender: TObject);
     procedure pNumbersResize(Sender: TObject);
+    procedure pShortcutConverterMouseEnter(Sender: TObject);
+    procedure pShortcutConverterMouseLeave(Sender: TObject);
     procedure sBoxResize(Sender: TObject);
     procedure sbUpdateLaterClick(Sender: TObject);
     procedure TimerLoadTimer(Sender: TObject);
@@ -328,6 +337,18 @@ begin
   Working := False;
 end;
 
+procedure TfrmDashboard.pNewSightingMouseEnter(Sender: TObject);
+begin
+  if (Sender is TBCPanel) then
+    TBCPanel(Sender).Background.Color := clBtnHighlight;
+end;
+
+procedure TfrmDashboard.pNewSightingMouseLeave(Sender: TObject);
+begin
+  if (Sender is TBCPanel) then
+    TBCPanel(Sender).Background.Color := clBtnFace;
+end;
+
 procedure TfrmDashboard.pNumbersResize(Sender: TObject);
 begin
   if sBox.Width < ((pCharts.Constraints.MinWidth * 2) + (pFlow.ChildSizing.HorizontalSpacing * 2)) then
@@ -337,6 +358,18 @@ begin
     pNumbers.ChildSizing.ControlsPerLine := 4
   else
     pNumbers.ChildSizing.ControlsPerLine := 6;
+end;
+
+procedure TfrmDashboard.pShortcutConverterMouseEnter(Sender: TObject);
+begin
+  if (Sender is TBCPanel) then
+    TBCPanel(Sender).Background.Color := clBtnHighlight;
+end;
+
+procedure TfrmDashboard.pShortcutConverterMouseLeave(Sender: TObject);
+begin
+  if (Sender is TBCPanel) then
+    TBCPanel(Sender).Background.Color := clBtnFace;
 end;
 
 procedure TfrmDashboard.RefreshBandBalance;
@@ -417,23 +450,67 @@ begin
 end;
 
 procedure TfrmDashboard.RefreshChart;
+var
+  InitialMonth: TDate;
+  i: Integer;
 begin
+  InitialMonth := IncMonth(Today, -12);
   with DMC.qIndividualsMonth do
   begin
     if DMC.qIndividualsMonth.Active then
       Refresh
     else
       Open;
-    chartIndividuals.Refresh;
-    lcsIndividualsMonth.Clear;
-    First;
-    repeat
-      lcsIndividualsMonth.Add(
-        FieldByName('id').AsFloat,
-        FieldByName('quantity').AsFloat,
-        Trim(FieldByName('record_month').AsString));
-      Next;
-    until EOF;
+    if DMC.qIndividualsMonth.RecordCount > 0 then
+    begin
+      chartIndividuals.Refresh;
+      lcsIndividualsMonth.Clear;
+      for i := 1 to 12 do
+      begin
+        if Locate('record_month', FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)), []) then
+          lcsIndividualsMonth.Add(
+            i,
+            FieldByName('quantity').AsFloat,
+            FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
+        else
+          lcsIndividualsMonth.Add(
+            i,
+            0,
+            FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
+      end;
+      pCharts.Visible := True;
+    end
+    else
+      pCharts.Visible := False;
+  end;
+
+  with DMC.qSpeciesMonth do
+  begin
+    if DMC.qSpeciesMonth.Active then
+      Refresh
+    else
+      Open;
+    if DMC.qIndividualsMonth.RecordCount > 0 then
+    begin
+      chartSpecies.Refresh;
+      lcsSpeciesMonth.Clear;
+      for i := 1 to 12 do
+      begin
+        if Locate('record_month', FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)), []) then
+          lcsIndividualsMonth.Add(
+            i,
+            FieldByName('quantity').AsFloat,
+            FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
+        else
+          lcsIndividualsMonth.Add(
+            i,
+            0,
+            FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
+      end;
+      pCharts1.Visible := True;
+    end
+    else
+      pCharts1.Visible := False;
   end;
 end;
 
@@ -450,26 +527,37 @@ begin
       Open;
 
     mapSurveys.GPSItems.Clear(20);
-    First;
-    repeat
-      rp.Lon := FieldByName('start_longitude').AsFloat;
-      rp.Lat := FieldByName('start_latitude').AsFloat;
-      if not (rp.Lon = 0) and not (rp.Lat = 0) then
+
+    if DMC.qLastSurveys.RecordCount > 0 then
+    begin
+      First;
+      repeat
+        rp.Lon := FieldByName('start_longitude').AsFloat;
+        rp.Lat := FieldByName('start_latitude').AsFloat;
+        if not (rp.Lon = 0) and not (rp.Lat = 0) then
+        begin
+          //mapSurveys.LonLatToScreen(rp);
+          poi := TGpsPoint.CreateFrom(rp);
+          //poi.Name := FieldByName('survey_date').AsString;
+            //+ #10 + FieldByName('locality_name').AsString + #10 +
+            //FieldByName('method_name').AsString;
+          mapSurveys.GPSItems.Add(poi, 20);
+        end;
+        Next;
+      until EOF;
+      if mapSurveys.GPSItems.Count > 0 then
       begin
-        //mapSurveys.LonLatToScreen(rp);
-        poi := TGpsPoint.CreateFrom(rp);
-        //poi.Name := FieldByName('survey_date').AsString;
-          //+ #10 + FieldByName('locality_name').AsString + #10 +
-          //FieldByName('method_name').AsString;
-        mapSurveys.GPSItems.Add(poi, 20);
-      end;
-      Next;
-    until EOF;
+        mapSurveys.ZoomOnArea(mapSurveys.GPSItems.BoundingBox);
+        mapSurveys.Zoom := mapSurveys.Zoom - 1;
+        mapSurveys.Visible := True;
+      end
+      else
+        mapSurveys.Visible := False;
+    end
+    else
+      mapSurveys.Visible := False;
     Close;
   end;
-  mapSurveys.ZoomOnArea(mapSurveys.GPSItems.BoundingBox);
-  mapSurveys.Zoom := mapSurveys.Zoom - 1;
-
 end;
 
 procedure TfrmDashboard.RefreshNumbers;

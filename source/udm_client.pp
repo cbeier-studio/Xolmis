@@ -15,6 +15,7 @@ type
     dsIndividualsMonth: TDataSource;
     dsBandsBalance: TDataSource;
     dsBandsRunningOut: TDataSource;
+    dsSpeciesMonth: TDataSource;
     dsLastLifers: TDataSource;
     dsLastSurveys: TDataSource;
     dsBirthdays: TDataSource;
@@ -36,9 +37,13 @@ type
     qExpiredPermitsdays_remaining: TLongintField;
     qExpiredPermitsexpire_date: TDateField;
     qExpiredPermitspermit_name: TStringField;
+    qSpeciesMonth: TSQLQuery;
     qIndividualsMonthid: TLongintField;
+    qIndividualsMonthid1: TLongintField;
     qIndividualsMonthquantity: TLongintField;
+    qIndividualsMonthquantity1: TLongintField;
     qIndividualsMonthrecord_month: TStringField;
+    qIndividualsMonthrecord_month1: TStringField;
     qLastLifers: TSQLQuery;
     qLastLifersativo: TBooleanField;
     qLastLifersdata_registro: TStringField;
