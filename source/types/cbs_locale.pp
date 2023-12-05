@@ -191,6 +191,7 @@ uses
       'Once completed, this operation cannot be undone.';
     rsActionCannotBeUndone = 'This action cannot be undone.';
     rsModificationsNotSaved = 'Changes not saved';
+    rsCreateDatabasePrompt = 'Database file not found. Do you want to create it?';
 
 
     { Validation messages }

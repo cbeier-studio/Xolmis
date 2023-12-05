@@ -475,10 +475,12 @@ begin
 end;
 
 function ConnectDatabase: Boolean;
-//var
+var
+  dontConnect: Boolean;
 //  DateCheck: TDateTime;
 begin
   Result := False;
+  dontConnect := False;
 
   dlgConnect := TdlgConnect.Create(nil);
   with dlgConnect do
@@ -493,9 +495,10 @@ begin
         dbSqlite:
           begin
             if not (FileExists(ConexaoDB.Database)) then
-            begin
-              CreateUserDatabase(ConexaoDB.Manager, ConexaoDB.Database);
-            end;
+              if MessageDlg(rsCreateDatabasePrompt, mtConfirmation, mbYesNo, 0, mbYes) = mrYes then
+                CreateUserDatabase(ConexaoDB.Manager, ConexaoDB.Database)
+              else
+                dontConnect := True;
 
             // If the last session was not terminated correctly
             //if (Finalizado = False) then
@@ -517,6 +520,9 @@ begin
         dbPostgre: ;
         dbMaria: ;
       end;
+
+      if dontConnect then
+        Exit;
 
       // >> Permanently delete inactive records older than a specified period
       //DateCheck := GetPreference('GENERAL', 'LastClearDeleted', DateOf(Now - 1));
