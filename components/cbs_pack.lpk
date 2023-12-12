@@ -2,7 +2,7 @@
 <CONFIG>
   <Package Version="5">
     <PathDelim Value="\"/>
-    <Name Value="cbs_library"/>
+    <Name Value="cbs_pack"/>
     <Type Value="RunAndDesignTime"/>
     <Author Value="Christian Beier"/>
     <CompilerOptions>

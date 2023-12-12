@@ -331,7 +331,8 @@
         <PackageName Value="lazupdate"/>
       </Item>
       <Item>
-        <PackageName Value="cbs_library"/>
+        <PackageName Value="cbs_pack"/>
+        <MaxVersion Minor="1"/>
       </Item>
       <Item>
         <PackageName Value="SQLDBLaz"/>
