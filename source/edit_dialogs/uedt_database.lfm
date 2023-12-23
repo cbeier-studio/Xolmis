@@ -1,14 +1,15 @@
 object edtDatabase: TedtDatabase
   Left = 352
-  Height = 577
+  Height = 609
   Top = 33
-  Width = 390
+  Width = 488
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Connection settings'
-  ClientHeight = 577
-  ClientWidth = 390
-  Font.Height = -15
+  ClientHeight = 609
+  ClientWidth = 488
+  DesignTimePPI = 120
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -16,13 +17,14 @@ object edtDatabase: TedtDatabase
   PopupMode = pmExplicit
   PopupParent = cfgDatabase.Owner
   Position = poScreenCenter
-  LCLVersion = '3.0.0.2'
+  LCLVersion = '3.0.0.3'
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 527
-    Width = 390
-    Align = alBottom
+    Height = 52
+    Top = 557
+    Width = 488
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -31,8 +33,8 @@ object edtDatabase: TedtDatabase
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
-    ClientWidth = 390
+    ClientHeight = 52
+    ClientWidth = 488
     Color = 15987699
     ParentBackground = False
     ParentColor = False
@@ -41,7 +43,7 @@ object edtDatabase: TedtDatabase
       Left = 16
       Height = 36
       Top = 8
-      Width = 175
+      Width = 224
       StateClicked.Background.Color = 14259089
       StateClicked.Background.Gradient1.StartColor = 8404992
       StateClicked.Background.Gradient1.EndColor = 4194304
@@ -129,7 +131,7 @@ object edtDatabase: TedtDatabase
       StateNormal.FontEx.PaddingRight = 4
       Caption = 'Save'
       Color = 15987699
-      Constraints.MinWidth = 175
+      Constraints.MinWidth = 219
       DropDownWidth = 16
       DropDownArrowSize = 8
       GlobalOpacity = 255
@@ -141,13 +143,13 @@ object edtDatabase: TedtDatabase
       RoundingDropDown.RoundY = 8
       TextApplyGlobalOpacity = False
       MemoryUsage = bmuMediumF
-      TabOrder = 1
+      TabOrder = 0
     end
     object sbCancel: TBCButtonFocus
-      Left = 199
+      Left = 248
       Height = 36
       Top = 8
-      Width = 175
+      Width = 224
       StateClicked.Background.Color = 16245964
       StateClicked.Background.Gradient1.StartColor = 16422228
       StateClicked.Background.Gradient1.EndColor = 14771751
@@ -239,7 +241,7 @@ object edtDatabase: TedtDatabase
       StateNormal.FontEx.PaddingRight = 4
       Caption = 'Cancel'
       Color = 15987699
-      Constraints.MinWidth = 175
+      Constraints.MinWidth = 219
       DropDownWidth = 16
       DropDownArrowSize = 8
       GlobalOpacity = 255
@@ -251,39 +253,39 @@ object edtDatabase: TedtDatabase
       RoundingDropDown.RoundY = 1
       TextApplyGlobalOpacity = False
       MemoryUsage = bmuMediumF
-      TabOrder = 0
+      TabOrder = 1
     end
   end
   object pMain: TPanel
     Left = 0
-    Height = 525
+    Height = 555
     Top = 0
-    Width = 390
-    Align = alClient
+    Width = 488
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 525
-    ClientWidth = 390
+    ClientHeight = 555
+    ClientWidth = 488
     Color = 16444392
-    Constraints.MinHeight = 525
-    Constraints.MinWidth = 390
+    Constraints.MinWidth = 488
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object pTitleAuthentication: TPanel
       Left = 16
-      Height = 30
-      Top = 356
-      Width = 358
+      Height = 38
+      Top = 375
+      Width = 456
       Align = alTop
       Alignment = taLeftJustify
-      BorderSpacing.Top = 16
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Top = 20
+      BorderSpacing.Bottom = 10
       BevelOuter = bvNone
       Caption = 'Authentication'
       Font.Color = 13066075
-      Font.Height = -20
+      Font.Height = -25
       ParentBackground = False
       ParentFont = False
       TabOrder = 6
@@ -291,10 +293,10 @@ object edtDatabase: TedtDatabase
     object lblDBManager: TLabel
       Left = 16
       Height = 20
-      Top = 76
-      Width = 358
+      Top = 79
+      Width = 456
       Align = alTop
-      BorderSpacing.Bottom = 4
+      BorderSpacing.Bottom = 5
       Caption = 'Database type: *'
       Layout = tlCenter
       ParentColor = False
@@ -302,11 +304,11 @@ object edtDatabase: TedtDatabase
     object lblDBServer: TLabel
       Left = 16
       Height = 20
-      Top = 168
-      Width = 358
+      Top = 176
+      Width = 456
       Align = alTop
-      BorderSpacing.Top = 8
-      BorderSpacing.Bottom = 4
+      BorderSpacing.Top = 10
+      BorderSpacing.Bottom = 5
       Caption = 'Server:'
       Layout = tlCenter
       ParentColor = False
@@ -314,10 +316,10 @@ object edtDatabase: TedtDatabase
     object lblDBPort: TLabel
       Left = 16
       Height = 20
-      Top = 228
-      Width = 358
+      Top = 239
+      Width = 456
       Align = alTop
-      BorderSpacing.Bottom = 4
+      BorderSpacing.Bottom = 5
       Caption = 'Port:'
       Layout = tlCenter
       ParentColor = False
@@ -325,10 +327,10 @@ object edtDatabase: TedtDatabase
     object lblDBFile: TLabel
       Left = 16
       Height = 20
-      Top = 288
-      Width = 358
+      Top = 302
+      Width = 456
       Align = alTop
-      BorderSpacing.Bottom = 4
+      BorderSpacing.Bottom = 5
       Caption = 'Database file: *'
       Layout = tlCenter
       ParentColor = False
@@ -336,10 +338,10 @@ object edtDatabase: TedtDatabase
     object lblDBUser: TLabel
       Left = 16
       Height = 20
-      Top = 394
-      Width = 358
+      Top = 423
+      Width = 456
       Align = alTop
-      BorderSpacing.Bottom = 4
+      BorderSpacing.Bottom = 5
       Caption = 'Username:'
       Layout = tlCenter
       ParentColor = False
@@ -347,8 +349,8 @@ object edtDatabase: TedtDatabase
     object eDBPass: TEditButton
       Left = 16
       Height = 28
-      Top = 478
-      Width = 358
+      Top = 511
+      Width = 456
       Align = alTop
       ButtonWidth = 29
       EchoMode = emPassword
@@ -367,10 +369,10 @@ object edtDatabase: TedtDatabase
     object lblDBPass: TLabel
       Left = 16
       Height = 20
-      Top = 454
-      Width = 358
+      Top = 486
+      Width = 456
       Align = alTop
-      BorderSpacing.Bottom = 4
+      BorderSpacing.Bottom = 5
       Caption = 'Password:'
       Layout = tlCenter
       ParentColor = False
@@ -379,9 +381,9 @@ object edtDatabase: TedtDatabase
       Left = 16
       Height = 20
       Top = 16
-      Width = 358
+      Width = 456
       Align = alTop
-      BorderSpacing.Bottom = 4
+      BorderSpacing.Bottom = 5
       Caption = 'Connection name: *'
       Layout = tlCenter
       ParentColor = False
@@ -389,12 +391,12 @@ object edtDatabase: TedtDatabase
     object eName: TDBEdit
       Left = 16
       Height = 28
-      Top = 40
-      Width = 358
+      Top = 41
+      Width = 456
       DataField = 'connection_name'
       DataSource = dsConn
       Align = alTop
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Bottom = 10
       MaxLength = 0
       TabOrder = 0
       OnKeyDown = FormKeyDown
@@ -403,12 +405,12 @@ object edtDatabase: TedtDatabase
     object eDBServer: TDBEdit
       Left = 16
       Height = 28
-      Top = 192
-      Width = 358
+      Top = 201
+      Width = 456
       DataField = 'database_server'
       DataSource = dsConn
       Align = alTop
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Bottom = 10
       MaxLength = 0
       TabOrder = 3
       OnKeyDown = FormKeyDown
@@ -417,12 +419,12 @@ object edtDatabase: TedtDatabase
     object eDBPort: TDBEdit
       Left = 16
       Height = 28
-      Top = 252
-      Width = 358
+      Top = 264
+      Width = 456
       DataField = 'database_port'
       DataSource = dsConn
       Align = alTop
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Bottom = 10
       MaxLength = 0
       TabOrder = 4
       OnKeyDown = FormKeyDown
@@ -431,12 +433,12 @@ object edtDatabase: TedtDatabase
     object eDBUser: TDBEdit
       Left = 16
       Height = 28
-      Top = 418
-      Width = 358
+      Top = 448
+      Width = 456
       DataField = 'user_name'
       DataSource = dsConn
       Align = alTop
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Bottom = 10
       MaxLength = 0
       TabOrder = 7
       OnKeyDown = FormKeyDown
@@ -445,10 +447,10 @@ object edtDatabase: TedtDatabase
     object ckRemoteDB: TCheckBox
       Left = 16
       Height = 24
-      Top = 136
-      Width = 358
+      Top = 142
+      Width = 456
       Align = alTop
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Bottom = 10
       Caption = 'Remote database'
       TabOrder = 2
       OnChange = ckRemoteDBChange
@@ -458,18 +460,17 @@ object edtDatabase: TedtDatabase
     object cbDBManager: TDBComboBox
       Left = 16
       Height = 28
-      Top = 100
-      Width = 358
+      Top = 104
+      Width = 456
       Align = alTop
       AutoComplete = True
       AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Bottom = 10
       DataField = 'database_type'
       DataSource = dsConn
       ItemHeight = 20
       Items.Strings = (
         'SQLite'
-        'Firebird'
       )
       MaxLength = 0
       OnKeyDown = FormKeyDown
@@ -478,33 +479,35 @@ object edtDatabase: TedtDatabase
       Style = csDropDownList
       TabOrder = 1
     end
-    object eDBFile: TEditButton
+    object eDBFile: TDBEditButton
       Left = 16
       Height = 28
-      Top = 312
-      Width = 358
+      Top = 327
+      Width = 456
       Align = alTop
-      ButtonWidth = 29
-      Images = frmMain.mPopup
-      ImageIndex = 43
-      ImageWidth = 20
-      MaxLength = 0
-      NumGlyphs = 1
-      OnButtonClick = eDBFileButtonClick
-      OnEditingDone = eDBFileEditingDone
-      OnKeyDown = FormKeyDown
-      OnKeyPress = eNameKeyPress
-      PasswordChar = #0
-      Spacing = 0
+      BevelOuter = bvNone
+      ClientHeight = 28
+      ClientWidth = 456
+      Constraints.MaxHeight = 28
+      ParentBackground = False
       TabOrder = 5
+      ImageIndex = 43
+      Images = frmMain.mPopup
+      ImageWidth = 20
+      DataField = 'database_name'
+      DataSource = dsConn
+      CharCase = ecNormal
+      OnButtonClick = eDBFileButtonClick
+      OnDBEditKeyDown = FormKeyDown
+      OnDBEditKeyPress = eNameKeyPress
     end
   end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 525
-    Width = 390
-    Align = alBottom
+    Top = 555
+    Width = 488
+    Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
@@ -513,14 +516,14 @@ object edtDatabase: TedtDatabase
     DataSet = DMM.qsConn
     OnDataChange = dsConnDataChange
     OnUpdateData = dsConnUpdateData
-    Left = 248
-    Top = 144
+    Left = 310
+    Top = 180
   end
   object OpenDlg: TOpenDialog
     Title = 'Abrir'
     DefaultExt = '.sqlite3'
     Filter = 'SQLite 3 (*.sqlite3; *.db3; *.s3db; *.sl3)|*.sqlite3; *.db3; *.s3db; *.sl3|Firebird (*.fdb)|*.fdb'
-    Left = 304
-    Top = 144
+    Left = 380
+    Top = 180
   end
 end

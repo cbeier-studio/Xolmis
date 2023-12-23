@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons,
-  EditBtn, ComCtrls, DBCtrls, atshapelinebgra, BCButtonFocus;
+  EditBtn, ComCtrls, DBCtrls, DBEditButton, atshapelinebgra, BCButtonFocus;
 
 type
 
@@ -15,8 +15,8 @@ type
   TedtDatabase = class(TForm)
     ckRemoteDB: TCheckBox;
     cbDBManager: TDBComboBox;
+    eDBFile: TDBEditButton;
     dsConn: TDataSource;
-    eDBFile: TEditButton;
     eName: TDBEdit;
     eDBPass: TEditButton;
     eDBServer: TDBEdit;
@@ -41,7 +41,6 @@ type
     procedure dsConnDataChange(Sender: TObject; Field: TField);
     procedure dsConnUpdateData(Sender: TObject);
     procedure eDBFileButtonClick(Sender: TObject);
-    procedure eDBFileEditingDone(Sender: TObject);
     procedure eDBPassButtonClick(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -81,7 +80,7 @@ begin
   ckRemoteDBChange(nil);
 
   cbDBManager.ItemIndex := cbDBManager.Items.IndexOf(dsConn.DataSet.FieldByName(cbDBManager.DataField).DisplayText);
-  eDBFile.Text := dsConn.DataSet.FieldByName('database_name').AsString;
+  //eDBFile.Text := dsConn.DataSet.FieldByName('database_name').AsString;
   eDBPass.Text := dsConn.DataSet.FieldByName('user_password').AsString;
 
   eName.SetFocus;
@@ -103,14 +102,8 @@ begin
   GravaStat(Name, TComponent(Sender).Name, 'buttonclick');
   if OpenDlg.Execute then
   begin
-    eDBFile.Text := OpenDlg.FileName;
+    eDBFile.Field.AsString := OpenDlg.FileName;
   end;
-end;
-
-procedure TedtDatabase.eDBFileEditingDone(Sender: TObject);
-begin
-  DMM.qsConn.FieldByName('database_name').AsString := eDBFile.Text;
-
 end;
 
 procedure TedtDatabase.eDBPassButtonClick(Sender: TObject);
@@ -168,7 +161,7 @@ begin
         eDBPass.Enabled := False;
         eDBPass.Button.Enabled := False;
         lblDBPass.Enabled := False;
-        eDBFile.Button.Visible := True;
+        //eDBFile.FButton.Visible := True;
         lblDBFile.Caption := rsLabelFile;
       end;
     dbFirebird: { Firebird }
@@ -184,7 +177,7 @@ begin
         eDBPass.Enabled := True;
         eDBPass.Button.Enabled := True;
         lblDBPass.Enabled := True;
-        eDBFile.Button.Visible := True;
+        //eDBFile.FButton.Visible := True;
         lblDBFile.Caption := rsLabelFile;
       end;
     dbPostgre: { PostgreSQL }
@@ -200,7 +193,7 @@ begin
         eDBPass.Enabled := True;
         eDBPass.Button.Enabled := True;
         lblDBPass.Enabled := True;
-        eDBFile.Button.Visible := False;
+        //eDBFile.FButton.Visible := False;
         lblDBFile.Caption := rsLabelName;
       end;
     dbMaria: { MariaDB }
@@ -216,7 +209,7 @@ begin
         eDBPass.Enabled := True;
         eDBPass.Button.Enabled := True;
         lblDBPass.Enabled := True;
-        eDBFile.Button.Visible := False;
+        //eDBFile.FButton.Visible := False;
         lblDBFile.Caption := rsLabelName;
       end;
   end;
@@ -259,7 +252,6 @@ end;
 
 procedure TedtDatabase.dsConnUpdateData(Sender: TObject);
 begin
-  dsConn.DataSet.FieldByName('database_name').AsString := eDBFile.Text;
   dsConn.DataSet.FieldByName('user_password').AsString := eDBPass.Text;
 end;
 

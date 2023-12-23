@@ -1584,7 +1584,7 @@ begin
       FTotalLength := FieldByName('total_length').AsFloat;
       FFeatherMites := FieldByName('feather_mites').AsString;
       FFat := FieldByName('fat').AsString;
-      FBroodPatch := FieldByName('brod_patch').AsString;
+      FBroodPatch := FieldByName('brood_patch').AsString;
       FCloacalProtuberance := FieldByName('cloacal_protuberance').AsString;
       FOldMolt := FieldByName('old_molt').AsString;
       FOldPrimariesMolt := FieldByName('old_primaries_molt').AsString;
@@ -1592,7 +1592,7 @@ begin
       FOldRetricesMolt := FieldByName('old_retrices_molt').AsString;
       FOldBodyMolt := FieldByName('old_body_molt').AsString;
       FBodyMolt := FieldByName('body_molt').AsString;
-      FFlightFeathersMolt := FieldByName('fligth_feathers_molt').AsString;
+      FFlightFeathersMolt := FieldByName('flight_feathers_molt').AsString;
       FFlightFeathersWear := FieldByName('flight_feathers_wear').AsString;
       FMoltLimits := FieldByName('molt_limits').AsString;
       FCycleCode := FieldByName('cycle_code').AsString;

@@ -1973,7 +1973,7 @@ object DMM: TDMM
     Connected = False
     LoginPrompt = False
     BeforeConnect = sqlConBeforeConnect
-    DatabaseName = 'D:\Desenv\Xolmis\data\XolmisDB.sqlite3'
+    DatabaseName = 'D:\Desenv\Xolmis_Local\data\XolmisDB.sqlite3'
     KeepConnection = False
     Transaction = sqlTrans
     CharSet = 'UTF-8'

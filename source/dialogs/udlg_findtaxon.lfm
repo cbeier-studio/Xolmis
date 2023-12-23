@@ -15,7 +15,6 @@ object dlgFindTaxon: TdlgFindTaxon
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
-  LCLVersion = '3.0.0.2'
   object pSearchBar: TPanel
     Left = 0
     Height = 38
@@ -136,21 +135,18 @@ object dlgFindTaxon: TdlgFindTaxon
     OnKeyDown = FormKeyDown
     OnKeyPress = FormKeyPress
     OnPrepareCanvas = uListPrepareCanvas
-    ColWidths = (
-      188
-    )
     object pContent: TPanel
       Left = 0
       Height = 46
       Top = 0
-      Width = 188
+      Width = 371
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
       ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 46
-      ClientWidth = 188
+      ClientWidth = 371
       Color = clWindow
       ParentBackground = False
       ParentColor = False
@@ -190,6 +186,8 @@ object dlgFindTaxon: TdlgFindTaxon
         DefFontSize = 9
         HistoryMaxCount = 0
         HtOptions = [htPrintTableBackground, htPrintMonochromeBlack, htNoWheelMouse, htNoFocusRect]
+        MarginHeight = 1
+        MarginWidth = 0
         NoSelect = False
         PrintMarginBottom = 2
         PrintMarginLeft = 2

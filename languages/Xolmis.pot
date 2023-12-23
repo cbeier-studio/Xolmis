@@ -2612,7 +2612,7 @@ msgstr ""
 #: cbs_locale.rsvaluenotinset
 #, object-pascal-format
 msgctxt "cbs_locale.rsvaluenotinset"
-msgid "The value of <b>%s</b> must be one of the following: <font color=\"green\">%s</font>."
+msgid "The value of <b>%s</b> must be one of the following: <font color='green'>%s</font>."
 msgstr ""
 
 #: cbs_locale.rsversionplusstr

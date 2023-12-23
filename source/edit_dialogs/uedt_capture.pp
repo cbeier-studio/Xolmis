@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, Character, DateUtils,
-  ExtCtrls, StdCtrls, DBCtrls, DBExtCtrls, DBEditButton, atshapelinebgra,
+  ExtCtrls, StdCtrls, DBCtrls, DBEditButton, atshapelinebgra,
   cbs_birds;
 
 type
@@ -1175,8 +1175,8 @@ begin
   ValueInSet(D.FieldByName('brood_patch').AsString, rsBroodPatch, BroodPatchValues, Msgs);
   ValueInSet(D.FieldByName('fat').AsString, rsSubcutaneousFat, FatValues, Msgs);
   ValueInSet(D.FieldByName('body_molt').AsString, rsBodyMolt, BodyMoltValues, Msgs);
-  ValueInSet(D.FieldByName('flight_feather_molt').AsString, rsFlightMolt, FlightMoltValues, Msgs);
-  ValueInSet(D.FieldByName('flight_feather_wear').AsString, rsFlightWear, FeatherWearValues, Msgs);
+  ValueInSet(D.FieldByName('flight_feathers_molt').AsString, rsFlightMolt, FlightMoltValues, Msgs);
+  ValueInSet(D.FieldByName('flight_feathers_wear').AsString, rsFlightWear, FeatherWearValues, Msgs);
   ValueInSet(D.FieldByName('skull_ossification').AsString, rsSkullOssification, SkullValues, Msgs);
 
   if Msgs.Count > 0 then

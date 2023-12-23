@@ -11,7 +11,7 @@ object DMG: TDMG
     Top = 44
   end
   object qBands: TSQLQuery
-    PacketRecords = 50
+    PacketRecords = -1
     FieldDefs = <    
       item
         Name = 'band_id'
@@ -1767,7 +1767,7 @@ object DMG: TDMG
     end
   end
   object qCaptures: TSQLQuery
-    PacketRecords = 50
+    PacketRecords = -1
     FieldDefs = <    
       item
         Name = 'capture_id'
@@ -2436,6 +2436,7 @@ object DMG: TDMG
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 100
     end
     object qCapturesproject_id: TLongintField
@@ -2628,9 +2629,10 @@ object DMG: TDMG
       FieldName = 'taxon_formatted_name'
       Index = 19
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 250
     end
     object qCapturescapture_type: TStringField
@@ -3627,7 +3629,7 @@ object DMG: TDMG
     end
   end
   object qMolts: TSQLQuery
-    PacketRecords = 50
+    PacketRecords = -1
     FieldDefs = <    
       item
         Name = 'molt_id'
@@ -15729,6 +15731,7 @@ object DMG: TDMG
     Top = 512
   end
   object qBandHistory: TSQLQuery
+    PacketRecords = -1
     FieldDefs = <    
       item
         Name = 'event_id'

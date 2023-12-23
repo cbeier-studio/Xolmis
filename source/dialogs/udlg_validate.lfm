@@ -58,6 +58,7 @@ object dlgValidate: TdlgValidate
     Width = 630
     BorderStyle = htNone
     DefBackground = clWindow
+    DefFontColor = clBlack
     DefFontName = 'Default'
     DefFontSize = 0
     HistoryMaxCount = 0

@@ -77,6 +77,7 @@ begin
   else
     FList.Add(Format(rsErrorFound, [Lista.Count]));
 
+  FList.Add('<body>');
   FList.Add('<ul>');
   for i := 0 to Lista.Count - 1 do
   begin
@@ -84,8 +85,10 @@ begin
     // Application.ProcessMessages;
   end;
   FList.Add('</ul>');
+  FList.Add('</body>');
 
   LV.Caption := FList.Text;
+  LV.Refresh;
 end;
 
 end.

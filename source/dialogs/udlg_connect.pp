@@ -153,38 +153,11 @@ begin
   cfgDatabase := TcfgDatabase.Create(nil);
   with cfgDatabase do
   try
-    if ShowModal = mrOK then
-      LoadConnectionList;
+    ShowModal;
+    LoadConnectionList;
   finally
     FreeAndNil(cfgDatabase);
   end;
-end;
-
-procedure TdlgConnect.sbOKClick(Sender: TObject);
-begin
-  //GravaStat(Name, 'sbOK', 'click');
-
-  if cbConnection.ItemIndex < 0 then
-    Exit;
-  if not ValidatePassword then
-    Exit;
-
-  sbOK.Enabled := False;
-
-  SelectedConnection := cbConnection.Text;
-  ActiveUser.GetData(sUser);
-
-  if XSettings.RememberConnection then
-    XSettings.LastConnection := SelectedConnection;
-  //else
-  //  DelPreference('SECURITY', 'LastConnection');
-
-  if XSettings.RememberUser then
-    XSettings.LastUser := eUsername.Text;
-  //else
-  //  DelPreference('SECURITY', 'LastUser');
-
-  dlgConnect.ModalResult := mrOk;
 end;
 
 procedure TdlgConnect.LoadConnectionList;
@@ -218,6 +191,33 @@ procedure TdlgConnect.sbCancelClick(Sender: TObject);
 begin
   sbCancel.Enabled := False;
   dlgConnect.ModalResult := mrCancel;
+end;
+
+procedure TdlgConnect.sbOKClick(Sender: TObject);
+begin
+  //GravaStat(Name, 'sbOK', 'click');
+
+  if cbConnection.ItemIndex < 0 then
+    Exit;
+  if not ValidatePassword then
+    Exit;
+
+  sbOK.Enabled := False;
+
+  SelectedConnection := cbConnection.Text;
+  ActiveUser.GetData(sUser);
+
+  if XSettings.RememberConnection then
+    XSettings.LastConnection := SelectedConnection;
+  //else
+  //  DelPreference('SECURITY', 'LastConnection');
+
+  if XSettings.RememberUser then
+    XSettings.LastUser := eUsername.Text;
+  //else
+  //  DelPreference('SECURITY', 'LastUser');
+
+  dlgConnect.ModalResult := mrOk;
 end;
 
 procedure TdlgConnect.UpdateButtons;

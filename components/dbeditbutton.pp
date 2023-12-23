@@ -1,7 +1,7 @@
 {****************************
 DBEditButton
-Based on:
 
+Based on:
 F1DBEditButton.
 Simple Edit Control with a Button
 by Bambang Pranoto
@@ -76,7 +76,7 @@ type
     property Field: TField read GetField;
   published
     property ButtonHint: TTranslateString read GetButtonHint write SetButtonHint;
-    property ButtonWidth:Integer read GetButtonWidth write SetButtonWidth default 29;
+    property ButtonWidth: Integer read GetButtonWidth write SetButtonWidth default 29;
     property DisabledImageIndex: Integer read GetDisabledImageIndex write SetDisabledImageIndex default -1;
     property HotImageIndex: Integer read GetHotImageIndex write SetHotImageIndex default -1;
     property ImageIndex: Integer read GetImageIndex write SetImageIndex default -1;
@@ -156,6 +156,7 @@ begin
   inherited Create(AOwner);
 
   Self.Width := 105;
+  Self.Height := 28;
   Self.FButtonWidth := 29;
   Self.BevelOuter := bvNone;
 
@@ -172,7 +173,7 @@ begin
 
   Self.FDBEdit := TDBEdit.Create(Self);
   Self.FDBEdit.Parent := Self;
-  Self.Height := Self.FDBEdit.Height;
+  //Self.Height := Self.FDBEdit.Height;
   Self.Constraints.MaxHeight := Self.Height;
   Self.FDBEdit.Top := 0;
   Self.FDBEdit.Left := 0;
@@ -314,8 +315,8 @@ end;
 
 procedure TDBEditButton.SetButtonWidth(AValue: Integer);
 begin
-  if Self.FButtonWidth = AValue then
-    Exit;
+  //if Self.FButtonWidth = AValue then
+  //  Exit;
 
   Self.FButtonWidth := AValue;
   Self.FButton.Width := Self.FButtonWidth;

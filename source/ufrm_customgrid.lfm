@@ -4782,6 +4782,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             OnColExit = DBGColExit
             OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
             OnKeyDown = FormKeyDown
             OnKeyPress = FormKeyPress
@@ -4805,6 +4806,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             OnColExit = DBGColExit
             OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
             OnKeyPress = FormKeyPress
             OnPrepareCanvas = DBGPrepareCanvas
@@ -4827,6 +4829,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             OnColExit = DBGColExit
             OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
             OnKeyPress = FormKeyPress
             OnPrepareCanvas = DBGPrepareCanvas
@@ -4849,6 +4852,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             OnColExit = DBGColExit
             OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
             OnKeyPress = FormKeyPress
             OnPrepareCanvas = DBGPrepareCanvas
@@ -4871,6 +4875,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             OnColExit = DBGColExit
             OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
             OnKeyPress = FormKeyPress
             OnPrepareCanvas = DBGPrepareCanvas
@@ -6029,6 +6034,7 @@ object frmCustomGrid: TfrmCustomGrid
         TitleFont.Color = 6579300
         TitleImageList = iHeaders
         OnColExit = DBGColExit
+        OnEditButtonClick = DBGEditButtonClick
         OnEditingDone = DBGEditingDone
         OnKeyDown = FormKeyDown
         OnKeyPress = FormKeyPress
@@ -6229,7 +6235,6 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alTop
           Alignment = taCenter
           Caption = 'Result query is empty'
-          Font.Color = 13066075
           ParentFont = False
         end
       end

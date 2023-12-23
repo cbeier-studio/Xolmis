@@ -463,8 +463,8 @@ begin
 
   { Duplicated record }
   if (D.FieldByName('band_id').AsInteger > 0) then
-    RecordDuplicated(tbIndividuals, 'individual_id', 'band_full_name',
-      D.FieldByName('band_full_name').AsString,
+    RecordDuplicated(tbIndividuals, 'individual_id', 'full_name',
+      D.FieldByName('full_name').AsString,
       D.FieldByName('individual_id').AsInteger, Msgs);
 
   { Foreign keys }

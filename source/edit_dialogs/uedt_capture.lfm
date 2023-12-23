@@ -847,6 +847,7 @@ object edtCapture: TedtCapture
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eTaxonButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eTaxonKeyPress
           OnKeyDown = FormKeyDown

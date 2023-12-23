@@ -2396,6 +2396,77 @@ object DMS: TDMS
         Name = 'data_owner'
         DataType = ftLargeint
         Precision = -1
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'taxon_formatted_name'
+        DataType = ftString
+        Precision = -1
+        Size = 250
+      end    
+      item
+        Name = 'survey_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'net_station_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'net_number'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'bander_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'annotator_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'band_name'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'removed_band_name'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'photographer_1_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'photographer_2_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
       end>
     AfterCancel = qCapturesAfterCancel
     AfterInsert = qCapturesAfterInsert
@@ -2416,6 +2487,8 @@ object DMS: TDMS
       '    WHERE ns.net_station_id = m.net_station_id) AS net_station_name,'
       '  (SELECT n.net_number FROM nets_effort AS n'
       '    WHERE n.net_id = m.net_id) AS net_number,'
+      '  (SELECT g.site_name FROM gazetteer As g'
+      '    WHERE g.site_id = m.locality_id) AS locality_name,'
       '  (SELECT b.acronym FROM people AS b'
       '    WHERE b.person_id = m.bander_id) AS bander_name,'
       '  (SELECT w.acronym FROM people AS w'
@@ -2502,11 +2575,22 @@ object DMS: TDMS
       Required = False
       Visible = False
     end
+    object qCaptureslocality_name: TStringField
+      FieldKind = fkData
+      FieldName = 'locality_name'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 60
+    end
     object qCapturesnet_station_id: TLongintField
       DisplayLabel = 'Sampling plot (ID)'
       FieldKind = fkData
       FieldName = 'net_station_id'
-      Index = 5
+      Index = 6
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2519,7 +2603,7 @@ object DMS: TDMS
       DisplayWidth = 20
       FieldKind = fkData
       FieldName = 'net_station_name'
-      Index = 6
+      Index = 7
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -2530,7 +2614,7 @@ object DMS: TDMS
       DisplayLabel = 'Mistnet (ID)'
       FieldKind = fkData
       FieldName = 'net_id'
-      Index = 7
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2542,7 +2626,7 @@ object DMS: TDMS
       DisplayLabel = 'Mistnet nr.'
       FieldKind = fkData
       FieldName = 'net_number'
-      Index = 8
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -2552,7 +2636,7 @@ object DMS: TDMS
       DisplayLabel = 'Bander (ID)'
       FieldKind = fkData
       FieldName = 'bander_id'
-      Index = 9
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2564,7 +2648,7 @@ object DMS: TDMS
       DisplayLabel = 'Bander'
       FieldKind = fkData
       FieldName = 'bander_name'
-      Index = 10
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -2575,7 +2659,7 @@ object DMS: TDMS
       DisplayLabel = 'Annotator (ID)'
       FieldKind = fkData
       FieldName = 'annotator_id'
-      Index = 11
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2587,7 +2671,7 @@ object DMS: TDMS
       DisplayLabel = 'Annotator'
       FieldKind = fkData
       FieldName = 'annotator_name'
-      Index = 12
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -2599,7 +2683,7 @@ object DMS: TDMS
       DisplayLabel = 'Date'
       FieldKind = fkData
       FieldName = 'capture_date'
-      Index = 13
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2610,7 +2694,7 @@ object DMS: TDMS
       DisplayLabel = 'Time'
       FieldKind = fkData
       FieldName = 'capture_time'
-      Index = 14
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2621,7 +2705,7 @@ object DMS: TDMS
       DisplayLabel = 'Taxon (ID)'
       FieldKind = fkData
       FieldName = 'taxon_id'
-      Index = 15
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2633,7 +2717,7 @@ object DMS: TDMS
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'taxon_name'
-      Index = 16
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -2646,7 +2730,7 @@ object DMS: TDMS
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'capture_type'
-      Index = 17
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2659,7 +2743,7 @@ object DMS: TDMS
       DisplayLabel = 'Band (ID)'
       FieldKind = fkData
       FieldName = 'band_id'
-      Index = 18
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2671,7 +2755,7 @@ object DMS: TDMS
       DisplayLabel = 'Band'
       FieldKind = fkData
       FieldName = 'band_name'
-      Index = 19
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -2683,7 +2767,7 @@ object DMS: TDMS
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'removed_band_id'
-      Index = 20
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2696,7 +2780,7 @@ object DMS: TDMS
       DisplayWidth = 18
       FieldKind = fkData
       FieldName = 'removed_band_name'
-      Index = 21
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -2709,7 +2793,7 @@ object DMS: TDMS
       DisplayWidth = 12
       FieldKind = fkData
       FieldName = 'right_leg_below'
-      Index = 22
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2722,7 +2806,7 @@ object DMS: TDMS
       DisplayWidth = 12
       FieldKind = fkData
       FieldName = 'left_leg_below'
-      Index = 23
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2735,7 +2819,7 @@ object DMS: TDMS
       DisplayWidth = 12
       FieldKind = fkData
       FieldName = 'right_leg_above'
-      Index = 24
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2749,7 +2833,7 @@ object DMS: TDMS
       DisplayWidth = 12
       FieldKind = fkData
       FieldName = 'left_leg_above'
-      Index = 25
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2761,7 +2845,7 @@ object DMS: TDMS
       DisplayLabel = 'Longitude'
       FieldKind = fkData
       FieldName = 'longitude'
-      Index = 26
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2772,7 +2856,7 @@ object DMS: TDMS
       DisplayLabel = 'Latitude'
       FieldKind = fkData
       FieldName = 'latitude'
-      Index = 27
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2785,7 +2869,7 @@ object DMS: TDMS
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'cloacal_protuberance'
-      Index = 28
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2798,7 +2882,7 @@ object DMS: TDMS
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'brood_patch'
-      Index = 29
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2811,7 +2895,7 @@ object DMS: TDMS
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'fat'
-      Index = 30
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2823,7 +2907,7 @@ object DMS: TDMS
       DisplayLabel = 'Body molt'
       FieldKind = fkData
       FieldName = 'body_molt'
-      Index = 31
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2835,7 +2919,7 @@ object DMS: TDMS
       DisplayLabel = 'Flight feathers molt'
       FieldKind = fkData
       FieldName = 'flight_feathers_molt'
-      Index = 32
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2847,7 +2931,7 @@ object DMS: TDMS
       DisplayLabel = 'Flight feathers wear'
       FieldKind = fkData
       FieldName = 'flight_feathers_wear'
-      Index = 33
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2858,7 +2942,7 @@ object DMS: TDMS
       DisplayLabel = 'Right wing chord'
       FieldKind = fkData
       FieldName = 'right_wing_chord'
-      Index = 34
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2869,7 +2953,7 @@ object DMS: TDMS
       DisplayLabel = '1st secondary chord'
       FieldKind = fkData
       FieldName = 'first_secondary_chord'
-      Index = 35
+      Index = 36
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2881,7 +2965,7 @@ object DMS: TDMS
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'kipps_index'
-      Index = 36
+      Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2893,7 +2977,7 @@ object DMS: TDMS
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'tail_length'
-      Index = 37
+      Index = 38
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2905,7 +2989,7 @@ object DMS: TDMS
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'tarsus_length'
-      Index = 38
+      Index = 39
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2917,7 +3001,7 @@ object DMS: TDMS
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'tarsus_diameter'
-      Index = 39
+      Index = 40
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2928,7 +3012,7 @@ object DMS: TDMS
       DisplayLabel = 'Weight'
       FieldKind = fkData
       FieldName = 'weight'
-      Index = 40
+      Index = 41
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2939,7 +3023,7 @@ object DMS: TDMS
       DisplayLabel = 'Skull length'
       FieldKind = fkData
       FieldName = 'skull_length'
-      Index = 41
+      Index = 42
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2950,7 +3034,7 @@ object DMS: TDMS
       DisplayLabel = 'Exposed culmen'
       FieldKind = fkData
       FieldName = 'exposed_culmen'
-      Index = 42
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2961,7 +3045,7 @@ object DMS: TDMS
       DisplayLabel = 'Total culmen length'
       FieldKind = fkData
       FieldName = 'culmen_length'
-      Index = 43
+      Index = 44
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2973,7 +3057,7 @@ object DMS: TDMS
       DisplayLabel = 'Nostril to bill tip'
       FieldKind = fkData
       FieldName = 'nostril_bill_tip'
-      Index = 44
+      Index = 45
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2984,7 +3068,7 @@ object DMS: TDMS
       DisplayLabel = 'Bill width'
       FieldKind = fkData
       FieldName = 'bill_width'
-      Index = 45
+      Index = 46
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2995,7 +3079,7 @@ object DMS: TDMS
       DisplayLabel = 'Bill height'
       FieldKind = fkData
       FieldName = 'bill_height'
-      Index = 46
+      Index = 47
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3006,7 +3090,7 @@ object DMS: TDMS
       DisplayLabel = 'Total length'
       FieldKind = fkData
       FieldName = 'total_length'
-      Index = 47
+      Index = 48
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3019,7 +3103,7 @@ object DMS: TDMS
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'molt_limits'
-      Index = 48
+      Index = 49
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3030,7 +3114,7 @@ object DMS: TDMS
       DisplayLabel = 'Skull ossification'
       FieldKind = fkData
       FieldName = 'skull_ossification'
-      Index = 49
+      Index = 50
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3042,7 +3126,7 @@ object DMS: TDMS
       DisplayLabel = 'Molt cycle'
       FieldKind = fkData
       FieldName = 'cycle_code'
-      Index = 50
+      Index = 51
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3054,7 +3138,7 @@ object DMS: TDMS
       DisplayLabel = 'How was aged'
       FieldKind = fkData
       FieldName = 'how_aged'
-      Index = 51
+      Index = 52
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3066,7 +3150,7 @@ object DMS: TDMS
       DisplayLabel = 'Age'
       FieldKind = fkData
       FieldName = 'subject_age'
-      Index = 52
+      Index = 53
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3080,7 +3164,7 @@ object DMS: TDMS
       DisplayLabel = 'Sex'
       FieldKind = fkData
       FieldName = 'subject_sex'
-      Index = 53
+      Index = 54
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3094,7 +3178,7 @@ object DMS: TDMS
       DisplayLabel = 'How was sexed'
       FieldKind = fkData
       FieldName = 'how_sexed'
-      Index = 54
+      Index = 55
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3106,7 +3190,7 @@ object DMS: TDMS
       DisplayLabel = 'Status'
       FieldKind = fkData
       FieldName = 'subject_status'
-      Index = 55
+      Index = 56
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3119,7 +3203,7 @@ object DMS: TDMS
       DisplayLabel = 'Glucose'
       FieldKind = fkData
       FieldName = 'glucose'
-      Index = 56
+      Index = 57
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3130,7 +3214,7 @@ object DMS: TDMS
       DisplayLabel = 'Hemoglobin'
       FieldKind = fkData
       FieldName = 'hemoglobin'
-      Index = 57
+      Index = 58
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3141,7 +3225,7 @@ object DMS: TDMS
       DisplayLabel = 'Hematocrit'
       FieldKind = fkData
       FieldName = 'hematocrit'
-      Index = 58
+      Index = 59
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3152,7 +3236,7 @@ object DMS: TDMS
       DisplayLabel = '# Philornis larvae'
       FieldKind = fkData
       FieldName = 'philornis_larvae_tally'
-      Index = 59
+      Index = 60
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3163,7 +3247,7 @@ object DMS: TDMS
       DisplayLabel = 'Field number'
       FieldKind = fkData
       FieldName = 'field_number'
-      Index = 60
+      Index = 61
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3175,7 +3259,7 @@ object DMS: TDMS
       DisplayLabel = 'Blood'
       FieldKind = fkData
       FieldName = 'blood_sample'
-      Index = 61
+      Index = 62
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3187,7 +3271,7 @@ object DMS: TDMS
       DisplayLabel = 'Feathers'
       FieldKind = fkData
       FieldName = 'feather_sample'
-      Index = 62
+      Index = 63
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3199,7 +3283,7 @@ object DMS: TDMS
       DisplayLabel = 'Claw'
       FieldKind = fkData
       FieldName = 'claw_sample'
-      Index = 63
+      Index = 64
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3211,7 +3295,7 @@ object DMS: TDMS
       DisplayLabel = 'Feces'
       FieldKind = fkData
       FieldName = 'feces_sample'
-      Index = 64
+      Index = 65
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3223,7 +3307,7 @@ object DMS: TDMS
       DisplayLabel = 'Parasites'
       FieldKind = fkData
       FieldName = 'parasite_sample'
-      Index = 65
+      Index = 66
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3235,7 +3319,7 @@ object DMS: TDMS
       DisplayLabel = 'Collected (whole)'
       FieldKind = fkData
       FieldName = 'subject_collected'
-      Index = 66
+      Index = 67
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3247,7 +3331,7 @@ object DMS: TDMS
       DisplayLabel = 'Recorded'
       FieldKind = fkData
       FieldName = 'subject_recorded'
-      Index = 67
+      Index = 68
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3259,7 +3343,7 @@ object DMS: TDMS
       DisplayLabel = 'Photographed'
       FieldKind = fkData
       FieldName = 'subject_photographed'
-      Index = 68
+      Index = 69
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3270,7 +3354,7 @@ object DMS: TDMS
       DisplayLabel = 'Photographer 1 (ID)'
       FieldKind = fkData
       FieldName = 'photographer_1_id'
-      Index = 69
+      Index = 70
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3281,7 +3365,7 @@ object DMS: TDMS
       DisplayLabel = 'Photographer 1'
       FieldKind = fkData
       FieldName = 'photographer_1_name'
-      Index = 70
+      Index = 71
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -3292,7 +3376,7 @@ object DMS: TDMS
       DisplayLabel = 'Photographer 2 (ID)'
       FieldKind = fkData
       FieldName = 'photographer_2_id'
-      Index = 71
+      Index = 72
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3303,7 +3387,7 @@ object DMS: TDMS
       DisplayLabel = 'Photographer 2'
       FieldKind = fkData
       FieldName = 'photographer_2_name'
-      Index = 72
+      Index = 73
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -3316,7 +3400,7 @@ object DMS: TDMS
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'camera_name'
-      Index = 73
+      Index = 74
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3328,7 +3412,7 @@ object DMS: TDMS
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'start_photo_number'
-      Index = 74
+      Index = 75
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3339,7 +3423,7 @@ object DMS: TDMS
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'end_photo_number'
-      Index = 75
+      Index = 76
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3350,7 +3434,7 @@ object DMS: TDMS
       DisplayLabel = 'Escaped'
       FieldKind = fkData
       FieldName = 'escaped'
-      Index = 76
+      Index = 77
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3362,7 +3446,7 @@ object DMS: TDMS
       DisplayLabel = 'Needs review'
       FieldKind = fkData
       FieldName = 'needs_review'
-      Index = 77
+      Index = 78
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3374,7 +3458,7 @@ object DMS: TDMS
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 78
+      Index = 79
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3387,7 +3471,7 @@ object DMS: TDMS
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'capture_id'
-      Index = 79
+      Index = 80
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -3398,7 +3482,7 @@ object DMS: TDMS
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 80
+      Index = 81
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3410,7 +3494,7 @@ object DMS: TDMS
       DisplayLabel = 'Order (ID)'
       FieldKind = fkData
       FieldName = 'order_id'
-      Index = 81
+      Index = 82
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3421,7 +3505,7 @@ object DMS: TDMS
       DisplayLabel = 'Family (ID)'
       FieldKind = fkData
       FieldName = 'family_id'
-      Index = 82
+      Index = 83
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3432,7 +3516,7 @@ object DMS: TDMS
       DisplayLabel = 'Genus (ID)'
       FieldKind = fkData
       FieldName = 'genus_id'
-      Index = 83
+      Index = 84
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3443,7 +3527,7 @@ object DMS: TDMS
       DisplayLabel = 'Species (ID)'
       FieldKind = fkData
       FieldName = 'species_id'
-      Index = 84
+      Index = 85
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3454,7 +3538,7 @@ object DMS: TDMS
       DisplayLabel = 'Country (ID)'
       FieldKind = fkData
       FieldName = 'country_id'
-      Index = 85
+      Index = 86
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3465,7 +3549,7 @@ object DMS: TDMS
       DisplayLabel = 'State (ID)'
       FieldKind = fkData
       FieldName = 'state_id'
-      Index = 86
+      Index = 87
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3476,7 +3560,7 @@ object DMS: TDMS
       DisplayLabel = 'Municipality (ID)'
       FieldKind = fkData
       FieldName = 'municipality_id'
-      Index = 87
+      Index = 88
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3487,7 +3571,7 @@ object DMS: TDMS
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 88
+      Index = 89
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3498,7 +3582,7 @@ object DMS: TDMS
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 89
+      Index = 90
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3510,7 +3594,7 @@ object DMS: TDMS
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 90
+      Index = 91
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3522,7 +3606,7 @@ object DMS: TDMS
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 91
+      Index = 92
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3534,7 +3618,7 @@ object DMS: TDMS
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 92
+      Index = 93
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3547,7 +3631,7 @@ object DMS: TDMS
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 93
+      Index = 94
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

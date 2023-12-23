@@ -101,7 +101,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="93"/>
+      <BuildNr Value="100"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -157,9 +157,6 @@
               <ShowHintsForSenderNotUsed Value="True"/>
             </Verbosity>
             <WriteFPCLogo Value="False"/>
-            <OtherDefines Count="1">
-              <Define0 Value="DEBUG"/>
-            </OtherDefines>
             <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>

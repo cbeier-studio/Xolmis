@@ -396,6 +396,7 @@ type
     procedure cbAgeFilterSelect(Sender: TObject);
     procedure cbSexFilterSelect(Sender: TObject);
     procedure DBGColExit(Sender: TObject);
+    procedure DBGEditButtonClick(Sender: TObject);
     procedure DBGEditingDone(Sender: TObject);
     procedure DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
       AState: TGridDrawState);
@@ -626,7 +627,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs,
-  cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datasearch, {$IFDEF DEBUG}cbs_debug,{$ENDIF}
+  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datasearch, {$IFDEF DEBUG}cbs_debug,{$ENDIF}
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main;
 
 {$R *.lfm}
@@ -3646,6 +3647,10 @@ begin
         begin
           ReadOnly:= True;
         end;
+        with aGrid.Columns.ColumnByFieldName('taxon_name') do
+        begin
+          aGrid.Columns.ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+        end;
         with aGrid.Columns.ColumnByFieldName('individual_sex') do
         begin
           PickList.Add(rsSexUnknown);
@@ -3671,6 +3676,10 @@ begin
         with aGrid.Columns.ColumnByFieldname('capture_id') do
         begin
           ReadOnly:= True;
+        end;
+        with aGrid.Columns.ColumnByFieldName('taxon_name') do
+        begin
+          aGrid.Columns.ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
         end;
         with aGrid.Columns.ColumnByFieldName('capture_type') do
         begin
@@ -3738,6 +3747,10 @@ begin
         begin
           ReadOnly:= True;
         end;
+        with aGrid.Columns.ColumnByFieldName('taxon_name') do
+        begin
+          aGrid.Columns.ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+        end;
       end;
     tbNestRevisions:
       begin
@@ -3751,6 +3764,10 @@ begin
         with aGrid.Columns.ColumnByFieldname('egg_id') do
         begin
           ReadOnly:= True;
+        end;
+        with aGrid.Columns.ColumnByFieldName('taxon_name') do
+        begin
+          aGrid.Columns.ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbMethods:
@@ -3780,6 +3797,10 @@ begin
         begin
           ReadOnly:= True;
         end;
+        with aGrid.Columns.ColumnByFieldName('taxon_name') do
+        begin
+          aGrid.Columns.ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+        end;
       end;
     tbSpecimens:
       begin
@@ -3788,6 +3809,10 @@ begin
           //Footer.ValueType := fvtCount;
           //Footer.Alignment := taCenter;
           ReadOnly:= True;
+        end;
+        with aGrid.Columns.ColumnByFieldName('taxon_name') do
+        begin
+          aGrid.Columns.ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
         end;
       end;
   end;
@@ -5626,6 +5651,13 @@ begin
   TDBGrid(Sender).DefaultRowHeight := TDBGrid(Sender).DefaultRowHeight - 1;
   TDBGrid(Sender).EndUpdate;
   {$ENDIF}
+end;
+
+procedure TfrmCustomGrid.DBGEditButtonClick(Sender: TObject);
+begin
+  if (Sender as TDBGrid).SelectedColumn.FieldName = 'taxon_name' then
+    FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], (Sender as TDBGrid).InplaceEditor,
+      (Sender as TDBGrid).DataSource.DataSet, 'taxon_id', 'taxon_name', True);
 end;
 
 procedure TfrmCustomGrid.ClearBandFilters;

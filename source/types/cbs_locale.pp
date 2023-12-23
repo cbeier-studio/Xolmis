@@ -211,7 +211,7 @@ uses
     rsInvalidLatitude = 'The <b>Latitude</b> entered is not a valid decimal number.';
     rsInvalidEmail = 'The address <font color="blue">%s</font> is not a valid <b>e-mail</b>.';
     rsValueNotInRange = 'The value of <b>%s</b> must be between <font color="green">%d</font> and <font color="green">%d</font>.';
-    rsValueNotInSet = 'The value of <b>%s</b> must be one of the following: <font color="green">%s</font>.';
+    rsValueNotInSet = 'The value of <b>%s</b> must be one of the following: <font color=''green''>%s</font>.';
     rsInvalidCPF = 'The <b>CPF number</b> entered is invalid.';
     rsInvalidDate = 'The <b>%s</b> is not a valid date.';
     rsInvalidPartialDate = 'The <b>%s</b> is not a valid date.';

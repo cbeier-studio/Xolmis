@@ -68,6 +68,7 @@ type
     qCapturesleft_leg_above: TStringField;
     qCapturesleft_leg_below: TStringField;
     qCaptureslocality_id: TLongintField;
+    qCaptureslocality_name: TStringField;
     qCaptureslongitude: TFloatField;
     qCapturesmarked_status: TBooleanField;
     qCapturesmolt_limits: TStringField;

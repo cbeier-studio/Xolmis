@@ -110,8 +110,7 @@ begin
   Result := ValueInRange(aValue, aMin, aMax, aDisplayName, aMessageList, aMessageStr);
 end;
 
-function ValueInSet(aValue, aDisplayName: String; aSet: array of String; aMessageList: TStrings
-  ): Boolean;
+function ValueInSet(aValue, aDisplayName: String; aSet: array of String; aMessageList: TStrings): Boolean;
 var
   m: String;
   SS: String;
