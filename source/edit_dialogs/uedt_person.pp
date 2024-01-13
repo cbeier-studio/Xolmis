@@ -21,7 +21,7 @@ type
     eState: TDBEditButton;
     pImageToolbar: TBCPanel;
     cbTreatment: TDBComboBox;
-    cbGenre: TDBComboBox;
+    cbGender: TDBComboBox;
     imgProfile: TDBImage;
     eFullname: TDBEdit;
     eCitation: TDBEdit;
@@ -336,6 +336,9 @@ begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPerson)])
   else
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionPerson)]);
+
+  cbTreatment.Items.CommaText := rsTreatmentList;
+  cbGender.Items.CommaText := rsGenderList;
 end;
 
 function TedtPerson.IsRequiredFilled: Boolean;

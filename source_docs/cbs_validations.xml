@@ -6,6 +6,8 @@
       </element><element name="CheckCNPJ"><short>Check if a CNPJ number (Brazil) is valid or not.</short>
       </element><element name="ValidDate"><short>Check if a date string is valid or not.</short>
       </element><element name="ValidPartialDate"><short>Check if a partial date is valid or not.</short>
+      <seealso><link id="TPartialDate"/>
+        </seealso>
       </element><element name="PartialDateIsEmpty"><short>Check if a partial date is empty or not.</short>
       </element><element name="IsFutureDate"><short>Check if a date is a future date or not.</short>
       </element><element name="IsFuturePartialDate"><short>Check if a partial date is a future partial date or not.</short>

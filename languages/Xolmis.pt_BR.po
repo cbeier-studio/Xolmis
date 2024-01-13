@@ -913,20 +913,18 @@ msgctxt "cbs_locale.rseditedbyimport"
 msgid "Edited by import"
 msgstr "Editado por importação"
 
-#: cbs_locale.rseggeliptic
-msgctxt "cbs_locale.rseggeliptic"
-msgid "Eliptic"
-msgstr "Elíptico"
+#: cbs_locale.rseggelliptic
+msgid "Elliptic"
+msgstr ""
 
 #: cbs_locale.rseggovoid
 msgctxt "cbs_locale.rseggovoid"
 msgid "Ovoid"
 msgstr "Ovoide"
 
-#: cbs_locale.rseggpiriform
-msgctxt "cbs_locale.rseggpiriform"
-msgid "Piriform"
-msgstr "Piriforme"
+#: cbs_locale.rseggpyriform
+msgid "Pyriform"
+msgstr ""
 
 #: cbs_locale.rseggspheric
 msgctxt "cbs_locale.rseggspheric"
@@ -1297,6 +1295,10 @@ msgctxt "cbs_locale.rsfuturepartialdate"
 msgid "<b>%s</b> must be before or equal to <b>%s</b> (<font color=\"green\">%s</font>)."
 msgstr "<b>%s</b> deve ser anterior ou igual a <b>%s</b> (<font color=\"green\">%s</font>)."
 
+#: cbs_locale.rsgenderlist
+msgid "he/him,she/her,they/them"
+msgstr ""
+
 #: cbs_locale.rsguestuser
 msgctxt "cbs_locale.rsguestuser"
 msgid "Guest"
@@ -1599,6 +1601,18 @@ msgstr "\"C - não mudando (Ciclo)\",\"P - mudando (Pré)\",\"A - depois de dada
 msgid "\"N - No molt limits found after examination\",\"U - Molt limits are Undetermined after examination\",\"P - Primary flight feathers\",\"S - Secondary flight feathers\",\"D - primary coverts\",\"G - Greater coverts\",\"V - primaries Vs. greater coverts\",\"R - Rectrices\",\"L - Lesser coverts\",\"M - Median coverts\",\"B - Body plumage\",\"C - Carpal covert vs. alula covert/lesser alula\",\"A - Alula covert vs. lesser alula\",\"Y - It has limits but is not determined where\""
 msgstr "\"N - Nenhum limite de muda encontrado após exame\",\"U - limites de muda indeterminados após exame\",\"P - penas de voo Primárias\",\"S - penas de voo Secundárias\",\"D - coberteiras primárias\",\"G - Grandes coberteiras\",\"V - primárias Vs. grandes coberteiras\",\"R - Retrizes\",\"L - coberteiras menores\",\"M - coberteiras medianas\",\"B - plumagem do corpo\",\"C - coberteira Carpal vs. coberteira da álula/álula menor\",\"A - coberteira da álula vs. álula menor\",\"Y - possui limites mas não foi determinado onde\""
 
+#: cbs_locale.rsmomentend
+msgid "End"
+msgstr ""
+
+#: cbs_locale.rsmomentmiddle
+msgid "Middle"
+msgstr ""
+
+#: cbs_locale.rsmomentstart
+msgid "Start"
+msgstr ""
+
 #: cbs_locale.rsmoreselected
 #, object-pascal-format
 msgctxt "cbs_locale.rsmoreselected"
@@ -1755,6 +1769,26 @@ msgstr "\"U - Plumagem indeterminada\",\"J - Plumagem juvenil\",\"S - Plumagem s
 msgctxt "cbs_locale.rspostbeforecloseprompt"
 msgid "There are unsaved changes. Do you want to save it?"
 msgstr "Há alterações não salvas. Deseja salvá-las?"
+
+#: cbs_locale.rsprecipitationdrizzle
+msgid "Drizzle"
+msgstr ""
+
+#: cbs_locale.rsprecipitationfog
+msgid "Fog"
+msgstr ""
+
+#: cbs_locale.rsprecipitationmist
+msgid "Mist"
+msgstr ""
+
+#: cbs_locale.rsprecipitationnone
+msgid "None"
+msgstr ""
+
+#: cbs_locale.rsprecipitationrain
+msgid "Rain"
+msgstr ""
 
 #: cbs_locale.rspreparingbackup
 msgctxt "cbs_locale.rspreparingbackup"
@@ -2602,6 +2636,10 @@ msgstr "%s %d de %d %s"
 msgctxt "cbs_locale.rstotalresearchers"
 msgid "%d researcher(s)"
 msgstr "%d pesquisador(es)"
+
+#: cbs_locale.rstreatmentlist
+msgid "Mr.,Sir,Mrs.,Miss,Ms.,Madam,B./BS.,M./MSc.,Dr./PhD."
+msgstr ""
 
 #: cbs_locale.rsunresolved
 msgctxt "cbs_locale.rsunresolved"
@@ -7084,85 +7122,6 @@ msgstr "Sumário"
 msgid "Record details"
 msgstr "Detalhes do registro"
 
-#: tfrmcustomlist.lblmarkedfilter.caption
-msgctxt "tfrmcustomlist.lblmarkedfilter.caption"
-msgid "Marked records"
-msgstr "Registros marcados"
-
-#: tfrmcustomlist.lblrecordstatus.caption
-msgctxt "tfrmcustomlist.lblrecordstatus.caption"
-msgid "Loading records..."
-msgstr "Carregando registros..."
-
-#: tfrmcustomlist.lblunmarkedfilter.caption
-msgctxt "tfrmcustomlist.lblunmarkedfilter.caption"
-msgid "Unmarked records"
-msgstr "Registros desmarcados"
-
-#: tfrmcustomlist.pmgdel.caption
-msgctxt "tfrmcustomlist.pmgdel.caption"
-msgid "Delete"
-msgstr "Apagar"
-
-#: tfrmcustomlist.pmgedit.caption
-msgctxt "tfrmcustomlist.pmgedit.caption"
-msgid "Edit"
-msgstr "Editar"
-
-#: tfrmcustomlist.pmgrecordhistory.caption
-msgctxt "tfrmcustomlist.pmgrecordhistory.caption"
-msgid "Record history"
-msgstr "Histórico do registro"
-
-#: tfrmcustomlist.pmgrefresh.caption
-msgctxt "tfrmcustomlist.pmgrefresh.caption"
-msgid "Refresh"
-msgstr "Atualizar"
-
-#: tfrmcustomlist.sbcancelrecord.caption
-msgctxt "tfrmcustomlist.sbcancelrecord.caption"
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: tfrmcustomlist.sbrecordhistory.caption
-msgctxt "tfrmcustomlist.sbrecordhistory.caption"
-msgid "History"
-msgstr "Histórico"
-
-#: tfrmcustomlist.sbsaverecord.caption
-msgctxt "tfrmcustomlist.sbsaverecord.caption"
-msgid "Save"
-msgstr "Salvar"
-
-#: tfrmcustomlist.titleaudio.caption
-msgid "Audios"
-msgstr "Áudios"
-
-#: tfrmcustomlist.titleimages.caption
-msgctxt "tfrmcustomlist.titleimages.caption"
-msgid "Images"
-msgstr "Imagens"
-
-#: tfrmcustomlist.titleimages1.caption
-msgctxt "tfrmcustomlist.titleimages1.caption"
-msgid "Attachments"
-msgstr "Anexos"
-
-#: tfrmcustomlist.titlequickfilters.caption
-msgctxt "tfrmcustomlist.titlequickfilters.caption"
-msgid "Quick filters"
-msgstr "Filtros rápidos"
-
-#: tfrmcustomlist.titlerecycle.caption
-msgctxt "tfrmcustomlist.titlerecycle.caption"
-msgid "Recycle bin"
-msgstr "Lixeira"
-
-#: tfrmcustomlist.titlesummary.caption
-msgctxt "tfrmcustomlist.titlesummary.caption"
-msgid "Summary"
-msgstr "Sumário"
-
 #: tfrmdashboard.caption
 msgctxt "tfrmdashboard.caption"
 msgid "Home"
@@ -7955,3 +7914,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

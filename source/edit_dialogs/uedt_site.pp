@@ -163,6 +163,14 @@ begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionToponym)])
   else
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionToponym)]);
+
+  cbRank.Items.Clear;
+  cbRank.Items.Add(rsCaptionCountry);
+  cbRank.Items.Add(rsCaptionState);
+  cbRank.Items.Add(rsCaptionRegion);
+  cbRank.Items.Add(rsCaptionMunicipality);
+  cbRank.Items.Add(rsCaptionDistrict);
+  cbRank.Items.Add(rsCaptionLocality);
 end;
 
 function TedtSite.IsRequiredFilled: Boolean;

@@ -3,6 +3,8 @@
         </ul>
       </descr>
     <element name="MsgDlg"><short>Wrapper for TTaskDialog message</short>
+      <seealso>TMsgDlgType
+</seealso>
       </element>
     </module>
   </package>

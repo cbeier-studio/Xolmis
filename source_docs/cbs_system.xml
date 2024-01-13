@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fpdoc-descriptions><package name="Xolmis"><module name="cbs_system"><element name="TPartialDate"><short>Date type that allows blank day and month.</short>
+      <descr><p><var>RomanMonth</var> show the month in roman numbers, if <b>True</b>.</p><p><var>YearFirst</var> show the date as YYYY.MM.DD, if <b>True</b>, or DD.MM.YYYY if <b>False</b>.</p><p><var>Separator</var> is the date separator.</p><p><var>ToString</var> format date to string using the parameters.</p><p><var>Today</var> set parameters with today date.</p>
+        </descr>
       </element><element name="TPartialDate.ToString"><short>Displays the date as string, with zeros for blank day or month.</short><descr>Displays date as DD.MM.YYYY. If <var>YearFirst</var> is <var>True</var>, it displays as YYYY.MM.DD.
 </descr>
       </element><element name="TPartialDate.Separator"><short>Defines the date separator. Period (.) is the default.</short>

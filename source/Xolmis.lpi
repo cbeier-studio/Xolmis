@@ -10,6 +10,7 @@
       <SessionStorage Value="InProjectDir"/>
       <AutoCreateForms Value="False"/>
       <Title Value="Xolmis"/>
+      <Scaled Value="True"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <XPManifest>
@@ -101,7 +102,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="100"/>
+      <BuildNr Value="107"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -923,13 +924,6 @@
       <Unit>
         <Filename Value="types\cbs_datasearch.pp"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ufrm_customlist.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmCustomList"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
         <Filename Value="dialogs\udlg_importcaptures.pp"/>

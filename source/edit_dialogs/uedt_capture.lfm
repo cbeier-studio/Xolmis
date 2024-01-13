@@ -391,7 +391,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 18
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -431,7 +430,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 2
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -456,7 +454,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 3
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -519,7 +516,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 360
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -543,7 +539,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 360
           ParentBackground = False
           TabOrder = 1
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -626,7 +621,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 13
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -708,7 +702,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 2
-          ButtonWidth = 0
           ImageIndex = 13
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -840,7 +833,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 360
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -865,7 +857,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 1
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -889,7 +880,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 2
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -1014,7 +1004,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -1039,7 +1028,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 1
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -1235,7 +1223,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 1
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -1259,7 +1246,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 2
-          ButtonWidth = 0
           ImageIndex = 69
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -1284,7 +1270,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 3
-          ButtonWidth = 0
           ImageIndex = 69
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -2000,7 +1985,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 1
-          ButtonWidth = 0
           ImageIndex = 78
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -2108,7 +2092,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 78
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -2132,7 +2115,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 1
-          ButtonWidth = 0
           ImageIndex = 78
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -2175,7 +2157,6 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 172
           ParentBackground = False
           TabOrder = 3
-          ButtonWidth = 0
           ImageIndex = 78
           Images = frmMain.mPopup
           ImageWidth = 20

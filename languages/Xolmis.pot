@@ -907,9 +907,8 @@ msgctxt "cbs_locale.rseditedbyimport"
 msgid "Edited by import"
 msgstr ""
 
-#: cbs_locale.rseggeliptic
-msgctxt "cbs_locale.rseggeliptic"
-msgid "Eliptic"
+#: cbs_locale.rseggelliptic
+msgid "Elliptic"
 msgstr ""
 
 #: cbs_locale.rseggovoid
@@ -917,9 +916,8 @@ msgctxt "cbs_locale.rseggovoid"
 msgid "Ovoid"
 msgstr ""
 
-#: cbs_locale.rseggpiriform
-msgctxt "cbs_locale.rseggpiriform"
-msgid "Piriform"
+#: cbs_locale.rseggpyriform
+msgid "Pyriform"
 msgstr ""
 
 #: cbs_locale.rseggspheric
@@ -1281,6 +1279,10 @@ msgctxt "cbs_locale.rsfuturepartialdate"
 msgid "<b>%s</b> must be before or equal to <b>%s</b> (<font color=\"green\">%s</font>)."
 msgstr ""
 
+#: cbs_locale.rsgenderlist
+msgid "he/him,she/her,they/them"
+msgstr ""
+
 #: cbs_locale.rsguestuser
 msgctxt "cbs_locale.rsguestuser"
 msgid "Guest"
@@ -1583,6 +1585,18 @@ msgstr ""
 msgid "\"N - No molt limits found after examination\",\"U - Molt limits are Undetermined after examination\",\"P - Primary flight feathers\",\"S - Secondary flight feathers\",\"D - primary coverts\",\"G - Greater coverts\",\"V - primaries Vs. greater coverts\",\"R - Rectrices\",\"L - Lesser coverts\",\"M - Median coverts\",\"B - Body plumage\",\"C - Carpal covert vs. alula covert/lesser alula\",\"A - Alula covert vs. lesser alula\",\"Y - It has limits but is not determined where\""
 msgstr ""
 
+#: cbs_locale.rsmomentend
+msgid "End"
+msgstr ""
+
+#: cbs_locale.rsmomentmiddle
+msgid "Middle"
+msgstr ""
+
+#: cbs_locale.rsmomentstart
+msgid "Start"
+msgstr ""
+
 #: cbs_locale.rsmoreselected
 #, object-pascal-format
 msgctxt "cbs_locale.rsmoreselected"
@@ -1736,6 +1750,26 @@ msgstr ""
 #: cbs_locale.rspostbeforecloseprompt
 msgctxt "cbs_locale.rspostbeforecloseprompt"
 msgid "There are unsaved changes. Do you want to save it?"
+msgstr ""
+
+#: cbs_locale.rsprecipitationdrizzle
+msgid "Drizzle"
+msgstr ""
+
+#: cbs_locale.rsprecipitationfog
+msgid "Fog"
+msgstr ""
+
+#: cbs_locale.rsprecipitationmist
+msgid "Mist"
+msgstr ""
+
+#: cbs_locale.rsprecipitationnone
+msgid "None"
+msgstr ""
+
+#: cbs_locale.rsprecipitationrain
+msgid "Rain"
 msgstr ""
 
 #: cbs_locale.rspreparingbackup
@@ -2577,6 +2611,10 @@ msgstr ""
 #, object-pascal-format
 msgctxt "cbs_locale.rstotalresearchers"
 msgid "%d researcher(s)"
+msgstr ""
+
+#: cbs_locale.rstreatmentlist
+msgid "Mr.,Sir,Mrs.,Miss,Ms.,Madam,B./BS.,M./MSc.,Dr./PhD."
 msgstr ""
 
 #: cbs_locale.rsunresolved
@@ -7056,85 +7094,6 @@ msgstr ""
 
 #: tfrmcustomgrid.titleviewrecord.caption
 msgid "Record details"
-msgstr ""
-
-#: tfrmcustomlist.lblmarkedfilter.caption
-msgctxt "tfrmcustomlist.lblmarkedfilter.caption"
-msgid "Marked records"
-msgstr ""
-
-#: tfrmcustomlist.lblrecordstatus.caption
-msgctxt "tfrmcustomlist.lblrecordstatus.caption"
-msgid "Loading records..."
-msgstr ""
-
-#: tfrmcustomlist.lblunmarkedfilter.caption
-msgctxt "tfrmcustomlist.lblunmarkedfilter.caption"
-msgid "Unmarked records"
-msgstr ""
-
-#: tfrmcustomlist.pmgdel.caption
-msgctxt "tfrmcustomlist.pmgdel.caption"
-msgid "Delete"
-msgstr ""
-
-#: tfrmcustomlist.pmgedit.caption
-msgctxt "tfrmcustomlist.pmgedit.caption"
-msgid "Edit"
-msgstr ""
-
-#: tfrmcustomlist.pmgrecordhistory.caption
-msgctxt "tfrmcustomlist.pmgrecordhistory.caption"
-msgid "Record history"
-msgstr ""
-
-#: tfrmcustomlist.pmgrefresh.caption
-msgctxt "tfrmcustomlist.pmgrefresh.caption"
-msgid "Refresh"
-msgstr ""
-
-#: tfrmcustomlist.sbcancelrecord.caption
-msgctxt "tfrmcustomlist.sbcancelrecord.caption"
-msgid "Cancel"
-msgstr ""
-
-#: tfrmcustomlist.sbrecordhistory.caption
-msgctxt "tfrmcustomlist.sbrecordhistory.caption"
-msgid "History"
-msgstr ""
-
-#: tfrmcustomlist.sbsaverecord.caption
-msgctxt "tfrmcustomlist.sbsaverecord.caption"
-msgid "Save"
-msgstr ""
-
-#: tfrmcustomlist.titleaudio.caption
-msgid "Audios"
-msgstr ""
-
-#: tfrmcustomlist.titleimages.caption
-msgctxt "tfrmcustomlist.titleimages.caption"
-msgid "Images"
-msgstr ""
-
-#: tfrmcustomlist.titleimages1.caption
-msgctxt "tfrmcustomlist.titleimages1.caption"
-msgid "Attachments"
-msgstr ""
-
-#: tfrmcustomlist.titlequickfilters.caption
-msgctxt "tfrmcustomlist.titlequickfilters.caption"
-msgid "Quick filters"
-msgstr ""
-
-#: tfrmcustomlist.titlerecycle.caption
-msgctxt "tfrmcustomlist.titlerecycle.caption"
-msgid "Recycle bin"
-msgstr ""
-
-#: tfrmcustomlist.titlesummary.caption
-msgctxt "tfrmcustomlist.titlesummary.caption"
-msgid "Summary"
 msgstr ""
 
 #: tfrmdashboard.caption

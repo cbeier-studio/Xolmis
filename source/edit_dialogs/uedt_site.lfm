@@ -7,13 +7,13 @@ object edtSite: TedtSite
   Caption = 'New toponym'
   ClientHeight = 506
   ClientWidth = 488
+  DesignTimePPI = 120
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.2'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2

@@ -15,6 +15,7 @@ object frmCustomGrid: TfrmCustomGrid
   OnKeyPress = FormKeyPress
   OnResize = FormResize
   OnShow = FormShow
+  LCLVersion = '3.0.0.3'
   object pSide: TPanel
     Left = 727
     Height = 785
@@ -66,7 +67,7 @@ object frmCustomGrid: TfrmCustomGrid
           ColCount = 2
           FixedColor = 15987699
           FixedRows = 0
-          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRowSizing, goSmoothScroll, goFixedColSizing, goCellEllipsis]
+          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRowSizing, goThumbTracking, goSmoothScroll, goFixedColSizing, goCellEllipsis]
           ParentShowHint = False
           RowCount = 1
           ScrollBars = ssAutoVertical
@@ -75,7 +76,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyDown = FormKeyDown
           ColWidths = (
             80
-            415
+            419
           )
         end
       end
@@ -1660,6 +1661,7 @@ object frmCustomGrid: TfrmCustomGrid
               Rounding.RoundX = 1
               Rounding.RoundY = 1
               TabOrder = 22
+              Visible = False
               object pSexFilter: TBCPanel
                 Left = 0
                 Height = 52
@@ -2247,6 +2249,7 @@ object frmCustomGrid: TfrmCustomGrid
               Rounding.RoundX = 1
               Rounding.RoundY = 1
               TabOrder = 17
+              Visible = False
               object pIsSynonymFilter: TBCPanel
                 Left = 0
                 Height = 52
@@ -2447,6 +2450,7 @@ object frmCustomGrid: TfrmCustomGrid
               Rounding.RoundX = 1
               Rounding.RoundY = 1
               TabOrder = 20
+              Visible = False
               object pBodyMoltFilter: TBCPanel
                 Left = 0
                 Height = 52
@@ -2917,6 +2921,7 @@ object frmCustomGrid: TfrmCustomGrid
               Rounding.RoundX = 1
               Rounding.RoundY = 1
               TabOrder = 16
+              Visible = False
               object pTaxonomyClementsFilter: TBCPanel
                 Left = 0
                 Height = 52
@@ -3396,6 +3401,7 @@ object frmCustomGrid: TfrmCustomGrid
               Rounding.RoundX = 1
               Rounding.RoundY = 1
               TabOrder = 19
+              Visible = False
               object pAgeFilter: TBCPanel
                 Left = 0
                 Height = 52
@@ -3899,24 +3905,24 @@ object frmCustomGrid: TfrmCustomGrid
           Color = clWindow
           DefaultPositionAtEnd = False
           DrawPanel = pImageItem
-          FixedCols = 0
-          Options = [dgpDisableInsert]
+          Options = [dgpIndicator, dgpDisableInsert]
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
           ColWidths = (
-            188
+            12
+            462
           )
           object pImageItem: TPanel
-            Left = 0
+            Left = 12
             Height = 175
             Top = 0
-            Width = 188
+            Width = 462
             BevelOuter = bvNone
             ChildSizing.LeftRightSpacing = 8
             ChildSizing.TopBottomSpacing = 8
             ClientHeight = 175
-            ClientWidth = 188
+            ClientWidth = 462
             Color = clWindow
             ParentBackground = False
             ParentColor = False
@@ -4420,22 +4426,22 @@ object frmCustomGrid: TfrmCustomGrid
           Color = clWindow
           DefaultPositionAtEnd = False
           DrawPanel = pRecycleContent
-          FixedCols = 0
-          Options = [dgpDisableInsert, dgpCancelOnExit]
+          Options = [dgpIndicator, dgpDisableInsert, dgpCancelOnExit]
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
           ColWidths = (
-            188
+            12
+            462
           )
           object pRecycleContent: TPanel
-            Left = 0
+            Left = 12
             Height = 63
             Top = 0
-            Width = 188
+            Width = 462
             BevelOuter = bvNone
             ClientHeight = 63
-            ClientWidth = 188
+            ClientWidth = 462
             Color = clWindow
             ParentBackground = False
             ParentColor = False
@@ -4496,7 +4502,7 @@ object frmCustomGrid: TfrmCustomGrid
               StateDisabled.BorderWidth = 0
             end
             object sbRecycleDelete: TColorSpeedButton
-              Left = 444
+              Left = 432
               Height = 63
               Hint = 'Delete record permanently'
               Top = 0

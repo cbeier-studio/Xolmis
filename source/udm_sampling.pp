@@ -404,6 +404,10 @@ type
     procedure qWeatherLogsAfterPost(DataSet: TDataSet);
     procedure qWeatherLogsBeforeEdit(DataSet: TDataSet);
     procedure qWeatherLogsBeforePost(DataSet: TDataSet);
+    procedure qWeatherLogsprecipitationGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qWeatherLogsprecipitationSetText(Sender: TField; const aText: string);
+    procedure qWeatherLogssample_momentGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qWeatherLogssample_momentSetText(Sender: TField; const aText: string);
   private
     OldSurveyMember: TSurveyMember;
     OldNetEffort: TNetEffort;
@@ -1035,6 +1039,72 @@ end;
 procedure TDMS.qWeatherLogsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+end;
+
+procedure TDMS.qWeatherLogsprecipitationGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'N': aText := rsPrecipitationNone;
+    'F': aText := rsPrecipitationFog;
+    'M': aText := rsPrecipitationMist;
+    'D': aText := rsPrecipitationDrizzle;
+    'R': aText := rsPrecipitationRain;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMS.qWeatherLogsprecipitationSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsPrecipitationNone then
+    Sender.AsString := 'N'
+  else
+  if aText = rsPrecipitationFog then
+    Sender.AsString := 'F'
+  else
+  if aText = rsPrecipitationMist then
+    Sender.AsString := 'M'
+  else
+  if aText = rsPrecipitationDrizzle then
+    Sender.AsString := 'D'
+  else
+  if aText = rsPrecipitationRain then
+    Sender.AsString := 'R';
+end;
+
+procedure TDMS.qWeatherLogssample_momentGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'S': aText := rsMomentStart;
+    'M': aText := rsMomentMiddle;
+    'E': aText := rsMomentEnd;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMS.qWeatherLogssample_momentSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsMomentStart then
+    Sender.AsString := 'S'
+  else
+  if aText = rsMomentMiddle then
+    Sender.AsString := 'M'
+  else
+  if aText = rsMomentEnd then
+    Sender.AsString := 'E';
 end;
 
 initialization

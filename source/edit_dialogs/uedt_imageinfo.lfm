@@ -137,7 +137,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -187,7 +186,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -540,7 +538,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -592,7 +589,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -643,7 +639,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -695,7 +690,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -747,7 +741,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -799,7 +792,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 43
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -851,7 +843,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -903,7 +894,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -955,7 +945,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -1007,7 +996,6 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20

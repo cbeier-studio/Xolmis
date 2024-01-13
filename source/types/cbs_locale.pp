@@ -456,9 +456,9 @@ uses
     rsNestUnknown = 'Unknown';
 
     rsEggSpheric = 'Spheric';
-    rsEggEliptic = 'Eliptic';
+    rsEggElliptic = 'Elliptic';
     rsEggOvoid = 'Ovoid';
-    rsEggPiriform = 'Piriform';
+    rsEggPyriform = 'Pyriform';
     rsEggUnknown = 'Unknown';
 
     rsNestBuilding = 'Building';
@@ -573,6 +573,19 @@ uses
     rsSampleSyrinx = 'Syrinx';
     rsSampleGonads = 'Gonads';
     rsSampleStomach = 'Stomach';
+
+    rsGenderList = 'he/him,she/her,they/them';
+    rsTreatmentList = 'Mr.,Sir,Mrs.,Miss,Ms.,Madam,B./BS.,M./MSc.,Dr./PhD.';
+
+    rsMomentStart = 'Start';
+    rsMomentMiddle = 'Middle';
+    rsMomentEnd = 'End';
+
+    rsPrecipitationNone = 'None';
+    rsPrecipitationFog = 'Fog';
+    rsPrecipitationMist = 'Mist';
+    rsPrecipitationDrizzle = 'Drizzle';
+    rsPrecipitationRain = 'Rain';
 
     rsCaptionSpecies = 'Species';
     rsCaptionGenus = 'Genus';

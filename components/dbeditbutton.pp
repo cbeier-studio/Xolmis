@@ -165,7 +165,7 @@ begin
   Self.FButton.AutoSize := False;
   Self.FButton.Align := alRight;
   Self.FButton.Width := Self.FButtonWidth;
-  Self.FButton.Constraints.MinWidth := Self.FButtonWidth;
+  //Self.FButton.Constraints.MinWidth := Self.FButtonWidth;
   Self.FButton.Caption := EmptyStr;
   Self.FButton.Hint := EmptyStr;
 

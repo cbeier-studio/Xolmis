@@ -111,7 +111,6 @@ uses
   ucfg_users,
   { Other forms }
   ufrm_customgrid,
-  ufrm_customlist,
   ufrm_dashboard,
   ufrm_geoconverter,
   ufrm_maintenance, udm_breeding, uedt_method, udm_sampling, uedt_weatherlog, uedt_project, uedt_permit, 
@@ -121,6 +120,7 @@ uedt_sampleprep, uedt_specimen;
 
 begin
   RequireDerivedFormResource := True;
+  Application.Scaled := True;
   Application.Initialize;
   Application.CreateForm(TDMM, DMM);
   {$IFDEF WINDOWS}

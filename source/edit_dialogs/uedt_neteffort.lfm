@@ -727,17 +727,17 @@ object edtNetEffort: TedtNetEffort
         end
         object eSurvey: TDBEditButton
           Left = 17
-          Height = 23
+          Height = 28
           Top = 33
           Width = 422
           Align = alTop
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 28
           ClientWidth = 422
-          Constraints.MaxHeight = 23
+          Color = 16448250
           ParentBackground = False
+          ParentColor = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20

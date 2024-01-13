@@ -1,23 +1,23 @@
 object edtBotanicTaxon: TedtBotanicTaxon
   Left = 352
-  Height = 448
+  Height = 534
   Top = 33
-  Width = 488
+  Width = 610
   Caption = 'New taxon'
-  ClientHeight = 448
-  ClientWidth = 488
+  ClientHeight = 534
+  ClientWidth = 610
+  DesignTimePPI = 120
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.2'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 396
-    Width = 488
+    Top = 486
+    Width = 610
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -25,9 +25,9 @@ object edtBotanicTaxon: TedtBotanicTaxon
   end
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 398
-    Width = 488
+    Height = 46
+    Top = 488
+    Width = 610
     Align = alBottom
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
@@ -39,88 +39,88 @@ object edtBotanicTaxon: TedtBotanicTaxon
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
-    ClientWidth = 488
+    ClientHeight = 46
+    ClientWidth = 610
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
-      Height = 34
+      Height = 30
       Top = 8
-      Width = 224
+      Width = 285
       Caption = 'Save'
-      Constraints.MinWidth = 224
+      Constraints.MinWidth = 280
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 248
-      Height = 34
+      Left = 309
+      Height = 30
       Top = 8
-      Width = 224
+      Width = 285
       Caption = 'Cancel'
-      Constraints.MinWidth = 224
+      Constraints.MinWidth = 280
       ModalResult = 2
       TabOrder = 1
     end
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 396
+    Height = 486
     Top = 0
-    Width = 488
-    HorzScrollBar.Page = 488
-    VertScrollBar.Page = 396
+    Width = 610
+    HorzScrollBar.Page = 602
+    VertScrollBar.Page = 484
     Align = alClient
     BorderStyle = bsNone
-    ClientHeight = 396
-    ClientWidth = 488
-    Constraints.MinWidth = 220
+    ClientHeight = 486
+    ClientWidth = 610
+    Constraints.MinWidth = 275
     Color = clDefault
     ParentColor = False
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 396
+      Height = 484
       Top = 0
-      Width = 488
+      Width = 610
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 396
-      ClientWidth = 488
+      ClientHeight = 484
+      ClientWidth = 610
       Color = 15066599
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
       object pParentTaxon: TPanel
         Left = 0
-        Height = 58
-        Top = 264
-        Width = 488
+        Height = 72
+        Top = 324
+        Width = 610
         Align = alTop
-        BorderSpacing.Top = 16
+        BorderSpacing.Top = 20
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 72
+        ClientWidth = 610
         ParentBackground = False
         TabOrder = 0
         object lblParentTaxon: TLabel
           Left = 16
           Height = 20
-          Top = 4
-          Width = 456
+          Top = 5
+          Width = 570
           AutoSize = False
-          BorderSpacing.Top = 4
+          BorderSpacing.Top = 5
           Caption = 'Parent taxon:'
           Font.Color = 6579300
           ParentColor = False
@@ -129,16 +129,15 @@ object edtBotanicTaxon: TedtBotanicTaxon
         object eParentTaxon: TDBEditButton
           Left = 16
           Height = 28
-          Top = 28
-          Width = 456
+          Top = 29
+          Width = 570
           BevelOuter = bvNone
           ClientHeight = 28
-          ClientWidth = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
+          ClientWidth = 570
+          Constraints.MaxHeight = 36
+          Constraints.MinWidth = 570
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -152,9 +151,9 @@ object edtBotanicTaxon: TedtBotanicTaxon
       end
       object pName: TPanel
         Left = 0
-        Height = 58
+        Height = 72
         Top = 16
-        Width = 488
+        Width = 610
         Align = alTop
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
@@ -162,17 +161,17 @@ object edtBotanicTaxon: TedtBotanicTaxon
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 72
+        ClientWidth = 610
         ParentBackground = False
         TabOrder = 1
         object lblName: TLabel
           Left = 16
           Height = 20
-          Top = 4
-          Width = 456
+          Top = 5
+          Width = 570
           AutoSize = False
-          BorderSpacing.Top = 4
+          BorderSpacing.Top = 5
           Caption = 'Scientific name: *'
           Font.Color = 6579300
           ParentColor = False
@@ -181,16 +180,15 @@ object edtBotanicTaxon: TedtBotanicTaxon
         object eName: TDBEditButton
           Left = 16
           Height = 28
-          Top = 28
-          Width = 456
+          Top = 29
+          Width = 570
           BevelOuter = bvNone
           ClientHeight = 28
-          ClientWidth = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
+          ClientWidth = 570
+          Constraints.MaxHeight = 36
+          Constraints.MinWidth = 570
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 63
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -204,9 +202,9 @@ object edtBotanicTaxon: TedtBotanicTaxon
       end
       object pAuthorship: TPanel
         Left = 0
-        Height = 58
-        Top = 74
-        Width = 488
+        Height = 72
+        Top = 88
+        Width = 610
         Align = alTop
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
@@ -214,17 +212,17 @@ object edtBotanicTaxon: TedtBotanicTaxon
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 72
+        ClientWidth = 610
         ParentBackground = False
         TabOrder = 2
         object lblAuthorship: TLabel
           Left = 16
           Height = 20
-          Top = 4
-          Width = 456
+          Top = 5
+          Width = 570
           AutoSize = False
-          BorderSpacing.Top = 4
+          BorderSpacing.Top = 5
           Caption = 'Authorship:'
           Font.Color = 6579300
           ParentColor = False
@@ -233,11 +231,11 @@ object edtBotanicTaxon: TedtBotanicTaxon
         object eAuthorship: TDBEdit
           Left = 16
           Height = 28
-          Top = 28
-          Width = 456
+          Top = 29
+          Width = 570
           DataField = 'authorship'
           DataSource = dsLink
-          Constraints.MinWidth = 456
+          Constraints.MinWidth = 570
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -246,9 +244,9 @@ object edtBotanicTaxon: TedtBotanicTaxon
       end
       object pVernacularName: TPanel
         Left = 0
-        Height = 58
-        Top = 190
-        Width = 488
+        Height = 72
+        Top = 232
+        Width = 610
         Align = alTop
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
@@ -256,17 +254,17 @@ object edtBotanicTaxon: TedtBotanicTaxon
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 72
+        ClientWidth = 610
         ParentBackground = False
         TabOrder = 3
         object lblVernacularName: TLabel
           Left = 16
           Height = 20
-          Top = 4
-          Width = 456
+          Top = 5
+          Width = 570
           AutoSize = False
-          BorderSpacing.Top = 4
+          BorderSpacing.Top = 5
           Caption = 'Vernacular name:'
           Font.Color = 6579300
           ParentColor = False
@@ -275,11 +273,11 @@ object edtBotanicTaxon: TedtBotanicTaxon
         object eVernacularName: TDBEdit
           Left = 16
           Height = 28
-          Top = 28
-          Width = 456
+          Top = 29
+          Width = 570
           DataField = 'vernacular_name'
           DataSource = dsLink
-          Constraints.MinWidth = 456
+          Constraints.MinWidth = 570
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -288,9 +286,9 @@ object edtBotanicTaxon: TedtBotanicTaxon
       end
       object pValidName: TPanel
         Left = 0
-        Height = 58
-        Top = 322
-        Width = 488
+        Height = 72
+        Top = 396
+        Width = 610
         Align = alTop
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
@@ -298,17 +296,17 @@ object edtBotanicTaxon: TedtBotanicTaxon
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 72
+        ClientWidth = 610
         ParentBackground = False
         TabOrder = 4
         object lblValidName: TLabel
           Left = 16
           Height = 20
-          Top = 4
-          Width = 456
+          Top = 5
+          Width = 570
           AutoSize = False
-          BorderSpacing.Top = 4
+          BorderSpacing.Top = 5
           Caption = 'Valid name:'
           Font.Color = 6579300
           ParentColor = False
@@ -317,16 +315,15 @@ object edtBotanicTaxon: TedtBotanicTaxon
         object eValidName: TDBEditButton
           Left = 16
           Height = 28
-          Top = 28
-          Width = 456
+          Top = 29
+          Width = 570
           BevelOuter = bvNone
           ClientHeight = 28
-          ClientWidth = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
+          ClientWidth = 570
+          Constraints.MaxHeight = 36
+          Constraints.MinWidth = 570
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -340,9 +337,9 @@ object edtBotanicTaxon: TedtBotanicTaxon
       end
       object pRank: TPanel
         Left = 0
-        Height = 58
-        Top = 132
-        Width = 488
+        Height = 72
+        Top = 160
+        Width = 610
         Align = alTop
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
@@ -350,17 +347,17 @@ object edtBotanicTaxon: TedtBotanicTaxon
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 72
+        ClientWidth = 610
         ParentBackground = False
         TabOrder = 5
         object lblRank: TLabel
           Left = 16
           Height = 20
-          Top = 4
-          Width = 220
+          Top = 5
+          Width = 275
           AutoSize = False
-          BorderSpacing.Top = 4
+          BorderSpacing.Top = 5
           Caption = 'Taxonomic rank: *'
           Font.Color = 6579300
           ParentColor = False
@@ -369,9 +366,9 @@ object edtBotanicTaxon: TedtBotanicTaxon
         object cbRank: TDBLookupComboBox
           Left = 16
           Height = 28
-          Top = 28
-          Width = 220
-          Constraints.MinWidth = 220
+          Top = 29
+          Width = 275
+          Constraints.MinWidth = 275
           DataField = 'rank_id'
           DataSource = dsLink
           KeyField = 'rank_id'
@@ -389,7 +386,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
   object dsLink: TDataSource
     DataSet = DMG.qBotany
     OnDataChange = dsLinkDataChange
-    Left = 368
-    Top = 16
+    Left = 460
+    Top = 20
   end
 end

@@ -6,13 +6,13 @@ object edtNetStation: TedtNetStation
   Caption = 'New mistnet station'
   ClientHeight = 592
   ClientWidth = 488
+  DesignTimePPI = 120
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.2'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -137,7 +137,6 @@ object edtNetStation: TedtNetStation
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20

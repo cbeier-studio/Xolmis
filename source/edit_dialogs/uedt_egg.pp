@@ -252,6 +252,16 @@ begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionEgg)])
   else
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionEgg)]);
+
+  with cbShape.Items do
+  begin
+    Clear;
+    Add(rsEggSpheric);
+    Add(rsEggElliptic);
+    Add(rsEggOvoid);
+    Add(rsEggPyriform);
+    Add(rsEggUnknown);
+  end;
 end;
 
 function TedtEgg.IsRequiredFilled: Boolean;

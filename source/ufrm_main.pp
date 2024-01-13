@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons, ActnList,
   ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton, DefaultTranslator,
-  ufrm_customgrid, ufrm_customlist, TDICardPanel, udlg_rechistory, cbs_datatypes;
+  ufrm_customgrid, TDICardPanel, udlg_rechistory, cbs_datatypes;
 
 type
 
@@ -270,7 +270,6 @@ type
   private
     //ActiveQuery: TSQLQuery;
     ActiveGrid: TfrmCustomGrid;
-    ActiveList: TfrmCustomList;
     procedure OpenTab(Sender: TObject; aForm: TForm; aFormClass: TComponentClass; aCaption: String;
       Pinned: Boolean);
     procedure OpenForm(Sender: TObject; var aForm: TfrmCustomGrid; aTableType: TTableType;
@@ -906,7 +905,6 @@ begin
   begin
     ActiveQuery := nil;
     ActiveGrid := nil;
-    ActiveList := nil;
   end;
   UpdateMenu(PGW.ActivePageComponent);
 

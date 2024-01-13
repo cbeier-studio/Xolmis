@@ -323,7 +323,6 @@ object edtProject: TedtProject
           Constraints.MinWidth = 220
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 18
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -347,7 +346,6 @@ object edtProject: TedtProject
           Constraints.MinWidth = 220
           ParentBackground = False
           TabOrder = 1
-          ButtonWidth = 0
           ImageIndex = 18
           Images = frmMain.mPopup
           ImageWidth = 20

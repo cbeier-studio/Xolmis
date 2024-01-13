@@ -4632,6 +4632,8 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qWeatherLogssample_momentGetText
+      OnSetText = qWeatherLogssample_momentSetText
       Size = 1
     end
     object qWeatherLogscloud_cover: TLongintField
@@ -4653,6 +4655,8 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qWeatherLogsprecipitationGetText
+      OnSetText = qWeatherLogsprecipitationSetText
       Size = 1
     end
     object qWeatherLogsrainfall: TLongintField

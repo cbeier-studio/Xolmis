@@ -129,24 +129,27 @@ object dlgFindTaxon: TdlgFindTaxon
     DataSource = dsFind
     DefaultPositionAtEnd = False
     DrawPanel = pContent
-    FixedCols = 0
-    Options = [dgpDisableInsert, dgpCancelOnExit]
+    Options = [dgpIndicator, dgpDisableInsert, dgpCancelOnExit]
     TabOrder = 1
     OnKeyDown = FormKeyDown
     OnKeyPress = FormKeyPress
     OnPrepareCanvas = uListPrepareCanvas
+    ColWidths = (
+      12
+      359
+    )
     object pContent: TPanel
-      Left = 0
+      Left = 12
       Height = 46
       Top = 0
-      Width = 371
+      Width = 359
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
       ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 46
-      ClientWidth = 371
+      ClientWidth = 359
       Color = clWindow
       ParentBackground = False
       ParentColor = False
@@ -157,7 +160,7 @@ object dlgFindTaxon: TdlgFindTaxon
         Left = 8
         Height = 20
         Top = 24
-        Width = 355
+        Width = 343
         Align = alTop
         DataSource = dsFind
         Font.Color = 6381921
@@ -179,7 +182,7 @@ object dlgFindTaxon: TdlgFindTaxon
         Left = 8
         Height = 24
         Top = 0
-        Width = 355
+        Width = 343
         BorderStyle = htNone
         DefBackground = clWhite
         DefFontName = 'default'

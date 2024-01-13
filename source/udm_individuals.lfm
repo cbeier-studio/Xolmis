@@ -2940,7 +2940,12 @@ object DMI: TDMI
     FieldDefs = <    
       item
         Name = 'sighting_id'
-        DataType = ftAutoInc
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'internal_id'
+        DataType = ftLargeint
         Precision = -1
       end    
       item
@@ -3186,6 +3191,53 @@ object DMI: TDMI
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'data_owner'
+        DataType = ftLargeint
+        Precision = -1
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'taxon_formatted_name'
+        DataType = ftString
+        Precision = -1
+        Size = 250
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'observer_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'survey_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'method_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 180
       end>
     AfterCancel = qSightingsAfterCancel
     AfterInsert = qSightingsAfterInsert
@@ -3250,12 +3302,23 @@ object DMI: TDMI
       Required = False
       Visible = False
     end
+    object qSightingssurvey_name: TStringField
+      FieldKind = fkData
+      FieldName = 'survey_name'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
     object qSightingssighting_date: TDateField
       Alignment = taCenter
       DisplayLabel = 'Date'
       FieldKind = fkData
       FieldName = 'sighting_date'
-      Index = 2
+      Index = 3
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3266,7 +3329,7 @@ object DMI: TDMI
       DisplayLabel = 'Time'
       FieldKind = fkData
       FieldName = 'sighting_time'
-      Index = 3
+      Index = 4
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3276,19 +3339,29 @@ object DMI: TDMI
       DisplayLabel = 'Locality (ID)'
       FieldKind = fkData
       FieldName = 'locality_id'
-      Index = 4
+      Index = 5
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Visible = False
     end
+    object qSightingslocality_name: TStringField
+      FieldKind = fkData
+      FieldName = 'locality_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 180
+    end
     object qSightingslongitude: TFloatField
       DisplayLabel = 'Longitude'
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'longitude'
-      Index = 5
+      Index = 7
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3300,7 +3373,7 @@ object DMI: TDMI
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'latitude'
-      Index = 6
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3311,19 +3384,30 @@ object DMI: TDMI
       DisplayLabel = 'Method (ID)'
       FieldKind = fkData
       FieldName = 'method_id'
-      Index = 7
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Visible = False
     end
+    object qSightingsmethod_name: TStringField
+      FieldKind = fkData
+      FieldName = 'method_name'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
     object qSightingsmackinnon_list_num: TLongintField
       Alignment = taCenter
       DisplayLabel = 'Mackinnon list nr.'
       FieldKind = fkData
       FieldName = 'mackinnon_list_num'
-      Index = 8
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3333,40 +3417,83 @@ object DMI: TDMI
       DisplayLabel = 'Observer (ID)'
       FieldKind = fkData
       FieldName = 'observer_id'
-      Index = 9
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Visible = False
+    end
+    object qSightingsobserver_name: TStringField
+      FieldKind = fkData
+      FieldName = 'observer_name'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
     end
     object qSightingstaxon_id: TLongintField
       DisplayLabel = 'Taxon (ID)'
       FieldKind = fkData
       FieldName = 'taxon_id'
-      Index = 10
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Visible = False
+    end
+    object qSightingstaxon_name: TStringField
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qSightingstaxon_formatted_name: TStringField
+      FieldKind = fkData
+      FieldName = 'taxon_formatted_name'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 250
     end
     object qSightingsindividual_id: TLongintField
       DisplayLabel = 'Individual (ID)'
       FieldKind = fkData
       FieldName = 'individual_id'
-      Index = 11
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Visible = False
     end
+    object qSightingsindividual_name: TStringField
+      FieldKind = fkData
+      FieldName = 'individual_name'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 120
+    end
     object qSightingssubjects_tally: TLongintField
       DisplayLabel = '# individuals'
       FieldKind = fkData
       FieldName = 'subjects_tally'
-      Index = 12
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3376,7 +3503,7 @@ object DMI: TDMI
       DisplayLabel = 'Distance'
       FieldKind = fkData
       FieldName = 'subject_distance'
-      Index = 13
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3388,7 +3515,7 @@ object DMI: TDMI
       DisplayLabel = 'Seen'
       FieldKind = fkData
       FieldName = 'subject_seen'
-      Index = 14
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3400,7 +3527,7 @@ object DMI: TDMI
       DisplayLabel = 'Heard'
       FieldKind = fkData
       FieldName = 'subject_heard'
-      Index = 15
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3412,7 +3539,7 @@ object DMI: TDMI
       DisplayLabel = 'Photographed'
       FieldKind = fkData
       FieldName = 'subject_photographed'
-      Index = 16
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3424,7 +3551,7 @@ object DMI: TDMI
       DisplayLabel = 'Recorded'
       FieldKind = fkData
       FieldName = 'subject_recorded'
-      Index = 17
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3436,7 +3563,7 @@ object DMI: TDMI
       DisplayLabel = 'Captured'
       FieldKind = fkData
       FieldName = 'subject_captured'
-      Index = 18
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3447,7 +3574,7 @@ object DMI: TDMI
       DisplayLabel = '# males'
       FieldKind = fkData
       FieldName = 'males_tally'
-      Index = 19
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3458,7 +3585,7 @@ object DMI: TDMI
       DisplayLabel = '# females'
       FieldKind = fkData
       FieldName = 'females_tally'
-      Index = 20
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3469,7 +3596,7 @@ object DMI: TDMI
       DisplayLabel = '# not sexed'
       FieldKind = fkData
       FieldName = 'not_sexed_tally'
-      Index = 21
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3480,7 +3607,7 @@ object DMI: TDMI
       DisplayLabel = '# adults'
       FieldKind = fkData
       FieldName = 'adults_tally'
-      Index = 22
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3491,7 +3618,7 @@ object DMI: TDMI
       DisplayLabel = '# immatures'
       FieldKind = fkData
       FieldName = 'immatures_tally'
-      Index = 23
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3502,7 +3629,7 @@ object DMI: TDMI
       DisplayLabel = '# not aged'
       FieldKind = fkData
       FieldName = 'not_aged_tally'
-      Index = 24
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3513,7 +3640,7 @@ object DMI: TDMI
       DisplayLabel = '# new captures'
       FieldKind = fkData
       FieldName = 'new_captures_tally'
-      Index = 25
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3523,7 +3650,7 @@ object DMI: TDMI
       DisplayLabel = '# recaptures'
       FieldKind = fkData
       FieldName = 'recaptures_tally'
-      Index = 26
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3533,7 +3660,7 @@ object DMI: TDMI
       DisplayLabel = '# unbanded'
       FieldKind = fkData
       FieldName = 'unbanded_tally'
-      Index = 27
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3544,7 +3671,7 @@ object DMI: TDMI
       DisplayLabel = 'Detection type'
       FieldKind = fkData
       FieldName = 'detection_type'
-      Index = 28
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3556,7 +3683,7 @@ object DMI: TDMI
       DisplayLabel = 'Breeding and behavior'
       FieldKind = fkData
       FieldName = 'breeding_status'
-      Index = 29
+      Index = 36
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3568,7 +3695,7 @@ object DMI: TDMI
       DisplayLabel = 'Out of the sample'
       FieldKind = fkData
       FieldName = 'not_surveying'
-      Index = 30
+      Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3580,7 +3707,7 @@ object DMI: TDMI
       DisplayLabel = 'It''s in eBird'
       FieldKind = fkData
       FieldName = 'ebird_available'
-      Index = 31
+      Index = 38
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3592,7 +3719,7 @@ object DMI: TDMI
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 32
+      Index = 39
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3605,7 +3732,7 @@ object DMI: TDMI
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'sighting_id'
-      Index = 33
+      Index = 40
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -3615,7 +3742,7 @@ object DMI: TDMI
       DisplayLabel = 'Full name'
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 34
+      Index = 41
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3627,7 +3754,7 @@ object DMI: TDMI
       DisplayLabel = 'Order (ID)'
       FieldKind = fkData
       FieldName = 'order_id'
-      Index = 35
+      Index = 42
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3638,7 +3765,7 @@ object DMI: TDMI
       DisplayLabel = 'Family (ID)'
       FieldKind = fkData
       FieldName = 'family_id'
-      Index = 36
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3649,7 +3776,7 @@ object DMI: TDMI
       DisplayLabel = 'Genus (ID)'
       FieldKind = fkData
       FieldName = 'genus_id'
-      Index = 37
+      Index = 44
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3660,7 +3787,7 @@ object DMI: TDMI
       DisplayLabel = 'Species (ID)'
       FieldKind = fkData
       FieldName = 'species_id'
-      Index = 38
+      Index = 45
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3671,7 +3798,7 @@ object DMI: TDMI
       DisplayLabel = 'Country (ID)'
       FieldKind = fkData
       FieldName = 'country_id'
-      Index = 39
+      Index = 46
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3682,7 +3809,7 @@ object DMI: TDMI
       DisplayLabel = 'State (ID)'
       FieldKind = fkData
       FieldName = 'state_id'
-      Index = 40
+      Index = 47
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3693,7 +3820,7 @@ object DMI: TDMI
       DisplayLabel = 'Municipality (ID)'
       FieldKind = fkData
       FieldName = 'municipality_id'
-      Index = 41
+      Index = 48
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3704,7 +3831,7 @@ object DMI: TDMI
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 42
+      Index = 49
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3715,7 +3842,7 @@ object DMI: TDMI
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 43
+      Index = 50
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3727,7 +3854,7 @@ object DMI: TDMI
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 44
+      Index = 51
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3739,7 +3866,7 @@ object DMI: TDMI
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 45
+      Index = 52
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3751,7 +3878,7 @@ object DMI: TDMI
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 46
+      Index = 53
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3764,7 +3891,7 @@ object DMI: TDMI
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 47
+      Index = 54
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

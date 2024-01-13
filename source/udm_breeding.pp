@@ -176,9 +176,9 @@ begin
 
   case Sender.AsString of
     'R': aText := rsEggSpheric;
-    'E': aText := rsEggEliptic;
+    'E': aText := rsEggElliptic;
     'O': aText := rsEggOvoid;
-    'P': aText := rsEggPiriform;
+    'P': aText := rsEggPyriform;
     'U': aText := rsEggUnknown;
   end;
 
@@ -193,13 +193,13 @@ begin
   if aText = rsEggSpheric then
     Sender.AsString := 'R'
   else
-  if aText = rsEggEliptic then
+  if aText = rsEggElliptic then
     Sender.AsString := 'E'
   else
   if aText = rsEggOvoid then
     Sender.AsString := 'O'
   else
-  if aText = rsEggPiriform then
+  if aText = rsEggPyriform then
     Sender.AsString := 'P'
   else
   if aText = rsEggUnknown then

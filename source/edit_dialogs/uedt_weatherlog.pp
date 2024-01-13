@@ -136,6 +136,13 @@ begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionWeatherLogEntry)])
   else
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionWeatherLogEntry)]);
+
+  cbSampleMoment.Items.CommaText := rsMomentStart + ',' + rsMomentMiddle + ',' + rsMomentEnd;
+  cbPrecipitation.Items.CommaText := rsPrecipitationNone + ',' +
+                                     rsPrecipitationFog + ',' +
+                                     rsPrecipitationMist + ',' +
+                                     rsPrecipitationDrizzle + ',' +
+                                     rsPrecipitationRain;
 end;
 
 function TedtWeatherLog.IsRequiredFilled: Boolean;

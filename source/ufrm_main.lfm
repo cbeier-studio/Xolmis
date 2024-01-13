@@ -1,11 +1,11 @@
 object frmMain: TfrmMain
   Left = -9
-  Height = 1080
+  Height = 871
   Top = -9
-  Width = 1267
+  Width = 1285
   Caption = 'Xolmis'
-  ClientHeight = 1080
-  ClientWidth = 1267
+  ClientHeight = 871
+  ClientWidth = 1285
   Constraints.MinWidth = 960
   DesignTimePPI = 120
   OnClose = FormClose
@@ -13,23 +13,23 @@ object frmMain: TfrmMain
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  LCLVersion = '3.0.0.2'
+  LCLVersion = '3.0.0.3'
   WindowState = wsMaximized
   object pLeftTabs: TPanel
     Left = 0
-    Height = 917
+    Height = 737
     Top = 104
-    Width = 1267
+    Width = 1285
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 917
-    ClientWidth = 1267
+    ClientHeight = 737
+    ClientWidth = 1285
     TabOrder = 0
     object navTabs: TATTabs
       Left = 0
       Height = 44
       Top = 0
-      Width = 1267
+      Width = 1285
       Align = alTop
       ParentColor = False
       PopupMenu = pmTabs
@@ -151,9 +151,9 @@ object frmMain: TfrmMain
     end
     object PGW: TTDICardPanel
       Left = 0
-      Height = 873
+      Height = 693
       Top = 44
-      Width = 1267
+      Width = 1285
       Align = alClient
       TabOrder = 1
       TDIActions.CloseTab.Caption = 'Close Tab'
@@ -176,7 +176,7 @@ object frmMain: TfrmMain
     Left = 0
     Height = 2
     Top = 102
-    Width = 1267
+    Width = 1285
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -186,11 +186,11 @@ object frmMain: TfrmMain
     Left = 0
     Height = 44
     Top = 0
-    Width = 1267
+    Width = 1285
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 44
-    ClientWidth = 1267
+    ClientWidth = 1285
     Color = 15987699
     ParentBackground = False
     ParentColor = False
@@ -329,7 +329,7 @@ object frmMain: TfrmMain
       Left = 180
       Height = 40
       Top = 4
-      Width = 907
+      Width = 925
       Align = alClient
       BorderSpacing.Top = 4
       Font.Color = 1776411
@@ -432,7 +432,7 @@ object frmMain: TfrmMain
     end
     object pSearch: TBCPanel
       AnchorSideLeft.Side = asrCenter
-      Left = 1103
+      Left = 1121
       Height = 30
       Top = 7
       Width = 148
@@ -558,7 +558,7 @@ object frmMain: TfrmMain
     Left = 0
     Height = 58
     Top = 44
-    Width = 1267
+    Width = 1285
     PageIndex = 0
     Align = alTop
     Color = 15987699
@@ -1153,8 +1153,8 @@ object frmMain: TfrmMain
   object SBar: TBCPanel
     Left = 0
     Height = 30
-    Top = 1021
-    Width = 1267
+    Top = 841
+    Width = 1285
     Align = alBottom
     Background.Color = clBtnFace
     Background.Gradient1.StartColor = clWhite
@@ -1194,9 +1194,10 @@ object frmMain: TfrmMain
       Left = 0
       Height = 30
       Top = 0
-      Width = 250
+      Width = 47
       Align = alLeft
-      ChildSizing.LeftRightSpacing = 4
+      AutoSize = True
+      ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 2
       ChildSizing.HorizontalSpacing = 4
       Background.Color = clBtnFace
@@ -1235,7 +1236,7 @@ object frmMain: TfrmMain
       ShowHint = True
       TabOrder = 0
       object icoSbarDatabase: TImage
-        Left = 5
+        Left = 9
         Height = 24
         Top = 3
         Width = 24
@@ -1246,22 +1247,23 @@ object frmMain: TfrmMain
         Proportional = True
       end
       object lblSbarDatabase: TLabel
-        Left = 33
+        Left = 37
         Height = 24
         Top = 3
-        Width = 212
-        Align = alClient
+        Width = 1
+        Align = alLeft
         Layout = tlCenter
         ShowAccelChar = False
       end
     end
     object sbarUser: TBCPanel
-      Left = 250
+      Left = 47
       Height = 30
       Top = 0
-      Width = 250
+      Width = 47
       Align = alLeft
-      ChildSizing.LeftRightSpacing = 4
+      AutoSize = True
+      ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 2
       ChildSizing.HorizontalSpacing = 4
       Background.Color = clBtnFace
@@ -1299,16 +1301,16 @@ object frmMain: TfrmMain
       Rounding.RoundY = 1
       TabOrder = 1
       object lblSbarUser: TLabel
-        Left = 33
+        Left = 37
         Height = 24
         Top = 3
-        Width = 212
-        Align = alClient
+        Width = 1
+        Align = alLeft
         Layout = tlCenter
         ShowAccelChar = False
       end
       object icoSbarUser: TImage
-        Left = 5
+        Left = 9
         Height = 24
         Top = 3
         Width = 24
@@ -1321,12 +1323,13 @@ object frmMain: TfrmMain
       end
     end
     object sbarTaxonomy: TBCPanel
-      Left = 500
+      Left = 94
       Height = 30
       Top = 0
-      Width = 250
+      Width = 47
       Align = alLeft
-      ChildSizing.LeftRightSpacing = 4
+      AutoSize = True
+      ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 2
       ChildSizing.HorizontalSpacing = 4
       Background.Color = clBtnFace
@@ -1364,16 +1367,16 @@ object frmMain: TfrmMain
       Rounding.RoundY = 1
       TabOrder = 2
       object lblSbarTaxonomy: TLabel
-        Left = 33
+        Left = 37
         Height = 24
         Top = 3
-        Width = 212
-        Align = alClient
+        Width = 1
+        Align = alLeft
         Layout = tlCenter
         ShowAccelChar = False
       end
       object icoSbarTaxonomy: TImage
-        Left = 5
+        Left = 9
         Height = 24
         Top = 3
         Width = 24
@@ -1386,10 +1389,10 @@ object frmMain: TfrmMain
       end
     end
     object sbarStatus: TBCPanel
-      Left = 750
+      Left = 141
       Height = 30
       Top = 0
-      Width = 267
+      Width = 894
       Align = alClient
       Background.Color = clBtnFace
       Background.Gradient1.StartColor = clWhite
@@ -1433,7 +1436,7 @@ object frmMain: TfrmMain
       TabOrder = 3
     end
     object sbarProgress: TBCPanel
-      Left = 1017
+      Left = 1035
       Height = 30
       Top = 0
       Width = 250

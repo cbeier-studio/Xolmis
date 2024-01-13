@@ -261,7 +261,6 @@ object edtEgg: TedtEgg
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -312,7 +311,6 @@ object edtEgg: TedtEgg
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -363,7 +361,6 @@ object edtEgg: TedtEgg
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
-          ButtonWidth = 0
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -413,11 +410,11 @@ object edtEgg: TedtEgg
           DataSource = dsLink
           ItemHeight = 20
           Items.Strings = (
-            'Esférico'
-            'Elíptico'
-            'Ovoide'
-            'Piriforme'
-            'Indeterminado'
+            'Spheric'
+            'Elliptic'
+            'Ovoid'
+            'Pyriform'
+            'Unknown'
           )
           MaxLength = 0
           OnKeyDown = FormKeyDown
