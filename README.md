@@ -46,25 +46,7 @@ You can create [pull requests](https://github.com/cbeier-studio/xolmis/pulls) di
 
 If you want to help in Xolmis development, please send me a message to [hello@christianbeier.studio](mailto://hello@christianbeier.studio).
 
-#### Requirements
-
-- [Lazarus](https://www.lazarus-ide.org/) 2.2+.
-- [Free Pascal](https://www.freepascal.org/) Compiler (FPC) 3.2+.
-- [SQLite](https://sqlite.org/) 3.31+.
-
-#### Packages
-
-- [ATFlatControls](https://github.com/Alexey-T/ATFlatControls)
-- [BGRABitmap](https://github.com/bgrabitmap/bgrabitmap)
-- [BGRAControls](https://github.com/bgrabitmap/bgracontrols)
-- [DCPCrypt](https://wiki.lazarus.freepascal.org/DCPcrypt)
-- FPExif
-- [HtmlViewer](https://github.com/BerndGabriel/HtmlViewer)
-- [IBX](http://www.mwasoftware.co.uk/ibx)
-- [LazVirtualTreeView](https://github.com/blikblum/VirtualTreeView-Lazarus)
-- [LazMapViewer](https://wiki.lazarus.freepascal.org/LazMapViewer)
-- [SynEdit](https://wiki.lazarus.freepascal.org/SynEdit)
-- [TAChart](https://wiki.lazarus.freepascal.org/TAChart)
+For requirements and packages needed, see the [Wiki](https://github.com/cbeier-studio/Xolmis/wiki/Installing).
 
 ## License
 
