@@ -1,12 +1,11 @@
 object frmCustomGrid: TfrmCustomGrid
   Left = 352
-  Height = 785
+  Height = 981
   Top = 33
-  Width = 1287
+  Width = 1609
   Caption = 'Grid'
-  ClientHeight = 785
-  ClientWidth = 1287
-  DesignTimePPI = 120
+  ClientHeight = 981
+  ClientWidth = 1609
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -15,16 +14,15 @@ object frmCustomGrid: TfrmCustomGrid
   OnKeyPress = FormKeyPress
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '3.0.0.3'
   object pSide: TPanel
-    Left = 727
-    Height = 785
+    Left = 920
+    Height = 981
     Top = 0
-    Width = 515
+    Width = 644
     Align = alRight
     BevelOuter = bvNone
-    ClientHeight = 785
-    ClientWidth = 515
+    ClientHeight = 981
+    ClientWidth = 644
     Color = 15658734
     ParentBackground = False
     ParentColor = False
@@ -32,9 +30,9 @@ object frmCustomGrid: TfrmCustomGrid
     Visible = False
     object cpSide: TNotebook
       Left = 0
-      Height = 785
+      Height = 981
       Top = 0
-      Width = 515
+      Width = 644
       PageIndex = 0
       Align = alClient
       TabOrder = 0
@@ -43,24 +41,24 @@ object frmCustomGrid: TfrmCustomGrid
         ChildSizing.TopBottomSpacing = 8
         ChildSizing.VerticalSpacing = 8
         object titleViewRecord: TLabel
-          Left = 16
-          Height = 28
-          Top = 8
-          Width = 483
+          Left = 20
+          Height = 30
+          Top = 10
+          Width = 604
           Align = alTop
-          BorderSpacing.Left = 16
-          BorderSpacing.Top = 8
-          BorderSpacing.Right = 16
+          BorderSpacing.Left = 20
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 20
           Caption = 'Record details'
           Font.Color = 13066075
-          Font.Height = -20
+          Font.Height = -22
           ParentFont = False
         end
         object gridRecord: TStringGrid
           Left = 8
-          Height = 733
-          Top = 44
-          Width = 499
+          Height = 925
+          Top = 48
+          Width = 628
           Align = alClient
           AlternateColor = 16448250
           AutoFillColumns = True
@@ -75,39 +73,39 @@ object frmCustomGrid: TfrmCustomGrid
           TabOrder = 0
           OnKeyDown = FormKeyDown
           ColWidths = (
-            80
-            419
+            100
+            524
           )
         end
       end
       object cardQuickFilters: TPage
         object scrollFilter: TScrollBox
           Left = 0
-          Height = 749
-          Top = 36
-          Width = 515
-          HorzScrollBar.Page = 233
-          VertScrollBar.Page = 749
+          Height = 941
+          Top = 40
+          Width = 644
+          HorzScrollBar.Page = 279
+          VertScrollBar.Page = 941
           VertScrollBar.Tracking = True
           Align = alClient
           BorderStyle = bsNone
-          ClientHeight = 749
-          ClientWidth = 515
+          ClientHeight = 941
+          ClientWidth = 644
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel
             Left = 0
-            Height = 12
-            Top = 3242
-            Width = 494
+            Height = 15
+            Top = 4050
+            Width = 623
             Align = alTop
             Shape = bsSpacer
           end
           object pQuickFiltersContent: TBCPanel
             Left = 0
-            Height = 3242
+            Height = 4050
             Top = 0
-            Width = 494
+            Width = 623
             Align = alTop
             AutoSize = True
             ChildSizing.LeftRightSpacing = 8
@@ -147,11 +145,11 @@ object frmCustomGrid: TfrmCustomGrid
             TabOrder = 0
             object pSiteFilters: TBCPanel
               Left = 9
-              Height = 300
-              Top = 129
-              Width = 476
+              Height = 375
+              Top = 159
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               ChildSizing.LeftRightSpacing = 16
               Background.Color = 16448250
               Background.Gradient1.StartColor = clWhite
@@ -190,23 +188,23 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object pTitleSiteFilter: TPanel
                 Left = 16
-                Height = 46
+                Height = 58
                 Top = 1
-                Width = 444
+                Width = 573
                 Align = alTop
                 BorderSpacing.Top = 1
                 BevelOuter = bvNone
                 ChildSizing.TopBottomSpacing = 8
                 ChildSizing.HorizontalSpacing = 8
-                ClientHeight = 46
-                ClientWidth = 444
+                ClientHeight = 58
+                ClientWidth = 573
                 Color = 16448250
                 ParentBackground = False
                 ParentColor = False
                 TabOrder = 0
                 object lblSiteFilter: TLabel
-                  Left = 32
-                  Height = 30
+                  Left = 38
+                  Height = 42
                   Top = 8
                   Width = 63
                   Align = alLeft
@@ -215,8 +213,8 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object lblCountSiteFilter: TLabel
-                  Left = 352
-                  Height = 30
+                  Left = 481
+                  Height = 42
                   Top = 8
                   Width = 92
                   Align = alRight
@@ -228,9 +226,9 @@ object frmCustomGrid: TfrmCustomGrid
                 end
                 object icoSiteFilter: TImage
                   Left = 0
-                  Height = 30
+                  Height = 42
                   Top = 8
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 64
@@ -240,11 +238,11 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object tvSiteFilter: TLazVirtualStringTree
                 Left = 16
-                Height = 241
-                Top = 47
-                Width = 444
+                Height = 301
+                Top = 59
+                Width = 573
                 Align = alClient
-                BorderSpacing.Bottom = 12
+                BorderSpacing.Bottom = 15
                 DefaultText = 'Node'
                 EmptyListMessage = 'No locations to show'
                 Header.AutoSizeIndex = -1
@@ -269,11 +267,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pSiteRankFilter: TBCPanel
               Left = 9
-              Height = 52
-              Top = 437
-              Width = 476
+              Height = 65
+              Top = 544
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 16
+              BorderSpacing.Bottom = 20
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
               ChildSizing.HorizontalSpacing = 8
@@ -314,9 +312,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object icoSiteRankFilter: TImage
                 Left = 16
-                Height = 28
+                Height = 41
                 Top = 12
-                Width = 24
+                Width = 30
                 Align = alLeft
                 Center = True
                 ImageIndex = 62
@@ -324,8 +322,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Images = frmMain.mPopup
               end
               object lblSiteRankFilter: TLabel
-                Left = 48
-                Height = 28
+                Left = 54
+                Height = 41
                 Top = 12
                 Width = 89
                 Align = alLeft
@@ -334,10 +332,10 @@ object frmCustomGrid: TfrmCustomGrid
                 ParentColor = False
               end
               object cbSiteRankFilter: TComboBox
-                Left = 277
+                Left = 360
                 Height = 28
                 Top = 12
-                Width = 183
+                Width = 229
                 Align = alRight
                 Color = 16119285
                 ItemHeight = 20
@@ -362,11 +360,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pTaxonRanksFilters: TBCPanel
               Left = 9
-              Height = 300
-              Top = 1565
-              Width = 476
+              Height = 375
+              Top = 1954
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               ChildSizing.LeftRightSpacing = 16
               Background.Color = 16448250
               Background.Gradient1.StartColor = clWhite
@@ -405,23 +403,23 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object pTitleTaxonRanksFilter: TPanel
                 Left = 16
-                Height = 46
+                Height = 58
                 Top = 1
-                Width = 444
+                Width = 573
                 Align = alTop
                 BorderSpacing.Top = 1
                 BevelOuter = bvNone
                 ChildSizing.TopBottomSpacing = 8
                 ChildSizing.HorizontalSpacing = 8
-                ClientHeight = 46
-                ClientWidth = 444
+                ClientHeight = 58
+                ClientWidth = 573
                 Color = 16448250
                 ParentBackground = False
                 ParentColor = False
                 TabOrder = 0
                 object lblTaxonRanksFilter: TLabel
-                  Left = 32
-                  Height = 30
+                  Left = 38
+                  Height = 42
                   Top = 8
                   Width = 38
                   Align = alLeft
@@ -430,8 +428,8 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object lblCountTaxonRanksFilter: TLabel
-                  Left = 352
-                  Height = 30
+                  Left = 481
+                  Height = 42
                   Top = 8
                   Width = 92
                   Align = alRight
@@ -443,9 +441,9 @@ object frmCustomGrid: TfrmCustomGrid
                 end
                 object icoTaxonRanksFilter: TImage
                   Left = 0
-                  Height = 30
+                  Height = 42
                   Top = 8
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 81
@@ -455,11 +453,11 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object clbTaxonRanksFilter: TCheckListBox
                 Left = 16
-                Height = 241
-                Top = 47
-                Width = 444
+                Height = 301
+                Top = 59
+                Width = 573
                 Align = alClient
-                BorderSpacing.Bottom = 12
+                BorderSpacing.Bottom = 15
                 ItemHeight = 0
                 TabOrder = 1
                 OnKeyPress = FormKeyPress
@@ -468,11 +466,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pMaterialFilter: TBCPanel
               Left = 9
-              Height = 52
-              Top = 1001
-              Width = 476
+              Height = 65
+              Top = 1249
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 16
+              BorderSpacing.Bottom = 20
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
               ChildSizing.HorizontalSpacing = 8
@@ -513,9 +511,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object icoMaterialFilter: TImage
                 Left = 16
-                Height = 28
+                Height = 41
                 Top = 12
-                Width = 24
+                Width = 30
                 Align = alLeft
                 Center = True
                 ImageIndex = 156
@@ -523,8 +521,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Images = frmMain.mPopup
               end
               object lblMaterialFilter: TLabel
-                Left = 48
-                Height = 28
+                Left = 54
+                Height = 41
                 Top = 12
                 Width = 55
                 Align = alLeft
@@ -533,10 +531,10 @@ object frmCustomGrid: TfrmCustomGrid
                 ParentColor = False
               end
               object cbMaterialFilter: TComboBox
-                Left = 277
+                Left = 360
                 Height = 28
                 Top = 12
-                Width = 183
+                Width = 229
                 Align = alRight
                 Color = 16119285
                 ItemHeight = 20
@@ -567,11 +565,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pMethodFilter: TBCPanel
               Left = 9
-              Height = 52
-              Top = 505
-              Width = 476
+              Height = 65
+              Top = 629
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 16
+              BorderSpacing.Bottom = 20
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
               ChildSizing.HorizontalSpacing = 8
@@ -612,9 +610,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object icoMethodFilter: TImage
                 Left = 16
-                Height = 28
+                Height = 41
                 Top = 12
-                Width = 24
+                Width = 30
                 Align = alLeft
                 Center = True
                 ImageIndex = 110
@@ -622,8 +620,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Images = frmMain.mPopup
               end
               object lblMethodFilter: TLabel
-                Left = 48
-                Height = 28
+                Left = 54
+                Height = 41
                 Top = 12
                 Width = 52
                 Align = alLeft
@@ -632,10 +630,10 @@ object frmCustomGrid: TfrmCustomGrid
                 ParentColor = False
               end
               object cbMethodFilter: TComboBox
-                Left = 277
+                Left = 360
                 Height = 28
                 Top = 12
-                Width = 183
+                Width = 229
                 Align = alRight
                 Color = 16119285
                 ItemHeight = 20
@@ -651,11 +649,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pBandSizeFilter: TBCPanel
               Left = 9
-              Height = 52
-              Top = 1069
-              Width = 476
+              Height = 65
+              Top = 1334
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
               ChildSizing.HorizontalSpacing = 8
@@ -695,8 +693,8 @@ object frmCustomGrid: TfrmCustomGrid
               TabOrder = 7
               Visible = False
               object lblBandSizeFilter: TLabel
-                Left = 48
-                Height = 28
+                Left = 54
+                Height = 41
                 Top = 12
                 Width = 27
                 Align = alLeft
@@ -706,9 +704,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object icoBandSizeFilter: TImage
                 Left = 16
-                Height = 28
+                Height = 41
                 Top = 12
-                Width = 24
+                Width = 30
                 Align = alLeft
                 Center = True
                 ImageIndex = 163
@@ -716,10 +714,10 @@ object frmCustomGrid: TfrmCustomGrid
                 Images = frmMain.mPopup
               end
               object cbBandSizeFilter: TComboBox
-                Left = 290
+                Left = 377
                 Height = 28
                 Top = 12
-                Width = 170
+                Width = 212
                 Align = alRight
                 Color = 16119285
                 ItemHeight = 20
@@ -756,11 +754,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pWithRecapturesFilter: TBCPanel
               Left = 9
-              Height = 52
-              Top = 1497
-              Width = 476
+              Height = 65
+              Top = 1869
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 16
+              BorderSpacing.Bottom = 20
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
               ChildSizing.HorizontalSpacing = 8
@@ -801,9 +799,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object icoWithRecapturesFilter: TImage
                 Left = 16
-                Height = 28
+                Height = 41
                 Top = 12
-                Width = 24
+                Width = 30
                 Align = alLeft
                 Center = True
                 ImageIndex = 172
@@ -811,8 +809,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Images = frmMain.mPopup
               end
               object lblWithRecapturesFilter: TLabel
-                Left = 48
-                Height = 28
+                Left = 54
+                Height = 41
                 Top = 12
                 Width = 107
                 Align = alLeft
@@ -821,10 +819,10 @@ object frmCustomGrid: TfrmCustomGrid
                 ParentColor = False
               end
               object tsfWithRecapturesFilter: TRxSwitch
-                Left = 410
-                Height = 28
+                Left = 527
+                Height = 41
                 Top = 12
-                Width = 50
+                Width = 62
                 Align = alRight
                 Color = 16448250
                 ParentColor = False
@@ -838,11 +836,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pFatFilter: TBCPanel
               Left = 9
-              Height = 52
-              Top = 2957
-              Width = 476
+              Height = 65
+              Top = 3694
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
               ChildSizing.HorizontalSpacing = 8
@@ -883,9 +881,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object icoFatFilter: TImage
                 Left = 16
-                Height = 28
+                Height = 41
                 Top = 12
-                Width = 24
+                Width = 30
                 Align = alLeft
                 Center = True
                 ImageIndex = 146
@@ -893,8 +891,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Images = frmMain.mPopup
               end
               object lblFatFilter: TLabel
-                Left = 48
-                Height = 28
+                Left = 54
+                Height = 41
                 Top = 12
                 Width = 114
                 Align = alLeft
@@ -903,10 +901,10 @@ object frmCustomGrid: TfrmCustomGrid
                 ParentColor = False
               end
               object cbFatFilter: TComboBox
-                Left = 290
+                Left = 377
                 Height = 28
                 Top = 12
-                Width = 170
+                Width = 212
                 Align = alRight
                 Color = 16119285
                 ItemHeight = 20
@@ -932,11 +930,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pBandStatusFilter: TBCPanel
               Left = 9
-              Height = 52
-              Top = 1129
-              Width = 476
+              Height = 65
+              Top = 1409
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
               ChildSizing.HorizontalSpacing = 8
@@ -977,9 +975,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object icoBandStatusFilter: TImage
                 Left = 16
-                Height = 28
+                Height = 41
                 Top = 12
-                Width = 24
+                Width = 30
                 Align = alLeft
                 Center = True
                 ImageIndex = 59
@@ -987,8 +985,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Images = frmMain.mPopup
               end
               object lblBandStatusFilter: TLabel
-                Left = 48
-                Height = 28
+                Left = 54
+                Height = 41
                 Top = 12
                 Width = 40
                 Align = alLeft
@@ -997,10 +995,10 @@ object frmCustomGrid: TfrmCustomGrid
                 ParentColor = False
               end
               object cbBandStatusFilter: TComboBox
-                Left = 290
+                Left = 377
                 Height = 28
                 Top = 12
-                Width = 170
+                Width = 212
                 Align = alRight
                 Color = 16119285
                 ItemHeight = 20
@@ -1023,11 +1021,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pDatesFilters: TBCPanel
               Left = 9
-              Height = 300
-              Top = 573
-              Width = 476
+              Height = 375
+              Top = 714
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               ChildSizing.LeftRightSpacing = 16
               Background.Color = 16448250
               Background.Gradient1.StartColor = clWhite
@@ -1066,11 +1064,11 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object tvDateFilter: TLazVirtualStringTree
                 Left = 16
-                Height = 241
-                Top = 47
-                Width = 444
+                Height = 301
+                Top = 59
+                Width = 573
                 Align = alClient
-                BorderSpacing.Bottom = 12
+                BorderSpacing.Bottom = 15
                 DefaultText = 'Node'
                 DragOperations = [doCopy]
                 EmptyListMessage = 'No dates to show'
@@ -1080,9 +1078,9 @@ object frmCustomGrid: TfrmCustomGrid
                     CheckBox = True
                     Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coShowDropMark, coVisible, coAllowFocus]
                     Position = 0
-                    Width = 400
+                    Width = 500
                   end>
-                Header.Height = 26
+                Header.Height = 32
                 Header.Options = [hoColumnResize, hoDrag, hoShowImages, hoShowSortGlyphs]
                 Header.Style = hsFlatButtons
                 PopupMenu = pmTree
@@ -1100,23 +1098,23 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pDateFilter: TPanel
                 Left = 16
-                Height = 46
+                Height = 58
                 Top = 1
-                Width = 444
+                Width = 573
                 Align = alTop
                 BorderSpacing.Top = 1
                 BevelOuter = bvNone
                 ChildSizing.TopBottomSpacing = 8
                 ChildSizing.HorizontalSpacing = 8
-                ClientHeight = 46
-                ClientWidth = 444
+                ClientHeight = 58
+                ClientWidth = 573
                 Color = 16448250
                 ParentBackground = False
                 ParentColor = False
                 TabOrder = 0
                 object lblDateFilter: TLabel
-                  Left = 32
-                  Height = 30
+                  Left = 38
+                  Height = 42
                   Top = 8
                   Width = 38
                   Align = alLeft
@@ -1125,8 +1123,8 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object lblCountDateFilter: TLabel
-                  Left = 352
-                  Height = 30
+                  Left = 481
+                  Height = 42
                   Top = 8
                   Width = 92
                   Align = alRight
@@ -1138,9 +1136,9 @@ object frmCustomGrid: TfrmCustomGrid
                 end
                 object icoDateFilter: TImage
                   Left = 0
-                  Height = 30
+                  Height = 42
                   Top = 8
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 18
@@ -1151,11 +1149,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pNestFateFilter: TBCPanel
               Left = 9
-              Height = 52
-              Top = 1369
-              Width = 476
+              Height = 65
+              Top = 1709
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 16
+              BorderSpacing.Bottom = 20
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
               ChildSizing.HorizontalSpacing = 8
@@ -1196,9 +1194,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object icoNestFateFilter: TImage
                 Left = 16
-                Height = 28
+                Height = 41
                 Top = 12
-                Width = 24
+                Width = 30
                 Align = alLeft
                 Center = True
                 ImageIndex = 147
@@ -1206,8 +1204,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Images = frmMain.mPopup
               end
               object lblNestFateFilter: TLabel
-                Left = 48
-                Height = 28
+                Left = 54
+                Height = 41
                 Top = 12
                 Width = 27
                 Align = alLeft
@@ -1216,10 +1214,10 @@ object frmCustomGrid: TfrmCustomGrid
                 ParentColor = False
               end
               object cbNestFateFilter: TComboBox
-                Left = 290
+                Left = 377
                 Height = 28
                 Top = 12
-                Width = 170
+                Width = 212
                 Align = alRight
                 Color = 16119285
                 ItemHeight = 20
@@ -1240,11 +1238,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pNestSupportFilter: TBCPanel
               Left = 9
-              Height = 52
-              Top = 1309
-              Width = 476
+              Height = 65
+              Top = 1634
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
               ChildSizing.HorizontalSpacing = 8
@@ -1285,9 +1283,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object icoNestSupportFilter: TImage
                 Left = 16
-                Height = 28
+                Height = 41
                 Top = 12
-                Width = 24
+                Width = 30
                 Align = alLeft
                 Center = True
                 ImageIndex = 123
@@ -1295,8 +1293,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Images = frmMain.mPopup
               end
               object lblNestSupportFilter: TLabel
-                Left = 48
-                Height = 28
+                Left = 54
+                Height = 41
                 Top = 12
                 Width = 86
                 Align = alLeft
@@ -1305,10 +1303,10 @@ object frmCustomGrid: TfrmCustomGrid
                 ParentColor = False
               end
               object cbNestSupportFilter: TComboBox
-                Left = 290
+                Left = 377
                 Height = 28
                 Top = 12
-                Width = 170
+                Width = 212
                 Align = alRight
                 Color = 16119285
                 ItemHeight = 20
@@ -1334,11 +1332,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pTaxonFilters: TBCPanel
               Left = 9
-              Height = 300
-              Top = 1873
-              Width = 476
+              Height = 375
+              Top = 2339
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               ChildSizing.LeftRightSpacing = 16
               Background.Color = 16448250
               Background.Gradient1.StartColor = clWhite
@@ -1377,24 +1375,24 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object pTitleTaxonFilter: TPanel
                 Left = 16
-                Height = 46
+                Height = 58
                 Top = 1
-                Width = 444
+                Width = 573
                 Align = alTop
                 BorderSpacing.Top = 1
                 BevelColor = clWhite
                 BevelOuter = bvNone
                 ChildSizing.TopBottomSpacing = 8
                 ChildSizing.HorizontalSpacing = 8
-                ClientHeight = 46
-                ClientWidth = 444
+                ClientHeight = 58
+                ClientWidth = 573
                 Color = 16448250
                 ParentBackground = False
                 ParentColor = False
                 TabOrder = 0
                 object lblTaxonFilter: TLabel
-                  Left = 32
-                  Height = 30
+                  Left = 38
+                  Height = 42
                   Top = 8
                   Width = 29
                   Align = alLeft
@@ -1403,8 +1401,8 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object lblCountTaxonFilter: TLabel
-                  Left = 352
-                  Height = 30
+                  Left = 481
+                  Height = 42
                   Top = 8
                   Width = 92
                   Align = alRight
@@ -1416,9 +1414,9 @@ object frmCustomGrid: TfrmCustomGrid
                 end
                 object icoTaxaFilter: TImage
                   Left = 0
-                  Height = 30
+                  Height = 42
                   Top = 8
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 88
@@ -1428,11 +1426,11 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object tvTaxaFilter: TLazVirtualStringTree
                 Left = 16
-                Height = 241
-                Top = 47
-                Width = 444
+                Height = 301
+                Top = 59
+                Width = 573
                 Align = alClient
-                BorderSpacing.Bottom = 12
+                BorderSpacing.Bottom = 15
                 DefaultText = 'Node'
                 EmptyListMessage = 'No taxa to show'
                 Header.AutoSizeIndex = -1
@@ -1458,11 +1456,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pExtinctFilter: TBCPanel
               Left = 9
-              Height = 52
-              Top = 2457
-              Width = 476
+              Height = 65
+              Top = 3069
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 16
+              BorderSpacing.Bottom = 20
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
               ChildSizing.HorizontalSpacing = 8
@@ -1503,9 +1501,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object icoExtinctFilter: TImage
                 Left = 16
-                Height = 28
+                Height = 41
                 Top = 12
-                Width = 24
+                Width = 30
                 Align = alLeft
                 Center = True
                 ImageIndex = 142
@@ -1513,8 +1511,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Images = frmMain.mPopup
               end
               object lblExtinctFilter: TLabel
-                Left = 48
-                Height = 28
+                Left = 54
+                Height = 41
                 Top = 12
                 Width = 44
                 Align = alLeft
@@ -1523,10 +1521,10 @@ object frmCustomGrid: TfrmCustomGrid
                 ParentColor = False
               end
               object tsTaxonExtinct: TRxSwitch
-                Left = 410
-                Height = 28
+                Left = 527
+                Height = 41
                 Top = 12
-                Width = 50
+                Width = 62
                 Align = alRight
                 Color = 16448250
                 ParentColor = False
@@ -1539,11 +1537,11 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pWithColorBandsFilter: TBCPanel
               Left = 9
-              Height = 52
-              Top = 1437
-              Width = 476
+              Height = 65
+              Top = 1794
+              Width = 605
               Align = alTop
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
               ChildSizing.HorizontalSpacing = 8
@@ -1584,9 +1582,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object icoWithColorBandsFilter: TImage
                 Left = 16
-                Height = 28
+                Height = 41
                 Top = 12
-                Width = 24
+                Width = 30
                 Align = alLeft
                 Center = True
                 ImageIndex = 13
@@ -1594,8 +1592,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Images = frmMain.mPopup
               end
               object lblWithColorBandsFilter: TLabel
-                Left = 48
-                Height = 28
+                Left = 54
+                Height = 41
                 Top = 12
                 Width = 125
                 Align = alLeft
@@ -1604,10 +1602,10 @@ object frmCustomGrid: TfrmCustomGrid
                 ParentColor = False
               end
               object tsfWithColorBandsFilter: TRxSwitch
-                Left = 410
-                Height = 28
+                Left = 527
+                Height = 41
                 Top = 12
-                Width = 50
+                Width = 62
                 Align = alRight
                 Color = 16448250
                 ParentColor = False
@@ -1621,12 +1619,12 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pSexingFilters: TBCPanel
               Left = 9
-              Height = 208
-              Top = 3017
-              Width = 476
+              Height = 260
+              Top = 3769
+              Width = 605
               Align = alTop
               AutoSize = True
-              BorderSpacing.Bottom = 16
+              BorderSpacing.Bottom = 20
               Background.Color = clBtnFace
               Background.Gradient1.StartColor = clWhite
               Background.Gradient1.EndColor = clBlack
@@ -1664,9 +1662,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object pSexFilter: TBCPanel
                 Left = 0
-                Height = 52
+                Height = 65
                 Top = 0
-                Width = 476
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -1708,9 +1706,9 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 0
                 object icoSexFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 136
@@ -1718,8 +1716,8 @@ object frmCustomGrid: TfrmCustomGrid
                   Images = frmMain.mPopup
                 end
                 object lblSexFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 23
                   Align = alLeft
@@ -1728,10 +1726,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object cbSexFilter: TComboBox
-                  Left = 290
+                  Left = 377
                   Height = 28
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
                   Color = 16119285
                   ItemHeight = 20
@@ -1753,9 +1751,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pCloacalProtuberanceFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 52
-                Width = 476
+                Height = 65
+                Top = 65
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -1797,15 +1795,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 1
                 object icoBandSizeFilter4: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblCloacalProtuberanceFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 142
                   Align = alLeft
@@ -1814,10 +1812,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object cbCloacalProtuberanceFilter: TComboBox
-                  Left = 290
+                  Left = 377
                   Height = 28
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
                   Color = 16119285
                   ItemHeight = 20
@@ -1840,9 +1838,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pBroodPatchFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 104
-                Width = 476
+                Height = 65
+                Top = 130
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -1884,15 +1882,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 2
                 object icoBandSizeFilter3: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblBroodPatchFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 82
                   Align = alLeft
@@ -1901,10 +1899,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object cbBroodPatchFilter: TComboBox
-                  Left = 290
+                  Left = 377
                   Height = 28
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
                   Color = 16119285
                   ItemHeight = 20
@@ -1927,9 +1925,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pHowSexedFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 156
-                Width = 476
+                Height = 65
+                Top = 195
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -1971,15 +1969,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 3
                 object icoBandSizeFilter2: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblHowSexedFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 102
                   Align = alLeft
@@ -1988,12 +1986,12 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object eHowSexedFilter: TEditButton
-                  Left = 290
-                  Height = 28
+                  Left = 377
+                  Height = 41
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
-                  ButtonWidth = 29
+                  ButtonWidth = 36
                   Images = frmMain.mPopup
                   ImageIndex = 78
                   ImageWidth = 24
@@ -2009,12 +2007,12 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pBandReportFilters: TBCPanel
               Left = 9
-              Height = 104
-              Top = 1189
-              Width = 476
+              Height = 130
+              Top = 1484
+              Width = 605
               Align = alTop
               AutoSize = True
-              BorderSpacing.Bottom = 16
+              BorderSpacing.Bottom = 20
               Background.Color = clBtnFace
               Background.Gradient1.StartColor = clWhite
               Background.Gradient1.EndColor = clBlack
@@ -2052,9 +2050,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object pReportedFilter: TBCPanel
                 Left = 0
-                Height = 52
+                Height = 65
                 Top = 0
-                Width = 476
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -2095,10 +2093,10 @@ object frmCustomGrid: TfrmCustomGrid
                 Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
                 TabOrder = 0
                 object tsBandReported: TRxSwitch
-                  Left = 410
-                  Height = 28
+                  Left = 527
+                  Height = 41
                   Top = 12
-                  Width = 50
+                  Width = 62
                   Align = alRight
                   Color = 16448250
                   ParentColor = False
@@ -2110,9 +2108,9 @@ object frmCustomGrid: TfrmCustomGrid
                 end
                 object icoReportedFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 170
@@ -2120,8 +2118,8 @@ object frmCustomGrid: TfrmCustomGrid
                   Images = frmMain.mPopup
                 end
                 object lblReportedFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 62
                   Align = alLeft
@@ -2132,9 +2130,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pNotReportedFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 52
-                Width = 476
+                Height = 65
+                Top = 65
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -2175,8 +2173,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
                 TabOrder = 1
                 object lblNotReportedFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 87
                   Align = alLeft
@@ -2185,10 +2183,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object tsBandNotReported: TRxSwitch
-                  Left = 410
-                  Height = 28
+                  Left = 527
+                  Height = 41
                   Top = 12
-                  Width = 50
+                  Width = 62
                   Align = alRight
                   Color = 16448250
                   ParentColor = False
@@ -2199,9 +2197,9 @@ object frmCustomGrid: TfrmCustomGrid
                 end
                 object icoBandNotReportedFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
@@ -2209,12 +2207,12 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pSynonymFilters: TBCPanel
               Left = 9
-              Height = 104
-              Top = 2345
-              Width = 476
+              Height = 130
+              Top = 2929
+              Width = 605
               Align = alTop
               AutoSize = True
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               Background.Color = clBtnFace
               Background.Gradient1.StartColor = clWhite
               Background.Gradient1.EndColor = clBlack
@@ -2252,9 +2250,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object pIsSynonymFilter: TBCPanel
                 Left = 0
-                Height = 52
+                Height = 65
                 Top = 0
-                Width = 476
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -2296,9 +2294,9 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 0
                 object icoSynonymsFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 137
@@ -2306,8 +2304,8 @@ object frmCustomGrid: TfrmCustomGrid
                   Images = frmMain.mPopup
                 end
                 object lblSynonymFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 84
                   Align = alLeft
@@ -2316,10 +2314,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object tsIsSynonym: TRxSwitch
-                  Left = 410
-                  Height = 28
+                  Left = 527
+                  Height = 41
                   Top = 12
-                  Width = 50
+                  Width = 62
                   Align = alRight
                   Color = 16448250
                   ParentColor = False
@@ -2332,9 +2330,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pHasSynonymsFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 52
-                Width = 476
+                Height = 65
+                Top = 65
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -2376,15 +2374,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 1
                 object icoBandSizeFilter12: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblHasSynonymsFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 102
                   Align = alLeft
@@ -2393,10 +2391,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object tsHasSynonyms: TRxSwitch
-                  Left = 410
-                  Height = 28
+                  Left = 527
+                  Height = 41
                   Top = 12
-                  Width = 50
+                  Width = 62
                   Align = alRight
                   Color = 16448250
                   ParentColor = False
@@ -2410,12 +2408,12 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pMoltingFilters: TBCPanel
               Left = 9
-              Height = 260
-              Top = 2689
-              Width = 476
+              Height = 325
+              Top = 3359
+              Width = 605
               Align = alTop
               AutoSize = True
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               Background.Color = clBtnFace
               Background.Gradient1.StartColor = clWhite
               Background.Gradient1.EndColor = clBlack
@@ -2453,9 +2451,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object pBodyMoltFilter: TBCPanel
                 Left = 0
-                Height = 52
+                Height = 65
                 Top = 0
-                Width = 476
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -2497,9 +2495,9 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 0
                 object icoMoltFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 144
@@ -2507,8 +2505,8 @@ object frmCustomGrid: TfrmCustomGrid
                   Images = frmMain.mPopup
                 end
                 object lblBodyMoltFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 69
                   Align = alLeft
@@ -2517,10 +2515,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object cbBodyMoltFilter: TComboBox
-                  Left = 290
+                  Left = 377
                   Height = 28
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
                   Color = 16119285
                   ItemHeight = 20
@@ -2545,9 +2543,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pFFMoltFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 52
-                Width = 476
+                Height = 65
+                Top = 65
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -2589,15 +2587,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 1
                 object icoBandSizeFilter5: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblFFMoltFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 129
                   Align = alLeft
@@ -2606,10 +2604,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object cbFFMoltFilter: TComboBox
-                  Left = 290
+                  Left = 377
                   Height = 28
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
                   Color = 16119285
                   ItemHeight = 20
@@ -2630,9 +2628,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pFFWearFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 104
-                Width = 476
+                Height = 65
+                Top = 130
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -2674,15 +2672,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 2
                 object icoBandSizeFilter6: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblFFWearFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 130
                   Align = alLeft
@@ -2691,10 +2689,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object cbFFWearFilter: TComboBox
-                  Left = 290
+                  Left = 377
                   Height = 28
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
                   Color = 16119285
                   ItemHeight = 20
@@ -2718,9 +2716,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pMoltLimitsFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 156
-                Width = 476
+                Height = 65
+                Top = 195
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -2762,15 +2760,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 3
                 object icoBandSizeFilter8: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblMoltLimitsFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 71
                   Align = alLeft
@@ -2779,12 +2777,12 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object eMoltLimitsFilter: TEditButton
-                  Left = 290
-                  Height = 28
+                  Left = 377
+                  Height = 41
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
-                  ButtonWidth = 29
+                  ButtonWidth = 36
                   Images = frmMain.mPopup
                   ImageIndex = 78
                   ImageWidth = 24
@@ -2799,9 +2797,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pMoltCycleFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 208
-                Width = 476
+                Height = 65
+                Top = 260
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -2843,15 +2841,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 4
                 object icoBandSizeFilter7: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblCycleCodeFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 68
                   Align = alLeft
@@ -2860,12 +2858,12 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object eCycleCodeFilter: TEditButton
-                  Left = 290
-                  Height = 28
+                  Left = 377
+                  Height = 41
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
-                  ButtonWidth = 29
+                  ButtonWidth = 36
                   Images = frmMain.mPopup
                   ImageIndex = 78
                   ImageWidth = 24
@@ -2881,12 +2879,12 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pTaxonomiesFilters: TBCPanel
               Left = 9
-              Height = 156
-              Top = 2181
-              Width = 476
+              Height = 195
+              Top = 2724
+              Width = 605
               Align = alTop
               AutoSize = True
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               Background.Color = clBtnFace
               Background.Gradient1.StartColor = clWhite
               Background.Gradient1.EndColor = clBlack
@@ -2924,9 +2922,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object pTaxonomyClementsFilter: TBCPanel
                 Left = 0
-                Height = 52
+                Height = 65
                 Top = 0
-                Width = 476
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -2968,9 +2966,9 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 0
                 object icoTaxonomiesFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 81
@@ -2978,8 +2976,8 @@ object frmCustomGrid: TfrmCustomGrid
                   Images = frmMain.mPopup
                 end
                 object lblClementsFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 102
                   Align = alLeft
@@ -2988,10 +2986,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object tsTaxonomyClements: TRxSwitch
-                  Left = 410
-                  Height = 28
+                  Left = 527
+                  Height = 41
                   Top = 12
-                  Width = 50
+                  Width = 62
                   Align = alRight
                   Color = 16448250
                   ParentColor = False
@@ -3004,9 +3002,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pTaxonomyIocFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 52
-                Width = 476
+                Height = 65
+                Top = 65
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -3048,15 +3046,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 1
                 object icoBandSizeFilter9: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblTaxonomyIocFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 24
                   Align = alLeft
@@ -3065,10 +3063,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object tsTaxonomyIoc: TRxSwitch
-                  Left = 410
-                  Height = 28
+                  Left = 527
+                  Height = 41
                   Top = 12
-                  Width = 50
+                  Width = 62
                   Align = alRight
                   Color = 16448250
                   ParentColor = False
@@ -3081,9 +3079,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pTaxonomyCbroFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 104
-                Width = 476
+                Height = 65
+                Top = 130
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -3125,15 +3123,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 2
                 object icoBandSizeFilter11: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblTaxonomyCbroFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 38
                   Align = alLeft
@@ -3142,10 +3140,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object tsTaxonomyCbro: TRxSwitch
-                  Left = 410
-                  Height = 28
+                  Left = 527
+                  Height = 41
                   Top = 12
-                  Width = 50
+                  Width = 62
                   Align = alRight
                   Color = 16448250
                   ParentColor = False
@@ -3159,12 +3157,12 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pTimeFilters: TBCPanel
               Left = 9
-              Height = 104
-              Top = 881
-              Width = 476
+              Height = 130
+              Top = 1099
+              Width = 605
               Align = alTop
               AutoSize = True
-              BorderSpacing.Bottom = 16
+              BorderSpacing.Bottom = 20
               Background.Color = clBtnFace
               Background.Gradient1.StartColor = clWhite
               Background.Gradient1.EndColor = clBlack
@@ -3202,9 +3200,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object pStartTimeFilter: TBCPanel
                 Left = 0
-                Height = 52
+                Height = 65
                 Top = 0
-                Width = 476
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -3245,8 +3243,8 @@ object frmCustomGrid: TfrmCustomGrid
                 Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
                 TabOrder = 0
                 object lblStartTimeFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 94
                   Align = alLeft
@@ -3256,9 +3254,9 @@ object frmCustomGrid: TfrmCustomGrid
                 end
                 object icoMarkedFilter12: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 139
@@ -3266,11 +3264,11 @@ object frmCustomGrid: TfrmCustomGrid
                   Images = frmMain.mPopup
                 end
                 object eStartTimeFilter: TTimeEdit
-                  Left = 290
-                  Height = 28
+                  Left = 377
+                  Height = 41
                   Top = 12
-                  Width = 170
-                  ButtonWidth = 29
+                  Width = 212
+                  ButtonWidth = 36
                   Align = alRight
                   NumGlyphs = 1
                   MaxLength = 0
@@ -3283,9 +3281,9 @@ object frmCustomGrid: TfrmCustomGrid
               object pEndTimeFilter: TBCPanel
                 AnchorSideTop.Side = asrBottom
                 Left = 0
-                Height = 52
-                Top = 52
-                Width = 476
+                Height = 65
+                Top = 65
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -3327,15 +3325,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 1
                 object icoBandSizeFilter14: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblEndTimeFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 25
                   Align = alLeft
@@ -3344,11 +3342,11 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object eEndTimeFilter: TTimeEdit
-                  Left = 290
-                  Height = 28
+                  Left = 377
+                  Height = 41
                   Top = 12
-                  Width = 170
-                  ButtonWidth = 29
+                  Width = 212
+                  ButtonWidth = 36
                   Align = alRight
                   NumGlyphs = 1
                   MaxLength = 0
@@ -3361,12 +3359,12 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pAgingFilters: TBCPanel
               Left = 9
-              Height = 156
-              Top = 2525
-              Width = 476
+              Height = 195
+              Top = 3154
+              Width = 605
               Align = alTop
               AutoSize = True
-              BorderSpacing.Bottom = 8
+              BorderSpacing.Bottom = 10
               Background.Color = clBtnFace
               Background.Gradient1.StartColor = clWhite
               Background.Gradient1.EndColor = clBlack
@@ -3404,9 +3402,9 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object pAgeFilter: TBCPanel
                 Left = 0
-                Height = 52
+                Height = 65
                 Top = 0
-                Width = 476
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -3447,10 +3445,10 @@ object frmCustomGrid: TfrmCustomGrid
                 Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
                 TabOrder = 0
                 object cbAgeFilter: TComboBox
-                  Left = 290
+                  Left = 377
                   Height = 28
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
                   Color = 16119285
                   ItemHeight = 20
@@ -3477,8 +3475,8 @@ object frmCustomGrid: TfrmCustomGrid
                   OnSelect = cbAgeFilterSelect
                 end
                 object lblAgeFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 27
                   Align = alLeft
@@ -3488,9 +3486,9 @@ object frmCustomGrid: TfrmCustomGrid
                 end
                 object icoAgingFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 145
@@ -3500,9 +3498,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pSkullOssificationFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 52
-                Width = 476
+                Height = 65
+                Top = 65
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -3544,15 +3542,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 1
                 object icoBandSizeFilter10: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblSkullOssificationFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 110
                   Align = alLeft
@@ -3561,10 +3559,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object cbSkullOssificationFilter: TComboBox
-                  Left = 290
+                  Left = 377
                   Height = 28
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
                   Color = 16119285
                   ItemHeight = 20
@@ -3589,9 +3587,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pHowAgedFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 104
-                Width = 476
+                Height = 65
+                Top = 130
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -3633,15 +3631,15 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 2
                 object icoBandSizeFilter13: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                 end
                 object lblHowAgedFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 98
                   Align = alLeft
@@ -3650,12 +3648,12 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object eHowAgedFilter: TEditButton
-                  Left = 290
-                  Height = 28
+                  Left = 377
+                  Height = 41
                   Top = 12
-                  Width = 170
+                  Width = 212
                   Align = alRight
-                  ButtonWidth = 29
+                  ButtonWidth = 36
                   Images = frmMain.mPopup
                   ImageIndex = 78
                   ImageWidth = 24
@@ -3671,12 +3669,12 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pMarksFilters: TBCPanel
               Left = 9
-              Height = 104
+              Height = 130
               Top = 9
-              Width = 476
+              Width = 605
               Align = alTop
               AutoSize = True
-              BorderSpacing.Bottom = 16
+              BorderSpacing.Bottom = 20
               Background.Color = clBtnFace
               Background.Gradient1.StartColor = clWhite
               Background.Gradient1.EndColor = clBlack
@@ -3713,9 +3711,9 @@ object frmCustomGrid: TfrmCustomGrid
               TabOrder = 0
               object pMarkedFilter: TBCPanel
                 Left = 0
-                Height = 52
+                Height = 65
                 Top = 0
-                Width = 476
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -3757,9 +3755,9 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 0
                 object icoMarkedFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 101
@@ -3767,8 +3765,8 @@ object frmCustomGrid: TfrmCustomGrid
                   Images = frmMain.mPopup
                 end
                 object lblMarkedFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 103
                   Align = alLeft
@@ -3777,10 +3775,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object tsfMarked: TRxSwitch
-                  Left = 410
-                  Height = 28
+                  Left = 527
+                  Height = 41
                   Top = 12
-                  Width = 50
+                  Width = 62
                   Align = alRight
                   Color = 16448250
                   ParentColor = False
@@ -3794,9 +3792,9 @@ object frmCustomGrid: TfrmCustomGrid
               end
               object pUnmarkedFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 52
-                Width = 476
+                Height = 65
+                Top = 65
+                Width = 605
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
                 ChildSizing.TopBottomSpacing = 12
@@ -3838,9 +3836,9 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 1
                 object icoUnmarkedFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 41
                   Top = 12
-                  Width = 24
+                  Width = 30
                   Align = alLeft
                   Center = True
                   ImageIndex = 100
@@ -3848,8 +3846,8 @@ object frmCustomGrid: TfrmCustomGrid
                   Images = frmMain.mPopup
                 end
                 object lblUnmarkedFilter: TLabel
-                  Left = 48
-                  Height = 28
+                  Left = 54
+                  Height = 41
                   Top = 12
                   Width = 121
                   Align = alLeft
@@ -3858,10 +3856,10 @@ object frmCustomGrid: TfrmCustomGrid
                   ParentColor = False
                 end
                 object tsfUnmarked: TRxSwitch
-                  Left = 410
-                  Height = 28
+                  Left = 527
+                  Height = 41
                   Top = 12
-                  Width = 50
+                  Width = 62
                   Align = alRight
                   Color = 16448250
                   ParentColor = False
@@ -3877,17 +3875,17 @@ object frmCustomGrid: TfrmCustomGrid
           end
         end
         object titleQuickFilters: TLabel
-          Left = 16
-          Height = 28
-          Top = 8
-          Width = 483
+          Left = 20
+          Height = 30
+          Top = 10
+          Width = 604
           Align = alTop
-          BorderSpacing.Left = 16
-          BorderSpacing.Top = 8
-          BorderSpacing.Right = 16
+          BorderSpacing.Left = 20
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 20
           Caption = 'Quick filters'
           Font.Color = 13066075
-          Font.Height = -20
+          Font.Height = -22
           ParentFont = False
         end
       end
@@ -3896,9 +3894,9 @@ object frmCustomGrid: TfrmCustomGrid
         ChildSizing.TopBottomSpacing = 8
         object dbgImages: TDBControlGrid
           Left = 8
-          Height = 677
-          Top = 100
-          Width = 499
+          Height = 853
+          Top = 120
+          Width = 628
           Align = alClient
           AlternateColor = clBtnFace
           AltColorStartNormal = True
@@ -3910,44 +3908,44 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
           ColWidths = (
-            12
-            462
+            15
+            588
           )
           object pImageItem: TPanel
-            Left = 12
-            Height = 175
+            Left = 15
+            Height = 219
             Top = 0
-            Width = 462
+            Width = 588
             BevelOuter = bvNone
             ChildSizing.LeftRightSpacing = 8
             ChildSizing.TopBottomSpacing = 8
-            ClientHeight = 175
-            ClientWidth = 462
+            ClientHeight = 219
+            ClientWidth = 588
             Color = clWindow
             ParentBackground = False
             ParentColor = False
             TabOrder = 0
             Visible = False
             object lblImageDate: TDBText
-              Left = 264
+              Left = 330
               Height = 20
-              Top = 8
+              Top = 10
               Width = 91
               DataField = 'image_date'
               ParentColor = False
             end
             object lblImageTime: TDBText
-              Left = 264
+              Left = 330
               Height = 20
-              Top = 32
+              Top = 40
               Width = 92
               DataField = 'image_time'
               ParentColor = False
             end
             object lblImageType: TDBText
-              Left = 264
+              Left = 330
               Height = 20
-              Top = 64
+              Top = 80
               Width = 90
               DataField = 'image_type'
               ParentColor = False
@@ -3955,28 +3953,28 @@ object frmCustomGrid: TfrmCustomGrid
           end
         end
         object titleImages: TLabel
-          Left = 16
-          Height = 28
-          Top = 8
-          Width = 483
+          Left = 20
+          Height = 30
+          Top = 10
+          Width = 604
           Align = alTop
-          BorderSpacing.Left = 16
-          BorderSpacing.Top = 8
-          BorderSpacing.Right = 16
+          BorderSpacing.Left = 20
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 20
           Caption = 'Images'
           Font.Color = 13066075
-          Font.Height = -20
+          Font.Height = -22
           ParentFont = False
         end
         object pRecordToolbar2: TBCPanel
-          Left = 8
-          Height = 48
-          Top = 52
-          Width = 499
+          Left = 10
+          Height = 60
+          Top = 60
+          Width = 624
           Align = alTop
-          BorderSpacing.Left = 8
-          BorderSpacing.Top = 16
-          BorderSpacing.Right = 8
+          BorderSpacing.Left = 10
+          BorderSpacing.Top = 20
+          BorderSpacing.Right = 10
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 8
           Background.Color = 16448250
@@ -4015,14 +4013,14 @@ object frmCustomGrid: TfrmCustomGrid
           Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
           TabOrder = 1
           object sbEditRecord7: TSpeedButton
-            Left = 52
-            Height = 32
+            Left = 54
+            Height = 44
             Hint = 'View and edit image info'
             Top = 8
             Width = 28
             Align = alLeft
             AutoSize = True
-            BorderSpacing.Right = 8
+            BorderSpacing.Right = 10
             DisabledImageIndex = 31
             Enabled = False
             Flat = True
@@ -4034,13 +4032,13 @@ object frmCustomGrid: TfrmCustomGrid
           end
           object sbInsertRecord2: TSpeedButton
             Left = 16
-            Height = 32
+            Height = 44
             Hint = 'Add image'
             Top = 8
             Width = 28
             Align = alLeft
             AutoSize = True
-            BorderSpacing.Right = 8
+            BorderSpacing.Right = 10
             DisabledImageIndex = 29
             Flat = True
             Images = iButtons
@@ -4050,10 +4048,10 @@ object frmCustomGrid: TfrmCustomGrid
             ParentShowHint = False
           end
           object Separator10: TShapeLineBGRA
-            Left = 124
-            Height = 32
+            Left = 130
+            Height = 44
             Top = 8
-            Width = 3
+            Width = 4
             Align = alLeft
             Direction = drUpDown
             LineColor = 12829635
@@ -4061,14 +4059,14 @@ object frmCustomGrid: TfrmCustomGrid
             LineWidth = 1
           end
           object sbEditRecord8: TSpeedButton
-            Left = 88
-            Height = 32
+            Left = 92
+            Height = 44
             Hint = 'Save image as...'
             Top = 8
             Width = 28
             Align = alLeft
             AutoSize = True
-            BorderSpacing.Right = 8
+            BorderSpacing.Right = 10
             DisabledImageIndex = 35
             Enabled = False
             Flat = True
@@ -4079,15 +4077,15 @@ object frmCustomGrid: TfrmCustomGrid
             ParentShowHint = False
           end
           object sbEditRecord9: TSpeedButton
-            Left = 135
-            Height = 32
+            Left = 144
+            Height = 44
             Hint = 'View image'
             Top = 8
             Width = 28
             Align = alLeft
             AutoSize = True
-            BorderSpacing.Left = 8
-            BorderSpacing.Right = 8
+            BorderSpacing.Left = 10
+            BorderSpacing.Right = 10
             DisabledImageIndex = 37
             Enabled = False
             Flat = True
@@ -4098,14 +4096,14 @@ object frmCustomGrid: TfrmCustomGrid
             ParentShowHint = False
           end
           object sbEditRecord10: TSpeedButton
-            Left = 455
-            Height = 32
+            Left = 580
+            Height = 44
             Hint = 'Delete image'
             Top = 8
             Width = 28
             Align = alRight
             AutoSize = True
-            BorderSpacing.Right = 8
+            BorderSpacing.Right = 10
             DisabledImageIndex = 5
             Enabled = False
             Flat = True
@@ -4124,12 +4122,12 @@ object frmCustomGrid: TfrmCustomGrid
           Top = 8
           Width = 483
           Align = alTop
-          BorderSpacing.Left = 16
-          BorderSpacing.Top = 8
-          BorderSpacing.Right = 16
+          BorderSpacing.Left = 20
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 20
           Caption = 'Audio recordings'
           Font.Color = 13066075
-          Font.Height = -20
+          Font.Height = -25
           ParentFont = False
         end
       end
@@ -4140,12 +4138,12 @@ object frmCustomGrid: TfrmCustomGrid
           Top = 8
           Width = 483
           Align = alTop
-          BorderSpacing.Left = 16
-          BorderSpacing.Top = 8
-          BorderSpacing.Right = 16
+          BorderSpacing.Left = 20
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 20
           Caption = 'Documents and links'
           Font.Color = 13066075
-          Font.Height = -20
+          Font.Height = -25
           ParentFont = False
         end
       end
@@ -4156,12 +4154,12 @@ object frmCustomGrid: TfrmCustomGrid
           Top = 8
           Width = 483
           Align = alTop
-          BorderSpacing.Left = 16
-          BorderSpacing.Top = 8
-          BorderSpacing.Right = 16
+          BorderSpacing.Left = 20
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 20
           Caption = 'Summary'
           Font.Color = 13066075
-          Font.Height = -20
+          Font.Height = -25
           ParentFont = False
         end
       end
@@ -4172,12 +4170,12 @@ object frmCustomGrid: TfrmCustomGrid
           Top = 8
           Width = 483
           Align = alTop
-          BorderSpacing.Left = 16
-          BorderSpacing.Top = 8
-          BorderSpacing.Right = 16
+          BorderSpacing.Left = 20
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 20
           Caption = 'Columns'
           Font.Color = 13066075
-          Font.Height = -20
+          Font.Height = -25
           ParentFont = False
         end
         object gridColumns: TStringGrid
@@ -4187,10 +4185,10 @@ object frmCustomGrid: TfrmCustomGrid
           Width = 499
           Align = alClient
           AutoFillColumns = True
-          BorderSpacing.Left = 8
-          BorderSpacing.Top = 8
-          BorderSpacing.Right = 8
-          BorderSpacing.Bottom = 8
+          BorderSpacing.Left = 10
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 10
+          BorderSpacing.Bottom = 10
           ColCount = 3
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goSmoothScroll, goFixedRowNumbering, goCellEllipsis]
           RowCount = 2
@@ -4198,20 +4196,20 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
           ColWidths = (
-            80
-            210
-            209
+            100
+            200
+            199
           )
         end
         object pRecordToolbar1: TBCPanel
           Left = 8
-          Height = 48
+          Height = 60
           Top = 52
           Width = 499
           Align = alTop
-          BorderSpacing.Left = 8
-          BorderSpacing.Top = 16
-          BorderSpacing.Right = 8
+          BorderSpacing.Left = 10
+          BorderSpacing.Top = 20
+          BorderSpacing.Right = 10
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 8
           Background.Color = 16448250
@@ -4256,7 +4254,7 @@ object frmCustomGrid: TfrmCustomGrid
             Width = 28
             Align = alLeft
             AutoSize = True
-            BorderSpacing.Right = 8
+            BorderSpacing.Right = 10
             DisabledImageIndex = 49
             Flat = True
             Images = iButtons
@@ -4274,7 +4272,7 @@ object frmCustomGrid: TfrmCustomGrid
             Width = 28
             Align = alLeft
             AutoSize = True
-            BorderSpacing.Right = 8
+            BorderSpacing.Right = 10
             DisabledImageIndex = 47
             Flat = True
             Images = iButtons
@@ -4288,7 +4286,7 @@ object frmCustomGrid: TfrmCustomGrid
             Left = 124
             Height = 32
             Top = 8
-            Width = 3
+            Width = 4
             Align = alLeft
             Direction = drUpDown
             LineColor = 12829635
@@ -4303,7 +4301,7 @@ object frmCustomGrid: TfrmCustomGrid
             Width = 28
             Align = alLeft
             AutoSize = True
-            BorderSpacing.Right = 8
+            BorderSpacing.Right = 10
             DisabledImageIndex = 43
             Flat = True
             Images = iButtons
@@ -4321,8 +4319,8 @@ object frmCustomGrid: TfrmCustomGrid
             Width = 28
             Align = alLeft
             AutoSize = True
-            BorderSpacing.Left = 8
-            BorderSpacing.Right = 8
+            BorderSpacing.Left = 10
+            BorderSpacing.Right = 10
             DisabledImageIndex = 45
             Flat = True
             Images = iButtons
@@ -4340,8 +4338,8 @@ object frmCustomGrid: TfrmCustomGrid
             Width = 28
             Align = alRight
             AutoSize = True
-            BorderSpacing.Left = 8
-            BorderSpacing.Right = 8
+            BorderSpacing.Left = 10
+            BorderSpacing.Right = 10
             DisabledImageIndex = 51
             Flat = True
             Images = iButtons
@@ -4376,7 +4374,7 @@ object frmCustomGrid: TfrmCustomGrid
             Width = 28
             Align = alRight
             AutoSize = True
-            BorderSpacing.Right = 8
+            BorderSpacing.Right = 10
             DisabledImageIndex = 41
             Flat = True
             Images = iButtons
@@ -4386,10 +4384,10 @@ object frmCustomGrid: TfrmCustomGrid
             ParentShowHint = False
           end
           object Separator11: TShapeLineBGRA
-            Left = 444
+            Left = 443
             Height = 32
             Top = 8
-            Width = 3
+            Width = 4
             Align = alRight
             Direction = drUpDown
             LineColor = 12829635
@@ -4405,12 +4403,12 @@ object frmCustomGrid: TfrmCustomGrid
           Top = 8
           Width = 483
           Align = alTop
-          BorderSpacing.Left = 16
-          BorderSpacing.Top = 8
-          BorderSpacing.Right = 16
+          BorderSpacing.Left = 20
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 20
           Caption = 'Recycle bin'
           Font.Color = 13066075
-          Font.Height = -20
+          Font.Height = -25
           ParentFont = False
         end
         object dbgRecycle: TDBControlGrid
@@ -4420,9 +4418,9 @@ object frmCustomGrid: TfrmCustomGrid
           Width = 499
           Align = alClient
           AltColorStartNormal = True
-          BorderSpacing.Left = 8
-          BorderSpacing.Top = 8
-          BorderSpacing.Right = 8
+          BorderSpacing.Left = 10
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 10
           Color = clWindow
           DefaultPositionAtEnd = False
           DrawPanel = pRecycleContent
@@ -4431,40 +4429,40 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
           ColWidths = (
-            12
-            462
+            15
+            578
           )
           object pRecycleContent: TPanel
-            Left = 12
-            Height = 63
+            Left = 15
+            Height = 79
             Top = 0
-            Width = 462
+            Width = 578
             BevelOuter = bvNone
-            ClientHeight = 63
-            ClientWidth = 462
+            ClientHeight = 79
+            ClientWidth = 578
             Color = clWindow
             ParentBackground = False
             ParentColor = False
             TabOrder = 0
             Visible = False
             object lblRecycleName: TDBText
-              Left = 40
+              Left = 50
               Height = 20
-              Top = 8
+              Top = 10
               Width = 107
             end
             object lblRecycleModifiedDate: TDBText
-              Left = 40
+              Left = 50
               Height = 20
-              Top = 32
+              Top = 40
               Width = 160
               Font.Color = 6381921
               ParentFont = False
             end
             object DBText3: TDBText
-              Left = 240
+              Left = 300
               Height = 20
-              Top = 32
+              Top = 40
               Width = 54
               Font.Color = 6381921
               ParentFont = False
@@ -4474,7 +4472,7 @@ object frmCustomGrid: TfrmCustomGrid
               Height = 63
               Hint = 'Restore record'
               Top = 0
-              Width = 30
+              Width = 38
               Align = alLeft
               Font.Color = clBlack
               Images = frmMain.mPopup
@@ -4502,11 +4500,11 @@ object frmCustomGrid: TfrmCustomGrid
               StateDisabled.BorderWidth = 0
             end
             object sbRecycleDelete: TColorSpeedButton
-              Left = 432
+              Left = 424
               Height = 63
               Hint = 'Delete record permanently'
               Top = 0
-              Width = 30
+              Width = 38
               Align = alRight
               Font.Color = clBlack
               Images = frmMain.mPopup
@@ -4540,10 +4538,10 @@ object frmCustomGrid: TfrmCustomGrid
   end
   object SplitRight: TSplitter
     AnchorSideRight.Control = pSide
-    Left = 721
-    Height = 785
+    Left = 912
+    Height = 981
     Top = 0
-    Width = 6
+    Width = 8
     Align = alRight
     OnMoved = SplitRightMoved
     ResizeAnchor = akRight
@@ -4551,15 +4549,15 @@ object frmCustomGrid: TfrmCustomGrid
   end
   object pClient: TPanel
     Left = 0
-    Height = 785
+    Height = 981
     Top = 0
-    Width = 721
+    Width = 912
     Align = alClient
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 8
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 785
-    ClientWidth = 721
+    ClientHeight = 981
+    ClientWidth = 912
     Color = 15066599
     ParentBackground = False
     ParentColor = False
@@ -4568,9 +4566,9 @@ object frmCustomGrid: TfrmCustomGrid
     object SplitChild: TSplitter
       Cursor = crVSplit
       Left = 8
-      Height = 6
-      Top = 408
-      Width = 705
+      Height = 8
+      Top = 511
+      Width = 896
       Align = alBottom
       Color = clBtnFace
       OnMoved = SplitChildMoved
@@ -4580,21 +4578,21 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pChild: TPanel
       Left = 8
-      Height = 363
-      Top = 414
-      Width = 705
+      Height = 454
+      Top = 519
+      Width = 896
       Align = alBottom
       BevelOuter = bvNone
-      ClientHeight = 363
-      ClientWidth = 705
+      ClientHeight = 454
+      ClientWidth = 896
       ParentBackground = False
       TabOrder = 1
       Visible = False
       object pChildToolbar: TBCPanel
         Left = 0
-        Height = 46
+        Height = 48
         Top = 0
-        Width = 705
+        Width = 896
         Align = alTop
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
@@ -4622,7 +4620,7 @@ object frmCustomGrid: TfrmCustomGrid
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
-        Constraints.MinWidth = 560
+        Constraints.MinWidth = 700
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -4636,14 +4634,14 @@ object frmCustomGrid: TfrmCustomGrid
         Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
         TabOrder = 0
         object sbEditChild: TSpeedButton
-          Left = 193
-          Height = 28
+          Left = 237
+          Height = 30
           Hint = 'Edit selected record'
           Top = 9
-          Width = 30
+          Width = 38
           Align = alLeft
-          BorderSpacing.Left = 8
-          BorderSpacing.Right = 8
+          BorderSpacing.Left = 10
+          BorderSpacing.Right = 10
           DisabledImageIndex = 3
           Enabled = False
           Flat = True
@@ -4655,11 +4653,11 @@ object frmCustomGrid: TfrmCustomGrid
           ParentShowHint = False
         end
         object sbDelChild: TSpeedButton
-          Left = 658
-          Height = 28
+          Left = 841
+          Height = 30
           Hint = 'Delete selected record'
           Top = 9
-          Width = 30
+          Width = 38
           Align = alRight
           DisabledImageIndex = 5
           Enabled = False
@@ -4673,9 +4671,9 @@ object frmCustomGrid: TfrmCustomGrid
         end
         object eAddChild: TEdit
           Left = 17
-          Height = 28
+          Height = 30
           Top = 9
-          Width = 168
+          Width = 210
           Align = alLeft
           TabOrder = 0
           TextHint = 'Quick add'
@@ -4684,14 +4682,14 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = eAddChildKeyPress
         end
         object sbChildHistory: TSpeedButton
-          Left = 242
-          Height = 28
+          Left = 299
+          Height = 30
           Hint = 'View record history'
           Top = 9
-          Width = 30
+          Width = 38
           Align = alLeft
-          BorderSpacing.Left = 8
-          BorderSpacing.Right = 16
+          BorderSpacing.Left = 10
+          BorderSpacing.Right = 20
           DisabledImageIndex = 13
           Enabled = False
           Flat = True
@@ -4704,13 +4702,13 @@ object frmCustomGrid: TfrmCustomGrid
           ParentShowHint = False
         end
         object sbSortChilds: TSpeedButton
-          Left = 288
-          Height = 28
+          Left = 357
+          Height = 30
           Hint = 'Sort records'
           Top = 9
-          Width = 30
+          Width = 38
           Align = alLeft
-          BorderSpacing.Right = 8
+          BorderSpacing.Right = 10
           DisabledImageIndex = 15
           Enabled = False
           Flat = True
@@ -4723,10 +4721,10 @@ object frmCustomGrid: TfrmCustomGrid
           ParentShowHint = False
         end
         object Separator5: TShapeLineBGRA
-          Left = 231
-          Height = 28
+          Left = 285
+          Height = 30
           Top = 9
-          Width = 3
+          Width = 4
           Align = alLeft
           Direction = drUpDown
           LineColor = 12829635
@@ -4734,10 +4732,10 @@ object frmCustomGrid: TfrmCustomGrid
           LineWidth = 1
         end
         object Separator6: TShapeLineBGRA
-          Left = 326
-          Height = 28
+          Left = 405
+          Height = 30
           Top = 9
-          Width = 3
+          Width = 4
           Align = alLeft
           Direction = drUpDown
           LineColor = 12829635
@@ -4745,15 +4743,15 @@ object frmCustomGrid: TfrmCustomGrid
           LineWidth = 1
         end
         object sbSortChilds1: TSpeedButton
-          Left = 337
-          Height = 28
+          Left = 419
+          Height = 30
           Hint = 'Open records in a new tab'
           Top = 9
           Width = 28
           Align = alLeft
           AutoSize = True
-          BorderSpacing.Left = 8
-          BorderSpacing.Right = 8
+          BorderSpacing.Left = 10
+          BorderSpacing.Right = 10
           DisabledImageIndex = 25
           Enabled = False
           Flat = True
@@ -4766,18 +4764,18 @@ object frmCustomGrid: TfrmCustomGrid
       end
       object nbChilds: TNotebook
         Left = 0
-        Height = 285
-        Top = 46
-        Width = 705
+        Height = 374
+        Top = 48
+        Width = 896
         PageIndex = 0
         Align = alClient
         TabOrder = 1
         object pgChild1: TPage
           object gridChild1: TDBGrid
             Left = 0
-            Height = 285
+            Height = 374
             Top = 0
-            Width = 705
+            Width = 896
             Align = alClient
             Color = clWindow
             Columns = <>
@@ -4893,8 +4891,8 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Side = asrBottom
         Left = 0
         Height = 32
-        Top = 331
-        Width = 705
+        Top = 422
+        Width = 896
         Align = alBottom
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 4
@@ -4940,16 +4938,18 @@ object frmCustomGrid: TfrmCustomGrid
           Width = 116
           Align = alLeft
           Caption = 'Loading records...'
+          Font.Height = -15
           Layout = tlCenter
+          ParentFont = False
         end
         object sbFirstChild: TSpeedButton
-          Left = 593
+          Left = 756
           Height = 24
           Hint = 'First record'
           Top = 4
-          Width = 24
+          Width = 30
           Align = alRight
-          BorderSpacing.Left = 16
+          BorderSpacing.Left = 20
           DisabledImageIndex = 17
           Flat = True
           Images = iButtons
@@ -4961,11 +4961,11 @@ object frmCustomGrid: TfrmCustomGrid
           ParentShowHint = False
         end
         object sbPriorChild: TSpeedButton
-          Left = 617
+          Left = 786
           Height = 24
           Hint = 'Previous record'
           Top = 4
-          Width = 24
+          Width = 30
           Align = alRight
           DisabledImageIndex = 19
           Flat = True
@@ -4978,11 +4978,11 @@ object frmCustomGrid: TfrmCustomGrid
           ParentShowHint = False
         end
         object sbNextChild: TSpeedButton
-          Left = 641
+          Left = 816
           Height = 24
           Hint = 'Next record'
           Top = 4
-          Width = 24
+          Width = 30
           Align = alRight
           DisabledImageIndex = 21
           Flat = True
@@ -4995,13 +4995,13 @@ object frmCustomGrid: TfrmCustomGrid
           ParentShowHint = False
         end
         object sbLastChild: TSpeedButton
-          Left = 665
+          Left = 846
           Height = 24
           Hint = 'Last record'
           Top = 4
-          Width = 24
+          Width = 30
           Align = alRight
-          BorderSpacing.Right = 16
+          BorderSpacing.Right = 20
           DisabledImageIndex = 23
           Flat = True
           Images = iButtons
@@ -5015,13 +5015,13 @@ object frmCustomGrid: TfrmCustomGrid
       end
     end
     object pRecordToolbar: TBCPanel
-      Left = 8
+      Left = 10
       Height = 48
       Top = 8
-      Width = 705
+      Width = 892
       Align = alTop
-      BorderSpacing.Left = 8
-      BorderSpacing.Right = 8
+      BorderSpacing.Left = 10
+      BorderSpacing.Right = 10
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       Background.Color = 15987699
@@ -5047,7 +5047,7 @@ object frmCustomGrid: TfrmCustomGrid
       Border.Color = 13750737
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
-      Constraints.MinWidth = 520
+      Constraints.MinWidth = 650
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -5061,15 +5061,15 @@ object frmCustomGrid: TfrmCustomGrid
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 2
       object sbDelRecord: TSpeedButton
-        Left = 661
+        Left = 844
         Height = 32
         Hint = 'Delete selected record'
         Top = 8
         Width = 28
         Align = alRight
         AutoSize = True
-        BorderSpacing.Left = 16
-        BorderSpacing.Right = 16
+        BorderSpacing.Left = 20
+        BorderSpacing.Right = 20
         DisabledImageIndex = 5
         Flat = True
         Images = iButtons
@@ -5080,34 +5080,36 @@ object frmCustomGrid: TfrmCustomGrid
         ParentShowHint = False
       end
       object sbRecordHistory: TSpeedButton
-        Left = 115
+        Left = 126
         Height = 32
         Hint = 'View record history'
         Top = 8
         Width = 79
         Align = alLeft
         AutoSize = True
-        BorderSpacing.Left = 16
-        BorderSpacing.Right = 16
+        BorderSpacing.Left = 20
+        BorderSpacing.Right = 20
         Caption = 'History'
         DisabledImageIndex = 13
         Flat = True
+        Font.Height = -15
         Images = iButtons
         ImageIndex = 12
         ImageWidth = 24
         OnClick = sbRecordHistoryClick
         ShowHint = True
+        ParentFont = False
         ParentShowHint = False
       end
       object sbEditRecord: TSpeedButton
-        Left = 52
+        Left = 54
         Height = 32
         Hint = 'Edit selected record'
         Top = 8
         Width = 28
         Align = alLeft
         AutoSize = True
-        BorderSpacing.Right = 16
+        BorderSpacing.Right = 20
         DisabledImageIndex = 3
         Flat = True
         Images = iButtons
@@ -5118,45 +5120,49 @@ object frmCustomGrid: TfrmCustomGrid
         ParentShowHint = False
       end
       object sbSaveRecord: TSpeedButton
-        Left = 290
+        Left = 326
         Height = 32
         Hint = 'Save changes'
         Top = 8
-        Width = 86
+        Width = 108
         Align = alLeft
-        BorderSpacing.Right = 4
+        BorderSpacing.Right = 5
         Caption = 'Save'
         DisabledImageIndex = 7
         Flat = True
+        Font.Height = -15
         Images = iButtons
         ImageIndex = 6
         ImageWidth = 24
         OnClick = sbSaveRecordClick
+        ParentFont = False
       end
       object sbCancelRecord: TSpeedButton
-        Left = 484
+        Left = 622
         Height = 32
         Hint = 'Cancel editing'
         Top = 8
-        Width = 96
+        Width = 120
         Align = alRight
         Caption = 'Cancel'
         DisabledImageIndex = 9
         Flat = True
+        Font.Height = -15
         Images = iButtons
         ImageIndex = 8
         ImageWidth = 24
         OnClick = sbCancelRecordClick
+        ParentFont = False
       end
       object sbRefreshRecords: TSpeedButton
-        Left = 596
+        Left = 762
         Height = 32
         Hint = 'Refresh records'
         Top = 8
-        Width = 30
+        Width = 38
         Align = alRight
-        BorderSpacing.Left = 16
-        BorderSpacing.Right = 16
+        BorderSpacing.Left = 20
+        BorderSpacing.Right = 20
         DisabledImageIndex = 11
         Flat = True
         Images = iButtons
@@ -5175,7 +5181,7 @@ object frmCustomGrid: TfrmCustomGrid
         Width = 28
         Align = alLeft
         AutoSize = True
-        BorderSpacing.Right = 8
+        BorderSpacing.Right = 10
         DisabledImageIndex = 1
         Flat = True
         Images = iButtons
@@ -5186,10 +5192,10 @@ object frmCustomGrid: TfrmCustomGrid
         ParentShowHint = False
       end
       object Separator7: TShapeLineBGRA
-        Left = 96
+        Left = 102
         Height = 32
         Top = 8
-        Width = 3
+        Width = 4
         Align = alLeft
         Direction = drUpDown
         LineColor = 12829635
@@ -5197,10 +5203,10 @@ object frmCustomGrid: TfrmCustomGrid
         LineWidth = 1
       end
       object Separator8: TShapeLineBGRA
-        Left = 642
+        Left = 820
         Height = 32
         Top = 8
-        Width = 3
+        Width = 4
         Align = alRight
         Direction = drUpDown
         LineColor = 12829635
@@ -5208,13 +5214,13 @@ object frmCustomGrid: TfrmCustomGrid
         LineWidth = 1
       end
       object sbSortRecords: TSpeedButton
-        Left = 210
+        Left = 225
         Height = 32
         Hint = 'Sort records'
         Top = 8
-        Width = 30
+        Width = 38
         Align = alLeft
-        BorderSpacing.Right = 4
+        BorderSpacing.Right = 5
         DisabledImageIndex = 15
         Flat = True
         Images = iButtons
@@ -5226,13 +5232,13 @@ object frmCustomGrid: TfrmCustomGrid
         ParentShowHint = False
       end
       object sbFilterRecords: TSpeedButton
-        Left = 244
+        Left = 268
         Height = 32
         Hint = 'Filters'
         Top = 8
-        Width = 30
+        Width = 38
         Align = alLeft
-        BorderSpacing.Right = 16
+        BorderSpacing.Right = 20
         DisabledImageIndex = 67
         Flat = True
         Images = iButtons
@@ -5246,15 +5252,15 @@ object frmCustomGrid: TfrmCustomGrid
       end
     end
     object pChildsBar: TBCPanel
-      Left = 8
-      Height = 54
-      Top = 350
-      Width = 705
+      Left = 10
+      Height = 52
+      Top = 454
+      Width = 892
       Align = alBottom
-      BorderSpacing.Left = 8
-      BorderSpacing.Top = 8
-      BorderSpacing.Right = 8
-      BorderSpacing.Bottom = 4
+      BorderSpacing.Left = 10
+      BorderSpacing.Top = 10
+      BorderSpacing.Right = 10
+      BorderSpacing.Bottom = 5
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
@@ -5298,9 +5304,9 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = sbAddChild
         AnchorSideTop.Side = asrCenter
-        Left = 60
+        Left = 64
         Height = 37
-        Top = 9
+        Top = 8
         Width = 125
         AutoSize = True
         ChildSizing.LeftRightSpacing = 16
@@ -5391,7 +5397,7 @@ object frmCustomGrid: TfrmCustomGrid
           Border.Style = bboNone
           BorderBCStyle = bpsBorder
           Color = 16448250
-          Constraints.MaxWidth = 120
+          Constraints.MaxWidth = 150
           FontEx.Color = 4500223
           FontEx.FontQuality = fqSystemClearType
           FontEx.Shadow = False
@@ -5431,9 +5437,9 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideLeft.Control = pChildTag1
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = pChildTag1
-        Left = 193
+        Left = 197
         Height = 37
-        Top = 9
+        Top = 8
         Width = 104
         AutoSize = True
         ChildSizing.LeftRightSpacing = 16
@@ -5525,7 +5531,7 @@ object frmCustomGrid: TfrmCustomGrid
           Border.Style = bboNone
           BorderBCStyle = bpsBorder
           Color = 16448250
-          Constraints.MaxWidth = 120
+          Constraints.MaxWidth = 150
           FontEx.Color = 4500223
           FontEx.FontQuality = fqSystemClearType
           FontEx.Shadow = False
@@ -5565,9 +5571,9 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideLeft.Control = pChildTag2
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = pChildTag2
-        Left = 305
+        Left = 309
         Height = 37
-        Top = 9
+        Top = 8
         Width = 128
         AutoSize = True
         ChildSizing.LeftRightSpacing = 16
@@ -5659,7 +5665,7 @@ object frmCustomGrid: TfrmCustomGrid
           Border.Style = bboNone
           BorderBCStyle = bpsBorder
           Color = 16448250
-          Constraints.MaxWidth = 120
+          Constraints.MaxWidth = 150
           FontEx.Color = 4500223
           FontEx.FontQuality = fqSystemClearType
           FontEx.Shadow = False
@@ -5699,9 +5705,9 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideLeft.Control = pChildTag3
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = pChildTag3
-        Left = 441
+        Left = 445
         Height = 37
-        Top = 9
+        Top = 8
         Width = 103
         AutoSize = True
         ChildSizing.LeftRightSpacing = 16
@@ -5793,7 +5799,7 @@ object frmCustomGrid: TfrmCustomGrid
           Border.Style = bboNone
           BorderBCStyle = bpsBorder
           Color = 16448250
-          Constraints.MaxWidth = 120
+          Constraints.MaxWidth = 150
           FontEx.Color = 4500223
           FontEx.FontQuality = fqSystemClearType
           FontEx.Shadow = False
@@ -5833,9 +5839,9 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideLeft.Control = pChildTag4
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = pChildTag4
-        Left = 552
+        Left = 556
         Height = 37
-        Top = 9
+        Top = 8
         Width = 138
         AutoSize = True
         ChildSizing.LeftRightSpacing = 16
@@ -5927,7 +5933,7 @@ object frmCustomGrid: TfrmCustomGrid
           Border.Style = bboNone
           BorderBCStyle = bpsBorder
           Color = 16448250
-          Constraints.MaxWidth = 120
+          Constraints.MaxWidth = 150
           FontEx.Color = 4500223
           FontEx.FontQuality = fqSystemClearType
           FontEx.Shadow = False
@@ -5964,13 +5970,13 @@ object frmCustomGrid: TfrmCustomGrid
       end
       object sbAddChild: TSpeedButton
         Left = 16
-        Height = 38
+        Height = 36
         Hint = 'New related record'
         Top = 8
         Width = 28
         Align = alLeft
         AutoSize = True
-        BorderSpacing.Right = 16
+        BorderSpacing.Right = 20
         DisabledImageIndex = 1
         Flat = True
         Images = iButtons
@@ -5984,9 +5990,9 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pGrid: TBCPanel
       Left = 8
-      Height = 286
+      Height = 388
       Top = 56
-      Width = 705
+      Width = 896
       Align = alClient
       Background.Color = 15066599
       Background.Gradient1.StartColor = clWhite
@@ -6023,9 +6029,9 @@ object frmCustomGrid: TfrmCustomGrid
       TabOrder = 4
       object DBG: TDBGrid
         Left = 0
-        Height = 254
+        Height = 352
         Top = 0
-        Width = 705
+        Width = 896
         Align = alClient
         Color = clWindow
         Columns = <>
@@ -6050,9 +6056,9 @@ object frmCustomGrid: TfrmCustomGrid
       object pRecordStatus: TBCPanel
         AnchorSideTop.Side = asrBottom
         Left = 0
-        Height = 32
-        Top = 254
-        Width = 705
+        Height = 36
+        Top = 352
+        Width = 896
         Align = alBottom
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 4
@@ -6093,21 +6099,23 @@ object frmCustomGrid: TfrmCustomGrid
         TabOrder = 1
         object lblRecordStatus: TLabel
           Left = 16
-          Height = 24
+          Height = 28
           Top = 4
           Width = 116
           Align = alLeft
           Caption = 'Loading records...'
+          Font.Height = -15
           Layout = tlCenter
+          ParentFont = False
         end
         object sbFirstRecord: TSpeedButton
-          Left = 593
-          Height = 24
+          Left = 756
+          Height = 28
           Hint = 'First record'
           Top = 4
-          Width = 24
+          Width = 30
           Align = alRight
-          BorderSpacing.Left = 16
+          BorderSpacing.Left = 20
           DisabledImageIndex = 17
           Flat = True
           Images = iButtons
@@ -6119,11 +6127,11 @@ object frmCustomGrid: TfrmCustomGrid
           ParentShowHint = False
         end
         object sbPriorRecord: TSpeedButton
-          Left = 617
-          Height = 24
+          Left = 786
+          Height = 28
           Hint = 'Previous record'
           Top = 4
-          Width = 24
+          Width = 30
           Align = alRight
           DisabledImageIndex = 19
           Flat = True
@@ -6136,11 +6144,11 @@ object frmCustomGrid: TfrmCustomGrid
           ParentShowHint = False
         end
         object sbNextRecord: TSpeedButton
-          Left = 641
-          Height = 24
+          Left = 816
+          Height = 28
           Hint = 'Next record'
           Top = 4
-          Width = 24
+          Width = 30
           Align = alRight
           DisabledImageIndex = 21
           Flat = True
@@ -6153,13 +6161,13 @@ object frmCustomGrid: TfrmCustomGrid
           ParentShowHint = False
         end
         object sbLastRecord: TSpeedButton
-          Left = 665
-          Height = 24
+          Left = 846
+          Height = 28
           Hint = 'Last record'
           Top = 4
-          Width = 24
+          Width = 30
           Align = alRight
-          BorderSpacing.Right = 16
+          BorderSpacing.Right = 20
           DisabledImageIndex = 23
           Flat = True
           Images = iButtons
@@ -6176,9 +6184,9 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideLeft.Side = asrCenter
         AnchorSideTop.Control = DBG
         AnchorSideTop.Side = asrCenter
-        Left = 266
+        Left = 362
         Height = 108
-        Top = 73
+        Top = 122
         Width = 173
         AutoSize = True
         ChildSizing.LeftRightSpacing = 16
@@ -6247,8 +6255,8 @@ object frmCustomGrid: TfrmCustomGrid
     end
   end
   object pSideToolbar: TPanel
-    Left = 1243
-    Height = 785
+    Left = 1565
+    Height = 981
     Top = 0
     Width = 44
     Align = alRight
@@ -6259,7 +6267,7 @@ object frmCustomGrid: TfrmCustomGrid
     ChildSizing.VerticalSpacing = 8
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
-    ClientHeight = 785
+    ClientHeight = 981
     ClientWidth = 44
     Color = 15987699
     ParentBackground = False
@@ -6414,11 +6422,11 @@ object frmCustomGrid: TfrmCustomGrid
       Left = 8
       Height = 28
       Hint = 'Recycle bin'
-      Top = 284
+      Top = 290
       Width = 28
       AllowAllUp = True
       AutoSize = True
-      BorderSpacing.Top = 24
+      BorderSpacing.Top = 30
       DisabledImageIndex = 53
       Flat = True
       GroupIndex = 10
@@ -6433,8 +6441,8 @@ object frmCustomGrid: TfrmCustomGrid
     end
   end
   object lineRight: TShapeLineBGRA
-    Left = 1242
-    Height = 785
+    Left = 1564
+    Height = 981
     Top = 0
     Width = 1
     Align = alRight
@@ -6446,21 +6454,21 @@ object frmCustomGrid: TfrmCustomGrid
   object TimerUpdate: TTimer
     Enabled = False
     Interval = 500
-    Left = 315
-    Top = 199
+    Left = 394
+    Top = 249
   end
   object TimerFind: TTimer
     Enabled = False
     Interval = 250
     OnTimer = TimerFindTimer
-    Left = 315
-    Top = 120
+    Left = 394
+    Top = 150
   end
   object pmGrid: TPopupMenu
     Images = iButtons
     ImagesWidth = 20
-    Left = 184
-    Top = 96
+    Left = 230
+    Top = 120
     object pmgInsert: TMenuItem
       Caption = 'New record'
       ImageIndex = 0
@@ -6499,8 +6507,8 @@ object frmCustomGrid: TfrmCustomGrid
   object pmTree: TPopupMenu
     Images = frmMain.mPopup
     ImagesWidth = 20
-    Left = 184
-    Top = 168
+    Left = 230
+    Top = 210
     object pmtExpandAll: TMenuItem
       Caption = 'Expand all'
       ImageIndex = 20
@@ -6527,8 +6535,8 @@ object frmCustomGrid: TfrmCustomGrid
   object pmAddChild: TPopupMenu
     Images = frmMain.mPopup
     ImagesWidth = 20
-    Left = 96
-    Top = 168
+    Left = 120
+    Top = 210
     object pmcNewCapture: TMenuItem
       Caption = 'New capture'
       ImageIndex = 135
@@ -6620,13 +6628,13 @@ object frmCustomGrid: TfrmCustomGrid
   object dsLink: TDataSource
     OnStateChange = dsLinkStateChange
     OnDataChange = dsLinkDataChange
-    Left = 440
-    Top = 120
+    Left = 550
+    Top = 150
   end
   object pmSort: TPopupMenu
     ImagesWidth = 20
-    Left = 184
-    Top = 240
+    Left = 230
+    Top = 300
     object pmsSortAlphabetic: TMenuItem
       AutoCheck = True
       Caption = 'Alphabetic'
@@ -6673,8 +6681,8 @@ object frmCustomGrid: TfrmCustomGrid
   object pmFilter: TPopupMenu
     Images = frmMain.mPopup
     ImagesWidth = 20
-    Left = 96
-    Top = 240
+    Left = 120
+    Top = 300
     object pmfFilterSelected: TMenuItem
       Caption = 'Add selected to filter'
       ImageIndex = 46
@@ -6695,8 +6703,8 @@ object frmCustomGrid: TfrmCustomGrid
     Height = 48
     Scaled = True
     Width = 48
-    Left = 443
-    Top = 203
+    Left = 554
+    Top = 254
     Bitmap = {
       4C7A460000003000000030000000DA9A00000000000078DAEC9D07781545F7FF
       43511015F5B5E16B0DBD89828AD85014C5820DB0A020A8A06085570105942288
@@ -10157,39 +10165,39 @@ object frmCustomGrid: TfrmCustomGrid
   object dsLink1: TDataSource
     OnStateChange = dsLink1StateChange
     OnDataChange = dsLink1DataChange
-    Left = 280
-    Top = 480
+    Left = 350
+    Top = 600
   end
   object dsLink2: TDataSource
     OnStateChange = dsLink2StateChange
     OnDataChange = dsLink2DataChange
-    Left = 360
-    Top = 480
+    Left = 450
+    Top = 600
   end
   object dsLink3: TDataSource
     OnStateChange = dsLink3StateChange
     OnDataChange = dsLink3DataChange
-    Left = 432
-    Top = 480
+    Left = 540
+    Top = 600
   end
   object dsLink4: TDataSource
     OnStateChange = dsLink4StateChange
     OnDataChange = dsLink4DataChange
-    Left = 504
-    Top = 480
+    Left = 630
+    Top = 600
   end
   object dsLink5: TDataSource
     OnStateChange = dsLink5StateChange
     OnDataChange = dsLink5DataChange
-    Left = 576
-    Top = 480
+    Left = 720
+    Top = 600
   end
   object iHeaders: TImageList
     Height = 24
     Scaled = True
     Width = 24
-    Left = 528
-    Top = 203
+    Left = 660
+    Top = 254
     Bitmap = {
       4C7A050000001800000018000000240300000000000078DAED965B48145118C7
       DD347AADDC28ED2116BA106ABE14442F8211B61028F490A05DC824C85B469806

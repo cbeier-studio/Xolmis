@@ -136,7 +136,6 @@ object frmDashboard: TfrmDashboard
             end          
             item
               Font.Style = [fsItalic]
-              SizePriority = 1
               Title.Caption = 'Táxon'
               Width = 274
               FieldName = 'nome_taxon'
@@ -373,7 +372,6 @@ object frmDashboard: TfrmDashboard
           InactiveColor = 16448250
           MapProvider = 'OpenStreetMap Mapnik'
           UseThreads = True
-          Zoom = 0
         end
       end
       object pCharts1: TBCPanel

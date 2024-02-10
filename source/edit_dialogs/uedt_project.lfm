@@ -1,13 +1,13 @@
 object edtProject: TedtProject
   Left = 373
-  Height = 708
+  Height = 588
   Top = 34
-  Width = 488
+  Width = 400
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New project'
-  ClientHeight = 708
-  ClientWidth = 488
-  DesignTimePPI = 120
+  ClientHeight = 588
+  ClientWidth = 400
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -18,19 +18,20 @@ object edtProject: TedtProject
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 656
-    Width = 488
-    Align = alBottom
+    Top = 545
+    Width = 400
+    Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 658
-    Width = 488
-    Align = alBottom
+    Height = 41
+    Top = 547
+    Width = 400
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -41,88 +42,91 @@ object edtProject: TedtProject
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
-    ClientWidth = 488
+    ClientHeight = 41
+    ClientWidth = 400
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16
-      Height = 34
+      Height = 25
       Top = 8
-      Width = 225
+      Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 225
+      Constraints.MinWidth = 180
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 249
-      Height = 34
+      Left = 204
+      Height = 25
       Top = 8
-      Width = 225
+      Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 225
+      Constraints.MinWidth = 180
       ModalResult = 2
       TabOrder = 1
     end
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 656
+    Height = 545
     Top = 0
-    Width = 488
-    HorzScrollBar.Page = 488
-    VertScrollBar.Page = 656
-    Align = alClient
+    Width = 400
+    HorzScrollBar.Page = 1
+    HorzScrollBar.Visible = False
+    VertScrollBar.Page = 545
+    Align = alTop
+    AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 656
-    ClientWidth = 488
-    Constraints.MinWidth = 220
+    ClientHeight = 545
+    ClientWidth = 400
+    Constraints.MinWidth = 176
     Color = clDefault
     ParentColor = False
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 656
+      Height = 545
       Top = 0
-      Width = 488
+      Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 656
-      ClientWidth = 488
+      ClientHeight = 545
+      ClientWidth = 400
       Color = 15066599
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
-        Height = 142
-        Top = 498
-        Width = 488
+        Height = 124
+        Top = 405
+        Width = 400
         Align = alTop
-        BorderSpacing.Top = 16
+        AutoSize = True
+        BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 142
-        ClientWidth = 488
+        ClientHeight = 124
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 7
         object lblNotes: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 42
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 368
+          Align = alTop
+          BorderSpacing.Top = 3
           Caption = 'Notes:'
           Font.Color = 6579300
           ParentColor = False
@@ -130,11 +134,11 @@ object edtProject: TedtProject
         end
         object mNotes: TDBMemo
           Left = 16
-          Height = 113
-          Top = 29
-          Width = 456
-          Anchors = [akTop, akLeft, akRight]
-          Constraints.MinWidth = 456
+          Height = 90
+          Top = 22
+          Width = 368
+          Align = alTop
+          Constraints.MinWidth = 365
           DataField = 'notes'
           DataSource = dsLink
           OnKeyDown = FormKeyDown
@@ -145,27 +149,27 @@ object edtProject: TedtProject
       end
       object pTitle: TPanel
         Left = 0
-        Height = 58
+        Height = 45
         Top = 16
-        Width = 488
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 0
         object lblTitle: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Title: *'
           Font.Color = 6579300
           ParentColor = False
@@ -173,12 +177,12 @@ object edtProject: TedtProject
         end
         object eTitle: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 23
+          Top = 22
+          Width = 365
           DataField = 'project_title'
           DataSource = dsLink
-          Constraints.MinWidth = 456
+          Constraints.MinWidth = 365
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -187,27 +191,27 @@ object edtProject: TedtProject
       end
       object pShortTitle: TPanel
         Left = 0
-        Height = 58
-        Top = 74
-        Width = 488
+        Height = 45
+        Top = 61
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 1
         object lblShortTitle: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Short title: *'
           Font.Color = 6579300
           ParentColor = False
@@ -215,12 +219,12 @@ object edtProject: TedtProject
         end
         object eShortTitle: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 23
+          Top = 22
+          Width = 365
           DataField = 'short_title'
           DataSource = dsLink
-          Constraints.MinWidth = 456
+          Constraints.MinWidth = 365
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -229,28 +233,29 @@ object edtProject: TedtProject
       end
       object pAbstract: TPanel
         Left = 0
-        Height = 102
-        Top = 380
-        Width = 488
+        Height = 92
+        Top = 300
+        Width = 400
         Align = alTop
-        BorderSpacing.Top = 16
+        AutoSize = True
+        BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 102
-        ClientWidth = 488
+        ClientHeight = 92
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 6
         object lblAbstract: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 58
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 368
+          Align = alTop
+          BorderSpacing.Top = 3
           Caption = 'Abstract:'
           Font.Color = 6579300
           ParentColor = False
@@ -258,11 +263,11 @@ object edtProject: TedtProject
         end
         object mAbstract: TDBMemo
           Left = 16
-          Height = 73
-          Top = 29
-          Width = 456
-          Anchors = [akTop, akLeft, akRight]
-          Constraints.MinWidth = 456
+          Height = 58
+          Top = 22
+          Width = 368
+          Align = alTop
+          Constraints.MinWidth = 365
           DataField = 'project_abstract'
           DataSource = dsLink
           OnKeyDown = FormKeyDown
@@ -273,39 +278,38 @@ object edtProject: TedtProject
       end
       object pStartEndDate: TPanel
         Left = 0
-        Height = 58
-        Top = 132
-        Width = 488
+        Height = 46
+        Top = 106
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 46
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 2
         object lblStartDate: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Start date:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblEndDate: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'End date:'
           Font.Color = 6579300
           ParentColor = False
@@ -313,14 +317,14 @@ object edtProject: TedtProject
         end
         object eStartDate: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 24
+          Top = 22
+          Width = 176
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 220
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 220
+          ClientHeight = 24
+          ClientWidth = 176
+          Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 18
@@ -335,15 +339,15 @@ object edtProject: TedtProject
           OnDBEditKeyPress = eTitleKeyPress
         end
         object eEndDate: TDBEditButton
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
+          Left = 208
+          Height = 24
+          Top = 22
+          Width = 176
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 220
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 220
+          ClientHeight = 24
+          ClientWidth = 176
+          Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
           ImageIndex = 18
@@ -360,27 +364,27 @@ object edtProject: TedtProject
       end
       object pWebsite: TPanel
         Left = 0
-        Height = 58
-        Top = 190
-        Width = 488
+        Height = 45
+        Top = 152
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 3
         object lblWebsite: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Website:'
           Font.Color = 6579300
           ParentColor = False
@@ -388,12 +392,12 @@ object edtProject: TedtProject
         end
         object eWebsite: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 23
+          Top = 22
+          Width = 365
           DataField = 'website_uri'
           DataSource = dsLink
-          Constraints.MinWidth = 456
+          Constraints.MinWidth = 365
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -402,27 +406,27 @@ object edtProject: TedtProject
       end
       object pEmail: TPanel
         Left = 0
-        Height = 58
-        Top = 248
-        Width = 488
+        Height = 45
+        Top = 197
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
         object lblEmail: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'E-mail:'
           Font.Color = 6579300
           ParentColor = False
@@ -430,12 +434,12 @@ object edtProject: TedtProject
         end
         object eEmail: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 23
+          Top = 22
+          Width = 365
           DataField = 'email_addr'
           DataSource = dsLink
-          Constraints.MinWidth = 456
+          Constraints.MinWidth = 365
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -444,27 +448,27 @@ object edtProject: TedtProject
       end
       object pContactName: TPanel
         Left = 0
-        Height = 58
-        Top = 306
-        Width = 488
+        Height = 45
+        Top = 242
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 488
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 5
         object lblContactName: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Contact person:'
           Font.Color = 6579300
           ParentColor = False
@@ -472,12 +476,12 @@ object edtProject: TedtProject
         end
         object eContactName: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 23
+          Top = 22
+          Width = 365
           DataField = 'contact_name'
           DataSource = dsLink
-          Constraints.MinWidth = 456
+          Constraints.MinWidth = 365
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -489,7 +493,7 @@ object edtProject: TedtProject
   object dsLink: TDataSource
     DataSet = DMG.qProjects
     OnDataChange = dsLinkDataChange
-    Left = 408
-    Top = 56
+    Left = 326
+    Top = 45
   end
 end

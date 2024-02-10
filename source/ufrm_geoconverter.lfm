@@ -6,12 +6,11 @@ object frmGeoConverter: TfrmGeoConverter
   Caption = 'Coordinates converter'
   ClientHeight = 720
   ClientWidth = 1193
-  DesignTimePPI = 120
   OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
   object SplitSynEdit: TSplitter
-    Left = 794
+    Left = 793
     Height = 712
     Top = 8
     Width = 6
@@ -34,14 +33,15 @@ object frmGeoConverter: TfrmGeoConverter
     Left = 0
     Height = 712
     Top = 8
-    Width = 312
+    Width = 311
     Align = alLeft
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.ControlsPerLine = 1
     ClientHeight = 712
-    ClientWidth = 312
+    ClientWidth = 311
     Color = 15987699
     ParentBackground = False
     ParentColor = False
@@ -50,7 +50,7 @@ object frmGeoConverter: TfrmGeoConverter
       Left = 16
       Height = 28
       Top = 232
-      Width = 280
+      Width = 279
       Align = alTop
       BorderSpacing.Top = 16
       Caption = 'Options'
@@ -63,8 +63,9 @@ object frmGeoConverter: TfrmGeoConverter
       Left = 16
       Height = 134
       Top = 8
-      Width = 280
+      Width = 279
       Align = alTop
+      AutoSize = True
       BorderSpacing.Top = 8
       BorderSpacing.Bottom = 8
       ChildSizing.LeftRightSpacing = 16
@@ -109,7 +110,7 @@ object frmGeoConverter: TfrmGeoConverter
         Left = 17
         Height = 28
         Top = 9
-        Width = 246
+        Width = 245
         Align = alTop
         AutoComplete = True
         AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
@@ -128,7 +129,7 @@ object frmGeoConverter: TfrmGeoConverter
         Left = 17
         Height = 28
         Top = 45
-        Width = 246
+        Width = 245
         Align = alTop
         AutoComplete = True
         AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
@@ -148,7 +149,7 @@ object frmGeoConverter: TfrmGeoConverter
         Left = 17
         Height = 36
         Top = 89
-        Width = 246
+        Width = 245
         Align = alTop
         BorderSpacing.Top = 16
         Caption = 'Convert'
@@ -164,8 +165,9 @@ object frmGeoConverter: TfrmGeoConverter
       Left = 16
       Height = 46
       Top = 268
-      Width = 280
+      Width = 279
       Align = alTop
+      AutoSize = True
       BorderSpacing.Top = 8
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
@@ -216,7 +218,7 @@ object frmGeoConverter: TfrmGeoConverter
         ParentColor = False
       end
       object eUTMZone: TEdit
-        Left = 183
+        Left = 182
         Height = 28
         Top = 9
         Width = 80
@@ -228,10 +230,11 @@ object frmGeoConverter: TfrmGeoConverter
     end
     object pConvertFromToolbar3: TBCPanel
       Left = 16
-      Height = 46
+      Height = 42
       Top = 314
-      Width = 280
+      Width = 279
       Align = alTop
+      AutoSize = True
       BorderSpacing.Bottom = 8
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
@@ -274,7 +277,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 2
       object lblUTMHemisphere: TLabel
         Left = 17
-        Height = 28
+        Height = 24
         Top = 9
         Width = 83
         Align = alLeft
@@ -283,8 +286,8 @@ object frmGeoConverter: TfrmGeoConverter
         ParentColor = False
       end
       object Panel2: TPanel
-        Left = 128
-        Height = 28
+        Left = 127
+        Height = 24
         Top = 9
         Width = 135
         Align = alRight
@@ -292,7 +295,7 @@ object frmGeoConverter: TfrmGeoConverter
         ChildSizing.HorizontalSpacing = 8
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 28
+        ClientHeight = 24
         ClientWidth = 135
         Color = 16448250
         ParentBackground = False
@@ -300,7 +303,7 @@ object frmGeoConverter: TfrmGeoConverter
         TabOrder = 0
         object rbNorth: TRadioButton
           Left = 9
-          Height = 28
+          Height = 24
           Top = 0
           Width = 59
           Align = alRight
@@ -311,7 +314,7 @@ object frmGeoConverter: TfrmGeoConverter
         end
         object rbSouth: TRadioButton
           Left = 76
-          Height = 28
+          Height = 24
           Top = 0
           Width = 59
           Align = alRight
@@ -326,10 +329,11 @@ object frmGeoConverter: TfrmGeoConverter
     end
     object pConvertFromToolbar4: TBCPanel
       Left = 16
-      Height = 46
-      Top = 368
-      Width = 280
+      Height = 42
+      Top = 364
+      Width = 279
       Align = alTop
+      AutoSize = True
       BorderSpacing.Top = 8
       BorderSpacing.Bottom = 8
       ChildSizing.LeftRightSpacing = 16
@@ -371,7 +375,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 3
       object ckAddUnitsZone: TCheckBox
         Left = 17
-        Height = 28
+        Height = 24
         Top = 9
         Width = 205
         Align = alLeft
@@ -381,9 +385,9 @@ object frmGeoConverter: TfrmGeoConverter
     end
     object icoConverter: TImage
       Left = 16
-      Height = 228
-      Top = 422
-      Width = 280
+      Height = 240
+      Top = 414
+      Width = 279
       Align = alClient
       Center = True
       ImageIndex = 4
@@ -395,7 +399,7 @@ object frmGeoConverter: TfrmGeoConverter
       Left = 16
       Height = 66
       Top = 150
-      Width = 280
+      Width = 279
       Align = alTop
       AutoSize = True
       BorderSpacing.Top = 8
@@ -442,7 +446,7 @@ object frmGeoConverter: TfrmGeoConverter
         Left = 17
         Height = 20
         Top = 9
-        Width = 246
+        Width = 245
         Align = alTop
         Caption = 'Use this format:'
         Font.Color = 12017408
@@ -453,16 +457,16 @@ object frmGeoConverter: TfrmGeoConverter
         Left = 17
         Height = 20
         Top = 33
-        Width = 246
+        Width = 245
         Align = alTop
         Caption = 'longitude (X axis); latitude (Y axis)'
       end
     end
     object pConvertFromToolbar6: TBCPanel
       Left = 16
-      Height = 46
-      Top = 658
-      Width = 280
+      Height = 42
+      Top = 662
+      Width = 279
       Align = alBottom
       BorderSpacing.Top = 8
       BorderSpacing.Bottom = 8
@@ -492,6 +496,7 @@ object frmGeoConverter: TfrmGeoConverter
       Border.Color = 13750737
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
+      Constraints.MinHeight = 42
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -505,9 +510,9 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 5
       object lblLineCol: TLabel
         Left = 17
-        Height = 28
+        Height = 24
         Top = 9
-        Width = 246
+        Width = 245
         Align = alClient
         Alignment = taCenter
         Layout = tlCenter
@@ -515,7 +520,7 @@ object frmGeoConverter: TfrmGeoConverter
     end
   end
   object pConvertFrom: TPanel
-    Left = 312
+    Left = 311
     Height = 712
     Top = 8
     Width = 482
@@ -529,8 +534,8 @@ object frmGeoConverter: TfrmGeoConverter
     TabOrder = 3
     inline seConvertFrom: TSynEdit
       Left = 0
-      Height = 652
-      Top = 60
+      Height = 650
+      Top = 62
       Width = 482
       Align = alClient
       Font.Height = -18
@@ -545,7 +550,7 @@ object frmGeoConverter: TfrmGeoConverter
       OnKeyUp = seConvertFromKeyUp
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 69
+      Gutter.Width = 70
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1002,11 +1007,11 @@ object frmGeoConverter: TfrmGeoConverter
       OnPaste = seConvertFromPaste
       inline SynLeftGutterPartList1: TSynGutterPartList
         object SynGutterMarks1: TSynGutterMarks
-          Width = 24
+          Width = 30
           MouseActions = <>
         end
         object SynGutterLineNumber1: TSynGutterLineNumber
-          Width = 27
+          Width = 21
           MouseActions = <>
           MarkupInfo.Background = clWhite
           MarkupInfo.Foreground = clSilver
@@ -1023,7 +1028,7 @@ object frmGeoConverter: TfrmGeoConverter
           SavedColor = clGreen
         end
         object SynGutterSeparator1: TSynGutterSeparator
-          Width = 2
+          Width = 3
           MouseActions = <>
           MarkupInfo.Background = clWhite
           MarkupInfo.Foreground = clWhite
@@ -1041,10 +1046,11 @@ object frmGeoConverter: TfrmGeoConverter
     end
     object pConvertFromToolbar: TBCPanel
       Left = 0
-      Height = 44
+      Height = 46
       Top = 8
       Width = 482
       Align = alTop
+      AutoSize = True
       BorderSpacing.Top = 8
       BorderSpacing.Bottom = 8
       ChildSizing.LeftRightSpacing = 16
@@ -1086,7 +1092,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 1
       object sbOpenFile: TSpeedButton
         Left = 17
-        Height = 26
+        Height = 28
         Top = 9
         Width = 68
         Align = alLeft
@@ -1100,7 +1106,7 @@ object frmGeoConverter: TfrmGeoConverter
       end
       object sbPaste: TSpeedButton
         Left = 93
-        Height = 26
+        Height = 28
         Top = 9
         Width = 66
         Align = alLeft
@@ -1114,7 +1120,7 @@ object frmGeoConverter: TfrmGeoConverter
       end
       object sbClear: TSpeedButton
         Left = 379
-        Height = 26
+        Height = 28
         Top = 9
         Width = 86
         Align = alRight
@@ -1129,23 +1135,23 @@ object frmGeoConverter: TfrmGeoConverter
     end
   end
   object pConverted: TPanel
-    Left = 800
+    Left = 799
     Height = 712
     Top = 8
-    Width = 393
+    Width = 394
     Align = alClient
     BevelOuter = bvNone
     ClientHeight = 712
-    ClientWidth = 393
+    ClientWidth = 394
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 4
     inline seConverted: TSynEdit
       Left = 0
-      Height = 652
-      Top = 60
-      Width = 393
+      Height = 650
+      Top = 62
+      Width = 394
       Align = alClient
       Font.Height = -18
       Font.Name = 'Consolas'
@@ -1157,7 +1163,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 0
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 69
+      Gutter.Width = 70
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1613,11 +1619,11 @@ object frmGeoConverter: TfrmGeoConverter
       LineHighlightColor.Foreground = clNone
       inline SynLeftGutterPartList1: TSynGutterPartList
         object SynGutterMarks1: TSynGutterMarks
-          Width = 24
+          Width = 30
           MouseActions = <>
         end
         object SynGutterLineNumber1: TSynGutterLineNumber
-          Width = 27
+          Width = 21
           MouseActions = <>
           MarkupInfo.Background = clWhite
           MarkupInfo.Foreground = clSilver
@@ -1634,7 +1640,7 @@ object frmGeoConverter: TfrmGeoConverter
           SavedColor = clGreen
         end
         object SynGutterSeparator1: TSynGutterSeparator
-          Width = 2
+          Width = 3
           MouseActions = <>
           MarkupInfo.Background = clWhite
           MarkupInfo.Foreground = clWhite
@@ -1652,10 +1658,11 @@ object frmGeoConverter: TfrmGeoConverter
     end
     object pConvertedToolbar: TBCPanel
       Left = 0
-      Height = 44
+      Height = 46
       Top = 8
-      Width = 393
+      Width = 394
       Align = alTop
+      AutoSize = True
       BorderSpacing.Top = 8
       BorderSpacing.Bottom = 8
       ChildSizing.LeftRightSpacing = 16
@@ -1697,7 +1704,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 1
       object sbSaveFile: TSpeedButton
         Left = 17
-        Height = 26
+        Height = 28
         Top = 9
         Width = 63
         Align = alLeft
@@ -1711,7 +1718,7 @@ object frmGeoConverter: TfrmGeoConverter
       end
       object sbCopy: TSpeedButton
         Left = 88
-        Height = 26
+        Height = 28
         Top = 9
         Width = 66
         Align = alLeft
@@ -1725,7 +1732,7 @@ object frmGeoConverter: TfrmGeoConverter
       end
       object sbAddToGeoEditor: TSpeedButton
         Left = 162
-        Height = 26
+        Height = 28
         Top = 9
         Width = 122
         Align = alLeft

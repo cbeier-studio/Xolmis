@@ -1,25 +1,24 @@
 object dlgPlantminer: TdlgPlantminer
   Left = 352
-  Height = 346
+  Height = 432
   Top = 33
-  Width = 490
+  Width = 612
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
   Caption = 'Checking botanic taxon'
-  ClientHeight = 346
-  ClientWidth = 490
+  ClientHeight = 432
+  ClientWidth = 612
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
-  LCLVersion = '3.0.0.2'
   object VL: TValueListEditor
     Left = 0
-    Height = 300
+    Height = 386
     Top = 0
-    Width = 490
+    Width = 612
     Align = alClient
     AutoEdit = False
-    DefaultColWidth = 150
+    DefaultColWidth = 188
     FixedCols = 0
     RowCount = 1
     TabOrder = 0
@@ -27,15 +26,15 @@ object dlgPlantminer: TdlgPlantminer
     DisplayOptions = [doAutoColResize, doKeyColFixed]
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goThumbTracking]
     ColWidths = (
-      150
-      340
+      188
+      420
     )
   end
   object pBottom: TPanel
     Left = 0
     Height = 46
-    Top = 300
-    Width = 490
+    Top = 386
+    Width = 612
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
@@ -47,15 +46,15 @@ object dlgPlantminer: TdlgPlantminer
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 46
-    ClientWidth = 490
+    ClientWidth = 612
     TabOrder = 1
     object sbSave: TBitBtn
       Left = 16
       Height = 30
       Top = 8
-      Width = 225
+      Width = 286
       Caption = 'Apply'
-      Constraints.MinWidth = 225
+      Constraints.MinWidth = 281
       Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbSaveClick
@@ -63,12 +62,12 @@ object dlgPlantminer: TdlgPlantminer
       TabOrder = 0
     end
     object sbCancel: TBitBtn
-      Left = 249
+      Left = 310
       Height = 30
       Top = 8
-      Width = 225
+      Width = 286
       Caption = 'Cancel'
-      Constraints.MinWidth = 225
+      Constraints.MinWidth = 281
       OnClick = sbCancelClick
       TabOrder = 1
     end

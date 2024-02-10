@@ -1,21 +1,21 @@
 object cfgOptions: TcfgOptions
   Left = 352
-  Height = 465
+  Height = 581
   Top = 33
-  Width = 749
+  Width = 936
   BorderIcons = [biSystemMenu]
   Caption = 'Settings'
-  ClientHeight = 465
-  ClientWidth = 749
+  ClientHeight = 581
+  ClientWidth = 936
+  DesignTimePPI = 120
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.2'
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 415
-    Width = 749
+    Height = 52
+    Top = 529
+    Width = 936
     Align = alBottom
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
@@ -24,18 +24,18 @@ object cfgOptions: TcfgOptions
     ChildSizing.EnlargeHorizontal = crsScaleChilds
     ChildSizing.ShrinkHorizontal = crsScaleChilds
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
-    ClientWidth = 749
+    ClientHeight = 52
+    ClientWidth = 936
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object sbClose: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 603
-      Height = 34
+      Left = 758
+      Height = 36
       Top = 8
-      Width = 130
+      Width = 162
       Align = alRight
       Caption = 'Close'
       ModalResult = 11
@@ -45,18 +45,18 @@ object cfgOptions: TcfgOptions
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 413
-    Width = 749
+    Top = 527
+    Width = 936
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
   object nbPages: TNotebook
-    Left = 56
-    Height = 413
+    Left = 70
+    Height = 527
     Top = 0
-    Width = 693
+    Width = 866
     PageIndex = 0
     Align = alClient
     TabOrder = 1
@@ -64,55 +64,55 @@ object cfgOptions: TcfgOptions
       Color = 16444392
       object scrollGeneral: TScrollBox
         Left = 0
-        Height = 413
+        Height = 527
         Top = 0
-        Width = 693
-        HorzScrollBar.Page = 444
-        VertScrollBar.Page = 240
+        Width = 866
+        HorzScrollBar.Page = 451
+        VertScrollBar.Page = 253
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 413
-        ClientWidth = 693
+        ClientHeight = 527
+        ClientWidth = 866
         Color = 16444392
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
         object pContentGeneral: TPanel
           Left = 0
-          Height = 240
+          Height = 253
           Top = 0
-          Width = 693
+          Width = 866
           Align = alTop
           AutoSize = True
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
-          ClientHeight = 240
-          ClientWidth = 693
+          ClientHeight = 253
+          ClientWidth = 866
           Color = 16444392
           ParentBackground = False
           ParentColor = False
           TabOrder = 0
           object lblTitleInterface: TLabel
             Left = 16
-            Height = 28
+            Height = 35
             Top = 16
-            Width = 661
+            Width = 834
             Align = alTop
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Bottom = 10
             Caption = 'General'
             Font.Color = 13066075
-            Font.Height = -20
+            Font.Height = -25
             ParentColor = False
             ParentFont = False
           end
           object pEnterAsTab: TBCPanel
             Left = 16
             Height = 52
-            Top = 52
-            Width = 661
+            Top = 61
+            Width = 834
             Align = alTop
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Bottom = 10
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -154,7 +154,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 30
@@ -163,7 +163,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblEnterAsTab: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 345
@@ -173,10 +173,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object tsEnterAsTab: TRxSwitch
-              Left = 595
+              Left = 756
               Height = 28
               Top = 12
-              Width = 50
+              Width = 62
               Align = alRight
               Color = 16448250
               ParentColor = False
@@ -190,10 +190,10 @@ object cfgOptions: TcfgOptions
           object pConfirmCancel: TBCPanel
             Left = 16
             Height = 52
-            Top = 112
-            Width = 661
+            Top = 123
+            Width = 834
             Align = alTop
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Bottom = 10
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -235,7 +235,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 29
@@ -244,7 +244,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblConfirmCancel: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 239
@@ -254,10 +254,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object tsConfirmCancel: TRxSwitch
-              Left = 595
+              Left = 756
               Height = 28
               Top = 12
-              Width = 50
+              Width = 62
               Align = alRight
               Color = 16448250
               ParentColor = False
@@ -271,10 +271,10 @@ object cfgOptions: TcfgOptions
           object pClearDeleted: TBCPanel
             Left = 16
             Height = 52
-            Top = 172
-            Width = 661
+            Top = 185
+            Width = 834
             Align = alTop
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Bottom = 10
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -316,7 +316,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 9
@@ -325,7 +325,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblClearDeleted: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 296
@@ -335,10 +335,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object cbClearDeleted: TComboBox
-              Left = 472
+              Left = 602
               Height = 28
               Top = 12
-              Width = 173
+              Width = 216
               Align = alRight
               Color = clWhite
               ItemHeight = 20
@@ -360,53 +360,53 @@ object cfgOptions: TcfgOptions
     object pgCollection: TPage
       object scrollCollection: TScrollBox
         Left = 0
-        Height = 413
+        Height = 527
         Top = 0
-        Width = 749
-        HorzScrollBar.Page = 311
-        VertScrollBar.Page = 224
+        Width = 866
+        HorzScrollBar.Page = 318
+        VertScrollBar.Page = 241
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 413
-        ClientWidth = 749
+        ClientHeight = 527
+        ClientWidth = 866
         Color = 16444392
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
         object pContentCollection: TPanel
           Left = 0
-          Height = 224
+          Height = 241
           Top = 0
-          Width = 749
+          Width = 866
           Align = alTop
           AutoSize = True
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
-          ClientHeight = 224
-          ClientWidth = 749
+          ClientHeight = 241
+          ClientWidth = 866
           Color = 16444392
           ParentBackground = False
           ParentColor = False
           TabOrder = 0
           object lblTitleCollection: TLabel
             Left = 16
-            Height = 28
-            Top = 16
-            Width = 717
+            Height = 35
+            Top = 20
+            Width = 834
             Align = alTop
-            BorderSpacing.Top = 16
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Top = 20
+            BorderSpacing.Bottom = 10
             Caption = 'Collection'
             Font.Color = 13066075
-            Font.Height = -20
+            Font.Height = -25
             ParentColor = False
             ParentFont = False
           end
           object pVernacularNames: TBCPanel
             Left = 16
             Height = 52
-            Top = 52
-            Width = 717
+            Top = 65
+            Width = 834
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
@@ -450,7 +450,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 33
@@ -459,7 +459,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblVernacularNames: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 202
@@ -469,10 +469,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object cbVernacularNames: TComboBox
-              Left = 528
+              Left = 602
               Height = 28
               Top = 12
-              Width = 173
+              Width = 216
               Align = alRight
               Color = clWhite
               ItemHeight = 20
@@ -489,8 +489,8 @@ object cfgOptions: TcfgOptions
           object pMainTaxonomy: TBCPanel
             Left = 16
             Height = 52
-            Top = 104
-            Width = 717
+            Top = 117
+            Width = 834
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
@@ -534,7 +534,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 18
@@ -543,7 +543,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblMainTaxonomy: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 126
@@ -553,10 +553,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object cbMainTaxonomy: TComboBox
-              Left = 528
+              Left = 602
               Height = 28
               Top = 12
-              Width = 173
+              Width = 216
               Align = alRight
               Color = clWhite
               ItemHeight = 20
@@ -573,10 +573,10 @@ object cfgOptions: TcfgOptions
           object pShowSynonyms: TBCPanel
             Left = 16
             Height = 52
-            Top = 156
-            Width = 717
+            Top = 169
+            Width = 834
             Align = alTop
-            BorderSpacing.Bottom = 16
+            BorderSpacing.Bottom = 20
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -619,7 +619,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 27
@@ -628,7 +628,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblShowSynonyms: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 212
@@ -638,10 +638,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object tsShowSynonyms: TRxSwitch
-              Left = 651
+              Left = 756
               Height = 28
               Top = 12
-              Width = 50
+              Width = 62
               Align = alRight
               Color = 16448250
               ParentColor = False
@@ -658,53 +658,53 @@ object cfgOptions: TcfgOptions
     object pgMedia: TPage
       object scrollMedia: TScrollBox
         Left = 0
-        Height = 413
+        Height = 527
         Top = 0
-        Width = 749
-        HorzScrollBar.Page = 481
-        VertScrollBar.Page = 224
+        Width = 866
+        HorzScrollBar.Page = 585
+        VertScrollBar.Page = 241
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 413
-        ClientWidth = 749
+        ClientHeight = 527
+        ClientWidth = 866
         Color = 16444392
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
         object pContentMedia: TPanel
           Left = 0
-          Height = 224
+          Height = 241
           Top = 0
-          Width = 749
+          Width = 866
           Align = alTop
           AutoSize = True
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
-          ClientHeight = 224
-          ClientWidth = 749
+          ClientHeight = 241
+          ClientWidth = 866
           Color = 16444392
           ParentBackground = False
           ParentColor = False
           TabOrder = 0
           object lblTitleMedia: TLabel
             Left = 16
-            Height = 28
-            Top = 16
-            Width = 717
+            Height = 35
+            Top = 20
+            Width = 834
             Align = alTop
-            BorderSpacing.Top = 16
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Top = 20
+            BorderSpacing.Bottom = 10
             Caption = 'Media'
             Font.Color = 13066075
-            Font.Height = -20
+            Font.Height = -25
             ParentColor = False
             ParentFont = False
           end
           object pImagesPath: TBCPanel
             Left = 16
             Height = 52
-            Top = 52
-            Width = 717
+            Top = 65
+            Width = 834
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
@@ -748,7 +748,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 12
@@ -757,7 +757,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblImagesPath: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 106
@@ -767,12 +767,12 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object eImagesPath: TDirectoryEdit
-              Left = 284
+              Left = 297
               Height = 28
               Top = 12
-              Width = 417
+              Width = 521
               ShowHidden = False
-              ButtonWidth = 29
+              ButtonWidth = 36
               NumGlyphs = 1
               Images = iPanels
               ImageIndex = 10
@@ -787,8 +787,8 @@ object cfgOptions: TcfgOptions
           object pAudiosPath: TBCPanel
             Left = 16
             Height = 52
-            Top = 104
-            Width = 717
+            Top = 117
+            Width = 834
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
@@ -832,7 +832,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 15
@@ -841,7 +841,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblAudiosPath: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 129
@@ -851,12 +851,12 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object eAudiosPath: TDirectoryEdit
-              Left = 284
+              Left = 297
               Height = 28
               Top = 12
-              Width = 417
+              Width = 521
               ShowHidden = False
-              ButtonWidth = 29
+              ButtonWidth = 36
               NumGlyphs = 1
               Images = iPanels
               ImageIndex = 10
@@ -871,10 +871,10 @@ object cfgOptions: TcfgOptions
           object pAttachmentsPath: TBCPanel
             Left = 16
             Height = 52
-            Top = 156
-            Width = 717
+            Top = 169
+            Width = 834
             Align = alTop
-            BorderSpacing.Bottom = 16
+            BorderSpacing.Bottom = 20
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -917,7 +917,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 24
@@ -926,7 +926,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblAttachmentsPath: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 133
@@ -936,12 +936,12 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object eAttachmentsPath: TDirectoryEdit
-              Left = 284
+              Left = 297
               Height = 28
               Top = 12
-              Width = 417
+              Width = 521
               ShowHidden = False
-              ButtonWidth = 29
+              ButtonWidth = 36
               NumGlyphs = 1
               Images = iPanels
               ImageIndex = 10
@@ -959,55 +959,55 @@ object cfgOptions: TcfgOptions
     object pgSecurity: TPage
       object scrollSecurity: TScrollBox
         Left = 0
-        Height = 413
+        Height = 527
         Top = 0
-        Width = 693
-        HorzScrollBar.Page = 417
-        VertScrollBar.Page = 380
+        Width = 866
+        HorzScrollBar.Page = 424
+        VertScrollBar.Page = 397
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 413
-        ClientWidth = 693
+        ClientHeight = 527
+        ClientWidth = 866
         Color = 16444392
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
         object pContentSecurity: TPanel
           Left = 0
-          Height = 380
+          Height = 397
           Top = 0
-          Width = 693
+          Width = 866
           Align = alTop
           AutoSize = True
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
-          ClientHeight = 380
-          ClientWidth = 693
+          ClientHeight = 397
+          ClientWidth = 866
           Color = 16444392
           ParentBackground = False
           ParentColor = False
           TabOrder = 0
           object lblTitleSecurity: TLabel
             Left = 16
-            Height = 28
-            Top = 16
-            Width = 661
+            Height = 35
+            Top = 20
+            Width = 834
             Align = alTop
-            BorderSpacing.Top = 16
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Top = 20
+            BorderSpacing.Bottom = 10
             Caption = 'Security and privacy'
             Font.Color = 13066075
-            Font.Height = -20
+            Font.Height = -25
             ParentColor = False
             ParentFont = False
           end
           object pCheckUpdates: TBCPanel
             Left = 16
             Height = 52
-            Top = 52
-            Width = 661
+            Top = 65
+            Width = 834
             Align = alTop
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Bottom = 10
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -1049,7 +1049,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 39
@@ -1058,7 +1058,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblCheckUpdates: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 168
@@ -1068,10 +1068,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object cbCheckUpdates: TComboBox
-              Left = 367
+              Left = 497
               Height = 28
               Top = 12
-              Width = 173
+              Width = 216
               Align = alRight
               Color = clWhite
               ItemHeight = 20
@@ -1086,7 +1086,7 @@ object cfgOptions: TcfgOptions
               OnChange = cbCheckUpdatesChange
             end
             object sbCheckUpdatesNow: TBitBtn
-              Left = 548
+              Left = 721
               Height = 28
               Top = 12
               Width = 97
@@ -1100,8 +1100,8 @@ object cfgOptions: TcfgOptions
           object pRememberConnection: TBCPanel
             Left = 16
             Height = 52
-            Top = 112
-            Width = 661
+            Top = 127
+            Width = 834
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
@@ -1145,7 +1145,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 3
@@ -1154,7 +1154,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblRememberConnection: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 264
@@ -1164,10 +1164,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object tsRememberConnection: TRxSwitch
-              Left = 595
+              Left = 756
               Height = 28
               Top = 12
-              Width = 50
+              Width = 62
               Align = alRight
               Color = 16448250
               ParentColor = False
@@ -1181,10 +1181,10 @@ object cfgOptions: TcfgOptions
           object pRememberUser: TBCPanel
             Left = 16
             Height = 52
-            Top = 164
-            Width = 661
+            Top = 179
+            Width = 834
             Align = alTop
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Bottom = 10
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -1227,7 +1227,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 41
@@ -1236,7 +1236,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblRememberUser: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 218
@@ -1246,10 +1246,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object tsRememberUser: TRxSwitch
-              Left = 595
+              Left = 756
               Height = 28
               Top = 12
-              Width = 50
+              Width = 62
               Align = alRight
               Color = 16448250
               ParentColor = False
@@ -1263,8 +1263,8 @@ object cfgOptions: TcfgOptions
           object pAllowWriteLog: TBCPanel
             Left = 16
             Height = 52
-            Top = 224
-            Width = 661
+            Top = 241
+            Width = 834
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
@@ -1308,7 +1308,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 40
@@ -1317,7 +1317,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblAllowWriteLog: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 318
@@ -1327,10 +1327,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object tsWriteLogs: TRxSwitch
-              Left = 595
+              Left = 756
               Height = 28
               Top = 12
-              Width = 50
+              Width = 62
               Align = alRight
               Color = 16448250
               ParentColor = False
@@ -1344,8 +1344,8 @@ object cfgOptions: TcfgOptions
           object pAllowUsageData: TBCPanel
             Left = 16
             Height = 52
-            Top = 276
-            Width = 661
+            Top = 293
+            Width = 834
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
@@ -1389,7 +1389,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 6
@@ -1398,7 +1398,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblAllowUsageData: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 310
@@ -1408,10 +1408,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object tsAllowUsageData: TRxSwitch
-              Left = 595
+              Left = 756
               Height = 28
               Top = 12
-              Width = 50
+              Width = 62
               Align = alRight
               Color = 16448250
               ParentColor = False
@@ -1425,8 +1425,8 @@ object cfgOptions: TcfgOptions
           object pAllowUsageData1: TBCPanel
             Left = 16
             Height = 52
-            Top = 328
-            Width = 661
+            Top = 345
+            Width = 834
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
@@ -1479,10 +1479,10 @@ object cfgOptions: TcfgOptions
               ParentFont = False
             end
             object Image17: TImage
-              Left = 618
+              Left = 784
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alRight
               Center = True
               ImageIndex = 42
@@ -1497,53 +1497,53 @@ object cfgOptions: TcfgOptions
     object pgBackup: TPage
       object scrollBackup: TScrollBox
         Left = 0
-        Height = 511
+        Height = 527
         Top = 0
-        Width = 749
-        HorzScrollBar.Page = 481
-        VertScrollBar.Page = 224
+        Width = 866
+        HorzScrollBar.Page = 585
+        VertScrollBar.Page = 241
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 511
-        ClientWidth = 749
+        ClientHeight = 527
+        ClientWidth = 866
         Color = 16444392
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
         object pContentBackup: TPanel
           Left = 0
-          Height = 224
+          Height = 241
           Top = 0
-          Width = 749
+          Width = 866
           Align = alTop
           AutoSize = True
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
-          ClientHeight = 224
-          ClientWidth = 749
+          ClientHeight = 241
+          ClientWidth = 866
           Color = 16444392
           ParentBackground = False
           ParentColor = False
           TabOrder = 0
           object lblTitleBackup: TLabel
             Left = 16
-            Height = 28
-            Top = 16
-            Width = 717
+            Height = 35
+            Top = 20
+            Width = 834
             Align = alTop
-            BorderSpacing.Top = 16
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Top = 20
+            BorderSpacing.Bottom = 10
             Caption = 'Backup and restore'
             Font.Color = 13066075
-            Font.Height = -20
+            Font.Height = -25
             ParentColor = False
             ParentFont = False
           end
           object pBackupPath: TBCPanel
             Left = 16
             Height = 52
-            Top = 52
-            Width = 717
+            Top = 65
+            Width = 834
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
@@ -1587,7 +1587,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 21
@@ -1596,7 +1596,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblBackupPath: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 123
@@ -1606,12 +1606,12 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object eBackupPath: TDirectoryEdit
-              Left = 284
+              Left = 297
               Height = 28
               Top = 12
-              Width = 417
+              Width = 521
               ShowHidden = False
-              ButtonWidth = 29
+              ButtonWidth = 36
               NumGlyphs = 1
               Images = iPanels
               ImageIndex = 10
@@ -1626,8 +1626,8 @@ object cfgOptions: TcfgOptions
           object pStartupBackup: TBCPanel
             Left = 16
             Height = 52
-            Top = 104
-            Width = 717
+            Top = 117
+            Width = 834
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
@@ -1671,7 +1671,7 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 28
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 4
@@ -1680,7 +1680,7 @@ object cfgOptions: TcfgOptions
               Proportional = True
             end
             object lblStartupBackup: TLabel
-              Left = 51
+              Left = 58
               Height = 28
               Top = 12
               Width = 283
@@ -1690,10 +1690,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object tsStartupBackup: TRxSwitch
-              Left = 651
+              Left = 756
               Height = 28
               Top = 12
-              Width = 50
+              Width = 62
               Align = alRight
               Color = 16448250
               ParentColor = False
@@ -1707,10 +1707,10 @@ object cfgOptions: TcfgOptions
           object pManageBackups: TBCPanel
             Left = 16
             Height = 52
-            Top = 156
-            Width = 717
+            Top = 169
+            Width = 834
             Align = alTop
-            BorderSpacing.Bottom = 16
+            BorderSpacing.Bottom = 20
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -1760,7 +1760,7 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object sbNewBackup: TBitBtn
-              Left = 496
+              Left = 613
               Height = 28
               Top = 12
               Width = 121
@@ -1771,7 +1771,7 @@ object cfgOptions: TcfgOptions
               TabOrder = 0
             end
             object sbRestoreBackup: TBitBtn
-              Left = 625
+              Left = 742
               Height = 28
               Top = 12
               Width = 76
@@ -1788,9 +1788,9 @@ object cfgOptions: TcfgOptions
   end
   object BCPanel1: TBCPanel
     Left = 0
-    Height = 413
+    Height = 527
     Top = 0
-    Width = 56
+    Width = 70
     Align = alLeft
     ChildSizing.TopBottomSpacing = 16
     ChildSizing.VerticalSpacing = 8
@@ -1828,13 +1828,13 @@ object cfgOptions: TcfgOptions
     Rounding.RoundY = 1
     TabOrder = 2
     object tabGeneral: TColorSpeedButton
-      Left = 8
-      Height = 40
+      Left = 10
+      Height = 50
       Hint = 'General'
       Top = 16
-      Width = 48
+      Width = 60
       Align = alTop
-      BorderSpacing.Left = 8
+      BorderSpacing.Left = 10
       Down = True
       Font.Color = clBlack
       GroupIndex = 10
@@ -1865,13 +1865,13 @@ object cfgOptions: TcfgOptions
     end
     object tabCollection: TColorSpeedButton
       Tag = 1
-      Left = 8
-      Height = 40
+      Left = 10
+      Height = 50
       Hint = 'Collection'
-      Top = 64
-      Width = 48
+      Top = 74
+      Width = 60
       Align = alTop
-      BorderSpacing.Left = 8
+      BorderSpacing.Left = 10
       Font.Color = clBlack
       GroupIndex = 10
       Images = frmMain.mPopup
@@ -1901,13 +1901,13 @@ object cfgOptions: TcfgOptions
     end
     object tabMedia: TColorSpeedButton
       Tag = 2
-      Left = 8
-      Height = 40
+      Left = 10
+      Height = 50
       Hint = 'Media'
-      Top = 112
-      Width = 48
+      Top = 132
+      Width = 60
       Align = alTop
-      BorderSpacing.Left = 8
+      BorderSpacing.Left = 10
       Font.Color = clBlack
       GroupIndex = 10
       Images = frmMain.mPopup
@@ -1937,13 +1937,13 @@ object cfgOptions: TcfgOptions
     end
     object tabSecurity: TColorSpeedButton
       Tag = 3
-      Left = 8
-      Height = 40
+      Left = 10
+      Height = 50
       Hint = 'Security and privacy'
-      Top = 160
-      Width = 48
+      Top = 190
+      Width = 60
       Align = alTop
-      BorderSpacing.Left = 8
+      BorderSpacing.Left = 10
       Font.Color = clBlack
       GroupIndex = 10
       Images = frmMain.mPopup
@@ -1973,13 +1973,13 @@ object cfgOptions: TcfgOptions
     end
     object tabBackup: TColorSpeedButton
       Tag = 4
-      Left = 8
-      Height = 40
+      Left = 10
+      Height = 50
       Hint = 'Backup and restore'
-      Top = 208
-      Width = 48
+      Top = 248
+      Width = 60
       Align = alTop
-      BorderSpacing.Left = 8
+      BorderSpacing.Left = 10
       Font.Color = clBlack
       GroupIndex = 10
       Images = frmMain.mPopup
@@ -2011,10 +2011,10 @@ object cfgOptions: TcfgOptions
       AnchorSideLeft.Control = tabGeneral
       AnchorSideTop.Control = tabGeneral
       AnchorSideTop.Side = asrCenter
-      Left = 10
-      Height = 20
-      Top = 26
-      Width = 5
+      Left = 12
+      Height = 25
+      Top = 29
+      Width = 6
       BorderSpacing.Left = 2
       Background.Color = 13066075
       Background.Gradient1.StartColor = clWhite
@@ -2053,15 +2053,15 @@ object cfgOptions: TcfgOptions
     end
   end
   object OpenDlg: TOpenDialog
-    Left = 336
-    Top = 229
+    Left = 420
+    Top = 286
   end
   object iPanels: TImageList
     Height = 48
     Scaled = True
     Width = 48
-    Left = 416
-    Top = 229
+    Left = 520
+    Top = 286
     Bitmap = {
       4C7A2B0000003000000030000000847200000000000078DAEC9D077814C5FBC7
       E9D8B057AC4008D23BD23BA87411952220222A82828008D2912245A4284D448A

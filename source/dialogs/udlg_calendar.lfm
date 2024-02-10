@@ -3,17 +3,16 @@ object dlgCalendar: TdlgCalendar
   Height = 271
   Top = 33
   Width = 484
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
   Caption = 'Select date'
   ClientHeight = 271
   ClientWidth = 484
-  DesignTimePPI = 120
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
-  LCLVersion = '3.0.0.2'
   object pBottom: TPanel
     Left = 0
     Height = 46

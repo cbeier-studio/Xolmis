@@ -4193,13 +4193,14 @@ msgstr ""
 msgid "Connection name: *"
 msgstr ""
 
+#: tedtdatabase.lbltitleauthentication.caption
+msgctxt "tedtdatabase.lbltitleauthentication.caption"
+msgid "Authentication"
+msgstr ""
+
 #: tedtdatabase.opendlg.title
 msgctxt "tedtdatabase.opendlg.title"
 msgid "Abrir"
-msgstr ""
-
-#: tedtdatabase.ptitleauthentication.caption
-msgid "Authentication"
 msgstr ""
 
 #: tedtdatabase.sbcancel.caption

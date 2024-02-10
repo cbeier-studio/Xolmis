@@ -14,13 +14,13 @@ object lstBreedingStatus: TlstBreedingStatus
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poOwnerFormCenter
-  LCLVersion = '3.0.0.2'
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 660
+    Height = 46
+    Top = 664
     Width = 434
     Align = alBottom
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -31,7 +31,7 @@ object lstBreedingStatus: TlstBreedingStatus
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
+    ClientHeight = 46
     ClientWidth = 434
     Color = 15987699
     ParentBackground = False
@@ -39,10 +39,11 @@ object lstBreedingStatus: TlstBreedingStatus
     TabOrder = 0
     object sbOK: TBitBtn
       Left = 16
-      Height = 34
+      Height = 30
       Top = 8
       Width = 197
       Caption = 'Apply'
+      Constraints.MinHeight = 30
       Constraints.MinWidth = 197
       Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
@@ -53,10 +54,11 @@ object lstBreedingStatus: TlstBreedingStatus
     end
     object sbCancel: TBitBtn
       Left = 221
-      Height = 34
+      Height = 30
       Top = 8
       Width = 197
       Caption = 'Cancel'
+      Constraints.MinHeight = 30
       Constraints.MinWidth = 197
       OnClick = sbCancelClick
       OnKeyPress = FormKeyPress
@@ -65,7 +67,7 @@ object lstBreedingStatus: TlstBreedingStatus
   end
   object cklBreed: TCheckListBox
     Left = 8
-    Height = 599
+    Height = 603
     Top = 8
     Width = 418
     Align = alClient
@@ -111,7 +113,7 @@ object lstBreedingStatus: TlstBreedingStatus
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 658
+    Top = 662
     Width = 434
     Align = alBottom
     LineColor = 9276813
@@ -121,7 +123,7 @@ object lstBreedingStatus: TlstBreedingStatus
   object pCode: TBCPanel
     Left = 8
     Height = 35
-    Top = 615
+    Top = 619
     Width = 418
     Align = alBottom
     BorderSpacing.Left = 8

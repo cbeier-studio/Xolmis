@@ -4219,14 +4219,16 @@ msgstr "Nome de usuário:"
 msgid "Connection name: *"
 msgstr "Nome da conexão: *"
 
+#: tedtdatabase.lbltitleauthentication.caption
+#, fuzzy
+msgctxt "tedtdatabase.lbltitleauthentication.caption"
+msgid "Authentication"
+msgstr "Autenticação"
+
 #: tedtdatabase.opendlg.title
 msgctxt "tedtdatabase.opendlg.title"
 msgid "Abrir"
 msgstr "Abrir"
-
-#: tedtdatabase.ptitleauthentication.caption
-msgid "Authentication"
-msgstr "Autenticação"
 
 #: tedtdatabase.sbcancel.caption
 msgctxt "tedtdatabase.sbcancel.caption"

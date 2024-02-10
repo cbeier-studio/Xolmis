@@ -1,24 +1,26 @@
 object cfgDelimiters: TcfgDelimiters
   Left = 352
-  Height = 380
+  Height = 404
   Top = 33
-  Width = 416
+  Width = 520
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'Delimitation options'
-  ClientHeight = 380
-  ClientWidth = 416
-  Constraints.MinWidth = 416
+  ClientHeight = 404
+  ClientWidth = 520
+  Constraints.MinWidth = 520
+  DesignTimePPI = 120
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.2'
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 330
-    Width = 416
-    Align = alBottom
+    Height = 52
+    Top = 352
+    Width = 520
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -27,8 +29,8 @@ object cfgDelimiters: TcfgDelimiters
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
-    ClientWidth = 416
+    ClientHeight = 52
+    ClientWidth = 520
     Color = 15987699
     ParentBackground = False
     ParentColor = False
@@ -37,7 +39,7 @@ object cfgDelimiters: TcfgDelimiters
       Left = 16
       Height = 36
       Top = 8
-      Width = 188
+      Width = 240
       StateClicked.Background.Color = 14259089
       StateClicked.Background.Gradient1.StartColor = 8404992
       StateClicked.Background.Gradient1.EndColor = 4194304
@@ -125,7 +127,7 @@ object cfgDelimiters: TcfgDelimiters
       StateNormal.FontEx.PaddingRight = 4
       Caption = 'Apply'
       Color = 15987699
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 235
       DropDownWidth = 16
       DropDownArrowSize = 8
       GlobalOpacity = 255
@@ -140,10 +142,10 @@ object cfgDelimiters: TcfgDelimiters
       TabOrder = 0
     end
     object sbCancel: TBCButtonFocus
-      Left = 212
+      Left = 264
       Height = 36
       Top = 8
-      Width = 188
+      Width = 240
       StateClicked.Background.Color = 16245964
       StateClicked.Background.Gradient1.StartColor = 16422228
       StateClicked.Background.Gradient1.EndColor = 14771751
@@ -235,7 +237,7 @@ object cfgDelimiters: TcfgDelimiters
       StateNormal.FontEx.PaddingRight = 4
       Caption = 'Cancel'
       Color = 15987699
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 235
       DropDownWidth = 16
       DropDownArrowSize = 8
       GlobalOpacity = 255
@@ -252,61 +254,61 @@ object cfgDelimiters: TcfgDelimiters
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 328
-    Width = 416
-    Align = alBottom
+    Top = 350
+    Width = 520
+    Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
   object pClient: TPanel
     Left = 0
-    Height = 328
+    Height = 350
     Top = 0
-    Width = 416
-    Align = alClient
+    Width = 520
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 328
-    ClientWidth = 416
+    ClientHeight = 350
+    ClientWidth = 520
     Color = 16444392
-    Constraints.MinHeight = 328
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object lblTitleFields: TLabel
       Left = 16
-      Height = 28
+      Height = 35
       Top = 16
-      Width = 384
+      Width = 488
       Align = alTop
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Bottom = 10
       Caption = 'Columns'
       Font.Color = 13066075
-      Font.Height = -20
+      Font.Height = -25
       ParentColor = False
       ParentFont = False
     end
     object lblTitleNumbers: TLabel
       Left = 16
-      Height = 28
-      Top = 224
-      Width = 384
+      Height = 35
+      Top = 237
+      Width = 488
       Align = alTop
-      BorderSpacing.Top = 16
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Top = 20
+      BorderSpacing.Bottom = 10
       Caption = 'Numbers'
       Font.Color = 13066075
-      Font.Height = -20
+      Font.Height = -25
       ParentColor = False
       ParentFont = False
     end
     object pDelimiter: TBCPanel
       Left = 16
       Height = 52
-      Top = 156
-      Width = 384
+      Top = 165
+      Width = 488
       Align = alTop
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 12
@@ -357,10 +359,10 @@ object cfgDelimiters: TcfgDelimiters
         ParentColor = False
       end
       object cbDelimiter: TComboBox
-        Left = 195
+        Left = 258
         Height = 28
         Top = 12
-        Width = 123
+        Width = 154
         Align = alRight
         Color = clWhite
         ItemHeight = 20
@@ -377,10 +379,10 @@ object cfgDelimiters: TcfgDelimiters
         OnSelect = cbDelimiterSelect
       end
       object eOther: TEdit
-        Left = 326
+        Left = 420
         Height = 28
         Top = 12
-        Width = 42
+        Width = 52
         Align = alRight
         TabOrder = 1
         Visible = False
@@ -389,8 +391,8 @@ object cfgDelimiters: TcfgDelimiters
     object pQuotedAsText: TBCPanel
       Left = 16
       Height = 52
-      Top = 104
-      Width = 384
+      Top = 113
+      Width = 488
       Align = alTop
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 12
@@ -441,10 +443,10 @@ object cfgDelimiters: TcfgDelimiters
         ParentColor = False
       end
       object tsQuotedAsText: TRxSwitch
-        Left = 318
+        Left = 410
         Height = 28
         Top = 12
-        Width = 50
+        Width = 62
         Align = alRight
         Color = 16448250
         ParentColor = False
@@ -456,8 +458,8 @@ object cfgDelimiters: TcfgDelimiters
     object pHaveHeader: TBCPanel
       Left = 16
       Height = 52
-      Top = 52
-      Width = 384
+      Top = 61
+      Width = 488
       Align = alTop
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 12
@@ -508,10 +510,10 @@ object cfgDelimiters: TcfgDelimiters
         ParentColor = False
       end
       object tsHaveHeader: TRxSwitch
-        Left = 318
+        Left = 410
         Height = 28
         Top = 12
-        Width = 50
+        Width = 62
         Align = alRight
         Color = 16448250
         ParentColor = False
@@ -523,8 +525,8 @@ object cfgDelimiters: TcfgDelimiters
     object pDecimalSeparator: TBCPanel
       Left = 16
       Height = 52
-      Top = 260
-      Width = 384
+      Top = 282
+      Width = 488
       Align = alTop
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 12
@@ -574,10 +576,10 @@ object cfgDelimiters: TcfgDelimiters
         ParentColor = False
       end
       object cbDecimalSeparator: TComboBox
-        Left = 195
+        Left = 256
         Height = 28
         Top = 12
-        Width = 173
+        Width = 216
         Align = alRight
         Color = clWhite
         ItemHeight = 20

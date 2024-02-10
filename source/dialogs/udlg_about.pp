@@ -13,10 +13,10 @@ type
   { TdlgAbout }
 
   TdlgAbout = class(TForm)
-    BCPanel1: TBCPanel;
-    BCPanel2: TBCPanel;
-    BCPanel3: TBCPanel;
-    BCPanel4: TBCPanel;
+    pVersion: TBCPanel;
+    pClements: TBCPanel;
+    pIOC: TBCPanel;
+    pCBRO: TBCPanel;
     lblAppVersion: TLabel;
     lblAppName: TLabel;
     lblAppDescription: TLabel;

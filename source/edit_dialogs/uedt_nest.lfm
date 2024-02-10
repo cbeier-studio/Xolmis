@@ -1,12 +1,12 @@
 object edtNest: TedtNest
   Left = 352
-  Height = 740
+  Height = 731
   Top = 33
-  Width = 510
+  Width = 416
+  AutoSize = True
   Caption = 'New nest'
-  ClientHeight = 740
-  ClientWidth = 510
-  DesignTimePPI = 120
+  ClientHeight = 731
+  ClientWidth = 416
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
@@ -18,18 +18,19 @@ object edtNest: TedtNest
     Left = 0
     Height = 2
     Top = 688
-    Width = 510
-    Align = alBottom
+    Width = 416
+    Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
   object pBottom: TPanel
     Left = 0
-    Height = 50
+    Height = 41
     Top = 690
-    Width = 510
-    Align = alBottom
+    Width = 416
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -40,30 +41,30 @@ object edtNest: TedtNest
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
-    ClientWidth = 510
+    ClientHeight = 41
+    ClientWidth = 416
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
-      Height = 34
+      Height = 25
       Top = 8
-      Width = 235
+      Width = 188
       Caption = 'Save'
-      Constraints.MinWidth = 235
+      Constraints.MinWidth = 188
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 259
-      Height = 34
+      Left = 212
+      Height = 25
       Top = 8
-      Width = 235
+      Width = 188
       Caption = 'Cancel'
-      Constraints.MinWidth = 235
+      Constraints.MinWidth = 188
       ModalResult = 2
       TabOrder = 1
     end
@@ -72,55 +73,56 @@ object edtNest: TedtNest
     Left = 0
     Height = 688
     Top = 0
-    Width = 510
-    HorzScrollBar.Page = 488
+    Width = 416
+    HorzScrollBar.Page = 1
+    HorzScrollBar.Visible = False
     VertScrollBar.Page = 688
-    Align = alClient
+    Align = alTop
     BorderStyle = bsNone
     ClientHeight = 688
-    ClientWidth = 489
-    Constraints.MinWidth = 220
+    ClientWidth = 399
+    Constraints.MinWidth = 176
     Color = clDefault
     ParentColor = False
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 1532
+      Height = 1234
       Top = 0
-      Width = 489
+      Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1532
-      ClientWidth = 489
+      ClientHeight = 1234
+      ClientWidth = 399
       Color = 15066599
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
       object pSupplier: TPanel
         Left = 0
-        Height = 58
-        Top = 306
-        Width = 489
+        Height = 46
+        Top = 245
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
         object lblSupplier: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Locality:'
           Font.Color = 6579300
           ParentColor = False
@@ -128,14 +130,14 @@ object edtNest: TedtNest
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 24
+          Top = 22
+          Width = 365
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
+          ClientHeight = 24
+          ClientWidth = 365
+          Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -152,39 +154,38 @@ object edtNest: TedtNest
       end
       object pRequester: TPanel
         Left = 0
-        Height = 58
-        Top = 74
-        Width = 489
+        Height = 45
+        Top = 62
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 1
         object lblRequester: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Field number:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblRequester3: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Fate:'
           Font.Color = 6579300
           ParentColor = False
@@ -192,26 +193,26 @@ object edtNest: TedtNest
         end
         object eFieldNumber: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'field_number'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
         object cbNestFate: TDBComboBox
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
-          Constraints.MinWidth = 220
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
+          Constraints.MinWidth = 176
           DataField = 'nest_fate'
           DataSource = dsLink
-          ItemHeight = 20
+          ItemHeight = 15
           Items.Strings = (
             'Lost'
             'Success'
@@ -226,27 +227,27 @@ object edtNest: TedtNest
       end
       object pStatus1: TPanel
         Left = 0
-        Height = 58
+        Height = 46
         Top = 16
-        Width = 489
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
         object lblBandStatus1: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Taxon:'
           Font.Color = 6579300
           ParentColor = False
@@ -254,14 +255,14 @@ object edtNest: TedtNest
         end
         object eTaxon: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 24
+          Top = 22
+          Width = 365
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
+          ClientHeight = 24
+          ClientWidth = 365
+          Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -278,28 +279,28 @@ object edtNest: TedtNest
       end
       object pNotes: TPanel
         Left = 0
-        Height = 142
-        Top = 1374
-        Width = 489
+        Height = 124
+        Top = 1094
+        Width = 399
         Align = alTop
-        BorderSpacing.Top = 16
+        AutoSize = True
+        BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 142
-        ClientWidth = 489
+        ClientHeight = 124
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 3
         object lblNotes: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 42
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 367
+          Align = alTop
+          BorderSpacing.Top = 3
           Caption = 'Notes:'
           Font.Color = 6579300
           ParentColor = False
@@ -307,11 +308,11 @@ object edtNest: TedtNest
         end
         object mNotes: TDBMemo
           Left = 16
-          Height = 113
-          Top = 29
-          Width = 456
-          Anchors = [akTop, akLeft, akRight]
-          Constraints.MinWidth = 456
+          Height = 90
+          Top = 22
+          Width = 367
+          Align = alTop
+          Constraints.MinWidth = 365
           DataField = 'notes'
           DataSource = dsLink
           OnKeyDown = FormKeyDown
@@ -322,27 +323,27 @@ object edtNest: TedtNest
       end
       object pSupplier1: TPanel
         Left = 0
-        Height = 58
-        Top = 190
-        Width = 489
+        Height = 46
+        Top = 153
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
         object lblSupplier1: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Project:'
           Font.Color = 6579300
           ParentColor = False
@@ -350,14 +351,14 @@ object edtNest: TedtNest
         end
         object eProject: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 24
+          Top = 22
+          Width = 365
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
+          ClientHeight = 24
+          ClientWidth = 365
+          Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -374,27 +375,27 @@ object edtNest: TedtNest
       end
       object pRequester1: TPanel
         Left = 0
-        Height = 58
-        Top = 248
-        Width = 489
+        Height = 46
+        Top = 199
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
         object lblRequester1: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Observer:'
           Font.Color = 6579300
           ParentColor = False
@@ -402,14 +403,14 @@ object edtNest: TedtNest
         end
         object eObserver: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 24
+          Top = 22
+          Width = 365
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
+          ClientHeight = 24
+          ClientWidth = 365
+          Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -426,39 +427,38 @@ object edtNest: TedtNest
       end
       object pStatus3: TPanel
         Left = 0
-        Height = 58
-        Top = 132
-        Width = 489
+        Height = 46
+        Top = 107
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 6
         object lblBandStatus3: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Nest encounter date:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandStatus8: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Last date:'
           Font.Color = 6579300
           ParentColor = False
@@ -466,14 +466,14 @@ object edtNest: TedtNest
         end
         object eFoundDate: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 24
+          Top = 22
+          Width = 176
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 220
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 220
+          ClientHeight = 24
+          ClientWidth = 176
+          Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 18
@@ -490,15 +490,15 @@ object edtNest: TedtNest
           OnKeyPress = eFieldNumberKeyPress
         end
         object eLastDate: TDBEditButton
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
+          Left = 208
+          Height = 24
+          Top = 22
+          Width = 176
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 220
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 220
+          ClientHeight = 24
+          ClientWidth = 176
+          Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
           ImageIndex = 18
@@ -517,39 +517,38 @@ object edtNest: TedtNest
       end
       object pStatus4: TPanel
         Left = 0
-        Height = 58
-        Top = 364
-        Width = 489
+        Height = 46
+        Top = 291
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 7
         object lblBandStatus4: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Longitude:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandStatus9: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Latitude:'
           Font.Color = 6579300
           ParentColor = False
@@ -557,14 +556,14 @@ object edtNest: TedtNest
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 24
+          Top = 22
+          Width = 176
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 220
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 220
+          ClientHeight = 24
+          ClientWidth = 176
+          Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 69
@@ -580,15 +579,15 @@ object edtNest: TedtNest
           OnKeyPress = eFieldNumberKeyPress
         end
         object eLatitude: TDBEditButton
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
+          Left = 208
+          Height = 24
+          Top = 22
+          Width = 176
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 220
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 220
+          ClientHeight = 24
+          ClientWidth = 176
+          Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
           ImageIndex = 69
@@ -606,40 +605,39 @@ object edtNest: TedtNest
       end
       object pTypeHeight: TPanel
         Left = 0
-        Height = 58
-        Top = 630
-        Width = 489
+        Height = 45
+        Top = 513
+        Width = 399
         Align = alTop
-        BorderSpacing.Top = 16
+        AutoSize = True
+        BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 8
         object lblSupportType: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Support type:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblHeightAboveGround: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Height at ground level:'
           Font.Color = 6579300
           ParentColor = False
@@ -647,13 +645,13 @@ object edtNest: TedtNest
         end
         object cbSupportType: TDBComboBox
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
-          Constraints.MinWidth = 220
+          Height = 23
+          Top = 22
+          Width = 176
+          Constraints.MinWidth = 176
           DataField = 'support_type'
           DataSource = dsLink
-          ItemHeight = 20
+          ItemHeight = 15
           Items.Strings = (
             'Solo'
             'Plataforma'
@@ -672,13 +670,13 @@ object edtNest: TedtNest
           TabOrder = 0
         end
         object eHeightAboveGround: TDBEdit
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'height_above_ground'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -687,39 +685,38 @@ object edtNest: TedtNest
       end
       object pStatus6: TPanel
         Left = 0
-        Height = 58
-        Top = 862
-        Width = 489
+        Height = 45
+        Top = 695
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 9
         object lblBandStatus6: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Plant height:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandStatus11: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Stem thickness:'
           Font.Color = 6579300
           ParentColor = False
@@ -727,25 +724,25 @@ object edtNest: TedtNest
         end
         object ePlantHeight: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'plant_height'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
         object ePlantDbh: TDBEdit
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'plant_dbh'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -754,39 +751,38 @@ object edtNest: TedtNest
       end
       object pStatus7: TPanel
         Left = 0
-        Height = 58
-        Top = 920
-        Width = 489
+        Height = 45
+        Top = 740
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 10
         object lblBandStatus7: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Greater plant diameter:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandStatus12: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Lesser plant diameter:'
           Font.Color = 6579300
           ParentColor = False
@@ -794,25 +790,25 @@ object edtNest: TedtNest
         end
         object ePlantMaxDiameter: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'plant_max_diameter'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
         object ePlantMinDiameter: TDBEdit
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'plant_min_diameter'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -821,28 +817,28 @@ object edtNest: TedtNest
       end
       object pRequester2: TPanel
         Left = 0
-        Height = 58
-        Top = 556
-        Width = 489
+        Height = 45
+        Top = 455
+        Width = 399
         Align = alTop
-        BorderSpacing.Top = 16
+        AutoSize = True
+        BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 11
         object lblRequester2: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Productivity:'
           Font.Color = 6579300
           ParentColor = False
@@ -850,12 +846,12 @@ object edtNest: TedtNest
         end
         object eProductivity: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'nest_productivity'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -864,28 +860,28 @@ object edtNest: TedtNest
       end
       object pNotes1: TPanel
         Left = 0
-        Height = 102
-        Top = 438
-        Width = 489
+        Height = 92
+        Top = 350
+        Width = 399
         Align = alTop
-        BorderSpacing.Top = 16
+        AutoSize = True
+        BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 102
-        ClientWidth = 489
+        ClientHeight = 92
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 12
         object lblNotes1: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 111
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 367
+          Align = alTop
+          BorderSpacing.Top = 3
           Caption = 'Nest description:'
           Font.Color = 6579300
           ParentColor = False
@@ -893,11 +889,11 @@ object edtNest: TedtNest
         end
         object mDescription: TDBMemo
           Left = 16
-          Height = 73
-          Top = 29
-          Width = 456
-          Anchors = [akTop, akLeft, akRight]
-          Constraints.MinWidth = 456
+          Height = 58
+          Top = 22
+          Width = 367
+          Align = alTop
+          Constraints.MinWidth = 365
           DataField = 'description'
           DataSource = dsLink
           OnKeyDown = FormKeyDown
@@ -908,27 +904,27 @@ object edtNest: TedtNest
       end
       object pSupportPlant1: TPanel
         Left = 0
-        Height = 58
-        Top = 688
-        Width = 489
+        Height = 46
+        Top = 558
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 13
         object lblSupportPlant1: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Support plant 1:'
           Font.Color = 6579300
           ParentColor = False
@@ -936,14 +932,14 @@ object edtNest: TedtNest
         end
         object eSupportPlant1: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 24
+          Top = 22
+          Width = 365
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
+          ClientHeight = 24
+          ClientWidth = 365
+          Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -960,28 +956,28 @@ object edtNest: TedtNest
       end
       object pOtherSupport: TPanel
         Left = 0
-        Height = 58
-        Top = 804
-        Width = 489
+        Height = 45
+        Top = 650
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 14
         Visible = False
         object lblOtherSupport: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Other support:'
           Font.Color = 6579300
           ParentColor = False
@@ -989,12 +985,12 @@ object edtNest: TedtNest
         end
         object eOtherSupport: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 23
+          Top = 22
+          Width = 365
           DataField = 'other_support'
           DataSource = dsLink
-          Constraints.MinWidth = 456
+          Constraints.MinWidth = 365
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -1003,27 +999,27 @@ object edtNest: TedtNest
       end
       object pSupportPlant2: TPanel
         Left = 0
-        Height = 58
-        Top = 746
-        Width = 489
+        Height = 46
+        Top = 604
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 15
         object lblSupportPlant2: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Support plant 2:'
           Font.Color = 6579300
           ParentColor = False
@@ -1031,14 +1027,14 @@ object edtNest: TedtNest
         end
         object eSupportPlant2: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 24
+          Top = 22
+          Width = 365
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
+          ClientHeight = 24
+          ClientWidth = 365
+          Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -1055,40 +1051,39 @@ object edtNest: TedtNest
       end
       object pStatus8: TPanel
         Left = 0
-        Height = 58
-        Top = 994
-        Width = 489
+        Height = 45
+        Top = 798
+        Width = 399
         Align = alTop
-        BorderSpacing.Top = 16
+        AutoSize = True
+        BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 16
         object lblBandStatus13: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Days building:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandStatus14: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Days incubating:'
           Font.Color = 6579300
           ParentColor = False
@@ -1096,25 +1091,25 @@ object edtNest: TedtNest
         end
         object eConstructionDays: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'construction_days'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
         object eIncubationDays: TDBEdit
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'incubation_days'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -1123,39 +1118,38 @@ object edtNest: TedtNest
       end
       object pStatus9: TPanel
         Left = 0
-        Height = 58
-        Top = 1052
-        Width = 489
+        Height = 45
+        Top = 843
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 17
         object lblBandStatus15: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Nestling-days:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandStatus16: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Total active-days:'
           Font.Color = 6579300
           ParentColor = False
@@ -1163,25 +1157,25 @@ object edtNest: TedtNest
         end
         object eNestlingDays: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'nestling_days'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
         object eActiveDays: TDBEdit
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'active_days'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -1190,40 +1184,39 @@ object edtNest: TedtNest
       end
       object pStatus10: TPanel
         Left = 0
-        Height = 58
-        Top = 1126
-        Width = 489
+        Height = 45
+        Top = 901
+        Width = 399
         Align = alTop
-        BorderSpacing.Top = 16
+        AutoSize = True
+        BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 18
         object lblBandStatus17: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Internal diameter:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandStatus18: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'External diameter:'
           Font.Color = 6579300
           ParentColor = False
@@ -1231,25 +1224,25 @@ object edtNest: TedtNest
         end
         object eInternalDiameter: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'internal_diameter'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
         object eExternalDiameter: TDBEdit
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'external_diameter'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -1258,39 +1251,38 @@ object edtNest: TedtNest
       end
       object pStatus11: TPanel
         Left = 0
-        Height = 58
-        Top = 1242
-        Width = 489
+        Height = 45
+        Top = 991
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 19
         object lblBandStatus19: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Distance from plant edge:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandStatus20: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Distance from plant center:'
           Font.Color = 6579300
           ParentColor = False
@@ -1298,25 +1290,25 @@ object edtNest: TedtNest
         end
         object eEdgeDistance: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'edge_distance'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
         object eCenterDistance: TDBEdit
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'center_distance'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -1325,39 +1317,38 @@ object edtNest: TedtNest
       end
       object pStatus12: TPanel
         Left = 0
-        Height = 58
-        Top = 1184
-        Width = 489
+        Height = 45
+        Top = 946
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 20
         object lblBandStatus21: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Internal height:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandStatus22: TLabel
-          Left = 252
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'External height:'
           Font.Color = 6579300
           ParentColor = False
@@ -1365,25 +1356,25 @@ object edtNest: TedtNest
         end
         object eInternalHeight: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'internal_height'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
         object eExternalHeight: TDBEdit
-          Left = 252
-          Height = 28
-          Top = 28
-          Width = 220
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'external_height'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -1392,27 +1383,27 @@ object edtNest: TedtNest
       end
       object pRequester11: TPanel
         Left = 0
-        Height = 58
-        Top = 1300
-        Width = 489
+        Height = 45
+        Top = 1036
+        Width = 399
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 58
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 21
         object lblRequester4: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 220
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Caption = 'Cover (%):'
           Font.Color = 6579300
           ParentColor = False
@@ -1420,12 +1411,12 @@ object edtNest: TedtNest
         end
         object eNestCover: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 220
+          Height = 23
+          Top = 22
+          Width = 176
           DataField = 'nest_cover'
           DataSource = dsLink
-          Constraints.MinWidth = 220
+          Constraints.MinWidth = 176
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -1437,7 +1428,7 @@ object edtNest: TedtNest
   object dsLink: TDataSource
     DataSet = DMG.qNests
     OnDataChange = dsLinkDataChange
-    Left = 376
-    Top = 40
+    Left = 301
+    Top = 32
   end
 end

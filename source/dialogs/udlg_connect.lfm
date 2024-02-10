@@ -1,15 +1,14 @@
 object dlgConnect: TdlgConnect
   Left = 352
-  Height = 545
+  Height = 574
   Top = 33
-  Width = 382
+  Width = 360
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'Xolmis'
-  ClientHeight = 545
-  ClientWidth = 382
-  Constraints.MinWidth = 382
-  DesignTimePPI = 120
+  ClientHeight = 574
+  ClientWidth = 360
+  Constraints.MinWidth = 278
   OnClose = FormClose
   OnShow = FormShow
   PopupMode = pmExplicit
@@ -17,27 +16,27 @@ object dlgConnect: TdlgConnect
   Position = poScreenCenter
   object pClient: TPanel
     Left = 0
-    Height = 491
+    Height = 520
     Top = 0
-    Width = 382
+    Width = 360
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 491
-    ClientWidth = 382
+    ClientHeight = 520
+    ClientWidth = 360
     Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object imgLogin: TImage
       Left = 16
-      Height = 169
+      Height = 168
       Top = 16
-      Width = 350
+      Width = 328
       Align = alTop
-      BorderSpacing.Bottom = 20
+      BorderSpacing.Bottom = 25
       Center = True
       ImageIndex = 1
       ImageWidth = 128
@@ -47,10 +46,10 @@ object dlgConnect: TdlgConnect
     object eUsername: TEdit
       Left = 16
       Height = 28
-      Top = 384
-      Width = 350
+      Top = 410
+      Width = 328
       Align = alTop
-      BorderSpacing.Bottom = 10
+      BorderSpacing.Bottom = 12
       TabOrder = 1
       OnChange = eUsernameChange
       OnKeyDown = eUsernameKeyDown
@@ -59,12 +58,12 @@ object dlgConnect: TdlgConnect
     object ePassword: TEditButton
       Left = 16
       Height = 28
-      Top = 447
-      Width = 350
+      Top = 476
+      Width = 328
       Align = alTop
-      BorderSpacing.Bottom = 10
+      BorderSpacing.Bottom = 12
       ButtonHint = 'Mostrar/ocultar senha'
-      ButtonWidth = 29
+      ButtonWidth = 30
       EchoMode = emPassword
       Images = frmMain.bMenu
       ImageIndex = 92
@@ -80,15 +79,15 @@ object dlgConnect: TdlgConnect
     end
     object lblLogin: TLabel
       Left = 16
-      Height = 36
-      Top = 205
-      Width = 350
+      Height = 45
+      Top = 209
+      Width = 328
       Align = alTop
       Alignment = taCenter
-      BorderSpacing.Bottom = 20
+      BorderSpacing.Bottom = 25
       Caption = 'Connect'
       Font.Color = 13066075
-      Font.Height = -26
+      Font.Height = -33
       Font.Name = 'Segoe UI Semibold'
       Layout = tlCenter
       ParentColor = False
@@ -97,10 +96,10 @@ object dlgConnect: TdlgConnect
     object lblUsername: TLabel
       Left = 16
       Height = 20
-      Top = 359
-      Width = 350
+      Top = 384
+      Width = 328
       Align = alTop
-      BorderSpacing.Bottom = 5
+      BorderSpacing.Bottom = 6
       Caption = 'Username:'
       Layout = tlCenter
       ParentColor = False
@@ -108,10 +107,10 @@ object dlgConnect: TdlgConnect
     object lblPassword: TLabel
       Left = 16
       Height = 20
-      Top = 422
-      Width = 350
+      Top = 450
+      Width = 328
       Align = alTop
-      BorderSpacing.Bottom = 5
+      BorderSpacing.Bottom = 6
       Caption = 'Password:'
       Layout = tlCenter
       ParentColor = False
@@ -119,10 +118,10 @@ object dlgConnect: TdlgConnect
     object lblConnection: TLabel
       Left = 16
       Height = 20
-      Top = 261
-      Width = 350
+      Top = 279
+      Width = 328
       Align = alTop
-      BorderSpacing.Bottom = 5
+      BorderSpacing.Bottom = 6
       Caption = 'Select a connection:'
       Layout = tlCenter
       ParentColor = False
@@ -130,10 +129,10 @@ object dlgConnect: TdlgConnect
     object cbConnection: TComboBox
       Left = 16
       Height = 28
-      Top = 286
-      Width = 350
+      Top = 305
+      Width = 328
       Align = alTop
-      BorderSpacing.Bottom = 5
+      BorderSpacing.Bottom = 6
       ItemHeight = 20
       Style = csDropDownList
       TabOrder = 0
@@ -144,11 +143,11 @@ object dlgConnect: TdlgConnect
       Cursor = crHandPoint
       Left = 16
       Height = 20
-      Top = 319
-      Width = 350
+      Top = 339
+      Width = 328
       Align = alTop
       Alignment = taRightJustify
-      BorderSpacing.Bottom = 20
+      BorderSpacing.Bottom = 25
       Caption = 'Manage connections'
       Font.Color = 13066075
       ParentColor = False
@@ -163,9 +162,10 @@ object dlgConnect: TdlgConnect
   object pBottom: TPanel
     Left = 0
     Height = 52
-    Top = 493
-    Width = 382
+    Top = 522
+    Width = 360
     Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -175,7 +175,7 @@ object dlgConnect: TdlgConnect
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 52
-    ClientWidth = 382
+    ClientWidth = 360
     Color = 15987699
     ParentBackground = False
     ParentColor = False
@@ -184,7 +184,7 @@ object dlgConnect: TdlgConnect
       Left = 16
       Height = 36
       Top = 8
-      Width = 171
+      Width = 160
       StateClicked.Background.Color = 14259089
       StateClicked.Background.Gradient1.StartColor = 8404992
       StateClicked.Background.Gradient1.EndColor = 4194304
@@ -272,7 +272,7 @@ object dlgConnect: TdlgConnect
       StateNormal.FontEx.PaddingRight = 4
       Caption = 'Connect'
       Color = 15987699
-      Constraints.MinWidth = 166
+      Constraints.MinWidth = 160
       DropDownWidth = 16
       DropDownArrowSize = 8
       Enabled = False
@@ -288,10 +288,10 @@ object dlgConnect: TdlgConnect
       TabOrder = 0
     end
     object sbCancel: TBCButtonFocus
-      Left = 195
+      Left = 184
       Height = 36
       Top = 8
-      Width = 171
+      Width = 160
       StateClicked.Background.Color = 16245964
       StateClicked.Background.Gradient1.StartColor = 16422228
       StateClicked.Background.Gradient1.EndColor = 14771751
@@ -383,7 +383,7 @@ object dlgConnect: TdlgConnect
       StateNormal.FontEx.PaddingRight = 4
       Caption = 'Cancel'
       Color = 15987699
-      Constraints.MinWidth = 166
+      Constraints.MinWidth = 160
       DropDownWidth = 16
       DropDownArrowSize = 8
       GlobalOpacity = 255
@@ -401,8 +401,8 @@ object dlgConnect: TdlgConnect
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 491
-    Width = 382
+    Top = 520
+    Width = 360
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -413,7 +413,7 @@ object dlgConnect: TdlgConnect
     Algorithm = 'Blowfish'
     MaxKeySize = 448
     BlockSize = 64
-    Left = 20
-    Top = 180
+    Left = 25
+    Top = 225
   end
 end

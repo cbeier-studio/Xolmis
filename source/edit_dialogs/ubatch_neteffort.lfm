@@ -1,13 +1,13 @@
 object batchNetEffort: TbatchNetEffort
   Left = 352
-  Height = 507
+  Height = 409
   Top = 33
-  Width = 488
+  Width = 400
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New series of mistnets'
-  ClientHeight = 507
-  ClientWidth = 488
-  DesignTimePPI = 120
+  ClientHeight = 409
+  ClientWidth = 400
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   PopupMode = pmAuto
@@ -15,19 +15,20 @@ object batchNetEffort: TbatchNetEffort
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 459
-    Width = 488
-    Align = alBottom
+    Top = 366
+    Width = 400
+    Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
   object pBottom: TPanel
     Left = 0
-    Height = 46
-    Top = 461
-    Width = 488
-    Align = alBottom
+    Height = 41
+    Top = 368
+    Width = 400
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -36,46 +37,47 @@ object batchNetEffort: TbatchNetEffort
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 46
-    ClientWidth = 488
+    ClientHeight = 41
+    ClientWidth = 400
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16
-      Height = 30
+      Height = 25
       Top = 8
-      Width = 224
+      Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 224
+      Constraints.MinWidth = 179
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 248
-      Height = 30
+      Left = 204
+      Height = 25
       Top = 8
-      Width = 224
+      Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 224
+      Constraints.MinWidth = 179
       ModalResult = 2
       TabOrder = 1
     end
   end
   object pEdit: TPanel
     Left = 0
-    Height = 459
+    Height = 366
     Top = 0
-    Width = 488
-    Align = alClient
+    Width = 400
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 459
-    ClientWidth = 488
+    ClientHeight = 366
+    ClientWidth = 400
     Color = 16444392
-    Constraints.MinHeight = 458
+    Constraints.MinHeight = 360
     Font.Color = 6579300
     ParentBackground = False
     ParentColor = False
@@ -83,39 +85,40 @@ object batchNetEffort: TbatchNetEffort
     TabOrder = 0
     object pNetSize: TPanel
       Left = 0
-      Height = 58
-      Top = 326
-      Width = 488
+      Height = 45
+      Top = 260
+      Width = 400
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
-      ClientHeight = 58
-      ClientWidth = 488
+      ClientHeight = 45
+      ClientWidth = 400
       ParentBackground = False
       TabOrder = 4
       object lblNetLength: TLabel
         Left = 16
-        Height = 20
-        Top = 4
-        Width = 220
+        Height = 15
+        Top = 3
+        Width = 176
         AutoSize = False
-        BorderSpacing.Top = 4
+        BorderSpacing.Top = 3
         Caption = 'Mistnet length:'
         Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
       object lblNetHeight: TLabel
-        Left = 252
-        Height = 20
-        Top = 4
-        Width = 220
+        Left = 208
+        Height = 15
+        Top = 3
+        Width = 176
         AutoSize = False
-        BorderSpacing.Top = 4
+        BorderSpacing.Top = 3
         Caption = 'Mistnet height:'
         Font.Color = 6579300
         ParentColor = False
@@ -123,56 +126,57 @@ object batchNetEffort: TbatchNetEffort
       end
       object eNetLength: TFloatSpinEdit
         Left = 16
-        Height = 28
-        Top = 28
-        Width = 220
-        Constraints.MinWidth = 220
+        Height = 23
+        Top = 22
+        Width = 176
+        Constraints.MinWidth = 176
         DecimalPlaces = 1
         TabOrder = 0
       end
       object eNetHeight: TFloatSpinEdit
-        Left = 252
-        Height = 28
-        Top = 28
-        Width = 220
-        Constraints.MinWidth = 220
+        Left = 208
+        Height = 23
+        Top = 22
+        Width = 176
+        Constraints.MinWidth = 176
         DecimalPlaces = 1
         TabOrder = 1
       end
     end
     object pFromToNumber: TPanel
       Left = 0
-      Height = 58
-      Top = 94
-      Width = 488
+      Height = 45
+      Top = 80
+      Width = 400
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
-      ClientHeight = 58
-      ClientWidth = 488
+      ClientHeight = 45
+      ClientWidth = 400
       ParentBackground = False
       TabOrder = 0
       object lblStartNumber: TLabel
         Left = 16
-        Height = 20
-        Top = 4
-        Width = 220
-        BorderSpacing.Top = 4
+        Height = 15
+        Top = 3
+        Width = 176
+        BorderSpacing.Top = 3
         Caption = 'Start number:'
         Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
       object lblEndNumber: TLabel
-        Left = 252
-        Height = 20
-        Top = 4
-        Width = 220
-        BorderSpacing.Top = 4
+        Left = 208
+        Height = 15
+        Top = 3
+        Width = 176
+        BorderSpacing.Top = 3
         Caption = 'Final number:'
         Font.Color = 6579300
         ParentColor = False
@@ -180,21 +184,21 @@ object batchNetEffort: TbatchNetEffort
       end
       object eStartNumber: TSpinEdit
         Left = 16
-        Height = 28
-        Top = 28
-        Width = 220
-        Constraints.MinWidth = 220
+        Height = 23
+        Top = 22
+        Width = 176
+        Constraints.MinWidth = 176
         MaxValue = 9999
         MinValue = 1
         TabOrder = 0
         Value = 1
       end
       object eEndNumber: TSpinEdit
-        Left = 252
-        Height = 28
-        Top = 28
-        Width = 220
-        Constraints.MinWidth = 220
+        Left = 208
+        Height = 23
+        Top = 22
+        Width = 176
+        Constraints.MinWidth = 176
         MaxValue = 9999
         MinValue = 1
         TabOrder = 1
@@ -203,10 +207,11 @@ object batchNetEffort: TbatchNetEffort
     end
     object pNetMesh: TPanel
       Left = 0
-      Height = 58
-      Top = 384
-      Width = 488
+      Height = 45
+      Top = 305
+      Width = 400
       Align = alTop
+      AutoSize = True
       BorderSpacing.Bottom = 16
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 16
@@ -214,16 +219,16 @@ object batchNetEffort: TbatchNetEffort
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 58
-      ClientWidth = 488
+      ClientHeight = 45
+      ClientWidth = 400
       ParentBackground = False
       TabOrder = 5
       object lblNetMesh: TLabel
         Left = 16
-        Height = 20
-        Top = 4
-        Width = 220
-        BorderSpacing.Top = 4
+        Height = 15
+        Top = 3
+        Width = 176
+        BorderSpacing.Top = 3
         Caption = 'Mesh size:'
         Font.Color = 6579300
         ParentColor = False
@@ -231,11 +236,11 @@ object batchNetEffort: TbatchNetEffort
       end
       object cbNetMesh: TComboBox
         Left = 16
-        Height = 28
-        Top = 28
-        Width = 220
-        Constraints.MinWidth = 220
-        ItemHeight = 20
+        Height = 23
+        Top = 22
+        Width = 176
+        Constraints.MinWidth = 176
+        ItemHeight = 15
         Items.Strings = (
           '14x14'
           '16x16'
@@ -253,35 +258,36 @@ object batchNetEffort: TbatchNetEffort
     end
     object pOpenCloseTime1: TPanel
       Left = 0
-      Height = 58
-      Top = 152
-      Width = 488
+      Height = 45
+      Top = 125
+      Width = 400
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
-      ClientHeight = 58
-      ClientWidth = 488
+      ClientHeight = 45
+      ClientWidth = 400
       ParentBackground = False
       TabOrder = 1
       object lblOpenTime1: TLabel
         Left = 16
-        Height = 20
-        Top = 4
-        Width = 220
-        BorderSpacing.Top = 4
+        Height = 15
+        Top = 3
+        Width = 176
+        BorderSpacing.Top = 3
         Caption = 'Opening time 1:'
         ParentColor = False
       end
       object lblCloseTime1: TLabel
-        Left = 252
-        Height = 20
-        Top = 4
-        Width = 220
-        BorderSpacing.Top = 4
+        Left = 208
+        Height = 15
+        Top = 3
+        Width = 176
+        BorderSpacing.Top = 3
         Caption = 'Closing time 1:'
         Font.Color = 6579300
         ParentColor = False
@@ -289,11 +295,11 @@ object batchNetEffort: TbatchNetEffort
       end
       object eOpenTime1: TTimeEdit
         Left = 16
-        Height = 28
-        Top = 28
-        Width = 220
-        ButtonWidth = 29
-        Constraints.MinWidth = 220
+        Height = 23
+        Top = 22
+        Width = 176
+        ButtonWidth = 23
+        Constraints.MinWidth = 176
         NumGlyphs = 1
         MaxLength = 0
         Spacing = 0
@@ -301,12 +307,12 @@ object batchNetEffort: TbatchNetEffort
         TextHint = 'HH:MM'
       end
       object eCloseTime1: TTimeEdit
-        Left = 252
-        Height = 28
-        Top = 28
-        Width = 220
-        ButtonWidth = 29
-        Constraints.MinWidth = 220
+        Left = 208
+        Height = 23
+        Top = 22
+        Width = 176
+        ButtonWidth = 23
+        Constraints.MinWidth = 176
         NumGlyphs = 1
         MaxLength = 0
         Spacing = 0
@@ -316,35 +322,36 @@ object batchNetEffort: TbatchNetEffort
     end
     object pOpenCloseTime2: TPanel
       Left = 0
-      Height = 58
-      Top = 210
-      Width = 488
+      Height = 45
+      Top = 170
+      Width = 400
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
-      ClientHeight = 58
-      ClientWidth = 488
+      ClientHeight = 45
+      ClientWidth = 400
       ParentBackground = False
       TabOrder = 2
       object lblOpenTime2: TLabel
         Left = 16
-        Height = 20
-        Top = 4
-        Width = 220
-        BorderSpacing.Top = 4
+        Height = 15
+        Top = 3
+        Width = 176
+        BorderSpacing.Top = 3
         Caption = 'Opening time 2:'
         ParentColor = False
       end
       object lblCloseTime2: TLabel
-        Left = 252
-        Height = 20
-        Top = 4
-        Width = 220
-        BorderSpacing.Top = 4
+        Left = 208
+        Height = 15
+        Top = 3
+        Width = 176
+        BorderSpacing.Top = 3
         Caption = 'Closing time 2:'
         Font.Color = 6579300
         ParentColor = False
@@ -352,11 +359,11 @@ object batchNetEffort: TbatchNetEffort
       end
       object eOpenTime2: TTimeEdit
         Left = 16
-        Height = 28
-        Top = 28
-        Width = 220
-        ButtonWidth = 29
-        Constraints.MinWidth = 220
+        Height = 23
+        Top = 22
+        Width = 176
+        ButtonWidth = 23
+        Constraints.MinWidth = 176
         NumGlyphs = 1
         MaxLength = 0
         Spacing = 0
@@ -364,12 +371,12 @@ object batchNetEffort: TbatchNetEffort
         TextHint = 'HH:MM'
       end
       object eCloseTime2: TTimeEdit
-        Left = 252
-        Height = 28
-        Top = 28
-        Width = 220
-        ButtonWidth = 29
-        Constraints.MinWidth = 220
+        Left = 208
+        Height = 23
+        Top = 22
+        Width = 176
+        ButtonWidth = 23
+        Constraints.MinWidth = 176
         NumGlyphs = 1
         MaxLength = 0
         Spacing = 0
@@ -379,35 +386,36 @@ object batchNetEffort: TbatchNetEffort
     end
     object pOpenCloseTime3: TPanel
       Left = 0
-      Height = 58
-      Top = 268
-      Width = 488
+      Height = 45
+      Top = 215
+      Width = 400
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
-      ClientHeight = 58
-      ClientWidth = 488
+      ClientHeight = 45
+      ClientWidth = 400
       ParentBackground = False
       TabOrder = 3
       object lblOpenTime3: TLabel
         Left = 16
-        Height = 20
-        Top = 4
-        Width = 220
-        BorderSpacing.Top = 4
+        Height = 15
+        Top = 3
+        Width = 176
+        BorderSpacing.Top = 3
         Caption = 'Opening time 3:'
         ParentColor = False
       end
       object lblCloseTime3: TLabel
-        Left = 252
-        Height = 20
-        Top = 4
-        Width = 220
-        BorderSpacing.Top = 4
+        Left = 208
+        Height = 15
+        Top = 3
+        Width = 176
+        BorderSpacing.Top = 3
         Caption = 'Closing time 3:'
         Font.Color = 6579300
         ParentColor = False
@@ -415,11 +423,11 @@ object batchNetEffort: TbatchNetEffort
       end
       object eOpenTime3: TTimeEdit
         Left = 16
-        Height = 28
-        Top = 28
-        Width = 220
-        ButtonWidth = 29
-        Constraints.MinWidth = 220
+        Height = 23
+        Top = 22
+        Width = 176
+        ButtonWidth = 23
+        Constraints.MinWidth = 176
         NumGlyphs = 1
         MaxLength = 0
         Spacing = 0
@@ -427,12 +435,12 @@ object batchNetEffort: TbatchNetEffort
         TextHint = 'HH:MM'
       end
       object eCloseTime3: TTimeEdit
-        Left = 252
-        Height = 28
-        Top = 28
-        Width = 220
-        ButtonWidth = 29
-        Constraints.MinWidth = 220
+        Left = 208
+        Height = 23
+        Top = 22
+        Width = 176
+        ButtonWidth = 23
+        Constraints.MinWidth = 176
         NumGlyphs = 1
         MaxLength = 0
         Spacing = 0
@@ -441,14 +449,15 @@ object batchNetEffort: TbatchNetEffort
       end
     end
     object pSurvey: TBCPanel
-      Left = 16
-      Height = 70
+      Left = 13
+      Height = 59
       Top = 8
-      Width = 456
+      Width = 374
       Align = alTop
-      BorderSpacing.Left = 16
-      BorderSpacing.Right = 16
-      BorderSpacing.Bottom = 16
+      AutoSize = True
+      BorderSpacing.Left = 13
+      BorderSpacing.Right = 13
+      BorderSpacing.Bottom = 13
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       Background.Color = 16448250
@@ -487,11 +496,11 @@ object batchNetEffort: TbatchNetEffort
       TabOrder = 6
       object lblSurvey: TLabel
         Left = 17
-        Height = 20
+        Height = 15
         Top = 9
-        Width = 422
+        Width = 340
         Align = alTop
-        BorderSpacing.Bottom = 4
+        BorderSpacing.Bottom = 3
         Caption = 'Copy mistnets from survey:'
         Font.Color = 6579300
         ParentColor = False
@@ -499,12 +508,12 @@ object batchNetEffort: TbatchNetEffort
       end
       object eSurvey: TEditButton
         Left = 17
-        Height = 28
-        Top = 33
-        Width = 422
+        Height = 23
+        Top = 27
+        Width = 340
         Align = alTop
-        BorderSpacing.Bottom = 8
-        ButtonWidth = 29
+        BorderSpacing.Bottom = 6
+        ButtonWidth = 23
         Color = clWhite
         Images = frmMain.mPopup
         ImageIndex = 99

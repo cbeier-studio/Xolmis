@@ -22,6 +22,7 @@ type
     eDBServer: TDBEdit;
     eDBPort: TDBEdit;
     eDBUser: TDBEdit;
+    lblTitleAuthentication: TLabel;
     lblDBFile: TLabel;
     lblDBManager: TLabel;
     lblName: TLabel;

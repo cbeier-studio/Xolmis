@@ -1,12 +1,12 @@
 object edtNestRevision: TedtNestRevision
   Left = 352
-  Height = 933
+  Height = 772
   Top = 33
-  Width = 489
+  Width = 400
+  AutoSize = True
   Caption = 'New nest revision'
-  ClientHeight = 933
-  ClientWidth = 489
-  DesignTimePPI = 120
+  ClientHeight = 772
+  ClientWidth = 400
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
@@ -17,19 +17,20 @@ object edtNestRevision: TedtNestRevision
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 881
-    Width = 489
-    Align = alBottom
+    Top = 729
+    Width = 400
+    Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 883
-    Width = 489
-    Align = alBottom
+    Height = 41
+    Top = 731
+    Width = 400
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -40,81 +41,85 @@ object edtNestRevision: TedtNestRevision
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
-    ClientWidth = 489
+    ClientHeight = 41
+    ClientWidth = 400
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16
-      Height = 34
+      Height = 25
       Top = 8
-      Width = 225
+      Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 225
+      Constraints.MinWidth = 180
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 249
-      Height = 34
+      Left = 204
+      Height = 25
       Top = 8
-      Width = 225
+      Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 225
+      Constraints.MinWidth = 180
       ModalResult = 2
       TabOrder = 1
     end
   end
   object sBox: TScrollBox
     Left = 0
-    Height = 881
+    Height = 729
     Top = 0
-    Width = 489
-    HorzScrollBar.Page = 488
-    VertScrollBar.Page = 880
-    Align = alClient
+    Width = 400
+    HorzScrollBar.Page = 1
+    HorzScrollBar.Visible = False
+    VertScrollBar.Page = 729
+    Align = alTop
+    AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 881
-    ClientWidth = 489
+    ClientHeight = 729
+    ClientWidth = 400
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 880
+      Height = 729
       Top = 0
-      Width = 489
+      Width = 400
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 880
-      ClientWidth = 489
+      ClientHeight = 729
+      ClientWidth = 400
       Color = 15066599
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
       object pNestStage: TPanel
         Left = 0
-        Height = 56
-        Top = 240
-        Width = 489
+        Height = 45
+        Top = 199
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 56
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
         object lblNestStage: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 280
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 224
+          BorderSpacing.Top = 3
           Caption = 'Stage: *'
           Font.Color = 6579300
           ParentColor = False
@@ -122,13 +127,13 @@ object edtNestRevision: TedtNestRevision
         end
         object cbNestStage: TDBComboBox
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 280
-          Constraints.MinWidth = 280
+          Height = 23
+          Top = 22
+          Width = 224
+          Constraints.MinWidth = 224
           DataField = 'nest_stage'
           DataSource = dsLink
-          ItemHeight = 20
+          ItemHeight = 15
           Items.Strings = (
             'Building'
             'Laying'
@@ -147,26 +152,27 @@ object edtNestRevision: TedtNestRevision
       end
       object pHostEggsTally: TPanel
         Left = 0
-        Height = 56
-        Top = 368
-        Width = 489
+        Height = 45
+        Top = 302
+        Width = 400
         Align = alTop
-        BorderSpacing.Top = 16
+        AutoSize = True
+        BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 56
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 6
         object lblHostEggsTally: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 280
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 224
+          BorderSpacing.Top = 3
           Caption = 'Number of eggs (host):'
           Font.Color = 6579300
           ParentColor = False
@@ -174,12 +180,12 @@ object edtNestRevision: TedtNestRevision
         end
         object eHostEggsTally: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 280
+          Height = 23
+          Top = 22
+          Width = 224
           DataField = 'host_eggs_tally'
           DataSource = dsLink
-          Constraints.MinWidth = 280
+          Constraints.MinWidth = 224
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -188,25 +194,26 @@ object edtNestRevision: TedtNestRevision
       end
       object pRevisionDate: TPanel
         Left = 0
-        Height = 56
+        Height = 46
         Top = 16
-        Width = 489
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 56
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 0
         object lblRevisionDate: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 280
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 224
+          BorderSpacing.Top = 3
           Caption = 'Nest revision date: *'
           Font.Color = 6579300
           ParentColor = False
@@ -214,15 +221,15 @@ object edtNestRevision: TedtNestRevision
         end
         object eRevisionDate: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 280
+          Height = 24
+          Top = 22
+          Width = 224
           Alignment = taLeftJustify
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 280
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 280
+          ClientHeight = 24
+          ClientWidth = 224
+          Constraints.MinWidth = 224
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 18
@@ -239,26 +246,27 @@ object edtNestRevision: TedtNestRevision
       end
       object pNidoparasite: TPanel
         Left = 0
-        Height = 56
-        Top = 496
-        Width = 489
+        Height = 46
+        Top = 405
+        Width = 400
         Align = alTop
-        BorderSpacing.Top = 16
+        AutoSize = True
+        BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 56
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 8
         object lblNidoparasite: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 456
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
           Caption = 'Nidoparasite taxon:'
           Font.Color = 6579300
           ParentColor = False
@@ -266,14 +274,14 @@ object edtNestRevision: TedtNestRevision
         end
         object eNidoparasite: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 456
+          Height = 24
+          Top = 22
+          Width = 365
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
+          ClientHeight = 24
+          ClientWidth = 365
+          Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -289,25 +297,26 @@ object edtNestRevision: TedtNestRevision
       end
       object pObserver1: TPanel
         Left = 0
-        Height = 56
-        Top = 128
-        Width = 489
+        Height = 46
+        Top = 107
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 56
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 2
         object lblObserver1: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 280
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 224
+          BorderSpacing.Top = 3
           Caption = 'Observer 1: *'
           Font.Color = 6579300
           ParentColor = False
@@ -315,15 +324,15 @@ object edtNestRevision: TedtNestRevision
         end
         object eObserver1: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 280
+          Height = 24
+          Top = 22
+          Width = 224
           Alignment = taLeftJustify
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 280
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 280
+          ClientHeight = 24
+          ClientWidth = 224
+          Constraints.MinWidth = 224
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -339,28 +348,28 @@ object edtNestRevision: TedtNestRevision
       end
       object pNotes: TPanel
         Left = 0
-        Height = 142
-        Top = 722
-        Width = 489
+        Height = 124
+        Top = 589
+        Width = 400
         Align = alTop
-        BorderSpacing.Top = 16
+        AutoSize = True
+        BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 142
-        ClientWidth = 489
+        ClientHeight = 124
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 12
         object lblNotes: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 42
-          AutoSize = False
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 368
+          Align = alTop
+          BorderSpacing.Top = 3
           Caption = 'Notes:'
           Font.Color = 6579300
           ParentColor = False
@@ -368,11 +377,11 @@ object edtNestRevision: TedtNestRevision
         end
         object mNotes: TDBMemo
           Left = 16
-          Height = 113
-          Top = 29
-          Width = 456
-          Anchors = [akTop, akLeft, akRight]
-          Constraints.MinWidth = 456
+          Height = 90
+          Top = 22
+          Width = 368
+          Align = alTop
+          Constraints.MinWidth = 365
           DataField = 'notes'
           DataSource = dsLink
           OnKeyDown = FormKeyDown
@@ -383,25 +392,27 @@ object edtNestRevision: TedtNestRevision
       end
       object pPhilornis: TPanel
         Left = 0
-        Height = 40
-        Top = 666
-        Width = 489
+        Height = 35
+        Top = 541
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 40
-        ClientWidth = 489
+        ClientHeight = 35
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 11
         object ckHasPhilornisLarvae: TDBCheckBox
           Left = 16
-          Height = 24
+          Height = 19
           Top = 8
-          Width = 239
+          Width = 191
+          AutoSize = True
           Caption = 'Parasitized by Philornis sp. larvae'
           DataField = 'have_philornis_larvae'
           DataSource = dsLink
@@ -412,25 +423,26 @@ object edtNestRevision: TedtNestRevision
       end
       object pRevisionTime: TPanel
         Left = 0
-        Height = 56
-        Top = 72
-        Width = 489
+        Height = 45
+        Top = 62
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 56
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 1
         object lblRevisionTime: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 280
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 224
+          BorderSpacing.Top = 3
           Caption = 'Nest revision time:'
           Font.Color = 6579300
           ParentColor = False
@@ -438,12 +450,12 @@ object edtNestRevision: TedtNestRevision
         end
         object eRevisionTime: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 280
+          Height = 23
+          Top = 22
+          Width = 224
           DataField = 'revision_time'
           DataSource = dsLink
-          Constraints.MinWidth = 280
+          Constraints.MinWidth = 224
           MaxLength = 0
           TabOrder = 0
           TextHint = 'HH:MM'
@@ -453,25 +465,26 @@ object edtNestRevision: TedtNestRevision
       end
       object pObserver2: TPanel
         Left = 0
-        Height = 56
-        Top = 184
-        Width = 489
+        Height = 46
+        Top = 153
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 56
-        ClientWidth = 489
+        ClientHeight = 46
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 3
         object lblObserver2: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 280
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 224
+          BorderSpacing.Top = 3
           Caption = 'Observer 2:'
           Font.Color = 6579300
           ParentColor = False
@@ -479,15 +492,15 @@ object edtNestRevision: TedtNestRevision
         end
         object eObserver2: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 280
+          Height = 24
+          Top = 22
+          Width = 224
           Alignment = taLeftJustify
+          AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 280
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 280
+          ClientHeight = 24
+          ClientWidth = 224
+          Constraints.MinWidth = 224
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -503,25 +516,26 @@ object edtNestRevision: TedtNestRevision
       end
       object pNestStatus: TPanel
         Left = 0
-        Height = 56
-        Top = 296
-        Width = 489
+        Height = 45
+        Top = 244
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 56
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 5
         object lblNestStatus: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 280
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 224
+          BorderSpacing.Top = 3
           Caption = 'Status: *'
           Font.Color = 6579300
           ParentColor = False
@@ -529,13 +543,13 @@ object edtNestRevision: TedtNestRevision
         end
         object cbNestStatus: TDBComboBox
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 280
-          Constraints.MinWidth = 280
+          Height = 23
+          Top = 22
+          Width = 224
+          Constraints.MinWidth = 224
           DataField = 'nest_status'
           DataSource = dsLink
-          ItemHeight = 20
+          ItemHeight = 15
           Items.Strings = (
             'Active'
             'Inactive'
@@ -549,25 +563,26 @@ object edtNestRevision: TedtNestRevision
       end
       object pHostNestlingsTally: TPanel
         Left = 0
-        Height = 56
-        Top = 424
-        Width = 489
+        Height = 45
+        Top = 347
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 56
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 7
         object lblHostNestlingsTally: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 280
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 224
+          BorderSpacing.Top = 3
           Caption = 'Number of nestlings (host):'
           Font.Color = 6579300
           ParentColor = False
@@ -575,12 +590,12 @@ object edtNestRevision: TedtNestRevision
         end
         object eHostNestlingsTally: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 280
+          Height = 23
+          Top = 22
+          Width = 224
           DataField = 'host_nestlings_tally'
           DataSource = dsLink
-          Constraints.MinWidth = 280
+          Constraints.MinWidth = 224
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -589,25 +604,26 @@ object edtNestRevision: TedtNestRevision
       end
       object pNidoparasiteEggsTally: TPanel
         Left = 0
-        Height = 57
-        Top = 552
-        Width = 489
+        Height = 45
+        Top = 451
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 57
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 9
         object lblNidoparasiteEggsTally: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 280
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 224
+          BorderSpacing.Top = 3
           Caption = 'Number of nidoparasite eggs:'
           Font.Color = 6579300
           ParentColor = False
@@ -615,12 +631,12 @@ object edtNestRevision: TedtNestRevision
         end
         object eNidoparasiteEggsTally: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 280
+          Height = 23
+          Top = 22
+          Width = 224
           DataField = 'nidoparasite_eggs_tally'
           DataSource = dsLink
-          Constraints.MinWidth = 280
+          Constraints.MinWidth = 224
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -629,25 +645,26 @@ object edtNestRevision: TedtNestRevision
       end
       object pNidoparasiteNestlingsTally: TPanel
         Left = 0
-        Height = 57
-        Top = 609
-        Width = 489
+        Height = 45
+        Top = 496
+        Width = 400
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 57
-        ClientWidth = 489
+        ClientHeight = 45
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 10
         object lblNidoparasiteNestlingsTally: TLabel
           Left = 16
-          Height = 20
-          Top = 4
-          Width = 280
-          BorderSpacing.Top = 4
+          Height = 15
+          Top = 3
+          Width = 224
+          BorderSpacing.Top = 3
           Caption = 'Number of nidoparasite nestlings:'
           Font.Color = 6579300
           ParentColor = False
@@ -655,12 +672,12 @@ object edtNestRevision: TedtNestRevision
         end
         object eNidoparasiteNestlingsTally: TDBEdit
           Left = 16
-          Height = 28
-          Top = 28
-          Width = 280
+          Height = 23
+          Top = 22
+          Width = 224
           DataField = 'nidoparasite_nestlings_tally'
           DataSource = dsLink
-          Constraints.MinWidth = 280
+          Constraints.MinWidth = 224
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -672,7 +689,7 @@ object edtNestRevision: TedtNestRevision
   object dsLink: TDataSource
     DataSet = DMG.qNestRevisions
     OnDataChange = dsLinkDataChange
-    Left = 392
-    Top = 48
+    Left = 314
+    Top = 38
   end
 end

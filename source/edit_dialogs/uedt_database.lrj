@@ -2,7 +2,7 @@
 {"hash":203147411,"name":"tedtdatabase.caption","sourcebytes":[67,111,110,110,101,99,116,105,111,110,32,115,101,116,116,105,110,103,115],"value":"Connection settings"},
 {"hash":366789,"name":"tedtdatabase.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtdatabase.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
-{"hash":53899134,"name":"tedtdatabase.ptitleauthentication.caption","sourcebytes":[65,117,116,104,101,110,116,105,99,97,116,105,111,110],"value":"Authentication"},
+{"hash":53899134,"name":"tedtdatabase.lbltitleauthentication.caption","sourcebytes":[65,117,116,104,101,110,116,105,99,97,116,105,111,110],"value":"Authentication"},
 {"hash":227193850,"name":"tedtdatabase.lbldbmanager.caption","sourcebytes":[68,97,116,97,98,97,115,101,32,116,121,112,101,58,32,42],"value":"Database type: *"},
 {"hash":164219914,"name":"tedtdatabase.lbldbserver.caption","sourcebytes":[83,101,114,118,101,114,58],"value":"Server:"},
 {"hash":5728634,"name":"tedtdatabase.lbldbport.caption","sourcebytes":[80,111,114,116,58],"value":"Port:"},

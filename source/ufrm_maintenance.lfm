@@ -1,20 +1,18 @@
 object frmMaintenance: TfrmMaintenance
   Left = 352
-  Height = 480
+  Height = 600
   Top = 33
-  Width = 784
+  Width = 980
   Caption = 'Maintenance'
-  ClientHeight = 480
-  ClientWidth = 784
-  DesignTimePPI = 120
+  ClientHeight = 600
+  ClientWidth = 980
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.2'
   object navTabs: TATTabs
     Left = 0
-    Height = 39
+    Height = 44
     Top = 0
-    Width = 784
+    Width = 980
     Align = alTop
     ParentColor = False
     Tabs = <    
@@ -55,6 +53,7 @@ object frmMaintenance: TfrmMaintenance
     OptSpaceInitial = 8
     OptSpaceBeforeText = 8
     OptSpaceAfterText = 8
+    OptSpacer = 8
     OptSpacer2 = 8
     OptSpaceXSize = 14
     OptColoredBandSize = 2
@@ -88,61 +87,62 @@ object frmMaintenance: TfrmMaintenance
   end
   object PG: TNotebook
     Left = 0
-    Height = 389
-    Top = 39
-    Width = 784
-    PageIndex = 0
+    Height = 502
+    Top = 44
+    Width = 980
+    PageIndex = 3
     Align = alClient
     TabOrder = 1
     object tabTaxonomy: TPage
       object scrollTaxonomy: TScrollBox
         Left = 0
-        Height = 389
+        Height = 497
         Top = 0
-        Width = 784
-        HorzScrollBar.Page = 361
-        VertScrollBar.Page = 180
+        Width = 980
+        HorzScrollBar.Page = 435
+        VertScrollBar.Page = 195
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 389
-        ClientWidth = 784
+        ClientHeight = 497
+        ClientWidth = 980
         TabOrder = 0
         object pTaxonomy: TPanel
           Left = 0
-          Height = 389
+          Height = 497
           Top = 0
-          Width = 784
+          Width = 980
           Align = alClient
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
           ChildSizing.VerticalSpacing = 2
-          ClientHeight = 389
-          ClientWidth = 784
+          ClientHeight = 497
+          ClientWidth = 980
           Color = 16444392
           ParentBackground = False
           ParentColor = False
           TabOrder = 0
           object lblTitleTaxaHierarchy: TLabel
             Left = 16
-            Height = 28
+            Height = 35
             Top = 16
-            Width = 752
+            Width = 948
             Align = alTop
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Bottom = 10
             Caption = 'Hierarchies'
             Font.Color = 13066075
-            Font.Height = -20
+            Font.Height = -25
             ParentColor = False
             ParentFont = False
           end
           object pRewriteTaxaHierarchy: TBCPanel
             Left = 16
-            Height = 52
-            Top = 52
-            Width = 752
+            Height = 54
+            Top = 61
+            Width = 948
             Align = alTop
-            BorderSpacing.Bottom = 8
+            AutoSize = True
+            BorderSpacing.Bottom = 10
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -183,9 +183,9 @@ object frmMaintenance: TfrmMaintenance
             TabOrder = 0
             object icoRewriteTaxaHierarchy: TImage
               Left = 16
-              Height = 28
+              Height = 30
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 81
@@ -194,8 +194,8 @@ object frmMaintenance: TfrmMaintenance
               Proportional = True
             end
             object lblRewriteTaxaHierarchy: TLabel
-              Left = 51
-              Height = 28
+              Left = 58
+              Height = 30
               Top = 12
               Width = 232
               Align = alLeft
@@ -204,10 +204,10 @@ object frmMaintenance: TfrmMaintenance
               ParentColor = False
             end
             object cbTaxaHierarchy: TComboBox
-              Left = 431
+              Left = 553
               Height = 28
               Top = 12
-              Width = 173
+              Width = 216
               Align = alRight
               Color = clWhite
               ItemHeight = 20
@@ -221,25 +221,26 @@ object frmMaintenance: TfrmMaintenance
               Text = 'Zoological'
             end
             object sbRewriteTaxaHierarchy: TBitBtn
-              Left = 612
-              Height = 28
+              Left = 777
+              Height = 30
               Top = 12
-              Width = 124
+              Width = 155
               Align = alRight
               AutoSize = True
               Caption = 'Check'
-              Constraints.MinWidth = 124
+              Constraints.MinWidth = 155
               OnClick = sbRewriteTaxaHierarchyClick
               TabOrder = 1
             end
           end
           object pRewriteTaxaSequence: TBCPanel
             Left = 16
-            Height = 52
-            Top = 112
-            Width = 752
+            Height = 54
+            Top = 125
+            Width = 948
             Align = alTop
-            BorderSpacing.Bottom = 8
+            AutoSize = True
+            BorderSpacing.Bottom = 10
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -280,9 +281,9 @@ object frmMaintenance: TfrmMaintenance
             TabOrder = 1
             object icoRewriteTaxaSequence: TImage
               Left = 16
-              Height = 28
+              Height = 30
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 107
@@ -291,8 +292,8 @@ object frmMaintenance: TfrmMaintenance
               Proportional = True
             end
             object lblRewriteTaxaSequence: TLabel
-              Left = 51
-              Height = 28
+              Left = 58
+              Height = 30
               Top = 12
               Width = 145
               Align = alLeft
@@ -301,10 +302,10 @@ object frmMaintenance: TfrmMaintenance
               ParentColor = False
             end
             object cbTaxaSequence: TComboBox
-              Left = 431
+              Left = 553
               Height = 28
               Top = 12
-              Width = 173
+              Width = 216
               Align = alRight
               Color = clWhite
               ItemHeight = 20
@@ -319,14 +320,14 @@ object frmMaintenance: TfrmMaintenance
               Visible = False
             end
             object sbRewriteTaxaSequence: TBitBtn
-              Left = 612
-              Height = 28
+              Left = 777
+              Height = 30
               Top = 12
-              Width = 124
+              Width = 155
               Align = alRight
               AutoSize = True
               Caption = 'Review'
-              Constraints.MinWidth = 124
+              Constraints.MinWidth = 155
               TabOrder = 1
             end
           end
@@ -336,52 +337,53 @@ object frmMaintenance: TfrmMaintenance
     object tabGeo: TPage
       object scrollGeo: TScrollBox
         Left = 0
-        Height = 389
+        Height = 497
         Top = 0
-        Width = 784
-        HorzScrollBar.Page = 394
-        VertScrollBar.Page = 120
+        Width = 980
+        HorzScrollBar.Page = 401
+        VertScrollBar.Page = 131
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 389
-        ClientWidth = 784
+        ClientHeight = 497
+        ClientWidth = 980
         TabOrder = 0
         object pGeo: TPanel
           Left = 0
-          Height = 389
+          Height = 497
           Top = 0
-          Width = 784
+          Width = 980
           Align = alClient
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
           ChildSizing.VerticalSpacing = 2
-          ClientHeight = 389
-          ClientWidth = 784
+          ClientHeight = 497
+          ClientWidth = 980
           Color = 16444392
           ParentBackground = False
           ParentColor = False
           TabOrder = 0
           object lblTitleGeoHierarchy: TLabel
             Left = 16
-            Height = 28
+            Height = 35
             Top = 16
-            Width = 752
+            Width = 948
             Align = alTop
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Bottom = 10
             Caption = 'Hierarchies'
             Font.Color = 13066075
-            Font.Height = -20
+            Font.Height = -25
             ParentColor = False
             ParentFont = False
           end
           object pRewriteGeoHierarchy: TBCPanel
             Left = 16
-            Height = 52
-            Top = 52
-            Width = 752
+            Height = 54
+            Top = 61
+            Width = 948
             Align = alTop
-            BorderSpacing.Bottom = 8
+            AutoSize = True
+            BorderSpacing.Bottom = 10
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -422,9 +424,9 @@ object frmMaintenance: TfrmMaintenance
             TabOrder = 0
             object icoRewriteGeoHierarchy: TImage
               Left = 16
-              Height = 28
+              Height = 30
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 81
@@ -433,8 +435,8 @@ object frmMaintenance: TfrmMaintenance
               Proportional = True
             end
             object lblRewriteGeoHierarchy: TLabel
-              Left = 51
-              Height = 28
+              Left = 58
+              Height = 30
               Top = 12
               Width = 295
               Align = alLeft
@@ -443,14 +445,14 @@ object frmMaintenance: TfrmMaintenance
               ParentColor = False
             end
             object sbRewriteGeoHierarchy: TBitBtn
-              Left = 612
-              Height = 28
+              Left = 777
+              Height = 30
               Top = 12
-              Width = 124
+              Width = 155
               Align = alRight
               AutoSize = True
               Caption = 'Check'
-              Constraints.MinWidth = 124
+              Constraints.MinWidth = 155
               OnClick = sbRewriteTaxaHierarchyClick
               TabOrder = 0
             end
@@ -461,40 +463,41 @@ object frmMaintenance: TfrmMaintenance
     object tabIndividuals: TPage
       object pGeo1: TPanel
         Left = 0
-        Height = 389
+        Height = 497
         Top = 0
-        Width = 784
+        Width = 980
         Align = alClient
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
         ChildSizing.VerticalSpacing = 2
-        ClientHeight = 389
-        ClientWidth = 784
+        ClientHeight = 497
+        ClientWidth = 980
         Color = 16444392
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
         object lblTitleGeoHierarchy1: TLabel
           Left = 16
-          Height = 28
+          Height = 35
           Top = 16
-          Width = 752
+          Width = 948
           Align = alTop
-          BorderSpacing.Bottom = 8
+          BorderSpacing.Bottom = 10
           Caption = 'Full names'
           Font.Color = 13066075
-          Font.Height = -20
+          Font.Height = -25
           ParentColor = False
           ParentFont = False
         end
         object pRewriteGeoHierarchy1: TBCPanel
           Left = 16
-          Height = 52
-          Top = 52
-          Width = 752
+          Height = 54
+          Top = 61
+          Width = 948
           Align = alTop
-          BorderSpacing.Bottom = 8
+          AutoSize = True
+          BorderSpacing.Bottom = 10
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 12
           ChildSizing.HorizontalSpacing = 8
@@ -535,9 +538,9 @@ object frmMaintenance: TfrmMaintenance
           TabOrder = 0
           object icoRewriteGeoHierarchy1: TImage
             Left = 16
-            Height = 28
+            Height = 30
             Top = 12
-            Width = 27
+            Width = 34
             Align = alLeft
             Center = True
             ImageIndex = 81
@@ -546,8 +549,8 @@ object frmMaintenance: TfrmMaintenance
             Proportional = True
           end
           object lblRewriteGeoHierarchy1: TLabel
-            Left = 51
-            Height = 28
+            Left = 58
+            Height = 30
             Top = 12
             Width = 219
             Align = alLeft
@@ -556,14 +559,14 @@ object frmMaintenance: TfrmMaintenance
             ParentColor = False
           end
           object sbRewriteIndividualsFullname: TBitBtn
-            Left = 612
-            Height = 28
+            Left = 777
+            Height = 30
             Top = 12
-            Width = 124
+            Width = 155
             Align = alRight
             AutoSize = True
             Caption = 'Rewrite'
-            Constraints.MinWidth = 124
+            Constraints.MinWidth = 155
             OnClick = sbRewriteIndividualsFullnameClick
             TabOrder = 0
           end
@@ -573,52 +576,53 @@ object frmMaintenance: TfrmMaintenance
     object tabImages: TPage
       object scrollImages: TScrollBox
         Left = 0
-        Height = 389
+        Height = 502
         Top = 0
-        Width = 784
-        HorzScrollBar.Page = 386
-        VertScrollBar.Page = 120
+        Width = 980
+        HorzScrollBar.Page = 393
+        VertScrollBar.Page = 131
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 389
-        ClientWidth = 784
+        ClientHeight = 502
+        ClientWidth = 980
         TabOrder = 0
         object pImages: TPanel
           Left = 0
-          Height = 389
+          Height = 502
           Top = 0
-          Width = 784
+          Width = 980
           Align = alClient
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
           ChildSizing.VerticalSpacing = 2
-          ClientHeight = 389
-          ClientWidth = 784
+          ClientHeight = 502
+          ClientWidth = 980
           Color = 16444392
           ParentBackground = False
           ParentColor = False
           TabOrder = 0
           object lblTitleImageThumbnails: TLabel
             Left = 16
-            Height = 28
+            Height = 35
             Top = 16
-            Width = 752
+            Width = 948
             Align = alTop
-            BorderSpacing.Bottom = 8
+            BorderSpacing.Bottom = 10
             Caption = 'Thumbnails'
             Font.Color = 13066075
-            Font.Height = -20
+            Font.Height = -25
             ParentColor = False
             ParentFont = False
           end
           object pRecreateImageThumbnails: TBCPanel
             Left = 16
-            Height = 52
-            Top = 52
-            Width = 752
+            Height = 54
+            Top = 61
+            Width = 948
             Align = alTop
-            BorderSpacing.Bottom = 8
+            AutoSize = True
+            BorderSpacing.Bottom = 10
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -659,9 +663,9 @@ object frmMaintenance: TfrmMaintenance
             TabOrder = 0
             object icoRecreateImageThumbnails: TImage
               Left = 16
-              Height = 28
+              Height = 30
               Top = 12
-              Width = 27
+              Width = 34
               Align = alLeft
               Center = True
               ImageIndex = 56
@@ -670,8 +674,8 @@ object frmMaintenance: TfrmMaintenance
               Proportional = True
             end
             object lblRecreateImageThumbnails: TLabel
-              Left = 51
-              Height = 28
+              Left = 58
+              Height = 30
               Top = 12
               Width = 287
               Align = alLeft
@@ -680,14 +684,14 @@ object frmMaintenance: TfrmMaintenance
               ParentColor = False
             end
             object sbRecreateImageThumbnails: TBitBtn
-              Left = 612
-              Height = 28
+              Left = 777
+              Height = 30
               Top = 12
-              Width = 124
+              Width = 155
               Align = alRight
               AutoSize = True
               Caption = 'Recreate'
-              Constraints.MinWidth = 124
+              Constraints.MinWidth = 155
               OnClick = sbRecreateImageThumbnailsClick
               TabOrder = 0
             end
@@ -699,8 +703,8 @@ object frmMaintenance: TfrmMaintenance
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 428
-    Width = 784
+    Top = 546
+    Width = 980
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -708,27 +712,29 @@ object frmMaintenance: TfrmMaintenance
   end
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 430
-    Width = 784
+    Height = 52
+    Top = 548
+    Width = 980
     Align = alBottom
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ClientHeight = 50
-    ClientWidth = 784
+    ClientHeight = 52
+    ClientWidth = 980
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 2
     object sbClose: TButton
-      Left = 638
-      Height = 34
+      Left = 802
+      Height = 36
       Top = 8
-      Width = 130
+      Width = 162
       Align = alRight
       Caption = 'Close'
+      Constraints.MinHeight = 36
       ModalResult = 11
       TabOrder = 0
     end

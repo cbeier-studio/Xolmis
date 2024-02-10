@@ -1,13 +1,13 @@
 object edtBands: TedtBands
   Left = 352
-  Height = 884
+  Height = 630
   Top = 33
-  Width = 610
+  Width = 488
+  AutoSize = True
   BorderStyle = bsDialog
   Caption = 'New band'
-  ClientHeight = 884
-  ClientWidth = 610
-  DesignTimePPI = 120
+  ClientHeight = 630
+  ClientWidth = 488
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
@@ -17,10 +17,10 @@ object edtBands: TedtBands
   Position = poScreenCenter
   object pBottom: TPanel
     Left = 0
-    Height = 46
-    Top = 838
-    Width = 610
-    Align = alBottom
+    Height = 41
+    Top = 589
+    Width = 488
+    Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
@@ -30,19 +30,19 @@ object edtBands: TedtBands
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 46
-    ClientWidth = 610
+    ClientHeight = 41
+    ClientWidth = 488
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
-      Height = 30
+      Height = 25
       Top = 8
-      Width = 285
+      Width = 224
       Caption = 'Save'
-      Constraints.MinWidth = 280
+      Constraints.MinWidth = 224
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -50,12 +50,12 @@ object edtBands: TedtBands
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 309
-      Height = 30
+      Left = 248
+      Height = 25
       Top = 8
-      Width = 285
+      Width = 224
       Caption = 'Cancel'
-      Constraints.MinWidth = 280
+      Constraints.MinWidth = 224
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
@@ -65,79 +65,81 @@ object edtBands: TedtBands
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 836
-    Width = 610
-    Align = alBottom
+    Top = 587
+    Width = 488
+    Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 836
+    Height = 587
     Top = 0
-    Width = 610
-    HorzScrollBar.Page = 602
-    VertScrollBar.Page = 835
-    Align = alClient
+    Width = 488
+    HorzScrollBar.Page = 488
+    VertScrollBar.Page = 586
+    Align = alTop
     BorderStyle = bsNone
-    ClientHeight = 836
-    ClientWidth = 610
-    Constraints.MinWidth = 275
+    ClientHeight = 587
+    ClientWidth = 488
+    Constraints.MinWidth = 220
     Color = clDefault
     ParentColor = False
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 835
+      Height = 586
       Top = 0
-      Width = 610
+      Width = 488
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 835
-      ClientWidth = 610
+      ClientHeight = 586
+      ClientWidth = 488
       Color = 15066599
-      Constraints.MinHeight = 835
+      Constraints.MinHeight = 560
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
-        Height = 178
-        Top = 630
-        Width = 610
+        Height = 148
+        Top = 422
+        Width = 488
         Align = alTop
-        BorderSpacing.Top = 20
+        AutoSize = True
+        BorderSpacing.Top = 16
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 178
-        ClientWidth = 610
+        ClientHeight = 148
+        ClientWidth = 488
         ParentBackground = False
         TabOrder = 8
         object lblNotes: TLabel
           Left = 16
-          Height = 20
-          Top = 5
-          Width = 42
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Height = 15
+          Top = 4
+          Width = 456
+          Align = alTop
+          BorderSpacing.Top = 4
           Caption = 'Notes:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object mNotes: TDBMemo
-          Left = 20
-          Height = 141
-          Top = 36
-          Width = 570
-          Anchors = [akTop, akLeft, akRight]
-          Constraints.MinWidth = 570
+          Left = 16
+          Height = 113
+          Top = 23
+          Width = 456
+          Align = alTop
+          Constraints.MinWidth = 456
           DataField = 'notes'
           DataSource = dsLink
           OnKeyDown = FormKeyDown
@@ -148,39 +150,38 @@ object edtBands: TedtBands
       end
       object pSizeNumber: TPanel
         Left = 0
-        Height = 72
+        Height = 46
         Top = 16
-        Width = 610
+        Width = 488
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 72
-        ClientWidth = 610
+        ClientHeight = 46
+        ClientWidth = 488
         ParentBackground = False
         TabOrder = 0
         object lblBandSize: TLabel
           Left = 16
-          Height = 20
-          Top = 5
-          Width = 275
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Height = 15
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
           Caption = 'Size: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandNumber: TLabel
-          Left = 307
-          Height = 20
-          Top = 5
-          Width = 275
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Left = 252
+          Height = 15
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
           Caption = 'Number: *'
           Font.Color = 6579300
           ParentColor = False
@@ -188,13 +189,13 @@ object edtBands: TedtBands
         end
         object cbBandSize: TDBComboBox
           Left = 16
-          Height = 28
-          Top = 29
-          Width = 275
-          Constraints.MinWidth = 275
+          Height = 23
+          Top = 23
+          Width = 220
+          Constraints.MinWidth = 220
           DataField = 'band_size'
           DataSource = dsLink
-          ItemHeight = 20
+          ItemHeight = 15
           Items.Strings = (
             'A'
             'C'
@@ -223,13 +224,13 @@ object edtBands: TedtBands
           TabOrder = 0
         end
         object eBandNumber: TDBEdit
-          Left = 307
-          Height = 28
-          Top = 29
-          Width = 275
+          Left = 252
+          Height = 23
+          Top = 23
+          Width = 220
           DataField = 'band_number'
           DataSource = dsLink
-          Constraints.MinWidth = 275
+          Constraints.MinWidth = 220
           MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -238,39 +239,38 @@ object edtBands: TedtBands
       end
       object pPrefixSuffix: TPanel
         Left = 0
-        Height = 72
-        Top = 88
-        Width = 610
+        Height = 46
+        Top = 62
+        Width = 488
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 72
-        ClientWidth = 610
+        ClientHeight = 46
+        ClientWidth = 488
         ParentBackground = False
         TabOrder = 1
         object lblBandPrefix: TLabel
           Left = 16
-          Height = 20
-          Top = 5
-          Width = 275
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Height = 15
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
           Caption = 'Prefix:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandSuffix: TLabel
-          Left = 307
-          Height = 20
-          Top = 5
-          Width = 275
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Left = 252
+          Height = 15
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
           Caption = 'Suffix:'
           Font.Color = 6579300
           ParentColor = False
@@ -278,25 +278,25 @@ object edtBands: TedtBands
         end
         object ePrefix: TDBEdit
           Left = 16
-          Height = 28
-          Top = 29
-          Width = 275
+          Height = 23
+          Top = 23
+          Width = 220
           DataField = 'band_prefix'
           DataSource = dsLink
-          Constraints.MinWidth = 275
+          Constraints.MinWidth = 220
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
         object eSuffix: TDBEdit
-          Left = 307
-          Height = 28
-          Top = 29
-          Width = 275
+          Left = 252
+          Height = 23
+          Top = 23
+          Width = 220
           DataField = 'band_suffix'
           DataSource = dsLink
-          Constraints.MinWidth = 275
+          Constraints.MinWidth = 220
           MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -305,39 +305,38 @@ object edtBands: TedtBands
       end
       object pTypeColor: TPanel
         Left = 0
-        Height = 72
-        Top = 160
-        Width = 610
+        Height = 49
+        Top = 108
+        Width = 488
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 72
-        ClientWidth = 610
+        ClientHeight = 49
+        ClientWidth = 488
         ParentBackground = False
         TabOrder = 2
         object lblBandType: TLabel
           Left = 16
-          Height = 20
-          Top = 5
-          Width = 275
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Height = 15
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
           Caption = 'Type: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblBandColor: TLabel
-          Left = 307
-          Height = 20
-          Top = 5
-          Width = 275
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Left = 252
+          Height = 15
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
           Caption = 'Color:'
           Font.Color = 6579300
           ParentColor = False
@@ -345,15 +344,15 @@ object edtBands: TedtBands
         end
         object cbBandType: TDBComboBox
           Left = 16
-          Height = 31
-          Top = 29
-          Width = 275
+          Height = 26
+          Top = 23
+          Width = 220
           AutoComplete = True
           AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-          Constraints.MinWidth = 275
+          Constraints.MinWidth = 220
           DataField = 'band_type'
           DataSource = dsLink
-          ItemHeight = 25
+          ItemHeight = 20
           Items.Strings = (
             'Butt-end'
             'Flag'
@@ -373,16 +372,16 @@ object edtBands: TedtBands
           TabOrder = 0
         end
         object cbBandColor: TDBComboBox
-          Left = 307
-          Height = 31
-          Top = 29
-          Width = 275
+          Left = 252
+          Height = 26
+          Top = 23
+          Width = 220
           AutoComplete = True
           AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-          Constraints.MinWidth = 275
+          Constraints.MinWidth = 220
           DataField = 'band_color'
           DataSource = dsLink
-          ItemHeight = 25
+          ItemHeight = 20
           Items.Strings = (
             'yellow'
             'orange'
@@ -410,54 +409,54 @@ object edtBands: TedtBands
       end
       object pStatus: TPanel
         Left = 0
-        Height = 72
-        Top = 232
-        Width = 610
+        Height = 46
+        Top = 157
+        Width = 488
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 72
-        ClientWidth = 610
+        ClientHeight = 46
+        ClientWidth = 488
         ParentBackground = False
         TabOrder = 3
         object lblBandStatus: TLabel
           Left = 16
-          Height = 20
-          Top = 5
-          Width = 275
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Height = 15
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
           Caption = 'Status: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblPlaceholder1: TLabel
-          Left = 307
-          Height = 20
-          Top = 5
-          Width = 83
+          Left = 252
+          Height = 15
+          Top = 4
+          Width = 66
           AutoSize = False
-          BorderSpacing.Top = 5
+          BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object cbBandStatus: TDBComboBox
           Left = 16
-          Height = 28
-          Top = 29
-          Width = 275
+          Height = 23
+          Top = 23
+          Width = 220
           AutoComplete = True
           AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-          Constraints.MinWidth = 275
+          Constraints.MinWidth = 220
           DataField = 'band_status'
           DataSource = dsLink
-          ItemHeight = 20
+          ItemHeight = 15
           Items.Strings = (
             'Available'
             'Used'
@@ -473,10 +472,10 @@ object edtBands: TedtBands
           TabOrder = 0
         end
         object ckReported: TDBCheckBox
-          Left = 307
-          Height = 28
-          Top = 29
-          Width = 83
+          Left = 252
+          Height = 23
+          Top = 23
+          Width = 66
           AutoSize = True
           Caption = 'Reported'
           DataField = 'band_reported'
@@ -488,28 +487,28 @@ object edtBands: TedtBands
       end
       object pSourceOrderNumber: TPanel
         Left = 0
-        Height = 70
-        Top = 324
-        Width = 610
+        Height = 46
+        Top = 219
+        Width = 488
         Align = alTop
-        BorderSpacing.Top = 20
+        AutoSize = True
+        BorderSpacing.Top = 16
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 70
-        ClientWidth = 610
+        ClientHeight = 46
+        ClientWidth = 488
         ParentBackground = False
         TabOrder = 4
         object lblBandSource: TLabel
           Left = 16
-          Height = 20
-          Top = 5
-          Width = 275
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Height = 15
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
           Caption = 'Source: *'
           Font.Color = 6579300
           ParentColor = False
@@ -517,15 +516,15 @@ object edtBands: TedtBands
         end
         object cbBandSource: TDBComboBox
           Left = 16
-          Height = 28
-          Top = 29
-          Width = 275
+          Height = 23
+          Top = 23
+          Width = 220
           AutoComplete = True
           AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-          Constraints.MinWidth = 275
+          Constraints.MinWidth = 220
           DataField = 'band_source'
           DataSource = dsLink
-          ItemHeight = 20
+          ItemHeight = 15
           Items.Strings = (
             'Acquired from supplier'
             'Transfer between banders'
@@ -542,27 +541,27 @@ object edtBands: TedtBands
       end
       object pSupplier: TPanel
         Left = 0
-        Height = 72
-        Top = 394
-        Width = 610
+        Height = 47
+        Top = 265
+        Width = 488
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 72
-        ClientWidth = 610
+        ClientHeight = 47
+        ClientWidth = 488
         ParentBackground = False
         TabOrder = 5
         object lblSupplier: TLabel
           Left = 16
-          Height = 20
-          Top = 5
-          Width = 570
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Height = 15
+          Top = 4
+          Width = 456
+          BorderSpacing.Top = 4
           Caption = 'Supplier: *'
           Font.Color = 6579300
           ParentColor = False
@@ -570,14 +569,14 @@ object edtBands: TedtBands
         end
         object eSupplier: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 29
-          Width = 570
+          Height = 24
+          Top = 23
+          Width = 456
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 570
-          Constraints.MaxHeight = 36
-          Constraints.MinWidth = 570
+          ClientHeight = 24
+          ClientWidth = 456
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -595,27 +594,27 @@ object edtBands: TedtBands
       end
       object pCarrier: TPanel
         Left = 0
-        Height = 72
-        Top = 466
-        Width = 610
+        Height = 47
+        Top = 312
+        Width = 488
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 72
-        ClientWidth = 610
+        ClientHeight = 47
+        ClientWidth = 488
         ParentBackground = False
         TabOrder = 6
         object lblCarrier: TLabel
           Left = 16
-          Height = 20
-          Top = 5
-          Width = 570
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Height = 15
+          Top = 4
+          Width = 456
+          BorderSpacing.Top = 4
           Caption = 'Carrier:'
           Font.Color = 6579300
           ParentColor = False
@@ -623,14 +622,14 @@ object edtBands: TedtBands
         end
         object eCarrier: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 29
-          Width = 570
+          Height = 24
+          Top = 23
+          Width = 456
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 570
-          Constraints.MaxHeight = 36
-          Constraints.MinWidth = 570
+          ClientHeight = 24
+          ClientWidth = 456
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -648,27 +647,27 @@ object edtBands: TedtBands
       end
       object pProject: TPanel
         Left = 0
-        Height = 72
-        Top = 538
-        Width = 610
+        Height = 47
+        Top = 359
+        Width = 488
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 72
-        ClientWidth = 610
+        ClientHeight = 47
+        ClientWidth = 488
         ParentBackground = False
         TabOrder = 7
         object lblProject: TLabel
           Left = 16
-          Height = 20
-          Top = 5
-          Width = 570
-          AutoSize = False
-          BorderSpacing.Top = 5
+          Height = 15
+          Top = 4
+          Width = 456
+          BorderSpacing.Top = 4
           Caption = 'Project:'
           Font.Color = 6579300
           ParentColor = False
@@ -676,14 +675,14 @@ object edtBands: TedtBands
         end
         object eProject: TDBEditButton
           Left = 16
-          Height = 28
-          Top = 29
-          Width = 570
+          Height = 24
+          Top = 23
+          Width = 456
           BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 570
-          Constraints.MaxHeight = 36
-          Constraints.MinWidth = 570
+          ClientHeight = 24
+          ClientWidth = 456
+          Constraints.MaxHeight = 29
+          Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
           ImageIndex = 99
@@ -704,7 +703,7 @@ object edtBands: TedtBands
   object dsLink: TDataSource
     DataSet = DMG.qBands
     OnDataChange = dsLinkDataChange
-    Left = 390
-    Top = 330
+    Left = 312
+    Top = 264
   end
 end

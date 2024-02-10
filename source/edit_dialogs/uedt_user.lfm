@@ -1,25 +1,26 @@
 object edtUser: TedtUser
   Left = 352
-  Height = 416
+  Height = 348
   Top = 33
-  Width = 432
+  Width = 532
+  AutoSize = True
   BorderStyle = bsDialog
   Caption = 'New user'
-  ClientHeight = 416
-  ClientWidth = 432
+  ClientHeight = 348
+  ClientWidth = 532
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.2'
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 366
-    Width = 432
-    Align = alBottom
+    Height = 41
+    Top = 307
+    Width = 532
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -30,19 +31,19 @@ object edtUser: TedtUser
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
-    ClientWidth = 432
+    ClientHeight = 41
+    ClientWidth = 532
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16
-      Height = 34
+      Height = 25
       Top = 8
-      Width = 196
+      Width = 246
       Caption = 'Save'
-      Constraints.MinWidth = 196
+      Constraints.MinWidth = 245
       Default = True
       Enabled = False
       TabOrder = 0
@@ -50,12 +51,12 @@ object edtUser: TedtUser
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 220
-      Height = 34
+      Left = 270
+      Height = 25
       Top = 8
-      Width = 196
+      Width = 246
       Caption = 'Cancel'
-      Constraints.MinWidth = 196
+      Constraints.MinWidth = 245
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
@@ -65,50 +66,51 @@ object edtUser: TedtUser
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 364
-    Width = 432
-    Align = alBottom
+    Top = 305
+    Width = 532
+    Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
   object pClient: TPanel
     Left = 0
-    Height = 364
+    Height = 305
     Top = 0
-    Width = 432
-    Align = alClient
+    Width = 532
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 364
-    ClientWidth = 432
+    ClientHeight = 305
+    ClientWidth = 532
     Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object pUsername: TPanel
       Left = 0
-      Height = 58
+      Height = 47
       Top = 16
-      Width = 432
+      Width = 532
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 58
-      ClientWidth = 432
+      ClientHeight = 47
+      ClientWidth = 532
       ParentBackground = False
       TabOrder = 0
       object lblUsername: TLabel
         Left = 16
-        Height = 20
-        Top = 4
-        Width = 200
-        AutoSize = False
-        BorderSpacing.Top = 4
+        Height = 15
+        Top = 5
+        Width = 250
+        BorderSpacing.Top = 5
         Caption = 'Username: *'
         Font.Color = 6579300
         ParentColor = False
@@ -116,12 +118,12 @@ object edtUser: TedtUser
       end
       object eUsername: TDBEdit
         Left = 16
-        Height = 28
-        Top = 28
-        Width = 200
+        Height = 23
+        Top = 24
+        Width = 250
         DataField = 'user_name'
         DataSource = dsUser
-        Constraints.MinWidth = 200
+        Constraints.MinWidth = 250
         MaxLength = 0
         TabOrder = 0
         OnKeyDown = FormKeyDown
@@ -130,27 +132,27 @@ object edtUser: TedtUser
     end
     object pFullName: TPanel
       Left = 0
-      Height = 58
-      Top = 74
-      Width = 432
+      Height = 47
+      Top = 63
+      Width = 532
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 58
-      ClientWidth = 432
+      ClientHeight = 47
+      ClientWidth = 532
       ParentBackground = False
       TabOrder = 1
       object lblFullName: TLabel
         Left = 16
-        Height = 20
-        Top = 4
-        Width = 400
-        AutoSize = False
-        BorderSpacing.Top = 4
+        Height = 15
+        Top = 5
+        Width = 500
+        BorderSpacing.Top = 5
         Caption = 'Full name:'
         Font.Color = 6579300
         ParentColor = False
@@ -158,12 +160,12 @@ object edtUser: TedtUser
       end
       object eFullName: TDBEdit
         Left = 16
-        Height = 28
-        Top = 28
-        Width = 400
+        Height = 23
+        Top = 24
+        Width = 500
         DataField = 'full_name'
         DataSource = dsUser
-        Constraints.MinWidth = 400
+        Constraints.MinWidth = 500
         MaxLength = 0
         TabOrder = 0
         OnKeyDown = FormKeyDown
@@ -172,27 +174,27 @@ object edtUser: TedtUser
     end
     object pRank: TPanel
       Left = 0
-      Height = 58
-      Top = 132
-      Width = 432
+      Height = 47
+      Top = 110
+      Width = 532
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 58
-      ClientWidth = 432
+      ClientHeight = 47
+      ClientWidth = 532
       ParentBackground = False
       TabOrder = 2
       object lblRank: TLabel
         Left = 16
-        Height = 20
-        Top = 4
-        Width = 200
-        AutoSize = False
-        BorderSpacing.Top = 4
+        Height = 15
+        Top = 5
+        Width = 250
+        BorderSpacing.Top = 5
         Caption = 'Access level: *'
         Font.Color = 6579300
         ParentColor = False
@@ -200,13 +202,13 @@ object edtUser: TedtUser
       end
       object cbUserRank: TDBComboBox
         Left = 16
-        Height = 28
-        Top = 28
-        Width = 200
-        Constraints.MinWidth = 200
+        Height = 23
+        Top = 24
+        Width = 250
+        Constraints.MinWidth = 250
         DataField = 'user_rank'
         DataSource = dsUser
-        ItemHeight = 20
+        ItemHeight = 15
         Items.Strings = (
           'Padrão'
           'Administrador(a)'
@@ -221,28 +223,28 @@ object edtUser: TedtUser
     end
     object pPermissions: TPanel
       Left = 0
-      Height = 142
-      Top = 206
-      Width = 432
+      Height = 112
+      Top = 177
+      Width = 532
       Align = alTop
-      BorderSpacing.Top = 16
+      AutoSize = True
+      BorderSpacing.Top = 20
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 142
-      ClientWidth = 432
+      ClientHeight = 112
+      ClientWidth = 532
       ParentBackground = False
       TabOrder = 3
       object lblPermissions: TLabel
         Left = 16
-        Height = 20
-        Top = 4
-        Width = 144
-        AutoSize = False
-        BorderSpacing.Top = 4
+        Height = 15
+        Top = 5
+        Width = 116
+        BorderSpacing.Top = 5
         Caption = 'Permissions:'
         Font.Color = 6579300
         ParentColor = False
@@ -250,9 +252,10 @@ object edtUser: TedtUser
       end
       object ckAllowCollectionEdit: TDBCheckBox
         Left = 16
-        Height = 24
-        Top = 28
-        Width = 144
+        Height = 19
+        Top = 24
+        Width = 116
+        AutoSize = True
         Caption = 'Manage collection'
         DataField = 'allow_collection_edit'
         DataSource = dsUser
@@ -262,9 +265,10 @@ object edtUser: TedtUser
       end
       object ckAllowPrint: TDBCheckBox
         Left = 16
-        Height = 24
-        Top = 56
-        Width = 144
+        Height = 19
+        Top = 47
+        Width = 116
+        AutoSize = True
         Caption = 'Print reports'
         DataField = 'allow_print'
         DataSource = dsUser
@@ -274,9 +278,10 @@ object edtUser: TedtUser
       end
       object ckAllowExport: TDBCheckBox
         Left = 16
-        Height = 24
-        Top = 84
-        Width = 144
+        Height = 19
+        Top = 70
+        Width = 116
+        AutoSize = True
         Caption = 'Export data'
         DataField = 'allow_export'
         DataSource = dsUser
@@ -286,9 +291,10 @@ object edtUser: TedtUser
       end
       object ckAllowImport: TDBCheckBox
         Left = 16
-        Height = 24
-        Top = 112
-        Width = 144
+        Height = 19
+        Top = 93
+        Width = 116
+        AutoSize = True
         Caption = 'Import data'
         DataField = 'allow_import'
         DataSource = dsUser
@@ -301,7 +307,7 @@ object edtUser: TedtUser
   object dsUser: TDataSource
     DataSet = DMM.qUsers
     OnDataChange = dsUserDataChange
-    Left = 310
-    Top = 157
+    Left = 388
+    Top = 196
   end
 end

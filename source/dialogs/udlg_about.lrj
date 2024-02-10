@@ -5,7 +5,7 @@
 {"hash":126928889,"name":"tdlgabout.linkprivacy.caption","sourcebytes":[80,114,105,118,97,99,121],"value":"Privacy"},
 {"hash":92475011,"name":"tdlgabout.linklicense.caption","sourcebytes":[76,105,99,101,110,115,101,32,116,101,114,109,115],"value":"License terms"},
 {"hash":101580163,"name":"tdlgabout.linkthirdparty.caption","sourcebytes":[84,104,105,114,100,45,112,97,114,116,121,32,97,110,110,111,117,110,99,101,109,101,110,116,115],"value":"Third-party announcements"},
-{"hash":254714418,"name":"tdlgabout.lblappcopyright.caption","sourcebytes":[194,169,32,50,48,50,48,45,50,48,50,51,32,67,104,114,105,115,116,105,97,110,32,66,101,105,101,114],"value":"\u00A9 2020-2023 Christian Beier"},
+{"hash":254648882,"name":"tdlgabout.lblappcopyright.caption","sourcebytes":[194,169,32,50,48,50,48,45,50,48,50,52,32,67,104,114,105,115,116,105,97,110,32,66,101,105,101,114],"value":"\u00A9 2020-2024 Christian Beier"},
 {"hash":91650015,"name":"tdlgabout.linkwebsite.hint","sourcebytes":[104,116,116,112,58,47,47,120,111,108,109,105,115,46,103,105,116,104,117,98,46,105,111],"value":"http://xolmis.github.io"},
 {"hash":230269173,"name":"tdlgabout.linkwebsite.caption","sourcebytes":[87,101,98,115,105,116,101],"value":"Website"},
 {"hash":13073,"name":"tdlgabout.pappversion.caption","sourcebytes":[48,46,49],"value":"0.1"},
