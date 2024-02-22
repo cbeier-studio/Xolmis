@@ -8,12 +8,14 @@ object edtSighting: TedtSighting
   Caption = 'New sighting'
   ClientHeight = 706
   ClientWidth = 416
+  Font.Height = -12
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.0.0.3'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -194,6 +196,7 @@ object edtSighting: TedtSighting
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
@@ -216,6 +219,7 @@ object edtSighting: TedtSighting
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
@@ -278,6 +282,7 @@ object edtSighting: TedtSighting
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
@@ -463,6 +468,7 @@ object edtSighting: TedtSighting
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
@@ -485,6 +491,7 @@ object edtSighting: TedtSighting
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
@@ -627,6 +634,7 @@ object edtSighting: TedtSighting
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -678,6 +686,7 @@ object edtSighting: TedtSighting
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -781,6 +790,7 @@ object edtSighting: TedtSighting
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -832,6 +842,7 @@ object edtSighting: TedtSighting
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -1250,6 +1261,7 @@ object edtSighting: TedtSighting
           ClientHeight = 24
           ClientWidth = 339
           Color = 16448250
+          Constraints.MaxHeight = 28
           ParentBackground = False
           ParentColor = False
           TabOrder = 0

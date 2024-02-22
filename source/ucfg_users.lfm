@@ -1,13 +1,13 @@
 object cfgUsers: TcfgUsers
   Left = 352
-  Height = 545
+  Height = 436
   Top = 33
-  Width = 430
+  Width = 344
   BorderStyle = bsDialog
   Caption = 'Manage users'
-  ClientHeight = 545
-  ClientWidth = 430
-  DesignTimePPI = 120
+  ClientHeight = 436
+  ClientWidth = 344
+  Font.Height = -12
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -15,25 +15,25 @@ object cfgUsers: TcfgUsers
   Position = poScreenCenter
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 495
-    Width = 430
+    Height = 40
+    Top = 396
+    Width = 344
     Align = alBottom
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ClientHeight = 50
-    ClientWidth = 430
+    ClientHeight = 40
+    ClientWidth = 344
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object sbClose: TButton
-      Left = 284
-      Height = 34
+      Left = 224
+      Height = 24
       Top = 8
-      Width = 130
+      Width = 104
       Align = alRight
       Caption = 'Close'
       ModalResult = 11
@@ -43,8 +43,8 @@ object cfgUsers: TcfgUsers
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 493
-    Width = 430
+    Top = 394
+    Width = 344
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -52,31 +52,31 @@ object cfgUsers: TcfgUsers
   end
   object pClient: TPanel
     Left = 0
-    Height = 493
+    Height = 394
     Top = 0
-    Width = 430
+    Width = 344
     Align = alClient
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 493
-    ClientWidth = 430
+    ClientHeight = 394
+    ClientWidth = 344
     Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
     object gridUsers: TDBGrid
       Left = 16
-      Height = 415
-      Top = 62
-      Width = 398
+      Height = 318
+      Top = 60
+      Width = 312
       Align = alClient
       AutoFillColumns = True
       Color = clWindow
       Columns = <      
         item
           Title.Caption = 'Username'
-          Width = 197
+          Width = 154
           FieldName = 'user_name'
         end      
         item
@@ -87,7 +87,7 @@ object cfgUsers: TcfgUsers
             'Visitante'
           )
           Title.Caption = 'Access level'
-          Width = 197
+          Width = 154
           FieldName = 'user_rank'
         end>
       DataSource = dsUsers
@@ -100,9 +100,9 @@ object cfgUsers: TcfgUsers
     end
     object pChildToolbar: TBCPanel
       Left = 16
-      Height = 46
+      Height = 44
       Top = 16
-      Width = 398
+      Width = 312
       Align = alTop
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
@@ -144,11 +144,12 @@ object cfgUsers: TcfgUsers
       TabOrder = 1
       object sbNew: TSpeedButton
         Left = 17
-        Height = 28
+        Height = 26
         Top = 9
-        Width = 29
+        Width = 28
         Align = alLeft
-        BorderSpacing.Bottom = 8
+        AutoSize = True
+        BorderSpacing.Bottom = 6
         Flat = True
         Images = frmMain.mPopup
         ImageIndex = 0
@@ -156,13 +157,14 @@ object cfgUsers: TcfgUsers
         OnClick = sbNewClick
       end
       object sbEdit: TSpeedButton
-        Left = 50
-        Height = 28
+        Left = 49
+        Height = 26
         Top = 9
-        Width = 29
+        Width = 28
         Align = alLeft
-        BorderSpacing.Right = 16
-        BorderSpacing.Bottom = 8
+        AutoSize = True
+        BorderSpacing.Right = 13
+        BorderSpacing.Bottom = 6
         Flat = True
         Images = frmMain.mPopup
         ImageIndex = 39
@@ -170,15 +172,16 @@ object cfgUsers: TcfgUsers
         OnClick = sbEditClick
       end
       object sbChangePassword: TSpeedButton
-        Left = 114
-        Height = 28
+        Left = 105
+        Height = 26
         Hint = 'Change password'
         Top = 9
-        Width = 29
+        Width = 28
         Align = alLeft
-        BorderSpacing.Left = 16
-        BorderSpacing.Right = 16
-        BorderSpacing.Bottom = 8
+        AutoSize = True
+        BorderSpacing.Left = 13
+        BorderSpacing.Right = 13
+        BorderSpacing.Bottom = 6
         Flat = True
         Images = frmMain.mPopup
         ImageIndex = 149
@@ -186,12 +189,13 @@ object cfgUsers: TcfgUsers
         OnClick = sbChangePasswordClick
       end
       object sbDelete: TSpeedButton
-        Left = 352
-        Height = 28
+        Left = 267
+        Height = 26
         Top = 9
-        Width = 29
+        Width = 28
         Align = alRight
-        BorderSpacing.Bottom = 8
+        AutoSize = True
+        BorderSpacing.Bottom = 6
         Flat = True
         Images = frmMain.mPopup
         ImageIndex = 141
@@ -199,10 +203,10 @@ object cfgUsers: TcfgUsers
         OnClick = sbDeleteClick
       end
       object Separator7: TShapeLineBGRA
-        Left = 95
-        Height = 28
+        Left = 90
+        Height = 26
         Top = 9
-        Width = 3
+        Width = 2
         Align = alLeft
         Direction = drUpDown
         LineColor = 12829635
@@ -214,8 +218,8 @@ object cfgUsers: TcfgUsers
   object pmGrid: TPopupMenu
     Images = frmMain.mPopup
     ImagesWidth = 20
-    Left = 169
-    Top = 222
+    Left = 135
+    Top = 178
     object pmgEdit: TMenuItem
       Caption = 'Edit'
       ImageIndex = 39
@@ -237,7 +241,7 @@ object cfgUsers: TcfgUsers
   end
   object dsUsers: TDataSource
     DataSet = DMM.qUsers
-    Left = 337
-    Top = 149
+    Left = 270
+    Top = 119
   end
 end

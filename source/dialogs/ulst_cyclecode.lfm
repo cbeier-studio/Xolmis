@@ -1,38 +1,38 @@
 object lstCycleCode: TlstCycleCode
   Left = 352
-  Height = 303
+  Height = 255
   Top = 33
-  Width = 693
+  Width = 538
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Cycle code'
   ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-  ChildSizing.Layout = cclLeftToRightThenTopToBottom
   ChildSizing.ControlsPerLine = 3
-  ClientHeight = 303
-  ClientWidth = 693
+  ClientHeight = 255
+  ClientWidth = 538
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poOwnerFormCenter
-  LCLVersion = '3.0.0.2'
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 253
-    Width = 693
-    Align = alBottom
+    Height = 41
+    Top = 214
+    Width = 538
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ClientHeight = 50
-    ClientWidth = 693
+    ClientHeight = 41
+    ClientWidth = 538
     TabOrder = 0
     object sbOK: TBitBtn
-      Left = 409
-      Height = 34
+      Left = 254
+      Height = 25
       Top = 8
       Width = 130
       Align = alRight
@@ -44,8 +44,8 @@ object lstCycleCode: TlstCycleCode
       TabOrder = 0
     end
     object sbCancel: TBitBtn
-      Left = 547
-      Height = 34
+      Left = 392
+      Height = 25
       Top = 8
       Width = 130
       Align = alRight
@@ -54,104 +54,12 @@ object lstCycleCode: TlstCycleCode
       TabOrder = 1
     end
   end
-  object rgFirst: TRadioGroup
-    Left = 8
-    Height = 193
-    Top = 8
-    Width = 212
-    AutoFill = True
-    BorderSpacing.Left = 8
-    BorderSpacing.Top = 8
-    BorderSpacing.Right = 8
-    BorderSpacing.Bottom = 8
-    Caption = 'Cycle'
-    ChildSizing.LeftRightSpacing = 6
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsScaleChilds
-    ChildSizing.ShrinkVertical = crsScaleChilds
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
-    ChildSizing.ControlsPerLine = 1
-    ClientHeight = 168
-    ClientWidth = 208
-    ItemIndex = 0
-    Items.Strings = (
-      'U - Unknown molt cycle'
-      'D - Definitive molt cycle'
-      'F - First molt cycle'
-      'S - Second molt cycle'
-      'T - Third molt cycle'
-      '4 - Fourth molt cycle'
-      '5 - Fifth molt cycle'
-    )
-    OnClick = rgFirstClick
-    TabOrder = 1
-  end
-  object rgSecond: TRadioGroup
-    Left = 228
-    Height = 193
-    Top = 8
-    Width = 223
-    AutoFill = True
-    BorderSpacing.Top = 8
-    BorderSpacing.Right = 8
-    BorderSpacing.Bottom = 8
-    Caption = 'Molt'
-    ChildSizing.LeftRightSpacing = 6
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsScaleChilds
-    ChildSizing.ShrinkVertical = crsScaleChilds
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
-    ChildSizing.ControlsPerLine = 1
-    ClientHeight = 168
-    ClientWidth = 219
-    ItemIndex = 0
-    Items.Strings = (
-      'C - not molting (Cycle)'
-      'P - molting (Pre)'
-      'A - After a given plumage'
-    )
-    OnClick = rgFirstClick
-    TabOrder = 2
-  end
-  object rgThird: TRadioGroup
-    Left = 459
-    Height = 193
-    Top = 8
-    Width = 226
-    AutoFill = True
-    BorderSpacing.Top = 8
-    BorderSpacing.Right = 8
-    BorderSpacing.Bottom = 8
-    Caption = 'Plumage'
-    ChildSizing.LeftRightSpacing = 6
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsScaleChilds
-    ChildSizing.ShrinkVertical = crsScaleChilds
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
-    ChildSizing.ControlsPerLine = 1
-    ClientHeight = 168
-    ClientWidth = 222
-    ItemIndex = 0
-    Items.Strings = (
-      'U - Unknown plumage'
-      'J - Juvenal plumage'
-      'S - Supplemental plumage'
-      'F - Formative plumage'
-      'B - Basic plumage'
-      'A - Alternate plumage'
-    )
-    OnClick = rgFirstClick
-    TabOrder = 3
-  end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 251
-    Width = 693
-    Align = alBottom
+    Top = 212
+    Width = 538
+    Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
@@ -159,9 +67,9 @@ object lstCycleCode: TlstCycleCode
   object pCode: TBCPanel
     Left = 8
     Height = 35
-    Top = 208
-    Width = 677
-    Align = alBottom
+    Top = 169
+    Width = 522
+    Align = alTop
     BorderSpacing.Left = 8
     BorderSpacing.Right = 8
     BorderSpacing.Bottom = 8
@@ -198,6 +106,115 @@ object lstCycleCode: TlstCycleCode
     ParentBackground = False
     Rounding.RoundX = 8
     Rounding.RoundY = 8
-    TabOrder = 4
+    TabOrder = 1
+  end
+  object pContent: TPanel
+    Left = 0
+    Height = 169
+    Top = 0
+    Width = 538
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.HorizontalSpacing = 4
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 3
+    ClientHeight = 169
+    ClientWidth = 538
+    TabOrder = 2
+    object rgFirst: TRadioGroup
+      Left = 8
+      Height = 153
+      Top = 8
+      Width = 162
+      AutoFill = True
+      BorderSpacing.Left = 8
+      BorderSpacing.Top = 8
+      BorderSpacing.Right = 8
+      BorderSpacing.Bottom = 8
+      Caption = 'Cycle'
+      ChildSizing.LeftRightSpacing = 6
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 133
+      ClientWidth = 158
+      ItemIndex = 0
+      Items.Strings = (
+        'U - Unknown molt cycle'
+        'D - Definitive molt cycle'
+        'F - First molt cycle'
+        'S - Second molt cycle'
+        'T - Third molt cycle'
+        '4 - Fourth molt cycle'
+        '5 - Fifth molt cycle'
+      )
+      OnClick = rgFirstClick
+      TabOrder = 0
+    end
+    object rgSecond: TRadioGroup
+      Left = 178
+      Height = 153
+      Top = 8
+      Width = 170
+      AutoFill = True
+      BorderSpacing.Top = 8
+      BorderSpacing.Right = 8
+      BorderSpacing.Bottom = 8
+      Caption = 'Molt'
+      ChildSizing.LeftRightSpacing = 6
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 133
+      ClientWidth = 166
+      ItemIndex = 0
+      Items.Strings = (
+        'C - not molting (Cycle)'
+        'P - molting (Pre)'
+        'A - After a given plumage'
+      )
+      OnClick = rgFirstClick
+      TabOrder = 1
+    end
+    object rgThird: TRadioGroup
+      Left = 356
+      Height = 153
+      Top = 8
+      Width = 174
+      AutoFill = True
+      BorderSpacing.Top = 8
+      BorderSpacing.Right = 8
+      BorderSpacing.Bottom = 8
+      Caption = 'Plumage'
+      ChildSizing.LeftRightSpacing = 6
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 133
+      ClientWidth = 170
+      ItemIndex = 0
+      Items.Strings = (
+        'U - Unknown plumage'
+        'J - Juvenal plumage'
+        'S - Supplemental plumage'
+        'F - Formative plumage'
+        'B - Basic plumage'
+        'A - Alternate plumage'
+      )
+      OnClick = rgFirstClick
+      TabOrder = 2
+    end
   end
 end

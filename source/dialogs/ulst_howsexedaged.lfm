@@ -1,25 +1,26 @@
 object lstHowSexedAged: TlstHowSexedAged
   Left = 352
-  Height = 751
+  Height = 747
   Top = 33
-  Width = 600
+  Width = 438
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'How sexed/aged'
-  ClientHeight = 751
-  ClientWidth = 600
+  ClientHeight = 747
+  ClientWidth = 438
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poOwnerFormCenter
-  LCLVersion = '3.0.0.2'
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 701
-    Width = 600
+    Height = 41
+    Top = 706
+    Width = 438
     Align = alBottom
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -30,16 +31,15 @@ object lstHowSexedAged: TlstHowSexedAged
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
-    ClientWidth = 600
+    ClientHeight = 41
+    ClientWidth = 438
     TabOrder = 0
     object sbOK: TBitBtn
       Left = 16
-      Height = 34
+      Height = 25
       Top = 8
-      Width = 280
+      Width = 197
       Caption = 'Apply'
-      Constraints.MinWidth = 280
       Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
@@ -47,23 +47,24 @@ object lstHowSexedAged: TlstHowSexedAged
       TabOrder = 0
     end
     object sbCancel: TBitBtn
-      Left = 304
-      Height = 34
+      Left = 221
+      Height = 25
       Top = 8
-      Width = 280
+      Width = 201
       Caption = 'Cancel'
-      Constraints.MinWidth = 280
       OnClick = sbCancelClick
       TabOrder = 1
     end
   end
   object cklAged: TCheckListBox
     Left = 8
-    Height = 640
+    Height = 645
     Top = 8
-    Width = 584
+    Width = 422
     Align = alClient
     BorderSpacing.Around = 8
+    Constraints.MinHeight = 645
+    Constraints.MinWidth = 422
     Items.Strings = (
       'Physical differences'
       'B - Brood patch'
@@ -107,8 +108,8 @@ object lstHowSexedAged: TlstHowSexedAged
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 699
-    Width = 600
+    Top = 704
+    Width = 438
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -117,8 +118,8 @@ object lstHowSexedAged: TlstHowSexedAged
   object pCode: TBCPanel
     Left = 8
     Height = 35
-    Top = 656
-    Width = 584
+    Top = 661
+    Width = 422
     Align = alBottom
     BorderSpacing.Left = 8
     BorderSpacing.Right = 8

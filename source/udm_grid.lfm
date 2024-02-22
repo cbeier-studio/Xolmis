@@ -1,14 +1,13 @@
 object DMG: TDMG
   OldCreateOrder = False
-  Height = 788
-  HorizontalOffset = 596
-  VerticalOffset = 242
-  Width = 1076
-  PPI = 120
+  Height = 630
+  HorizontalOffset = 477
+  VerticalOffset = 194
+  Width = 861
   object dsBands: TDataSource
     DataSet = qBands
-    Left = 144
-    Top = 44
+    Left = 115
+    Top = 35
   end
   object qBands: TSQLQuery
     PacketRecords = -1
@@ -185,7 +184,7 @@ object DMG: TDMG
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
-      'SELECT a.*'
+      'SELECT a.*,'
       '  (SELECT f.acronym FROM institutions AS f'
       '    WHERE f.institution_id = a.supplier_id) AS supplier_name,'
       '  (SELECT p.full_name FROM people AS p'
@@ -202,8 +201,8 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Sequence.FieldName = 'band_id'
-    Left = 40
-    Top = 44
+    Left = 32
+    Top = 35
     object qBandsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -643,7 +642,7 @@ object DMG: TDMG
       '  (SELECT l.full_name FROM gazetteer AS l'
       '    WHERE l.site_id = x.locality_id) AS locality_name,'
       '  (SELECT j.project_title FROM projects AS j'
-      '    WHERE j.project_id = x.project_id) AS project_name,'
+      '    WHERE j.project_id = x.project_id) AS project_name'
       'FROM expeditions AS x'
       'WHERE (x.expedition_id = -1)'
       '  AND (x.active_status = 1)'
@@ -654,8 +653,8 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Sequence.FieldName = 'expedition_id'
-    Left = 256
-    Top = 44
+    Left = 205
+    Top = 35
     object qExpeditionsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -1164,8 +1163,8 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Sequence.FieldName = 'individual_id'
-    Left = 40
-    Top = 176
+    Left = 32
+    Top = 141
     object qIndividualsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -2400,8 +2399,8 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Sequence.FieldName = 'capture_id'
-    Left = 40
-    Top = 244
+    Left = 32
+    Top = 195
     object qCapturesmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -4002,8 +4001,8 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Sequence.FieldName = 'molt_id'
-    Left = 40
-    Top = 314
+    Left = 32
+    Top = 251
     object qMoltsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -5182,8 +5181,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 882
-    Top = 368
+    Left = 706
+    Top = 294
     object qImagesimage_id: TLargeintField
       FieldKind = fkData
       FieldName = 'image_id'
@@ -5909,8 +5908,8 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Sequence.FieldName = 'survey_id'
-    Left = 256
-    Top = 112
+    Left = 205
+    Top = 90
     object qSurveysmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -6737,8 +6736,8 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Sequence.FieldName = 'sighting_id'
-    Left = 256
-    Top = 177
+    Left = 205
+    Top = 142
     object qSightingsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -7519,8 +7518,8 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Sequence.FieldName = 'institution_id'
-    Left = 256
-    Top = 384
+    Left = 205
+    Top = 307
     object qInstitutionsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -8051,8 +8050,8 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Sequence.FieldName = 'person_id'
-    Left = 256
-    Top = 450
+    Left = 205
+    Top = 360
     object qPeoplemarked_status: TBooleanField
       DisplayLabel = 'Marked'
       FieldKind = fkData
@@ -8852,8 +8851,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 464
-    Top = 44
+    Left = 371
+    Top = 35
     object qNestsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -9661,8 +9660,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 464
-    Top = 112
+    Left = 371
+    Top = 90
     object qNestRevisionsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -10140,8 +10139,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 464
-    Top = 177
+    Left = 371
+    Top = 142
     object qEggsmarked_status: TBooleanField
       FieldKind = fkData
       FieldName = 'marked_status'
@@ -10638,8 +10637,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 464
-    Top = 382
+    Left = 371
+    Top = 306
     object qGazetteermarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marcado'
@@ -11058,8 +11057,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 464
-    Top = 450
+    Left = 371
+    Top = 360
     object qNetStationsmarked_status: TBooleanField
       DisplayLabel = 'Marcado'
       DisplayWidth = 10
@@ -11390,8 +11389,8 @@ object DMG: TDMG
       end>
     Macros = <>
     DataSource = dsNetStations
-    Left = 464
-    Top = 524
+    Left = 371
+    Top = 419
     object qPermanentNetsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marcado'
@@ -11675,8 +11674,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 680
-    Top = 44
+    Left = 544
+    Top = 35
     object qProjectsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -11999,8 +11998,8 @@ object DMG: TDMG
       end>
     Macros = <>
     DataSource = dsProjects
-    Left = 680
-    Top = 112
+    Left = 544
+    Top = 90
     object qProjectTeammarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -12283,8 +12282,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 680
-    Top = 177
+    Left = 544
+    Top = 142
     object qPermitsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -12723,8 +12722,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 680
-    Top = 314
+    Left = 544
+    Top = 251
     object qSpecimensmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -12796,6 +12795,7 @@ object DMG: TDMG
       Required = False
     end
     object qSpecimenscollection_day: TLongintField
+      Alignment = taCenter
       DisplayLabel = 'Collection day'
       FieldKind = fkData
       FieldName = 'collection_day'
@@ -12806,6 +12806,7 @@ object DMG: TDMG
       Required = False
     end
     object qSpecimenscollection_month: TLongintField
+      Alignment = taCenter
       DisplayLabel = 'Collection month'
       FieldKind = fkData
       FieldName = 'collection_month'
@@ -12816,6 +12817,7 @@ object DMG: TDMG
       Required = False
     end
     object qSpecimenscollection_year: TLongintField
+      Alignment = taCenter
       DisplayLabel = 'Collection year'
       FieldKind = fkData
       FieldName = 'collection_year'
@@ -13315,8 +13317,8 @@ object DMG: TDMG
       end>
     Macros = <>
     DataSource = dsSpecimens
-    Left = 680
-    Top = 382
+    Left = 544
+    Top = 306
     object qSamplePrepsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -13759,8 +13761,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 888
-    Top = 44
+    Left = 710
+    Top = 35
     object qBotanymarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -14396,8 +14398,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 888
-    Top = 112
+    Left = 710
+    Top = 90
     object qTaxataxon_id: TLargeintField
       FieldKind = fkData
       FieldName = 'taxon_id'
@@ -14890,8 +14892,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 888
-    Top = 176
+    Left = 710
+    Top = 141
     object qSynonymTaxavalid_id: TLargeintField
       FieldKind = fkData
       FieldName = 'valid_id'
@@ -14954,8 +14956,8 @@ object DMG: TDMG
         ParamType = ptInput
       end>
     Macros = <>
-    Left = 888
-    Top = 247
+    Left = 710
+    Top = 198
     object qChildTaxafull_name: TStringField
       FieldKind = fkData
       FieldName = 'full_name'
@@ -14979,133 +14981,133 @@ object DMG: TDMG
   end
   object dsIndividuals: TDataSource
     DataSet = qIndividuals
-    Left = 144
-    Top = 179
+    Left = 115
+    Top = 143
   end
   object dsCaptures: TDataSource
     DataSet = qCaptures
-    Left = 144
-    Top = 244
+    Left = 115
+    Top = 195
   end
   object dsMolts: TDataSource
     DataSet = qMolts
-    Left = 144
-    Top = 314
+    Left = 115
+    Top = 251
   end
   object dsImages: TDataSource
     DataSet = qImages
-    Left = 970
-    Top = 368
+    Left = 776
+    Top = 294
   end
   object dsExpeditions: TDataSource
     DataSet = qExpeditions
-    Left = 352
-    Top = 44
+    Left = 282
+    Top = 35
   end
   object dsSurveys: TDataSource
     DataSet = qSurveys
-    Left = 352
-    Top = 112
+    Left = 282
+    Top = 90
   end
   object dsSightings: TDataSource
     DataSet = qSightings
-    Left = 352
-    Top = 177
+    Left = 282
+    Top = 142
   end
   object dsInstitutions: TDataSource
     DataSet = qInstitutions
-    Left = 352
-    Top = 384
+    Left = 282
+    Top = 307
   end
   object dsPeople: TDataSource
     DataSet = qPeople
-    Left = 352
-    Top = 450
+    Left = 282
+    Top = 360
   end
   object dsNests: TDataSource
     DataSet = qNests
-    Left = 544
-    Top = 44
+    Left = 435
+    Top = 35
   end
   object dsNestRevisions: TDataSource
     DataSet = qNestRevisions
-    Left = 544
-    Top = 112
+    Left = 435
+    Top = 90
   end
   object dsEggs: TDataSource
     DataSet = qEggs
-    Left = 544
-    Top = 177
+    Left = 435
+    Top = 142
   end
   object dsGazetteer: TDataSource
     DataSet = qGazetteer
-    Left = 544
-    Top = 382
+    Left = 435
+    Top = 306
   end
   object dsNetStations: TDataSource
     DataSet = qNetStations
-    Left = 544
-    Top = 450
+    Left = 435
+    Top = 360
   end
   object dsPermanentNets: TDataSource
     DataSet = qPermanentNets
-    Left = 544
-    Top = 524
+    Left = 435
+    Top = 419
   end
   object dsProjects: TDataSource
     DataSet = qProjects
-    Left = 762
-    Top = 44
+    Left = 610
+    Top = 35
   end
   object dsProjectTeam: TDataSource
     DataSet = qProjectTeam
-    Left = 762
-    Top = 112
+    Left = 610
+    Top = 90
   end
   object dsPermits: TDataSource
     DataSet = qPermits
-    Left = 762
-    Top = 177
+    Left = 610
+    Top = 142
   end
   object dsSpecimens: TDataSource
     DataSet = qSpecimens
-    Left = 762
-    Top = 313
+    Left = 610
+    Top = 250
   end
   object dsSamplePreps: TDataSource
     DataSet = qSamplePreps
-    Left = 762
-    Top = 382
+    Left = 610
+    Top = 306
   end
   object dsBotany: TDataSource
     DataSet = qBotany
-    Left = 970
-    Top = 44
+    Left = 776
+    Top = 35
   end
   object dsTaxa: TDataSource
     DataSet = qTaxa
-    Left = 970
-    Top = 112
+    Left = 776
+    Top = 90
   end
   object dsSynonymTaxa: TDataSource
     DataSet = qSynonymTaxa
-    Left = 970
-    Top = 177
+    Left = 776
+    Top = 142
   end
   object dsChildTaxa: TDataSource
     DataSet = qChildTaxa
-    Left = 970
-    Top = 247
+    Left = 776
+    Top = 198
   end
   object dsAudio: TDataSource
     DataSet = qAudio
-    Left = 970
-    Top = 439
+    Left = 776
+    Top = 351
   end
   object dsAttachments: TDataSource
     DataSet = qAttachments
-    Left = 970
-    Top = 512
+    Left = 776
+    Top = 410
   end
   object qAudio: TSQLQuery
     PacketRecords = -1
@@ -15336,8 +15338,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 882
-    Top = 439
+    Left = 706
+    Top = 351
     object qAudioaudio_id: TLargeintField
       FieldKind = fkData
       FieldName = 'audio_id'
@@ -15730,8 +15732,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 882
-    Top = 512
+    Left = 706
+    Top = 410
   end
   object qBandHistory: TSQLQuery
     PacketRecords = -1
@@ -15845,8 +15847,8 @@ object DMG: TDMG
       end>
     Macros = <>
     DataSource = dsBands
-    Left = 42
-    Top = 112
+    Left = 34
+    Top = 90
     object qBandHistorymarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -16076,8 +16078,8 @@ object DMG: TDMG
   end
   object dsBandHistory: TDataSource
     DataSet = qBandHistory
-    Left = 144
-    Top = 112
+    Left = 115
+    Top = 90
   end
   object qMethods: TSQLQuery
     PacketRecords = -1
@@ -16163,8 +16165,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 56
-    Top = 432
+    Left = 45
+    Top = 346
     object qMethodsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -16310,8 +16312,8 @@ object DMG: TDMG
   end
   object dsMethods: TDataSource
     DataSet = qMethods
-    Left = 136
-    Top = 432
+    Left = 109
+    Top = 346
   end
   object qTaxonRanks: TSQLQuery
     PacketRecords = -1
@@ -16418,8 +16420,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 56
-    Top = 504
+    Left = 45
+    Top = 403
     object qTaxonRanksmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marcado'
@@ -16619,8 +16621,8 @@ object DMG: TDMG
   end
   object dsTaxonRanks: TDataSource
     DataSet = qTaxonRanks
-    Left = 136
-    Top = 504
+    Left = 109
+    Top = 403
   end
   object qSampleCollectors: TSQLQuery
     PacketRecords = -1
@@ -16705,8 +16707,8 @@ object DMG: TDMG
       end>
     Macros = <>
     DataSource = dsSpecimens
-    Left = 680
-    Top = 456
+    Left = 544
+    Top = 365
     object qSampleCollectorsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -16847,7 +16849,7 @@ object DMG: TDMG
   end
   object dsSampleCollectors: TDataSource
     DataSet = qSampleCollectors
-    Left = 762
-    Top = 456
+    Left = 610
+    Top = 365
   end
 end

@@ -9,6 +9,7 @@ object edtDatabase: TedtDatabase
   Caption = 'Connection settings'
   ClientHeight = 495
   ClientWidth = 390
+  Font.Height = -12
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -16,6 +17,7 @@ object edtDatabase: TedtDatabase
   PopupMode = pmExplicit
   PopupParent = cfgDatabase.Owner
   Position = poScreenCenter
+  LCLVersion = '3.0.0.3'
   object pBottom: TPanel
     Left = 0
     Height = 47
@@ -497,6 +499,7 @@ object edtDatabase: TedtDatabase
       BevelOuter = bvNone
       ClientHeight = 24
       ClientWidth = 358
+      Constraints.MaxHeight = 28
       ParentBackground = False
       TabOrder = 5
       ImageIndex = 43

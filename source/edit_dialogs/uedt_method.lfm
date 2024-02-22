@@ -2,23 +2,25 @@ object edtMethod: TedtMethod
   Left = 373
   Height = 377
   Top = 34
-  Width = 488
+  Width = 404
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New method'
   ClientHeight = 377
-  ClientWidth = 488
+  ClientWidth = 404
+  Font.Height = -12
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.0.0.3'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
     Top = 334
-    Width = 488
+    Width = 404
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -28,7 +30,7 @@ object edtMethod: TedtMethod
     Left = 0
     Height = 41
     Top = 336
-    Width = 488
+    Width = 404
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -42,7 +44,7 @@ object edtMethod: TedtMethod
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 488
+    ClientWidth = 404
     Color = 15987699
     ParentBackground = False
     ParentColor = False
@@ -51,9 +53,9 @@ object edtMethod: TedtMethod
       Left = 16
       Height = 25
       Top = 8
-      Width = 224
+      Width = 182
       Caption = 'Save'
-      Constraints.MinWidth = 224
+      Constraints.MinWidth = 180
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -61,12 +63,12 @@ object edtMethod: TedtMethod
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 248
+      Left = 206
       Height = 25
       Top = 8
-      Width = 224
+      Width = 182
       Caption = 'Cancel'
-      Constraints.MinWidth = 224
+      Constraints.MinWidth = 180
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
@@ -77,14 +79,14 @@ object edtMethod: TedtMethod
     Left = 0
     Height = 334
     Top = 0
-    Width = 488
-    HorzScrollBar.Page = 488
+    Width = 404
+    HorzScrollBar.Page = 404
     VertScrollBar.Page = 334
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
     ClientHeight = 334
-    ClientWidth = 488
+    ClientWidth = 404
     Constraints.MinWidth = 220
     Color = clDefault
     ParentColor = False
@@ -93,13 +95,13 @@ object edtMethod: TedtMethod
       Left = 0
       Height = 334
       Top = 0
-      Width = 488
+      Width = 404
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 334
-      ClientWidth = 488
+      ClientWidth = 404
       Color = 15066599
       ParentBackground = False
       ParentColor = False
@@ -108,7 +110,7 @@ object edtMethod: TedtMethod
         Left = 0
         Height = 46
         Top = 16
-        Width = 488
+        Width = 404
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -118,14 +120,14 @@ object edtMethod: TedtMethod
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 488
+        ClientWidth = 404
         ParentBackground = False
         TabOrder = 0
         object lblName: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 456
+          Width = 372
           BorderSpacing.Top = 4
           Caption = 'Name: *'
           Font.Color = 6579300
@@ -136,10 +138,10 @@ object edtMethod: TedtMethod
           Left = 16
           Height = 23
           Top = 23
-          Width = 456
+          Width = 372
           DataField = 'method_name'
           DataSource = dsLink
-          Constraints.MinWidth = 456
+          Constraints.MinWidth = 372
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -150,7 +152,7 @@ object edtMethod: TedtMethod
         Left = 0
         Height = 46
         Top = 108
-        Width = 488
+        Width = 404
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -160,14 +162,14 @@ object edtMethod: TedtMethod
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 488
+        ClientWidth = 404
         ParentBackground = False
         TabOrder = 2
         object lblEbirdName: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 456
+          Width = 372
           BorderSpacing.Top = 4
           Caption = 'Method name on eBird:'
           Font.Color = 6579300
@@ -178,10 +180,10 @@ object edtMethod: TedtMethod
           Left = 16
           Height = 23
           Top = 23
-          Width = 456
+          Width = 372
           DataField = 'ebird_name'
           DataSource = dsLink
-          Constraints.MinWidth = 456
+          Constraints.MinWidth = 372
           MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -192,7 +194,7 @@ object edtMethod: TedtMethod
         Left = 0
         Height = 46
         Top = 62
-        Width = 488
+        Width = 404
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -202,7 +204,7 @@ object edtMethod: TedtMethod
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 488
+        ClientWidth = 404
         ParentBackground = False
         TabOrder = 1
         object lblAcronym: TLabel
@@ -234,7 +236,7 @@ object edtMethod: TedtMethod
         Left = 0
         Height = 148
         Top = 170
-        Width = 488
+        Width = 404
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 16
@@ -244,14 +246,14 @@ object edtMethod: TedtMethod
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 148
-        ClientWidth = 488
+        ClientWidth = 404
         ParentBackground = False
         TabOrder = 3
         object lblDescription: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 456
+          Width = 372
           Align = alTop
           BorderSpacing.Top = 4
           Caption = 'Description:'
@@ -263,9 +265,8 @@ object edtMethod: TedtMethod
           Left = 16
           Height = 113
           Top = 23
-          Width = 456
+          Width = 372
           Align = alTop
-          Constraints.MinWidth = 456
           DataField = 'description'
           DataSource = dsLink
           OnKeyDown = FormKeyDown

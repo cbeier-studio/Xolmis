@@ -199,6 +199,7 @@ type
     SpeedButton44: TSpeedButton;
     PGW: TTDICardPanel;
     SpeedButton45: TSpeedButton;
+    TimerScreen: TTimer;
     TimerAnimSearch: TTimer;
     TimerFind: TTimer;
     procedure actAboutExecute(Sender: TObject);
@@ -262,6 +263,7 @@ type
     procedure pmaNewProjectClick(Sender: TObject);
     procedure pmaNewResearcherClick(Sender: TObject);
     procedure pmaNewSightingClick(Sender: TObject);
+    procedure pmaNewSpecimenClick(Sender: TObject);
     procedure pmaNewSurveyClick(Sender: TObject);
     procedure pmaNewToponymClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
@@ -1087,6 +1089,11 @@ end;
 procedure TfrmMain.pmaNewSightingClick(Sender: TObject);
 begin
   EditSighting(DMG.qSightings, 0, True);
+end;
+
+procedure TfrmMain.pmaNewSpecimenClick(Sender: TObject);
+begin
+  EditSpecimen(DMG.qSpecimens, True);
 end;
 
 procedure TfrmMain.pmaNewSurveyClick(Sender: TObject);

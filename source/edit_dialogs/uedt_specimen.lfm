@@ -8,12 +8,14 @@ object edtSpecimen: TedtSpecimen
   Caption = 'New specimen'
   ClientHeight = 635
   ClientWidth = 400
+  Font.Height = -12
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.0.0.3'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -280,6 +282,7 @@ object edtSpecimen: TedtSpecimen
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -420,6 +423,7 @@ object edtSpecimen: TedtSpecimen
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -471,6 +475,7 @@ object edtSpecimen: TedtSpecimen
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -519,6 +524,7 @@ object edtSpecimen: TedtSpecimen
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -567,6 +573,7 @@ object edtSpecimen: TedtSpecimen
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -630,6 +637,7 @@ object edtSpecimen: TedtSpecimen
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
@@ -653,6 +661,7 @@ object edtSpecimen: TedtSpecimen
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1

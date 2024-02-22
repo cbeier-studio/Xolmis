@@ -7,6 +7,7 @@ object edtIndividual: TedtIndividual
   Caption = 'New individual'
   ClientHeight = 641
   ClientWidth = 416
+  Font.Height = -12
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
@@ -137,6 +138,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -201,6 +203,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
@@ -225,6 +228,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
@@ -279,6 +283,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -377,6 +382,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -430,6 +436,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -657,6 +664,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
@@ -681,6 +689,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
@@ -789,6 +798,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
@@ -813,6 +823,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
@@ -877,6 +888,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
@@ -901,6 +913,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
@@ -955,6 +968,7 @@ object edtIndividual: TedtIndividual
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0

@@ -1,30 +1,29 @@
 object frmDashboard: TfrmDashboard
   Left = 352
-  Height = 598
+  Height = 478
   Top = 33
-  Width = 1880
+  Width = 1504
   Caption = 'Home'
-  ClientHeight = 598
-  ClientWidth = 1880
-  Constraints.MinWidth = 914
-  DesignTimePPI = 120
+  ClientHeight = 478
+  ClientWidth = 1504
+  Constraints.MinWidth = 731
   OnClose = FormClose
   OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMenu = pmDashboard
   object sBox: TScrollBox
     Left = 0
-    Height = 598
+    Height = 478
     Top = 0
-    Width = 1444
+    Width = 1155
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 598
+    VertScrollBar.Page = 478
     Align = alClient
     BorderStyle = bsNone
-    ClientHeight = 598
-    ClientWidth = 1423
-    Constraints.MinWidth = 516
+    ClientHeight = 478
+    ClientWidth = 1138
+    Constraints.MinWidth = 413
     Color = 15066599
     ParentBackground = False
     ParentColor = False
@@ -32,9 +31,9 @@ object frmDashboard: TfrmDashboard
     OnResize = sBoxResize
     object pFlow: TPanel
       Left = 0
-      Height = 648
-      Top = 129
-      Width = 1423
+      Height = 528
+      Top = 107
+      Width = 1138
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -48,8 +47,8 @@ object frmDashboard: TfrmDashboard
       ChildSizing.ShrinkVertical = crsHomogenousChildResize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 3
-      ClientHeight = 648
-      ClientWidth = 1423
+      ClientHeight = 528
+      ClientWidth = 1138
       Color = 15066599
       ParentBackground = False
       ParentColor = False
@@ -57,9 +56,9 @@ object frmDashboard: TfrmDashboard
       OnChangeBounds = pFlowChangeBounds
       object pLifers: TBCPanel
         Left = 16
-        Height = 300
+        Height = 240
         Top = 16
-        Width = 464
+        Width = 371
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
         ChildSizing.VerticalSpacing = 8
@@ -86,9 +85,9 @@ object frmDashboard: TfrmDashboard
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
-        Constraints.MaxHeight = 400
-        Constraints.MinHeight = 300
-        Constraints.MinWidth = 464
+        Constraints.MaxHeight = 320
+        Constraints.MinHeight = 240
+        Constraints.MinWidth = 371
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -102,15 +101,16 @@ object frmDashboard: TfrmDashboard
         TabOrder = 0
         object pTitleLifers: TPanel
           Left = 16
-          Height = 20
+          Height = 16
           Top = 8
-          Width = 432
+          Width = 339
           Align = alTop
           Alignment = taLeftJustify
           BevelOuter = bvNone
           Caption = 'Last lifers'
           Color = 16448250
           Font.Color = 13066075
+          Font.Height = -15
           ParentBackground = False
           ParentColor = False
           ParentFont = False
@@ -118,9 +118,9 @@ object frmDashboard: TfrmDashboard
         end
         object dbgLifers: TDBGrid
           Left = 16
-          Height = 228
-          Top = 36
-          Width = 432
+          Height = 177
+          Top = 32
+          Width = 339
           Align = alClient
           AlternateColor = clWhite
           AutoFillColumns = True
@@ -131,20 +131,20 @@ object frmDashboard: TfrmDashboard
               Alignment = taCenter
               SizePriority = 0
               Title.Caption = 'Tipo'
-              Width = 38
+              Width = 30
               FieldName = 'tipo'
             end          
             item
               Font.Style = [fsItalic]
               Title.Caption = 'Táxon'
-              Width = 274
+              Width = 213
               FieldName = 'nome_taxon'
             end          
             item
               Alignment = taRightJustify
               SizePriority = 0
               Title.Caption = 'Data'
-              Width = 120
+              Width = 96
               FieldName = 'data_registro'
             end>
           DataSource = DMC.dsLastLifers
@@ -156,9 +156,9 @@ object frmDashboard: TfrmDashboard
         object linkShowMoreLifers: TATLabelLink
           Cursor = crHandPoint
           Left = 16
-          Height = 20
-          Top = 272
-          Width = 432
+          Height = 15
+          Top = 217
+          Width = 339
           Align = alBottom
           Alignment = taCenter
           Caption = 'Mostrar mais'
@@ -173,10 +173,10 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pCharts: TBCPanel
-        Left = 496
-        Height = 300
+        Left = 403
+        Height = 240
         Top = 16
-        Width = 464
+        Width = 371
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
         ChildSizing.VerticalSpacing = 8
@@ -203,9 +203,9 @@ object frmDashboard: TfrmDashboard
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
-        Constraints.MaxHeight = 400
-        Constraints.MinHeight = 300
-        Constraints.MinWidth = 464
+        Constraints.MaxHeight = 320
+        Constraints.MinHeight = 240
+        Constraints.MinWidth = 371
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -219,9 +219,9 @@ object frmDashboard: TfrmDashboard
         TabOrder = 1
         object chartIndividuals: TChart
           Left = 16
-          Height = 284
+          Height = 224
           Top = 8
-          Width = 432
+          Width = 339
           AxisList = <          
             item
               Grid.Color = 13750737
@@ -302,10 +302,10 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pMapSurveys: TBCPanel
-        Left = 976
-        Height = 300
+        Left = 790
+        Height = 240
         Top = 16
-        Width = 464
+        Width = 371
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
         ChildSizing.VerticalSpacing = 8
@@ -333,9 +333,9 @@ object frmDashboard: TfrmDashboard
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
         Caption = 'No surveys to show'
-        Constraints.MaxHeight = 400
-        Constraints.MinHeight = 300
-        Constraints.MinWidth = 464
+        Constraints.MaxHeight = 320
+        Constraints.MinHeight = 240
+        Constraints.MinWidth = 371
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -351,19 +351,20 @@ object frmDashboard: TfrmDashboard
           Left = 16
           Height = 20
           Top = 8
-          Width = 432
+          Width = 339
           Align = alTop
           Caption = 'Last surveys'
           Color = 16448250
           Font.Color = 13066075
+          Font.Height = -15
           ParentColor = False
           ParentFont = False
         end
         object mapSurveys: TMapView
           Left = 16
-          Height = 256
+          Height = 196
           Top = 36
-          Width = 432
+          Width = 339
           Align = alClient
           CachePath = 'map-cache'
           DownloadEngine = mapSurveys.BuiltInDLE
@@ -376,9 +377,9 @@ object frmDashboard: TfrmDashboard
       end
       object pCharts1: TBCPanel
         Left = 16
-        Height = 300
-        Top = 332
-        Width = 464
+        Height = 240
+        Top = 272
+        Width = 371
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
         ChildSizing.VerticalSpacing = 8
@@ -405,9 +406,9 @@ object frmDashboard: TfrmDashboard
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
-        Constraints.MaxHeight = 400
-        Constraints.MinHeight = 300
-        Constraints.MinWidth = 464
+        Constraints.MaxHeight = 320
+        Constraints.MinHeight = 240
+        Constraints.MinWidth = 371
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -421,9 +422,9 @@ object frmDashboard: TfrmDashboard
         TabOrder = 3
         object chartSpecies: TChart
           Left = 16
-          Height = 284
+          Height = 224
           Top = 8
-          Width = 432
+          Width = 339
           AxisList = <          
             item
               Grid.Color = 13750737
@@ -505,15 +506,15 @@ object frmDashboard: TfrmDashboard
       end
     end
     object pNumbers: TBCPanel
-      Left = 16
-      Height = 113
-      Top = 16
-      Width = 1391
+      Left = 13
+      Height = 94
+      Top = 13
+      Width = 1112
       Align = alTop
       AutoSize = True
-      BorderSpacing.Left = 16
-      BorderSpacing.Top = 16
-      BorderSpacing.Right = 16
+      BorderSpacing.Left = 13
+      BorderSpacing.Top = 13
+      BorderSpacing.Right = 13
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 16
       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
@@ -558,9 +559,9 @@ object frmDashboard: TfrmDashboard
       OnResize = pNumbersResize
       object pTotalSpecies: TBCPanel
         Left = 0
-        Height = 113
+        Height = 94
         Top = 0
-        Width = 219
+        Width = 172
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = 16448250
@@ -586,8 +587,8 @@ object frmDashboard: TfrmDashboard
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
-        Constraints.MinHeight = 112
-        Constraints.MinWidth = 144
+        Constraints.MinHeight = 90
+        Constraints.MinWidth = 115
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -603,26 +604,26 @@ object frmDashboard: TfrmDashboard
           AnchorSideLeft.Control = lineTotalSpecies
           AnchorSideLeft.Side = asrBottom
           AnchorSideTop.Control = pTotalSpecies
-          Left = 23
-          Height = 54
+          Left = 20
+          Height = 45
           Top = 9
-          Width = 64
+          Width = 52
           Caption = '----'
           Color = 16448250
           Font.Color = 13066075
-          Font.Height = -40
+          Font.Height = -32
           ParentColor = False
           ParentFont = False
         end
         object lineTotalSpecies: TShape
           Left = 9
-          Height = 91
-          Top = 13
-          Width = 6
+          Height = 74
+          Top = 11
+          Width = 5
           Align = alLeft
-          BorderSpacing.Top = 12
-          BorderSpacing.Right = 8
-          BorderSpacing.Bottom = 8
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 6
+          BorderSpacing.Bottom = 6
           Brush.Color = 13066075
           Pen.Style = psClear
           Pen.Width = 0
@@ -633,20 +634,20 @@ object frmDashboard: TfrmDashboard
           AnchorSideTop.Side = asrBottom
           AnchorSideRight.Control = pTotalSpecies
           AnchorSideRight.Side = asrBottom
-          Left = 23
-          Height = 40
-          Top = 63
-          Width = 60
+          Left = 20
+          Height = 30
+          Top = 54
+          Width = 47
           Caption = 'species'#13#10'recorded'
           ShowAccelChar = False
           WordWrap = True
         end
       end
       object pTotalIndividuals: TBCPanel
-        Left = 235
-        Height = 113
+        Left = 188
+        Height = 94
         Top = 0
-        Width = 219
+        Width = 172
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = 16448250
@@ -672,8 +673,8 @@ object frmDashboard: TfrmDashboard
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
-        Constraints.MinHeight = 112
-        Constraints.MinWidth = 144
+        Constraints.MinHeight = 90
+        Constraints.MinWidth = 115
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -689,26 +690,26 @@ object frmDashboard: TfrmDashboard
           AnchorSideLeft.Control = lineTotalIndividuals
           AnchorSideLeft.Side = asrBottom
           AnchorSideTop.Control = pTotalIndividuals
-          Left = 23
-          Height = 54
+          Left = 20
+          Height = 45
           Top = 9
-          Width = 64
+          Width = 52
           Caption = '----'
           Color = 16448250
           Font.Color = 1014543
-          Font.Height = -40
+          Font.Height = -32
           ParentColor = False
           ParentFont = False
         end
         object lineTotalIndividuals: TShape
           Left = 9
-          Height = 91
-          Top = 13
-          Width = 6
+          Height = 74
+          Top = 11
+          Width = 5
           Align = alLeft
-          BorderSpacing.Top = 12
-          BorderSpacing.Right = 8
-          BorderSpacing.Bottom = 8
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 6
+          BorderSpacing.Bottom = 6
           Brush.Color = 1014543
           Pen.Style = psClear
           Pen.Width = 0
@@ -719,20 +720,20 @@ object frmDashboard: TfrmDashboard
           AnchorSideTop.Side = asrBottom
           AnchorSideRight.Control = pTotalIndividuals
           AnchorSideRight.Side = asrBottom
-          Left = 23
-          Height = 40
-          Top = 63
-          Width = 71
+          Left = 20
+          Height = 30
+          Top = 54
+          Width = 57
           Caption = 'individuals'#13#10'recorded'
           ShowAccelChar = False
           WordWrap = True
         end
       end
       object pTotalNests: TBCPanel
-        Left = 470
-        Height = 113
+        Left = 376
+        Height = 94
         Top = 0
-        Width = 219
+        Width = 172
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = 16448250
@@ -758,8 +759,8 @@ object frmDashboard: TfrmDashboard
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
-        Constraints.MinHeight = 112
-        Constraints.MinWidth = 144
+        Constraints.MinHeight = 90
+        Constraints.MinWidth = 115
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -775,26 +776,26 @@ object frmDashboard: TfrmDashboard
           AnchorSideLeft.Control = lineTotalNests
           AnchorSideLeft.Side = asrBottom
           AnchorSideTop.Control = pTotalNests
-          Left = 23
-          Height = 54
+          Left = 20
+          Height = 45
           Top = 9
-          Width = 64
+          Width = 52
           Caption = '----'
           Color = 16448250
           Font.Color = 23965
-          Font.Height = -40
+          Font.Height = -32
           ParentColor = False
           ParentFont = False
         end
         object lineTotalNests: TShape
           Left = 9
-          Height = 91
-          Top = 13
-          Width = 6
+          Height = 74
+          Top = 11
+          Width = 5
           Align = alLeft
-          BorderSpacing.Top = 12
-          BorderSpacing.Right = 8
-          BorderSpacing.Bottom = 8
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 6
+          BorderSpacing.Bottom = 6
           Brush.Color = 23965
           Pen.Style = psClear
           Pen.Width = 0
@@ -805,20 +806,20 @@ object frmDashboard: TfrmDashboard
           AnchorSideTop.Side = asrBottom
           AnchorSideRight.Control = pTotalNests
           AnchorSideRight.Side = asrBottom
-          Left = 23
-          Height = 40
-          Top = 63
-          Width = 39
+          Left = 20
+          Height = 30
+          Top = 54
+          Width = 32
           Caption = 'nests '#13#10'found'
           ShowAccelChar = False
           WordWrap = True
         end
       end
       object pTotalSamplings: TBCPanel
-        Left = 705
-        Height = 113
+        Left = 564
+        Height = 94
         Top = 0
-        Width = 219
+        Width = 172
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = 16448250
@@ -844,8 +845,8 @@ object frmDashboard: TfrmDashboard
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
-        Constraints.MinHeight = 112
-        Constraints.MinWidth = 144
+        Constraints.MinHeight = 90
+        Constraints.MinWidth = 115
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -861,26 +862,26 @@ object frmDashboard: TfrmDashboard
           AnchorSideLeft.Control = lineTotalSamplings
           AnchorSideLeft.Side = asrBottom
           AnchorSideTop.Control = pTotalSamplings
-          Left = 23
-          Height = 54
+          Left = 20
+          Height = 45
           Top = 9
-          Width = 64
+          Width = 52
           Caption = '----'
           Color = 16448250
           Font.Color = 7354004
-          Font.Height = -40
+          Font.Height = -32
           ParentColor = False
           ParentFont = False
         end
         object lineTotalSamplings: TShape
           Left = 9
-          Height = 91
-          Top = 13
-          Width = 6
+          Height = 74
+          Top = 11
+          Width = 5
           Align = alLeft
-          BorderSpacing.Top = 12
-          BorderSpacing.Right = 8
-          BorderSpacing.Bottom = 8
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 6
+          BorderSpacing.Bottom = 6
           Brush.Color = 7354004
           Pen.Style = psClear
           Pen.Width = 0
@@ -891,20 +892,20 @@ object frmDashboard: TfrmDashboard
           AnchorSideTop.Side = asrBottom
           AnchorSideRight.Control = pTotalSamplings
           AnchorSideRight.Side = asrBottom
-          Left = 23
-          Height = 40
-          Top = 63
-          Width = 72
+          Left = 20
+          Height = 30
+          Top = 54
+          Width = 57
           Caption = 'samplings'#13#10'carried out'
           ShowAccelChar = False
           WordWrap = True
         end
       end
       object pNewSighting: TBCPanel
-        Left = 940
-        Height = 113
+        Left = 752
+        Height = 94
         Top = 0
-        Width = 219
+        Width = 172
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = clBtnFace
@@ -930,8 +931,8 @@ object frmDashboard: TfrmDashboard
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
-        Constraints.MinHeight = 112
-        Constraints.MinWidth = 144
+        Constraints.MinHeight = 90
+        Constraints.MinWidth = 115
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -950,12 +951,12 @@ object frmDashboard: TfrmDashboard
           AnchorSideTop.Control = pNewSighting
           AnchorSideRight.Side = asrBottom
           Left = 9
-          Height = 62
+          Height = 50
           Top = 9
-          Width = 84
+          Width = 64
           Caption = 'New'#13#10'sighting'
           Font.Color = 13066075
-          Font.Height = -23
+          Font.Height = -18
           ParentFont = False
           ShowAccelChar = False
           WordWrap = True
@@ -965,10 +966,10 @@ object frmDashboard: TfrmDashboard
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = pNewSighting
           AnchorSideBottom.Side = asrBottom
-          Left = 160
-          Height = 48
-          Top = 56
-          Width = 50
+          Left = 123
+          Height = 38
+          Top = 47
+          Width = 40
           Anchors = [akRight, akBottom]
           Center = True
           ImageIndex = 174
@@ -978,10 +979,10 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pShortcutConverter: TBCPanel
-        Left = 1175
-        Height = 113
+        Left = 940
+        Height = 94
         Top = 0
-        Width = 216
+        Width = 172
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = clBtnFace
@@ -1007,8 +1008,8 @@ object frmDashboard: TfrmDashboard
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
-        Constraints.MinHeight = 112
-        Constraints.MinWidth = 144
+        Constraints.MinHeight = 90
+        Constraints.MinWidth = 115
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -1027,12 +1028,12 @@ object frmDashboard: TfrmDashboard
           AnchorSideTop.Control = pShortcutConverter
           AnchorSideRight.Side = asrBottom
           Left = 9
-          Height = 62
+          Height = 50
           Top = 9
-          Width = 123
+          Width = 96
           Caption = 'Coordinates'#13#10'converter'
           Font.Color = 13066075
-          Font.Height = -23
+          Font.Height = -18
           ParentFont = False
           ShowAccelChar = False
           WordWrap = True
@@ -1042,10 +1043,10 @@ object frmDashboard: TfrmDashboard
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = pShortcutConverter
           AnchorSideBottom.Side = asrBottom
-          Left = 157
-          Height = 48
-          Top = 56
-          Width = 50
+          Left = 123
+          Height = 38
+          Top = 47
+          Width = 40
           Anchors = [akRight, akBottom]
           Center = True
           ImageIndex = 70
@@ -1057,10 +1058,10 @@ object frmDashboard: TfrmDashboard
     end
   end
   object pNotificationCenter: TBCPanel
-    Left = 1444
-    Height = 598
+    Left = 1155
+    Height = 478
     Top = 0
-    Width = 436
+    Width = 349
     Align = alRight
     ChildSizing.VerticalSpacing = 8
     Background.Color = 16444392
@@ -1087,7 +1088,7 @@ object frmDashboard: TfrmDashboard
     Border.Style = bboSolid
     BorderBCStyle = bpsBorder
     Color = 16444392
-    Constraints.MinWidth = 436
+    Constraints.MinWidth = 349
     FontEx.Color = clDefault
     FontEx.FontQuality = fqSystemClearType
     FontEx.Shadow = False
@@ -1100,15 +1101,15 @@ object frmDashboard: TfrmDashboard
     Rounding.RoundY = 1
     TabOrder = 1
     object pAppUpdate: TBCPanel
-      Left = 17
-      Height = 123
-      Top = 113
-      Width = 402
+      Left = 14
+      Height = 108
+      Top = 93
+      Width = 321
       Align = alTop
       AutoSize = True
-      BorderSpacing.Left = 16
-      BorderSpacing.Right = 16
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Left = 13
+      BorderSpacing.Right = 13
+      BorderSpacing.Bottom = 6
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
@@ -1153,28 +1154,29 @@ object frmDashboard: TfrmDashboard
         Left = 17
         Height = 20
         Top = 9
-        Width = 368
+        Width = 287
         Align = alTop
         Caption = 'Software update'
         Color = 16448250
         Font.Color = 13066075
+        Font.Height = -15
         ParentColor = False
         ParentFont = False
       end
       object txtAppUpdate: TLabel
         Left = 17
-        Height = 40
+        Height = 30
         Top = 37
-        Width = 368
+        Width = 287
         Align = alTop
         Caption = 'A new Xolmis update was found!'#13#10'New version 1.0.0 (your version 0.1.0).'
         WordWrap = True
       end
       object pAppUpdateBtns: TBCPanel
         Left = 17
-        Height = 29
-        Top = 85
-        Width = 368
+        Height = 24
+        Top = 75
+        Width = 287
         Align = alTop
         AutoSize = True
         ChildSizing.HorizontalSpacing = 8
@@ -1219,9 +1221,9 @@ object frmDashboard: TfrmDashboard
         TabOrder = 0
         object sbUpdateLater: TBCButton
           Left = 0
-          Height = 29
+          Height = 24
           Top = 0
-          Width = 180
+          Width = 140
           StateClicked.Background.Color = 11776947
           StateClicked.Background.Gradient1.StartColor = 8404992
           StateClicked.Background.Gradient1.EndColor = 4194304
@@ -1308,7 +1310,7 @@ object frmDashboard: TfrmDashboard
           StateNormal.FontEx.PaddingRight = 4
           Caption = 'Remember later'
           Color = clNone
-          Constraints.MinWidth = 168
+          Constraints.MinWidth = 134
           DropDownWidth = 16
           DropDownArrowSize = 8
           GlobalOpacity = 255
@@ -1322,10 +1324,10 @@ object frmDashboard: TfrmDashboard
           MemoryUsage = bmuMedium
         end
         object sbUpdateNow: TBCButton
-          Left = 188
-          Height = 29
+          Left = 148
+          Height = 24
           Top = 0
-          Width = 180
+          Width = 139
           StateClicked.Background.Color = 14259089
           StateClicked.Background.Gradient1.StartColor = 8404992
           StateClicked.Background.Gradient1.EndColor = 4194304
@@ -1412,7 +1414,7 @@ object frmDashboard: TfrmDashboard
           StateNormal.FontEx.PaddingRight = 4
           Caption = 'Update now'
           Color = clNone
-          Constraints.MinWidth = 168
+          Constraints.MinWidth = 134
           DropDownWidth = 16
           DropDownArrowSize = 8
           GlobalOpacity = 255
@@ -1427,14 +1429,14 @@ object frmDashboard: TfrmDashboard
       end
     end
     object pLoading: TBCPanel
-      Left = 17
-      Height = 40
-      Top = 57
-      Width = 402
+      Left = 14
+      Height = 32
+      Top = 48
+      Width = 321
       Align = alTop
-      BorderSpacing.Left = 16
-      BorderSpacing.Right = 16
-      BorderSpacing.Bottom = 16
+      BorderSpacing.Left = 13
+      BorderSpacing.Right = 13
+      BorderSpacing.Bottom = 13
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 12
       ChildSizing.HorizontalSpacing = 8
@@ -1476,15 +1478,15 @@ object frmDashboard: TfrmDashboard
       TabOrder = 1
     end
     object pTitleNotificationCenter: TBCPanel
-      Left = 17
-      Height = 32
-      Top = 17
-      Width = 402
+      Left = 14
+      Height = 26
+      Top = 14
+      Width = 321
       Align = alTop
-      BorderSpacing.Left = 16
-      BorderSpacing.Top = 16
-      BorderSpacing.Right = 16
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Left = 13
+      BorderSpacing.Top = 13
+      BorderSpacing.Right = 13
+      BorderSpacing.Bottom = 6
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 12
       ChildSizing.HorizontalSpacing = 8
@@ -1529,28 +1531,28 @@ object frmDashboard: TfrmDashboard
     end
     object scrollNotifications: TScrollBox
       Left = 0
-      Height = 353
-      Top = 244
-      Width = 434
-      HorzScrollBar.Page = 172
-      VertScrollBar.Page = 298
+      Height = 268
+      Top = 209
+      Width = 347
+      HorzScrollBar.Page = 162
+      VertScrollBar.Page = 244
       Align = alClient
-      BorderSpacing.Left = 1
+      BorderSpacing.Left = 2
       BorderSpacing.Right = 1
       BorderStyle = bsNone
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 16
       ChildSizing.VerticalSpacing = 8
-      ClientHeight = 353
-      ClientWidth = 434
-      Constraints.MinWidth = 434
+      ClientHeight = 268
+      ClientWidth = 347
+      Constraints.MinWidth = 347
       ParentBackground = False
       TabOrder = 3
       object pBandsBalance: TBCPanel
         Left = 16
-        Height = 77
+        Height = 62
         Top = 16
-        Width = 402
+        Width = 315
         Align = alTop
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
@@ -1595,21 +1597,22 @@ object frmDashboard: TfrmDashboard
           Left = 17
           Height = 20
           Top = 9
-          Width = 368
+          Width = 281
           Align = alTop
-          BorderSpacing.Bottom = 8
+          BorderSpacing.Bottom = 6
           Caption = 'Bands balance'
           Color = 16448250
           Font.Color = 13066075
+          Font.Height = -15
           ParentColor = False
           ParentFont = False
           OnClick = lblTitleBandsBalanceClick
         end
         object pBandsContent: TBCPanel
           Left = 17
-          Height = 63
-          Top = 37
-          Width = 368
+          Height = 50
+          Top = 35
+          Width = 281
           Align = alTop
           ChildSizing.HorizontalSpacing = 8
           ChildSizing.VerticalSpacing = 8
@@ -1653,9 +1656,9 @@ object frmDashboard: TfrmDashboard
       end
       object pPermitsExpiring: TBCPanel
         Left = 16
-        Height = 63
-        Top = 101
-        Width = 402
+        Height = 50
+        Top = 86
+        Width = 315
         Align = alTop
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
@@ -1697,9 +1700,9 @@ object frmDashboard: TfrmDashboard
         Visible = False
         object lblTitlePermitsExpiring: TLabel
           Left = 17
-          Height = 20
+          Height = 15
           Top = 9
-          Width = 368
+          Width = 281
           Align = alTop
           Caption = 'Permits expiring'
           Color = 16448250
@@ -1710,9 +1713,9 @@ object frmDashboard: TfrmDashboard
       end
       object pBirthdays: TBCPanel
         Left = 16
-        Height = 63
-        Top = 243
-        Width = 402
+        Height = 50
+        Top = 202
+        Width = 315
         Align = alTop
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
@@ -1754,11 +1757,11 @@ object frmDashboard: TfrmDashboard
         Visible = False
         object lblTitleBirthdays: TLabel
           Left = 17
-          Height = 20
+          Height = 15
           Top = 9
-          Width = 368
+          Width = 281
           Align = alTop
-          BorderSpacing.Bottom = 8
+          BorderSpacing.Bottom = 6
           Caption = 'Next birthdays'
           Color = 16448250
           Font.Color = 13066075
@@ -1768,9 +1771,9 @@ object frmDashboard: TfrmDashboard
       end
       object pReviseNests: TBCPanel
         Left = 16
-        Height = 63
-        Top = 172
-        Width = 402
+        Height = 50
+        Top = 144
+        Width = 315
         Align = alTop
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
@@ -1812,9 +1815,9 @@ object frmDashboard: TfrmDashboard
         Visible = False
         object lblTitleReviseNests: TLabel
           Left = 17
-          Height = 20
+          Height = 15
           Top = 9
-          Width = 368
+          Width = 281
           Align = alTop
           Caption = 'Check nests'
           Color = 16448250
@@ -1829,8 +1832,8 @@ object frmDashboard: TfrmDashboard
     Height = 20
     Scaled = True
     Width = 20
-    Left = 376
-    Top = 200
+    Left = 301
+    Top = 160
     Bitmap = {
       4C7A020000001400000014000000420400000000000078DABD967B4C53571CC7
       DB81665392FD311FD58538DE55029D2B35842C2CCDC65C5C308B42C8BA30EB12
@@ -1914,14 +1917,14 @@ object frmDashboard: TfrmDashboard
     Enabled = False
     Interval = 100
     OnTimer = TimerLoadTimer
-    Left = 472
-    Top = 240
+    Left = 378
+    Top = 192
   end
   object pmDashboard: TPopupMenu
     Images = frmMain.mPopup
     ImagesWidth = 20
-    Left = 472
-    Top = 328
+    Left = 378
+    Top = 262
     object pmRefresh: TMenuItem
       Caption = 'Atualizar'
       ImageIndex = 1
@@ -1930,20 +1933,20 @@ object frmDashboard: TfrmDashboard
     end
   end
   object lcsIndividualsMonth: TListChartSource
-    Left = 192
-    Top = 320
+    Left = 154
+    Top = 256
   end
   object TimerReload: TTimer
     OnTimer = TimerReloadTimer
-    Left = 472
-    Top = 160
+    Left = 378
+    Top = 128
   end
   object ChartGUIConnectorBGRA1: TChartGUIConnectorBGRA
-    Left = 472
-    Top = 410
+    Left = 378
+    Top = 328
   end
   object lcsSpeciesMonth: TListChartSource
-    Left = 192
-    Top = 240
+    Left = 154
+    Top = 192
   end
 end

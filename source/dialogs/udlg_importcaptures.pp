@@ -14,6 +14,10 @@ type
 
   TdlgImportCaptures = class(TForm)
     barProgress: TProgressBar;
+    eWeatherFile: TFileNameEdit;
+    icoWeatherFile: TImage;
+    lblWeatherFile: TLabel;
+    pEffortFile1: TBCPanel;
     pRetry: TBCPanel;
     imgFinished: TImageList;
     hvProgress: THtmlViewer;
@@ -47,6 +51,7 @@ type
     sbCancel: TButton;
     sbClearEffortFile: TSpeedButton;
     sbClearCaptureFile: TSpeedButton;
+    sbClearWeatherFile: TSpeedButton;
     sbClose: TButton;
     sbRetry: TBitBtn;
     sbRun: TButton;
@@ -55,6 +60,7 @@ type
     procedure eEffortFileChange(Sender: TObject);
     procedure eJournalFileButtonClick(Sender: TObject);
     procedure eJournalFileChange(Sender: TObject);
+    procedure eWeatherFileChange(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbClearJournalFileClick(Sender: TObject);
     procedure sbRetryClick(Sender: TObject);
@@ -96,6 +102,11 @@ begin
   UpdateButtons;
 end;
 
+procedure TdlgImportCaptures.eWeatherFileChange(Sender: TObject);
+begin
+  UpdateButtons;
+end;
+
 procedure TdlgImportCaptures.sbCancelClick(Sender: TObject);
 begin
   Parar := True;
@@ -111,7 +122,8 @@ begin
   case TControl(Sender).Tag of
     0: eJournalFile.Clear;
     1: eEffortFile.Clear;
-    2: eCaptureFile.Clear;
+    2: eWeatherFile.Clear;
+    3: eCaptureFile.Clear;
   end;
 
   UpdateButtons;
@@ -144,6 +156,7 @@ procedure TdlgImportCaptures.UpdateButtons;
 begin
   sbRun.Enabled := not IsEmptyStr(eJournalFile.FileName, [' ', '.']) or
                    not IsEmptyStr(eEffortFile.FileName, [' ', '.']) or
+                   not IsEmptyStr(eWeatherFile.FileName, [' ', '.']) or
                    not IsEmptyStr(eCaptureFile.FileName, [' ', '.']);
 end;
 

@@ -1,21 +1,22 @@
 object dlgAbout: TdlgAbout
   Left = 352
-  Height = 598
+  Height = 498
   Top = 33
-  Width = 432
+  Width = 307
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'About'
-  ClientHeight = 598
-  ClientWidth = 432
+  ClientHeight = 498
+  ClientWidth = 307
+  Font.Height = -12
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 544
-    Width = 432
+    Top = 446
+    Width = 307
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -23,70 +24,77 @@ object dlgAbout: TdlgAbout
   end
   object pBottom: TPanel
     Left = 0
-    Height = 52
-    Top = 546
-    Width = 432
+    Height = 50
+    Top = 448
+    Width = 307
     Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ClientHeight = 52
-    ClientWidth = 432
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 50
+    ClientWidth = 307
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    object sbClose: TButton
-      Left = 254
-      Height = 36
-      Top = 8
-      Width = 162
-      Align = alRight
-      Caption = 'Fechar'
-      ModalResult = 11
-      TabOrder = 0
-    end
     object sbCopy: TBitBtn
-      Left = 84
-      Height = 36
+      Left = 16
+      Height = 34
       Top = 8
-      Width = 162
-      Align = alRight
+      Width = 98
+      Align = alLeft
       Caption = 'Copiar'
       Images = frmMain.mPopup
       ImageIndex = 27
       ImageWidth = 24
       OnClick = sbCopyClick
+      TabOrder = 0
+    end
+    object sbClose: TButton
+      Left = 193
+      Height = 34
+      Top = 8
+      Width = 98
+      Align = alRight
+      Caption = 'Fechar'
+      ModalResult = 11
       TabOrder = 1
     end
   end
   object pContent: TPanel
     Left = 0
-    Height = 425
-    Top = 119
-    Width = 432
+    Height = 349
+    Top = 97
+    Width = 307
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 425
-    ClientWidth = 432
+    ClientHeight = 349
+    ClientWidth = 307
     Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
     object linkPrivacy: TATLabelLink
       Cursor = crHandPoint
-      Left = 16
-      Height = 20
-      Top = 364
-      Width = 400
+      Left = 32
+      Height = 15
+      Top = 298
+      Width = 243
       Align = alTop
+      BorderSpacing.Left = 32
+      BorderSpacing.Right = 32
       BorderSpacing.Bottom = 5
       Caption = 'Privacy'
       Font.Color = 13066075
+      Font.Height = -12
       ParentColor = False
       ParentFont = False
       ParentShowHint = False
@@ -96,14 +104,17 @@ object dlgAbout: TdlgAbout
     end
     object linkLicense: TATLabelLink
       Cursor = crHandPoint
-      Left = 16
-      Height = 20
-      Top = 389
-      Width = 400
+      Left = 32
+      Height = 15
+      Top = 318
+      Width = 243
       Align = alTop
+      BorderSpacing.Left = 32
+      BorderSpacing.Right = 32
       BorderSpacing.Bottom = 5
       Caption = 'License terms'
       Font.Color = 13066075
+      Font.Height = -12
       ParentColor = False
       ParentFont = False
       ParentShowHint = False
@@ -113,14 +124,17 @@ object dlgAbout: TdlgAbout
     end
     object linkThirdParty: TATLabelLink
       Cursor = crHandPoint
-      Left = 16
-      Height = 20
-      Top = 324
-      Width = 400
+      Left = 32
+      Height = 15
+      Top = 263
+      Width = 243
       Align = alTop
+      BorderSpacing.Left = 32
+      BorderSpacing.Right = 32
       BorderSpacing.Bottom = 20
       Caption = 'Third-party announcements'
       Font.Color = 13066075
+      Font.Height = -12
       ParentColor = False
       ParentFont = False
       ParentShowHint = False
@@ -130,9 +144,9 @@ object dlgAbout: TdlgAbout
     end
     object lblAppCopyright: TLabel
       Left = 16
-      Height = 20
+      Height = 15
       Top = 16
-      Width = 400
+      Width = 275
       Align = alTop
       BorderSpacing.Bottom = 10
       Caption = '© 2020-2024 Christian Beier'
@@ -140,15 +154,18 @@ object dlgAbout: TdlgAbout
     end
     object linkWebsite: TATLabelLink
       Cursor = crHandPoint
-      Left = 16
-      Height = 20
+      Left = 32
+      Height = 15
       Hint = 'http://xolmis.github.io'
-      Top = 284
-      Width = 400
+      Top = 228
+      Width = 243
       Align = alTop
+      BorderSpacing.Left = 32
+      BorderSpacing.Right = 32
       BorderSpacing.Bottom = 20
       Caption = 'Website'
       Font.Color = 13066075
+      Font.Height = -12
       ParentColor = False
       ParentFont = False
       ParentShowHint = False
@@ -159,10 +176,11 @@ object dlgAbout: TdlgAbout
     end
     object pVersion: TBCPanel
       Left = 16
-      Height = 52
-      Top = 46
-      Width = 400
+      Height = 43
+      Top = 41
+      Width = 275
       Align = alTop
+      AutoSize = True
       BorderSpacing.Bottom = 10
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
@@ -190,7 +208,7 @@ object dlgAbout: TdlgAbout
       Border.Color = 13750737
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
-      Constraints.MinWidth = 400
+      Constraints.MinWidth = 275
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -202,68 +220,20 @@ object dlgAbout: TdlgAbout
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       TabOrder = 0
-      object pAppVersion: TBCPanel
-        Left = 233
-        Height = 34
-        Top = 9
-        Width = 150
-        Align = alRight
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.TopBottomSpacing = 4
-        Background.Color = 16226706
-        Background.Gradient1.StartColor = clWhite
-        Background.Gradient1.EndColor = clBlack
-        Background.Gradient1.GradientType = gtLinear
-        Background.Gradient1.Point1XPercent = 0
-        Background.Gradient1.Point1YPercent = 0
-        Background.Gradient1.Point2XPercent = 0
-        Background.Gradient1.Point2YPercent = 100
-        Background.Gradient2.StartColor = clWhite
-        Background.Gradient2.EndColor = clBlack
-        Background.Gradient2.GradientType = gtLinear
-        Background.Gradient2.Point1XPercent = 0
-        Background.Gradient2.Point1YPercent = 0
-        Background.Gradient2.Point2XPercent = 0
-        Background.Gradient2.Point2YPercent = 100
-        Background.Gradient1EndPercent = 35
-        Background.Style = bbsColor
-        BevelInner = bvNone
-        BevelOuter = bvRaised
-        BevelWidth = 1
-        Border.Style = bboNone
-        BorderBCStyle = bpsBorder
-        Caption = '0.1'
-        Color = 16448250
-        Constraints.MaxWidth = 150
-        FontEx.Color = 7880253
-        FontEx.FontQuality = fqSystemClearType
-        FontEx.Height = 18
-        FontEx.Shadow = False
-        FontEx.ShadowRadius = 5
-        FontEx.ShadowOffsetX = 5
-        FontEx.ShadowOffsetY = 5
-        FontEx.Style = [fsBold]
-        FontEx.PaddingLeft = 8
-        FontEx.PaddingRight = 8
-        ParentBackground = False
-        Rounding.RoundX = 16
-        Rounding.RoundY = 16
-        TabOrder = 0
-      end
       object lblAppVersion: TLabel
         Left = 17
-        Height = 34
+        Height = 25
         Top = 9
-        Width = 48
+        Width = 38
         Align = alLeft
         Caption = 'Version'
         Layout = tlCenter
       end
       object pAppPrerelease: TBCPanel
-        Left = 110
-        Height = 30
+        Left = 114
+        Height = 21
         Top = 11
-        Width = 115
+        Width = 69
         Align = alRight
         BorderSpacing.Top = 10
         BorderSpacing.Bottom = 10
@@ -297,6 +267,7 @@ object dlgAbout: TdlgAbout
         Constraints.MaxWidth = 150
         FontEx.Color = 4500223
         FontEx.FontQuality = fqSystemClearType
+        FontEx.Height = 12
         FontEx.Shadow = False
         FontEx.ShadowRadius = 5
         FontEx.ShadowOffsetX = 5
@@ -307,15 +278,30 @@ object dlgAbout: TdlgAbout
         ParentBackground = False
         Rounding.RoundX = 12
         Rounding.RoundY = 12
-        TabOrder = 1
+        TabOrder = 0
+      end
+      object pAppVersion: TLabel
+        Left = 199
+        Height = 25
+        Top = 9
+        Width = 59
+        Align = alRight
+        BorderSpacing.Left = 16
+        Caption = '0.1.0.0'
+        Font.Color = 7880253
+        Font.Height = -19
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentFont = False
       end
     end
     object pClements: TBCPanel
       Left = 16
-      Height = 52
-      Top = 108
-      Width = 400
+      Height = 38
+      Top = 94
+      Width = 275
       Align = alTop
+      AutoSize = True
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
@@ -354,72 +340,38 @@ object dlgAbout: TdlgAbout
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 1
-      object pClementsVersion: TBCPanel
-        Left = 233
-        Height = 34
-        Top = 9
-        Width = 150
-        Align = alRight
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.TopBottomSpacing = 4
-        Background.Color = 16444392
-        Background.Gradient1.StartColor = clWhite
-        Background.Gradient1.EndColor = clBlack
-        Background.Gradient1.GradientType = gtLinear
-        Background.Gradient1.Point1XPercent = 0
-        Background.Gradient1.Point1YPercent = 0
-        Background.Gradient1.Point2XPercent = 0
-        Background.Gradient1.Point2YPercent = 100
-        Background.Gradient2.StartColor = clWhite
-        Background.Gradient2.EndColor = clBlack
-        Background.Gradient2.GradientType = gtLinear
-        Background.Gradient2.Point1XPercent = 0
-        Background.Gradient2.Point1YPercent = 0
-        Background.Gradient2.Point2XPercent = 0
-        Background.Gradient2.Point2YPercent = 100
-        Background.Gradient1EndPercent = 35
-        Background.Style = bbsColor
-        BevelInner = bvNone
-        BevelOuter = bvRaised
-        BevelWidth = 1
-        Border.Color = 16226706
-        Border.Style = bboSolid
-        BorderBCStyle = bpsBorder
-        Caption = '2021'
-        Color = 16448250
-        Constraints.MaxWidth = 150
-        FontEx.Color = 13066075
-        FontEx.FontQuality = fqSystemClearType
-        FontEx.Height = 18
-        FontEx.Shadow = False
-        FontEx.ShadowRadius = 5
-        FontEx.ShadowOffsetX = 5
-        FontEx.ShadowOffsetY = 5
-        FontEx.Style = [fsBold]
-        FontEx.PaddingLeft = 8
-        FontEx.PaddingRight = 8
-        ParentBackground = False
-        Rounding.RoundX = 16
-        Rounding.RoundY = 16
-        TabOrder = 0
-      end
       object lblClementsVersion: TLabel
         Left = 17
-        Height = 34
+        Height = 20
         Top = 9
-        Width = 102
+        Width = 82
         Align = alLeft
         Caption = 'Clements/eBird'
         Layout = tlCenter
         ParentColor = False
       end
+      object pClementsVersion: TLabel
+        Left = 222
+        Height = 20
+        Top = 9
+        Width = 36
+        Align = alRight
+        Caption = '2021'
+        Font.Color = 13066075
+        Font.Height = -15
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentColor = False
+        ParentFont = False
+      end
     end
     object pIOC: TBCPanel
       Left = 16
-      Height = 52
-      Top = 160
-      Width = 400
+      Height = 38
+      Top = 132
+      Width = 275
       Align = alTop
+      AutoSize = True
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
@@ -458,72 +410,38 @@ object dlgAbout: TdlgAbout
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 2
-      object pIocVersion: TBCPanel
-        Left = 233
-        Height = 34
-        Top = 9
-        Width = 150
-        Align = alRight
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.TopBottomSpacing = 4
-        Background.Color = 16444392
-        Background.Gradient1.StartColor = clWhite
-        Background.Gradient1.EndColor = clBlack
-        Background.Gradient1.GradientType = gtLinear
-        Background.Gradient1.Point1XPercent = 0
-        Background.Gradient1.Point1YPercent = 0
-        Background.Gradient1.Point2XPercent = 0
-        Background.Gradient1.Point2YPercent = 100
-        Background.Gradient2.StartColor = clWhite
-        Background.Gradient2.EndColor = clBlack
-        Background.Gradient2.GradientType = gtLinear
-        Background.Gradient2.Point1XPercent = 0
-        Background.Gradient2.Point1YPercent = 0
-        Background.Gradient2.Point2XPercent = 0
-        Background.Gradient2.Point2YPercent = 100
-        Background.Gradient1EndPercent = 35
-        Background.Style = bbsColor
-        BevelInner = bvNone
-        BevelOuter = bvRaised
-        BevelWidth = 1
-        Border.Color = 16226706
-        Border.Style = bboSolid
-        BorderBCStyle = bpsBorder
-        Caption = '11.2'
-        Color = 16448250
-        Constraints.MaxWidth = 150
-        FontEx.Color = 13066075
-        FontEx.FontQuality = fqSystemClearType
-        FontEx.Height = 18
-        FontEx.Shadow = False
-        FontEx.ShadowRadius = 5
-        FontEx.ShadowOffsetX = 5
-        FontEx.ShadowOffsetY = 5
-        FontEx.Style = [fsBold]
-        FontEx.PaddingLeft = 8
-        FontEx.PaddingRight = 8
-        ParentBackground = False
-        Rounding.RoundX = 16
-        Rounding.RoundY = 16
-        TabOrder = 0
-      end
       object lblIocVersion: TLabel
         Left = 17
-        Height = 34
+        Height = 20
         Top = 9
-        Width = 24
+        Width = 20
         Align = alLeft
         Caption = 'IOC'
         Layout = tlCenter
         ParentColor = False
       end
+      object pIocVersion: TLabel
+        Left = 227
+        Height = 20
+        Top = 9
+        Width = 31
+        Align = alRight
+        Caption = '11.2'
+        Font.Color = 13066075
+        Font.Height = -15
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentColor = False
+        ParentFont = False
+      end
     end
     object pCBRO: TBCPanel
       Left = 16
-      Height = 52
-      Top = 212
-      Width = 400
+      Height = 38
+      Top = 170
+      Width = 275
       Align = alTop
+      AutoSize = True
       BorderSpacing.Bottom = 20
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
@@ -563,105 +481,71 @@ object dlgAbout: TdlgAbout
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
       TabOrder = 3
-      object pCbroVersion: TBCPanel
-        Left = 233
-        Height = 34
-        Top = 9
-        Width = 150
-        Align = alRight
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.TopBottomSpacing = 4
-        Background.Color = 16444392
-        Background.Gradient1.StartColor = clWhite
-        Background.Gradient1.EndColor = clBlack
-        Background.Gradient1.GradientType = gtLinear
-        Background.Gradient1.Point1XPercent = 0
-        Background.Gradient1.Point1YPercent = 0
-        Background.Gradient1.Point2XPercent = 0
-        Background.Gradient1.Point2YPercent = 100
-        Background.Gradient2.StartColor = clWhite
-        Background.Gradient2.EndColor = clBlack
-        Background.Gradient2.GradientType = gtLinear
-        Background.Gradient2.Point1XPercent = 0
-        Background.Gradient2.Point1YPercent = 0
-        Background.Gradient2.Point2XPercent = 0
-        Background.Gradient2.Point2YPercent = 100
-        Background.Gradient1EndPercent = 35
-        Background.Style = bbsColor
-        BevelInner = bvNone
-        BevelOuter = bvRaised
-        BevelWidth = 1
-        Border.Color = 16226706
-        Border.Style = bboSolid
-        BorderBCStyle = bpsBorder
-        Caption = '2021'
-        Color = 16448250
-        Constraints.MaxWidth = 150
-        FontEx.Color = 13066075
-        FontEx.FontQuality = fqSystemClearType
-        FontEx.Height = 18
-        FontEx.Shadow = False
-        FontEx.ShadowRadius = 5
-        FontEx.ShadowOffsetX = 5
-        FontEx.ShadowOffsetY = 5
-        FontEx.Style = [fsBold]
-        FontEx.PaddingLeft = 8
-        FontEx.PaddingRight = 8
-        ParentBackground = False
-        Rounding.RoundX = 16
-        Rounding.RoundY = 16
-        TabOrder = 0
-      end
       object lblCbroVersion: TLabel
         Left = 17
-        Height = 34
+        Height = 20
         Top = 9
-        Width = 38
+        Width = 31
         Align = alLeft
         Caption = 'CBRO'
         Layout = tlCenter
         ParentColor = False
       end
+      object pCbroVersion: TLabel
+        Left = 222
+        Height = 20
+        Top = 9
+        Width = 36
+        Align = alRight
+        Caption = '2021'
+        Font.Color = 13066075
+        Font.Height = -15
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentColor = False
+        ParentFont = False
+      end
     end
   end
   object pTitle: TPanel
     Left = 0
-    Height = 119
+    Height = 97
     Top = 0
-    Width = 432
+    Width = 307
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
     ChildSizing.VerticalSpacing = 4
-    ClientHeight = 119
-    ClientWidth = 432
+    ClientHeight = 97
+    ClientWidth = 307
     Color = 16448250
     ParentBackground = False
     ParentColor = False
     TabOrder = 2
     object lblAppName: TLabel
       Left = 16
-      Height = 67
+      Height = 50
       Top = 16
-      Width = 400
+      Width = 275
       Align = alTop
       Caption = 'Xolmis'
       Font.Color = 13066075
-      Font.Height = -50
+      Font.Height = -37
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
     end
     object lblAppDescription: TLabel
       Left = 16
-      Height = 20
-      Top = 87
-      Width = 400
+      Height = 15
+      Top = 70
+      Width = 275
       Align = alTop
       Caption = 'A free, open source ornithological data manager'
       Font.Color = 6579300
+      Font.Height = -12
       ParentColor = False
       ParentFont = False
     end

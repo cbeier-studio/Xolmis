@@ -173,8 +173,8 @@ type
     pRecordStatus: TBCPanel;
     pChildStatus: TBCPanel;
     pRecordToolbar: TBCPanel;
-    pRecordToolbar1: TBCPanel;
-    pRecordToolbar2: TBCPanel;
+    pColumnsToolbar: TBCPanel;
+    pImagesToolbar: TBCPanel;
     pRecycleContent: TPanel;
     pReportedFilter: TBCPanel;
     pChildCount3: TBCPanel;
@@ -2554,6 +2554,7 @@ end;
 procedure TfrmCustomGrid.sbShowRecordClick(Sender: TObject);
 begin
   pSide.Visible := (Sender as TSpeedButton).Down;
+  SplitRight.Visible := pSide.Visible;
 
   if (Sender as TSpeedButton).Down then
     cpSide.PageIndex := (Sender as TSpeedButton).Tag;

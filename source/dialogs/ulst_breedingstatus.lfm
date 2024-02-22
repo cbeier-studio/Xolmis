@@ -2,12 +2,13 @@ object lstBreedingStatus: TlstBreedingStatus
   Left = 352
   Height = 710
   Top = 33
-  Width = 434
+  Width = 334
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Breeding and behavior code'
   ClientHeight = 710
-  ClientWidth = 434
+  ClientWidth = 334
   Color = 16444392
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
@@ -16,9 +17,9 @@ object lstBreedingStatus: TlstBreedingStatus
   Position = poOwnerFormCenter
   object pBottom: TPanel
     Left = 0
-    Height = 46
-    Top = 664
-    Width = 434
+    Height = 41
+    Top = 669
+    Width = 334
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
@@ -31,20 +32,18 @@ object lstBreedingStatus: TlstBreedingStatus
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 46
-    ClientWidth = 434
+    ClientHeight = 41
+    ClientWidth = 334
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object sbOK: TBitBtn
       Left = 16
-      Height = 30
+      Height = 25
       Top = 8
-      Width = 197
+      Width = 145
       Caption = 'Apply'
-      Constraints.MinHeight = 30
-      Constraints.MinWidth = 197
       Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
@@ -53,13 +52,11 @@ object lstBreedingStatus: TlstBreedingStatus
       TabOrder = 0
     end
     object sbCancel: TBitBtn
-      Left = 221
-      Height = 30
+      Left = 169
+      Height = 25
       Top = 8
-      Width = 197
+      Width = 149
       Caption = 'Cancel'
-      Constraints.MinHeight = 30
-      Constraints.MinWidth = 197
       OnClick = sbCancelClick
       OnKeyPress = FormKeyPress
       TabOrder = 1
@@ -67,11 +64,13 @@ object lstBreedingStatus: TlstBreedingStatus
   end
   object cklBreed: TCheckListBox
     Left = 8
-    Height = 603
+    Height = 608
     Top = 8
-    Width = 418
+    Width = 318
     Align = alClient
     BorderSpacing.Around = 8
+    Constraints.MinHeight = 608
+    Constraints.MinWidth = 318
     Items.Strings = (
       'Confirmed'
       'NY - Nest with Young'
@@ -113,8 +112,8 @@ object lstBreedingStatus: TlstBreedingStatus
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 662
-    Width = 434
+    Top = 667
+    Width = 334
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -123,8 +122,8 @@ object lstBreedingStatus: TlstBreedingStatus
   object pCode: TBCPanel
     Left = 8
     Height = 35
-    Top = 619
-    Width = 418
+    Top = 624
+    Width = 318
     Align = alBottom
     BorderSpacing.Left = 8
     BorderSpacing.Right = 8

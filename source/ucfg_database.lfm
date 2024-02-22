@@ -1,36 +1,36 @@
 object cfgDatabase: TcfgDatabase
   Left = 352
-  Height = 547
+  Height = 438
   Top = 33
-  Width = 430
+  Width = 344
   BorderStyle = bsDialog
   Caption = 'Xolmis - Manage connections'
-  ClientHeight = 547
-  ClientWidth = 430
-  DesignTimePPI = 120
+  ClientHeight = 438
+  ClientWidth = 344
+  Font.Height = -12
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   Position = poScreenCenter
   object pClient: TPanel
     Left = 0
-    Height = 495
+    Height = 396
     Top = 0
-    Width = 430
+    Width = 344
     Align = alClient
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 495
-    ClientWidth = 430
+    ClientHeight = 396
+    ClientWidth = 344
     Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object vtConnections: TVirtualDBGrid
       Left = 16
-      Height = 417
-      Top = 62
-      Width = 398
+      Height = 320
+      Top = 60
+      Width = 312
       Align = alClient
       Header.AutoSizeIndex = 0
       Header.Columns = <      
@@ -38,7 +38,7 @@ object cfgDatabase: TcfgDatabase
           Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus]
           Position = 0
           Text = 'connection_name'
-          Width = 350
+          Width = 280
           FieldName = 'connection_name'
           ColumnType = ctDBField
         end>
@@ -56,9 +56,9 @@ object cfgDatabase: TcfgDatabase
     end
     object pChildToolbar: TBCPanel
       Left = 16
-      Height = 46
+      Height = 44
       Top = 16
-      Width = 398
+      Width = 312
       Align = alTop
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
@@ -99,13 +99,14 @@ object cfgDatabase: TcfgDatabase
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 1
       object sbDelete: TSpeedButton
-        Left = 352
-        Height = 28
+        Left = 267
+        Height = 26
         Top = 9
-        Width = 29
+        Width = 28
         Align = alRight
-        BorderSpacing.Left = 16
-        BorderSpacing.Bottom = 8
+        AutoSize = True
+        BorderSpacing.Left = 13
+        BorderSpacing.Bottom = 6
         Flat = True
         Images = frmMain.mPopup
         ImageIndex = 141
@@ -113,13 +114,14 @@ object cfgDatabase: TcfgDatabase
         OnClick = sbDeleteClick
       end
       object sbEdit: TSpeedButton
-        Left = 50
-        Height = 28
+        Left = 49
+        Height = 26
         Top = 9
-        Width = 29
+        Width = 28
         Align = alLeft
-        BorderSpacing.Right = 16
-        BorderSpacing.Bottom = 8
+        AutoSize = True
+        BorderSpacing.Right = 13
+        BorderSpacing.Bottom = 6
         Flat = True
         Images = frmMain.mPopup
         ImageIndex = 39
@@ -128,11 +130,12 @@ object cfgDatabase: TcfgDatabase
       end
       object sbNew: TSpeedButton
         Left = 17
-        Height = 28
+        Height = 26
         Top = 9
-        Width = 29
+        Width = 28
         Align = alLeft
-        BorderSpacing.Bottom = 8
+        AutoSize = True
+        BorderSpacing.Bottom = 6
         Flat = True
         Images = frmMain.mPopup
         ImageIndex = 0
@@ -140,10 +143,10 @@ object cfgDatabase: TcfgDatabase
         OnClick = sbNewClick
       end
       object Separator7: TShapeLineBGRA
-        Left = 95
-        Height = 28
+        Left = 90
+        Height = 26
         Top = 9
-        Width = 3
+        Width = 2
         Align = alLeft
         Direction = drUpDown
         LineColor = 12829635
@@ -151,13 +154,14 @@ object cfgDatabase: TcfgDatabase
         LineWidth = 1
       end
       object sbMore: TSpeedButton
-        Left = 114
-        Height = 28
+        Left = 105
+        Height = 26
         Top = 9
-        Width = 29
+        Width = 28
         Align = alLeft
-        BorderSpacing.Left = 16
-        BorderSpacing.Right = 16
+        AutoSize = True
+        BorderSpacing.Left = 13
+        BorderSpacing.Right = 13
         Flat = True
         Images = frmMain.mPopup
         ImageIndex = 78
@@ -165,10 +169,10 @@ object cfgDatabase: TcfgDatabase
         OnClick = sbMoreClick
       end
       object Separator8: TShapeLineBGRA
-        Left = 333
-        Height = 28
+        Left = 252
+        Height = 26
         Top = 9
-        Width = 3
+        Width = 2
         Align = alRight
         Direction = drUpDown
         LineColor = 12829635
@@ -176,14 +180,15 @@ object cfgDatabase: TcfgDatabase
         LineWidth = 1
       end
       object sbRefreshRecords: TSpeedButton
-        Left = 288
-        Height = 28
+        Left = 211
+        Height = 26
         Hint = 'Refresh records'
         Top = 9
-        Width = 29
+        Width = 28
         Align = alRight
-        BorderSpacing.Left = 16
-        BorderSpacing.Right = 16
+        AutoSize = True
+        BorderSpacing.Left = 13
+        BorderSpacing.Right = 13
         Flat = True
         Images = frmMain.bMenu
         ImageIndex = 5
@@ -197,25 +202,25 @@ object cfgDatabase: TcfgDatabase
   end
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 497
-    Width = 430
+    Height = 40
+    Top = 398
+    Width = 344
     Align = alBottom
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ClientHeight = 50
-    ClientWidth = 430
+    ClientHeight = 40
+    ClientWidth = 344
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
     object sbClose: TButton
-      Left = 284
-      Height = 34
+      Left = 217
+      Height = 24
       Top = 8
-      Width = 130
+      Width = 111
       Align = alRight
       Caption = 'Close'
       ModalResult = 11
@@ -227,8 +232,8 @@ object cfgDatabase: TcfgDatabase
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 495
-    Width = 430
+    Top = 396
+    Width = 344
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -238,8 +243,8 @@ object cfgDatabase: TcfgDatabase
     Height = 20
     Scaled = True
     Width = 20
-    Left = 211
-    Top = 159
+    Left = 169
+    Top = 127
     Bitmap = {
       4C7A040000001400000014000000C70A00000000000078DAED987954D35716C7
       5F424212B2110944402C8B42444520B20802028A206E91464169EB5610959D6A
@@ -408,14 +413,14 @@ object cfgDatabase: TcfgDatabase
     AutoEdit = False
     DataSet = DMM.qsConn
     OnStateChange = dsConnStateChange
-    Left = 211
-    Top = 240
+    Left = 169
+    Top = 192
   end
   object pmTools: TPopupMenu
     Images = iButtons
     ImagesWidth = 20
-    Left = 211
-    Top = 88
+    Left = 169
+    Top = 70
     object mmTestConnection: TMenuItem
       Caption = 'Test connection'
       ImageIndex = 0
@@ -426,8 +431,8 @@ object cfgDatabase: TcfgDatabase
     Height = 32
     Scaled = True
     Width = 32
-    Left = 296
-    Top = 159
+    Left = 237
+    Top = 127
     Bitmap = {
       4C7A010000002000000020000000B40200000000000078DAED97516812711CC7
       5D0B46903DF4145223F5419850D46BF8506FB3F029C868D283C42848C215636E

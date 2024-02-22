@@ -2,24 +2,25 @@ object lstDetectionType: TlstDetectionType
   Left = 352
   Height = 246
   Top = 33
-  Width = 332
+  Width = 246
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Detection type'
   ClientHeight = 246
-  ClientWidth = 332
+  ClientWidth = 246
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poOwnerFormCenter
-  LCLVersion = '3.0.0.2'
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 196
-    Width = 332
+    Height = 41
+    Top = 205
+    Width = 246
     Align = alBottom
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -30,16 +31,15 @@ object lstDetectionType: TlstDetectionType
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
-    ClientWidth = 332
+    ClientHeight = 41
+    ClientWidth = 246
     TabOrder = 0
     object sbOK: TBitBtn
       Left = 16
-      Height = 34
+      Height = 25
       Top = 8
-      Width = 146
+      Width = 101
       Caption = 'Apply'
-      Constraints.MinWidth = 146
       Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
@@ -47,23 +47,24 @@ object lstDetectionType: TlstDetectionType
       TabOrder = 0
     end
     object sbCancel: TBitBtn
-      Left = 170
-      Height = 34
+      Left = 125
+      Height = 25
       Top = 8
-      Width = 146
+      Width = 105
       Caption = 'Cancel'
-      Constraints.MinWidth = 146
       OnClick = sbCancelClick
       TabOrder = 1
     end
   end
   object cklDetect: TCheckListBox
     Left = 8
-    Height = 135
+    Height = 144
     Top = 8
-    Width = 316
+    Width = 230
     Align = alClient
     BorderSpacing.Around = 8
+    Constraints.MinHeight = 144
+    Constraints.MinWidth = 230
     Items.Strings = (
       'S - song'
       'C - call'
@@ -82,8 +83,8 @@ object lstDetectionType: TlstDetectionType
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 194
-    Width = 332
+    Top = 203
+    Width = 246
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -92,8 +93,8 @@ object lstDetectionType: TlstDetectionType
   object pCode: TBCPanel
     Left = 8
     Height = 35
-    Top = 151
-    Width = 316
+    Top = 160
+    Width = 230
     Align = alBottom
     BorderSpacing.Left = 8
     BorderSpacing.Right = 8

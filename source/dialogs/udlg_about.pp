@@ -13,6 +13,10 @@ type
   { TdlgAbout }
 
   TdlgAbout = class(TForm)
+    pClementsVersion: TLabel;
+    pAppVersion: TLabel;
+    pIocVersion: TLabel;
+    pCbroVersion: TLabel;
     pVersion: TBCPanel;
     pClements: TBCPanel;
     pIOC: TBCPanel;
@@ -28,17 +32,13 @@ type
     linkLicense: TATLabelLink;
     linkThirdParty: TATLabelLink;
     linkWebsite: TATLabelLink;
-    pAppVersion: TBCPanel;
     pAppPrerelease: TBCPanel;
-    pClementsVersion: TBCPanel;
-    pIocVersion: TBCPanel;
-    pCbroVersion: TBCPanel;
     pTitle: TPanel;
+    sbClose: TButton;
     sbCopy: TBitBtn;
     lineBottom: TShapeLineBGRA;
     pContent: TPanel;
     pBottom: TPanel;
-    sbClose: TButton;
     procedure FormShow(Sender: TObject);
     procedure sbCopyClick(Sender: TObject);
   private

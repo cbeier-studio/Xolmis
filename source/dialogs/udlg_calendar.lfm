@@ -1,24 +1,25 @@
 object dlgCalendar: TdlgCalendar
   Left = 352
-  Height = 271
+  Height = 238
   Top = 33
-  Width = 484
+  Width = 392
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
   Caption = 'Select date'
-  ClientHeight = 271
-  ClientWidth = 484
+  ClientHeight = 238
+  ClientWidth = 392
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   object pBottom: TPanel
     Left = 0
-    Height = 46
-    Top = 225
-    Width = 484
+    Height = 41
+    Top = 197
+    Width = 392
     Align = alBottom
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -27,19 +28,19 @@ object dlgCalendar: TdlgCalendar
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 46
-    ClientWidth = 484
+    ClientHeight = 41
+    ClientWidth = 392
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object sbOK: TBitBtn
       Left = 16
-      Height = 30
+      Height = 25
       Top = 8
-      Width = 222
+      Width = 174
+      AutoSize = True
       Caption = 'Apply'
-      Constraints.MinWidth = 222
       Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
@@ -47,12 +48,12 @@ object dlgCalendar: TdlgCalendar
       TabOrder = 0
     end
     object sbCancel: TBitBtn
-      Left = 246
-      Height = 30
+      Left = 198
+      Height = 25
       Top = 8
-      Width = 222
+      Width = 178
+      AutoSize = True
       Caption = 'Cancel'
-      Constraints.MinWidth = 222
       OnClick = sbCancelClick
       TabOrder = 1
     end
@@ -60,21 +61,22 @@ object dlgCalendar: TdlgCalendar
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 223
-    Width = 484
+    Top = 195
+    Width = 392
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
   object pRight: TBCPanel
-    Left = 280
-    Height = 223
+    Left = 235
+    Height = 195
     Top = 0
-    Width = 204
-    Align = alRight
+    Width = 157
+    Align = alLeft
+    AutoSize = True
     ChildSizing.LeftRightSpacing = 8
-    ChildSizing.TopBottomSpacing = 14
+    ChildSizing.TopBottomSpacing = 8
     Background.Color = 16444392
     Background.Gradient1.StartColor = clWhite
     Background.Gradient1.EndColor = clBlack
@@ -111,8 +113,8 @@ object dlgCalendar: TdlgCalendar
     object pOperations: TBCPanel
       Left = 9
       Height = 46
-      Top = 15
-      Width = 186
+      Top = 9
+      Width = 139
       Align = alTop
       BorderSpacing.Bottom = 8
       ChildSizing.LeftRightSpacing = 8
@@ -162,7 +164,7 @@ object dlgCalendar: TdlgCalendar
         Left = 8
         Height = 30
         Top = 8
-        Width = 83
+        Width = 60
         Down = True
         GroupIndex = 1
         Images = iCalendar
@@ -170,10 +172,10 @@ object dlgCalendar: TdlgCalendar
         ImageWidth = 24
       end
       object rbSubtract: TSpeedButton
-        Left = 95
+        Left = 72
         Height = 30
         Top = 8
-        Width = 83
+        Width = 59
         GroupIndex = 1
         Images = iCalendar
         ImageIndex = 1
@@ -182,10 +184,11 @@ object dlgCalendar: TdlgCalendar
     end
     object pYears: TBCPanel
       Left = 9
-      Height = 46
-      Top = 69
-      Width = 186
+      Height = 41
+      Top = 63
+      Width = 139
       Align = alTop
+      AutoSize = True
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
@@ -226,7 +229,7 @@ object dlgCalendar: TdlgCalendar
       TabOrder = 1
       object lblYears: TLabel
         Left = 9
-        Height = 28
+        Height = 23
         Top = 9
         Width = 63
         Align = alLeft
@@ -238,9 +241,9 @@ object dlgCalendar: TdlgCalendar
       end
       object eYears: TSpinEdit
         Left = 80
-        Height = 28
+        Height = 23
         Top = 9
-        Width = 97
+        Width = 50
         Align = alClient
         MaxValue = 99999
         OnChange = eYearsChange
@@ -249,10 +252,11 @@ object dlgCalendar: TdlgCalendar
     end
     object pMonths: TBCPanel
       Left = 9
-      Height = 46
-      Top = 115
-      Width = 186
+      Height = 41
+      Top = 104
+      Width = 139
       Align = alTop
+      AutoSize = True
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
@@ -293,7 +297,7 @@ object dlgCalendar: TdlgCalendar
       TabOrder = 2
       object lblMonths: TLabel
         Left = 9
-        Height = 28
+        Height = 23
         Top = 9
         Width = 63
         Align = alLeft
@@ -305,9 +309,9 @@ object dlgCalendar: TdlgCalendar
       end
       object eMonths: TSpinEdit
         Left = 80
-        Height = 28
+        Height = 23
         Top = 9
-        Width = 97
+        Width = 50
         Align = alClient
         MaxValue = 999999
         TabOrder = 0
@@ -315,10 +319,11 @@ object dlgCalendar: TdlgCalendar
     end
     object pDays: TBCPanel
       Left = 9
-      Height = 46
-      Top = 161
-      Width = 186
+      Height = 41
+      Top = 145
+      Width = 139
       Align = alTop
+      AutoSize = True
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
@@ -359,7 +364,7 @@ object dlgCalendar: TdlgCalendar
       TabOrder = 3
       object lblDays: TLabel
         Left = 9
-        Height = 28
+        Height = 23
         Top = 9
         Width = 63
         Align = alLeft
@@ -371,9 +376,9 @@ object dlgCalendar: TdlgCalendar
       end
       object eDays: TSpinEdit
         Left = 80
-        Height = 28
+        Height = 23
         Top = 9
-        Width = 97
+        Width = 50
         Align = alClient
         MaxValue = 999999999
         TabOrder = 0
@@ -382,11 +387,12 @@ object dlgCalendar: TdlgCalendar
   end
   object pCalendar: TBCPanel
     Left = 0
-    Height = 223
+    Height = 195
     Top = 0
-    Width = 280
-    Align = alClient
-    ChildSizing.TopBottomSpacing = 8
+    Width = 235
+    Align = alLeft
+    AutoSize = True
+    ChildSizing.TopBottomSpacing = 16
     Background.Color = 16444392
     Background.Gradient1.StartColor = clWhite
     Background.Gradient1.EndColor = clBlack
@@ -422,9 +428,9 @@ object dlgCalendar: TdlgCalendar
     TabOrder = 2
     object Cal: TCalendar
       Left = 9
-      Height = 205
-      Top = 9
-      Width = 267
+      Height = 160
+      Top = 17
+      Width = 225
       AutoSize = True
       BorderSpacing.Left = 8
       DateTime = 44826
@@ -435,7 +441,7 @@ object dlgCalendar: TdlgCalendar
     Height = 48
     Width = 48
     Left = 24
-    Top = 208
+    Top = 192
     Bitmap = {
       4C7A020000003000000030000000B70000000000000078DAEDDAC10983300086
       516F9D23F77427C1390457A81375134BF7283642A4ED517B3091F7E0BFD6EF22

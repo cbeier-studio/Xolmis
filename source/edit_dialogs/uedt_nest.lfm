@@ -1,12 +1,13 @@
 object edtNest: TedtNest
   Left = 352
-  Height = 731
+  Height = 643
   Top = 33
   Width = 416
   AutoSize = True
   Caption = 'New nest'
-  ClientHeight = 731
+  ClientHeight = 643
   ClientWidth = 416
+  Font.Height = -12
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
@@ -17,7 +18,7 @@ object edtNest: TedtNest
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 688
+    Top = 600
     Width = 416
     Align = alTop
     LineColor = 9276813
@@ -27,7 +28,7 @@ object edtNest: TedtNest
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 690
+    Top = 602
     Width = 416
     Align = alTop
     AutoSize = True
@@ -71,15 +72,15 @@ object edtNest: TedtNest
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 688
+    Height = 600
     Top = 0
     Width = 416
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 688
+    VertScrollBar.Page = 600
     Align = alTop
     BorderStyle = bsNone
-    ClientHeight = 688
+    ClientHeight = 600
     ClientWidth = 399
     Constraints.MinWidth = 176
     Color = clDefault
@@ -137,6 +138,7 @@ object edtNest: TedtNest
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -262,6 +264,7 @@ object edtNest: TedtNest
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -358,6 +361,7 @@ object edtNest: TedtNest
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -410,6 +414,7 @@ object edtNest: TedtNest
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -473,6 +478,7 @@ object edtNest: TedtNest
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
@@ -498,6 +504,7 @@ object edtNest: TedtNest
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
@@ -563,6 +570,7 @@ object edtNest: TedtNest
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
@@ -587,6 +595,7 @@ object edtNest: TedtNest
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
@@ -939,6 +948,7 @@ object edtNest: TedtNest
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -1034,6 +1044,7 @@ object edtNest: TedtNest
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0

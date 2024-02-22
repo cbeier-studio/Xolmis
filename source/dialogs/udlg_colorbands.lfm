@@ -1,15 +1,15 @@
 object dlgColorBands: TdlgColorBands
   Left = 352
-  Height = 252
+  Height = 212
   Top = 33
-  Width = 405
+  Width = 324
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
   Caption = 'Auxiliary bands'
-  ClientHeight = 252
-  ClientWidth = 405
+  ClientHeight = 212
+  ClientWidth = 324
   Color = clWhite
-  DesignTimePPI = 120
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
@@ -17,9 +17,9 @@ object dlgColorBands: TdlgColorBands
   PopupMode = pmAuto
   object pBottom: TPanel
     Left = 0
-    Height = 46
-    Top = 206
-    Width = 405
+    Height = 41
+    Top = 171
+    Width = 324
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
@@ -30,19 +30,20 @@ object dlgColorBands: TdlgColorBands
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 46
-    ClientWidth = 405
+    ClientHeight = 41
+    ClientWidth = 324
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object sbOK: TBitBtn
       Left = 16
-      Height = 30
+      Height = 25
       Top = 8
-      Width = 183
+      Width = 142
+      AutoSize = True
       Caption = 'Apply'
-      Constraints.MinWidth = 178
+      Constraints.MinWidth = 142
       Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
@@ -50,21 +51,22 @@ object dlgColorBands: TdlgColorBands
       TabOrder = 0
     end
     object sbCancel: TBitBtn
-      Left = 207
-      Height = 30
+      Left = 166
+      Height = 25
       Top = 8
-      Width = 182
+      Width = 142
+      AutoSize = True
       Caption = 'Cancel'
-      Constraints.MinWidth = 178
+      Constraints.MinWidth = 142
       OnClick = sbCancelClick
       TabOrder = 1
     end
   end
   object pBands: TPanel
     Left = 0
-    Height = 204
+    Height = 169
     Top = 0
-    Width = 162
+    Width = 125
     Align = alClient
     AutoSize = True
     BevelOuter = bvNone
@@ -77,18 +79,18 @@ object dlgColorBands: TdlgColorBands
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
-    ClientHeight = 204
-    ClientWidth = 162
+    ClientHeight = 169
+    ClientWidth = 125
     Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
     object Band1: TBCPanel
-      Left = 10
-      Height = 47
+      Left = 8
+      Height = 38
       Top = 8
-      Width = 144
-      BorderSpacing.Left = 10
+      Width = 109
+      BorderSpacing.Left = 8
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 4
       Background.Color = 16448250
@@ -114,8 +116,8 @@ object dlgColorBands: TdlgColorBands
       Border.Color = 13750737
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 125
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 100
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -129,13 +131,13 @@ object dlgColorBands: TdlgColorBands
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 0
       object sbDelBand1: TSpeedButton
-        Left = 103
-        Height = 35
-        Top = 6
-        Width = 32
+        Left = 74
+        Height = 28
+        Top = 5
+        Width = 26
         Align = alRight
-        BorderSpacing.Top = 5
-        BorderSpacing.Bottom = 5
+        BorderSpacing.Top = 4
+        BorderSpacing.Bottom = 4
         Flat = True
         Images = bBands
         ImageIndex = 0
@@ -145,11 +147,11 @@ object dlgColorBands: TdlgColorBands
       end
     end
     object Band2: TBCPanel
-      Left = 10
-      Height = 47
-      Top = 56
-      Width = 144
-      BorderSpacing.Left = 10
+      Left = 8
+      Height = 38
+      Top = 47
+      Width = 109
+      BorderSpacing.Left = 8
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 4
       Background.Color = 16448250
@@ -175,8 +177,8 @@ object dlgColorBands: TdlgColorBands
       Border.Color = 13750737
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 125
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 100
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -190,13 +192,13 @@ object dlgColorBands: TdlgColorBands
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 1
       object sbDelBand2: TSpeedButton
-        Left = 103
-        Height = 35
-        Top = 6
-        Width = 32
+        Left = 74
+        Height = 28
+        Top = 5
+        Width = 26
         Align = alRight
-        BorderSpacing.Top = 5
-        BorderSpacing.Bottom = 5
+        BorderSpacing.Top = 4
+        BorderSpacing.Bottom = 4
         Flat = True
         Images = bBands
         ImageIndex = 0
@@ -206,11 +208,11 @@ object dlgColorBands: TdlgColorBands
       end
     end
     object Band3: TBCPanel
-      Left = 10
-      Height = 47
-      Top = 104
-      Width = 144
-      BorderSpacing.Left = 10
+      Left = 8
+      Height = 38
+      Top = 86
+      Width = 109
+      BorderSpacing.Left = 8
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 4
       Background.Color = 16448250
@@ -236,8 +238,8 @@ object dlgColorBands: TdlgColorBands
       Border.Color = 13750737
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 125
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 100
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -251,13 +253,13 @@ object dlgColorBands: TdlgColorBands
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 2
       object sbDelBand3: TSpeedButton
-        Left = 103
-        Height = 35
-        Top = 6
-        Width = 32
+        Left = 74
+        Height = 28
+        Top = 5
+        Width = 26
         Align = alRight
-        BorderSpacing.Top = 5
-        BorderSpacing.Bottom = 5
+        BorderSpacing.Top = 4
+        BorderSpacing.Bottom = 4
         Flat = True
         Images = bBands
         ImageIndex = 0
@@ -267,11 +269,11 @@ object dlgColorBands: TdlgColorBands
       end
     end
     object Band4: TBCPanel
-      Left = 10
-      Height = 44
-      Top = 152
-      Width = 144
-      BorderSpacing.Left = 10
+      Left = 8
+      Height = 36
+      Top = 125
+      Width = 109
+      BorderSpacing.Left = 8
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 4
       Background.Color = 16448250
@@ -297,8 +299,8 @@ object dlgColorBands: TdlgColorBands
       Border.Color = 13750737
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 125
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 100
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -312,13 +314,13 @@ object dlgColorBands: TdlgColorBands
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
       TabOrder = 3
       object sbDelBand4: TSpeedButton
-        Left = 103
-        Height = 32
-        Top = 6
-        Width = 32
+        Left = 74
+        Height = 26
+        Top = 5
+        Width = 26
         Align = alRight
-        BorderSpacing.Top = 5
-        BorderSpacing.Bottom = 5
+        BorderSpacing.Top = 4
+        BorderSpacing.Bottom = 4
         Flat = True
         Images = bBands
         ImageIndex = 0
@@ -329,24 +331,24 @@ object dlgColorBands: TdlgColorBands
     end
   end
   object pCenter: TPanel
-    Left = 162
-    Height = 204
+    Left = 125
+    Height = 169
     Top = 0
-    Width = 38
+    Width = 30
     Align = alRight
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 204
-    ClientWidth = 38
+    ClientHeight = 169
+    ClientWidth = 30
     Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 2
     object sbClear: TSpeedButton
       Left = 0
-      Height = 38
-      Top = 158
-      Width = 38
+      Height = 30
+      Top = 131
+      Width = 30
       Align = alBottom
       Enabled = False
       Flat = True
@@ -357,9 +359,9 @@ object dlgColorBands: TdlgColorBands
     end
     object sbUp: TSpeedButton
       Left = 0
-      Height = 38
+      Height = 30
       Top = 8
-      Width = 38
+      Width = 30
       Align = alTop
       Enabled = False
       Flat = True
@@ -369,9 +371,9 @@ object dlgColorBands: TdlgColorBands
     end
     object sbDown: TSpeedButton
       Left = 0
-      Height = 38
-      Top = 46
-      Width = 38
+      Height = 30
+      Top = 38
+      Width = 30
       Align = alTop
       Enabled = False
       Flat = True
@@ -381,10 +383,10 @@ object dlgColorBands: TdlgColorBands
     end
   end
   object pColors: TBCPanel
-    Left = 200
-    Height = 204
+    Left = 155
+    Height = 169
     Top = 0
-    Width = 205
+    Width = 169
     Align = alRight
     AutoSize = True
     ChildSizing.LeftRightSpacing = 8
@@ -433,9 +435,9 @@ object dlgColorBands: TdlgColorBands
     TabOrder = 3
     object pColor_M: TBCPanel
       Left = 8
-      Height = 44
+      Height = 36
       Top = 8
-      Width = 45
+      Width = 36
       Background.Color = clSilver
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -460,8 +462,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'M'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -480,10 +482,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_A: TBCPanel
       Tag = 1
-      Left = 57
-      Height = 44
+      Left = 48
+      Height = 36
       Top = 8
-      Width = 44
+      Width = 35
       Background.Color = clOlive
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -508,8 +510,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'A'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clWhite
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -527,10 +529,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_Y: TBCPanel
       Tag = 2
-      Left = 105
-      Height = 44
+      Left = 87
+      Height = 36
       Top = 8
-      Width = 44
+      Width = 35
       Background.Color = clYellow
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -555,8 +557,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'Y'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -574,10 +576,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_O: TBCPanel
       Tag = 3
-      Left = 153
-      Height = 44
+      Left = 126
+      Height = 36
       Top = 8
-      Width = 44
+      Width = 35
       Background.Color = 1750527
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -602,8 +604,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'O'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -623,9 +625,9 @@ object dlgColorBands: TdlgColorBands
     object pColor_R: TBCPanel
       Tag = 4
       Left = 8
-      Height = 44
-      Top = 56
-      Width = 45
+      Height = 35
+      Top = 48
+      Width = 36
       Background.Color = clRed
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -650,8 +652,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'R'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -669,10 +671,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_C: TBCPanel
       Tag = 5
-      Left = 57
-      Height = 44
-      Top = 56
-      Width = 44
+      Left = 48
+      Height = 35
+      Top = 48
+      Width = 35
       Background.Color = clFuchsia
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -697,8 +699,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'C'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -716,10 +718,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_K: TBCPanel
       Tag = 6
-      Left = 105
-      Height = 44
-      Top = 56
-      Width = 44
+      Left = 87
+      Height = 35
+      Top = 48
+      Width = 35
       Background.Color = 13805311
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -744,8 +746,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'K'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -763,10 +765,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_V: TBCPanel
       Tag = 7
-      Left = 153
-      Height = 44
-      Top = 56
-      Width = 44
+      Left = 126
+      Height = 35
+      Top = 48
+      Width = 35
       Background.Color = 16727197
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -791,8 +793,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'V'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clWhite
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -811,9 +813,9 @@ object dlgColorBands: TdlgColorBands
     object pColor_P: TBCPanel
       Tag = 8
       Left = 8
-      Height = 44
-      Top = 104
-      Width = 45
+      Height = 35
+      Top = 87
+      Width = 36
       Background.Color = 16753994
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -838,8 +840,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'P'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -857,10 +859,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_B: TBCPanel
       Tag = 9
-      Left = 57
-      Height = 44
-      Top = 104
-      Width = 44
+      Left = 48
+      Height = 35
+      Top = 87
+      Width = 35
       Background.Color = clBlue
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -885,8 +887,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'B'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clWhite
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -904,10 +906,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_G: TBCPanel
       Tag = 10
-      Left = 105
-      Height = 44
-      Top = 104
-      Width = 44
+      Left = 87
+      Height = 35
+      Top = 87
+      Width = 35
       Background.Color = clGreen
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -932,8 +934,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'G'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clWhite
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -951,10 +953,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_L: TBCPanel
       Tag = 11
-      Left = 153
-      Height = 44
-      Top = 104
-      Width = 44
+      Left = 126
+      Height = 35
+      Top = 87
+      Width = 35
       Background.Color = clLime
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -979,8 +981,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'L'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -999,9 +1001,9 @@ object dlgColorBands: TdlgColorBands
     object pColor_U: TBCPanel
       Tag = 12
       Left = 8
-      Height = 44
-      Top = 152
-      Width = 45
+      Height = 35
+      Top = 126
+      Width = 36
       Background.Color = 16512
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -1026,8 +1028,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'U'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clWhite
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -1046,10 +1048,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_W: TBCPanel
       Tag = 13
-      Left = 57
-      Height = 44
-      Top = 152
-      Width = 44
+      Left = 48
+      Height = 35
+      Top = 126
+      Width = 35
       Background.Color = clWhite
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -1074,8 +1076,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'W'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -1093,10 +1095,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_S: TBCPanel
       Tag = 14
-      Left = 105
-      Height = 44
-      Top = 152
-      Width = 44
+      Left = 87
+      Height = 35
+      Top = 126
+      Width = 35
       Background.Color = clGray
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -1121,8 +1123,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'S'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clWhite
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -1140,10 +1142,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_N: TBCPanel
       Tag = 15
-      Left = 153
-      Height = 44
-      Top = 152
-      Width = 44
+      Left = 126
+      Height = 35
+      Top = 126
+      Width = 35
       Background.Color = 1776411
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -1168,8 +1170,8 @@ object dlgColorBands: TdlgColorBands
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       Caption = 'N'
-      Constraints.MinHeight = 44
-      Constraints.MinWidth = 44
+      Constraints.MinHeight = 35
+      Constraints.MinWidth = 35
       FontEx.Color = clWhite
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -1190,8 +1192,8 @@ object dlgColorBands: TdlgColorBands
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 204
-    Width = 405
+    Top = 169
+    Width = 324
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -1201,8 +1203,8 @@ object dlgColorBands: TdlgColorBands
     Height = 20
     Scaled = True
     Width = 20
-    Left = 160
-    Top = 100
+    Left = 128
+    Top = 80
     Bitmap = {
       4C7A020000001400000014000000FB0100000000000078DADD943F48026114C0
       15290A9B9A0A5A4488147409C283C0A65A0AB125ACAD9A6A111C6A69CEDD6A8E

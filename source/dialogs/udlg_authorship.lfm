@@ -1,38 +1,38 @@
 object dlgAuthorship: TdlgAuthorship
   Left = 352
-  Height = 240
+  Height = 232
   Top = 33
-  Width = 492
+  Width = 440
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
   Caption = 'Sort authors'
-  ClientHeight = 240
-  ClientWidth = 492
+  ClientHeight = 232
+  ClientWidth = 440
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow
   PopupMode = pmAuto
   ShowInTaskBar = stNever
-  LCLVersion = '3.0.0.2'
   object pBottom: TPanel
     Left = 0
-    Height = 40
-    Top = 200
-    Width = 492
+    Height = 33
+    Top = 199
+    Width = 440
     Align = alBottom
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 8
     ChildSizing.TopBottomSpacing = 4
     ChildSizing.HorizontalSpacing = 8
-    ClientHeight = 40
-    ClientWidth = 492
+    ClientHeight = 33
+    ClientWidth = 440
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object sbOK: TBitBtn
-      Left = 216
-      Height = 32
+      Left = 164
+      Height = 25
       Top = 4
       Width = 130
       Align = alRight
@@ -44,8 +44,8 @@ object dlgAuthorship: TdlgAuthorship
       TabOrder = 0
     end
     object sbCancel: TBitBtn
-      Left = 354
-      Height = 32
+      Left = 302
+      Height = 25
       Top = 4
       Width = 130
       Align = alRight
@@ -55,9 +55,9 @@ object dlgAuthorship: TdlgAuthorship
     end
     object lblTotal: TLabel
       Left = 8
-      Height = 32
+      Height = 25
       Top = 4
-      Width = 96
+      Width = 76
       Align = alLeft
       Caption = '0 researcher(s)'
       Layout = tlCenter
@@ -65,23 +65,24 @@ object dlgAuthorship: TdlgAuthorship
     end
   end
   object pRight: TPanel
-    Left = 446
-    Height = 200
+    Left = 400
+    Height = 199
     Top = 0
-    Width = 46
+    Width = 40
     Align = alRight
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 8
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 200
-    ClientWidth = 46
+    ClientHeight = 199
+    ClientWidth = 40
     TabOrder = 1
     object sbDel: TSpeedButton
       Left = 8
       Height = 30
       Hint = 'Delete'
       Top = 54
-      Width = 30
+      Width = 24
       Align = alTop
       BorderSpacing.Top = 16
       Flat = True
@@ -97,8 +98,8 @@ object dlgAuthorship: TdlgAuthorship
       Left = 8
       Height = 30
       Hint = 'Move up'
-      Top = 132
-      Width = 30
+      Top = 131
+      Width = 24
       Align = alBottom
       Flat = True
       Images = frmMain.bMenu
@@ -113,8 +114,8 @@ object dlgAuthorship: TdlgAuthorship
       Left = 8
       Height = 30
       Hint = 'Move down'
-      Top = 162
-      Width = 30
+      Top = 161
+      Width = 24
       Align = alBottom
       Flat = True
       Images = frmMain.bMenu
@@ -130,7 +131,7 @@ object dlgAuthorship: TdlgAuthorship
       Height = 30
       Hint = 'Add'
       Top = 8
-      Width = 30
+      Width = 24
       Align = alTop
       Flat = True
       Images = frmMain.mPopup
@@ -144,9 +145,9 @@ object dlgAuthorship: TdlgAuthorship
   end
   object lbColetor: TListBox
     Left = 4
-    Height = 196
+    Height = 195
     Top = 4
-    Width = 442
+    Width = 396
     Align = alClient
     BorderSpacing.Left = 4
     BorderSpacing.Top = 4

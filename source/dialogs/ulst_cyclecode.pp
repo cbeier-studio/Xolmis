@@ -13,6 +13,7 @@ type
 
   TlstCycleCode = class(TForm)
     lineBottom: TShapeLineBGRA;
+    pContent: TPanel;
     pBottom: TPanel;
     pCode: TBCPanel;
     rgFirst: TRadioGroup;

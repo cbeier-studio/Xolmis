@@ -3531,6 +3531,8 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #: tdlgconnect.sbok.caption
+#, fuzzy
+#| msgid "Connect"
 msgctxt "tdlgconnect.sbok.caption"
 msgid "Connect"
 msgstr "Conectar"
@@ -3603,13 +3605,21 @@ msgctxt "tdlgimportcaptures.ejournalfile.texthint"
 msgid "Select a file..."
 msgstr "Selecione um arquivo..."
 
+#: tdlgimportcaptures.eweatherfile.texthint
+#, fuzzy
+msgctxt "tdlgimportcaptures.eweatherfile.texthint"
+msgid "Select a file..."
+msgstr "Selecione um arquivo..."
+
 #: tdlgimportcaptures.lblcapturefile.caption
 msgctxt "tdlgimportcaptures.lblcapturefile.caption"
 msgid "Captures"
 msgstr "Capturas"
 
 #: tdlgimportcaptures.lbleffortfile.caption
-msgid "Efforts"
+#, fuzzy
+#| msgid "Efforts"
+msgid "Field efforts"
 msgstr "Esforços"
 
 #: tdlgimportcaptures.lbljournalfile.caption
@@ -3631,6 +3641,10 @@ msgstr "Arquivos a importar"
 #: tdlgimportcaptures.lbltitleimportfinished.caption
 msgid "Finished importing!"
 msgstr "Importação finalizada!"
+
+#: tdlgimportcaptures.lblweatherfile.caption
+msgid "Weather log"
+msgstr ""
 
 #: tdlgimportcaptures.sbcancel.caption
 msgctxt "tdlgimportcaptures.sbcancel.caption"

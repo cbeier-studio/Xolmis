@@ -26,12 +26,12 @@ type
     lblLongitude: TLabel;
     lblLatitude: TLabel;
     lineBottom: TShapeLineBGRA;
-    sbOK: TBitBtn;
-    sbCancel: TBitBtn;
     pBottom: TPanel;
     eLongMin: TSpinEdit;
     eLatDeg: TSpinEdit;
     eLatMin: TSpinEdit;
+    sbCancel: TButton;
+    sbOK: TButton;
     procedure eLongDegChange(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);

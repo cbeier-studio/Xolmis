@@ -1,17 +1,17 @@
 object dlgImportCaptures: TdlgImportCaptures
   Left = 382
-  Height = 364
+  Height = 349
   Top = 32
-  Width = 784
+  Width = 759
   Caption = 'Import data'
-  ClientHeight = 364
-  ClientWidth = 784
-  LCLVersion = '3.0.0.2'
+  ClientHeight = 349
+  ClientWidth = 759
+  Font.Height = -12
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 312
-    Width = 784
+    Top = 297
+    Width = 759
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -20,9 +20,10 @@ object dlgImportCaptures: TdlgImportCaptures
   object pBottom: TPanel
     Left = 0
     Height = 50
-    Top = 314
-    Width = 784
+    Top = 299
+    Width = 759
     Align = alBottom
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -31,67 +32,70 @@ object dlgImportCaptures: TdlgImportCaptures
     ChildSizing.ShrinkHorizontal = crsScaleChilds
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 50
-    ClientWidth = 784
+    ClientWidth = 759
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object sbCancel: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 500
+      Left = 475
       Height = 34
       Top = 8
       Width = 130
       Align = alRight
       Caption = 'Cancel'
+      Constraints.MinHeight = 34
       TabOrder = 0
       Visible = False
       OnClick = sbCancelClick
     end
     object sbRun: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 362
+      Left = 337
       Height = 34
       Top = 8
       Width = 130
       Align = alRight
       Caption = 'Import'
+      Constraints.MinHeight = 34
       Enabled = False
       TabOrder = 1
       OnClick = sbRunClick
     end
     object sbClose: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 638
+      Left = 613
       Height = 34
       Top = 8
       Width = 130
       Align = alRight
       Caption = 'Close'
+      Constraints.MinHeight = 34
       ModalResult = 11
       TabOrder = 2
     end
   end
   object nbContent: TNotebook
     Left = 0
-    Height = 312
+    Height = 297
     Top = 0
-    Width = 784
+    Width = 759
     PageIndex = 0
     Align = alClient
     TabOrder = 1
     object pgImportFiles: TPage
       object pContentFiles: TPanel
         Left = 0
-        Height = 312
+        Height = 297
         Top = 0
-        Width = 784
+        Width = 759
         Align = alClient
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
-        ClientHeight = 312
-        ClientWidth = 784
+        ClientHeight = 297
+        ClientWidth = 759
         Color = 16444392
         ParentBackground = False
         ParentColor = False
@@ -100,7 +104,7 @@ object dlgImportCaptures: TdlgImportCaptures
           Left = 16
           Height = 28
           Top = 16
-          Width = 752
+          Width = 727
           Align = alTop
           BorderSpacing.Top = 16
           BorderSpacing.Bottom = 8
@@ -112,10 +116,11 @@ object dlgImportCaptures: TdlgImportCaptures
         end
         object pJournalFile: TBCPanel
           Left = 16
-          Height = 52
-          Top = 88
-          Width = 752
+          Height = 48
+          Top = 83
+          Width = 727
           Align = alTop
+          AutoSize = True
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 12
           ChildSizing.HorizontalSpacing = 8
@@ -156,7 +161,7 @@ object dlgImportCaptures: TdlgImportCaptures
           TabOrder = 0
           object icoJournalFile: TImage
             Left = 16
-            Height = 28
+            Height = 24
             Top = 12
             Width = 27
             Align = alLeft
@@ -168,30 +173,31 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object lblJournalFile: TLabel
             Left = 51
-            Height = 28
+            Height = 24
             Top = 12
-            Width = 82
+            Width = 65
             Align = alLeft
             Caption = 'Field journal'
             Layout = tlCenter
             ParentColor = False
           end
           object eJournalFile: TFileNameEdit
-            Left = 205
-            Height = 28
+            Left = 160
+            Height = 24
             Top = 12
-            Width = 494
+            Width = 517
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
             FilterIndex = 1
             HideDirectories = False
-            ButtonWidth = 29
+            ButtonWidth = 26
             NumGlyphs = 1
             Images = frmMain.mPopup
             ImageIndex = 43
             ImageWidth = 20
             Align = alRight
+            Anchors = [akTop, akLeft, akRight, akBottom]
             MaxLength = 0
             Spacing = 0
             TabOrder = 0
@@ -200,10 +206,10 @@ object dlgImportCaptures: TdlgImportCaptures
             TextHint = 'Select a file...'
           end
           object sbClearJournalFile: TSpeedButton
-            Left = 707
-            Height = 28
+            Left = 685
+            Height = 24
             Top = 12
-            Width = 29
+            Width = 26
             Align = alRight
             Images = frmMain.mPopup
             ImageIndex = 17
@@ -213,10 +219,11 @@ object dlgImportCaptures: TdlgImportCaptures
         end
         object pEffortFile: TBCPanel
           Left = 16
-          Height = 52
-          Top = 140
-          Width = 752
+          Height = 48
+          Top = 131
+          Width = 727
           Align = alTop
+          AutoSize = True
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 12
           ChildSizing.HorizontalSpacing = 8
@@ -257,7 +264,7 @@ object dlgImportCaptures: TdlgImportCaptures
           TabOrder = 1
           object icoEffortFile: TImage
             Left = 16
-            Height = 28
+            Height = 24
             Top = 12
             Width = 27
             Align = alLeft
@@ -269,30 +276,31 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object lblEffortFile: TLabel
             Left = 51
-            Height = 28
+            Height = 24
             Top = 12
-            Width = 43
+            Width = 62
             Align = alLeft
-            Caption = 'Efforts'
+            Caption = 'Field efforts'
             Layout = tlCenter
             ParentColor = False
           end
           object eEffortFile: TFileNameEdit
-            Left = 205
-            Height = 28
+            Left = 160
+            Height = 24
             Top = 12
-            Width = 494
+            Width = 517
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
             FilterIndex = 1
             HideDirectories = False
-            ButtonWidth = 29
+            ButtonWidth = 26
             NumGlyphs = 1
             Images = frmMain.mPopup
             ImageIndex = 43
             ImageWidth = 20
             Align = alRight
+            Anchors = [akTop, akLeft, akRight, akBottom]
             MaxLength = 0
             Spacing = 0
             TabOrder = 0
@@ -302,10 +310,10 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object sbClearEffortFile: TSpeedButton
             Tag = 1
-            Left = 707
-            Height = 28
+            Left = 685
+            Height = 24
             Top = 12
-            Width = 29
+            Width = 26
             Align = alRight
             Images = frmMain.mPopup
             ImageIndex = 17
@@ -315,10 +323,11 @@ object dlgImportCaptures: TdlgImportCaptures
         end
         object pCaptureFile: TBCPanel
           Left = 16
-          Height = 52
-          Top = 192
-          Width = 752
+          Height = 48
+          Top = 227
+          Width = 727
           Align = alTop
+          AutoSize = True
           BorderSpacing.Bottom = 16
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 12
@@ -360,7 +369,7 @@ object dlgImportCaptures: TdlgImportCaptures
           TabOrder = 2
           object icoCaptureFile: TImage
             Left = 16
-            Height = 28
+            Height = 24
             Top = 12
             Width = 27
             Align = alLeft
@@ -372,30 +381,31 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object lblCaptureFile: TLabel
             Left = 51
-            Height = 28
+            Height = 24
             Top = 12
-            Width = 58
+            Width = 47
             Align = alLeft
             Caption = 'Captures'
             Layout = tlCenter
             ParentColor = False
           end
           object eCaptureFile: TFileNameEdit
-            Left = 205
-            Height = 28
+            Left = 160
+            Height = 24
             Top = 12
-            Width = 494
+            Width = 517
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
             FilterIndex = 1
             HideDirectories = False
-            ButtonWidth = 29
+            ButtonWidth = 26
             NumGlyphs = 1
             Images = frmMain.mPopup
             ImageIndex = 43
             ImageWidth = 20
             Align = alRight
+            Anchors = [akTop, akLeft, akRight, akBottom]
             MaxLength = 0
             Spacing = 0
             TabOrder = 0
@@ -404,11 +414,11 @@ object dlgImportCaptures: TdlgImportCaptures
             TextHint = 'Select a file...'
           end
           object sbClearCaptureFile: TSpeedButton
-            Tag = 2
-            Left = 707
-            Height = 28
+            Tag = 3
+            Left = 685
+            Height = 24
             Top = 12
-            Width = 29
+            Width = 26
             Align = alRight
             Images = frmMain.mPopup
             ImageIndex = 17
@@ -418,23 +428,127 @@ object dlgImportCaptures: TdlgImportCaptures
         end
         object lblSubtitleImportFiles: TLabel
           Left = 16
-          Height = 20
+          Height = 15
           Top = 52
-          Width = 752
+          Width = 727
           Align = alTop
           BorderSpacing.Bottom = 16
           Caption = 'Select at least one file to start importing.'
           Layout = tlCenter
           ParentColor = False
         end
+        object pEffortFile1: TBCPanel
+          Left = 16
+          Height = 48
+          Top = 179
+          Width = 727
+          Align = alTop
+          AutoSize = True
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = False
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+          TabOrder = 3
+          object icoWeatherFile: TImage
+            Left = 16
+            Height = 24
+            Top = 12
+            Width = 27
+            Align = alLeft
+            Center = True
+            ImageIndex = 183
+            ImageWidth = 24
+            Images = frmMain.mPopup
+            Proportional = True
+          end
+          object lblWeatherFile: TLabel
+            Left = 51
+            Height = 24
+            Top = 12
+            Width = 64
+            Align = alLeft
+            Caption = 'Weather log'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object eWeatherFile: TFileNameEdit
+            Left = 160
+            Height = 24
+            Top = 12
+            Width = 517
+            DialogTitle = 'Import from file'
+            DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
+            Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
+            FilterIndex = 1
+            HideDirectories = False
+            ButtonWidth = 26
+            NumGlyphs = 1
+            Images = frmMain.mPopup
+            ImageIndex = 43
+            ImageWidth = 20
+            Align = alRight
+            Anchors = [akTop, akLeft, akRight, akBottom]
+            MaxLength = 0
+            Spacing = 0
+            TabOrder = 0
+            OnButtonClick = eJournalFileButtonClick
+            OnChange = eWeatherFileChange
+            TextHint = 'Select a file...'
+          end
+          object sbClearWeatherFile: TSpeedButton
+            Tag = 2
+            Left = 685
+            Height = 24
+            Top = 12
+            Width = 26
+            Align = alRight
+            Images = frmMain.mPopup
+            ImageIndex = 17
+            ImageWidth = 20
+            OnClick = sbClearJournalFileClick
+          end
+        end
       end
     end
     object pgImportProgress: TPage
       object pContentProgress: TBCPanel
         Left = 0
-        Height = 304
+        Height = 292
         Top = 8
-        Width = 784
+        Width = 759
         Align = alClient
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
@@ -473,9 +587,9 @@ object dlgImportCaptures: TdlgImportCaptures
         TabOrder = 0
         object pProgress: TBCPanel
           Left = 17
-          Height = 270
+          Height = 258
           Top = 17
-          Width = 750
+          Width = 725
           Align = alClient
           BorderSpacing.Bottom = 16
           ChildSizing.LeftRightSpacing = 16
@@ -518,9 +632,9 @@ object dlgImportCaptures: TdlgImportCaptures
           TabOrder = 0
           object hvProgress: THtmlViewer
             Left = 16
-            Height = 246
+            Height = 234
             Top = 12
-            Width = 718
+            Width = 693
             BorderStyle = htNone
             DefBackground = 16448250
             DefFontName = 'Default'
@@ -542,7 +656,7 @@ object dlgImportCaptures: TdlgImportCaptures
         Left = 0
         Height = 8
         Top = 0
-        Width = 784
+        Width = 759
         Align = alTop
         TabOrder = 1
       end
@@ -550,9 +664,9 @@ object dlgImportCaptures: TdlgImportCaptures
     object pgImportFinished: TPage
       object pContentFinished: TBCPanel
         Left = 0
-        Height = 312
+        Height = 315
         Top = 0
-        Width = 784
+        Width = 759
         Align = alClient
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
@@ -593,7 +707,7 @@ object dlgImportCaptures: TdlgImportCaptures
           Left = 17
           Height = 41
           Top = 17
-          Width = 750
+          Width = 725
           Align = alTop
           Alignment = taCenter
           BorderSpacing.Top = 16
@@ -606,9 +720,9 @@ object dlgImportCaptures: TdlgImportCaptures
         end
         object lblSubtitleImportFinished: TLabel
           Left = 17
-          Height = 20
+          Height = 15
           Top = 66
-          Width = 750
+          Width = 725
           Align = alTop
           Alignment = taCenter
           BorderSpacing.Bottom = 16
@@ -618,9 +732,9 @@ object dlgImportCaptures: TdlgImportCaptures
         end
         object icoImportFinished: TImage
           Left = 17
-          Height = 149
-          Top = 102
-          Width = 750
+          Height = 157
+          Top = 97
+          Width = 725
           Align = alClient
           BorderSpacing.Bottom = 8
           Center = True
@@ -629,8 +743,8 @@ object dlgImportCaptures: TdlgImportCaptures
         object pRetry: TBCPanel
           Left = 17
           Height = 36
-          Top = 259
-          Width = 750
+          Top = 262
+          Width = 725
           Align = alBottom
           AutoSize = True
           Background.Color = 16444392
@@ -670,10 +784,10 @@ object dlgImportCaptures: TdlgImportCaptures
           object sbRetry: TBitBtn
             AnchorSideLeft.Control = pRetry
             AnchorSideLeft.Side = asrCenter
-            Left = 318
+            Left = 311
             Height = 34
             Top = 1
-            Width = 115
+            Width = 102
             AutoSize = True
             Caption = 'Try again'
             Images = frmMain.mPopup
@@ -691,7 +805,7 @@ object dlgImportCaptures: TdlgImportCaptures
     Scaled = True
     Width = 96
     Left = 32
-    Top = 264
+    Top = 288
     Bitmap = {
       4C7A020000006000000060000000D50800000000000078DAED9D6B6C54451480
       B72545014DA144DB1FDB4742EA9F92D836408110A0DA120D3F88620294441A4D

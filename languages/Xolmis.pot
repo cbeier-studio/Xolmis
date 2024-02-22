@@ -3577,13 +3577,18 @@ msgctxt "tdlgimportcaptures.ejournalfile.texthint"
 msgid "Select a file..."
 msgstr ""
 
+#: tdlgimportcaptures.eweatherfile.texthint
+msgctxt "tdlgimportcaptures.eweatherfile.texthint"
+msgid "Select a file..."
+msgstr ""
+
 #: tdlgimportcaptures.lblcapturefile.caption
 msgctxt "tdlgimportcaptures.lblcapturefile.caption"
 msgid "Captures"
 msgstr ""
 
 #: tdlgimportcaptures.lbleffortfile.caption
-msgid "Efforts"
+msgid "Field efforts"
 msgstr ""
 
 #: tdlgimportcaptures.lbljournalfile.caption
@@ -3604,6 +3609,10 @@ msgstr ""
 
 #: tdlgimportcaptures.lbltitleimportfinished.caption
 msgid "Finished importing!"
+msgstr ""
+
+#: tdlgimportcaptures.lblweatherfile.caption
+msgid "Weather log"
 msgstr ""
 
 #: tdlgimportcaptures.sbcancel.caption

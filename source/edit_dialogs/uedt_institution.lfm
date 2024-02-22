@@ -7,12 +7,14 @@ object edtInstitution: TedtInstitution
   Caption = 'New institution'
   ClientHeight = 689
   ClientWidth = 510
+  Font.Height = -12
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.0.0.3'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -136,6 +138,7 @@ object edtInstitution: TedtInstitution
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 456
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
@@ -524,6 +527,7 @@ object edtInstitution: TedtInstitution
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 456
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
@@ -574,6 +578,7 @@ object edtInstitution: TedtInstitution
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 456
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0

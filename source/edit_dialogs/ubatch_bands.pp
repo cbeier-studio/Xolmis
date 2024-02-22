@@ -51,8 +51,8 @@ type
     pBottom: TPanel;
     eStartNumber: TSpinEdit;
     eEndNumber: TSpinEdit;
-    sbCancel: TBCButtonFocus;
-    sbSave: TBCButtonFocus;
+    sbCancel: TButton;
+    sbSave: TButton;
     procedure cbBandSizeChange(Sender: TObject);
     procedure cbBandSizeKeyPress(Sender: TObject; var Key: char);
     procedure cbBandTypeDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);

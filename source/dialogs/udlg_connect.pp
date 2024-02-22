@@ -26,8 +26,8 @@ type
     linkManageConn: TATLabelLink;
     pBottom: TPanel;
     pClient: TPanel;
-    sbCancel: TBCButtonFocus;
-    sbOK: TBCButtonFocus;
+    sbCancel: TButton;
+    sbOK: TButton;
     procedure cbConnectionChange(Sender: TObject);
     procedure ePasswordButtonClick(Sender: TObject);
     procedure eUsernameChange(Sender: TObject);
@@ -189,7 +189,7 @@ end;
 
 procedure TdlgConnect.sbCancelClick(Sender: TObject);
 begin
-  sbCancel.Enabled := False;
+  sbOK.Enabled := False;
   dlgConnect.ModalResult := mrCancel;
 end;
 

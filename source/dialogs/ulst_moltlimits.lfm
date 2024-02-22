@@ -1,22 +1,24 @@
 object lstMoltLimits: TlstMoltLimits
   Left = 352
-  Height = 413
+  Height = 410
   Top = 33
-  Width = 466
+  Width = 356
+  AutoSize = True
   Caption = 'Molt limits'
-  ClientHeight = 413
-  ClientWidth = 466
+  ClientHeight = 410
+  ClientWidth = 356
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  LCLVersion = '3.0.0.2'
   object cklLimits: TCheckListBox
     Left = 8
-    Height = 302
+    Height = 308
     Top = 8
-    Width = 450
+    Width = 340
     Align = alClient
     BorderSpacing.Around = 8
+    Constraints.MinHeight = 308
+    Constraints.MinWidth = 340
     Items.Strings = (
       'N - No molt limits found after examination'
       'U - Molt limits are Undetermined after examination'
@@ -42,10 +44,11 @@ object lstMoltLimits: TlstMoltLimits
   end
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 363
-    Width = 466
+    Height = 41
+    Top = 369
+    Width = 356
     Align = alBottom
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -56,16 +59,15 @@ object lstMoltLimits: TlstMoltLimits
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
-    ClientWidth = 466
+    ClientHeight = 41
+    ClientWidth = 356
     TabOrder = 1
     object sbOK: TBitBtn
       Left = 16
-      Height = 34
+      Height = 25
       Top = 8
-      Width = 213
+      Width = 156
       Caption = 'Apply'
-      Constraints.MinWidth = 213
       Default = True
       Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
@@ -74,12 +76,11 @@ object lstMoltLimits: TlstMoltLimits
       TabOrder = 0
     end
     object sbCancel: TBitBtn
-      Left = 237
-      Height = 34
+      Left = 180
+      Height = 25
       Top = 8
-      Width = 213
+      Width = 160
       Caption = 'Cancel'
-      Constraints.MinWidth = 213
       OnClick = sbCancelClick
       TabOrder = 1
     end
@@ -87,8 +88,8 @@ object lstMoltLimits: TlstMoltLimits
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 361
-    Width = 466
+    Top = 367
+    Width = 356
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -97,8 +98,8 @@ object lstMoltLimits: TlstMoltLimits
   object pCode: TBCPanel
     Left = 8
     Height = 35
-    Top = 318
-    Width = 450
+    Top = 324
+    Width = 340
     Align = alBottom
     BorderSpacing.Left = 8
     BorderSpacing.Right = 8

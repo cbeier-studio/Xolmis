@@ -1,12 +1,13 @@
 object edtNestRevision: TedtNestRevision
   Left = 352
-  Height = 772
+  Height = 643
   Top = 33
   Width = 400
   AutoSize = True
   Caption = 'New nest revision'
-  ClientHeight = 772
+  ClientHeight = 643
   ClientWidth = 400
+  Font.Height = -12
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
@@ -17,7 +18,7 @@ object edtNestRevision: TedtNestRevision
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 729
+    Top = 600
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -27,7 +28,7 @@ object edtNestRevision: TedtNestRevision
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 731
+    Top = 602
     Width = 400
     Align = alTop
     AutoSize = True
@@ -71,29 +72,28 @@ object edtNestRevision: TedtNestRevision
   end
   object sBox: TScrollBox
     Left = 0
-    Height = 729
+    Height = 600
     Top = 0
     Width = 400
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 729
+    VertScrollBar.Page = 600
     Align = alTop
-    AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 729
-    ClientWidth = 400
+    ClientHeight = 600
+    ClientWidth = 383
     TabOrder = 0
     object pContent: TPanel
       Left = 0
       Height = 729
       Top = 0
-      Width = 400
+      Width = 383
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 729
-      ClientWidth = 400
+      ClientWidth = 383
       Color = 15066599
       ParentBackground = False
       ParentColor = False
@@ -102,7 +102,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 45
         Top = 199
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -111,7 +111,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 4
         object lblNestStage: TLabel
@@ -154,7 +154,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 45
         Top = 302
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -164,7 +164,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 6
         object lblHostEggsTally: TLabel
@@ -196,7 +196,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 46
         Top = 16
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -205,7 +205,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 0
         object lblRevisionDate: TLabel
@@ -229,6 +229,7 @@ object edtNestRevision: TedtNestRevision
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 224
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 224
           ParentBackground = False
           TabOrder = 0
@@ -248,7 +249,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 46
         Top = 405
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -258,7 +259,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 8
         object lblNidoparasite: TLabel
@@ -281,6 +282,7 @@ object edtNestRevision: TedtNestRevision
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 365
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
@@ -299,7 +301,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 46
         Top = 107
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -308,7 +310,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 2
         object lblObserver1: TLabel
@@ -332,6 +334,7 @@ object edtNestRevision: TedtNestRevision
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 224
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 224
           ParentBackground = False
           TabOrder = 0
@@ -350,7 +353,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 124
         Top = 589
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -360,14 +363,14 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 124
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 12
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 351
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -379,7 +382,7 @@ object edtNestRevision: TedtNestRevision
           Left = 16
           Height = 90
           Top = 22
-          Width = 368
+          Width = 365
           Align = alTop
           Constraints.MinWidth = 365
           DataField = 'notes'
@@ -394,7 +397,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 35
         Top = 541
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -404,7 +407,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 35
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 11
         object ckHasPhilornisLarvae: TDBCheckBox
@@ -425,7 +428,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 45
         Top = 62
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -434,7 +437,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 1
         object lblRevisionTime: TLabel
@@ -467,7 +470,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 46
         Top = 153
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -476,7 +479,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 3
         object lblObserver2: TLabel
@@ -500,6 +503,7 @@ object edtNestRevision: TedtNestRevision
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 224
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 224
           ParentBackground = False
           TabOrder = 0
@@ -518,7 +522,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 45
         Top = 244
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -527,7 +531,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 5
         object lblNestStatus: TLabel
@@ -565,7 +569,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 45
         Top = 347
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -574,7 +578,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 7
         object lblHostNestlingsTally: TLabel
@@ -606,7 +610,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 45
         Top = 451
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -615,7 +619,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 9
         object lblNidoparasiteEggsTally: TLabel
@@ -647,7 +651,7 @@ object edtNestRevision: TedtNestRevision
         Left = 0
         Height = 45
         Top = 496
-        Width = 400
+        Width = 383
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -656,7 +660,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 383
         ParentBackground = False
         TabOrder = 10
         object lblNidoparasiteNestlingsTally: TLabel

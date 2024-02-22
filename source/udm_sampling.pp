@@ -105,9 +105,11 @@ type
     qCapturessubject_sex: TStringField;
     qCapturessubject_status: TStringField;
     qCapturessurvey_id: TLongintField;
+    qCapturessurvey_name: TStringField;
     qCapturestail_length: TFloatField;
     qCapturestarsus_diameter: TFloatField;
     qCapturestarsus_length: TFloatField;
+    qCapturestaxon_formatted_name: TStringField;
     qCapturestaxon_id: TLongintField;
     qCapturestaxon_name: TStringField;
     qCapturestotal_length: TFloatField;

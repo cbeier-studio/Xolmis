@@ -1,26 +1,27 @@
 object dlgGeoEditor: TdlgGeoEditor
   Left = 352
-  Height = 256
+  Height = 230
   Top = 33
-  Width = 436
+  Width = 369
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
   Caption = 'Coordinates editor'
-  ClientHeight = 256
-  ClientWidth = 436
+  ClientHeight = 230
+  ClientWidth = 369
   Color = 16444392
-  Constraints.MinHeight = 256
-  Constraints.MinWidth = 436
-  DesignTimePPI = 120
+  Constraints.MinHeight = 205
+  Constraints.MinWidth = 349
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   object pBottom: TPanel
     Left = 0
-    Height = 48
-    Top = 208
-    Width = 436
-    Align = alBottom
+    Height = 41
+    Top = 189
+    Width = 369
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -29,58 +30,56 @@ object dlgGeoEditor: TdlgGeoEditor
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 48
-    ClientWidth = 436
+    ClientHeight = 41
+    ClientWidth = 369
     Color = 15987699
-    Constraints.MinWidth = 140
+    Constraints.MinWidth = 112
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    object sbOK: TBitBtn
+    object sbOK: TButton
       Left = 16
-      Height = 32
+      Height = 25
       Top = 8
-      Width = 198
-      Anchors = [akTop, akLeft, akRight, akBottom]
+      Width = 165
+      AutoSize = True
       Caption = 'Apply'
-      Constraints.MinWidth = 198
-      Font.Color = 14120960
+      Constraints.MinWidth = 120
+      Enabled = False
       Font.Name = 'Segoe UI Semibold'
-      OnClick = sbOKClick
       ParentFont = False
       TabOrder = 0
+      OnClick = sbOKClick
     end
-    object sbCancel: TBitBtn
-      AnchorSideLeft.Control = sbOK
-      AnchorSideLeft.Side = asrBottom
-      AnchorSideBottom.Side = asrBottom
-      Left = 222
-      Height = 32
+    object sbCancel: TButton
+      Left = 189
+      Height = 25
       Top = 8
-      Width = 198
-      Anchors = [akTop, akLeft, akRight]
+      Width = 164
+      AutoSize = True
       Caption = 'Cancel'
-      Constraints.MinWidth = 198
-      OnClick = sbCancelClick
+      Constraints.MinWidth = 120
       TabOrder = 1
+      OnClick = sbCancelClick
     end
   end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 206
-    Width = 436
-    Align = alBottom
+    Top = 187
+    Width = 369
+    Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
   object pContent: TBCPanel
     Left = 0
-    Height = 206
+    Height = 187
     Top = 0
-    Width = 436
-    Align = alClient
+    Width = 369
+    Align = alTop
+    AutoSize = True
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
     Background.Color = 16444392
@@ -118,10 +117,11 @@ object dlgGeoEditor: TdlgGeoEditor
     TabOrder = 1
     object pLong: TBCPanel
       Left = 17
-      Height = 52
+      Height = 49
       Top = 17
-      Width = 402
+      Width = 335
       Align = alTop
+      AutoSize = True
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 12
       ChildSizing.HorizontalSpacing = 8
@@ -161,42 +161,42 @@ object dlgGeoEditor: TdlgGeoEditor
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 0
       object eLongDeg: TSpinEdit
-        Left = 95
-        Height = 26
+        Left = 82
+        Height = 23
         Top = 13
-        Width = 63
+        Width = 50
         Align = alLeft
         MaxValue = 180
         OnChange = eLongDegChange
         TabOrder = 0
       end
       object eLongMin: TSpinEdit
-        Left = 166
-        Height = 26
+        Left = 140
+        Height = 23
         Top = 13
-        Width = 63
+        Width = 50
         Align = alLeft
         MaxValue = 60
         OnChange = eLongDegChange
         TabOrder = 1
       end
       object eLongSec: TFloatSpinEdit
-        Left = 237
-        Height = 26
+        Left = 198
+        Height = 23
         Top = 13
-        Width = 76
+        Width = 61
         Align = alLeft
         MaxValue = 60
         OnChange = eLongDegChange
         TabOrder = 2
       end
       object cbLongHem: TComboBox
-        Left = 321
-        Height = 28
+        Left = 267
+        Height = 23
         Top = 13
-        Width = 64
+        Width = 51
         Align = alLeft
-        ItemHeight = 20
+        ItemHeight = 15
         Items.Strings = (
           'E'
           'W'
@@ -207,9 +207,9 @@ object dlgGeoEditor: TdlgGeoEditor
       end
       object lblLongitude: TLabel
         Left = 17
-        Height = 26
+        Height = 23
         Top = 13
-        Width = 70
+        Width = 57
         Align = alLeft
         Alignment = taRightJustify
         Caption = 'Longitude:'
@@ -218,11 +218,12 @@ object dlgGeoEditor: TdlgGeoEditor
     end
     object pLat: TBCPanel
       Left = 17
-      Height = 52
-      Top = 69
-      Width = 402
+      Height = 49
+      Top = 66
+      Width = 335
       Align = alTop
-      BorderSpacing.Bottom = 16
+      AutoSize = True
+      BorderSpacing.Bottom = 13
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 12
       ChildSizing.HorizontalSpacing = 8
@@ -262,42 +263,42 @@ object dlgGeoEditor: TdlgGeoEditor
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
       TabOrder = 1
       object eLatDeg: TSpinEdit
-        Left = 95
-        Height = 26
+        Left = 81
+        Height = 23
         Top = 13
-        Width = 63
+        Width = 50
         Align = alLeft
         MaxValue = 90
         OnChange = eLongDegChange
         TabOrder = 0
       end
       object eLatMin: TSpinEdit
-        Left = 166
-        Height = 26
+        Left = 139
+        Height = 23
         Top = 13
-        Width = 63
+        Width = 50
         Align = alLeft
         MaxValue = 60
         OnChange = eLongDegChange
         TabOrder = 1
       end
       object eLatSec: TFloatSpinEdit
-        Left = 237
-        Height = 26
+        Left = 197
+        Height = 23
         Top = 13
-        Width = 76
+        Width = 61
         Align = alLeft
         MaxValue = 60
         OnChange = eLongDegChange
         TabOrder = 2
       end
       object cbLatHem: TComboBox
-        Left = 321
-        Height = 28
+        Left = 266
+        Height = 23
         Top = 13
-        Width = 64
+        Width = 51
         Align = alLeft
-        ItemHeight = 20
+        ItemHeight = 15
         Items.Strings = (
           'N'
           'S'
@@ -308,9 +309,9 @@ object dlgGeoEditor: TdlgGeoEditor
       end
       object lblLatitude: TLabel
         Left = 17
-        Height = 26
+        Height = 23
         Top = 13
-        Width = 70
+        Width = 56
         Align = alLeft
         Alignment = taRightJustify
         AutoSize = False
@@ -320,9 +321,9 @@ object dlgGeoEditor: TdlgGeoEditor
     end
     object pDecimal: TBCPanel
       Left = 17
-      Height = 52
-      Top = 137
-      Width = 402
+      Height = 42
+      Top = 128
+      Width = 335
       Align = alTop
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 12

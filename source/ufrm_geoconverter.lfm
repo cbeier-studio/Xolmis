@@ -49,7 +49,7 @@ object frmGeoConverter: TfrmGeoConverter
     object Label1: TLabel
       Left = 16
       Height = 28
-      Top = 232
+      Top = 212
       Width = 279
       Align = alTop
       BorderSpacing.Top = 16
@@ -61,7 +61,7 @@ object frmGeoConverter: TfrmGeoConverter
     end
     object pConvertFromToolbar1: TBCPanel
       Left = 16
-      Height = 134
+      Height = 124
       Top = 8
       Width = 279
       Align = alTop
@@ -108,14 +108,14 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 0
       object cbConvertFrom: TComboBox
         Left = 17
-        Height = 28
+        Height = 23
         Top = 9
         Width = 245
         Align = alTop
         AutoComplete = True
         AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
         Constraints.MinWidth = 245
-        ItemHeight = 20
+        ItemHeight = 15
         Items.Strings = (
           'Decimal degrees'
           'Degrees, minutes and seconds'
@@ -127,14 +127,14 @@ object frmGeoConverter: TfrmGeoConverter
       end
       object cbConvertTo: TComboBox
         Left = 17
-        Height = 28
-        Top = 45
+        Height = 23
+        Top = 40
         Width = 245
         Align = alTop
         AutoComplete = True
         AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
         Constraints.MinWidth = 245
-        ItemHeight = 20
+        ItemHeight = 15
         Items.Strings = (
           'Decimal degrees'
           'Degrees, minutes and seconds'
@@ -148,7 +148,7 @@ object frmGeoConverter: TfrmGeoConverter
       object sbConvert: TSpeedButton
         Left = 17
         Height = 36
-        Top = 89
+        Top = 79
         Width = 245
         Align = alTop
         BorderSpacing.Top = 16
@@ -163,8 +163,8 @@ object frmGeoConverter: TfrmGeoConverter
     end
     object pConvertFromToolbar2: TBCPanel
       Left = 16
-      Height = 46
-      Top = 268
+      Height = 41
+      Top = 248
       Width = 279
       Align = alTop
       AutoSize = True
@@ -209,9 +209,9 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 1
       object lblUTMZone: TLabel
         Left = 17
-        Height = 28
+        Height = 23
         Top = 9
-        Width = 70
+        Width = 56
         Align = alLeft
         Caption = 'UTM zone:'
         Layout = tlCenter
@@ -219,7 +219,7 @@ object frmGeoConverter: TfrmGeoConverter
       end
       object eUTMZone: TEdit
         Left = 182
-        Height = 28
+        Height = 23
         Top = 9
         Width = 80
         Align = alRight
@@ -230,8 +230,8 @@ object frmGeoConverter: TfrmGeoConverter
     end
     object pConvertFromToolbar3: TBCPanel
       Left = 16
-      Height = 42
-      Top = 314
+      Height = 37
+      Top = 289
       Width = 279
       Align = alTop
       AutoSize = True
@@ -277,9 +277,9 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 2
       object lblUTMHemisphere: TLabel
         Left = 17
-        Height = 24
+        Height = 19
         Top = 9
-        Width = 83
+        Width = 67
         Align = alLeft
         Caption = 'Hemisphere:'
         Layout = tlCenter
@@ -287,7 +287,7 @@ object frmGeoConverter: TfrmGeoConverter
       end
       object Panel2: TPanel
         Left = 127
-        Height = 24
+        Height = 19
         Top = 9
         Width = 135
         Align = alRight
@@ -295,17 +295,17 @@ object frmGeoConverter: TfrmGeoConverter
         ChildSizing.HorizontalSpacing = 8
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 24
+        ClientHeight = 19
         ClientWidth = 135
         Color = 16448250
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
         object rbNorth: TRadioButton
-          Left = 9
-          Height = 24
+          Left = 29
+          Height = 19
           Top = 0
-          Width = 59
+          Width = 49
           Align = alRight
           Caption = 'North'
           Color = 16448250
@@ -313,10 +313,10 @@ object frmGeoConverter: TfrmGeoConverter
           TabOrder = 0
         end
         object rbSouth: TRadioButton
-          Left = 76
-          Height = 24
+          Left = 86
+          Height = 19
           Top = 0
-          Width = 59
+          Width = 49
           Align = alRight
           Caption = 'South'
           Checked = True
@@ -329,8 +329,8 @@ object frmGeoConverter: TfrmGeoConverter
     end
     object pConvertFromToolbar4: TBCPanel
       Left = 16
-      Height = 42
-      Top = 364
+      Height = 37
+      Top = 334
       Width = 279
       Align = alTop
       AutoSize = True
@@ -375,9 +375,9 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 3
       object ckAddUnitsZone: TCheckBox
         Left = 17
-        Height = 24
+        Height = 19
         Top = 9
-        Width = 205
+        Width = 165
         Align = alLeft
         Caption = 'Add units/zone to the result'
         TabOrder = 0
@@ -385,8 +385,8 @@ object frmGeoConverter: TfrmGeoConverter
     end
     object icoConverter: TImage
       Left = 16
-      Height = 240
-      Top = 414
+      Height = 275
+      Top = 379
       Width = 279
       Align = alClient
       Center = True
@@ -397,8 +397,8 @@ object frmGeoConverter: TfrmGeoConverter
     end
     object pConvertFromToolbar5: TBCPanel
       Left = 16
-      Height = 66
-      Top = 150
+      Height = 56
+      Top = 140
       Width = 279
       Align = alTop
       AutoSize = True
@@ -444,7 +444,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 4
       object Label2: TLabel
         Left = 17
-        Height = 20
+        Height = 15
         Top = 9
         Width = 245
         Align = alTop
@@ -455,8 +455,8 @@ object frmGeoConverter: TfrmGeoConverter
       end
       object Label3: TLabel
         Left = 17
-        Height = 20
-        Top = 33
+        Height = 15
+        Top = 28
         Width = 245
         Align = alTop
         Caption = 'longitude (X axis); latitude (Y axis)'
@@ -550,7 +550,7 @@ object frmGeoConverter: TfrmGeoConverter
       OnKeyUp = seConvertFromKeyUp
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 70
+      Gutter.Width = 63
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1007,7 +1007,7 @@ object frmGeoConverter: TfrmGeoConverter
       OnPaste = seConvertFromPaste
       inline SynLeftGutterPartList1: TSynGutterPartList
         object SynGutterMarks1: TSynGutterMarks
-          Width = 30
+          Width = 24
           MouseActions = <>
         end
         object SynGutterLineNumber1: TSynGutterLineNumber
@@ -1028,13 +1028,12 @@ object frmGeoConverter: TfrmGeoConverter
           SavedColor = clGreen
         end
         object SynGutterSeparator1: TSynGutterSeparator
-          Width = 3
+          Width = 2
           MouseActions = <>
           MarkupInfo.Background = clWhite
           MarkupInfo.Foreground = clWhite
         end
         object SynGutterCodeFolding1: TSynGutterCodeFolding
-          Width = 13
           Visible = False
           MouseActions = <>
           MarkupInfo.Background = clNone
@@ -1094,7 +1093,7 @@ object frmGeoConverter: TfrmGeoConverter
         Left = 17
         Height = 28
         Top = 9
-        Width = 68
+        Width = 61
         Align = alLeft
         AutoSize = True
         Caption = 'Open'
@@ -1105,10 +1104,10 @@ object frmGeoConverter: TfrmGeoConverter
         OnClick = sbOpenFileClick
       end
       object sbPaste: TSpeedButton
-        Left = 93
+        Left = 86
         Height = 28
         Top = 9
-        Width = 66
+        Width = 60
         Align = alLeft
         AutoSize = True
         Caption = 'Paste'
@@ -1119,10 +1118,10 @@ object frmGeoConverter: TfrmGeoConverter
         OnClick = sbPasteClick
       end
       object sbClear: TSpeedButton
-        Left = 379
+        Left = 391
         Height = 28
         Top = 9
-        Width = 86
+        Width = 74
         Align = alRight
         AutoSize = True
         Caption = 'Clear all'
@@ -1163,7 +1162,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 0
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 70
+      Gutter.Width = 63
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1619,7 +1618,7 @@ object frmGeoConverter: TfrmGeoConverter
       LineHighlightColor.Foreground = clNone
       inline SynLeftGutterPartList1: TSynGutterPartList
         object SynGutterMarks1: TSynGutterMarks
-          Width = 30
+          Width = 24
           MouseActions = <>
         end
         object SynGutterLineNumber1: TSynGutterLineNumber
@@ -1640,13 +1639,12 @@ object frmGeoConverter: TfrmGeoConverter
           SavedColor = clGreen
         end
         object SynGutterSeparator1: TSynGutterSeparator
-          Width = 3
+          Width = 2
           MouseActions = <>
           MarkupInfo.Background = clWhite
           MarkupInfo.Foreground = clWhite
         end
         object SynGutterCodeFolding1: TSynGutterCodeFolding
-          Width = 13
           Visible = False
           MouseActions = <>
           MarkupInfo.Background = clNone
@@ -1706,7 +1704,7 @@ object frmGeoConverter: TfrmGeoConverter
         Left = 17
         Height = 28
         Top = 9
-        Width = 63
+        Width = 56
         Align = alLeft
         AutoSize = True
         Caption = 'Save'
@@ -1717,10 +1715,10 @@ object frmGeoConverter: TfrmGeoConverter
         OnClick = sbSaveFileClick
       end
       object sbCopy: TSpeedButton
-        Left = 88
+        Left = 81
         Height = 28
         Top = 9
-        Width = 66
+        Width = 60
         Align = alLeft
         AutoSize = True
         Caption = 'Copy'
@@ -1731,10 +1729,10 @@ object frmGeoConverter: TfrmGeoConverter
         OnClick = sbCopyClick
       end
       object sbAddToGeoEditor: TSpeedButton
-        Left = 162
+        Left = 149
         Height = 28
         Top = 9
-        Width = 122
+        Width = 102
         Align = alLeft
         AutoSize = True
         Caption = 'Add to Editor'
@@ -1753,36 +1751,37 @@ object frmGeoConverter: TfrmGeoConverter
     Left = 352
     Top = 296
     Bitmap = {
-      4C7A020000001400000014000000CA0100000000000078DAD5943F4842411CC7
-      0DE2112811484320547364924B900DFD9B5B6A69B1C1FE6C2DCDBEA9A5B186A0
-      C906B7C22532176948102AB47A0EA9450E81D5100D120E7AFDEE38E1F1B8BBF7
-      7B5A420F3ECBE3EEC3FDEEF7BBAFCBD5DD2F19766940109803063AF06C00B740
-      1D20269E8003A01FE9F101298B43440558B0710D026F08578B26B0A4F09D8AF6
-      65F420C91FAECA9C55C02B70ADC8CEF159CE12FAA5B78764CEB8C07722F36577
-      678811DB52D5FD0DF45A7C2FB2F5A9481FB9DC19B5BBCB80C9E555AD2D2574F2
-      55C9D9F92258DFF3F91EA9558B689F5DBD485F00DB0F844FD40FE9BC18B14DF2
-      719F54F9E29279169F71AD87F5D8C93C9BDE5BF5B7DE9B290F2E907930EF20AF
-      D6811B4B5ED1F394807D6C5E49F2741298ED244FFFCBE71BBBF200218EA74D87
-      06E84001680284D3E4FFA2740DD23501E44D0E1939BA16E1AA235C2DEA3227AF
-      F14EB46FC49F61489C7951EDFCBE847B1267EF0CC539A3025F41B6BE58AE3114
-      3E4330138D0E7C74AFDBE40BA9EE1DE1A34C637D8FA51AC3814F59EF72F88181
-      ADD7AE1F538BD70C6C3FECE6E5E8F895E1705E34D93B1B1ECF3014EF4EFBEBF7
-      D6661EF81DE415CD24C3D2F706FF87CE2B81DB4D678BE3EE769EFF0074B8D9B7
+      4C7A020000001400000014000000CB0100000000000078DAEDD44F2883711CC7
+      F16DAE0E6A2B25C2018913395B2251F2E722210A0729668A71D93427232D07A9
+      C94172514A3407FF160EA8A5E530267320B4388870F1F37932177DBFBF3D4FCF
+      69E5A9D7E5797EBF77CFEFE9F9FD0C86E4BCFC1D866C70C23ADC410CB660028A
+      34B67AE00504E3131C90A2A2B524E9FCB5236BE2592B3BB7D3C8354798563A3C
+      5173420BDDE262CDC5F53EA090E87571EFB6DD67117BF66CD9BA5D446F8E1B1F
+      18CE1347AE32596F83E89D70E3CF97FAC5D5A647D6BB277A073A7A37446F4647
+      6F95E8B5E9E839885E2A44A9F1A7D3B522E4EBE25ACF90C1FC8315F0A5617F28
+      DA13EC37A786E6BCCAF3C00AD792CE2334693C6394EFD90C1ED88543F02AEB03
+      B3E1FF527D65161D1A153A1B05E0063FC4E2FCF17BF91A3A29608777100CE599
+      0D4C095A26D89074FE5A977D073CEBA3E66515FF609ABD4C2B17DEA83963EE88
+      708C5F72BD57C8217A43DCBA3CB35131E98DCAD63D48F45674F496895E44472F
+      4CF4423A7A67446F911B5F6A3D1125E5C7B29E4FEDBFA2A86A0C8ACA86A0ACD7
+      4BF42CF0408DB78D86C58023CCB5EEC1CCFC83F51AF6C6AFBA047B6E5A436B52
+      E59950037792CE2D546B3CAFD2A025FEBE01D887A9F8BDB4643DCBBF0155856B
+      9F
     }
     BitmapAdv = {
-      4C69010000004C7A020000001000000010000000650100000000000078DA6360
-      A03ED81ECF200DC4E140DC0DC4D3803805887588D0C704C4C540FC1D88FF63C1
-      F380980F875E4620DE8C431F32BE0FC4C258F467A2AB3D5024FFFF5487133633
-      56A0E9E506E2CFE8EA2ECF49FAFFE4C8425CEEB047D26F8BCBBD3B925870E9AF
-      45D25F884DCDF929A1FF1FEE998A4BFF4642FAAF2DC9FBFFE2CC3A62F4DB92A1
-      BF9650F85D5990F1FFD9891504C30F57FCED4C66FBBF37579C60FC21A59F4DE4
-      A61FA4F45B8427FDCEC5957ED1CC9102E23020EE82E69F6420D66618224046FB
-      880A10C701F1242806B15588D0C701C49D40FC1788FFA3E1BF50390E3C7ACF62
-      D1878ECF6233036A368A5A2D8B13FF35CD8F6333A3038B7F31DCBC7AE34B30C6
-      E1176524FD71D8DCBA65E71B30C6E18F5824FD93C8D03F9190FE551B70BA1F5D
-      3F56F783C20E47F8A1BB1F6BF815D7DCFE5F527B9B60F8E18A3F0DA0DD1A44C4
-      1F35D20F92191D78D26F072EBD68E62883C20714C6501C8BEE5F6A0100B20D83
-      CE
+      4C69010000004C7A020000001000000010000000650100000000000078DAD593
+      214FC34014C74B96110862FD00EC1340404D22664A665088194010104B50105C
+      7160089805240A099BA130906C82894D4CC030235911947D8399F2BFE3C4EDF2
+      5EBB12045CF24B2EEFFEBFDE4BFACEB27E77DD6D5819E0020F7C283C55CBC4B8
+      CBC0072183387318D789F04C1CC3B5C1BB997BD89E91307DD89A7F40DDF37AED
+      86DD2B97EBC1D57C8FCADC6F4E4A18FF46F3032AD3B9D892307EA0F93ED7BF80
+      F1FB9A5FFD815FD1FC3D2AD32EAF4A187F57F3A7C14B82FFFF0CA68C19C881E1
+      18AEC8E498195C00ED08B72532316F200DD6C119785288FD9A38B3FED19A9D6B
+      4C08123A295002353050D4542D15E3664103840C759189B8B7AEE7F32B2D89F1
+      8D47AA0FD5DF48F6B8FC2621FA2811FE6D02DF23FCCF047E40F8BE99DBD9EF4A
+      08BF4FF85533979DFF86F02B845F347347A7BDF0F0A447F94566D6467A585C6A
+      4ACCBBB99944DD069711F323CEEC3166B800CE415321F685BFF846BF00F01B58
+      6F
     }
   end
   object SaveDlg: TSaveDialog

@@ -929,7 +929,7 @@ begin
       FNetHeight := FieldByName('net_height').AsFloat;
       FNetArea := FieldByName('net_area').AsFloat;
       FNetMesh := FieldByName('net_mesh').AsString;
-      FNotes := FieldByName('note').AsString;
+      FNotes := FieldByName('notes').AsString;
       FUserInserted := FieldByName('user_inserted').AsInteger;
       FUserUpdated := FieldByName('user_updated').AsInteger;
       FInsertDate := FieldByName('insert_date').AsDateTime;

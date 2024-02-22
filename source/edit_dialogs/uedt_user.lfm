@@ -8,12 +8,14 @@ object edtUser: TedtUser
   Caption = 'New user'
   ClientHeight = 348
   ClientWidth = 532
+  Font.Height = -12
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.0.0.3'
   object pBottom: TPanel
     Left = 0
     Height = 41

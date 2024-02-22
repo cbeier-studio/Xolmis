@@ -8,6 +8,7 @@ object edtProject: TedtProject
   Caption = 'New project'
   ClientHeight = 588
   ClientWidth = 400
+  Font.Height = -12
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -15,6 +16,7 @@ object edtProject: TedtProject
   PopupMode = pmAuto
   Position = poScreenCenter
   ShowInTaskBar = stNever
+  LCLVersion = '3.0.0.3'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -324,6 +326,7 @@ object edtProject: TedtProject
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
@@ -347,6 +350,7 @@ object edtProject: TedtProject
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 176
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
