@@ -6,7 +6,7 @@ Xolmis is an ornithological data management system intended for researchers and 
 
 ![Xolmis screenshot](https://github.com/cbeier-studio/xolmis/assets/109050697/00962310-a2ac-45b0-ba88-465d806f0cab)
 
-:dove: _Xolmis_ is a genre of Neotropical passerines. Today it is represented by two species: [_Xolmis irupero_](https://www.wikiaves.com.br/wiki/noivinha) and [_Xolmis velatus_](https://www.wikiaves.com.br/wiki/noivinha-branca).
+:dove: _Xolmis_ is a genus of Neotropical passerines. Today it is represented by two species: [_Xolmis irupero_](https://www.wikiaves.com.br/wiki/noivinha) and [_Xolmis velatus_](https://www.wikiaves.com.br/wiki/noivinha-branca).
 
 ## Features
 
@@ -28,7 +28,6 @@ Here is a list of the main features:
 - [ ] Import banding journals (CSV file).
 - [x] Import captures (CSV file).
 - [ ] Attachment of images, audio recording, documents and links to the field records.
-- [ ] Many personalization settings.
 
 See the roadmap for more information on planned features.
 
