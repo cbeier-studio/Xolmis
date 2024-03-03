@@ -82,7 +82,7 @@ object dlgGeoEditor: TdlgGeoEditor
     AutoSize = True
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
-    Background.Color = 16444392
+    Background.Color = clBtnFace
     Background.Gradient1.StartColor = clWhite
     Background.Gradient1.EndColor = clBlack
     Background.Gradient1.GradientType = gtLinear

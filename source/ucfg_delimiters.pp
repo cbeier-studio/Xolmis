@@ -29,8 +29,8 @@ type
     lineBottom: TShapeLineBGRA;
     pClient: TPanel;
     pBottom: TPanel;
-    sbCancel: TBCButtonFocus;
-    sbOk: TBCButtonFocus;
+    sbCancel: TButton;
+    sbOK: TButton;
     tsHaveHeader: TRxSwitch;
     tsQuotedAsText: TRxSwitch;
     procedure cbDelimiterSelect(Sender: TObject);

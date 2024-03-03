@@ -176,6 +176,7 @@ var
   IsRunning: Boolean;
   MsgValor: String;
   EditSourceStr: String;
+  OldPPI: Integer;
 
   { System logging }
   procedure LogEvent(aAction, Msg: String);

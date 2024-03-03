@@ -1,13 +1,12 @@
 object dlgRecHistory: TdlgRecHistory
   Left = 352
-  Height = 616
+  Height = 493
   Top = 33
-  Width = 1353
+  Width = 1082
   BorderIcons = [biSystemMenu]
   Caption = 'History'
-  ClientHeight = 616
-  ClientWidth = 1353
-  DesignTimePPI = 120
+  ClientHeight = 493
+  ClientWidth = 1082
   OnClose = FormClose
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -15,25 +14,23 @@ object dlgRecHistory: TdlgRecHistory
   Position = poMainFormCenter
   object pTop: TPanel
     Left = 0
-    Height = 52
+    Height = 42
     Top = 0
-    Width = 1353
+    Width = 1082
     Align = alTop
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ClientHeight = 52
-    ClientWidth = 1353
-    Color = 16444392
+    ClientHeight = 42
+    ClientWidth = 1082
     ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object Label1: TLabel
       Left = 16
-      Height = 36
+      Height = 26
       Top = 8
-      Width = 67
+      Width = 53
       Align = alLeft
       Alignment = taRightJustify
       Caption = 'Record id:'
@@ -43,10 +40,10 @@ object dlgRecHistory: TdlgRecHistory
       ParentFont = False
     end
     object lblNumInterno: TDBText
-      Left = 91
-      Height = 36
+      Left = 77
+      Height = 26
       Top = 8
-      Width = 96
+      Width = 78
       Align = alLeft
       Font.Color = 13066075
       Layout = tlCenter
@@ -54,10 +51,10 @@ object dlgRecHistory: TdlgRecHistory
       ParentFont = False
     end
     object ckAtivo: TDBCheckBox
-      Left = 1107
-      Height = 36
+      Left = 876
+      Height = 26
       Top = 8
-      Width = 62
+      Width = 51
       Align = alRight
       AutoSize = True
       Caption = 'Active'
@@ -68,10 +65,10 @@ object dlgRecHistory: TdlgRecHistory
       ValueUnchecked = 'False'
     end
     object ckMarcado: TDBCheckBox
-      Left = 1177
-      Height = 36
+      Left = 935
+      Height = 26
       Top = 8
-      Width = 71
+      Width = 58
       Align = alRight
       AutoSize = True
       Caption = 'Marked'
@@ -82,10 +79,10 @@ object dlgRecHistory: TdlgRecHistory
       ValueUnchecked = 'False'
     end
     object ckExportado: TDBCheckBox
-      Left = 1256
-      Height = 36
+      Left = 1001
+      Height = 26
       Top = 8
-      Width = 81
+      Width = 65
       Align = alRight
       AutoSize = True
       Caption = 'Exported'
@@ -98,21 +95,21 @@ object dlgRecHistory: TdlgRecHistory
   end
   object pBottom: TPanel
     Left = 0
-    Height = 52
-    Top = 564
-    Width = 1353
+    Height = 42
+    Top = 451
+    Width = 1082
     Align = alBottom
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 52
-    ClientWidth = 1353
+    ClientHeight = 42
+    ClientWidth = 1082
     TabOrder = 1
     object sbClose: TBitBtn
-      Left = 1175
-      Height = 36
+      Left = 936
+      Height = 26
       Top = 8
-      Width = 162
+      Width = 130
       Align = alRight
       Caption = 'Close'
       Default = True
@@ -122,46 +119,46 @@ object dlgRecHistory: TdlgRecHistory
   end
   object dbgHistory: TDBGrid
     Left = 0
-    Height = 512
-    Top = 52
-    Width = 1353
+    Height = 409
+    Top = 42
+    Width = 1082
     Align = alClient
     Color = clWindow
     Columns = <    
       item
         Alignment = taCenter
         Title.Caption = 'Date'
-        Width = 175
+        Width = 140
         FieldName = 'event_date'
       end    
       item
         Title.Caption = 'Action'
-        Width = 150
+        Width = 120
         FieldName = 'event_action'
       end    
       item
         Title.Caption = 'Property'
-        Width = 175
+        Width = 140
         FieldName = 'event_field'
       end    
       item
         Title.Caption = 'Old value'
-        Width = 225
+        Width = 180
         FieldName = 'old_value'
       end    
       item
         Title.Caption = 'New value'
-        Width = 225
+        Width = 180
         FieldName = 'new_value'
       end    
       item
         Title.Caption = 'Notes'
-        Width = 225
+        Width = 180
         FieldName = 'notes'
       end    
       item
         Title.Caption = 'Username'
-        Width = 150
+        Width = 120
         FieldName = 'user_name'
       end>
     DataSource = dsHistory
@@ -177,8 +174,8 @@ object dlgRecHistory: TdlgRecHistory
   object dsHistory: TDataSource
     AutoEdit = False
     DataSet = qHistory
-    Left = 430
-    Top = 219
+    Left = 344
+    Top = 175
   end
   object qHistory: TSQLQuery
     FieldDefs = <    
@@ -251,8 +248,8 @@ object dlgRecHistory: TdlgRecHistory
       end>
     Macros = <>
     MacroCheck = True
-    Left = 540
-    Top = 220
+    Left = 432
+    Top = 176
     object qHistoryevent_date: TDateTimeField
       Alignment = taCenter
       DisplayLabel = 'Date'

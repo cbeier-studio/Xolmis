@@ -22,7 +22,6 @@ object cfgDatabase: TcfgDatabase
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 396
     ClientWidth = 344
-    Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
@@ -93,7 +92,7 @@ object cfgDatabase: TcfgDatabase
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]

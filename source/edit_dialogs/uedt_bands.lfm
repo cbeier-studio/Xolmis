@@ -8,14 +8,15 @@ object edtBands: TedtBands
   Caption = 'New band'
   ClientHeight = 630
   ClientWidth = 488
-  Font.Height = -12
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
+  ParentFont = True
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.0.0.3'
   object pBottom: TPanel
     Left = 0
     Height = 41

@@ -81,7 +81,6 @@ object dlgColorBands: TdlgColorBands
     ChildSizing.ControlsPerLine = 1
     ClientHeight = 169
     ClientWidth = 125
-    Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
@@ -125,7 +124,7 @@ object dlgColorBands: TdlgColorBands
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
@@ -186,7 +185,7 @@ object dlgColorBands: TdlgColorBands
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
@@ -247,7 +246,7 @@ object dlgColorBands: TdlgColorBands
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
@@ -308,7 +307,7 @@ object dlgColorBands: TdlgColorBands
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
@@ -340,7 +339,7 @@ object dlgColorBands: TdlgColorBands
     ChildSizing.TopBottomSpacing = 8
     ClientHeight = 169
     ClientWidth = 30
-    Color = 16444392
+    Color = clBtnFace
     ParentBackground = False
     ParentColor = False
     TabOrder = 2
@@ -399,7 +398,7 @@ object dlgColorBands: TdlgColorBands
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 4
-    Background.Color = 16444392
+    Background.Color = clBtnFace
     Background.Gradient1.StartColor = clWhite
     Background.Gradient1.EndColor = clBlack
     Background.Gradient1.GradientType = gtLinear

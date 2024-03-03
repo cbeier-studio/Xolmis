@@ -95,8 +95,12 @@ procedure TedtBands.cbBandColorDrawItem(Control: TWinControl; Index: Integer; AR
   );
 var
   aColorRect: TRect;
+  aTextStyle: TTextStyle;
 begin
+  aTextStyle := cbBandColor.Canvas.TextStyle;
+  aTextStyle.Layout := tlCenter;
   cbBandColor.Canvas.FillRect(ARect);
+  cbBandColor.Canvas.TextStyle := aTextStyle;
   cbBandColor.Canvas.TextRect(ARect, 24, ARect.Top, cbBandColor.Items[Index]);
 
   aColorRect.Left   := ARect.Left   + 2;
@@ -133,8 +137,13 @@ begin
 end;
 
 procedure TedtBands.cbBandTypeDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
+var
+  aTextStyle: TTextStyle;
 begin
+  aTextStyle := cbBandType.Canvas.TextStyle;
+  aTextStyle.Layout := tlCenter;
   cbBandType.Canvas.FillRect(ARect);
+  cbBandType.Canvas.TextStyle := aTextStyle;
   cbBandType.Canvas.TextRect(ARect, 24, ARect.Top, cbBandType.Items[Index]);
   if Index < cbBandType.Items.Count - 1 then
     DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType);
@@ -277,6 +286,8 @@ end;
 
 procedure TedtBands.FormShow(Sender: TObject);
 begin
+
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionBand)])
   else

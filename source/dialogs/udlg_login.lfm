@@ -84,7 +84,6 @@ object dlgLogin: TdlgLogin
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 314
     ClientWidth = 280
-    Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 0

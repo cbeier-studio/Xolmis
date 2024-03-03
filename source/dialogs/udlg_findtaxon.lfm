@@ -1,14 +1,13 @@
 object dlgFindTaxon: TdlgFindTaxon
   Left = 352
-  Height = 335
+  Height = 268
   Top = 33
-  Width = 396
+  Width = 317
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
   Caption = 'Find taxon'
-  ClientHeight = 335
-  ClientWidth = 396
-  DesignTimePPI = 120
+  ClientHeight = 268
+  ClientWidth = 317
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
@@ -17,23 +16,25 @@ object dlgFindTaxon: TdlgFindTaxon
   PopupMode = pmAuto
   object pSearchBar: TPanel
     Left = 0
-    Height = 38
+    Height = 34
     Top = 0
-    Width = 396
+    Width = 317
     Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 4
     ChildSizing.TopBottomSpacing = 4
     ChildSizing.HorizontalSpacing = 4
-    ClientHeight = 38
-    ClientWidth = 396
+    ClientHeight = 34
+    ClientWidth = 317
     TabOrder = 0
     object pEP: TBCPanel
       Left = 4
-      Height = 30
+      Height = 26
       Top = 4
-      Width = 388
+      Width = 309
       Align = alClient
+      AutoSize = True
       ChildSizing.LeftRightSpacing = 4
       ChildSizing.TopBottomSpacing = 1
       ChildSizing.HorizontalSpacing = 8
@@ -74,11 +75,12 @@ object dlgFindTaxon: TdlgFindTaxon
       Rounding.RoundY = 4
       TabOrder = 0
       object sbClearSearch: TSpeedButton
-        Left = 320
-        Height = 28
+        Left = 249
+        Height = 24
         Top = 1
-        Width = 28
+        Width = 24
         Align = alRight
+        AutoSize = True
         Flat = True
         Images = frmMain.mPopup
         ImageIndex = 38
@@ -87,15 +89,13 @@ object dlgFindTaxon: TdlgFindTaxon
         OnClick = sbClearSearchClick
       end
       object EP: TEdit
-        AnchorSideTop.Side = asrCenter
         Left = 4
-        Height = 22
-        Top = 4
-        Width = 308
+        Height = 18
+        Top = 5
+        Width = 237
         Align = alClient
-        Anchors = [akLeft, akRight]
-        BorderSpacing.Top = 4
-        BorderSpacing.Bottom = 4
+        BorderSpacing.Top = 5
+        BorderSpacing.Bottom = 3
         BorderStyle = bsNone
         TabOrder = 0
         TextHint = 'Find...'
@@ -104,11 +104,12 @@ object dlgFindTaxon: TdlgFindTaxon
         OnKeyPress = FormKeyPress
       end
       object sbClose: TSpeedButton
-        Left = 356
-        Height = 28
+        Left = 281
+        Height = 24
         Top = 1
-        Width = 28
+        Width = 24
         Align = alRight
+        AutoSize = True
         Flat = True
         Images = frmMain.bMenu
         ImageIndex = 90
@@ -119,9 +120,9 @@ object dlgFindTaxon: TdlgFindTaxon
   end
   object uList: TDBControlGrid
     Left = 0
-    Height = 297
-    Top = 38
-    Width = 396
+    Height = 234
+    Top = 34
+    Width = 317
     Align = alClient
     AlternateColor = 16448250
     AltColorStartNormal = True
@@ -135,21 +136,21 @@ object dlgFindTaxon: TdlgFindTaxon
     OnKeyPress = FormKeyPress
     OnPrepareCanvas = uListPrepareCanvas
     ColWidths = (
-      12
-      359
+      10
+      286
     )
     object pContent: TPanel
-      Left = 12
-      Height = 46
+      Left = 10
+      Height = 37
       Top = 0
-      Width = 359
+      Width = 286
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
       ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 46
-      ClientWidth = 359
+      ClientHeight = 37
+      ClientWidth = 286
       Color = clWindow
       ParentBackground = False
       ParentColor = False
@@ -158,9 +159,9 @@ object dlgFindTaxon: TdlgFindTaxon
       OnClick = pContentClick
       object lblVernacular: TDBText
         Left = 8
-        Height = 20
-        Top = 24
-        Width = 343
+        Height = 15
+        Top = 19
+        Width = 270
         Align = alTop
         DataSource = dsFind
         Font.Color = 6381921
@@ -168,10 +169,10 @@ object dlgFindTaxon: TdlgFindTaxon
         OnClick = pContentClick
       end
       object lblName1: TDBText
-        Left = 8
-        Height = 20
+        Left = 6
+        Height = 15
         Top = 0
-        Width = 65
+        Width = 51
         DataField = 'full_name'
         DataSource = dsFind
         Visible = False
@@ -180,9 +181,9 @@ object dlgFindTaxon: TdlgFindTaxon
       object lblName: THtmlViewer
         Cursor = crArrow
         Left = 8
-        Height = 24
+        Height = 19
         Top = 0
-        Width = 343
+        Width = 270
         BorderStyle = htNone
         DefBackground = clWhite
         DefFontName = 'default'
@@ -210,8 +211,8 @@ object dlgFindTaxon: TdlgFindTaxon
   object dsFind: TDataSource
     AutoEdit = False
     DataSet = qFind
-    Left = 85
-    Top = 215
+    Left = 68
+    Top = 172
   end
   object qFind: TSQLQuery
     PacketRecords = 50
@@ -220,14 +221,14 @@ object dlgFindTaxon: TdlgFindTaxon
     Transaction = DMM.sqlTrans
     Params = <>
     Macros = <>
-    Left = 155
-    Top = 214
+    Left = 124
+    Top = 171
   end
   object TimerFind: TTimer
     Enabled = False
     Interval = 250
     OnTimer = TimerFindTimer
-    Left = 226
-    Top = 214
+    Left = 181
+    Top = 171
   end
 end

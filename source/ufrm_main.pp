@@ -269,6 +269,7 @@ type
     procedure sbClearSearchClick(Sender: TObject);
     procedure sbHomeClick(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
+    procedure TimerScreenTimer(Sender: TObject);
   private
     //ActiveQuery: TSQLQuery;
     ActiveGrid: TfrmCustomGrid;
@@ -600,6 +601,7 @@ end;
 procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   Closing := True;
+  TimerScreen.Enabled := False;
 
   CloseAllTabs(True);
 
@@ -656,8 +658,14 @@ begin
   menuTabs.GetTabData(5).TabCaption := rsTabTaxonomy;
   menuTabs.GetTabData(6).TabCaption := rsTabMedia;
   menuTabs.GetTabData(7).TabCaption := rsTabHelp;
-  if Screen.PixelsPerInch <> 96 then
-    navTabs.OptScalePercents := (Screen.PixelsPerInch * 100) div 96;
+  OldPPI := Self.PixelsPerInch;
+  if OldPPI <> 96 then
+  begin
+    navTabs.OptScalePercents := (OldPPI * 100) div 96;
+    //navTabs.OptFontScale := (OldPPI * 100) div 96;
+  end;
+  //navTabs.Height := (navTabs.OptTabHeight + navTabs.OptSpacer);
+  //TimerScreen.Enabled := True;
 
   { Check if there are connections available }
   DMM.qsConn.Open;
@@ -978,6 +986,30 @@ begin
   //  (TTDIPage(PGW.ActivePage).FormInPage as TfrmIndividuals).SearchString := eSearch.Text
   //else
     Exit;
+end;
+
+procedure TfrmMain.TimerScreenTimer(Sender: TObject);
+begin
+  Self.AutoScale;
+  if OldPPI = Self.PixelsPerInch then
+    Exit;
+
+  OldPPI := Self.PixelsPerInch;
+  {$IFDEF DEBUG}
+  LogDebug('DPI changed: ' + IntToStr(OldPPI) + '; Monitor: ' + IntToStr(Self.Monitor.MonitorNum));
+  {$ENDIF}
+  //Self.PixelsPerInch := OldPPI;
+  //Self.AutoScale;
+  if Self.PixelsPerInch <> 96 then
+  begin
+    navTabs.OptScalePercents := (OldPPI * 100) div 96;
+    navTabs.OptFontScale := (OldPPI * 100) div 96;
+  end
+  else
+  begin
+    navTabs.OptScalePercents := 100;
+    navTabs.OptFontScale := 100;
+  end;
 end;
 
 procedure TfrmMain.OpenTab(Sender: TObject; aForm: TForm; aFormClass: TComponentClass; aCaption: String;

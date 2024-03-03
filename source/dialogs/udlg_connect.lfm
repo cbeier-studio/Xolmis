@@ -26,7 +26,7 @@ object dlgConnect: TdlgConnect
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 437
     ClientWidth = 280
-    Color = 16444392
+    Color = clBtnFace
     ParentBackground = False
     ParentColor = False
     TabOrder = 0

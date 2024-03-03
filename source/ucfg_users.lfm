@@ -61,7 +61,6 @@ object cfgUsers: TcfgUsers
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 394
     ClientWidth = 344
-    Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
@@ -137,7 +136,7 @@ object cfgUsers: TcfgUsers
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]

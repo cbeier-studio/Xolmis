@@ -119,9 +119,7 @@ object frmMaintenance: TfrmMaintenance
           ChildSizing.VerticalSpacing = 2
           ClientHeight = 185
           ClientWidth = 622
-          Color = 16444392
           ParentBackground = False
-          ParentColor = False
           TabOrder = 0
           object lblTitleTaxaHierarchy: TLabel
             Left = 16
@@ -364,9 +362,7 @@ object frmMaintenance: TfrmMaintenance
           ChildSizing.VerticalSpacing = 2
           ClientHeight = 185
           ClientWidth = 622
-          Color = 16444392
           ParentBackground = False
-          ParentColor = False
           TabOrder = 0
           object lblTitleGeoHierarchy: TLabel
             Left = 16
@@ -478,9 +474,7 @@ object frmMaintenance: TfrmMaintenance
         ChildSizing.VerticalSpacing = 2
         ClientHeight = 185
         ClientWidth = 622
-        Color = 16444392
         ParentBackground = False
-        ParentColor = False
         TabOrder = 0
         object lblTitleGeoHierarchy1: TLabel
           Left = 16
@@ -603,9 +597,7 @@ object frmMaintenance: TfrmMaintenance
           ChildSizing.VerticalSpacing = 2
           ClientHeight = 185
           ClientWidth = 622
-          Color = 16444392
           ParentBackground = False
-          ParentColor = False
           TabOrder = 0
           object lblTitleImageThumbnails: TLabel
             Left = 16

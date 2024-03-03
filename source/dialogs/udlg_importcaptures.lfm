@@ -96,9 +96,7 @@ object dlgImportCaptures: TdlgImportCaptures
         ChildSizing.TopBottomSpacing = 16
         ClientHeight = 297
         ClientWidth = 759
-        Color = 16444392
         ParentBackground = False
-        ParentColor = False
         TabOrder = 0
         object lblTitleImportFiles: TLabel
           Left = 16
@@ -154,7 +152,7 @@ object dlgImportCaptures: TdlgImportCaptures
           FontEx.ShadowOffsetX = 5
           FontEx.ShadowOffsetY = 5
           FontEx.Style = []
-          ParentBackground = False
+          ParentBackground = True
           Rounding.RoundX = 8
           Rounding.RoundY = 8
           Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
@@ -257,7 +255,7 @@ object dlgImportCaptures: TdlgImportCaptures
           FontEx.ShadowOffsetX = 5
           FontEx.ShadowOffsetY = 5
           FontEx.Style = []
-          ParentBackground = False
+          ParentBackground = True
           Rounding.RoundX = 8
           Rounding.RoundY = 8
           Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
@@ -362,7 +360,7 @@ object dlgImportCaptures: TdlgImportCaptures
           FontEx.ShadowOffsetX = 5
           FontEx.ShadowOffsetY = 5
           FontEx.Style = []
-          ParentBackground = False
+          ParentBackground = True
           Rounding.RoundX = 8
           Rounding.RoundY = 8
           Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
@@ -477,7 +475,7 @@ object dlgImportCaptures: TdlgImportCaptures
           FontEx.ShadowOffsetX = 5
           FontEx.ShadowOffsetY = 5
           FontEx.Style = []
-          ParentBackground = False
+          ParentBackground = True
           Rounding.RoundX = 8
           Rounding.RoundY = 8
           Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
@@ -546,13 +544,13 @@ object dlgImportCaptures: TdlgImportCaptures
     object pgImportProgress: TPage
       object pContentProgress: TBCPanel
         Left = 0
-        Height = 292
+        Height = 289
         Top = 8
         Width = 759
         Align = alClient
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
-        Background.Color = 16444392
+        Background.Color = clBtnFace
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
         Background.Gradient1.GradientType = gtLinear
@@ -587,7 +585,7 @@ object dlgImportCaptures: TdlgImportCaptures
         TabOrder = 0
         object pProgress: TBCPanel
           Left = 17
-          Height = 258
+          Height = 255
           Top = 17
           Width = 725
           Align = alClient
@@ -632,7 +630,7 @@ object dlgImportCaptures: TdlgImportCaptures
           TabOrder = 0
           object hvProgress: THtmlViewer
             Left = 16
-            Height = 234
+            Height = 231
             Top = 12
             Width = 693
             BorderStyle = htNone
@@ -664,13 +662,13 @@ object dlgImportCaptures: TdlgImportCaptures
     object pgImportFinished: TPage
       object pContentFinished: TBCPanel
         Left = 0
-        Height = 315
+        Height = 297
         Top = 0
         Width = 759
         Align = alClient
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
-        Background.Color = 16444392
+        Background.Color = clBtnFace
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
         Background.Gradient1.GradientType = gtLinear
@@ -732,7 +730,7 @@ object dlgImportCaptures: TdlgImportCaptures
         end
         object icoImportFinished: TImage
           Left = 17
-          Height = 157
+          Height = 139
           Top = 97
           Width = 725
           Align = alClient
@@ -743,11 +741,11 @@ object dlgImportCaptures: TdlgImportCaptures
         object pRetry: TBCPanel
           Left = 17
           Height = 36
-          Top = 262
+          Top = 244
           Width = 725
           Align = alBottom
           AutoSize = True
-          Background.Color = 16444392
+          Background.Color = clBtnFace
           Background.Gradient1.StartColor = clWhite
           Background.Gradient1.EndColor = clBlack
           Background.Gradient1.GradientType = gtLinear

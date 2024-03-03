@@ -1,12 +1,11 @@
 object dlgBandHistory: TdlgBandHistory
   Left = 352
-  Height = 475
+  Height = 380
   Top = 33
-  Width = 1095
+  Width = 876
   Caption = 'Band history'
-  ClientHeight = 475
-  ClientWidth = 1095
-  DesignTimePPI = 120
+  ClientHeight = 380
+  ClientWidth = 876
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -14,25 +13,24 @@ object dlgBandHistory: TdlgBandHistory
   Position = poScreenCenter
   object pHeader: TPanel
     Left = 0
-    Height = 50
+    Height = 40
     Top = 0
-    Width = 1095
+    Width = 876
     Align = alTop
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ClientHeight = 50
-    ClientWidth = 1095
-    Color = 16444392
+    ClientHeight = 40
+    ClientWidth = 876
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object lblBandNameCaption: TLabel
       Left = 16
-      Height = 34
+      Height = 24
       Top = 8
-      Width = 37
+      Width = 30
       Align = alLeft
       Alignment = taRightJustify
       Caption = 'Band:'
@@ -42,15 +40,15 @@ object dlgBandHistory: TdlgBandHistory
       ParentFont = False
     end
     object lblBandName: TDBText
-      Left = 61
-      Height = 34
+      Left = 54
+      Height = 24
       Top = 8
-      Width = 139
+      Width = 106
       Align = alLeft
       DataField = 'full_name'
       DataSource = DMG.dsBands
       Font.Color = 13066075
-      Font.Height = -23
+      Font.Height = -18
       Layout = tlCenter
       ParentColor = False
       ParentFont = False
@@ -58,24 +56,24 @@ object dlgBandHistory: TdlgBandHistory
   end
   object pBottom: TPanel
     Left = 0
-    Height = 48
-    Top = 427
-    Width = 1095
+    Height = 38
+    Top = 342
+    Width = 876
     Align = alBottom
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 48
-    ClientWidth = 1095
+    ClientHeight = 38
+    ClientWidth = 876
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
     object sbClose: TButton
-      Left = 949
-      Height = 32
+      Left = 756
+      Height = 22
       Top = 8
-      Width = 130
+      Width = 104
       Align = alRight
       Caption = 'Close'
       ModalResult = 11
@@ -84,9 +82,9 @@ object dlgBandHistory: TdlgBandHistory
   end
   object DBG: TDBGrid
     Left = 0
-    Height = 377
-    Top = 50
-    Width = 1095
+    Height = 302
+    Top = 40
+    Width = 876
     Align = alClient
     Color = clWindow
     Columns = <    
@@ -106,7 +104,7 @@ object dlgBandHistory: TdlgBandHistory
       item
         Alignment = taCenter
         Title.Caption = 'Date'
-        Width = 125
+        Width = 100
         FieldName = 'event_date'
       end    
       item
@@ -121,13 +119,13 @@ object dlgBandHistory: TdlgBandHistory
           'Baixa'
         )
         Title.Caption = 'Type'
-        Width = 125
+        Width = 100
         FieldName = 'event_type'
       end    
       item
         Alignment = taCenter
         Title.Caption = 'Order number'
-        Width = 130
+        Width = 104
         FieldName = 'order_number'
       end    
       item
@@ -138,7 +136,7 @@ object dlgBandHistory: TdlgBandHistory
       end    
       item
         Title.Caption = 'Supplier'
-        Width = 125
+        Width = 100
         FieldName = 'supplier_name'
       end    
       item
@@ -149,7 +147,7 @@ object dlgBandHistory: TdlgBandHistory
       end    
       item
         Title.Caption = 'Sender'
-        Width = 250
+        Width = 200
         FieldName = 'sender_name'
       end    
       item
@@ -160,7 +158,7 @@ object dlgBandHistory: TdlgBandHistory
       end    
       item
         Title.Caption = 'Requester'
-        Width = 250
+        Width = 200
         FieldName = 'requester_name'
       end    
       item
@@ -171,7 +169,7 @@ object dlgBandHistory: TdlgBandHistory
       end    
       item
         Title.Caption = 'Notes'
-        Width = 350
+        Width = 280
         FieldName = 'notes'
       end    
       item

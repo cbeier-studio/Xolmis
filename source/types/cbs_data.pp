@@ -267,6 +267,7 @@ begin
       except
         DMM.sqlTrans.RollbackRetaining;
         LogError(Format('Unable to create the user database (SQLite): %s', [aFileName]));
+        Result := False;
       end;
     end;
     dbFirebird: ;
