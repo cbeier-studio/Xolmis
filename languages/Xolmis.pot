@@ -371,8 +371,16 @@ msgctxt "cbs_locale.rscaptionband"
 msgid "Band"
 msgstr ""
 
+#: cbs_locale.rscaptionbandingpermit
+msgid "Banding Permit"
+msgstr ""
+
 #: cbs_locale.rscaptioncapture
 msgid "Capture"
+msgstr ""
+
+#: cbs_locale.rscaptioncollectionpermit
+msgid "Collection Permit"
 msgstr ""
 
 #: cbs_locale.rscaptioncountry
@@ -498,6 +506,10 @@ msgctxt "cbs_locale.rscaptionname"
 msgid "Name"
 msgstr ""
 
+#: cbs_locale.rscaptionnationalparkpermit
+msgid "National Park Research Permit"
+msgstr ""
+
 #: cbs_locale.rscaptionnest
 msgctxt "cbs_locale.rscaptionnest"
 msgid "Nest"
@@ -585,6 +597,10 @@ msgstr ""
 #: cbs_locale.rscaptionstate
 msgctxt "cbs_locale.rscaptionstate"
 msgid "State"
+msgstr ""
+
+#: cbs_locale.rscaptionstateparkpermit
+msgid "State Park Research Permit"
 msgstr ""
 
 #: cbs_locale.rscaptionsubfamily
@@ -2726,10 +2742,12 @@ msgid "Receipt date:"
 msgstr ""
 
 #: tbatchbands.lblrequester.caption
+msgctxt "tbatchbands.lblrequester.caption"
 msgid "Requester:"
 msgstr ""
 
 #: tbatchbands.lblsender.caption
+msgctxt "tbatchbands.lblsender.caption"
 msgid "Sender:"
 msgstr ""
 
@@ -2739,6 +2757,7 @@ msgid "Start number:"
 msgstr ""
 
 #: tbatchbands.lblsupplier.caption
+msgctxt "tbatchbands.lblsupplier.caption"
 msgid "Supplier:"
 msgstr ""
 
@@ -3281,6 +3300,26 @@ msgstr ""
 msgid "Requester (Id)"
 msgstr ""
 
+#: tdlgbandhistory.label2.caption
+msgctxt "tdlgbandhistory.label2.caption"
+msgid "Supplier:"
+msgstr ""
+
+#: tdlgbandhistory.label3.caption
+msgctxt "tdlgbandhistory.label3.caption"
+msgid "Requester:"
+msgstr ""
+
+#: tdlgbandhistory.label4.caption
+msgctxt "tdlgbandhistory.label4.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tdlgbandhistory.label6.caption
+msgctxt "tdlgbandhistory.label6.caption"
+msgid "Sender:"
+msgstr ""
+
 #: tdlgbandhistory.lblbandnamecaption.caption
 msgctxt "tdlgbandhistory.lblbandnamecaption.caption"
 msgid "Band:"
@@ -3715,26 +3754,25 @@ msgstr ""
 msgid "Property"
 msgstr ""
 
-#: tdlgrechistory.dbghistory.columns[3].title.caption
-msgid "Old value"
-msgstr ""
-
-#: tdlgrechistory.dbghistory.columns[4].title.caption
-msgid "New value"
-msgstr ""
-
-#: tdlgrechistory.dbghistory.columns[5].title.caption
-msgctxt "tdlgrechistory.dbghistory.columns[5].title.caption"
-msgid "Notes"
-msgstr ""
-
-#: tdlgrechistory.dbghistory.columns[6].title.caption
-msgctxt "tdlgrechistory.dbghistory.columns[6].title.caption"
-msgid "Username"
-msgstr ""
-
 #: tdlgrechistory.label1.caption
 msgid "Record id:"
+msgstr ""
+
+#: tdlgrechistory.label2.caption
+msgid "Old value:"
+msgstr ""
+
+#: tdlgrechistory.label3.caption
+msgid "New value:"
+msgstr ""
+
+#: tdlgrechistory.label4.caption
+msgctxt "tdlgrechistory.label4.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tdlgrechistory.label5.caption
+msgid "User name:"
 msgstr ""
 
 #: tdlgrechistory.sbclose.caption

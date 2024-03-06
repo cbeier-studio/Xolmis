@@ -14,11 +14,20 @@ type
 
   TdlgBandHistory = class(TForm)
     DBG: TDBGrid;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label6: TLabel;
     lblBandNameCaption: TLabel;
     lblBandName: TDBText;
+    lblRequester: TDBText;
+    lblSender: TDBText;
+    lblSupplier: TDBText;
+    mNotes: TDBMemo;
     pHeader: TPanel;
     pBottom: TPanel;
     sbClose: TButton;
+    ScrollBox1: TScrollBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

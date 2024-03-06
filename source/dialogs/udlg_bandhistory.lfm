@@ -1,11 +1,11 @@
 object dlgBandHistory: TdlgBandHistory
   Left = 352
-  Height = 380
+  Height = 305
   Top = 33
-  Width = 876
+  Width = 672
   Caption = 'Band history'
-  ClientHeight = 380
-  ClientWidth = 876
+  ClientHeight = 305
+  ClientWidth = 672
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -13,22 +13,23 @@ object dlgBandHistory: TdlgBandHistory
   Position = poScreenCenter
   object pHeader: TPanel
     Left = 0
-    Height = 40
+    Height = 41
     Top = 0
-    Width = 876
+    Width = 672
     Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ClientHeight = 40
-    ClientWidth = 876
+    ClientHeight = 41
+    ClientWidth = 672
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object lblBandNameCaption: TLabel
       Left = 16
-      Height = 24
+      Height = 25
       Top = 8
       Width = 30
       Align = alLeft
@@ -41,7 +42,7 @@ object dlgBandHistory: TdlgBandHistory
     end
     object lblBandName: TDBText
       Left = 54
-      Height = 24
+      Height = 25
       Top = 8
       Width = 106
       Align = alLeft
@@ -56,22 +57,23 @@ object dlgBandHistory: TdlgBandHistory
   end
   object pBottom: TPanel
     Left = 0
-    Height = 38
-    Top = 342
-    Width = 876
+    Height = 41
+    Top = 264
+    Width = 672
     Align = alBottom
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 38
-    ClientWidth = 876
+    ClientHeight = 41
+    ClientWidth = 672
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
     object sbClose: TButton
-      Left = 756
-      Height = 22
+      Left = 552
+      Height = 25
       Top = 8
       Width = 104
       Align = alRight
@@ -82,10 +84,10 @@ object dlgBandHistory: TdlgBandHistory
   end
   object DBG: TDBGrid
     Left = 0
-    Height = 302
-    Top = 40
-    Width = 876
-    Align = alClient
+    Height = 223
+    Top = 41
+    Width = 336
+    Align = alLeft
     Color = clWindow
     Columns = <    
       item
@@ -136,7 +138,8 @@ object dlgBandHistory: TdlgBandHistory
       end    
       item
         Title.Caption = 'Supplier'
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'supplier_name'
       end    
       item
@@ -147,7 +150,8 @@ object dlgBandHistory: TdlgBandHistory
       end    
       item
         Title.Caption = 'Sender'
-        Width = 200
+        Width = 0
+        Visible = False
         FieldName = 'sender_name'
       end    
       item
@@ -158,7 +162,8 @@ object dlgBandHistory: TdlgBandHistory
       end    
       item
         Title.Caption = 'Requester'
-        Width = 200
+        Width = 0
+        Visible = False
         FieldName = 'requester_name'
       end    
       item
@@ -169,7 +174,8 @@ object dlgBandHistory: TdlgBandHistory
       end    
       item
         Title.Caption = 'Notes'
-        Width = 280
+        Width = 0
+        Visible = False
         FieldName = 'notes'
       end    
       item
@@ -217,5 +223,124 @@ object dlgBandHistory: TdlgBandHistory
     Scrollbars = ssAutoBoth
     TabOrder = 2
     TitleFont.Color = 6579300
+  end
+  object ScrollBox1: TScrollBox
+    Left = 336
+    Height = 223
+    Top = 41
+    Width = 336
+    HorzScrollBar.Page = 1
+    HorzScrollBar.Visible = False
+    VertScrollBar.Page = 207
+    Align = alLeft
+    BorderStyle = bsNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 16
+    ChildSizing.VerticalSpacing = 4
+    ClientHeight = 223
+    ClientWidth = 336
+    Constraints.MinWidth = 336
+    Color = 15066599
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 3
+    object Label2: TLabel
+      Left = 16
+      Height = 15
+      Top = 16
+      Width = 304
+      Align = alTop
+      Caption = 'Supplier:'
+      Font.Color = 6579300
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label3: TLabel
+      Left = 16
+      Height = 15
+      Top = 58
+      Width = 304
+      Align = alTop
+      Caption = 'Requester:'
+      Font.Color = 6579300
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label4: TLabel
+      Left = 16
+      Height = 15
+      Top = 142
+      Width = 304
+      Align = alTop
+      Caption = 'Notes:'
+      Font.Color = 6579300
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object mNotes: TDBMemo
+      Left = 16
+      Height = 46
+      Top = 161
+      Width = 304
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      Color = 15987699
+      DataField = 'notes'
+      DataSource = DMG.dsBandHistory
+      ReadOnly = True
+      ScrollBars = ssAutoVertical
+      TabOrder = 0
+    end
+    object lblSupplier: TDBText
+      Left = 16
+      Height = 15
+      Top = 35
+      Width = 304
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      DataField = 'supplier_name'
+      DataSource = DMG.dsBandHistory
+      Layout = tlCenter
+      ParentColor = False
+    end
+    object lblRequester: TDBText
+      Left = 16
+      Height = 15
+      Top = 77
+      Width = 304
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      DataField = 'requester_name'
+      DataSource = DMG.dsBandHistory
+      Layout = tlCenter
+      ParentColor = False
+    end
+    object Label6: TLabel
+      Left = 16
+      Height = 15
+      Top = 100
+      Width = 304
+      Align = alTop
+      Caption = 'Sender:'
+      Font.Color = 6579300
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblSender: TDBText
+      Left = 16
+      Height = 15
+      Top = 119
+      Width = 304
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      DataField = 'sender_name'
+      DataSource = DMG.dsBandHistory
+      Layout = tlCenter
+      ParentColor = False
+    end
   end
 end

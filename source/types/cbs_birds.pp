@@ -124,6 +124,8 @@ type
     procedure Clear; override;
     procedure GetData(aKey: Integer);
     function Diff(aOld: TBandHistory; var aList: TStrings): Boolean;
+    procedure Insert;
+    procedure Update;
   published
     property BandId: Integer read FBandId write FBandId;
     property EventType: String read FEventType write FEventType;
@@ -717,22 +719,99 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Tipo de evento', aOld.EventType, FEventType, R) then
+  if FieldValuesDiff('Event type', aOld.EventType, FEventType, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nº do pedido', aOld.OrderNumber, FOrderNumber, R) then
+  if FieldValuesDiff('Order number', aOld.OrderNumber, FOrderNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data do evento', aOld.EventDate, FEventDate, R) then
+  if FieldValuesDiff('Event date', aOld.EventDate, FEventDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Fornecedor', aOld.SupplierId, FSupplierId, R) then
+  if FieldValuesDiff('Supplier ID', aOld.SupplierId, FSupplierId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anilhador solicitante', aOld.RequesterId, FRequesterId, R) then
+  if FieldValuesDiff('Requester ID', aOld.RequesterId, FRequesterId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anilhador remetente', aOld.SenderId, FSenderId, R) then
+  if FieldValuesDiff('Sender ID', aOld.SenderId, FSenderId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anotações', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff('Notes', aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
+end;
+
+procedure TBandHistory.Insert;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO band_history (band_id, ' +
+      'event_date, notes, event_type, supplier_id, order_number, requester_id, ' +
+      'sender_id, user_inserted, insert_date) ');
+    Add('VALUES (:aband, date(:adate), :anote, :atype, :asupplier, :aorder, ' +
+      ':arequester, :asender, :auser, datetime(''now'',''localtime''));');
+    ParamByName('ABAND').AsInteger := FBandId;
+    ParamByName('ADATE').AsString := FormatDateTime('yyyy-MM-dd', FEventDate);
+    ParamByName('ANOTE').AsString := FNotes;
+    ParamByName('ATYPE').AsString := FEventType;
+    if FSupplierId > 0 then
+      ParamByName('ASUPPLIER').AsInteger := FSupplierId
+    else
+      ParamByName('ASUPPLIER').Clear;
+    ParamByName('AORDER').AsInteger := FOrderNumber;
+    if FRequesterId > 0 then
+      ParamByName('AREQUESTER').AsInteger := FRequesterId
+    else
+      ParamByName('AREQUESTER').Clear;
+    if FSenderId > 0 then
+      ParamByName('ASENDER').AsInteger := FSenderId
+    else
+      ParamByName('ASENDER').Clear;
+    ParamByName('AUSER').AsInteger := FUserInserted;
+//    GravaLogSQL(SQL);
+    ExecSQL;
+
+    // Get the autoincrement key inserted
+    Clear;
+    Add('SELECT DISTINCT last_insert_rowid() FROM band_history');
+    Open;
+    FId := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TBandHistory.Update;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Clear;
+    Add('UPDATE band_history SET event_type = :atype, ');
+    Add('supplier_id = :asupplier, requester_id = :arequester, ');
+    Add('sender_id = :asender, order_number = :aorder, notes = :anote, ');
+    Add('user_updated = :auser, update_date = datetime(''now'',''localtime'') ');
+    Add('WHERE event_id = :aid;');
+    ParamByName('ANOTE').DataType := ftMemo;
+    ParamByName('ANOTE').AsString := FNotes;
+    ParamByName('ATYPE').AsString := FEventType;
+    ParamByName('ASUPPLIER').AsInteger := FSupplierId;
+    ParamByName('AREQUESTER').AsInteger := FRequesterId;
+    ParamByName('ASENDER').AsInteger := FSenderId;
+    ParamByName('AORDER').AsInteger := FOrderNumber;
+    ParamByName('AUSER').AsInteger := FUserUpdated;
+    ParamByName('AID').AsInteger := FId;
+//    GravaLogSQL(Qry.SQL);
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 { TSighting }
@@ -2278,57 +2357,57 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff('Full name', aOld.FullName, FFullName, R) then
     aList.Add(R);
   if FieldValuesDiff(rsCaptionTaxon, aOld.TaxonId, FTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Sexo', aOld.Sex, FSex, R) then
+  if FieldValuesDiff('Sex', aOld.Sex, FSex, R) then
     aList.Add(R);
-  if FieldValuesDiff('Idade', aOld.Age, FAge, R) then
+  if FieldValuesDiff('Age', aOld.Age, FAge, R) then
     aList.Add(R);
   if FieldValuesDiff(rsCaptionNest, aOld.NestId, FNestId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data nascimento', aOld.BirthDate, FBirthDate, R) then
+  if FieldValuesDiff('Birth date', aOld.BirthDate, FBirthDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dia nascimento', aOld.BirthDay, FBirthDay, R) then
+  if FieldValuesDiff('Birth day', aOld.BirthDay, FBirthDay, R) then
     aList.Add(R);
-  if FieldValuesDiff('M'#234's nascimento', aOld.BirthMonth, FBirthMonth, R) then
+  if FieldValuesDiff('Birth month', aOld.BirthMonth, FBirthMonth, R) then
     aList.Add(R);
-  if FieldValuesDiff('Ano nascimento', aOld.BirthYear, FBirthYear, R) then
+  if FieldValuesDiff('Birth year', aOld.BirthYear, FBirthYear, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data marca'#231#227'o', aOld.BandingDate, FBandingDate, R) then
+  if FieldValuesDiff('Banding date', aOld.BandingDate, FBandingDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data troca anilha', aOld.BandChangeDate, FBandChangeDate, R) then
+  if FieldValuesDiff('Band change date', aOld.BandChangeDate, FBandChangeDate, R) then
     aList.Add(R);
   if FieldValuesDiff(rsCaptionBand, aOld.BandId, FBandId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anilha dupla', aOld.DoubleBandId, FDoubleBandId, R) then
+  if FieldValuesDiff('Double band', aOld.DoubleBandId, FDoubleBandId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anilha removida', aOld.RemovedBandId, FRemovedBandId, R) then
+  if FieldValuesDiff('Removed band', aOld.RemovedBandId, FRemovedBandId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tarso direito (abaixo)', aOld.RightLegBelow, FRightLegBelow, R) then
+  if FieldValuesDiff('Right tarsus', aOld.RightLegBelow, FRightLegBelow, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tarso esquerdo (abaixo)', aOld.LeftLegBelow, FLeftLegBelow, R) then
+  if FieldValuesDiff('Left Tarsus', aOld.LeftLegBelow, FLeftLegBelow, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tarso direito (acima)', aOld.RightLegAbove, FRightLegAbove, R) then
+  if FieldValuesDiff('Right tibia', aOld.RightLegAbove, FRightLegAbove, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tarso esquerdo (acima)', aOld.LeftLegAbove, FLeftLegAbove, R) then
+  if FieldValuesDiff('Left tibia', aOld.LeftLegAbove, FLeftLegAbove, R) then
     aList.Add(R);
   if FieldValuesDiff(rsCaptionFather, aOld.FatherId, FFatherId, R) then
     aList.Add(R);
   if FieldValuesDiff(rsCaptionMother, aOld.MotherId, FMotherId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data '#243'bito', aOld.DeathDate, FDeathDate, R) then
+  if FieldValuesDiff('Death date', aOld.DeathDate, FDeathDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dia '#243'bito', aOld.DeathDay, FDeathDay, R) then
+  if FieldValuesDiff('Death day', aOld.DeathDay, FDeathDay, R) then
     aList.Add(R);
-  if FieldValuesDiff('M'#234's '#243'bito', aOld.DeathMonth, FDeathMonth, R) then
+  if FieldValuesDiff('Death month', aOld.DeathMonth, FDeathMonth, R) then
     aList.Add(R);
-  if FieldValuesDiff('Ano '#243'bito', aOld.DeathYear, FDeathYear, R) then
+  if FieldValuesDiff('Death year', aOld.DeathYear, FDeathYear, R) then
     aList.Add(R);
-  if FieldValuesDiff('Marcas vis'#237'veis', aOld.RecognizableMarkings, FRecognizableMarkings, R) then
+  if FieldValuesDiff('Recognizable markings', aOld.RecognizableMarkings, FRecognizableMarkings, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anota'#231#245'es', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff('Notes', aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;

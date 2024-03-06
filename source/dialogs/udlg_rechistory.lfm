@@ -1,12 +1,12 @@
 object dlgRecHistory: TdlgRecHistory
   Left = 352
-  Height = 493
+  Height = 370
   Top = 33
-  Width = 1082
+  Width = 824
   BorderIcons = [biSystemMenu]
   Caption = 'History'
-  ClientHeight = 493
-  ClientWidth = 1082
+  ClientHeight = 370
+  ClientWidth = 824
   OnClose = FormClose
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -14,21 +14,22 @@ object dlgRecHistory: TdlgRecHistory
   Position = poMainFormCenter
   object pTop: TPanel
     Left = 0
-    Height = 42
+    Height = 35
     Top = 0
-    Width = 1082
+    Width = 824
     Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ClientHeight = 42
-    ClientWidth = 1082
+    ClientHeight = 35
+    ClientWidth = 824
     ParentBackground = False
     TabOrder = 0
     object Label1: TLabel
       Left = 16
-      Height = 26
+      Height = 19
       Top = 8
       Width = 53
       Align = alLeft
@@ -41,7 +42,7 @@ object dlgRecHistory: TdlgRecHistory
     end
     object lblNumInterno: TDBText
       Left = 77
-      Height = 26
+      Height = 19
       Top = 8
       Width = 78
       Align = alLeft
@@ -51,8 +52,8 @@ object dlgRecHistory: TdlgRecHistory
       ParentFont = False
     end
     object ckAtivo: TDBCheckBox
-      Left = 876
-      Height = 26
+      Left = 618
+      Height = 19
       Top = 8
       Width = 51
       Align = alRight
@@ -65,8 +66,8 @@ object dlgRecHistory: TdlgRecHistory
       ValueUnchecked = 'False'
     end
     object ckMarcado: TDBCheckBox
-      Left = 935
-      Height = 26
+      Left = 677
+      Height = 19
       Top = 8
       Width = 58
       Align = alRight
@@ -79,8 +80,8 @@ object dlgRecHistory: TdlgRecHistory
       ValueUnchecked = 'False'
     end
     object ckExportado: TDBCheckBox
-      Left = 1001
-      Height = 26
+      Left = 743
+      Height = 19
       Top = 8
       Width = 65
       Align = alRight
@@ -95,21 +96,22 @@ object dlgRecHistory: TdlgRecHistory
   end
   object pBottom: TPanel
     Left = 0
-    Height = 42
-    Top = 451
-    Width = 1082
+    Height = 41
+    Top = 329
+    Width = 824
     Align = alBottom
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 42
-    ClientWidth = 1082
+    ClientHeight = 41
+    ClientWidth = 824
     TabOrder = 1
     object sbClose: TBitBtn
-      Left = 936
-      Height = 26
+      Left = 696
+      Height = 25
       Top = 8
-      Width = 130
+      Width = 112
       Align = alRight
       Caption = 'Close'
       Default = True
@@ -119,10 +121,10 @@ object dlgRecHistory: TdlgRecHistory
   end
   object dbgHistory: TDBGrid
     Left = 0
-    Height = 409
-    Top = 42
-    Width = 1082
-    Align = alClient
+    Height = 294
+    Top = 35
+    Width = 488
+    Align = alLeft
     Color = clWindow
     Columns = <    
       item
@@ -138,28 +140,8 @@ object dlgRecHistory: TdlgRecHistory
       end    
       item
         Title.Caption = 'Property'
-        Width = 140
+        Width = 200
         FieldName = 'event_field'
-      end    
-      item
-        Title.Caption = 'Old value'
-        Width = 180
-        FieldName = 'old_value'
-      end    
-      item
-        Title.Caption = 'New value'
-        Width = 180
-        FieldName = 'new_value'
-      end    
-      item
-        Title.Caption = 'Notes'
-        Width = 180
-        FieldName = 'notes'
-      end    
-      item
-        Title.Caption = 'Username'
-        Width = 120
-        FieldName = 'user_name'
       end>
     DataSource = dsHistory
     FixedColor = 15987699
@@ -170,6 +152,128 @@ object dlgRecHistory: TdlgRecHistory
     Scrollbars = ssAutoBoth
     TabOrder = 2
     TitleFont.Color = 6579300
+  end
+  object ScrollBox1: TScrollBox
+    Left = 488
+    Height = 294
+    Top = 35
+    Width = 336
+    HorzScrollBar.Page = 1
+    HorzScrollBar.Visible = False
+    VertScrollBar.Page = 269
+    Align = alLeft
+    BorderStyle = bsNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 16
+    ChildSizing.VerticalSpacing = 4
+    ClientHeight = 294
+    ClientWidth = 336
+    Constraints.MinWidth = 336
+    Color = 15066599
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 3
+    object Label2: TLabel
+      Left = 16
+      Height = 15
+      Top = 16
+      Width = 304
+      Align = alTop
+      Caption = 'Old value:'
+      Font.Color = 6579300
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object mOldValue: TDBMemo
+      Left = 16
+      Height = 46
+      Top = 35
+      Width = 304
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      Color = 15987699
+      DataField = 'old_value'
+      DataSource = dsHistory
+      ReadOnly = True
+      ScrollBars = ssAutoVertical
+      TabOrder = 0
+    end
+    object Label3: TLabel
+      Left = 16
+      Height = 15
+      Top = 89
+      Width = 304
+      Align = alTop
+      Caption = 'New value:'
+      Font.Color = 6579300
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object mNewValue: TDBMemo
+      Left = 16
+      Height = 46
+      Top = 108
+      Width = 304
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      Color = 15987699
+      DataField = 'new_value'
+      DataSource = dsHistory
+      ReadOnly = True
+      ScrollBars = ssAutoVertical
+      TabOrder = 1
+    end
+    object Label4: TLabel
+      Left = 16
+      Height = 15
+      Top = 162
+      Width = 304
+      Align = alTop
+      Caption = 'Notes:'
+      Font.Color = 6579300
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object mNotes: TDBMemo
+      Left = 16
+      Height = 46
+      Top = 181
+      Width = 304
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      Color = 15987699
+      DataField = 'notes'
+      DataSource = dsHistory
+      ReadOnly = True
+      ScrollBars = ssAutoVertical
+      TabOrder = 2
+    end
+    object Label5: TLabel
+      Left = 16
+      Height = 15
+      Top = 235
+      Width = 304
+      Align = alTop
+      Caption = 'User name:'
+      Font.Color = 6579300
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblUsername: TDBText
+      Left = 16
+      Height = 15
+      Top = 254
+      Width = 304
+      Align = alTop
+      DataField = 'user_name'
+      DataSource = dsHistory
+      Layout = tlCenter
+      ParentColor = False
+    end
   end
   object dsHistory: TDataSource
     AutoEdit = False

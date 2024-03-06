@@ -16,9 +16,17 @@ type
     ckAtivo: TDBCheckBox;
     ckMarcado: TDBCheckBox;
     ckExportado: TDBCheckBox;
+    mOldValue: TDBMemo;
+    mNewValue: TDBMemo;
+    mNotes: TDBMemo;
     dsHistory: TDataSource;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
     lblNumInterno: TDBText;
     Label1: TLabel;
+    lblUsername: TDBText;
     qHistoryevent_action: TStringField;
     qHistoryevent_date: TDateTimeField;
     qHistoryevent_field: TStringField;
@@ -32,6 +40,7 @@ type
     pBottom: TPanel;
     pTop: TPanel;
     qHistory: TSQLQuery;
+    ScrollBox1: TScrollBox;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);

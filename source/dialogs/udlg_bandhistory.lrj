@@ -20,5 +20,9 @@
 {"hash":9249397,"name":"tdlgbandhistory.dbg.columns[15].title.caption","sourcebytes":[67,114,101,97,116,105,111,110,32,100,97,116,101],"value":"Creation date"},
 {"hash":119908548,"name":"tdlgbandhistory.dbg.columns[16].title.caption","sourcebytes":[76,97,115,116,32,109,111,100,105,102,105,101,100],"value":"Last modified"},
 {"hash":259432052,"name":"tdlgbandhistory.dbg.columns[17].title.caption","sourcebytes":[69,120,112,111,114,116,101,100],"value":"Exported"},
-{"hash":75149509,"name":"tdlgbandhistory.dbg.columns[18].title.caption","sourcebytes":[65,99,116,105,118,101],"value":"Active"}
+{"hash":75149509,"name":"tdlgbandhistory.dbg.columns[18].title.caption","sourcebytes":[65,99,116,105,118,101],"value":"Active"},
+{"hash":124954266,"name":"tdlgbandhistory.label2.caption","sourcebytes":[83,117,112,112,108,105,101,114,58],"value":"Supplier:"},
+{"hash":198123738,"name":"tdlgbandhistory.label3.caption","sourcebytes":[82,101,113,117,101,115,116,101,114,58],"value":"Requester:"},
+{"hash":89566314,"name":"tdlgbandhistory.label4.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
+{"hash":163884042,"name":"tdlgbandhistory.label6.caption","sourcebytes":[83,101,110,100,101,114,58],"value":"Sender:"}
 ]}

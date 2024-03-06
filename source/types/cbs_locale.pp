@@ -645,6 +645,11 @@ uses
     rsCaptionWeatherLogEntry = 'Weather log entry';
     rsCaptionParentSite = 'Parent toponym';
 
+    rsCaptionBandingPermit = 'Banding Permit';
+    rsCaptionCollectionPermit = 'Collection Permit';
+    rsCaptionNationalParkPermit = 'National Park Research Permit';
+    rsCaptionStateParkPermit = 'State Park Research Permit';
+
     rsTitleNew = 'New %s';
     rsTitleEditing = 'Editing %s';
 
