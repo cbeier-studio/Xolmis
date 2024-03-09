@@ -35,8 +35,8 @@ type
     pTitleAuthentication: TPanel;
     pMain: TPanel;
     pBottom: TPanel;
-    sbCancel: TBCButtonFocus;
-    sbSave: TBCButtonFocus;
+    sbCancel: TButton;
+    sbSave: TButton;
     procedure cbDBManagerSelect(Sender: TObject);
     procedure ckRemoteDBChange(Sender: TObject);
     procedure dsConnDataChange(Sender: TObject; Field: TField);

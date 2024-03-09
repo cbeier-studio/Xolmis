@@ -740,6 +740,7 @@ begin
     aTag.Border.Color := $00C75F5B;
     aTag.Border.Width := 2;
   end;
+  //splitChild.Visible := pChild.Visible;
   aTag.Background.Color := $00E0C0C0;
   aCountTag.Color := aTag.Background.Color;
   Working := False;
@@ -1671,7 +1672,7 @@ begin
   pSide.Visible := False;
   scrollFilter.VertScrollBar.Position := 0;
   FSidePanelFactor := pSide.Width / (ClientWidth - SplitRight.Width - pSideToolbar.Width);
-  FChildPanelFactor := 0.3;
+  FChildPanelFactor := 0.4;
   pChild.Height := Round((pClient.Height - SplitChild.Height) * FChildPanelFactor);
   Application.ProcessMessages;
   {$IFDEF DEBUG}
@@ -2802,7 +2803,8 @@ begin
     sbPriorRecord.Enabled := False;
     sbNextRecord.Enabled := False;
     sbLastRecord.Enabled := False;
-    sbChildHistory.Enabled := False;
+    sbRecordHistory.Enabled := False;
+    sbSortRecords.Enabled := False;
 
     sbShowQuickFilters.Enabled := False;
     sbShowImages.Enabled := False;
@@ -2825,13 +2827,15 @@ begin
     begin
       sbEditRecord.Enabled := (aDataSet.RecordCount > 0);
       sbDelRecord.Enabled := (aDataSet.RecordCount > 0);
-      sbChildHistory.Enabled := (aDataSet.RecordCount > 0);
+      sbRecordHistory.Enabled := (aDataSet.RecordCount > 0);
+      sbSortRecords.Enabled := (aDataSet.RecordCount > 0);
     end
     else
     begin
       sbEditRecord.Enabled := False;
       sbDelRecord.Enabled := False;
-      sbChildHistory.Enabled := False;
+      sbRecordHistory.Enabled := False;
+      sbSortRecords.Enabled := False;
     end;
     sbFirstRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
     sbPriorRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
@@ -2888,7 +2892,7 @@ begin
   begin
     if (aDataSet.Active) and not (TSQLQuery(aDataSet).ReadOnly) then
     begin
-      sbAddChild.Enabled := True;
+      sbAddChild.Enabled := (aDataSet.RecordCount > 0);
       sbEditChild.Enabled := (aDataSet.RecordCount > 0);
       sbDelChild.Enabled := (aDataSet.RecordCount > 0);
       sbChildHistory.Enabled := (aDataSet.RecordCount > 0);

@@ -1985,7 +1985,7 @@ object DMM: TDMM
     ConnectionType = 'SQLite3'
     LibraryName = 'D:\Desenv\Xolmis\bin\sqlite3.dll'
     Left = 262
-    Top = 38
+    Top = 40
   end
   object tabGeoBank: TBufDataset
     PacketRecords = 50

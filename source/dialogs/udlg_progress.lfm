@@ -70,7 +70,7 @@ object dlgProgress: TdlgProgress
     ChildSizing.VerticalSpacing = 8
     ClientHeight = 113
     ClientWidth = 400
-    Color = 16444392
+    Color = 16448250
     ParentBackground = False
     ParentColor = False
     TabOrder = 1

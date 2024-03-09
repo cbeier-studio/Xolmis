@@ -13,7 +13,6 @@ object batchNetEffort: TbatchNetEffort
   OnKeyPress = FormKeyPress
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.3'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -300,7 +299,7 @@ object batchNetEffort: TbatchNetEffort
         Height = 23
         Top = 22
         Width = 176
-        ButtonWidth = 26
+        ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
         Images = frmMain.mPopup
@@ -316,7 +315,7 @@ object batchNetEffort: TbatchNetEffort
         Height = 23
         Top = 22
         Width = 176
-        ButtonWidth = 26
+        ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
         Images = frmMain.mPopup
@@ -370,7 +369,7 @@ object batchNetEffort: TbatchNetEffort
         Height = 23
         Top = 22
         Width = 176
-        ButtonWidth = 26
+        ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
         Images = frmMain.mPopup
@@ -386,7 +385,7 @@ object batchNetEffort: TbatchNetEffort
         Height = 23
         Top = 22
         Width = 176
-        ButtonWidth = 26
+        ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
         Images = frmMain.mPopup
@@ -440,7 +439,7 @@ object batchNetEffort: TbatchNetEffort
         Height = 23
         Top = 22
         Width = 176
-        ButtonWidth = 26
+        ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
         Images = frmMain.mPopup
@@ -456,7 +455,7 @@ object batchNetEffort: TbatchNetEffort
         Height = 23
         Top = 22
         Width = 176
-        ButtonWidth = 26
+        ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
         Images = frmMain.mPopup
@@ -533,7 +532,7 @@ object batchNetEffort: TbatchNetEffort
         Width = 340
         Align = alTop
         BorderSpacing.Bottom = 6
-        ButtonWidth = 26
+        ButtonWidth = 23
         Color = clWhite
         Images = frmMain.mPopup
         ImageIndex = 99

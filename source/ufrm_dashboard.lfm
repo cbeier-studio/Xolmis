@@ -1534,7 +1534,7 @@ object frmDashboard: TfrmDashboard
       Height = 268
       Top = 209
       Width = 347
-      HorzScrollBar.Page = 162
+      HorzScrollBar.Page = 172
       VertScrollBar.Page = 244
       Align = alClient
       BorderSpacing.Left = 2
@@ -1700,13 +1700,14 @@ object frmDashboard: TfrmDashboard
         Visible = False
         object lblTitlePermitsExpiring: TLabel
           Left = 17
-          Height = 15
+          Height = 20
           Top = 9
           Width = 281
           Align = alTop
           Caption = 'Permits expiring'
           Color = 16448250
           Font.Color = 13066075
+          Font.Height = -15
           ParentColor = False
           ParentFont = False
         end
@@ -1757,7 +1758,7 @@ object frmDashboard: TfrmDashboard
         Visible = False
         object lblTitleBirthdays: TLabel
           Left = 17
-          Height = 15
+          Height = 20
           Top = 9
           Width = 281
           Align = alTop
@@ -1765,6 +1766,7 @@ object frmDashboard: TfrmDashboard
           Caption = 'Next birthdays'
           Color = 16448250
           Font.Color = 13066075
+          Font.Height = -15
           ParentColor = False
           ParentFont = False
         end
@@ -1815,13 +1817,14 @@ object frmDashboard: TfrmDashboard
         Visible = False
         object lblTitleReviseNests: TLabel
           Left = 17
-          Height = 15
+          Height = 20
           Top = 9
           Width = 281
           Align = alTop
           Caption = 'Check nests'
           Color = 16448250
           Font.Color = 13066075
+          Font.Height = -15
           ParentColor = False
           ParentFont = False
         end

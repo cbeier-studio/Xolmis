@@ -4655,7 +4655,7 @@ msgstr ""
 
 #: tedtinstitution.lblcomplement.caption
 msgctxt "tedtinstitution.lblcomplement.caption"
-msgid "Complement:"
+msgid "Address detail:"
 msgstr ""
 
 #: tedtinstitution.lblcountry.caption
@@ -5553,7 +5553,7 @@ msgstr ""
 
 #: tedtperson.lbladdress2.caption
 msgctxt "tedtperson.lbladdress2.caption"
-msgid "Complement:"
+msgid "Address detail:"
 msgstr ""
 
 #: tedtperson.lblbirthdate.caption
@@ -5638,7 +5638,7 @@ msgid "Telephone:"
 msgstr ""
 
 #: tedtperson.lblphone2.caption
-msgid "Cell phone:"
+msgid "Mobile phone:"
 msgstr ""
 
 #: tedtperson.lblrg.caption
@@ -5655,7 +5655,7 @@ msgid "Treatment:"
 msgstr ""
 
 #: tedtperson.lbltwitter.caption
-msgid "Twitter:"
+msgid "X (Twitter):"
 msgstr ""
 
 #: tedtperson.lblwebsite.caption

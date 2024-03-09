@@ -14,7 +14,6 @@ object edtPerson: TedtPerson
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.3'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -142,6 +141,7 @@ object edtPerson: TedtPerson
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -260,7 +260,7 @@ object edtPerson: TedtPerson
           Top = 3
           Width = 365
           BorderSpacing.Top = 3
-          Caption = 'Complement:'
+          Caption = 'Address detail:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -534,6 +534,7 @@ object edtPerson: TedtPerson
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -586,6 +587,7 @@ object edtPerson: TedtPerson
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -764,6 +766,7 @@ object edtPerson: TedtPerson
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 18
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -926,7 +929,7 @@ object edtPerson: TedtPerson
           Top = 3
           Width = 176
           BorderSpacing.Top = 3
-          Caption = 'Cell phone:'
+          Caption = 'Mobile phone:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -1030,6 +1033,7 @@ object edtPerson: TedtPerson
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -1106,7 +1110,7 @@ object edtPerson: TedtPerson
           Top = 3
           Width = 176
           BorderSpacing.Top = 3
-          Caption = 'Twitter:'
+          Caption = 'X (Twitter):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -1288,7 +1292,7 @@ object edtPerson: TedtPerson
             Align = alTop
             Flat = True
             Images = frmMain.mPopup
-            ImageIndex = 54
+            ImageIndex = 56
             ImageWidth = 20
             OnClick = sbAddImageClick
           end
@@ -1348,6 +1352,7 @@ object edtPerson: TedtPerson
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 18
           Images = frmMain.mPopup
           ImageWidth = 20

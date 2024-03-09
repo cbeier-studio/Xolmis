@@ -15,7 +15,6 @@ object edtPermit: TedtPermit
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.3'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -283,6 +282,7 @@ object edtPermit: TedtPermit
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 18
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -307,6 +307,7 @@ object edtPermit: TedtPermit
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
+          ButtonWidth = 24
           ImageIndex = 18
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -461,6 +462,7 @@ object edtPermit: TedtPermit
           ParentBackground = False
           ParentColor = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20

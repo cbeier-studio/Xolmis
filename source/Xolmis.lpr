@@ -12,7 +12,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   sdflaz,
-  tachartlazaruspkg, tachartbgra,
+  tachartlazaruspkg, lazcontrols, tachartbgra,
   rxnew,
   virtualdbgrid_package,
   FrameViewer09,

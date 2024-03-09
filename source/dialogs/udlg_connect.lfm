@@ -64,7 +64,7 @@ object dlgConnect: TdlgConnect
       Align = alTop
       BorderSpacing.Bottom = 12
       ButtonHint = 'Mostrar/ocultar senha'
-      ButtonWidth = 26
+      ButtonWidth = 23
       EchoMode = emPassword
       Images = frmMain.bMenu
       ImageIndex = 92

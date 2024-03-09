@@ -15,7 +15,6 @@ object edtSite: TedtSite
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.3'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -145,6 +144,7 @@ object edtSite: TedtSite
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -410,6 +410,7 @@ object edtSite: TedtSite
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -433,6 +434,7 @@ object edtSite: TedtSite
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
+          ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup
           ImageWidth = 20

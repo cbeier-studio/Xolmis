@@ -23,7 +23,7 @@ const
   procedure ExcluiFoto(DataSet: TDataset; aBlobField: String);
   procedure ExportaFoto(DataSet: TDataset; aBlobField, FileName: String);
 
-  procedure CreateImageThumbnail(aFileName: String; outStream: TStream);
+  function CreateImageThumbnail(aFileName: String): TStream;
   procedure RecreateThumbnails;
 
 implementation
@@ -31,7 +31,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_validations, udm_main, udlg_progress,
   fpeGlobal, fpeTags, fpeExifData, Math, {$IFDEF DEBUG}cbs_debug,{$ENDIF}
-  BGRAReadJpeg, fpwritejpeg, BGRAReadWebP, BGRAWriteWebP;
+  BGRAReadJpeg, fpwritejpeg, BGRAReadWebP, BGRAWriteWebP, BGRAThumbnail;
 
 { ----------------------------------------------------------------------------------------- }
 { Image (BLOB field) manipulation }
@@ -77,9 +77,9 @@ begin
   end;
 
   { Create image thumbnail as JPEG }
-  sthumb := TMemoryStream.Create;
+  //sthumb := TMemoryStream.Create;
   try
-    CreateImageThumbnail(aFileName, sthumb);
+    //CreateImageThumbnail(aFileName, sthumb);
 
     { Insert the image into the dataset }
     with aDataset do
@@ -102,12 +102,12 @@ begin
         FieldByName('longitude').AsFloat := long;
         FieldByName('latitude').AsFloat := lat;
       end;
-      (FieldByName(aBlobField) as TBlobField).LoadFromStream(sthumb);
+      (FieldByName(aBlobField) as TBlobField).LoadFromStream(CreateImageThumbnail(aFileName));
       Post;
     end;
     Result := True;
   finally
-    sthumb.Free;
+    //sthumb.Free;
   end;
 end;
 
@@ -229,7 +229,7 @@ begin
     end;
 end;
 
-procedure CreateImageThumbnail(aFileName: String; outStream: TStream);
+function CreateImageThumbnail(aFileName: String): TStream;
 var
   bmpFactor, rotAngle: Single;
   bmpCenter: TPointF;
@@ -257,14 +257,16 @@ begin
     FreeAndNil(imgExif);
   end;
 
-  imgThumb := TBGRABitmap.Create(aFileName);
+  imgThumb := GetFileThumbnail(aFileName, thumbSize, thumbSize, $000000FF, False);
+  //imgThumb := TBGRABitmap.Create(aFileName);
+  Result := TMemoryStream.Create;
   try
     // Get the scale factor for thumbnail image using the larger side
-    if imgThumb.Height > imgThumb.Width then
-      bmpFactor := thumbSize / imgThumb.Height
-    else
-      bmpFactor := thumbSize / imgThumb.Width;
-    BGRAReplace(imgThumb, imgThumb.Resample(Round(imgThumb.Width * bmpFactor), Round(imgThumb.Height * bmpFactor)));
+    //if imgThumb.Height > imgThumb.Width then
+    //  bmpFactor := thumbSize / imgThumb.Height
+    //else
+    //  bmpFactor := thumbSize / imgThumb.Width;
+    //BGRAReplace(imgThumb, imgThumb.Resample(Round(imgThumb.Width * bmpFactor), Round(imgThumb.Height * bmpFactor)));
 
     { Correct image orientation }
     case imgOrientation of
@@ -307,16 +309,17 @@ begin
     jpgwriter := TFPWriterJPEG.Create;
     try
       jpgwriter.CompressionQuality := thumbQuality;
-      outStream.Position := OffsetMemoryStream;
-      jpgwriter.ImageWrite(outStream, imgThumb);
+      Result.Position := OffsetMemoryStream;
+      //jpgwriter.ImageWrite(outStream, imgThumb);
       //imgThumb.SaveToStreamAs(aStream, ifJpeg);
-      imgThumb.SaveToStream(outStream, jpgwriter);
-      //aStream.Position := OffsetMemoryStream;
+      imgThumb.SaveToStream(Result, jpgwriter);
+      Result.Position := OffsetMemoryStream;
     finally
       jpgwriter.Free;
     end;
   finally
     imgThumb.Free;
+    Result.Free;
   end;
 end;
 
@@ -325,6 +328,8 @@ var
   Qry: TSQLQuery;
   sthumb: TStream;
   imgPath: String;
+  imgThumb: TBGRABitmap;
+  jpgwriter: TFPWriterJPEG;
   {$IFDEF DEBUG}
   Usage: TElapsedTimer;
   {$ENDIF}
@@ -360,17 +365,29 @@ begin
         dlgProgress.Max := Qry.RecordCount;
         repeat
           dlgProgress.Text := Format(rsProgressImportImages, [Qry.RecNo, Qry.RecordCount]);
-          Edit;
-          sthumb := TMemoryStream.Create;
-          try
-            imgPath := CreateAbsolutePath(Qry.FieldByName('image_filename').AsString, XSettings.ImagesFolder);
-            CreateImageThumbnail(imgPath, sthumb);
-            sthumb.Position := OffsetMemoryStream;
-            (FieldByName('image_thumbnail') as TBlobField).LoadFromStream(sthumb);
-            //(FieldByName('image_thumbnail') as TBlobField).SaveToFile('D:\Temp\test_stream.jpg');
-            Post;
-          finally
-            sthumb.Free;
+          imgPath := CreateAbsolutePath(Qry.FieldByName('image_filename').AsString, XSettings.ImagesFolder);
+          if (FileExists(imgPath)) then
+          begin
+            Edit;
+            //sthumb := TMemoryStream.Create;
+            try
+              //CreateImageThumbnail(imgPath, sthumb);
+              //sthumb.Position := OffsetMemoryStream;
+              imgThumb := GetFileThumbnail(imgPath, thumbSize, thumbSize, BGRAWhite, True);
+              sthumb := CreateBlobStream(FieldByName('image_thumbnail'), bmWrite);
+              FieldByName('image_thumbnail').Clear;
+              jpgwriter := TFPWriterJPEG.Create;
+              jpgwriter.CompressionQuality := thumbQuality;
+              imgThumb.SaveToStream(sthumb, jpgwriter);
+              // imgThumb.SaveToStreamAs(sthumb, TBGRAImageFormat.ifJpeg);
+              //(FieldByName('image_thumbnail') as TBlobField).LoadFromStream(CreateImageThumbnail(imgPath));
+              //(FieldByName('image_thumbnail') as TBlobField).SaveToFile('D:\Temp\test_stream.jpg');
+              Post;
+            finally
+              jpgwriter.Free;
+              sthumb.Free;
+              imgThumb.Free;
+            end;
           end;
           dlgProgress.Position := Qry.RecNo;
           Application.ProcessMessages;
@@ -379,7 +396,7 @@ begin
 
         if Parar then
         begin
-          DMM.sqlTrans.Rollback;
+          DMM.sqlTrans.RollbackRetaining;
           MsgDlg(rsTitleRecreateThumbnails, rsBatchCanceledByUser, mtWarning);
           {$IFDEF DEBUG}
           LogDebug('Thumbnails remake canceled by user');
@@ -399,7 +416,7 @@ begin
         {$IFDEF DEBUG}
         LogDebug('Error remaking thumbnails');
         {$ENDIF}
-        DMM.sqlTrans.Rollback;
+        DMM.sqlTrans.RollbackRetaining;
         raise;
       end;
     end

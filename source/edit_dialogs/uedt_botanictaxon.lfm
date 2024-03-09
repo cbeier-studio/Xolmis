@@ -14,7 +14,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.3'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -141,6 +140,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -192,6 +192,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 63
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -327,6 +328,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Constraints.MinWidth = 456
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20

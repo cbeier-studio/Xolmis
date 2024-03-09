@@ -603,6 +603,7 @@ type
     qSampleCollectorsupdate_date: TDateTimeField;
     qSampleCollectorsuser_inserted: TLongintField;
     qSampleCollectorsuser_updated: TLongintField;
+    qSamplePrepspreparer_name: TStringField;
     qSightingsindividual_name: TStringField;
     qSightingslocality_name: TStringField;
     qSightingsmethod_name: TStringField;

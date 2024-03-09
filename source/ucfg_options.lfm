@@ -12,10 +12,11 @@ object cfgOptions: TcfgOptions
   Position = poScreenCenter
   object pBottom: TPanel
     Left = 0
-    Height = 42
-    Top = 423
+    Height = 41
+    Top = 424
     Width = 749
     Align = alBottom
+    AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
@@ -23,7 +24,7 @@ object cfgOptions: TcfgOptions
     ChildSizing.EnlargeHorizontal = crsScaleChilds
     ChildSizing.ShrinkHorizontal = crsScaleChilds
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 42
+    ClientHeight = 41
     ClientWidth = 749
     Color = 15987699
     ParentBackground = False
@@ -31,10 +32,10 @@ object cfgOptions: TcfgOptions
     TabOrder = 0
     object sbClose: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 603
-      Height = 26
+      Left = 624
+      Height = 25
       Top = 8
-      Width = 130
+      Width = 109
       Align = alRight
       Caption = 'Close'
       ModalResult = 11
@@ -44,7 +45,7 @@ object cfgOptions: TcfgOptions
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 421
+    Top = 422
     Width = 749
     Align = alBottom
     LineColor = 9276813
@@ -53,7 +54,7 @@ object cfgOptions: TcfgOptions
   end
   object nbPages: TNotebook
     Left = 56
-    Height = 421
+    Height = 422
     Top = 0
     Width = 693
     PageIndex = 0
@@ -62,14 +63,14 @@ object cfgOptions: TcfgOptions
     object pgGeneral: TPage
       object scrollGeneral: TScrollBox
         Left = 0
-        Height = 421
+        Height = 422
         Top = 0
         Width = 693
         HorzScrollBar.Page = 376
         VertScrollBar.Page = 236
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 421
+        ClientHeight = 422
         ClientWidth = 693
         ParentBackground = False
         TabOrder = 0
@@ -357,14 +358,14 @@ object cfgOptions: TcfgOptions
     object pgCollection: TPage
       object scrollCollection: TScrollBox
         Left = 0
-        Height = 421
+        Height = 422
         Top = 0
         Width = 693
         HorzScrollBar.Page = 272
         VertScrollBar.Page = 216
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 421
+        ClientHeight = 422
         ClientWidth = 693
         ParentBackground = False
         TabOrder = 0
@@ -654,14 +655,14 @@ object cfgOptions: TcfgOptions
     object pgMedia: TPage
       object scrollMedia: TScrollBox
         Left = 0
-        Height = 421
+        Height = 422
         Top = 0
         Width = 693
         HorzScrollBar.Page = 481
         VertScrollBar.Page = 212
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 421
+        ClientHeight = 422
         ClientWidth = 693
         ParentBackground = False
         TabOrder = 0
@@ -765,7 +766,7 @@ object cfgOptions: TcfgOptions
               Top = 12
               Width = 417
               ShowHidden = False
-              ButtonWidth = 29
+              ButtonWidth = 24
               NumGlyphs = 1
               Images = iPanels
               ImageIndex = 10
@@ -851,7 +852,7 @@ object cfgOptions: TcfgOptions
               Top = 12
               Width = 417
               ShowHidden = False
-              ButtonWidth = 29
+              ButtonWidth = 24
               NumGlyphs = 1
               Images = iPanels
               ImageIndex = 10
@@ -938,7 +939,7 @@ object cfgOptions: TcfgOptions
               Top = 12
               Width = 417
               ShowHidden = False
-              ButtonWidth = 29
+              ButtonWidth = 24
               NumGlyphs = 1
               Images = iPanels
               ImageIndex = 10
@@ -957,14 +958,14 @@ object cfgOptions: TcfgOptions
     object pgSecurity: TPage
       object scrollSecurity: TScrollBox
         Left = 0
-        Height = 421
+        Height = 422
         Top = 0
         Width = 693
         HorzScrollBar.Page = 352
         VertScrollBar.Page = 373
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 421
+        ClientHeight = 422
         ClientWidth = 693
         ParentBackground = False
         TabOrder = 0
@@ -1497,14 +1498,14 @@ object cfgOptions: TcfgOptions
     object pgBackup: TPage
       object scrollBackup: TScrollBox
         Left = 0
-        Height = 421
+        Height = 422
         Top = 0
         Width = 693
         HorzScrollBar.Page = 481
         VertScrollBar.Page = 217
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 421
+        ClientHeight = 422
         ClientWidth = 693
         ParentBackground = False
         TabOrder = 0
@@ -1608,7 +1609,7 @@ object cfgOptions: TcfgOptions
               Top = 12
               Width = 417
               ShowHidden = False
-              ButtonWidth = 29
+              ButtonWidth = 24
               NumGlyphs = 1
               Images = iPanels
               ImageIndex = 10
@@ -1787,7 +1788,7 @@ object cfgOptions: TcfgOptions
   end
   object BCPanel1: TBCPanel
     Left = 0
-    Height = 421
+    Height = 422
     Top = 0
     Width = 56
     Align = alLeft

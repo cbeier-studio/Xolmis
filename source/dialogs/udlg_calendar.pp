@@ -149,6 +149,8 @@ begin
   GravaStat(Name, 'SBOK', 'click');
   Date := Cal.DateTime;
   DateString := Cal.Date;
+
+  ModalResult := mrOk;
 end;
 
 procedure TdlgCalendar.SetDialogPosition(X, Y: Integer; ControlWidth, ControlHeight: Integer);

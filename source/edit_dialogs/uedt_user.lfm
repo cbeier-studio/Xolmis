@@ -2,12 +2,12 @@ object edtUser: TedtUser
   Left = 352
   Height = 348
   Top = 33
-  Width = 532
+  Width = 400
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'New user'
   ClientHeight = 348
-  ClientWidth = 532
+  ClientWidth = 400
   Font.Height = -12
   OnClose = FormClose
   OnKeyDown = FormKeyDown
@@ -15,12 +15,11 @@ object edtUser: TedtUser
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.0.0.3'
   object pBottom: TPanel
     Left = 0
     Height = 41
     Top = 307
-    Width = 532
+    Width = 400
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -34,7 +33,7 @@ object edtUser: TedtUser
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 532
+    ClientWidth = 400
     Color = 15987699
     ParentBackground = False
     ParentColor = False
@@ -43,22 +42,21 @@ object edtUser: TedtUser
       Left = 16
       Height = 25
       Top = 8
-      Width = 246
+      Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 245
-      Default = True
+      Constraints.MinWidth = 180
       Enabled = False
       TabOrder = 0
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 270
+      Left = 204
       Height = 25
       Top = 8
-      Width = 246
+      Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 245
+      Constraints.MinWidth = 180
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
@@ -69,7 +67,7 @@ object edtUser: TedtUser
     Left = 0
     Height = 2
     Top = 305
-    Width = 532
+    Width = 400
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -79,14 +77,14 @@ object edtUser: TedtUser
     Left = 0
     Height = 305
     Top = 0
-    Width = 532
+    Width = 400
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 305
-    ClientWidth = 532
-    Color = 16444392
+    ClientWidth = 400
+    Color = 15066599
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
@@ -94,7 +92,7 @@ object edtUser: TedtUser
       Left = 0
       Height = 47
       Top = 16
-      Width = 532
+      Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -104,7 +102,7 @@ object edtUser: TedtUser
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 47
-      ClientWidth = 532
+      ClientWidth = 400
       ParentBackground = False
       TabOrder = 0
       object lblUsername: TLabel
@@ -136,7 +134,7 @@ object edtUser: TedtUser
       Left = 0
       Height = 47
       Top = 63
-      Width = 532
+      Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -146,14 +144,14 @@ object edtUser: TedtUser
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 47
-      ClientWidth = 532
+      ClientWidth = 400
       ParentBackground = False
       TabOrder = 1
       object lblFullName: TLabel
         Left = 16
         Height = 15
         Top = 5
-        Width = 500
+        Width = 368
         BorderSpacing.Top = 5
         Caption = 'Full name:'
         Font.Color = 6579300
@@ -164,10 +162,10 @@ object edtUser: TedtUser
         Left = 16
         Height = 23
         Top = 24
-        Width = 500
+        Width = 368
         DataField = 'full_name'
         DataSource = dsUser
-        Constraints.MinWidth = 500
+        Constraints.MinWidth = 368
         MaxLength = 0
         TabOrder = 0
         OnKeyDown = FormKeyDown
@@ -178,7 +176,7 @@ object edtUser: TedtUser
       Left = 0
       Height = 47
       Top = 110
-      Width = 532
+      Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -188,7 +186,7 @@ object edtUser: TedtUser
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 47
-      ClientWidth = 532
+      ClientWidth = 400
       ParentBackground = False
       TabOrder = 2
       object lblRank: TLabel
@@ -227,7 +225,7 @@ object edtUser: TedtUser
       Left = 0
       Height = 112
       Top = 177
-      Width = 532
+      Width = 400
       Align = alTop
       AutoSize = True
       BorderSpacing.Top = 20
@@ -238,7 +236,7 @@ object edtUser: TedtUser
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 112
-      ClientWidth = 532
+      ClientWidth = 400
       ParentBackground = False
       TabOrder = 3
       object lblPermissions: TLabel
@@ -309,7 +307,7 @@ object edtUser: TedtUser
   object dsUser: TDataSource
     DataSet = DMM.qUsers
     OnDataChange = dsUserDataChange
-    Left = 388
+    Left = 312
     Top = 196
   end
 end

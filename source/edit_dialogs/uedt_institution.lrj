@@ -5,7 +5,7 @@
 {"hash":46657946,"name":"tedtinstitution.lblmunicipality.caption","sourcebytes":[77,117,110,105,99,105,112,97,108,105,116,121,58],"value":"Municipality:"},
 {"hash":75730042,"name":"tedtinstitution.lblfullname.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
 {"hash":106723002,"name":"tedtinstitution.lblacronym.caption","sourcebytes":[65,99,114,111,110,121,109,58,32,42],"value":"Acronym: *"},
-{"hash":50979082,"name":"tedtinstitution.lblcomplement.caption","sourcebytes":[67,111,109,112,108,101,109,101,110,116,58],"value":"Complement:"},
+{"hash":21404986,"name":"tedtinstitution.lblcomplement.caption","sourcebytes":[65,100,100,114,101,115,115,32,100,101,116,97,105,108,58],"value":"Address detail:"},
 {"hash":179883546,"name":"tedtinstitution.lbladdress.caption","sourcebytes":[65,100,100,114,101,115,115,58],"value":"Address:"},
 {"hash":208472234,"name":"tedtinstitution.lblphone.caption","sourcebytes":[84,101,108,101,112,104,111,110,101,58],"value":"Telephone:"},
 {"hash":186708218,"name":"tedtinstitution.lblpostalcode.caption","sourcebytes":[80,111,115,116,97,108,32,99,111,100,101,58],"value":"Postal code:"},

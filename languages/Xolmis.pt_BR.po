@@ -377,7 +377,7 @@ msgstr "Anilha"
 
 #: cbs_locale.rscaptionbandingpermit
 msgid "Banding Permit"
-msgstr ""
+msgstr "Licença de anilhamento"
 
 #: cbs_locale.rscaptioncapture
 msgid "Capture"
@@ -385,7 +385,7 @@ msgstr "Captura"
 
 #: cbs_locale.rscaptioncollectionpermit
 msgid "Collection Permit"
-msgstr ""
+msgstr "Licença de coleta"
 
 #: cbs_locale.rscaptioncountry
 msgctxt "cbs_locale.rscaptioncountry"
@@ -512,7 +512,7 @@ msgstr "Nome"
 
 #: cbs_locale.rscaptionnationalparkpermit
 msgid "National Park Research Permit"
-msgstr ""
+msgstr "Licença de pesquisa em Parque Nacional"
 
 #: cbs_locale.rscaptionnest
 msgctxt "cbs_locale.rscaptionnest"
@@ -605,7 +605,7 @@ msgstr "Estado"
 
 #: cbs_locale.rscaptionstateparkpermit
 msgid "State Park Research Permit"
-msgstr ""
+msgstr "Licença de pesquisa em Parque Estadual"
 
 #: cbs_locale.rscaptionsubfamily
 msgctxt "cbs_locale.rscaptionsubfamily"
@@ -931,7 +931,7 @@ msgstr "Editado por importação"
 
 #: cbs_locale.rseggelliptic
 msgid "Elliptic"
-msgstr ""
+msgstr "Elíptico"
 
 #: cbs_locale.rseggovoid
 msgctxt "cbs_locale.rseggovoid"
@@ -940,7 +940,7 @@ msgstr "Ovoide"
 
 #: cbs_locale.rseggpyriform
 msgid "Pyriform"
-msgstr ""
+msgstr "Piriforme"
 
 #: cbs_locale.rseggspheric
 msgctxt "cbs_locale.rseggspheric"
@@ -1313,7 +1313,7 @@ msgstr "<b>%s</b> deve ser anterior ou igual a <b>%s</b> (<font color=\"green\">
 
 #: cbs_locale.rsgenderlist
 msgid "he/him,she/her,they/them"
-msgstr ""
+msgstr "ele,ela,el@s"
 
 #: cbs_locale.rsguestuser
 msgctxt "cbs_locale.rsguestuser"
@@ -1619,15 +1619,15 @@ msgstr "\"N - Nenhum limite de muda encontrado após exame\",\"U - limites de mu
 
 #: cbs_locale.rsmomentend
 msgid "End"
-msgstr ""
+msgstr "Fim"
 
 #: cbs_locale.rsmomentmiddle
 msgid "Middle"
-msgstr ""
+msgstr "Meio"
 
 #: cbs_locale.rsmomentstart
 msgid "Start"
-msgstr ""
+msgstr "Início"
 
 #: cbs_locale.rsmoreselected
 #, object-pascal-format
@@ -1788,23 +1788,23 @@ msgstr "Há alterações não salvas. Deseja salvá-las?"
 
 #: cbs_locale.rsprecipitationdrizzle
 msgid "Drizzle"
-msgstr ""
+msgstr "Garoa"
 
 #: cbs_locale.rsprecipitationfog
 msgid "Fog"
-msgstr ""
+msgstr "Neblina"
 
 #: cbs_locale.rsprecipitationmist
 msgid "Mist"
-msgstr ""
+msgstr "Nevoeiro"
 
 #: cbs_locale.rsprecipitationnone
 msgid "None"
-msgstr ""
+msgstr "Nenhum"
 
 #: cbs_locale.rsprecipitationrain
 msgid "Rain"
-msgstr ""
+msgstr "Chuva"
 
 #: cbs_locale.rspreparingbackup
 msgctxt "cbs_locale.rspreparingbackup"
@@ -2655,7 +2655,7 @@ msgstr "%d pesquisador(es)"
 
 #: cbs_locale.rstreatmentlist
 msgid "Mr.,Sir,Mrs.,Miss,Ms.,Madam,B./BS.,M./MSc.,Dr./PhD."
-msgstr ""
+msgstr "Sr.,Sir,Sra.,Srta.,Sra.,Madame,Bel./BS.,M./MSc.,Dr./PhD."
 
 #: cbs_locale.rsunresolved
 msgctxt "cbs_locale.rsunresolved"
@@ -3327,25 +3327,21 @@ msgid "Requester (Id)"
 msgstr "Solicitante (ID)"
 
 #: tdlgbandhistory.label2.caption
-#, fuzzy
 msgctxt "tdlgbandhistory.label2.caption"
 msgid "Supplier:"
 msgstr "Fornecedor:"
 
 #: tdlgbandhistory.label3.caption
-#, fuzzy
 msgctxt "tdlgbandhistory.label3.caption"
 msgid "Requester:"
 msgstr "Solicitante:"
 
 #: tdlgbandhistory.label4.caption
-#, fuzzy
 msgctxt "tdlgbandhistory.label4.caption"
 msgid "Notes:"
 msgstr "Anotações:"
 
 #: tdlgbandhistory.label6.caption
-#, fuzzy
 msgctxt "tdlgbandhistory.label6.caption"
 msgid "Sender:"
 msgstr "Remetente:"
@@ -3574,8 +3570,6 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #: tdlgconnect.sbok.caption
-#, fuzzy
-#| msgid "Connect"
 msgctxt "tdlgconnect.sbok.caption"
 msgid "Connect"
 msgstr "Conectar"
@@ -3649,7 +3643,6 @@ msgid "Select a file..."
 msgstr "Selecione um arquivo..."
 
 #: tdlgimportcaptures.eweatherfile.texthint
-#, fuzzy
 msgctxt "tdlgimportcaptures.eweatherfile.texthint"
 msgid "Select a file..."
 msgstr "Selecione um arquivo..."
@@ -3660,8 +3653,6 @@ msgid "Captures"
 msgstr "Capturas"
 
 #: tdlgimportcaptures.lbleffortfile.caption
-#, fuzzy
-#| msgid "Efforts"
 msgid "Field efforts"
 msgstr "Esforços"
 
@@ -3687,7 +3678,7 @@ msgstr "Importação finalizada!"
 
 #: tdlgimportcaptures.lblweatherfile.caption
 msgid "Weather log"
-msgstr ""
+msgstr "Log do tempo"
 
 #: tdlgimportcaptures.sbcancel.caption
 msgctxt "tdlgimportcaptures.sbcancel.caption"
@@ -3795,21 +3786,20 @@ msgstr "ID do registro:"
 
 #: tdlgrechistory.label2.caption
 msgid "Old value:"
-msgstr ""
+msgstr "Valor antigo:"
 
 #: tdlgrechistory.label3.caption
 msgid "New value:"
-msgstr ""
+msgstr "Valor novo:"
 
 #: tdlgrechistory.label4.caption
-#, fuzzy
 msgctxt "tdlgrechistory.label4.caption"
 msgid "Notes:"
 msgstr "Anotações:"
 
 #: tdlgrechistory.label5.caption
 msgid "User name:"
-msgstr ""
+msgstr "Nome de usuário:"
 
 #: tdlgrechistory.sbclose.caption
 msgctxt "tdlgrechistory.sbclose.caption"
@@ -4277,7 +4267,6 @@ msgid "Connection name: *"
 msgstr "Nome da conexão: *"
 
 #: tedtdatabase.lbltitleauthentication.caption
-#, fuzzy
 msgctxt "tedtdatabase.lbltitleauthentication.caption"
 msgid "Authentication"
 msgstr "Autenticação"
@@ -4692,7 +4681,7 @@ msgstr "Endereço:"
 
 #: tedtinstitution.lblcomplement.caption
 msgctxt "tedtinstitution.lblcomplement.caption"
-msgid "Complement:"
+msgid "Address detail:"
 msgstr "Complemento:"
 
 #: tedtinstitution.lblcountry.caption
@@ -5590,7 +5579,7 @@ msgstr "Endereço:"
 
 #: tedtperson.lbladdress2.caption
 msgctxt "tedtperson.lbladdress2.caption"
-msgid "Complement:"
+msgid "Address detail:"
 msgstr "Complemento:"
 
 #: tedtperson.lblbirthdate.caption
@@ -5675,7 +5664,7 @@ msgid "Telephone:"
 msgstr "Telefone:"
 
 #: tedtperson.lblphone2.caption
-msgid "Cell phone:"
+msgid "Mobile phone:"
 msgstr "Celular:"
 
 #: tedtperson.lblrg.caption
@@ -5692,8 +5681,8 @@ msgid "Treatment:"
 msgstr "Tratamento:"
 
 #: tedtperson.lbltwitter.caption
-msgid "Twitter:"
-msgstr "Twitter:"
+msgid "X (Twitter):"
+msgstr "X (Twitter):"
 
 #: tedtperson.lblwebsite.caption
 msgctxt "tedtperson.lblwebsite.caption"
@@ -7973,4 +7962,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

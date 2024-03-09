@@ -10,7 +10,7 @@ object dlgImportCaptures: TdlgImportCaptures
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 297
+    Top = 306
     Width = 759
     Align = alBottom
     LineColor = 9276813
@@ -19,8 +19,8 @@ object dlgImportCaptures: TdlgImportCaptures
   end
   object pBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 299
+    Height = 41
+    Top = 308
     Width = 759
     Align = alBottom
     AutoSize = True
@@ -31,7 +31,7 @@ object dlgImportCaptures: TdlgImportCaptures
     ChildSizing.EnlargeHorizontal = crsScaleChilds
     ChildSizing.ShrinkHorizontal = crsScaleChilds
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
+    ClientHeight = 41
     ClientWidth = 759
     Color = 15987699
     ParentBackground = False
@@ -40,12 +40,11 @@ object dlgImportCaptures: TdlgImportCaptures
     object sbCancel: TButton
       AnchorSideLeft.Side = asrBottom
       Left = 475
-      Height = 34
+      Height = 25
       Top = 8
       Width = 130
       Align = alRight
       Caption = 'Cancel'
-      Constraints.MinHeight = 34
       TabOrder = 0
       Visible = False
       OnClick = sbCancelClick
@@ -53,12 +52,11 @@ object dlgImportCaptures: TdlgImportCaptures
     object sbRun: TButton
       AnchorSideLeft.Side = asrBottom
       Left = 337
-      Height = 34
+      Height = 25
       Top = 8
       Width = 130
       Align = alRight
       Caption = 'Import'
-      Constraints.MinHeight = 34
       Enabled = False
       TabOrder = 1
       OnClick = sbRunClick
@@ -66,19 +64,18 @@ object dlgImportCaptures: TdlgImportCaptures
     object sbClose: TButton
       AnchorSideLeft.Side = asrBottom
       Left = 613
-      Height = 34
+      Height = 25
       Top = 8
       Width = 130
       Align = alRight
       Caption = 'Close'
-      Constraints.MinHeight = 34
       ModalResult = 11
       TabOrder = 2
     end
   end
   object nbContent: TNotebook
     Left = 0
-    Height = 297
+    Height = 306
     Top = 0
     Width = 759
     PageIndex = 0
@@ -87,14 +84,14 @@ object dlgImportCaptures: TdlgImportCaptures
     object pgImportFiles: TPage
       object pContentFiles: TPanel
         Left = 0
-        Height = 297
+        Height = 306
         Top = 0
         Width = 759
         Align = alClient
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
-        ClientHeight = 297
+        ClientHeight = 306
         ClientWidth = 759
         ParentBackground = False
         TabOrder = 0
@@ -183,13 +180,13 @@ object dlgImportCaptures: TdlgImportCaptures
             Left = 160
             Height = 24
             Top = 12
-            Width = 517
+            Width = 519
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
             FilterIndex = 1
             HideDirectories = False
-            ButtonWidth = 26
+            ButtonWidth = 24
             NumGlyphs = 1
             Images = frmMain.mPopup
             ImageIndex = 43
@@ -204,10 +201,10 @@ object dlgImportCaptures: TdlgImportCaptures
             TextHint = 'Select a file...'
           end
           object sbClearJournalFile: TSpeedButton
-            Left = 685
+            Left = 687
             Height = 24
             Top = 12
-            Width = 26
+            Width = 24
             Align = alRight
             Images = frmMain.mPopup
             ImageIndex = 17
@@ -286,13 +283,13 @@ object dlgImportCaptures: TdlgImportCaptures
             Left = 160
             Height = 24
             Top = 12
-            Width = 517
+            Width = 519
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
             FilterIndex = 1
             HideDirectories = False
-            ButtonWidth = 26
+            ButtonWidth = 24
             NumGlyphs = 1
             Images = frmMain.mPopup
             ImageIndex = 43
@@ -308,10 +305,10 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object sbClearEffortFile: TSpeedButton
             Tag = 1
-            Left = 685
+            Left = 687
             Height = 24
             Top = 12
-            Width = 26
+            Width = 24
             Align = alRight
             Images = frmMain.mPopup
             ImageIndex = 17
@@ -391,13 +388,13 @@ object dlgImportCaptures: TdlgImportCaptures
             Left = 160
             Height = 24
             Top = 12
-            Width = 517
+            Width = 519
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
             FilterIndex = 1
             HideDirectories = False
-            ButtonWidth = 26
+            ButtonWidth = 24
             NumGlyphs = 1
             Images = frmMain.mPopup
             ImageIndex = 43
@@ -413,10 +410,10 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object sbClearCaptureFile: TSpeedButton
             Tag = 3
-            Left = 685
+            Left = 687
             Height = 24
             Top = 12
-            Width = 26
+            Width = 24
             Align = alRight
             Images = frmMain.mPopup
             ImageIndex = 17
@@ -506,13 +503,13 @@ object dlgImportCaptures: TdlgImportCaptures
             Left = 160
             Height = 24
             Top = 12
-            Width = 517
+            Width = 519
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
             FilterIndex = 1
             HideDirectories = False
-            ButtonWidth = 26
+            ButtonWidth = 24
             NumGlyphs = 1
             Images = frmMain.mPopup
             ImageIndex = 43
@@ -528,10 +525,10 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object sbClearWeatherFile: TSpeedButton
             Tag = 2
-            Left = 685
+            Left = 687
             Height = 24
             Top = 12
-            Width = 26
+            Width = 24
             Align = alRight
             Images = frmMain.mPopup
             ImageIndex = 17

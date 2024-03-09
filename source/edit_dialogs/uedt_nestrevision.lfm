@@ -233,6 +233,7 @@ object edtNestRevision: TedtNestRevision
           Constraints.MinWidth = 224
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 18
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -286,6 +287,7 @@ object edtNestRevision: TedtNestRevision
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -338,6 +340,7 @@ object edtNestRevision: TedtNestRevision
           Constraints.MinWidth = 224
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
@@ -507,6 +510,7 @@ object edtNestRevision: TedtNestRevision
           Constraints.MinWidth = 224
           ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
