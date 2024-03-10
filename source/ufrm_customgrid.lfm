@@ -4811,7 +4811,7 @@ object frmCustomGrid: TfrmCustomGrid
         Height = 164
         Top = 40
         Width = 712
-        PageIndex = 0
+        PageIndex = 4
         Align = alClient
         TabOrder = 1
         object pgChild1: TPage
@@ -4834,6 +4834,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnEditingDone = DBGEditingDone
             OnKeyDown = FormKeyDown
             OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
             OnPrepareCanvas = DBGPrepareCanvas
             OnSelectEditor = DBGSelectEditor
           end
@@ -4841,9 +4842,9 @@ object frmCustomGrid: TfrmCustomGrid
         object pgChild2: TPage
           object gridChild2: TDBGrid
             Left = 0
-            Height = 285
+            Height = 164
             Top = 0
-            Width = 705
+            Width = 712
             Align = alClient
             Color = clWindow
             Columns = <>
@@ -4857,6 +4858,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
             OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
             OnPrepareCanvas = DBGPrepareCanvas
             OnSelectEditor = DBGSelectEditor
           end
@@ -4864,9 +4866,9 @@ object frmCustomGrid: TfrmCustomGrid
         object pgChild3: TPage
           object gridChild3: TDBGrid
             Left = 0
-            Height = 285
+            Height = 164
             Top = 0
-            Width = 705
+            Width = 712
             Align = alClient
             Color = clWindow
             Columns = <>
@@ -4880,6 +4882,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
             OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
             OnPrepareCanvas = DBGPrepareCanvas
             OnSelectEditor = DBGSelectEditor
           end
@@ -4887,9 +4890,9 @@ object frmCustomGrid: TfrmCustomGrid
         object pgChild4: TPage
           object gridChild4: TDBGrid
             Left = 0
-            Height = 285
+            Height = 164
             Top = 0
-            Width = 705
+            Width = 712
             Align = alClient
             Color = clWindow
             Columns = <>
@@ -4903,6 +4906,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
             OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
             OnPrepareCanvas = DBGPrepareCanvas
             OnSelectEditor = DBGSelectEditor
           end
@@ -4910,9 +4914,9 @@ object frmCustomGrid: TfrmCustomGrid
         object pgChild5: TPage
           object gridChild5: TDBGrid
             Left = 0
-            Height = 285
+            Height = 164
             Top = 0
-            Width = 705
+            Width = 712
             Align = alClient
             Color = clWindow
             Columns = <>
@@ -4926,6 +4930,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
             OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
             OnPrepareCanvas = DBGPrepareCanvas
             OnSelectEditor = DBGSelectEditor
           end

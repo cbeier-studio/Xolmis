@@ -6,9 +6,9 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils,
-  Grids, DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus,
+  Grids, DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf,
   Buttons, CheckLst, DBCtrls, laz.VirtualTrees, rxswitch, attabs, atshapelinebgra, BCPanel,
-  DBControlGrid, ColorSpeedButton, cbs_datatypes, cbs_filters;
+  DBControlGrid, ColorSpeedButton, cbs_datatypes, cbs_filters, Types;
 
 type
   { TStringMemoEditor }
@@ -398,6 +398,8 @@ type
     procedure DBGColExit(Sender: TObject);
     procedure DBGEditButtonClick(Sender: TObject);
     procedure DBGEditingDone(Sender: TObject);
+    procedure DBGMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+      var Handled: Boolean);
     procedure DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
       AState: TGridDrawState);
     procedure DBGSelectEditor(Sender: TObject; Column: TColumn; var Editor: TWinControl);
@@ -1543,6 +1545,31 @@ begin
   //if TStringGrid(Sender).RowCount > TStringGrid(Sender).Row then
   //  TStringGrid(Sender).RowHeights[TStringGrid(Sender).Row] := TStringGrid(Sender).DefaultRowHeight;
   //{$ENDIF}
+end;
+
+procedure TfrmCustomGrid.DBGMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer;
+  MousePos: TPoint; var Handled: Boolean);
+
+  function GetNumScrollLines: Integer;
+  begin
+    SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, @Result, 0);
+  end;
+
+var
+  Direction: Shortint;
+begin
+  Direction := 1;
+  if WheelDelta = 0 then
+    Exit
+  else if WheelDelta > 0 then
+    Direction := -1;
+
+  with TDBGrid(Sender) do
+  begin
+    if Assigned(DataSource) and Assigned(DataSource.DataSet) then
+      DataSource.DataSet.MoveBy(Direction * GetNumScrollLines);
+    Invalidate;
+  end;
 end;
 
 procedure TfrmCustomGrid.FormClose(Sender: TObject;

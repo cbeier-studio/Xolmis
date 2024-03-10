@@ -414,7 +414,6 @@ begin
   Application.CreateForm(TbatchBands, batchBands);
   with batchBands do
   try
-    // LoadIcone(DML.vImgsBtns, 0, batch_Bands.Icon);
     ShowModal;
   finally
     FreeAndNil(batchBands);
