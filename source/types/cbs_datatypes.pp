@@ -248,11 +248,13 @@ type
   TSearchGroup = class
   private
     FFields: TSearchFields;
+    FAndOr: TSQLAndOr;
   public
-    constructor Create;
+    constructor Create(aAndOr: TSQLAndOr = aoOr);
     destructor Destroy; override;
   published
     property Fields: TSearchFields read FFields write FFields;
+    property AndOr: TSQLAndOr read FAndOr write FAndOr default aoOr;
   end;
 
   TSearchGroups = specialize TObjectList<TSearchGroup>;
@@ -1025,9 +1027,10 @@ end;
 
 { TSearchGroup }
 
-constructor TSearchGroup.Create;
+constructor TSearchGroup.Create(aAndOr: TSQLAndOr);
 begin
   FFields := TSearchFields.Create(True);
+  FAndOr := aAndOr;
 end;
 
 destructor TSearchGroup.Destroy;
@@ -1137,13 +1140,16 @@ var
     case aDataType of
       sdtText, sdtList, sdtLookup:
         begin
-          if ExecRegExpr('^.+\+.+$', aValue1) then
-            aValue1 := WildcardSyllables(aValue1) + '%'
-          else
-            aValue1 := WildcardWords(aValue1) + '%';
+          if aCriteriaType in [crLike, crStartLike] then
+          begin
+            if ExecRegExpr('^.+\+.+$', aValue1) then
+              aValue1 := WildcardSyllables(aValue1) + '%'
+            else
+              aValue1 := WildcardWords(aValue1) + '%';
 
-          if aCriteriaType = crLike then
-            aValue1 := '%' + aValue1;
+            if aCriteriaType = crLike then
+              aValue1 := '%' + aValue1;
+          end;
 
           aValue1 := QuotedStr(aValue1);
         end;
@@ -1173,12 +1179,14 @@ begin
   // Add fields in WHERE clause
   if FQuickFilters.Count > 0 then
   begin
+    FDataSet.SQL.Add(AndOrWhere + '(');
     // Iterate groups
     for i := 0 to (FQuickFilters.Count - 1) do
     begin
       if FQuickFilters[i].Fields.Count > 0 then
       begin
-        FDataSet.SQL.Add(AndOrWhere + '(');
+        FDataSet.SQL.Add('(');
+
         // Iterate group fields
         for f := 0 to (FQuickFilters[i].Fields.Count - 1) do
         begin
@@ -1190,7 +1198,7 @@ begin
 
             // Fieldname, criteria, and values
             case Criteria of
-              crLike, crStartLike, crEqual, crMoreThan, crLessThan:
+              crLike, crStartLike, crEqual, crDistinct, crMoreThan, crLessThan:
               begin
                 if FQuickFilters[i].Fields[f].Lookup then
                   S := S + Format(Msk, [FieldName, CriteriaOperators[Criteria], Value1])
@@ -1212,23 +1220,27 @@ begin
                   S := S + Format(Msk, [FTableAlias+'.'+FieldName, CriteriaOperators[Criteria]]);
               end;
             end;
-
-            // Close parenthesis, and AND/OR
-            if f < (FQuickFilters[i].Fields.Count - 1) then
-            //  S := Trim(S) + ')'
-            //else
-              S := S + 'OR ';
           end;
 
-          //if i = 0 then
-          //  FDataSet.SQL.Add(AndOrWhere + S)
-          //else
-            FDataSet.SQL.Add(S);
+          // Close parenthesis, and AND/OR
+          if f < (FQuickFilters[i].Fields.Count - 1) then
+          begin
+            AndOrWhere := AndOrStr[FQuickFilters[i].AndOr] + ' ';
+            S := S + AndOrWhere;
+          end;
+
+          FDataSet.SQL.Add(S);
         end;
-        FDataSet.SQL.Add(')');
-        AndOrWhere := 'AND ';
+        // Close parenthesis, and AND/OR
+        AndOrWhere := 'OR ';
+        if i < (FQuickFilters.Count - 1) then
+          FDataSet.SQL.Add(') ' + AndOrWhere)
+        else
+          FDataSet.SQL.Add(')');
       end;
     end;
+    FDataSet.SQL.Add(')');
+    AndOrWhere := 'AND ';
   end;
 
   if FFields.Count > 0 then
@@ -1250,7 +1262,7 @@ begin
 
             // Fieldname, criteria, and values
             case Criteria of
-              crLike, crStartLike, crEqual, crMoreThan, crLessThan:
+              crLike, crStartLike, crEqual, crDistinct, crMoreThan, crLessThan:
               begin
                 if FFields[i].Fields[f].Lookup then
                   S := S + Format(Msk, [FieldName, CriteriaOperators[Criteria], Value1])
@@ -1275,15 +1287,13 @@ begin
 
             // Close parenthesis, and AND/OR
             if f < (FFields[i].Fields.Count - 1) then
-            //  S := S + ') '
-            //else
-              S := S + 'OR ';
+            begin
+              AndOrWhere := AndOrStr[FFields[i].AndOr] + ' ';
+              S := S + AndOrWhere;
+            end;
           end;
 
-          //if i = 0 then
-          //  FDataSet.SQL.Add(AndOrWhere + S)
-          //else
-            FDataSet.SQL.Add(S);
+          FDataSet.SQL.Add(S);
         end;
         FDataSet.SQL.Add(')');
         AndOrWhere := 'AND ';

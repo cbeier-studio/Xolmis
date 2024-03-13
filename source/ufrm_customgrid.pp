@@ -393,8 +393,16 @@ type
     tvDateFilter: TLazVirtualStringTree;
     tvSiteFilter: TLazVirtualStringTree;
     tvTaxaFilter: TLazVirtualStringTree;
-    procedure cbAgeFilterSelect(Sender: TObject);
-    procedure cbSexFilterSelect(Sender: TObject);
+    procedure cbAgeFilterChange(Sender: TObject);
+    procedure cbBandSizeFilterChange(Sender: TObject);
+    procedure cbBandStatusFilterChange(Sender: TObject);
+    procedure cbBroodPatchFilterChange(Sender: TObject);
+    procedure cbCloacalProtuberanceFilterChange(Sender: TObject);
+    procedure cbNestFateFilterChange(Sender: TObject);
+    procedure cbNestSupportFilterChange(Sender: TObject);
+    procedure cbSexFilterChange(Sender: TObject);
+    procedure cbSiteRankFilterChange(Sender: TObject);
+    procedure cbSkullOssificationFilterChange(Sender: TObject);
     procedure DBGColExit(Sender: TObject);
     procedure DBGEditButtonClick(Sender: TObject);
     procedure DBGEditingDone(Sender: TObject);
@@ -474,10 +482,28 @@ type
     procedure SplitChildMoved(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
+    procedure tsBandNotReportedOff(Sender: TObject);
+    procedure tsBandNotReportedOn(Sender: TObject);
+    procedure tsBandReportedOff(Sender: TObject);
+    procedure tsBandReportedOn(Sender: TObject);
+    procedure tsfMarkedOff(Sender: TObject);
     procedure tsfMarkedOn(Sender: TObject);
+    procedure tsfUnmarkedOff(Sender: TObject);
     procedure tsfUnmarkedOn(Sender: TObject);
     procedure tsfWithColorBandsFilterOn(Sender: TObject);
     procedure tsfWithRecapturesFilterOn(Sender: TObject);
+    procedure tsHasSynonymsOff(Sender: TObject);
+    procedure tsHasSynonymsOn(Sender: TObject);
+    procedure tsIsSynonymOff(Sender: TObject);
+    procedure tsIsSynonymOn(Sender: TObject);
+    procedure tsTaxonExtinctOff(Sender: TObject);
+    procedure tsTaxonExtinctOn(Sender: TObject);
+    procedure tsTaxonomyCbroOff(Sender: TObject);
+    procedure tsTaxonomyCbroOn(Sender: TObject);
+    procedure tsTaxonomyClementsOff(Sender: TObject);
+    procedure tsTaxonomyClementsOn(Sender: TObject);
+    procedure tsTaxonomyIocOff(Sender: TObject);
+    procedure tsTaxonomyIocOn(Sender: TObject);
     procedure tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure tvDateFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode; var NewState: TCheckState;
       var Allowed: Boolean);
@@ -671,41 +697,54 @@ end;
 
 { TfrmCustomGrid }
 
-procedure TfrmCustomGrid.cbAgeFilterSelect(Sender: TObject);
-var
-  i: Integer;
+procedure TfrmCustomGrid.cbAgeFilterChange(Sender: TObject);
 begin
-  if cbSexFilter.ItemIndex > 0 then
-  begin
-    i := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    case cbSexFilter.ItemIndex of
-      0: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_age', 'Age', sdtText, crEqual, False, 'U'));
-      1: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_age', 'Age', sdtText, crEqual, False, 'A'));
-      2: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_age', 'Age', sdtText, crEqual, False, 'I'));
-      3: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_age', 'Age', sdtText, crEqual, False, 'J'));
-      4: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_age', 'Age', sdtText, crEqual, False, 'N'));
-      5: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_age', 'Age', sdtText, crEqual, False, 'F'));
-      6: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_age', 'Age', sdtText, crEqual, False, 'S'));
-      7: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_age', 'Age', sdtText, crEqual, False, 'T'));
-      8: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_age', 'Age', sdtText, crEqual, False, '4'));
-      9: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_age', 'Age', sdtText, crEqual, False, '5'));
-    end;
-  end;
+  Search(FSearchString);
 end;
 
-procedure TfrmCustomGrid.cbSexFilterSelect(Sender: TObject);
-var
-  i: Integer;
+procedure TfrmCustomGrid.cbBandSizeFilterChange(Sender: TObject);
 begin
-  if cbSexFilter.ItemIndex > 0 then
-  begin
-    i := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    case cbSexFilter.ItemIndex of
-      0: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_sex', 'Sex', sdtText, crEqual, False, 'M'));
-      1: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_sex', 'Sex', sdtText, crEqual, False, 'F'));
-      2: FSearch.QuickFilters[i].Fields.Add(TSearchField.Create('individual_sex', 'Sex', sdtText, crEqual, False, 'U'));
-    end;
-  end;
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.cbBandStatusFilterChange(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.cbBroodPatchFilterChange(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.cbCloacalProtuberanceFilterChange(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.cbNestFateFilterChange(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.cbNestSupportFilterChange(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.cbSexFilterChange(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.cbSiteRankFilterChange(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.cbSkullOssificationFilterChange(Sender: TObject);
+begin
+  Search(FSearchString);
 end;
 
 procedure TfrmCustomGrid.ChildTagClick(aTag, aCountTag: TBCPanel);
@@ -1581,12 +1620,12 @@ begin
   if Assigned(dsLink.DataSet) then
     dsLink.DataSet.Close;
 
-  tvTaxaFilter.BeginUpdate;
-  try
-    tvTaxaFilter.Clear;
-  finally
-    tvTaxaFilter.EndUpdate;
-  end;
+  //tvTaxaFilter.BeginUpdate;
+  //try
+  //  tvTaxaFilter.Clear;
+  //finally
+  //  tvTaxaFilter.EndUpdate;
+  //end;
 
   {$IFDEF DEBUG}
   LogDebug('CLOSE: ' + Caption);
@@ -1643,10 +1682,10 @@ end;
 
 procedure TfrmCustomGrid.FormDestroy(Sender: TObject);
 begin
-  if Assigned(DMI) then
-    FreeAndNil(DMI);
-  if Assigned(DMB) then
-    FreeAndNil(DMB);
+  //if Assigned(DMI) then
+  //  FreeAndNil(DMI);
+  //if Assigned(DMB) then
+  //  FreeAndNil(DMB);
 
   Sorting.Free;
   FreeAndNil(QuickFilters);
@@ -2634,6 +2673,31 @@ begin
   {$ENDIF}
 end;
 
+procedure TfrmCustomGrid.tsBandNotReportedOff(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsBandNotReportedOn(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsBandReportedOff(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsBandReportedOn(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsfMarkedOff(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
 procedure TfrmCustomGrid.tsfMarkedOn(Sender: TObject);
 begin
   if (tsfUnmarked.StateOn = sw_on) then
@@ -2644,6 +2708,13 @@ begin
     //FSearch.QuickFilters.Add(TSearchField.Create('marked_status', 'Marked', sdtBoolean, crEqual,
     //  False, '1'));
   end;
+
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsfUnmarkedOff(Sender: TObject);
+begin
+  Search(FSearchString);
 end;
 
 procedure TfrmCustomGrid.tsfUnmarkedOn(Sender: TObject);
@@ -2654,6 +2725,8 @@ begin
   if (tsfUnmarked.StateOn = sw_on) then
     //FSearch.QuickFilters.Add(TSearchField.Create('marked_status', 'Marked', sdtBoolean, crEqual,
     //  False, '0'));
+
+  Search(FSearchString);
 end;
 
 procedure TfrmCustomGrid.tsfWithColorBandsFilterOn(Sender: TObject);
@@ -2673,14 +2746,107 @@ end;
 
 procedure TfrmCustomGrid.tsfWithRecapturesFilterOn(Sender: TObject);
 begin
-  if tsfWithRecapturesFilter.StateOn = sw_on then
+  Search(FSearchString);
+  //if tsfWithRecapturesFilter.StateOn = sw_on then
     //FSearch.QuickFilters.Add(TSearchField.Create('captures_tally', '# of captures', sdtInteger, crMoreThan,
     //  False, '1'));
 end;
 
-procedure TfrmCustomGrid.tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
+procedure TfrmCustomGrid.tsHasSynonymsOff(Sender: TObject);
 begin
-  tvDateFilter.Refresh;
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsHasSynonymsOn(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsIsSynonymOff(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsIsSynonymOn(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsTaxonExtinctOff(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsTaxonExtinctOn(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsTaxonomyCbroOff(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsTaxonomyCbroOn(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsTaxonomyClementsOff(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsTaxonomyClementsOn(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsTaxonomyIocOff(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tsTaxonomyIocOn(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
+var
+  Data: PSiteNodeData;
+begin
+  Data := Sender.GetNodeData(Node);
+  Data^.Checked := Node^.CheckState = csCheckedNormal;
+
+  if TBaseVirtualTree(Sender).GetNodeLevel(Node) = 2 then
+  begin
+    if TBaseVirtualTree(Sender).CheckState[Node] = csCheckedNormal then
+    begin
+      TBaseVirtualTree(Sender).CheckState[TBaseVirtualTree(Sender).NodeParent[Node]] := csMixedNormal;
+      TBaseVirtualTree(Sender).CheckState[TBaseVirtualTree(Sender).NodeParent[TBaseVirtualTree(Sender).NodeParent[Node]]] := csMixedNormal;
+    end
+    else
+    begin
+      TBaseVirtualTree(Sender).CheckState[TBaseVirtualTree(Sender).NodeParent[Node]] := csUncheckedNormal;
+      TBaseVirtualTree(Sender).CheckState[TBaseVirtualTree(Sender).NodeParent[TBaseVirtualTree(Sender).NodeParent[Node]]] := csUncheckedNormal;
+    end;
+  end
+  else
+  if TBaseVirtualTree(Sender).GetNodeLevel(Node) = 1 then
+  begin
+    if TBaseVirtualTree(Sender).CheckState[Node] = csCheckedNormal then
+    begin
+      TBaseVirtualTree(Sender).CheckState[TBaseVirtualTree(Sender).NodeParent[Node]] := csMixedNormal;
+    end
+    else
+    begin
+      TBaseVirtualTree(Sender).CheckState[TBaseVirtualTree(Sender).NodeParent[Node]] := csUncheckedNormal;
+    end;
+  end;
+
+  GetFilters(QuickFilters);
+  Search(FSearchString);
 end;
 
 procedure TfrmCustomGrid.tvDateFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode;
@@ -2764,10 +2930,17 @@ begin
 end;
 
 procedure TfrmCustomGrid.tvTaxaFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
+var
+  Data: PTaxonNodeData;
 begin
   if not CanToggle then
     Exit;
 
+  Data := Sender.GetNodeData(Node);
+  Data^.Checked := Node^.CheckState = csCheckedNormal;
+
+  GetFilters(QuickFilters);
+  Search(FSearchString);
 
 end;
 
@@ -4321,6 +4494,7 @@ begin
   LogDebug('Search value: ' + aValue);
   {$ENDIF}
   FSearch.Fields.Clear;
+  FSearch.QuickFilters.Clear;
   lblRecordStatus.Caption := rsLoadingRecords;
 
   case TableType of
@@ -4376,13 +4550,7 @@ begin
   end;
   Working := False;
 
-  if dsLink.DataSet.RecordCount = 0 then
-  begin
-    lblRecordStatus.Caption := rsNoRecordsFound;
-  end
-  else
-    lblRecordStatus.Caption := Format(rsNoRecordsFound, [dsLink.DataSet.RecordCount]);
-  lblRecordStatus.Refresh;
+  UpdateButtons(dsLink.DataSet);
 end;
 
 function TfrmCustomGrid.SearchInstitutions(aValue: String): Boolean;
@@ -4426,6 +4594,8 @@ begin
         True, aValue));
     end;
   end;
+
+  GetFilters(QuickFilters);
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -4480,6 +4650,8 @@ begin
         False, aValue));
     end;
   end;
+
+  GetFilters(QuickFilters);
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -4539,6 +4711,8 @@ begin
     end;
   end;
 
+  GetFilters(QuickFilters);
+
   Result := FSearch.RunSearch > 0;
 end;
 
@@ -4595,6 +4769,8 @@ begin
     end;
   end;
 
+  GetFilters(QuickFilters);
+
   Result := FSearch.RunSearch > 0;
 end;
 
@@ -4647,6 +4823,8 @@ begin
         False, aValue));
     end;
   end;
+
+  GetFilters(QuickFilters);
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -4701,6 +4879,8 @@ begin
     end;
   end;
 
+  GetFilters(QuickFilters);
+
   Result := FSearch.RunSearch > 0;
 end;
 
@@ -4743,6 +4923,8 @@ begin
         False, aValue));
     end;
   end;
+
+  GetFilters(QuickFilters);
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -4788,6 +4970,8 @@ begin
         False, aValue));
     end;
   end;
+
+  GetFilters(QuickFilters);
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -4843,6 +5027,8 @@ begin
         False, aValue));
     end;
   end;
+
+  GetFilters(QuickFilters);
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -4911,6 +5097,8 @@ begin
 
   end;
 
+  GetFilters(QuickFilters);
+
   Result := FSearch.RunSearch > 0;
 end;
 
@@ -4973,6 +5161,8 @@ begin
         True, aValue));
     end;
   end;
+
+  GetFilters(QuickFilters);
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5037,6 +5227,8 @@ begin
     end;
   end;
 
+  GetFilters(QuickFilters);
+
   Result := FSearch.RunSearch > 0;
 end;
 
@@ -5095,6 +5287,8 @@ begin
     end;
   end;
 
+  GetFilters(QuickFilters);
+
   Result := FSearch.RunSearch > 0;
 end;
 
@@ -5149,6 +5343,8 @@ begin
     end;
   end;
 
+  GetFilters(QuickFilters);
+
   Result := FSearch.RunSearch > 0;
 end;
 
@@ -5193,6 +5389,8 @@ begin
         False, aValue));
     end;
   end;
+
+  GetFilters(QuickFilters);
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5245,6 +5443,8 @@ begin
         True, aValue));
     end;
   end;
+
+  GetFilters(QuickFilters);
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5301,6 +5501,8 @@ begin
         False, aValue));
     end;
   end;
+
+  GetFilters(QuickFilters);
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5369,6 +5571,8 @@ begin
     end;
   end;
 
+  GetFilters(QuickFilters);
+
   Result := FSearch.RunSearch > 0;
 end;
 
@@ -5430,6 +5634,8 @@ begin
     end;
   end;
 
+  GetFilters(QuickFilters);
+
   Result := FSearch.RunSearch > 0;
 end;
 
@@ -5490,6 +5696,8 @@ begin
     end;
   end;
 
+  GetFilters(QuickFilters);
+
   Result := FSearch.RunSearch > 0;
 end;
 
@@ -5536,6 +5744,14 @@ begin
   case TableType of
     tbGazetteer:
       begin
+        cbSiteRankFilter.Items.Clear;
+        cbSiteRankFilter.Items.Add('All');
+        cbSiteRankFilter.Items.Add(rsCaptionCountry);
+        cbSiteRankFilter.Items.Add(rsCaptionState);
+        cbSiteRankFilter.Items.Add(rsCaptionRegion);
+        cbSiteRankFilter.Items.Add(rsCaptionMunicipality);
+        cbSiteRankFilter.Items.Add(rsCaptionDistrict);
+        cbSiteRankFilter.Items.Add(rsCaptionLocality);
         pSiteRankFilter.Visible := True;
         pSiteFilters.Visible := True;
         LoadSiteTreeData(FTableType, tvSiteFilter, 4);
@@ -5557,6 +5773,11 @@ begin
         pDatesFilters.Visible := True;
         LoadDateTreeData(FTableType, tvDateFilter);
       end;
+    tbPermits:
+      begin
+        pDatesFilters.Visible := True;
+        LoadDateTreeData(FTableType, tvDateFilter);
+      end;
     tbNetStations:
       begin
         pSiteFilters.Visible := True;
@@ -5566,26 +5787,24 @@ begin
       begin
         pTaxonRanksFilters.Visible := True;
         LoadTaxaRanks(DMM.sqlCon, clbTaxonRanksFilter);
-        pIsSynonymFilter.Visible := True;
-        pHasSynonymsFilter.Visible := True;
+        pSynonymFilters.Visible := True;
       end;
     tbZooTaxa:
       begin
         pTaxonRanksFilters.Visible := True;
         LoadTaxaRanks(DMM.sqlCon, clbTaxonRanksFilter);
-        pTaxonomyClementsFilter.Visible := True;
-        pTaxonomyIocFilter.Visible := True;
-        pTaxonomyCbroFilter.Visible := True;
-        pIsSynonymFilter.Visible := True;
-        pHasSynonymsFilter.Visible := True;
+        pTaxonomiesFilters.Visible := True;
+        pSynonymFilters.Visible := True;
         pExtinctFilter.Visible := True;
       end;
     tbBands:
       begin
         pBandSizeFilter.Visible := True;
+        cbBandStatusFilter.Items.Clear;
+        cbBandStatusFilter.Items.Add('All');
+        cbBandStatusFilter.Items.AddCommaText(rsBandStatusList);
         pBandStatusFilter.Visible := True;
-        pReportedFilter.Visible := True;
-        pNotReportedFilter.Visible := True;
+        pBandReportFilters.Visible := True;
         //pDatesFilters.Visible := True;
         //LoadDateTreeData(TableType, tvDateFilter);
       end;
@@ -5595,10 +5814,15 @@ begin
         LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
         pDatesFilters.Visible := True;
         LoadDateTreeData(FTableType, tvDateFilter);
-        pAgeFilter.Visible := True;
+        pSkullOssificationFilter.Visible := False;
+        pHowAgedFilter.Visible := False;
         pAgeFilter.Rounding.RoundOptions := [];
-        pSexFilter.Visible := True;
+        pAgingFilters.Visible := True;
+        pCloacalProtuberanceFilter.Visible := False;
+        pBroodPatchFilter.Visible := False;
+        pHowSexedFilter.Visible := False;
         pSexFilter.Rounding.RoundOptions := [];
+        pSexingFilters.Visible := True;
       end;
     tbCaptures:
       begin
@@ -5608,18 +5832,16 @@ begin
         LoadDateTreeData(FTableType, tvDateFilter);
         pSiteFilters.Visible := True;
         LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-        pAgeFilter.Visible := True;
-        pSkullOssificationFilter.Visible := True;
-        pHowAgedFilter.Visible := True;
-        pSexFilter.Visible := True;
-        pCloacalProtuberanceFilter.Visible := True;
-        pBroodPatchFilter.Visible := True;
+        cbAgeFilter.Items.Clear;
+        cbAgeFilter.Items.CommaText := 'All,' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeImmature + ',' +
+          rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
+          rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
+        pAgingFilters.Visible := True;
+        cbSexFilter.Items.Clear;
+        cbSexFilter.Items.CommaText := 'All,' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
+        pSexingFilters.Visible := True;
         pFatFilter.Visible := True;
-        pBodyMoltFilter.Visible := True;
-        pFFMoltFilter.Visible := True;
-        pFFWearFilter.Visible := True;
-        pMoltLimitsFilter.Visible := True;
-        pMoltCycleFilter.Visible := True;
+        pMoltingFilters.Visible := True;
       end;
     tbNests:
       begin
@@ -5629,8 +5851,24 @@ begin
         LoadDateTreeData(FTableType, tvDateFilter);
         pSiteFilters.Visible := True;
         LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+        cbNestFateFilter.Items.Clear;
+        cbNestFateFilter.Items.CommaText := 'All,"' + rsNestLost + '","' + rsNestSuccess + '","' + rsNestUnknown + '"';
         pNestFateFilter.Visible := True;
+        cbNestSupportFilter.Items.Clear;
+        cbNestSupportFilter.Items.CommaText := 'All,"' + rsSupportGround + '","' + rsSupportPlatform + '","' +
+          rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportSuspended + '","' +
+          rsSupportCavity + '","' + rsSupportArtificial + '","' + rsSupportOther + '"';
         pNestSupportFilter.Visible := True;
+      end;
+    tbNestRevisions:
+      begin
+        pDatesFilters.Visible := True;
+        LoadDateTreeData(FTableType, tvDateFilter);
+      end;
+    tbEggs:
+      begin
+        pDatesFilters.Visible := True;
+        LoadDateTreeData(FTableType, tvDateFilter);
       end;
     tbExpeditions:
       begin
@@ -5646,8 +5884,7 @@ begin
         LoadDateTreeData(FTableType, tvDateFilter);
         pSiteFilters.Visible := True;
         LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-        pStartTimeFilter.Visible := True;
-        pEndTimeFilter.Visible := True;
+        pTimeFilters.Visible := True;
       end;
     tbSightings:
       begin
@@ -5660,6 +5897,20 @@ begin
       end;
     tbSpecimens:
       begin
+        cbMaterialFilter.Items.Clear;
+        cbMaterialFilter.Items.Add(rsSpecimenCarcassWhole);
+        cbMaterialFilter.Items.Add(rsSpecimenCarcassPartial);
+        cbMaterialFilter.Items.Add(rsSpecimenNest);
+        cbMaterialFilter.Items.Add(rsSpecimenBones);
+        cbMaterialFilter.Items.Add(rsSpecimenEgg);
+        cbMaterialFilter.Items.Add(rsSpecimenParasites);
+        cbMaterialFilter.Items.Add(rsSpecimenFeathers);
+        cbMaterialFilter.Items.Add(rsSpecimenBlood);
+        cbMaterialFilter.Items.Add(rsSpecimenClaw);
+        cbMaterialFilter.Items.Add(rsSpecimenSwab);
+        cbMaterialFilter.Items.Add(rsSpecimenTissues);
+        cbMaterialFilter.Items.Add(rsSpecimenFeces);
+        cbMaterialFilter.Items.Add(rsSpecimenRegurgite);
         pMaterialFilter.Visible := True;
         pTaxonFilters.Visible := True;
         LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
@@ -5672,6 +5923,8 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetFilters(aList: TStrings);
+var
+  sf: Integer;
 begin
   if not CanToggle then
     Exit;
@@ -5680,10 +5933,20 @@ begin
   aList.Clear;
 
   if (tsfMarked.StateOn = sw_on) then
-    Modifier.Mark := rmMarked
+  begin
+    Modifier.Mark := rmMarked;
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('marked_status', 'Marked', sdtBoolean,
+      crEqual, False, '1'));
+  end
   else
   if (tsfUnmarked.StateOn = sw_on) then
-    Modifier.Mark := rmUnmarked
+  begin
+    Modifier.Mark := rmUnmarked;
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('marked_status', 'Marked', sdtBoolean,
+      crEqual, False, '0'));
+  end
   else
     Modifier.Mark := rmAll;
 
@@ -5744,38 +6007,42 @@ end;
 
 procedure TfrmCustomGrid.GetInstitutionFilters(aList: TStrings);
 begin
-  if SiteFilter <> EmptyStr then
-    aList.Add(SiteFilter);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
 end;
 
 procedure TfrmCustomGrid.GetPeopleFilters(aList: TStrings);
 begin
-  if SiteFilter <> EmptyStr then
-    aList.Add(SiteFilter);
-  if DateFilter <> EmptyStr then
-    aList.Add(DateFilter);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 end;
 
 procedure TfrmCustomGrid.GetProjectFilters(aList: TStrings);
 begin
-  if DateFilter <> EmptyStr then
-    aList.Add(DateFilter);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 end;
 
 procedure TfrmCustomGrid.GetPermitFilters(aList: TStrings);
 begin
-
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 end;
 
 procedure TfrmCustomGrid.GetGazetteerFilters(aList: TStrings);
+const
+  SiteRanks: array of String = ('P', 'E', 'R', 'M', 'D', 'L');
+var
+  sf: Integer;
 begin
-
+  if cbSiteRankFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('site_rank', 'Site rank', sdtText,
+      crEqual, False, SiteRanks[cbSiteRankFilter.ItemIndex - 1]));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetNetStationFilters(aList: TStrings);
 begin
-  if SiteFilter <> EmptyStr then
-    aList.Add(SiteFilter);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
 end;
 
 procedure TfrmCustomGrid.GetTaxonRankFilters(aList: TStrings);
@@ -5784,35 +6051,71 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetBotanicTaxaFilters(aList: TStrings);
+var
+  sf: Integer;
 begin
   if RanksFilter <> EmptyStr then
     aList.Add(RanksFilter);
 
-  if IsSynonymFilter <> EmptyStr then
-    aList.Add(IsSynonymFilter);
-  if HasSynonymsFilter <> EmptyStr then
-    aList.Add(HasSynonymsFilter);
+  if tsIsSynonym.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
+      crDistinct, False, '0'));
+  end;
+  //if tsHasSynonyms.StateOn = sw_on then
+  //begin
+  //  sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+  //  FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
+  //    crMoreThan, False, '1'));
+  //end;
 end;
 
 procedure TfrmCustomGrid.GetZooTaxaFilters(aList: TStrings);
+var
+  sf: Integer;
 begin
   if RanksFilter <> EmptyStr then
     aList.Add(RanksFilter);
 
-  if ClementsFilter <> EmptyStr then
-    aList.Add(ClementsFilter);
-  if IocFilter <> EmptyStr then
-    aList.Add(IocFilter);
-  if CbroFilter <> EmptyStr then
-    aList.Add(CbroFilter);
+  if tsTaxonomyClements.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('clements_taxonomy', 'Clements/eBird', sdtBoolean,
+      crEqual, False, '1'));
+  end;
+  if tsTaxonomyIoc.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('ioc_taxonomy', 'IOC', sdtBoolean,
+      crEqual, False, '1'));
+  end;
+  if tsTaxonomyCbro.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('cbro_taxonomy', 'CBRO', sdtBoolean,
+      crEqual, False, '1'));
+  end;
 
-  if ExtinctFilter <> EmptyStr then
-    aList.Add(ExtinctFilter);
+  if tsTaxonExtinct.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('extinct', 'Extinct', sdtBoolean,
+      crEqual, False, '1'));
+  end;
 
-  if IsSynonymFilter <> EmptyStr then
-    aList.Add(IsSynonymFilter);
-  if HasSynonymsFilter <> EmptyStr then
-    aList.Add(HasSynonymsFilter);
+  if tsIsSynonym.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
+      crDistinct, False, '0'));
+  end;
+  //if tsHasSynonyms.StateOn = sw_on then
+  //begin
+  //  sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+  //  FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
+  //    crMoreThan, False, '1'));
+  //end;
 end;
 
 procedure TfrmCustomGrid.gridChild1DblClick(Sender: TObject);
@@ -5822,47 +6125,148 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetBandFilters(aList: TStrings);
+const
+  BandStatus: array of String = ('D', 'U', 'R', 'T', 'Q', 'P');
+var
+  sf: Integer;
 begin
-  if BandSizeFilter <> EmptyStr then
-    aList.Add(BandSizeFilter);
-  if BandStatusFilter <> EmptyStr then
-    aList.Add(BandStatusFilter);
-  if ReportedFilter <> EmptyStr then
-    aList.Add(ReportedFilter);
-  if DateFilter <> EmptyStr then
-    aList.Add(DateFilter);
+  if cbBandSizeFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('band_size', 'Band size', sdtText,
+      crEqual, False, cbBandSizeFilter.Text));
+  end;
+
+  if cbBandStatusFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('band_status', 'Band status', sdtText,
+      crEqual, False, BandStatus[cbBandStatusFilter.ItemIndex - 1]));
+  end;
+
+  if tsBandReported.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('band_reported', 'Band reported', sdtBoolean,
+      crEqual, False, '1'));
+  end;
+  if tsBandNotReported.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('band_reported', 'Band reported', sdtBoolean,
+      crEqual, False, '0'));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetIndividualFilters(aList: TStrings);
+const
+  BirdAge: array of String = ('U', 'A', 'I', 'J', 'N', 'F', 'S', 'T', '4', '5');
+  BirdSex: array of String = ('M', 'F', 'U');
+var
+  sf: Integer;
 begin
-  if TaxaFilter <> EmptyStr then
-    aList.Add(TaxaFilter);
-  if SexFilter <> EmptyStr then
-    aList.Add(SexFilter);
-  if DateFilter <> EmptyStr then
-    aList.Add(DateFilter);
-  if AgeFilter <> EmptyStr then
-    aList.Add(AgeFilter);
-  if WithColorFilter <> EmptyStr then
-    aList.Add(WithColorFilter);
-  if WithRecapturesFilter <> EmptyStr then
-    aList.Add(WithRecapturesFilter);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if cbSexFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('individual_sex', 'Sex', sdtText,
+      crEqual, False, BirdSex[cbSexFilter.ItemIndex - 1]));
+  end;
+  if cbAgeFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('individual_age', 'Age', sdtText,
+      crEqual, False, BirdAge[cbAgeFilter.ItemIndex - 1]));
+  end;
+
+  if tsfWithColorBandsFilter.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('right_leg_below', 'Right tarsus', sdtText,
+      crDistinct, False, ''));
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('left_leg_below', 'Left tarsus', sdtText,
+      crDistinct, False, ''));
+  end;
+  if tsfWithRecapturesFilter.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('captures_tally', 'Captures', sdtInteger,
+      crMoreThan, True, '2'));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetCaptureFilters(aList: TStrings);
+const
+  BirdAge: array of String = ('U', 'A', 'I', 'J', 'N', 'F', 'S', 'T', '4', '5');
+  BirdSex: array of String = ('M', 'F', 'U');
+var
+  sf: Integer;
 begin
-  if TaxaFilter <> EmptyStr then
-    aList.Add(TaxaFilter);
-  if SiteFilter <> EmptyStr then
-    aList.Add(SiteFilter);
-  if DateFilter <> EmptyStr then
-    aList.Add(DateFilter);
-  if SexFilter <> EmptyStr then
-    aList.Add(SexFilter);
-  if CloacalProtuberanceFilter <> EmptyStr then
-    aList.Add(CloacalProtuberanceFilter);
-  if BroodPatchFilter <> EmptyStr then
-    aList.Add(BroodPatchFilter);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if cbAgeFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('subject_age', 'Age', sdtText,
+      crEqual, False, BirdAge[cbAgeFilter.ItemIndex - 1]));
+  end;
+  if cbSexFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('subject_sex', 'Sex', sdtText,
+      crEqual, False, BirdSex[cbSexFilter.ItemIndex - 1]));
+  end;
+
+  if cbCloacalProtuberanceFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('cloacal_protuberance', 'Cloacal protuberance', sdtText,
+      crEqual, False, cbCloacalProtuberanceFilter.Text));
+  end;
+  if cbBroodPatchFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('brood_patch', 'Brood patch', sdtText,
+      crEqual, False, cbBroodPatchFilter.Text));
+  end;
+
+  if cbFatFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('fat', 'Subcutaneous fat', sdtText,
+      crEqual, False, cbFatFilter.Text));
+  end;
+
+  if cbBodyMoltFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('body_molt', 'Body molt', sdtText,
+      crEqual, False, cbBodyMoltFilter.Text));
+  end;
+  if cbFFMoltFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('flight_feathers_molt', 'Flight feathers molt', sdtText,
+      crEqual, False, cbFFMoltFilter.Text));
+  end;
+  if cbFFWearFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('flight_feathers_wear', 'Flight feathers wear', sdtText,
+      crEqual, False, cbFFWearFilter.Text));
+  end;
+
+  if cbSkullOssificationFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('skull_ossification', 'Skull ossification', sdtText,
+      crEqual, False, cbSkullOssificationFilter.Text));
+  end;
 end;
 
 function TfrmCustomGrid.GetChildDataSet: TDataSet;
@@ -5934,21 +6338,34 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetNestFilters(aList: TStrings);
+const
+  NestFate: array of String = ('P', 'S', 'U');
+  NestSupport: array of String = ('G', 'P', 'H', 'F', 'S', 'C', 'A', 'O');
+var
+  sf: Integer;
 begin
-  if TaxaFilter <> EmptyStr then
-    aList.Add(TaxaFilter);
-  if SiteFilter <> EmptyStr then
-    aList.Add(SiteFilter);
-  if DateFilter <> EmptyStr then
-    aList.Add(DateFilter);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if cbNestFateFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('nest_fate', 'Nest fate', sdtText,
+      crEqual, False, NestFate[cbNestFateFilter.ItemIndex - 1]));
+  end;
+  if cbNestSupportFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('support_type', 'Support type', sdtText,
+      crEqual, False, NestSupport[cbNestSupportFilter.ItemIndex - 1]));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetEggFilters(aList: TStrings);
 begin
-  if TaxaFilter <> EmptyStr then
-    aList.Add(TaxaFilter);
-  if DateFilter <> EmptyStr then
-    aList.Add(DateFilter);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 end;
 
 procedure TfrmCustomGrid.GetMethodFilters(aList: TStrings);
@@ -5958,40 +6375,39 @@ end;
 
 procedure TfrmCustomGrid.GetExpeditionFilters(aList: TStrings);
 begin
-  if SiteFilter <> EmptyStr then
-    aList.Add(SiteFilter);
-  if DateFilter <> EmptyStr then
-    aList.Add(DateFilter);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 end;
 
 procedure TfrmCustomGrid.GetSurveyFilters(aList: TStrings);
 begin
-  if SiteFilter <> EmptyStr then
-    aList.Add(SiteFilter);
-  if DateFilter <> EmptyStr then
-    aList.Add(DateFilter);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 end;
 
 procedure TfrmCustomGrid.GetSightingFilters(aList: TStrings);
 begin
-  TaxaFilter := TaxonFilterToString(tvTaxaFilter);
-
-  if TaxaFilter <> EmptyStr then
-    aList.Add(TaxaFilter);
-  if SiteFilter <> EmptyStr then
-    aList.Add(SiteFilter);
-  if DateFilter <> EmptyStr then
-    aList.Add(DateFilter);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 end;
 
 procedure TfrmCustomGrid.GetSpecimenFilters(aList: TStrings);
+const
+  SampleTypes: array of String = ('WS', 'PS', 'N', 'B', 'E', 'P', 'F', 'BS', 'C', 'S', 'T', 'D', 'R');
+var
+  sf: Integer;
 begin
-  if TaxaFilter <> EmptyStr then
-    aList.Add(TaxaFilter);
-  if SiteFilter <> EmptyStr then
-    aList.Add(SiteFilter);
-  if DateFilter <> EmptyStr then
-    aList.Add(DateFilter);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if cbMaterialFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('sample_type', 'Sample type', sdtText,
+      crEqual, False, SampleTypes[cbMaterialFilter.ItemIndex - 1]));
+  end;
 end;
 
 procedure TfrmCustomGrid.ClearInstitutionFilters;
@@ -6514,7 +6930,7 @@ begin
 
   //EP.Clear;
   SearchStr.Clear;
-  QuickFilters.Clear;
+  FSearch.QuickFilters.Clear;
   Modifier.Reset;
 
   FSearch.RunSearch;

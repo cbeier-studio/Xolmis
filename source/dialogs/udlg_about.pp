@@ -52,7 +52,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_autoupdate;
+uses cbs_global, cbs_autoupdate;
 
 {$R *.lfm}
 
@@ -61,6 +61,8 @@ uses cbs_locale, cbs_global, cbs_autoupdate;
 procedure TdlgAbout.FormShow(Sender: TObject);
 begin
   pAppVersion.Caption := GetBuildInfoAsString;
+  pAppPrerelease.Visible := PrereleaseStage <> EmptyStr;
+  pAppPrerelease.Caption := PrereleaseStage;
 
   pClementsVersion.Caption := XSettings.ClementsVersion;
   pIocVersion.Caption := XSettings.IocVersion;

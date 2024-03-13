@@ -66,6 +66,7 @@ type
     procedure eTaxonButtonClick(Sender: TObject);
     procedure eTaxonDBEditKeyPress(Sender: TObject; var Key: char);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -209,6 +210,24 @@ end;
 procedure TedtSpecimen.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   CloseAction := caFree;
+end;
+
+procedure TedtSpecimen.FormCreate(Sender: TObject);
+begin
+  cbSampleType.Items.Clear;
+  cbSampleType.Items.Add(rsSpecimenCarcassWhole);
+  cbSampleType.Items.Add(rsSpecimenCarcassPartial);
+  cbSampleType.Items.Add(rsSpecimenNest);
+  cbSampleType.Items.Add(rsSpecimenBones);
+  cbSampleType.Items.Add(rsSpecimenEgg);
+  cbSampleType.Items.Add(rsSpecimenParasites);
+  cbSampleType.Items.Add(rsSpecimenFeathers);
+  cbSampleType.Items.Add(rsSpecimenBlood);
+  cbSampleType.Items.Add(rsSpecimenClaw);
+  cbSampleType.Items.Add(rsSpecimenSwab);
+  cbSampleType.Items.Add(rsSpecimenTissues);
+  cbSampleType.Items.Add(rsSpecimenFeces);
+  cbSampleType.Items.Add(rsSpecimenRegurgite);
 end;
 
 procedure TedtSpecimen.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

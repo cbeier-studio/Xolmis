@@ -10142,6 +10142,7 @@ object DMG: TDMG
     Left = 371
     Top = 142
     object qEggsmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
       FieldKind = fkData
       FieldName = 'marked_status'
       Index = 0
@@ -10152,6 +10153,7 @@ object DMG: TDMG
       DisplayValues = 'True;False'
     end
     object qEggsnest_id: TLongintField
+      DisplayLabel = 'Nest ID'
       FieldKind = fkData
       FieldName = 'nest_id'
       Index = 1
@@ -10162,6 +10164,7 @@ object DMG: TDMG
       Visible = False
     end
     object qEggsfield_number: TStringField
+      DisplayLabel = 'Field number'
       FieldKind = fkData
       FieldName = 'field_number'
       Index = 2
@@ -10171,6 +10174,7 @@ object DMG: TDMG
       Required = False
     end
     object qEggsegg_seq: TLongintField
+      DisplayLabel = 'Egg number'
       FieldKind = fkData
       FieldName = 'egg_seq'
       Index = 3
@@ -10180,6 +10184,7 @@ object DMG: TDMG
       Required = False
     end
     object qEggstaxon_id: TLongintField
+      DisplayLabel = 'Taxon ID'
       FieldKind = fkData
       FieldName = 'taxon_id'
       Index = 4
@@ -10190,6 +10195,8 @@ object DMG: TDMG
       Visible = False
     end
     object qEggstaxon_name: TStringField
+      DisplayLabel = 'Taxon'
+      DisplayWidth = 35
       FieldKind = fkData
       FieldName = 'taxon_name'
       Index = 5
@@ -10200,6 +10207,7 @@ object DMG: TDMG
       Size = 100
     end
     object qEggsegg_shape: TStringField
+      DisplayLabel = 'Egg shape'
       FieldKind = fkData
       FieldName = 'egg_shape'
       Index = 6
@@ -10212,6 +10220,7 @@ object DMG: TDMG
       Size = 5
     end
     object qEggseggshell_color: TStringField
+      DisplayLabel = 'Eggshell color'
       FieldKind = fkData
       FieldName = 'eggshell_color'
       Index = 7
@@ -10222,6 +10231,7 @@ object DMG: TDMG
       Size = 40
     end
     object qEggseggshell_pattern: TStringField
+      DisplayLabel = 'Eggshell pattern'
       FieldKind = fkData
       FieldName = 'eggshell_pattern'
       Index = 8
@@ -10232,6 +10242,7 @@ object DMG: TDMG
       Size = 5
     end
     object qEggseggshell_texture: TStringField
+      DisplayLabel = 'Eggshell texture'
       FieldKind = fkData
       FieldName = 'eggshell_texture'
       Index = 9
@@ -10242,6 +10253,7 @@ object DMG: TDMG
       Size = 5
     end
     object qEggsegg_width: TFloatField
+      DisplayLabel = 'Width'
       FieldKind = fkData
       FieldName = 'egg_width'
       Index = 10
@@ -10253,6 +10265,7 @@ object DMG: TDMG
       Precision = -1
     end
     object qEggsegg_length: TFloatField
+      DisplayLabel = 'Length'
       FieldKind = fkData
       FieldName = 'egg_length'
       Index = 11
@@ -10264,6 +10277,7 @@ object DMG: TDMG
       Precision = -1
     end
     object qEggsegg_mass: TFloatField
+      DisplayLabel = 'Mass'
       FieldKind = fkData
       FieldName = 'egg_mass'
       Index = 12
@@ -10275,6 +10289,7 @@ object DMG: TDMG
       Precision = -1
     end
     object qEggsegg_volume: TFloatField
+      DisplayLabel = 'Volume'
       FieldKind = fkInternalCalc
       FieldName = 'egg_volume'
       Index = 13
@@ -10286,6 +10301,7 @@ object DMG: TDMG
       Precision = -1
     end
     object qEggsegg_stage: TStringField
+      DisplayLabel = 'Stage'
       FieldKind = fkData
       FieldName = 'egg_stage'
       Index = 14
@@ -10296,6 +10312,7 @@ object DMG: TDMG
       Size = 5
     end
     object qEggsegg_hatched: TBooleanField
+      DisplayLabel = 'Hatched'
       FieldKind = fkData
       FieldName = 'egg_hatched'
       Index = 15
@@ -10306,6 +10323,7 @@ object DMG: TDMG
       DisplayValues = 'True;False'
     end
     object qEggsindividual_id: TLongintField
+      DisplayLabel = 'Individual ID'
       FieldKind = fkData
       FieldName = 'individual_id'
       Index = 16
@@ -10316,6 +10334,8 @@ object DMG: TDMG
       Visible = False
     end
     object qEggsindividual_name: TStringField
+      DisplayLabel = 'Individual'
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'individual_name'
       Index = 17
@@ -10326,6 +10346,7 @@ object DMG: TDMG
       Size = 120
     end
     object qEggsmeasure_date: TDateField
+      DisplayLabel = 'Date'
       FieldKind = fkData
       FieldName = 'measure_date'
       Index = 18
@@ -10335,6 +10356,7 @@ object DMG: TDMG
       Required = False
     end
     object qEggsresearcher_id: TLongintField
+      DisplayLabel = 'Researcher ID'
       FieldKind = fkData
       FieldName = 'researcher_id'
       Index = 19
@@ -10345,6 +10367,7 @@ object DMG: TDMG
       Visible = False
     end
     object qEggsresearcher_name: TStringField
+      DisplayLabel = 'Researcher'
       FieldKind = fkData
       FieldName = 'researcher_name'
       Index = 20
@@ -10355,6 +10378,8 @@ object DMG: TDMG
       Size = 10
     end
     object qEggsdescription: TMemoField
+      DisplayLabel = 'Description'
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'description'
       Index = 21
@@ -10366,6 +10391,7 @@ object DMG: TDMG
       Transliterate = False
     end
     object qEggsegg_id: TAutoIncField
+      DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'egg_id'
       Index = 22
@@ -10375,6 +10401,8 @@ object DMG: TDMG
       Required = True
     end
     object qEggsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'notes'
       Index = 23
@@ -10386,6 +10414,8 @@ object DMG: TDMG
       Transliterate = False
     end
     object qEggsfull_name: TStringField
+      DisplayLabel = 'Full name'
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'full_name'
       Index = 24
@@ -10397,6 +10427,7 @@ object DMG: TDMG
       Size = 100
     end
     object qEggsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
       Index = 25
@@ -10407,6 +10438,7 @@ object DMG: TDMG
       Visible = False
     end
     object qEggsuser_updated: TLongintField
+      DisplayLabel = 'Modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
       Index = 26
@@ -10417,6 +10449,7 @@ object DMG: TDMG
       Visible = False
     end
     object qEggsinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
       Index = 27
@@ -10427,6 +10460,7 @@ object DMG: TDMG
       Visible = False
     end
     object qEggsupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
       Index = 28
@@ -10437,6 +10471,7 @@ object DMG: TDMG
       Visible = False
     end
     object qEggsexported_status: TBooleanField
+      DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
       Index = 29
@@ -10448,6 +10483,7 @@ object DMG: TDMG
       DisplayValues = 'True;False'
     end
     object qEggsactive_status: TBooleanField
+      DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
       Index = 30

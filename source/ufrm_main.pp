@@ -5,9 +5,9 @@ unit ufrm_main;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons, ActnList,
-  ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton, DefaultTranslator,
-  ufrm_customgrid, TDICardPanel, udlg_rechistory, cbs_datatypes;
+  Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons,
+  ActnList, ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton, UniqueInstance,
+  DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory, cbs_datatypes;
 
 type
 
@@ -202,6 +202,7 @@ type
     TimerScreen: TTimer;
     TimerAnimSearch: TTimer;
     TimerFind: TTimer;
+    UniqueInstance1: TUniqueInstance;
     procedure actAboutExecute(Sender: TObject);
     procedure actCoordinatesConverterExecute(Sender: TObject);
     procedure actDBConnectExecute(Sender: TObject);
@@ -1201,10 +1202,15 @@ begin
   if navTabs.TabCount < 1 then
     Exit;
 
-  for i := (navTabs.TabCount - 1) downto 0 do
-    if not (navTabs.GetTabData(i).TabPinned) or (ClosePinned) or (Closing) then
-      if not navTabs.DeleteTab(i, True, False, aocNone) then
-        Break;
+  navTabs.Tabs.BeginUpdate;
+  try
+    for i := (navTabs.TabCount - 1) downto 0 do
+      if not (navTabs.GetTabData(i).TabPinned) or (ClosePinned) or (Closing) then
+        if not navTabs.DeleteTab(i, True, False, aocNone) then
+          Break;
+  finally
+    navTabs.Tabs.EndUpdate;
+  end;
 
   if not (Closing) and (navTabs.TabCount > 0) then
     UpdateMenu(PGW.ActivePageComponent);

@@ -265,7 +265,7 @@ object dlgAbout: TdlgAbout
         Caption = 'Alpha'
         Color = 16448250
         Constraints.MaxWidth = 150
-        FontEx.Color = 4500223
+        FontEx.Color = 1871359
         FontEx.FontQuality = fqSystemClearType
         FontEx.Height = 12
         FontEx.Shadow = False
