@@ -47,6 +47,8 @@ type
   procedure LoadTaxaTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
   procedure LoadSpecimenDateTree(aSQL: TStrings);
   procedure LoadNestDateTree(aSQL: TStrings);
+  procedure LoadNestRevisionDateTree(aSQL: TStrings);
+  procedure LoadEggDateTree(aSQL: TStrings);
   procedure LoadSightingDateTree(aSQL: TStrings);
   procedure LoadCaptureDateTree(aSQL: TStrings);
   procedure LoadExpeditionDateTree(aSQL: TStrings);
@@ -83,13 +85,12 @@ type
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_getvalue, udm_main;
+uses cbs_global, udm_main;
 
 procedure LoadTaxaTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
 var
   aOrder, aFamily, aSpecies: String;
   aOrderId, aFamilyId, aSpeciesId: Integer;
-  p: Integer;
   Qry: TSQLQuery;
   Data: TTaxonNodeData;
   xNode, orderParent, familyParent: PVirtualNode;
@@ -114,13 +115,13 @@ begin
           Add('(SELECT t.sort_num FROM zoo_taxa AS t WHERE t.taxon_id = i.taxon_id) AS sort_num');
           Add('FROM individuals AS i WHERE (i.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT m.taxon_id, m.species_id, m.family_id, m.order_id,');
-          Add('(SELECT s.full_name FROM zoo_taxa AS s WHERE s.taxon_id = m.species_id) AS species_name,');
-          // SQL.Add('(SELECT g.full_name FROM zoo_taxa AS g WHERE g.taxon_id = m.genus_id) AS genus_name,');
-          Add('(SELECT f.full_name FROM zoo_taxa AS f WHERE f.taxon_id = m.family_id) AS family_name,');
-          Add('(SELECT o.full_name FROM zoo_taxa AS o WHERE o.taxon_id = m.order_id) AS order_name,');
-          Add('(SELECT t.sort_num FROM zoo_taxa AS t WHERE t.taxon_id = m.taxon_id) AS sort_num');
-          Add('FROM captures AS m WHERE (m.active_status = 1)');
+          Add('SELECT DISTINCT c.taxon_id, c.species_id, c.family_id, c.order_id,');
+          Add('(SELECT s.full_name FROM zoo_taxa AS s WHERE s.taxon_id = c.species_id) AS species_name,');
+          // SQL.Add('(SELECT g.full_name FROM zoo_taxa AS g WHERE g.taxon_id = c.genus_id) AS genus_name,');
+          Add('(SELECT f.full_name FROM zoo_taxa AS f WHERE f.taxon_id = c.family_id) AS family_name,');
+          Add('(SELECT o.full_name FROM zoo_taxa AS o WHERE o.taxon_id = c.order_id) AS order_name,');
+          Add('(SELECT t.sort_num FROM zoo_taxa AS t WHERE t.taxon_id = c.taxon_id) AS sort_num');
+          Add('FROM captures AS c WHERE (c.active_status = 1)');
           Add('UNION');
           Add('SELECT DISTINCT ac.taxon_id, ac.species_id, ac.family_id, ac.order_id,');
           Add('(SELECT s.full_name FROM zoo_taxa AS s WHERE s.taxon_id = ac.species_id) AS species_name,');
@@ -144,7 +145,15 @@ begin
           Add('(SELECT f.full_name FROM zoo_taxa AS f WHERE f.taxon_id = e.family_id) AS family_name,');
           Add('(SELECT o.full_name FROM zoo_taxa AS o WHERE o.taxon_id = e.order_id) AS order_name,');
           Add('(SELECT t.sort_num FROM zoo_taxa AS t WHERE t.taxon_id = e.taxon_id) AS sort_num');
-          Add('FROM specimens AS e WHERE (e.active_status = 1)');
+          Add('FROM eggs AS e WHERE (e.active_status = 1)');
+          Add('UNION');
+          Add('SELECT DISTINCT sp.taxon_id, sp.species_id, sp.family_id, sp.order_id,');
+          Add('(SELECT s.full_name FROM zoo_taxa AS s WHERE s.taxon_id = sp.species_id) AS species_name,');
+          // SQL.Add('(SELECT g.full_name FROM zoo_taxa AS g WHERE g.taxon_id = sp.genus_id) AS genus_name,');
+          Add('(SELECT f.full_name FROM zoo_taxa AS f WHERE f.taxon_id = sp.family_id) AS family_name,');
+          Add('(SELECT o.full_name FROM zoo_taxa AS o WHERE o.taxon_id = sp.order_id) AS order_name,');
+          Add('(SELECT t.sort_num FROM zoo_taxa AS t WHERE t.taxon_id = sp.taxon_id) AS sort_num');
+          Add('FROM specimens AS sp WHERE (sp.active_status = 1)');
         end;
       tbIndividuals:
         begin
@@ -158,13 +167,13 @@ begin
         end;
       tbCaptures:
         begin
-          Add('SELECT DISTINCT m.taxon_id, m.species_id, m.family_id, m.order_id,');
-          Add('(SELECT s.full_name FROM zoo_taxa AS s WHERE s.taxon_id = m.species_id) AS species_name,');
-          // SQL.Add('(SELECT g.full_name FROM zoo_taxa AS g WHERE g.taxon_id = m.genus_id) AS genus_name,');
-          Add('(SELECT f.full_name FROM zoo_taxa AS f WHERE f.taxon_id = m.family_id) AS family_name,');
-          Add('(SELECT o.full_name FROM zoo_taxa AS o WHERE o.taxon_id = m.order_id) AS order_name,');
-          Add('(SELECT t.sort_num FROM zoo_taxa AS t WHERE t.taxon_id = m.taxon_id) AS sort_num');
-          Add('FROM captures AS m WHERE (m.active_status = 1)');
+          Add('SELECT DISTINCT c.taxon_id, c.species_id, c.family_id, c.order_id,');
+          Add('(SELECT s.full_name FROM zoo_taxa AS s WHERE s.taxon_id = c.species_id) AS species_name,');
+          // SQL.Add('(SELECT g.full_name FROM zoo_taxa AS g WHERE g.taxon_id = c.genus_id) AS genus_name,');
+          Add('(SELECT f.full_name FROM zoo_taxa AS f WHERE f.taxon_id = c.family_id) AS family_name,');
+          Add('(SELECT o.full_name FROM zoo_taxa AS o WHERE o.taxon_id = c.order_id) AS order_name,');
+          Add('(SELECT t.sort_num FROM zoo_taxa AS t WHERE t.taxon_id = c.taxon_id) AS sort_num');
+          Add('FROM captures AS c WHERE (c.active_status = 1)');
         end;
       tbSightings:
         begin
@@ -186,7 +195,7 @@ begin
           Add('(SELECT t.sort_num FROM zoo_taxa AS t WHERE t.taxon_id = n.taxon_id) AS sort_num');
           Add('FROM nests AS n WHERE (n.active_status = 1)');
         end;
-      tbSpecimens:
+      tbEggs:
         begin
           Add('SELECT DISTINCT e.taxon_id, e.species_id, e.family_id, e.order_id,');
           Add('(SELECT s.full_name FROM zoo_taxa AS s WHERE s.taxon_id = e.species_id) AS species_name,');
@@ -194,7 +203,17 @@ begin
           Add('(SELECT f.full_name FROM zoo_taxa AS f WHERE f.taxon_id = e.family_id) AS family_name,');
           Add('(SELECT o.full_name FROM zoo_taxa AS o WHERE o.taxon_id = e.order_id) AS order_name,');
           Add('(SELECT t.sort_num FROM zoo_taxa AS t WHERE t.taxon_id = e.taxon_id) AS sort_num');
-          Add('FROM specimens AS e WHERE (e.active_status = 1)');
+          Add('FROM eggs AS e WHERE (e.active_status = 1)');
+        end;
+      tbSpecimens:
+        begin
+          Add('SELECT DISTINCT sp.taxon_id, sp.species_id, sp.family_id, sp.order_id,');
+          Add('(SELECT s.full_name FROM zoo_taxa AS s WHERE s.taxon_id = sp.species_id) AS species_name,');
+          // SQL.Add('(SELECT g.full_name FROM zoo_taxa AS g WHERE g.taxon_id = sp.genus_id) AS genus_name,');
+          Add('(SELECT f.full_name FROM zoo_taxa AS f WHERE f.taxon_id = sp.family_id) AS family_name,');
+          Add('(SELECT o.full_name FROM zoo_taxa AS o WHERE o.taxon_id = sp.order_id) AS order_name,');
+          Add('(SELECT t.sort_num FROM zoo_taxa AS t WHERE t.taxon_id = sp.taxon_id) AS sort_num');
+          Add('FROM specimens AS sp WHERE (sp.active_status = 1)');
         end;
       //tbImages: ;
       //tbAudioRecordings: ;
@@ -302,10 +321,10 @@ end;
 procedure LoadSpecimenDateTree(aSQL: TStrings);
 begin
   aSQL.Add('SELECT DISTINCT ');
-  aSQL.Add('strftime(''%Y'', e.collection_date) AS ano,');
-  aSQL.Add('strftime(''%m'', e.collection_date) AS mes,');
-  aSQL.Add('strftime(''%d'', e.collection_date) AS dia');
-  aSQL.Add('FROM specimens AS e WHERE (e.active_status = 1)');
+  aSQL.Add('strftime(''%Y'', sp.collection_date) AS ano,');
+  aSQL.Add('strftime(''%m'', sp.collection_date) AS mes,');
+  aSQL.Add('strftime(''%d'', sp.collection_date) AS dia');
+  aSQL.Add('FROM specimens AS sp WHERE (sp.active_status = 1)');
 end;
 
 procedure LoadNestDateTree(aSQL: TStrings);
@@ -322,22 +341,40 @@ begin
   aSQL.Add('FROM nests AS n WHERE (n.active_status = 1)');
 end;
 
+procedure LoadNestRevisionDateTree(aSQL: TStrings);
+begin
+  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('strftime(''%Y'', nr.revision_date) AS ano,');
+  aSQL.Add('strftime(''%m'', nr.revision_date) AS mes,');
+  aSQL.Add('strftime(''%d'', nr.revision_date) AS dia');
+  aSQL.Add('FROM nest_revisions AS nr WHERE (nr.active_status = 1)');
+end;
+
+procedure LoadEggDateTree(aSQL: TStrings);
+begin
+  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('strftime(''%Y'', e.measure_date) AS ano,');
+  aSQL.Add('strftime(''%m'', e.measure_date) AS mes,');
+  aSQL.Add('strftime(''%d'', e.measure_date) AS dia');
+  aSQL.Add('FROM eggs AS e WHERE (e.active_status = 1)');
+end;
+
 procedure LoadSightingDateTree(aSQL: TStrings);
 begin
   aSQL.Add('SELECT DISTINCT ');
-  aSQL.Add('strftime(''%Y'', ac.sighting_date) AS ano,');
-  aSQL.Add('strftime(''%m'', ac.sighting_date) AS mes,');
-  aSQL.Add('strftime(''%d'', ac.sighting_date) AS dia');
-  aSQL.Add('FROM sightings AS ac WHERE (ac.active_status = 1)');
+  aSQL.Add('strftime(''%Y'', s.sighting_date) AS ano,');
+  aSQL.Add('strftime(''%m'', s.sighting_date) AS mes,');
+  aSQL.Add('strftime(''%d'', s.sighting_date) AS dia');
+  aSQL.Add('FROM sightings AS s WHERE (s.active_status = 1)');
 end;
 
 procedure LoadCaptureDateTree(aSQL: TStrings);
 begin
   aSQL.Add('SELECT DISTINCT ');
-  aSQL.Add('strftime(''%Y'', i.capture_date) AS ano,');
-  aSQL.Add('strftime(''%m'', i.capture_date) AS mes,');
-  aSQL.Add('strftime(''%d'', i.capture_date) AS dia');
-  aSQL.Add('FROM captures AS i WHERE (i.active_status = 1)');
+  aSQL.Add('strftime(''%Y'', c.capture_date) AS ano,');
+  aSQL.Add('strftime(''%m'', c.capture_date) AS mes,');
+  aSQL.Add('strftime(''%d'', c.capture_date) AS dia');
+  aSQL.Add('FROM captures AS c WHERE (c.active_status = 1)');
 end;
 
 procedure LoadExpeditionDateTree(aSQL: TStrings);
@@ -357,10 +394,10 @@ end;
 procedure LoadSurveyDateTree(aSQL: TStrings);
 begin
   aSQL.Add('SELECT DISTINCT ');
-  aSQL.Add('strftime(''%Y'', a.survey_date) AS ano,');
-  aSQL.Add('strftime(''%m'', a.survey_date) AS mes,');
-  aSQL.Add('strftime(''%d'', a.survey_date) AS dia');
-  aSQL.Add('FROM surveys AS a WHERE (a.active_status = 1)');
+  aSQL.Add('strftime(''%Y'', sv.survey_date) AS ano,');
+  aSQL.Add('strftime(''%m'', sv.survey_date) AS mes,');
+  aSQL.Add('strftime(''%d'', sv.survey_date) AS dia');
+  aSQL.Add('FROM surveys AS sv WHERE (sv.active_status = 1)');
 end;
 
 procedure LoadBandDateTree(aSQL: TStrings);
@@ -395,25 +432,25 @@ end;
 procedure LoadIndividualDateTree(aSQL: TStrings);
 begin
   aSQL.Add('SELECT DISTINCT ');
-  aSQL.Add('q.birth_year AS ano,');
-  aSQL.Add('q.birth_month AS mes,');
-  aSQL.Add('q.birth_day AS dia');
-  aSQL.Add('FROM individuals AS q WHERE (q.active_status = 1) UNION');
+  aSQL.Add('i.birth_year AS ano,');
+  aSQL.Add('i.birth_month AS mes,');
+  aSQL.Add('i.birth_day AS dia');
+  aSQL.Add('FROM individuals AS i WHERE (i.active_status = 1) UNION');
   aSQL.Add('SELECT DISTINCT ');
-  aSQL.Add('strftime(''%Y'', q.banding_date) AS ano,');
-  aSQL.Add('strftime(''%m'', q.banding_date) AS mes,');
-  aSQL.Add('strftime(''%d'', q.banding_date) AS dia');
-  aSQL.Add('FROM individuals AS q WHERE (q.active_status = 1) UNION');
+  aSQL.Add('strftime(''%Y'', i.banding_date) AS ano,');
+  aSQL.Add('strftime(''%m'', i.banding_date) AS mes,');
+  aSQL.Add('strftime(''%d'', i.banding_date) AS dia');
+  aSQL.Add('FROM individuals AS i WHERE (i.active_status = 1) UNION');
   aSQL.Add('SELECT DISTINCT ');
-  aSQL.Add('strftime(''%Y'', q.band_change_date) AS ano,');
-  aSQL.Add('strftime(''%m'', q.band_change_date) AS mes,');
-  aSQL.Add('strftime(''%d'', q.band_change_date) AS dia');
-  aSQL.Add('FROM individuals AS q WHERE (q.active_status = 1) UNION');
+  aSQL.Add('strftime(''%Y'', i.band_change_date) AS ano,');
+  aSQL.Add('strftime(''%m'', i.band_change_date) AS mes,');
+  aSQL.Add('strftime(''%d'', i.band_change_date) AS dia');
+  aSQL.Add('FROM individuals AS i WHERE (i.active_status = 1) UNION');
   aSQL.Add('SELECT DISTINCT ');
-  aSQL.Add('q.death_year AS ano,');
-  aSQL.Add('q.death_month AS mes,');
-  aSQL.Add('q.death_day AS dia');
-  aSQL.Add('FROM individuals AS q WHERE (q.active_status = 1)');
+  aSQL.Add('i.death_year AS ano,');
+  aSQL.Add('i.death_month AS mes,');
+  aSQL.Add('i.death_day AS dia');
+  aSQL.Add('FROM individuals AS i WHERE (i.active_status = 1)');
 end;
 
 procedure LoadProjectDateTree(aSQL: TStrings);
@@ -466,6 +503,10 @@ begin
           Q.Add('UNION');
           LoadNestDateTree(Q);
           Q.Add('UNION');
+          LoadNestRevisionDateTree(Q);
+          Q.Add('UNION');
+          LoadEggDateTree(Q);
+          Q.Add('UNION');
           LoadSightingDateTree(Q);
           Q.Add('UNION');
           LoadCaptureDateTree(Q);
@@ -484,31 +525,21 @@ begin
         end;
       tbRecordHistory: ;
       tbPermits: ;
-      tbNests:
-        LoadNestDateTree(Q);
-      tbNestRevisions: ;
-      tbEggs: ;
-      tbProjects:
-        LoadProjectDateTree(Q);
+      tbNests:         LoadNestDateTree(Q);
+      tbNestRevisions: LoadNestRevisionDateTree(Q);
+      tbEggs:          LoadEggDateTree(Q);
+      tbProjects:      LoadProjectDateTree(Q);
       tbInstitutions: ;
-      tbPeople:
-        LoadPeopleDateTree(Q);
-      tbExpeditions:
-        LoadExpeditionDateTree(Q);
-      tbSurveys:
-        LoadSurveyDateTree(Q);
+      tbPeople:        LoadPeopleDateTree(Q);
+      tbExpeditions:   LoadExpeditionDateTree(Q);
+      tbSurveys:       LoadSurveyDateTree(Q);
       tbNetsEffort: ;
-      tbSightings:
-        LoadSightingDateTree(Q);
-      tbSpecimens:
-        LoadSpecimenDateTree(Q);
+      tbSightings:     LoadSightingDateTree(Q);
+      tbSpecimens:     LoadSpecimenDateTree(Q);
       tbSamplePreps: ;
-      tbBands:
-        LoadBandDateTree(Q);
-      tbIndividuals:
-        LoadIndividualDateTree(Q);
-      tbCaptures:
-        LoadCaptureDateTree(Q);
+      tbBands:         LoadBandDateTree(Q);
+      tbIndividuals:   LoadIndividualDateTree(Q);
+      tbCaptures:      LoadCaptureDateTree(Q);
       tbMolts: ;
       tbImages: ;
       tbAudioLibrary: ;
@@ -516,6 +547,9 @@ begin
 
     Q.Add('GROUP BY ano, mes, dia');
     Q.Add('ORDER BY ano DESC, mes ASC, dia ASC');
+    {$IFDEF DEBUG}
+    LogDebug(Qry.SQL.Text);
+    {$ENDIF}
     Qry.Open;
 
     if Qry.RecordCount > 0 then

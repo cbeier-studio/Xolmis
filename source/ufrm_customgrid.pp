@@ -5867,6 +5867,8 @@ begin
       end;
     tbEggs:
       begin
+        pTaxonFilters.Visible := True;
+        LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
         pDatesFilters.Visible := True;
         LoadDateTreeData(FTableType, tvDateFilter);
       end;

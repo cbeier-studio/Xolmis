@@ -5,7 +5,7 @@ unit ucfg_options;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn, Buttons, CheckBoxThemed,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn, Buttons, ComCtrls,
   atshapelinebgra, BCPanel, ColorSpeedButton, rxswitch;
 
 type
