@@ -43,18 +43,26 @@ type
     dsLink3: TDataSource;
     dsLink4: TDataSource;
     dsLink5: TDataSource;
+    eSurveyFilter: TEditButton;
     ePersonFilter: TEditButton;
+    eInstitutionFilter: TEditButton;
+    eMethodFilter: TEditButton;
     iButtons: TImageList;
+    icoSurveyFilter: TImage;
     icoPersonFilter: TImage;
+    icoInstitutionFilter: TImage;
     iHeaders: TImageList;
     icoEmptyQuery: TImage;
     lblEmptyQuery: TLabel;
+    lblSurveyFilter: TLabel;
     lblPersonFilter: TLabel;
+    lblInstitutionFilter: TLabel;
     lblRecordStatus: TLabel;
     lblChildStatus: TLabel;
     lblRecycleModifiedDate: TDBText;
     lblRecycleName: TDBText;
     pEmptyQuery: TBCPanel;
+    pSurveyFilter: TBCPanel;
     pPersonFilter: TBCPanel;
     pmcNewSurvey: TMenuItem;
     pmcNewCollector: TMenuItem;
@@ -174,6 +182,7 @@ type
     pChildTag4: TBCPanel;
     pmSort: TPopupMenu;
     pNotReportedFilter: TBCPanel;
+    pInstitutionFilter: TBCPanel;
     pRecordStatus: TBCPanel;
     pChildStatus: TBCPanel;
     pRecordToolbar: TBCPanel;
@@ -209,7 +218,6 @@ type
     cbBandStatusFilter: TComboBox;
     cbFatFilter: TComboBox;
     cbMaterialFilter: TComboBox;
-    cbMethodFilter: TComboBox;
     cbNestFateFilter: TComboBox;
     cbNestSupportFilter: TComboBox;
     cbSiteRankFilter: TComboBox;
@@ -435,18 +443,26 @@ type
     procedure eCycleCodeFilterButtonClick(Sender: TObject);
     procedure eCycleCodeFilterChange(Sender: TObject);
     procedure eCycleCodeFilterKeyPress(Sender: TObject; var Key: char);
+    procedure eEndTimeFilterChange(Sender: TObject);
     procedure eHowAgedFilterButtonClick(Sender: TObject);
     procedure eHowAgedFilterChange(Sender: TObject);
     procedure eHowAgedFilterKeyPress(Sender: TObject; var Key: char);
     procedure eHowSexedFilterButtonClick(Sender: TObject);
     procedure eHowSexedFilterChange(Sender: TObject);
     procedure eHowSexedFilterKeyPress(Sender: TObject; var Key: char);
+    procedure eInstitutionFilterButtonClick(Sender: TObject);
+    procedure eInstitutionFilterKeyPress(Sender: TObject; var Key: char);
+    procedure eMethodFilterButtonClick(Sender: TObject);
+    procedure eMethodFilterKeyPress(Sender: TObject; var Key: char);
     procedure eMoltLimitsFilterButtonClick(Sender: TObject);
     procedure eMoltLimitsFilterChange(Sender: TObject);
     procedure eMoltLimitsFilterKeyPress(Sender: TObject; var Key: char);
     procedure ePersonFilterButtonClick(Sender: TObject);
     procedure ePersonFilterChange(Sender: TObject);
     procedure ePersonFilterKeyPress(Sender: TObject; var Key: char);
+    procedure eStartTimeFilterChange(Sender: TObject);
+    procedure eSurveyFilterButtonClick(Sender: TObject);
+    procedure eSurveyFilterKeyPress(Sender: TObject; var Key: char);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -583,7 +599,7 @@ type
     IsSynonymFilter, HasSynonymsFilter: String;
     CloacalProtuberanceFilter, BroodPatchFilter: String;
     NestFateFilter, NestSupportFilter: String;
-    FPersonKeyFilter: Integer;
+    FPersonKeyFilter, FInstitutionKeyFilter, FSurveyKeyFilter, FMethodKeyFilter: Integer;
     CanToggle: Boolean;
     FSidePanelFactor: Double;
     FChildPanelFactor: Double;
@@ -634,6 +650,7 @@ type
     procedure GetIndividualFilters(aList: TStrings);
     procedure GetCaptureFilters(aList: TStrings);
     procedure GetNestFilters(aList: TStrings);
+    procedure GetNestRevisionFilters(aList: TStrings);
     procedure GetEggFilters(aList: TStrings);
     procedure GetMethodFilters(aList: TStrings);
     procedure GetExpeditionFilters(aList: TStrings);
@@ -1635,6 +1652,11 @@ begin
   //end;
 end;
 
+procedure TfrmCustomGrid.eEndTimeFilterChange(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
 procedure TfrmCustomGrid.eHowAgedFilterButtonClick(Sender: TObject);
 begin
   HowAgedDialog(eHowAgedFilter);
@@ -1681,6 +1703,66 @@ begin
   if (Key = #8) then
   begin
     eHowSexedFilter.Clear;
+    Key := #0;
+  end;
+  //{ <ENTER/RETURN> key }
+  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //begin
+  //  SelectNext(Sender as TWinControl, True, True);
+  //  Key := #0;
+  //end;
+end;
+
+procedure TfrmCustomGrid.eInstitutionFilterButtonClick(Sender: TObject);
+begin
+  FindDlg(tbInstitutions, eInstitutionFilter, FInstitutionKeyFilter);
+end;
+
+procedure TfrmCustomGrid.eInstitutionFilterKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbInstitutions, eInstitutionFilter, FInstitutionKeyFilter, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    eInstitutionFilter.Clear;
+    FInstitutionKeyFilter := 0;
+    Key := #0;
+  end;
+  //{ <ENTER/RETURN> key }
+  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //begin
+  //  SelectNext(Sender as TWinControl, True, True);
+  //  Key := #0;
+  //end;
+end;
+
+procedure TfrmCustomGrid.eMethodFilterButtonClick(Sender: TObject);
+begin
+  FindDlg(tbMethods, eMethodFilter, FMethodKeyFilter);
+end;
+
+procedure TfrmCustomGrid.eMethodFilterKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbMethods, eMethodFilter, FMethodKeyFilter, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    eMethodFilter.Clear;
+    FMethodKeyFilter := 0;
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
@@ -1744,6 +1826,41 @@ begin
   begin
     ePersonFilter.Clear;
     FPersonKeyFilter := 0;
+    Key := #0;
+  end;
+  //{ <ENTER/RETURN> key }
+  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //begin
+  //  SelectNext(Sender as TWinControl, True, True);
+  //  Key := #0;
+  //end;
+end;
+
+procedure TfrmCustomGrid.eStartTimeFilterChange(Sender: TObject);
+begin
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.eSurveyFilterButtonClick(Sender: TObject);
+begin
+  FindDlg(tbSurveys, eSurveyFilter, FSurveyKeyFilter);
+end;
+
+procedure TfrmCustomGrid.eSurveyFilterKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbSurveys, eSurveyFilter, FSurveyKeyFilter, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    eSurveyFilter.Clear;
+    FSurveyKeyFilter := 0;
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
@@ -6009,6 +6126,7 @@ begin
         LoadSiteTreeData(FTableType, tvSiteFilter, 4);
         pDatesFilters.Visible := True;
         LoadDateTreeData(FTableType, tvDateFilter);
+        pInstitutionFilter.Visible := True;
       end;
     tbProjects:
       begin
@@ -6048,6 +6166,7 @@ begin
         pBandStatusFilter.Visible := True;
         pBandReportFilters.Visible := True;
         pPersonFilter.Visible := True;
+        pInstitutionFilter.Visible := True;
         //pDatesFilters.Visible := True;
         //LoadDateTreeData(TableType, tvDateFilter);
       end;
@@ -6086,6 +6205,9 @@ begin
         pFatFilter.Visible := True;
         pMoltingFilters.Visible := True;
         pPersonFilter.Visible := True;
+        pTimeFilters.Visible := True;
+        pSurveyFilter.Visible := True;
+        pMethodFilter.Visible := True;
       end;
     tbNests:
       begin
@@ -6110,6 +6232,7 @@ begin
         pDatesFilters.Visible := True;
         LoadDateTreeData(FTableType, tvDateFilter);
         pPersonFilter.Visible := True;
+        pTimeFilters.Visible:= True;
       end;
     tbEggs:
       begin
@@ -6144,6 +6267,9 @@ begin
         pSiteFilters.Visible := True;
         LoadSiteTreeData(FTableType, tvSiteFilter, 4);
         pPersonFilter.Visible := True;
+        pTimeFilters.Visible := True;
+        pSurveyFilter.Visible := True;
+        pMethodFilter.Visible := True;
       end;
     tbSpecimens:
       begin
@@ -6203,49 +6329,30 @@ begin
   case TableType of
     tbNone: ;
     tbProjectTeams: ;
-    tbPermits:
-      GetPermitFilters(aList);
-    tbGazetteer:
-      GetGazetteerFilters(aList);
-    tbBotanicTaxa:
-      GetBotanicTaxaFilters(aList);
-    tbNests:
-      GetNestFilters(aList);
-    tbNestRevisions: ;
-    tbEggs:
-      GetEggFilters(aList);
-    tbNetStations:
-      GetNetStationFilters(aList);
-    tbTaxonRanks:
-      GetTaxonRankFilters(aList);
-    tbZooTaxa:
-      GetZooTaxaFilters(aList);
-    tbProjects:
-      GetProjectFilters(aList);
-    tbInstitutions:
-      GetInstitutionFilters(aList);
-    tbPeople:
-      GetPeopleFilters(aList);
-    tbExpeditions:
-      GetExpeditionFilters(aList);
-    tbSurveys:
-      GetSurveyFilters(aList);
-    tbMethods:
-      GetMethodFilters(aList);
+    tbPermits:       GetPermitFilters(aList);
+    tbGazetteer:     GetGazetteerFilters(aList);
+    tbBotanicTaxa:   GetBotanicTaxaFilters(aList);
+    tbNests:         GetNestFilters(aList);
+    tbNestRevisions: GetNestRevisionFilters(aList);
+    tbEggs:          GetEggFilters(aList);
+    tbNetStations:   GetNetStationFilters(aList);
+    tbTaxonRanks:    GetTaxonRankFilters(aList);
+    tbZooTaxa:       GetZooTaxaFilters(aList);
+    tbProjects:      GetProjectFilters(aList);
+    tbInstitutions:  GetInstitutionFilters(aList);
+    tbPeople:        GetPeopleFilters(aList);
+    tbExpeditions:   GetExpeditionFilters(aList);
+    tbSurveys:       GetSurveyFilters(aList);
+    tbMethods:       GetMethodFilters(aList);
     tbSurveyTeams: ;
     tbNetsEffort: ;
-    tbSightings:
-      GetSightingFilters(aList);
-    tbSpecimens:
-      GetSpecimenFilters(aList);
+    tbSightings:     GetSightingFilters(aList);
+    tbSpecimens:     GetSpecimenFilters(aList);
     tbSamplePreps: ;
     tbPermanentNets: ;
-    tbBands:
-      GetBandFilters(aList);
-    tbIndividuals:
-      GetIndividualFilters(aList);
-    tbCaptures:
-      GetCaptureFilters(aList);
+    tbBands:         GetBandFilters(aList);
+    tbIndividuals:   GetIndividualFilters(aList);
+    tbCaptures:      GetCaptureFilters(aList);
     tbMolts: ;
     tbImages: ;
     tbAudioLibrary: ;
@@ -6261,9 +6368,18 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetPeopleFilters(aList: TStrings);
+var
+  sf: Integer;
 begin
   SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if FInstitutionKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('institution_id', 'Institution', sdtInteger,
+      crEqual, False, IntToStr(FInstitutionKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetProjectFilters(aList: TStrings);
@@ -6409,6 +6525,13 @@ begin
 
   if ePersonFilter.Text <> EmptyStr then
     PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
+
+  if FInstitutionKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('supplier_id', 'Supplier', sdtInteger,
+      crEqual, False, IntToStr(FInstitutionKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetIndividualFilters(aList: TStrings);
@@ -6547,6 +6670,30 @@ begin
 
   if FPersonKeyFilter > 0 then
     PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
+
+  if eStartTimeFilter.Text <> EmptyStr then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    if eEndTimeFilter.Text <> EmptyStr then
+      FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('capture_time', 'Time', sdtTime,
+        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)))
+    else
+      FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('capture_time', 'Time', sdtTime,
+        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
+  end;
+
+  if FSurveyKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('survey_id', 'Survey', sdtInteger,
+      crEqual, False, IntToStr(FSurveyKeyFilter)));
+  end;
+  if FMethodKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('method_id', 'Method', sdtInteger,
+      crEqual, False, IntToStr(FMethodKeyFilter)));
+  end;
 end;
 
 function TfrmCustomGrid.GetChildDataSet: TDataSet;
@@ -6645,6 +6792,27 @@ begin
     PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
 end;
 
+procedure TfrmCustomGrid.GetNestRevisionFilters(aList: TStrings);
+var
+  sf: Integer;
+begin
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if ePersonFilter.Text <> EmptyStr then
+    PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
+
+  if eStartTimeFilter.Text <> EmptyStr then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    if eEndTimeFilter.Text <> EmptyStr then
+      FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('revision_time', 'Time', sdtTime,
+        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)))
+    else
+      FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('revision_time', 'Time', sdtTime,
+        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
+  end;
+end;
+
 procedure TfrmCustomGrid.GetEggFilters(aList: TStrings);
 begin
   TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
@@ -6666,12 +6834,42 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetSurveyFilters(aList: TStrings);
+var
+  sf: Integer;
 begin
   SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if eStartTimeFilter.Text <> EmptyStr then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    if eEndTimeFilter.Text <> EmptyStr then
+    begin
+      FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('start_time', 'Start time', sdtTime,
+        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)));
+      FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('end_time', 'End time', sdtTime,
+        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)));
+    end
+    else
+    begin
+      FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('start_time', 'Start time', sdtTime,
+        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
+      FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('end_time', 'End time', sdtTime,
+        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
+    end;
+  end;
+
+  if FMethodKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('method_id', 'Method', sdtInteger,
+      crEqual, False, IntToStr(FMethodKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetSightingFilters(aList: TStrings);
+var
+  sf: Integer;
 begin
   TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
   SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
@@ -6679,6 +6877,30 @@ begin
 
   if ePersonFilter.Text <> EmptyStr then
     PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
+
+  if eStartTimeFilter.Text <> EmptyStr then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    if eEndTimeFilter.Text <> EmptyStr then
+      FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('sighting_time', 'Time', sdtTime,
+        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)))
+    else
+      FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('sighting_time', 'Time', sdtTime,
+        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
+  end;
+
+  if FSurveyKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('survey_id', 'Survey', sdtInteger,
+      crEqual, False, IntToStr(FSurveyKeyFilter)));
+  end;
+  if FMethodKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('method_id', 'Method', sdtInteger,
+      crEqual, False, IntToStr(FMethodKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetSpecimenFilters(aList: TStrings);

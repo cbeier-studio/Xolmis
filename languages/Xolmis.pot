@@ -619,6 +619,7 @@ msgid "Supplier"
 msgstr ""
 
 #: cbs_locale.rscaptionsurvey
+msgctxt "cbs_locale.rscaptionsurvey"
 msgid "Survey"
 msgstr ""
 
@@ -6435,11 +6436,6 @@ msgctxt "tfrmcustomgrid.cbmaterialfilter.texthint"
 msgid "Nenhum"
 msgstr ""
 
-#: tfrmcustomgrid.cbmethodfilter.texthint
-msgctxt "tfrmcustomgrid.cbmethodfilter.texthint"
-msgid "Nenhum"
-msgstr ""
-
 #: tfrmcustomgrid.cbnestfatefilter.text
 msgctxt "tfrmcustomgrid.cbnestfatefilter.text"
 msgid "All"
@@ -6622,6 +6618,11 @@ msgstr ""
 msgid "How was sexed"
 msgstr ""
 
+#: tfrmcustomgrid.lblinstitutionfilter.caption
+msgctxt "tfrmcustomgrid.lblinstitutionfilter.caption"
+msgid "Institution"
+msgstr ""
+
 #: tfrmcustomgrid.lblmarkedfilter.caption
 msgctxt "tfrmcustomgrid.lblmarkedfilter.caption"
 msgid "Marked records"
@@ -6687,6 +6688,11 @@ msgstr ""
 
 #: tfrmcustomgrid.lblstarttimefilter.caption
 msgid "Time between"
+msgstr ""
+
+#: tfrmcustomgrid.lblsurveyfilter.caption
+msgctxt "tfrmcustomgrid.lblsurveyfilter.caption"
+msgid "Survey"
 msgstr ""
 
 #: tfrmcustomgrid.lblsynonymfilter.caption

@@ -623,6 +623,7 @@ msgid "Supplier"
 msgstr "Fornecedor"
 
 #: cbs_locale.rscaptionsurvey
+msgctxt "cbs_locale.rscaptionsurvey"
 msgid "Survey"
 msgstr "Amostragem"
 
@@ -6461,11 +6462,6 @@ msgctxt "tfrmcustomgrid.cbmaterialfilter.texthint"
 msgid "Nenhum"
 msgstr "Nenhum"
 
-#: tfrmcustomgrid.cbmethodfilter.texthint
-msgctxt "tfrmcustomgrid.cbmethodfilter.texthint"
-msgid "Nenhum"
-msgstr "Nenhum"
-
 #: tfrmcustomgrid.cbnestfatefilter.text
 msgctxt "tfrmcustomgrid.cbnestfatefilter.text"
 msgid "All"
@@ -6648,6 +6644,12 @@ msgstr "Como foi etariado"
 msgid "How was sexed"
 msgstr "Como foi sexado"
 
+#: tfrmcustomgrid.lblinstitutionfilter.caption
+#, fuzzy
+msgctxt "tfrmcustomgrid.lblinstitutionfilter.caption"
+msgid "Institution"
+msgstr "Instituição"
+
 #: tfrmcustomgrid.lblmarkedfilter.caption
 msgctxt "tfrmcustomgrid.lblmarkedfilter.caption"
 msgid "Marked records"
@@ -6716,6 +6718,12 @@ msgstr "Ossificação craniana"
 #: tfrmcustomgrid.lblstarttimefilter.caption
 msgid "Time between"
 msgstr "Hora entre"
+
+#: tfrmcustomgrid.lblsurveyfilter.caption
+#, fuzzy
+msgctxt "tfrmcustomgrid.lblsurveyfilter.caption"
+msgid "Survey"
+msgstr "Amostragem"
 
 #: tfrmcustomgrid.lblsynonymfilter.caption
 msgid "Is a synonym"
