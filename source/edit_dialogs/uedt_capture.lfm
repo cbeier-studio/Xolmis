@@ -541,6 +541,7 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 364
           ParentBackground = False
           TabOrder = 0
+          OnExit = eSurveyExit
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -548,6 +549,7 @@ object edtCapture: TedtCapture
           DataField = 'survey_name'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eSurveyButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eSurveyKeyPress
           OnKeyDown = FormKeyDown
@@ -573,6 +575,7 @@ object edtCapture: TedtCapture
           DataField = 'locality_name'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eLocalityButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eLocalityKeyPress
           OnKeyDown = FormKeyDown
@@ -651,6 +654,7 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 174
           ParentBackground = False
           TabOrder = 0
+          OnExit = eRightLegBelowExit
           ButtonWidth = 24
           ImageIndex = 13
           Images = frmMain.mPopup
@@ -658,6 +662,7 @@ object edtCapture: TedtCapture
           DataField = 'right_leg_below'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eRightLegBelowButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
@@ -734,6 +739,7 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 174
           ParentBackground = False
           TabOrder = 2
+          OnExit = eRightLegBelowExit
           ButtonWidth = 24
           ImageIndex = 13
           Images = frmMain.mPopup
@@ -741,6 +747,7 @@ object edtCapture: TedtCapture
           DataField = 'left_leg_below'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eLeftLegBelowButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
@@ -901,6 +908,7 @@ object edtCapture: TedtCapture
           DataField = 'band_name'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eBandButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eBandKeyPress
           OnKeyDown = FormKeyDown
@@ -926,6 +934,7 @@ object edtCapture: TedtCapture
           DataField = 'removed_band_name'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eRemovedBandButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eRemovedBandKeyPress
           OnKeyDown = FormKeyDown
@@ -1278,6 +1287,7 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 174
           ParentBackground = False
           TabOrder = 1
+          OnExit = eNetExit
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -1285,6 +1295,7 @@ object edtCapture: TedtCapture
           DataField = 'net_number'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eNetButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eNetKeyPress
           OnKeyDown = FormKeyDown
@@ -1303,6 +1314,7 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 174
           ParentBackground = False
           TabOrder = 2
+          OnExit = eLongitudeExit
           ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup
@@ -1329,6 +1341,7 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 174
           ParentBackground = False
           TabOrder = 3
+          OnExit = eLongitudeExit
           ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup
@@ -1336,6 +1349,7 @@ object edtCapture: TedtCapture
           DataField = 'latitude'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eLatitudeButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eLongitudeKeyPress
           OnKeyDown = FormKeyDown
@@ -2058,6 +2072,7 @@ object edtCapture: TedtCapture
           DataField = 'molt_limits'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eMoltLimitsButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
@@ -2167,6 +2182,7 @@ object edtCapture: TedtCapture
           DataField = 'cycle_code'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eCycleCodeButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
@@ -2191,6 +2207,7 @@ object edtCapture: TedtCapture
           DataField = 'how_aged'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eHowAgedButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
@@ -2234,6 +2251,7 @@ object edtCapture: TedtCapture
           DataField = 'how_sexed'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eHowSexedButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown

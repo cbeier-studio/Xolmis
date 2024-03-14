@@ -5,7 +5,7 @@ unit cbs_dialogs;
 interface
 
 uses
-  Classes, SysUtils, Controls, StdCtrls, Dialogs, DB, RegExpr;
+  Classes, SysUtils, Controls, StdCtrls, Dialogs, DB, RegExpr, EditBtn;
 
   function MsgDlg(aTitle, aText: String; aType: TMsgDlgType): Boolean;
   procedure ProgressDlg(aTitle, aText: String; aMin: Integer = 0; aMax: Integer = 100);
@@ -22,16 +22,21 @@ uses
   procedure EditColorBands(aDataset: TDataset; aTextField: String; aControl: TControl; aLimit: Integer = 4);
   function CalendarDlg(aDateStr: String; aEdit: TCustomEdit; var aDate: TDate): Boolean; overload;
   function CalendarDlg(aControl: TControl; aDataset: TDataset; aField: String): Boolean; overload;
-  function MoltLimitsDialog(aLimits: String; aDataset: TDataset; aCampo: String): Boolean;
-  function HowAgedDialog(aEdit: TCustomEdit): Boolean; overload;
+  function MoltLimitsDialog(aLimits: String; aDataset: TDataset; aCampo: String): Boolean; overload;
+  function MoltLimitsDialog(aEdit: TEditButton): Boolean; overload;
+  function HowAgedDialog(aEdit: TEditButton): Boolean; overload;
   function HowAgedDialog(aHowAged: String; aDataset: TDataset; aCampo: String): Boolean; overload;
-  function MoltCycleDialog(aCycle: String; aDataset: TDataset; aCampo: String): Boolean;
-  function DetectionDialog(aDetect: String; aDataset: TDataset; aCampo: String): Boolean;
-  function BreedingDialog(aBreeding: String; aDataset: TDataset; aCampo: String): Boolean;
+  function MoltCycleDialog(aCycle: String; aDataset: TDataset; aCampo: String): Boolean; overload;
+  function MoltCycleDialog(aEdit: TEditButton): Boolean; overload;
+  function DetectionDialog(aDetect: String; aDataset: TDataset; aCampo: String): Boolean; overload;
+  function DetectionDialog(aEdit: TEditButton): Boolean; overload;
+  function BreedingDialog(aBreeding: String; aDataset: TDataset; aCampo: String): Boolean; overload;
+  function BreedingDialog(aEdit: TEditButton): Boolean; overload;
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_sampling, udm_main,
+uses
+  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_sampling, udm_main,
   udlg_find, udlg_validate, udlg_plantminer, udlg_authorship,
   udlg_calendar, udlg_colorbands, ulst_cyclecode, ulst_moltlimits, ulst_howsexedaged,
   ulst_detectiontype, ulst_breedingstatus;
@@ -355,7 +360,31 @@ begin
   end;
 end;
 
-function HowAgedDialog(aEdit: TCustomEdit): Boolean;
+function MoltLimitsDialog(aEdit: TEditButton): Boolean;
+begin
+  Result := False;
+  {$IFDEF DEBUG}
+  LogDebug('OPEN LIST: Molt limits');
+  {$ENDIF}
+  lstMoltLimits := TlstMoltLimits.Create(nil);
+  with lstMoltLimits do
+  try
+    //Limites := aLimits;
+    // GetFormPosition(aEdit, WindowPos);
+    if ShowModal = mrOK then
+    begin
+      aEdit.Text := Limites;
+      Result := True;
+    end;
+  finally
+    FreeAndNil(lstMoltLimits);
+    {$IFDEF DEBUG}
+    LogDebug('CLOSE LIST: Molt limits');
+    {$ENDIF}
+  end;
+end;
+
+function HowAgedDialog(aEdit: TEditButton): Boolean;
 begin
   Result := False;
   {$IFDEF DEBUG}
@@ -428,6 +457,30 @@ begin
   end;
 end;
 
+function MoltCycleDialog(aEdit: TEditButton): Boolean;
+begin
+  Result := False;
+  {$IFDEF DEBUG}
+  LogDebug('OPEN LIST: Molt cycle');
+  {$ENDIF}
+  lstCycleCode := TlstCycleCode.Create(nil);
+  with lstCycleCode do
+  try
+    //Ciclo := aCycle;
+    // GetFormPosition(aEdit, WindowPos);
+    if ShowModal = mrOK then
+    begin
+      aEdit.Text := Ciclo;
+      Result := True;
+    end;
+  finally
+    FreeAndNil(lstCycleCode);
+    {$IFDEF DEBUG}
+    LogDebug('CLOSE LIST: Molt cycle');
+    {$ENDIF}
+  end;
+end;
+
 function DetectionDialog(aDetect: String; aDataset: TDataset; aCampo: String): Boolean;
 begin
   Result := False;
@@ -453,6 +506,30 @@ begin
   end;
 end;
 
+function DetectionDialog(aEdit: TEditButton): Boolean;
+begin
+  Result := False;
+  {$IFDEF DEBUG}
+  LogDebug('OPEN LIST: Detection code');
+  {$ENDIF}
+  lstDetectionType := TlstDetectionType.Create(nil);
+  with lstDetectionType do
+  try
+    //Deteccao := aDetect;
+    // GetFormPosition(aEdit, WindowPos);
+    if ShowModal = mrOK then
+    begin
+      aEdit.Text := Deteccao;
+      Result := True;
+    end;
+  finally
+    FreeAndNil(lstDetectionType);
+    {$IFDEF DEBUG}
+    LogDebug('CLOSE LIST: Detection code');
+    {$ENDIF}
+  end;
+end;
+
 function BreedingDialog(aBreeding: String; aDataset: TDataset; aCampo: String): Boolean;
 begin
   Result := False;
@@ -468,6 +545,30 @@ begin
     begin
       CanEdit(aDataSet);
       aDataset.FieldByName(aCampo).AsString := BreedingStatus;
+      Result := True;
+    end;
+  finally
+    FreeAndNil(lstBreedingStatus);
+    {$IFDEF DEBUG}
+    LogDebug('CLOSE LIST: Breeding code');
+    {$ENDIF}
+  end;
+end;
+
+function BreedingDialog(aEdit: TEditButton): Boolean;
+begin
+  Result := False;
+  {$IFDEF DEBUG}
+  LogDebug('OPEN LIST: Breeding code');
+  {$ENDIF}
+  lstBreedingStatus := TlstBreedingStatus.Create(nil);
+  with lstBreedingStatus do
+  try
+    //BreedingStatus := aBreeding;
+    // GetFormPosition(aEdit, WindowPos);
+    if ShowModal = mrOK then
+    begin
+      aEdit.Text := BreedingStatus;
       Result := True;
     end;
   finally

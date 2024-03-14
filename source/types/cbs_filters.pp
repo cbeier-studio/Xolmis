@@ -56,6 +56,7 @@ type
   procedure LoadBandDateTree(aSQL: TStrings);
   procedure LoadIndividualDateTree(aSQL: TStrings);
   procedure LoadProjectDateTree(aSQL: TStrings);
+  procedure LoadPermitDateTree(aSQL: TStrings);
   procedure LoadPeopleDateTree(aSQL: TStrings);
   procedure LoadDateTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
   procedure LoadSiteTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
@@ -80,6 +81,7 @@ type
   function SiteFilterToSearch(aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
   function DateFilterToString(aTable: TTableType; aVirtualTree: TBaseVirtualTree; var aTotal: Integer): String;
   function DateFilterToSearch(aTable: TTableType; aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
+  function PersonFilterToSearch(aTable: TTableType; aSearchGroup: TSearchGroups; aKey: Integer = 0): Boolean;
   function Ordenar(const aTabela: TTableType; aSortedFields: TSortedFields): Boolean;
 
 
@@ -467,6 +469,20 @@ begin
   aSQL.Add('FROM projects AS pj WHERE (pj.active_status = 1)');
 end;
 
+procedure LoadPermitDateTree(aSQL: TStrings);
+begin
+  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('strftime(''%Y'', l.dispatch_date) AS ano,');
+  aSQL.Add('strftime(''%m'', l.dispatch_date) AS mes,');
+  aSQL.Add('strftime(''%d'', l.dispatch_date) AS dia');
+  aSQL.Add('FROM legal AS l WHERE (l.active_status = 1) UNION');
+  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('strftime(''%Y'', l.expire_date) AS ano,');
+  aSQL.Add('strftime(''%m'', l.expire_date) AS mes,');
+  aSQL.Add('strftime(''%d'', l.expire_date) AS dia');
+  aSQL.Add('FROM legal AS l WHERE (l.active_status = 1)');
+end;
+
 procedure LoadPeopleDateTree(aSQL: TStrings);
 begin
   aSQL.Add('SELECT DISTINCT ');
@@ -521,10 +537,12 @@ begin
           Q.Add('UNION');
           LoadProjectDateTree(Q);
           Q.Add('UNION');
+          LoadPermitDateTree(Q);
+          Q.Add('UNION');
           LoadPeopleDateTree(Q);
         end;
       tbRecordHistory: ;
-      tbPermits: ;
+      tbPermits:       LoadPermitDateTree(Q);
       tbNests:         LoadNestDateTree(Q);
       tbNestRevisions: LoadNestRevisionDateTree(Q);
       tbEggs:          LoadEggDateTree(Q);
@@ -1808,6 +1826,66 @@ begin
   end;
 
   Result := aTotal;
+end;
+
+function PersonFilterToSearch(aTable: TTableType; aSearchGroup: TSearchGroups; aKey: Integer): Boolean;
+var
+  sf: Integer;
+begin
+  Result := False;
+  if aKey <= 0 then
+    Exit;
+
+  sf := aSearchGroup.Add(TSearchGroup.Create);
+
+  case aTable of
+    tbNone: ;
+    tbNests:
+      begin
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('observer_id', 'Observer', sdtInteger,
+          crEqual, False, IntToStr(aKey)));
+      end;
+    tbNestRevisions:
+      begin
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('observer_1_id', 'Observer 1', sdtInteger,
+          crEqual, False, IntToStr(aKey)));
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('observer_2_id', 'Observer 2', sdtInteger,
+          crEqual, False, IntToStr(aKey)));
+      end;
+    tbEggs:
+      begin
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('researcher_id', 'Researcher', sdtInteger,
+          crEqual, False, IntToStr(aKey)));
+      end;
+    tbSightings:
+      begin
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('observer_id', 'Observer', sdtInteger,
+          crEqual, False, IntToStr(aKey)));
+      end;
+    tbSpecimens: ;
+    tbSamplePreps: ;
+    tbBands:
+      begin
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('carrier_id', 'Carrier', sdtInteger,
+          crEqual, False, IntToStr(aKey)));
+      end;
+    tbCaptures:
+      begin
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('bander_id', 'Bander', sdtInteger,
+          crEqual, False, IntToStr(aKey)));
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('annotator_id', 'Annotator', sdtInteger,
+          crEqual, False, IntToStr(aKey)));
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('photographer_1_id', 'Photographer 1', sdtInteger,
+          crEqual, False, IntToStr(aKey)));
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('photographer_2_id', 'Photographer 2', sdtInteger,
+          crEqual, False, IntToStr(aKey)));
+      end;
+    tbMolts: ;
+    tbImages: ;
+    tbAudioLibrary: ;
+  end;
+
+  Result := True;
 end;
 
 function Ordenar(const aTabela: TTableType; aSortedFields: TSortedFields): Boolean;

@@ -5,7 +5,7 @@ unit cbs_finddialogs;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, DB, StdCtrls, cbs_system, cbs_datatypes, cbs_taxonomy, cbs_gis;
+  Classes, SysUtils, Forms, Controls, DB, StdCtrls, EditBtn, cbs_system, cbs_datatypes, cbs_taxonomy, cbs_gis;
 
   { Find and select records }
   function FindDlg(aTable: TTableType; aControl: TControl; var aResultKey: Integer;
@@ -64,11 +64,18 @@ begin
     begin
       aResultKey := dlgFind.KeySelected;
       if Assigned(aControl) then
+      begin
         if aControl is TCustomEdit then
         begin
           TCustomEdit(aControl).Text := dlgFind.NameSelected;
           TCustomEdit(aControl).Modified := True;
         end;
+        if aControl is TEditButton then
+        begin
+          TEditButton(aControl).Text := dlgFind.NameSelected;
+          TEditButton(aControl).Modified := True;
+        end;
+      end;
       Result := True;
     end;
   finally

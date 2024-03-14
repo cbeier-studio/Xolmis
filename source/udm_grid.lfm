@@ -10677,7 +10677,7 @@ object DMG: TDMG
     Top = 306
     object qGazetteermarked_status: TBooleanField
       Alignment = taCenter
-      DisplayLabel = 'Marcado'
+      DisplayLabel = 'Marked'
       FieldKind = fkData
       FieldName = 'marked_status'
       Index = 0
@@ -10688,7 +10688,7 @@ object DMG: TDMG
       DisplayValues = 'True;False'
     end
     object qGazetteersite_name: TStringField
-      DisplayLabel = 'Nome'
+      DisplayLabel = 'Site name'
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'site_name'
@@ -10701,7 +10701,7 @@ object DMG: TDMG
     end
     object qGazetteersite_acronym: TStringField
       Alignment = taCenter
-      DisplayLabel = 'Abreviatura'
+      DisplayLabel = 'Acronym'
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'site_acronym'
@@ -10713,7 +10713,7 @@ object DMG: TDMG
       Size = 10
     end
     object qGazetteersite_rank: TStringField
-      DisplayLabel = 'Tipo'
+      DisplayLabel = 'Type'
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'site_rank'
@@ -10763,7 +10763,7 @@ object DMG: TDMG
       Precision = -1
     end
     object qGazetteerparent_site_id: TLargeintField
-      DisplayLabel = 'Nível superior (ID)'
+      DisplayLabel = 'Parent site (ID)'
       FieldKind = fkData
       FieldName = 'parent_site_id'
       Index = 7
@@ -10774,19 +10774,19 @@ object DMG: TDMG
       Visible = False
     end
     object qGazetteerparent_site_name: TStringField
-      DisplayLabel = 'Nível superior'
+      DisplayLabel = 'Parent site'
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'parent_site_name'
       Index = 8
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
       Size = 60
     end
     object qGazetteermunicipality_id: TLargeintField
-      DisplayLabel = 'Município (ID)'
+      DisplayLabel = 'Municipality (ID)'
       FieldKind = fkData
       FieldName = 'municipality_id'
       Index = 9
@@ -10797,7 +10797,7 @@ object DMG: TDMG
       Visible = False
     end
     object qGazetteerstate_id: TLargeintField
-      DisplayLabel = 'Estado (ID)'
+      DisplayLabel = 'State (ID)'
       FieldKind = fkData
       FieldName = 'state_id'
       Index = 10
@@ -10808,7 +10808,7 @@ object DMG: TDMG
       Visible = False
     end
     object qGazetteercountry_id: TLargeintField
-      DisplayLabel = 'País (ID)'
+      DisplayLabel = 'Country (ID)'
       FieldKind = fkData
       FieldName = 'country_id'
       Index = 11
@@ -10819,7 +10819,7 @@ object DMG: TDMG
       Visible = False
     end
     object qGazetteerfull_name: TStringField
-      DisplayLabel = 'Nome completo'
+      DisplayLabel = 'Full name'
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'full_name'
@@ -10831,7 +10831,7 @@ object DMG: TDMG
       Size = 180
     end
     object qGazetteerebird_name: TStringField
-      DisplayLabel = 'Nome no eBird'
+      DisplayLabel = 'eBird name'
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'ebird_name'
@@ -10843,7 +10843,7 @@ object DMG: TDMG
       Size = 150
     end
     object qGazetteerlanguage: TStringField
-      DisplayLabel = 'Idioma'
+      DisplayLabel = 'Language'
       FieldKind = fkData
       FieldName = 'language'
       Index = 14
@@ -10854,7 +10854,7 @@ object DMG: TDMG
       Size = 10
     end
     object qGazetteerdescription: TMemoField
-      DisplayLabel = 'Descrição'
+      DisplayLabel = 'Description'
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'description'
@@ -10866,22 +10866,12 @@ object DMG: TDMG
       BlobType = ftMemo
       Transliterate = False
     end
-    object qGazetteersite_id: TLargeintField
-      DisplayLabel = 'Nº interno'
-      FieldKind = fkData
-      FieldName = 'site_id'
-      Index = 16
-      LookupCache = False
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = False
-      Required = True
-    end
     object qGazetteernotes: TMemoField
-      DisplayLabel = 'Anotações'
+      DisplayLabel = 'Notes'
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 17
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -10889,8 +10879,18 @@ object DMG: TDMG
       BlobType = ftMemo
       Transliterate = False
     end
+    object qGazetteersite_id: TLargeintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'site_id'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
     object qGazetteeruser_inserted: TLongintField
-      DisplayLabel = 'Criado por'
+      DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
       Index = 18
@@ -10898,9 +10898,10 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qGazetteeruser_updated: TLongintField
-      DisplayLabel = 'Modificado por'
+      DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
       Index = 19
@@ -10908,10 +10909,11 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qGazetteerinsert_date: TDateTimeField
       Alignment = taCenter
-      DisplayLabel = 'Data de criação'
+      DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
       Index = 20
@@ -10919,10 +10921,11 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qGazetteerupdate_date: TDateTimeField
       Alignment = taCenter
-      DisplayLabel = 'Data de modificação'
+      DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
       Index = 21
@@ -10930,10 +10933,11 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qGazetteerexported_status: TBooleanField
       Alignment = taCenter
-      DisplayLabel = 'Exportado'
+      DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
       Index = 22
@@ -10941,11 +10945,12 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       DisplayValues = 'True;False'
     end
     object qGazetteeractive_status: TBooleanField
       Alignment = taCenter
-      DisplayLabel = 'Ativo'
+      DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
       Index = 23
@@ -10953,6 +10958,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       DisplayValues = 'True;False'
     end
   end
@@ -11096,7 +11102,7 @@ object DMG: TDMG
     Left = 371
     Top = 360
     object qNetStationsmarked_status: TBooleanField
-      DisplayLabel = 'Marcado'
+      DisplayLabel = 'Marked'
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'marked_status'
@@ -11108,7 +11114,7 @@ object DMG: TDMG
       DisplayValues = 'True;False'
     end
     object qNetStationsstation_name: TStringField
-      DisplayLabel = 'Nome'
+      DisplayLabel = 'Name'
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'station_name'
@@ -11120,7 +11126,7 @@ object DMG: TDMG
       Size = 100
     end
     object qNetStationsstation_acronym: TStringField
-      DisplayLabel = 'Abreviatura'
+      DisplayLabel = 'Acronym'
       FieldKind = fkData
       FieldName = 'station_acronym'
       Index = 2
@@ -11131,7 +11137,7 @@ object DMG: TDMG
       Size = 10
     end
     object qNetStationslocality_id: TLongintField
-      DisplayLabel = 'Localidade (ID)'
+      DisplayLabel = 'Locality (ID)'
       FieldKind = fkData
       FieldName = 'locality_id'
       Index = 3
@@ -11142,7 +11148,7 @@ object DMG: TDMG
       Visible = False
     end
     object qNetStationslocality_name: TStringField
-      DisplayLabel = 'Localidade'
+      DisplayLabel = 'Locality'
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'locality_name'
@@ -11154,7 +11160,7 @@ object DMG: TDMG
       Size = 180
     end
     object qNetStationscountry_id: TLongintField
-      DisplayLabel = 'País (ID)'
+      DisplayLabel = 'Country (ID)'
       FieldKind = fkData
       FieldName = 'country_id'
       Index = 5
@@ -11165,7 +11171,7 @@ object DMG: TDMG
       Visible = False
     end
     object qNetStationsstate_id: TLongintField
-      DisplayLabel = 'Estado (ID)'
+      DisplayLabel = 'State (ID)'
       FieldKind = fkData
       FieldName = 'state_id'
       Index = 6
@@ -11176,7 +11182,7 @@ object DMG: TDMG
       Visible = False
     end
     object qNetStationsmunicipality_id: TLongintField
-      DisplayLabel = 'Município (ID)'
+      DisplayLabel = 'Municipality (ID)'
       FieldKind = fkData
       FieldName = 'municipality_id'
       Index = 7
@@ -11211,7 +11217,7 @@ object DMG: TDMG
       Precision = -1
     end
     object qNetStationsarea_shape: TStringField
-      DisplayLabel = 'Formato da parcela'
+      DisplayLabel = 'Area shape'
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'area_shape'
@@ -11223,7 +11229,7 @@ object DMG: TDMG
       Size = 5
     end
     object qNetStationsdescription: TMemoField
-      DisplayLabel = 'Descrição'
+      DisplayLabel = 'Description'
       DisplayWidth = 60
       FieldKind = fkData
       FieldName = 'description'
@@ -11235,22 +11241,12 @@ object DMG: TDMG
       BlobType = ftMemo
       Transliterate = False
     end
-    object qNetStationsnet_station_id: TAutoIncField
-      DisplayLabel = 'Nº interno'
-      FieldKind = fkData
-      FieldName = 'net_station_id'
-      Index = 12
-      LookupCache = False
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = False
-      Required = True
-    end
     object qNetStationsnotes: TMemoField
-      DisplayLabel = 'Anotações'
+      DisplayLabel = 'Notes'
       DisplayWidth = 60
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 13
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11258,8 +11254,18 @@ object DMG: TDMG
       BlobType = ftMemo
       Transliterate = False
     end
+    object qNetStationsnet_station_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'net_station_id'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
     object qNetStationsuser_inserted: TLongintField
-      DisplayLabel = 'Criado por'
+      DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
       Index = 14
@@ -11270,7 +11276,7 @@ object DMG: TDMG
       Visible = False
     end
     object qNetStationsuser_updated: TLongintField
-      DisplayLabel = 'Modificado por'
+      DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
       Index = 15
@@ -11281,7 +11287,7 @@ object DMG: TDMG
       Visible = False
     end
     object qNetStationsinsert_date: TDateTimeField
-      DisplayLabel = 'Data de criação'
+      DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
       Index = 16
@@ -11292,7 +11298,7 @@ object DMG: TDMG
       Visible = False
     end
     object qNetStationsupdate_date: TDateTimeField
-      DisplayLabel = 'Data de modificação'
+      DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
       Index = 17
@@ -11303,7 +11309,7 @@ object DMG: TDMG
       Visible = False
     end
     object qNetStationsexported_status: TBooleanField
-      DisplayLabel = 'Exportado'
+      DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
       Index = 18
@@ -11315,7 +11321,7 @@ object DMG: TDMG
       DisplayValues = 'True;False'
     end
     object qNetStationsactive_status: TBooleanField
-      DisplayLabel = 'Ativo'
+      DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
       Index = 19
@@ -11429,7 +11435,7 @@ object DMG: TDMG
     Top = 419
     object qPermanentNetsmarked_status: TBooleanField
       Alignment = taCenter
-      DisplayLabel = 'Marcado'
+      DisplayLabel = 'Marked'
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'marked_status'
@@ -11441,7 +11447,7 @@ object DMG: TDMG
       DisplayValues = 'True;False'
     end
     object qPermanentNetsnet_station_id: TLongintField
-      DisplayLabel = 'Estação de redes (ID)'
+      DisplayLabel = 'Mistnet station (ID)'
       FieldKind = fkData
       FieldName = 'net_station_id'
       Index = 1
@@ -11453,7 +11459,7 @@ object DMG: TDMG
     end
     object qPermanentNetsnet_number: TLongintField
       Alignment = taCenter
-      DisplayLabel = 'Nº da rede'
+      DisplayLabel = 'Mistnet nr.'
       FieldKind = fkData
       FieldName = 'net_number'
       Index = 2
@@ -11487,7 +11493,7 @@ object DMG: TDMG
       Precision = -1
     end
     object qPermanentNetsfull_name: TStringField
-      DisplayLabel = 'Nome completo'
+      DisplayLabel = 'Full name'
       FieldKind = fkData
       FieldName = 'full_name'
       Index = 5
@@ -11495,10 +11501,11 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 50
     end
     object qPermanentNetsnotes: TStringField
-      DisplayLabel = 'Anotações'
+      DisplayLabel = 'Notes'
       DisplayWidth = 60
       FieldKind = fkData
       FieldName = 'notes'
@@ -11510,7 +11517,7 @@ object DMG: TDMG
       Size = 150
     end
     object qPermanentNetspermanent_net_id: TAutoIncField
-      DisplayLabel = 'Nº interno'
+      DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'permanent_net_id'
       Index = 7
@@ -11520,7 +11527,7 @@ object DMG: TDMG
       Required = False
     end
     object qPermanentNetsuser_inserted: TLongintField
-      DisplayLabel = 'Criado por'
+      DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
       Index = 8
@@ -11531,7 +11538,7 @@ object DMG: TDMG
       Visible = False
     end
     object qPermanentNetsuser_updated: TLongintField
-      DisplayLabel = 'Modificado por'
+      DisplayLabel = 'Modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
       Index = 9
@@ -11543,7 +11550,7 @@ object DMG: TDMG
     end
     object qPermanentNetsinsert_date: TDateTimeField
       Alignment = taCenter
-      DisplayLabel = 'Data de criação'
+      DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
       Index = 10
@@ -11555,7 +11562,7 @@ object DMG: TDMG
     end
     object qPermanentNetsupdate_date: TDateTimeField
       Alignment = taCenter
-      DisplayLabel = 'Data de modificação'
+      DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
       Index = 11
@@ -11567,7 +11574,7 @@ object DMG: TDMG
     end
     object qPermanentNetsexported_status: TBooleanField
       Alignment = taCenter
-      DisplayLabel = 'Exportado'
+      DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
       Index = 12
@@ -11580,7 +11587,7 @@ object DMG: TDMG
     end
     object qPermanentNetsactive_status: TBooleanField
       Alignment = taCenter
-      DisplayLabel = 'Ativo'
+      DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
       Index = 13
@@ -12428,6 +12435,7 @@ object DMG: TDMG
       Size = 150
     end
     object qPermitsnotes: TMemoField
+      DisplayLabel = 'Notes'
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'notes'

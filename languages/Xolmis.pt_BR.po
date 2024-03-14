@@ -6679,6 +6679,10 @@ msgstr "Tipo de suporte"
 msgid "Not reported"
 msgstr "Não reportada"
 
+#: tfrmcustomgrid.lblpersonfilter.caption
+msgid "Person"
+msgstr ""
+
 #: tfrmcustomgrid.lblrecordstatus.caption
 msgctxt "tfrmcustomgrid.lblrecordstatus.caption"
 msgid "Loading records..."
@@ -6699,8 +6703,10 @@ msgid "Locations"
 msgstr "Locais"
 
 #: tfrmcustomgrid.lblsiterankfilter.caption
+#, fuzzy
+#| msgid "Location rank"
 msgctxt "tfrmcustomgrid.lblsiterankfilter.caption"
-msgid "Location rank"
+msgid "Site rank"
 msgstr "Nível do local"
 
 #: tfrmcustomgrid.lblskullossificationfilter.caption
@@ -7962,3 +7968,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

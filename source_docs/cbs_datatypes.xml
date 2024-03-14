@@ -12,6 +12,25 @@
       </element><element name="SearchDataTypes"><short>Strings for search data types.</short>
       </element><element name="StrSeparators"><short>Strings for types of separators.</short>
       </element>
+    <element name="TCustomSearchField"><short>Base to search field types</short><descr>It has fields for data types, criteria, values to search, and if it is a lookup field.
+</descr>
+      </element><element name="TSearchField"><short>Default search field type</short><descr>It adds field name and display name to TCustomSearchField.
+</descr>
+      </element><element name="TSearchFields"><short>List of search fields</short>
+      </element><element name="TSortDirection"><short>Direction of sorting types</short>
+      </element><element name="TSortType"><short>Types of sorting</short>
+      </element><element name="TSortedField"><short>Sorted field data</short><descr>It has data for field name to sort, direction of sorting, collation, and if it is a lookup field.
+</descr>
+      </element><element name="TSortedFields"><short>List of sorted fields</short>
+      </element><element name="SortDirections"><short>Strings of sorting directions</short>
+      </element><element name="TSearchGroup"><short>Group of field to search</short>
+      </element><element name="TSearchGroups"><short>List of search groups</short>
+      </element><element name="TCustomSearch"><short>Base type for seaches</short><descr>It has data and routines to execute searches in a database table.
+</descr>
+      </element><element name="TTableField"><short>Table field parameters</short>
+      </element><element name="TTableFields"><short>List of table fields</short>
+      </element><element name="TTableInfo"><short>Table parameters</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

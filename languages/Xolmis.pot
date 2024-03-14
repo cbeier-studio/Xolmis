@@ -6653,6 +6653,10 @@ msgstr ""
 msgid "Not reported"
 msgstr ""
 
+#: tfrmcustomgrid.lblpersonfilter.caption
+msgid "Person"
+msgstr ""
+
 #: tfrmcustomgrid.lblrecordstatus.caption
 msgctxt "tfrmcustomgrid.lblrecordstatus.caption"
 msgid "Loading records..."
@@ -6674,7 +6678,7 @@ msgstr ""
 
 #: tfrmcustomgrid.lblsiterankfilter.caption
 msgctxt "tfrmcustomgrid.lblsiterankfilter.caption"
-msgid "Location rank"
+msgid "Site rank"
 msgstr ""
 
 #: tfrmcustomgrid.lblskullossificationfilter.caption
