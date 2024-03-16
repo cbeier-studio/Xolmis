@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons,
   ActnList, ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton,
-  BGRASpriteAnimation, UniqueInstance, DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory,
+  DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory,
   cbs_datatypes;
 
 type
@@ -204,7 +204,6 @@ type
     TimerScreen: TTimer;
     TimerAnimSearch: TTimer;
     TimerFind: TTimer;
-    UniqueInstance1: TUniqueInstance;
     procedure actAboutExecute(Sender: TObject);
     procedure actCoordinatesConverterExecute(Sender: TObject);
     procedure actDBConnectExecute(Sender: TObject);
@@ -675,6 +674,13 @@ begin
     if not DatabaseConfig then
       Application.Terminate;
   Application.ProcessMessages;
+
+  { Check if there are users available }
+  //if not Application.Terminated then
+  //  if DMM.qUsers.RecordCount = 0 then
+  //    if not DatabaseConfig then
+  //      Application.Terminate;
+  //Application.ProcessMessages;
 
   { Open connection dialog and try to connect to database }
   if not Application.Terminated then
@@ -1233,6 +1239,7 @@ begin
   // SBarTaxonomy.Caption:= TaxonomyName[ActiveTaxonomy];
 
   // Get user permissions
+  actMaintenance.Enabled := ActiveUser.Rank = 'A';
   actExport.Enabled := ActiveUser.AllowExport;
   actImport.Enabled := ActiveUser.AllowImport;
   actPrint.Enabled := ActiveUser.AllowPrint;

@@ -16,7 +16,7 @@ interface
 
 uses
   { System }
-  Classes, SysUtils, Variants, DateUtils, StrUtils, Generics.Collections, RegExpr,
+  Classes, SysUtils, Variants, DateUtils, StrUtils, Generics.Collections, RegExpr, fileutil,
   { VCL }
   Controls, ExtCtrls, Forms, Dialogs, StdCtrls, DBCtrls,
   { Data }
@@ -233,39 +233,43 @@ begin
       LogDebug('Creating database: ' + aFilename);
       {$ENDIF}
       try
+        Result := CopyFile(ConcatPaths([AppDataDir, 'XolmisDB_template.sqlite3']), aFilename, False, True);
+
+        if Result then
+          DMM.sqlCon.DatabaseName := aFilename;
+
         //DMM.sqlCon.ConnectorType := 'SQLite3';
-        DMM.sqlCon.DatabaseName := aFilename;
         //DMM.sqlCon.Open;
-        if not DMM.sqlTrans.Active then
-          DMM.sqlTrans.StartTransaction;
+        //if not DMM.sqlTrans.Active then
+        //  DMM.sqlTrans.StartTransaction;
 
         { Create tables and stuff }
         //DMM.sqlCon.CreateDB;
-        try
-          DMM.scriptNewUserDB.ExecuteScript;
-        finally
-          if DMM.scriptNewUserDB.Aborted then
-            DMM.sqlTrans.RollbackRetaining
-          else
-            DMM.sqlTrans.CommitRetaining;
-        end;
+        //try
+        //  DMM.scriptNewUserDB.ExecuteScript;
+        //finally
+        //  if DMM.scriptNewUserDB.Aborted then
+        //    DMM.sqlTrans.RollbackRetaining
+        //  else
+        //    DMM.sqlTrans.CommitRetaining;
+        //end;
 
-        if not DMM.sqlTrans.Active then
-          DMM.sqlTrans.StartTransaction;
+        //if not DMM.sqlTrans.Active then
+        //  DMM.sqlTrans.StartTransaction;
         { Populate tables }
-        try
-          DMM.scriptUserDBInit.ExecuteScript;
-        finally
-          if DMM.scriptUserDBInit.Aborted then
-            DMM.sqlTrans.RollbackRetaining
-          else
-            DMM.sqlTrans.CommitRetaining;
-        end;
+        //try
+        //  DMM.scriptUserDBInit.ExecuteScript;
+        //finally
+        //  if DMM.scriptUserDBInit.Aborted then
+        //    DMM.sqlTrans.RollbackRetaining
+        //  else
+        //    DMM.sqlTrans.CommitRetaining;
+        //end;
 
         LogInfo(Format('User database succesfully created (SQLite): %s', [aFileName]));
         Result := True;
       except
-        DMM.sqlTrans.RollbackRetaining;
+        //DMM.sqlTrans.RollbackRetaining;
         LogError(Format('Unable to create the user database (SQLite): %s', [aFileName]));
         Result := False;
       end;

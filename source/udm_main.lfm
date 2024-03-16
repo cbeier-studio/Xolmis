@@ -9981,4 +9981,11 @@ object DMM: TDMM
     Left = 262
     Top = 173
   end
+  object UniqueInstance1: TUniqueInstance
+    Enabled = True
+    Identifier = '4DB7D3F0-8B6A-45EA-9AC3-3B52A6359DC5'
+    OnOtherInstance = UniqueInstance1OtherInstance
+    Left = 432
+    Top = 333
+  end
 end

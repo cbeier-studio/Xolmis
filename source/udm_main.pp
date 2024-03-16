@@ -5,9 +5,8 @@ unit udm_main;
 interface
 
 uses
-  Classes, SysUtils, StrUtils, Forms, Dialogs, ExtDlgs, Controls, DB, BufDataset, SdfData, SQLDB,
-  SQLDBLib, IBConnection, SQLite3Conn, fpjson, eventlog,
-  cbs_system, SQLScript;
+  Classes, SysUtils, StrUtils, Forms, Dialogs, ExtDlgs, Controls, UniqueInstance, DB, BufDataset, SdfData,
+  SQLDB, SQLDBLib, IBConnection, SQLite3Conn, fpjson, eventlog, cbs_system, SQLScript;
 
 type
 
@@ -74,6 +73,7 @@ type
     tabGeoBanklatitude: TFloatField;
     tabGeoBanklongitude: TFloatField;
     TaskDlg: TTaskDialog;
+    UniqueInstance1: TUniqueInstance;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure qsConnAfterInsert(DataSet: TDataSet);
@@ -88,6 +88,8 @@ type
     procedure qUsersuser_rankSetText(Sender: TField; const aText: string);
     procedure sqlConBeforeConnect(Sender: TObject);
     procedure sysConBeforeConnect(Sender: TObject);
+    procedure UniqueInstance1OtherInstance(Sender: TObject; ParamCount: Integer;
+      const Parameters: array of String);
   private
     UID: TGUID;
     OldUser: TUser;
@@ -274,6 +276,13 @@ end;
 procedure TDMM.sysConBeforeConnect(Sender: TObject);
 begin
   sysCon.DatabaseName := ConcatPaths([AppDataDir, 'systemdb.sqlite3']);
+end;
+
+procedure TDMM.UniqueInstance1OtherInstance(Sender: TObject; ParamCount: Integer;
+  const Parameters: array of String);
+begin
+  Application.Restore;
+  Application.BringToFront;
 end;
 
 procedure TDMM.OpenSystemDatabase;

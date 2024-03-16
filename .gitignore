@@ -34,11 +34,9 @@ published/
 *.app/
 
 # User defined
-*.sqlite3
+#*.sqlite3
 test/
 data/
 *.json
 *.ini
-tools/taxonomy_editor/*.dll
 
-*.sqlite3
