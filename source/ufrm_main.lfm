@@ -1500,11 +1500,11 @@ object frmMain: TfrmMain
   end
   object pSplash: TPanel
     Left = 592
-    Height = 352
+    Height = 416
     Top = 160
     Width = 376
     BevelOuter = bvNone
-    ClientHeight = 352
+    ClientHeight = 416
     ClientWidth = 376
     Color = clWhite
     ParentBackground = False
@@ -1518,7 +1518,7 @@ object frmMain: TfrmMain
       AnchorSideTop.Side = asrBottom
       Left = 137
       Height = 35
-      Top = 304
+      Top = 336
       Width = 103
       BorderSpacing.Bottom = 12
       Caption = 'Welcome'
@@ -1535,10 +1535,22 @@ object frmMain: TfrmMain
       AnchorSideTop.Side = asrCenter
       Left = 60
       Height = 256
-      Top = 48
+      Top = 80
       Width = 256
       AutoSize = True
       Images = DMM.iLogos
+    end
+    object MarqueeBar: TProgressBar
+      AnchorSideLeft.Control = lblLoading
+      AnchorSideLeft.Side = asrCenter
+      AnchorSideTop.Control = lblLoading
+      AnchorSideTop.Side = asrBottom
+      Left = 60
+      Height = 7
+      Top = 383
+      Width = 256
+      Style = pbstMarquee
+      TabOrder = 0
     end
   end
   object bMenu: TImageList

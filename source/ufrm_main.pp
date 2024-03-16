@@ -6,8 +6,9 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons,
-  ActnList, ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton, UniqueInstance,
-  DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory, cbs_datatypes;
+  ActnList, ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton,
+  BGRASpriteAnimation, UniqueInstance, DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory,
+  cbs_datatypes;
 
 type
 
@@ -65,6 +66,7 @@ type
     actOpenBands: TAction;
     ActList: TActionList;
     AppEvents: TApplicationProperties;
+    MarqueeBar: TProgressBar;
     sbClearSearch: TColorSpeedButton;
     icoSbarDatabase: TImage;
     icoSbarUser: TImage;
