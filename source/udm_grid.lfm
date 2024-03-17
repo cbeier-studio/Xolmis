@@ -8450,7 +8450,6 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate]
       ReadOnly = False
       Required = False
-      BlobType = ftTypedBinary
     end
     object qPeopleprofile_color: TStringField
       DisplayLabel = 'Profile color'

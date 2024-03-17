@@ -547,7 +547,7 @@ begin
       FAcronym := FieldByName('acronym').AsString;
       FCitation := FieldByName('citation').AsString;
       FTitleTreatment := FieldByName('title_treatment').AsString;
-      FGenre := FieldByName('genre').AsString;
+      FGenre := FieldByName('gender').AsString;
       FBirthDate := FieldByName('birth_date').AsDateTime;
       FDeathDate := FieldByName('death_date').AsDateTime;
       FIdDocument1 := FieldByName('national_id_card').AsString;

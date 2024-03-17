@@ -84,7 +84,7 @@ end;
 
 procedure TedtPermanentNet.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtPermanentNet.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

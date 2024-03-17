@@ -131,7 +131,7 @@ end;
 
 procedure TedtPermit.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtPermit.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

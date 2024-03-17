@@ -162,7 +162,7 @@ end;
 
 procedure TedtExpedition.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtExpedition.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

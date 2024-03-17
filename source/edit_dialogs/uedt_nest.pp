@@ -396,7 +396,7 @@ end;
 
 procedure TedtNest.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtNest.FormCreate(Sender: TObject);

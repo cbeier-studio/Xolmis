@@ -209,7 +209,7 @@ end;
 
 procedure TedtSpecimen.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtSpecimen.FormCreate(Sender: TObject);

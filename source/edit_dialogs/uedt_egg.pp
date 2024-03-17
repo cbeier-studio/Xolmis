@@ -104,7 +104,7 @@ uses cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_ta
 
 procedure TedtEgg.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtEgg.dsLinkDataChange(Sender: TObject; Field: TField);

@@ -104,7 +104,7 @@ end;
 
 procedure TedtProject.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtProject.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

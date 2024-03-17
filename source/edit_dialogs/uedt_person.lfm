@@ -1219,7 +1219,6 @@ object edtPerson: TedtPerson
         Top = 16
         Width = 399
         Align = alTop
-        AutoSize = True
         BorderSpacing.Bottom = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
@@ -1235,6 +1234,7 @@ object edtPerson: TedtPerson
           Top = 0
           Width = 90
           Align = alLeft
+          AntialiasingMode = amOn
           DataField = 'profile_image'
           DataSource = dsLink
           PopupMenu = pmImage

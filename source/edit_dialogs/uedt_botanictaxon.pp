@@ -155,7 +155,7 @@ end;
 
 procedure TedtBotanicTaxon.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtBotanicTaxon.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

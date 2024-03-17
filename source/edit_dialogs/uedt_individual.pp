@@ -387,7 +387,7 @@ end;
 
 procedure TedtIndividual.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtIndividual.FormCreate(Sender: TObject);

@@ -246,7 +246,7 @@ end;
 
 procedure TedtBands.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtBands.FormCreate(Sender: TObject);

@@ -103,7 +103,7 @@ end;
 
 procedure TedtWeatherLog.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtWeatherLog.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

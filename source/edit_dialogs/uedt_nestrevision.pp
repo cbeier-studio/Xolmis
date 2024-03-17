@@ -232,7 +232,7 @@ end;
 
 procedure TedtNestRevision.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtNestRevision.FormCreate(Sender: TObject);

@@ -472,7 +472,7 @@ end;
 
 procedure TedtImageInfo.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction := caFree;
+  // CloseAction := caFree;
 end;
 
 procedure TedtImageInfo.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
