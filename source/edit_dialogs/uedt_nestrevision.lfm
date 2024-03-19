@@ -4,6 +4,7 @@ object edtNestRevision: TedtNestRevision
   Top = 33
   Width = 400
   AutoSize = True
+  BorderIcons = [biSystemMenu]
   Caption = 'New nest revision'
   ClientHeight = 643
   ClientWidth = 400

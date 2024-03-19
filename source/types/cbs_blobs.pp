@@ -356,7 +356,7 @@ begin
     {$ENDIF}
     if Qry.RecordCount > 0 then
     begin
-      (FieldByName('image_thumbnail') as TBlobField).BlobType := ftGraphic;
+      //(FieldByName('image_thumbnail') as TBlobField).BlobType := ftGraphic;
       First;
       DMM.sqlTrans.EndTransaction;
       DMM.sqlTrans.StartTransaction;

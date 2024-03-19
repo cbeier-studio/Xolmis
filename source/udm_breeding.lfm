@@ -1,10 +1,9 @@
 object DMB: TDMB
   OldCreateOrder = False
-  Height = 513
-  HorizontalOffset = 466
-  VerticalOffset = 43
-  Width = 658
-  PPI = 120
+  Height = 410
+  HorizontalOffset = 373
+  VerticalOffset = 34
+  Width = 526
   object qNestRevisions: TSQLQuery
     PacketRecords = -1
     FieldDefs = <    
@@ -154,8 +153,8 @@ object DMB: TDMB
       end>
     Macros = <>
     DataSource = DMG.dsNests
-    Left = 90
-    Top = 60
+    Left = 72
+    Top = 48
     object qNestRevisionsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -644,8 +643,8 @@ object DMB: TDMB
       end>
     Macros = <>
     DataSource = DMG.dsNests
-    Left = 90
-    Top = 141
+    Left = 72
+    Top = 113
     object qEggsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -799,6 +798,8 @@ object DMB: TDMB
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qEggseggshell_patternGetText
+      OnSetText = qEggseggshell_patternSetText
       Size = 5
     end
     object qEggseggshell_texture: TStringField
@@ -811,6 +812,8 @@ object DMB: TDMB
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qEggseggshell_textureGetText
+      OnSetText = qEggseggshell_textureSetText
       Size = 5
     end
     object qEggsegg_stage: TStringField
@@ -1013,13 +1016,13 @@ object DMB: TDMB
   end
   object dsNestRevisions: TDataSource
     DataSet = qNestRevisions
-    Left = 250
-    Top = 60
+    Left = 200
+    Top = 48
   end
   object dsEggs: TDataSource
     DataSet = qEggs
-    Left = 250
-    Top = 141
+    Left = 200
+    Top = 113
   end
   object qNestOwners: TSQLQuery
     PacketRecords = -1
@@ -1110,8 +1113,8 @@ object DMB: TDMB
       end>
     Macros = <>
     DataSource = DMG.dsNests
-    Left = 90
-    Top = 224
+    Left = 72
+    Top = 179
     object qNestOwnersmarked_status: TBooleanField
       DisplayLabel = 'Marked'
       FieldKind = fkData
@@ -1136,6 +1139,7 @@ object DMB: TDMB
     end
     object qNestOwnersrole: TStringField
       DisplayLabel = 'Role'
+      DisplayWidth = 12
       FieldKind = fkData
       FieldName = 'role'
       Index = 2
@@ -1143,6 +1147,8 @@ object DMB: TDMB
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qNestOwnersroleGetText
+      OnSetText = qNestOwnersroleSetText
       Size = 5
     end
     object qNestOwnersindividual_id: TLongintField
@@ -1250,7 +1256,7 @@ object DMB: TDMB
   end
   object dsNestOwners: TDataSource
     DataSet = qNestOwners
-    Left = 250
-    Top = 224
+    Left = 200
+    Top = 179
   end
 end

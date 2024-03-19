@@ -409,6 +409,7 @@ msgid "Egg"
 msgstr ""
 
 #: cbs_locale.rscaptionexpedition
+msgctxt "cbs_locale.rscaptionexpedition"
 msgid "Expedition"
 msgstr ""
 
@@ -515,6 +516,10 @@ msgctxt "cbs_locale.rscaptionnest"
 msgid "Nest"
 msgstr ""
 
+#: cbs_locale.rscaptionnestowner
+msgid "Nest owner"
+msgstr ""
+
 #: cbs_locale.rscaptionnestrevision
 msgid "Nest revision"
 msgstr ""
@@ -577,6 +582,7 @@ msgid "Removed band"
 msgstr ""
 
 #: cbs_locale.rscaptionsamplingplot
+msgctxt "cbs_locale.rscaptionsamplingplot"
 msgid "Sampling plot"
 msgstr ""
 
@@ -924,22 +930,80 @@ msgctxt "cbs_locale.rseditedbyimport"
 msgid "Edited by import"
 msgstr ""
 
-#: cbs_locale.rseggelliptic
-msgid "Elliptic"
+#: cbs_locale.rseggbiconical
+msgid "Biconical"
 msgstr ""
 
-#: cbs_locale.rseggovoid
-msgctxt "cbs_locale.rseggovoid"
-msgid "Ovoid"
+#: cbs_locale.rseggblotches
+msgid "Blotches"
+msgstr ""
+
+#: cbs_locale.rseggblotchessquiggles
+msgid "Blotches and squiggles"
+msgstr ""
+
+#: cbs_locale.rseggchalky
+msgid "Chalky"
+msgstr ""
+
+#: cbs_locale.rseggconical
+msgid "Conical"
+msgstr ""
+
+#: cbs_locale.rseggcylindrical
+msgid "Cylindrical"
+msgstr ""
+
+#: cbs_locale.rseggelliptical
+msgid "Elliptical"
+msgstr ""
+
+#: cbs_locale.rseggglossy
+msgid "Glossy"
+msgstr ""
+
+#: cbs_locale.rsegglongitudinal
+msgid "Longitudinal"
+msgstr ""
+
+#: cbs_locale.rseggoval
+msgid "Oval"
+msgstr ""
+
+#: cbs_locale.rseggpitted
+msgid "Pitted"
 msgstr ""
 
 #: cbs_locale.rseggpyriform
 msgid "Pyriform"
 msgstr ""
 
-#: cbs_locale.rseggspheric
-msgctxt "cbs_locale.rseggspheric"
-msgid "Spheric"
+#: cbs_locale.rseggscrawls
+msgid "Scrawls"
+msgstr ""
+
+#: cbs_locale.rseggshiny
+msgid "Shiny"
+msgstr ""
+
+#: cbs_locale.rseggspherical
+msgid "Spherical"
+msgstr ""
+
+#: cbs_locale.rseggspots
+msgid "Spots"
+msgstr ""
+
+#: cbs_locale.rseggspotssquiggles
+msgid "Spots and squiggles"
+msgstr ""
+
+#: cbs_locale.rseggsquiggles
+msgid "Squiggles"
+msgstr ""
+
+#: cbs_locale.rseggstreaks
+msgid "Streaks"
 msgstr ""
 
 #: cbs_locale.rseggunknown
@@ -1641,9 +1705,17 @@ msgctxt "cbs_locale.rsnestbuilding"
 msgid "Building"
 msgstr ""
 
+#: cbs_locale.rsnestfemale
+msgid "Breeding female"
+msgstr ""
+
 #: cbs_locale.rsnesthatching
 msgctxt "cbs_locale.rsnesthatching"
 msgid "Hatching"
+msgstr ""
+
+#: cbs_locale.rsnesthelper
+msgid "Helper"
 msgstr ""
 
 #: cbs_locale.rsnestinactive
@@ -1665,9 +1737,21 @@ msgctxt "cbs_locale.rsnestlost"
 msgid "Lost"
 msgstr ""
 
+#: cbs_locale.rsnestmale
+msgid "Breeding male"
+msgstr ""
+
 #: cbs_locale.rsnestnestling
 msgctxt "cbs_locale.rsnestnestling"
 msgid "Nestling"
+msgstr ""
+
+#: cbs_locale.rsnestoffspring
+msgid "Offspring"
+msgstr ""
+
+#: cbs_locale.rsnestownersrolelist
+msgid "\"Breeding male\",\"Breeding female\",\"Helper\",\"Offspring\",\"Unknown\""
 msgstr ""
 
 #: cbs_locale.rsnestsuccess
@@ -2482,6 +2566,10 @@ msgstr ""
 #: cbs_locale.rstitlemolts
 msgctxt "cbs_locale.rstitlemolts"
 msgid "Molts"
+msgstr ""
+
+#: cbs_locale.rstitlenestowners
+msgid "Owners"
 msgstr ""
 
 #: cbs_locale.rstitlenestrevisions
@@ -4297,7 +4385,7 @@ msgid "Observer: *"
 msgstr ""
 
 #: tedtegg.lblshape.caption
-msgid "Format:"
+msgid "Shape:"
 msgstr ""
 
 #: tedtegg.lblshellcolor.caption
@@ -5191,6 +5279,30 @@ msgstr ""
 
 #: tedtnest.sbsave.caption
 msgctxt "tedtnest.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtnestowner.caption
+msgctxt "tedtnestowner.caption"
+msgid "New nest owner"
+msgstr ""
+
+#: tedtnestowner.lblindividual.caption
+msgctxt "tedtnestowner.lblindividual.caption"
+msgid "Individual:"
+msgstr ""
+
+#: tedtnestowner.lblrole.caption
+msgid "Role: *"
+msgstr ""
+
+#: tedtnestowner.sbcancel.caption
+msgctxt "tedtnestowner.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtnestowner.sbsave.caption
+msgctxt "tedtnestowner.sbsave.caption"
 msgid "Save"
 msgstr ""
 
@@ -6590,6 +6702,11 @@ msgstr ""
 msgid "and"
 msgstr ""
 
+#: tfrmcustomgrid.lblexpeditionfilter.caption
+msgctxt "tfrmcustomgrid.lblexpeditionfilter.caption"
+msgid "Expedition"
+msgstr ""
+
 #: tfrmcustomgrid.lblextinctfilter.caption
 msgid "Extinct"
 msgstr ""
@@ -6616,6 +6733,11 @@ msgstr ""
 
 #: tfrmcustomgrid.lblhowsexedfilter.caption
 msgid "How was sexed"
+msgstr ""
+
+#: tfrmcustomgrid.lblindividualfilter.caption
+msgctxt "tfrmcustomgrid.lblindividualfilter.caption"
+msgid "Individual"
 msgstr ""
 
 #: tfrmcustomgrid.lblinstitutionfilter.caption
@@ -6646,6 +6768,11 @@ msgstr ""
 msgid "Fate"
 msgstr ""
 
+#: tfrmcustomgrid.lblnestfilter.caption
+msgctxt "tfrmcustomgrid.lblnestfilter.caption"
+msgid "Nest"
+msgstr ""
+
 #: tfrmcustomgrid.lblnestsupportfilter.caption
 msgid "Support type"
 msgstr ""
@@ -6658,6 +6785,15 @@ msgstr ""
 msgid "Person"
 msgstr ""
 
+#: tfrmcustomgrid.lblplantfilter.caption
+msgid "Support plant"
+msgstr ""
+
+#: tfrmcustomgrid.lblprojectfilter.caption
+msgctxt "tfrmcustomgrid.lblprojectfilter.caption"
+msgid "Project"
+msgstr ""
+
 #: tfrmcustomgrid.lblrecordstatus.caption
 msgctxt "tfrmcustomgrid.lblrecordstatus.caption"
 msgid "Loading records..."
@@ -6666,6 +6802,11 @@ msgstr ""
 #: tfrmcustomgrid.lblreportedfilter.caption
 msgctxt "tfrmcustomgrid.lblreportedfilter.caption"
 msgid "Reported"
+msgstr ""
+
+#: tfrmcustomgrid.lblsamplingplotfilter.caption
+msgctxt "tfrmcustomgrid.lblsamplingplotfilter.caption"
+msgid "Sampling plot"
 msgstr ""
 
 #: tfrmcustomgrid.lblsexfilter.caption
@@ -6759,6 +6900,11 @@ msgstr ""
 #: tfrmcustomgrid.pmcnewnest.caption
 msgctxt "tfrmcustomgrid.pmcnewnest.caption"
 msgid "New nest"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewnestowner.caption
+msgctxt "tfrmcustomgrid.pmcnewnestowner.caption"
+msgid "New nest owner"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewnestrevision.caption

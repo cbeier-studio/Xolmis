@@ -10238,6 +10238,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qEggseggshell_patternGetText
+      OnSetText = qEggseggshell_patternSetText
       Size = 5
     end
     object qEggseggshell_texture: TStringField
@@ -10249,6 +10251,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qEggseggshell_textureGetText
+      OnSetText = qEggseggshell_textureSetText
       Size = 5
     end
     object qEggsegg_width: TFloatField

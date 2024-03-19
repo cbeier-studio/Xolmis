@@ -1149,6 +1149,10 @@ type
     procedure qEggsAfterPost(DataSet: TDataSet);
     procedure qEggsBeforeEdit(DataSet: TDataSet);
     procedure qEggsBeforePost(DataSet: TDataSet);
+    procedure qEggseggshell_patternGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qEggseggshell_patternSetText(Sender: TField; const aText: string);
+    procedure qEggseggshell_textureGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qEggseggshell_textureSetText(Sender: TField; const aText: string);
     procedure qEggsegg_shapeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qEggsegg_shapeSetText(Sender: TField; const aText: string);
     procedure qExpeditionsAfterCancel(DataSet: TDataSet);
@@ -1961,16 +1965,106 @@ begin
   SetRecordDateUser(DataSet);
 end;
 
+procedure TDMG.qEggseggshell_patternGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'P': aText := rsEggSpots;
+    'B': aText := rsEggBlotches;
+    'S': aText := rsEggSquiggles;
+    'T': aText := rsEggStreaks;
+    'W': aText := rsEggScrawls;
+    'PS': aText := rsEggSpotsSquiggles;
+    'BS': aText := rsEggBlotchesSquiggles;
+    'U': aText := rsEggUnknown;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qEggseggshell_patternSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsEggSpots then
+    Sender.AsString := 'P'
+  else
+  if aText = rsEggBlotches then
+    Sender.AsString := 'B'
+  else
+  if aText = rsEggSquiggles then
+    Sender.AsString := 'S'
+  else
+  if aText = rsEggStreaks then
+    Sender.AsString := 'T'
+  else
+  if aText = rsEggScrawls then
+    Sender.AsString := 'W'
+  else
+  if aText = rsEggSpotsSquiggles then
+    Sender.AsString := 'PS'
+  else
+  if aText = rsEggBlotchesSquiggles then
+    Sender.AsString := 'BS'
+  else
+  if aText = rsEggUnknown then
+    Sender.AsString := 'U';
+end;
+
+procedure TDMG.qEggseggshell_textureGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'C': aText := rsEggChalky;
+    'S': aText := rsEggShiny;
+    'G': aText := rsEggGlossy;
+    'P': aText := rsEggPitted;
+    'U': aText := rsEggUnknown;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qEggseggshell_textureSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsEggChalky then
+    Sender.AsString := 'C'
+  else
+  if aText = rsEggShiny then
+    Sender.AsString := 'S'
+  else
+  if aText = rsEggGlossy then
+    Sender.AsString := 'G'
+  else
+  if aText = rsEggPitted then
+    Sender.AsString := 'P'
+  else
+  if aText = rsEggUnknown then
+    Sender.AsString := 'U';
+end;
+
 procedure TDMG.qEggsegg_shapeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
 begin
   if Sender.AsString = EmptyStr then
     Exit;
 
   case Sender.AsString of
-    'R': aText := rsEggSpheric;
-    'E': aText := rsEggElliptic;
-    'O': aText := rsEggOvoid;
+    'S': aText := rsEggSpherical;
+    'E': aText := rsEggElliptical;
+    'O': aText := rsEggOval;
     'P': aText := rsEggPyriform;
+    'C': aText := rsEggConical;
+    'B': aText := rsEggBiconical;
+    'Y': aText := rsEggCylindrical;
+    'L': aText := rsEggLongitudinal;
     'U': aText := rsEggUnknown;
   end;
 
@@ -1982,17 +2076,29 @@ begin
   if aText = EmptyStr then
     Exit;
 
-  if aText = rsEggSpheric then
-    Sender.AsString := 'R'
+  if aText = rsEggSpherical then
+    Sender.AsString := 'S'
   else
-  if aText = rsEggElliptic then
+  if aText = rsEggElliptical then
     Sender.AsString := 'E'
   else
-  if aText = rsEggOvoid then
+  if aText = rsEggOval then
     Sender.AsString := 'O'
   else
   if aText = rsEggPyriform then
     Sender.AsString := 'P'
+  else
+  if aText = rsEggConical then
+    Sender.AsString := 'C'
+  else
+  if aText = rsEggBiconical then
+    Sender.AsString := 'B'
+  else
+  if aText = rsEggCylindrical then
+    Sender.AsString := 'Y'
+  else
+  if aText = rsEggLongitudinal then
+    Sender.AsString := 'L'
   else
   if aText = rsEggUnknown then
     Sender.AsString := 'U';

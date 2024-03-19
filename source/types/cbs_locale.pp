@@ -42,6 +42,7 @@ uses
     rsTitleIndividuals = 'Individuals';
     rsTitleMolts = 'Molts';
     rsTitleNests = 'Nests';
+    rsTitleNestOwners = 'Owners';
     rsTitleNestRevisions = 'Revisions';
     rsTitleEggs = 'Eggs';
     rsTitleInstitutions = 'Institutions';
@@ -454,12 +455,32 @@ uses
     rsNestLost = 'Lost';
     rsNestSuccess = 'Success';
     rsNestUnknown = 'Unknown';
+    rsNestOwnersRoleList = '"Breeding male","Breeding female","Helper","Offspring","Unknown"';
+    rsNestMale = 'Breeding male';
+    rsNestFemale = 'Breeding female';
+    rsNestHelper = 'Helper';
+    rsNestOffspring = 'Offspring';
 
-    rsEggSpheric = 'Spheric';
-    rsEggElliptic = 'Elliptic';
-    rsEggOvoid = 'Ovoid';
+    rsEggSpherical = 'Spherical';
+    rsEggElliptical = 'Elliptical';
+    rsEggOval = 'Oval';
     rsEggPyriform = 'Pyriform';
+    rsEggConical = 'Conical';
+    rsEggBiconical = 'Biconical';
+    rsEggCylindrical = 'Cylindrical';
+    rsEggLongitudinal = 'Longitudinal';
     rsEggUnknown = 'Unknown';
+    rsEggChalky = 'Chalky';
+    rsEggShiny = 'Shiny';
+    rsEggGlossy = 'Glossy';
+    rsEggPitted = 'Pitted';
+    rsEggStreaks = 'Streaks';
+    rsEggSpots = 'Spots';
+    rsEggBlotches = 'Blotches';
+    rsEggSquiggles = 'Squiggles';
+    rsEggScrawls = 'Scrawls';
+    rsEggSpotsSquiggles = 'Spots and squiggles';
+    rsEggBlotchesSquiggles = 'Blotches and squiggles';
 
     rsNestBuilding = 'Building';
     rsNestLaying = 'Laying';
@@ -633,6 +654,7 @@ uses
     rsCaptionAudioLibrary = 'Audio recordings';
     rsCaptionEgg = 'Egg';
     rsCaptionNestRevision = 'Nest revision';
+    rsCaptionNestOwner = 'Nest owner';
     rsCaptionCapture = 'Capture';
     rsCaptionMolt = 'Molt';
     rsCaptionMistnet = 'Mistnet';

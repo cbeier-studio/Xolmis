@@ -43,17 +43,34 @@ type
     dsLink3: TDataSource;
     dsLink4: TDataSource;
     dsLink5: TDataSource;
+    eNestFilter: TEditButton;
+    eIndividualFilter: TEditButton;
+    eExpeditionFilter: TEditButton;
+    ePlantFilter: TEditButton;
+    eSamplingPlotFilter: TEditButton;
     eSurveyFilter: TEditButton;
     ePersonFilter: TEditButton;
     eInstitutionFilter: TEditButton;
     eMethodFilter: TEditButton;
+    eProjectFilter: TEditButton;
     iButtons: TImageList;
+    icoNestFilter: TImage;
+    icoIndividualFilter: TImage;
+    icoExpeditionFilter: TImage;
+    icoPlantFilter: TImage;
+    icoSamplingPlotFilter: TImage;
     icoSurveyFilter: TImage;
     icoPersonFilter: TImage;
     icoInstitutionFilter: TImage;
+    icoProjectFilter: TImage;
     iHeaders: TImageList;
     icoEmptyQuery: TImage;
     lblEmptyQuery: TLabel;
+    lblNestFilter: TLabel;
+    lblIndividualFilter: TLabel;
+    lblExpeditionFilter: TLabel;
+    lblPlantFilter: TLabel;
+    lblSamplingPlotFilter: TLabel;
     lblSurveyFilter: TLabel;
     lblPersonFilter: TLabel;
     lblInstitutionFilter: TLabel;
@@ -61,7 +78,14 @@ type
     lblChildStatus: TLabel;
     lblRecycleModifiedDate: TDBText;
     lblRecycleName: TDBText;
+    lblProjectFilter: TLabel;
+    pmcNewNestOwner: TMenuItem;
     pEmptyQuery: TBCPanel;
+    pNestFilter: TBCPanel;
+    pIndividualFilter: TBCPanel;
+    pExpeditionFilter: TBCPanel;
+    pPlantFilter: TBCPanel;
+    pSamplingPlotFilter: TBCPanel;
     pSurveyFilter: TBCPanel;
     pPersonFilter: TBCPanel;
     pmcNewSurvey: TMenuItem;
@@ -270,6 +294,7 @@ type
     pChildToolbar: TBCPanel;
     pSiteFilters: TBCPanel;
     pSiteRankFilter: TBCPanel;
+    pProjectFilter: TBCPanel;
     pSynonymFilters: TBCPanel;
     pMoltingFilters: TBCPanel;
     pTaxonomiesFilters: TBCPanel;
@@ -444,12 +469,16 @@ type
     procedure eCycleCodeFilterChange(Sender: TObject);
     procedure eCycleCodeFilterKeyPress(Sender: TObject; var Key: char);
     procedure eEndTimeFilterChange(Sender: TObject);
+    procedure eExpeditionFilterButtonClick(Sender: TObject);
+    procedure eExpeditionFilterKeyPress(Sender: TObject; var Key: char);
     procedure eHowAgedFilterButtonClick(Sender: TObject);
     procedure eHowAgedFilterChange(Sender: TObject);
     procedure eHowAgedFilterKeyPress(Sender: TObject; var Key: char);
     procedure eHowSexedFilterButtonClick(Sender: TObject);
     procedure eHowSexedFilterChange(Sender: TObject);
     procedure eHowSexedFilterKeyPress(Sender: TObject; var Key: char);
+    procedure eIndividualFilterButtonClick(Sender: TObject);
+    procedure eIndividualFilterKeyPress(Sender: TObject; var Key: char);
     procedure eInstitutionFilterButtonClick(Sender: TObject);
     procedure eInstitutionFilterKeyPress(Sender: TObject; var Key: char);
     procedure eMethodFilterButtonClick(Sender: TObject);
@@ -457,9 +486,17 @@ type
     procedure eMoltLimitsFilterButtonClick(Sender: TObject);
     procedure eMoltLimitsFilterChange(Sender: TObject);
     procedure eMoltLimitsFilterKeyPress(Sender: TObject; var Key: char);
+    procedure eNestFilterButtonClick(Sender: TObject);
+    procedure eNestFilterKeyPress(Sender: TObject; var Key: char);
     procedure ePersonFilterButtonClick(Sender: TObject);
     procedure ePersonFilterChange(Sender: TObject);
     procedure ePersonFilterKeyPress(Sender: TObject; var Key: char);
+    procedure ePlantFilterButtonClick(Sender: TObject);
+    procedure ePlantFilterKeyPress(Sender: TObject; var Key: char);
+    procedure eProjectFilterButtonClick(Sender: TObject);
+    procedure eProjectFilterKeyPress(Sender: TObject; var Key: char);
+    procedure eSamplingPlotFilterButtonClick(Sender: TObject);
+    procedure eSamplingPlotFilterKeyPress(Sender: TObject; var Key: char);
     procedure eStartTimeFilterChange(Sender: TObject);
     procedure eSurveyFilterButtonClick(Sender: TObject);
     procedure eSurveyFilterKeyPress(Sender: TObject; var Key: char);
@@ -482,6 +519,7 @@ type
     procedure pmcNewMistnetClick(Sender: TObject);
     procedure pmcNewMoltClick(Sender: TObject);
     procedure pmcNewNestClick(Sender: TObject);
+    procedure pmcNewNestOwnerClick(Sender: TObject);
     procedure pmcNewNestRevisionClick(Sender: TObject);
     procedure pmcNewPermanentNetClick(Sender: TObject);
     procedure pmcNewProjectMemberClick(Sender: TObject);
@@ -600,6 +638,8 @@ type
     CloacalProtuberanceFilter, BroodPatchFilter: String;
     NestFateFilter, NestSupportFilter: String;
     FPersonKeyFilter, FInstitutionKeyFilter, FSurveyKeyFilter, FMethodKeyFilter: Integer;
+    FProjectKeyFilter, FNestKeyFilter, FIndividualKeyFilter, FExpeditionKeyFilter: Integer;
+    FPlantKeyFilter, FSamplingPlotKeyFilter: Integer;
     CanToggle: Boolean;
     FSidePanelFactor: Double;
     FChildPanelFactor: Double;
@@ -700,7 +740,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs,
-  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datasearch, {$IFDEF DEBUG}cbs_debug,{$ENDIF}
+  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, {$IFDEF DEBUG}cbs_debug,{$ENDIF}
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main;
 
 {$R *.lfm}
@@ -867,9 +907,11 @@ end;
 procedure TfrmCustomGrid.DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
   AState: TGridDrawState);
 var
-  MyTextStyle: TTextStyle;
+  //MyTextStyle: TTextStyle;
   aTable: TTableType;
 begin
+  aTable := tbNone;
+
   if (Column.Visible = False) then
     Exit;
   if (gdSelected in AState) or (gdFixed in AState) then
@@ -902,13 +944,13 @@ begin
       tbNests:
       begin
         if Sender = gridChild1 then
-          aTable := tbNestRevisions
+          aTable := tbNestOwners
         else
         if Sender = gridChild2 then
-          aTable := tbEggs
+          aTable := tbNestRevisions
         else
         if Sender = gridChild3 then
-          aTable := tbNestOwners;
+          aTable := tbEggs;
       end;
       tbSurveys:
       begin
@@ -1249,6 +1291,7 @@ begin
           end;
         end;
       end;
+    //tbNestOwners: ;
     tbNestRevisions:
       begin
         if Column.FieldName = 'nidoparasite_name' then
@@ -1657,6 +1700,36 @@ begin
   Search(FSearchString);
 end;
 
+procedure TfrmCustomGrid.eExpeditionFilterButtonClick(Sender: TObject);
+begin
+  FindDlg(tbExpeditions, eExpeditionFilter, FExpeditionKeyFilter);
+end;
+
+procedure TfrmCustomGrid.eExpeditionFilterKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbExpeditions, eExpeditionFilter, FExpeditionKeyFilter, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    eExpeditionFilter.Clear;
+    FExpeditionKeyFilter := 0;
+    Key := #0;
+  end;
+  //{ <ENTER/RETURN> key }
+  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //begin
+  //  SelectNext(Sender as TWinControl, True, True);
+  //  Key := #0;
+  //end;
+end;
+
 procedure TfrmCustomGrid.eHowAgedFilterButtonClick(Sender: TObject);
 begin
   HowAgedDialog(eHowAgedFilter);
@@ -1703,6 +1776,36 @@ begin
   if (Key = #8) then
   begin
     eHowSexedFilter.Clear;
+    Key := #0;
+  end;
+  //{ <ENTER/RETURN> key }
+  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //begin
+  //  SelectNext(Sender as TWinControl, True, True);
+  //  Key := #0;
+  //end;
+end;
+
+procedure TfrmCustomGrid.eIndividualFilterButtonClick(Sender: TObject);
+begin
+  FindDlg(tbIndividuals, eIndividualFilter, FIndividualKeyFilter);
+end;
+
+procedure TfrmCustomGrid.eIndividualFilterKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbIndividuals, eIndividualFilter, FIndividualKeyFilter, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    eIndividualFilter.Clear;
+    FIndividualKeyFilter := 0;
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
@@ -1801,6 +1904,36 @@ begin
   //end;
 end;
 
+procedure TfrmCustomGrid.eNestFilterButtonClick(Sender: TObject);
+begin
+  FindDlg(tbNests, eNestFilter, FNestKeyFilter);
+end;
+
+procedure TfrmCustomGrid.eNestFilterKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbNests, eNestFilter, FNestKeyFilter, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    eNestFilter.Clear;
+    FNestKeyFilter := 0;
+    Key := #0;
+  end;
+  //{ <ENTER/RETURN> key }
+  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //begin
+  //  SelectNext(Sender as TWinControl, True, True);
+  //  Key := #0;
+  //end;
+end;
+
 procedure TfrmCustomGrid.ePersonFilterButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, ePersonFilter, FPersonKeyFilter);
@@ -1826,6 +1959,96 @@ begin
   begin
     ePersonFilter.Clear;
     FPersonKeyFilter := 0;
+    Key := #0;
+  end;
+  //{ <ENTER/RETURN> key }
+  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //begin
+  //  SelectNext(Sender as TWinControl, True, True);
+  //  Key := #0;
+  //end;
+end;
+
+procedure TfrmCustomGrid.ePlantFilterButtonClick(Sender: TObject);
+begin
+  FindDlg(tbBotanicTaxa, ePlantFilter, FPlantKeyFilter);
+end;
+
+procedure TfrmCustomGrid.ePlantFilterKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbBotanicTaxa, ePlantFilter, FPlantKeyFilter, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    ePlantFilter.Clear;
+    FPlantKeyFilter := 0;
+    Key := #0;
+  end;
+  //{ <ENTER/RETURN> key }
+  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //begin
+  //  SelectNext(Sender as TWinControl, True, True);
+  //  Key := #0;
+  //end;
+end;
+
+procedure TfrmCustomGrid.eProjectFilterButtonClick(Sender: TObject);
+begin
+  FindDlg(tbProjects, eProjectFilter, FProjectKeyFilter);
+end;
+
+procedure TfrmCustomGrid.eProjectFilterKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbProjects, eProjectFilter, FProjectKeyFilter, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    eProjectFilter.Clear;
+    FProjectKeyFilter := 0;
+    Key := #0;
+  end;
+  //{ <ENTER/RETURN> key }
+  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //begin
+  //  SelectNext(Sender as TWinControl, True, True);
+  //  Key := #0;
+  //end;
+end;
+
+procedure TfrmCustomGrid.eSamplingPlotFilterButtonClick(Sender: TObject);
+begin
+  FindDlg(tbNetStations, eSamplingPlotFilter, FSamplingPlotKeyFilter);
+end;
+
+procedure TfrmCustomGrid.eSamplingPlotFilterKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbNetStations, eSamplingPlotFilter, FSamplingPlotKeyFilter, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    eSamplingPlotFilter.Clear;
+    FSamplingPlotKeyFilter := 0;
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
@@ -2099,10 +2322,12 @@ begin
       end;
       tbNests:
       begin
-        AddGridColumns(tbNestRevisions, gridChild1);
+        AddGridColumns(tbNestOwners, gridChild1);
         dsLink1.DataSet.Open;
-        AddGridColumns(tbEggs, gridChild2);
+        AddGridColumns(tbNestRevisions, gridChild2);
         dsLink2.DataSet.Open;
+        AddGridColumns(tbEggs, gridChild3);
+        dsLink3.DataSet.Open;
       end;
       tbSurveys:
       begin
@@ -2175,6 +2400,9 @@ procedure TfrmCustomGrid.pChildTag1Click(Sender: TObject);
 var
   aTag, aCountTag: TBCPanel;
 begin
+  aTag := nil;
+  aCountTag := nil;
+
   if (Sender = pChildTag1) or (Sender = lblChildTag1) or (Sender = pChildCount1) or (Sender = lblChildCount1) then
   begin
     aTag := pChildTag1;
@@ -2219,8 +2447,9 @@ begin
       end;
     tbNests:
       case nbChilds.PageIndex of
-        0: FChildTable := tbNestRevisions;
-        1: FChildTable := tbEggs;
+        0: FChildTable := tbNestOwners;
+        1: FChildTable := tbNestRevisions;
+        2: FChildTable := tbEggs;
       end;
     tbExpeditions:
       case nbChilds.PageIndex of
@@ -2311,6 +2540,9 @@ procedure TfrmCustomGrid.pChildTag1MouseLeave(Sender: TObject);
 var
   aTag, aCountTag: TBCPanel;
 begin
+  aTag := nil;
+  aCountTag := nil;
+
   if (Sender = pChildTag1) or (Sender = lblChildTag1) or (Sender = pChildCount1) or (Sender = lblChildCount1) then
   begin
     aTag := pChildTag1;
@@ -2401,6 +2633,13 @@ begin
   EditNest(DMI.qNests, True);
 
   UpdateChildButtons(DMI.qNests);
+end;
+
+procedure TfrmCustomGrid.pmcNewNestOwnerClick(Sender: TObject);
+begin
+  EditNestOwner(DMB.qNestOwners, dsLink.DataSet.FieldByName('nest_id').AsInteger, True);
+
+  UpdateChildButtons(DMB.qNestOwners);
 end;
 
 procedure TfrmCustomGrid.pmcNewNestRevisionClick(Sender: TObject);
@@ -2568,8 +2807,9 @@ begin
     //tbMolts: ;
     tbNests:
       case nbChilds.PageIndex of
-        0: DeleteRecord(tbNestRevisions, DMB.qNestRevisions);
-        1: DeleteRecord(tbEggs, DMB.qEggs);
+        0: DeleteRecord(tbNestOwners, DMB.qNestOwners);
+        1: DeleteRecord(tbNestRevisions, DMB.qNestRevisions);
+        2: DeleteRecord(tbEggs, DMB.qEggs);
       end;
     //tbNestRevisions: ;
     //tbEggs: ;
@@ -2655,8 +2895,9 @@ begin
     //tbMolts: ;
     tbNests:
       case nbChilds.PageIndex of
-        0: EditNestRevision(DMB.qNestRevisions, dsLink.DataSet.FieldByName('nest_id').AsInteger);
-        1: EditEgg(DMB.qEggs, dsLink.DataSet.FieldByName('nest_id').AsInteger);
+        0: EditNestOwner(DMB.qNestOwners, dsLink.DataSet.FieldByName('nest_id').AsInteger);
+        1: EditNestRevision(DMB.qNestRevisions, dsLink.DataSet.FieldByName('nest_id').AsInteger);
+        2: EditEgg(DMB.qEggs, dsLink.DataSet.FieldByName('nest_id').AsInteger);
       end;
     //tbNestRevisions: ;
     //tbEggs: ;
@@ -2703,32 +2944,33 @@ begin
     //tbNone: ;
     //tbUsers: ;
     //tbRecordHistory: ;
-    tbGazetteer: EditSite(dsLink.DataSet);
-    tbNetStations: EditNetStation(dsLink.DataSet);
+    tbGazetteer:     EditSite(dsLink.DataSet);
+    tbNetStations:   EditNetStation(dsLink.DataSet);
     //tbPermanentNets: ;
-    tbInstitutions: EditInstitution(dsLink.DataSet);
-    tbPeople: EditPerson(dsLink.DataSet);
-    tbProjects: EditProject(dsLink.DataSet);
+    tbInstitutions:  EditInstitution(dsLink.DataSet);
+    tbPeople:        EditPerson(dsLink.DataSet);
+    tbProjects:      EditProject(dsLink.DataSet);
     //tbProjectTeams: ;
-    tbPermits: EditPermit(dsLink.DataSet);
+    tbPermits:       EditPermit(dsLink.DataSet);
     tbTaxonRanks: ;
     //tbZooTaxa: ;
-    tbBotanicTaxa: EditBotanicTaxon(dsLink.DataSet);
-    tbBands: EditBand(dsLink.DataSet);
+    tbBotanicTaxa:   EditBotanicTaxon(dsLink.DataSet);
+    tbBands:         EditBand(dsLink.DataSet);
     //tbBandHistory: ;
-    tbIndividuals: EditIndividual(dsLink.DataSet);
-    tbCaptures: EditCapture(dsLink.DataSet);
-    tbMolts: EditMolt(dsLink.DataSet);
-    tbNests: EditNest(dsLink.DataSet);
+    tbIndividuals:   EditIndividual(dsLink.DataSet);
+    tbCaptures:      EditCapture(dsLink.DataSet);
+    tbMolts:         EditMolt(dsLink.DataSet);
+    tbNests:         EditNest(dsLink.DataSet);
+    tbNestOwners:    EditNestOwner(dsLink.DataSet);
     tbNestRevisions: EditNestRevision(dsLink.DataSet);
-    tbEggs: EditEgg(dsLink.DataSet);
-    tbMethods: EditMethod(dsLink.DataSet);
-    tbExpeditions: EditExpedition(dsLink.DataSet);
-    tbSurveys: EditSurvey(dsLink.DataSet);
+    tbEggs:          EditEgg(dsLink.DataSet);
+    tbMethods:       EditMethod(dsLink.DataSet);
+    tbExpeditions:   EditExpedition(dsLink.DataSet);
+    tbSurveys:       EditSurvey(dsLink.DataSet);
     //tbSurveyTeams: ;
     //tbNetsEffort: ;
-    tbSightings: EditSighting(dsLink.DataSet);
-    tbSpecimens: EditSpecimen(dsLink.DataSet);
+    tbSightings:     EditSighting(dsLink.DataSet);
+    tbSpecimens:     EditSpecimen(dsLink.DataSet);
     //tbSamplePreps: ;
     //tbImages: ;
     //tbAudioLibrary: ;
@@ -2780,32 +3022,33 @@ begin
     //tbNone: ;
     //tbUsers: ;
     //tbRecordHistory: ;
-    tbGazetteer: EditSite(dsLink.DataSet, True);
-    tbNetStations: EditNetStation(dsLink.DataSet, True);
+    tbGazetteer:     EditSite(dsLink.DataSet, True);
+    tbNetStations:   EditNetStation(dsLink.DataSet, True);
     //tbPermanentNets: ;
-    tbInstitutions: EditInstitution(dsLink.DataSet, True);
-    tbPeople: EditPerson(dsLink.DataSet, True);
-    tbProjects: EditProject(dsLink.DataSet, True);
+    tbInstitutions:  EditInstitution(dsLink.DataSet, True);
+    tbPeople:        EditPerson(dsLink.DataSet, True);
+    tbProjects:      EditProject(dsLink.DataSet, True);
     //tbProjectTeams: ;
-    tbPermits: EditPermit(dsLink.DataSet, 0, True);
+    tbPermits:       EditPermit(dsLink.DataSet, 0, True);
     tbTaxonRanks: ;
     //tbZooTaxa: ;
-    tbBotanicTaxa: EditBotanicTaxon(dsLink.DataSet, True);
-    tbBands: EditBand(dsLink.DataSet, True);
+    tbBotanicTaxa:   EditBotanicTaxon(dsLink.DataSet, True);
+    tbBands:         EditBand(dsLink.DataSet, True);
     //tbBandHistory: ;
-    tbIndividuals: EditIndividual(dsLink.DataSet, True);
-    tbCaptures: EditCapture(dsLink.DataSet, 0, True);
-    tbMolts: EditMolt(dsLink.DataSet, 0, True);
-    tbNests: EditNest(dsLink.DataSet, True);
+    tbIndividuals:   EditIndividual(dsLink.DataSet, True);
+    tbCaptures:      EditCapture(dsLink.DataSet, 0, True);
+    tbMolts:         EditMolt(dsLink.DataSet, 0, True);
+    tbNests:         EditNest(dsLink.DataSet, True);
+    tbNestOwners:    EditNestOwner(dsLink.DataSet, 0, True);
     tbNestRevisions: EditNestRevision(dsLink.DataSet, 0, True);
-    tbEggs: EditEgg(dsLink.DataSet, 0, True);
-    tbMethods: EditMethod(dsLink.DataSet, True);
-    tbExpeditions: EditExpedition(dsLink.DataSet, True);
-    tbSurveys: EditSurvey(dsLink.DataSet, True);
+    tbEggs:          EditEgg(dsLink.DataSet, 0, True);
+    tbMethods:       EditMethod(dsLink.DataSet, True);
+    tbExpeditions:   EditExpedition(dsLink.DataSet, True);
+    tbSurveys:       EditSurvey(dsLink.DataSet, True);
     //tbSurveyTeams: ;
     //tbNetsEffort: ;
-    tbSightings: EditSighting(dsLink.DataSet, 0, True);
-    tbSpecimens: EditSpecimen(dsLink.DataSet, True);
+    tbSightings:     EditSighting(dsLink.DataSet, 0, True);
+    tbSpecimens:     EditSpecimen(dsLink.DataSet, True);
     //tbSamplePreps: ;
     //tbImages: ;
     //tbAudioLibrary: ;
@@ -2910,6 +3153,8 @@ var
   aKeyField: String;
   aDataSet: TDataSet;
 begin
+  aDataSet := nil;
+
   aKeyField := GetPrimaryKey(TableNames[FChildTable]);
   case nbChilds.PageIndex of
     0: aDataSet := gridChild1.DataSource.DataSet;
@@ -3585,6 +3830,14 @@ begin
       end
       else
         pChildCount2.Visible := False;
+
+      if dsLink3.DataSet.RecordCount > 0 then
+      begin
+        lblChildCount3.Caption := IntToStr(dsLink3.DataSet.RecordCount);
+        pChildCount3.Visible := True;
+      end
+      else
+        pChildCount3.Visible := False;
     end;
     //tbNestRevisions: ;
     //tbEggs: ;
@@ -3665,6 +3918,7 @@ procedure TfrmCustomGrid.UpdateChildStatus;
 var
   DS: TDataSource;
 begin
+  DS := nil;
   if FChildTable = tbNone then
     Exit;
 
@@ -3708,6 +3962,7 @@ begin
       case nbChilds.PageIndex of
         0: DS := dsLink1;
         1: DS := dsLink2;
+        2: DS := dsLink3;
       end;
     end;
     //tbNestRevisions: ;
@@ -3936,16 +4191,20 @@ begin
         AddSortedField('full_name', sdAscending);
         dsLink.DataSet := DMG.qNests;
 
-        lblChildTag1.Caption := rsTitleNestRevisions;
-        lblChildTag2.Caption := rsTitleEggs;
+        lblChildTag1.Caption := rsTitleNestOwners;
+        lblChildTag2.Caption := rsTitleNestRevisions;
+        lblChildTag3.Caption := rsTitleEggs;
         pChildTag1.Visible := True;
         pChildTag2.Visible := True;
+        pChildTag3.Visible := True;
         nbChilds.PageIndex := 0;
         if not Assigned(DMB) then
           DMB := TDMB.Create(Self);
-        FChildTable := tbNestRevisions;
-        dsLink1.DataSet := DMB.qNestRevisions;
-        dsLink2.DataSet := DMB.qEggs;
+        FChildTable := tbNestOwners;
+        dsLink1.DataSet := DMB.qNestOwners;
+        dsLink2.DataSet := DMB.qNestRevisions;
+        dsLink3.DataSet := DMB.qEggs;
+        pmcNewNestOwner.Visible := True;
         pmcNewNestRevision.Visible := True;
         pmcNewEgg.Visible := True;
 
@@ -4615,6 +4874,22 @@ begin
           ButtonStyle := cbsEllipsis;
         end;
       end;
+    tbNestOwners:
+      begin
+        //with aGrid.Columns.ColumnByFieldname('nest_owner_id') do
+        //begin
+        //  ReadOnly:= True;
+        //end;
+        with aGrid.Columns.ColumnByFieldName('role') do
+        begin
+          PickList.CommaText := rsNestOwnersRoleList;
+        end;
+        if aGrid.DataSource.DataSet.FieldByName('individual_name').Visible then
+        with aGrid.Columns.ColumnByFieldName('individual_name') do
+        begin
+          ButtonStyle := cbsEllipsis;
+        end;
+      end;
     tbNestRevisions:
       begin
         with aGrid.Columns.ColumnByFieldname('nest_revision_id') do
@@ -4649,10 +4924,33 @@ begin
         end;
         with aGrid.Columns.ColumnByFieldName('egg_shape') do
         begin
-          PickList.Add(rsEggSpheric);
-          PickList.Add(rsEggElliptic);
-          PickList.Add(rsEggOvoid);
+          PickList.Add(rsEggSpherical);
+          PickList.Add(rsEggElliptical);
+          PickList.Add(rsEggOval);
           PickList.Add(rsEggPyriform);
+          PickList.Add(rsEggConical);
+          PickList.Add(rsEggBiconical);
+          PickList.Add(rsEggCylindrical);
+          PickList.Add(rsEggLongitudinal);
+          PickList.Add(rsEggUnknown);
+        end;
+        with aGrid.Columns.ColumnByFieldName('eggshell_texture') do
+        begin
+          PickList.Add(rsEggChalky);
+          PickList.Add(rsEggShiny);
+          PickList.Add(rsEggGlossy);
+          PickList.Add(rsEggPitted);
+          PickList.Add(rsEggUnknown);
+        end;
+        with aGrid.Columns.ColumnByFieldName('eggshell_pattern') do
+        begin
+          PickList.Add(rsEggSpots);
+          PickList.Add(rsEggBlotches);
+          PickList.Add(rsEggSquiggles);
+          PickList.Add(rsEggStreaks);
+          PickList.Add(rsEggScrawls);
+          PickList.Add(rsEggSpotsSquiggles);
+          PickList.Add(rsEggBlotchesSquiggles);
           PickList.Add(rsEggUnknown);
         end;
       end;
@@ -6137,6 +6435,7 @@ begin
       begin
         pDatesFilters.Visible := True;
         LoadDateTreeData(FTableType, tvDateFilter);
+        pProjectFilter.Visible := True;
       end;
     tbNetStations:
       begin
@@ -6167,6 +6466,7 @@ begin
         pBandReportFilters.Visible := True;
         pPersonFilter.Visible := True;
         pInstitutionFilter.Visible := True;
+        pProjectFilter.Visible := True;
         //pDatesFilters.Visible := True;
         //LoadDateTreeData(TableType, tvDateFilter);
       end;
@@ -6185,6 +6485,8 @@ begin
         pHowSexedFilter.Visible := False;
         pSexFilter.Rounding.RoundOptions := [];
         pSexingFilters.Visible := True;
+        pNestFilter.Visible := True;
+        pIndividualFilter.Visible := True;
       end;
     tbCaptures:
       begin
@@ -6208,6 +6510,8 @@ begin
         pTimeFilters.Visible := True;
         pSurveyFilter.Visible := True;
         pMethodFilter.Visible := True;
+        pIndividualFilter.Visible := True;
+        pSamplingPlotFilter.Visible := True;
       end;
     tbNests:
       begin
@@ -6226,6 +6530,8 @@ begin
           rsSupportCavity + '","' + rsSupportArtificial + '","' + rsSupportOther + '"';
         pNestSupportFilter.Visible := True;
         pPersonFilter.Visible := True;
+        pProjectFilter.Visible := True;
+        pPlantFilter.Visible := True;
       end;
     tbNestRevisions:
       begin
@@ -6233,6 +6539,7 @@ begin
         LoadDateTreeData(FTableType, tvDateFilter);
         pPersonFilter.Visible := True;
         pTimeFilters.Visible:= True;
+        pNestFilter.Visible := True;
       end;
     tbEggs:
       begin
@@ -6241,6 +6548,8 @@ begin
         pDatesFilters.Visible := True;
         LoadDateTreeData(FTableType, tvDateFilter);
         pPersonFilter.Visible := True;
+        pNestFilter.Visible := True;
+        pIndividualFilter.Visible := True;
       end;
     tbExpeditions:
       begin
@@ -6248,6 +6557,7 @@ begin
         LoadSiteTreeData(FTableType, tvSiteFilter, 4);
         pDatesFilters.Visible := True;
         LoadDateTreeData(FTableType, tvDateFilter);
+        pProjectFilter.Visible := True;
       end;
     tbSurveys:
       begin
@@ -6257,6 +6567,9 @@ begin
         pSiteFilters.Visible := True;
         LoadSiteTreeData(FTableType, tvSiteFilter, 4);
         pTimeFilters.Visible := True;
+        pProjectFilter.Visible := True;
+        pSamplingPlotFilter.Visible := True;
+        pExpeditionFilter.Visible := True;
       end;
     tbSightings:
       begin
@@ -6270,6 +6583,7 @@ begin
         pTimeFilters.Visible := True;
         pSurveyFilter.Visible := True;
         pMethodFilter.Visible := True;
+        pIndividualFilter.Visible := True;
       end;
     tbSpecimens:
       begin
@@ -6294,6 +6608,8 @@ begin
         LoadDateTreeData(FTableType, tvDateFilter);
         pSiteFilters.Visible := True;
         LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+        pNestFilter.Visible := True;
+        pIndividualFilter.Visible := True;
       end;
   end;
 end;
@@ -6388,8 +6704,17 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetPermitFilters(aList: TStrings);
+var
+  sf: Integer;
 begin
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if FProjectKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('project_id', 'Project', sdtInteger,
+      crEqual, False, IntToStr(FProjectKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetGazetteerFilters(aList: TStrings);
@@ -6532,6 +6857,13 @@ begin
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('supplier_id', 'Supplier', sdtInteger,
       crEqual, False, IntToStr(FInstitutionKeyFilter)));
   end;
+
+  if FProjectKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('project_id', 'Project', sdtInteger,
+      crEqual, False, IntToStr(FProjectKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetIndividualFilters(aList: TStrings);
@@ -6571,6 +6903,22 @@ begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('captures_tally', 'Captures', sdtInteger,
       crMoreThan, True, '2'));
+  end;
+
+  if FNestKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('nest_id', 'Nest', sdtInteger,
+      crEqual, False, IntToStr(FNestKeyFilter)));
+  end;
+
+  if FIndividualKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('father_id', 'Father', sdtInteger,
+      crEqual, False, IntToStr(FIndividualKeyFilter)));
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('mother_id', 'Mother', sdtInteger,
+      crEqual, False, IntToStr(FIndividualKeyFilter)));
   end;
 end;
 
@@ -6694,10 +7042,19 @@ begin
     FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('method_id', 'Method', sdtInteger,
       crEqual, False, IntToStr(FMethodKeyFilter)));
   end;
+
+  if FIndividualKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('individual_id', 'Individual', sdtInteger,
+      crEqual, False, IntToStr(FIndividualKeyFilter)));
+  end;
 end;
 
 function TfrmCustomGrid.GetChildDataSet: TDataSet;
 begin
+  Result := nil;
+
   case FTableType of
     //tbNone: ;
     //tbUsers: ;
@@ -6735,6 +7092,7 @@ begin
       case nbChilds.PageIndex of
         0: Result := dsLink1.DataSet;
         1: Result := dsLink2.DataSet;
+        2: Result := dsLink3.DataSet;
       end;
     //tbNestRevisions: ;
     //tbEggs: ;
@@ -6790,6 +7148,22 @@ begin
 
   if ePersonFilter.Text <> EmptyStr then
     PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
+
+  if FProjectKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('project_id', 'Project', sdtInteger,
+      crEqual, False, IntToStr(FProjectKeyFilter)));
+  end;
+
+  if FPlantKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('support_plant_1_id', 'Support plant 1', sdtInteger,
+      crEqual, False, IntToStr(FPlantKeyFilter)));
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('support_plant_2_id', 'Support plant 2', sdtInteger,
+      crEqual, False, IntToStr(FPlantKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetNestRevisionFilters(aList: TStrings);
@@ -6811,15 +7185,38 @@ begin
       FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('revision_time', 'Time', sdtTime,
         crEqual, False, QuotedStr(eStartTimeFilter.Text)));
   end;
+
+  if FNestKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('nest_id', 'Nest', sdtInteger,
+      crEqual, False, IntToStr(FNestKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetEggFilters(aList: TStrings);
+var
+  sf: Integer;
 begin
   TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 
   if ePersonFilter.Text <> EmptyStr then
     PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
+
+  if FNestKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('nest_id', 'Nest', sdtInteger,
+      crEqual, False, IntToStr(FNestKeyFilter)));
+  end;
+
+  if FIndividualKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('individual_id', 'Individual', sdtInteger,
+      crEqual, False, IntToStr(FIndividualKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetMethodFilters(aList: TStrings);
@@ -6828,9 +7225,18 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetExpeditionFilters(aList: TStrings);
+var
+  sf: Integer;
 begin
   SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if FProjectKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('project_id', 'Project', sdtInteger,
+      crEqual, False, IntToStr(FProjectKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetSurveyFilters(aList: TStrings);
@@ -6864,6 +7270,20 @@ begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('method_id', 'Method', sdtInteger,
       crEqual, False, IntToStr(FMethodKeyFilter)));
+  end;
+
+  if FProjectKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('project_id', 'Project', sdtInteger,
+      crEqual, False, IntToStr(FProjectKeyFilter)));
+  end;
+
+  if FExpeditionKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('expedition_id', 'Expedition', sdtInteger,
+      crEqual, False, IntToStr(FExpeditionKeyFilter)));
   end;
 end;
 
@@ -6901,6 +7321,13 @@ begin
     FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('method_id', 'Method', sdtInteger,
       crEqual, False, IntToStr(FMethodKeyFilter)));
   end;
+
+  if FIndividualKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('individual_id', 'Individual', sdtInteger,
+      crEqual, False, IntToStr(FIndividualKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetSpecimenFilters(aList: TStrings);
@@ -6918,6 +7345,20 @@ begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('sample_type', 'Sample type', sdtText,
       crEqual, False, SampleTypes[cbMaterialFilter.ItemIndex - 1]));
+  end;
+
+  if FNestKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('nest_id', 'Nest', sdtInteger,
+      crEqual, False, IntToStr(FNestKeyFilter)));
+  end;
+
+  if FIndividualKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('individual_id', 'Individual', sdtInteger,
+      crEqual, False, IntToStr(FIndividualKeyFilter)));
   end;
 end;
 

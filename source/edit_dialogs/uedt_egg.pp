@@ -256,10 +256,35 @@ begin
   with cbShape.Items do
   begin
     Clear;
-    Add(rsEggSpheric);
-    Add(rsEggElliptic);
-    Add(rsEggOvoid);
+    Add(rsEggSpherical);
+    Add(rsEggElliptical);
+    Add(rsEggOval);
     Add(rsEggPyriform);
+    Add(rsEggConical);
+    Add(rsEggBiconical);
+    Add(rsEggCylindrical);
+    Add(rsEggLongitudinal);
+    Add(rsEggUnknown);
+  end;
+  with cbShellTexture.Items do
+  begin
+    Clear;
+    Add(rsEggChalky);
+    Add(rsEggShiny);
+    Add(rsEggGlossy);
+    Add(rsEggPitted);
+    Add(rsEggUnknown);
+  end;
+  with cbShellPattern.Items do
+  begin
+    Clear;
+    Add(rsEggSpots);
+    Add(rsEggBlotches);
+    Add(rsEggSquiggles);
+    Add(rsEggStreaks);
+    Add(rsEggScrawls);
+    Add(rsEggSpotsSquiggles);
+    Add(rsEggBlotchesSquiggles);
     Add(rsEggUnknown);
   end;
 end;
