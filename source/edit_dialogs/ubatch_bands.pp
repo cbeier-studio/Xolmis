@@ -188,16 +188,6 @@ begin
           ExecSQL;
         end;
 
-        { #todo : Insert event in the band history
-          FBandId: Integer;
-          FEventType: String;
-          FEventDate: TDate;
-          FOrderNumber: Integer;
-          FSupplierId: Integer;
-          FSenderId: Integer;
-          FRequesterId: Integer;
-          FNotes: String; }
-
         { Write the band history }
         case cbBandSource.ItemIndex of
         0:

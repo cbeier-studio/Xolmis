@@ -1,37 +1,36 @@
 object dlgBandsBalance: TdlgBandsBalance
   Left = 352
-  Height = 536
+  Height = 429
   Top = 33
-  Width = 400
+  Width = 320
   BorderStyle = bsDialog
   Caption = 'Bands balance'
-  ClientHeight = 536
-  ClientWidth = 400
-  DesignTimePPI = 120
+  ClientHeight = 429
+  ClientWidth = 320
   OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
   object pBottom: TPanel
     Left = 0
-    Height = 48
-    Top = 488
-    Width = 400
+    Height = 38
+    Top = 391
+    Width = 320
     Align = alBottom
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 48
-    ClientWidth = 400
+    ClientHeight = 38
+    ClientWidth = 320
     Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object sbClose: TButton
-      Left = 254
-      Height = 32
+      Left = 200
+      Height = 22
       Top = 8
-      Width = 130
+      Width = 104
       Align = alRight
       Caption = 'Close'
       ModalResult = 11
@@ -41,8 +40,8 @@ object dlgBandsBalance: TdlgBandsBalance
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 486
-    Width = 400
+    Top = 389
+    Width = 320
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -50,9 +49,9 @@ object dlgBandsBalance: TdlgBandsBalance
   end
   object dbgSaldo: TDBGrid
     Left = 0
-    Height = 486
+    Height = 389
     Top = 0
-    Width = 400
+    Width = 320
     Align = alClient
     AutoFillColumns = True
     BorderStyle = bsNone
@@ -62,36 +61,36 @@ object dlgBandsBalance: TdlgBandsBalance
         Font.Style = [fsBold]
         Title.Alignment = taCenter
         Title.Caption = 'Size'
-        Width = 100
+        Width = 80
         FieldName = 'band_size'
       end    
       item
         Title.Alignment = taCenter
         Title.Caption = 'Leftover'
-        Width = 100
+        Width = 80
         FieldName = 'saldo'
       end    
       item
         Title.Alignment = taCenter
         Title.Caption = 'Avg./day'
-        Width = 100
+        Width = 80
         FieldName = 'media_dia'
       end    
       item
         Title.Alignment = taCenter
         Title.Caption = 'Max./day'
-        Width = 100
+        Width = 80
         FieldName = 'maximo_dia'
       end>
     DataSource = DMC.dsBandsBalance
     FixedCols = 0
-    Flat = True
     Options = [dgTitles, dgColumnResize, dgRowLines, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgDisableDelete, dgDisableInsert, dgThumbTracking]
     PopupMenu = pmGrid
     ReadOnly = True
     Scrollbars = ssAutoBoth
     TabOrder = 1
     TitleFont.Color = 6579300
+    TitleStyle = tsNative
     OnPrepareCanvas = dbgSaldoPrepareCanvas
   end
   object pMsg: TBCPanel
@@ -99,10 +98,10 @@ object dlgBandsBalance: TdlgBandsBalance
     AnchorSideLeft.Side = asrCenter
     AnchorSideTop.Control = dbgSaldo
     AnchorSideTop.Side = asrCenter
-    Left = 32
-    Height = 30
-    Top = 228
-    Width = 336
+    Left = 26
+    Height = 24
+    Top = 182
+    Width = 269
     ChildSizing.LeftRightSpacing = 4
     ChildSizing.TopBottomSpacing = 1
     ChildSizing.HorizontalSpacing = 8
@@ -148,14 +147,14 @@ object dlgBandsBalance: TdlgBandsBalance
     Enabled = False
     Interval = 500
     OnTimer = TimerLoadTimer
-    Left = 215
-    Top = 265
+    Left = 172
+    Top = 212
   end
   object pmGrid: TPopupMenu
     Images = frmMain.mPopup
     ImagesWidth = 20
-    Left = 219
-    Top = 333
+    Left = 175
+    Top = 266
     object pmgRefresh: TMenuItem
       Caption = 'Refresh'
       ImageIndex = 1
@@ -172,7 +171,7 @@ object dlgBandsBalance: TdlgBandsBalance
     end
   end
   object SaveDlg: TSaveDialog
-    Left = 219
-    Top = 405
+    Left = 175
+    Top = 324
   end
 end

@@ -7,10 +7,10 @@ interface
 uses
   Classes, SysUtils, DB, SQLDB, RegExpr, StrUtils, cbs_datatypes;
 
-  { Search records }
-  function TableSearch(aQuery: TSQLQuery; aTable: TTableType; aSearch: TSearch;
-    aQuickFilter: TStrings; aModifier: TRecordStatus; aSorting: TSortedFields;
-    aWhere: TStrings): Boolean;
+  { Search records (deprecated) }
+  //function TableSearch(aQuery: TSQLQuery; aTable: TTableType; aSearch: TSearch;
+  //  aQuickFilter: TStrings; aModifier: TRecordStatus; aSorting: TSortedFields;
+  //  aWhere: TStrings): Boolean;
 
   { SQL Select and filtering }
   function GetModifier(aModifier: String): TFilterValue;
@@ -72,159 +72,159 @@ uses cbs_global;
 { Search records }
 { ----------------------------------------------------------------------------------------- }
 
-function TableSearch(aQuery: TSQLQuery; aTable: TTableType; aSearch: TSearch;
-  aQuickFilter: TStrings; aModifier: TRecordStatus; aSorting: TSortedFields;
-  aWhere: TStrings): Boolean;
-var
-  AndWhere, aAlias, aSort, aDir: String;
-  i: Integer;
-  SF: TSortedField;
-begin
-  aAlias := EmptyStr;
-  AndWhere := 'WHERE ';
-  aWhere.Clear;
-  Result := False;
-
-  with aQuery, SQL do
-  begin
-    Close;
-    Clear;
-    SetSelectSQL(SQL, aTable, aAlias);
-
-    // Value typed in the Search field
-    if not aSearch.IsEmpty then
-    begin
-      //aQuery.FilterOptions := [foCaseInsensitive];
-      //aQuery.Filter := aSearch.FilterString;
-      //aQuery.Filtered := True;
-      Add(aSearch.SQLString);
-      aWhere.Add(aSearch.SQLString);
-      AndWhere := 'AND ';
-    end;
-    //else
-    //  aQuery.Filtered := False;
-
-    // Quick filters applied
-    if aQuickFilter.Count > 0 then
-    begin
-      for i := 0 to aQuickFilter.Count - 1 do
-      begin
-        Add(AndWhere + aQuickFilter[i]);
-        aWhere.Add(AndWhere + aQuickFilter[i]);
-        AndWhere := 'AND ';
-      end;
-    end;
-
-    // Record active or not
-    case aModifier.Status of
-      rsAll:
-        ;
-      rsActive:
-        begin
-          Add(AndWhere + '(' + aAlias + 'active_status = 1)');
-          aWhere.Add(AndWhere + '(' + aAlias + 'active_status = 1)');
-          AndWhere := 'AND ';
-        end;
-      rsInactive:
-        begin
-          Add(AndWhere + '(' + aAlias + 'active_status = 0)');
-          aWhere.Add(AndWhere + '(' + aAlias + 'active_status = 0)');
-          AndWhere := 'AND ';
-        end;
-      rsNone:
-        begin
-          Add(AndWhere + '(' + aAlias + 'active_status = -1)');
-          aWhere.Add(AndWhere + '(' + aAlias + 'active_status = -1)');
-          AndWhere := 'AND ';
-        end;
-    end;
-    // Record marked or not
-    case aModifier.Mark of
-      rmAll:
-        ;
-      rmMarked:
-        begin
-          Add(AndWhere + '(' + aAlias + 'marked_status = 1)');
-          aWhere.Add(AndWhere + '(' + aAlias + 'marked_status = 1)');
-          AndWhere := 'AND ';
-        end;
-      rmUnmarked:
-        begin
-          Add(AndWhere + '(' + aAlias + 'marked_status = 0)');
-          aWhere.Add(AndWhere + '(' + aAlias + 'marked_status = 0)');
-          AndWhere := 'AND ';
-        end;
-    end;
-    // Record queued or not
-    case aModifier.Queue of
-      rqAll:
-        ;
-      rqQueued:
-        begin
-          Add(AndWhere + '(' + aAlias + 'queued_status = 1)');
-          aWhere.Add(AndWhere + '(' + aAlias + 'queued_status = 1)');
-          AndWhere := 'AND ';
-        end;
-      rqUnqueued:
-        begin
-          Add(AndWhere + '(' + aAlias + 'queued_status = 0)');
-          aWhere.Add(AndWhere + '(' + aAlias + 'queued_status = 0)');
-          AndWhere := 'AND ';
-        end;
-    end;
-    // Record already exported or not
-    case aModifier.Share of
-      rxAll:
-        ;
-      rxExported:
-        begin
-          Add(AndWhere + '(' + aAlias + 'exported_status = 1)');
-          aWhere.Add(AndWhere + '(' + aAlias + 'exported_status = 1)');
-          AndWhere := 'AND ';
-        end;
-      rxNotExported:
-        begin
-          Add(AndWhere + '(' + aAlias + 'exported_status = 0)');
-          aWhere.Add(AndWhere + '(' + aAlias + 'exported_status = 0)');
-          AndWhere := 'AND ';
-        end;
-    end;
-
-    // Record sorting
-    if aSorting.Count > 0 then
-    begin
-      aSort := '';
-      aDir := '';
-      for i := 0 to (aSorting.Count - 1) do
-      begin
-        SF := aSorting.Items[i];
-        aDir := SortDirections[SF.Direction];
-        //case SF^.Direction of
-        //  sdNone:
-        //    ;
-        //  sdAscending:
-        //    aDir := 'ASC';
-        //  sdDescending:
-        //    aDir := 'DESC';
-        //end;
-        if (ExecRegExpr('.*\_name$', SF.FieldName)) and (SF.FieldName <> 'full_name') then
-          aSort := aSort + SF.FieldName + ' ' +{' COLLATE pt_BR ' +} aDir
-        else
-          aSort := aSort + aAlias + SF.FieldName + ' ' +{' COLLATE pt_BR ' +} aDir;
-        if i < (aSorting.Count - 1) then
-          aSort := aSort + ', ';
-      end;
-      Add('ORDER BY ' + aSort);
-    end;
-
-    {$IFDEF DEBUG}
-    LogSQL(SQL);
-    {$ENDIF}
-    Open;
-  end;
-
-  Result := not aQuery.IsEmpty;
-end;
+//function TableSearch(aQuery: TSQLQuery; aTable: TTableType; aSearch: TSearch;
+//  aQuickFilter: TStrings; aModifier: TRecordStatus; aSorting: TSortedFields;
+//  aWhere: TStrings): Boolean;
+//var
+//  AndWhere, aAlias, aSort, aDir: String;
+//  i: Integer;
+//  SF: TSortedField;
+//begin
+//  aAlias := EmptyStr;
+//  AndWhere := 'WHERE ';
+//  aWhere.Clear;
+//  Result := False;
+//
+//  with aQuery, SQL do
+//  begin
+//    Close;
+//    Clear;
+//    SetSelectSQL(SQL, aTable, aAlias);
+//
+//    // Value typed in the Search field
+//    if not aSearch.IsEmpty then
+//    begin
+//      //aQuery.FilterOptions := [foCaseInsensitive];
+//      //aQuery.Filter := aSearch.FilterString;
+//      //aQuery.Filtered := True;
+//      Add(aSearch.SQLString);
+//      aWhere.Add(aSearch.SQLString);
+//      AndWhere := 'AND ';
+//    end;
+//    //else
+//    //  aQuery.Filtered := False;
+//
+//    // Quick filters applied
+//    if aQuickFilter.Count > 0 then
+//    begin
+//      for i := 0 to aQuickFilter.Count - 1 do
+//      begin
+//        Add(AndWhere + aQuickFilter[i]);
+//        aWhere.Add(AndWhere + aQuickFilter[i]);
+//        AndWhere := 'AND ';
+//      end;
+//    end;
+//
+//    // Record active or not
+//    case aModifier.Status of
+//      rsAll:
+//        ;
+//      rsActive:
+//        begin
+//          Add(AndWhere + '(' + aAlias + 'active_status = 1)');
+//          aWhere.Add(AndWhere + '(' + aAlias + 'active_status = 1)');
+//          AndWhere := 'AND ';
+//        end;
+//      rsInactive:
+//        begin
+//          Add(AndWhere + '(' + aAlias + 'active_status = 0)');
+//          aWhere.Add(AndWhere + '(' + aAlias + 'active_status = 0)');
+//          AndWhere := 'AND ';
+//        end;
+//      rsNone:
+//        begin
+//          Add(AndWhere + '(' + aAlias + 'active_status = -1)');
+//          aWhere.Add(AndWhere + '(' + aAlias + 'active_status = -1)');
+//          AndWhere := 'AND ';
+//        end;
+//    end;
+//    // Record marked or not
+//    case aModifier.Mark of
+//      rmAll:
+//        ;
+//      rmMarked:
+//        begin
+//          Add(AndWhere + '(' + aAlias + 'marked_status = 1)');
+//          aWhere.Add(AndWhere + '(' + aAlias + 'marked_status = 1)');
+//          AndWhere := 'AND ';
+//        end;
+//      rmUnmarked:
+//        begin
+//          Add(AndWhere + '(' + aAlias + 'marked_status = 0)');
+//          aWhere.Add(AndWhere + '(' + aAlias + 'marked_status = 0)');
+//          AndWhere := 'AND ';
+//        end;
+//    end;
+//    // Record queued or not
+//    case aModifier.Queue of
+//      rqAll:
+//        ;
+//      rqQueued:
+//        begin
+//          Add(AndWhere + '(' + aAlias + 'queued_status = 1)');
+//          aWhere.Add(AndWhere + '(' + aAlias + 'queued_status = 1)');
+//          AndWhere := 'AND ';
+//        end;
+//      rqUnqueued:
+//        begin
+//          Add(AndWhere + '(' + aAlias + 'queued_status = 0)');
+//          aWhere.Add(AndWhere + '(' + aAlias + 'queued_status = 0)');
+//          AndWhere := 'AND ';
+//        end;
+//    end;
+//    // Record already exported or not
+//    case aModifier.Share of
+//      rxAll:
+//        ;
+//      rxExported:
+//        begin
+//          Add(AndWhere + '(' + aAlias + 'exported_status = 1)');
+//          aWhere.Add(AndWhere + '(' + aAlias + 'exported_status = 1)');
+//          AndWhere := 'AND ';
+//        end;
+//      rxNotExported:
+//        begin
+//          Add(AndWhere + '(' + aAlias + 'exported_status = 0)');
+//          aWhere.Add(AndWhere + '(' + aAlias + 'exported_status = 0)');
+//          AndWhere := 'AND ';
+//        end;
+//    end;
+//
+//    // Record sorting
+//    if aSorting.Count > 0 then
+//    begin
+//      aSort := '';
+//      aDir := '';
+//      for i := 0 to (aSorting.Count - 1) do
+//      begin
+//        SF := aSorting.Items[i];
+//        aDir := SortDirections[SF.Direction];
+//        //case SF^.Direction of
+//        //  sdNone:
+//        //    ;
+//        //  sdAscending:
+//        //    aDir := 'ASC';
+//        //  sdDescending:
+//        //    aDir := 'DESC';
+//        //end;
+//        if (ExecRegExpr('.*\_name$', SF.FieldName)) and (SF.FieldName <> 'full_name') then
+//          aSort := aSort + SF.FieldName + ' ' +{' COLLATE pt_BR ' +} aDir
+//        else
+//          aSort := aSort + aAlias + SF.FieldName + ' ' +{' COLLATE pt_BR ' +} aDir;
+//        if i < (aSorting.Count - 1) then
+//          aSort := aSort + ', ';
+//      end;
+//      Add('ORDER BY ' + aSort);
+//    end;
+//
+//    {$IFDEF DEBUG}
+//    LogSQL(SQL);
+//    {$ENDIF}
+//    Open;
+//  end;
+//
+//  Result := not aQuery.IsEmpty;
+//end;
 
 {
  ----------------------------------------------------------------------------

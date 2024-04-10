@@ -14,10 +14,6 @@ type
 
   TdlgImportCaptures = class(TForm)
     barProgress: TProgressBar;
-    eWeatherFile: TFileNameEdit;
-    icoWeatherFile: TImage;
-    lblWeatherFile: TLabel;
-    pEffortFile1: TBCPanel;
     pRetry: TBCPanel;
     imgFinished: TImageList;
     hvProgress: THtmlViewer;
@@ -51,7 +47,6 @@ type
     sbCancel: TButton;
     sbClearEffortFile: TSpeedButton;
     sbClearCaptureFile: TSpeedButton;
-    sbClearWeatherFile: TSpeedButton;
     sbClose: TButton;
     sbRetry: TBitBtn;
     sbRun: TButton;
@@ -60,12 +55,14 @@ type
     procedure eEffortFileChange(Sender: TObject);
     procedure eJournalFileButtonClick(Sender: TObject);
     procedure eJournalFileChange(Sender: TObject);
-    procedure eWeatherFileChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbClearJournalFileClick(Sender: TObject);
     procedure sbRetryClick(Sender: TObject);
     procedure sbRunClick(Sender: TObject);
   private
+    FProgressList: TStrings;
     procedure UpdateButtons;
   public
 
@@ -77,7 +74,9 @@ var
 implementation
 
 uses
-  cbs_global;
+  cbs_locale, cbs_global, cbs_import;
+
+{$R *.lfm}
 
 { TdlgImportCaptures }
 
@@ -102,9 +101,14 @@ begin
   UpdateButtons;
 end;
 
-procedure TdlgImportCaptures.eWeatherFileChange(Sender: TObject);
+procedure TdlgImportCaptures.FormCreate(Sender: TObject);
 begin
-  UpdateButtons;
+  FProgressList := TStringList.Create;
+end;
+
+procedure TdlgImportCaptures.FormDestroy(Sender: TObject);
+begin
+  FProgressList.Free;
 end;
 
 procedure TdlgImportCaptures.sbCancelClick(Sender: TObject);
@@ -122,8 +126,7 @@ begin
   case TControl(Sender).Tag of
     0: eJournalFile.Clear;
     1: eEffortFile.Clear;
-    2: eWeatherFile.Clear;
-    3: eCaptureFile.Clear;
+    2: eCaptureFile.Clear;
   end;
 
   UpdateButtons;
@@ -144,19 +147,52 @@ begin
   { #todo : Validate fields }
 
   Parar := False;
+  FProgressList.Clear;
 
   nbContent.PageIndex := 1;
 
   sbCancel.Visible := True;
   sbClose.Visible := False;
   sbRun.Visible := False;
+
+  FProgressList.Add(rsProgressImportBandingJournal);
+  hvProgress.LoadFromString(FProgressList.Text);
+  ImportBandingJournalV1(eJournalFile.FileName, barProgress);
+
+  if not Parar then
+  begin
+    FProgressList.Add(rsProgressImportBandingEffort);
+    hvProgress.LoadFromString(FProgressList.Text);
+    ImportBandingEffortV1(eEffortFile.FileName, barProgress);
+
+    if not Parar then
+    begin
+      FProgressList.Add(rsProgressImportCaptures);
+      hvProgress.LoadFromString(FProgressList.Text);
+      ImportBandingDataV1(eCaptureFile.FileName, barProgress);
+    end;
+  end;
+
+  nbContent.PageIndex := 2;
+  if Parar then
+  begin
+    lblTitleImportFinished.Caption := rsImportCanceled;
+    lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+    icoImportFinished.ImageIndex := 1;
+  end
+  else
+  begin
+    lblTitleImportFinished.Caption := rsFinishedImporting;
+    lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+    icoImportFinished.ImageIndex := 0;
+  end;
+
 end;
 
 procedure TdlgImportCaptures.UpdateButtons;
 begin
   sbRun.Enabled := not IsEmptyStr(eJournalFile.FileName, [' ', '.']) or
                    not IsEmptyStr(eEffortFile.FileName, [' ', '.']) or
-                   not IsEmptyStr(eWeatherFile.FileName, [' ', '.']) or
                    not IsEmptyStr(eCaptureFile.FileName, [' ', '.']);
 end;
 

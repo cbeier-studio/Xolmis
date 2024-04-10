@@ -316,11 +316,11 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions, cbs_data,
+  cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions,
   cbs_taxonomy, cbs_editdialogs, cbs_themes, udm_main, udm_lookup, udm_grid, udm_client,
   ucfg_database, ucfg_users, ucfg_options,
-  ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, ufrm_geoconverter, ufrm_dashboard,
-  ufrm_maintenance;
+  ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures,
+  ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance;
 
 {$R *.lfm}
 
@@ -359,10 +359,18 @@ end;
 
 procedure TfrmMain.actImportCapturesExecute(Sender: TObject);
 begin
-  DMM.OpenCsvDlg.Title := rsTitleImportFile;
-  if DMM.OpenCsvDlg.Execute then
-  begin
-    ImportBandingDataV1(DMM.OpenCsvDlg.Filename);
+  //DMM.OpenCsvDlg.Title := rsTitleImportFile;
+  //if DMM.OpenCsvDlg.Execute then
+  //begin
+  //  ImportBandingDataV1(DMM.OpenCsvDlg.Filename);
+  //end;
+
+  dlgImportCaptures := TdlgImportCaptures.Create(nil);
+  with dlgImportCaptures do
+  try
+    ShowModal;
+  finally
+    FreeAndNil(dlgImportCaptures);
   end;
 end;
 
@@ -555,7 +563,8 @@ end;
 
 procedure TfrmMain.eSearchEnter(Sender: TObject);
 begin
-  pSearch.Width := ClientWidth div 4;
+  if eSearch.Text = EmptyStr then
+    pSearch.Width := ClientWidth div 4;
   pSearch.Background.Color := clWhite;
   pSearch.Border.Color := clAccentFillTertiaryLight;
   //pSearch.Border.Width := 2;
@@ -566,7 +575,8 @@ end;
 
 procedure TfrmMain.eSearchExit(Sender: TObject);
 begin
-  pSearch.Width := 148;
+  if eSearch.Text = EmptyStr then
+    pSearch.Width := 148;
   pSearch.Background.Color := $00FAFAFA;
   pSearch.Border.Color := clDefaultBorderLight;
   pSearch.Border.Width := 1;

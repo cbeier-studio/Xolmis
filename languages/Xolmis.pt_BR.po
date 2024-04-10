@@ -50,12 +50,8 @@ msgstr "Restaurado"
 #: cbs_locale.rsactiverecordduplicated
 #, object-pascal-format
 msgctxt "cbs_locale.rsactiverecordduplicated"
-msgid ""
-"A record with the same <b>%s</b> value already exists (<font "
-"color=\"blue\">%s</font>)."
-msgstr ""
-"Um registro com o mesmo valor de <b>%s</b> já existe (<font "
-"color=\"blue\">%s</font>)."
+msgid "A record with the same <b>%s</b> value already exists (<font color=\"blue\">%s</font>)."
+msgstr "Um registro com o mesmo valor de <b>%s</b> já existe (<font color=\"blue\">%s</font>)."
 
 #: cbs_locale.rsadminuser
 msgctxt "cbs_locale.rsadminuser"
@@ -147,14 +143,8 @@ msgid "Closed"
 msgstr "Fechada"
 
 #: cbs_locale.rsbandcolorlist
-msgid ""
-"\"yellow\",\"orange\",\"red\",\"carmine\",\"pink\",\"violet\",\"pale blue\","
-"\"blue\",\"green\",\"lime green\",\"umber\",\"white\",\"gray\",\"black\","
-"\"other\""
-msgstr ""
-"\"amarela\",\"laranja\",\"vermelha\",\"carmim\",\"rosa\",\"violeta\",\"azul "
-"claro\",\"azul\",\"verde\",\"verde lima\",\"marrom\",\"branca\",\"cinza\","
-"\"preta\",\"outra\""
+msgid "\"yellow\",\"orange\",\"red\",\"carmine\",\"pink\",\"violet\",\"pale blue\",\"blue\",\"green\",\"lime green\",\"umber\",\"white\",\"gray\",\"black\",\"other\""
+msgstr "\"amarela\",\"laranja\",\"vermelha\",\"carmim\",\"rosa\",\"violeta\",\"azul claro\",\"azul\",\"verde\",\"verde lima\",\"marrom\",\"branca\",\"cinza\",\"preta\",\"outra\""
 
 #: cbs_locale.rsbanddeadbirdbandedbyothers
 msgctxt "cbs_locale.rsbanddeadbirdbandedbyothers"
@@ -269,12 +259,8 @@ msgid "Triangular"
 msgstr "Triangular"
 
 #: cbs_locale.rsbandtypelist
-msgid ""
-"\"Butt-end\",\"Flag\",\"Neck collar\",\"Wing tag\",\"Triangular\",\"Lock "
-"on\",\"Rivet\",\"Closed\",\"Other\""
-msgstr ""
-"\"Aberta\",\"Bandeirola\",\"Colar\",\"Etiqueta alar\",\"Triangular\","
-"\"Trava\",\"Parafusada\",\"Fechada\",\"Outra\""
+msgid "\"Butt-end\",\"Flag\",\"Neck collar\",\"Wing tag\",\"Triangular\",\"Lock on\",\"Rivet\",\"Closed\",\"Other\""
+msgstr "\"Aberta\",\"Bandeirola\",\"Colar\",\"Etiqueta alar\",\"Triangular\",\"Trava\",\"Parafusada\",\"Fechada\",\"Outra\""
 
 #: cbs_locale.rsbandused
 msgctxt "cbs_locale.rsbandused"
@@ -351,29 +337,8 @@ msgid "body molt"
 msgstr "muda do corpo"
 
 #: cbs_locale.rsbreedingcodes
-msgid ""
-"\"Confirmed\",\"NY - Nest with Young\",\"NE - Nest with Eggs\",\"FS - "
-"carrying Fecal Sac\",\"FY - Feeding Young\",\"CF - Carrying Food\",\"FL - "
-"recently Fledged young\",\"ON - Occupied Nest\",\"UN - Used Nest\",\"DD - "
-"Distraction Display,\"Confirmed/Probable\",\"NB - Nest Building\",\"CN - "
-"Carrying Nesting material\",\"Probable\",\"PE - Physiological Evidence\",\"B "
-"- wren/woodpecker nest Building\",\"A - Agitated behavior\",\"N - visiting "
-"probable Nest site\",\"C - Courtship, display or copulation\",\"T - "
-"Territorial defense\",\"P - Pair in suitable habitat\",\"M - Multiple "
-"singing birds (7+)\",\"S7 - Singing bird present 7+ days\",\"Possible\",\"S "
-"- Singing bird\",\"H - in appropriate Habitat\",\"Observed\",\"F - Flyover\""
-msgstr ""
-"\"Confirmado\",\"NY - Ninho com filhotes\",\"NE - Ninho com ovos\",\"FS - "
-"carregando Saco Fecal\",\"FY - alimentando filhotes\",\"CF - Carregando "
-"comida\",\"FL - Filhote que saiu do ninho recentemente\",\"ON - Ninho "
-"Ocupado\",\"UN - Ninho Usado\",\"DD - exibição de Distração\",\"Confirmado/"
-"Provável\",\"NB - construção de Ninho\",\"CN - Carregando material para "
-"Ninho\",\"Provável\",\"PE - Evidência fisiológica\",\"B - corruíra/pica-pau "
-"construindo ninho\",\"A - comportamento Agitado\",\"N - visitando provável "
-"local de Ninho\",\"C - Côrte, exibição ou cópula\",\"T - defesa "
-"Territorial\",\"P - casal em habitat propício\",\"M - Múltiplas aves "
-"cantando (7+)\",\"S7 - ave cantando presente 7+ dias\",\"Possível\",\"S - "
-"ave cantando\",\"H - em Habitat propício\",\"Observado,\"F - passou voando\""
+msgid "\"Confirmed\",\"NY - Nest with Young\",\"NE - Nest with Eggs\",\"FS - carrying Fecal Sac\",\"FY - Feeding Young\",\"CF - Carrying Food\",\"FL - recently Fledged young\",\"ON - Occupied Nest\",\"UN - Used Nest\",\"DD - Distraction Display,\"Confirmed/Probable\",\"NB - Nest Building\",\"CN - Carrying Nesting material\",\"Probable\",\"PE - Physiological Evidence\",\"B - wren/woodpecker nest Building\",\"A - Agitated behavior\",\"N - visiting probable Nest site\",\"C - Courtship, display or copulation\",\"T - Territorial defense\",\"P - Pair in suitable habitat\",\"M - Multiple singing birds (7+)\",\"S7 - Singing bird present 7+ days\",\"Possible\",\"S - Singing bird\",\"H - in appropriate Habitat\",\"Observed\",\"F - Flyover\""
+msgstr "\"Confirmado\",\"NY - Ninho com filhotes\",\"NE - Ninho com ovos\",\"FS - carregando Saco Fecal\",\"FY - alimentando filhotes\",\"CF - Carregando comida\",\"FL - Filhote que saiu do ninho recentemente\",\"ON - Ninho Ocupado\",\"UN - Ninho Usado\",\"DD - exibição de Distração\",\"Confirmado/Provável\",\"NB - construção de Ninho\",\"CN - Carregando material para Ninho\",\"Provável\",\"PE - Evidência fisiológica\",\"B - corruíra/pica-pau construindo ninho\",\"A - comportamento Agitado\",\"N - visitando provável local de Ninho\",\"C - Côrte, exibição ou cópula\",\"T - defesa Territorial\",\"P - casal em habitat propício\",\"M - Múltiplas aves cantando (7+)\",\"S7 - ave cantando presente 7+ dias\",\"Possível\",\"S - ave cantando\",\"H - em Habitat propício\",\"Observado,\"F - passou voando\""
 
 #: cbs_locale.rsbroodpatch
 msgctxt "cbs_locale.rsbroodpatch"
@@ -392,19 +357,13 @@ msgstr ""
 #: cbs_locale.rscantdeleterecord
 msgctxt "cbs_locale.rscantdeleterecord"
 msgid "This record cannot be deleted, because it is linked to other records."
-msgstr ""
-"Este registro não pode ser apagado, pois está sendo usado por outros "
-"registros."
+msgstr "Este registro não pode ser apagado, pois está sendo usado por outros registros."
 
 #: cbs_locale.rscantdeleteuser
 #, object-pascal-format
 msgctxt "cbs_locale.rscantdeleteuser"
-msgid ""
-"User %s should not be deleted, because it could compromise the Xolmis "
-"functioning!"
-msgstr ""
-"Usuário %s não deve ser apagado, pois pode comprometer o funcionamento do "
-"Xolmis!"
+msgid "User %s should not be deleted, because it could compromise the Xolmis functioning!"
+msgstr "Usuário %s não deve ser apagado, pois pode comprometer o funcionamento do Xolmis!"
 
 #: cbs_locale.rscaptionaudiolibrary
 msgctxt "cbs_locale.rscaptionaudiolibrary"
@@ -729,9 +688,7 @@ msgstr "Mesmo dia"
 #: cbs_locale.rscapturetypelist
 msgctxt "cbs_locale.rscapturetypelist"
 msgid "\"New capture\",\"Recapture\",\"Same day\",\"Change band\",\"Unbanded\""
-msgstr ""
-"\"Nova captura\",\"Recaptura\",\"Mesmo dia\",\"Anilha trocada\",\"Não "
-"anilhado\""
+msgstr "\"Nova captura\",\"Recaptura\",\"Mesmo dia\",\"Anilha trocada\",\"Não anilhado\""
 
 #: cbs_locale.rscaptureunbanded
 msgctxt "cbs_locale.rscaptureunbanded"
@@ -933,12 +890,8 @@ msgstr ""
 
 #: cbs_locale.rsdeleterecordfooter
 msgctxt "cbs_locale.rsdeleterecordfooter"
-msgid ""
-"Deleted record stay in recycle bin for the time period defined in Settings "
-"before being permanently deleted."
-msgstr ""
-"Registros apagados ficam na lixeira pelo período de tempo definido nas "
-"Opções antes de serem permanentemente apagados."
+msgid "Deleted record stay in recycle bin for the time period defined in Settings before being permanently deleted."
+msgstr "Registros apagados ficam na lixeira pelo período de tempo definido nas Opções antes de serem permanentemente apagados."
 
 #: cbs_locale.rsdeleterecordprompt
 msgctxt "cbs_locale.rsdeleterecordprompt"
@@ -951,12 +904,8 @@ msgid "Delete record"
 msgstr "Apagar registro"
 
 #: cbs_locale.rsdetectiontypes
-msgid ""
-"\"S - song\",\"C - call\",\"V - seen\",\"W - wing flapping\",\"D - "
-"drumming\",\"F - flying\""
-msgstr ""
-"\"S - canto\",\"C - chamado\",\"V - visto\",\"W - bater de asas\",\"D - "
-"tamborilar\",\"F - voando\""
+msgid "\"S - song\",\"C - call\",\"V - seen\",\"W - wing flapping\",\"D - drumming\",\"F - flying\""
+msgstr "\"S - canto\",\"C - chamado\",\"V - visto\",\"W - bater de asas\",\"D - tamborilar\",\"F - voando\""
 
 #: cbs_locale.rsdiscardchangestitle
 msgid "Discard changes"
@@ -1075,12 +1024,8 @@ msgstr "Ambiente"
 
 #: cbs_locale.rsepithetonlyininfrasp
 msgctxt "cbs_locale.rsepithetonlyininfrasp"
-msgid ""
-"The <b>Infraspecific epithet</b> must be filled when an <b>Infraspecific "
-"category</b> was selected."
-msgstr ""
-"O <b>epíteto infraespecífico</b> deve ser preenchido quando a <b>categoria "
-"infraespecífica</b> foi selecionada."
+msgid "The <b>Infraspecific epithet</b> must be filled when an <b>Infraspecific category</b> was selected."
+msgstr "O <b>epíteto infraespecífico</b> deve ser preenchido quando a <b>categoria infraespecífica</b> foi selecionada."
 
 #: cbs_locale.rserrorbackupfailed
 msgctxt "cbs_locale.rserrorbackupfailed"
@@ -1100,8 +1045,7 @@ msgid ""
 "Check if the connection settings and the database path are correct."
 msgstr ""
 "Não foi possível conectar ao banco de dados.\n"
-"Verifique se as opções da conexão e o caminho do banco de dados estão "
-"corretos."
+"Verifique se as opções da conexão e o caminho do banco de dados estão corretos."
 
 #: cbs_locale.rserrorconnectionnotfound
 #, object-pascal-format
@@ -1318,6 +1262,12 @@ msgctxt "cbs_locale.rsfilterstartlike"
 msgid "start with"
 msgstr "começa com"
 
+#: cbs_locale.rsfinishedimporting
+#, fuzzy
+msgctxt "cbs_locale.rsfinishedimporting"
+msgid "Finished importing!"
+msgstr "Importação finalizada!"
+
 #: cbs_locale.rsflightmolt
 msgctxt "cbs_locale.rsflightmolt"
 msgid "flight feathers molt"
@@ -1342,8 +1292,7 @@ msgstr "Pegada"
 #, object-pascal-format
 msgctxt "cbs_locale.rsforeignnotexist"
 msgid "Selected <b>%s</b> does not exist. Select a valid record."
-msgstr ""
-"O(A) <b>%s</b> selecionado(a) não existe. Selecione um registro válido."
+msgstr "O(A) <b>%s</b> selecionado(a) não existe. Selecione um registro válido."
 
 #: cbs_locale.rsfound
 msgctxt "cbs_locale.rsfound"
@@ -1420,8 +1369,7 @@ msgstr "O número inicial deve ser maior que zero."
 #, object-pascal-format
 msgctxt "cbs_locale.rsfuturedate"
 msgid "<b>%s</b> must be after <b>%s</b> (<font color=\"green\">%s</font>)."
-msgstr ""
-"<b>%s</b> deve ser posterior à <b>%s</b> (<font color=\"green\">%s</font>)."
+msgstr "<b>%s</b> deve ser posterior à <b>%s</b> (<font color=\"green\">%s</font>)."
 
 #: cbs_locale.rsfuturedatefromtoday
 msgctxt "cbs_locale.rsfuturedatefromtoday"
@@ -1431,12 +1379,8 @@ msgstr "A data deve ser de hoje ou anterior."
 #: cbs_locale.rsfuturepartialdate
 #, object-pascal-format
 msgctxt "cbs_locale.rsfuturepartialdate"
-msgid ""
-"<b>%s</b> must be before or equal to <b>%s</b> (<font color=\"green\">%s</"
-"font>)."
-msgstr ""
-"<b>%s</b> deve ser anterior ou igual a <b>%s</b> (<font color=\"green\">%s</"
-"font>)."
+msgid "<b>%s</b> must be before or equal to <b>%s</b> (<font color=\"green\">%s</font>)."
+msgstr "<b>%s</b> deve ser anterior ou igual a <b>%s</b> (<font color=\"green\">%s</font>)."
 
 #: cbs_locale.rsgenderlist
 msgid "he/him,she/her,they/them"
@@ -1480,39 +1424,8 @@ msgid "Home"
 msgstr "Início"
 
 #: cbs_locale.rshowagedsexedlist
-msgid ""
-"\"Physical differences\",\"B - Brood patch\",\"C - Cloacal protuberance\","
-"\"@ - egg in oviduct\",\"E - Eye color\",\"I - mouth/bill color or "
-"striations on bill (in hummingbirds)\",\"G - Gape\",\"$ - feet or legs\",\"S "
-"- Skull ossification\",\"Q - measurements (details in notes)\",\"Y - "
-"symmetrical flight feather molt\",\"Plumage characters\",\"K - definitive "
-"basic plumage\",\"A - definitve Alternate plumage\",\"F - Formative plumage "
-"(applies to first alternate plumage as well)\",\"J - Juvenal plumage\",\"M - "
-"Molt limits\",\"P - Plumage (only for sexual dimorphism)\",\"L - plumage "
-"color patch Length or extent (details in notes)\",\"Feather characters\",\"W "
-"- feather Wear\",\"V - feather shape\",\"R - Prejuvenal (first prebasic) "
-"molt\",\"= - fault bar alignment\",\"# - growth bar alignment\","
-"\"Undetermined or remaining\",\"O - Other (such as behavior/copulation; put "
-"in notes)\",\"U - Undetermined after examination\",\"X - age or sex "
-"determination not attempted\",\"Z - less precise age (< 95%) but high "
-"certainty\""
-msgstr ""
-"\"Diferenças físicas\",\"B - placa de incubação\",\"C - protuberância "
-"Cloacal\",\"@ - ovo no oviduto\",\"E - cor do olho\",\"I - cor da boca/bico "
-"ou estriamento no bico (em beija-flores)\",\"G - ricto\",\"$ - pés ou "
-"pernas\",\"S - ossificação craniana\",\"Q - medidas (detalhes nas notas)\","
-"\"Y - muda de penas de voo simétrica\",\"Caracteres de plumagem\",\"K - "
-"plumagem básica definitiva\",\"A - plumagem básica Alterna\",\"F - plumagem "
-"Formativa (se aplica à primeira plumagem alterna também)\",\"J - plumagem "
-"Juvenil\",\"M - limites de Muda\",\"P - Plumagem (somente para dimorfismo "
-"sexual)\",\"L - extensão de mancha de cor da plumagem (detalhes nas notas)\","
-"\"Caracteres das penas\",\"W - desgaste das penas\",\"V - formato das "
-"penas\",\"R - muda pré-juvenil (primeira pré-básica)\",\"= - alinhamento das "
-"barras de falha\",\"# - alinhamento das barras de crescimento\","
-"\"Indeterminado ou restante\",\"O - Outro (como comportamento/cópula; "
-"incluir nas notas)\",\"U - indeterminado após exame\",\"X - determinação de "
-"idade ou sexo não realizada\",\"Z - idade menos precisa (< 95%) mas alta "
-"certeza\""
+msgid "\"Physical differences\",\"B - Brood patch\",\"C - Cloacal protuberance\",\"@ - egg in oviduct\",\"E - Eye color\",\"I - mouth/bill color or striations on bill (in hummingbirds)\",\"G - Gape\",\"$ - feet or legs\",\"S - Skull ossification\",\"Q - measurements (details in notes)\",\"Y - symmetrical flight feather molt\",\"Plumage characters\",\"K - definitive basic plumage\",\"A - definitve Alternate plumage\",\"F - Formative plumage (applies to first alternate plumage as well)\",\"J - Juvenal plumage\",\"M - Molt limits\",\"P - Plumage (only for sexual dimorphism)\",\"L - plumage color patch Length or extent (details in notes)\",\"Feather characters\",\"W - feather Wear\",\"V - feather shape\",\"R - Prejuvenal (first prebasic) molt\",\"= - fault bar alignment\",\"# - growth bar alignment\",\"Undetermined or remaining\",\"O - Other (such as behavior/copulation; put in notes)\",\"U - Undetermined after examination\",\"X - age or sex determination not attempted\",\"Z - less precise age (< 95%) but high certainty\""
+msgstr "\"Diferenças físicas\",\"B - placa de incubação\",\"C - protuberância Cloacal\",\"@ - ovo no oviduto\",\"E - cor do olho\",\"I - cor da boca/bico ou estriamento no bico (em beija-flores)\",\"G - ricto\",\"$ - pés ou pernas\",\"S - ossificação craniana\",\"Q - medidas (detalhes nas notas)\",\"Y - muda de penas de voo simétrica\",\"Caracteres de plumagem\",\"K - plumagem básica definitiva\",\"A - plumagem básica Alterna\",\"F - plumagem Formativa (se aplica à primeira plumagem alterna também)\",\"J - plumagem Juvenil\",\"M - limites de Muda\",\"P - Plumagem (somente para dimorfismo sexual)\",\"L - extensão de mancha de cor da plumagem (detalhes nas notas)\",\"Caracteres das penas\",\"W - desgaste das penas\",\"V - formato das penas\",\"R - muda pré-juvenil (primeira pré-básica)\",\"= - alinhamento das barras de falha\",\"# - alinhamento das barras de crescimento\",\"Indeterminado ou restante\",\"O - Outro (como comportamento/cópula; incluir nas notas)\",\"U - indeterminado após exame\",\"X - determinação de idade ou sexo não realizada\",\"Z - idade menos precisa (< 95%) mas alta certeza\""
 
 #: cbs_locale.rsidentifier
 msgctxt "cbs_locale.rsidentifier"
@@ -1531,9 +1444,15 @@ msgctxt "cbs_locale.rsimagenotsupported"
 msgid "Image type not supported: %s"
 msgstr "Formato de imagem não suportado: %s"
 
+#: cbs_locale.rsimportcanceled
+msgid "Import canceled!"
+msgstr ""
+
 #: cbs_locale.rsimportcanceledbyuser
+#, fuzzy
+#| msgid "Import cancelled by the user."
 msgctxt "cbs_locale.rsimportcanceledbyuser"
-msgid "Import cancelled by the user."
+msgid "Import canceled by the user."
 msgstr "Importação cancelada pelo usuário."
 
 #: cbs_locale.rsimportimagestitle
@@ -1544,12 +1463,8 @@ msgstr "Importar imagens"
 #: cbs_locale.rsinactiverecordduplicated
 #, object-pascal-format
 msgctxt "cbs_locale.rsinactiverecordduplicated"
-msgid ""
-"An <b>inactive</b> record with the same <b>%s</b> value already exists "
-"(<font color=\"blue\">%s</font>)."
-msgstr ""
-"Um registro <b>inativo</b> com o mesmo valor de <b>%s</b> já existe (<font "
-"color=\"blue\">%s</font>)."
+msgid "An <b>inactive</b> record with the same <b>%s</b> value already exists (<font color=\"blue\">%s</font>)."
+msgstr "Um registro <b>inativo</b> com o mesmo valor de <b>%s</b> já existe (<font color=\"blue\">%s</font>)."
 
 #: cbs_locale.rsincorrectpassword
 msgctxt "cbs_locale.rsincorrectpassword"
@@ -1610,10 +1525,8 @@ msgstr "A <b>%s</b> não é uma data válida."
 #: cbs_locale.rsinvalidemail
 #, object-pascal-format
 msgctxt "cbs_locale.rsinvalidemail"
-msgid ""
-"The address <font color=\"blue\">%s</font> is not a valid <b>e-mail</b>."
-msgstr ""
-"O endereço <font color=\"blue\">%s</font> não é um <b>e-mail</b> válido."
+msgid "The address <font color=\"blue\">%s</font> is not a valid <b>e-mail</b>."
+msgstr "O endereço <font color=\"blue\">%s</font> não é um <b>e-mail</b> válido."
 
 #: cbs_locale.rsinvalidlatitude
 msgctxt "cbs_locale.rsinvalidlatitude"
@@ -1770,40 +1683,16 @@ msgid "Changes not saved"
 msgstr "Alterações não salvas"
 
 #: cbs_locale.rsmoltcycles
-msgid ""
-"\"U - Unknown molt cycle\",\"D - Definitive molt cycle\",\"F - First molt "
-"cycle\",\"S - Second molt cycle\",\"T - Third molt cycle\",\"4 - Fourth molt "
-"cycle\",\"5 - Fifth molt cycle\""
-msgstr ""
-"\"U - Ciclo de muda indeterminado\",\"D - Ciclo de muda definitivo\",\"F - "
-"Primeiro ciclo de muda\",\"S - Segundo ciclo de muda\",\"T - Terceiro ciclo "
-"de muda\",\"4 - Quarto ciclo de muda\",\"5 - Quinto ciclo de muda\""
+msgid "\"U - Unknown molt cycle\",\"D - Definitive molt cycle\",\"F - First molt cycle\",\"S - Second molt cycle\",\"T - Third molt cycle\",\"4 - Fourth molt cycle\",\"5 - Fifth molt cycle\""
+msgstr "\"U - Ciclo de muda indeterminado\",\"D - Ciclo de muda definitivo\",\"F - Primeiro ciclo de muda\",\"S - Segundo ciclo de muda\",\"T - Terceiro ciclo de muda\",\"4 - Quarto ciclo de muda\",\"5 - Quinto ciclo de muda\""
 
 #: cbs_locale.rsmoltings
-msgid ""
-"\"C - not molting (Cycle)\",\"P - molting (Pre)\",\"A - After a given "
-"plumage\""
-msgstr ""
-"\"C - não mudando (Ciclo)\",\"P - mudando (Pré)\",\"A - depois de dada "
-"plumagem\""
+msgid "\"C - not molting (Cycle)\",\"P - molting (Pre)\",\"A - After a given plumage\""
+msgstr "\"C - não mudando (Ciclo)\",\"P - mudando (Pré)\",\"A - depois de dada plumagem\""
 
 #: cbs_locale.rsmoltlimitslist
-msgid ""
-"\"N - No molt limits found after examination\",\"U - Molt limits are "
-"Undetermined after examination\",\"P - Primary flight feathers\",\"S - "
-"Secondary flight feathers\",\"D - primary coverts\",\"G - Greater coverts\","
-"\"V - primaries Vs. greater coverts\",\"R - Rectrices\",\"L - Lesser "
-"coverts\",\"M - Median coverts\",\"B - Body plumage\",\"C - Carpal covert "
-"vs. alula covert/lesser alula\",\"A - Alula covert vs. lesser alula\",\"Y - "
-"It has limits but is not determined where\""
-msgstr ""
-"\"N - Nenhum limite de muda encontrado após exame\",\"U - limites de muda "
-"indeterminados após exame\",\"P - penas de voo Primárias\",\"S - penas de "
-"voo Secundárias\",\"D - coberteiras primárias\",\"G - Grandes coberteiras\","
-"\"V - primárias Vs. grandes coberteiras\",\"R - Retrizes\",\"L - coberteiras "
-"menores\",\"M - coberteiras medianas\",\"B - plumagem do corpo\",\"C - "
-"coberteira Carpal vs. coberteira da álula/álula menor\",\"A - coberteira da "
-"álula vs. álula menor\",\"Y - possui limites mas não foi determinado onde\""
+msgid "\"N - No molt limits found after examination\",\"U - Molt limits are Undetermined after examination\",\"P - Primary flight feathers\",\"S - Secondary flight feathers\",\"D - primary coverts\",\"G - Greater coverts\",\"V - primaries Vs. greater coverts\",\"R - Rectrices\",\"L - Lesser coverts\",\"M - Median coverts\",\"B - Body plumage\",\"C - Carpal covert vs. alula covert/lesser alula\",\"A - Alula covert vs. lesser alula\",\"Y - It has limits but is not determined where\""
+msgstr "\"N - Nenhum limite de muda encontrado após exame\",\"U - limites de muda indeterminados após exame\",\"P - penas de voo Primárias\",\"S - penas de voo Secundárias\",\"D - coberteiras primárias\",\"G - Grandes coberteiras\",\"V - primárias Vs. grandes coberteiras\",\"R - Retrizes\",\"L - coberteiras menores\",\"M - coberteiras medianas\",\"B - plumagem do corpo\",\"C - coberteira Carpal vs. coberteira da álula/álula menor\",\"A - coberteira da álula vs. álula menor\",\"Y - possui limites mas não foi determinado onde\""
 
 #: cbs_locale.rsmomentend
 msgid "End"
@@ -1890,11 +1779,8 @@ msgid "Offspring"
 msgstr "Prole"
 
 #: cbs_locale.rsnestownersrolelist
-msgid ""
-"\"Breeding male\",\"Breeding female\",\"Helper\",\"Offspring\",\"Unknown\""
-msgstr ""
-"\"Macho reprodutor\",\"Fêmea reprodutora\",\"Ajudante\",\"Prole\","
-"\"Desconhecido\""
+msgid "\"Breeding male\",\"Breeding female\",\"Helper\",\"Offspring\",\"Unknown\""
+msgstr "\"Macho reprodutor\",\"Fêmea reprodutora\",\"Ajudante\",\"Prole\",\"Desconhecido\""
 
 #: cbs_locale.rsnestsuccess
 msgctxt "cbs_locale.rsnestsuccess"
@@ -1975,10 +1861,8 @@ msgstr "Busca original"
 #: cbs_locale.rspartialdateempty
 #, object-pascal-format
 msgctxt "cbs_locale.rspartialdateempty"
-msgid ""
-"At least the <font color=\"blue\">year</font> of <b>%s</b> must be entered."
-msgstr ""
-"No mínimo o <font color=\"blue\">ano</font> da <b>%s</b> deve ser informado."
+msgid "At least the <font color=\"blue\">year</font> of <b>%s</b> must be entered."
+msgstr "No mínimo o <font color=\"blue\">ano</font> da <b>%s</b> deve ser informado."
 
 #: cbs_locale.rsphotographed
 msgctxt "cbs_locale.rsphotographed"
@@ -1991,13 +1875,8 @@ msgid "Plantminer query works only for Genera and Species."
 msgstr "A pesquisa no Plantminer funciona somente para Gêneros e Espécies."
 
 #: cbs_locale.rsplumages
-msgid ""
-"\"U - Unknown plumage\",\"J - Juvenal plumage\",\"S - Supplemental plumage\","
-"\"F - Formative plumage\",\"B - Basic plumage\",\"A - Alternate plumage\""
-msgstr ""
-"\"U - Plumagem indeterminada\",\"J - Plumagem juvenil\",\"S - Plumagem "
-"suplementar\",\"F - Plumagem formativa\",\"B - Plumagem básica\",\"A - "
-"Plumagem alterna\""
+msgid "\"U - Unknown plumage\",\"J - Juvenal plumage\",\"S - Supplemental plumage\",\"F - Formative plumage\",\"B - Basic plumage\",\"A - Alternate plumage\""
+msgstr "\"U - Plumagem indeterminada\",\"J - Plumagem juvenil\",\"S - Plumagem suplementar\",\"F - Plumagem formativa\",\"B - Plumagem básica\",\"A - Plumagem alterna\""
 
 #: cbs_locale.rspostbeforecloseprompt
 msgctxt "cbs_locale.rspostbeforecloseprompt"
@@ -2045,6 +1924,18 @@ msgctxt "cbs_locale.rsprogressfinishing"
 msgid "Finishing..."
 msgstr "Finalizando..."
 
+#: cbs_locale.rsprogressimportbandingeffort
+msgid "Importing banding effort..."
+msgstr ""
+
+#: cbs_locale.rsprogressimportbandingjournal
+msgid "Importing banding journals..."
+msgstr ""
+
+#: cbs_locale.rsprogressimportcaptures
+msgid "Importing captures..."
+msgstr ""
+
 #: cbs_locale.rsprogressimportimages
 #, object-pascal-format
 msgctxt "cbs_locale.rsprogressimportimages"
@@ -2091,12 +1982,8 @@ msgstr "Despreparando..."
 
 #: cbs_locale.rsqualifieronlyingenus
 msgctxt "cbs_locale.rsqualifieronlyingenus"
-msgid ""
-"The <font color=\"green\">sp.</font> <b>qualifier</b> can only be used with "
-"genera rank."
-msgstr ""
-"O <b>qualificador</b> <font color=\"green\">sp.</font> só pode ser usado com "
-"nível de gênero."
+msgid "The <font color=\"green\">sp.</font> <b>qualifier</b> can only be used with genera rank."
+msgstr "O <b>qualificador</b> <font color=\"green\">sp.</font> só pode ser usado com nível de gênero."
 
 #: cbs_locale.rsrecnoempty
 msgctxt "cbs_locale.rsrecnoempty"
@@ -2192,8 +2079,7 @@ msgid ""
 "This operation will overwrite the database and records may be lost."
 msgstr ""
 "Deseja realmente restaurar este backup?\n"
-"Essa operação irá sobrescrever o banco de dados e registros podem ser "
-"perdidos."
+"Essa operação irá sobrescrever o banco de dados e registros podem ser perdidos."
 
 #: cbs_locale.rsrestorerecordprompt
 msgctxt "cbs_locale.rsrestorerecordprompt"
@@ -2236,11 +2122,8 @@ msgstr "Criando backup de inicialização..."
 
 #: cbs_locale.rssamecoordinateformat
 msgctxt "cbs_locale.rssamecoordinateformat"
-msgid ""
-"Select a destination coordinate type that is different from the origin type."
-msgstr ""
-"Selecione um formato de coordenada destino que seja diferente do formato de "
-"origem."
+msgid "Select a destination coordinate type that is different from the origin type."
+msgstr "Selecione um formato de coordenada destino que seja diferente do formato de origem."
 
 #: cbs_locale.rssampleblooddry
 msgctxt "cbs_locale.rssampleblooddry"
@@ -2496,6 +2379,19 @@ msgstr "Arquivo de backup criado com sucesso: %s"
 #: cbs_locale.rssuccessfulconnectiontest
 msgid "Connection to database was successful!"
 msgstr "Conexão ao banco de dados foi bem sucedida!"
+
+#: cbs_locale.rssuccessfulimport
+msgctxt "cbs_locale.rssuccessfulimport"
+msgid "The selected file(s) were sucessfully imported."
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportbandingeffort
+msgid "Banding effort imported successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportbandingjournal
+msgid "Banding journals imported successfully!"
+msgstr "Diários de anilhamento importados com sucesso!"
 
 #: cbs_locale.rssuccessfulimportcaptures
 msgctxt "cbs_locale.rssuccessfulimportcaptures"
@@ -2901,12 +2797,10 @@ msgstr "Nova versão: %s"
 #: cbs_locale.rsupdatesumcaptures
 msgctxt "cbs_locale.rsupdatesumcaptures"
 msgid ""
-"The sum of new captures, recaptures and unmarked individuals differs from "
-"the total number of individuals.\n"
+"The sum of new captures, recaptures and unmarked individuals differs from the total number of individuals.\n"
 "Do you want to update it?"
 msgstr ""
-"A soma das novas capturas, recapturas e indivíduos não marcados difere do "
-"número total de indivíduos.\n"
+"A soma das novas capturas, recapturas e indivíduos não marcados difere do número total de indivíduos.\n"
 "Deseja atualizar?"
 
 #: cbs_locale.rsusernumberandtotal
@@ -2918,22 +2812,14 @@ msgstr "usuário %d de %d"
 #: cbs_locale.rsvaluenotinrange
 #, object-pascal-format
 msgctxt "cbs_locale.rsvaluenotinrange"
-msgid ""
-"The value of <b>%s</b> must be between <font color=\"green\">%d</font> and "
-"<font color=\"green\">%d</font>."
-msgstr ""
-"O valor de <b>%s</b> deve estar entre <font color=\"green\">%d</font> e "
-"<font color=\"green\">%d</font>."
+msgid "The value of <b>%s</b> must be between <font color=\"green\">%d</font> and <font color=\"green\">%d</font>."
+msgstr "O valor de <b>%s</b> deve estar entre <font color=\"green\">%d</font> e <font color=\"green\">%d</font>."
 
 #: cbs_locale.rsvaluenotinset
 #, object-pascal-format
 msgctxt "cbs_locale.rsvaluenotinset"
-msgid ""
-"The value of <b>%s</b> must be one of the following: <font color='green'>%s</"
-"font>."
-msgstr ""
-"O valor de <b>%s</b> deve ser um dos seguintes: <font color='green'>%s</"
-"font>."
+msgid "The value of <b>%s</b> must be one of the following: <font color='green'>%s</font>."
+msgstr "O valor de <b>%s</b> deve ser um dos seguintes: <font color='green'>%s</font>."
 
 #: cbs_locale.rsversionplusstr
 #, object-pascal-format
@@ -3882,11 +3768,6 @@ msgctxt "tdlgimportcaptures.ejournalfile.texthint"
 msgid "Select a file..."
 msgstr "Selecione um arquivo..."
 
-#: tdlgimportcaptures.eweatherfile.texthint
-msgctxt "tdlgimportcaptures.eweatherfile.texthint"
-msgid "Select a file..."
-msgstr "Selecione um arquivo..."
-
 #: tdlgimportcaptures.lblcapturefile.caption
 msgctxt "tdlgimportcaptures.lblcapturefile.caption"
 msgid "Captures"
@@ -3905,7 +3786,10 @@ msgid "Select at least one file to start importing."
 msgstr "Selecione ao menos um arquivo para iniciar a importação."
 
 #: tdlgimportcaptures.lblsubtitleimportfinished.caption
-msgid "The selected files data were sucessfully imported."
+#, fuzzy
+#| msgid "The selected files data were sucessfully imported."
+msgctxt "tdlgimportcaptures.lblsubtitleimportfinished.caption"
+msgid "The selected file(s) were sucessfully imported."
 msgstr "Os arquivos selecionados foram importados com sucesso."
 
 #: tdlgimportcaptures.lbltitleimportfiles.caption
@@ -3913,12 +3797,9 @@ msgid "Files to import"
 msgstr "Arquivos a importar"
 
 #: tdlgimportcaptures.lbltitleimportfinished.caption
+msgctxt "tdlgimportcaptures.lbltitleimportfinished.caption"
 msgid "Finished importing!"
 msgstr "Importação finalizada!"
-
-#: tdlgimportcaptures.lblweatherfile.caption
-msgid "Weather log"
-msgstr "Log do tempo"
 
 #: tdlgimportcaptures.sbcancel.caption
 msgctxt "tdlgimportcaptures.sbcancel.caption"
@@ -7234,6 +7115,11 @@ msgctxt "tfrmcustomgrid.sbchildhistory.hint"
 msgid "View record history"
 msgstr "Visualizar histórico do registro"
 
+#: tfrmcustomgrid.sbchildnewtab.hint
+msgctxt "tfrmcustomgrid.sbchildnewtab.hint"
+msgid "Open records in a new tab"
+msgstr "Abrir registros em uma nova aba"
+
 #: tfrmcustomgrid.sbcolumnhide.hint
 msgid "Hide the selected column"
 msgstr "Ocultar coluna selecionada"
@@ -7428,10 +7314,6 @@ msgstr "Sumário"
 msgctxt "tfrmcustomgrid.sbsortchilds.hint"
 msgid "Sort records"
 msgstr "Ordenar registros"
-
-#: tfrmcustomgrid.sbsortchilds1.hint
-msgid "Open records in a new tab"
-msgstr "Abrir registros em uma nova aba"
 
 #: tfrmcustomgrid.sbsortrecords.hint
 msgctxt "tfrmcustomgrid.sbsortrecords.hint"
@@ -7797,8 +7679,10 @@ msgid "Import"
 msgstr "Importar"
 
 #: tfrmmain.actimportcaptures.caption
+#, fuzzy
+#| msgid "Captures"
 msgctxt "tfrmmain.actimportcaptures.caption"
-msgid "Captures"
+msgid "Banding data"
 msgstr "Capturas"
 
 #: tfrmmain.actimportebird.caption
@@ -8269,3 +8153,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

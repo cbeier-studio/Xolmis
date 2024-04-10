@@ -53,7 +53,7 @@
 {"hash":38067011,"name":"tfrmmain.actmanageusers.caption","sourcebytes":[77,97,110,97,103,101,32,117,115,101,114,115],"value":"Manage users"},
 {"hash":87418310,"name":"tfrmmain.actlogoff.caption","sourcebytes":[76,111,103,111,102,102],"value":"Logoff"},
 {"hash":315140,"name":"tfrmmain.actexit.caption","sourcebytes":[69,120,105,116],"value":"Exit"},
-{"hash":142330963,"name":"tfrmmain.actimportcaptures.caption","sourcebytes":[67,97,112,116,117,114,101,115],"value":"Captures"},
+{"hash":2024353,"name":"tfrmmain.actimportcaptures.caption","sourcebytes":[66,97,110,100,105,110,103,32,100,97,116,97],"value":"Banding data"},
 {"hash":5556915,"name":"tfrmmain.actimportnests.caption","sourcebytes":[78,101,115,116,115],"value":"Nests"},
 {"hash":128475572,"name":"tfrmmain.actimportwizard.caption","sourcebytes":[73,109,112,111,114,116,32,119,105,122,97,114,100],"value":"Import wizard"},
 {"hash":110571586,"name":"tfrmmain.pmtclosetab.caption","sourcebytes":[67,108,111,115,101,32,116,97,98],"value":"Close tab"},

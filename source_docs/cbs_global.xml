@@ -31,6 +31,8 @@
       </element><element name="LogInfo"><short>Write info message to the log file.</short>
       </element><element name="LogDebug"><short>Write debug info to the log file.</short>
       </element>
+    <element name="CheckLogsFull"><short>Check if the logs size reached the limit.</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

@@ -13,7 +13,7 @@ object dlgPlantminer: TdlgPlantminer
   PopupMode = pmAuto
   object VL: TValueListEditor
     Left = 0
-    Height = 386
+    Height = 391
     Top = 0
     Width = 612
     Align = alClient
@@ -22,6 +22,7 @@ object dlgPlantminer: TdlgPlantminer
     FixedCols = 0
     RowCount = 1
     TabOrder = 0
+    TitleStyle = tsNative
     OnDrawCell = VLDrawCell
     DisplayOptions = [doAutoColResize, doKeyColFixed]
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goThumbTracking]
@@ -32,8 +33,8 @@ object dlgPlantminer: TdlgPlantminer
   end
   object pBottom: TPanel
     Left = 0
-    Height = 46
-    Top = 386
+    Height = 41
+    Top = 391
     Width = 612
     Align = alBottom
     AutoSize = True
@@ -45,12 +46,12 @@ object dlgPlantminer: TdlgPlantminer
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 46
+    ClientHeight = 41
     ClientWidth = 612
     TabOrder = 1
     object sbSave: TBitBtn
       Left = 16
-      Height = 30
+      Height = 25
       Top = 8
       Width = 286
       Caption = 'Apply'
@@ -63,7 +64,7 @@ object dlgPlantminer: TdlgPlantminer
     end
     object sbCancel: TBitBtn
       Left = 310
-      Height = 30
+      Height = 25
       Top = 8
       Width = 286
       Caption = 'Cancel'

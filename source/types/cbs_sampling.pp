@@ -173,6 +173,7 @@ type
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
     procedure GetData(aKey: Integer);
+    procedure Insert;
     function Diff(aOld: TWeatherLog; var aList: TStrings): Boolean;
   published
     property SurveyId: Integer read FSurveyId write FSurveyId;
@@ -203,6 +204,7 @@ type
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
     procedure GetData(aKey: Integer);
+    procedure Insert;
     function Diff(aOld: TSurveyMember; var aList: TStrings): Boolean;
   published
     property SurveyId: Integer read FSurveyId write FSurveyId;
@@ -230,6 +232,8 @@ type
     FNetClose2: TTime;
     FNetOpen3: TTime;
     FNetClose3: TTime;
+    FNetOpen4: TTime;
+    FNetClose4: TTime;
     FTotalOpenTime: Double;
     FNetLength: Double;
     FNetHeight: Double;
@@ -240,6 +244,7 @@ type
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
     procedure GetData(aKey: Integer);
+    procedure Insert;
     function Find(aSurvey: Integer; aNetNumber: String): Boolean;
     function Diff(aOld: TNetEffort; var aList: TStrings): Boolean;
   published
@@ -257,6 +262,8 @@ type
     property NetClose2: TTime read FNetClose2 write FNetClose2;
     property NetOpen3: TTime read FNetOpen3 write FNetOpen3;
     property NetClose3: TTime read FNetClose3 write FNetClose3;
+    property NetOpen4: TTime read FNetOpen4 write FNetOpen4;
+    property NetClose4: TTime read FNetClose4 write FNetClose4;
     property TotalOpenTime: Double read FTotalOpenTime write FTotalOpenTime;
     property NetLength: Double read FNetLength write FNetLength;
     property NetHeight: Double read FNetHeight write FNetHeight;
@@ -886,6 +893,8 @@ begin
   FNetClose2 := StrToTime('00:00:00');
   FNetOpen3 := StrToTime('00:00:00');
   FNetClose3 := StrToTime('00:00:00');
+  FNetOpen4 := StrToTime('00:00:00');
+  FNetClose4 := StrToTime('00:00:00');
   FTotalOpenTime := 0.0;
   FNetLength := 0.0;
   FNetHeight := 0.0;
@@ -924,6 +933,8 @@ begin
       FNetClose2 := FieldByName('net_close_2').AsDateTime;
       FNetOpen3 := FieldByName('net_open_3').AsDateTime;
       FNetClose3 := FieldByName('net_close_3').AsDateTime;
+      FNetOpen4 := FieldByName('net_open_4').AsDateTime;
+      FNetClose4 := FieldByName('net_close_4').AsDateTime;
       FTotalOpenTime := FieldByName('open_time_total').AsFloat;
       FNetLength := FieldByName('net_length').AsFloat;
       FNetHeight := FieldByName('net_height').AsFloat;
@@ -938,6 +949,93 @@ begin
       FMarked := FieldByName('marked_status').AsBoolean;
       FActive := FieldByName('active_status').AsBoolean;
     end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNetEffort.Insert;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO nets_effort (survey_id, net_station_id, net_number, longitude, latitude, ' +
+      'sample_date, net_open_1, net_close_1, net_open_2, net_close_2, net_open_3, net_close_3, ' +
+      'net_open_4, net_close_4, ' +
+      'full_name, notes, user_inserted, insert_date) ');
+    Add('VALUES (:asurvey, :astation, :anumber, :alongitude, :alatitude, ' +
+      'date(:adate), time(:aopentime1), time(:aclosetime1), time(:aopentime2), time(:aclosetime2), ' +
+      'time(:aopentime3), time(:aclosetime3), ' +
+      'time(:aopentime4), time(:aclosetime4), ' +
+      ':aname, :anote, ' +
+      ':auser, datetime(''now'',''localtime''));');
+    ParamByName('ADATE').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
+    ParamByName('ANUMBER').AsInteger := FNetNumber;
+    ParamByName('ASURVEY').AsInteger := FSurveyId;
+    ParamByName('ASTATION').AsInteger := FNetStationId;
+    ParamByName('ANAME').AsString := GetNetEffortFullname(FSampleDate, FNetStationId, FNetNumber);
+    if FLongitude > 0 then
+      ParamByName('ALONGITUDE').AsFloat := FLongitude
+    else
+      ParamByName('ALONGITUDE').Clear;
+    if FLatitude <> 0 then
+      ParamByName('ALATITUDE').AsFloat := FLatitude
+    else
+      ParamByName('ALATITUDE').Clear;
+    ParamByName('ANOTE').AsString := FNotes;
+
+    // if the field has 1 second, it is NULL
+    if FNetOpen1 <> StrToTime('00:00:01') then
+      ParamByName('AOPENTIME1').AsString := TimeToStr(FNetOpen1)
+    else
+      ParamByName('AOPENTIME1').Clear;
+    if FNetClose1 <> StrToTime('00:00:01') then
+      ParamByName('ACLOSETIME1').AsString := TimeToStr(FNetClose1)
+    else
+      ParamByName('ACLOSETIME1').Clear;
+
+    if FNetOpen2 <> StrToTime('00:00:01') then
+      ParamByName('AOPENTIME2').AsString := TimeToStr(FNetOpen2)
+    else
+      ParamByName('AOPENTIME2').Clear;
+    if FNetClose2 <> StrToTime('00:00:01') then
+      ParamByName('ACLOSETIME2').AsString := TimeToStr(FNetClose2)
+    else
+      ParamByName('ACLOSETIME2').Clear;
+
+    if FNetOpen3 <> StrToTime('00:00:01') then
+      ParamByName('AOPENTIME3').AsString := TimeToStr(FNetOpen3)
+    else
+      ParamByName('AOPENTIME3').Clear;
+    if FNetClose3 <> StrToTime('00:00:01') then
+      ParamByName('ACLOSETIME3').AsString := TimeToStr(FNetClose3)
+    else
+      ParamByName('ACLOSETIME3').Clear;
+
+    if FNetOpen4 <> StrToTime('00:00:01') then
+      ParamByName('AOPENTIME4').AsString := TimeToStr(FNetOpen4)
+    else
+      ParamByName('AOPENTIME4').Clear;
+    if FNetClose4 <> StrToTime('00:00:01') then
+      ParamByName('ACLOSETIME4').AsString := TimeToStr(FNetClose4)
+    else
+      ParamByName('ACLOSETIME4').Clear;
+
+    ParamByName('AUSER').AsInteger := FUserInserted;
+//    GravaLogSQL(SQL);
+    ExecSQL;
+
+    // Get the autoincrement key inserted
+    Clear;
+    Add('SELECT DISTINCT last_insert_rowid() FROM nets_effort');
+    Open;
+    FId := Fields[0].AsInteger;
     Close;
   finally
     FreeAndNil(Qry);
@@ -1004,6 +1102,10 @@ begin
     aList.Add(R);
   if FieldValuesDiff('Fechamento 3', aOld.NetClose3, FNetClose3, R) then
     aList.Add(R);
+  if FieldValuesDiff('Abertura 4', aOld.NetOpen4, FNetOpen4, R) then
+    aList.Add(R);
+  if FieldValuesDiff('Fechamento 4', aOld.NetClose4, FNetClose4, R) then
+    aList.Add(R);
   if FieldValuesDiff('Tempo aberta', aOld.TotalOpenTime, FTotalOpenTime, R) then
     aList.Add(R);
   if FieldValuesDiff('Comprimento', aOld.NetLength, FNetLength, R) then
@@ -1014,7 +1116,7 @@ begin
     aList.Add(R);
   if FieldValuesDiff('Malha', aOld.NetMesh, FNetMesh, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anota'#231#245'es', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff('Notes', aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -1071,6 +1173,37 @@ begin
   end;
 end;
 
+procedure TSurveyMember.Insert;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO survey_team (survey_id, person_id, ' +
+      'user_inserted, insert_date) ');
+    Add('VALUES (:asurvey, :aperson, ' +
+      ':auser, datetime(''now'',''localtime''));');
+    ParamByName('ASURVEY').AsInteger := FSurveyId;
+    ParamByName('APERSON').AsInteger := FPersonId;
+    ParamByName('AUSER').AsInteger := FUserInserted;
+//    GravaLogSQL(SQL);
+    ExecSQL;
+
+    // Get the autoincrement key inserted
+    Clear;
+    Add('SELECT DISTINCT last_insert_rowid() FROM survey_team');
+    Open;
+    FId := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 function TSurveyMember.Diff(aOld: TSurveyMember; var aList: TStrings): Boolean;
 var
   R: String;
@@ -1078,9 +1211,9 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Pesquisador', aOld.PersonId, FPersonId, R) then
+  if FieldValuesDiff('Person', aOld.PersonId, FPersonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Visitante', aOld.Visitor, FVisitor, R) then
+  if FieldValuesDiff('Visitor', aOld.Visitor, FVisitor, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -1228,7 +1361,8 @@ begin
       ':auser, datetime(''now'',''localtime''));');
     ParamByName('ADATE').AsString := FormatDateTime('yyyy-mm-dd', FSurveyDate);
     ParamByName('ATIME').AsString := TimeToStr(FStartTime);
-    ParamByName('ADURATION').AsInteger := FDuration;
+    if FDuration > 0 then
+      ParamByName('ADURATION').AsInteger := FDuration;
     ParamByName('AMETHOD').AsInteger := FMethodId;
     ParamByName('ANAME').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, 0, '');
     ParamByName('ALOCAL').AsInteger := FLocalityId;
@@ -1444,6 +1578,51 @@ begin
       FWindSpeedBft := FieldByName('wind_speed_bft').AsInteger;
       FWindSpeedKmH := FieldByName('wind_speed_kmh').AsFloat;
     end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TWeatherLog.Insert;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO weather_logs (survey_id, sample_date, sample_time, sample_moment, ' +
+      'cloud_cover, precipitation, rainfall, temperature, wind_speed_bft, wind_speed_kmh, ' +
+      'relative_humidity, atmospheric_pressure, notes, ' +
+      'user_inserted, insert_date) ');
+    Add('VALUES (:asurvey, date(:adate), time(:atime), :amoment, :acloudcover, ' +
+      ':aprecipitation, :arainfall, :atemperature, :awindbft, :awindkmh, :ahumidity, :apressure, :anote, ' +
+      ':auser, datetime(''now'',''localtime''));');
+    ParamByName('ADATE').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
+    ParamByName('ATIME').AsString := TimeToStr(FSampleTime);
+    ParamByName('AMOMENT').AsString := FSampleMoment;
+    ParamByName('ASURVEY').AsInteger := FSurveyId;
+    ParamByName('ACLOUDCOVER').AsInteger := FCloudCover;
+    ParamByName('APRECIPITATION').AsString := FPrecipitation;
+    ParamByName('ARAINFALL').AsInteger := FRainfall;
+    ParamByName('ATEMPERATURE').AsFloat := FTemperature;
+    ParamByName('AWINDBFT').AsInteger := FWindSpeedBft;
+    ParamByName('AWINDKMH').AsFloat := FWindSpeedKmH;
+    ParamByName('AHUMIDITY').AsFloat := FRelativeHumidity;
+    ParamByName('APRESSURE').AsFloat := FAtmosphericPressure;
+    ParamByName('ANOTE').AsString := FNotes;
+    ParamByName('AUSER').AsInteger := FUserInserted;
+//    GravaLogSQL(SQL);
+    ExecSQL;
+
+    // Get the autoincrement key inserted
+    Clear;
+    Add('SELECT DISTINCT last_insert_rowid() FROM weather_logs');
+    Open;
+    FId := Fields[0].AsInteger;
     Close;
   finally
     FreeAndNil(Qry);

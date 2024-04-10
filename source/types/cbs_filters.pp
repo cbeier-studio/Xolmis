@@ -595,7 +595,15 @@ begin
         Lang := $0409   // English (USA)
       else
         Lang := $0416;  // Portuguese (Brazil)
+      {$IFDEF MSWINDOWS}
       SysUtils.GetLocaleFormatSettings(Lang, FS);
+      {$ENDIF}
+      {$IFDEF DARWIN}
+      GetNSFormatSettings(FS, L);
+      {$ENDIF}
+      {$IFDEF LINUX}
+      FS := FormatSettings;
+      {$ENDIF}
 
       // Create list for the treelist
       Qry.First;
@@ -1743,7 +1751,15 @@ begin
       Lang := $0409   // English (USA)
     else
       Lang := $0416;  // Portuguese (Brazil)
+    {$IFDEF MSWINDOWS}
     SysUtils.GetLocaleFormatSettings(Lang, FS);
+    {$ENDIF}
+    {$IFDEF DARWIN}
+    GetNSFormatSettings(FS, L);
+    {$ENDIF}
+    {$IFDEF LINUX}
+    FS := FormatSettings;
+    {$ENDIF}
 
     Node := aVirtualTree.GetFirst;
     while Assigned(Node) do

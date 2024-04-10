@@ -4,7 +4,7 @@ program Xolmis;
 
 uses
   {$IFDEF UNIX}
-  cthreads,
+  cthreads, clocale,
   {$ENDIF}
   {$IFDEF HASAMIGA}
   athreads,

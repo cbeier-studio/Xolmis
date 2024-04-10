@@ -41,6 +41,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "{#MyAppSource}\Xolmis.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppSource}\sqlite3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "languages\Xolmis.pt_BR.mo"; DestDir: "{app}\languages"
 Source: "resources\XolmisDB_template.sqlite3"; DestDir: "{localappdata}\{#MyAppName}"
 
 [Icons]
@@ -49,3 +50,9 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+
+[Dirs]
+Name: "{app}\languages"; Flags: uninsalwaysuninstall
+
+[UninstallDelete]
+Type: filesandordirs; Name: "{localappdata}\{#MyAppName}"

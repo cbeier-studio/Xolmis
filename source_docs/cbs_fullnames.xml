@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_fullnames"><element name="GetSurveyFullname"><short>Returns a full name for a survey.</short><descr><p><var>aDate</var>, the date of the survey</p><p><var>aSite</var>, the survey locality</p><p><var>aMethod</var>, the method used in the survey</p><p><var>aStation</var>, the sampling plot or mistnet station</p><p><var>aID</var>, used when the sampling plot is not informed</p>
+        </descr>
+      </element><element name="GetNetEffortFullname"><short>Returns a full name for a  net effort record.</short><descr><p><var>aDate</var>, the date of the sampling</p><p><var>aStation</var>, the mistnet station sampled</p><p><var>aNetNumber</var>, the mistnet number in the station</p>
+        </descr>
+      </element><element name="GetIndividualFullname"><short>Returns a full name for a individual.</short><descr><p><var>aTaxon</var>, the taxon of the individual</p><p><var>aBand</var>, the unique metal band</p><p><var>aRightLegBelow</var>, the combination of metal/colored bands in the right leg</p><p><var>aLeftLegBelow</var>, the combination of metal/colored bands in the left leg</p><p><var>aSex</var>, the sex (male/female) of the individual</p><p><var>Formatted</var>, format name with HTML if True</p>
+        </descr>
+      </element><element name="GetCaptureFullname"><short>Returns a full name for a capture.</short><descr><p><var>aDate</var>, the date of the capture</p><p><var>aTaxon</var>, the taxon of the individual</p><p><var>aBand</var>, the unique metal band</p><p><var>aSex</var>, the sex (male/female) of the individual</p><p><var>aCaptureType</var>, the type of capture (new, recapture, band change, ...)</p><p><var>aCycle</var>, the molt cycle code</p><p><var>Formatted</var>, format name with HTML if True</p>
+        </descr>
+      </element><element name="GetBandFullname"><short>Returns a full name for a band</short><descr><p><var>aSize</var>, the band size code</p><p><var>aNumber</var>, the unique number</p><p><var>aSupplier</var>, the band supplier</p>
+        </descr>
+      </element>
+    <element name="GetPermanentNetFullName"><short>Returns a full name for a permanent mistnet.</short><descr><p><var>aNetStation</var>, the mistnet station</p><p><var>aNetNumber</var>, the number of the mistnet</p>
+        </descr>
+      </element><element name="GetNestFullName"><short>Returns a full name for a nest.</short><descr><p><var>aDate</var>, the date when the nest was found</p><p><var>aTaxon</var>, the taxon of the nest</p><p><var>aSite</var>, the locality where the nest was found</p><p><var>aFieldNumber</var>, the field ID number (optional)</p>
+        </descr>
+      </element><element name="GetNestRevisionFullName"><short>Returns a full name for a nest revision.</short><descr><p><var>aDate</var>, the date of the revision</p><p><var>aNest</var>, the nest revised</p><p><var>aStage</var>, the stage the nest is in</p><p><var>aStatus</var>, the status of the nest</p>
+        </descr>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

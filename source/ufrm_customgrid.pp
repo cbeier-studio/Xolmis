@@ -363,7 +363,7 @@ type
     sbShowColumns: TSpeedButton;
     sbShowRecycle: TSpeedButton;
     sbShowSummary: TSpeedButton;
-    sbSortChilds1: TSpeedButton;
+    sbChildNewTab: TSpeedButton;
     sbSortChilds: TSpeedButton;
     sbSortRecords: TSpeedButton;
     sbFilterRecords: TSpeedButton;
@@ -617,26 +617,11 @@ type
       Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType);
   private
     FTableType, FChildTable: TTableType;
-    SearchStr: TSearch;
     FSearch: TCustomSearch;
-    QuickFilters: TStringList;
-    Modifier: TRecordStatus;
-    Sorting: TSortedFields;
-    WhereSQL: TStrings;
     Filtrado: Boolean;
     FSidePanel, OldSidePanel: Boolean;
     FSideIndex, OldSideIndex: Integer;
     FSearchString, OldSearchString: String;
-    BandSizeFilter, BandStatusFilter: String;
-    DateFilter, ReportedFilter: String;
-    SiteFilter, SiteRankFilter: String;
-    ClementsFilter, IocFilter, CbroFilter: String;
-    TaxaFilter, RanksFilter, ExtinctFilter: String;
-    SexFilter, AgeFilter: String;
-    WithColorFilter, WithRecapturesFilter: String;
-    IsSynonymFilter, HasSynonymsFilter: String;
-    CloacalProtuberanceFilter, BroodPatchFilter: String;
-    NestFateFilter, NestSupportFilter: String;
     FPersonKeyFilter, FInstitutionKeyFilter, FSurveyKeyFilter, FMethodKeyFilter: Integer;
     FProjectKeyFilter, FNestKeyFilter, FIndividualKeyFilter, FExpeditionKeyFilter: Integer;
     FPlantKeyFilter, FSamplingPlotKeyFilter: Integer;
@@ -676,27 +661,27 @@ type
     procedure LoadRecordColumns;
     procedure LoadRecordRow;
     procedure UpdateFilterPanels;
-    procedure GetFilters(aList: TStrings);
-    procedure GetInstitutionFilters(aList: TStrings);
-    procedure GetPeopleFilters(aList: TStrings);
-    procedure GetProjectFilters(aList: TStrings);
-    procedure GetPermitFilters(aList: TStrings);
-    procedure GetGazetteerFilters(aList: TStrings);
-    procedure GetNetStationFilters(aList: TStrings);
-    procedure GetTaxonRankFilters(aList: TStrings);
-    procedure GetBotanicTaxaFilters(aList: TStrings);
-    procedure GetZooTaxaFilters(aList: TStrings);
-    procedure GetBandFilters(aList: TStrings);
-    procedure GetIndividualFilters(aList: TStrings);
-    procedure GetCaptureFilters(aList: TStrings);
-    procedure GetNestFilters(aList: TStrings);
-    procedure GetNestRevisionFilters(aList: TStrings);
-    procedure GetEggFilters(aList: TStrings);
-    procedure GetMethodFilters(aList: TStrings);
-    procedure GetExpeditionFilters(aList: TStrings);
-    procedure GetSurveyFilters(aList: TStrings);
-    procedure GetSightingFilters(aList: TStrings);
-    procedure GetSpecimenFilters(aList: TStrings);
+    procedure GetFilters;
+    procedure GetInstitutionFilters;
+    procedure GetPeopleFilters;
+    procedure GetProjectFilters;
+    procedure GetPermitFilters;
+    procedure GetGazetteerFilters;
+    procedure GetNetStationFilters;
+    procedure GetTaxonRankFilters;
+    procedure GetBotanicTaxaFilters;
+    procedure GetZooTaxaFilters;
+    procedure GetBandFilters;
+    procedure GetIndividualFilters;
+    procedure GetCaptureFilters;
+    procedure GetNestFilters;
+    procedure GetNestRevisionFilters;
+    procedure GetEggFilters;
+    procedure GetMethodFilters;
+    procedure GetExpeditionFilters;
+    procedure GetSurveyFilters;
+    procedure GetSightingFilters;
+    procedure GetSpecimenFilters;
     procedure ClearInstitutionFilters;
     procedure ClearPeopleFilters;
     procedure ClearProjectFilters;
@@ -710,6 +695,7 @@ type
     procedure ClearIndividualFilters;
     procedure ClearCaptureFilters;
     procedure ClearNestFilters;
+    procedure ClearNestRevisionFilters;
     procedure ClearEggFilters;
     procedure ClearMethodFilters;
     procedure ClearExpeditionFilters;
@@ -722,6 +708,7 @@ type
     procedure ChildTagMouseLeave(aTag, aCountTag: TBCPanel);
     function GetChildDataSet: TDataSet;
     procedure UpdateButtons(aDataSet: TDataSet);
+    procedure UpdateChildBar;
     procedure UpdateChildButtons(aDataSet: TDataSet);
     procedure UpdateChildCount;
     procedure UpdateChildStatus;
@@ -1568,14 +1555,7 @@ procedure TfrmCustomGrid.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
   LoadRecordRow;
 
-  if pChildsBar.Visible then
-    case nbChilds.PageIndex of
-      0: UpdateChildButtons(dsLink1.DataSet);
-      1: UpdateChildButtons(dsLink2.DataSet);
-      2: UpdateChildButtons(dsLink3.DataSet);
-      3: UpdateChildButtons(dsLink4.DataSet);
-      4: UpdateChildButtons(dsLink5.DataSet);
-    end;
+  UpdateChildBar;
 end;
 
 procedure TfrmCustomGrid.dsLinkStateChange(Sender: TObject);
@@ -1585,14 +1565,7 @@ begin
 
   pEmptyQuery.Visible := dsLink.DataSet.RecordCount = 0;
 
-  if pChildsBar.Visible then
-    case nbChilds.PageIndex of
-      0: UpdateChildButtons(dsLink1.DataSet);
-      1: UpdateChildButtons(dsLink2.DataSet);
-      2: UpdateChildButtons(dsLink3.DataSet);
-      3: UpdateChildButtons(dsLink4.DataSet);
-      4: UpdateChildButtons(dsLink5.DataSet);
-    end;
+  UpdateChildBar;
 end;
 
 procedure TfrmCustomGrid.eAddChildKeyPress(Sender: TObject; var Key: char);
@@ -2198,12 +2171,7 @@ end;
 procedure TfrmCustomGrid.FormCreate(Sender: TObject);
 begin
   CanToggle := False;
-  SearchStr := TSearch.Create;
-  Sorting := TSortedFields.Create;
-  Modifier.Reset;
   Filtrado := False;
-  QuickFilters := TStringList.Create;
-  WhereSQL := TStringList.Create;
 
   OldSidePanel := False;
   OldSideIndex := -1;
@@ -2222,11 +2190,7 @@ begin
   //if Assigned(DMB) then
   //  FreeAndNil(DMB);
 
-  Sorting.Free;
-  FreeAndNil(QuickFilters);
-  FreeAndNil(WhereSQL);
   FreeAndNil(FSearch);
-  SearchStr.Free;
 end;
 
 procedure TfrmCustomGrid.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -2590,14 +2554,7 @@ begin
       EditCapture(DMS.qCaptures, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
   end;
 
-  if pChildsBar.Visible then
-    case nbChilds.PageIndex of
-      0: UpdateChildButtons(dsLink1.DataSet);
-      1: UpdateChildButtons(dsLink2.DataSet);
-      2: UpdateChildButtons(dsLink3.DataSet);
-      3: UpdateChildButtons(dsLink4.DataSet);
-      4: UpdateChildButtons(dsLink5.DataSet);
-    end;
+  UpdateChildBar;
 end;
 
 procedure TfrmCustomGrid.pmcNewCollectorClick(Sender: TObject);
@@ -2679,14 +2636,7 @@ begin
       EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
   end;
 
-  if pChildsBar.Visible then
-    case nbChilds.PageIndex of
-      0: UpdateChildButtons(dsLink1.DataSet);
-      1: UpdateChildButtons(dsLink2.DataSet);
-      2: UpdateChildButtons(dsLink3.DataSet);
-      3: UpdateChildButtons(dsLink4.DataSet);
-      4: UpdateChildButtons(dsLink5.DataSet);
-    end;
+  UpdateChildBar;
 end;
 
 procedure TfrmCustomGrid.pmcNewSpecimenClick(Sender: TObject);
@@ -2835,14 +2785,7 @@ begin
     //tbAudioLibrary: ;
   end;
 
-  if pChildsBar.Visible then
-    case nbChilds.PageIndex of
-      0: UpdateChildButtons(dsLink1.DataSet);
-      1: UpdateChildButtons(dsLink2.DataSet);
-      2: UpdateChildButtons(dsLink3.DataSet);
-      3: UpdateChildButtons(dsLink4.DataSet);
-      4: UpdateChildButtons(dsLink5.DataSet);
-    end;
+  UpdateChildBar;
   Working := False;
 end;
 
@@ -2923,14 +2866,7 @@ begin
     //tbAudioLibrary: ;
   end;
 
-  if pChildsBar.Visible then
-    case nbChilds.PageIndex of
-      0: UpdateChildButtons(dsLink1.DataSet);
-      1: UpdateChildButtons(dsLink2.DataSet);
-      2: UpdateChildButtons(dsLink3.DataSet);
-      3: UpdateChildButtons(dsLink4.DataSet);
-      4: UpdateChildButtons(dsLink5.DataSet);
-    end;
+  UpdateChildBar;
   Working := False;
 end;
 
@@ -3674,6 +3610,18 @@ begin
     lblRecordStatus.Caption := rsNoRecordsFound;
 end;
 
+procedure TfrmCustomGrid.UpdateChildBar;
+begin
+  if pChildsBar.Visible then
+    case nbChilds.PageIndex of
+      0: UpdateChildButtons(dsLink1.DataSet);
+      1: UpdateChildButtons(dsLink2.DataSet);
+      2: UpdateChildButtons(dsLink3.DataSet);
+      3: UpdateChildButtons(dsLink4.DataSet);
+      4: UpdateChildButtons(dsLink5.DataSet);
+    end;
+end;
+
 procedure TfrmCustomGrid.UpdateChildButtons(aDataSet: TDataSet);
 begin
   if Closing then
@@ -3716,7 +3664,7 @@ begin
     pSide.Enabled := True;
   end;
 
-  UpdateChildCount;
+  //UpdateChildCount;
 end;
 
 procedure TfrmCustomGrid.UpdateChildCount;
@@ -5252,7 +5200,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5308,7 +5256,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5368,7 +5316,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5426,7 +5374,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5481,7 +5429,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5536,7 +5484,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5581,7 +5529,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5628,7 +5576,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5685,7 +5633,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5754,7 +5702,7 @@ begin
 
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5819,7 +5767,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5884,7 +5832,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -5944,7 +5892,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -6000,7 +5948,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -6047,7 +5995,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -6101,7 +6049,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -6159,7 +6107,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -6228,7 +6176,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -6291,7 +6239,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -6353,7 +6301,7 @@ begin
     end;
   end;
 
-  GetFilters(QuickFilters);
+  GetFilters;
 
   Result := FSearch.RunSearch > 0;
 end;
@@ -6614,7 +6562,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetFilters;
 var
   sf: Integer;
 begin
@@ -6622,11 +6570,9 @@ begin
     Exit;
 
   CanToggle := False;
-  aList.Clear;
 
   if (tsfMarked.StateOn = sw_on) then
   begin
-    Modifier.Mark := rmMarked;
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('marked_status', 'Marked', sdtBoolean,
       crEqual, False, '1'));
@@ -6634,56 +6580,53 @@ begin
   else
   if (tsfUnmarked.StateOn = sw_on) then
   begin
-    Modifier.Mark := rmUnmarked;
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('marked_status', 'Marked', sdtBoolean,
       crEqual, False, '0'));
-  end
-  else
-    Modifier.Mark := rmAll;
+  end;
 
   case TableType of
     tbNone: ;
     tbProjectTeams: ;
-    tbPermits:       GetPermitFilters(aList);
-    tbGazetteer:     GetGazetteerFilters(aList);
-    tbBotanicTaxa:   GetBotanicTaxaFilters(aList);
-    tbNests:         GetNestFilters(aList);
-    tbNestRevisions: GetNestRevisionFilters(aList);
-    tbEggs:          GetEggFilters(aList);
-    tbNetStations:   GetNetStationFilters(aList);
-    tbTaxonRanks:    GetTaxonRankFilters(aList);
-    tbZooTaxa:       GetZooTaxaFilters(aList);
-    tbProjects:      GetProjectFilters(aList);
-    tbInstitutions:  GetInstitutionFilters(aList);
-    tbPeople:        GetPeopleFilters(aList);
-    tbExpeditions:   GetExpeditionFilters(aList);
-    tbSurveys:       GetSurveyFilters(aList);
-    tbMethods:       GetMethodFilters(aList);
+    tbPermits:       GetPermitFilters;
+    tbGazetteer:     GetGazetteerFilters;
+    tbBotanicTaxa:   GetBotanicTaxaFilters;
+    tbNests:         GetNestFilters;
+    tbNestRevisions: GetNestRevisionFilters;
+    tbEggs:          GetEggFilters;
+    tbNetStations:   GetNetStationFilters;
+    tbTaxonRanks:    GetTaxonRankFilters;
+    tbZooTaxa:       GetZooTaxaFilters;
+    tbProjects:      GetProjectFilters;
+    tbInstitutions:  GetInstitutionFilters;
+    tbPeople:        GetPeopleFilters;
+    tbExpeditions:   GetExpeditionFilters;
+    tbSurveys:       GetSurveyFilters;
+    tbMethods:       GetMethodFilters;
     tbSurveyTeams: ;
     tbNetsEffort: ;
-    tbSightings:     GetSightingFilters(aList);
-    tbSpecimens:     GetSpecimenFilters(aList);
+    tbSightings:     GetSightingFilters;
+    tbSpecimens:     GetSpecimenFilters;
     tbSamplePreps: ;
     tbPermanentNets: ;
-    tbBands:         GetBandFilters(aList);
-    tbIndividuals:   GetIndividualFilters(aList);
-    tbCaptures:      GetCaptureFilters(aList);
+    tbBands:         GetBandFilters;
+    tbIndividuals:   GetIndividualFilters;
+    tbCaptures:      GetCaptureFilters;
     tbMolts: ;
     tbImages: ;
     tbAudioLibrary: ;
   end;
 
-  Filtrado := aList.Count > 0;
+  Filtrado := FSearch.QuickFilters.Count > 0;
   CanToggle := True;
 end;
 
-procedure TfrmCustomGrid.GetInstitutionFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetInstitutionFilters;
 begin
   SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
 end;
 
-procedure TfrmCustomGrid.GetPeopleFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetPeopleFilters;
 var
   sf: Integer;
 begin
@@ -6698,12 +6641,12 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetProjectFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetProjectFilters;
 begin
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 end;
 
-procedure TfrmCustomGrid.GetPermitFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetPermitFilters;
 var
   sf: Integer;
 begin
@@ -6717,7 +6660,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetGazetteerFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetGazetteerFilters;
 const
   SiteRanks: array of String = ('P', 'E', 'R', 'M', 'D', 'L');
 var
@@ -6731,22 +6674,22 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetNetStationFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetNetStationFilters;
 begin
   SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
 end;
 
-procedure TfrmCustomGrid.GetTaxonRankFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetTaxonRankFilters;
 begin
 
 end;
 
-procedure TfrmCustomGrid.GetBotanicTaxaFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetBotanicTaxaFilters;
 var
   sf: Integer;
 begin
-  if RanksFilter <> EmptyStr then
-    aList.Add(RanksFilter);
+  //if RanksFilter <> EmptyStr then
+  //  aList.Add(RanksFilter);
 
   if tsIsSynonym.StateOn = sw_on then
   begin
@@ -6762,12 +6705,12 @@ begin
   //end;
 end;
 
-procedure TfrmCustomGrid.GetZooTaxaFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetZooTaxaFilters;
 var
   sf: Integer;
 begin
-  if RanksFilter <> EmptyStr then
-    aList.Add(RanksFilter);
+  //if RanksFilter <> EmptyStr then
+  //  aList.Add(RanksFilter);
 
   if tsTaxonomyClements.StateOn = sw_on then
   begin
@@ -6815,7 +6758,7 @@ begin
     sbEditChildClick(Sender);
 end;
 
-procedure TfrmCustomGrid.GetBandFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetBandFilters;
 const
   BandStatus: array of String = ('D', 'U', 'R', 'T', 'Q', 'P');
 var
@@ -6866,7 +6809,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetIndividualFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetIndividualFilters;
 const
   BirdAge: array of String = ('U', 'A', 'I', 'J', 'N', 'F', 'S', 'T', '4', '5');
   BirdSex: array of String = ('M', 'F', 'U');
@@ -6922,7 +6865,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetCaptureFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetCaptureFilters;
 const
   BirdAge: array of String = ('U', 'A', 'I', 'J', 'N', 'F', 'S', 'T', '4', '5');
   BirdSex: array of String = ('M', 'F', 'U');
@@ -7122,7 +7065,7 @@ begin
 
 end;
 
-procedure TfrmCustomGrid.GetNestFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetNestFilters;
 const
   NestFate: array of String = ('P', 'S', 'U');
   NestSupport: array of String = ('G', 'P', 'H', 'F', 'S', 'C', 'A', 'O');
@@ -7166,7 +7109,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetNestRevisionFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetNestRevisionFilters;
 var
   sf: Integer;
 begin
@@ -7194,7 +7137,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetEggFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetEggFilters;
 var
   sf: Integer;
 begin
@@ -7219,12 +7162,12 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetMethodFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetMethodFilters;
 begin
 
 end;
 
-procedure TfrmCustomGrid.GetExpeditionFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetExpeditionFilters;
 var
   sf: Integer;
 begin
@@ -7239,7 +7182,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetSurveyFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetSurveyFilters;
 var
   sf: Integer;
 begin
@@ -7287,7 +7230,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetSightingFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetSightingFilters;
 var
   sf: Integer;
 begin
@@ -7330,7 +7273,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetSpecimenFilters(aList: TStrings);
+procedure TfrmCustomGrid.GetSpecimenFilters;
 const
   SampleTypes: array of String = ('WS', 'PS', 'N', 'B', 'E', 'P', 'F', 'BS', 'C', 'S', 'T', 'D', 'R');
 var
@@ -7371,7 +7314,6 @@ begin
 
     Filtrado := False;
   end;
-  SiteFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearPeopleFilters;
@@ -7386,8 +7328,6 @@ begin
 
     Filtrado := False;
   end;
-  SiteFilter := EmptyStr;
-  DateFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearProjectFilters;
@@ -7399,7 +7339,6 @@ begin
 
     Filtrado := False;
   end;
-  DateFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearPermitFilters;
@@ -7418,8 +7357,6 @@ begin
 
     Filtrado := False;
   end;
-  SiteRankFilter := EmptyStr;
-  SiteFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearNetStationFilters;
@@ -7431,7 +7368,6 @@ begin
 
     Filtrado := False;
   end;
-  SiteFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearTaxonRankFilters;
@@ -7451,9 +7387,6 @@ begin
 
     Filtrado := False;
   end;
-  RanksFilter := EmptyStr;
-  IsSynonymFilter := EmptyStr;
-  HasSynonymsFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearZooTaxaFilters;
@@ -7474,13 +7407,6 @@ begin
 
     Filtrado := False;
   end;
-  RanksFilter := EmptyStr;
-  ClementsFilter := EmptyStr;
-  IocFilter := EmptyStr;
-  CbroFilter := EmptyStr;
-  ExtinctFilter := EmptyStr;
-  IsSynonymFilter := EmptyStr;
-  HasSynonymsFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.DBGColExit(Sender: TObject);
@@ -7646,10 +7572,6 @@ begin
 
     Filtrado := False;
   end;
-  DateFilter := EmptyStr;
-  BandSizeFilter := EmptyStr;
-  BandStatusFilter := EmptyStr;
-  ReportedFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearIndividualFilters;
@@ -7673,12 +7595,6 @@ begin
 
     Filtrado := False;
   end;
-  TaxaFilter := EmptyStr;
-  DateFilter := EmptyStr;
-  SexFilter := EmptyStr;
-  AgeFilter := EmptyStr;
-  WithColorFilter := EmptyStr;
-  WithRecapturesFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearCaptureFilters;
@@ -7704,12 +7620,6 @@ begin
 
     Filtrado := False;
   end;
-  TaxaFilter := EmptyStr;
-  SiteFilter := EmptyStr;
-  DateFilter := EmptyStr;
-  SexFilter := EmptyStr;
-  CloacalProtuberanceFilter := EmptyStr;
-  BroodPatchFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearNestFilters;
@@ -7731,11 +7641,11 @@ begin
 
     Filtrado := False;
   end;
-  TaxaFilter := EmptyStr;
-  SiteFilter := EmptyStr;
-  DateFilter := EmptyStr;
-  NestFateFilter := EmptyStr;
-  NestSupportFilter := EmptyStr;
+end;
+
+procedure TfrmCustomGrid.ClearNestRevisionFilters;
+begin
+
 end;
 
 procedure TfrmCustomGrid.ClearEggFilters;
@@ -7760,8 +7670,6 @@ begin
 
     Filtrado := False;
   end;
-  SiteFilter := EmptyStr;
-  DateFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearSurveyFilters;
@@ -7776,8 +7684,6 @@ begin
 
     Filtrado := False;
   end;
-  SiteFilter := EmptyStr;
-  DateFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearSightingFilters;
@@ -7795,9 +7701,6 @@ begin
 
     Filtrado := False;
   end;
-  TaxaFilter := EmptyStr;
-  SiteFilter := EmptyStr;
-  DateFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearSpecimenFilters;
@@ -7815,9 +7718,6 @@ begin
 
     Filtrado := False;
   end;
-  TaxaFilter := EmptyStr;
-  SiteFilter := EmptyStr;
-  DateFilter := EmptyStr;
 end;
 
 procedure TfrmCustomGrid.ClearSearch;
@@ -7831,62 +7731,41 @@ begin
 
   case TableType of
     tbNone: ;
-    tbProjectTeams: ;
-    tbPermits:
-      ClearPermitFilters;
-    tbGazetteer:
-      ClearGazetteerFilters;
-    tbBotanicTaxa:
-      ClearBotanicTaxaFilters;
-    tbNests:
-      ClearNestFilters;
-    tbNestRevisions: ;
-    tbEggs:
-      ClearEggFilters;
-    tbNetStations:
-      ClearNetStationFilters;
-    tbTaxonRanks:
-      ClearTaxonRankFilters;
-    tbZooTaxa:
-      ClearZooTaxaFilters;
-    tbProjects:
-      ClearProjectFilters;
-    tbInstitutions:
-      ClearInstitutionFilters;
-    tbPeople:
-      ClearPeopleFilters;
-    tbExpeditions:
-      ClearExpeditionFilters;
-    tbSurveys:
-      ClearSurveyFilters;
-    tbMethods:
-      ClearMethodFilters;
-    tbSurveyTeams: ;
-    tbNetsEffort: ;
-    tbSightings:
-      ClearSightingFilters;
-    tbSpecimens:
-      ClearSpecimenFilters;
-    tbSamplePreps: ;
-    tbPermanentNets: ;
-    tbBands:
-      ClearBandFilters;
-    tbIndividuals:
-      ClearIndividualFilters;
-    tbCaptures:
-      ClearCaptureFilters;
-    tbMolts: ;
-    tbImages: ;
-    tbAudioLibrary: ;
+    //tbProjectTeams: ;
+    tbPermits:       ClearPermitFilters;
+    tbGazetteer:     ClearGazetteerFilters;
+    tbBotanicTaxa:   ClearBotanicTaxaFilters;
+    tbNests:         ClearNestFilters;
+    tbNestRevisions: ClearNestRevisionFilters;
+    tbEggs:          ClearEggFilters;
+    tbNetStations:   ClearNetStationFilters;
+    tbTaxonRanks:    ClearTaxonRankFilters;
+    tbZooTaxa:       ClearZooTaxaFilters;
+    tbProjects:      ClearProjectFilters;
+    tbInstitutions:  ClearInstitutionFilters;
+    tbPeople:        ClearPeopleFilters;
+    tbExpeditions:   ClearExpeditionFilters;
+    tbSurveys:       ClearSurveyFilters;
+    tbMethods:       ClearMethodFilters;
+    //tbSurveyTeams: ;
+    //tbNetsEffort: ;
+    tbSightings:     ClearSightingFilters;
+    tbSpecimens:     ClearSpecimenFilters;
+    //tbSamplePreps: ;
+    //tbPermanentNets: ;
+    tbBands:         ClearBandFilters;
+    tbIndividuals:   ClearIndividualFilters;
+    tbCaptures:      ClearCaptureFilters;
+    //tbMolts: ;
+    //tbImages: ;
+    //tbAudioLibrary: ;
   end;
 
   //EP.Clear;
-  SearchStr.Clear;
   FSearch.QuickFilters.Clear;
-  Modifier.Reset;
 
   FSearch.RunSearch;
-  //TableSearch(TSQLQuery(dsLink.DataSet), TableType, SearchStr, QuickFilters, Modifier, Sorting, WhereSQL);
+
   CanToggle := True;
 end;
 

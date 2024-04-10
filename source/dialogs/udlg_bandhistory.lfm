@@ -223,6 +223,7 @@ object dlgBandHistory: TdlgBandHistory
     Scrollbars = ssAutoBoth
     TabOrder = 2
     TitleFont.Color = 6579300
+    TitleStyle = tsNative
   end
   object ScrollBox1: TScrollBox
     Left = 336

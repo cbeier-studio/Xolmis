@@ -39,7 +39,6 @@ object dlgConnect: TdlgConnect
       AutoSize = True
       BorderSpacing.Bottom = 25
       Center = True
-      ImageIndex = 1
       ImageWidth = 128
       Images = DMM.iLogos
       Proportional = True

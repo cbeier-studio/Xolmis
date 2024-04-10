@@ -39,6 +39,7 @@ const
   maskShortDate: String          = 'dd/mm/yyyy';
   maskSQLiteDate: String         = 'yyyy-mm-dd';
   maskSQLiteDateTime: String     = 'yyyy-mm-dd hh:nn:ss';
+  maskDisplayTime: String        = 'hh:nn';
   maskShortTime: String          = '!90:00;1;_';
   maskCEP: String                = '!00000-000;0;_';
   maskPhone: String              = '!(00)_0000-0000;0;_';

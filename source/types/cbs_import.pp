@@ -7,7 +7,7 @@ interface
 
 uses
   { System }
-  SysUtils, Classes, Dialogs, StrUtils,
+  SysUtils, Classes, Forms, Dialogs, StrUtils, ComCtrls,
   { Data }
   DB, SQLDB, SdfData;
 
@@ -16,6 +16,14 @@ const
     'Count,State/Province,County,Location ID,Location,Latitude,Longitude,Date,Time,' +
     'Protocol,Duration (Min),All Obs Reported,Distance Traveled (km),Area Covered (ha),' +
     'Number of Observers,Breeding Code,Observation Details,Checklist Comments,ML Catalog Numbers';
+
+  BandingJournalSchema: String = 'LOCALITY;NET STATION;SAMPLING DATE;START TIME;END TIME;LONGITUDE;LATITUDE;' +
+    'TEAM;NOTES';
+
+  WeatherLogSchema: String = 'TIME;MOMENT;CLOUD COVER;PRECIPITATION;TEMPERATURE;WIND SPEED;HUMIDITY';
+
+  NetEffortSchema: String = 'LOCALITY;NET STATION;SAMPLING DATE;NET NUMBER;LONGITUDE;LATITUDE;' +
+    'OPEN TIME 1;CLOSE TIME 1;OPEN TIME 2;CLOSE TIME 2;OPEN TIME 3;CLOSE TIME 3;OPEN TIME 4;CLOSE TIME 4;NOTES';
 
   BandingSchema: String = 'LOCALITY;STATION;DATA;RECORDER;BANDER;CAP TIME;NET SITE NAME;NEW_RECAP;' +
     'BAND_CODE;BAND NUMBER;RIGHT LEG;LEFT LEG;SPECIES NAME;CP;BP;FAT;BODY MOLT;FF MOLT;FF WEAR;' +
@@ -59,9 +67,9 @@ type
 
   TWeatherSample = record
     SamplingTime: TTime;
-    SamplingMoment: (wmStart, wmMiddle, wmEnd);
+    SamplingMoment: (wmNone, wmStart, wmMiddle, wmEnd);
     CloudCover: Integer;
-    Precipitation: (wpNone, wpFog, wpMist, wpDrizzle, wpRain);
+    Precipitation: (wpEmpty = -1, wpNone, wpFog, wpMist, wpDrizzle, wpRain);
     Temperature: Double;
     WindSpeed: Integer;
     Humidity: Double;
@@ -173,14 +181,14 @@ type
   end;
 
   procedure ImportEbirdData(aCSVFile: String);
-  procedure ImportBandingDataV1(aCSVFile: String);
-  procedure ImportBandingJournalV1(aCSVFile: String);
-  procedure ImportBandingEffortV1(aCSVFile: String);
+  procedure ImportBandingDataV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
+  procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
+  procedure ImportBandingEffortV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
 
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_data, cbs_taxonomy, cbs_birds, cbs_sampling, cbs_gis,
+  cbs_locale, cbs_global, cbs_dialogs, cbs_datatypes, cbs_data, cbs_taxonomy, cbs_birds, cbs_sampling, cbs_gis,
   cbs_system, cbs_getvalue, udm_main, udlg_progress;
 
 procedure ImportEbirdData(aCSVFile: String);
@@ -290,7 +298,7 @@ begin
         Reg.MLCatalogNumber := CSV.FieldByName('ML Catalog Numbers').AsString;
 
         { Load other variables }
-        RDate := FormatDateTime('yyyy-mm-dd', Reg.RecordDate);
+        RDate := FormatDateTime(maskSQLiteDate, Reg.RecordDate);
         if Reg.Count <> 'X' then
           Quant := StrToInt(Reg.Count)
         else
@@ -357,6 +365,7 @@ begin
         end;
 
         dlgProgress.Position := CSV.RecNo;
+        Application.ProcessMessages;
         CSV.Next;
       until CSV.Eof or Parar;
 
@@ -384,7 +393,7 @@ begin
   end;
 end;
 
-procedure ImportBandingDataV1(aCSVFile: String);
+procedure ImportBandingDataV1(aCSVFile: String; aProgressBar: TProgressBar);
 var
   CSV: TSdfDataSet;
   Reg: TBandingData;
@@ -408,10 +417,13 @@ begin
   end;
 
   Parar := False;
-  dlgProgress := TdlgProgress.Create(nil);
-  dlgProgress.Show;
-  dlgProgress.Title := rsTitleImportFile;
-  dlgProgress.Text := rsLoadingCSVFile;
+  if not Assigned(aProgressBar) then
+  begin
+    dlgProgress := TdlgProgress.Create(nil);
+    dlgProgress.Show;
+    dlgProgress.Title := rsTitleImportFile;
+    dlgProgress.Text := rsLoadingCSVFile;
+  end;
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
@@ -425,14 +437,24 @@ begin
       Open;
     end;
 
-    dlgProgress.Position := 0;
-    dlgProgress.Max := CSV.RecordCount;
+    if Assigned(aProgressBar) then
+    begin
+      aProgressBar.Position := 0;
+      aProgressBar.Max := CSV.RecordCount;
+    end
+    else
+    if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Position := 0;
+      dlgProgress.Max := CSV.RecordCount;
+    end;
     DMM.sqlTrans.StartTransaction;
     try
       CSV.First;
       repeat
-        dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
-        // Reinicia variáveis
+        if Assigned(dlgProgress) then
+          dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
+        // Reset variables
         Reg.Clear;
         CodAnilha := 0;
         NetLat := 500.0;
@@ -464,7 +486,9 @@ begin
         Reg.Bander := AnsiUpperCase(CSV.FieldByName('BANDER').AsString);
         { 5 = CAP TIME }
         if (not CSV.FieldByName('CAP TIME').IsNull) then
-          Reg.CaptureTime := CSV.FieldByName('CAP TIME').AsDateTime;
+          Reg.CaptureTime := CSV.FieldByName('CAP TIME').AsDateTime
+        else
+          Reg.CaptureTime := StrToTime('00:00:01');
         { 6 = NET SITE NAME }
         if (CSV.FieldByName('NET SITE NAME').AsString = '') then
           Reg.NetSiteName := '0'
@@ -599,8 +623,8 @@ begin
         // If it is a capture record (including recapture and band change)
         if (Trim(Reg.SpeciesName) <> EmptyStr) then
         begin
-          strDate := FormatDateTime('yyyy-mm-dd', Reg.CaptureDate);
-          strTime := FormatDateTime('hh:nn', Reg.CaptureTime);
+          strDate := FormatDateTime(maskSQLiteDate, Reg.CaptureDate);
+          strTime := FormatDateTime(maskDisplayTime, Reg.CaptureTime);
 
           try
             Taxon := TTaxon.Create(GetKey('zoo_taxa', 'taxon_id', 'full_name', Reg.SpeciesName));
@@ -857,7 +881,12 @@ begin
           end;
         end;
 
-        dlgProgress.Position := CSV.RecNo;
+        if Assigned(aProgressBar) then
+          aProgressBar.Position := CSV.RecNo
+        else
+        if Assigned(dlgProgress) then
+          dlgProgress.Position := CSV.RecNo;
+        Application.ProcessMessages;
         CSV.Next;
       until CSV.Eof or Parar;
       // end;
@@ -869,7 +898,8 @@ begin
       end
       else
       begin
-        dlgProgress.Text := rsProgressFinishing;
+        if Assigned(dlgProgress) then
+          dlgProgress.Text := rsProgressFinishing;
         DMM.sqlTrans.CommitRetaining;
         MsgDlg(rsTitleImportFile, rsSuccessfulImportCaptures, mtInformation);
       end;
@@ -881,57 +911,693 @@ begin
   finally
     CSV.Close;
     FreeAndNil(CSV);
-    dlgProgress.Close;
-    FreeAndNil(dlgProgress);
+    if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Close;
+      FreeAndNil(dlgProgress);
+    end;
   end;
 end;
 
-procedure ImportBandingJournalV1(aCSVFile: String);
+procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar);
+var
+  CSV: TSdfDataSet;
+  Reg: TBandingJournal;
+  Toponimo: TSite;
+  NetStation: TNetStation;
+  Survey: TSurvey;
+  Weather1, Weather2, Weather3, Weather4: TWeatherLog;
+  Member: TSurveyMember;
+  strDate: String;
+  pp: Integer;
 begin
-  { #todo : Import banding journal }
+  if not FileExists(aCSVFile) then
+  begin
+    MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
+    Exit;
+  end;
 
-  { Locality
-    Station
-    Date
-    Time Start
-    Time Stop
-    Team
-    Cloud_cover OPEN
-    Cloud_cover MID
-    Cloud_cover CLOSE
-    Preciptation OPEN
-    Preciptation MID
-    Preciptation CLOSE
-    Temperature OPEN
-    Temperature MID
-    Temperature CLOSE
-    Wind-Beaufort OPEN
-    Wind-Beaufort MID
-    Wind-Beaufort CLOSE
-    XCOORD
-    YCOORD
-    NOTES }
+  Parar := False;
+  if not Assigned(aProgressBar) then
+  begin
+    dlgProgress := TdlgProgress.Create(nil);
+    dlgProgress.Show;
+    dlgProgress.Title := rsTitleImportFile;
+    dlgProgress.Text := rsLoadingCSVFile;
+  end;
+  CSV := TSdfDataSet.Create(nil);
+  try
+    { Define CSV format settings }
+    with CSV do
+    begin
+      Delimiter := ';';
+      FirstLineAsSchema := True;
+      CodePage := 'Windows-1252';
+      Schema.AddDelimitedText(BandingJournalSchema, ';', True);
+      FileName := aCSVFile;
+      Open;
+    end;
 
+    if Assigned(aProgressBar) then
+    begin
+      aProgressBar.Position := 0;
+      aProgressBar.Max := CSV.RecordCount;
+    end
+    else
+    if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Position := 0;
+      dlgProgress.Max := CSV.RecordCount;
+    end;
+    DMM.sqlTrans.StartTransaction;
+    try
+      CSV.First;
+      repeat
+        if Assigned(dlgProgress) then
+          dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
+        // Reset variables
+        Reg.Clear;
+        strDate := '';
+
+        { 0 - Locality }
+        Reg.Locality := CSV.FieldByName('LOCALITY').AsString;
+        { 1 - NetStation }
+        Reg.NetStation := CSV.FieldByName('STATION').AsString;
+        { 2 - SamplingDate }
+        Reg.SamplingDate := CSV.FieldByName('DATE').AsDateTime;
+        { 3 - StartTime }
+        if (not CSV.FieldByName('START TIME').IsNull) then
+          Reg.StartTime := CSV.FieldByName('START TIME').AsDateTime;
+        { 4 - EndTime }
+        if (not CSV.FieldByName('END TIME').IsNull) then
+          Reg.EndTime := CSV.FieldByName('END TIME').AsDateTime;
+        { 5 - Longitude }
+        if (not CSV.FieldByName('LONGITUDE').IsNull) then
+          Reg.Longitude := CSV.FieldByName('LONGITUDE').AsFloat;
+        { 6 - Latitude }
+        if (not CSV.FieldByName('LATITUDE').IsNull) then
+          Reg.Latitude := CSV.FieldByName('LATITUDE').AsFloat;
+        { 7 - Team }
+        Reg.Team := CSV.FieldByName('TEAM').AsString;
+        { 8 - Notes }
+        Reg.Notes := CSV.FieldByName('NOTES').AsString;
+        { 9 - Weather Time 1 }
+        if (not CSV.FieldByName('WEATHER TIME 1').IsNull) then
+          Reg.Weather1.SamplingTime := CSV.FieldByName('WEATHER TIME 1').AsDateTime;
+        { 10 - Weather Moment 1 }
+        if (not CSV.FieldByName('WEATHER MOMENT 1').IsNull) then
+          case CSV.FieldByName('WEATHER MOMENT 1').AsString of
+            'S': Reg.Weather1.SamplingMoment := wmStart;
+            'M': Reg.Weather1.SamplingMoment := wmMiddle;
+            'E': Reg.Weather1.SamplingMoment := wmEnd;
+          else
+            Reg.Weather1.SamplingMoment := wmNone;
+          end;
+        { 11 - Cloud Cover 1 }
+        if (not CSV.FieldByName('CLOUD COVER 1').IsNull) then
+          Reg.Weather1.CloudCover := CSV.FieldByName('CLOUD COVER 1').AsInteger;
+        { 12 - Precipitation 1 }
+        if (not CSV.FieldByName('PRECIPITATION 1').IsNull) then
+          case CSV.FieldByName('PRECIPITATION 1').AsString of
+            'N': Reg.Weather1.Precipitation := wpNone;
+            'F': Reg.Weather1.Precipitation := wpFog;
+            'M': Reg.Weather1.Precipitation := wpMist;
+            'D': Reg.Weather1.Precipitation := wpDrizzle;
+            'R': Reg.Weather1.Precipitation := wpRain;
+          end;
+        { 13 - Temperature 1 }
+        if (not CSV.FieldByName('TEMPERATURE 1').IsNull) then
+          Reg.Weather1.Temperature := CSV.FieldByName('TEMPERATURE 1').AsFloat;
+        { 14 - Wind Speed 1 }
+        if (not CSV.FieldByName('WIND SPEED 1').IsNull) then
+          Reg.Weather1.WindSpeed := CSV.FieldByName('WIND SPEED 1').AsInteger;
+        { 15 - Humidity 1 }
+        if (not CSV.FieldByName('HUMIDITY 1').IsNull) then
+          Reg.Weather1.Humidity := CSV.FieldByName('HUMIDITY 1').AsFloat;
+        { 16 - Weather Time 2 }
+        if (not CSV.FieldByName('WEATHER TIME 2').IsNull) then
+          Reg.Weather2.SamplingTime := CSV.FieldByName('WEATHER TIME 2').AsDateTime;
+        { 17 - Weather Moment 2 }
+        if (not CSV.FieldByName('WEATHER MOMENT 2').IsNull) then
+          case CSV.FieldByName('WEATHER MOMENT 2').AsString of
+            'S': Reg.Weather2.SamplingMoment := wmStart;
+            'M': Reg.Weather2.SamplingMoment := wmMiddle;
+            'E': Reg.Weather2.SamplingMoment := wmEnd;
+          else
+            Reg.Weather2.SamplingMoment := wmNone;
+          end;
+        { 18 - Cloud Cover 2 }
+        if (not CSV.FieldByName('CLOUD COVER 2').IsNull) then
+          Reg.Weather2.CloudCover := CSV.FieldByName('CLOUD COVER 2').AsInteger;
+        { 19 - Precipitation 2 }
+        if (not CSV.FieldByName('PRECIPITATION 2').IsNull) then
+          case CSV.FieldByName('PRECIPITATION 2').AsString of
+            'N': Reg.Weather2.Precipitation := wpNone;
+            'F': Reg.Weather2.Precipitation := wpFog;
+            'M': Reg.Weather2.Precipitation := wpMist;
+            'D': Reg.Weather2.Precipitation := wpDrizzle;
+            'R': Reg.Weather2.Precipitation := wpRain;
+          end;
+        { 20 -Temperature 2 }
+        if (not CSV.FieldByName('TEMPERATURE 2').IsNull) then
+          Reg.Weather2.Temperature := CSV.FieldByName('TEMPERATURE 2').AsFloat;
+        { 21 - Wind Speed 2 }
+        if (not CSV.FieldByName('WIND SPEED 2').IsNull) then
+          Reg.Weather2.WindSpeed := CSV.FieldByName('WIND SPEED 2').AsInteger;
+        { 22 - Humidity 2 }
+        if (not CSV.FieldByName('HUMIDITY 2').IsNull) then
+          Reg.Weather2.Humidity := CSV.FieldByName('HUMIDITY 2').AsFloat;
+        { 23 - Weather Time 3 }
+        if (not CSV.FieldByName('WEATHER TIME 3').IsNull) then
+          Reg.Weather3.SamplingTime := CSV.FieldByName('WEATHER TIME 3').AsDateTime;
+        { 24 - Weather Moment 3 }
+        if (not CSV.FieldByName('WEATHER MOMENT 3').IsNull) then
+          case CSV.FieldByName('WEATHER MOMENT 3').AsString of
+            'S': Reg.Weather3.SamplingMoment := wmStart;
+            'M': Reg.Weather3.SamplingMoment := wmMiddle;
+            'E': Reg.Weather3.SamplingMoment := wmEnd;
+          else
+            Reg.Weather3.SamplingMoment := wmNone;
+          end;
+        { 25 - Cloud Cover 3 }
+        if (not CSV.FieldByName('CLOUD COVER 3').IsNull) then
+          Reg.Weather3.CloudCover := CSV.FieldByName('CLOUD COVER 3').AsInteger;
+        { 26 - Precipitation 3 }
+        if (not CSV.FieldByName('PRECIPITATION 3').IsNull) then
+          case CSV.FieldByName('PRECIPITATION 3').AsString of
+            'N': Reg.Weather3.Precipitation := wpNone;
+            'F': Reg.Weather3.Precipitation := wpFog;
+            'M': Reg.Weather3.Precipitation := wpMist;
+            'D': Reg.Weather3.Precipitation := wpDrizzle;
+            'R': Reg.Weather3.Precipitation := wpRain;
+          end;
+        { 27 - Temperature 3 }
+        if (not CSV.FieldByName('TEMPERATURE 3').IsNull) then
+          Reg.Weather3.Temperature := CSV.FieldByName('TEMPERATURE 3').AsFloat;
+        { 28 - Wind Speed 3 }
+        if (not CSV.FieldByName('WIND SPEED 3').IsNull) then
+          Reg.Weather3.WindSpeed := CSV.FieldByName('WIND SPEED 3').AsInteger;
+        { 29 - Humidity 3 }
+        if (not CSV.FieldByName('HUMIDITY 3').IsNull) then
+          Reg.Weather3.Humidity := CSV.FieldByName('HUMIDITY 3').AsFloat;
+        { 30 - Weather Time 4 }
+        if (not CSV.FieldByName('WEATHER TIME 4').IsNull) then
+          Reg.Weather4.SamplingTime := CSV.FieldByName('WEATHER TIME 4').AsDateTime;
+        { 31 - Weather Moment 4 }
+        if (not CSV.FieldByName('WEATHER MOMENT 4').IsNull) then
+          case CSV.FieldByName('WEATHER MOMENT 4').AsString of
+            'S': Reg.Weather4.SamplingMoment := wmStart;
+            'M': Reg.Weather4.SamplingMoment := wmMiddle;
+            'E': Reg.Weather4.SamplingMoment := wmEnd;
+          else
+            Reg.Weather4.SamplingMoment := wmNone;
+          end;
+        { 32 - Cloud Cover 4 }
+        if (not CSV.FieldByName('CLOUD COVER 4').IsNull) then
+          Reg.Weather4.CloudCover := CSV.FieldByName('CLOUD COVER 4').AsInteger;
+        { 33 - Precipitation 4 }
+        if (not CSV.FieldByName('PRECIPITATION 4').IsNull) then
+          case CSV.FieldByName('PRECIPITATION 4').AsString of
+            'N': Reg.Weather4.Precipitation := wpNone;
+            'F': Reg.Weather4.Precipitation := wpFog;
+            'M': Reg.Weather4.Precipitation := wpMist;
+            'D': Reg.Weather4.Precipitation := wpDrizzle;
+            'R': Reg.Weather4.Precipitation := wpRain;
+          end;
+        { 34 - Temperature 4 }
+        if (not CSV.FieldByName('TEMPERATURE 4').IsNull) then
+          Reg.Weather4.Temperature := CSV.FieldByName('TEMPERATURE 4').AsFloat;
+        { 35 - Wind Speed 4 }
+        if (not CSV.FieldByName('WIND SPEED 4').IsNull) then
+          Reg.Weather4.WindSpeed := CSV.FieldByName('WIND SPEED 4').AsInteger;
+        { 36 - Humidity 4 }
+        if (not CSV.FieldByName('HUMIDITY 4').IsNull) then
+          Reg.Weather4.Humidity := CSV.FieldByName('HUMIDITY 4').AsFloat;
+
+        strDate := FormatDateTime(maskSQLiteDate, Reg.SamplingDate);
+        //if not CSV.FieldByName('START TIME').IsNull then
+        //  strStartTime := FormatDateTime(maskDisplayTime, Reg.StartTime)
+        //else
+        //  strStartTime := EmptyStr;
+        //if not CSV.FieldByName('END TIME').IsNull then
+        //  strEndTime := FormatDateTime(maskDisplayTime, Reg.EndTime)
+        //else
+        //  strEndTime := EmptyStr;
+        //if not CSV.FieldByName('WEATHER TIME 1').IsNull then
+        //  strWeatherTime1 := FormatDateTime(maskDisplayTime, Reg.Weather1.SamplingTime)
+        //else
+        //  strWeatherTime1 := EmptyStr;
+        //if not CSV.FieldByName('WEATHER TIME 2').IsNull then
+        //  strWeatherTime2 := FormatDateTime(maskDisplayTime, Reg.Weather2.SamplingTime)
+        //else
+        //  strWeatherTime2 := EmptyStr;
+        //if not CSV.FieldByName('WEATHER TIME 3').IsNull then
+        //  strWeatherTime3 := FormatDateTime(maskDisplayTime, Reg.Weather3.SamplingTime)
+        //else
+        //  strWeatherTime3 := EmptyStr;
+        //if not CSV.FieldByName('WEATHER TIME 4').IsNull then
+        //  strWeatherTime4 := FormatDateTime(maskDisplayTime, Reg.Weather4.SamplingTime)
+        //else
+        //  strWeatherTime4 := EmptyStr;
+
+
+        try
+          NetStation := TNetStation.Create;
+          Toponimo := TSite.Create;
+          Survey := TSurvey.Create;
+
+          // Get net station and locality
+          if NetStation.Find(Reg.NetStation) then
+          begin
+            Toponimo.GetData(NetStation.LocalityId);
+          end;
+
+          // Check if the survey exists
+          if not Survey.Find(Toponimo.Id, strDate, NetStation.Id) then
+          begin
+            Survey.SurveyDate := Reg.SamplingDate;
+            Survey.StartTime := Reg.StartTime;
+            Survey.EndTime := Reg.EndTime;
+
+            Survey.Duration := 0;
+            Survey.MethodId := GetKey('methods', 'method_id', 'method_acronym', 'Banding');
+            Survey.NetStationId := NetStation.Id;
+            Survey.LocalityId := Toponimo.Id;
+            Survey.MunicipalityId := Toponimo.MunicipalityId;
+            Survey.StateId := Toponimo.StateId;
+            Survey.CountryId := Toponimo.CountryId;
+            Survey.StartLongitude := Reg.Longitude;
+            Survey.StartLatitude := Reg.Latitude;
+            //Survey.EndLongitude := ;
+            //Survey.EndLatitude := ;
+            //Survey.TotalNets := ;
+            Survey.Notes := Reg.Notes;
+
+            Survey.Insert;
+
+            if Survey.Id > 0 then
+            begin
+              // Insert record history
+              WriteRecHistory(tbSurveys, haCreated, Survey.Id, '', '', '', rsInsertedByImport);
+
+              // Insert the survey team
+              if (Reg.Team <> EmptyStr) then
+              try
+                Member := TSurveyMember.Create;
+
+                for pp := 0 to (WordCount(Reg.Team, [',', ';']) - 1) do
+                begin
+                  Member.SurveyId := Survey.Id;
+                  Member.PersonId := GetKey('people', 'person_id', 'acronym', ExtractWord(pp, Reg.Team, [',', ';']));
+
+                  Member.Insert;
+                  WriteRecHistory(tbSurveyTeams, haCreated, Member.Id, '', '', '', rsInsertedByImport);
+                end;
+
+              finally
+                FreeAndNil(Member);
+              end;
+
+              // Insert the weather logs
+              if (Reg.Weather1.Precipitation <> wpEmpty) or (Reg.Weather1.CloudCover >= 0) then
+              try
+                Weather1 := TWeatherLog.Create;
+                Weather1.SurveyId := Survey.Id;
+                Weather1.SampleDate := Reg.SamplingDate;
+                Weather1.SampleTime := Reg.Weather1.SamplingTime;
+                case Reg.Weather1.SamplingMoment of
+                  wmStart:  Weather1.SampleMoment := 'S';
+                  wmMiddle: Weather1.SampleMoment := 'M';
+                  wmEnd:    Weather1.SampleMoment := 'E';
+                else
+                  Weather1.SampleMoment := EmptyStr;
+                end;
+                Weather1.Temperature := Reg.Weather1.Temperature;
+                case Reg.Weather1.Precipitation of
+                  wpNone:    Weather1.Precipitation := 'N';
+                  wpFog:     Weather1.Precipitation := 'F';
+                  wpMist:    Weather1.Precipitation := 'M';
+                  wpDrizzle: Weather1.Precipitation := 'D';
+                  wpRain:    Weather1.Precipitation := 'R';
+                else
+                  Weather1.Precipitation := EmptyStr;
+                end;
+                Weather1.CloudCover := Reg.Weather1.CloudCover;
+                Weather1.WindSpeedBft := Reg.Weather1.WindSpeed;
+                Weather1.RelativeHumidity := Reg.Weather1.Humidity;
+
+                Weather1.Insert;
+                WriteRecHistory(tbWeatherLogs, haCreated, Weather1.Id, '', '', '', rsInsertedByImport);
+              finally
+                FreeAndNil(Weather1);
+              end;
+
+              if (Reg.Weather2.Precipitation <> wpEmpty) or (Reg.Weather2.CloudCover >= 0) then
+              try
+                Weather2 := TWeatherLog.Create;
+                Weather2.SurveyId := Survey.Id;
+                Weather2.SampleDate := Reg.SamplingDate;
+                Weather2.SampleTime := Reg.Weather2.SamplingTime;
+                case Reg.Weather2.SamplingMoment of
+                  wmStart:  Weather2.SampleMoment := 'S';
+                  wmMiddle: Weather2.SampleMoment := 'M';
+                  wmEnd:    Weather2.SampleMoment := 'E';
+                else
+                  Weather2.SampleMoment := EmptyStr;
+                end;
+                Weather2.Temperature := Reg.Weather2.Temperature;
+                case Reg.Weather2.Precipitation of
+                  wpNone:    Weather2.Precipitation := 'N';
+                  wpFog:     Weather2.Precipitation := 'F';
+                  wpMist:    Weather2.Precipitation := 'M';
+                  wpDrizzle: Weather2.Precipitation := 'D';
+                  wpRain:    Weather2.Precipitation := 'R';
+                else
+                  Weather2.Precipitation := EmptyStr;
+                end;
+                Weather2.CloudCover := Reg.Weather2.CloudCover;
+                Weather2.WindSpeedBft := Reg.Weather2.WindSpeed;
+                Weather2.RelativeHumidity := Reg.Weather2.Humidity;
+
+                Weather2.Insert;
+                WriteRecHistory(tbWeatherLogs, haCreated, Weather2.Id, '', '', '', rsInsertedByImport);
+              finally
+                FreeAndNil(Weather2);
+              end;
+
+              if (Reg.Weather3.Precipitation <> wpEmpty) or (Reg.Weather3.CloudCover >= 0) then
+              try
+                Weather3 := TWeatherLog.Create;
+                Weather3.SurveyId := Survey.Id;
+                Weather3.SampleDate := Reg.SamplingDate;
+                Weather3.SampleTime := Reg.Weather3.SamplingTime;
+                case Reg.Weather3.SamplingMoment of
+                  wmStart:  Weather3.SampleMoment := 'S';
+                  wmMiddle: Weather3.SampleMoment := 'M';
+                  wmEnd:    Weather3.SampleMoment := 'E';
+                else
+                  Weather3.SampleMoment := EmptyStr;
+                end;
+                Weather3.Temperature := Reg.Weather3.Temperature;
+                case Reg.Weather3.Precipitation of
+                  wpNone:    Weather3.Precipitation := 'N';
+                  wpFog:     Weather3.Precipitation := 'F';
+                  wpMist:    Weather3.Precipitation := 'M';
+                  wpDrizzle: Weather3.Precipitation := 'D';
+                  wpRain:    Weather3.Precipitation := 'R';
+                else
+                  Weather3.Precipitation := EmptyStr;
+                end;
+                Weather3.CloudCover := Reg.Weather3.CloudCover;
+                Weather3.WindSpeedBft := Reg.Weather3.WindSpeed;
+                Weather3.RelativeHumidity := Reg.Weather3.Humidity;
+
+                Weather3.Insert;
+                WriteRecHistory(tbWeatherLogs, haCreated, Weather3.Id, '', '', '', rsInsertedByImport);
+              finally
+                FreeAndNil(Weather3);
+              end;
+
+              if (Reg.Weather4.Precipitation <> wpEmpty) or (Reg.Weather4.CloudCover >= 0) then
+              try
+                Weather4 := TWeatherLog.Create;
+                Weather4.SurveyId := Survey.Id;
+                Weather4.SampleDate := Reg.SamplingDate;
+                Weather4.SampleTime := Reg.Weather4.SamplingTime;
+                case Reg.Weather4.SamplingMoment of
+                  wmStart:  Weather4.SampleMoment := 'S';
+                  wmMiddle: Weather4.SampleMoment := 'M';
+                  wmEnd:    Weather4.SampleMoment := 'E';
+                else
+                  Weather4.SampleMoment := EmptyStr;
+                end;
+                Weather4.Temperature := Reg.Weather4.Temperature;
+                case Reg.Weather4.Precipitation of
+                  wpNone:    Weather4.Precipitation := 'N';
+                  wpFog:     Weather4.Precipitation := 'F';
+                  wpMist:    Weather4.Precipitation := 'M';
+                  wpDrizzle: Weather4.Precipitation := 'D';
+                  wpRain:    Weather4.Precipitation := 'R';
+                else
+                  Weather4.Precipitation := EmptyStr;
+                end;
+                Weather4.CloudCover := Reg.Weather4.CloudCover;
+                Weather4.WindSpeedBft := Reg.Weather4.WindSpeed;
+                Weather4.RelativeHumidity := Reg.Weather4.Humidity;
+
+                Weather4.Insert;
+                WriteRecHistory(tbWeatherLogs, haCreated, Weather4.Id, '', '', '', rsInsertedByImport);
+              finally
+                FreeAndNil(Weather4);
+              end;
+            end;
+          end;
+
+        finally
+          FreeAndNil(NetStation);
+          FreeAndNil(Toponimo);
+          FreeAndNil(Survey);
+        end;
+
+        if Assigned(aProgressBar) then
+          aProgressBar.Position := CSV.RecNo
+        else
+        if Assigned(dlgProgress) then
+          dlgProgress.Position := CSV.RecNo;
+        Application.ProcessMessages;
+        CSV.Next;
+      until CSV.Eof or Parar;
+
+      if Parar then
+      begin
+        DMM.sqlTrans.Rollback;
+        MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
+      end
+      else
+      begin
+        if Assigned(dlgProgress) then
+          dlgProgress.Text := rsProgressFinishing;
+        DMM.sqlTrans.CommitRetaining;
+        MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingJournal, mtInformation);
+      end;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+
+  finally
+    CSV.Close;
+    FreeAndNil(CSV);
+    if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Close;
+      FreeAndNil(dlgProgress);
+    end;
+  end;
 end;
 
-procedure ImportBandingEffortV1(aCSVFile: String);
+procedure ImportBandingEffortV1(aCSVFile: String; aProgressBar: TProgressBar);
+var
+  CSV: TSdfDataSet;
+  Reg: TBandingEffort;
+  Toponimo: TSite;
+  NetStation: TNetStation;
+  Survey: TSurvey;
+  NetSite: TNetEffort;
+  strDate: String;
 begin
   { #todo : Import banding effort }
+  if not FileExists(aCSVFile) then
+  begin
+    MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
+    Exit;
+  end;
 
-  { Locality
-    Station
-    Date
-    Net_Number
-    XCOORD
-    YCOORD
-    Open1
-    Close1
-    Open2
-    Close2
-    Open3
-    Close3
-    Notes }
+  Parar := False;
+  if not Assigned(aProgressBar) then
+  begin
+    dlgProgress := TdlgProgress.Create(nil);
+    dlgProgress.Show;
+    dlgProgress.Title := rsTitleImportFile;
+    dlgProgress.Text := rsLoadingCSVFile;
+  end;
+  CSV := TSdfDataSet.Create(nil);
+  try
+    { Define CSV format settings }
+    with CSV do
+    begin
+      Delimiter := ';';
+      FirstLineAsSchema := True;
+      CodePage := 'Windows-1252';
+      Schema.AddDelimitedText(NetEffortSchema, ';', True);
+      FileName := aCSVFile;
+      Open;
+    end;
 
+    if Assigned(aProgressBar) then
+    begin
+      aProgressBar.Position := 0;
+      aProgressBar.Max := CSV.RecordCount;
+    end
+    else
+    if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Position := 0;
+      dlgProgress.Max := CSV.RecordCount;
+    end;
+    DMM.sqlTrans.StartTransaction;
+    try
+      CSV.First;
+      repeat
+        if Assigned(dlgProgress) then
+          dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
+        // Reset variables
+        Reg.Clear;
+        strDate := '';
+
+        { 0 - Locality }
+        Reg.Locality := CSV.FieldByName('LOCALITY').AsString;
+        { 1 - NetStation }
+        Reg.NetStation := CSV.FieldByName('STATION').AsString;
+        { 2 - SamplingDate }
+        Reg.SamplingDate := CSV.FieldByName('SAMPLING DATE').AsDateTime;
+        { 3 - NetNumber }
+        Reg.NetNumber := CSV.FieldByName('NET NUMBER').AsInteger;
+        { 4 - Longitude }
+        if (not CSV.FieldByName('LONGITUDE').IsNull) then
+          Reg.Longitude := CSV.FieldByName('LONGITUDE').AsFloat;
+        { 5 - Latitude }
+        if (not CSV.FieldByName('LATITUDE').IsNull) then
+          Reg.Latitude := CSV.FieldByName('LATITUDE').AsFloat;
+        { 6 - OpenTime 1 }
+        // to know the time is NULL, put 1 second in the field
+        if (not CSV.FieldByName('OPEN TIME 1').IsNull) then
+          Reg.NetBout1.OpenTime := CSV.FieldByName('OPEN TIME 1').AsDateTime
+        else
+          Reg.NetBout1.OpenTime := StrToTime('00:00:01');
+        { 7 - CloseTime 1 }
+        if (not CSV.FieldByName('CLOSE TIME 1').IsNull) then
+          Reg.NetBout1.CloseTime := CSV.FieldByName('CLOSE TIME 1').AsDateTime
+        else
+          Reg.NetBout1.CloseTime := StrToTime('00:00:01');
+        { 6 - OpenTime 2 }
+        if (not CSV.FieldByName('OPEN TIME 2').IsNull) then
+          Reg.NetBout2.OpenTime := CSV.FieldByName('OPEN TIME 2').AsDateTime
+        else
+          Reg.NetBout2.OpenTime := StrToTime('00:00:01');
+        { 7 - CloseTime 2 }
+        if (not CSV.FieldByName('CLOSE TIME 2').IsNull) then
+          Reg.NetBout2.CloseTime := CSV.FieldByName('CLOSE TIME 2').AsDateTime
+        else
+          Reg.NetBout2.CloseTime := StrToTime('00:00:01');
+        { 6 - OpenTime 3 }
+        if (not CSV.FieldByName('OPEN TIME 3').IsNull) then
+          Reg.NetBout3.OpenTime := CSV.FieldByName('OPEN TIME 3').AsDateTime
+        else
+          Reg.NetBout3.OpenTime := StrToTime('00:00:01');
+        { 7 - CloseTime 3 }
+        if (not CSV.FieldByName('CLOSE TIME 3').IsNull) then
+          Reg.NetBout3.CloseTime := CSV.FieldByName('CLOSE TIME 3').AsDateTime
+        else
+          Reg.NetBout3.CloseTime := StrToTime('00:00:01');
+        { 6 - OpenTime 4 }
+        if (not CSV.FieldByName('OPEN TIME 4').IsNull) then
+          Reg.NetBout4.OpenTime := CSV.FieldByName('OPEN TIME 4').AsDateTime
+        else
+          Reg.NetBout4.OpenTime := StrToTime('00:00:01');
+        { 7 - CloseTime 4 }
+        if (not CSV.FieldByName('CLOSE TIME 4').IsNull) then
+          Reg.NetBout4.CloseTime := CSV.FieldByName('CLOSE TIME 4').AsDateTime
+        else
+          Reg.NetBout4.CloseTime := StrToTime('00:00:01');
+        { 8 - Notes }
+        Reg.Notes := CSV.FieldByName('NOTES').AsString;
+
+        try
+          NetStation := TNetStation.Create;
+          Toponimo := TSite.Create;
+          Survey := TSurvey.Create;
+          NetSite := TNetEffort.Create;
+
+          // Get net station and locality
+          if NetStation.Find(Reg.NetStation) then
+          begin
+            Toponimo.GetData(NetStation.LocalityId);
+          end;
+
+          // Check if the survey exists
+          if Survey.Find(Toponimo.Id, strDate, NetStation.Id) then
+          begin
+            // Check if the net site exists
+            if not NetSite.Find(Survey.Id, IntToStr(Reg.NetNumber)) then
+            begin
+              // Insert the net effort
+              NetSite.SurveyId := Survey.Id;
+              NetSite.NetStationId := NetStation.Id;
+              NetSite.SampleDate := Reg.SamplingDate;
+              NetSite.NetNumber := Reg.NetNumber;
+              NetSite.Longitude := Reg.Longitude;
+              NetSite.Latitude := Reg.Latitude;
+              NetSite.Notes := Reg.Notes;
+              NetSite.NetOpen1 := Reg.NetBout1.OpenTime;
+              NetSite.NetClose1 := Reg.NetBout1.CloseTime;
+              NetSite.NetOpen2 := Reg.NetBout2.OpenTime;
+              NetSite.NetClose2 := Reg.NetBout2.CloseTime;
+              NetSite.NetOpen3 := Reg.NetBout3.OpenTime;
+              NetSite.NetClose3 := Reg.NetBout3.CloseTime;
+              NetSite.NetOpen4 := Reg.NetBout4.OpenTime;
+              NetSite.NetClose4 := Reg.NetBout4.CloseTime;
+
+              NetSite.Insert;
+
+              // Insert record history
+              WriteRecHistory(tbNetsEffort, haCreated, NetSite.Id, '', '', '', rsInsertedByImport);
+
+            end;
+          end;
+
+        finally
+          FreeAndNil(NetSite);
+          FreeAndNil(NetStation);
+          FreeAndNil(Toponimo);
+          FreeAndNil(Survey);
+        end;
+
+        if Assigned(aProgressBar) then
+          aProgressBar.Position := CSV.RecNo
+        else
+        if Assigned(dlgProgress) then
+          dlgProgress.Position := CSV.RecNo;
+        Application.ProcessMessages;
+        CSV.Next;
+      until CSV.Eof or Parar;
+
+      if Parar then
+      begin
+        DMM.sqlTrans.Rollback;
+        MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
+      end
+      else
+      begin
+        if Assigned(dlgProgress) then
+          dlgProgress.Text := rsProgressFinishing;
+        DMM.sqlTrans.CommitRetaining;
+        MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingEffort, mtInformation);
+      end;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+
+  finally
+    CSV.Close;
+    FreeAndNil(CSV);
+    if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Close;
+      FreeAndNil(dlgProgress);
+    end;
+  end;
 end;
 
 { TBandingEffort }
@@ -946,17 +1612,17 @@ begin
   Latitude := 0.0;
   Notes := EmptyStr;
 
-  NetBout1.OpenTime := StrToTime('00:00:00');
-  NetBout1.CloseTime := StrToTime('00:00:00');
+  NetBout1.OpenTime := StrToTime('00:00:01');
+  NetBout1.CloseTime := StrToTime('00:00:01');
 
-  NetBout2.OpenTime := StrToTime('00:00:00');
-  NetBout2.CloseTime := StrToTime('00:00:00');
+  NetBout2.OpenTime := StrToTime('00:00:01');
+  NetBout2.CloseTime := StrToTime('00:00:01');
 
-  NetBout3.OpenTime := StrToTime('00:00:00');
-  NetBout3.CloseTime := StrToTime('00:00:00');
+  NetBout3.OpenTime := StrToTime('00:00:01');
+  NetBout3.CloseTime := StrToTime('00:00:01');
 
-  NetBout4.OpenTime := StrToTime('00:00:00');
-  NetBout4.CloseTime := StrToTime('00:00:00');
+  NetBout4.OpenTime := StrToTime('00:00:01');
+  NetBout4.CloseTime := StrToTime('00:00:01');
 end;
 
 { TBandingJournal }
@@ -966,41 +1632,41 @@ begin
   Locality := EmptyStr;
   NetStation := EmptyStr;
   SamplingDate := StrToDate('30/12/1500');
-  StartTime := StrToTime('00:00:00');
-  EndTime := StrToTime('00:00:00');
+  StartTime := StrToTime('00:00:01');
+  EndTime := StrToTime('00:00:01');
   Longitude := 0.0;
   Latitude := 0.0;
   Team := EmptyStr;
   Notes := EmptyStr;
 
-  Weather1.SamplingTime := StrToTime('00:00:00');
-  Weather1.SamplingMoment := wmStart;
+  Weather1.SamplingTime := StrToTime('00:00:01');
+  Weather1.SamplingMoment := wmNone;
   Weather1.CloudCover := 0;
-  Weather1.Precipitation := wpNone;
+  Weather1.Precipitation := wpEmpty;
   Weather1.Temperature := 0.0;
   Weather1.WindSpeed := 0;
   Weather1.Humidity := 0.0;
 
-  Weather2.SamplingTime := StrToTime('00:00:00');
-  Weather2.SamplingMoment := wmStart;
+  Weather2.SamplingTime := StrToTime('00:00:01');
+  Weather2.SamplingMoment := wmNone;
   Weather2.CloudCover := 0;
-  Weather2.Precipitation := wpNone;
+  Weather2.Precipitation := wpEmpty;
   Weather2.Temperature := 0.0;
   Weather2.WindSpeed := 0;
   Weather2.Humidity := 0.0;
 
-  Weather3.SamplingTime := StrToTime('00:00:00');
-  Weather3.SamplingMoment := wmStart;
+  Weather3.SamplingTime := StrToTime('00:00:01');
+  Weather3.SamplingMoment := wmNone;
   Weather3.CloudCover := 0;
-  Weather3.Precipitation := wpNone;
+  Weather3.Precipitation := wpEmpty;
   Weather3.Temperature := 0.0;
   Weather3.WindSpeed := 0;
   Weather3.Humidity := 0.0;
 
-  Weather4.SamplingTime := StrToTime('00:00:00');
-  Weather4.SamplingMoment := wmStart;
+  Weather4.SamplingTime := StrToTime('00:00:01');
+  Weather4.SamplingMoment := wmNone;
   Weather4.CloudCover := 0;
-  Weather4.Precipitation := wpNone;
+  Weather4.Precipitation := wpEmpty;
   Weather4.Temperature := 0.0;
   Weather4.WindSpeed := 0;
   Weather4.Humidity := 0.0;
@@ -1086,52 +1752,29 @@ begin
     for i := 0 to Valores.Count do
     begin
       case i of
-        0:
-          SubmissionID := Valores[i];
-        1:
-          CommonName := Valores[i];
-        2:
-          ScientificName := Valores[i];
-        3:
-          TaxonomicOrder := StrToInt(Valores[i]);
-        4:
-          Count := Valores[i];
-        5:
-          StateProvince := Valores[i];
-        6:
-          County := Valores[i];
-        7:
-          LocationID := Valores[i];
-        8:
-          LocationName := Valores[i];
-        9:
-          Latitude := StrToFloat(StringReplace(Valores[i], '.', ',', []));
-        10:
-          Longitude := StrToFloat(StringReplace(Valores[i], '.', ',', []));
-        11:
-          RecordDate := StrToDate(Valores[i]);
-        12:
-          RecordTime := StrToTime(Valores[i]);
-        13:
-          Protocol := Valores[i];
-        14:
-          Duration := StrToInt(Valores[i]);
-        15:
-          AllObsReported := Boolean(StrToInt(Valores[i]));
-        16:
-          DistanceTraveled := StrToFloat(StringReplace(Valores[i], '.', ',', []));
-        17:
-          AreaCovered := StrToFloat(StringReplace(Valores[i], '.', ',', []));
-        18:
-          NumberObservers := StrToInt(Valores[i]);
-        19:
-          BreedingCode := Valores[i];
-        20:
-          ObservationDetails := Valores[i];
-        21:
-          ChecklistComments := Valores[i];
-        22:
-          MLCatalogNumber := Valores[i];
+        0:  SubmissionID := Valores[i];
+        1:  CommonName := Valores[i];
+        2:  ScientificName := Valores[i];
+        3:  TaxonomicOrder := StrToInt(Valores[i]);
+        4:  Count := Valores[i];
+        5:  StateProvince := Valores[i];
+        6:  County := Valores[i];
+        7:  LocationID := Valores[i];
+        8:  LocationName := Valores[i];
+        9:  Latitude := StrToFloat(StringReplace(Valores[i], '.', ',', []));
+        10: Longitude := StrToFloat(StringReplace(Valores[i], '.', ',', []));
+        11: RecordDate := StrToDate(Valores[i]);
+        12: RecordTime := StrToTime(Valores[i]);
+        13: Protocol := Valores[i];
+        14: Duration := StrToInt(Valores[i]);
+        15: AllObsReported := Boolean(StrToInt(Valores[i]));
+        16: DistanceTraveled := StrToFloat(StringReplace(Valores[i], '.', ',', []));
+        17: AreaCovered := StrToFloat(StringReplace(Valores[i], '.', ',', []));
+        18: NumberObservers := StrToInt(Valores[i]);
+        19: BreedingCode := Valores[i];
+        20: ObservationDetails := Valores[i];
+        21: ChecklistComments := Valores[i];
+        22: MLCatalogNumber := Valores[i];
       end;
     end;
   finally

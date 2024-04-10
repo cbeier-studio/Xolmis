@@ -133,7 +133,11 @@ begin
 
   { >> SQLite3 library}
   sqliteLibLoader.ConnectionType := 'SQLite3';
+  {$IFDEF MSWINDOWS}
   sqliteLibLoader.LibraryName := ConcatPaths([InstallDir, 'sqlite3.dll']);
+  {$ELSE}
+  sqliteLibLoader.LibraryName := '/usr/lib/x86_64-linux-gnu/libsqlite3.so.0';
+  {$ENDIF} 
   sqliteLibLoader.Enabled := True;
   sqliteLibLoader.LoadLibrary;
   {$IFDEF DEBUG}

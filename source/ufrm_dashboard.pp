@@ -88,6 +88,7 @@ type
     procedure pNewSightingMouseEnter(Sender: TObject);
     procedure pNewSightingMouseLeave(Sender: TObject);
     procedure pNumbersResize(Sender: TObject);
+    procedure pShortcutConverterClick(Sender: TObject);
     procedure pShortcutConverterMouseEnter(Sender: TObject);
     procedure pShortcutConverterMouseLeave(Sender: TObject);
     procedure sBoxResize(Sender: TObject);
@@ -360,16 +361,21 @@ begin
     pNumbers.ChildSizing.ControlsPerLine := 6;
 end;
 
+procedure TfrmDashboard.pShortcutConverterClick(Sender: TObject);
+begin
+  frmMain.actCoordinatesConverterExecute(Sender);
+end;
+
 procedure TfrmDashboard.pShortcutConverterMouseEnter(Sender: TObject);
 begin
-  if (Sender is TBCPanel) then
-    TBCPanel(Sender).Background.Color := clBtnHighlight;
+  if (Sender = pShortcutConverter) or (Sender = txtShortcutConverter) or (Sender = icoShortcutConverter) then
+    pShortcutConverter.Background.Color := clBtnHighlight;
 end;
 
 procedure TfrmDashboard.pShortcutConverterMouseLeave(Sender: TObject);
 begin
-  if (Sender is TBCPanel) then
-    TBCPanel(Sender).Background.Color := clBtnFace;
+  if (Sender = pShortcutConverter) or (Sender = txtShortcutConverter) or (Sender = icoShortcutConverter) then
+    pShortcutConverter.Background.Color := clBtnFace;
 end;
 
 procedure TfrmDashboard.RefreshBandBalance;

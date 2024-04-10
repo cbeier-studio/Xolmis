@@ -106,9 +106,16 @@ uses
     rsProgressRewritingHierarchy = 'Rewriting %s...';
     rsProgressLoadingCSVFile = 'Loading CSV file... %d%%';
     rsProgressRecords = 'Processing %d of %d records...';
+    rsProgressImportBandingJournal = 'Importing banding journals...';
+    rsProgressImportBandingEffort = 'Importing banding effort...';
+    rsProgressImportCaptures = 'Importing captures...';
+    rsFinishedImporting = 'Finished importing!';
 
     rsSuccessfulUpdate = '%s was updated successfully!';
+    rsSuccessfulImport = 'The selected file(s) were sucessfully imported.';
     rsSuccessfulImportEbird = 'eBird file imported successfully!';
+    rsSuccessfulImportBandingJournal = 'Banding journals imported successfully!';
+    rsSuccessfulImportBandingEffort = 'Banding effort imported successfully!';
     rsSuccessfulImportCaptures = 'Captures file imported successfully!';
     rsSuccessfulBackup = 'Backup file created successfully: %s';
     rsSuccessfulRestore = 'Backup restored successfully: %s';
@@ -148,7 +155,8 @@ uses
     rsPreparingRestore = 'Preparing backup restore...';
 
     rsImportImagesTitle = 'Import images';
-    rsImportCanceledByUser = 'Import cancelled by the user.';
+    rsImportCanceled = 'Import canceled!';
+    rsImportCanceledByUser = 'Import canceled by the user.';
     rsBatchCanceledByUser = 'Operation was canceled by user.';
 
     rsLoadingForm = 'Loading %s...';

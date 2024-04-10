@@ -11,7 +11,7 @@ uses
   DB, SQLDB;
 
   function GetSurveyFullname(aDate: TDate; aSite, aMethod, aStation: Integer; aID: String): String;
-  function GetNetEffortFullname(aDate: TDate; aSite, aStation: Integer; aNetNumber: Integer): String;
+  function GetNetEffortFullname(aDate: TDate; aStation: Integer; aNetNumber: Integer): String;
   function GetIndividualFullname(aTaxon, aBand: Integer; aRightLegBelow, aLeftLegBelow, aSex: String;
     Formatted: Boolean = False): String;
   function GetCaptureFullname(aDate: TDate; aTaxon, aBand: Integer;
@@ -55,16 +55,18 @@ begin
   Result := Trim(StringReplace(S, '  ', ' ', [rfReplaceAll]));
 end;
 
-function GetNetEffortFullname(aDate: TDate; aSite, aStation: Integer; aNetNumber: Integer): String;
+function GetNetEffortFullname(aDate: TDate; aStation: Integer; aNetNumber: Integer): String;
 var
-  SurveyName: String;
+  d, m, a: Word;
+  StationName: String;
 begin
   Result := EmptyStr;
 
-  SurveyName := GetSurveyFullname(aDate, aSite, 0, aStation, '');
+  DecodeDate(aDate, a, m, d);
+  StationName := GetName('net_stations', 'acronym', 'net_station_id', aStation);
 
-  { [Site] [Year-Month-Day] [Net station] [Net number] }
-  Result := Format('%s %3.3d', [SurveyName, aNetNumber]);
+  { [Net station] [Year-Month-Day] [Net number] }
+  Result := Format('%s %4.4d-%2.2d-%2.2d %3.3d', [StationName, a, m, d, aNetNumber]);
 end;
 
 function GetIndividualFullname(aTaxon, aBand: Integer; aRightLegBelow, aLeftLegBelow, aSex: String;

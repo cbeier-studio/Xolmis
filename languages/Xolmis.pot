@@ -1246,6 +1246,11 @@ msgctxt "cbs_locale.rsfilterstartlike"
 msgid "start with"
 msgstr ""
 
+#: cbs_locale.rsfinishedimporting
+msgctxt "cbs_locale.rsfinishedimporting"
+msgid "Finished importing!"
+msgstr ""
+
 #: cbs_locale.rsflightmolt
 msgctxt "cbs_locale.rsflightmolt"
 msgid "flight feathers molt"
@@ -1422,9 +1427,13 @@ msgctxt "cbs_locale.rsimagenotsupported"
 msgid "Image type not supported: %s"
 msgstr ""
 
+#: cbs_locale.rsimportcanceled
+msgid "Import canceled!"
+msgstr ""
+
 #: cbs_locale.rsimportcanceledbyuser
 msgctxt "cbs_locale.rsimportcanceledbyuser"
-msgid "Import cancelled by the user."
+msgid "Import canceled by the user."
 msgstr ""
 
 #: cbs_locale.rsimportimagestitle
@@ -1894,6 +1903,18 @@ msgctxt "cbs_locale.rsprogressfinishing"
 msgid "Finishing..."
 msgstr ""
 
+#: cbs_locale.rsprogressimportbandingeffort
+msgid "Importing banding effort..."
+msgstr ""
+
+#: cbs_locale.rsprogressimportbandingjournal
+msgid "Importing banding journals..."
+msgstr ""
+
+#: cbs_locale.rsprogressimportcaptures
+msgid "Importing captures..."
+msgstr ""
+
 #: cbs_locale.rsprogressimportimages
 #, object-pascal-format
 msgctxt "cbs_locale.rsprogressimportimages"
@@ -2330,6 +2351,19 @@ msgstr ""
 
 #: cbs_locale.rssuccessfulconnectiontest
 msgid "Connection to database was successful!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulimport
+msgctxt "cbs_locale.rssuccessfulimport"
+msgid "The selected file(s) were sucessfully imported."
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportbandingeffort
+msgid "Banding effort imported successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportbandingjournal
+msgid "Banding journals imported successfully!"
 msgstr ""
 
 #: cbs_locale.rssuccessfulimportcaptures
@@ -3705,11 +3739,6 @@ msgctxt "tdlgimportcaptures.ejournalfile.texthint"
 msgid "Select a file..."
 msgstr ""
 
-#: tdlgimportcaptures.eweatherfile.texthint
-msgctxt "tdlgimportcaptures.eweatherfile.texthint"
-msgid "Select a file..."
-msgstr ""
-
 #: tdlgimportcaptures.lblcapturefile.caption
 msgctxt "tdlgimportcaptures.lblcapturefile.caption"
 msgid "Captures"
@@ -3728,7 +3757,8 @@ msgid "Select at least one file to start importing."
 msgstr ""
 
 #: tdlgimportcaptures.lblsubtitleimportfinished.caption
-msgid "The selected files data were sucessfully imported."
+msgctxt "tdlgimportcaptures.lblsubtitleimportfinished.caption"
+msgid "The selected file(s) were sucessfully imported."
 msgstr ""
 
 #: tdlgimportcaptures.lbltitleimportfiles.caption
@@ -3736,11 +3766,8 @@ msgid "Files to import"
 msgstr ""
 
 #: tdlgimportcaptures.lbltitleimportfinished.caption
+msgctxt "tdlgimportcaptures.lbltitleimportfinished.caption"
 msgid "Finished importing!"
-msgstr ""
-
-#: tdlgimportcaptures.lblweatherfile.caption
-msgid "Weather log"
 msgstr ""
 
 #: tdlgimportcaptures.sbcancel.caption
@@ -7057,6 +7084,11 @@ msgctxt "tfrmcustomgrid.sbchildhistory.hint"
 msgid "View record history"
 msgstr ""
 
+#: tfrmcustomgrid.sbchildnewtab.hint
+msgctxt "tfrmcustomgrid.sbchildnewtab.hint"
+msgid "Open records in a new tab"
+msgstr ""
+
 #: tfrmcustomgrid.sbcolumnhide.hint
 msgid "Hide the selected column"
 msgstr ""
@@ -7250,10 +7282,6 @@ msgstr ""
 #: tfrmcustomgrid.sbsortchilds.hint
 msgctxt "tfrmcustomgrid.sbsortchilds.hint"
 msgid "Sort records"
-msgstr ""
-
-#: tfrmcustomgrid.sbsortchilds1.hint
-msgid "Open records in a new tab"
 msgstr ""
 
 #: tfrmcustomgrid.sbsortrecords.hint
@@ -7609,7 +7637,7 @@ msgstr ""
 
 #: tfrmmain.actimportcaptures.caption
 msgctxt "tfrmmain.actimportcaptures.caption"
-msgid "Captures"
+msgid "Banding data"
 msgstr ""
 
 #: tfrmmain.actimportebird.caption

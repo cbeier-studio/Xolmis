@@ -181,6 +181,7 @@ type
     qNetsEffortnet_close_1: TTimeField;
     qNetsEffortnet_close_2: TTimeField;
     qNetsEffortnet_close_3: TTimeField;
+    qNetsEffortnet_close_4: TTimeField;
     qNetsEffortnet_height: TFloatField;
     qNetsEffortnet_id: TLargeintField;
     qNetsEffortnet_length: TFloatField;
@@ -189,6 +190,7 @@ type
     qNetsEffortnet_open_1: TTimeField;
     qNetsEffortnet_open_2: TTimeField;
     qNetsEffortnet_open_3: TTimeField;
+    qNetsEffortnet_open_4: TTimeField;
     qNetsEffortnet_station_id: TLargeintField;
     qNetsEffortnotes: TMemoField;
     qNetsEffortopen_time_total: TFloatField;

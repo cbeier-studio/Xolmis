@@ -1,6 +1,6 @@
 object frmMain: TfrmMain
   Left = -8
-  Height = 1087
+  Height = 1100
   Top = -8
   Width = 1940
   Caption = 'Xolmis'
@@ -12365,7 +12365,7 @@ object frmMain: TfrmMain
     end
     object actImportCaptures: TAction
       Category = 'Import'
-      Caption = 'Captures'
+      Caption = 'Banding data'
       OnExecute = actImportCapturesExecute
     end
     object actImportNests: TAction
