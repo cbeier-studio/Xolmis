@@ -5091,8 +5091,8 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            172
-            172
+            174
+            174
           )
         end
         object pColumnsToolbar: TBCPanel
@@ -5580,6 +5580,7 @@ object frmCustomGrid: TfrmCustomGrid
           TabOrder = 0
           TextHint = 'Quick add'
           Visible = False
+          OnEnter = eAddChildEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eAddChildKeyPress
         end

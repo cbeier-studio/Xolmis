@@ -1379,6 +1379,10 @@ msgctxt "cbs_locale.rsheard"
 msgid "Heard"
 msgstr ""
 
+#: cbs_locale.rshintaddexistingsurvey
+msgid "Add existing survey"
+msgstr ""
+
 #: cbs_locale.rshintcheckuncheckall
 msgctxt "cbs_locale.rshintcheckuncheckall"
 msgid "Mark/unmark all"
@@ -5430,6 +5434,11 @@ msgctxt "tedtneteffort.enetclose3.texthint"
 msgid "HH:MM"
 msgstr ""
 
+#: tedtneteffort.enetclose4.texthint
+msgctxt "tedtneteffort.enetclose4.texthint"
+msgid "HH:MM"
+msgstr ""
+
 #: tedtneteffort.enetopen1.texthint
 msgctxt "tedtneteffort.enetopen1.texthint"
 msgid "HH:MM"
@@ -5445,37 +5454,63 @@ msgctxt "tedtneteffort.enetopen3.texthint"
 msgid "HH:MM"
 msgstr ""
 
-#: tedtneteffort.lblendnumber1.caption
-msgctxt "tedtneteffort.lblendnumber1.caption"
+#: tedtneteffort.enetopen4.texthint
+msgctxt "tedtneteffort.enetopen4.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtneteffort.lbldate.caption
+msgctxt "tedtneteffort.lbldate.caption"
+msgid "Survey date: *"
+msgstr ""
+
+#: tedtneteffort.lbllatitude.caption
+msgctxt "tedtneteffort.lbllatitude.caption"
 msgid "Latitude:"
 msgstr ""
 
-#: tedtneteffort.lblendnumber2.caption
-msgid "Mistnet height (m):"
+#: tedtneteffort.lbllongitude.caption
+msgctxt "tedtneteffort.lbllongitude.caption"
+msgid "Longitude:"
 msgstr ""
 
-#: tedtneteffort.lblendnumber3.caption
-msgctxt "tedtneteffort.lblendnumber3.caption"
-msgid "Mesh size:"
+#: tedtneteffort.lblnetarea.caption
+msgctxt "tedtneteffort.lblnetarea.caption"
+msgid "Mistnet area (m²):"
 msgstr ""
 
-#: tedtneteffort.lblendnumber4.caption
-msgid "Total open time (h):"
-msgstr ""
-
-#: tedtneteffort.lblendnumber5.caption
-msgctxt "tedtneteffort.lblendnumber5.caption"
+#: tedtneteffort.lblnetclose1.caption
+msgctxt "tedtneteffort.lblnetclose1.caption"
 msgid "Closing time 1: *"
 msgstr ""
 
-#: tedtneteffort.lblendnumber6.caption
-msgctxt "tedtneteffort.lblendnumber6.caption"
+#: tedtneteffort.lblnetclose2.caption
+msgctxt "tedtneteffort.lblnetclose2.caption"
 msgid "Closing time 2:"
 msgstr ""
 
-#: tedtneteffort.lblendnumber7.caption
-msgctxt "tedtneteffort.lblendnumber7.caption"
+#: tedtneteffort.lblnetclose3.caption
+msgctxt "tedtneteffort.lblnetclose3.caption"
 msgid "Closing time 3:"
+msgstr ""
+
+#: tedtneteffort.lblnetclose4.caption
+msgid "Closing time 4:"
+msgstr ""
+
+#: tedtneteffort.lblnetheight.caption
+msgctxt "tedtneteffort.lblnetheight.caption"
+msgid "Mistnet height (m):"
+msgstr ""
+
+#: tedtneteffort.lblnetlength.caption
+msgctxt "tedtneteffort.lblnetlength.caption"
+msgid "Mistnet length (m):"
+msgstr ""
+
+#: tedtneteffort.lblnetmesh.caption
+msgctxt "tedtneteffort.lblnetmesh.caption"
+msgid "Mesh size:"
 msgstr ""
 
 #: tedtneteffort.lblnetnumber.caption
@@ -5483,51 +5518,43 @@ msgctxt "tedtneteffort.lblnetnumber.caption"
 msgid "Mistnet number: *"
 msgstr ""
 
+#: tedtneteffort.lblnetopen1.caption
+msgctxt "tedtneteffort.lblnetopen1.caption"
+msgid "Opening time 1: *"
+msgstr ""
+
+#: tedtneteffort.lblnetopen2.caption
+msgctxt "tedtneteffort.lblnetopen2.caption"
+msgid "Opening time 2:"
+msgstr ""
+
+#: tedtneteffort.lblnetopen3.caption
+msgctxt "tedtneteffort.lblnetopen3.caption"
+msgid "Opening time 3:"
+msgstr ""
+
+#: tedtneteffort.lblnetopen4.caption
+msgid "Opening time 4:"
+msgstr ""
+
 #: tedtneteffort.lblnotes.caption
 msgctxt "tedtneteffort.lblnotes.caption"
 msgid "Notes:"
 msgstr ""
 
-#: tedtneteffort.lblstartnumber.caption
+#: tedtneteffort.lblpermanentnet.caption
+msgctxt "tedtneteffort.lblpermanentnet.caption"
 msgid "Permanent mistnet:"
-msgstr ""
-
-#: tedtneteffort.lblstartnumber1.caption
-msgctxt "tedtneteffort.lblstartnumber1.caption"
-msgid "Longitude:"
-msgstr ""
-
-#: tedtneteffort.lblstartnumber2.caption
-msgid "Mistnet length (m):"
-msgstr ""
-
-#: tedtneteffort.lblstartnumber3.caption
-msgid "Mistnet area (m²):"
-msgstr ""
-
-#: tedtneteffort.lblstartnumber4.caption
-msgctxt "tedtneteffort.lblstartnumber4.caption"
-msgid "Survey date: *"
-msgstr ""
-
-#: tedtneteffort.lblstartnumber5.caption
-msgctxt "tedtneteffort.lblstartnumber5.caption"
-msgid "Opening time 1: *"
-msgstr ""
-
-#: tedtneteffort.lblstartnumber6.caption
-msgctxt "tedtneteffort.lblstartnumber6.caption"
-msgid "Opening time 2:"
-msgstr ""
-
-#: tedtneteffort.lblstartnumber7.caption
-msgctxt "tedtneteffort.lblstartnumber7.caption"
-msgid "Opening time 3:"
 msgstr ""
 
 #: tedtneteffort.lblsurvey.caption
 msgctxt "tedtneteffort.lblsurvey.caption"
 msgid "Survey:"
+msgstr ""
+
+#: tedtneteffort.lbltotalopentime.caption
+msgctxt "tedtneteffort.lbltotalopentime.caption"
+msgid "Total open time (h):"
 msgstr ""
 
 #: tedtneteffort.sbcancel.caption

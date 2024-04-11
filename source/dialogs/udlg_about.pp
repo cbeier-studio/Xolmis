@@ -5,7 +5,7 @@ unit udlg_about;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, Clipbrd,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, Clipbrd, lclintf,
   atshapelinebgra, BCPanel, ATLinkLabel;
 
 type
@@ -40,6 +40,8 @@ type
     pContent: TPanel;
     pBottom: TPanel;
     procedure FormShow(Sender: TObject);
+    procedure linkLicenseClick(Sender: TObject);
+    procedure linkThirdPartyClick(Sender: TObject);
     procedure sbCopyClick(Sender: TObject);
   private
 
@@ -67,6 +69,16 @@ begin
   pClementsVersion.Caption := XSettings.ClementsVersion;
   pIocVersion.Caption := XSettings.IocVersion;
   pCbroVersion.Caption := XSettings.CbroVersion;
+end;
+
+procedure TdlgAbout.linkLicenseClick(Sender: TObject);
+begin
+  OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/LICENSE');
+end;
+
+procedure TdlgAbout.linkThirdPartyClick(Sender: TObject);
+begin
+  OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/THIRD_PARTY.md');
 end;
 
 procedure TdlgAbout.sbCopyClick(Sender: TObject);

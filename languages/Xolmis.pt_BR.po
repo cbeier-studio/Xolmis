@@ -1263,7 +1263,6 @@ msgid "start with"
 msgstr "começa com"
 
 #: cbs_locale.rsfinishedimporting
-#, fuzzy
 msgctxt "cbs_locale.rsfinishedimporting"
 msgid "Finished importing!"
 msgstr "Importação finalizada!"
@@ -1396,6 +1395,10 @@ msgctxt "cbs_locale.rsheard"
 msgid "Heard"
 msgstr "Ouvido"
 
+#: cbs_locale.rshintaddexistingsurvey
+msgid "Add existing survey"
+msgstr "Adicionar amostragem existente"
+
 #: cbs_locale.rshintcheckuncheckall
 msgctxt "cbs_locale.rshintcheckuncheckall"
 msgid "Mark/unmark all"
@@ -1446,11 +1449,9 @@ msgstr "Formato de imagem não suportado: %s"
 
 #: cbs_locale.rsimportcanceled
 msgid "Import canceled!"
-msgstr ""
+msgstr "Importação cancelada!"
 
 #: cbs_locale.rsimportcanceledbyuser
-#, fuzzy
-#| msgid "Import cancelled by the user."
 msgctxt "cbs_locale.rsimportcanceledbyuser"
 msgid "Import canceled by the user."
 msgstr "Importação cancelada pelo usuário."
@@ -1926,15 +1927,15 @@ msgstr "Finalizando..."
 
 #: cbs_locale.rsprogressimportbandingeffort
 msgid "Importing banding effort..."
-msgstr ""
+msgstr "Importando esforços de anilhamento..."
 
 #: cbs_locale.rsprogressimportbandingjournal
 msgid "Importing banding journals..."
-msgstr ""
+msgstr "Importando diários de anilhamento..."
 
 #: cbs_locale.rsprogressimportcaptures
 msgid "Importing captures..."
-msgstr ""
+msgstr "Importando capturas..."
 
 #: cbs_locale.rsprogressimportimages
 #, object-pascal-format
@@ -2383,11 +2384,11 @@ msgstr "Conexão ao banco de dados foi bem sucedida!"
 #: cbs_locale.rssuccessfulimport
 msgctxt "cbs_locale.rssuccessfulimport"
 msgid "The selected file(s) were sucessfully imported."
-msgstr ""
+msgstr "O(s) arquivo(s) selecionado(s) foi/foram importado(s) com sucesso."
 
 #: cbs_locale.rssuccessfulimportbandingeffort
 msgid "Banding effort imported successfully!"
-msgstr ""
+msgstr "Esforço de anilhamento foi importado com sucesso!"
 
 #: cbs_locale.rssuccessfulimportbandingjournal
 msgid "Banding journals imported successfully!"
@@ -3786,11 +3787,9 @@ msgid "Select at least one file to start importing."
 msgstr "Selecione ao menos um arquivo para iniciar a importação."
 
 #: tdlgimportcaptures.lblsubtitleimportfinished.caption
-#, fuzzy
-#| msgid "The selected files data were sucessfully imported."
 msgctxt "tdlgimportcaptures.lblsubtitleimportfinished.caption"
 msgid "The selected file(s) were sucessfully imported."
-msgstr "Os arquivos selecionados foram importados com sucesso."
+msgstr "O(s) arquivo(s) selecionado(s) foi/foram importado(s) com sucesso."
 
 #: tdlgimportcaptures.lbltitleimportfiles.caption
 msgid "Files to import"
@@ -5461,6 +5460,11 @@ msgctxt "tedtneteffort.enetclose3.texthint"
 msgid "HH:MM"
 msgstr "HH:MM"
 
+#: tedtneteffort.enetclose4.texthint
+msgctxt "tedtneteffort.enetclose4.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
 #: tedtneteffort.enetopen1.texthint
 msgctxt "tedtneteffort.enetopen1.texthint"
 msgid "HH:MM"
@@ -5476,90 +5480,108 @@ msgctxt "tedtneteffort.enetopen3.texthint"
 msgid "HH:MM"
 msgstr "HH:MM"
 
-#: tedtneteffort.lblendnumber1.caption
-msgctxt "tedtneteffort.lblendnumber1.caption"
+#: tedtneteffort.enetopen4.texthint
+msgctxt "tedtneteffort.enetopen4.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
+#: tedtneteffort.lbldate.caption
+msgctxt "tedtneteffort.lbldate.caption"
+msgid "Survey date: *"
+msgstr "Data da amostragem: *"
+
+#: tedtneteffort.lbllatitude.caption
+msgctxt "tedtneteffort.lbllatitude.caption"
 msgid "Latitude:"
 msgstr "Latitude:"
 
-#: tedtneteffort.lblendnumber2.caption
-msgid "Mistnet height (m):"
-msgstr "Altura da rede (m):"
+#: tedtneteffort.lbllongitude.caption
+msgctxt "tedtneteffort.lbllongitude.caption"
+msgid "Longitude:"
+msgstr "Longitude:"
 
-#: tedtneteffort.lblendnumber3.caption
-msgctxt "tedtneteffort.lblendnumber3.caption"
-msgid "Mesh size:"
-msgstr "Tamanho da malha:"
+#: tedtneteffort.lblnetarea.caption
+msgctxt "tedtneteffort.lblnetarea.caption"
+msgid "Mistnet area (m²):"
+msgstr "Área da rede (m²):"
 
-#: tedtneteffort.lblendnumber4.caption
-msgid "Total open time (h):"
-msgstr "Total de tempo aberta (h):"
-
-#: tedtneteffort.lblendnumber5.caption
-msgctxt "tedtneteffort.lblendnumber5.caption"
+#: tedtneteffort.lblnetclose1.caption
+msgctxt "tedtneteffort.lblnetclose1.caption"
 msgid "Closing time 1: *"
 msgstr "Hora de fechamento 1: *"
 
-#: tedtneteffort.lblendnumber6.caption
-msgctxt "tedtneteffort.lblendnumber6.caption"
+#: tedtneteffort.lblnetclose2.caption
+msgctxt "tedtneteffort.lblnetclose2.caption"
 msgid "Closing time 2:"
 msgstr "Hora de fechamento 2:"
 
-#: tedtneteffort.lblendnumber7.caption
-msgctxt "tedtneteffort.lblendnumber7.caption"
+#: tedtneteffort.lblnetclose3.caption
+msgctxt "tedtneteffort.lblnetclose3.caption"
 msgid "Closing time 3:"
 msgstr "Hora de fechamento 3:"
+
+#: tedtneteffort.lblnetclose4.caption
+msgid "Closing time 4:"
+msgstr "Hora de fechamento 4:"
+
+#: tedtneteffort.lblnetheight.caption
+msgctxt "tedtneteffort.lblnetheight.caption"
+msgid "Mistnet height (m):"
+msgstr "Altura da rede (m):"
+
+#: tedtneteffort.lblnetlength.caption
+msgctxt "tedtneteffort.lblnetlength.caption"
+msgid "Mistnet length (m):"
+msgstr "Comprimento da rede (m):"
+
+#: tedtneteffort.lblnetmesh.caption
+msgctxt "tedtneteffort.lblnetmesh.caption"
+msgid "Mesh size:"
+msgstr "Tamanho da malha:"
 
 #: tedtneteffort.lblnetnumber.caption
 msgctxt "tedtneteffort.lblnetnumber.caption"
 msgid "Mistnet number: *"
 msgstr "Número da rede: *"
 
+#: tedtneteffort.lblnetopen1.caption
+msgctxt "tedtneteffort.lblnetopen1.caption"
+msgid "Opening time 1: *"
+msgstr "Hora de abertura 1: *"
+
+#: tedtneteffort.lblnetopen2.caption
+msgctxt "tedtneteffort.lblnetopen2.caption"
+msgid "Opening time 2:"
+msgstr "Hora de abertura 2:"
+
+#: tedtneteffort.lblnetopen3.caption
+msgctxt "tedtneteffort.lblnetopen3.caption"
+msgid "Opening time 3:"
+msgstr "Hora de abertura 3:"
+
+#: tedtneteffort.lblnetopen4.caption
+msgid "Opening time 4:"
+msgstr "Hora de abertura 4:"
+
 #: tedtneteffort.lblnotes.caption
 msgctxt "tedtneteffort.lblnotes.caption"
 msgid "Notes:"
 msgstr "Anotações:"
 
-#: tedtneteffort.lblstartnumber.caption
+#: tedtneteffort.lblpermanentnet.caption
+msgctxt "tedtneteffort.lblpermanentnet.caption"
 msgid "Permanent mistnet:"
 msgstr "Rede permanente:"
-
-#: tedtneteffort.lblstartnumber1.caption
-msgctxt "tedtneteffort.lblstartnumber1.caption"
-msgid "Longitude:"
-msgstr "Longitude:"
-
-#: tedtneteffort.lblstartnumber2.caption
-msgid "Mistnet length (m):"
-msgstr "Comprimento da rede (m):"
-
-#: tedtneteffort.lblstartnumber3.caption
-msgid "Mistnet area (m²):"
-msgstr "Área da rede (m²):"
-
-#: tedtneteffort.lblstartnumber4.caption
-msgctxt "tedtneteffort.lblstartnumber4.caption"
-msgid "Survey date: *"
-msgstr "Data da amostragem: *"
-
-#: tedtneteffort.lblstartnumber5.caption
-msgctxt "tedtneteffort.lblstartnumber5.caption"
-msgid "Opening time 1: *"
-msgstr "Hora de abertura 1: *"
-
-#: tedtneteffort.lblstartnumber6.caption
-msgctxt "tedtneteffort.lblstartnumber6.caption"
-msgid "Opening time 2:"
-msgstr "Hora de abertura 2:"
-
-#: tedtneteffort.lblstartnumber7.caption
-msgctxt "tedtneteffort.lblstartnumber7.caption"
-msgid "Opening time 3:"
-msgstr "Hora de abertura 3:"
 
 #: tedtneteffort.lblsurvey.caption
 msgctxt "tedtneteffort.lblsurvey.caption"
 msgid "Survey:"
 msgstr "Amostragem:"
+
+#: tedtneteffort.lbltotalopentime.caption
+msgctxt "tedtneteffort.lbltotalopentime.caption"
+msgid "Total open time (h):"
+msgstr "Total de tempo aberta (h):"
 
 #: tedtneteffort.sbcancel.caption
 msgctxt "tedtneteffort.sbcancel.caption"
@@ -7679,11 +7701,9 @@ msgid "Import"
 msgstr "Importar"
 
 #: tfrmmain.actimportcaptures.caption
-#, fuzzy
-#| msgid "Captures"
 msgctxt "tfrmmain.actimportcaptures.caption"
 msgid "Banding data"
-msgstr "Capturas"
+msgstr "Dados de anilhamento"
 
 #: tfrmmain.actimportebird.caption
 msgid "eBird records"
@@ -8153,4 +8173,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

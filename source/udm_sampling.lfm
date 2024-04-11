@@ -5200,15 +5200,20 @@ object DMS: TDMS
       '  (SELECT cast((sum(ef.net_area) + sum(ef.open_time_total)) AS REAL) FROM nets_effort AS ef'
       '    WHERE (ef.survey_id = sv.survey_id) AND (ef.active_status = 1)) AS net_effort'
       'FROM surveys AS sv'
-      'WHERE (sv.active_status = 1)'
+      'WHERE (sv.active_status = 1) AND (sv.expedition_id = :expedition_id)'
     )
     Options = [sqoAutoApplyUpdates]
-    Params = <>
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'expedition_id'
+        ParamType = ptInput
+      end>
     Macros = <>
     DataSource = DMG.dsExpeditions
     Sequence.FieldName = 'survey_id'
-    Left = 390
-    Top = 170
+    Left = 392
+    Top = 173
     object qSurveysmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'

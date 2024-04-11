@@ -209,6 +209,7 @@ type
     procedure actDBConnectExecute(Sender: TObject);
     procedure actDBSettingsExecute(Sender: TObject);
     procedure actExitExecute(Sender: TObject);
+    procedure actGiveFeedbackExecute(Sender: TObject);
     procedure actImportCapturesExecute(Sender: TObject);
     procedure actImportEbirdExecute(Sender: TObject);
     procedure actInsertRecordExecute(Sender: TObject);
@@ -355,6 +356,11 @@ end;
 procedure TfrmMain.actExitExecute(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TfrmMain.actGiveFeedbackExecute(Sender: TObject);
+begin
+  OpenUrl('https://github.com/cbeier-studio/Xolmis/issues');
 end;
 
 procedure TfrmMain.actImportCapturesExecute(Sender: TObject);

@@ -245,6 +245,7 @@ uses
     rsHintHeaderAllUnmarked = 'No marked records';
     rsHintHeaderSomeMarked = '%d of %d records marked';
     rsHintHeaderAllMarked = 'All %d records marked';
+    rsHintAddExistingSurvey = 'Add existing survey';
 
     { Other texts }
     rsFilterAnd = 'and ';

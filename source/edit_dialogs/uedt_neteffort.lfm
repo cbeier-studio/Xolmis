@@ -1,11 +1,11 @@
 object edtNetEffort: TedtNetEffort
   Left = 352
-  Height = 674
+  Height = 719
   Top = 33
   Width = 400
   AutoSize = True
   Caption = 'New mistnet effort'
-  ClientHeight = 674
+  ClientHeight = 719
   ClientWidth = 400
   Font.Height = -12
   OnClose = FormClose
@@ -17,7 +17,7 @@ object edtNetEffort: TedtNetEffort
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 631
+    Top = 676
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -26,28 +26,28 @@ object edtNetEffort: TedtNetEffort
   end
   object sBox: TScrollBox
     Left = 0
-    Height = 631
+    Height = 676
     Top = 0
     Width = 400
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 631
+    VertScrollBar.Page = 676
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 631
+    ClientHeight = 676
     ClientWidth = 400
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 631
+      Height = 676
       Top = 0
       Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 631
+      ClientHeight = 676
       ClientWidth = 400
       Color = 15066599
       ParentBackground = False
@@ -56,7 +56,7 @@ object edtNetEffort: TedtNetEffort
       object pNotes: TPanel
         Left = 0
         Height = 124
-        Top = 491
+        Top = 536
         Width = 400
         Align = alTop
         AutoSize = True
@@ -69,7 +69,7 @@ object edtNetEffort: TedtNetEffort
         ClientHeight = 124
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 10
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -97,7 +97,7 @@ object edtNetEffort: TedtNetEffort
           TabOrder = 0
         end
       end
-      object pFromToNumber: TPanel
+      object pPermanentNetNumber: TPanel
         Left = 0
         Height = 46
         Top = 89
@@ -114,7 +114,7 @@ object edtNetEffort: TedtNetEffort
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 1
-        object lblStartNumber: TLabel
+        object lblPermanentNet: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -174,7 +174,7 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
       end
-      object pFromToNumber1: TPanel
+      object pLongLat: TPanel
         Left = 0
         Height = 46
         Top = 135
@@ -191,7 +191,7 @@ object edtNetEffort: TedtNetEffort
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 2
-        object lblStartNumber1: TLabel
+        object lblLongitude: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -202,7 +202,7 @@ object edtNetEffort: TedtNetEffort
           ParentColor = False
           ParentFont = False
         end
-        object lblEndNumber1: TLabel
+        object lblLatitude: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -262,7 +262,7 @@ object edtNetEffort: TedtNetEffort
           OnDBEditKeyPress = eNetNumberKeyPress
         end
       end
-      object pFromToNumber2: TPanel
+      object pNetLengthHeight: TPanel
         Left = 0
         Height = 45
         Top = 194
@@ -280,7 +280,7 @@ object edtNetEffort: TedtNetEffort
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 3
-        object lblStartNumber2: TLabel
+        object lblNetLength: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -291,7 +291,7 @@ object edtNetEffort: TedtNetEffort
           ParentColor = False
           ParentFont = False
         end
-        object lblEndNumber2: TLabel
+        object lblNetHeight: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -329,7 +329,7 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
       end
-      object pFromToNumber3: TPanel
+      object pNetMeshArea: TPanel
         Left = 0
         Height = 45
         Top = 239
@@ -346,7 +346,7 @@ object edtNetEffort: TedtNetEffort
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
-        object lblEndNumber3: TLabel
+        object lblNetMesh: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -357,7 +357,7 @@ object edtNetEffort: TedtNetEffort
           ParentColor = False
           ParentFont = False
         end
-        object lblStartNumber3: TLabel
+        object lblNetArea: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -405,7 +405,7 @@ object edtNetEffort: TedtNetEffort
           ParentColor = False
         end
       end
-      object pFromToNumber4: TPanel
+      object pDateTotalTime: TPanel
         Left = 0
         Height = 46
         Top = 297
@@ -423,7 +423,7 @@ object edtNetEffort: TedtNetEffort
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 5
-        object lblStartNumber4: TLabel
+        object lblDate: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -434,7 +434,7 @@ object edtNetEffort: TedtNetEffort
           ParentColor = False
           ParentFont = False
         end
-        object lblEndNumber4: TLabel
+        object lblTotalOpenTime: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -482,7 +482,7 @@ object edtNetEffort: TedtNetEffort
           ParentColor = False
         end
       end
-      object pFromToNumber5: TPanel
+      object pNetOpenClose1: TPanel
         Left = 0
         Height = 45
         Top = 343
@@ -499,7 +499,7 @@ object edtNetEffort: TedtNetEffort
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 6
-        object lblStartNumber5: TLabel
+        object lblNetOpen1: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -510,7 +510,7 @@ object edtNetEffort: TedtNetEffort
           ParentColor = False
           ParentFont = False
         end
-        object lblEndNumber5: TLabel
+        object lblNetClose1: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -550,7 +550,7 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
       end
-      object pFromToNumber6: TPanel
+      object pNetOpenClose2: TPanel
         Left = 0
         Height = 45
         Top = 388
@@ -567,7 +567,7 @@ object edtNetEffort: TedtNetEffort
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 7
-        object lblStartNumber6: TLabel
+        object lblNetOpen2: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -578,7 +578,7 @@ object edtNetEffort: TedtNetEffort
           ParentColor = False
           ParentFont = False
         end
-        object lblEndNumber6: TLabel
+        object lblNetClose2: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -618,7 +618,7 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
       end
-      object pFromToNumber7: TPanel
+      object pNetOpenClose3: TPanel
         Left = 0
         Height = 45
         Top = 433
@@ -635,7 +635,7 @@ object edtNetEffort: TedtNetEffort
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 8
-        object lblStartNumber7: TLabel
+        object lblNetOpen3: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -646,7 +646,7 @@ object edtNetEffort: TedtNetEffort
           ParentColor = False
           ParentFont = False
         end
-        object lblEndNumber7: TLabel
+        object lblNetClose3: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -771,12 +771,80 @@ object edtNetEffort: TedtNetEffort
           OnDBEditKeyPress = eSurveyDBEditKeyPress
         end
       end
+      object pNetOpenClose4: TPanel
+        Left = 0
+        Height = 45
+        Top = 478
+        Width = 400
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 400
+        ParentBackground = False
+        TabOrder = 9
+        object lblNetOpen4: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'Opening time 4:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblNetClose4: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'Closing time 4:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eNetOpen4: TDBEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 176
+          DataField = 'net_open_4'
+          DataSource = dsLink
+          Constraints.MinWidth = 176
+          MaxLength = 0
+          TabOrder = 0
+          TextHint = 'HH:MM'
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+        end
+        object eNetClose4: TDBEdit
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
+          DataField = 'net_close_4'
+          DataSource = dsLink
+          Constraints.MinWidth = 176
+          MaxLength = 0
+          TabOrder = 1
+          TextHint = 'HH:MM'
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNetNumberKeyPress
+        end
+      end
     end
   end
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 633
+    Top = 678
     Width = 400
     Align = alTop
     AutoSize = True

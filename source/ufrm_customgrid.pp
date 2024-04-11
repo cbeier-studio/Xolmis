@@ -464,6 +464,7 @@ type
     procedure dsLink5StateChange(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure dsLinkStateChange(Sender: TObject);
+    procedure eAddChildEnter(Sender: TObject);
     procedure eAddChildKeyPress(Sender: TObject; var Key: char);
     procedure eCycleCodeFilterButtonClick(Sender: TObject);
     procedure eCycleCodeFilterChange(Sender: TObject);
@@ -1568,6 +1569,33 @@ begin
   UpdateChildBar;
 end;
 
+procedure TfrmCustomGrid.eAddChildEnter(Sender: TObject);
+var
+  aSurvey: Integer;
+  Qry: TSQLQuery;
+begin
+  if (FTableType = tbExpeditions) and (FChildTable = tbSurveys) then
+  begin
+    if FindDlg(tbSurveys, eAddChild, aSurvey) then
+    begin
+      Qry := TSQLQuery.Create(DMM.sqlCon);
+      with Qry, SQL do
+      try
+        SQLConnection := DMM.sqlCon;
+        Clear;
+
+        Add('UPDATE surveys INTO expedition_id = :aexpedition WHERE survey_id = :asurvey');
+        ParamByName('AEXPEDITION').AsInteger := DBG.DataSource.DataSet.FieldByName('expedition_id').AsInteger;
+        ParamByName('ASURVEY').AsInteger := aSurvey;
+
+        ExecSQL;
+      finally
+        FreeAndNil(Qry);
+      end;
+    end;
+  end;
+end;
+
 procedure TfrmCustomGrid.eAddChildKeyPress(Sender: TObject; var Key: char);
 var
   P: Integer;
@@ -2293,6 +2321,11 @@ begin
         AddGridColumns(tbEggs, gridChild3);
         dsLink3.DataSet.Open;
       end;
+      tbExpeditions:
+      begin
+        AddGridColumns(tbSurveys, gridChild1);
+        dsLink1.DataSet.Open;
+      end;
       tbSurveys:
       begin
         AddGridColumns(tbSurveyTeams, gridChild1);
@@ -2417,7 +2450,12 @@ begin
       end;
     tbExpeditions:
       case nbChilds.PageIndex of
-        0: FChildTable := tbSurveys;
+        0:
+        begin
+          FChildTable := tbSurveys;
+          eAddChild.Visible := True;
+          eAddChild.TextHint := rsHintAddExistingSurvey;
+        end;
       end;
     tbSurveys:
       case nbChilds.PageIndex of
@@ -2764,7 +2802,10 @@ begin
     //tbNestRevisions: ;
     //tbEggs: ;
     //tbMethods: ;
-    //tbExpeditions: ;
+    tbExpeditions:
+      case nbChilds.PageIndex of
+        0: DeleteRecord(tbSurveys, DMS.qSurveys);
+      end;
     tbSurveys:
       case nbChilds.PageIndex of
         0: DeleteRecord(tbSurveyTeams, DMS.qSurveyTeam);
@@ -2845,7 +2886,10 @@ begin
     //tbNestRevisions: ;
     //tbEggs: ;
     //tbMethods: ;
-    //tbExpeditions: ;
+    tbExpeditions:
+      case nbChilds.PageIndex of
+        0: EditSurvey(DMS.qSurveys);
+      end;
     tbSurveys:
       case nbChilds.PageIndex of
         0: EditSurveyMember(DMS.qSurveyTeam, dsLink.DataSet.FieldByName('survey_id').AsInteger);
@@ -3663,6 +3707,7 @@ begin
 
     pSide.Enabled := True;
   end;
+  eAddChild.Enabled := sbAddChild.Enabled;
 
   //UpdateChildCount;
 end;
@@ -3790,7 +3835,16 @@ begin
     //tbNestRevisions: ;
     //tbEggs: ;
     //tbMethods: ;
-    //tbExpeditions: ;
+    tbExpeditions:
+    begin
+      if dsLink1.DataSet.RecordCount > 0 then
+      begin
+        lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
+        pChildCount1.Visible := True;
+      end
+      else
+        pChildCount1.Visible := False;
+    end;
     tbSurveys:
     begin
       if dsLink1.DataSet.RecordCount > 0 then
@@ -7040,7 +7094,10 @@ begin
     //tbNestRevisions: ;
     //tbEggs: ;
     //tbMethods: ;
-    //tbExpeditions: ;
+    tbExpeditions:
+      case nbChilds.PageIndex of
+        0: Result := dsLink1.DataSet;
+      end;
     tbSurveys:
       case nbChilds.PageIndex of
         0: Result := dsLink1.DataSet;
