@@ -910,7 +910,6 @@ type
     qSpecimenscollection_day: TLongintField;
     qSpecimenscollection_month: TLongintField;
     qSpecimenscollection_year: TLongintField;
-    qSpecimenscollectors: TStringField;
     qSpecimenscountry_id: TLongintField;
     qSpecimensegg_id: TLongintField;
     qSpecimensegg_name: TStringField;
