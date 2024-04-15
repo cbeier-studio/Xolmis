@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="72">
+      <ExcludedIdentifiers Count="74">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -96,6 +96,8 @@
         <Item70 Value="tfrmcustomgrid.lblchildcount4.caption"/>
         <Item71 Value="tfrmcustomgrid.lblchildcount5.caption"/>
         <Item72 Value="tdlgGeoEditor.pDecimal.caption"/>
+        <Item73 Value="tdlgImportCaptures.lblTitleImportFinished.Caption"/>
+        <Item74 Value="tdlgImportCaptures.lblSubtitleImportFinished.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>

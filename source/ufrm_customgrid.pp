@@ -4377,184 +4377,113 @@ begin
     tbNone: ;
     tbInstitutions:
       begin
-        with aGrid.Columns.ColumnByFieldname('institution_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        with aGrid.Columns.ColumnByFieldname('country_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('state_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('municipality_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('institution_id').ReadOnly:= True;
+
+          ColumnByFieldname('country_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('state_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('municipality_name').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbPeople:
       begin
-        with aGrid.Columns.ColumnByFieldname('person_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        with aGrid.Columns.ColumnByFieldName('gender') do
-        begin
-          PickList.AddCommaText(rsGenderList);
-        end;
-        with aGrid.Columns.ColumnByFieldName('title_treatment') do
-        begin
-          PickList.AddCommaText(rsTreatmentList);
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('institution_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('institution_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('country_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('country_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('state_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('state_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('municipality_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('municipality_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('birth_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('death_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('person_id').ReadOnly:= True;
+
+          ColumnByFieldName('gender').PickList.AddCommaText(rsGenderList);
+          ColumnByFieldName('title_treatment').PickList.AddCommaText(rsTreatmentList);
+
+          if DataSource.DataSet.FieldByName('institution_name').Visible then
+            ColumnByFieldname('institution_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('country_name').Visible then
+            ColumnByFieldname('country_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('state_name').Visible then
+            ColumnByFieldname('state_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('municipality_name').Visible then
+            ColumnByFieldname('municipality_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('birth_date').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('death_date').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbProjects:
       begin
-        with aGrid.Columns.ColumnByFieldname('project_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        with aGrid.Columns.ColumnByFieldName('start_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('end_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('project_id').ReadOnly:= True;
+
+          ColumnByFieldName('start_date').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('end_date').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbPermits:
       begin
-        with aGrid.Columns.ColumnByFieldname('permit_id') do
+        with aGrid.Columns do
         begin
-          ReadOnly:= True;
-        end;
-        with aGrid.Columns.ColumnByFieldName('project_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('dispatch_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('expire_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('permit_id').ReadOnly:= True;
+
+          ColumnByFieldName('project_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('dispatch_date').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('expire_date').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbGazetteer:
       begin
-        with aGrid.Columns.ColumnByFieldname('site_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        with aGrid.Columns.ColumnByFieldName('site_rank') do
-        begin
-          PickList.Add(rsCaptionCountry);
-          PickList.Add(rsCaptionState);
-          PickList.Add(rsCaptionRegion);
-          PickList.Add(rsCaptionMunicipality);
-          PickList.Add(rsCaptionDistrict);
-          PickList.Add(rsCaptionLocality);
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('parent_site_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('parent_site_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('longitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('latitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('site_id').ReadOnly:= True;
+
+          ColumnByFieldName('site_rank').PickList.Add(rsCaptionCountry);
+          ColumnByFieldName('site_rank').PickList.Add(rsCaptionState);
+          ColumnByFieldName('site_rank').PickList.Add(rsCaptionRegion);
+          ColumnByFieldName('site_rank').PickList.Add(rsCaptionMunicipality);
+          ColumnByFieldName('site_rank').PickList.Add(rsCaptionDistrict);
+          ColumnByFieldName('site_rank').PickList.Add(rsCaptionLocality);
+
+          if DataSource.DataSet.FieldByName('parent_site_name').Visible then
+            ColumnByFieldname('parent_site_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbNetStations:
       begin
-        with aGrid.Columns.ColumnByFieldname('net_station_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('locality_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('locality_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('longitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('latitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('net_station_id').ReadOnly:= True;
+
+          if DataSource.DataSet.FieldByName('locality_name').Visible then
+            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbPermanentNets:
       begin
-        with aGrid.Columns.ColumnByFieldname('permanent_net_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        with aGrid.Columns.ColumnByFieldname('longitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('latitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('permanent_net_id').ReadOnly:= True;
+
+          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbTaxonRanks:
       begin
-        with aGrid.Columns.ColumnByFieldname('rank_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
+          ColumnByFieldname('rank_id').ReadOnly:= True;
         end;
       end;
     tbBotanicTaxa:
       begin
-        with aGrid.Columns.ColumnByFieldname('taxon_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        with aGrid.Columns.ColumnByFieldname('parent_taxon_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('valid_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('taxon_id').ReadOnly:= True;
+
+          ColumnByFieldname('parent_taxon_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('valid_name').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbZooTaxa:
@@ -4563,561 +4492,332 @@ begin
       end;
     tbBands:
       begin
-        with aGrid.Columns.ColumnByFieldname('band_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        with aGrid.Columns.ColumnByFieldName('band_size') do
-        begin
-          PickList.AddCommaText('A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z');
-        end;
-        with aGrid.Columns.ColumnByFieldName('band_status') do
-        begin
-          //KeyList.AddCommaText('D,U,R,Q,P');
-          PickList.AddCommaText(rsBandStatusList);
-        end;
-        with aGrid.Columns.ColumnByFieldName('band_source') do
-        begin
-          //KeyList.AddCommaText('A,T,L,D,F');
-          PickList.Add(rsBandAcquiredFromSupplier);
-          PickList.Add(rsBandTransferBetweenBanders);
-          PickList.Add(rsBandLivingBirdBandedByOthers);
-          PickList.Add(rsBandDeadBirdBandedByOthers);
-          PickList.Add(rsBandFoundLoose);
-        end;
-        with aGrid.Columns.ColumnByFieldName('band_type') do
-        begin
-          //KeyList.AddCommaText('A,F,T,B,C,V');
-          PickList.AddCommaText(rsBandTypeList);
-        end;
-        with aGrid.Columns.ColumnByFieldName('supplier_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('carrier_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('project_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('band_id').ReadOnly:= True;
+
+          ColumnByFieldName('band_size').PickList.AddCommaText('A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z');
+          ColumnByFieldName('band_status').PickList.AddCommaText(rsBandStatusList);
+          ColumnByFieldName('band_source').PickList.Add(rsBandAcquiredFromSupplier);
+          ColumnByFieldName('band_source').PickList.Add(rsBandTransferBetweenBanders);
+          ColumnByFieldName('band_source').PickList.Add(rsBandLivingBirdBandedByOthers);
+          ColumnByFieldName('band_source').PickList.Add(rsBandDeadBirdBandedByOthers);
+          ColumnByFieldName('band_source').PickList.Add(rsBandFoundLoose);
+          ColumnByFieldName('band_type').PickList.AddCommaText(rsBandTypeList);
+
+          ColumnByFieldName('supplier_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('carrier_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('project_name').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbIndividuals:
       begin
-        if aGrid.DataSource.DataSet.FieldByName('individual_id').Visible then
-        with aGrid.Columns.ColumnByFieldname('individual_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('taxon_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('taxon_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('band_full_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('band_full_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('double_band_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('double_band_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('removed_band_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('removed_band_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('individual_sex').Visible then
-        with aGrid.Columns.ColumnByFieldName('individual_sex') do
-        begin
-          PickList.Add(rsSexUnknown);
-          PickList.Add(rsSexMale);
-          PickList.Add(rsSexFemale);
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('individual_age').Visible then
-        with aGrid.Columns.ColumnByFieldName('individual_age') do
-        begin
-          PickList.Add(rsAgeUnknown);
-          PickList.Add(rsAgeAdult);
-          PickList.Add(rsAgeImmature);
-          PickList.Add(rsAgeFledgling);
-          PickList.Add(rsAgeNestling);
-          PickList.Add(rsAgeFirstYear);
-          PickList.Add(rsAgeSecondYear);
-          PickList.Add(rsAgeThirdYear);
-          PickList.Add(rsAgeFourthYear);
-          PickList.Add(rsAgeFifthYear);
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('banding_date').Visible then
-        with aGrid.Columns.ColumnByFieldName('banding_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('band_change_date').Visible then
-        with aGrid.Columns.ColumnByFieldName('band_change_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('nest_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('nest_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('father_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('father_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('mother_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('mother_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('right_leg_below').Visible then
-        with aGrid.Columns.ColumnByFieldName('right_leg_below') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('left_leg_below').Visible then
-        with aGrid.Columns.ColumnByFieldName('left_leg_below') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('right_leg_above').Visible then
-        with aGrid.Columns.ColumnByFieldName('right_leg_above') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('left_leg_above').Visible then
-        with aGrid.Columns.ColumnByFieldName('left_leg_above') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('individual_id').Visible then
+            ColumnByFieldname('individual_id').ReadOnly:= True;
+
+          if DataSource.DataSet.FieldByName('taxon_name').Visible then
+            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('band_full_name').Visible then
+            ColumnByFieldName('band_full_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('double_band_name').Visible then
+            ColumnByFieldName('double_band_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('removed_band_name').Visible then
+            ColumnByFieldName('removed_band_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('banding_date').Visible then
+            ColumnByFieldName('banding_date').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('band_change_date').Visible then
+            ColumnByFieldName('band_change_date').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('nest_name').Visible then
+            ColumnByFieldName('nest_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('father_name').Visible then
+            ColumnByFieldName('father_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('mother_name').Visible then
+            ColumnByFieldName('mother_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('right_leg_below').Visible then
+            ColumnByFieldName('right_leg_below').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('left_leg_below').Visible then
+            ColumnByFieldName('left_leg_below').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('right_leg_above').Visible then
+            ColumnByFieldName('right_leg_above').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('left_leg_above').Visible then
+            ColumnByFieldName('left_leg_above').ButtonStyle := cbsEllipsis;
+
+          if DataSource.DataSet.FieldByName('individual_sex').Visible then
+          begin
+            ColumnByFieldName('individual_sex').PickList.Add(rsSexUnknown);
+            ColumnByFieldName('individual_sex').PickList.Add(rsSexMale);
+            ColumnByFieldName('individual_sex').PickList.Add(rsSexFemale);
+          end;
+          if DataSource.DataSet.FieldByName('individual_age').Visible then
+          begin
+            ColumnByFieldName('individual_age').PickList.Add(rsAgeUnknown);
+            ColumnByFieldName('individual_age').PickList.Add(rsAgeAdult);
+            ColumnByFieldName('individual_age').PickList.Add(rsAgeImmature);
+            ColumnByFieldName('individual_age').PickList.Add(rsAgeFledgling);
+            ColumnByFieldName('individual_age').PickList.Add(rsAgeNestling);
+            ColumnByFieldName('individual_age').PickList.Add(rsAgeFirstYear);
+            ColumnByFieldName('individual_age').PickList.Add(rsAgeSecondYear);
+            ColumnByFieldName('individual_age').PickList.Add(rsAgeThirdYear);
+            ColumnByFieldName('individual_age').PickList.Add(rsAgeFourthYear);
+            ColumnByFieldName('individual_age').PickList.Add(rsAgeFifthYear);
+          end;
         end;
       end;
     tbCaptures:
       begin
-        if aGrid.DataSource.DataSet.FieldByName('capture_id').Visible then
-        with aGrid.Columns.ColumnByFieldname('capture_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('capture_date').Visible then
-        with aGrid.Columns.ColumnByFieldName('capture_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('taxon_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('taxon_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('capture_type').Visible then
-        with aGrid.Columns.ColumnByFieldName('capture_type') do
-        begin
-          PickList.AddCommaText(rsCaptureTypeList);
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('right_leg_below').Visible then
-        with aGrid.Columns.ColumnByFieldName('right_leg_below') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('left_leg_below').Visible then
-        with aGrid.Columns.ColumnByFieldName('left_leg_below') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('right_leg_above').Visible then
-        with aGrid.Columns.ColumnByFieldName('right_leg_above') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('left_leg_above').Visible then
-        with aGrid.Columns.ColumnByFieldName('left_leg_above') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('cloacal_protuberance').Visible then
-        with aGrid.Columns.ColumnByFieldName('cloacal_protuberance') do
-        begin
-          PickList.AddCommaText('U,N,S,M,L');
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('brood_patch').Visible then
-        with aGrid.Columns.ColumnByFieldName('brood_patch') do
-        begin
-          PickList.AddCommaText('F,N,V,W,O');
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('fat').Visible then
-        with aGrid.Columns.ColumnByFieldName('fat') do
-        begin
-          PickList.AddCommaText('N,T,L,H,F,B,G,V');
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('body_molt').Visible then
-        with aGrid.Columns.ColumnByFieldName('body_molt') do
-        begin
-          PickList.AddCommaText('N,T,S,H,G,A,F');
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('flight_feathers_molt').Visible then
-        with aGrid.Columns.ColumnByFieldName('flight_feathers_molt') do
-        begin
-          PickList.AddCommaText('N,S,A');
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('flight_feathers_wear').Visible then
-        with aGrid.Columns.ColumnByFieldName('flight_feathers_wear') do
-        begin
-          PickList.AddCommaText('N,S,L,M,H,X');
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('skull_ossification').Visible then
-        with aGrid.Columns.ColumnByFieldName('skull_ossification') do
-        begin
-          PickList.AddCommaText('N,T,L,H,G,A,F');
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('molt_limits').Visible then
-        with aGrid.Columns.ColumnByFieldName('molt_limits') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('cycle_code').Visible then
-        with aGrid.Columns.ColumnByFieldName('cycle_code') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('subject_age').Visible then
-        with aGrid.Columns.ColumnByFieldName('subject_age') do
-        begin
-          PickList.Add(rsAgeUnknown);
-          PickList.Add(rsAgeAdult);
-          PickList.Add(rsAgeImmature);
-          PickList.Add(rsAgeFledgling);
-          PickList.Add(rsAgeNestling);
-          PickList.Add(rsAgeFirstYear);
-          PickList.Add(rsAgeSecondYear);
-          PickList.Add(rsAgeThirdYear);
-          PickList.Add(rsAgeFourthYear);
-          PickList.Add(rsAgeFifthYear);
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('how_aged').Visible then
-        with aGrid.Columns.ColumnByFieldName('how_aged') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('subject_sex').Visible then
-        with aGrid.Columns.ColumnByFieldName('subject_sex') do
-        begin
-          PickList.Add(rsSexMale);
-          PickList.Add(rsSexFemale);
-          PickList.Add(rsSexUnknown);
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('how_sexed').Visible then
-        with aGrid.Columns.ColumnByFieldName('how_sexed') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('subject_status').Visible then
-        with aGrid.Columns.ColumnByFieldName('subject_status') do
-        begin
-          PickList.Add(rsStatusNormal);
-          PickList.Add(rsStatusInjured);
-          PickList.Add(rsStatusWingSprain);
-          PickList.Add(rsStatusStressed);
-          PickList.Add(rsStatusDead);
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('locality_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('locality_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('longitude').Visible then
-        with aGrid.Columns.ColumnByFieldname('longitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('latitude').Visible then
-        with aGrid.Columns.ColumnByFieldname('latitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('capture_id').Visible then
+            ColumnByFieldname('capture_id').ReadOnly:= True;
+
+          if DataSource.DataSet.FieldByName('capture_date').Visible then
+            ColumnByFieldName('capture_date').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('taxon_name').Visible then
+            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('capture_type').Visible then
+            ColumnByFieldName('capture_type').PickList.AddCommaText(rsCaptureTypeList);
+          if DataSource.DataSet.FieldByName('right_leg_below').Visible then
+            ColumnByFieldName('right_leg_below').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('left_leg_below').Visible then
+            ColumnByFieldName('left_leg_below').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('right_leg_above').Visible then
+            ColumnByFieldName('right_leg_above').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('left_leg_above').Visible then
+            ColumnByFieldName('left_leg_above').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('locality_name').Visible then
+            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('longitude').Visible then
+            ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('latitude').Visible then
+            ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('molt_limits').Visible then
+            ColumnByFieldName('molt_limits').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('cycle_code').Visible then
+            ColumnByFieldName('cycle_code').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('how_aged').Visible then
+            ColumnByFieldName('how_aged').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('how_sexed').Visible then
+            ColumnByFieldName('how_sexed').ButtonStyle := cbsEllipsis;
+
+          if DataSource.DataSet.FieldByName('cloacal_protuberance').Visible then
+            ColumnByFieldName('cloacal_protuberance').PickList.AddCommaText('U,N,S,M,L');
+          if DataSource.DataSet.FieldByName('brood_patch').Visible then
+            ColumnByFieldName('brood_patch').PickList.AddCommaText('F,N,V,W,O');
+          if DataSource.DataSet.FieldByName('fat').Visible then
+            ColumnByFieldName('fat').PickList.AddCommaText('N,T,L,H,F,B,G,V');
+          if DataSource.DataSet.FieldByName('body_molt').Visible then
+            ColumnByFieldName('body_molt').PickList.AddCommaText('N,T,S,H,G,A,F');
+          if DataSource.DataSet.FieldByName('flight_feathers_molt').Visible then
+            ColumnByFieldName('flight_feathers_molt').PickList.AddCommaText('N,S,A');
+          if DataSource.DataSet.FieldByName('flight_feathers_wear').Visible then
+            ColumnByFieldName('flight_feathers_wear').PickList.AddCommaText('N,S,L,M,H,X');
+          if DataSource.DataSet.FieldByName('skull_ossification').Visible then
+            ColumnByFieldName('skull_ossification').PickList.AddCommaText('N,T,L,H,G,A,F');
+          if DataSource.DataSet.FieldByName('subject_age').Visible then
+          begin
+            ColumnByFieldName('subject_age').PickList.Add(rsAgeUnknown);
+            ColumnByFieldName('subject_age').PickList.Add(rsAgeAdult);
+            ColumnByFieldName('subject_age').PickList.Add(rsAgeImmature);
+            ColumnByFieldName('subject_age').PickList.Add(rsAgeFledgling);
+            ColumnByFieldName('subject_age').PickList.Add(rsAgeNestling);
+            ColumnByFieldName('subject_age').PickList.Add(rsAgeFirstYear);
+            ColumnByFieldName('subject_age').PickList.Add(rsAgeSecondYear);
+            ColumnByFieldName('subject_age').PickList.Add(rsAgeThirdYear);
+            ColumnByFieldName('subject_age').PickList.Add(rsAgeFourthYear);
+            ColumnByFieldName('subject_age').PickList.Add(rsAgeFifthYear);
+          end;
+          if DataSource.DataSet.FieldByName('subject_sex').Visible then
+          begin
+            ColumnByFieldName('subject_sex').PickList.Add(rsSexMale);
+            ColumnByFieldName('subject_sex').PickList.Add(rsSexFemale);
+            ColumnByFieldName('subject_sex').PickList.Add(rsSexUnknown);
+          end;
+          if DataSource.DataSet.FieldByName('subject_status').Visible then
+          begin
+            ColumnByFieldName('subject_status').PickList.Add(rsStatusNormal);
+            ColumnByFieldName('subject_status').PickList.Add(rsStatusInjured);
+            ColumnByFieldName('subject_status').PickList.Add(rsStatusWingSprain);
+            ColumnByFieldName('subject_status').PickList.Add(rsStatusStressed);
+            ColumnByFieldName('subject_status').PickList.Add(rsStatusDead);
+          end;
         end;
       end;
     tbNests:
       begin
-        if aGrid.DataSource.DataSet.FieldByName('nest_id').Visible then
-        with aGrid.Columns.ColumnByFieldname('nest_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('taxon_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('taxon_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('found_date').Visible then
-        with aGrid.Columns.ColumnByFieldName('found_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('last_date').Visible then
-        with aGrid.Columns.ColumnByFieldName('last_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('locality_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('locality_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('longitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('latitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('nest_id').Visible then
+            ColumnByFieldname('nest_id').ReadOnly:= True;
+
+          if DataSource.DataSet.FieldByName('taxon_name').Visible then
+            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('found_date').Visible then
+            ColumnByFieldName('found_date').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('last_date').Visible then
+            ColumnByFieldName('last_date').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('locality_name').Visible then
+            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbNestOwners:
       begin
-        //with aGrid.Columns.ColumnByFieldname('nest_owner_id') do
-        //begin
-        //  ReadOnly:= True;
-        //end;
-        with aGrid.Columns.ColumnByFieldName('role') do
+        with aGrid, Columns do
         begin
-          PickList.CommaText := rsNestOwnersRoleList;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('individual_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('individual_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          //ColumnByFieldname('nest_owner_id').ReadOnly:= True;
+
+          ColumnByFieldName('role').PickList.CommaText := rsNestOwnersRoleList;
+
+          if DataSource.DataSet.FieldByName('individual_name').Visible then
+            ColumnByFieldName('individual_name').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbNestRevisions:
       begin
-        with aGrid.Columns.ColumnByFieldname('nest_revision_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('revision_date').Visible then
-        with aGrid.Columns.ColumnByFieldName('revision_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('nest_revision_id').ReadOnly:= True;
+
+          if DataSource.DataSet.FieldByName('revision_date').Visible then
+            ColumnByFieldName('revision_date').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbEggs:
       begin
-        aGrid.Columns.ColumnByFieldname('egg_id').ReadOnly:= True;
-        if aGrid.DataSource.DataSet.FieldByName('taxon_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('taxon_name') do
+        with aGrid, Columns do
         begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('measure_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('individual_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('researcher_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('egg_shape') do
-        begin
-          PickList.Add(rsEggSpherical);
-          PickList.Add(rsEggElliptical);
-          PickList.Add(rsEggOval);
-          PickList.Add(rsEggPyriform);
-          PickList.Add(rsEggConical);
-          PickList.Add(rsEggBiconical);
-          PickList.Add(rsEggCylindrical);
-          PickList.Add(rsEggLongitudinal);
-          PickList.Add(rsEggUnknown);
-        end;
-        with aGrid.Columns.ColumnByFieldName('eggshell_texture') do
-        begin
-          PickList.Add(rsEggChalky);
-          PickList.Add(rsEggShiny);
-          PickList.Add(rsEggGlossy);
-          PickList.Add(rsEggPitted);
-          PickList.Add(rsEggUnknown);
-        end;
-        with aGrid.Columns.ColumnByFieldName('eggshell_pattern') do
-        begin
-          PickList.Add(rsEggSpots);
-          PickList.Add(rsEggBlotches);
-          PickList.Add(rsEggSquiggles);
-          PickList.Add(rsEggStreaks);
-          PickList.Add(rsEggScrawls);
-          PickList.Add(rsEggSpotsSquiggles);
-          PickList.Add(rsEggBlotchesSquiggles);
-          PickList.Add(rsEggUnknown);
+          ColumnByFieldname('egg_id').ReadOnly:= True;
+
+          if DataSource.DataSet.FieldByName('taxon_name').Visible then
+            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('measure_date').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('individual_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('researcher_name').ButtonStyle := cbsEllipsis;
+
+          ColumnByFieldName('egg_shape').PickList.Add(rsEggSpherical);
+          ColumnByFieldName('egg_shape').PickList.Add(rsEggElliptical);
+          ColumnByFieldName('egg_shape').PickList.Add(rsEggOval);
+          ColumnByFieldName('egg_shape').PickList.Add(rsEggPyriform);
+          ColumnByFieldName('egg_shape').PickList.Add(rsEggConical);
+          ColumnByFieldName('egg_shape').PickList.Add(rsEggBiconical);
+          ColumnByFieldName('egg_shape').PickList.Add(rsEggCylindrical);
+          ColumnByFieldName('egg_shape').PickList.Add(rsEggLongitudinal);
+          ColumnByFieldName('egg_shape').PickList.Add(rsEggUnknown);
+
+          ColumnByFieldName('eggshell_texture').PickList.Add(rsEggChalky);
+          ColumnByFieldName('eggshell_texture').PickList.Add(rsEggShiny);
+          ColumnByFieldName('eggshell_texture').PickList.Add(rsEggGlossy);
+          ColumnByFieldName('eggshell_texture').PickList.Add(rsEggPitted);
+          ColumnByFieldName('eggshell_texture').PickList.Add(rsEggUnknown);
+
+          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggSpots);
+          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggBlotches);
+          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggSquiggles);
+          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggStreaks);
+          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggScrawls);
+          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggSpotsSquiggles);
+          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggBlotchesSquiggles);
+          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggUnknown);
         end;
       end;
     tbMethods:
       begin
-        with aGrid.Columns.ColumnByFieldname('method_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
+          ColumnByFieldname('method_id').ReadOnly:= True;
         end;
       end;
     tbExpeditions:
       begin
-        with aGrid.Columns.ColumnByFieldname('expedition_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('locality_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('locality_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('start_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldName('end_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('expedition_id').ReadOnly:= True;
+
+          if DataSource.DataSet.FieldByName('locality_name').Visible then
+            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('start_date').ButtonStyle := cbsEllipsis;
+          ColumnByFieldName('end_date').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbSurveys:
       begin
-        with aGrid.Columns.ColumnByFieldname('survey_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        with aGrid.Columns.ColumnByFieldName('survey_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('locality_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('locality_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('start_longitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('start_latitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('end_longitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('end_latitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('survey_id').ReadOnly:= True;
+
+          ColumnByFieldName('survey_date').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('locality_name').Visible then
+            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('start_longitude').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('start_latitude').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('end_longitude').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('end_latitude').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbWeatherLogs:
       begin
-        //with aGrid.Columns.ColumnByFieldname('weather_id') do
-        //begin
-        //  ReadOnly:= True;
-        //end;
-        with aGrid.Columns.ColumnByFieldname('sample_moment') do
+        with aGrid, Columns do
         begin
-          PickList.Add(rsMomentStart);
-          PickList.Add(rsMomentMiddle);
-          PickList.Add(rsMomentEnd);
-        end;
-        with aGrid.Columns.ColumnByFieldname('precipitation') do
-        begin
-          PickList.Add(rsPrecipitationNone);
-          PickList.Add(rsPrecipitationFog);
-          PickList.Add(rsPrecipitationMist);
-          PickList.Add(rsPrecipitationDrizzle);
-          PickList.Add(rsPrecipitationRain);
+          //  ColumnByFieldname('weather_id').ReadOnly:= True;
+
+          ColumnByFieldname('sample_moment').PickList.Add(rsMomentStart);
+          ColumnByFieldname('sample_moment').PickList.Add(rsMomentMiddle);
+          ColumnByFieldname('sample_moment').PickList.Add(rsMomentEnd);
+
+          ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationNone);
+          ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationFog);
+          ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationMist);
+          ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationDrizzle);
+          ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationRain);
         end;
       end;
     tbSightings:
       begin
-        if aGrid.DataSource.DataSet.FieldByName('sighting_id').Visible then
-        with aGrid.Columns.ColumnByFieldname('sighting_id') do
+        with aGrid, Columns do
         begin
-          ReadOnly:= True;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('survey_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('survey_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('taxon_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('taxon_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('locality_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('locality_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('observer_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('observer_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('individual_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('individual_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('detection_type').Visible then
-        with aGrid.Columns.ColumnByFieldname('detection_type') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('breeding_status').Visible then
-        with aGrid.Columns.ColumnByFieldname('breeding_status') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('sighting_date').Visible then
-        with aGrid.Columns.ColumnByFieldname('sighting_date') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('longitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('latitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('sighting_id').Visible then
+            ColumnByFieldname('sighting_id').ReadOnly:= True;
+
+          if DataSource.DataSet.FieldByName('survey_name').Visible then
+            ColumnByFieldname('survey_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('taxon_name').Visible then
+            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('locality_name').Visible then
+            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('observer_name').Visible then
+            ColumnByFieldname('observer_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('individual_name').Visible then
+            ColumnByFieldname('individual_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('detection_type').Visible then
+            ColumnByFieldname('detection_type').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('breeding_status').Visible then
+            ColumnByFieldname('breeding_status').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('sighting_date').Visible then
+            ColumnByFieldname('sighting_date').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
         end;
       end;
     tbSpecimens:
       begin
-        if aGrid.DataSource.DataSet.FieldByName('specimen_id').Visible then
-        with aGrid.Columns.ColumnByFieldname('specimen_id') do
+        with aGrid, Columns do
         begin
-          //Footer.ValueType := fvtCount;
-          //Footer.Alignment := taCenter;
-          ReadOnly:= True;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('taxon_name').Visible then
-        with aGrid.Columns.ColumnByFieldName('taxon_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        if aGrid.DataSource.DataSet.FieldByName('locality_name').Visible then
-        with aGrid.Columns.ColumnByFieldname('locality_name') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('longitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
-        end;
-        with aGrid.Columns.ColumnByFieldname('latitude') do
-        begin
-          ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('specimen_id').Visible then
+          begin
+            ColumnByFieldname('specimen_id').ReadOnly:= True;
+            //ColumnByFieldname('specimen_id').Footer.ValueType := fvtCount;
+            //ColumnByFieldname('specimen_id').Footer.Alignment := taCenter;
+          end;
+
+          if DataSource.DataSet.FieldByName('taxon_name').Visible then
+            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+          if DataSource.DataSet.FieldByName('locality_name').Visible then
+            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
         end;
       end;
   end;
@@ -7479,137 +7179,112 @@ end;
 
 procedure TfrmCustomGrid.DBGEditButtonClick(Sender: TObject);
 begin
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'taxon_name' then
-    FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], (Sender as TDBGrid).InplaceEditor,
-      (Sender as TDBGrid).DataSource.DataSet, 'taxon_id', 'taxon_name', True);
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'parent_taxon_name' then
-    FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], (Sender as TDBGrid).InplaceEditor,
-      (Sender as TDBGrid).DataSource.DataSet, 'parent_taxon_id', 'parent_taxon_name', True);
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'valid_name' then
-    FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], (Sender as TDBGrid).InplaceEditor,
-      (Sender as TDBGrid).DataSource.DataSet, 'valid_id', 'valid_name', True);
+  with (Sender as TDBGrid), SelectedColumn do
+  begin
+    if FieldName = 'taxon_name' then
+      FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+        DataSource.DataSet, 'taxon_id', 'taxon_name', True);
+    if FieldName = 'parent_taxon_name' then
+      FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+        DataSource.DataSet, 'parent_taxon_id', 'parent_taxon_name', True);
+    if FieldName = 'valid_name' then
+      FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+        DataSource.DataSet, 'valid_id', 'valid_name', True);
 
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'country_name' then
-    FindSiteDlg([gfCountries], (Sender as TDBGrid).InplaceEditor,
-      (Sender as TDBGrid).DataSource.DataSet, 'country_id', 'country_name');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'state_name' then
-    FindSiteDlg([gfStates], (Sender as TDBGrid).InplaceEditor,
-      (Sender as TDBGrid).DataSource.DataSet, 'state_id', 'state_name');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'municipality_name' then
-    FindSiteDlg([gfCities], (Sender as TDBGrid).InplaceEditor,
-      (Sender as TDBGrid).DataSource.DataSet, 'municipality_id', 'municipality_name');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'locality_name' then
-    FindSiteDlg([gfLocalities], (Sender as TDBGrid).InplaceEditor,
-      (Sender as TDBGrid).DataSource.DataSet, 'locality_id', 'locality_name');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'parent_site_name' then
-    FindSiteDlg([gfLocalities], (Sender as TDBGrid).InplaceEditor,
-      (Sender as TDBGrid).DataSource.DataSet, 'parent_site_id', 'parent_site_name');
+    if FieldName = 'country_name' then
+      FindSiteDlg([gfCountries], InplaceEditor, DataSource.DataSet, 'country_id', 'country_name');
+    if FieldName = 'state_name' then
+      FindSiteDlg([gfStates], InplaceEditor, DataSource.DataSet, 'state_id', 'state_name');
+    if FieldName = 'municipality_name' then
+      FindSiteDlg([gfCities], InplaceEditor, DataSource.DataSet, 'municipality_id', 'municipality_name');
+    if FieldName = 'locality_name' then
+      FindSiteDlg([gfLocalities], InplaceEditor, DataSource.DataSet, 'locality_id', 'locality_name');
+    if FieldName = 'parent_site_name' then
+      FindSiteDlg([gfLocalities], InplaceEditor, DataSource.DataSet, 'parent_site_id', 'parent_site_name');
 
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'institution_name' then
-    FindDlg(tbInstitutions, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'institution_id', 'institution_name');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'supplier_name' then
-    FindDlg(tbInstitutions, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'supplier_id', 'supplier_name');
+    if FieldName = 'institution_name' then
+      FindDlg(tbInstitutions, InplaceEditor, DataSource.DataSet, 'institution_id', 'institution_name');
+    if FieldName = 'supplier_name' then
+      FindDlg(tbInstitutions, InplaceEditor, DataSource.DataSet, 'supplier_id', 'supplier_name');
 
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'survey_name' then
-    FindDlg(tbSurveys, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'survey_id', 'survey_name');
+    if FieldName = 'survey_name' then
+      FindDlg(tbSurveys, InplaceEditor, DataSource.DataSet, 'survey_id', 'survey_name');
 
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'observer_name' then
-    FindDlg(tbPeople, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'observer_id', 'observer_name');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'carrier_name' then
-    FindDlg(tbPeople, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'carrier_id', 'carrier_name');
+    if FieldName = 'observer_name' then
+      FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_id', 'observer_name');
+    if FieldName = 'carrier_name' then
+      FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'carrier_id', 'carrier_name');
 
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'project_name' then
-    FindDlg(tbProjects, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'project_id', 'project_name');
+    if FieldName = 'project_name' then
+      FindDlg(tbProjects, InplaceEditor, DataSource.DataSet, 'project_id', 'project_name');
 
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'individual_name' then
-    FindDlg(tbIndividuals, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'individual_id', 'individual_name');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'father_name' then
-    FindDlg(tbIndividuals, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'father_id', 'father_name');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'mother_name' then
-    FindDlg(tbIndividuals, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'mother_id', 'mother_name');
+    if FieldName = 'individual_name' then
+      FindDlg(tbIndividuals, InplaceEditor, DataSource.DataSet, 'individual_id', 'individual_name');
+    if FieldName = 'father_name' then
+      FindDlg(tbIndividuals, InplaceEditor, DataSource.DataSet, 'father_id', 'father_name');
+    if FieldName = 'mother_name' then
+      FindDlg(tbIndividuals, InplaceEditor, DataSource.DataSet, 'mother_id', 'mother_name');
 
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'nest_name' then
-    FindDlg(tbNests, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'nest_id', 'nest_name');
+    if FieldName = 'nest_name' then
+      FindDlg(tbNests, InplaceEditor, DataSource.DataSet, 'nest_id', 'nest_name');
 
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'band_full_name' then
-    FindDlg(tbBands, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'band_id', 'band_full_name');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'double_band_name' then
-    FindDlg(tbBands, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'double_band_id', 'double_band_name');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'removed_band_name' then
-    FindDlg(tbBands, (Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'removed_band_id', 'removed_band_name');
+    if FieldName = 'band_full_name' then
+      FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_full_name');
+    if FieldName = 'double_band_name' then
+      FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'double_band_id', 'double_band_name');
+    if FieldName = 'removed_band_name' then
+      FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'removed_band_id', 'removed_band_name');
 
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'detection_type' then
-    DetectionDialog((Sender as TDBGrid).DataSource.DataSet.FieldByName('detection_type').AsString,
-      (Sender as TDBGrid).DataSource.DataSet, 'detection_type');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'breeding_status' then
-    BreedingDialog((Sender as TDBGrid).DataSource.DataSet.FieldByName('breeding_status').AsString,
-      (Sender as TDBGrid).DataSource.DataSet, 'breeding_status');
+    if FieldName = 'detection_type' then
+      DetectionDialog(DataSource.DataSet.FieldByName('detection_type').AsString,
+        DataSource.DataSet, 'detection_type');
+    if FieldName = 'breeding_status' then
+      BreedingDialog(DataSource.DataSet.FieldByName('breeding_status').AsString,
+        DataSource.DataSet, 'breeding_status');
 
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'molt_limits' then
-    MoltLimitsDialog((Sender as TDBGrid).DataSource.DataSet.FieldByName('molt_limits').AsString,
-      (Sender as TDBGrid).DataSource.DataSet, 'molt_limits');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'cycle_code' then
-    MoltCycleDialog((Sender as TDBGrid).DataSource.DataSet.FieldByName('cycle_code').AsString,
-      (Sender as TDBGrid).DataSource.DataSet, 'cycle_code');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'how_aged' then
-    HowAgedDialog((Sender as TDBGrid).DataSource.DataSet.FieldByName('how_aged').AsString,
-      (Sender as TDBGrid).DataSource.DataSet, 'how_aged');
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'how_sexed' then
-    HowAgedDialog((Sender as TDBGrid).DataSource.DataSet.FieldByName('how_sexed').AsString,
-      (Sender as TDBGrid).DataSource.DataSet, 'how_sexed');
+    if FieldName = 'molt_limits' then
+      MoltLimitsDialog(DataSource.DataSet.FieldByName('molt_limits').AsString, DataSource.DataSet, 'molt_limits');
+    if FieldName = 'cycle_code' then
+      MoltCycleDialog(DataSource.DataSet.FieldByName('cycle_code').AsString, DataSource.DataSet, 'cycle_code');
+    if FieldName = 'how_aged' then
+      HowAgedDialog(DataSource.DataSet.FieldByName('how_aged').AsString,  DataSource.DataSet, 'how_aged');
+    if FieldName = 'how_sexed' then
+      HowAgedDialog(DataSource.DataSet.FieldByName('how_sexed').AsString, DataSource.DataSet, 'how_sexed');
 
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'right_leg_below' then
-    EditColorBands((Sender as TDBGrid).DataSource.DataSet, 'right_leg_below', (Sender as TDBGrid).InplaceEditor);
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'left_leg_below' then
-    EditColorBands((Sender as TDBGrid).DataSource.DataSet, 'left_leg_below', (Sender as TDBGrid).InplaceEditor);
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'right_leg_above' then
-    EditColorBands((Sender as TDBGrid).DataSource.DataSet, 'right_leg_above', (Sender as TDBGrid).InplaceEditor);
-  if (Sender as TDBGrid).SelectedColumn.FieldName = 'left_leg_above' then
-    EditColorBands((Sender as TDBGrid).DataSource.DataSet, 'left_leg_above', (Sender as TDBGrid).InplaceEditor);
+    if FieldName = 'right_leg_below' then
+      EditColorBands(DataSource.DataSet, 'right_leg_below', InplaceEditor);
+    if FieldName = 'left_leg_below' then
+      EditColorBands(DataSource.DataSet, 'left_leg_below', InplaceEditor);
+    if FieldName = 'right_leg_above' then
+      EditColorBands(DataSource.DataSet, 'right_leg_above', InplaceEditor);
+    if FieldName = 'left_leg_above' then
+      EditColorBands(DataSource.DataSet, 'left_leg_above', InplaceEditor);
 
-  if ((Sender as TDBGrid).SelectedColumn.FieldName = 'sighting_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'measure_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'start_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'end_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'survey_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'birth_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'death_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'banding_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'band_change_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'found_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'last_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'revision_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'dispatch_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'expire_date') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'capture_date') then
-    CalendarDlg((Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      (Sender as TDBGrid).SelectedColumn.FieldName);
+    if (FieldName = 'sighting_date') or
+      (FieldName = 'measure_date') or
+      (FieldName = 'start_date') or
+      (FieldName = 'end_date') or
+      (FieldName = 'survey_date') or
+      (FieldName = 'birth_date') or
+      (FieldName = 'death_date') or
+      (FieldName = 'banding_date') or
+      (FieldName = 'band_change_date') or
+      (FieldName = 'found_date') or
+      (FieldName = 'last_date') or
+      (FieldName = 'revision_date') or
+      (FieldName = 'dispatch_date') or
+      (FieldName = 'expire_date') or
+      (FieldName = 'capture_date') then
+      CalendarDlg(InplaceEditor, DataSource.DataSet, FieldName);
 
-  if ((Sender as TDBGrid).SelectedColumn.FieldName = 'longitude') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'latitude') then
-    GeoEditorDlg((Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'longitude', 'latitude');
-  if ((Sender as TDBGrid).SelectedColumn.FieldName = 'start_longitude') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'start_latitude') then
-    GeoEditorDlg((Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'start_longitude', 'start_latitude');
-  if ((Sender as TDBGrid).SelectedColumn.FieldName = 'end_longitude') or
-    ((Sender as TDBGrid).SelectedColumn.FieldName = 'end_latitude') then
-    GeoEditorDlg((Sender as TDBGrid).InplaceEditor, (Sender as TDBGrid).DataSource.DataSet,
-      'end_longitude', 'end_latitude');
+    if (FieldName = 'longitude') or (FieldName = 'latitude') then
+      GeoEditorDlg(InplaceEditor, DataSource.DataSet, 'longitude', 'latitude');
+    if (FieldName = 'start_longitude') or (FieldName = 'start_latitude') then
+      GeoEditorDlg(InplaceEditor, DataSource.DataSet, 'start_longitude', 'start_latitude');
+    if (FieldName = 'end_longitude') or (FieldName = 'end_latitude') then
+      GeoEditorDlg(InplaceEditor, DataSource.DataSet, 'end_longitude', 'end_latitude');
+
+  end;
 
 end;
 

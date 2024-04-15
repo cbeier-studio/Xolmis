@@ -3760,18 +3760,8 @@ msgstr ""
 msgid "Select at least one file to start importing."
 msgstr ""
 
-#: tdlgimportcaptures.lblsubtitleimportfinished.caption
-msgctxt "tdlgimportcaptures.lblsubtitleimportfinished.caption"
-msgid "The selected file(s) were sucessfully imported."
-msgstr ""
-
 #: tdlgimportcaptures.lbltitleimportfiles.caption
 msgid "Files to import"
-msgstr ""
-
-#: tdlgimportcaptures.lbltitleimportfinished.caption
-msgctxt "tdlgimportcaptures.lbltitleimportfinished.caption"
-msgid "Finished importing!"
 msgstr ""
 
 #: tdlgimportcaptures.sbcancel.caption
