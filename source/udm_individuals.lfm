@@ -1,10 +1,9 @@
 object DMI: TDMI
   OldCreateOrder = False
-  Height = 529
-  HorizontalOffset = 440
-  VerticalOffset = 41
-  Width = 558
-  PPI = 120
+  Height = 423
+  HorizontalOffset = 352
+  VerticalOffset = 33
+  Width = 446
   object qCaptures: TSQLQuery
     PacketRecords = -1
     FieldDefs = <    
@@ -576,8 +575,8 @@ object DMI: TDMI
     Macros = <>
     DataSource = DMG.dsIndividuals
     Sequence.FieldName = 'capture_id'
-    Left = 50
-    Top = 40
+    Left = 40
+    Top = 32
     object qCapturesmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -2078,8 +2077,8 @@ object DMI: TDMI
     Macros = <>
     DataSource = DMG.dsIndividuals
     Sequence.FieldName = 'molt_id'
-    Left = 50
-    Top = 128
+    Left = 40
+    Top = 102
     object qMoltsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -2927,13 +2926,13 @@ object DMI: TDMI
   end
   object dsCaptures: TDataSource
     DataSet = qCaptures
-    Left = 180
-    Top = 40
+    Left = 144
+    Top = 32
   end
   object dsMolts: TDataSource
     DataSet = qMolts
-    Left = 180
-    Top = 128
+    Left = 144
+    Top = 102
   end
   object qSightings: TSQLQuery
     PacketRecords = -1
@@ -3276,8 +3275,8 @@ object DMI: TDMI
     Macros = <>
     DataSource = DMG.dsIndividuals
     Sequence.FieldName = 'sighting_id'
-    Left = 50
-    Top = 220
+    Left = 40
+    Top = 176
     object qSightingsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -3902,8 +3901,8 @@ object DMI: TDMI
   end
   object dsSightings: TDataSource
     DataSet = qSightings
-    Left = 180
-    Top = 220
+    Left = 144
+    Top = 176
   end
   object qNests: TSQLQuery
     PacketRecords = -1
@@ -4243,8 +4242,8 @@ object DMI: TDMI
       end>
     Macros = <>
     DataSource = DMG.dsIndividuals
-    Left = 50
-    Top = 320
+    Left = 40
+    Top = 256
     object qNestsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -4851,8 +4850,8 @@ object DMI: TDMI
   end
   object dsNests: TDataSource
     DataSet = qNests
-    Left = 180
-    Top = 320
+    Left = 144
+    Top = 256
   end
   object qSpecimens: TSQLQuery
     PacketRecords = -1
@@ -5072,8 +5071,8 @@ object DMI: TDMI
       end>
     Macros = <>
     DataSource = DMG.dsIndividuals
-    Left = 48
-    Top = 411
+    Left = 38
+    Top = 329
     object qSpecimensmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -5292,24 +5291,12 @@ object DMI: TDMI
       Required = False
       Size = 100
     end
-    object qSpecimenscollectors: TStringField
-      DisplayLabel = 'Collectors'
-      DisplayWidth = 40
-      FieldKind = fkData
-      FieldName = 'collectors'
-      Index = 19
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 120
-    end
     object qSpecimensnotes: TMemoField
       DisplayLabel = 'Notes'
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 20
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5322,7 +5309,7 @@ object DMI: TDMI
       DisplayLabel = 'Specimen (Id)'
       FieldKind = fkData
       FieldName = 'specimen_id'
-      Index = 21
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -5332,7 +5319,7 @@ object DMI: TDMI
       DisplayLabel = 'Full name'
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 22
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5344,7 +5331,7 @@ object DMI: TDMI
       DisplayLabel = 'Order (Id)'
       FieldKind = fkData
       FieldName = 'order_id'
-      Index = 23
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5355,7 +5342,7 @@ object DMI: TDMI
       DisplayLabel = 'Family (Id)'
       FieldKind = fkData
       FieldName = 'family_id'
-      Index = 24
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5366,7 +5353,7 @@ object DMI: TDMI
       DisplayLabel = 'Subfamily (Id)'
       FieldKind = fkData
       FieldName = 'subfamily_id'
-      Index = 25
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5377,7 +5364,7 @@ object DMI: TDMI
       DisplayLabel = 'Genus (Id)'
       FieldKind = fkData
       FieldName = 'genus_id'
-      Index = 26
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5388,7 +5375,7 @@ object DMI: TDMI
       DisplayLabel = 'Species (Id)'
       FieldKind = fkData
       FieldName = 'species_id'
-      Index = 27
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5399,7 +5386,7 @@ object DMI: TDMI
       DisplayLabel = 'Country (Id)'
       FieldKind = fkData
       FieldName = 'country_id'
-      Index = 28
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5410,7 +5397,7 @@ object DMI: TDMI
       DisplayLabel = 'State (Id)'
       FieldKind = fkData
       FieldName = 'state_id'
-      Index = 29
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5421,7 +5408,7 @@ object DMI: TDMI
       DisplayLabel = 'Municipality (Id)'
       FieldKind = fkData
       FieldName = 'municipality_id'
-      Index = 30
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5432,7 +5419,7 @@ object DMI: TDMI
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 31
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5443,7 +5430,7 @@ object DMI: TDMI
       DisplayLabel = 'Modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 32
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5455,7 +5442,7 @@ object DMI: TDMI
       DisplayLabel = 'Date of creation'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 33
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5467,7 +5454,7 @@ object DMI: TDMI
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 34
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5479,7 +5466,7 @@ object DMI: TDMI
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 35
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5492,7 +5479,7 @@ object DMI: TDMI
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 36
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5503,8 +5490,8 @@ object DMI: TDMI
   end
   object dsSpecimens: TDataSource
     DataSet = qSpecimens
-    Left = 180
-    Top = 411
+    Left = 144
+    Top = 329
   end
   object qImages: TSQLQuery
     PacketRecords = -1
@@ -5817,8 +5804,8 @@ object DMI: TDMI
       end>
     Macros = <>
     DataSource = DMG.dsIndividuals
-    Left = 368
-    Top = 40
+    Left = 294
+    Top = 32
     object qImagesmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -6411,7 +6398,7 @@ object DMI: TDMI
   end
   object dsImages: TDataSource
     DataSet = qImages
-    Left = 480
-    Top = 40
+    Left = 384
+    Top = 32
   end
 end

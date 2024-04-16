@@ -7,6 +7,15 @@
       </element><element name="TfrmCustomGrid.LoadRecordColumns"><short>Loads the column names in the record view.</short>
       </element><element name="TfrmCustomGrid.UpdateFilterPanels"><short>Set visible the filter panels for the current table type.</short>
       </element>
+    <element name="TfrmCustomGrid.AddGridColumns"><short>Adds the columns of a table into a TDBGrid</short>
+      </element><element name="TfrmCustomGrid.AddSortedField"><short>Adds a field to the sorting list</short>
+      </element><element name="TfrmCustomGrid.ClearSearch"><short>Use this method to reset the search and filters</short>
+      </element><element name="TfrmCustomGrid.GetFilters"><short>Use this method to get the filter parameters of a search</short>
+      </element><element name="TfrmCustomGrid.LoadRecordRow"><short>Loads the record data from the selected row to the record view</short>
+      </element><element name="TfrmCustomGrid.Search"><short>Use this method to run a search or filter</short>
+      </element><element name="TfrmCustomGrid.SetSearchString"><short>Sets the SearchString property</short>
+      </element><element name="TfrmCustomGrid.SearchString"><short>String containing a typed search value</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

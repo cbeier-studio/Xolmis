@@ -363,7 +363,6 @@ type
     qSpecimenscollection_month1: TLongintField;
     qSpecimenscollection_year: TLongintField;
     qSpecimenscollection_year1: TLongintField;
-    qSpecimenscollectors: TStringField;
     qSpecimenscollectors1: TStringField;
     qSpecimenscollector_5: TLongintField;
     qSpecimenscollector_6: TLongintField;

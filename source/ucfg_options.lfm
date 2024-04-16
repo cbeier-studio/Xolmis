@@ -32,10 +32,10 @@ object cfgOptions: TcfgOptions
     TabOrder = 0
     object sbClose: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 624
+      Left = 632
       Height = 25
       Top = 8
-      Width = 109
+      Width = 101
       Align = alRight
       Caption = 'Close'
       ModalResult = 11

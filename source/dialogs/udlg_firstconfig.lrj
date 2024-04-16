@@ -1,0 +1,12 @@
+{"version":1,"strings":[
+{"hash":126046094,"name":"tdlgfirstconfig.caption","sourcebytes":[73,110,105,116,105,97,108,32,99,111,110,102,105,103,117,114,97,116,105,111,110],"value":"Initial configuration"},
+{"hash":65725844,"name":"tdlgfirstconfig.lbltitleauthentication.caption","sourcebytes":[65,100,109,105,110,32,112,97,115,115,119,111,114,100],"value":"Admin password"},
+{"hash":193901546,"name":"tdlgfirstconfig.lbldbfile.caption","sourcebytes":[68,97,116,97,98,97,115,101,32,102,105,108,101,58,32,42],"value":"Database file: *"},
+{"hash":241508010,"name":"tdlgfirstconfig.lbldbpass.caption","sourcebytes":[78,101,119,32,112,97,115,115,119,111,114,100,58],"value":"New password:"},
+{"hash":176789706,"name":"tdlgfirstconfig.lblname.caption","sourcebytes":[67,111,110,110,101,99,116,105,111,110,32,110,97,109,101,58,32,42],"value":"Connection name: *"},
+{"hash":137105230,"name":"tdlgfirstconfig.lbltitleauthentication1.caption","sourcebytes":[78,101,119,32,99,111,110,110,101,99,116,105,111,110],"value":"New connection"},
+{"hash":174684714,"name":"tdlgfirstconfig.lbldbpass1.caption","sourcebytes":[67,111,110,102,105,114,109,32,112,97,115,115,119,111,114,100,58],"value":"Confirm password:"},
+{"hash":366789,"name":"tdlgfirstconfig.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tdlgfirstconfig.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":265753941,"name":"tdlgfirstconfig.opendlg.title","sourcebytes":[83,101,108,101,99,116,32,100,97,116,97,98,97,115,101,32,102,105,108,101],"value":"Select database file"}
+]}

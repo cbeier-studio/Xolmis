@@ -3018,10 +3018,6 @@ msgctxt "tcfgdatabase.sbrefreshrecords.hint"
 msgid "Refresh records"
 msgstr ""
 
-#: tcfgdatabase.vtconnections.header.columns[0].text
-msgid "connection_name"
-msgstr ""
-
 #: tcfgdelimiters.caption
 msgid "Delimitation options"
 msgstr ""
@@ -3541,10 +3537,12 @@ msgid "Mostrar/ocultar senha"
 msgstr ""
 
 #: tdlgchangepassword.lblconfirmpassword.caption
+msgctxt "tdlgchangepassword.lblconfirmpassword.caption"
 msgid "Confirm password:"
 msgstr ""
 
 #: tdlgchangepassword.lblnewpassword.caption
+msgctxt "tdlgchangepassword.lblnewpassword.caption"
 msgid "New password:"
 msgstr ""
 
@@ -3697,6 +3695,53 @@ msgstr ""
 #: tdlgfindtaxon.ep.texthint
 msgctxt "tdlgfindtaxon.ep.texthint"
 msgid "Find..."
+msgstr ""
+
+#: tdlgfirstconfig.caption
+msgid "Initial configuration"
+msgstr ""
+
+#: tdlgfirstconfig.lbldbfile.caption
+msgctxt "tdlgfirstconfig.lbldbfile.caption"
+msgid "Database file: *"
+msgstr ""
+
+#: tdlgfirstconfig.lbldbpass.caption
+msgctxt "tdlgfirstconfig.lbldbpass.caption"
+msgid "New password:"
+msgstr ""
+
+#: tdlgfirstconfig.lbldbpass1.caption
+msgctxt "tdlgfirstconfig.lbldbpass1.caption"
+msgid "Confirm password:"
+msgstr ""
+
+#: tdlgfirstconfig.lblname.caption
+msgctxt "tdlgfirstconfig.lblname.caption"
+msgid "Connection name: *"
+msgstr ""
+
+#: tdlgfirstconfig.lbltitleauthentication.caption
+msgid "Admin password"
+msgstr ""
+
+#: tdlgfirstconfig.lbltitleauthentication1.caption
+msgid "New connection"
+msgstr ""
+
+#: tdlgfirstconfig.opendlg.title
+msgctxt "tdlgfirstconfig.opendlg.title"
+msgid "Select database file"
+msgstr ""
+
+#: tdlgfirstconfig.sbcancel.caption
+msgctxt "tdlgfirstconfig.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgfirstconfig.sbsave.caption
+msgctxt "tdlgfirstconfig.sbsave.caption"
+msgid "Save"
 msgstr ""
 
 #: tdlggeoeditor.caption
@@ -4347,6 +4392,7 @@ msgid "Username:"
 msgstr ""
 
 #: tedtdatabase.lblname.caption
+msgctxt "tedtdatabase.lblname.caption"
 msgid "Connection name: *"
 msgstr ""
 
@@ -4357,7 +4403,7 @@ msgstr ""
 
 #: tedtdatabase.opendlg.title
 msgctxt "tedtdatabase.opendlg.title"
-msgid "Abrir"
+msgid "Select database file"
 msgstr ""
 
 #: tedtdatabase.sbcancel.caption
@@ -7398,6 +7444,19 @@ msgctxt "tfrmdashboard.lbltitlebirthdays.caption"
 msgid "Next birthdays"
 msgstr ""
 
+#: tfrmdashboard.lbltitlechartindividuals.caption
+msgid "Individuals recorded"
+msgstr ""
+
+#: tfrmdashboard.lbltitlechartspecies.caption
+msgid "Species recorded"
+msgstr ""
+
+#: tfrmdashboard.lbltitlelifers.caption
+msgctxt "tfrmdashboard.lbltitlelifers.caption"
+msgid "Last lifers"
+msgstr ""
+
 #: tfrmdashboard.lbltitlemapsurveys.caption
 msgctxt "tfrmdashboard.lbltitlemapsurveys.caption"
 msgid "Last surveys"
@@ -7430,10 +7489,6 @@ msgstr ""
 #: tfrmdashboard.pmrefresh.caption
 msgctxt "tfrmdashboard.pmrefresh.caption"
 msgid "Atualizar"
-msgstr ""
-
-#: tfrmdashboard.ptitlelifers.caption
-msgid "Last lifers"
 msgstr ""
 
 #: tfrmdashboard.ptitlenotificationcenter.caption

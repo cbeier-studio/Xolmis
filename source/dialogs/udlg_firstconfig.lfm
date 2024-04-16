@@ -1,0 +1,268 @@
+object dlgFirstConfig: TdlgFirstConfig
+  Left = 362
+  Height = 347
+  Top = 250
+  Width = 400
+  AutoSize = True
+  BorderStyle = bsDialog
+  Caption = 'Initial configuration'
+  ClientHeight = 347
+  ClientWidth = 400
+  OnDestroy = FormDestroy
+  OnKeyPress = FormKeyPress
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  object pMain: TPanel
+    Left = 0
+    Height = 304
+    Top = 0
+    Width = 400
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 16
+    ClientHeight = 304
+    ClientWidth = 400
+    Color = 15066599
+    Constraints.MinWidth = 390
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object pTitleAuthentication: TPanel
+      Left = 16
+      Height = 28
+      Top = 160
+      Width = 368
+      Align = alTop
+      Alignment = taLeftJustify
+      AutoSize = True
+      BorderSpacing.Top = 16
+      BorderSpacing.Bottom = 8
+      BevelOuter = bvNone
+      ClientHeight = 28
+      ClientWidth = 368
+      Font.Color = 13066075
+      Font.Height = -20
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 3
+      object lblTitleAuthentication: TLabel
+        Left = 0
+        Height = 28
+        Top = 0
+        Width = 146
+        Align = alLeft
+        Caption = 'Admin password'
+      end
+    end
+    object lblDBFile: TLabel
+      Left = 16
+      Height = 15
+      Top = 102
+      Width = 368
+      Align = alTop
+      BorderSpacing.Bottom = 4
+      Caption = 'Database file: *'
+      Layout = tlCenter
+      ParentColor = False
+    end
+    object eNewPass: TEditButton
+      Left = 16
+      Height = 23
+      Top = 215
+      Width = 368
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ButtonWidth = 24
+      EchoMode = emPassword
+      Images = frmMain.bMenu
+      ImageIndex = 92
+      ImageWidth = 20
+      MaxLength = 0
+      NumGlyphs = 1
+      OnButtonClick = eNewPassButtonClick
+      OnChange = eNameChange
+      PasswordChar = '*'
+      Spacing = 0
+      TabOrder = 4
+    end
+    object lblDBPass: TLabel
+      Left = 16
+      Height = 15
+      Top = 196
+      Width = 368
+      Align = alTop
+      BorderSpacing.Bottom = 4
+      Caption = 'New password:'
+      Layout = tlCenter
+      ParentColor = False
+    end
+    object lblName: TLabel
+      Left = 16
+      Height = 15
+      Top = 52
+      Width = 368
+      Align = alTop
+      BorderSpacing.Bottom = 4
+      Caption = 'Connection name: *'
+      Layout = tlCenter
+      ParentColor = False
+    end
+    object pTitleAuthentication1: TPanel
+      Left = 16
+      Height = 28
+      Top = 16
+      Width = 368
+      Align = alTop
+      Alignment = taLeftJustify
+      AutoSize = True
+      BorderSpacing.Bottom = 8
+      BevelOuter = bvNone
+      ClientHeight = 28
+      ClientWidth = 368
+      Font.Color = 13066075
+      Font.Height = -20
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 0
+      object lblTitleAuthentication1: TLabel
+        Left = 0
+        Height = 28
+        Top = 0
+        Width = 141
+        Align = alLeft
+        Caption = 'New connection'
+      end
+    end
+    object lblDBPass1: TLabel
+      Left = 16
+      Height = 15
+      Top = 246
+      Width = 368
+      Align = alTop
+      BorderSpacing.Bottom = 4
+      Caption = 'Confirm password:'
+      Layout = tlCenter
+      ParentColor = False
+    end
+    object eConfirmPass: TEditButton
+      Left = 16
+      Height = 23
+      Top = 265
+      Width = 368
+      Align = alTop
+      ButtonWidth = 24
+      EchoMode = emPassword
+      Images = frmMain.bMenu
+      ImageIndex = 92
+      ImageWidth = 20
+      MaxLength = 0
+      NumGlyphs = 1
+      OnButtonClick = eConfirmPassButtonClick
+      OnChange = eNameChange
+      PasswordChar = '*'
+      Spacing = 0
+      TabOrder = 5
+    end
+    object eDBFile: TEditButton
+      Left = 16
+      Height = 23
+      Top = 121
+      Width = 368
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ButtonWidth = 24
+      Images = frmMain.mPopup
+      ImageIndex = 43
+      ImageWidth = 20
+      MaxLength = 0
+      NumGlyphs = 1
+      OnButtonClick = eDBFileButtonClick
+      OnChange = eNameChange
+      PasswordChar = #0
+      Spacing = 0
+      TabOrder = 2
+    end
+    object eName: TEdit
+      Left = 16
+      Height = 23
+      Top = 71
+      Width = 368
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      TabOrder = 1
+      OnChange = eNameChange
+      OnKeyPress = eNameKeyPress
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 304
+    Width = 400
+    Align = alTop
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 41
+    Top = 306
+    Width = 400
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 41
+    ClientWidth = 400
+    Color = 15987699
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    object sbSave: TButton
+      Left = 16
+      Height = 25
+      Top = 8
+      Width = 180
+      Caption = 'Save'
+      Constraints.MinWidth = 180
+      Default = True
+      Enabled = False
+      TabOrder = 0
+      OnClick = sbSaveClick
+    end
+    object sbCancel: TButton
+      Left = 204
+      Height = 25
+      Top = 8
+      Width = 180
+      Caption = 'Cancel'
+      Constraints.MinWidth = 180
+      ModalResult = 2
+      TabOrder = 1
+    end
+  end
+  object OpenDlg: TOpenDialog
+    Title = 'Select database file'
+    DefaultExt = '.sqlite3'
+    Filter = 'SQLite 3 (*.sqlite3; *.db3; *.s3db; *.sl3)|*.sqlite3; *.db3; *.s3db; *.sl3|Firebird (*.fdb)|*.fdb'
+    Left = 320
+    Top = 160
+  end
+  object BCrypt: TDCP_blowfish
+    Id = 5
+    Algorithm = 'Blowfish'
+    MaxKeySize = 448
+    BlockSize = 64
+    Left = 256
+    Top = 160
+  end
+end

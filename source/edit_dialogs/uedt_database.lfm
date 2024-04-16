@@ -342,7 +342,7 @@ object edtDatabase: TedtDatabase
     Top = 144
   end
   object OpenDlg: TOpenDialog
-    Title = 'Abrir'
+    Title = 'Select database file'
     DefaultExt = '.sqlite3'
     Filter = 'SQLite 3 (*.sqlite3; *.db3; *.s3db; *.sl3)|*.sqlite3; *.db3; *.s3db; *.sl3|Firebird (*.fdb)|*.fdb'
     Left = 304

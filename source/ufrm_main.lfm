@@ -1,11 +1,11 @@
 object frmMain: TfrmMain
   Left = -8
-  Height = 1100
+  Height = 1087
   Top = -8
   Width = 1940
   Caption = 'Xolmis'
-  ClientHeight = 1061
-  ClientWidth = 1924
+  ClientHeight = 1087
+  ClientWidth = 1940
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   OnClose = FormClose
@@ -13,6 +13,7 @@ object frmMain: TfrmMain
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
+  LCLVersion = '3.2.0.0'
   WindowState = wsMaximized
   object pLeftTabs: TPanel
     Left = 0
@@ -310,14 +311,15 @@ object frmMain: TfrmMain
     end
     object sbHome: TSpeedButton
       Left = 96
-      Height = 43
+      Height = 36
       Hint = 'Home'
-      Top = 6
+      Top = 9
       Width = 36
       Align = alLeft
       AutoSize = True
-      BorderSpacing.Top = 6
+      BorderSpacing.Top = 9
       BorderSpacing.Right = 8
+      BorderSpacing.Bottom = 4
       Flat = True
       Images = bMenu
       ImageIndex = 122
@@ -416,14 +418,15 @@ object frmMain: TfrmMain
     end
     object sbInsertRecord: TSpeedButton
       Left = 140
-      Height = 43
+      Height = 36
       Hint = 'New record'
-      Top = 6
+      Top = 9
       Width = 36
       Action = actInsertRecord
       Align = alLeft
       AutoSize = True
-      BorderSpacing.Top = 6
+      BorderSpacing.Top = 9
+      BorderSpacing.Bottom = 4
       Flat = True
       Images = bMenu
       ImageIndex = 121
@@ -569,11 +572,11 @@ object frmMain: TfrmMain
     Color = 15987699
     TabOrder = 2
     object pgSampling: TPage
-      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.LeftRightSpacing = 25
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      object SpeedButton15: TSpeedButton
-        Left = 117
+      object sbmSurveys: TSpeedButton
+        Left = 126
         Height = 29
         Top = 8
         Width = 72
@@ -586,7 +589,7 @@ object frmMain: TfrmMain
         ImageWidth = 24
       end
       object ShapeLineBGRA1: TShapeLineBGRA
-        Left = 197
+        Left = 206
         Height = 29
         Top = 8
         Width = 8
@@ -598,8 +601,8 @@ object frmMain: TfrmMain
         ArrowColor = clBlack
         LineWidth = 1
       end
-      object SpeedButton16: TSpeedButton
-        Left = 213
+      object sbmSightings: TSpeedButton
+        Left = 222
         Height = 29
         Top = 8
         Width = 81
@@ -611,8 +614,8 @@ object frmMain: TfrmMain
         ImageIndex = 20
         ImageWidth = 24
       end
-      object SpeedButton17: TSpeedButton
-        Left = 318
+      object sbmMethods: TSpeedButton
+        Left = 327
         Height = 29
         Top = 8
         Width = 79
@@ -624,8 +627,8 @@ object frmMain: TfrmMain
         ImageIndex = 81
         ImageWidth = 24
       end
-      object SpeedButton18: TSpeedButton
-        Left = 421
+      object sbmSpecimens: TSpeedButton
+        Left = 430
         Height = 29
         Top = 8
         Width = 89
@@ -638,7 +641,7 @@ object frmMain: TfrmMain
         ImageWidth = 24
       end
       object ShapeLineBGRA2: TShapeLineBGRA
-        Left = 302
+        Left = 311
         Height = 29
         Top = 8
         Width = 8
@@ -651,7 +654,7 @@ object frmMain: TfrmMain
         LineWidth = 1
       end
       object ShapeLineBGRA3: TShapeLineBGRA
-        Left = 405
+        Left = 414
         Height = 29
         Top = 8
         Width = 8
@@ -663,8 +666,8 @@ object frmMain: TfrmMain
         ArrowColor = clBlack
         LineWidth = 1
       end
-      object SpeedButton45: TSpeedButton
-        Left = 16
+      object sbmExpeditions: TSpeedButton
+        Left = 25
         Height = 29
         Top = 8
         Width = 93
@@ -678,12 +681,12 @@ object frmMain: TfrmMain
       end
     end
     object pgIndividuals: TPage
-      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.LeftRightSpacing = 25
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      object SpeedButton19: TSpeedButton
-        Left = 376
-        Height = 37
+      object sbmIndividuals: TSpeedButton
+        Left = 385
+        Height = 29
         Top = 8
         Width = 89
         Action = actOpenIndividuals
@@ -694,9 +697,9 @@ object frmMain: TfrmMain
         ImageIndex = 22
         ImageWidth = 24
       end
-      object SpeedButton20: TSpeedButton
-        Left = 16
-        Height = 37
+      object sbmBands: TSpeedButton
+        Left = 25
+        Height = 29
         Top = 8
         Width = 64
         Action = actOpenBands
@@ -707,9 +710,9 @@ object frmMain: TfrmMain
         ImageIndex = 21
         ImageWidth = 24
       end
-      object SpeedButton21: TSpeedButton
-        Left = 104
-        Height = 37
+      object sbmNewBandsBatch: TSpeedButton
+        Left = 113
+        Height = 29
         Top = 8
         Width = 89
         Action = actNewBands
@@ -720,9 +723,9 @@ object frmMain: TfrmMain
         ImageIndex = 111
         ImageWidth = 24
       end
-      object SpeedButton22: TSpeedButton
-        Left = 201
-        Height = 37
+      object sbmBandHistory: TSpeedButton
+        Left = 210
+        Height = 29
         Top = 8
         Width = 70
         Action = actOpenBandHistory
@@ -733,9 +736,9 @@ object frmMain: TfrmMain
         ImageIndex = 118
         ImageWidth = 24
       end
-      object SpeedButton23: TSpeedButton
-        Left = 279
-        Height = 37
+      object sbmBandsBalance: TSpeedButton
+        Left = 288
+        Height = 29
         Top = 8
         Width = 73
         Action = actViewBandsBalance
@@ -746,9 +749,9 @@ object frmMain: TfrmMain
         ImageIndex = 116
         ImageWidth = 24
       end
-      object SpeedButton24: TSpeedButton
-        Left = 489
-        Height = 37
+      object sbmCaptures: TSpeedButton
+        Left = 498
+        Height = 29
         Top = 8
         Width = 79
         Action = actOpenCaptures
@@ -760,8 +763,8 @@ object frmMain: TfrmMain
         ImageWidth = 24
       end
       object ShapeLineBGRA4: TShapeLineBGRA
-        Left = 360
-        Height = 37
+        Left = 369
+        Height = 29
         Top = 8
         Width = 8
         Align = alLeft
@@ -773,8 +776,8 @@ object frmMain: TfrmMain
         LineWidth = 1
       end
       object ShapeLineBGRA5: TShapeLineBGRA
-        Left = 473
-        Height = 37
+        Left = 482
+        Height = 29
         Top = 8
         Width = 8
         Align = alLeft
@@ -786,8 +789,8 @@ object frmMain: TfrmMain
         LineWidth = 1
       end
       object ShapeLineBGRA6: TShapeLineBGRA
-        Left = 88
-        Height = 29
+        Left = 97
+        Height = 21
         Top = 12
         Width = 8
         Align = alLeft
@@ -798,9 +801,9 @@ object frmMain: TfrmMain
         ArrowColor = clBlack
         LineWidth = 1
       end
-      object SpeedButton44: TSpeedButton
-        Left = 576
-        Height = 37
+      object sbmMolts: TSpeedButton
+        Left = 585
+        Height = 29
         Top = 8
         Width = 62
         Action = actOpenMolts
@@ -813,12 +816,12 @@ object frmMain: TfrmMain
       end
     end
     object pgBreeding: TPage
-      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.LeftRightSpacing = 25
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      object SpeedButton25: TSpeedButton
-        Left = 16
-        Height = 37
+      object sbmNests: TSpeedButton
+        Left = 25
+        Height = 29
         Top = 8
         Width = 61
         Action = actOpenNests
@@ -829,9 +832,9 @@ object frmMain: TfrmMain
         ImageIndex = 24
         ImageWidth = 24
       end
-      object SpeedButton26: TSpeedButton
-        Left = 101
-        Height = 37
+      object sbmNestRevisions: TSpeedButton
+        Left = 110
+        Height = 29
         Top = 8
         Width = 105
         Action = actOpenNestRevisions
@@ -842,9 +845,9 @@ object frmMain: TfrmMain
         ImageIndex = 113
         ImageWidth = 24
       end
-      object SpeedButton27: TSpeedButton
-        Left = 214
-        Height = 37
+      object sbmEggs: TSpeedButton
+        Left = 223
+        Height = 29
         Top = 8
         Width = 57
         Action = actOpenEggs
@@ -856,8 +859,8 @@ object frmMain: TfrmMain
         ImageWidth = 24
       end
       object ShapeLineBGRA7: TShapeLineBGRA
-        Left = 85
-        Height = 29
+        Left = 94
+        Height = 21
         Top = 12
         Width = 8
         Align = alLeft
@@ -870,12 +873,12 @@ object frmMain: TfrmMain
       end
     end
     object pgEntities: TPage
-      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.LeftRightSpacing = 25
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      object SpeedButton28: TSpeedButton
-        Left = 16
-        Height = 37
+      object sbmInstitutions: TSpeedButton
+        Left = 25
+        Height = 29
         Top = 8
         Width = 91
         Action = actOpenInstitutions
@@ -886,9 +889,9 @@ object frmMain: TfrmMain
         ImageIndex = 12
         ImageWidth = 24
       end
-      object SpeedButton29: TSpeedButton
-        Left = 115
-        Height = 37
+      object sbmResearchers: TSpeedButton
+        Left = 124
+        Height = 29
         Top = 8
         Width = 94
         Action = actOpenResearchers
@@ -899,9 +902,9 @@ object frmMain: TfrmMain
         ImageIndex = 11
         ImageWidth = 24
       end
-      object SpeedButton30: TSpeedButton
-        Left = 233
-        Height = 37
+      object sbmProjects: TSpeedButton
+        Left = 242
+        Height = 29
         Top = 8
         Width = 74
         Action = actOpenProjects
@@ -912,9 +915,9 @@ object frmMain: TfrmMain
         ImageIndex = 13
         ImageWidth = 24
       end
-      object SpeedButton31: TSpeedButton
-        Left = 315
-        Height = 37
+      object sbmPermits: TSpeedButton
+        Left = 324
+        Height = 29
         Top = 8
         Width = 72
         Action = actOpenPermits
@@ -926,8 +929,8 @@ object frmMain: TfrmMain
         ImageWidth = 24
       end
       object ShapeLineBGRA8: TShapeLineBGRA
-        Left = 217
-        Height = 37
+        Left = 226
+        Height = 29
         Top = 8
         Width = 8
         Align = alLeft
@@ -940,12 +943,12 @@ object frmMain: TfrmMain
       end
     end
     object pgGeo: TPage
-      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.LeftRightSpacing = 25
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      object SpeedButton32: TSpeedButton
-        Left = 16
-        Height = 37
+      object sbmGazetteer: TSpeedButton
+        Left = 25
+        Height = 29
         Top = 8
         Width = 81
         Action = actOpenGazetteer
@@ -956,9 +959,9 @@ object frmMain: TfrmMain
         ImageIndex = 15
         ImageWidth = 24
       end
-      object SpeedButton33: TSpeedButton
-        Left = 105
-        Height = 37
+      object sbmSamplingPlots: TSpeedButton
+        Left = 114
+        Height = 29
         Top = 8
         Width = 111
         Action = actOpenNetStations
@@ -969,9 +972,9 @@ object frmMain: TfrmMain
         ImageIndex = 16
         ImageWidth = 24
       end
-      object SpeedButton34: TSpeedButton
-        Left = 240
-        Height = 37
+      object sbmGeoEditor: TSpeedButton
+        Left = 249
+        Height = 29
         Top = 8
         Width = 63
         Action = actCoordinatesEditor
@@ -982,9 +985,9 @@ object frmMain: TfrmMain
         ImageIndex = 34
         ImageWidth = 24
       end
-      object SpeedButton35: TSpeedButton
-        Left = 311
-        Height = 37
+      object sbmGeoConverter: TSpeedButton
+        Left = 320
+        Height = 29
         Top = 8
         Width = 84
         Action = actCoordinatesConverter
@@ -996,8 +999,8 @@ object frmMain: TfrmMain
         ImageWidth = 24
       end
       object ShapeLineBGRA9: TShapeLineBGRA
-        Left = 224
-        Height = 37
+        Left = 233
+        Height = 29
         Top = 8
         Width = 8
         Align = alLeft
@@ -1010,12 +1013,12 @@ object frmMain: TfrmMain
       end
     end
     object pgTaxonomy: TPage
-      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.LeftRightSpacing = 25
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      object SpeedButton36: TSpeedButton
-        Left = 16
-        Height = 37
+      object sbmZooTaxa: TSpeedButton
+        Left = 25
+        Height = 29
         Top = 8
         Width = 55
         Action = actOpenTaxa
@@ -1026,9 +1029,9 @@ object frmMain: TfrmMain
         ImageIndex = 17
         ImageWidth = 24
       end
-      object SpeedButton37: TSpeedButton
-        Left = 95
-        Height = 37
+      object sbmBotanicTaxa: TSpeedButton
+        Left = 104
+        Height = 29
         Top = 8
         Width = 97
         Action = actOpenBotany
@@ -1040,8 +1043,8 @@ object frmMain: TfrmMain
         ImageWidth = 24
       end
       object ShapeLineBGRA10: TShapeLineBGRA
-        Left = 79
-        Height = 37
+        Left = 88
+        Height = 29
         Top = 8
         Width = 8
         Align = alLeft
@@ -1054,12 +1057,12 @@ object frmMain: TfrmMain
       end
     end
     object pgMedia: TPage
-      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.LeftRightSpacing = 25
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      object SpeedButton38: TSpeedButton
-        Left = 16
-        Height = 37
+      object sbmImageGallery: TSpeedButton
+        Left = 25
+        Height = 29
         Top = 8
         Width = 103
         Action = actOpenImagesList
@@ -1070,9 +1073,9 @@ object frmMain: TfrmMain
         ImageIndex = 26
         ImageWidth = 24
       end
-      object SpeedButton39: TSpeedButton
-        Left = 127
-        Height = 37
+      object sbmAudioLibrary: TSpeedButton
+        Left = 136
+        Height = 29
         Top = 8
         Width = 100
         Action = actOpenRecordingsList
@@ -1083,9 +1086,9 @@ object frmMain: TfrmMain
         ImageIndex = 27
         ImageWidth = 24
       end
-      object SpeedButton40: TSpeedButton
-        Left = 235
-        Height = 37
+      object sbmAttachments: TSpeedButton
+        Left = 244
+        Height = 29
         Top = 8
         Width = 100
         Action = actOpenDocumentsList
@@ -1098,12 +1101,12 @@ object frmMain: TfrmMain
       end
     end
     object pgHelp: TPage
-      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.LeftRightSpacing = 25
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      object SpeedButton41: TSpeedButton
-        Left = 16
-        Height = 37
+      object sbmHelp: TSpeedButton
+        Left = 25
+        Height = 29
         Top = 8
         Width = 57
         Action = actOpenManual
@@ -1114,9 +1117,9 @@ object frmMain: TfrmMain
         ImageIndex = 31
         ImageWidth = 24
       end
-      object SpeedButton42: TSpeedButton
-        Left = 81
-        Height = 37
+      object sbmAbout: TSpeedButton
+        Left = 212
+        Height = 29
         Top = 8
         Width = 65
         Action = actAbout
@@ -1127,9 +1130,9 @@ object frmMain: TfrmMain
         ImageIndex = 32
         ImageWidth = 24
       end
-      object SpeedButton43: TSpeedButton
-        Left = 170
-        Height = 37
+      object sbmFeedback: TSpeedButton
+        Left = 106
+        Height = 29
         Top = 8
         Width = 82
         Action = actGiveFeedback
@@ -1141,8 +1144,21 @@ object frmMain: TfrmMain
         ImageWidth = 24
       end
       object ShapeLineBGRA11: TShapeLineBGRA
-        Left = 154
-        Height = 37
+        Left = 90
+        Height = 29
+        Top = 8
+        Width = 8
+        Align = alLeft
+        BorderSpacing.Top = 8
+        BorderSpacing.Bottom = 8
+        Direction = drUpDown
+        LineColor = clSilver
+        ArrowColor = clBlack
+        LineWidth = 1
+      end
+      object ShapeLineBGRA12: TShapeLineBGRA
+        Left = 196
+        Height = 29
         Top = 8
         Width = 8
         Align = alLeft
@@ -12209,6 +12225,7 @@ object frmMain: TfrmMain
       Caption = 'Editor'
       Enabled = False
       ImageIndex = 34
+      Visible = False
     end
     object actCoordinatesConverter: TAction
       Category = 'Geo'

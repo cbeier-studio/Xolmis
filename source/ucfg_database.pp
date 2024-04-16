@@ -54,7 +54,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, udm_main, uedt_database;
+uses cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, udm_main, uedt_database;
 
 {$R *.lfm}
 
@@ -121,7 +121,11 @@ begin
     dsConn.DataSet.Append;
     dsConn.DataSet.FieldByName('database_type').AsInteger := 0;
     if ShowModal = mrOk then
-      dsConn.DataSet.Post
+    begin
+      dsConn.DataSet.Post;
+      if not FileExists(dsConn.DataSet.FieldByName('database_name').AsString) then
+        CreateUserDatabase(dbSqlite, dsConn.DataSet.FieldByName('database_name').AsString);
+    end
     else
       dsConn.DataSet.Cancel;
   finally

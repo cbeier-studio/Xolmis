@@ -36,7 +36,6 @@ object cfgDatabase: TcfgDatabase
         item
           Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus]
           Position = 0
-          Text = 'connection_name'
           Width = 280
           FieldName = 'connection_name'
           ColumnType = ctDBField

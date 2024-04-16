@@ -256,15 +256,15 @@ begin
 
   if FieldValuesDiff(rsCaptionName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff('N'#237'vel superior', aOld.ParentTaxonId, FParentTaxonId, R) then
+  if FieldValuesDiff('Parent taxon', aOld.ParentTaxonId, FParentTaxonId, R) then
     aList.Add(R);
   if FieldValuesDiff(rsCaptionRank, aOld.RankId, FRankId, R) then
     aList.Add(R);
   if FieldValuesDiff(rsAuthorship, aOld.Authorship, FAuthorship, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome vernacular', aOld.VernacularName, FVernacularName, R) then
+  if FieldValuesDiff('Vernacular name', aOld.VernacularName, FVernacularName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome v'#225'lido', aOld.ValidId, FValidId, R) then
+  if FieldValuesDiff('Valid name', aOld.ValidId, FValidId, R) then
     aList.Add(R);
   if FieldValuesDiff(rsCaptionOrder, aOld.OrderId, FOrderId, R) then
     aList.Add(R);

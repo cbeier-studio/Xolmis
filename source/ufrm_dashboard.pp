@@ -25,6 +25,9 @@ type
     lblTitleBandsBalance: TLabel;
     lblTitleBirthdays: TLabel;
     lblTitleMapSurveys: TLabel;
+    lblTitleChartIndividuals: TLabel;
+    lblTitleChartSpecies: TLabel;
+    lblTitleLifers: TLabel;
     lblTitlePermitsExpiring: TLabel;
     lblTitleReviseNests: TLabel;
     lblTotalIndividuals: TLabel;
@@ -49,7 +52,6 @@ type
     pNumbers: TBCPanel;
     pPermitsExpiring: TBCPanel;
     pReviseNests: TBCPanel;
-    pTitleLifers: TPanel;
     pTitleNotificationCenter: TBCPanel;
     pAppUpdateBtns: TBCPanel;
     pTotalIndividuals: TBCPanel;

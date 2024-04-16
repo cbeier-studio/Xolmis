@@ -160,6 +160,7 @@ type
     ShapeLineBGRA1: TShapeLineBGRA;
     ShapeLineBGRA10: TShapeLineBGRA;
     ShapeLineBGRA11: TShapeLineBGRA;
+    ShapeLineBGRA12: TShapeLineBGRA;
     ShapeLineBGRA2: TShapeLineBGRA;
     ShapeLineBGRA3: TShapeLineBGRA;
     ShapeLineBGRA4: TShapeLineBGRA;
@@ -169,38 +170,38 @@ type
     ShapeLineBGRA8: TShapeLineBGRA;
     ShapeLineBGRA9: TShapeLineBGRA;
     sbHome: TSpeedButton;
-    SpeedButton15: TSpeedButton;
-    SpeedButton16: TSpeedButton;
-    SpeedButton17: TSpeedButton;
-    SpeedButton18: TSpeedButton;
-    SpeedButton19: TSpeedButton;
-    SpeedButton20: TSpeedButton;
-    SpeedButton21: TSpeedButton;
-    SpeedButton22: TSpeedButton;
-    SpeedButton23: TSpeedButton;
-    SpeedButton24: TSpeedButton;
-    SpeedButton25: TSpeedButton;
-    SpeedButton26: TSpeedButton;
-    SpeedButton27: TSpeedButton;
-    SpeedButton28: TSpeedButton;
-    SpeedButton29: TSpeedButton;
-    SpeedButton30: TSpeedButton;
-    SpeedButton31: TSpeedButton;
-    SpeedButton32: TSpeedButton;
-    SpeedButton33: TSpeedButton;
-    SpeedButton34: TSpeedButton;
-    SpeedButton35: TSpeedButton;
-    SpeedButton36: TSpeedButton;
-    SpeedButton37: TSpeedButton;
-    SpeedButton38: TSpeedButton;
-    SpeedButton39: TSpeedButton;
-    SpeedButton40: TSpeedButton;
-    SpeedButton41: TSpeedButton;
-    SpeedButton42: TSpeedButton;
-    SpeedButton43: TSpeedButton;
-    SpeedButton44: TSpeedButton;
+    sbmSurveys: TSpeedButton;
+    sbmSightings: TSpeedButton;
+    sbmMethods: TSpeedButton;
+    sbmSpecimens: TSpeedButton;
+    sbmIndividuals: TSpeedButton;
+    sbmBands: TSpeedButton;
+    sbmNewBandsBatch: TSpeedButton;
+    sbmBandHistory: TSpeedButton;
+    sbmBandsBalance: TSpeedButton;
+    sbmCaptures: TSpeedButton;
+    sbmNests: TSpeedButton;
+    sbmNestRevisions: TSpeedButton;
+    sbmEggs: TSpeedButton;
+    sbmInstitutions: TSpeedButton;
+    sbmResearchers: TSpeedButton;
+    sbmProjects: TSpeedButton;
+    sbmPermits: TSpeedButton;
+    sbmGazetteer: TSpeedButton;
+    sbmSamplingPlots: TSpeedButton;
+    sbmGeoEditor: TSpeedButton;
+    sbmGeoConverter: TSpeedButton;
+    sbmZooTaxa: TSpeedButton;
+    sbmBotanicTaxa: TSpeedButton;
+    sbmImageGallery: TSpeedButton;
+    sbmAudioLibrary: TSpeedButton;
+    sbmAttachments: TSpeedButton;
+    sbmHelp: TSpeedButton;
+    sbmAbout: TSpeedButton;
+    sbmFeedback: TSpeedButton;
+    sbmMolts: TSpeedButton;
     PGW: TTDICardPanel;
-    SpeedButton45: TSpeedButton;
+    sbmExpeditions: TSpeedButton;
     TimerScreen: TTimer;
     TimerAnimSearch: TTimer;
     TimerFind: TTimer;
@@ -687,8 +688,9 @@ begin
   { Check if there are connections available }
   DMM.qsConn.Open;
   if DMM.qsConn.RecordCount = 0 then
-    if not DatabaseConfig then
+    if not FirstConfig then
       Application.Terminate;
+  DMM.qsConn.Refresh;
   Application.ProcessMessages;
 
   { Check if there are users available }

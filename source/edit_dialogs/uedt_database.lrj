@@ -11,5 +11,5 @@
 {"hash":179191546,"name":"tedtdatabase.lbldbpass.caption","sourcebytes":[80,97,115,115,119,111,114,100,58],"value":"Password:"},
 {"hash":176789706,"name":"tedtdatabase.lblname.caption","sourcebytes":[67,111,110,110,101,99,116,105,111,110,32,110,97,109,101,58,32,42],"value":"Connection name: *"},
 {"hash":214804213,"name":"tedtdatabase.ckremotedb.caption","sourcebytes":[82,101,109,111,116,101,32,100,97,116,97,98,97,115,101],"value":"Remote database"},
-{"hash":4692226,"name":"tedtdatabase.opendlg.title","sourcebytes":[65,98,114,105,114],"value":"Abrir"}
+{"hash":265753941,"name":"tedtdatabase.opendlg.title","sourcebytes":[83,101,108,101,99,116,32,100,97,116,97,98,97,115,101,32,102,105,108,101],"value":"Select database file"}
 ]}

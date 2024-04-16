@@ -99,27 +99,10 @@ object frmDashboard: TfrmDashboard
         Rounding.RoundX = 8
         Rounding.RoundY = 8
         TabOrder = 0
-        object pTitleLifers: TPanel
-          Left = 16
-          Height = 16
-          Top = 8
-          Width = 339
-          Align = alTop
-          Alignment = taLeftJustify
-          BevelOuter = bvNone
-          Caption = 'Last lifers'
-          Color = 16448250
-          Font.Color = 13066075
-          Font.Height = -15
-          ParentBackground = False
-          ParentColor = False
-          ParentFont = False
-          TabOrder = 0
-        end
         object dbgLifers: TDBGrid
           Left = 16
-          Height = 177
-          Top = 32
+          Height = 173
+          Top = 36
           Width = 339
           Align = alClient
           AlternateColor = clWhite
@@ -151,7 +134,7 @@ object frmDashboard: TfrmDashboard
           FixedCols = 0
           Options = [dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgCellEllipsis, dgDisplayMemoText]
           Scrollbars = ssNone
-          TabOrder = 1
+          TabOrder = 0
         end
         object linkShowMoreLifers: TATLabelLink
           Cursor = crHandPoint
@@ -170,6 +153,20 @@ object frmDashboard: TfrmDashboard
           ShowHint = True
           ColorLinkNormal = 13066075
           ColorLinkMouseover = 9520964
+        end
+        object lblTitleLifers: TLabel
+          Left = 16
+          Height = 20
+          Top = 8
+          Width = 339
+          Align = alTop
+          Alignment = taRightJustify
+          Caption = 'Last lifers'
+          Color = 16448250
+          Font.Color = 13066075
+          Font.Height = -15
+          ParentColor = False
+          ParentFont = False
         end
       end
       object pCharts: TBCPanel
@@ -219,8 +216,8 @@ object frmDashboard: TfrmDashboard
         TabOrder = 1
         object chartIndividuals: TChart
           Left = 16
-          Height = 224
-          Top = 8
+          Height = 196
+          Top = 36
           Width = 339
           AxisList = <          
             item
@@ -282,7 +279,6 @@ object frmDashboard: TfrmDashboard
           Title.Text.Strings = (
             'Individuals recorded'
           )
-          Title.Visible = True
           Align = alClient
           Color = 16448250
           object barIndividualsMonth: TBarSeries
@@ -299,6 +295,20 @@ object frmDashboard: TfrmDashboard
             Marks.Style = smsValue
             Source = lcsIndividualsMonth
           end
+        end
+        object lblTitleChartIndividuals: TLabel
+          Left = 16
+          Height = 20
+          Top = 8
+          Width = 339
+          Align = alTop
+          Alignment = taRightJustify
+          Caption = 'Individuals recorded'
+          Color = 16448250
+          Font.Color = 1014543
+          Font.Height = -15
+          ParentColor = False
+          ParentFont = False
         end
       end
       object pMapSurveys: TBCPanel
@@ -353,9 +363,10 @@ object frmDashboard: TfrmDashboard
           Top = 8
           Width = 339
           Align = alTop
+          Alignment = taRightJustify
           Caption = 'Last surveys'
           Color = 16448250
-          Font.Color = 13066075
+          Font.Color = 7354004
           Font.Height = -15
           ParentColor = False
           ParentFont = False
@@ -422,8 +433,8 @@ object frmDashboard: TfrmDashboard
         TabOrder = 3
         object chartSpecies: TChart
           Left = 16
-          Height = 224
-          Top = 8
+          Height = 196
+          Top = 36
           Width = 339
           AxisList = <          
             item
@@ -485,7 +496,6 @@ object frmDashboard: TfrmDashboard
           Title.Text.Strings = (
             'Species recorded'
           )
-          Title.Visible = True
           Align = alClient
           Color = 16448250
           object barSpeciesMonth: TBarSeries
@@ -502,6 +512,20 @@ object frmDashboard: TfrmDashboard
             Marks.Style = smsValue
             Source = lcsSpeciesMonth
           end
+        end
+        object lblTitleChartSpecies: TLabel
+          Left = 16
+          Height = 20
+          Top = 8
+          Width = 339
+          Align = alTop
+          Alignment = taRightJustify
+          Caption = 'Species recorded'
+          Color = 16448250
+          Font.Color = 13066075
+          Font.Height = -15
+          ParentColor = False
+          ParentFont = False
         end
       end
     end

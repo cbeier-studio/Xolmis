@@ -200,6 +200,7 @@ var
   function HelpDir: String;
 
   { System settings and user permissions manipulation }
+  function FirstConfig: Boolean;
   function DatabaseConfig: Boolean;
   procedure LoadDatabaseParams(aConnectionName: String; aConnector: TSQLConnector);
   function ConnectDatabase: Boolean;
@@ -209,7 +210,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_conversions, cbs_data, udlg_connect;
+  cbs_locale, cbs_conversions, cbs_data, udlg_connect, udlg_firstconfig;
 
 { ---------------------------------------------------------------------------------------- }
 { System logging }
@@ -555,6 +556,27 @@ begin
     DMM.sqlCon.Close;
 
   ConexaoDB.Clear;
+end;
+
+function FirstConfig: Boolean;
+begin
+  Result := False;
+
+  Application.CreateForm(TdlgFirstConfig, dlgFirstConfig);
+  with dlgFirstConfig do
+  try
+    {$IFDEF DEBUG}
+    LogDebug('OPEN: Manage connections');
+    {$ENDIF}
+    GravaStat(Name, '', 'open');
+    if ShowModal = mrOK then
+      Result := True;
+  finally
+    {$IFDEF DEBUG}
+    LogDebug('CLOSE: Manage connections');
+    {$ENDIF}
+    FreeAndNil(dlgFirstConfig);
+  end;
 end;
 
 { TXolmisSettings }

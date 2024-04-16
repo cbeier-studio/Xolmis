@@ -1320,17 +1320,17 @@ begin
     for i := 0 to (FSortFields.Count - 1) do
     begin
       // Field name
-      if (FSortFields.Items[i].Lookup) or (FTableAlias = EmptyStr) then
-        aSort := aSort + FSortFields.Items[i].FieldName
+      if (FSortFields[i].Lookup) or (FTableAlias = EmptyStr) then
+        aSort := aSort + FSortFields[i].FieldName
       else
-        aSort := aSort + FTableAlias + '.' + FSortFields.Items[i].FieldName;
+        aSort := aSort + FTableAlias + '.' + FSortFields[i].FieldName;
 
       // Collation
-      if FSortFields.Items[i].Collation <> EmptyStr then
-        aSort := aSort + ' COLLATE ' + FSortFields.Items[i].Collation;
+      if FSortFields[i].Collation <> EmptyStr then
+        aSort := aSort + ' COLLATE ' + FSortFields[i].Collation;
 
       // Direction
-      aSort := aSort + ' ' + SortDirections[FSortFields.Items[i].Direction];
+      aSort := aSort + ' ' + SortDirections[FSortFields[i].Direction];
 
       if i < (FSortFields.Count - 1) then
         aSort := aSort + ', ';
@@ -1352,6 +1352,9 @@ end;
 
 function TCustomSearch.RunSearch: Integer;
 begin
+  if not Assigned(FDataSet) then
+    Exit;
+
   if FDataSet.Active then
     FDataSet.Close;
 
