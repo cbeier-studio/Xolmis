@@ -26,10 +26,5 @@
 {"hash":171596723,"name":"tcfgoptions.lblstartupbackup.caption","sourcebytes":[67,114,101,97,116,101,32,97,32,100,97,116,97,98,97,115,101,32,99,111,112,121,32,119,104,101,110,32,88,111,108,109,105,115,32,115,116,97,114,116,115],"value":"Create a database copy when Xolmis starts"},
 {"hash":4193827,"name":"tcfgoptions.lblmanagebackups.caption","sourcebytes":[77,97,110,97,103,101,32,98,97,99,107,117,112,115],"value":"Manage backups"},
 {"hash":202123504,"name":"tcfgoptions.sbnewbackup.caption","sourcebytes":[67,114,101,97,116,101,32,98,97,99,107,117,112],"value":"Create backup"},
-{"hash":147502805,"name":"tcfgoptions.sbrestorebackup.caption","sourcebytes":[82,101,115,116,111,114,101],"value":"Restore"},
-{"hash":231000124,"name":"tcfgoptions.tabgeneral.hint","sourcebytes":[71,101,110,101,114,97,108],"value":"General"},
-{"hash":46008942,"name":"tcfgoptions.tabcollection.hint","sourcebytes":[67,111,108,108,101,99,116,105,111,110],"value":"Collection"},
-{"hash":5487345,"name":"tcfgoptions.tabmedia.hint","sourcebytes":[77,101,100,105,97],"value":"Media"},
-{"hash":123475193,"name":"tcfgoptions.tabsecurity.hint","sourcebytes":[83,101,99,117,114,105,116,121,32,97,110,100,32,112,114,105,118,97,99,121],"value":"Security and privacy"},
-{"hash":237720117,"name":"tcfgoptions.tabbackup.hint","sourcebytes":[66,97,99,107,117,112,32,97,110,100,32,114,101,115,116,111,114,101],"value":"Backup and restore"}
+{"hash":147502805,"name":"tcfgoptions.sbrestorebackup.caption","sourcebytes":[82,101,115,116,111,114,101],"value":"Restore"}
 ]}

@@ -2448,7 +2448,7 @@ object DMM: TDMM
     Left = 32
     Top = 333
     object qsConnconnection_id: TLongintField
-      DisplayLabel = 'Nº interno'
+      DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'connection_id'
       Index = 0
@@ -2458,7 +2458,7 @@ object DMM: TDMM
       Required = False
     end
     object qsConnconnection_name: TStringField
-      DisplayLabel = 'Nome da conexão'
+      DisplayLabel = 'Connection name'
       FieldKind = fkData
       FieldName = 'connection_name'
       Index = 1
@@ -2469,7 +2469,7 @@ object DMM: TDMM
       Size = 40
     end
     object qsConndatabase_type: TLongintField
-      DisplayLabel = 'Tipo de banco de dados'
+      DisplayLabel = 'Database type'
       FieldKind = fkData
       FieldName = 'database_type'
       Index = 2
@@ -2481,7 +2481,7 @@ object DMM: TDMM
       OnSetText = qsConndatabase_typeSetText
     end
     object qsConndatabase_server: TStringField
-      DisplayLabel = 'Servidor'
+      DisplayLabel = 'Server'
       FieldKind = fkData
       FieldName = 'database_server'
       Index = 3
@@ -2492,7 +2492,7 @@ object DMM: TDMM
       Size = 30
     end
     object qsConndatabase_port: TLongintField
-      DisplayLabel = 'Porta'
+      DisplayLabel = 'Port'
       FieldKind = fkData
       FieldName = 'database_port'
       Index = 4
@@ -2502,7 +2502,7 @@ object DMM: TDMM
       Required = False
     end
     object qsConndatabase_name: TStringField
-      DisplayLabel = 'Arquivo do banco de dados'
+      DisplayLabel = 'Database file'
       FieldKind = fkData
       FieldName = 'database_name'
       Index = 5
@@ -2513,7 +2513,7 @@ object DMM: TDMM
       Size = 200
     end
     object qsConnuser_name: TStringField
-      DisplayLabel = 'Nome de usuário'
+      DisplayLabel = 'Username'
       FieldKind = fkData
       FieldName = 'user_name'
       Index = 6
@@ -2523,7 +2523,7 @@ object DMM: TDMM
       Required = False
     end
     object qsConnuser_password: TMemoField
-      DisplayLabel = 'Senha'
+      DisplayLabel = 'Password'
       FieldKind = fkData
       FieldName = 'user_password'
       Index = 7
@@ -2535,7 +2535,7 @@ object DMM: TDMM
       Transliterate = False
     end
     object qsConninsert_date: TDateTimeField
-      DisplayLabel = 'Data de criação'
+      DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
       Index = 8
@@ -2545,7 +2545,7 @@ object DMM: TDMM
       Required = False
     end
     object qsConnupdate_date: TDateTimeField
-      DisplayLabel = 'Data de modificação'
+      DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
       Index = 9

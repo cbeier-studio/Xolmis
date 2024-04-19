@@ -6,15 +6,13 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn, Buttons, ComCtrls,
-  atshapelinebgra, BCPanel, ColorSpeedButton, rxswitch;
+  atshapelinebgra, BCPanel, rxswitch;
 
 type
 
   { TcfgOptions }
 
   TcfgOptions = class(TForm)
-    BCPanel1: TBCPanel;
-    pIndicator: TBCPanel;
     cbCheckUpdates: TComboBox;
     cbClearDeleted: TComboBox;
     cbMainTaxonomy: TComboBox;
@@ -99,17 +97,13 @@ type
     sbCheckUpdatesNow: TBitBtn;
     sbClose: TButton;
     sbNewBackup: TBitBtn;
-    tabGeneral: TColorSpeedButton;
-    tabCollection: TColorSpeedButton;
-    tabMedia: TColorSpeedButton;
-    tabSecurity: TColorSpeedButton;
-    tabBackup: TColorSpeedButton;
     sbRestoreBackup: TBitBtn;
     scrollGeneral: TScrollBox;
     scrollCollection: TScrollBox;
     scrollMedia: TScrollBox;
     scrollSecurity: TScrollBox;
     scrollBackup: TScrollBox;
+    tvMenu: TTreeView;
     tsAllowUsageData: TRxSwitch;
     tsConfirmCancel: TRxSwitch;
     tsEnterAsTab: TRxSwitch;
@@ -130,7 +124,6 @@ type
     procedure sbCheckUpdatesNowClick(Sender: TObject);
     procedure sbNewBackupClick(Sender: TObject);
     procedure sbRestoreBackupClick(Sender: TObject);
-    procedure tabGeneralClick(Sender: TObject);
     procedure tsAllowUsageDataOn(Sender: TObject);
     procedure tsWriteLogsOn(Sender: TObject);
     procedure tsConfirmCancelOn(Sender: TObject);
@@ -139,6 +132,7 @@ type
     procedure tsRememberUserOn(Sender: TObject);
     procedure tsShowSynonymsOn(Sender: TObject);
     procedure tsStartupBackupOn(Sender: TObject);
+    procedure tvMenuSelectionChanged(Sender: TObject);
   private
     procedure LoadConfig;
   public
@@ -161,6 +155,11 @@ begin
   XSettings.AllowWriteLogs := tsWriteLogs.StateOn = sw_on;
 end;
 
+procedure TcfgOptions.tvMenuSelectionChanged(Sender: TObject);
+begin
+  nbPages.PageIndex := tvMenu.Selected.Index;
+end;
+
 procedure TcfgOptions.tsAllowUsageDataOn(Sender: TObject);
 begin
   XSettings.AllowSendUsageData := tsAllowUsageData.StateOn = sw_on;
@@ -175,12 +174,6 @@ begin
   OpenDlg.InitialDir:= XSettings.BackupFolder;
   if OpenDlg.Execute then
     RestoreBackup(OpenDlg.FileName);
-end;
-
-procedure TcfgOptions.tabGeneralClick(Sender: TObject);
-begin
-  nbPages.PageIndex := TColorSpeedButton(Sender).Tag;
-  pIndicator.AnchorVerticalCenterTo(Sender as TControl);
 end;
 
 procedure TcfgOptions.sbNewBackupClick(Sender: TObject);
@@ -233,6 +226,7 @@ end;
 procedure TcfgOptions.FormShow(Sender: TObject);
 begin
   //SBox.VertScrollBar.Position := 0;
+  tvMenu.Selected := tvMenu.Items.GetFirstNode;
   pManageBackups.Enabled := not (ActiveUser.IsVisitor);
 
   LoadConfig;

@@ -101,7 +101,7 @@ object edtNest: TedtNest
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
-      object pSupplier: TPanel
+      object pLocality: TPanel
         Left = 0
         Height = 46
         Top = 245
@@ -117,8 +117,8 @@ object edtNest: TedtNest
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 0
-        object lblSupplier: TLabel
+        TabOrder = 5
+        object lblLocality: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -155,7 +155,7 @@ object edtNest: TedtNest
           OnKeyDown = FormKeyDown
         end
       end
-      object pRequester: TPanel
+      object pFieldNumberFate: TPanel
         Left = 0
         Height = 45
         Top = 62
@@ -228,7 +228,7 @@ object edtNest: TedtNest
           TabOrder = 1
         end
       end
-      object pStatus1: TPanel
+      object pTaxon: TPanel
         Left = 0
         Height = 46
         Top = 16
@@ -244,7 +244,7 @@ object edtNest: TedtNest
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 2
+        TabOrder = 0
         object lblBandStatus1: TLabel
           Left = 16
           Height = 15
@@ -298,7 +298,7 @@ object edtNest: TedtNest
         ClientHeight = 124
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 3
+        TabOrder = 21
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -326,7 +326,7 @@ object edtNest: TedtNest
           TabOrder = 0
         end
       end
-      object pSupplier1: TPanel
+      object pProject: TPanel
         Left = 0
         Height = 46
         Top = 153
@@ -342,7 +342,7 @@ object edtNest: TedtNest
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 3
         object lblSupplier1: TLabel
           Left = 16
           Height = 15
@@ -380,7 +380,7 @@ object edtNest: TedtNest
           OnKeyDown = FormKeyDown
         end
       end
-      object pRequester1: TPanel
+      object pObserver: TPanel
         Left = 0
         Height = 46
         Top = 199
@@ -396,7 +396,7 @@ object edtNest: TedtNest
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 4
         object lblRequester1: TLabel
           Left = 16
           Height = 15
@@ -434,7 +434,7 @@ object edtNest: TedtNest
           OnKeyDown = FormKeyDown
         end
       end
-      object pStatus3: TPanel
+      object pDateFoundLast: TPanel
         Left = 0
         Height = 46
         Top = 107
@@ -450,7 +450,7 @@ object edtNest: TedtNest
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 2
         object lblBandStatus3: TLabel
           Left = 16
           Height = 15
@@ -528,7 +528,7 @@ object edtNest: TedtNest
           OnKeyPress = eFieldNumberKeyPress
         end
       end
-      object pStatus4: TPanel
+      object pLongLat: TPanel
         Left = 0
         Height = 46
         Top = 291
@@ -544,7 +544,7 @@ object edtNest: TedtNest
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 6
         object lblBandStatus4: TLabel
           Left = 16
           Height = 15
@@ -637,7 +637,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 8
+        TabOrder = 9
         object lblSupportType: TLabel
           Left = 16
           Height = 15
@@ -716,7 +716,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 13
         object lblBandStatus6: TLabel
           Left = 16
           Height = 15
@@ -782,7 +782,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 10
+        TabOrder = 14
         object lblBandStatus7: TLabel
           Left = 16
           Height = 15
@@ -832,7 +832,7 @@ object edtNest: TedtNest
           OnKeyPress = eFieldNumberKeyPress
         end
       end
-      object pRequester2: TPanel
+      object pProductivity: TPanel
         Left = 0
         Height = 45
         Top = 455
@@ -849,7 +849,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 11
+        TabOrder = 8
         object lblRequester2: TLabel
           Left = 16
           Height = 15
@@ -875,7 +875,7 @@ object edtNest: TedtNest
           OnKeyPress = eFieldNumberKeyPress
         end
       end
-      object pNotes1: TPanel
+      object pDescription: TPanel
         Left = 0
         Height = 92
         Top = 350
@@ -891,7 +891,7 @@ object edtNest: TedtNest
         ClientHeight = 92
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 12
+        TabOrder = 7
         object lblNotes1: TLabel
           Left = 16
           Height = 15
@@ -935,7 +935,7 @@ object edtNest: TedtNest
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 13
+        TabOrder = 10
         object lblSupportPlant1: TLabel
           Left = 16
           Height = 15
@@ -989,7 +989,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 14
+        TabOrder = 12
         Visible = False
         object lblOtherSupport: TLabel
           Left = 16
@@ -1032,7 +1032,7 @@ object edtNest: TedtNest
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 15
+        TabOrder = 11
         object lblSupportPlant2: TLabel
           Left = 16
           Height = 15
@@ -1087,7 +1087,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 16
+        TabOrder = 15
         object lblBandStatus13: TLabel
           Left = 16
           Height = 15
@@ -1153,7 +1153,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 17
+        TabOrder = 16
         object lblBandStatus15: TLabel
           Left = 16
           Height = 15
@@ -1220,7 +1220,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 18
+        TabOrder = 17
         object lblBandStatus17: TLabel
           Left = 16
           Height = 15
@@ -1352,7 +1352,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 20
+        TabOrder = 18
         object lblBandStatus21: TLabel
           Left = 16
           Height = 15
@@ -1418,7 +1418,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 21
+        TabOrder = 20
         object lblRequester4: TLabel
           Left = 16
           Height = 15

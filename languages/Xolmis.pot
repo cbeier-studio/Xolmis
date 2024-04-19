@@ -3008,6 +3008,30 @@ msgctxt "tcfgdatabase.mmtestconnection.caption"
 msgid "Test connection"
 msgstr ""
 
+#: tcfgdatabase.pmgdelete.caption
+msgctxt "tcfgdatabase.pmgdelete.caption"
+msgid "Delete"
+msgstr ""
+
+#: tcfgdatabase.pmgedit.caption
+msgid "Edit connection"
+msgstr ""
+
+#: tcfgdatabase.pmgnew.caption
+msgctxt "tcfgdatabase.pmgnew.caption"
+msgid "New connection"
+msgstr ""
+
+#: tcfgdatabase.pmgrefresh.caption
+msgctxt "tcfgdatabase.pmgrefresh.caption"
+msgid "Refresh"
+msgstr ""
+
+#: tcfgdatabase.pmgtest.caption
+msgctxt "tcfgdatabase.pmgtest.caption"
+msgid "Test connection"
+msgstr ""
+
 #: tcfgdatabase.sbclose.caption
 msgctxt "tcfgdatabase.sbclose.caption"
 msgid "Close"
@@ -3016,6 +3040,10 @@ msgstr ""
 #: tcfgdatabase.sbrefreshrecords.hint
 msgctxt "tcfgdatabase.sbrefreshrecords.hint"
 msgid "Refresh records"
+msgstr ""
+
+#: tcfgdatabase.vtconnections.header.columns[0].text
+msgid "Connection"
 msgstr ""
 
 #: tcfgdelimiters.caption
@@ -3183,31 +3211,6 @@ msgstr ""
 #: tcfgoptions.sbrestorebackup.caption
 msgctxt "tcfgoptions.sbrestorebackup.caption"
 msgid "Restore"
-msgstr ""
-
-#: tcfgoptions.tabbackup.hint
-msgctxt "tcfgoptions.tabbackup.hint"
-msgid "Backup and restore"
-msgstr ""
-
-#: tcfgoptions.tabcollection.hint
-msgctxt "tcfgoptions.tabcollection.hint"
-msgid "Collection"
-msgstr ""
-
-#: tcfgoptions.tabgeneral.hint
-msgctxt "tcfgoptions.tabgeneral.hint"
-msgid "General"
-msgstr ""
-
-#: tcfgoptions.tabmedia.hint
-msgctxt "tcfgoptions.tabmedia.hint"
-msgid "Media"
-msgstr ""
-
-#: tcfgoptions.tabsecurity.hint
-msgctxt "tcfgoptions.tabsecurity.hint"
-msgid "Security and privacy"
 msgstr ""
 
 #: tcfgusers.caption
@@ -3726,6 +3729,7 @@ msgid "Admin password"
 msgstr ""
 
 #: tdlgfirstconfig.lbltitleauthentication1.caption
+msgctxt "tdlgfirstconfig.lbltitleauthentication1.caption"
 msgid "New connection"
 msgstr ""
 
@@ -5278,6 +5282,11 @@ msgctxt "tedtnest.lblheightaboveground.caption"
 msgid "Height at ground level:"
 msgstr ""
 
+#: tedtnest.lbllocality.caption
+msgctxt "tedtnest.lbllocality.caption"
+msgid "Locality:"
+msgstr ""
+
 #: tedtnest.lblnotes.caption
 msgctxt "tedtnest.lblnotes.caption"
 msgid "Notes:"
@@ -5312,11 +5321,6 @@ msgstr ""
 
 #: tedtnest.lblrequester4.caption
 msgid "Cover (%):"
-msgstr ""
-
-#: tedtnest.lblsupplier.caption
-msgctxt "tedtnest.lblsupplier.caption"
-msgid "Locality:"
 msgstr ""
 
 #: tedtnest.lblsupplier1.caption

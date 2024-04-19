@@ -3,10 +3,10 @@
 #define MyAppVersion "0.1"
 #define MyAppPublisher "Christian Beier Studio"
 #define MyAppExeName "Xolmis.exe"
-#define MyAppSource ".\win64\Beta-x86_64"
+#define MyAppSource ".\win64\x86_64"
 
 [Setup]
-AppId={{E9CE3CB4-EB71-4E42-9B7E-5DE99A2C0D0E}
+AppId={E9CE3CB4-EB71-4E42-9B7E-5DE99A2C0D0E}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}

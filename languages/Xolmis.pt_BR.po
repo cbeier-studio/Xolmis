@@ -3034,6 +3034,30 @@ msgctxt "tcfgdatabase.mmtestconnection.caption"
 msgid "Test connection"
 msgstr "Testar conexão"
 
+#: tcfgdatabase.pmgdelete.caption
+msgctxt "tcfgdatabase.pmgdelete.caption"
+msgid "Delete"
+msgstr "Apagar"
+
+#: tcfgdatabase.pmgedit.caption
+msgid "Edit connection"
+msgstr "Editar conexão"
+
+#: tcfgdatabase.pmgnew.caption
+msgctxt "tcfgdatabase.pmgnew.caption"
+msgid "New connection"
+msgstr "Nova conexão"
+
+#: tcfgdatabase.pmgrefresh.caption
+msgctxt "tcfgdatabase.pmgrefresh.caption"
+msgid "Refresh"
+msgstr "Atualizar"
+
+#: tcfgdatabase.pmgtest.caption
+msgctxt "tcfgdatabase.pmgtest.caption"
+msgid "Test connection"
+msgstr "Testar conexão"
+
 #: tcfgdatabase.sbclose.caption
 msgctxt "tcfgdatabase.sbclose.caption"
 msgid "Close"
@@ -3043,6 +3067,10 @@ msgstr "Fechar"
 msgctxt "tcfgdatabase.sbrefreshrecords.hint"
 msgid "Refresh records"
 msgstr "Atualizar registros"
+
+#: tcfgdatabase.vtconnections.header.columns[0].text
+msgid "Connection"
+msgstr "Conexão"
 
 #: tcfgdelimiters.caption
 msgid "Delimitation options"
@@ -3210,31 +3238,6 @@ msgstr "Criar backup"
 msgctxt "tcfgoptions.sbrestorebackup.caption"
 msgid "Restore"
 msgstr "Restaurar"
-
-#: tcfgoptions.tabbackup.hint
-msgctxt "tcfgoptions.tabbackup.hint"
-msgid "Backup and restore"
-msgstr "Backup e restauração"
-
-#: tcfgoptions.tabcollection.hint
-msgctxt "tcfgoptions.tabcollection.hint"
-msgid "Collection"
-msgstr "Acervo"
-
-#: tcfgoptions.tabgeneral.hint
-msgctxt "tcfgoptions.tabgeneral.hint"
-msgid "General"
-msgstr "Geral"
-
-#: tcfgoptions.tabmedia.hint
-msgctxt "tcfgoptions.tabmedia.hint"
-msgid "Media"
-msgstr "Mídias"
-
-#: tcfgoptions.tabsecurity.hint
-msgctxt "tcfgoptions.tabsecurity.hint"
-msgid "Security and privacy"
-msgstr "Segurança e privacidade"
 
 #: tcfgusers.caption
 msgctxt "tcfgusers.caption"
@@ -3752,6 +3755,7 @@ msgid "Admin password"
 msgstr "Senha do admin"
 
 #: tdlgfirstconfig.lbltitleauthentication1.caption
+msgctxt "tdlgfirstconfig.lbltitleauthentication1.caption"
 msgid "New connection"
 msgstr "Nova conexão"
 
@@ -5304,6 +5308,11 @@ msgctxt "tedtnest.lblheightaboveground.caption"
 msgid "Height at ground level:"
 msgstr "Altura ao nível do solo:"
 
+#: tedtnest.lbllocality.caption
+msgctxt "tedtnest.lbllocality.caption"
+msgid "Locality:"
+msgstr "Localidade:"
+
 #: tedtnest.lblnotes.caption
 msgctxt "tedtnest.lblnotes.caption"
 msgid "Notes:"
@@ -5339,11 +5348,6 @@ msgstr "Destino:"
 #: tedtnest.lblrequester4.caption
 msgid "Cover (%):"
 msgstr "Cobertura (%):"
-
-#: tedtnest.lblsupplier.caption
-msgctxt "tedtnest.lblsupplier.caption"
-msgid "Locality:"
-msgstr "Localidade:"
 
 #: tedtnest.lblsupplier1.caption
 msgctxt "tedtnest.lblsupplier1.caption"

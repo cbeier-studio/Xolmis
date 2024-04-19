@@ -2,7 +2,7 @@
 {"hash":211241444,"name":"tedtnest.caption","sourcebytes":[78,101,119,32,110,101,115,116],"value":"New nest"},
 {"hash":366789,"name":"tedtnest.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtnest.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
-{"hash":159602842,"name":"tedtnest.lblsupplier.caption","sourcebytes":[76,111,99,97,108,105,116,121,58],"value":"Locality:"},
+{"hash":159602842,"name":"tedtnest.lbllocality.caption","sourcebytes":[76,111,99,97,108,105,116,121,58],"value":"Locality:"},
 {"hash":157264490,"name":"tedtnest.lblrequester.caption","sourcebytes":[70,105,101,108,100,32,110,117,109,98,101,114,58],"value":"Field number:"},
 {"hash":5016202,"name":"tedtnest.lblrequester3.caption","sourcebytes":[70,97,116,101,58],"value":"Fate:"},
 {"hash":94959130,"name":"tedtnest.lblbandstatus1.caption","sourcebytes":[84,97,120,111,110,58],"value":"Taxon:"},
