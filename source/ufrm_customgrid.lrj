@@ -143,7 +143,7 @@
 {"hash":132082148,"name":"tfrmcustomgrid.sbnextrecord.hint","sourcebytes":[78,101,120,116,32,114,101,99,111,114,100],"value":"Next record"},
 {"hash":131673316,"name":"tfrmcustomgrid.sblastrecord.hint","sourcebytes":[76,97,115,116,32,114,101,99,111,114,100],"value":"Last record"},
 {"hash":73584121,"name":"tfrmcustomgrid.lblemptyquery.caption","sourcebytes":[82,101,115,117,108,116,32,113,117,101,114,121,32,105,115,32,101,109,112,116,121],"value":"Result query is empty"},
-{"hash":93038212,"name":"tfrmcustomgrid.sbshowrecord.hint","sourcebytes":[82,101,99,111,114,100],"value":"Record"},
+{"hash":23920083,"name":"tfrmcustomgrid.sbshowrecord.hint","sourcebytes":[82,101,99,111,114,100,32,100,101,116,97,105,108,115],"value":"Record details"},
 {"hash":73150883,"name":"tfrmcustomgrid.sbshowquickfilters.hint","sourcebytes":[81,117,105,99,107,32,102,105,108,116,101,114,115],"value":"Quick filters"},
 {"hash":84114883,"name":"tfrmcustomgrid.sbshowimages.hint","sourcebytes":[73,109,97,103,101,115],"value":"Images"},
 {"hash":110757075,"name":"tfrmcustomgrid.sbshowaudio.hint","sourcebytes":[65,117,100,105,111,32,114,101,99,111,114,100,105,110,103,115],"value":"Audio recordings"},

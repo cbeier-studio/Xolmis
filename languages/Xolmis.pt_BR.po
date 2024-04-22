@@ -7359,8 +7359,8 @@ msgstr "Filtros rápidos"
 
 #: tfrmcustomgrid.sbshowrecord.hint
 msgctxt "tfrmcustomgrid.sbshowrecord.hint"
-msgid "Record"
-msgstr "Registro"
+msgid "Record details"
+msgstr "Detalhes do registro"
 
 #: tfrmcustomgrid.sbshowrecycle.hint
 msgctxt "tfrmcustomgrid.sbshowrecycle.hint"
@@ -7418,6 +7418,7 @@ msgid "Summary"
 msgstr "Sumário"
 
 #: tfrmcustomgrid.titleviewrecord.caption
+msgctxt "tfrmcustomgrid.titleviewrecord.caption"
 msgid "Record details"
 msgstr "Detalhes do registro"
 

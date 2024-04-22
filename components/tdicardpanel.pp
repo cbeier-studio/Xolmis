@@ -854,7 +854,7 @@ begin
           if Assigned( FormInPage ) then
           begin
             CanRemovePage := False;
-            FormInPage.Close ;
+            FormInPage.Close;
           end ;
         end ;
       end ;

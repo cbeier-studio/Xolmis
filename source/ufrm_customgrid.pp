@@ -690,7 +690,26 @@ type
     procedure LoadRecordRow;
 
     procedure SetGridAndChild;
+    procedure SetGridBands;
+    procedure SetGridBotanicTaxa;
+    procedure SetGridCaptures;
     procedure SetGridColumns(aTable: TTableType; aGrid: TDBGrid);
+    procedure SetGridEggs;
+    procedure SetGridGazetteer;
+    procedure SetGridIndividuals;
+    procedure SetGridInstitutions;
+    procedure SetGridMethods;
+    procedure SetGridNestRevisions;
+    procedure SetGridNests;
+    procedure SetGridExpeditions;
+    procedure SetGridNetStations;
+    procedure SetGridPeople;
+    procedure SetGridPermits;
+    procedure SetGridProjects;
+    procedure SetGridSightings;
+    procedure SetGridSpecimens;
+    procedure SetGridSurveys;
+    procedure SetGridTaxonRanks;
     procedure SetSidePanel(aValue: Boolean);
     procedure SetSideIndex(aValue: Integer);
     procedure SetSearchString(aValue: String);
@@ -2666,6 +2685,17 @@ begin
   TimerUpdate.Enabled := False;
   TimerFind.Enabled := False;
 
+  if Assigned(dsLink5.DataSet) then
+    dsLink5.DataSet.Close;
+  if Assigned(dsLink4.DataSet) then
+    dsLink4.DataSet.Close;
+  if Assigned(dsLink3.DataSet) then
+    dsLink3.DataSet.Close;
+  if Assigned(dsLink2.DataSet) then
+    dsLink2.DataSet.Close;
+  if Assigned(dsLink1.DataSet) then
+    dsLink1.DataSet.Close;
+
   if Assigned(dsLink.DataSet) then
     dsLink.DataSet.Close;
 
@@ -4019,6 +4049,305 @@ begin
 
   if pmTree.PopupComponent = tvDateFilter then
     LoadDateTreeData(FTableType, tvDateFilter);
+end;
+
+procedure TfrmCustomGrid.SetGridMethods;
+begin
+  Caption := rsTitleMethods;
+  AddSortedField('method_name', sdAscending);
+  dsLink.DataSet := DMG.qMethods;
+
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridEggs;
+begin
+  Caption := rsTitleEggs;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qEggs;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridNestRevisions;
+begin
+  Caption := rsTitleNestRevisions;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qNestRevisions;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridCaptures;
+begin
+  Caption := rsTitleCaptures;
+  AddSortedField('capture_date', sdDescending);
+  dsLink.DataSet := DMG.qCaptures;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridBands;
+begin
+  Caption := rsTitleBands;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qBands;
+end;
+
+procedure TfrmCustomGrid.SetGridBotanicTaxa;
+begin
+  Caption := rsTitleBotanicTaxa;
+  AddSortedField('taxon_name', sdAscending);
+  dsLink.DataSet := DMG.qBotany;
+end;
+
+procedure TfrmCustomGrid.SetGridTaxonRanks;
+begin
+  Caption := rsTitleTaxonRanks;
+  AddSortedField('rank_seq', sdAscending);
+  dsLink.DataSet := DMG.qTaxonRanks;
+end;
+
+procedure TfrmCustomGrid.SetGridGazetteer;
+begin
+  Caption := rsTitleGazetteer;
+  AddSortedField('site_name', sdAscending);
+  dsLink.DataSet := DMG.qGazetteer;
+
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridPermits;
+begin
+  Caption := rsTitlePermits;
+  AddSortedField('permit_name', sdAscending);
+  dsLink.DataSet := DMG.qPermits;
+
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridNetStations;
+begin
+  Caption := rsTitleSamplingPlots;
+  AddSortedField('station_name', sdAscending);
+  dsLink.DataSet := DMG.qNetStations;
+
+  lblChildTag1.Caption := rsTitlePermanentNets;
+  pChildTag1.Visible := True;
+  nbChilds.PageIndex := 0;
+  FChildTable := tbPermanentNets;
+  dsLink1.DataSet := DMG.qPermanentNets;
+  pmcNewPermanentNet.Visible := True;
+
+  pChildsBar.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridSightings;
+begin
+  Caption := rsTitleSightings;
+  AddSortedField('sighting_date', sdDescending);
+  dsLink.DataSet := DMG.qSightings;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridPeople;
+begin
+  Caption := rsTitleResearchers;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qPeople;
+end;
+
+procedure TfrmCustomGrid.SetGridInstitutions;
+begin
+  Caption := rsTitleInstitutions;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qInstitutions;
+end;
+
+procedure TfrmCustomGrid.SetGridProjects;
+begin
+  Caption := rsTitleProjects;
+  AddSortedField('project_title', sdAscending);
+  dsLink.DataSet := DMG.qProjects;
+
+  lblChildTag1.Caption := rsTitleTeam;
+  pChildTag1.Visible := True;
+  nbChilds.PageIndex := 0;
+  FChildTable := tbProjectTeams;
+  dsLink1.DataSet := DMG.qProjectTeam;
+  pmcNewProjectMember.Visible := True;
+
+  pChildsBar.Visible := True;
+
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridIndividuals;
+begin
+  Caption := rsTitleIndividuals;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qIndividuals;
+
+  lblChildTag1.Caption := rsTitleCaptures;
+  lblChildTag2.Caption := rsTitleMolts;
+  lblChildTag3.Caption := rsTitleSightings;
+  lblChildTag4.Caption := rsTitleNests;
+  lblChildTag5.Caption := rsTitleSpecimens;
+  pChildTag1.Visible := True;
+  pChildTag2.Visible := True;
+  pChildTag3.Visible := True;
+  pChildTag4.Visible := True;
+  pChildTag5.Visible := True;
+  nbChilds.PageIndex := 0;
+  if not Assigned(DMI) then
+    DMI := TDMI.Create(nil);
+  FChildTable := tbCaptures;
+  dsLink1.DataSet := DMI.qCaptures;
+  dsLink2.DataSet := DMI.qMolts;
+  dsLink3.DataSet := DMI.qSightings;
+  dsLink4.DataSet := DMI.qNests;
+  dsLink5.DataSet := DMI.qSpecimens;
+  pmcNewCapture.Visible := True;
+  pmcNewMolt.Visible := True;
+  pmcNewSighting.Visible := True;
+  pmcNewNest.Visible := True;
+  pmcNewSpecimen.Visible := True;
+
+  pChildsBar.Visible := True;
+  //pChild.Visible := True;
+  dbgImages.DataSource := DMI.dsImages;
+  lblImageTime.DataSource := dbgImages.DataSource;
+  lblImageDate.DataSource := dbgImages.DataSource;
+  lblImageType.DataSource := dbgImages.DataSource;
+  //imgThumb.DataSource := dbgImages.DataSource;
+  //imgThumb.DataField := 'image_thumbnail';
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridSpecimens;
+begin
+  Caption := rsTitleSpecimens;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qSpecimens;
+
+  lblChildTag1.Caption := rsTitleCollectors;
+  lblChildTag2.Caption := rsTitleSamplePreps;
+  pChildTag1.Visible := True;
+  pChildTag2.Visible := True;
+  nbChilds.PageIndex := 0;
+  FChildTable := tbSpecimenCollectors;
+  dsLink1.DataSet := DMG.qSampleCollectors;
+  dsLink2.DataSet := DMG.qSamplePreps;
+  pmcNewCollector.Visible := True;
+  pmcNewSamplePrep.Visible := True;
+
+  pChildsBar.Visible := True;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridNests;
+begin
+  Caption := rsTitleNests;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qNests;
+
+  lblChildTag1.Caption := rsTitleNestOwners;
+  lblChildTag2.Caption := rsTitleNestRevisions;
+  lblChildTag3.Caption := rsTitleEggs;
+  pChildTag1.Visible := True;
+  pChildTag2.Visible := True;
+  pChildTag3.Visible := True;
+  nbChilds.PageIndex := 0;
+  if not Assigned(DMB) then
+    DMB := TDMB.Create(nil);
+  FChildTable := tbNestOwners;
+  dsLink1.DataSet := DMB.qNestOwners;
+  dsLink2.DataSet := DMB.qNestRevisions;
+  dsLink3.DataSet := DMB.qEggs;
+  pmcNewNestOwner.Visible := True;
+  pmcNewNestRevision.Visible := True;
+  pmcNewEgg.Visible := True;
+
+  pChildsBar.Visible := True;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridExpeditions;
+begin
+  Caption := rsCaptionExpeditions;
+  AddSortedField('start_date', sdDescending);
+  dsLink.DataSet := DMG.qExpeditions;
+
+  lblChildTag1.Caption := rsTitleSurveys;
+  pChildTag1.Visible := True;
+  nbChilds.PageIndex := 0;
+  if not Assigned(DMS) then
+    DMS := TDMS.Create(nil);
+  FChildTable := tbSurveys;
+  dsLink1.DataSet := DMS.qSurveys;
+  pmcNewSurvey.Visible := True;
+
+  pChildsBar.Visible := True;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridSurveys;
+begin
+  Caption := rsTitleSurveys;
+  AddSortedField('survey_date', sdDescending);
+  dsLink.DataSet := DMG.qSurveys;
+
+  lblChildTag1.Caption := rsTitleTeam;
+  lblChildTag2.Caption := rsTitleNetsEffort;
+  lblChildTag3.Caption := rsTitleWeather;
+  lblChildTag4.Caption := rsTitleCaptures;
+  lblChildTag5.Caption := rsTitleSightings;
+  pChildTag1.Visible := True;
+  pChildTag2.Visible := True;
+  pChildTag3.Visible := True;
+  pChildTag4.Visible := True;
+  pChildTag5.Visible := True;
+  nbChilds.PageIndex := 0;
+  if not Assigned(DMS) then
+    DMS := TDMS.Create(nil);
+  FChildTable := tbSurveyTeams;
+  dsLink1.DataSet := DMS.qSurveyTeam;
+  dsLink2.DataSet := DMS.qNetsEffort;
+  dsLink3.DataSet := DMS.qWeatherLogs;
+  dsLink4.DataSet := DMS.qCaptures;
+  dsLink5.DataSet := DMS.qSightings;
+  pmcNewSurveyMember.Visible := True;
+  pmcNewMistnet.Visible := True;
+  pmcNewWeatherLog.Visible := True;
+  pmcNewCapture.Visible := True;
+  pmcNewSighting.Visible := True;
+
+  pChildsBar.Visible := True;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.sbAddChildClick(Sender: TObject);
@@ -5707,296 +6036,26 @@ begin
   FChildTable := tbNone;
 
   case FTableType of
-    tbInstitutions:
-      begin
-        Caption := rsTitleInstitutions;
-        AddSortedField('full_name', sdAscending);
-        dsLink.DataSet := DMG.qInstitutions;
-
-      end;
-    tbPeople:
-      begin
-        Caption := rsTitleResearchers;
-        AddSortedField('full_name', sdAscending);
-        dsLink.DataSet := DMG.qPeople;
-
-      end;
-    tbProjects:
-      begin
-        Caption := rsTitleProjects;
-        AddSortedField('project_title', sdAscending);
-        dsLink.DataSet := DMG.qProjects;
-
-        lblChildTag1.Caption := rsTitleTeam;
-        pChildTag1.Visible := True;
-        nbChilds.PageIndex := 0;
-        FChildTable := tbProjectTeams;
-        dsLink1.DataSet := DMG.qProjectTeam;
-        pmcNewProjectMember.Visible := True;
-
-        pChildsBar.Visible := True;
-
-        //sbShowDocs.Visible := True;
-      end;
-    tbPermits:
-      begin
-        Caption := rsTitlePermits;
-        AddSortedField('permit_name', sdAscending);
-        dsLink.DataSet := DMG.qPermits;
-
-        //sbShowDocs.Visible := True;
-      end;
-    tbGazetteer:
-      begin
-        Caption := rsTitleGazetteer;
-        AddSortedField('site_name', sdAscending);
-        dsLink.DataSet := DMG.qGazetteer;
-
-        //sbShowDocs.Visible := True;
-      end;
-    tbNetStations:
-      begin
-        Caption := rsTitleSamplingPlots;
-        AddSortedField('station_name', sdAscending);
-        dsLink.DataSet := DMG.qNetStations;
-
-        lblChildTag1.Caption := rsTitlePermanentNets;
-        pChildTag1.Visible := True;
-        nbChilds.PageIndex := 0;
-        FChildTable := tbPermanentNets;
-        dsLink1.DataSet := DMG.qPermanentNets;
-        pmcNewPermanentNet.Visible := True;
-
-        pChildsBar.Visible := True;
-
-      end;
-    tbTaxonRanks:
-      begin
-        Caption := rsTitleTaxonRanks;
-        AddSortedField('rank_seq', sdAscending);
-        dsLink.DataSet := DMG.qTaxonRanks;
-
-      end;
-    tbBotanicTaxa:
-      begin
-        Caption := rsTitleBotanicTaxa;
-        AddSortedField('taxon_name', sdAscending);
-        dsLink.DataSet := DMG.qBotany;
-
-      end;
-    tbZooTaxa:
-      begin
-
-      end;
-    tbBands:
-      begin
-        Caption := rsTitleBands;
-        AddSortedField('full_name', sdAscending);
-        dsLink.DataSet := DMG.qBands;
-
-      end;
-    tbIndividuals:
-      begin
-        Caption := rsTitleIndividuals;
-        AddSortedField('full_name', sdAscending);
-        dsLink.DataSet := DMG.qIndividuals;
-
-        lblChildTag1.Caption := rsTitleCaptures;
-        lblChildTag2.Caption := rsTitleMolts;
-        lblChildTag3.Caption := rsTitleSightings;
-        lblChildTag4.Caption := rsTitleNests;
-        lblChildTag5.Caption := rsTitleSpecimens;
-        pChildTag1.Visible := True;
-        pChildTag2.Visible := True;
-        pChildTag3.Visible := True;
-        pChildTag4.Visible := True;
-        pChildTag5.Visible := True;
-        nbChilds.PageIndex := 0;
-        if not Assigned(DMI) then
-          DMI := TDMI.Create(Self);
-        FChildTable := tbCaptures;
-        dsLink1.DataSet := DMI.qCaptures;
-        dsLink2.DataSet := DMI.qMolts;
-        dsLink3.DataSet := DMI.qSightings;
-        dsLink4.DataSet := DMI.qNests;
-        dsLink5.DataSet := DMI.qSpecimens;
-        pmcNewCapture.Visible := True;
-        pmcNewMolt.Visible := True;
-        pmcNewSighting.Visible := True;
-        pmcNewNest.Visible := True;
-        pmcNewSpecimen.Visible := True;
-
-        pChildsBar.Visible := True;
-        //pChild.Visible := True;
-        dbgImages.DataSource := DMI.dsImages;
-        lblImageTime.DataSource := dbgImages.DataSource;
-        lblImageDate.DataSource := dbgImages.DataSource;
-        lblImageType.DataSource := dbgImages.DataSource;
-        //imgThumb.DataSource := dbgImages.DataSource;
-        //imgThumb.DataField := 'image_thumbnail';
-
-        //sbShowImages.Visible := True;
-        //sbShowAudio.Visible := True;
-        //sbShowDocs.Visible := True;
-      end;
-    tbCaptures:
-      begin
-        Caption := rsTitleCaptures;
-        AddSortedField('capture_date', sdDescending);
-        dsLink.DataSet := DMG.qCaptures;
-
-        //sbShowImages.Visible := True;
-        //sbShowAudio.Visible := True;
-        //sbShowDocs.Visible := True;
-      end;
-    tbNests:
-      begin
-        Caption := rsTitleNests;
-        AddSortedField('full_name', sdAscending);
-        dsLink.DataSet := DMG.qNests;
-
-        lblChildTag1.Caption := rsTitleNestOwners;
-        lblChildTag2.Caption := rsTitleNestRevisions;
-        lblChildTag3.Caption := rsTitleEggs;
-        pChildTag1.Visible := True;
-        pChildTag2.Visible := True;
-        pChildTag3.Visible := True;
-        nbChilds.PageIndex := 0;
-        if not Assigned(DMB) then
-          DMB := TDMB.Create(Self);
-        FChildTable := tbNestOwners;
-        dsLink1.DataSet := DMB.qNestOwners;
-        dsLink2.DataSet := DMB.qNestRevisions;
-        dsLink3.DataSet := DMB.qEggs;
-        pmcNewNestOwner.Visible := True;
-        pmcNewNestRevision.Visible := True;
-        pmcNewEgg.Visible := True;
-
-        pChildsBar.Visible := True;
-
-        //sbShowImages.Visible := True;
-        //sbShowAudio.Visible := True;
-        //sbShowDocs.Visible := True;
-      end;
-    tbNestRevisions:
-      begin
-        Caption := rsTitleNestRevisions;
-        AddSortedField('full_name', sdAscending);
-        dsLink.DataSet := DMG.qNestRevisions;
-
-        //sbShowImages.Visible := True;
-        //sbShowAudio.Visible := True;
-        //sbShowDocs.Visible := True;
-      end;
-    tbEggs:
-      begin
-        Caption := rsTitleEggs;
-        AddSortedField('full_name', sdAscending);
-        dsLink.DataSet := DMG.qEggs;
-
-        //sbShowImages.Visible := True;
-        //sbShowAudio.Visible := True;
-        //sbShowDocs.Visible := True;
-      end;
-    tbMethods:
-      begin
-        Caption := rsTitleMethods;
-        AddSortedField('method_name', sdAscending);
-        dsLink.DataSet := DMG.qMethods;
-
-        //sbShowDocs.Visible := True;
-      end;
-    tbExpeditions:
-      begin
-        Caption := rsCaptionExpeditions;
-        AddSortedField('start_date', sdDescending);
-        dsLink.DataSet := DMG.qExpeditions;
-
-        lblChildTag1.Caption := rsTitleSurveys;
-        pChildTag1.Visible := True;
-        nbChilds.PageIndex := 0;
-        if not Assigned(DMS) then
-          DMS := TDMS.Create(Self);
-        FChildTable := tbSurveys;
-        dsLink1.DataSet := DMS.qSurveys;
-        pmcNewSurvey.Visible := True;
-
-        pChildsBar.Visible := True;
-
-        //sbShowImages.Visible := True;
-        //sbShowAudio.Visible := True;
-        //sbShowDocs.Visible := True;
-      end;
-    tbSurveys:
-      begin
-        Caption := rsTitleSurveys;
-        AddSortedField('survey_date', sdDescending);
-        dsLink.DataSet := DMG.qSurveys;
-
-        lblChildTag1.Caption := rsTitleTeam;
-        lblChildTag2.Caption := rsTitleNetsEffort;
-        lblChildTag3.Caption := rsTitleWeather;
-        lblChildTag4.Caption := rsTitleCaptures;
-        lblChildTag5.Caption := rsTitleSightings;
-        pChildTag1.Visible := True;
-        pChildTag2.Visible := True;
-        pChildTag3.Visible := True;
-        pChildTag4.Visible := True;
-        pChildTag5.Visible := True;
-        nbChilds.PageIndex := 0;
-        if not Assigned(DMS) then
-          DMS := TDMS.Create(Self);
-        FChildTable := tbSurveyTeams;
-        dsLink1.DataSet := DMS.qSurveyTeam;
-        dsLink2.DataSet := DMS.qNetsEffort;
-        dsLink3.DataSet := DMS.qWeatherLogs;
-        dsLink4.DataSet := DMS.qCaptures;
-        dsLink5.DataSet := DMS.qSightings;
-        pmcNewSurveyMember.Visible := True;
-        pmcNewMistnet.Visible := True;
-        pmcNewWeatherLog.Visible := True;
-        pmcNewCapture.Visible := True;
-        pmcNewSighting.Visible := True;
-
-        pChildsBar.Visible := True;
-
-        //sbShowImages.Visible := True;
-        //sbShowAudio.Visible := True;
-        //sbShowDocs.Visible := True;
-      end;
-    tbSightings:
-      begin
-        Caption := rsTitleSightings;
-        AddSortedField('sighting_date', sdDescending);
-        dsLink.DataSet := DMG.qSightings;
-
-        //sbShowImages.Visible := True;
-        //sbShowAudio.Visible := True;
-        //sbShowDocs.Visible := True;
-      end;
-    tbSpecimens:
-      begin
-        Caption := rsTitleSpecimens;
-        AddSortedField('full_name', sdAscending);
-        dsLink.DataSet := DMG.qSpecimens;
-
-        lblChildTag1.Caption := rsTitleCollectors;
-        lblChildTag2.Caption := rsTitleSamplePreps;
-        pChildTag1.Visible := True;
-        pChildTag2.Visible := True;
-        nbChilds.PageIndex := 0;
-        FChildTable := tbSpecimenCollectors;
-        dsLink1.DataSet := DMG.qSampleCollectors;
-        dsLink2.DataSet := DMG.qSamplePreps;
-        pmcNewCollector.Visible := True;
-        pmcNewSamplePrep.Visible := True;
-
-        pChildsBar.Visible := True;
-
-        //sbShowImages.Visible := True;
-        //sbShowAudio.Visible := True;
-        //sbShowDocs.Visible := True;
-      end;
+    tbInstitutions:   SetGridInstitutions;
+    tbPeople:         SetGridPeople;
+    tbProjects:       SetGridProjects;
+    tbPermits:        SetGridPermits;
+    tbGazetteer:      SetGridGazetteer;
+    tbNetStations:    SetGridNetStations;
+    tbTaxonRanks:     SetGridTaxonRanks;
+    tbBotanicTaxa:    SetGridBotanicTaxa;
+    tbZooTaxa: ;
+    tbBands:          SetGridBands;
+    tbIndividuals:    SetGridIndividuals;
+    tbCaptures:       SetGridCaptures;
+    tbNests:          SetGridNests;
+    tbNestRevisions:  SetGridNestRevisions;
+    tbEggs:           SetGridEggs;
+    tbMethods:        SetGridMethods;
+    tbExpeditions:    SetGridExpeditions;
+    tbSurveys:        SetGridSurveys;
+    tbSightings:      SetGridSightings;
+    tbSpecimens:      SetGridSpecimens;
   end;
   FSearch.DataSet := TSQLQuery(dsLink.DataSet);
 

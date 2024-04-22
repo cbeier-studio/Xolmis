@@ -1,11 +1,11 @@
 object frmMain: TfrmMain
   Left = -8
-  Height = 1087
+  Height = 1048
   Top = -8
-  Width = 1940
+  Width = 1936
   Caption = 'Xolmis'
-  ClientHeight = 1087
-  ClientWidth = 1940
+  ClientHeight = 1025
+  ClientWidth = 1924
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   OnClose = FormClose
@@ -13,16 +13,15 @@ object frmMain: TfrmMain
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  LCLVersion = '3.2.0.0'
   WindowState = wsMaximized
   object pLeftTabs: TPanel
     Left = 0
-    Height = 939
+    Height = 903
     Top = 96
     Width = 1924
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 939
+    ClientHeight = 903
     ClientWidth = 1924
     TabOrder = 0
     object navTabs: TATTabs
@@ -34,6 +33,7 @@ object frmMain: TfrmMain
       ParentColor = False
       PopupMenu = pmTabs
       Tabs = <>
+      OnContextPopup = navTabsContextPopup
       DoubleBuffered = True
       TabIndex = -1
       ColorBg = 13750737
@@ -152,7 +152,7 @@ object frmMain: TfrmMain
     end
     object PGW: TTDICardPanel
       Left = 0
-      Height = 896
+      Height = 860
       Top = 43
       Width = 1924
       Align = alClient
@@ -1174,7 +1174,7 @@ object frmMain: TfrmMain
   object SBar: TBCPanel
     Left = 0
     Height = 26
-    Top = 1035
+    Top = 999
     Width = 1924
     Align = alBottom
     AutoSize = True
@@ -25161,12 +25161,15 @@ object frmMain: TfrmMain
     Top = 272
     object pmtCloseTab: TMenuItem
       Caption = 'Close tab'
+      OnClick = pmtCloseTabClick
     end
     object pmtCloseAllOtherTabs: TMenuItem
       Caption = 'Close all other tabs'
+      OnClick = pmtCloseAllOtherTabsClick
     end
     object pmtCloseAllTabs: TMenuItem
       Caption = 'Close all tabs'
+      OnClick = pmtCloseAllTabsClick
     end
   end
   object TimerFind: TTimer

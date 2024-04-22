@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons,
   ActnList, ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton,
   DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory,
-  cbs_datatypes;
+  cbs_datatypes, Types;
 
 type
 
@@ -251,6 +251,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure menuTabsResize(Sender: TObject);
     procedure menuTabsTabChanged(Sender: TObject);
+    procedure navTabsContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure navTabsTabChanged(Sender: TObject);
     procedure navTabsTabClose(Sender: TObject; ATabIndex: integer; var ACanClose,
       ACanContinue: boolean);
@@ -270,6 +271,9 @@ type
     procedure pmaNewSpecimenClick(Sender: TObject);
     procedure pmaNewSurveyClick(Sender: TObject);
     procedure pmaNewToponymClick(Sender: TObject);
+    procedure pmtCloseAllOtherTabsClick(Sender: TObject);
+    procedure pmtCloseAllTabsClick(Sender: TObject);
+    procedure pmtCloseTabClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
     procedure sbHomeClick(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
@@ -283,7 +287,7 @@ type
       aCaption: String; aIcon: Integer = -1); overload;
     //procedure OpenIndividuals(Sender: TObject; var aForm: TfrmIndividuals; aTableType: TTableType;
     //  aCaption: String; aIcon: Integer = -1); overload;
-    procedure CloseAllTabs(ClosePinned: Boolean = False);
+    procedure CloseAllTabs(ClosePinned: Boolean = False; ExceptIndex: Integer = -1);
   public
     procedure CarregaPref;
     procedure UpdateStatusBar;
@@ -319,7 +323,8 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions,
-  cbs_taxonomy, cbs_editdialogs, cbs_themes, udm_main, udm_lookup, udm_grid, udm_client,
+  cbs_taxonomy, cbs_editdialogs, cbs_themes, udm_main, udm_lookup, udm_grid, udm_client, udm_sampling,
+  udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures,
   ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance;
@@ -568,6 +573,55 @@ begin
   MsgDlg(rsTitleError, E.Message, mtError);
 end;
 
+procedure TfrmMain.CarregaPref;
+begin
+  // Update active taxonomy
+  ActiveTaxonomy := XSettings.Taxonomy;
+  // SBarTaxonomy.Caption:= TaxonomyName[ActiveTaxonomy];
+
+  // Get user permissions
+  actMaintenance.Enabled := ActiveUser.Rank = 'A';
+  actExport.Enabled := ActiveUser.AllowExport;
+  actImport.Enabled := ActiveUser.AllowImport;
+  actPrint.Enabled := ActiveUser.AllowPrint;
+
+  // Update status bar
+  UpdateStatusBar;
+end;
+
+procedure TfrmMain.CloseAllTabs(ClosePinned: Boolean; ExceptIndex: Integer);
+var
+  i: Integer;
+begin
+  if navTabs.TabCount < 1 then
+    Exit;
+
+  navTabs.Tabs.BeginUpdate;
+  try
+    for i := (navTabs.TabCount - 1) downto 0 do
+      if not (navTabs.GetTabData(i).TabPinned) or (ClosePinned) or (Closing) then
+        if not (navTabs.GetTabData(i).Index = ExceptIndex) then
+          if not navTabs.DeleteTab(i, True, False, aocNone) then
+            Break;
+  finally
+    navTabs.Tabs.EndUpdate;
+  end;
+
+  if not (Closing) and (navTabs.TabCount > 0) then
+  begin
+    navTabs.TabIndex := PGW.PageIndex;
+    UpdateMenu(PGW.ActivePageComponent);
+  end;
+end;
+
+procedure TfrmMain.eSearchChange(Sender: TObject);
+begin
+  TimerFind.Enabled := False;
+  TimerFind.Enabled := True;
+
+  sbClearSearch.Visible := Length(eSearch.Text) > 0;
+end;
+
 procedure TfrmMain.eSearchEnter(Sender: TObject);
 begin
   if eSearch.Text = EmptyStr then
@@ -590,30 +644,6 @@ begin
   eSearch.Color := pSearch.Background.Color;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
   //TimerAnimSearch.Enabled := True;
-end;
-
-procedure TfrmMain.FormDestroy(Sender: TObject);
-begin
-  //if Assigned(DMC) then
-  //  FreeAndNil(DMC);
-  //if Assigned(DMG) then
-  //  FreeAndNil(DMG);
-  //if Assigned(DML) then
-  //  FreeAndNil(DML);
-
-  if Assigned(ActiveUser) then
-    FreeAndNil(ActiveUser);
-end;
-
-procedure TfrmMain.FormKeyPress(Sender: TObject; var Key: char);
-begin
-  { <ESC> key }
-  if (Key = #27) then
-  begin
-    sbClearSearchClick(nil);  { Clear search }
-
-    Key := #0;
-  end;
 end;
 
 procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -656,6 +686,30 @@ begin
     //  Format(rsUpdatedNewVersion, [GetBuildInfoAsString]), mtInformation);
   end;
   Application.ProcessMessages;
+end;
+
+procedure TfrmMain.FormDestroy(Sender: TObject);
+begin
+  if Assigned(DMB) then
+    FreeAndNil(DMB);
+  if Assigned(DMI) then
+    FreeAndNil(DMI);
+  if Assigned(DMS) then
+    FreeAndNil(DMS);
+
+  if Assigned(ActiveUser) then
+    FreeAndNil(ActiveUser);
+end;
+
+procedure TfrmMain.FormKeyPress(Sender: TObject; var Key: char);
+begin
+  { <ESC> key }
+  if (Key = #27) then
+  begin
+    sbClearSearchClick(nil);  { Clear search }
+
+    Key := #0;
+  end;
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
@@ -759,6 +813,11 @@ begin
   nbMenu.PageIndex := menuTabs.TabIndex;
 end;
 
+procedure TfrmMain.navTabsContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+  pmtCloseTab.Visible := not (navTabs.GetTabData(navTabs.TabIndex).TabPinned);
+end;
+
 procedure TfrmMain.navTabsTabChanged(Sender: TObject);
 var
   aPage: TPage;
@@ -788,153 +847,40 @@ begin
     (TTDIPage(PGW.ActivePageComponent).FormInPage is TfrmCustomGrid) then
   begin
     aPage := PGW.ActivePageComponent;
+    ActiveGrid := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
     {$IFDEF DEBUG}
     LogInfo('ACTIVE TAB:' + aPage.Caption);
     {$ENDIF}
     case TTableType(aPage.Tag) of
       //tbNone: ;
-      tbGazetteer:
-        begin
-          ActiveQuery := DMG.qGazetteer;
-          if fGazetteer = nil then
-            fGazetteer := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fGazetteer;
-        end;
-      tbNetStations:
-        begin
-          ActiveQuery := DMG.qNetStations;
-          if fNetStations = nil then
-            fNetStations := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fNetStations;
-        end;
-      //tbTaxonRanks: ;
-      tbZooTaxa:
-        begin
-          ActiveQuery := DMG.qTaxa;
-          if fZooTaxa = nil then
-            fZooTaxa := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fZooTaxa;
-        end;
-      tbBotanicTaxa:
-        begin
-          ActiveQuery := DMG.qBotany;
-          if fBotanicTaxa = nil then
-            fBotanicTaxa := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fBotanicTaxa;
-        end;
-      tbInstitutions:
-        begin
-          ActiveQuery := DMG.qInstitutions;
-          if fInstitutions = nil then
-            fInstitutions := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fInstitutions;
-        end;
-      tbPeople:
-        begin
-          ActiveQuery := DMG.qPeople;
-          if fPeople = nil then
-            fPeople := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fPeople;
-        end;
-      tbProjects:
-        begin
-          ActiveQuery := DMG.qProjects;
-          if fProjects = nil then
-            fProjects := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fProjects;
-        end;
-      //tbProjectTeams: ;
-      tbPermits:
-        begin
-          ActiveQuery := DMG.qPermits;
-          if fPermits = nil then
-            fPermits := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fPermits;
-        end;
-      tbMethods:
-        begin
-          ActiveQuery := DMG.qMethods;
-          if fMethods = nil then
-            fMethods := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fMethods;
-        end;
-      tbExpeditions:
-        begin
-          ActiveQuery := DMG.qExpeditions;
-          if fExpeditions = nil then
-            fExpeditions := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fExpeditions;
-        end;
-      tbSurveys:
-        begin
-          ActiveQuery := DMG.qSurveys;
-          if fSurveys = nil then
-            fSurveys := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fSurveys;
-        end;
-      //tbSurveyTeams: ;
-      //tbNetsEffort: ;
-      tbSightings:
-        begin
-          ActiveQuery := DMG.qSightings;
-          if fSightings = nil then
-            fSightings := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fSightings;
-        end;
-      tbSpecimens:
-        begin
-          ActiveQuery := DMG.qSpecimens;
-          if fSpecimens = nil then
-            fSpecimens := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fSpecimens;
-        end;
-      //tbSamplePreps: ;
-      //tbPermanentNets: ;
-      tbBands:
-        begin
-          ActiveQuery := DMG.qBands;
-          if fBands = nil then
-            fBands := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fBands;
-        end;
-      tbIndividuals:
-        begin
-          ActiveQuery := DMG.qIndividuals;
-          if fIndividuals = nil then
-            fIndividuals := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fIndividuals;
-        end;
-      tbCaptures:
-        begin
-          ActiveQuery := DMG.qCaptures;
-          if fCaptures = nil then
-            fCaptures := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fCaptures;
-        end;
-      tbMolts:
-        begin
-          ActiveQuery := DMG.qMolts;
-          if fMolts = nil then
-            fMolts := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fMolts;
-        end;
-      tbNests:
-        begin
-          ActiveQuery := DMG.qNests;
-          if fNests = nil then
-            fNests := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fNests;
-        end;
-      //tbNestRevisions: ;
-      tbEggs:
-        begin
-          ActiveQuery := DMG.qEggs;
-          if fEggs = nil then
-            fEggs := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-          ActiveGrid := fEggs;
-        end;
+      tbGazetteer:      ActiveQuery := DMG.qGazetteer;
+      tbNetStations:    ActiveQuery := DMG.qNetStations;
+      tbZooTaxa:        ActiveQuery := DMG.qTaxa;
+      tbBotanicTaxa:    ActiveQuery := DMG.qBotany;
+      tbInstitutions:   ActiveQuery := DMG.qInstitutions;
+      tbPeople:         ActiveQuery := DMG.qPeople;
+      tbProjects:       ActiveQuery := DMG.qProjects;
+      tbPermits:        ActiveQuery := DMG.qPermits;
+      tbMethods:        ActiveQuery := DMG.qMethods;
+      tbExpeditions:    ActiveQuery := DMG.qExpeditions;
+      tbSurveys:        ActiveQuery := DMG.qSurveys;
+      tbSightings:      ActiveQuery := DMG.qSightings;
+      tbSpecimens:      ActiveQuery := DMG.qSpecimens;
+      tbBands:          ActiveQuery := DMG.qBands;
+      tbIndividuals:    ActiveQuery := DMG.qIndividuals;
+      tbCaptures:       ActiveQuery := DMG.qCaptures;
+      tbMolts:          ActiveQuery := DMG.qMolts;
+      tbNests:          ActiveQuery := DMG.qNests;
+      tbNestRevisions:  ActiveQuery := DMG.qNestRevisions;
+      tbEggs:           ActiveQuery := DMG.qEggs;
       //tbImages: ;
       //tbAudioLibrary: ;
+      //tbTaxonRanks: ;
+      //tbProjectTeams: ;
+      //tbSurveyTeams: ;
+      //tbNetsEffort: ;
+      //tbSamplePreps: ;
+      //tbPermanentNets: ;
     end;
     { #TODO : Set focus on active form }
   end else
@@ -970,72 +916,100 @@ begin
     ACanClose := PGW.CanCloseAPage(ATabIndex);
 
   if ACanClose then
+  begin
+    case TTableType(PGW.Page[ATabIndex].Tag) of
+      //tbNone: ;
+      tbGazetteer:      fGazetteer := nil;
+      tbNetStations:    fNetStations := nil;
+      tbZooTaxa:        fZooTaxa := nil;
+      tbBotanicTaxa:    fBotanicTaxa := nil;
+      tbInstitutions:   fInstitutions := nil;
+      tbPeople:         fPeople := nil;
+      tbProjects:       fProjects := nil;
+      tbPermits:        fPermits := nil;
+      tbMethods:        fMethods := nil;
+      tbExpeditions:    fExpeditions := nil;
+      tbSurveys:        fSurveys := nil;
+      tbSightings:      fSightings := nil;
+      tbSpecimens:      fSpecimens := nil;
+      tbBands:          fBands := nil;
+      tbIndividuals:    fIndividuals := nil;
+      tbCaptures:       fCaptures := nil;
+      tbMolts:          fMolts := nil;
+      tbNests:          fNests := nil;
+      tbNestRevisions:  fNestRevisions := nil;
+      tbEggs:           fEggs := nil;
+      //tbImages: ;
+      //tbAudioLibrary: ;
+      //tbTaxonRanks: ;
+      //tbProjectTeams: ;
+      //tbSurveyTeams: ;
+      //tbNetsEffort: ;
+      //tbSamplePreps: ;
+      //tbPermanentNets: ;
+    end;
     PGW.DoCloseTabClicked(PGW.Page[ATabIndex]);
+  end;
 
   if (PGW.PageCount > 0) and not (Closing) then
     UpdateMenu(PGW.ActivePageComponent);
 end;
 
-procedure TfrmMain.sbClearSearchClick(Sender: TObject);
-begin
-  {$IFDEF DEBUG}
-  LogDebug('Search cleared');
-  {$ENDIF}
-
-  eSearch.Clear;
-  if eSearch.CanSetFocus then
-    eSearch.SetFocus;
-
-  //ClearSearch;
-end;
-
-procedure TfrmMain.sbHomeClick(Sender: TObject);
+procedure TfrmMain.OpenForm(Sender: TObject; var aForm: TfrmCustomGrid; aTableType: TTableType;
+  aCaption: String; aIcon: Integer = -1);
 var
-  i: Integer;
+  pag: Integer;
 begin
-  for i := 0 to navTabs.TabCount - 1 do
-    if navTabs.GetTabData(i).TabCaption = rsHome then
-    begin
-      navTabs.TabIndex := i;
-      Break;
-    end;
-end;
-
-procedure TfrmMain.TimerFindTimer(Sender: TObject);
-begin
-  TimerFind.Enabled := False;
-
-  if TTDIPage(PGW.ActivePageComponent).FormInPage is TfrmCustomGrid then
-    ActiveGrid.SearchString := eSearch.Text
-  else
-  //if TTDIPage(PGW.ActivePage).FormInPage is TfrmIndividuals then
-  //  (TTDIPage(PGW.ActivePage).FormInPage as TfrmIndividuals).SearchString := eSearch.Text
-  //else
-    Exit;
-end;
-
-procedure TfrmMain.TimerScreenTimer(Sender: TObject);
-begin
-  Self.AutoScale;
-  if OldPPI = Self.PixelsPerInch then
+  if Opening then
     Exit;
 
-  OldPPI := Self.PixelsPerInch;
-  {$IFDEF DEBUG}
-  LogDebug('DPI changed: ' + IntToStr(OldPPI) + '; Monitor: ' + IntToStr(Self.Monitor.MonitorNum));
-  {$ENDIF}
-  //Self.PixelsPerInch := OldPPI;
-  //Self.AutoScale;
-  if Self.PixelsPerInch <> 96 then
+  Opening := True;
+
+  { Create data module }
+  if not Assigned(DML) then
+    DML := TDML.Create(Application);
+  if not Assigned(DMG) then
+    DMG := TDMG.Create(Application);
+
+  { Check if form is already open and show it }
+  pag := PGW.FindFormInPages(aForm);
+  if pag >= 0 then
   begin
-    navTabs.OptScalePercents := (OldPPI * 100) div 96;
-    navTabs.OptFontScale := (OldPPI * 100) div 96;
-  end
-  else
-  begin
-    navTabs.OptScalePercents := 100;
-    navTabs.OptFontScale := 100;
+    navTabs.TabIndex := pag;
+    PGW.PageIndex := pag;
+    if not (ActiveQuery.State in [dsInsert, dsEdit]) then
+      ActiveQuery.Refresh;
+    Opening := False;
+    Exit;
   end;
+
+  { If form is not open, create it }
+  pSplash.Top := PGW.Top + pMainMenu.Height + nbMenu.Height + 1;
+  pSplash.Height :=  PGW.Height;
+  pSplash.Width :=  PGW.Width;
+  pSplash.Visible := True;
+  Screen.BeginTempCursor(crAppStart);
+  sbarStatus.Caption := Format(rsLoadingForm, [LowerCase(aCaption)]);
+  aForm := TfrmCustomGrid.Create(Application);
+  aForm.Caption := aCaption;
+  aForm.TableType := aTableType;
+  {$IFDEF DEBUG}
+  LogDebug('OPEN: ' + aForm.Caption);
+  {$ENDIF}
+  PGW.ShowFormInPage(aForm, aIcon);
+  Application.ProcessMessages;
+  PGW.ActivePageComponent.Tag := Ord(aTableType);
+  navTabs.AddTab(PGW.PageIndex, PGW.ActivePageComponent.Caption);
+  navTabs.TabIndex := navTabs.TabCount - 1;
+  navTabs.GetTabData(navTabs.TabIndex).TabPopupMenu := pmTabs;
+  //atTabsTabChanged(Sender);
+
+  //mMenu.TabIndex := 3;
+  UpdateMenu(PGW.ActivePageComponent);
+  sbarStatus.Caption := EmptyStr;
+  Screen.EndTempCursor(crAppStart);
+  pSplash.Visible := False;
+  Opening := False;
 end;
 
 procedure TfrmMain.OpenTab(Sender: TObject; aForm: TForm; aFormClass: TComponentClass; aCaption: String;
@@ -1164,116 +1138,81 @@ begin
   EditSite(DMG.qGazetteer, True);
 end;
 
-procedure TfrmMain.OpenForm(Sender: TObject; var aForm: TfrmCustomGrid; aTableType: TTableType;
-  aCaption: String; aIcon: Integer = -1);
-var
-  pag: Integer;
+procedure TfrmMain.pmtCloseAllOtherTabsClick(Sender: TObject);
 begin
-  if Opening then
-    Exit;
-
-  Opening := True;
-
-  { Create data module }
-  if not Assigned(DML) then
-    DML := TDML.Create(Application);
-  if not Assigned(DMG) then
-    DMG := TDMG.Create(Application);
-
-  { Check if form is already open and show it }
-  pag := PGW.FindFormInPages(aForm);
-  if pag >= 0 then
-  begin
-    navTabs.TabIndex := pag;
-    PGW.PageIndex := pag;
-    if not (ActiveQuery.State in [dsInsert, dsEdit]) then
-      ActiveQuery.Refresh;
-    Opening := False;
-    Exit;
-  end;
-
-  { If form is not open, create it }
-  pSplash.Top := PGW.Top + pMainMenu.Height + nbMenu.Height + 1;
-  pSplash.Height :=  PGW.Height;
-  pSplash.Width :=  PGW.Width;
-  pSplash.Visible := True;
-  Screen.BeginTempCursor(crAppStart);
-  sbarStatus.Caption := Format(rsLoadingForm, [LowerCase(aCaption)]);
-  aForm := TfrmCustomGrid.Create(Application);
-  aForm.Caption := aCaption;
-  aForm.TableType := aTableType;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN: ' + aForm.Caption);
-  {$ENDIF}
-  PGW.ShowFormInPage(aForm, aIcon);
-  Application.ProcessMessages;
-  PGW.ActivePageComponent.Tag := Ord(aTableType);
-  navTabs.AddTab(PGW.PageIndex, PGW.ActivePageComponent.Caption);
-  navTabs.TabIndex := navTabs.TabCount - 1;
-  navTabs.GetTabData(navTabs.TabIndex).TabPopupMenu := pmTabs;
-  //atTabsTabChanged(Sender);
-
-  //mMenu.TabIndex := 3;
-  UpdateMenu(PGW.ActivePageComponent);
-  sbarStatus.Caption := EmptyStr;
-  Screen.EndTempCursor(crAppStart);
-  pSplash.Visible := False;
-  Opening := False;
+  CloseAllTabs(False, navTabs.TabIndex);
 end;
 
-procedure TfrmMain.CloseAllTabs(ClosePinned: Boolean);
+procedure TfrmMain.pmtCloseAllTabsClick(Sender: TObject);
+begin
+  CloseAllTabs(False);
+end;
+
+procedure TfrmMain.pmtCloseTabClick(Sender: TObject);
+begin
+  navTabs.DeleteTab(navTabs.TabIndex, True, False);
+end;
+
+procedure TfrmMain.sbClearSearchClick(Sender: TObject);
+begin
+  {$IFDEF DEBUG}
+  LogDebug('Search cleared');
+  {$ENDIF}
+
+  eSearch.Clear;
+  if eSearch.CanSetFocus then
+    eSearch.SetFocus;
+
+  //ClearSearch;
+end;
+
+procedure TfrmMain.sbHomeClick(Sender: TObject);
 var
   i: Integer;
 begin
-  if navTabs.TabCount < 1 then
-    Exit;
-
-  navTabs.Tabs.BeginUpdate;
-  try
-    for i := (navTabs.TabCount - 1) downto 0 do
-      if not (navTabs.GetTabData(i).TabPinned) or (ClosePinned) or (Closing) then
-        if not navTabs.DeleteTab(i, True, False, aocNone) then
-          Break;
-  finally
-    navTabs.Tabs.EndUpdate;
-  end;
-
-  if not (Closing) and (navTabs.TabCount > 0) then
-    UpdateMenu(PGW.ActivePageComponent);
+  for i := 0 to navTabs.TabCount - 1 do
+    if navTabs.GetTabData(i).TabCaption = rsHome then
+    begin
+      navTabs.TabIndex := i;
+      Break;
+    end;
 end;
 
-procedure TfrmMain.eSearchChange(Sender: TObject);
+procedure TfrmMain.TimerFindTimer(Sender: TObject);
 begin
   TimerFind.Enabled := False;
-  TimerFind.Enabled := True;
 
-  sbClearSearch.Visible := Length(eSearch.Text) > 0;
+  if TTDIPage(PGW.ActivePageComponent).FormInPage is TfrmCustomGrid then
+    ActiveGrid.SearchString := eSearch.Text
+  else
+  //if TTDIPage(PGW.ActivePage).FormInPage is TfrmIndividuals then
+  //  (TTDIPage(PGW.ActivePage).FormInPage as TfrmIndividuals).SearchString := eSearch.Text
+  //else
+    Exit;
 end;
 
-procedure TfrmMain.CarregaPref;
+procedure TfrmMain.TimerScreenTimer(Sender: TObject);
 begin
-  // Update active taxonomy
-  ActiveTaxonomy := XSettings.Taxonomy;
-  // SBarTaxonomy.Caption:= TaxonomyName[ActiveTaxonomy];
+  Self.AutoScale;
+  if OldPPI = Self.PixelsPerInch then
+    Exit;
 
-  // Get user permissions
-  actMaintenance.Enabled := ActiveUser.Rank = 'A';
-  actExport.Enabled := ActiveUser.AllowExport;
-  actImport.Enabled := ActiveUser.AllowImport;
-  actPrint.Enabled := ActiveUser.AllowPrint;
-
-  // Update status bar
-  UpdateStatusBar;
-end;
-
-procedure TfrmMain.UpdateStatusBar;
-begin
-  lblSbarDatabase.Caption := ConexaoDB.Name;
-  sbarDatabase.Hint := ConexaoDB.Database;
-  lblSbarDatabase.Hint := sbarDatabase.Hint;
-  icoSbarDatabase.Hint := sbarDatabase.Hint;
-  lblSbarUser.Caption := ActiveUser.UserName;
-  lblSbarTaxonomy.Caption := TaxonomyName[ActiveTaxonomy];
+  OldPPI := Self.PixelsPerInch;
+  {$IFDEF DEBUG}
+  LogDebug('DPI changed: ' + IntToStr(OldPPI) + '; Monitor: ' + IntToStr(Self.Monitor.MonitorNum));
+  {$ENDIF}
+  //Self.PixelsPerInch := OldPPI;
+  //Self.AutoScale;
+  if Self.PixelsPerInch <> 96 then
+  begin
+    navTabs.OptScalePercents := (OldPPI * 100) div 96;
+    navTabs.OptFontScale := (OldPPI * 100) div 96;
+  end
+  else
+  begin
+    navTabs.OptScalePercents := 100;
+    navTabs.OptFontScale := 100;
+  end;
 end;
 
 procedure TfrmMain.UpdateMenu(aTab: TPage);
@@ -1294,6 +1233,16 @@ begin
     actOpenBandHistory.Visible := False;
 
   end;
+end;
+
+procedure TfrmMain.UpdateStatusBar;
+begin
+  lblSbarDatabase.Caption := ConexaoDB.Name;
+  sbarDatabase.Hint := ConexaoDB.Database;
+  lblSbarDatabase.Hint := sbarDatabase.Hint;
+  icoSbarDatabase.Hint := sbarDatabase.Hint;
+  lblSbarUser.Caption := ActiveUser.UserName;
+  lblSbarTaxonomy.Caption := TaxonomyName[ActiveTaxonomy];
 end;
 
 end.

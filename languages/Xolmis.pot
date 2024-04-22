@@ -7333,7 +7333,7 @@ msgstr ""
 
 #: tfrmcustomgrid.sbshowrecord.hint
 msgctxt "tfrmcustomgrid.sbshowrecord.hint"
-msgid "Record"
+msgid "Record details"
 msgstr ""
 
 #: tfrmcustomgrid.sbshowrecycle.hint
@@ -7392,6 +7392,7 @@ msgid "Summary"
 msgstr ""
 
 #: tfrmcustomgrid.titleviewrecord.caption
+msgctxt "tfrmcustomgrid.titleviewrecord.caption"
 msgid "Record details"
 msgstr ""
 

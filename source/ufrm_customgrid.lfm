@@ -7206,7 +7206,7 @@ object frmCustomGrid: TfrmCustomGrid
     object sbShowRecord: TSpeedButton
       Left = 8
       Height = 28
-      Hint = 'Record'
+      Hint = 'Record details'
       Top = 16
       Width = 28
       AllowAllUp = True
@@ -7402,6 +7402,7 @@ object frmCustomGrid: TfrmCustomGrid
     object pmgInsert: TMenuItem
       Caption = 'New record'
       ImageIndex = 0
+      ShortCut = 16462
       OnClick = sbInsertRecordClick
     end
     object pmgEdit: TMenuItem
