@@ -689,6 +689,48 @@ type
     procedure LoadRecordColumns;
     procedure LoadRecordRow;
 
+    procedure PrepareCanvasBands(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasCaptures(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasEggs(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasExpeditions(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasIndividuals(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasInstitutions(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasMolts(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasNestRevisions(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasNests(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasNetsEffort(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasPeople(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasPermanentNets(const Column: TColumn; const sender: TObject);
+    procedure PrepareCanvasPermits(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasProjects(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasSamplePreps(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasSightings(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasSpecimens(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasSurveys(var Column: TColumn; var sender: TObject);
+
+    procedure SetColumnsBands(var aGrid: TDBGrid);
+    procedure SetColumnsBotanicTaxa(var aGrid: TDBGrid);
+    procedure SetColumnsCaptures(var aGrid: TDBGrid);
+    procedure SetColumnsEggs(var aGrid: TDBGrid);
+    procedure SetColumnsExpeditions(var aGrid: TDBGrid);
+    procedure SetColumnsGazetteer(var aGrid: TDBGrid);
+    procedure SetColumnsIndividuals(var aGrid: TDBGrid);
+    procedure SetColumnsInstitutions(var aGrid: TDBGrid);
+    procedure SetColumnsMethods(var aGrid: TDBGrid);
+    procedure SetColumnsNestOwners(var aGrid: TDBGrid);
+    procedure SetColumnsNestRevisions(var aGrid: TDBGrid);
+    procedure SetColumnsNests(var aGrid: TDBGrid);
+    procedure SetColumnsNetStations(var aGrid: TDBGrid);
+    procedure SetColumnsPeople(var aGrid: TDBGrid);
+    procedure SetColumnsPermanentNets(var aGrid: TDBGrid);
+    procedure SetColumnsPermits(var aGrid: TDBGrid);
+    procedure SetColumnsProjects(var aGrid: TDBGrid);
+    procedure SetColumnsSightings(var aGrid: TDBGrid);
+    procedure SetColumnsSpecimens(var aGrid: TDBGrid);
+    procedure SetColumnsSurveys(var aGrid: TDBGrid);
+    procedure SetColumnsTaxonRanks(var aGrid: TDBGrid);
+    procedure SetColumnsWeatherLogs(var aGrid: TDBGrid);
+
     procedure SetGridAndChild;
     procedure SetGridBands;
     procedure SetGridBotanicTaxa;
@@ -710,6 +752,7 @@ type
     procedure SetGridSpecimens;
     procedure SetGridSurveys;
     procedure SetGridTaxonRanks;
+
     procedure SetSidePanel(aValue: Boolean);
     procedure SetSideIndex(aValue: Integer);
     procedure SetSearchString(aValue: String);
@@ -741,8 +784,27 @@ type
     procedure UpdateChildButtons(aDataSet: TDataSet);
     procedure UpdateChildCount;
     procedure UpdateChildStatus;
-    procedure UpdateFilterPanels;
     procedure UpdateGridTitles(aGrid: TDBGrid; aSearch: TCustomSearch);
+
+    procedure UpdateFilterPanels;
+    procedure UpdateFilterPanelsBands;
+    procedure UpdateFilterPanelsBotanicTaxa;
+    procedure UpdateFilterPanelsCaptures;
+    procedure UpdateFilterPanelsEggs;
+    procedure UpdateFilterPanelsExpeditions;
+    procedure UpdateFilterPanelsGazetteer;
+    procedure UpdateFilterPanelsIndividuals;
+    procedure UpdateFilterPanelsInstitutions;
+    procedure UpdateFilterPanelsNestRevisions;
+    procedure UpdateFilterPanelsNests;
+    procedure UpdateFilterPanelsNetStations;
+    procedure UpdateFilterPanelsPeople;
+    procedure UpdateFilterPanelsPermits;
+    procedure UpdateFilterPanelsProjects;
+    procedure UpdateFilterPanelsSightings;
+    procedure UpdateFilterPanelsSpecimens;
+    procedure UpdateFilterPanelsSurveys;
+    procedure UpdateFilterPanelsZooTaxa;
   public
     property TableType: TTableType read FTableType write FTableType;
 
@@ -1537,473 +1599,25 @@ begin
   end;
 
   case aTable of
-    tbInstitutions:
-      begin
-        if Column.FieldName = 'acronym' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end;
-      end;
-    tbPeople:
-      begin
-        if Column.FieldName = 'acronym' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end;
-      end;
-    tbBands:
-      begin
-        if Column.FieldName = 'band_size' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end
-        else
-        if Column.FieldName = 'band_status' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-          case Column.Field.AsString of
-            'U': // Used
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-              end;
-            'D': // Available
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemNeutralFGLight;
-              end;
-            'R': // Removed
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemMediumBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemMediumFGLight;
-              end;
-            'Q': // Broken
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-              end;
-            'P': // Lost
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-              end;
-            'T': // Transfered
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clVioletBrand1Light;
-                TDBGrid(Sender).Canvas.Font.Color := clVioletFG2Light;
-              end;
-          end;
-        end;
-      end;
-    tbIndividuals:
-      begin
-        if Column.FieldName = 'taxon_name' then
-        begin
-          TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-        end
-        else
-        if (Column.FieldName = 'individual_sex') then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-          case Column.Field.AsString of
-            'U':
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-              end;
-            'M':
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-              end;
-            'F':
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-              end;
-          end;
-        end
-        else
-        if Column.FieldName = 'band_full_name' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end
-        else
-        if Column.FieldName = 'removed_band_name' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end;
-      end;
-    tbCaptures:
-      begin
-        if (Column.FieldName = 'taxon_name') then
-        begin
-          TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-        end
-        else
-        if (Column.FieldName = 'capture_type') then
-        begin
-          case Column.Field.AsString of
-            'N':
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clBlueBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryLight;
-              end;
-            'R', 'S':
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-              end;
-            'C':
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-              end;
-            'U':
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-              end;
-          end;
-        end
-        else
-        if (Column.FieldName = 'band_name') then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-          if (TDBGrid(Sender).Columns.ColumnByFieldname('capture_type').Field.AsString = 'R') or
-            (TDBGrid(Sender).Columns.ColumnByFieldname('capture_type').Field.AsString = 'S') then
-          begin
-            //TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-            TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-          end
-          else
-          if (TDBGrid(Sender).Columns.ColumnByFieldname('capture_type').Field.AsString = 'C') then
-          begin
-            //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-            TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-          end;
-        end
-        else
-        if (Column.FieldName = 'removed_band_name') then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-          if (TDBGrid(Sender).Columns.ColumnByFieldname('capture_type').Field.AsString = 'C') then
-          begin
-            //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-            TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-          end;
-        end;
-
-        { Paint the cell background red the invalid values }
-        if (Column.FieldName = 'cloacal_protuberance') then
-        begin
-          if (Column.Field.AsString <> '') and
-            not (MatchStr(Column.Field.AsString, CloacalProtuberanceValues)) then
-          begin
-            TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          end;
-        end
-        else
-        if (Column.FieldName = 'brood_patch') then
-        begin
-          if (Column.Field.AsString <> '') and
-            not (MatchStr(Column.Field.AsString, BroodPatchValues)) then
-          begin
-            TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          end;
-        end
-        else
-        if (Column.FieldName = 'fat') then
-        begin
-          if (Column.Field.AsString <> '') and
-            not (MatchStr(Column.Field.AsString, FatValues)) then
-          begin
-            TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          end;
-        end
-        else
-        if (Column.FieldName = 'body_molt') then
-        begin
-          if (Column.Field.AsString <> '') and
-            not (MatchStr(Column.Field.AsString, BodyMoltValues)) then
-          begin
-            TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          end;
-        end
-        else
-        if (Column.FieldName = 'flight_feather_molt') then
-        begin
-          if (Column.Field.AsString <> '') and
-            not (MatchStr(Column.Field.AsString, FlightMoltValues)) then
-          begin
-            TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          end;
-        end
-        else
-        if (Column.FieldName = 'flight_feather_wear') then
-        begin
-          if (Column.Field.AsString <> '') and
-            not (MatchStr(Column.Field.AsString, FeatherWearValues)) then
-          begin
-            TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          end;
-        end
-        else
-        if (Column.FieldName = 'skull_ossification') then
-        begin
-          if (Column.Field.AsString <> '') and
-            not (MatchStr(Column.Field.AsString, SkullValues)) then
-          begin
-            TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          end;
-        end;
-      end;
-    tbMolts:
-      begin
-        if Column.FieldName = 'sample_date' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end;
-      end;
-    tbNests:
-      begin
-        if (Column.FieldName = 'taxon_name') or
-          (Column.FieldName = 'support_plant_1_name') or
-          (Column.FieldName = 'support_plant_2_name') then
-        begin
-          TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-        end
-        else
-        if Column.FieldName = 'nest_fate' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-          case Column.Field.AsString of
-            'U':       // Unknown
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-              end;
-            'P':       // Lost
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-              end;
-            'S':       // Success
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-              end;
-          end;
-        end;
-      end;
+    tbInstitutions:   PrepareCanvasInstitutions(Column, sender);
+    tbPeople:         PrepareCanvasPeople(Column, sender);
+    tbBands:          PrepareCanvasBands(Column, sender);
+    tbIndividuals:    PrepareCanvasIndividuals(Column, sender);
+    tbCaptures:       PrepareCanvasCaptures(Column, sender);
+    tbMolts:          PrepareCanvasMolts(Column, sender);
+    tbNests:          PrepareCanvasNests(Column, sender);
     //tbNestOwners: ;
-    tbNestRevisions:
-      begin
-        if Column.FieldName = 'nidoparasite_name' then
-        begin
-          TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-        end
-        else
-        if Column.FieldName = 'nest_status' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-          case Column.Field.AsString of
-            'U':       // Unknown
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-              end;
-            'I':       // Lost
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-              end;
-            'A':       // Success
-              begin
-                TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-                TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-              end;
-          end;
-        end;
-      end;
-    tbEggs:
-      begin
-        if Column.FieldName = 'egg_seq' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end
-        else
-        if Column.FieldName = 'taxon_name' then
-        begin
-          TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-        end
-      end;
-    tbExpeditions:
-      begin
-        if Column.FieldName = 'start_date' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end;
-      end;
-    tbSurveys:
-      begin
-        if Column.FieldName = 'survey_date' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end;
-      end;
-    tbSightings:
-      begin
-        if Column.FieldName = 'sighting_date' then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end
-        else
-        if Column.FieldName = 'taxon_name' then
-        begin
-          TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-        end
-      end;
-    tbNetsEffort:
-      begin
-        if (Column.FieldName = 'sample_date') or
-          (Column.FieldName = 'net_number') then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end;
-      end;
-    tbSpecimens:
-      begin
-        if (Column.FieldName = 'collection_date') or
-          (Column.FieldName = 'field_number') then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end
-        else
-        if Column.FieldName = 'taxon_name' then
-        begin
-          TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-        end
-      end;
-    tbSamplePreps:
-      begin
-        if (Column.FieldName = 'preparation_date') or
-          (Column.FieldName = 'accession_num') then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end;
-      end;
-    tbProjects:
-      begin
-        if (Column.FieldName = 'start_date') or
-          (Column.FieldName = 'net_number') then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end;
-      end;
-    tbPermits:
-      begin
-        if (Column.FieldName = 'expire_date') or
-          (Column.FieldName = 'permit_number') then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end;
-      end;
-    tbPermanentNets:
-      begin
-        if (Column.FieldName = 'net_number') then
-        begin
-          {$IFDEF MSWINDOWS}
-          TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-          {$ELSE}
-          TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-          {$ENDIF}
-        end;
-      end;
+    tbNestRevisions:  PrepareCanvasNestRevisions(Column, sender);
+    tbEggs:           PrepareCanvasEggs(Column, sender);
+    tbExpeditions:    PrepareCanvasExpeditions(Column, sender);
+    tbSurveys:        PrepareCanvasSurveys(Column, sender);
+    tbSightings:      PrepareCanvasSightings(Column, sender);
+    tbNetsEffort:     PrepareCanvasNetsEffort(Column, sender);
+    tbSpecimens:      PrepareCanvasSpecimens(Column, sender);
+    tbSamplePreps:    PrepareCanvasSamplePreps(Column, sender);
+    tbProjects:       PrepareCanvasProjects(Column, sender);
+    tbPermits:        PrepareCanvasPermits(Column, sender);
+    tbPermanentNets:  PrepareCanvasPermanentNets(Column, sender);
     //tbNone: ;
     //tbUsers: ;
     //tbRecordHistory: ;
@@ -4051,303 +3665,488 @@ begin
     LoadDateTreeData(FTableType, tvDateFilter);
 end;
 
-procedure TfrmCustomGrid.SetGridMethods;
+procedure TfrmCustomGrid.PrepareCanvasBands(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleMethods;
-  AddSortedField('method_name', sdAscending);
-  dsLink.DataSet := DMG.qMethods;
-
-  //sbShowDocs.Visible := True;
+  if Column.FieldName = 'band_size' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end
+  else
+  if Column.FieldName = 'band_status' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+    case Column.Field.AsString of
+      'U': // Used
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+        end;
+      'D': // Available
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemNeutralFGLight;
+        end;
+      'R': // Removed
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemMediumBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemMediumFGLight;
+        end;
+      'Q': // Broken
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
+        end;
+      'P': // Lost
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+        end;
+      'T': // Transfered
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clVioletBrand1Light;
+          TDBGrid(Sender).Canvas.Font.Color := clVioletFG2Light;
+        end;
+    end;
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridEggs;
+procedure TfrmCustomGrid.PrepareCanvasCaptures(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleEggs;
-  AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qEggs;
+  if (Column.FieldName = 'taxon_name') then
+  begin
+    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+  end
+  else
+  if (Column.FieldName = 'capture_type') then
+  begin
+    case Column.Field.AsString of
+      'N':
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clBlueBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryLight;
+        end;
+      'R', 'S':
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+        end;
+      'C':
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+        end;
+      'U':
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
+        end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'band_name') then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+    if (TDBGrid(Sender).Columns.ColumnByFieldname('capture_type').Field.AsString = 'R') or
+      (TDBGrid(Sender).Columns.ColumnByFieldname('capture_type').Field.AsString = 'S') then
+    begin
+      //TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
+      TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+    end
+    else
+    if (TDBGrid(Sender).Columns.ColumnByFieldname('capture_type').Field.AsString = 'C') then
+    begin
+      //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+    end;
+  end
+  else
+  if (Column.FieldName = 'removed_band_name') then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+    if (TDBGrid(Sender).Columns.ColumnByFieldname('capture_type').Field.AsString = 'C') then
+    begin
+      //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+    end;
+  end;
 
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  { Paint the cell background red the invalid values }
+  if (Column.FieldName = 'cloacal_protuberance') then
+  begin
+    if (Column.Field.AsString <> '') and
+      not (MatchStr(Column.Field.AsString, CloacalProtuberanceValues)) then
+    begin
+      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+    end;
+  end
+  else
+  if (Column.FieldName = 'brood_patch') then
+  begin
+    if (Column.Field.AsString <> '') and
+      not (MatchStr(Column.Field.AsString, BroodPatchValues)) then
+    begin
+      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+    end;
+  end
+  else
+  if (Column.FieldName = 'fat') then
+  begin
+    if (Column.Field.AsString <> '') and
+      not (MatchStr(Column.Field.AsString, FatValues)) then
+    begin
+      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+    end;
+  end
+  else
+  if (Column.FieldName = 'body_molt') then
+  begin
+    if (Column.Field.AsString <> '') and
+      not (MatchStr(Column.Field.AsString, BodyMoltValues)) then
+    begin
+      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+    end;
+  end
+  else
+  if (Column.FieldName = 'flight_feather_molt') then
+  begin
+    if (Column.Field.AsString <> '') and
+      not (MatchStr(Column.Field.AsString, FlightMoltValues)) then
+    begin
+      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+    end;
+  end
+  else
+  if (Column.FieldName = 'flight_feather_wear') then
+  begin
+    if (Column.Field.AsString <> '') and
+      not (MatchStr(Column.Field.AsString, FeatherWearValues)) then
+    begin
+      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+    end;
+  end
+  else
+  if (Column.FieldName = 'skull_ossification') then
+  begin
+    if (Column.Field.AsString <> '') and
+      not (MatchStr(Column.Field.AsString, SkullValues)) then
+    begin
+      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+    end;
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridNestRevisions;
+procedure TfrmCustomGrid.PrepareCanvasEggs(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleNestRevisions;
-  AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qNestRevisions;
-
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  if Column.FieldName = 'egg_seq' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end
+  else
+  if Column.FieldName = 'taxon_name' then
+  begin
+    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridCaptures;
+procedure TfrmCustomGrid.PrepareCanvasExpeditions(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleCaptures;
-  AddSortedField('capture_date', sdDescending);
-  dsLink.DataSet := DMG.qCaptures;
-
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  if Column.FieldName = 'start_date' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridBands;
+procedure TfrmCustomGrid.PrepareCanvasIndividuals(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleBands;
-  AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qBands;
+  if Column.FieldName = 'taxon_name' then
+  begin
+    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+  end
+  else
+  if (Column.FieldName = 'individual_sex') then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+    case Column.Field.AsString of
+      'U':
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
+        end;
+      'M':
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+        end;
+      'F':
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+        end;
+    end;
+  end
+  else
+  if Column.FieldName = 'band_full_name' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end
+  else
+  if Column.FieldName = 'removed_band_name' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridBotanicTaxa;
+procedure TfrmCustomGrid.PrepareCanvasInstitutions(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleBotanicTaxa;
-  AddSortedField('taxon_name', sdAscending);
-  dsLink.DataSet := DMG.qBotany;
+  if Column.FieldName = 'acronym' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridTaxonRanks;
+procedure TfrmCustomGrid.PrepareCanvasMolts(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleTaxonRanks;
-  AddSortedField('rank_seq', sdAscending);
-  dsLink.DataSet := DMG.qTaxonRanks;
+  if Column.FieldName = 'sample_date' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridGazetteer;
+procedure TfrmCustomGrid.PrepareCanvasNests(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleGazetteer;
-  AddSortedField('site_name', sdAscending);
-  dsLink.DataSet := DMG.qGazetteer;
-
-  //sbShowDocs.Visible := True;
+  if (Column.FieldName = 'taxon_name') or
+    (Column.FieldName = 'support_plant_1_name') or
+    (Column.FieldName = 'support_plant_2_name') then
+  begin
+    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+  end
+  else
+  if Column.FieldName = 'nest_fate' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+    case Column.Field.AsString of
+      'U':       // Unknown
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
+        end;
+      'P':       // Lost
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
+        end;
+      'S':       // Success
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+        end;
+    end;
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridPermits;
+procedure TfrmCustomGrid.PrepareCanvasNestRevisions(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitlePermits;
-  AddSortedField('permit_name', sdAscending);
-  dsLink.DataSet := DMG.qPermits;
-
-  //sbShowDocs.Visible := True;
+  if Column.FieldName = 'nidoparasite_name' then
+  begin
+    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+  end
+  else
+  if Column.FieldName = 'nest_status' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+    case Column.Field.AsString of
+      'U':       // Unknown
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
+        end;
+      'I':       // Lost
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
+        end;
+      'A':       // Success
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+        end;
+    end;
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridNetStations;
+procedure TfrmCustomGrid.PrepareCanvasNetsEffort(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleSamplingPlots;
-  AddSortedField('station_name', sdAscending);
-  dsLink.DataSet := DMG.qNetStations;
-
-  lblChildTag1.Caption := rsTitlePermanentNets;
-  pChildTag1.Visible := True;
-  nbChilds.PageIndex := 0;
-  FChildTable := tbPermanentNets;
-  dsLink1.DataSet := DMG.qPermanentNets;
-  pmcNewPermanentNet.Visible := True;
-
-  pChildsBar.Visible := True;
+  if (Column.FieldName = 'sample_date') or
+    (Column.FieldName = 'net_number') then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridSightings;
+procedure TfrmCustomGrid.PrepareCanvasPeople(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleSightings;
-  AddSortedField('sighting_date', sdDescending);
-  dsLink.DataSet := DMG.qSightings;
-
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  if Column.FieldName = 'acronym' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridPeople;
+procedure TfrmCustomGrid.PrepareCanvasPermanentNets(const Column: TColumn; const sender: TObject);
 begin
-  Caption := rsTitleResearchers;
-  AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qPeople;
+  if (Column.FieldName = 'net_number') then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridInstitutions;
+procedure TfrmCustomGrid.PrepareCanvasPermits(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleInstitutions;
-  AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qInstitutions;
+  if (Column.FieldName = 'expire_date') or
+    (Column.FieldName = 'permit_number') then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridProjects;
+procedure TfrmCustomGrid.PrepareCanvasProjects(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleProjects;
-  AddSortedField('project_title', sdAscending);
-  dsLink.DataSet := DMG.qProjects;
-
-  lblChildTag1.Caption := rsTitleTeam;
-  pChildTag1.Visible := True;
-  nbChilds.PageIndex := 0;
-  FChildTable := tbProjectTeams;
-  dsLink1.DataSet := DMG.qProjectTeam;
-  pmcNewProjectMember.Visible := True;
-
-  pChildsBar.Visible := True;
-
-  //sbShowDocs.Visible := True;
+  if (Column.FieldName = 'start_date') or
+    (Column.FieldName = 'net_number') then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridIndividuals;
+procedure TfrmCustomGrid.PrepareCanvasSamplePreps(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleIndividuals;
-  AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qIndividuals;
-
-  lblChildTag1.Caption := rsTitleCaptures;
-  lblChildTag2.Caption := rsTitleMolts;
-  lblChildTag3.Caption := rsTitleSightings;
-  lblChildTag4.Caption := rsTitleNests;
-  lblChildTag5.Caption := rsTitleSpecimens;
-  pChildTag1.Visible := True;
-  pChildTag2.Visible := True;
-  pChildTag3.Visible := True;
-  pChildTag4.Visible := True;
-  pChildTag5.Visible := True;
-  nbChilds.PageIndex := 0;
-  if not Assigned(DMI) then
-    DMI := TDMI.Create(nil);
-  FChildTable := tbCaptures;
-  dsLink1.DataSet := DMI.qCaptures;
-  dsLink2.DataSet := DMI.qMolts;
-  dsLink3.DataSet := DMI.qSightings;
-  dsLink4.DataSet := DMI.qNests;
-  dsLink5.DataSet := DMI.qSpecimens;
-  pmcNewCapture.Visible := True;
-  pmcNewMolt.Visible := True;
-  pmcNewSighting.Visible := True;
-  pmcNewNest.Visible := True;
-  pmcNewSpecimen.Visible := True;
-
-  pChildsBar.Visible := True;
-  //pChild.Visible := True;
-  dbgImages.DataSource := DMI.dsImages;
-  lblImageTime.DataSource := dbgImages.DataSource;
-  lblImageDate.DataSource := dbgImages.DataSource;
-  lblImageType.DataSource := dbgImages.DataSource;
-  //imgThumb.DataSource := dbgImages.DataSource;
-  //imgThumb.DataField := 'image_thumbnail';
-
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  if (Column.FieldName = 'preparation_date') or
+    (Column.FieldName = 'accession_num') then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridSpecimens;
+procedure TfrmCustomGrid.PrepareCanvasSightings(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleSpecimens;
-  AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qSpecimens;
-
-  lblChildTag1.Caption := rsTitleCollectors;
-  lblChildTag2.Caption := rsTitleSamplePreps;
-  pChildTag1.Visible := True;
-  pChildTag2.Visible := True;
-  nbChilds.PageIndex := 0;
-  FChildTable := tbSpecimenCollectors;
-  dsLink1.DataSet := DMG.qSampleCollectors;
-  dsLink2.DataSet := DMG.qSamplePreps;
-  pmcNewCollector.Visible := True;
-  pmcNewSamplePrep.Visible := True;
-
-  pChildsBar.Visible := True;
-
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  if Column.FieldName = 'sighting_date' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end
+  else
+  if Column.FieldName = 'taxon_name' then
+  begin
+    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridNests;
+procedure TfrmCustomGrid.PrepareCanvasSpecimens(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsTitleNests;
-  AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qNests;
-
-  lblChildTag1.Caption := rsTitleNestOwners;
-  lblChildTag2.Caption := rsTitleNestRevisions;
-  lblChildTag3.Caption := rsTitleEggs;
-  pChildTag1.Visible := True;
-  pChildTag2.Visible := True;
-  pChildTag3.Visible := True;
-  nbChilds.PageIndex := 0;
-  if not Assigned(DMB) then
-    DMB := TDMB.Create(nil);
-  FChildTable := tbNestOwners;
-  dsLink1.DataSet := DMB.qNestOwners;
-  dsLink2.DataSet := DMB.qNestRevisions;
-  dsLink3.DataSet := DMB.qEggs;
-  pmcNewNestOwner.Visible := True;
-  pmcNewNestRevision.Visible := True;
-  pmcNewEgg.Visible := True;
-
-  pChildsBar.Visible := True;
-
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  if (Column.FieldName = 'collection_date') or
+    (Column.FieldName = 'field_number') then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end
+  else
+  if Column.FieldName = 'taxon_name' then
+  begin
+    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+  end;
 end;
 
-procedure TfrmCustomGrid.SetGridExpeditions;
+procedure TfrmCustomGrid.PrepareCanvasSurveys(var Column: TColumn; var sender: TObject);
 begin
-  Caption := rsCaptionExpeditions;
-  AddSortedField('start_date', sdDescending);
-  dsLink.DataSet := DMG.qExpeditions;
-
-  lblChildTag1.Caption := rsTitleSurveys;
-  pChildTag1.Visible := True;
-  nbChilds.PageIndex := 0;
-  if not Assigned(DMS) then
-    DMS := TDMS.Create(nil);
-  FChildTable := tbSurveys;
-  dsLink1.DataSet := DMS.qSurveys;
-  pmcNewSurvey.Visible := True;
-
-  pChildsBar.Visible := True;
-
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridSurveys;
-begin
-  Caption := rsTitleSurveys;
-  AddSortedField('survey_date', sdDescending);
-  dsLink.DataSet := DMG.qSurveys;
-
-  lblChildTag1.Caption := rsTitleTeam;
-  lblChildTag2.Caption := rsTitleNetsEffort;
-  lblChildTag3.Caption := rsTitleWeather;
-  lblChildTag4.Caption := rsTitleCaptures;
-  lblChildTag5.Caption := rsTitleSightings;
-  pChildTag1.Visible := True;
-  pChildTag2.Visible := True;
-  pChildTag3.Visible := True;
-  pChildTag4.Visible := True;
-  pChildTag5.Visible := True;
-  nbChilds.PageIndex := 0;
-  if not Assigned(DMS) then
-    DMS := TDMS.Create(nil);
-  FChildTable := tbSurveyTeams;
-  dsLink1.DataSet := DMS.qSurveyTeam;
-  dsLink2.DataSet := DMS.qNetsEffort;
-  dsLink3.DataSet := DMS.qWeatherLogs;
-  dsLink4.DataSet := DMS.qCaptures;
-  dsLink5.DataSet := DMS.qSightings;
-  pmcNewSurveyMember.Visible := True;
-  pmcNewMistnet.Visible := True;
-  pmcNewWeatherLog.Visible := True;
-  pmcNewCapture.Visible := True;
-  pmcNewSighting.Visible := True;
-
-  pChildsBar.Visible := True;
-
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  if Column.FieldName = 'survey_date' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
 end;
 
 procedure TfrmCustomGrid.sbAddChildClick(Sender: TObject);
@@ -6031,6 +5830,469 @@ begin
   Result := FSearch.RunSearch > 0;
 end;
 
+procedure TfrmCustomGrid.SetColumnsBands(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('band_id').ReadOnly := True;
+
+    ColumnByFieldName('band_size').PickList.AddCommaText('A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z');
+    ColumnByFieldName('band_status').PickList.AddCommaText(rsBandStatusList);
+    ColumnByFieldName('band_source').PickList.Add(rsBandAcquiredFromSupplier);
+    ColumnByFieldName('band_source').PickList.Add(rsBandTransferBetweenBanders);
+    ColumnByFieldName('band_source').PickList.Add(rsBandLivingBirdBandedByOthers);
+    ColumnByFieldName('band_source').PickList.Add(rsBandDeadBirdBandedByOthers);
+    ColumnByFieldName('band_source').PickList.Add(rsBandFoundLoose);
+    ColumnByFieldName('band_type').PickList.AddCommaText(rsBandTypeList);
+
+    ColumnByFieldName('supplier_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('carrier_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('project_name').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsBotanicTaxa(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('taxon_id').ReadOnly := True;
+
+    ColumnByFieldname('parent_taxon_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('valid_name').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsCaptures(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    if DataSource.DataSet.FieldByName('capture_id').Visible then
+      ColumnByFieldname('capture_id').ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName('capture_date').Visible then
+      ColumnByFieldName('capture_date').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('taxon_name').Visible then
+      ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('capture_type').Visible then
+      ColumnByFieldName('capture_type').PickList.AddCommaText(rsCaptureTypeList);
+    if DataSource.DataSet.FieldByName('right_leg_below').Visible then
+      ColumnByFieldName('right_leg_below').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('left_leg_below').Visible then
+      ColumnByFieldName('left_leg_below').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('right_leg_above').Visible then
+      ColumnByFieldName('right_leg_above').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('left_leg_above').Visible then
+      ColumnByFieldName('left_leg_above').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('locality_name').Visible then
+      ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('longitude').Visible then
+      ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('latitude').Visible then
+      ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('molt_limits').Visible then
+      ColumnByFieldName('molt_limits').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('cycle_code').Visible then
+      ColumnByFieldName('cycle_code').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('how_aged').Visible then
+      ColumnByFieldName('how_aged').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('how_sexed').Visible then
+      ColumnByFieldName('how_sexed').ButtonStyle := cbsEllipsis;
+
+    if DataSource.DataSet.FieldByName('cloacal_protuberance').Visible then
+      ColumnByFieldName('cloacal_protuberance').PickList.AddCommaText('U,N,S,M,L');
+    if DataSource.DataSet.FieldByName('brood_patch').Visible then
+      ColumnByFieldName('brood_patch').PickList.AddCommaText('F,N,V,W,O');
+    if DataSource.DataSet.FieldByName('fat').Visible then
+      ColumnByFieldName('fat').PickList.AddCommaText('N,T,L,H,F,B,G,V');
+    if DataSource.DataSet.FieldByName('body_molt').Visible then
+      ColumnByFieldName('body_molt').PickList.AddCommaText('N,T,S,H,G,A,F');
+    if DataSource.DataSet.FieldByName('flight_feathers_molt').Visible then
+      ColumnByFieldName('flight_feathers_molt').PickList.AddCommaText('N,S,A');
+    if DataSource.DataSet.FieldByName('flight_feathers_wear').Visible then
+      ColumnByFieldName('flight_feathers_wear').PickList.AddCommaText('N,S,L,M,H,X');
+    if DataSource.DataSet.FieldByName('skull_ossification').Visible then
+      ColumnByFieldName('skull_ossification').PickList.AddCommaText('N,T,L,H,G,A,F');
+    if DataSource.DataSet.FieldByName('subject_age').Visible then
+    begin
+      ColumnByFieldName('subject_age').PickList.Add(rsAgeUnknown);
+      ColumnByFieldName('subject_age').PickList.Add(rsAgeAdult);
+      ColumnByFieldName('subject_age').PickList.Add(rsAgeImmature);
+      ColumnByFieldName('subject_age').PickList.Add(rsAgeFledgling);
+      ColumnByFieldName('subject_age').PickList.Add(rsAgeNestling);
+      ColumnByFieldName('subject_age').PickList.Add(rsAgeFirstYear);
+      ColumnByFieldName('subject_age').PickList.Add(rsAgeSecondYear);
+      ColumnByFieldName('subject_age').PickList.Add(rsAgeThirdYear);
+      ColumnByFieldName('subject_age').PickList.Add(rsAgeFourthYear);
+      ColumnByFieldName('subject_age').PickList.Add(rsAgeFifthYear);
+    end;
+    if DataSource.DataSet.FieldByName('subject_sex').Visible then
+    begin
+      ColumnByFieldName('subject_sex').PickList.Add(rsSexMale);
+      ColumnByFieldName('subject_sex').PickList.Add(rsSexFemale);
+      ColumnByFieldName('subject_sex').PickList.Add(rsSexUnknown);
+    end;
+    if DataSource.DataSet.FieldByName('subject_status').Visible then
+    begin
+      ColumnByFieldName('subject_status').PickList.Add(rsStatusNormal);
+      ColumnByFieldName('subject_status').PickList.Add(rsStatusInjured);
+      ColumnByFieldName('subject_status').PickList.Add(rsStatusWingSprain);
+      ColumnByFieldName('subject_status').PickList.Add(rsStatusStressed);
+      ColumnByFieldName('subject_status').PickList.Add(rsStatusDead);
+    end;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsEggs(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('egg_id').ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName('taxon_name').Visible then
+      ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('measure_date').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('individual_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('researcher_name').ButtonStyle := cbsEllipsis;
+
+    ColumnByFieldName('egg_shape').PickList.Add(rsEggSpherical);
+    ColumnByFieldName('egg_shape').PickList.Add(rsEggElliptical);
+    ColumnByFieldName('egg_shape').PickList.Add(rsEggOval);
+    ColumnByFieldName('egg_shape').PickList.Add(rsEggPyriform);
+    ColumnByFieldName('egg_shape').PickList.Add(rsEggConical);
+    ColumnByFieldName('egg_shape').PickList.Add(rsEggBiconical);
+    ColumnByFieldName('egg_shape').PickList.Add(rsEggCylindrical);
+    ColumnByFieldName('egg_shape').PickList.Add(rsEggLongitudinal);
+    ColumnByFieldName('egg_shape').PickList.Add(rsEggUnknown);
+
+    ColumnByFieldName('eggshell_texture').PickList.Add(rsEggChalky);
+    ColumnByFieldName('eggshell_texture').PickList.Add(rsEggShiny);
+    ColumnByFieldName('eggshell_texture').PickList.Add(rsEggGlossy);
+    ColumnByFieldName('eggshell_texture').PickList.Add(rsEggPitted);
+    ColumnByFieldName('eggshell_texture').PickList.Add(rsEggUnknown);
+
+    ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggSpots);
+    ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggBlotches);
+    ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggSquiggles);
+    ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggStreaks);
+    ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggScrawls);
+    ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggSpotsSquiggles);
+    ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggBlotchesSquiggles);
+    ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggUnknown);
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsExpeditions(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('expedition_id').ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName('locality_name').Visible then
+      ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('start_date').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('end_date').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsGazetteer(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('site_id').ReadOnly := True;
+
+    ColumnByFieldName('site_rank').PickList.Add(rsCaptionCountry);
+    ColumnByFieldName('site_rank').PickList.Add(rsCaptionState);
+    ColumnByFieldName('site_rank').PickList.Add(rsCaptionRegion);
+    ColumnByFieldName('site_rank').PickList.Add(rsCaptionMunicipality);
+    ColumnByFieldName('site_rank').PickList.Add(rsCaptionDistrict);
+    ColumnByFieldName('site_rank').PickList.Add(rsCaptionLocality);
+
+    if DataSource.DataSet.FieldByName('parent_site_name').Visible then
+      ColumnByFieldname('parent_site_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsIndividuals(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    if DataSource.DataSet.FieldByName('individual_id').Visible then
+      ColumnByFieldname('individual_id').ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName('taxon_name').Visible then
+      ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('band_full_name').Visible then
+      ColumnByFieldName('band_full_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('double_band_name').Visible then
+      ColumnByFieldName('double_band_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('removed_band_name').Visible then
+      ColumnByFieldName('removed_band_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('banding_date').Visible then
+      ColumnByFieldName('banding_date').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('band_change_date').Visible then
+      ColumnByFieldName('band_change_date').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('nest_name').Visible then
+      ColumnByFieldName('nest_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('father_name').Visible then
+      ColumnByFieldName('father_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('mother_name').Visible then
+      ColumnByFieldName('mother_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('right_leg_below').Visible then
+      ColumnByFieldName('right_leg_below').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('left_leg_below').Visible then
+      ColumnByFieldName('left_leg_below').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('right_leg_above').Visible then
+      ColumnByFieldName('right_leg_above').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('left_leg_above').Visible then
+      ColumnByFieldName('left_leg_above').ButtonStyle := cbsEllipsis;
+
+    if DataSource.DataSet.FieldByName('individual_sex').Visible then
+    begin
+      ColumnByFieldName('individual_sex').PickList.Add(rsSexUnknown);
+      ColumnByFieldName('individual_sex').PickList.Add(rsSexMale);
+      ColumnByFieldName('individual_sex').PickList.Add(rsSexFemale);
+    end;
+    if DataSource.DataSet.FieldByName('individual_age').Visible then
+    begin
+      ColumnByFieldName('individual_age').PickList.Add(rsAgeUnknown);
+      ColumnByFieldName('individual_age').PickList.Add(rsAgeAdult);
+      ColumnByFieldName('individual_age').PickList.Add(rsAgeImmature);
+      ColumnByFieldName('individual_age').PickList.Add(rsAgeFledgling);
+      ColumnByFieldName('individual_age').PickList.Add(rsAgeNestling);
+      ColumnByFieldName('individual_age').PickList.Add(rsAgeFirstYear);
+      ColumnByFieldName('individual_age').PickList.Add(rsAgeSecondYear);
+      ColumnByFieldName('individual_age').PickList.Add(rsAgeThirdYear);
+      ColumnByFieldName('individual_age').PickList.Add(rsAgeFourthYear);
+      ColumnByFieldName('individual_age').PickList.Add(rsAgeFifthYear);
+    end;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsInstitutions(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('institution_id').ReadOnly := True;
+
+    ColumnByFieldname('country_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('state_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('municipality_name').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsMethods(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('method_id').ReadOnly := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsNestOwners(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    //ColumnByFieldname('nest_owner_id').ReadOnly:= True;
+
+    ColumnByFieldName('role').PickList.CommaText := rsNestOwnersRoleList;
+
+    if DataSource.DataSet.FieldByName('individual_name').Visible then
+      ColumnByFieldName('individual_name').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsNestRevisions(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('nest_revision_id').ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName('revision_date').Visible then
+      ColumnByFieldName('revision_date').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsNests(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    if DataSource.DataSet.FieldByName('nest_id').Visible then
+      ColumnByFieldname('nest_id').ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName('taxon_name').Visible then
+      ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('found_date').Visible then
+      ColumnByFieldName('found_date').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('last_date').Visible then
+      ColumnByFieldName('last_date').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('locality_name').Visible then
+      ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsNetStations(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('net_station_id').ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName('locality_name').Visible then
+      ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsPeople(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('person_id').ReadOnly := True;
+
+    ColumnByFieldName('gender').PickList.AddCommaText(rsGenderList);
+    ColumnByFieldName('title_treatment').PickList.AddCommaText(rsTreatmentList);
+
+    if DataSource.DataSet.FieldByName('institution_name').Visible then
+      ColumnByFieldname('institution_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('country_name').Visible then
+      ColumnByFieldname('country_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('state_name').Visible then
+      ColumnByFieldname('state_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('municipality_name').Visible then
+      ColumnByFieldname('municipality_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('birth_date').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('death_date').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsPermanentNets(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('permanent_net_id').ReadOnly := True;
+
+    ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsPermits(var aGrid: TDBGrid);
+begin
+  with aGrid.Columns do
+  begin
+    ColumnByFieldname('permit_id').ReadOnly := True;
+
+    ColumnByFieldName('project_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('dispatch_date').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('expire_date').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsProjects(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('project_id').ReadOnly := True;
+
+    ColumnByFieldName('start_date').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('end_date').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsSightings(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    if DataSource.DataSet.FieldByName('sighting_id').Visible then
+      ColumnByFieldname('sighting_id').ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName('survey_name').Visible then
+      ColumnByFieldname('survey_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('taxon_name').Visible then
+      ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('locality_name').Visible then
+      ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('observer_name').Visible then
+      ColumnByFieldname('observer_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('individual_name').Visible then
+      ColumnByFieldname('individual_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('detection_type').Visible then
+      ColumnByFieldname('detection_type').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('breeding_status').Visible then
+      ColumnByFieldname('breeding_status').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('sighting_date').Visible then
+      ColumnByFieldname('sighting_date').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsSpecimens(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    if DataSource.DataSet.FieldByName('specimen_id').Visible then
+    begin
+      ColumnByFieldname('specimen_id').ReadOnly := True;
+      //ColumnByFieldname('specimen_id').Footer.ValueType := fvtCount;
+      //ColumnByFieldname('specimen_id').Footer.Alignment := taCenter;
+    end;
+
+    if DataSource.DataSet.FieldByName('taxon_name').Visible then
+      ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('locality_name').Visible then
+      ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsSurveys(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('survey_id').ReadOnly := True;
+
+    ColumnByFieldName('survey_date').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('locality_name').Visible then
+      ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('start_longitude').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('start_latitude').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('end_longitude').ButtonStyle := cbsEllipsis;
+    ColumnByFieldname('end_latitude').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsTaxonRanks(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('rank_id').ReadOnly := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.SetColumnsWeatherLogs(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    //  ColumnByFieldname('weather_id').ReadOnly:= True;
+
+    ColumnByFieldname('sample_moment').PickList.Add(rsMomentStart);
+    ColumnByFieldname('sample_moment').PickList.Add(rsMomentMiddle);
+    ColumnByFieldname('sample_moment').PickList.Add(rsMomentEnd);
+
+    ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationNone);
+    ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationFog);
+    ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationMist);
+    ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationDrizzle);
+    ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationRain);
+  end;
+end;
+
 procedure TfrmCustomGrid.SetGridAndChild;
 begin
   FChildTable := tbNone;
@@ -6063,6 +6325,31 @@ begin
   Search(EmptyStr);
 end;
 
+procedure TfrmCustomGrid.SetGridBands;
+begin
+  Caption := rsTitleBands;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qBands;
+end;
+
+procedure TfrmCustomGrid.SetGridBotanicTaxa;
+begin
+  Caption := rsTitleBotanicTaxa;
+  AddSortedField('taxon_name', sdAscending);
+  dsLink.DataSet := DMG.qBotany;
+end;
+
+procedure TfrmCustomGrid.SetGridCaptures;
+begin
+  Caption := rsTitleCaptures;
+  AddSortedField('capture_date', sdDescending);
+  dsLink.DataSet := DMG.qCaptures;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
 procedure TfrmCustomGrid.SetGridColumns(aTable: TTableType; aGrid: TDBGrid);
 begin
   if aGrid.DataSource = nil then
@@ -6070,451 +6357,29 @@ begin
 
   case aTable of
     tbNone: ;
-    tbInstitutions:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('institution_id').ReadOnly:= True;
-
-          ColumnByFieldname('country_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('state_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('municipality_name').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbPeople:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('person_id').ReadOnly:= True;
-
-          ColumnByFieldName('gender').PickList.AddCommaText(rsGenderList);
-          ColumnByFieldName('title_treatment').PickList.AddCommaText(rsTreatmentList);
-
-          if DataSource.DataSet.FieldByName('institution_name').Visible then
-            ColumnByFieldname('institution_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('country_name').Visible then
-            ColumnByFieldname('country_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('state_name').Visible then
-            ColumnByFieldname('state_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('municipality_name').Visible then
-            ColumnByFieldname('municipality_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('birth_date').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('death_date').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbProjects:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('project_id').ReadOnly:= True;
-
-          ColumnByFieldName('start_date').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('end_date').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbPermits:
-      begin
-        with aGrid.Columns do
-        begin
-          ColumnByFieldname('permit_id').ReadOnly:= True;
-
-          ColumnByFieldName('project_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('dispatch_date').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('expire_date').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbGazetteer:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('site_id').ReadOnly:= True;
-
-          ColumnByFieldName('site_rank').PickList.Add(rsCaptionCountry);
-          ColumnByFieldName('site_rank').PickList.Add(rsCaptionState);
-          ColumnByFieldName('site_rank').PickList.Add(rsCaptionRegion);
-          ColumnByFieldName('site_rank').PickList.Add(rsCaptionMunicipality);
-          ColumnByFieldName('site_rank').PickList.Add(rsCaptionDistrict);
-          ColumnByFieldName('site_rank').PickList.Add(rsCaptionLocality);
-
-          if DataSource.DataSet.FieldByName('parent_site_name').Visible then
-            ColumnByFieldname('parent_site_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbNetStations:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('net_station_id').ReadOnly:= True;
-
-          if DataSource.DataSet.FieldByName('locality_name').Visible then
-            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbPermanentNets:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('permanent_net_id').ReadOnly:= True;
-
-          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbTaxonRanks:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('rank_id').ReadOnly:= True;
-        end;
-      end;
-    tbBotanicTaxa:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('taxon_id').ReadOnly:= True;
-
-          ColumnByFieldname('parent_taxon_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('valid_name').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbZooTaxa:
-      begin
-
-      end;
-    tbBands:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('band_id').ReadOnly:= True;
-
-          ColumnByFieldName('band_size').PickList.AddCommaText('A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z');
-          ColumnByFieldName('band_status').PickList.AddCommaText(rsBandStatusList);
-          ColumnByFieldName('band_source').PickList.Add(rsBandAcquiredFromSupplier);
-          ColumnByFieldName('band_source').PickList.Add(rsBandTransferBetweenBanders);
-          ColumnByFieldName('band_source').PickList.Add(rsBandLivingBirdBandedByOthers);
-          ColumnByFieldName('band_source').PickList.Add(rsBandDeadBirdBandedByOthers);
-          ColumnByFieldName('band_source').PickList.Add(rsBandFoundLoose);
-          ColumnByFieldName('band_type').PickList.AddCommaText(rsBandTypeList);
-
-          ColumnByFieldName('supplier_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('carrier_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('project_name').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbIndividuals:
-      begin
-        with aGrid, Columns do
-        begin
-          if DataSource.DataSet.FieldByName('individual_id').Visible then
-            ColumnByFieldname('individual_id').ReadOnly:= True;
-
-          if DataSource.DataSet.FieldByName('taxon_name').Visible then
-            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('band_full_name').Visible then
-            ColumnByFieldName('band_full_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('double_band_name').Visible then
-            ColumnByFieldName('double_band_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('removed_band_name').Visible then
-            ColumnByFieldName('removed_band_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('banding_date').Visible then
-            ColumnByFieldName('banding_date').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('band_change_date').Visible then
-            ColumnByFieldName('band_change_date').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('nest_name').Visible then
-            ColumnByFieldName('nest_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('father_name').Visible then
-            ColumnByFieldName('father_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('mother_name').Visible then
-            ColumnByFieldName('mother_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('right_leg_below').Visible then
-            ColumnByFieldName('right_leg_below').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('left_leg_below').Visible then
-            ColumnByFieldName('left_leg_below').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('right_leg_above').Visible then
-            ColumnByFieldName('right_leg_above').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('left_leg_above').Visible then
-            ColumnByFieldName('left_leg_above').ButtonStyle := cbsEllipsis;
-
-          if DataSource.DataSet.FieldByName('individual_sex').Visible then
-          begin
-            ColumnByFieldName('individual_sex').PickList.Add(rsSexUnknown);
-            ColumnByFieldName('individual_sex').PickList.Add(rsSexMale);
-            ColumnByFieldName('individual_sex').PickList.Add(rsSexFemale);
-          end;
-          if DataSource.DataSet.FieldByName('individual_age').Visible then
-          begin
-            ColumnByFieldName('individual_age').PickList.Add(rsAgeUnknown);
-            ColumnByFieldName('individual_age').PickList.Add(rsAgeAdult);
-            ColumnByFieldName('individual_age').PickList.Add(rsAgeImmature);
-            ColumnByFieldName('individual_age').PickList.Add(rsAgeFledgling);
-            ColumnByFieldName('individual_age').PickList.Add(rsAgeNestling);
-            ColumnByFieldName('individual_age').PickList.Add(rsAgeFirstYear);
-            ColumnByFieldName('individual_age').PickList.Add(rsAgeSecondYear);
-            ColumnByFieldName('individual_age').PickList.Add(rsAgeThirdYear);
-            ColumnByFieldName('individual_age').PickList.Add(rsAgeFourthYear);
-            ColumnByFieldName('individual_age').PickList.Add(rsAgeFifthYear);
-          end;
-        end;
-      end;
-    tbCaptures:
-      begin
-        with aGrid, Columns do
-        begin
-          if DataSource.DataSet.FieldByName('capture_id').Visible then
-            ColumnByFieldname('capture_id').ReadOnly:= True;
-
-          if DataSource.DataSet.FieldByName('capture_date').Visible then
-            ColumnByFieldName('capture_date').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('taxon_name').Visible then
-            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('capture_type').Visible then
-            ColumnByFieldName('capture_type').PickList.AddCommaText(rsCaptureTypeList);
-          if DataSource.DataSet.FieldByName('right_leg_below').Visible then
-            ColumnByFieldName('right_leg_below').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('left_leg_below').Visible then
-            ColumnByFieldName('left_leg_below').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('right_leg_above').Visible then
-            ColumnByFieldName('right_leg_above').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('left_leg_above').Visible then
-            ColumnByFieldName('left_leg_above').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('locality_name').Visible then
-            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('longitude').Visible then
-            ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('latitude').Visible then
-            ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('molt_limits').Visible then
-            ColumnByFieldName('molt_limits').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('cycle_code').Visible then
-            ColumnByFieldName('cycle_code').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('how_aged').Visible then
-            ColumnByFieldName('how_aged').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('how_sexed').Visible then
-            ColumnByFieldName('how_sexed').ButtonStyle := cbsEllipsis;
-
-          if DataSource.DataSet.FieldByName('cloacal_protuberance').Visible then
-            ColumnByFieldName('cloacal_protuberance').PickList.AddCommaText('U,N,S,M,L');
-          if DataSource.DataSet.FieldByName('brood_patch').Visible then
-            ColumnByFieldName('brood_patch').PickList.AddCommaText('F,N,V,W,O');
-          if DataSource.DataSet.FieldByName('fat').Visible then
-            ColumnByFieldName('fat').PickList.AddCommaText('N,T,L,H,F,B,G,V');
-          if DataSource.DataSet.FieldByName('body_molt').Visible then
-            ColumnByFieldName('body_molt').PickList.AddCommaText('N,T,S,H,G,A,F');
-          if DataSource.DataSet.FieldByName('flight_feathers_molt').Visible then
-            ColumnByFieldName('flight_feathers_molt').PickList.AddCommaText('N,S,A');
-          if DataSource.DataSet.FieldByName('flight_feathers_wear').Visible then
-            ColumnByFieldName('flight_feathers_wear').PickList.AddCommaText('N,S,L,M,H,X');
-          if DataSource.DataSet.FieldByName('skull_ossification').Visible then
-            ColumnByFieldName('skull_ossification').PickList.AddCommaText('N,T,L,H,G,A,F');
-          if DataSource.DataSet.FieldByName('subject_age').Visible then
-          begin
-            ColumnByFieldName('subject_age').PickList.Add(rsAgeUnknown);
-            ColumnByFieldName('subject_age').PickList.Add(rsAgeAdult);
-            ColumnByFieldName('subject_age').PickList.Add(rsAgeImmature);
-            ColumnByFieldName('subject_age').PickList.Add(rsAgeFledgling);
-            ColumnByFieldName('subject_age').PickList.Add(rsAgeNestling);
-            ColumnByFieldName('subject_age').PickList.Add(rsAgeFirstYear);
-            ColumnByFieldName('subject_age').PickList.Add(rsAgeSecondYear);
-            ColumnByFieldName('subject_age').PickList.Add(rsAgeThirdYear);
-            ColumnByFieldName('subject_age').PickList.Add(rsAgeFourthYear);
-            ColumnByFieldName('subject_age').PickList.Add(rsAgeFifthYear);
-          end;
-          if DataSource.DataSet.FieldByName('subject_sex').Visible then
-          begin
-            ColumnByFieldName('subject_sex').PickList.Add(rsSexMale);
-            ColumnByFieldName('subject_sex').PickList.Add(rsSexFemale);
-            ColumnByFieldName('subject_sex').PickList.Add(rsSexUnknown);
-          end;
-          if DataSource.DataSet.FieldByName('subject_status').Visible then
-          begin
-            ColumnByFieldName('subject_status').PickList.Add(rsStatusNormal);
-            ColumnByFieldName('subject_status').PickList.Add(rsStatusInjured);
-            ColumnByFieldName('subject_status').PickList.Add(rsStatusWingSprain);
-            ColumnByFieldName('subject_status').PickList.Add(rsStatusStressed);
-            ColumnByFieldName('subject_status').PickList.Add(rsStatusDead);
-          end;
-        end;
-      end;
-    tbNests:
-      begin
-        with aGrid, Columns do
-        begin
-          if DataSource.DataSet.FieldByName('nest_id').Visible then
-            ColumnByFieldname('nest_id').ReadOnly:= True;
-
-          if DataSource.DataSet.FieldByName('taxon_name').Visible then
-            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('found_date').Visible then
-            ColumnByFieldName('found_date').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('last_date').Visible then
-            ColumnByFieldName('last_date').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('locality_name').Visible then
-            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbNestOwners:
-      begin
-        with aGrid, Columns do
-        begin
-          //ColumnByFieldname('nest_owner_id').ReadOnly:= True;
-
-          ColumnByFieldName('role').PickList.CommaText := rsNestOwnersRoleList;
-
-          if DataSource.DataSet.FieldByName('individual_name').Visible then
-            ColumnByFieldName('individual_name').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbNestRevisions:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('nest_revision_id').ReadOnly:= True;
-
-          if DataSource.DataSet.FieldByName('revision_date').Visible then
-            ColumnByFieldName('revision_date').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbEggs:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('egg_id').ReadOnly:= True;
-
-          if DataSource.DataSet.FieldByName('taxon_name').Visible then
-            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('measure_date').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('individual_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('researcher_name').ButtonStyle := cbsEllipsis;
-
-          ColumnByFieldName('egg_shape').PickList.Add(rsEggSpherical);
-          ColumnByFieldName('egg_shape').PickList.Add(rsEggElliptical);
-          ColumnByFieldName('egg_shape').PickList.Add(rsEggOval);
-          ColumnByFieldName('egg_shape').PickList.Add(rsEggPyriform);
-          ColumnByFieldName('egg_shape').PickList.Add(rsEggConical);
-          ColumnByFieldName('egg_shape').PickList.Add(rsEggBiconical);
-          ColumnByFieldName('egg_shape').PickList.Add(rsEggCylindrical);
-          ColumnByFieldName('egg_shape').PickList.Add(rsEggLongitudinal);
-          ColumnByFieldName('egg_shape').PickList.Add(rsEggUnknown);
-
-          ColumnByFieldName('eggshell_texture').PickList.Add(rsEggChalky);
-          ColumnByFieldName('eggshell_texture').PickList.Add(rsEggShiny);
-          ColumnByFieldName('eggshell_texture').PickList.Add(rsEggGlossy);
-          ColumnByFieldName('eggshell_texture').PickList.Add(rsEggPitted);
-          ColumnByFieldName('eggshell_texture').PickList.Add(rsEggUnknown);
-
-          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggSpots);
-          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggBlotches);
-          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggSquiggles);
-          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggStreaks);
-          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggScrawls);
-          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggSpotsSquiggles);
-          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggBlotchesSquiggles);
-          ColumnByFieldName('eggshell_pattern').PickList.Add(rsEggUnknown);
-        end;
-      end;
-    tbMethods:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('method_id').ReadOnly:= True;
-        end;
-      end;
-    tbExpeditions:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('expedition_id').ReadOnly:= True;
-
-          if DataSource.DataSet.FieldByName('locality_name').Visible then
-            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('start_date').ButtonStyle := cbsEllipsis;
-          ColumnByFieldName('end_date').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbSurveys:
-      begin
-        with aGrid, Columns do
-        begin
-          ColumnByFieldname('survey_id').ReadOnly:= True;
-
-          ColumnByFieldName('survey_date').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('locality_name').Visible then
-            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('start_longitude').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('start_latitude').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('end_longitude').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('end_latitude').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbWeatherLogs:
-      begin
-        with aGrid, Columns do
-        begin
-          //  ColumnByFieldname('weather_id').ReadOnly:= True;
-
-          ColumnByFieldname('sample_moment').PickList.Add(rsMomentStart);
-          ColumnByFieldname('sample_moment').PickList.Add(rsMomentMiddle);
-          ColumnByFieldname('sample_moment').PickList.Add(rsMomentEnd);
-
-          ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationNone);
-          ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationFog);
-          ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationMist);
-          ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationDrizzle);
-          ColumnByFieldname('precipitation').PickList.Add(rsPrecipitationRain);
-        end;
-      end;
-    tbSightings:
-      begin
-        with aGrid, Columns do
-        begin
-          if DataSource.DataSet.FieldByName('sighting_id').Visible then
-            ColumnByFieldname('sighting_id').ReadOnly:= True;
-
-          if DataSource.DataSet.FieldByName('survey_name').Visible then
-            ColumnByFieldname('survey_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('taxon_name').Visible then
-            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('locality_name').Visible then
-            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('observer_name').Visible then
-            ColumnByFieldname('observer_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('individual_name').Visible then
-            ColumnByFieldname('individual_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('detection_type').Visible then
-            ColumnByFieldname('detection_type').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('breeding_status').Visible then
-            ColumnByFieldname('breeding_status').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('sighting_date').Visible then
-            ColumnByFieldname('sighting_date').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
-        end;
-      end;
-    tbSpecimens:
-      begin
-        with aGrid, Columns do
-        begin
-          if DataSource.DataSet.FieldByName('specimen_id').Visible then
-          begin
-            ColumnByFieldname('specimen_id').ReadOnly:= True;
-            //ColumnByFieldname('specimen_id').Footer.ValueType := fvtCount;
-            //ColumnByFieldname('specimen_id').Footer.Alignment := taCenter;
-          end;
-
-          if DataSource.DataSet.FieldByName('taxon_name').Visible then
-            ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
-          if DataSource.DataSet.FieldByName('locality_name').Visible then
-            ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
-          ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
-        end;
-      end;
+    tbInstitutions:   SetColumnsInstitutions(aGrid);
+    tbPeople:         SetColumnsPeople(aGrid);
+    tbProjects:       SetColumnsProjects(aGrid);
+    tbPermits:        SetColumnsPermits(aGrid);
+    tbGazetteer:      SetColumnsGazetteer(aGrid);
+    tbNetStations:    SetColumnsNetStations(aGrid);
+    tbPermanentNets:  SetColumnsPermanentNets(aGrid);
+    tbTaxonRanks:     SetColumnsTaxonRanks(aGrid);
+    tbBotanicTaxa:    SetColumnsBotanicTaxa(aGrid);
+    tbZooTaxa: ;
+    tbBands:          SetColumnsBands(aGrid);
+    tbIndividuals:    SetColumnsIndividuals(aGrid);
+    tbCaptures:       SetColumnsCaptures(aGrid);
+    tbNests:          SetColumnsNests(aGrid);
+    tbNestOwners:     SetColumnsNestOwners(aGrid);
+    tbNestRevisions:  SetColumnsNestRevisions(aGrid);
+    tbEggs:           SetColumnsEggs(aGrid);
+    tbMethods:        SetColumnsMethods(aGrid);
+    tbExpeditions:    SetColumnsExpeditions(aGrid);
+    tbSurveys:        SetColumnsSurveys(aGrid);
+    tbWeatherLogs:    SetColumnsWeatherLogs(aGrid);
+    tbSightings:      SetColumnsSightings(aGrid);
+    tbSpecimens:      SetColumnsSpecimens(aGrid);
   end;
 
   //aGrid.OptionsExtra := aGrid.OptionsExtra - [dgeAutoColumns];
@@ -6522,6 +6387,280 @@ begin
   {$IFDEF DEBUG}
   LogDebug(Format('%s: %d columns (%d visible)', [aGrid.Name, aGrid.Columns.Count, aGrid.Columns.VisibleCount]));
   {$ENDIF}
+end;
+
+procedure TfrmCustomGrid.SetGridEggs;
+begin
+  Caption := rsTitleEggs;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qEggs;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridExpeditions;
+begin
+  Caption := rsCaptionExpeditions;
+  AddSortedField('start_date', sdDescending);
+  dsLink.DataSet := DMG.qExpeditions;
+
+  lblChildTag1.Caption := rsTitleSurveys;
+  pChildTag1.Visible := True;
+  nbChilds.PageIndex := 0;
+  if not Assigned(DMS) then
+    DMS := TDMS.Create(nil);
+  FChildTable := tbSurveys;
+  dsLink1.DataSet := DMS.qSurveys;
+  pmcNewSurvey.Visible := True;
+
+  pChildsBar.Visible := True;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridGazetteer;
+begin
+  Caption := rsTitleGazetteer;
+  AddSortedField('site_name', sdAscending);
+  dsLink.DataSet := DMG.qGazetteer;
+
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridIndividuals;
+begin
+  Caption := rsTitleIndividuals;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qIndividuals;
+
+  lblChildTag1.Caption := rsTitleCaptures;
+  lblChildTag2.Caption := rsTitleMolts;
+  lblChildTag3.Caption := rsTitleSightings;
+  lblChildTag4.Caption := rsTitleNests;
+  lblChildTag5.Caption := rsTitleSpecimens;
+  pChildTag1.Visible := True;
+  pChildTag2.Visible := True;
+  pChildTag3.Visible := True;
+  pChildTag4.Visible := True;
+  pChildTag5.Visible := True;
+  nbChilds.PageIndex := 0;
+  if not Assigned(DMI) then
+    DMI := TDMI.Create(nil);
+  FChildTable := tbCaptures;
+  dsLink1.DataSet := DMI.qCaptures;
+  dsLink2.DataSet := DMI.qMolts;
+  dsLink3.DataSet := DMI.qSightings;
+  dsLink4.DataSet := DMI.qNests;
+  dsLink5.DataSet := DMI.qSpecimens;
+  pmcNewCapture.Visible := True;
+  pmcNewMolt.Visible := True;
+  pmcNewSighting.Visible := True;
+  pmcNewNest.Visible := True;
+  pmcNewSpecimen.Visible := True;
+
+  pChildsBar.Visible := True;
+  //pChild.Visible := True;
+  dbgImages.DataSource := DMI.dsImages;
+  lblImageTime.DataSource := dbgImages.DataSource;
+  lblImageDate.DataSource := dbgImages.DataSource;
+  lblImageType.DataSource := dbgImages.DataSource;
+  //imgThumb.DataSource := dbgImages.DataSource;
+  //imgThumb.DataField := 'image_thumbnail';
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridInstitutions;
+begin
+  Caption := rsTitleInstitutions;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qInstitutions;
+end;
+
+procedure TfrmCustomGrid.SetGridMethods;
+begin
+  Caption := rsTitleMethods;
+  AddSortedField('method_name', sdAscending);
+  dsLink.DataSet := DMG.qMethods;
+
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridNests;
+begin
+  Caption := rsTitleNests;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qNests;
+
+  lblChildTag1.Caption := rsTitleNestOwners;
+  lblChildTag2.Caption := rsTitleNestRevisions;
+  lblChildTag3.Caption := rsTitleEggs;
+  pChildTag1.Visible := True;
+  pChildTag2.Visible := True;
+  pChildTag3.Visible := True;
+  nbChilds.PageIndex := 0;
+  if not Assigned(DMB) then
+    DMB := TDMB.Create(nil);
+  FChildTable := tbNestOwners;
+  dsLink1.DataSet := DMB.qNestOwners;
+  dsLink2.DataSet := DMB.qNestRevisions;
+  dsLink3.DataSet := DMB.qEggs;
+  pmcNewNestOwner.Visible := True;
+  pmcNewNestRevision.Visible := True;
+  pmcNewEgg.Visible := True;
+
+  pChildsBar.Visible := True;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridNestRevisions;
+begin
+  Caption := rsTitleNestRevisions;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qNestRevisions;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridNetStations;
+begin
+  Caption := rsTitleSamplingPlots;
+  AddSortedField('station_name', sdAscending);
+  dsLink.DataSet := DMG.qNetStations;
+
+  lblChildTag1.Caption := rsTitlePermanentNets;
+  pChildTag1.Visible := True;
+  nbChilds.PageIndex := 0;
+  FChildTable := tbPermanentNets;
+  dsLink1.DataSet := DMG.qPermanentNets;
+  pmcNewPermanentNet.Visible := True;
+
+  pChildsBar.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridPeople;
+begin
+  Caption := rsTitleResearchers;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qPeople;
+end;
+
+procedure TfrmCustomGrid.SetGridPermits;
+begin
+  Caption := rsTitlePermits;
+  AddSortedField('permit_name', sdAscending);
+  dsLink.DataSet := DMG.qPermits;
+
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridProjects;
+begin
+  Caption := rsTitleProjects;
+  AddSortedField('project_title', sdAscending);
+  dsLink.DataSet := DMG.qProjects;
+
+  lblChildTag1.Caption := rsTitleTeam;
+  pChildTag1.Visible := True;
+  nbChilds.PageIndex := 0;
+  FChildTable := tbProjectTeams;
+  dsLink1.DataSet := DMG.qProjectTeam;
+  pmcNewProjectMember.Visible := True;
+
+  pChildsBar.Visible := True;
+
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridSightings;
+begin
+  Caption := rsTitleSightings;
+  AddSortedField('sighting_date', sdDescending);
+  dsLink.DataSet := DMG.qSightings;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridSpecimens;
+begin
+  Caption := rsTitleSpecimens;
+  AddSortedField('full_name', sdAscending);
+  dsLink.DataSet := DMG.qSpecimens;
+
+  lblChildTag1.Caption := rsTitleCollectors;
+  lblChildTag2.Caption := rsTitleSamplePreps;
+  pChildTag1.Visible := True;
+  pChildTag2.Visible := True;
+  nbChilds.PageIndex := 0;
+  FChildTable := tbSpecimenCollectors;
+  dsLink1.DataSet := DMG.qSampleCollectors;
+  dsLink2.DataSet := DMG.qSamplePreps;
+  pmcNewCollector.Visible := True;
+  pmcNewSamplePrep.Visible := True;
+
+  pChildsBar.Visible := True;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridSurveys;
+begin
+  Caption := rsTitleSurveys;
+  AddSortedField('survey_date', sdDescending);
+  dsLink.DataSet := DMG.qSurveys;
+
+  lblChildTag1.Caption := rsTitleTeam;
+  lblChildTag2.Caption := rsTitleNetsEffort;
+  lblChildTag3.Caption := rsTitleWeather;
+  lblChildTag4.Caption := rsTitleCaptures;
+  lblChildTag5.Caption := rsTitleSightings;
+  pChildTag1.Visible := True;
+  pChildTag2.Visible := True;
+  pChildTag3.Visible := True;
+  pChildTag4.Visible := True;
+  pChildTag5.Visible := True;
+  nbChilds.PageIndex := 0;
+  if not Assigned(DMS) then
+    DMS := TDMS.Create(nil);
+  FChildTable := tbSurveyTeams;
+  dsLink1.DataSet := DMS.qSurveyTeam;
+  dsLink2.DataSet := DMS.qNetsEffort;
+  dsLink3.DataSet := DMS.qWeatherLogs;
+  dsLink4.DataSet := DMS.qCaptures;
+  dsLink5.DataSet := DMS.qSightings;
+  pmcNewSurveyMember.Visible := True;
+  pmcNewMistnet.Visible := True;
+  pmcNewWeatherLog.Visible := True;
+  pmcNewCapture.Visible := True;
+  pmcNewSighting.Visible := True;
+
+  pChildsBar.Visible := True;
+
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  //sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridTaxonRanks;
+begin
+  Caption := rsTitleTaxonRanks;
+  AddSortedField('rank_seq', sdAscending);
+  dsLink.DataSet := DMG.qTaxonRanks;
 end;
 
 procedure TfrmCustomGrid.SetSidePanel(aValue: Boolean);
@@ -7359,224 +7498,6 @@ begin
     lblChildStatus.Caption := rsNoRecordsFound;
 end;
 
-procedure TfrmCustomGrid.UpdateFilterPanels;
-begin
-  case TableType of
-    tbGazetteer:
-      begin
-        cbSiteRankFilter.Items.Clear;
-        cbSiteRankFilter.Items.Add('All');
-        cbSiteRankFilter.Items.Add(rsCaptionCountry);
-        cbSiteRankFilter.Items.Add(rsCaptionState);
-        cbSiteRankFilter.Items.Add(rsCaptionRegion);
-        cbSiteRankFilter.Items.Add(rsCaptionMunicipality);
-        cbSiteRankFilter.Items.Add(rsCaptionDistrict);
-        cbSiteRankFilter.Items.Add(rsCaptionLocality);
-        pSiteRankFilter.Visible := True;
-        pSiteFilters.Visible := True;
-        LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-      end;
-    tbInstitutions:
-      begin
-        pSiteFilters.Visible := True;
-        LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-      end;
-    tbPeople:
-      begin
-        pSiteFilters.Visible := True;
-        LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-        pInstitutionFilter.Visible := True;
-      end;
-    tbProjects:
-      begin
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-      end;
-    tbPermits:
-      begin
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-        pProjectFilter.Visible := True;
-      end;
-    tbNetStations:
-      begin
-        pSiteFilters.Visible := True;
-        LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-      end;
-    tbBotanicTaxa:
-      begin
-        pTaxonRanksFilters.Visible := True;
-        LoadTaxaRanks(DMM.sqlCon, clbTaxonRanksFilter);
-        pSynonymFilters.Visible := True;
-      end;
-    tbZooTaxa:
-      begin
-        pTaxonRanksFilters.Visible := True;
-        LoadTaxaRanks(DMM.sqlCon, clbTaxonRanksFilter);
-        pTaxonomiesFilters.Visible := True;
-        pSynonymFilters.Visible := True;
-        pExtinctFilter.Visible := True;
-      end;
-    tbBands:
-      begin
-        pBandSizeFilter.Visible := True;
-        cbBandStatusFilter.Items.Clear;
-        cbBandStatusFilter.Items.Add('All');
-        cbBandStatusFilter.Items.AddCommaText(rsBandStatusList);
-        pBandStatusFilter.Visible := True;
-        pBandReportFilters.Visible := True;
-        pPersonFilter.Visible := True;
-        pInstitutionFilter.Visible := True;
-        pProjectFilter.Visible := True;
-        //pDatesFilters.Visible := True;
-        //LoadDateTreeData(TableType, tvDateFilter);
-      end;
-    tbIndividuals:
-      begin
-        pTaxonFilters.Visible := True;
-        LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-        pSkullOssificationFilter.Visible := False;
-        pHowAgedFilter.Visible := False;
-        pAgeFilter.Rounding.RoundOptions := [];
-        pAgingFilters.Visible := True;
-        pCloacalProtuberanceFilter.Visible := False;
-        pBroodPatchFilter.Visible := False;
-        pHowSexedFilter.Visible := False;
-        pSexFilter.Rounding.RoundOptions := [];
-        pSexingFilters.Visible := True;
-        pNestFilter.Visible := True;
-        pIndividualFilter.Visible := True;
-      end;
-    tbCaptures:
-      begin
-        pTaxonFilters.Visible := True;
-        LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-        pSiteFilters.Visible := True;
-        LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-        cbAgeFilter.Items.Clear;
-        cbAgeFilter.Items.CommaText := 'All,' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeImmature + ',' +
-          rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
-          rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
-        pAgingFilters.Visible := True;
-        cbSexFilter.Items.Clear;
-        cbSexFilter.Items.CommaText := 'All,' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
-        pSexingFilters.Visible := True;
-        pFatFilter.Visible := True;
-        pMoltingFilters.Visible := True;
-        pPersonFilter.Visible := True;
-        pTimeFilters.Visible := True;
-        pSurveyFilter.Visible := True;
-        pMethodFilter.Visible := True;
-        pIndividualFilter.Visible := True;
-        pSamplingPlotFilter.Visible := True;
-      end;
-    tbNests:
-      begin
-        pTaxonFilters.Visible := True;
-        LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-        pSiteFilters.Visible := True;
-        LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-        cbNestFateFilter.Items.Clear;
-        cbNestFateFilter.Items.CommaText := 'All,"' + rsNestLost + '","' + rsNestSuccess + '","' + rsNestUnknown + '"';
-        pNestFateFilter.Visible := True;
-        cbNestSupportFilter.Items.Clear;
-        cbNestSupportFilter.Items.CommaText := 'All,"' + rsSupportGround + '","' + rsSupportPlatform + '","' +
-          rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportSuspended + '","' +
-          rsSupportCavity + '","' + rsSupportArtificial + '","' + rsSupportOther + '"';
-        pNestSupportFilter.Visible := True;
-        pPersonFilter.Visible := True;
-        pProjectFilter.Visible := True;
-        pPlantFilter.Visible := True;
-      end;
-    tbNestRevisions:
-      begin
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-        pPersonFilter.Visible := True;
-        pTimeFilters.Visible:= True;
-        pNestFilter.Visible := True;
-      end;
-    tbEggs:
-      begin
-        pTaxonFilters.Visible := True;
-        LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-        pPersonFilter.Visible := True;
-        pNestFilter.Visible := True;
-        pIndividualFilter.Visible := True;
-      end;
-    tbExpeditions:
-      begin
-        pSiteFilters.Visible := True;
-        LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-        pProjectFilter.Visible := True;
-      end;
-    tbSurveys:
-      begin
-        pMethodFilter.Visible := True;
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-        pSiteFilters.Visible := True;
-        LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-        pTimeFilters.Visible := True;
-        pProjectFilter.Visible := True;
-        pSamplingPlotFilter.Visible := True;
-        pExpeditionFilter.Visible := True;
-      end;
-    tbSightings:
-      begin
-        pTaxonFilters.Visible := True;
-        LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-        pSiteFilters.Visible := True;
-        LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-        pPersonFilter.Visible := True;
-        pTimeFilters.Visible := True;
-        pSurveyFilter.Visible := True;
-        pMethodFilter.Visible := True;
-        pIndividualFilter.Visible := True;
-      end;
-    tbSpecimens:
-      begin
-        cbMaterialFilter.Items.Clear;
-        cbMaterialFilter.Items.Add(rsSpecimenCarcassWhole);
-        cbMaterialFilter.Items.Add(rsSpecimenCarcassPartial);
-        cbMaterialFilter.Items.Add(rsSpecimenNest);
-        cbMaterialFilter.Items.Add(rsSpecimenBones);
-        cbMaterialFilter.Items.Add(rsSpecimenEgg);
-        cbMaterialFilter.Items.Add(rsSpecimenParasites);
-        cbMaterialFilter.Items.Add(rsSpecimenFeathers);
-        cbMaterialFilter.Items.Add(rsSpecimenBlood);
-        cbMaterialFilter.Items.Add(rsSpecimenClaw);
-        cbMaterialFilter.Items.Add(rsSpecimenSwab);
-        cbMaterialFilter.Items.Add(rsSpecimenTissues);
-        cbMaterialFilter.Items.Add(rsSpecimenFeces);
-        cbMaterialFilter.Items.Add(rsSpecimenRegurgite);
-        pMaterialFilter.Visible := True;
-        pTaxonFilters.Visible := True;
-        LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-        pDatesFilters.Visible := True;
-        LoadDateTreeData(FTableType, tvDateFilter);
-        pSiteFilters.Visible := True;
-        LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-        pNestFilter.Visible := True;
-        pIndividualFilter.Visible := True;
-      end;
-  end;
-end;
-
 procedure TfrmCustomGrid.UpdateGridTitles(aGrid: TDBGrid; aSearch: TCustomSearch);
 const
   ArrowAsc: Integer = 3;
@@ -7600,6 +7521,261 @@ begin
       sdDescending: aGrid.Columns.ColumnByFieldname(aSearch.SortFields[i].FieldName).Title.ImageIndex := ArrowDesc;
     end;
   end;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanels;
+begin
+  case TableType of
+    tbGazetteer:      UpdateFilterPanelsGazetteer;
+    tbInstitutions:   UpdateFilterPanelsInstitutions;
+    tbPeople:         UpdateFilterPanelsPeople;
+    tbProjects:       UpdateFilterPanelsProjects;
+    tbPermits:        UpdateFilterPanelsPermits;
+    tbNetStations:    UpdateFilterPanelsNetStations;
+    tbBotanicTaxa:    UpdateFilterPanelsBotanicTaxa;
+    tbZooTaxa:        UpdateFilterPanelsZooTaxa;
+    tbBands:          UpdateFilterPanelsBands;
+    tbIndividuals:    UpdateFilterPanelsIndividuals;
+    tbCaptures:       UpdateFilterPanelsCaptures;
+    tbNests:          UpdateFilterPanelsNests;
+    tbNestRevisions:  UpdateFilterPanelsNestRevisions;
+    tbEggs:           UpdateFilterPanelsEggs;
+    tbExpeditions:    UpdateFilterPanelsExpeditions;
+    tbSurveys:        UpdateFilterPanelsSurveys;
+    tbSightings:      UpdateFilterPanelsSightings;
+    tbSpecimens:      UpdateFilterPanelsSpecimens;
+  end;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsBands;
+begin
+  pBandSizeFilter.Visible := True;
+  cbBandStatusFilter.Items.Clear;
+  cbBandStatusFilter.Items.Add('All');
+  cbBandStatusFilter.Items.AddCommaText(rsBandStatusList);
+  pBandStatusFilter.Visible := True;
+  pBandReportFilters.Visible := True;
+  pPersonFilter.Visible := True;
+  pInstitutionFilter.Visible := True;
+  pProjectFilter.Visible := True;
+  //pDatesFilters.Visible := True;
+  //LoadDateTreeData(TableType, tvDateFilter);
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsBotanicTaxa;
+begin
+  pTaxonRanksFilters.Visible := True;
+  LoadTaxaRanks(DMM.sqlCon, clbTaxonRanksFilter);
+  pSynonymFilters.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsCaptures;
+begin
+  pTaxonFilters.Visible := True;
+  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pSiteFilters.Visible := True;
+  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+  cbAgeFilter.Items.Clear;
+  cbAgeFilter.Items.CommaText := 'All,' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeImmature + ',' +
+    rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
+    rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
+  pAgingFilters.Visible := True;
+  cbSexFilter.Items.Clear;
+  cbSexFilter.Items.CommaText := 'All,' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
+  pSexingFilters.Visible := True;
+  pFatFilter.Visible := True;
+  pMoltingFilters.Visible := True;
+  pPersonFilter.Visible := True;
+  pTimeFilters.Visible := True;
+  pSurveyFilter.Visible := True;
+  pMethodFilter.Visible := True;
+  pIndividualFilter.Visible := True;
+  pSamplingPlotFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsEggs;
+begin
+  pTaxonFilters.Visible := True;
+  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pPersonFilter.Visible := True;
+  pNestFilter.Visible := True;
+  pIndividualFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsExpeditions;
+begin
+  pSiteFilters.Visible := True;
+  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pProjectFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsGazetteer;
+begin
+  cbSiteRankFilter.Items.Clear;
+  cbSiteRankFilter.Items.Add('All');
+  cbSiteRankFilter.Items.Add(rsCaptionCountry);
+  cbSiteRankFilter.Items.Add(rsCaptionState);
+  cbSiteRankFilter.Items.Add(rsCaptionRegion);
+  cbSiteRankFilter.Items.Add(rsCaptionMunicipality);
+  cbSiteRankFilter.Items.Add(rsCaptionDistrict);
+  cbSiteRankFilter.Items.Add(rsCaptionLocality);
+  pSiteRankFilter.Visible := True;
+  pSiteFilters.Visible := True;
+  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsIndividuals;
+begin
+  pTaxonFilters.Visible := True;
+  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pSkullOssificationFilter.Visible := False;
+  pHowAgedFilter.Visible := False;
+  pAgeFilter.Rounding.RoundOptions := [];
+  pAgingFilters.Visible := True;
+  pCloacalProtuberanceFilter.Visible := False;
+  pBroodPatchFilter.Visible := False;
+  pHowSexedFilter.Visible := False;
+  pSexFilter.Rounding.RoundOptions := [];
+  pSexingFilters.Visible := True;
+  pNestFilter.Visible := True;
+  pIndividualFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsInstitutions;
+begin
+  pSiteFilters.Visible := True;
+  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsNests;
+begin
+  pTaxonFilters.Visible := True;
+  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pSiteFilters.Visible := True;
+  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+  cbNestFateFilter.Items.Clear;
+  cbNestFateFilter.Items.CommaText := 'All,"' + rsNestLost + '","' + rsNestSuccess + '","' +
+    rsNestUnknown + '"';
+  pNestFateFilter.Visible := True;
+  cbNestSupportFilter.Items.Clear;
+  cbNestSupportFilter.Items.CommaText := 'All,"' + rsSupportGround + '","' + rsSupportPlatform + '","' +
+    rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportSuspended + '","' +
+    rsSupportCavity + '","' + rsSupportArtificial + '","' + rsSupportOther + '"';
+  pNestSupportFilter.Visible := True;
+  pPersonFilter.Visible := True;
+  pProjectFilter.Visible := True;
+  pPlantFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsNestRevisions;
+begin
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pPersonFilter.Visible := True;
+  pTimeFilters.Visible := True;
+  pNestFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsNetStations;
+begin
+  pSiteFilters.Visible := True;
+  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsPeople;
+begin
+  pSiteFilters.Visible := True;
+  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pInstitutionFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsPermits;
+begin
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pProjectFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsProjects;
+begin
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsSightings;
+begin
+  pTaxonFilters.Visible := True;
+  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pSiteFilters.Visible := True;
+  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+  pPersonFilter.Visible := True;
+  pTimeFilters.Visible := True;
+  pSurveyFilter.Visible := True;
+  pMethodFilter.Visible := True;
+  pIndividualFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsSpecimens;
+begin
+  cbMaterialFilter.Items.Clear;
+  cbMaterialFilter.Items.Add(rsSpecimenCarcassWhole);
+  cbMaterialFilter.Items.Add(rsSpecimenCarcassPartial);
+  cbMaterialFilter.Items.Add(rsSpecimenNest);
+  cbMaterialFilter.Items.Add(rsSpecimenBones);
+  cbMaterialFilter.Items.Add(rsSpecimenEgg);
+  cbMaterialFilter.Items.Add(rsSpecimenParasites);
+  cbMaterialFilter.Items.Add(rsSpecimenFeathers);
+  cbMaterialFilter.Items.Add(rsSpecimenBlood);
+  cbMaterialFilter.Items.Add(rsSpecimenClaw);
+  cbMaterialFilter.Items.Add(rsSpecimenSwab);
+  cbMaterialFilter.Items.Add(rsSpecimenTissues);
+  cbMaterialFilter.Items.Add(rsSpecimenFeces);
+  cbMaterialFilter.Items.Add(rsSpecimenRegurgite);
+  pMaterialFilter.Visible := True;
+  pTaxonFilters.Visible := True;
+  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pSiteFilters.Visible := True;
+  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+  pNestFilter.Visible := True;
+  pIndividualFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsSurveys;
+begin
+  pMethodFilter.Visible := True;
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pSiteFilters.Visible := True;
+  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+  pTimeFilters.Visible := True;
+  pProjectFilter.Visible := True;
+  pSamplingPlotFilter.Visible := True;
+  pExpeditionFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsZooTaxa;
+begin
+  pTaxonRanksFilters.Visible := True;
+  LoadTaxaRanks(DMM.sqlCon, clbTaxonRanksFilter);
+  pTaxonomiesFilters.Visible := True;
+  pSynonymFilters.Visible := True;
+  pExtinctFilter.Visible := True;
 end;
 
 end.
