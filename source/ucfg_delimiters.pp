@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, atshapelinebgra, BCPanel,
-  BCButtonFocus, rxswitch;
+  rxswitch;
 
 type
 

@@ -1216,22 +1216,15 @@ begin
 end;
 
 procedure TfrmMain.UpdateMenu(aTab: TPage);
-var
-  G: TfrmCustomGrid;
 begin
   if (TTDIPage(aTab).FormInPage is TfrmCustomGrid) then
   begin
-    G := TTDIPage(aTab).FormInPage as TfrmCustomGrid;
-
     pSearch.Visible := True;
     actOpenBandHistory.Visible := ActiveQuery = DMG.qBands;
-
   end else
   begin
-
     pSearch.Visible := False;
     actOpenBandHistory.Visible := False;
-
   end;
 end;
 

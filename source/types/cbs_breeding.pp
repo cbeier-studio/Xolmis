@@ -426,6 +426,8 @@ var
   R: String;
 begin
   Result := False;
+  R := EmptyStr;
+
   if FieldValuesDiff('Número de campo', aOld.FieldNumber, FFieldNumber, R) then
     aList.Add(R);
   if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then

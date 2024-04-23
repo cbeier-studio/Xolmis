@@ -6,7 +6,7 @@ interface
 
 uses
   { System }
-  Classes, SysUtils, Variants, Types,
+  Classes, SysUtils, Variants,
   { Data }
   DB, SQLDB,
   { CBS }
@@ -212,7 +212,7 @@ type
 
 implementation
 
-uses cbs_locale, cbs_data, cbs_validations;
+uses cbs_locale, cbs_validations;
 
 
 { TProject }

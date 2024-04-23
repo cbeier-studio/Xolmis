@@ -46,8 +46,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_taxonomy,
-  cbs_fullnames, cbs_validations, udm_breeding;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy,
+  cbs_validations, udm_breeding;
 
 {$R *.lfm}
 

@@ -6,7 +6,7 @@ interface
 
 uses
   { System }
-  Classes, SysUtils, LCLIntf, gettext, Generics.Collections, StrUtils,
+  Classes, SysUtils, LCLIntf, gettext, StrUtils,
   { VCL }
   Graphics, ImgList, Controls, Dialogs, Forms, laz.VirtualTrees,
   { Data }
@@ -82,7 +82,6 @@ type
   function DateFilterToString(aTable: TTableType; aVirtualTree: TBaseVirtualTree; var aTotal: Integer): String;
   function DateFilterToSearch(aTable: TTableType; aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
   function PersonFilterToSearch(aTable: TTableType; aSearchGroup: TSearchGroups; aKey: Integer = 0): Boolean;
-  function Ordenar(const aTabela: TTableType; aSortedFields: TSortedFields): Boolean;
 
 
 implementation
@@ -1903,28 +1902,5 @@ begin
 
   Result := True;
 end;
-
-function Ordenar(const aTabela: TTableType; aSortedFields: TSortedFields): Boolean;
-begin
-  //Result := False;
-  //GravaLog('ABRE ORDENAR', '');
-  //
-  //F_DlgOrderBy := TF_DlgOrderBy.Create(nil);
-  //with F_DlgOrderBy do
-  //  try
-  //    Tabela := aTabela;
-  //    ListSorted := aSortedFields;
-  //
-  //    if ShowModal = mrOK then
-  //    begin
-  //
-  //      Result := True;
-  //    end;
-  //  finally
-  //    FreeAndNil(F_DlgOrderBy);
-  //    GravaLog('FECHA ORDENAR', '');
-  //  end;
-end;
-
 
 end.

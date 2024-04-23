@@ -16,13 +16,13 @@ interface
 
 uses
   { System }
-  Classes, SysUtils, Variants, DateUtils, StrUtils, Generics.Collections, RegExpr, fileutil,
+  Classes, SysUtils, Variants, DateUtils, RegExpr, fileutil,
   { VCL }
   Controls, ExtCtrls, Forms, Dialogs, StdCtrls, DBCtrls,
   { Data }
   DB, SQLDB,
   { CBS }
-  cbs_datatypes, cbs_taxonomy;
+  cbs_datatypes;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -73,8 +73,8 @@ uses
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_gis, cbs_dialogs, cbs_conversions, cbs_system, cbs_blobs,
-  cbs_permissions, cbs_count, udm_main;
+  cbs_locale, cbs_global, cbs_dialogs, cbs_conversions, cbs_system,
+  cbs_count, udm_main;
 
   {
   -----------------------------------------------------------------------------------------

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, DB, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls, StdCtrls,
-  Character, atshapelinebgra;
+  atshapelinebgra;
 
 type
 

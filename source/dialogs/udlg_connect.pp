@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, DB, SQLDB, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn,
-  ATLinkLabel, DCPblowfish, DCPsha256, atshapelinebgra, BCButtonFocus, LCLType, cbs_system;
+  ATLinkLabel, DCPblowfish, DCPsha256, atshapelinebgra, LCLType, cbs_system;
 
 type
 

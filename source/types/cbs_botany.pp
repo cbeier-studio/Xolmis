@@ -88,9 +88,9 @@ const
   Italicos: array of String = ('g.', 'subg.', 'sect.', 'subsect.', 'ser.', 'subser.', 'sp.',
     'subsp.', 'var.', 'subvar.', 'f.', 'subf.');
 begin
-  if Trim(aSciName.Name) = '' then
+  if Trim(aSciName.Name) = EmptyStr then
   begin
-    Result := '';
+    Result := EmptyStr;
     Exit;
   end;
 

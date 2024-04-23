@@ -11,6 +11,7 @@ object dlgBandHistory: TdlgBandHistory
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.2.0.0'
   object pHeader: TPanel
     Left = 0
     Height = 41

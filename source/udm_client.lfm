@@ -1,11 +1,10 @@
 object DMC: TDMC
   OnCreate = DataModuleCreate
   OldCreateOrder = False
-  Height = 650
-  HorizontalOffset = 440
-  VerticalOffset = 41
-  Width = 954
-  PPI = 120
+  Height = 520
+  HorizontalOffset = 352
+  VerticalOffset = 33
+  Width = 763
   object qBandsBalance: TSQLQuery
     FieldDefs = <    
       item
@@ -38,8 +37,8 @@ object DMC: TDMC
     )
     Params = <>
     Macros = <>
-    Left = 80
-    Top = 40
+    Left = 64
+    Top = 32
     object qBandsBalanceband_size: TStringField
       Alignment = taCenter
       DisplayLabel = 'Tamanho'
@@ -121,8 +120,8 @@ object DMC: TDMC
     )
     Params = <>
     Macros = <>
-    Left = 78
-    Top = 131
+    Left = 62
+    Top = 105
     object qBandsRunningOutband_size: TStringField
       DisplayLabel = 'Tamanho'
       DisplayWidth = 10
@@ -211,8 +210,8 @@ object DMC: TDMC
     )
     Params = <>
     Macros = <>
-    Left = 81
-    Top = 228
+    Left = 65
+    Top = 182
     object qLastLiferstaxon: TLongintField
       FieldKind = fkData
       FieldName = 'taxon'
@@ -311,8 +310,8 @@ object DMC: TDMC
     )
     Params = <>
     Macros = <>
-    Left = 80
-    Top = 321
+    Left = 64
+    Top = 257
     object qLastSurveyssurvey_date: TDateField
       DisplayLabel = 'Data'
       FieldKind = fkData
@@ -398,8 +397,8 @@ object DMC: TDMC
     )
     Params = <>
     Macros = <>
-    Left = 81
-    Top = 419
+    Left = 65
+    Top = 335
     object qBirthdaysfull_name: TStringField
       DisplayLabel = 'Nome'
       FieldKind = fkData
@@ -473,8 +472,8 @@ object DMC: TDMC
     )
     Params = <>
     Macros = <>
-    Left = 83
-    Top = 521
+    Left = 66
+    Top = 417
     object qExpiredPermitsexpire_date: TDateField
       DisplayLabel = 'Data de validade'
       FieldKind = fkData
@@ -511,38 +510,38 @@ object DMC: TDMC
   object dsBandsBalance: TDataSource
     AutoEdit = False
     DataSet = qBandsBalance
-    Left = 230
-    Top = 40
+    Left = 184
+    Top = 32
   end
   object dsBandsRunningOut: TDataSource
     AutoEdit = False
     DataSet = qBandsRunningOut
-    Left = 230
-    Top = 131
+    Left = 184
+    Top = 105
   end
   object dsLastLifers: TDataSource
     AutoEdit = False
     DataSet = qLastLifers
-    Left = 230
-    Top = 228
+    Left = 184
+    Top = 182
   end
   object dsLastSurveys: TDataSource
     AutoEdit = False
     DataSet = qLastSurveys
-    Left = 230
-    Top = 321
+    Left = 184
+    Top = 257
   end
   object dsBirthdays: TDataSource
     AutoEdit = False
     DataSet = qBirthdays
-    Left = 230
-    Top = 419
+    Left = 184
+    Top = 335
   end
   object dsExpiredPermits: TDataSource
     AutoEdit = False
     DataSet = qExpiredPermits
-    Left = 230
-    Top = 521
+    Left = 184
+    Top = 417
   end
   object qIndividualsMonth: TSQLQuery
     PacketRecords = 1
@@ -588,8 +587,8 @@ object DMC: TDMC
     )
     Params = <>
     Macros = <>
-    Left = 696
-    Top = 131
+    Left = 557
+    Top = 105
     object qIndividualsMonthid: TLongintField
       FieldKind = fkData
       FieldName = 'id'
@@ -622,14 +621,14 @@ object DMC: TDMC
   object dsIndividualsMonth: TDataSource
     AutoEdit = False
     DataSet = qIndividualsMonth
-    Left = 552
-    Top = 131
+    Left = 442
+    Top = 105
   end
   object dsSpeciesMonth: TDataSource
     AutoEdit = False
     DataSet = qSpeciesMonth
-    Left = 552
-    Top = 216
+    Left = 442
+    Top = 173
   end
   object qSpeciesMonth: TSQLQuery
     PacketRecords = 1
@@ -689,8 +688,8 @@ object DMC: TDMC
     )
     Params = <>
     Macros = <>
-    Left = 696
-    Top = 216
+    Left = 557
+    Top = 173
     object qIndividualsMonthid1: TLongintField
       FieldKind = fkData
       FieldName = 'id'

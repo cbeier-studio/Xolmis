@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls,
-  DBExtCtrls, DBEditButton, atshapelinebgra;
+  DBEditButton, atshapelinebgra;
 
 type
 
@@ -147,7 +147,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_fullnames,
-  cbs_taxonomy, cbs_gis, udm_grid;
+  cbs_taxonomy, cbs_gis;
 
 {$R *.lfm}
 

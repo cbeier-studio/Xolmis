@@ -403,7 +403,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_conversions, cbs_datasearch, cbs_dialogs, udm_main;
+uses cbs_locale, cbs_global, cbs_conversions, cbs_datasearch, udm_main;
 
 function CampoByName(const aCampoName: String): TTableFieldType;
 var

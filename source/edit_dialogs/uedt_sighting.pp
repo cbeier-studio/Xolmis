@@ -5,7 +5,7 @@ unit uedt_sighting;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBExtCtrls,
+  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   Character, DBCtrls, StdCtrls, DBEditButton, atshapelinebgra, BCPanel;
 
 type

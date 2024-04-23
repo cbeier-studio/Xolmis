@@ -5,7 +5,7 @@ unit uedt_neteffort;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls, Spin, DBExtCtrls,
+  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls,
   Character, StdCtrls, DBEditButton, atshapelinebgra, BCPanel;
 
 type

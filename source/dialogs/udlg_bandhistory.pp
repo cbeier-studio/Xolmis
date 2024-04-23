@@ -5,8 +5,7 @@ unit udlg_bandhistory;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBGrids, StdCtrls, DBCtrls,
-  atshapelinebgra;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBGrids, StdCtrls, DBCtrls;
 
 type
 

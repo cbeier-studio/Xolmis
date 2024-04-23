@@ -243,6 +243,8 @@ function TdlgFindTaxon.Pesquisar(aValor: String): Boolean;
 var
   Criterio: TCriteriaType;
 begin
+  Result := False;
+
   Criterio := crLike;
   // aValor:= Trim(AnsiLowerCase(aValor));
   if ExecRegExpr('^#.+$', aValor) then

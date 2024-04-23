@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, ComCtrls,
-  Menus, SynEdit, atshapelinebgra, BCPanel, SynEditTypes, SynEditMarks, SynHighlighterAny, StrUtils,
+  Menus, SynEdit, BCPanel, SynEditTypes, SynEditMarks, SynHighlighterAny, StrUtils,
   RegExpr;
 
 type

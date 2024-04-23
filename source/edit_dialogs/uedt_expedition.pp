@@ -5,7 +5,7 @@ unit uedt_expedition;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls, DBExtCtrls,
+  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls,
   Character, DateUtils, Buttons, DBEditButton, atshapelinebgra;
 
 type

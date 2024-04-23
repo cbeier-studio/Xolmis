@@ -5,7 +5,7 @@ unit uedt_molt;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, DBCtrls, DBExtCtrls,
+  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, DBCtrls,
   Character, DateUtils, DBEditButton, atshapelinebgra;
 
 type

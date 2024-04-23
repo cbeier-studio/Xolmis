@@ -5,7 +5,7 @@ unit cbs_datasearch;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, RegExpr, StrUtils, cbs_datatypes;
+  Classes, SysUtils, SQLDB, RegExpr, StrUtils, cbs_datatypes;
 
   { Search records (deprecated) }
   //function TableSearch(aQuery: TSQLQuery; aTable: TTableType; aSearch: TSearch;

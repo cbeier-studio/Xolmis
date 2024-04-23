@@ -5,7 +5,7 @@ unit uedt_nestrevision;
 interface
 
 uses
-  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls, DBExtCtrls,
+  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls,
   StdCtrls, DateUtils, DBEditButton, atshapelinebgra;
 
 type
@@ -88,7 +88,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_taxonomy,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy,
   cbs_fullnames, cbs_validations, udm_breeding;
 
 {$R *.lfm}

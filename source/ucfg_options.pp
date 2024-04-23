@@ -144,7 +144,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_dialogs, cbs_backup, cbs_autoupdate, cbs_graphics, cbs_system;
+uses cbs_locale, cbs_global, cbs_dialogs, cbs_backup, cbs_autoupdate, cbs_system;
 
 {$R *.lfm}
 

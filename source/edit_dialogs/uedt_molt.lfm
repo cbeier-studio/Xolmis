@@ -13,6 +13,7 @@ object edtMolt: TedtMolt
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -190,6 +191,7 @@ object edtMolt: TedtMolt
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 179
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 179
           ParentBackground = False
           TabOrder = 0
@@ -523,6 +525,7 @@ object edtMolt: TedtMolt
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 374
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 374
           ParentBackground = False
           TabOrder = 0
@@ -573,6 +576,7 @@ object edtMolt: TedtMolt
           BevelOuter = bvNone
           ClientHeight = 24
           ClientWidth = 374
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 374
           ParentBackground = False
           TabOrder = 0

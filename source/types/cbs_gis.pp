@@ -7,7 +7,7 @@ interface
 
 uses
   { System }
-  Classes, Types, StdCtrls, SysUtils, Math, LazUTF8, StrUtils, RegExpr,
+  Classes, Types, SysUtils, Math, LazUTF8, StrUtils, RegExpr,
   { VCL }
   Forms, Controls, ExtCtrls, laz.VirtualTrees, mvMapViewer,
   { Data }
@@ -143,7 +143,7 @@ type
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_system, cbs_conversions, cbs_validations, udm_main, udlg_geoeditor;
+uses cbs_locale, cbs_global, cbs_conversions, cbs_validations, udm_main, udlg_geoeditor;
 
 function RemoveSymbolsDMS(aCoord: String): String;
 begin

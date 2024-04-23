@@ -68,8 +68,6 @@ var
 
 implementation
 
-uses udm_main;
-
 {$R *.lfm}
 
 end.

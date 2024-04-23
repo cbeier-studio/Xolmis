@@ -5,7 +5,7 @@ unit uedt_survey;
 interface
 
 uses
-  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, DBExtCtrls,
+  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
   DBCtrls, DBEditButton, atshapelinebgra, BCPanel;
 
 type

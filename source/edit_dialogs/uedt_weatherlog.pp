@@ -165,6 +165,7 @@ end;
 
 function TedtWeatherLog.ValidateFields: Boolean;
 begin
+  Result := True;
 
 end;
 

@@ -14,6 +14,7 @@ object dlgConnect: TdlgConnect
   PopupMode = pmExplicit
   PopupParent = frmMain.Owner
   Position = poScreenCenter
+  LCLVersion = '3.2.0.0'
   object pClient: TPanel
     Left = 0
     Height = 437

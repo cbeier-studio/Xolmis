@@ -5,7 +5,7 @@ unit udlg_colorbands;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons,
   BCPanel, atshapelinebgra, cbs_birds;
 
 type

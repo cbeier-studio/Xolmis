@@ -7450,11 +7450,11 @@ msgid "Next birthdays"
 msgstr ""
 
 #: tfrmdashboard.lbltitlechartindividuals.caption
-msgid "Individuals recorded"
+msgid "Individuals recorded in the last 12 months"
 msgstr ""
 
 #: tfrmdashboard.lbltitlechartspecies.caption
-msgid "Species recorded"
+msgid "Species recorded in the last 12 months"
 msgstr ""
 
 #: tfrmdashboard.lbltitlelifers.caption

@@ -23,7 +23,7 @@ uses
 
 implementation
 
-uses cbs_global, udm_main;
+uses udm_main;
 
 function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
 var

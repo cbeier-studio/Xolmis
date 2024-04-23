@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, DB, SqlDB, DBCtrls,
-  Spin, EditBtn, atshapelinebgra, BCButtonFocus, Character, DateUtils, Types;
+  Spin, EditBtn, atshapelinebgra, Character, DateUtils, Types;
 
 type
 

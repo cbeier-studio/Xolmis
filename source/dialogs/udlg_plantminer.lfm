@@ -11,6 +11,7 @@ object dlgPlantminer: TdlgPlantminer
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
+  LCLVersion = '3.2.0.0'
   object VL: TValueListEditor
     Left = 0
     Height = 391
@@ -28,7 +29,7 @@ object dlgPlantminer: TdlgPlantminer
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goThumbTracking]
     ColWidths = (
       188
-      420
+      424
     )
   end
   object pBottom: TPanel

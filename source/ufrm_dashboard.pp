@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, Menus, DB, SQLDB,
   DBGrids, ATLinkLabel, TAGraph, TATools, TASeries, TASources, TAGUIConnectorBGRA, BCPanel, DateUtils,
-  BCButton, BCTypes, mvMapViewer, mvTypes, mvGpsObj, mvExtraData, Grids, mvDrawingEngine;
+  BCButton, BCTypes, mvMapViewer, mvTypes, mvGpsObj;
 
 type
 
@@ -16,7 +16,7 @@ type
   TfrmDashboard = class(TForm)
     barIndividualsMonth: TBarSeries;
     barSpeciesMonth: TBarSeries;
-    ChartGUIConnectorBGRA1: TChartGUIConnectorBGRA;
+    ChartBGRA: TChartGUIConnectorBGRA;
     chartIndividuals: TChart;
     chartSpecies: TChart;
     dbgLifers: TDBGrid;
@@ -87,6 +87,7 @@ type
     procedure lblTitleBandsBalanceClick(Sender: TObject);
     procedure pFlowChangeBounds(Sender: TObject);
     procedure pmRefreshClick(Sender: TObject);
+    procedure pNewSightingClick(Sender: TObject);
     procedure pNewSightingMouseEnter(Sender: TObject);
     procedure pNewSightingMouseLeave(Sender: TObject);
     procedure pNumbersResize(Sender: TObject);
@@ -340,16 +341,21 @@ begin
   Working := False;
 end;
 
+procedure TfrmDashboard.pNewSightingClick(Sender: TObject);
+begin
+  frmMain.pmaNewSightingClick(Sender);
+end;
+
 procedure TfrmDashboard.pNewSightingMouseEnter(Sender: TObject);
 begin
-  if (Sender is TBCPanel) then
-    TBCPanel(Sender).Background.Color := clBtnHighlight;
+  if (Sender = pNewSighting) or (Sender = txtShortcutNewSighting) or (Sender = icoShortcutNewSighting) then
+    pNewSighting.Background.Color := clBtnHighlight;
 end;
 
 procedure TfrmDashboard.pNewSightingMouseLeave(Sender: TObject);
 begin
-  if (Sender is TBCPanel) then
-    TBCPanel(Sender).Background.Color := clBtnFace;
+  if (Sender = pNewSighting) or (Sender = txtShortcutNewSighting) or (Sender = icoShortcutNewSighting) then
+    pNewSighting.Background.Color := clBtnFace;
 end;
 
 procedure TfrmDashboard.pNumbersResize(Sender: TObject);
@@ -487,9 +493,9 @@ begin
             FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
       end;
       pCharts.Visible := True;
-    end
-    else
-      pCharts.Visible := False;
+    end;
+    //else
+    //  pCharts.Visible := False;
   end;
 
   with DMC.qSpeciesMonth do
@@ -516,9 +522,9 @@ begin
             FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
       end;
       pCharts1.Visible := True;
-    end
-    else
-      pCharts1.Visible := False;
+    end;
+    //else
+    //  pCharts1.Visible := False;
   end;
 end;
 
@@ -558,12 +564,12 @@ begin
         mapSurveys.ZoomOnArea(mapSurveys.GPSItems.BoundingBox);
         mapSurveys.Zoom := mapSurveys.Zoom - 1;
         mapSurveys.Visible := True;
-      end
-      else
-        mapSurveys.Visible := False;
-    end
-    else
-      mapSurveys.Visible := False;
+      end;
+      //else
+      //  mapSurveys.Visible := False;
+    end;
+    //else
+    //  mapSurveys.Visible := False;
     Close;
   end;
 end;

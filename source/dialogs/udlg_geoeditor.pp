@@ -5,8 +5,8 @@ unit udlg_geoeditor;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, MaskEdit, Spin, ComboEx,
-  atshapelinebgra, BCPanel, BCComboBox, SpinEx,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, MaskEdit, Spin,
+  atshapelinebgra, BCPanel, SpinEx,
   cbs_system, cbs_gis;
 
 type
@@ -65,7 +65,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, udm_main;
+  cbs_global;
 
 {$R *.lfm}
 

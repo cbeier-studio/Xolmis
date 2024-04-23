@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls,
-  DBExtCtrls, Menus, Buttons, DBEditButton, atshapelinebgra, BCRoundedImage, BCPanel;
+  Menus, Buttons, DBEditButton, atshapelinebgra, BCPanel;
 
 type
 

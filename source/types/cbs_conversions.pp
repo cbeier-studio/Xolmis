@@ -88,6 +88,7 @@ var
   i: Integer;
   S: String;
 begin
+  Result := EmptyStr;
   S := EmptyStr;
   if aList.Count = 0 then
     Exit;

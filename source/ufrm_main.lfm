@@ -4,8 +4,8 @@ object frmMain: TfrmMain
   Top = -8
   Width = 1936
   Caption = 'Xolmis'
-  ClientHeight = 1025
-  ClientWidth = 1924
+  ClientHeight = 1048
+  ClientWidth = 1936
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   OnClose = FormClose
@@ -13,6 +13,7 @@ object frmMain: TfrmMain
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
+  LCLVersion = '3.2.0.0'
   WindowState = wsMaximized
   object pLeftTabs: TPanel
     Left = 0
@@ -362,6 +363,7 @@ object frmMain: TfrmMain
         end      
         item
           TabCaption = 'Media'
+          TabVisible = False
         end      
         item
           TabCaption = 'Help'
@@ -1050,6 +1052,7 @@ object frmMain: TfrmMain
         Align = alLeft
         BorderSpacing.Top = 8
         BorderSpacing.Bottom = 8
+        Visible = False
         Direction = drUpDown
         LineColor = clSilver
         ArrowColor = clBlack
@@ -12189,6 +12192,7 @@ object frmMain: TfrmMain
       Caption = 'Taxa'
       Enabled = False
       ImageIndex = 17
+      Visible = False
     end
     object actOpenBotany: TAction
       Category = 'Taxonomy'
@@ -12351,6 +12355,7 @@ object frmMain: TfrmMain
       Caption = 'Molts'
       Enabled = False
       ImageIndex = 115
+      Visible = False
     end
     object actMaintenance: TAction
       Category = 'Menu'

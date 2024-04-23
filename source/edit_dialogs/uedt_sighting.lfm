@@ -15,6 +15,7 @@ object edtSighting: TedtSighting
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -748,7 +749,6 @@ object edtSighting: TedtSighting
           KeyField = 'person_id'
           ListField = 'full_name'
           ListFieldIndex = 0
-          ListSource = DML.dsLkPeople
           LookupCache = False
           NullValueKey = 32776
           OnKeyDown = FormKeyDown
