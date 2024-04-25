@@ -101,8 +101,10 @@ type
   private
     procedure AddBandBalance(aBandSize: String; aBandQuantity: Integer);
     procedure AddBirthday(aName, aBirthday: String);
+    procedure AddPermit(aName, aExpireDate: String);
     procedure RefreshBandBalance;
     procedure RefreshBirthday;
+    procedure RefreshPermits;
     procedure RefreshNumbers;
     procedure RefreshChart;
     procedure RefreshMap;
@@ -243,6 +245,48 @@ begin
   end;
 end;
 
+procedure TfrmDashboard.AddPermit(aName, aExpireDate: String);
+var
+  B: TBCPanel;
+  //C,
+  N, D: TLabel;
+begin
+  B := TBCPanel.Create(pPermitsExpiring);
+  with B do
+  begin
+    B.Parent := pPermitsExpiring;
+    Top := pPermitsExpiring.Height;
+    Height := 24;
+    Align := alTop;
+    Caption := EmptyStr;
+    BorderBCStyle := bpsBorder;
+    Background.Color := clCardBGSecondaryLight;
+    ChildSizing.HorizontalSpacing := 8;
+    BorderSpacing.Bottom := 2;
+    //Border.Style := TBCBorderStyle.bboSolid;
+  end;
+
+  D := TLabel.Create(B);
+  with D do
+  begin
+    D.Parent := B;
+    Align := alRight;
+    Alignment := taRightJustify;
+    Layout := tlCenter;
+    Caption := aExpireDate;
+    Font.Color := clDefaultFG2Light;
+  end;
+
+  N := TLabel.Create(B);
+  with N do
+  begin
+    N.Parent := B;
+    Align := alClient;
+    Layout := tlCenter;
+    Caption := aName;
+  end;
+end;
+
 procedure TfrmDashboard.FormDestroy(Sender: TObject);
 begin
   TimerLoad.Enabled := False;
@@ -317,7 +361,7 @@ begin
     DMC.qExpiredPermits.Refresh
   else
     DMC.qExpiredPermits.Open;
-
+  RefreshPermits;
   Application.ProcessMessages;
 
   if DMC.qBirthdays.Active then
@@ -626,6 +670,42 @@ begin
 
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TfrmDashboard.RefreshPermits;
+var
+  i: Integer;
+begin
+  with pPermitsExpiring do
+  begin
+    Visible := False;
+    AutoSize := False;
+    for i := (ComponentCount - 1) downto 0 do
+      if Components[i] is TBCPanel then
+        Components[i].Free;
+
+    if DMC.qExpiredPermits.RecordCount = 0 then
+      Exit;
+
+    with DMC.qExpiredPermits do
+    begin
+      Last;
+      AutoSize := True;
+      repeat
+        AddPermit(FieldByName('permit_name').AsString, FieldByName('expire_date').AsString);
+        Prior;
+      until BOF;
+    end;
+
+    //AutoSize := False;
+    //AutoSize := False;
+    //Height := (lblTitleBirthdays.Height + lblTitleBirthdays.BorderSpacing.Bottom) +
+    //  (ChildSizing.TopBottomSpacing * 2) + (ChildSizing.VerticalSpacing * (ComponentCount - 2)) +
+    //  (24 * (ComponentCount - 2));
+    Visible := True;
+    //AutoSize := True;
+    Top := pLoading.Top + pLoading.Height + 1;
   end;
 end;
 
