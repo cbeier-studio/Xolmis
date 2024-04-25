@@ -210,7 +210,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_data, udlg_connect, udlg_firstconfig;
+  cbs_locale, cbs_data, cbs_conversions, udlg_connect, udlg_firstconfig;
 
 { ---------------------------------------------------------------------------------------- }
 { System logging }

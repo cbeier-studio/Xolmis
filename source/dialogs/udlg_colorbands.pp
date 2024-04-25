@@ -293,12 +293,22 @@ procedure TdlgColorBands.RepaintBands;
 var
   i: Integer;
 begin
+  // Return bands to the empty state
+  for i := 0 to 3 do
+    case i of
+      0: PaintBand(ccNone, Band1, sbDelBand1);
+      1: PaintBand(ccNone, Band2, sbDelBand2);
+      2: PaintBand(ccNone, Band3, sbDelBand3);
+      3: PaintBand(ccNone, Band4, sbDelBand4);
+    end;
+
+  // Paint the bands
   for i := 0 to FBands.Count - 1 do
     case i of
       0: PaintBand(FBands.Items[i].Color, Band1, sbDelBand1);
       1: PaintBand(FBands.Items[i].Color, Band2, sbDelBand2);
       2: PaintBand(FBands.Items[i].Color, Band3, sbDelBand3);
-      4: PaintBand(FBands.Items[i].Color, Band4, sbDelBand4);
+      3: PaintBand(FBands.Items[i].Color, Band4, sbDelBand4);
     end;
 
   HabilitaBotoes;

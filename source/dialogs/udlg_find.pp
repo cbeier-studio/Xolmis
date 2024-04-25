@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, ExtCtrls, LCLType,
-  StdCtrls, Buttons, Grids, DBGrids, BCPanel, RegExpr, StrUtils,
+  StdCtrls, Buttons, Grids, DBGrids, BCPanel, ColorSpeedButton, RegExpr, StrUtils,
   cbs_system, cbs_datatypes, cbs_gis, cbs_taxonomy;
 
 type
@@ -14,12 +14,12 @@ type
   { TdlgFind }
 
   TdlgFind = class(TForm)
+    sbClearSearch: TColorSpeedButton;
+    sbClose: TColorSpeedButton;
     uList: TDBGrid;
     dsFind: TDataSource;
     EP: TEdit;
     pEP: TBCPanel;
-    sbClearSearch: TSpeedButton;
-    sbClose: TSpeedButton;
     pHeader: TPanel;
     qFind: TSQLQuery;
     TimerFind: TTimer;

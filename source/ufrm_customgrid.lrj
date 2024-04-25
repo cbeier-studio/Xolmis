@@ -109,6 +109,7 @@
 {"hash":175163177,"name":"tfrmcustomgrid.sbchildhistory.hint","sourcebytes":[86,105,101,119,32,114,101,99,111,114,100,32,104,105,115,116,111,114,121],"value":"View record history"},
 {"hash":220266179,"name":"tfrmcustomgrid.sbsortchilds.hint","sourcebytes":[83,111,114,116,32,114,101,99,111,114,100,115],"value":"Sort records"},
 {"hash":230921602,"name":"tfrmcustomgrid.sbchildnewtab.hint","sourcebytes":[79,112,101,110,32,114,101,99,111,114,100,115,32,105,110,32,97,32,110,101,119,32,116,97,98],"value":"Open records in a new tab"},
+{"hash":116530051,"name":"tfrmcustomgrid.sbrefreshchild.hint","sourcebytes":[82,101,102,114,101,115,104,32,114,101,108,97,116,101,100,32,114,101,99,111,114,100,115],"value":"Refresh related records"},
 {"hash":120172974,"name":"tfrmcustomgrid.lblchildstatus.caption","sourcebytes":[76,111,97,100,105,110,103,32,114,101,99,111,114,100,115,46,46,46],"value":"Loading records..."},
 {"hash":56302820,"name":"tfrmcustomgrid.sbfirstchild.hint","sourcebytes":[70,105,114,115,116,32,114,101,99,111,114,100],"value":"First record"},
 {"hash":190561620,"name":"tfrmcustomgrid.sbpriorchild.hint","sourcebytes":[80,114,101,118,105,111,117,115,32,114,101,99,111,114,100],"value":"Previous record"},
@@ -125,7 +126,6 @@
 {"hash":87468659,"name":"tfrmcustomgrid.sbrefreshrecords.hint","sourcebytes":[82,101,102,114,101,115,104,32,114,101,99,111,114,100,115],"value":"Refresh records"},
 {"hash":126806548,"name":"tfrmcustomgrid.sbinsertrecord.hint","sourcebytes":[78,101,119,32,114,101,99,111,114,100],"value":"New record"},
 {"hash":220266179,"name":"tfrmcustomgrid.sbsortrecords.hint","sourcebytes":[83,111,114,116,32,114,101,99,111,114,100,115],"value":"Sort records"},
-{"hash":218344659,"name":"tfrmcustomgrid.sbfilterrecords.hint","sourcebytes":[70,105,108,116,101,114,115],"value":"Filters"},
 {"hash":142330963,"name":"tfrmcustomgrid.lblchildtag1.caption","sourcebytes":[67,97,112,116,117,114,101,115],"value":"Captures"},
 {"hash":48,"name":"tfrmcustomgrid.lblchildcount1.caption","sourcebytes":[48],"value":"0"},
 {"hash":5530547,"name":"tfrmcustomgrid.lblchildtag2.caption","sourcebytes":[77,111,108,116,115],"value":"Molts"},
@@ -182,7 +182,7 @@
 {"hash":202699301,"name":"tfrmcustomgrid.pmssortlastmodifieddate.caption","sourcebytes":[76,97,115,116,32,109,111,100,105,102,105,101,100,32,100,97,116,101],"value":"Last modified date"},
 {"hash":163899607,"name":"tfrmcustomgrid.pmssortascending.caption","sourcebytes":[65,115,99,101,110,100,105,110,103],"value":"Ascending"},
 {"hash":163579095,"name":"tfrmcustomgrid.pmssortdescending.caption","sourcebytes":[68,101,115,99,101,110,100,105,110,103],"value":"Descending"},
-{"hash":198841874,"name":"tfrmcustomgrid.pmffilterselected.caption","sourcebytes":[65,100,100,32,115,101,108,101,99,116,101,100,32,116,111,32,102,105,108,116,101,114],"value":"Add selected to filter"},
-{"hash":80634163,"name":"tfrmcustomgrid.pmfadvancedfilter.caption","sourcebytes":[65,100,118,97,110,99,101,100,32,102,105,108,116,101,114,115],"value":"Advanced filters"},
-{"hash":115878067,"name":"tfrmcustomgrid.pmfclearfilters.caption","sourcebytes":[67,108,101,97,114,32,102,105,108,116,101,114,115],"value":"Clear filters"}
+{"hash":310020,"name":"tfrmcustomgrid.pmgedit1.caption","sourcebytes":[69,100,105,116],"value":"Edit"},
+{"hash":146640072,"name":"tfrmcustomgrid.pmgrefresh1.caption","sourcebytes":[82,101,102,114,101,115,104],"value":"Refresh"},
+{"hash":78392485,"name":"tfrmcustomgrid.pmgdel1.caption","sourcebytes":[68,101,108,101,116,101],"value":"Delete"}
 ]}

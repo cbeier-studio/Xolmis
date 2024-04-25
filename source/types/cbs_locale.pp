@@ -95,6 +95,8 @@ uses
     rsErrorRewritingHierarchy = 'Error rewriting the hierarchy. All rewriting changes were discarded.';
     rsErrorEmptyFieldName = 'Error loading field info: the field name is blank.';
     rsErrorCSVIndexNotFound = 'Field index of CSV record not exists!';
+    rsErrorDatabaseCreation = 'The database file was not created.';
+    rsErrorUpdatingAdminPassword = 'An error occurred while updating the Admin password.';
 
     rsProgressPreparing = 'Preparing...';
     rsProgressImportImages = 'Processing %d of %d images...';
@@ -123,6 +125,8 @@ uses
     rsSuccessfulNewBatch = 'New batch inserted successfully!';
     rsSuccessfulRecreateThumbnails = 'Image thumbnails recreated successfully!';
     rsSuccessfulConnectionTest = 'Connection to database was successful!';
+    rsSuccessfulDatabaseCreation = 'The database file was created successfully!';
+    rsSuccessfulUpdateAdminPassword = 'The Admin password was updated successfully!';
 
     rsDeleteConnectionTitle = 'Delete connection';
     rsDeleteConnectionPrompt = 'Do you really want to delete this connection?';
@@ -321,7 +325,9 @@ uses
     rsTitleInformation = 'Information';
     rsTitleCaution = 'Caution!';
     rsTitleImportFile = 'Import file';
+    rsTitleCreateDatabase = 'Create database';
     rsTitleSelectDatabaseFile = 'Select database';
+    rsTitleAdminPassword = 'Admin password';
     rsTitleBackup = 'Backup';
     rsTitleRestore = 'Restore backup';
     rsTitleNewBandsBatch = 'New batch of bands';
@@ -498,13 +504,25 @@ uses
     rsNestNestling = 'Nestling';
 
     rsSupportGround = 'Ground';
-    rsSupportPlatform = 'Platform';
     rsSupportHerbBush = 'Herb/bush';
     rsSupportBranchFork = 'Branch/fork';
-    rsSupportSuspended = 'Suspended';
-    rsSupportCavity = 'Cavity';
-    rsSupportArtificial = 'Artificial';
+    rsSupportLeaves = 'Leaves';
+    rsSupportLedge = 'Ledge';
+    rsSupportRockCliff = 'Rock/Cliff';
+    rsSupportRavine = 'Ravine';
+    rsSupportNestBox = 'Nest box';
+    rsSupportAnthropic = 'Anthropic';
     rsSupportOther = 'Other';
+
+    rsNestShapeScrape = 'Scrape';
+    rsNestShapeCup = 'Cup';
+    rsNestShapePlate = 'Plate';
+    rsNestShapeSphere = 'Sphere';
+    rsNestShapePendent = 'Pendent';
+    rsNestShapePlatform = 'Platform';
+    rsNestShapeMound = 'Mound';
+    rsNestShapeBurrow = 'Burrow';
+    rsNestShapeCavity = 'Cavity';
 
     rsAgeUnknown = 'Unknown';
     rsAgeAdult = 'Adult';

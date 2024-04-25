@@ -1215,6 +1215,8 @@ type
     procedure qNestsBeforePost(DataSet: TDataSet);
     procedure qNestsnest_fateGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qNestsnest_fateSetText(Sender: TField; const aText: string);
+    procedure qNestsnest_shapeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qNestsnest_shapeSetText(Sender: TField; const aText: string);
     procedure qNestssupport_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qNestssupport_typeSetText(Sender: TField; const aText: string);
     procedure qNetStationsAfterCancel(DataSet: TDataSet);
@@ -2927,34 +2929,91 @@ begin
     Sender.AsString := 'U';
 end;
 
+procedure TDMG.qNestsnest_shapeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  if Sender.AsString = 'SC' then
+    aText := rsNestShapeScrape
+  else
+  if Sender.AsString = 'CP' then
+    aText := rsNestShapeCup
+  else
+  if Sender.AsString = 'SP' then
+    aText := rsNestShapeSphere
+  else
+  if Sender.AsString = 'PD' then
+    aText := rsNestShapePendent
+  else
+  if Sender.AsString = 'PL' then
+    aText := rsNestShapePlatform
+  else
+  if Sender.AsString = 'MN' then
+    aText := rsNestShapeMound
+  else
+  if Sender.AsString = 'BR' then
+    aText := rsNestShapeBurrow
+  else
+  if Sender.AsString = 'CV' then
+    aText := rsNestShapeCavity
+  else
+  if Sender.AsString = 'PT' then
+    aText := rsNestShapePlate;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qNestsnest_shapeSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsNestShapeScrape then
+    Sender.AsString := 'SC'
+  else
+  if aText = rsNestShapeCup then
+    Sender.AsString := 'CP'
+  else
+  if aText = rsNestShapeSphere then
+    Sender.AsString := 'SP'
+  else
+  if aText = rsNestShapePendent then
+    Sender.AsString := 'PD'
+  else
+  if aText = rsNestShapePlatform then
+    Sender.AsString := 'PL'
+  else
+  if aText = rsNestShapeMound then
+    Sender.AsString := 'MN'
+  else
+  if aText = rsNestShapeBurrow then
+    Sender.AsString := 'BR'
+  else
+  if aText = rsNestShapeCavity then
+    Sender.AsString := 'CV'
+  else
+  if aText = rsNestShapePlate then
+    Sender.AsString := 'PT';
+end;
+
 procedure TDMG.qNestssupport_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
 begin
   if Sender.AsString = EmptyStr then
     Exit;
 
-  if Sender.AsString = 'G' then
-    aText := rsSupportGround
-  else
-  if Sender.AsString = 'P' then
-    aText := rsSupportPlatform
-  else
-  if Sender.AsString = 'H' then
-    aText := rsSupportHerbBush
-  else
-  if Sender.AsString = 'F' then
-    aText := rsSupportBranchFork
-  else
-  if Sender.AsString = 'S' then
-    aText := rsSupportSuspended
-  else
-  if Sender.AsString = 'C' then
-    aText := rsSupportCavity
-  else
-  if Sender.AsString = 'A' then
-    aText := rsSupportArtificial
-  else
-  if Sender.AsString = 'O' then
-    aText := rsSupportOther;
+  case Sender.AsString of
+    'G': aText := rsSupportGround;
+    'H': aText := rsSupportHerbBush;
+    'F': aText := rsSupportBranchFork;
+    'L': aText := rsSupportLeaves;
+    'D': aText := rsSupportLedge;
+    'C': aText := rsSupportRockCliff;
+    'R': aText := rsSupportRavine;
+    'B': aText := rsSupportNestBox;
+    'A': aText := rsSupportAnthropic;
+    'O': aText := rsSupportOther;
+  end;
 
   DisplayText := True;
 end;
@@ -2967,22 +3026,28 @@ begin
   if aText = rsSupportGround then
     Sender.AsString := 'G'
   else
-  if aText = rsSupportPlatform then
-    Sender.AsString := 'P'
-  else
   if aText = rsSupportHerbBush then
     Sender.AsString := 'H'
   else
   if aText = rsSupportBranchFork then
     Sender.AsString := 'F'
   else
-  if aText = rsSupportSuspended then
-    Sender.AsString := 'S'
+  if aText = rsSupportLeaves then
+    Sender.AsString := 'L'
   else
-  if aText = rsSupportCavity then
+  if aText = rsSupportLedge then
+    Sender.AsString := 'D'
+  else
+  if aText = rsSupportRockCliff then
     Sender.AsString := 'C'
   else
-  if aText = rsSupportArtificial then
+  if aText = rsSupportRavine then
+    Sender.AsString := 'R'
+  else
+  if aText = rsSupportNestBox then
+    Sender.AsString := 'B'
+  else
+  if aText = rsSupportAnthropic then
     Sender.AsString := 'A'
   else
   if aText = rsSupportOther then

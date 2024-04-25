@@ -15,7 +15,6 @@ object edtNest: TedtNest
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -671,14 +670,16 @@ object edtNest: TedtNest
           DataSource = dsLink
           ItemHeight = 15
           Items.Strings = (
-            'Solo'
-            'Plataforma'
-            'Herbácea/arbusto'
-            'Galho/forquilha'
-            'Suspenso'
-            'Cavidade'
-            'Artificial'
-            'Outro'
+            'Ground'
+            'Herb/bush'
+            'Branch/fork'
+            'Leaves'
+            'Ledge'
+            'Rock/Cliff'
+            'Ravine'
+            'Nest box'
+            'Anthropic'
+            'Other'
           )
           MaxLength = 0
           OnKeyDown = FormKeyDown
@@ -846,7 +847,7 @@ object edtNest: TedtNest
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
+        ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
@@ -858,6 +859,17 @@ object edtNest: TedtNest
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Productivity:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblRequester5: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'Nest shape:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -874,6 +886,33 @@ object edtNest: TedtNest
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
+        end
+        object cbNestShape: TDBComboBox
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
+          Constraints.MinWidth = 176
+          DataField = 'nest_shape'
+          DataSource = dsLink
+          ItemHeight = 15
+          Items.Strings = (
+            'Scrape'
+            'Cup'
+            'Plate'
+            'Sphere'
+            'Pendent'
+            'Platform'
+            'Mound'
+            'Burrow'
+            'Cavity'
+          )
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eFieldNumberKeyPress
+          OnSelect = cbSupportTypeSelect
+          Style = csDropDownList
+          TabOrder = 1
         end
       end
       object pDescription: TPanel

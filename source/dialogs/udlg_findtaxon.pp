@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, LCLType, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls,
-  DBControlGrid, StdCtrls, Buttons, BCPanel, HtmlView, RegExpr, StrUtils,
+  DBControlGrid, StdCtrls, Buttons, BCPanel, ColorSpeedButton, HtmlView, RegExpr, StrUtils,
   cbs_system, cbs_taxonomy, cbs_datatypes, Grids, HTMLUn2, HtmlGlobals;
 
 type
@@ -23,8 +23,8 @@ type
     pContent: TPanel;
     pEP: TBCPanel;
     qFind: TSQLQuery;
-    sbClearSearch: TSpeedButton;
-    sbClose: TSpeedButton;
+    sbClearSearch: TColorSpeedButton;
+    sbClose: TColorSpeedButton;
     TimerFind: TTimer;
     uList: TDBControlGrid;
     procedure EPChange(Sender: TObject);
@@ -516,6 +516,15 @@ begin
       fvDeleted:
         Add('WHERE (active_status = 0)');
     end;
+
+    case XSettings.Taxonomy of
+      0: Add('AND (clements_taxonomy = 1)');
+      1: Add('AND (ioc_taxonomy = 1)');
+      2: Add('AND (cbro_taxonomy = 1)');
+    end;
+    if not XSettings.ShowSynonyms then
+      Add('AND ((valid_id = 0) OR (valid_id ISNULL))');
+
     if Trim(oOrder) <> EmptyStr then
     begin
       if oDirection <> EmptyStr then

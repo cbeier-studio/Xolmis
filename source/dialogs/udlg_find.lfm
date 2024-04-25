@@ -75,20 +75,6 @@ object dlgFind: TdlgFind
       Rounding.RoundX = 4
       Rounding.RoundY = 4
       TabOrder = 0
-      object sbClearSearch: TSpeedButton
-        Left = 249
-        Height = 24
-        Top = 1
-        Width = 24
-        Align = alRight
-        AutoSize = True
-        Flat = True
-        Images = frmMain.mPopup
-        ImageIndex = 38
-        ImageWidth = 20
-        Visible = False
-        OnClick = sbClearSearchClick
-      end
       object EP: TEdit
         Left = 4
         Height = 18
@@ -105,18 +91,78 @@ object dlgFind: TdlgFind
         OnKeyDown = FormKeyDown
         OnKeyPress = FormKeyPress
       end
-      object sbClose: TSpeedButton
-        Left = 281
+      object sbClearSearch: TColorSpeedButton
+        Left = 249
         Height = 24
+        Hint = 'Clear search'
         Top = 1
         Width = 24
         Align = alRight
-        AutoSize = True
+        BorderSpacing.Top = 1
+        BorderSpacing.Bottom = 1
         Flat = True
-        Images = frmMain.bMenu
-        ImageIndex = 90
+        Font.Color = clBlack
+        Images = frmMain.mPopup
+        ImageIndex = 38
+        ImageWidth = 20
+        Visible = False
+        OnClick = sbClearSearchClick
+        ShowCaption = False
+        ShowHint = True
+        ParentFont = False
+        ParentShowHint = False
+        TextAutoSize = True
+        Toggle = False
+        Pressed = False
+        PopupMode = False
+        StateNormal.Color = clWhite
+        StateNormal.BorderColor = 11382189
+        StateNormal.BorderWidth = 0
+        StateHover.Color = 15987699
+        StateHover.BorderColor = 14120960
+        StateHover.BorderWidth = 0
+        StateActive.Color = 15658734
+        StateActive.BorderColor = 10048512
+        StateActive.BorderWidth = 0
+        StateDisabled.Color = 13158600
+        StateDisabled.BorderColor = 12566463
+        StateDisabled.BorderWidth = 0
+      end
+      object sbClose: TColorSpeedButton
+        Left = 281
+        Height = 24
+        Hint = 'Clear search'
+        Top = 1
+        Width = 24
+        Align = alRight
+        BorderSpacing.Top = 1
+        BorderSpacing.Bottom = 1
+        Flat = True
+        Font.Color = clBlack
+        Images = frmMain.mPopup
+        ImageIndex = 23
         ImageWidth = 20
         OnClick = sbCloseClick
+        ShowCaption = False
+        ShowHint = True
+        ParentFont = False
+        ParentShowHint = False
+        TextAutoSize = True
+        Toggle = False
+        Pressed = False
+        PopupMode = False
+        StateNormal.Color = clWhite
+        StateNormal.BorderColor = 11382189
+        StateNormal.BorderWidth = 0
+        StateHover.Color = 15987699
+        StateHover.BorderColor = 14120960
+        StateHover.BorderWidth = 0
+        StateActive.Color = 15658734
+        StateActive.BorderColor = 10048512
+        StateActive.BorderWidth = 0
+        StateDisabled.Color = 13158600
+        StateDisabled.BorderColor = 12566463
+        StateDisabled.BorderWidth = 0
       end
     end
   end

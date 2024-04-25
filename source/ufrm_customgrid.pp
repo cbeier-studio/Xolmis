@@ -81,6 +81,10 @@ type
     lblProjectFilter: TLabel;
     pmcNewNestOwner: TMenuItem;
     pEmptyQuery: TBCPanel;
+    pmgDel1: TMenuItem;
+    pmgEdit1: TMenuItem;
+    pmgRefresh1: TMenuItem;
+    pmGridChild: TPopupMenu;
     pNestFilter: TBCPanel;
     pIndividualFilter: TBCPanel;
     pExpeditionFilter: TBCPanel;
@@ -194,10 +198,6 @@ type
     pmcNewNest: TMenuItem;
     pmcNewSighting: TMenuItem;
     pmcNewSpecimen: TMenuItem;
-    pmfAdvancedFilter: TMenuItem;
-    pmfClearFilters: TMenuItem;
-    pmfFilterSelected: TMenuItem;
-    pmFilter: TPopupMenu;
     pMoltCycleFilter: TBCPanel;
     pMoltLimitsFilter: TBCPanel;
     pChildCount2: TBCPanel;
@@ -328,6 +328,7 @@ type
     sbDelRecord: TSpeedButton;
     sbEditChild: TSpeedButton;
     sbEditRecord: TSpeedButton;
+    sbRefreshChild: TSpeedButton;
     sbRowHeightDecrease: TSpeedButton;
     sbEditRecord10: TSpeedButton;
     sbRowHeightDefault: TSpeedButton;
@@ -366,11 +367,12 @@ type
     sbChildNewTab: TSpeedButton;
     sbSortChilds: TSpeedButton;
     sbSortRecords: TSpeedButton;
-    sbFilterRecords: TSpeedButton;
     Separator10: TShapeLineBGRA;
     Separator11: TShapeLineBGRA;
     Separator12: TMenuItem;
-    Separator14: TMenuItem;
+    Separator13: TMenuItem;
+    Separator15: TMenuItem;
+    Separator16: TShapeLineBGRA;
     Separator5: TShapeLineBGRA;
     Separator6: TShapeLineBGRA;
     Separator7: TShapeLineBGRA;
@@ -405,7 +407,6 @@ type
     scrollFilter: TScrollBox;
     gridColumns: TStringGrid;
     gridRecord: TStringGrid;
-    TimerFind: TTimer;
     TimerUpdate: TTimer;
     titleViewRecord: TLabel;
     titleRecycle: TLabel;
@@ -521,7 +522,6 @@ type
     procedure sbDelRecordClick(Sender: TObject);
     procedure sbEditChildClick(Sender: TObject);
     procedure sbEditRecordClick(Sender: TObject);
-    procedure sbFilterRecordsClick(Sender: TObject);
     procedure sbFirstChildClick(Sender: TObject);
     procedure sbFirstRecordClick(Sender: TObject);
     procedure sbInsertRecordClick(Sender: TObject);
@@ -533,6 +533,7 @@ type
     procedure sbPriorRecordClick(Sender: TObject);
     procedure sbRecordHistoryClick(Sender: TObject);
     procedure sbChildHistoryClick(Sender: TObject);
+    procedure sbRefreshChildClick(Sender: TObject);
     procedure sbRefreshRecordsClick(Sender: TObject);
     procedure sbRowHeightDecreaseClick(Sender: TObject);
     procedure sbRowHeightDefaultClick(Sender: TObject);
@@ -544,7 +545,6 @@ type
     procedure SetFilters(Sender: TObject);
     procedure SplitChildMoved(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
-    procedure TimerFindTimer(Sender: TObject);
     procedure tsfMarkedOff(Sender: TObject);
     procedure tsfMarkedOn(Sender: TObject);
     procedure tsfUnmarkedOff(Sender: TObject);
@@ -1762,11 +1762,17 @@ end;
 
 procedure TfrmCustomGrid.eCycleCodeFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   MoltCycleDialog(eCycleCodeFilter);
 end;
 
 procedure TfrmCustomGrid.eCycleCodeFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { CLEAR FIELD VALUE = Backspace }
@@ -1785,11 +1791,17 @@ end;
 
 procedure TfrmCustomGrid.eExpeditionFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   FindDlg(tbExpeditions, eExpeditionFilter, FExpeditionKeyFilter);
 end;
 
 procedure TfrmCustomGrid.eExpeditionFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
@@ -1815,11 +1827,17 @@ end;
 
 procedure TfrmCustomGrid.eHowAgedFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   HowAgedDialog(eHowAgedFilter);
 end;
 
 procedure TfrmCustomGrid.eHowAgedFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { CLEAR FIELD VALUE = Backspace }
@@ -1838,11 +1856,17 @@ end;
 
 procedure TfrmCustomGrid.eHowSexedFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   HowAgedDialog(eHowAgedFilter);
 end;
 
 procedure TfrmCustomGrid.eHowSexedFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { CLEAR FIELD VALUE = Backspace }
@@ -1861,11 +1885,17 @@ end;
 
 procedure TfrmCustomGrid.eIndividualFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   FindDlg(tbIndividuals, eIndividualFilter, FIndividualKeyFilter);
 end;
 
 procedure TfrmCustomGrid.eIndividualFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
@@ -1891,11 +1921,17 @@ end;
 
 procedure TfrmCustomGrid.eInstitutionFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   FindDlg(tbInstitutions, eInstitutionFilter, FInstitutionKeyFilter);
 end;
 
 procedure TfrmCustomGrid.eInstitutionFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
@@ -1921,11 +1957,17 @@ end;
 
 procedure TfrmCustomGrid.eMethodFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   FindDlg(tbMethods, eMethodFilter, FMethodKeyFilter);
 end;
 
 procedure TfrmCustomGrid.eMethodFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
@@ -1951,11 +1993,17 @@ end;
 
 procedure TfrmCustomGrid.eMoltLimitsFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   MoltLimitsDialog(eMoltLimitsFilter);
 end;
 
 procedure TfrmCustomGrid.eMoltLimitsFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { CLEAR FIELD VALUE = Backspace }
@@ -1974,11 +2022,17 @@ end;
 
 procedure TfrmCustomGrid.eNestFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   FindDlg(tbNests, eNestFilter, FNestKeyFilter);
 end;
 
 procedure TfrmCustomGrid.eNestFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
@@ -2004,11 +2058,17 @@ end;
 
 procedure TfrmCustomGrid.ePersonFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   FindDlg(tbPeople, ePersonFilter, FPersonKeyFilter);
 end;
 
 procedure TfrmCustomGrid.ePersonFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
@@ -2034,11 +2094,17 @@ end;
 
 procedure TfrmCustomGrid.ePlantFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   FindDlg(tbBotanicTaxa, ePlantFilter, FPlantKeyFilter);
 end;
 
 procedure TfrmCustomGrid.ePlantFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
@@ -2064,11 +2130,17 @@ end;
 
 procedure TfrmCustomGrid.eProjectFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   FindDlg(tbProjects, eProjectFilter, FProjectKeyFilter);
 end;
 
 procedure TfrmCustomGrid.eProjectFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
@@ -2094,11 +2166,17 @@ end;
 
 procedure TfrmCustomGrid.eSamplingPlotFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   FindDlg(tbNetStations, eSamplingPlotFilter, FSamplingPlotKeyFilter);
 end;
 
 procedure TfrmCustomGrid.eSamplingPlotFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
@@ -2124,11 +2202,17 @@ end;
 
 procedure TfrmCustomGrid.eSurveyFilterButtonClick(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   FindDlg(tbSurveys, eSurveyFilter, FSurveyKeyFilter);
 end;
 
 procedure TfrmCustomGrid.eSurveyFilterKeyPress(Sender: TObject; var Key: char);
 begin
+  if not CanToggle then
+    Exit;
+
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
@@ -2156,7 +2240,7 @@ procedure TfrmCustomGrid.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   TimerUpdate.Enabled := False;
-  TimerFind.Enabled := False;
+  //TimerFind.Enabled := False;
 
   if Assigned(dsLink5.DataSet) then
     dsLink5.DataSet.Close;
@@ -4261,12 +4345,6 @@ begin
   Working := False;
 end;
 
-procedure TfrmCustomGrid.sbFilterRecordsClick(Sender: TObject);
-begin
-  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
-    pmFilter.Popup(X, Y);
-end;
-
 procedure TfrmCustomGrid.sbFirstChildClick(Sender: TObject);
 var
   aDataSet: TDataSet;
@@ -4429,6 +4507,26 @@ var
 begin
   aKeyField := GetPrimaryKey(TableNames[FTableType]);
   ShowHistory(FTableType, dsLink.DataSet.FieldByName(aKeyField).AsInteger);
+end;
+
+procedure TfrmCustomGrid.sbRefreshChildClick(Sender: TObject);
+var
+  DS: TDataSet;
+begin
+  if Working then
+    Exit;
+
+  Working := True;
+  case nbChilds.PageIndex of
+    0: DS := dsLink1.DataSet;
+    1: DS := dsLink2.DataSet;
+    2: DS := dsLink3.DataSet;
+    3: DS := dsLink4.DataSet;
+    4: DS := dsLink5.DataSet;
+  end;
+  DS.Refresh;
+  UpdateChildButtons(DS);
+  Working := False;
 end;
 
 procedure TfrmCustomGrid.sbRefreshRecordsClick(Sender: TObject);
@@ -5990,6 +6088,27 @@ begin
       ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
     ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
     ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
+
+    ColumnByFieldname('nest_shape').PickList.Add(rsNestShapeScrape);
+    ColumnByFieldname('nest_shape').PickList.Add(rsNestShapeCup);
+    ColumnByFieldname('nest_shape').PickList.Add(rsNestShapePlate);
+    ColumnByFieldname('nest_shape').PickList.Add(rsNestShapeSphere);
+    ColumnByFieldname('nest_shape').PickList.Add(rsNestShapePendent);
+    ColumnByFieldname('nest_shape').PickList.Add(rsNestShapePlatform);
+    ColumnByFieldname('nest_shape').PickList.Add(rsNestShapeMound);
+    ColumnByFieldname('nest_shape').PickList.Add(rsNestShapeBurrow);
+    ColumnByFieldname('nest_shape').PickList.Add(rsNestShapeCavity);
+
+    ColumnByFieldname('support_type').PickList.Add(rsSupportGround);
+    ColumnByFieldname('support_type').PickList.Add(rsSupportHerbBush);
+    ColumnByFieldname('support_type').PickList.Add(rsSupportBranchFork);
+    ColumnByFieldname('support_type').PickList.Add(rsSupportLeaves);
+    ColumnByFieldname('support_type').PickList.Add(rsSupportLedge);
+    ColumnByFieldname('support_type').PickList.Add(rsSupportRockCliff);
+    ColumnByFieldname('support_type').PickList.Add(rsSupportRavine);
+    ColumnByFieldname('support_type').PickList.Add(rsSupportNestBox);
+    ColumnByFieldname('support_type').PickList.Add(rsSupportAnthropic);
+    ColumnByFieldname('support_type').PickList.Add(rsSupportOther);
   end;
 end;
 
@@ -6154,6 +6273,9 @@ end;
 
 procedure TfrmCustomGrid.SetFilters(Sender: TObject);
 begin
+  if not CanToggle then
+    Exit;
+
   Search(FSearchString);
 end;
 
@@ -6569,28 +6691,6 @@ begin
   FSidePanelFactor := pSide.Width / (ClientWidth - SplitRight.Width);
 end;
 
-procedure TfrmCustomGrid.TimerFindTimer(Sender: TObject);
-{$IFDEF DEBUG}
-var
-  Usage: TElapsedTimer;
-{$ENDIF}
-begin
-  TimerFind.Enabled := False;
-  if not CanToggle then
-    Exit;
-
-  {$IFDEF DEBUG}
-  Usage := TElapsedTimer.Create('Search');
-  {$ENDIF}
-
-  //Search(EP.Text);
-
-  {$IFDEF DEBUG}
-  Usage.StopTimer;
-  FreeAndNil(Usage);
-  {$ENDIF}
-end;
-
 procedure TfrmCustomGrid.tsfMarkedOff(Sender: TObject);
 begin
   Search(FSearchString);
@@ -6952,6 +7052,7 @@ begin
     sbNextChild.Enabled := False;
     sbLastChild.Enabled := False;
     sbChildHistory.Enabled := False;
+    sbRefreshChild.Enabled := False;
 
     pSide.Enabled := False;
   end
@@ -6959,7 +7060,7 @@ begin
   begin
     if (aDataSet.Active) and not (TSQLQuery(aDataSet).ReadOnly) then
     begin
-      sbAddChild.Enabled := (aDataSet.RecordCount > 0);
+      sbAddChild.Enabled := True;
       sbEditChild.Enabled := (aDataSet.RecordCount > 0);
       sbDelChild.Enabled := (aDataSet.RecordCount > 0);
       sbChildHistory.Enabled := (aDataSet.RecordCount > 0);
@@ -6971,6 +7072,7 @@ begin
       sbDelChild.Enabled := False;
       sbChildHistory.Enabled := False;
     end;
+    sbRefreshChild.Enabled := (aDataSet.Active);
     sbFirstChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
     sbPriorChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
     sbNextChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
@@ -7449,9 +7551,10 @@ begin
     rsNestUnknown + '"';
   pNestFateFilter.Visible := True;
   cbNestSupportFilter.Items.Clear;
-  cbNestSupportFilter.Items.CommaText := 'All,"' + rsSupportGround + '","' + rsSupportPlatform + '","' +
-    rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportSuspended + '","' +
-    rsSupportCavity + '","' + rsSupportArtificial + '","' + rsSupportOther + '"';
+  cbNestSupportFilter.Items.CommaText := 'All,"' + rsSupportGround + '","' +
+    rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportLeaves + '","' +
+    rsSupportLedge + '","' + rsSupportRockCliff + '","' + rsSupportRavine + '","' + rsSupportNestBox + '","' +
+    rsSupportAnthropic + '","' + rsSupportOther + '"';
   pNestSupportFilter.Visible := True;
   pPersonFilter.Visible := True;
   pProjectFilter.Visible := True;

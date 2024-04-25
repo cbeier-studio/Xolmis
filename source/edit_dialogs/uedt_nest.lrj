@@ -22,6 +22,7 @@
 {"hash":182466570,"name":"tedtnest.lblbandstatus7.caption","sourcebytes":[71,114,101,97,116,101,114,32,112,108,97,110,116,32,100,105,97,109,101,116,101,114,58],"value":"Greater plant diameter:"},
 {"hash":162241834,"name":"tedtnest.lblbandstatus12.caption","sourcebytes":[76,101,115,115,101,114,32,112,108,97,110,116,32,100,105,97,109,101,116,101,114,58],"value":"Lesser plant diameter:"},
 {"hash":245018682,"name":"tedtnest.lblrequester2.caption","sourcebytes":[80,114,111,100,117,99,116,105,118,105,116,121,58],"value":"Productivity:"},
+{"hash":130698474,"name":"tedtnest.lblrequester5.caption","sourcebytes":[78,101,115,116,32,115,104,97,112,101,58],"value":"Nest shape:"},
 {"hash":109229802,"name":"tedtnest.lblnotes1.caption","sourcebytes":[78,101,115,116,32,100,101,115,99,114,105,112,116,105,111,110,58],"value":"Nest description:"},
 {"hash":86616170,"name":"tedtnest.lblsupportplant1.caption","sourcebytes":[83,117,112,112,111,114,116,32,112,108,97,110,116,32,49,58],"value":"Support plant 1:"},
 {"hash":110832570,"name":"tedtnest.lblothersupport.caption","sourcebytes":[79,116,104,101,114,32,115,117,112,112,111,114,116,58],"value":"Other support:"},

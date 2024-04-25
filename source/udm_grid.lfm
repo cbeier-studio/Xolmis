@@ -8993,6 +8993,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qNestsnest_shapeGetText
+      OnSetText = qNestsnest_shapeSetText
       Size = 5
     end
     object qNestssupport_type: TStringField

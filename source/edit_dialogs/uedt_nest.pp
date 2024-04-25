@@ -15,12 +15,12 @@ type
   TedtNest = class(TForm)
     cbNestFate: TDBComboBox;
     cbSupportType: TDBComboBox;
+    cbNestShape: TDBComboBox;
     eOtherSupport: TDBEdit;
     eFieldNumber: TDBEdit;
     dsLink: TDataSource;
     eFoundDate: TDBEditButton;
     eLastDate: TDBEditButton;
-    eProductivity: TDBEdit;
     eHeightAboveGround: TDBEdit;
     ePlantHeight: TDBEdit;
     ePlantDbh: TDBEdit;
@@ -37,6 +37,7 @@ type
     eExternalHeight: TDBEdit;
     eEdgeDistance: TDBEdit;
     eCenterDistance: TDBEdit;
+    eProductivity: TDBEdit;
     eSupportPlant1: TDBEditButton;
     eSupportPlant2: TDBEditButton;
     eTaxon: TDBEditButton;
@@ -61,6 +62,7 @@ type
     lblBandStatus22: TLabel;
     lblBandStatus3: TLabel;
     lblBandStatus4: TLabel;
+    lblRequester5: TLabel;
     lblSupportType: TLabel;
     lblBandStatus6: TLabel;
     lblBandStatus7: TLabel;
@@ -402,9 +404,13 @@ end;
 procedure TedtNest.FormCreate(Sender: TObject);
 begin
   cbNestFate.Items.CommaText := '"' + rsNestLost + '","' + rsNestSuccess + '","' + rsNestUnknown + '"';
-  cbSupportType.Items.CommaText := '"' + rsSupportGround + '","' + rsSupportPlatform + '","' +
-    rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportSuspended + '","' +
-    rsSupportCavity + '","' + rsSupportArtificial + '","' + rsSupportOther + '"';
+  cbSupportType.Items.CommaText := '"' + rsSupportGround + '","' +
+    rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportLeaves + '","' +
+    rsSupportLedge + '","' + rsSupportRockCliff + '","' + rsSupportRavine + '","' + rsSupportNestBox + '","' +
+    rsSupportAnthropic + '","' + rsSupportOther + '"';
+  cbNestShape.Items.CommaText := '"' + rsNestShapeScrape + '","' + rsNestShapeCup + '","' +
+    rsNestShapePlate + '","' + rsNestShapeSphere + '","' + rsNestShapePendent + '","' +
+    rsNestShapePlatform + '","' + rsNestShapeMound + '","' + rsNestShapeBurrow + '","' + rsNestShapeCavity + '"';
 end;
 
 procedure TedtNest.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

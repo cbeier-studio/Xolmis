@@ -3,7 +3,7 @@
 {"hash":372847,"name":"tfrmdashboard.dbglifers.columns[0].title.caption","sourcebytes":[84,105,112,111],"value":"Tipo"},
 {"hash":101551966,"name":"tfrmdashboard.dbglifers.columns[1].title.caption","sourcebytes":[84,195,161,120,111,110],"value":"T\u00E1xon"},
 {"hash":305313,"name":"tfrmdashboard.dbglifers.columns[2].title.caption","sourcebytes":[68,97,116,97],"value":"Data"},
-{"hash":218209667,"name":"tfrmdashboard.linkshowmorelifers.caption","sourcebytes":[77,111,115,116,114,97,114,32,109,97,105,115],"value":"Mostrar mais"},
+{"hash":110591861,"name":"tfrmdashboard.linkshowmorelifers.caption","sourcebytes":[83,104,111,119,32,109,111,114,101],"value":"Show more"},
 {"hash":125650675,"name":"tfrmdashboard.lbltitlelifers.caption","sourcebytes":[76,97,115,116,32,108,105,102,101,114,115],"value":"Last lifers"},
 {"hash":62978659,"name":"tfrmdashboard.chartindividuals.axislist[0].title.caption","sourcebytes":[110,114,46,32,111,102,32,105,110,100,105,118,105,100,117,97,108,115],"value":"nr. of individuals"},
 {"hash":7628200,"name":"tfrmdashboard.chartindividuals.axislist[1].title.caption","sourcebytes":[109,111,110,116,104],"value":"month"},

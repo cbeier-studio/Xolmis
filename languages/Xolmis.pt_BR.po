@@ -1077,6 +1077,10 @@ msgstr ""
 "O banco de dados parece estar corrompido.\n"
 "É recomendado restaurar um backup do banco de dados."
 
+#: cbs_locale.rserrordatabasecreation
+msgid "The database file was not created."
+msgstr "O arquivo de banco de dados não foi criado."
+
 #: cbs_locale.rserrordatabasenotfound
 #, object-pascal-format
 msgctxt "cbs_locale.rserrordatabasenotfound"
@@ -1170,6 +1174,10 @@ msgstr "Tabela '%s' não encontrada."
 msgctxt "cbs_locale.rserrortitlehelpnotfound"
 msgid "Help files not found!"
 msgstr "Arquivos de ajuda não encontrados!"
+
+#: cbs_locale.rserrorupdatingadminpassword
+msgid "An error occurred while updating the Admin password."
+msgstr "Um erro ocorreu durante a atualização da senha do Admin."
 
 #: cbs_locale.rsexactcoordinate
 msgctxt "cbs_locale.rsexactcoordinate"
@@ -1783,6 +1791,44 @@ msgstr "Prole"
 msgid "\"Breeding male\",\"Breeding female\",\"Helper\",\"Offspring\",\"Unknown\""
 msgstr "\"Macho reprodutor\",\"Fêmea reprodutora\",\"Ajudante\",\"Prole\",\"Desconhecido\""
 
+#: cbs_locale.rsnestshapeburrow
+msgid "Burrow"
+msgstr "Toca"
+
+#: cbs_locale.rsnestshapecavity
+msgctxt "cbs_locale.rsnestshapecavity"
+msgid "Cavity"
+msgstr "Cavidade"
+
+#: cbs_locale.rsnestshapecup
+msgid "Cup"
+msgstr "Taça"
+
+#: cbs_locale.rsnestshapemound
+msgid "Mound"
+msgstr "Monte"
+
+#: cbs_locale.rsnestshapependent
+msgid "Pendent"
+msgstr "Pendente"
+
+#: cbs_locale.rsnestshapeplate
+msgid "Plate"
+msgstr "Prato"
+
+#: cbs_locale.rsnestshapeplatform
+msgctxt "cbs_locale.rsnestshapeplatform"
+msgid "Platform"
+msgstr "Plataforma"
+
+#: cbs_locale.rsnestshapescrape
+msgid "Scrape"
+msgstr "Ciscado"
+
+#: cbs_locale.rsnestshapesphere
+msgid "Sphere"
+msgstr "Esfera"
+
 #: cbs_locale.rsnestsuccess
 msgctxt "cbs_locale.rsnestsuccess"
 msgid "Success"
@@ -2381,6 +2427,10 @@ msgstr "Arquivo de backup criado com sucesso: %s"
 msgid "Connection to database was successful!"
 msgstr "Conexão ao banco de dados foi bem sucedida!"
 
+#: cbs_locale.rssuccessfuldatabasecreation
+msgid "The database file was created successfully!"
+msgstr "O arquivo de banco de dados foi criado com sucesso!"
+
 #: cbs_locale.rssuccessfulimport
 msgctxt "cbs_locale.rssuccessfulimport"
 msgid "The selected file(s) were sucessfully imported."
@@ -2431,20 +2481,18 @@ msgctxt "cbs_locale.rssuccessfulupdate"
 msgid "%s was updated successfully!"
 msgstr "%s foi atualizado com sucesso!"
 
-#: cbs_locale.rssupportartificial
-msgctxt "cbs_locale.rssupportartificial"
-msgid "Artificial"
-msgstr "Artificial"
+#: cbs_locale.rssuccessfulupdateadminpassword
+msgid "The Admin password was updated successfully!"
+msgstr "A senha do Admin foi atualizada com sucesso!"
+
+#: cbs_locale.rssupportanthropic
+msgid "Anthropic"
+msgstr "Antrópico"
 
 #: cbs_locale.rssupportbranchfork
 msgctxt "cbs_locale.rssupportbranchfork"
 msgid "Branch/fork"
 msgstr "Galho/forquilha"
-
-#: cbs_locale.rssupportcavity
-msgctxt "cbs_locale.rssupportcavity"
-msgid "Cavity"
-msgstr "Cavidade"
 
 #: cbs_locale.rssupportground
 msgctxt "cbs_locale.rssupportground"
@@ -2456,20 +2504,30 @@ msgctxt "cbs_locale.rssupportherbbush"
 msgid "Herb/bush"
 msgstr "Herbácea/arbusto"
 
+#: cbs_locale.rssupportleaves
+msgid "Leaves"
+msgstr "Folhas"
+
+#: cbs_locale.rssupportledge
+msgid "Ledge"
+msgstr "Saliência"
+
+#: cbs_locale.rssupportnestbox
+msgid "Nest box"
+msgstr "Caixa ninho"
+
 #: cbs_locale.rssupportother
 msgctxt "cbs_locale.rssupportother"
 msgid "Other"
 msgstr "Outro"
 
-#: cbs_locale.rssupportplatform
-msgctxt "cbs_locale.rssupportplatform"
-msgid "Platform"
-msgstr "Plataforma"
+#: cbs_locale.rssupportravine
+msgid "Ravine"
+msgstr "Barranco"
 
-#: cbs_locale.rssupportsuspended
-msgctxt "cbs_locale.rssupportsuspended"
-msgid "Suspended"
-msgstr "Suspenso"
+#: cbs_locale.rssupportrockcliff
+msgid "Rock/Cliff"
+msgstr "Rocha/Penhasco"
 
 #: cbs_locale.rssynonym
 msgctxt "cbs_locale.rssynonym"
@@ -2515,6 +2573,11 @@ msgstr "Taxonomia"
 msgctxt "cbs_locale.rsteam"
 msgid "Team"
 msgstr "Equipe"
+
+#: cbs_locale.rstitleadminpassword
+msgctxt "cbs_locale.rstitleadminpassword"
+msgid "Admin password"
+msgstr "Senha do admin"
 
 #: cbs_locale.rstitleautoupdate
 msgctxt "cbs_locale.rstitleautoupdate"
@@ -2564,6 +2627,10 @@ msgstr "Testar conexão"
 msgctxt "cbs_locale.rstitlecoordinateconverter"
 msgid "Coordinates converter"
 msgstr "Conversor de coordenadas"
+
+#: cbs_locale.rstitlecreatedatabase
+msgid "Create database"
+msgstr "Criar banco de dados"
 
 #: cbs_locale.rstitleediting
 #, object-pascal-format
@@ -3712,6 +3779,16 @@ msgctxt "tdlgfind.ep.texthint"
 msgid "Find..."
 msgstr "Buscar..."
 
+#: tdlgfind.sbclearsearch.hint
+msgctxt "tdlgfind.sbclearsearch.hint"
+msgid "Clear search"
+msgstr "Limpar busca"
+
+#: tdlgfind.sbclose.hint
+msgctxt "tdlgfind.sbclose.hint"
+msgid "Clear search"
+msgstr "Limpar busca"
+
 #: tdlgfind.ulist.columns[0].title.caption
 msgctxt "tdlgfind.ulist.columns[0].title.caption"
 msgid "Name"
@@ -3726,36 +3803,55 @@ msgctxt "tdlgfindtaxon.ep.texthint"
 msgid "Find..."
 msgstr "Buscar..."
 
+#: tdlgfindtaxon.sbclearsearch.hint
+msgctxt "tdlgfindtaxon.sbclearsearch.hint"
+msgid "Clear search"
+msgstr "Limpar busca"
+
+#: tdlgfindtaxon.sbclose.hint
+msgctxt "tdlgfindtaxon.sbclose.hint"
+msgid "Clear search"
+msgstr "Limpar busca"
+
 #: tdlgfirstconfig.caption
 msgid "Initial configuration"
 msgstr "Configuração inicial"
+
+#: tdlgfirstconfig.lbladmininstruction.caption
+msgid "Set a password for the Admin user. "
+msgstr "Defina uma senha para o usuário Admin."
+
+#: tdlgfirstconfig.lblconfirmpass.caption
+msgctxt "tdlgfirstconfig.lblconfirmpass.caption"
+msgid "Confirm password:"
+msgstr "Confirmar senha:"
+
+#: tdlgfirstconfig.lblconnectioninstruction.caption
+msgid "Inform a name and a file name to create the new connection."
+msgstr "Informe um nome e um nome de arquivo para criar a nova conexão."
 
 #: tdlgfirstconfig.lbldbfile.caption
 msgctxt "tdlgfirstconfig.lbldbfile.caption"
 msgid "Database file: *"
 msgstr "Arquivo do banco de dados: *"
 
-#: tdlgfirstconfig.lbldbpass.caption
-msgctxt "tdlgfirstconfig.lbldbpass.caption"
-msgid "New password:"
-msgstr "Nova senha:"
-
-#: tdlgfirstconfig.lbldbpass1.caption
-msgctxt "tdlgfirstconfig.lbldbpass1.caption"
-msgid "Confirm password:"
-msgstr "Confirmar senha:"
-
 #: tdlgfirstconfig.lblname.caption
 msgctxt "tdlgfirstconfig.lblname.caption"
 msgid "Connection name: *"
 msgstr "Nome da conexão: *"
 
+#: tdlgfirstconfig.lblnewpass.caption
+msgctxt "tdlgfirstconfig.lblnewpass.caption"
+msgid "New password:"
+msgstr "Nova senha:"
+
 #: tdlgfirstconfig.lbltitleauthentication.caption
+msgctxt "tdlgfirstconfig.lbltitleauthentication.caption"
 msgid "Admin password"
 msgstr "Senha do admin"
 
-#: tdlgfirstconfig.lbltitleauthentication1.caption
-msgctxt "tdlgfirstconfig.lbltitleauthentication1.caption"
+#: tdlgfirstconfig.lbltitleconnection.caption
+msgctxt "tdlgfirstconfig.lbltitleconnection.caption"
 msgid "New connection"
 msgstr "Nova conexão"
 
@@ -3764,15 +3860,19 @@ msgctxt "tdlgfirstconfig.opendlg.title"
 msgid "Select database file"
 msgstr "Selecione o arquivo de banco de dados"
 
+#: tdlgfirstconfig.sbapplyadmin.caption
+msgctxt "tdlgfirstconfig.sbapplyadmin.caption"
+msgid "Apply"
+msgstr "Aplicar"
+
 #: tdlgfirstconfig.sbcancel.caption
 msgctxt "tdlgfirstconfig.sbcancel.caption"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: tdlgfirstconfig.sbsave.caption
-msgctxt "tdlgfirstconfig.sbsave.caption"
-msgid "Save"
-msgstr "Salvar"
+#: tdlgfirstconfig.sbcreatedb.caption
+msgid "Create"
+msgstr "Criar"
 
 #: tdlggeoeditor.caption
 msgid "Coordinates editor"
@@ -5348,6 +5448,10 @@ msgstr "Destino:"
 #: tedtnest.lblrequester4.caption
 msgid "Cover (%):"
 msgstr "Cobertura (%):"
+
+#: tedtnest.lblrequester5.caption
+msgid "Nest shape:"
+msgstr "Forma do ninho:"
 
 #: tedtnest.lblsupplier1.caption
 msgctxt "tedtnest.lblsupplier1.caption"
@@ -7069,27 +7173,23 @@ msgstr "Novo participante da amostragem"
 msgid "New weather log"
 msgstr "Novo log do tempo"
 
-#: tfrmcustomgrid.pmfadvancedfilter.caption
-msgctxt "tfrmcustomgrid.pmfadvancedfilter.caption"
-msgid "Advanced filters"
-msgstr "Filtros avançados"
-
-#: tfrmcustomgrid.pmfclearfilters.caption
-msgctxt "tfrmcustomgrid.pmfclearfilters.caption"
-msgid "Clear filters"
-msgstr "Limpar filtros"
-
-#: tfrmcustomgrid.pmffilterselected.caption
-msgid "Add selected to filter"
-msgstr "Adicionar selecionado ao filtro"
-
 #: tfrmcustomgrid.pmgdel.caption
 msgctxt "tfrmcustomgrid.pmgdel.caption"
 msgid "Delete"
 msgstr "Apagar"
 
+#: tfrmcustomgrid.pmgdel1.caption
+msgctxt "tfrmcustomgrid.pmgdel1.caption"
+msgid "Delete"
+msgstr "Apagar"
+
 #: tfrmcustomgrid.pmgedit.caption
 msgctxt "tfrmcustomgrid.pmgedit.caption"
+msgid "Edit"
+msgstr "Editar"
+
+#: tfrmcustomgrid.pmgedit1.caption
+msgctxt "tfrmcustomgrid.pmgedit1.caption"
 msgid "Edit"
 msgstr "Editar"
 
@@ -7105,6 +7205,11 @@ msgstr "Histórico do registro"
 
 #: tfrmcustomgrid.pmgrefresh.caption
 msgctxt "tfrmcustomgrid.pmgrefresh.caption"
+msgid "Refresh"
+msgstr "Atualizar"
+
+#: tfrmcustomgrid.pmgrefresh1.caption
+msgctxt "tfrmcustomgrid.pmgrefresh1.caption"
 msgid "Refresh"
 msgstr "Atualizar"
 
@@ -7234,10 +7339,6 @@ msgstr "Salvar imagem como..."
 msgid "View image"
 msgstr "Visualizar imagem"
 
-#: tfrmcustomgrid.sbfilterrecords.hint
-msgid "Filters"
-msgstr "Filtros"
-
 #: tfrmcustomgrid.sbfirstchild.hint
 msgctxt "tfrmcustomgrid.sbfirstchild.hint"
 msgid "First record"
@@ -7305,6 +7406,10 @@ msgstr "Apagar registro permanentemente"
 msgctxt "tfrmcustomgrid.sbrecyclerestore.hint"
 msgid "Restore record"
 msgstr "Restaurar registro"
+
+#: tfrmcustomgrid.sbrefreshchild.hint
+msgid "Refresh related records"
+msgstr "Atualizar registros relacionados"
 
 #: tfrmcustomgrid.sbrefreshrecords.hint
 msgctxt "tfrmcustomgrid.sbrefreshrecords.hint"
@@ -7505,7 +7610,7 @@ msgstr "Revisar ninhos"
 
 #: tfrmdashboard.linkshowmorelifers.caption
 msgctxt "tfrmdashboard.linkshowmorelifers.caption"
-msgid "Mostrar mais"
+msgid "Show more"
 msgstr "Mostrar mais"
 
 #: tfrmdashboard.ploading.caption
@@ -8043,6 +8148,7 @@ msgid "Close tab"
 msgstr "Fechar guia"
 
 #: tfrmmain.sbclearsearch.hint
+msgctxt "tfrmmain.sbclearsearch.hint"
 msgid "Clear search"
 msgstr "Limpar busca"
 
