@@ -24,6 +24,14 @@ const
   DefaultSettingsFile: String   = 'settings.json';
   LogFile: String               = 'xlmslog.txt';
   BFKey: String                 = 'support lottery birds sample';
+  {$IFDEF WINDOWS}
+  cVersionsIniName: String      = 'versions_win64.ini';
+  cZipFileName: String          = 'Xolmis_win64.zip';
+  {$ENDIF}
+  {$IFDEF LINUX}
+  cVersionsIniName: String      = 'versions_linux64.ini';
+  cZipFileName: String          = 'Xolmis_linux64.zip';
+  {$ENDIF}
 
   { Format masks constants }
 const

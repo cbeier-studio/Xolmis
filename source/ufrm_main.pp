@@ -206,6 +206,7 @@ type
     TimerAnimSearch: TTimer;
     TimerFind: TTimer;
     procedure actAboutExecute(Sender: TObject);
+    procedure actCheckUpdatesExecute(Sender: TObject);
     procedure actCoordinatesConverterExecute(Sender: TObject);
     procedure actDBConnectExecute(Sender: TObject);
     procedure actDBSettingsExecute(Sender: TObject);
@@ -244,6 +245,7 @@ type
     procedure eSearchChange(Sender: TObject);
     procedure eSearchEnter(Sender: TObject);
     procedure eSearchExit(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -336,6 +338,11 @@ uses
 procedure TfrmMain.actAboutExecute(Sender: TObject);
 begin
   AbreForm(TdlgAbout, dlgAbout);
+end;
+
+procedure TfrmMain.actCheckUpdatesExecute(Sender: TObject);
+begin
+  DMM.AutoUpdate.NewVersionAvailable;
 end;
 
 procedure TfrmMain.actCoordinatesConverterExecute(Sender: TObject);
@@ -644,6 +651,11 @@ begin
   eSearch.Color := pSearch.Background.Color;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
   //TimerAnimSearch.Enabled := True;
+end;
+
+procedure TfrmMain.FormActivate(Sender: TObject);
+begin
+  DMM.AutoUpdate.ShowWhatsNewIfAvailable;
 end;
 
 procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);

@@ -113,6 +113,11 @@ msgctxt "cbs_locale.rsapproximatedcoordinate"
 msgid "Approximated"
 msgstr "Aproximada"
 
+#: cbs_locale.rsappwasupdated
+#, object-pascal-format
+msgid "Xolmis was updated to the most recent version (%s)!"
+msgstr "O Xolmis foi atualizado para a versão mais recente (%s)!"
+
 #: cbs_locale.rsaudiorecorded
 msgctxt "cbs_locale.rsaudiorecorded"
 msgid "Audio recorded"
@@ -1566,8 +1571,8 @@ msgstr "A hora final deve ser posterior à hora inicial."
 #: cbs_locale.rsisuptodate
 #, object-pascal-format
 msgctxt "cbs_locale.rsisuptodate"
-msgid "You are running the most recent %s version!"
-msgstr "Você está rodando a versão mais recente do %s!"
+msgid "You are running the most recent version (%s)!"
+msgstr "Você está rodando a versão mais recente (%s)!"
 
 #: cbs_locale.rslabelfile
 msgctxt "cbs_locale.rslabelfile"
@@ -1848,10 +1853,10 @@ msgstr "Nova senha"
 #, object-pascal-format
 msgctxt "cbs_locale.rsnewupdateavailable"
 msgid ""
-"A new %s version is available!\n"
+"A new version is available! (New version: %s)\n"
 "Do you want to download it now?"
 msgstr ""
-"Uma nova versão do %s está disponível.\n"
+"Uma nova versão está disponível! (Nova versão: %s)\n"
 "Deseja baixá-la agora?"
 
 #: cbs_locale.rsnoneselected

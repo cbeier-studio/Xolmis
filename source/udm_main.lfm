@@ -9981,11 +9981,50 @@ object DMM: TDMM
     Left = 262
     Top = 173
   end
-  object UniqueInstance1: TUniqueInstance
+  object Unique: TUniqueInstance
     Enabled = True
     Identifier = '4DB7D3F0-8B6A-45EA-9AC3-3B52A6359DC5'
-    OnOtherInstance = UniqueInstance1OtherInstance
+    OnOtherInstance = UniqueOtherInstance
     Left = 432
     Top = 333
+  end
+  object AutoUpdate: TLazAutoUpdate
+    About.Description.Strings = (
+      'A component for updating your application'#13#10'Designed for projects hosted by SourceForge and GitHub'#13#10#13#10'Main methods:'#13#10'Procedure AutoUpdate'#13#10'Function NewVersionAvailable: Boolean'#13#10'Function DownloadNewVersion: Boolean'#13#10'Function UpdateToNewVersion: Boolean'#13#10'Procedure ShowWhatsNewIfAvailable'#13#10'For troubleshooting, set DebugMode=TRUE'
+    )
+    About.Title = 'About LazAutoUpdate'
+    About.Height = 450
+    About.Width = 400
+    About.Font.Color = clNavy
+    About.Font.Height = -13
+    About.BackGroundColor = clWindow
+    About.Version = '0.3.9.0'
+    About.Authorname = 'Gordon Bamber'
+    About.Organisation = 'Public Domain'
+    About.AuthorEmail = 'minesadorada@charcodelvalle.com'
+    About.ComponentName = 'Laz Auto-update v0.3.9.0'
+    About.LicenseType = abModifiedGPL
+    OnNewVersionAvailable = AutoUpdateNewVersionAvailable
+    OnDownloaded = AutoUpdateDownloaded
+    OnUpdated = AutoUpdateUpdated
+    OnFileWriteProgress = AutoUpdateFileWriteProgress
+    OnDownloadProgress = AutoUpdateDownloadProgress
+    SFProjectName = '<not applicable>'
+    auOtherSourceURL = '<not applicable>'
+    auOtherSourceFilename = '<not applicable>'
+    ProjectType = auGitHubReleaseZip
+    UpdatesFolder = '<not applicable>'
+    VersionsININame = 'Xolmis_win64.ini'
+    VersionCountLimit = 1000000
+    DownloadCountLimit = 10000000
+    ZipfileName = 'Xolmis_update_win64.zip'
+    GitHubProjectname = 'cbeier-studio'
+    GitHubRepositoryName = 'Xolmis'
+    GitHubBranchOrTag = 'master'
+    WorkingMode = lauUpdate
+    ShortCut.ShortcutName = 'Xolmis'
+    ShortCut.Category = scAudioVideo
+    Left = 574
+    Top = 40
   end
 end
