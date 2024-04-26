@@ -131,7 +131,6 @@ begin
   B := TBCPanel.Create(pBandsContent);
   with B do
   begin
-    B.Parent := pBandsContent;
     //Top := B.Parent.Height;
     //Height := 44;
     Width := 60;
@@ -161,12 +160,12 @@ begin
     end;
     Border.Style := TBCBorderStyle.bboSolid;
     ParentBackground := True;
+    B.Parent := pBandsContent;
   end;
 
   Q := TLabel.Create(B);
   with Q do
   begin
-    Q.Parent := B;
     Align := alBottom;
     Caption := IntToStr(aBandQuantity);
     Alignment := taRightJustify;
@@ -187,6 +186,7 @@ begin
       Font.Color := clSystemCautionBGLight;
     end;
     //Q.ParentBackground := True;
+    Q.Parent := B;
   end;
 end;
 
@@ -199,7 +199,6 @@ begin
   B := TBCPanel.Create(pBirthdays);
   with B do
   begin
-    B.Parent := pBirthdays;
     Top := pBirthdays.Height;
     Height := 24;
     Align := alTop;
@@ -209,6 +208,7 @@ begin
     ChildSizing.HorizontalSpacing := 8;
     BorderSpacing.Bottom := 2;
     //Border.Style := TBCBorderStyle.bboSolid;
+    B.Parent := pBirthdays;
   end;
 
   //C := TLabel.Create(B);
@@ -227,21 +227,21 @@ begin
   D := TLabel.Create(B);
   with D do
   begin
-    D.Parent := B;
     Align := alRight;
     Alignment := taRightJustify;
     Layout := tlCenter;
     Caption := aBirthday;
     Font.Color := clDefaultFG2Light;
+    D.Parent := B;
   end;
 
   N := TLabel.Create(B);
   with N do
   begin
-    N.Parent := B;
     Align := alClient;
     Layout := tlCenter;
     Caption := aName;
+    N.Parent := B;
   end;
 end;
 
@@ -254,7 +254,6 @@ begin
   B := TBCPanel.Create(pPermitsExpiring);
   with B do
   begin
-    B.Parent := pPermitsExpiring;
     Top := pPermitsExpiring.Height;
     Height := 24;
     Align := alTop;
@@ -264,26 +263,27 @@ begin
     ChildSizing.HorizontalSpacing := 8;
     BorderSpacing.Bottom := 2;
     //Border.Style := TBCBorderStyle.bboSolid;
+    B.Parent := pPermitsExpiring;
   end;
 
   D := TLabel.Create(B);
   with D do
   begin
-    D.Parent := B;
     Align := alRight;
     Alignment := taRightJustify;
     Layout := tlCenter;
     Caption := aExpireDate;
     Font.Color := clDefaultFG2Light;
+    D.Parent := B;
   end;
 
   N := TLabel.Create(B);
   with N do
   begin
-    N.Parent := B;
     Align := alClient;
     Layout := tlCenter;
     Caption := aName;
+    N.Parent := B;
   end;
 end;
 

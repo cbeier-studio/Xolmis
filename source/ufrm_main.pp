@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons,
-  ActnList, ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton,
+  ActnList, ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton, DateUtils,
   DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory,
   cbs_datatypes, Types;
 
@@ -206,6 +206,7 @@ type
     TimerAnimSearch: TTimer;
     TimerFind: TTimer;
     procedure actAboutExecute(Sender: TObject);
+    procedure actCheckUpdatesExecute(Sender: TObject);
     procedure actCoordinatesConverterExecute(Sender: TObject);
     procedure actDBConnectExecute(Sender: TObject);
     procedure actDBSettingsExecute(Sender: TObject);
@@ -323,8 +324,8 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions,
-  cbs_taxonomy, cbs_editdialogs, cbs_themes, udm_main, udm_lookup, udm_grid, udm_client, udm_sampling,
-  udm_individuals, udm_breeding,
+  cbs_taxonomy, cbs_editdialogs, cbs_themes,
+  udm_main, udm_lookup, udm_grid, udm_client, udm_sampling, udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures,
   ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance;
@@ -336,6 +337,20 @@ uses
 procedure TfrmMain.actAboutExecute(Sender: TObject);
 begin
   AbreForm(TdlgAbout, dlgAbout);
+end;
+
+procedure TfrmMain.actCheckUpdatesExecute(Sender: TObject);
+begin
+  case CheckUpdates of
+    ckrNone: ;
+    ckrUpdated: MsgDlg(rsCheckUpdates, rsIsUpToDate, mtInformation);
+    ckrNewVersion:
+    begin
+      if MsgDlg(rsCheckUpdates, Format(rsNewUpdateAvailable, [NomeApp]), mtConfirmation) then
+        RunUpdate;
+    end;
+    ckrError: ;
+  end;
 end;
 
 procedure TfrmMain.actCoordinatesConverterExecute(Sender: TObject);
@@ -767,7 +782,6 @@ begin
     { Load the start page }
     if not Assigned(DMC) then
       DMC := TDMC.Create(Application);
-
     OpenTab(Sender, frmDashboard, TfrmDashboard, rsHome, True);
     Application.ProcessMessages;
 
@@ -775,6 +789,26 @@ begin
     if not Assigned(DMG) then
       DMG := TDMG.Create(Application);
     Application.ProcessMessages;
+
+    { Check for updates }
+    case XSettings.AutoUpdates of
+      0: ;
+      1:
+      begin
+        if DaysBetween(Now, XSettings.LastAutoUpdate) >= 1 then
+          actCheckUpdatesExecute(nil);
+      end;
+      2:
+      begin
+        if DaysBetween(Now, XSettings.LastAutoUpdate) >= 7 then
+          actCheckUpdatesExecute(nil);
+      end;
+      3:
+      begin
+        if DaysBetween(Now, XSettings.LastAutoUpdate) >= 30 then
+          actCheckUpdatesExecute(nil);
+      end;
+    end;
 
     {$IFDEF DEBUG}
     LogDebug('Main form opened');

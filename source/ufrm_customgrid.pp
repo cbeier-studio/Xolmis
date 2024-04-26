@@ -6980,6 +6980,7 @@ begin
       sbRefreshRecords.Enabled := True;
 
       //navGrid.Enabled := False;
+      //frmMain.navTabs.GetTabData((Self.Parent as TPage).PageIndex).TabModified := False;
       pSide.Enabled := False;
     end;
     dsBrowse:
@@ -7008,6 +7009,7 @@ begin
       sbCancelRecord.Visible := False;
 
       //navGrid.Enabled := True;
+      //frmMain.navTabs.GetTabData((Self.Parent as TPage).PageIndex).TabModified := False;
       pSide.Enabled := True;
     end;
     dsEdit, dsInsert:
@@ -7035,6 +7037,7 @@ begin
       sbRefreshRecords.Enabled := False;
 
       //navGrid.Enabled := False;
+      //frmMain.navTabs.GetTabData((Self.Parent as TPage).PageIndex).TabModified := True;
       pSide.Enabled := False;
     end;
 

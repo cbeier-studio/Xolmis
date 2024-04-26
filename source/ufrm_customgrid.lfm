@@ -15,6 +15,7 @@ object frmCustomGrid: TfrmCustomGrid
   OnResize = FormResize
   OnShow = FormShow
   ParentFont = True
+  LCLVersion = '3.2.0.0'
   object pSide: TPanel
     Left = 726
     Height = 614
@@ -77,7 +78,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyDown = FormKeyDown
           ColWidths = (
             100
-            344
+            348
           )
         end
       end

@@ -5,22 +5,26 @@ unit cbs_autoupdate;
 interface
 
 uses
-  Classes, SysUtils, fphttpclient, openssl, opensslsockets, fpjson, LazFileUtils,
+  Classes, SysUtils, Dialogs, fphttpclient, openssl, opensslsockets, fpjson, LazFileUtils, lclintf,
   fileinfo, winpeimagereader, elfreader, machoreader;
 
 const
-  CheckUpdateURL: String = 'https://';
+  CheckUpdateURL: String  = 'http://github.com/cbeier-studio/Xolmis/releases/latest/versions.json';
+  UpdateURL: String       = 'http://github.com/cbeier-studio/Xolmis/releases/latest';
+
+type
+  TCheckUpdateResponse = (ckrNone, ckrUpdated, ckrNewVersion, ckrError);
 
   function GetBuildInfoAsString: String;
   function CompareVersion(NewVersion, CurrentVersion: String): Integer;
   function IsNewVersion(NewVersion, CurrentVersion: String): Boolean;
 
-  function CheckUpdates: boolean;
+  function CheckUpdates: TCheckUpdateResponse;
   procedure RunUpdate;
 
 implementation
 
-uses cbs_global;
+uses cbs_global, cbs_dialogs, cbs_locale;
 
 function GetBuildInfoAsString: String;
 var
@@ -82,36 +86,49 @@ begin
   Result := CompareVersion(NewVersion, CurrentVersion) > 0;
 end;
 
-function CheckUpdates: boolean;
+function CheckUpdates: TCheckUpdateResponse;
 var
   Client: TFPHTTPClient;
-  Response: String;
+  Response: TStrings;
   Obj: TJSONObject;
-  Versao, ReleaseDate: String;
+  Versao: String;
   Atual: String;
+  TempFile: String;
 begin
-  Result := False;
+  Result := ckrNone;
 
   { SSL initialization has to be done by hand here }
-  InitSSLInterface;
+  //InitSSLInterface;
+  TempFile := ConcatPaths([TempDir, 'versions.json']);
+  if FileExists(TempFile) then
+    DeleteFile(TempFile);
 
   Client := TFPHttpClient.Create(nil);
   try
     { Allow redirections }
-    Client.AllowRedirect := true;
-    Response := Client.Get(CheckUpdateURL);
-    if (Length(Response) > 0) then
-    begin
-      Obj := GetJSON(Response) as TJSONObject;
-      Versao := Obj.Get('release');
-      ReleaseDate := Obj.Get('date');
-      Atual := GetBuildInfoAsString;
-      if CompareVersion(Atual, Versao) < 0 then
-        Result := true;
-      Obj.Free;
-    end
-    else
-      LogError('File not found: ' + CheckUpdateURL);
+    //Client.AllowRedirect := true;
+    try
+      Client.Get(CheckUpdateURL, TempFile);
+      if FileExists(TempFile) then
+      begin
+        Response := TStringList.Create;
+        Response.LoadFromFile(TempFile);
+        Obj := GetJSON(Response.Text) as TJSONObject;
+        Versao := Obj.Get('release');
+        Atual := GetBuildInfoAsString;
+        if CompareVersion(Versao, Atual) > 0 then
+          Result := ckrNewVersion
+        else
+          Result := ckrUpdated;
+        Obj.Free;
+        Response.Free;
+      end
+      else
+        LogError('File not found: ' + CheckUpdateURL);
+    except
+      Result := ckrError;
+      MsgDlg(rsCheckUpdates, rsErrorCheckingUpdates, mtError);
+    end;
   finally
     Client.Free;
   end;
@@ -119,7 +136,7 @@ end;
 
 procedure RunUpdate;
 begin
-
+  OpenUrl(UpdateURL);
 end;
 
 end.

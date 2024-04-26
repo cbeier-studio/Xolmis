@@ -97,6 +97,7 @@ uses
     rsErrorCSVIndexNotFound = 'Field index of CSV record not exists!';
     rsErrorDatabaseCreation = 'The database file was not created.';
     rsErrorUpdatingAdminPassword = 'An error occurred while updating the Admin password.';
+    rsErrorCheckingUpdates = 'An error occurred while checking for updates.';
 
     rsProgressPreparing = 'Preparing...';
     rsProgressImportImages = 'Processing %d of %d images...';
@@ -172,10 +173,11 @@ uses
     rsRestoringBackup = 'Restoring backup...';
     rsRunningStartupBackup = 'Creating startup backup...';
 
+    rsCheckUpdates = 'Check updates';
     rsUpdatedNewVersion = 'New version: %s';
-    rsNewUpdateAvailable = 'A new %s version is available!' + LineEnding +
+    rsNewUpdateAvailable = 'A new version of %s is available!' + LineEnding +
       'Do you want to download it now?';
-    rsIsUpToDate = 'You are running the most recent %s version!';
+    rsIsUpToDate = 'You are running the most recent version!';
 
     rsPostBeforeClosePrompt = 'There are unsaved changes. Do you want to save it?';
     rsDiscardChangesTitle = 'Discard changes';

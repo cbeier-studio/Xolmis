@@ -11,6 +11,7 @@ object frmDashboard: TfrmDashboard
   OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMenu = pmDashboard
+  LCLVersion = '3.2.0.0'
   object sBox: TScrollBox
     Left = 0
     Height = 478

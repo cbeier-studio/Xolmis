@@ -105,7 +105,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="146"/>
+      <BuildNr Value="149"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -369,16 +369,10 @@
     </RunParams>
     <RequiredPackages>
       <Item>
-        <PackageName Value="dcpcrypt_laz"/>
-      </Item>
-      <Item>
         <PackageName Value="uniqueinstance_package"/>
       </Item>
       <Item>
         <PackageName Value="LazControls"/>
-      </Item>
-      <Item>
-        <PackageName Value="LazControlDsgn"/>
       </Item>
       <Item>
         <PackageName Value="TAChartBgra"/>

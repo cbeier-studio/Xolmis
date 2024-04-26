@@ -700,6 +700,11 @@ msgctxt "cbs_locale.rscheckuncheckall"
 msgid "Mark/unmark all records"
 msgstr "Marca/desmarca todos registros"
 
+#: cbs_locale.rscheckupdates
+msgctxt "cbs_locale.rscheckupdates"
+msgid "Check updates"
+msgstr "Verificar atualizações"
+
 #: cbs_locale.rscloacalprotuberance
 msgctxt "cbs_locale.rscloacalprotuberance"
 msgid "cloacal protuberance"
@@ -1037,6 +1042,10 @@ msgstr "Criação do arquivo de backup falhou."
 msgctxt "cbs_locale.rserrorbackupnotfound"
 msgid "Backup file not found: %s"
 msgstr "Arquivo de backup não encontrado: %s"
+
+#: cbs_locale.rserrorcheckingupdates
+msgid "An error occurred while checking for updates."
+msgstr "Ocorreu um erro ao verificar atualizações."
 
 #: cbs_locale.rserrorconnectingdatabase
 msgctxt "cbs_locale.rserrorconnectingdatabase"
@@ -1564,10 +1573,9 @@ msgid "The end time must be later than the start time."
 msgstr "A hora final deve ser posterior à hora inicial."
 
 #: cbs_locale.rsisuptodate
-#, object-pascal-format
 msgctxt "cbs_locale.rsisuptodate"
-msgid "You are running the most recent %s version!"
-msgstr "Você está rodando a versão mais recente do %s!"
+msgid "You are running the most recent version!"
+msgstr "Você está rodando a versão mais recente!"
 
 #: cbs_locale.rslabelfile
 msgctxt "cbs_locale.rslabelfile"
@@ -1848,7 +1856,7 @@ msgstr "Nova senha"
 #, object-pascal-format
 msgctxt "cbs_locale.rsnewupdateavailable"
 msgid ""
-"A new %s version is available!\n"
+"A new version of %s is available!\n"
 "Do you want to download it now?"
 msgstr ""
 "Uma nova versão do %s está disponível.\n"
@@ -7830,6 +7838,7 @@ msgid "About"
 msgstr "Sobre"
 
 #: tfrmmain.actcheckupdates.caption
+msgctxt "tfrmmain.actcheckupdates.caption"
 msgid "Check updates"
 msgstr "Verificar atualizações"
 

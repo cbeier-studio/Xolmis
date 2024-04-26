@@ -81,7 +81,7 @@ type
     { General }
     FConfirmCancel, FEnterAsTab, FTerminatedOk: Boolean;
     FClearDeletedPeriod: Integer;
-    FLastClearDeleted, FLastDatabaseOptimization: TDateTime;
+    FLastClearDeleted, FLastDatabaseOptimization, FLastAutoUpdate: TDateTime;
     FLastPathUsed: String;
     { Appearance }
     FSelectedTheme: String;
@@ -129,6 +129,7 @@ type
     property ClearDeletedPeriod: Integer read FClearDeletedPeriod write FClearDeletedPeriod;
     property LastClearDeleted: TDateTime read FLastClearDeleted write FLastClearDeleted;
     property LastDatabaseOptimization: TDateTime read FLastDatabaseOptimization write FLastDatabaseOptimization;
+    property LastAutoUpdate: TDateTime read FLastAutoUpdate write FLastAutoUpdate;
     property LastPathUsed: String read FLastPathUsed write SetLastPathUsed;
     { Appearance }
     property SelectedTheme: String read FSelectedTheme write FSelectedTheme;
@@ -642,6 +643,7 @@ begin
   FClearDeletedPeriod := Ini.GetValue('/GENERAL/ClearDeletedPeriod', 2);
   FLastClearDeleted := Ini.GetValue('/GENERAL/LastClearDeleted', StrToDateTime('30/12/1500 00:00:00'));
   FLastDatabaseOptimization := Ini.GetValue('/GENERAL/LastDatabaseOptimization', StrToDateTime('30/12/1500 00:00:00'));
+  FLastAutoUpdate := Ini.GetValue('/GENERAL/LastAutoUpdate', StrToDateTime('30/12/1500 00:00:00'));
   { Appearance }
   FSelectedTheme := Ini.GetValue('/APPEARANCE/SelectedTheme', 'Light');
   FShowGridLines := Ini.GetValue('/APPEARANCE/ShowGridLines', True);
@@ -686,6 +688,7 @@ begin
   Ini.SetValue('/GENERAL/ClearDeletedPeriod', FClearDeletedPeriod);
   Ini.SetValue('/GENERAL/LastClearDeleted', FLastClearDeleted);
   Ini.SetValue('/GENERAL/LastDatabaseOptimization', FLastDatabaseOptimization);
+  Ini.SetValue('/GENERAL/LastAutoUpdate', FLastAutoUpdate);
   { Appearance }
   Ini.SetValue('/APPEARANCE/SelectedTheme', FSelectedTheme);
   Ini.SetValue('/APPEARANCE/ShowGridLines', FShowGridLines);

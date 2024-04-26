@@ -235,11 +235,16 @@ end;
 procedure TcfgOptions.sbCheckUpdatesNowClick(Sender: TObject);
 begin
   LogInfo('Check Xolmis updates');
-  if CheckUpdates then
-    if MsgDlg(rsTitleAutoUpdate, rsNewUpdateAvailable, mtConfirmation) then
-      RunUpdate
-    else
-      MsgDlg(rsTitleAutoUpdate, rsIsUpToDate, mtInformation);
+  case CheckUpdates of
+    ckrNone: ;
+    ckrUpdated: MsgDlg(rsCheckUpdates, rsIsUpToDate, mtInformation);
+    ckrNewVersion:
+    begin
+      if MsgDlg(rsCheckUpdates, Format(rsNewUpdateAvailable, [NomeApp]), mtConfirmation) then
+        RunUpdate;
+    end;
+    ckrError: ;
+  end;
 end;
 
 procedure TcfgOptions.tsConfirmCancelOn(Sender: TObject);

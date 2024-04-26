@@ -696,6 +696,11 @@ msgctxt "cbs_locale.rscheckuncheckall"
 msgid "Mark/unmark all records"
 msgstr ""
 
+#: cbs_locale.rscheckupdates
+msgctxt "cbs_locale.rscheckupdates"
+msgid "Check updates"
+msgstr ""
+
 #: cbs_locale.rscloacalprotuberance
 msgctxt "cbs_locale.rscloacalprotuberance"
 msgid "cloacal protuberance"
@@ -1030,6 +1035,10 @@ msgstr ""
 #, object-pascal-format
 msgctxt "cbs_locale.rserrorbackupnotfound"
 msgid "Backup file not found: %s"
+msgstr ""
+
+#: cbs_locale.rserrorcheckingupdates
+msgid "An error occurred while checking for updates."
 msgstr ""
 
 #: cbs_locale.rserrorconnectingdatabase
@@ -1548,9 +1557,8 @@ msgid "The end time must be later than the start time."
 msgstr ""
 
 #: cbs_locale.rsisuptodate
-#, object-pascal-format
 msgctxt "cbs_locale.rsisuptodate"
-msgid "You are running the most recent %s version!"
+msgid "You are running the most recent version!"
 msgstr ""
 
 #: cbs_locale.rslabelfile
@@ -1832,7 +1840,7 @@ msgstr ""
 #, object-pascal-format
 msgctxt "cbs_locale.rsnewupdateavailable"
 msgid ""
-"A new %s version is available!\n"
+"A new version of %s is available!\n"
 "Do you want to download it now?"
 msgstr ""
 
@@ -7792,6 +7800,7 @@ msgid "About"
 msgstr ""
 
 #: tfrmmain.actcheckupdates.caption
+msgctxt "tfrmmain.actcheckupdates.caption"
 msgid "Check updates"
 msgstr ""
 
