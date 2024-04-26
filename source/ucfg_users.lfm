@@ -13,6 +13,7 @@ object cfgUsers: TcfgUsers
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 40
@@ -75,7 +76,7 @@ object cfgUsers: TcfgUsers
       Columns = <      
         item
           Title.Caption = 'Username'
-          Width = 154
+          Width = 156
           FieldName = 'user_name'
         end      
         item
@@ -86,7 +87,7 @@ object cfgUsers: TcfgUsers
             'Visitante'
           )
           Title.Caption = 'Access level'
-          Width = 154
+          Width = 156
           FieldName = 'user_rank'
         end>
       DataSource = dsUsers
@@ -194,6 +195,7 @@ object cfgUsers: TcfgUsers
         Width = 28
         Align = alRight
         AutoSize = True
+        BorderSpacing.Left = 13
         BorderSpacing.Bottom = 6
         Flat = True
         Images = frmMain.mPopup
@@ -212,6 +214,36 @@ object cfgUsers: TcfgUsers
         ArrowColor = clBlack
         LineWidth = 1
       end
+      object Separator8: TShapeLineBGRA
+        Left = 252
+        Height = 26
+        Top = 9
+        Width = 2
+        Align = alRight
+        Direction = drUpDown
+        LineColor = 12829635
+        ArrowColor = clBlack
+        LineWidth = 1
+      end
+      object sbRefreshRecords: TSpeedButton
+        Left = 211
+        Height = 26
+        Hint = 'Refresh records'
+        Top = 9
+        Width = 28
+        Align = alRight
+        AutoSize = True
+        BorderSpacing.Left = 13
+        BorderSpacing.Right = 13
+        Flat = True
+        Images = frmMain.bMenu
+        ImageIndex = 5
+        ImageWidth = 24
+        OnClick = sbRefreshRecordsClick
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
+      end
     end
   end
   object pmGrid: TPopupMenu
@@ -219,6 +251,19 @@ object cfgUsers: TcfgUsers
     ImagesWidth = 20
     Left = 135
     Top = 178
+    object pmgRefresh: TMenuItem
+      Caption = 'Refresh'
+      ImageIndex = 1
+      OnClick = sbRefreshRecordsClick
+    end
+    object Separator2: TMenuItem
+      Caption = '-'
+    end
+    object pmgNew: TMenuItem
+      Caption = 'New'
+      ImageIndex = 0
+      OnClick = sbNewClick
+    end
     object pmgEdit: TMenuItem
       Caption = 'Edit'
       ImageIndex = 39
@@ -234,7 +279,7 @@ object cfgUsers: TcfgUsers
     end
     object pmgDelete: TMenuItem
       Caption = 'Delete'
-      ImageIndex = 34
+      ImageIndex = 141
       OnClick = sbDeleteClick
     end
   end

@@ -3310,6 +3310,16 @@ msgctxt "tcfgusers.pmgedit.caption"
 msgid "Edit"
 msgstr ""
 
+#: tcfgusers.pmgnew.caption
+msgctxt "tcfgusers.pmgnew.caption"
+msgid "New"
+msgstr ""
+
+#: tcfgusers.pmgrefresh.caption
+msgctxt "tcfgusers.pmgrefresh.caption"
+msgid "Refresh"
+msgstr ""
+
 #: tcfgusers.sbchangepassword.hint
 msgctxt "tcfgusers.sbchangepassword.hint"
 msgid "Change password"
@@ -3318,6 +3328,11 @@ msgstr ""
 #: tcfgusers.sbclose.caption
 msgctxt "tcfgusers.sbclose.caption"
 msgid "Close"
+msgstr ""
+
+#: tcfgusers.sbrefreshrecords.hint
+msgctxt "tcfgusers.sbrefreshrecords.hint"
+msgid "Refresh records"
 msgstr ""
 
 #: tdlgabout.caption
@@ -7072,6 +7087,16 @@ msgctxt "tfrmcustomgrid.lblwithrecapturesfilter.caption"
 msgid "Have recaptures"
 msgstr ""
 
+#: tfrmcustomgrid.pmcdel.caption
+msgctxt "tfrmcustomgrid.pmcdel.caption"
+msgid "Delete"
+msgstr ""
+
+#: tfrmcustomgrid.pmcedit.caption
+msgctxt "tfrmcustomgrid.pmcedit.caption"
+msgid "Edit"
+msgstr ""
+
 #: tfrmcustomgrid.pmcnewcapture.caption
 msgctxt "tfrmcustomgrid.pmcnewcapture.caption"
 msgid "New capture"
@@ -7147,23 +7172,18 @@ msgstr ""
 msgid "New weather log"
 msgstr ""
 
+#: tfrmcustomgrid.pmcrefresh.caption
+msgctxt "tfrmcustomgrid.pmcrefresh.caption"
+msgid "Refresh"
+msgstr ""
+
 #: tfrmcustomgrid.pmgdel.caption
 msgctxt "tfrmcustomgrid.pmgdel.caption"
 msgid "Delete"
 msgstr ""
 
-#: tfrmcustomgrid.pmgdel1.caption
-msgctxt "tfrmcustomgrid.pmgdel1.caption"
-msgid "Delete"
-msgstr ""
-
 #: tfrmcustomgrid.pmgedit.caption
 msgctxt "tfrmcustomgrid.pmgedit.caption"
-msgid "Edit"
-msgstr ""
-
-#: tfrmcustomgrid.pmgedit1.caption
-msgctxt "tfrmcustomgrid.pmgedit1.caption"
 msgid "Edit"
 msgstr ""
 
@@ -7179,11 +7199,6 @@ msgstr ""
 
 #: tfrmcustomgrid.pmgrefresh.caption
 msgctxt "tfrmcustomgrid.pmgrefresh.caption"
-msgid "Refresh"
-msgstr ""
-
-#: tfrmcustomgrid.pmgrefresh1.caption
-msgctxt "tfrmcustomgrid.pmgrefresh1.caption"
 msgid "Refresh"
 msgstr ""
 
@@ -7836,6 +7851,7 @@ msgid "Import wizard"
 msgstr ""
 
 #: tfrmmain.actinsertrecord.caption
+msgctxt "tfrmmain.actinsertrecord.caption"
 msgid "New"
 msgstr ""
 

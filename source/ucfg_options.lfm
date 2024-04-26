@@ -10,7 +10,6 @@ object cfgOptions: TcfgOptions
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -1814,13 +1813,15 @@ object cfgOptions: TcfgOptions
     ImagesWidth = 24
     Indent = 16
     ReadOnly = True
+    RightClickSelect = True
     RowSelect = True
     ScrollBars = ssNone
     SelectionColor = 13066075
+    SelectionFontColorUsed = True
     ShowRoot = False
     TabOrder = 0
     OnSelectionChanged = tvMenuSelectionChanged
-    Options = [tvoKeepCollapsedNodes, tvoReadOnly, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoToolTips, tvoThemedDraw]
+    Options = [tvoKeepCollapsedNodes, tvoReadOnly, tvoRightClickSelect, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoToolTips]
     Items.Data = {
       F9FFFFFF0200050000005000000050000000FFFFFFFFFFFFFFFF000000000000
       0000000700000047656E6572616C2A0000002A000000FFFFFFFFFFFFFFFF0000

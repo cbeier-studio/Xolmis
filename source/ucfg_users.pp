@@ -16,6 +16,8 @@ type
     dsUsers: TDataSource;
     gridUsers: TDBGrid;
     lineBottom: TShapeLineBGRA;
+    pmgRefresh: TMenuItem;
+    pmgNew: TMenuItem;
     pChildToolbar: TBCPanel;
     pmgEdit: TMenuItem;
     pmgDelete: TMenuItem;
@@ -28,8 +30,11 @@ type
     sbDelete: TSpeedButton;
     sbEdit: TSpeedButton;
     sbNew: TSpeedButton;
+    sbRefreshRecords: TSpeedButton;
     Separator1: TMenuItem;
+    Separator2: TMenuItem;
     Separator7: TShapeLineBGRA;
+    Separator8: TShapeLineBGRA;
     procedure dsUsersStateChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -38,6 +43,7 @@ type
     procedure sbDeleteClick(Sender: TObject);
     procedure sbEditClick(Sender: TObject);
     procedure sbNewClick(Sender: TObject);
+    procedure sbRefreshRecordsClick(Sender: TObject);
   private
 
   public
@@ -58,6 +64,14 @@ uses cbs_global, cbs_datatypes, cbs_data, cbs_editdialogs, udm_main;
 procedure TcfgUsers.sbNewClick(Sender: TObject);
 begin
   EditUser(True);
+end;
+
+procedure TcfgUsers.sbRefreshRecordsClick(Sender: TObject);
+begin
+  if not dsUsers.DataSet.Active then
+    dsUsers.DataSet.Open;
+
+  dsUsers.DataSet.Refresh;
 end;
 
 procedure TcfgUsers.sbDeleteClick(Sender: TObject);
@@ -88,6 +102,7 @@ begin
         sbEdit.Enabled := False;
         sbChangePassword.Enabled := False;
         sbDelete.Enabled := False;
+        sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
       end;
     dsBrowse:
@@ -96,6 +111,7 @@ begin
         sbEdit.Enabled := DMM.dsUsers.DataSet.RecordCount > 0;
         sbChangePassword.Enabled := DMM.dsUsers.DataSet.RecordCount > 0;
         sbDelete.Enabled := DMM.dsUsers.DataSet.RecordCount > 0;
+        sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
       end;
     dsEdit, dsInsert:
@@ -104,9 +120,12 @@ begin
         sbEdit.Enabled := False;
         sbChangePassword.Enabled := False;
         sbDelete.Enabled := False;
+        sbRefreshRecords.Enabled := False;
         sbClose.Enabled := False;
       end;
   end;
+  pmgRefresh.Enabled := sbRefreshRecords.Enabled;
+  pmgNew.Enabled := sbNew.Enabled;
   pmgEdit.Enabled := sbEdit.Enabled;
   pmgChangePassword.Enabled := sbChangePassword.Enabled;
   pmgDelete.Enabled := sbDelete.Enabled;

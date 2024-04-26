@@ -11285,7 +11285,7 @@ object frmCustomGrid: TfrmCustomGrid
     ImagesWidth = 20
     Left = 56
     Top = 456
-    object pmgEdit1: TMenuItem
+    object pmcEdit: TMenuItem
       Caption = 'Edit'
       ImageIndex = 2
       OnClick = sbEditChildClick
@@ -11293,7 +11293,7 @@ object frmCustomGrid: TfrmCustomGrid
     object Separator13: TMenuItem
       Caption = '-'
     end
-    object pmgRefresh1: TMenuItem
+    object pmcRefresh: TMenuItem
       Caption = 'Refresh'
       ImageIndex = 10
       OnClick = sbRefreshChildClick
@@ -11301,7 +11301,7 @@ object frmCustomGrid: TfrmCustomGrid
     object Separator15: TMenuItem
       Caption = '-'
     end
-    object pmgDel1: TMenuItem
+    object pmcDel: TMenuItem
       Caption = 'Delete'
       ImageIndex = 4
       OnClick = sbDelChildClick

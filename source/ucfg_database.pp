@@ -194,23 +194,35 @@ begin
         sbNew.Enabled := False;
         sbEdit.Enabled := False;
         sbDelete.Enabled := False;
+        sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
+        mmTestConnection.Enabled := False;
       end;
     dsBrowse:
       begin
         sbNew.Enabled := True;
         sbEdit.Enabled := dsConn.DataSet.RecordCount > 0;
         sbDelete.Enabled := dsConn.DataSet.RecordCount > 0;
+        sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
+        mmTestConnection.Enabled := dsConn.DataSet.RecordCount > 0;
       end;
     dsEdit, dsInsert:
       begin
         sbNew.Enabled := False;
         sbEdit.Enabled := False;
         sbDelete.Enabled := False;
+        sbRefreshRecords.Enabled := False;
         sbClose.Enabled := False;
+        mmTestConnection.Enabled := False;
       end;
   end;
+  pmgRefresh.Enabled := sbRefreshRecords.Enabled;
+  pmgNew.Enabled := sbNew.Enabled;
+  pmgEdit.Enabled := sbEdit.Enabled;
+  pmgDelete.Enabled := sbDelete.Enabled;
+  pmgTest.Enabled := mmTestConnection.Enabled;
+
   vtConnections.Refresh;
 end;
 

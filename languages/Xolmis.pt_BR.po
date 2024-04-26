@@ -3336,6 +3336,16 @@ msgctxt "tcfgusers.pmgedit.caption"
 msgid "Edit"
 msgstr "Editar"
 
+#: tcfgusers.pmgnew.caption
+msgctxt "tcfgusers.pmgnew.caption"
+msgid "New"
+msgstr "Novo"
+
+#: tcfgusers.pmgrefresh.caption
+msgctxt "tcfgusers.pmgrefresh.caption"
+msgid "Refresh"
+msgstr "Atualizar"
+
 #: tcfgusers.sbchangepassword.hint
 msgctxt "tcfgusers.sbchangepassword.hint"
 msgid "Change password"
@@ -3345,6 +3355,11 @@ msgstr "Trocar senha"
 msgctxt "tcfgusers.sbclose.caption"
 msgid "Close"
 msgstr "Fechar"
+
+#: tcfgusers.sbrefreshrecords.hint
+msgctxt "tcfgusers.sbrefreshrecords.hint"
+msgid "Refresh records"
+msgstr "Atualizar registros"
 
 #: tdlgabout.caption
 msgctxt "tdlgabout.caption"
@@ -7098,6 +7113,16 @@ msgctxt "tfrmcustomgrid.lblwithrecapturesfilter.caption"
 msgid "Have recaptures"
 msgstr "Possui recapturas"
 
+#: tfrmcustomgrid.pmcdel.caption
+msgctxt "tfrmcustomgrid.pmcdel.caption"
+msgid "Delete"
+msgstr "Apagar"
+
+#: tfrmcustomgrid.pmcedit.caption
+msgctxt "tfrmcustomgrid.pmcedit.caption"
+msgid "Edit"
+msgstr "Editar"
+
 #: tfrmcustomgrid.pmcnewcapture.caption
 msgctxt "tfrmcustomgrid.pmcnewcapture.caption"
 msgid "New capture"
@@ -7173,23 +7198,18 @@ msgstr "Novo participante da amostragem"
 msgid "New weather log"
 msgstr "Novo log do tempo"
 
+#: tfrmcustomgrid.pmcrefresh.caption
+msgctxt "tfrmcustomgrid.pmcrefresh.caption"
+msgid "Refresh"
+msgstr "Atualizar"
+
 #: tfrmcustomgrid.pmgdel.caption
 msgctxt "tfrmcustomgrid.pmgdel.caption"
 msgid "Delete"
 msgstr "Apagar"
 
-#: tfrmcustomgrid.pmgdel1.caption
-msgctxt "tfrmcustomgrid.pmgdel1.caption"
-msgid "Delete"
-msgstr "Apagar"
-
 #: tfrmcustomgrid.pmgedit.caption
 msgctxt "tfrmcustomgrid.pmgedit.caption"
-msgid "Edit"
-msgstr "Editar"
-
-#: tfrmcustomgrid.pmgedit1.caption
-msgctxt "tfrmcustomgrid.pmgedit1.caption"
 msgid "Edit"
 msgstr "Editar"
 
@@ -7205,11 +7225,6 @@ msgstr "Histórico do registro"
 
 #: tfrmcustomgrid.pmgrefresh.caption
 msgctxt "tfrmcustomgrid.pmgrefresh.caption"
-msgid "Refresh"
-msgstr "Atualizar"
-
-#: tfrmcustomgrid.pmgrefresh1.caption
-msgctxt "tfrmcustomgrid.pmgrefresh1.caption"
 msgid "Refresh"
 msgstr "Atualizar"
 
@@ -7874,6 +7889,7 @@ msgid "Import wizard"
 msgstr "Assistente de importação"
 
 #: tfrmmain.actinsertrecord.caption
+msgctxt "tfrmmain.actinsertrecord.caption"
 msgid "New"
 msgstr "Novo"
 

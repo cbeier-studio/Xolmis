@@ -4,6 +4,9 @@
 {"hash":164185077,"name":"tcfgusers.gridusers.columns[0].title.caption","sourcebytes":[85,115,101,114,110,97,109,101],"value":"Username"},
 {"hash":19615772,"name":"tcfgusers.gridusers.columns[1].title.caption","sourcebytes":[65,99,99,101,115,115,32,108,101,118,101,108],"value":"Access level"},
 {"hash":15202308,"name":"tcfgusers.sbchangepassword.hint","sourcebytes":[67,104,97,110,103,101,32,112,97,115,115,119,111,114,100],"value":"Change password"},
+{"hash":87468659,"name":"tcfgusers.sbrefreshrecords.hint","sourcebytes":[82,101,102,114,101,115,104,32,114,101,99,111,114,100,115],"value":"Refresh records"},
+{"hash":146640072,"name":"tcfgusers.pmgrefresh.caption","sourcebytes":[82,101,102,114,101,115,104],"value":"Refresh"},
+{"hash":21703,"name":"tcfgusers.pmgnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":310020,"name":"tcfgusers.pmgedit.caption","sourcebytes":[69,100,105,116],"value":"Edit"},
 {"hash":15202308,"name":"tcfgusers.pmgchangepassword.caption","sourcebytes":[67,104,97,110,103,101,32,112,97,115,115,119,111,114,100],"value":"Change password"},
 {"hash":78392485,"name":"tcfgusers.pmgdelete.caption","sourcebytes":[68,101,108,101,116,101],"value":"Delete"}

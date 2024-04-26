@@ -81,9 +81,9 @@ type
     lblProjectFilter: TLabel;
     pmcNewNestOwner: TMenuItem;
     pEmptyQuery: TBCPanel;
-    pmgDel1: TMenuItem;
-    pmgEdit1: TMenuItem;
-    pmgRefresh1: TMenuItem;
+    pmcDel: TMenuItem;
+    pmcEdit: TMenuItem;
+    pmcRefresh: TMenuItem;
     pmGridChild: TPopupMenu;
     pNestFilter: TBCPanel;
     pIndividualFilter: TBCPanel;
@@ -4524,6 +4524,8 @@ begin
     3: DS := dsLink4.DataSet;
     4: DS := dsLink5.DataSet;
   end;
+  if not DS.Active then
+    DS.Open;
   DS.Refresh;
   UpdateChildButtons(DS);
   Working := False;
@@ -4535,6 +4537,8 @@ begin
     Exit;
 
   Working := True;
+  if not dsLink.DataSet.Active then
+    dsLink.DataSet.Open;
   dsLink.DataSet.Refresh;
   UpdateButtons(dsLink.DataSet);
   Working := False;
@@ -6950,68 +6954,93 @@ end;
 
 procedure TfrmCustomGrid.UpdateButtons(aDataSet: TDataSet);
 begin
-  if (aDataSet.State in [dsInsert, dsEdit]) then
-  begin
-    sbEditRecord.Enabled := False;
-    sbDelRecord.Enabled := False;
-    sbFirstRecord.Enabled := False;
-    sbPriorRecord.Enabled := False;
-    sbNextRecord.Enabled := False;
-    sbLastRecord.Enabled := False;
-    sbRecordHistory.Enabled := False;
-    sbSortRecords.Enabled := False;
-
-    sbShowQuickFilters.Enabled := False;
-    sbShowImages.Enabled := False;
-    sbShowAudio.Enabled := False;
-    sbShowDocs.Enabled := False;
-    sbShowSummary.Enabled := False;
-    sbShowRecycle.Enabled := False;
-
-    sbCancelRecord.Visible := True;
-    sbSaveRecord.Visible := True;
-
-    pmgRefresh.Enabled := False;
-
-    //navGrid.Enabled := False;
-    pSide.Enabled := False;
-  end
-  else
-  begin
-    if (aDataSet.Active) and not (TSQLQuery(aDataSet).ReadOnly) then
+  case aDataSet.State of
+    dsInactive:
     begin
-      sbEditRecord.Enabled := (aDataSet.RecordCount > 0);
-      sbDelRecord.Enabled := (aDataSet.RecordCount > 0);
-      sbRecordHistory.Enabled := (aDataSet.RecordCount > 0);
-      sbSortRecords.Enabled := (aDataSet.RecordCount > 0);
-    end
-    else
-    begin
+      sbInsertRecord.Enabled := False;
       sbEditRecord.Enabled := False;
       sbDelRecord.Enabled := False;
+      sbFirstRecord.Enabled := False;
+      sbPriorRecord.Enabled := False;
+      sbNextRecord.Enabled := False;
+      sbLastRecord.Enabled := False;
       sbRecordHistory.Enabled := False;
       sbSortRecords.Enabled := False;
+
+      sbShowQuickFilters.Enabled := False;
+      sbShowImages.Enabled := False;
+      sbShowAudio.Enabled := False;
+      sbShowDocs.Enabled := False;
+      sbShowSummary.Enabled := False;
+      sbShowRecycle.Enabled := False;
+
+      sbCancelRecord.Visible := False;
+      sbSaveRecord.Visible := False;
+
+      sbRefreshRecords.Enabled := True;
+
+      //navGrid.Enabled := False;
+      pSide.Enabled := False;
     end;
-    sbFirstRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
-    sbPriorRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
-    sbNextRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
-    sbLastRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
+    dsBrowse:
+    begin
+      sbInsertRecord.Enabled := not (TSQLQuery(aDataSet).ReadOnly);
+      sbEditRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbDelRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbRecordHistory.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbSortRecords.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
 
-    sbShowQuickFilters.Enabled := True;
-    sbShowImages.Enabled := True;
-    sbShowAudio.Enabled := True;
-    sbShowDocs.Enabled := True;
-    sbShowSummary.Enabled := True;
-    sbShowRecycle.Enabled := True;
+      sbFirstRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
+      sbPriorRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
+      sbNextRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
+      sbLastRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
 
-    pmgRefresh.Enabled := True;
+      sbShowQuickFilters.Enabled := True;
+      sbShowImages.Enabled := True;
+      sbShowAudio.Enabled := True;
+      sbShowDocs.Enabled := True;
+      sbShowSummary.Enabled := True;
+      sbShowRecycle.Enabled := True;
 
-    sbSaveRecord.Visible := False;
-    sbCancelRecord.Visible := False;
+      sbRefreshRecords.Enabled := True;
 
-    //navGrid.Enabled := True;
-    pSide.Enabled := True;
+      sbSaveRecord.Visible := False;
+      sbCancelRecord.Visible := False;
+
+      //navGrid.Enabled := True;
+      pSide.Enabled := True;
+    end;
+    dsEdit, dsInsert:
+    begin
+      sbInsertRecord.Enabled := False;
+      sbEditRecord.Enabled := False;
+      sbDelRecord.Enabled := False;
+      sbFirstRecord.Enabled := False;
+      sbPriorRecord.Enabled := False;
+      sbNextRecord.Enabled := False;
+      sbLastRecord.Enabled := False;
+      sbRecordHistory.Enabled := False;
+      sbSortRecords.Enabled := False;
+
+      sbShowQuickFilters.Enabled := False;
+      sbShowImages.Enabled := False;
+      sbShowAudio.Enabled := False;
+      sbShowDocs.Enabled := False;
+      sbShowSummary.Enabled := False;
+      sbShowRecycle.Enabled := False;
+
+      sbCancelRecord.Visible := True;
+      sbSaveRecord.Visible := True;
+
+      sbRefreshRecords.Enabled := False;
+
+      //navGrid.Enabled := False;
+      pSide.Enabled := False;
+    end;
+
   end;
+  pmgRefresh.Enabled := sbRefreshRecords.Enabled;
+  pmgInsert.Enabled := sbInsertRecord.Enabled;
   pmgEdit.Enabled := sbEditRecord.Enabled;
   pmgDel.Enabled := sbDelRecord.Enabled;
   pmgRecordHistory.Enabled := sbChildHistory.Enabled;
@@ -7042,45 +7071,54 @@ begin
   if Closing then
     Exit;
 
-  if (aDataSet.State in [dsInsert, dsEdit]) then
-  begin
-    sbAddChild.Enabled := False;
-    sbEditChild.Enabled := False;
-    sbDelChild.Enabled := False;
-    sbFirstChild.Enabled := False;
-    sbPriorChild.Enabled := False;
-    sbNextChild.Enabled := False;
-    sbLastChild.Enabled := False;
-    sbChildHistory.Enabled := False;
-    sbRefreshChild.Enabled := False;
-
-    pSide.Enabled := False;
-  end
-  else
-  begin
-    if (aDataSet.Active) and not (TSQLQuery(aDataSet).ReadOnly) then
-    begin
-      sbAddChild.Enabled := True;
-      sbEditChild.Enabled := (aDataSet.RecordCount > 0);
-      sbDelChild.Enabled := (aDataSet.RecordCount > 0);
-      sbChildHistory.Enabled := (aDataSet.RecordCount > 0);
-    end
-    else
+  case aDataSet.State of
+    dsInactive:
     begin
       sbAddChild.Enabled := False;
       sbEditChild.Enabled := False;
       sbDelChild.Enabled := False;
+      sbFirstChild.Enabled := False;
+      sbPriorChild.Enabled := False;
+      sbNextChild.Enabled := False;
+      sbLastChild.Enabled := False;
       sbChildHistory.Enabled := False;
-    end;
-    sbRefreshChild.Enabled := (aDataSet.Active);
-    sbFirstChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
-    sbPriorChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
-    sbNextChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
-    sbLastChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
+      sbRefreshChild.Enabled := True;
 
-    pSide.Enabled := True;
+      pSide.Enabled := False;
+    end;
+    dsBrowse:
+    begin
+      sbAddChild.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbEditChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbDelChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbChildHistory.Enabled := (aDataSet.RecordCount > 0);
+      sbRefreshChild.Enabled := True;
+      sbFirstChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
+      sbPriorChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
+      sbNextChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
+      sbLastChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
+
+      pSide.Enabled := True;
+    end;
+    dsEdit, dsInsert:
+    begin
+      sbAddChild.Enabled := False;
+      sbEditChild.Enabled := False;
+      sbDelChild.Enabled := False;
+      sbFirstChild.Enabled := False;
+      sbPriorChild.Enabled := False;
+      sbNextChild.Enabled := False;
+      sbLastChild.Enabled := False;
+      sbChildHistory.Enabled := False;
+      sbRefreshChild.Enabled := False;
+
+      pSide.Enabled := False;
+    end;
   end;
   eAddChild.Enabled := sbAddChild.Enabled;
+  pmcEdit.Enabled := sbEditChild.Enabled;
+  pmcDel.Enabled := sbDelChild.Enabled;
+  pmcRefresh.Enabled := sbRefreshChild.Enabled;
 
   //UpdateChildCount;
 end;
