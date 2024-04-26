@@ -173,10 +173,9 @@ uses
     rsRunningStartupBackup = 'Creating startup backup...';
 
     rsUpdatedNewVersion = 'New version: %s';
-    rsNewUpdateAvailable = 'A new version is available! (New version: %s)' + LineEnding +
+    rsNewUpdateAvailable = 'A new %s version is available!' + LineEnding +
       'Do you want to download it now?';
-    rsIsUpToDate = 'You are running the most recent version (%s)!';
-    rsAppWasUpdated = 'Xolmis was updated to the most recent version (%s)!';
+    rsIsUpToDate = 'You are running the most recent %s version!';
 
     rsPostBeforeClosePrompt = 'There are unsaved changes. Do you want to save it?';
     rsDiscardChangesTitle = 'Discard changes';

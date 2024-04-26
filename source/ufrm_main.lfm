@@ -1,14 +1,13 @@
 object frmMain: TfrmMain
   Left = -8
-  Height = 1048
+  Height = 1087
   Top = -8
-  Width = 1936
+  Width = 1940
   Caption = 'Xolmis'
-  ClientHeight = 1025
+  ClientHeight = 1061
   ClientWidth = 1924
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
-  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -17,12 +16,12 @@ object frmMain: TfrmMain
   WindowState = wsMaximized
   object pLeftTabs: TPanel
     Left = 0
-    Height = 903
+    Height = 939
     Top = 96
     Width = 1924
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 903
+    ClientHeight = 939
     ClientWidth = 1924
     TabOrder = 0
     object navTabs: TATTabs
@@ -153,7 +152,7 @@ object frmMain: TfrmMain
     end
     object PGW: TTDICardPanel
       Left = 0
-      Height = 860
+      Height = 896
       Top = 43
       Width = 1924
       Align = alClient
@@ -1177,7 +1176,7 @@ object frmMain: TfrmMain
   object SBar: TBCPanel
     Left = 0
     Height = 26
-    Top = 999
+    Top = 1035
     Width = 1924
     Align = alBottom
     AutoSize = True
@@ -12361,7 +12360,6 @@ object frmMain: TfrmMain
       Category = 'Menu'
       Caption = 'Check updates'
       ImageIndex = 101
-      OnExecute = actCheckUpdatesExecute
     end
     object actManageUsers: TAction
       Category = 'Menu'

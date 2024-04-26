@@ -5,8 +5,8 @@ unit udm_main;
 interface
 
 uses
-  Classes, SysUtils, StrUtils, Forms, Dialogs, ExtDlgs, Controls, UniqueInstance, ulazautoupdate, DB,
-  BufDataset, SdfData, SQLDB, SQLDBLib, IBConnection, SQLite3Conn, fpjson, eventlog, cbs_system, SQLScript;
+  Classes, SysUtils, StrUtils, Forms, Dialogs, ExtDlgs, Controls, UniqueInstance, DB, BufDataset, SdfData,
+  SQLDB, SQLDBLib, IBConnection, SQLite3Conn, fpjson, eventlog, cbs_system, SQLScript;
 
 type
 
@@ -18,7 +18,6 @@ type
     iBandTypes: TImageList;
     iTrees: TImageList;
     iCheckbox: TImageList;
-    AutoUpdate: TLazAutoUpdate;
     qsConnconnection_id: TLongintField;
     qsConnconnection_name: TStringField;
     qsConndatabase_name: TStringField;
@@ -74,12 +73,7 @@ type
     tabGeoBanklatitude: TFloatField;
     tabGeoBanklongitude: TFloatField;
     TaskDlg: TTaskDialog;
-    Unique: TUniqueInstance;
-    procedure AutoUpdateDownloaded(Sender: TObject; ResultCode, BytesDownloaded: integer);
-    procedure AutoUpdateDownloadProgress(Sender: TObject; Percent: integer);
-    procedure AutoUpdateFileWriteProgress(Sender: TObject; Percent: integer);
-    procedure AutoUpdateNewVersionAvailable(Sender: TObject; Newer: boolean; OnlineVersion: string);
-    procedure AutoUpdateUpdated(Sender: TObject; NewVersion, LauMessage: string);
+    UniqueInstance1: TUniqueInstance;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure qsConnAfterInsert(DataSet: TDataSet);
@@ -94,7 +88,7 @@ type
     procedure qUsersuser_rankSetText(Sender: TField; const aText: string);
     procedure sqlConBeforeConnect(Sender: TObject);
     procedure sysConBeforeConnect(Sender: TObject);
-    procedure UniqueOtherInstance(Sender: TObject; ParamCount: Integer;
+    procedure UniqueInstance1OtherInstance(Sender: TObject; ParamCount: Integer;
       const Parameters: array of String);
   private
     UID: TGUID;
@@ -109,44 +103,11 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, ufrm_main;
+uses cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs;
 
 {$R *.lfm}
 
 { TDMM }
-
-procedure TDMM.AutoUpdateDownloaded(Sender: TObject; ResultCode, BytesDownloaded: integer);
-begin
-  frmMain.progressBar.Position := 0;
-end;
-
-procedure TDMM.AutoUpdateDownloadProgress(Sender: TObject; Percent: integer);
-begin
-  frmMain.progressBar.Position := Percent;
-end;
-
-procedure TDMM.AutoUpdateFileWriteProgress(Sender: TObject; Percent: integer);
-begin
-  frmMain.progressBar.Position := Percent;
-end;
-
-procedure TDMM.AutoUpdateNewVersionAvailable(Sender: TObject; Newer: boolean; OnlineVersion: string);
-begin
-  frmMain.progressBar.Max := 100;
-  If Newer then
-  begin
-    if MsgDlg('', Format(rsNewUpdateAvailable, [OnlineVersion]), mtInformation) then
-      If AutoUpdate.DownloadNewVersion then
-        AutoUpdate.UpdateToNewVersion;
-  end
-  else
-    MsgDlg('', Format(rsIsUpToDate, [OnlineVersion]), mtInformation);
-end;
-
-procedure TDMM.AutoUpdateUpdated(Sender: TObject; NewVersion, LauMessage: string);
-begin
-  MsgDlg('', Format(rsAppWasUpdated, [NewVersion]), mtInformation);
-end;
 
 procedure TDMM.DataModuleCreate(Sender: TObject);
 var
@@ -184,10 +145,6 @@ begin
   {$ENDIF}
 
   OpenSystemDatabase;
-
-  { AutoUpdate }
-  AutoUpdate.VersionsININame := cVersionsIniName;
-  AutoUpdate.ZipfileName := cZipFileName;
 end;
 
 procedure TDMM.DataModuleDestroy(Sender: TObject);
@@ -325,7 +282,7 @@ begin
   sysCon.DatabaseName := ConcatPaths([AppDataDir, 'systemdb.sqlite3']);
 end;
 
-procedure TDMM.UniqueOtherInstance(Sender: TObject; ParamCount: Integer;
+procedure TDMM.UniqueInstance1OtherInstance(Sender: TObject; ParamCount: Integer;
   const Parameters: array of String);
 begin
   Application.Restore;

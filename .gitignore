@@ -38,4 +38,5 @@ published/
 test/
 data/
 *.json
+*.ini
 
