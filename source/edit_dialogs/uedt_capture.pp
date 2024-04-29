@@ -813,6 +813,7 @@ begin
   if Sender = eRightTarsus then
     PaintColorBands(bpRightTarsus)
   else
+  if Sender = eLeftTarsus then
     PaintColorBands(bpLeftTarsus);
 end;
 

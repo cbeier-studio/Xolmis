@@ -2556,7 +2556,7 @@ begin
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
-      crDistinct, False, '0'));
+      crNotEqual, False, '0'));
   end;
   //if tsHasSynonyms.StateOn = sw_on then
   //begin
@@ -2910,9 +2910,9 @@ begin
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('right_leg_below', 'Right tarsus', sdtText,
-      crDistinct, False, ''));
+      crNotEqual, False, ''));
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('left_leg_below', 'Left tarsus', sdtText,
-      crDistinct, False, ''));
+      crNotEqual, False, ''));
   end;
   if tsfWithRecapturesFilter.StateOn = sw_on then
   begin
@@ -3224,7 +3224,7 @@ begin
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
-      crDistinct, False, '0'));
+      crNotEqual, False, '0'));
   end;
   //if tsHasSynonyms.StateOn = sw_on then
   //begin

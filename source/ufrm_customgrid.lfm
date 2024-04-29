@@ -116,7 +116,7 @@ object frmCustomGrid: TfrmCustomGrid
             AutoSize = True
             ChildSizing.LeftRightSpacing = 8
             ChildSizing.TopBottomSpacing = 8
-            Background.Color = clBtnFace
+            Background.Color = 15658734
             Background.Gradient1.StartColor = clWhite
             Background.Gradient1.EndColor = clBlack
             Background.Gradient1.GradientType = gtLinear
@@ -4870,7 +4870,7 @@ object frmCustomGrid: TfrmCustomGrid
           BorderSpacing.Right = 8
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 8
-          Background.Color = 16448250
+          Background.Color = 15987699
           Background.Gradient1.StartColor = clWhite
           Background.Gradient1.EndColor = clBlack
           Background.Gradient1.GradientType = gtLinear
@@ -5110,7 +5110,7 @@ object frmCustomGrid: TfrmCustomGrid
           BorderSpacing.Right = 8
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 8
-          Background.Color = 16448250
+          Background.Color = 15987699
           Background.Gradient1.StartColor = clWhite
           Background.Gradient1.EndColor = clBlack
           Background.Gradient1.GradientType = gtLinear
@@ -5459,7 +5459,7 @@ object frmCustomGrid: TfrmCustomGrid
     ChildSizing.TopBottomSpacing = 8
     ClientHeight = 614
     ClientWidth = 720
-    Color = 15066599
+    Color = 16250871
     ParentBackground = False
     ParentColor = False
     TabOrder = 2
@@ -5625,6 +5625,7 @@ object frmCustomGrid: TfrmCustomGrid
           Images = iButtons
           ImageIndex = 14
           ImageWidth = 24
+          Visible = False
           OnClick = sbSortChildsClick
           ShowCaption = False
           ShowHint = True
@@ -6235,6 +6236,7 @@ object frmCustomGrid: TfrmCustomGrid
       Border.Color = 13750737
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
+      Color = 16250871
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -7223,7 +7225,7 @@ object frmCustomGrid: TfrmCustomGrid
     ChildSizing.ControlsPerLine = 1
     ClientHeight = 614
     ClientWidth = 52
-    Color = 13750737
+    Color = 15263976
     ParentBackground = False
     ParentColor = False
     TabOrder = 3
@@ -7400,6 +7402,7 @@ object frmCustomGrid: TfrmCustomGrid
     Top = 0
     Width = 1
     Align = alRight
+    Visible = False
     Direction = drUpDown
     LineColor = 9276813
     ArrowColor = clBlack

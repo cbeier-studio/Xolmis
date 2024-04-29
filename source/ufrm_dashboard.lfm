@@ -11,7 +11,6 @@ object frmDashboard: TfrmDashboard
   OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMenu = pmDashboard
-  LCLVersion = '3.2.0.0'
   object sBox: TScrollBox
     Left = 0
     Height = 478
@@ -25,7 +24,7 @@ object frmDashboard: TfrmDashboard
     ClientHeight = 478
     ClientWidth = 1138
     Constraints.MinWidth = 413
-    Color = 15066599
+    Color = 16250871
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
@@ -50,7 +49,7 @@ object frmDashboard: TfrmDashboard
       ChildSizing.ControlsPerLine = 3
       ClientHeight = 528
       ClientWidth = 1138
-      Color = 15066599
+      Color = 16250871
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
@@ -63,7 +62,7 @@ object frmDashboard: TfrmDashboard
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
         ChildSizing.VerticalSpacing = 8
-        Background.Color = 16448250
+        Background.Color = clWhite
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
         Background.Gradient1.GradientType = gtLinear
@@ -106,10 +105,9 @@ object frmDashboard: TfrmDashboard
           Top = 36
           Width = 339
           Align = alClient
-          AlternateColor = clWhite
           AutoFillColumns = True
           BorderStyle = bsNone
-          Color = 16448250
+          Color = clWhite
           Columns = <          
             item
               Alignment = taCenter
@@ -178,7 +176,7 @@ object frmDashboard: TfrmDashboard
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
         ChildSizing.VerticalSpacing = 8
-        Background.Color = 16448250
+        Background.Color = clWhite
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
         Background.Gradient1.GradientType = gtLinear
@@ -264,7 +262,7 @@ object frmDashboard: TfrmDashboard
               Title.Caption = 'month'
               Title.LabelBrush.Style = bsClear
             end>
-          BackColor = 16448250
+          BackColor = clWhite
           Frame.Style = psClear
           GUIConnector = ChartBGRA
           Legend.BackgroundBrush.Color = 16448250
@@ -281,7 +279,7 @@ object frmDashboard: TfrmDashboard
             'Individuals recorded'
           )
           Align = alClient
-          Color = 16448250
+          Color = clWhite
           object barIndividualsMonth: TBarSeries
             Title = 'Individuals'
             BarBrush.Color = 1014543
@@ -320,7 +318,7 @@ object frmDashboard: TfrmDashboard
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
         ChildSizing.VerticalSpacing = 8
-        Background.Color = 16448250
+        Background.Color = clWhite
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
         Background.Gradient1.GradientType = gtLinear
@@ -382,7 +380,6 @@ object frmDashboard: TfrmDashboard
           DownloadEngine = mapSurveys.BuiltInDLE
           DrawingEngine = mapSurveys.BuiltInDE
           Font.Color = clBlack
-          InactiveColor = 16448250
           MapProvider = 'OpenStreetMap Mapnik'
           UseThreads = True
         end
@@ -395,7 +392,7 @@ object frmDashboard: TfrmDashboard
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
         ChildSizing.VerticalSpacing = 8
-        Background.Color = 16448250
+        Background.Color = clWhite
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
         Background.Gradient1.GradientType = gtLinear
@@ -481,7 +478,7 @@ object frmDashboard: TfrmDashboard
               Title.Caption = 'month'
               Title.LabelBrush.Style = bsClear
             end>
-          BackColor = 16448250
+          BackColor = clWhite
           Frame.Style = psClear
           GUIConnector = ChartBGRA
           Legend.BackgroundBrush.Color = 16448250
@@ -498,7 +495,7 @@ object frmDashboard: TfrmDashboard
             'Species recorded'
           )
           Align = alClient
-          Color = 16448250
+          Color = clWhite
           object barSpeciesMonth: TBarSeries
             Title = 'Species'
             BarBrush.Color = 13066075
@@ -548,7 +545,7 @@ object frmDashboard: TfrmDashboard
       ChildSizing.ShrinkVertical = crsHomogenousChildResize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 6
-      Background.Color = 15066599
+      Background.Color = 16250871
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
       Background.Gradient1.GradientType = gtLinear
@@ -589,7 +586,7 @@ object frmDashboard: TfrmDashboard
         Width = 171
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
-        Background.Color = 16448250
+        Background.Color = clWhite
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
         Background.Gradient1.GradientType = gtLinear
@@ -675,7 +672,7 @@ object frmDashboard: TfrmDashboard
         Width = 171
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
-        Background.Color = 16448250
+        Background.Color = clWhite
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
         Background.Gradient1.GradientType = gtLinear
@@ -761,7 +758,7 @@ object frmDashboard: TfrmDashboard
         Width = 171
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
-        Background.Color = 16448250
+        Background.Color = clWhite
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
         Background.Gradient1.GradientType = gtLinear
@@ -847,7 +844,7 @@ object frmDashboard: TfrmDashboard
         Width = 171
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
-        Background.Color = 16448250
+        Background.Color = clWhite
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
         Background.Gradient1.GradientType = gtLinear

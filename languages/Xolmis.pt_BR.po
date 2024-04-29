@@ -827,10 +827,22 @@ msgstr "Data de validade"
 msgid "Expire date"
 msgstr "Data de validade"
 
+#: cbs_locale.rsdatefound
+msgid "Date found"
+msgstr "Data de encontro"
+
+#: cbs_locale.rsdateimage
+msgid "Image date"
+msgstr "Data da imagem"
+
 #: cbs_locale.rsdateissue
 msgctxt "cbs_locale.rsdateissue"
 msgid "Issue date"
 msgstr "Data de emissão"
+
+#: cbs_locale.rsdatelast
+msgid "Last date active"
+msgstr "Última data ativo"
 
 #: cbs_locale.rsdatemeasured
 msgctxt "cbs_locale.rsdatemeasured"
@@ -855,10 +867,18 @@ msgctxt "cbs_locale.rsdatereport"
 msgid "Report date"
 msgstr "Data relatada"
 
+#: cbs_locale.rsdatesighting
+msgid "Sighting date"
+msgstr "Data da observação"
+
 #: cbs_locale.rsdatestart
 msgctxt "cbs_locale.rsdatestart"
 msgid "Start date"
 msgstr "Data inicial"
+
+#: cbs_locale.rsdatesurvey
+msgid "Survey date"
+msgstr "Data da amostragem"
 
 #: cbs_locale.rsdatetoday
 msgctxt "cbs_locale.rsdatetoday"
@@ -3802,15 +3822,19 @@ msgctxt "tdlgfind.ep.texthint"
 msgid "Find..."
 msgstr "Buscar..."
 
-#: tdlgfind.sbclearsearch.hint
-msgctxt "tdlgfind.sbclearsearch.hint"
-msgid "Clear search"
-msgstr "Limpar busca"
+#: tdlgfind.pmfshowbandsavailable.caption
+msgid "Show only available bands"
+msgstr "Mostrar apenas anilhas disponíveis"
 
 #: tdlgfind.sbclose.hint
 msgctxt "tdlgfind.sbclose.hint"
 msgid "Clear search"
 msgstr "Limpar busca"
+
+#: tdlgfind.sboptions.hint
+msgctxt "tdlgfind.sboptions.hint"
+msgid "Options"
+msgstr "Opções"
 
 #: tdlgfind.ulist.columns[0].title.caption
 msgctxt "tdlgfind.ulist.columns[0].title.caption"

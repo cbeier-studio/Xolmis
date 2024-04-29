@@ -157,6 +157,7 @@ type
     Separator4: TMenuItem;
     Separator5: TMenuItem;
     Separator6: TMenuItem;
+    Separator7: TMenuItem;
     ShapeLineBGRA1: TShapeLineBGRA;
     ShapeLineBGRA10: TShapeLineBGRA;
     ShapeLineBGRA11: TShapeLineBGRA;

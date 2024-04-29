@@ -661,7 +661,7 @@ object edtCapture: TedtCapture
           ImageWidth = 20
           DataField = 'right_leg_below'
           DataSource = dsLink
-          CharCase = ecNormal
+          CharCase = ecUppercase
           OnButtonClick = eRightLegBelowButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eCaptureTimeKeyPress
@@ -746,7 +746,7 @@ object edtCapture: TedtCapture
           ImageWidth = 20
           DataField = 'left_leg_below'
           DataSource = dsLink
-          CharCase = ecNormal
+          CharCase = ecUppercase
           OnButtonClick = eLeftLegBelowButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eCaptureTimeKeyPress

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, ExtCtrls, LCLType,
-  StdCtrls, Buttons, Grids, DBGrids, BCPanel, ColorSpeedButton, RegExpr, StrUtils,
+  StdCtrls, Buttons, Grids, DBGrids, Menus, BCPanel, ColorSpeedButton, RegExpr, StrUtils,
   cbs_system, cbs_datatypes, cbs_gis, cbs_taxonomy;
 
 type
@@ -14,7 +14,9 @@ type
   { TdlgFind }
 
   TdlgFind = class(TForm)
-    sbClearSearch: TColorSpeedButton;
+    pmfShowBandsAvailable: TMenuItem;
+    pmOptions: TPopupMenu;
+    sbOptions: TColorSpeedButton;
     sbClose: TColorSpeedButton;
     uList: TDBGrid;
     dsFind: TDataSource;
@@ -29,8 +31,9 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
-    procedure sbClearSearchClick(Sender: TObject);
+    procedure pmfShowBandsAvailableClick(Sender: TObject);
     procedure sbCloseClick(Sender: TObject);
+    procedure sbOptionsClick(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
     procedure uListCellClick(Column: TColumn);
   private
@@ -41,26 +44,36 @@ type
     FTaxonFilter: TTaxonFilters;
     FSortField, FSortDirection: String;
     FKeyField, FFullNameField, FFormattedNameField: String;
-    function Search(aValue: String): Boolean;
+    function GetCriteria(aCriteria: TCriteriaType): String;
     function HashtagFilter(aValue: String): Boolean;
+    function Search(aValue: String): Boolean;
+    procedure FindBands(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindBotany(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindCaptures(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindEggs(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindExpeditions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindGazetteer(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindIndividuals(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindInstitutions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindMethods(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindMolts(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindNestRevisions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindNests(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindNetEffort(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindNetStations(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindPeople(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindPermanentNets(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindPermits(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindProjects(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindSamplePreps(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindSightings(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindSpecimens(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindSurveys(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindTaxa(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindTaxonRanks(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindUsers(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure SetSelect(const aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure SetupFields(aKeyField, aNameField: String; aFormattedNameField: String = '');
-    function GetCriteria(aCriteria: TCriteriaType): String;
-    procedure FindUsers(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindGazetteer(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindBotany(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindNetStations(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindTaxonRanks(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindTaxa(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindProjects(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindInstitutions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindPeople(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindSurveys(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindMethods(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindNetEffort(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindPermanentNets(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindBands(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindIndividuals(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure SetupResult(aKeyField, aNameField: String);
   public
     procedure SetDialogPosition(X, Y: Integer; ControlWidth, ControlHeight: Integer);
@@ -92,15 +105,15 @@ begin
   TimerFind.Enabled := False;
   TimerFind.Enabled := True;
 
-  if Length(EP.Text) = 0 then
-  begin
-    sbClearSearch.Visible := True;
-  end
-  else
-  begin
-    sbClearSearch.Visible := False;
-    qFind.Close;
-  end;
+  //if Length(EP.Text) = 0 then
+  //begin
+  //  sbOptions.Visible := True;
+  //end
+  //else
+  //begin
+  //  sbOptions.Visible := False;
+  //  qFind.Close;
+  //end;
 end;
 
 procedure TdlgFind.FindBands(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
@@ -118,6 +131,8 @@ begin
       fvReset:
         begin
           Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
+          if pmfShowBandsAvailable.Checked then
+            Add('AND (band_status = ''D'') ');
           Add('AND (active_status = 1)');
         end;
       fvAll:
@@ -195,6 +210,87 @@ begin
               end;
             end;
           end;
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
+procedure TdlgFind.FindCaptures(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador := GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT capture_id, full_name FROM captures ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        begin
+          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
+procedure TdlgFind.FindEggs(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador := GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT egg_id, full_name FROM eggs ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        begin
+          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
+procedure TdlgFind.FindExpeditions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador := GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT expedition_id, expedition_name FROM expeditions ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        begin
+          Add('WHERE (expedition_name ' + Operador + ' :VALPARAM) ');
           Add('AND (active_status = 1)');
         end;
       fvAll:
@@ -347,6 +443,87 @@ begin
   end;
 end;
 
+procedure TdlgFind.FindMolts(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador := GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT molt_id, full_name FROM molts ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        begin
+          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
+procedure TdlgFind.FindNestRevisions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador := GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT nest_revision_id, full_name FROM nest_revisions ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        begin
+          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
+procedure TdlgFind.FindNests(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador := GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT nest_id, full_name FROM nests ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        begin
+          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
 procedure TdlgFind.FindNetEffort(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
 var
   Operador: String;
@@ -457,6 +634,33 @@ begin
   end;
 end;
 
+procedure TdlgFind.FindPermits(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador := GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT permit_id, permit_name FROM permits ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        begin
+          Add('WHERE (permit_name ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
 procedure TdlgFind.FindProjects(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
 var
   Operador: String;
@@ -472,6 +676,87 @@ begin
       fvReset:
         begin
           Add('WHERE (project_title ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
+procedure TdlgFind.FindSamplePreps(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador := GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT sample_prep_id, full_name FROM sample_preps ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        begin
+          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
+procedure TdlgFind.FindSightings(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador := GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT sighting_id, full_name FROM sightings ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        begin
+          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
+procedure TdlgFind.FindSpecimens(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador := GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT specimen_id, full_name FROM specimens ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        begin
+          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
           Add('AND (active_status = 1)');
         end;
       fvAll:
@@ -767,52 +1052,37 @@ begin
   end;
 
   case FTableType of
-    tbNone: { nothing } ;
-    tbUsers:
-      SetupFields('user_id', 'user_name');
-    tbRecordHistory: { nothing } ;
-    tbProjectTeams: { nothing } ;
-    tbPermits: { nothing } ;
-    tbGazetteer:
-      SetupFields('site_id', 'full_name');
-    tbBotanicTaxa:
-      SetupFields('taxon_id', 'taxon_name', 'formatted_name');
-    tbNests: { nothing } ;
-    tbNestRevisions: { nothing } ;
-    tbEggs: { nothing } ;
-    tbNetStations:
-      SetupFields('net_station_id', 'station_name');
-    tbTaxonRanks:
-      SetupFields('rank_id', 'rank_name');
-    tbZooTaxa:
-      SetupFields('zoo_taxa', 'full_name', 'formatted_name');
-    tbProjects:
-      SetupFields('project_id', 'project_title');
-    tbInstitutions:
-      SetupFields('institution_id', 'full_name');
-    tbPeople:
-      SetupFields('person_id', 'full_name');
-    tbExpeditions: ;
-    tbSurveys:
-      SetupFields('survey_id', 'full_name');
-    tbMethods:
-      SetupFields('method_id', 'method_name');
-    tbSurveyTeams: { nothing } ;
-    tbNetsEffort:
-      SetupFields('net_id', 'full_name');
-    tbSightings: { nothing } ;
-    tbSpecimens: { nothing } ;
-    tbSamplePreps: { nothing } ;
-    tbPermanentNets:
-      SetupFields('permanent_net_id', 'full_name');
-    tbBands:
-      SetupFields('band_id', 'full_name');
-    tbIndividuals:
-      SetupFields('individual_id', 'full_name');
-    tbCaptures: { nothing } ;
-    tbMolts: { nothing } ;
-    tbImages: { nothing } ;
-    tbAudioLibrary: ;
+    //tbNone: ;
+    tbUsers:          SetupFields('user_id', 'user_name');
+    //tbRecordHistory: ;
+    //tbProjectTeams: ;
+    tbPermits:        SetupFields('permit_id', 'permit_name');
+    tbGazetteer:      SetupFields('site_id', 'full_name');
+    tbBotanicTaxa:    SetupFields('taxon_id', 'taxon_name', 'formatted_name');
+    tbNests:          SetupFields('nest_id', 'full_name');
+    tbNestRevisions:  SetupFields('nest_revision_id', 'full_name');
+    tbEggs:           SetupFields('egg_id', 'full_name');
+    tbNetStations:    SetupFields('net_station_id', 'station_name');
+    tbTaxonRanks:     SetupFields('rank_id', 'rank_name');
+    tbZooTaxa:        SetupFields('zoo_taxa', 'full_name', 'formatted_name');
+    tbProjects:       SetupFields('project_id', 'project_title');
+    tbInstitutions:   SetupFields('institution_id', 'full_name');
+    tbPeople:         SetupFields('person_id', 'full_name');
+    tbExpeditions:    SetupFields('expedition_id', 'expedition_name');
+    tbSurveys:        SetupFields('survey_id', 'full_name');
+    tbMethods:        SetupFields('method_id', 'method_name');
+    //tbSurveyTeams: ;
+    tbNetsEffort:     SetupFields('net_id', 'full_name');
+    tbSightings:      SetupFields('sighting_id', 'full_name');
+    tbSpecimens:      SetupFields('specimen_id', 'full_name');
+    tbSamplePreps:    SetupFields('sample_prep_id', 'full_name');
+    tbPermanentNets:  SetupFields('permanent_net_id', 'full_name');
+    tbBands:          SetupFields('band_id', 'full_name');
+    tbIndividuals:    SetupFields('individual_id', 'full_name');
+    tbCaptures:       SetupFields('capture_id', 'full_name');
+    tbMolts:          SetupFields('molt_id', 'full_name');
+    //tbImages: ;
+    //tbAudioLibrary: ;
   end;
 
   FSortDirection := 'ASC';
@@ -822,6 +1092,8 @@ begin
     EP.Text := FInitial;
     EP.SelStart := Length(EP.Text);
   end;
+
+  sbOptions.Visible := FTableType = tbBands;
 
   if (FFormattedNameField <> EmptyStr) then
     uList.Columns[0].FieldName := FFormattedNameField
@@ -870,22 +1142,21 @@ begin
   Result := qFind.RecordCount > 0;
 end;
 
-procedure TdlgFind.sbClearSearchClick(Sender: TObject);
+procedure TdlgFind.pmfShowBandsAvailableClick(Sender: TObject);
 begin
-  {$IFDEF DEBUG}
-  LogDebug('Clear search');
-  {$ENDIF}
   if qFind.Active then
-    qFind.Close;
-  uList.Enabled := False;
-  EP.Clear;
-  EP.SetFocus;
-  TimerFind.Enabled := False;
+    Search(EP.Text);
 end;
 
 procedure TdlgFind.sbCloseClick(Sender: TObject);
 begin
   ModalResult := mrCancel;
+end;
+
+procedure TdlgFind.sbOptionsClick(Sender: TObject);
+begin
+  with TColorSpeedButton(Sender).ClientToScreen(point(0, TColorSpeedButton(Sender).Height + 1)) do
+    pmOptions.Popup(X, Y);
 end;
 
 function TdlgFind.Search(aValue: String): Boolean;
@@ -991,52 +1262,37 @@ begin
     Clear;
 
     case FTableType of
-      tbNone: ;
-      tbUsers:
-        FindUsers(aSQL, aFilter, aCriteria);
-      tbRecordHistory: ;
-      tbProjectTeams: ;
-      tbPermits: ;
-      tbGazetteer:
-        FindGazetteer(aSQL, aFilter, aCriteria);
-      tbBotanicTaxa:
-        FindBotany(aSQL, aFilter, aCriteria);
-      tbNests: ;
-      tbNestRevisions: ;
-      tbEggs: ;
-      tbNetStations:
-        FindNetStations(aSQL, aFilter, aCriteria);
-      tbTaxonRanks:
-        FindTaxonRanks(aSQL, aFilter, aCriteria);
-      tbZooTaxa:
-        FindTaxa(aSQL, aFilter, aCriteria);
-      tbProjects:
-        FindProjects(aSQL, aFilter, aCriteria);
-      tbInstitutions:
-        FindInstitutions(aSQL, aFilter, aCriteria);
-      tbPeople:
-        FindPeople(aSQL, aFilter, aCriteria);
-      tbSurveys:
-        FindSurveys(aSQL, aFilter, aCriteria);
-      tbExpeditions: ;
-      tbMethods:
-        FindMethods(aSQL, aFilter, aCriteria);
-      tbSurveyTeams: ;
-      tbNetsEffort:
-        FindNetEffort(aSQL, aFilter, aCriteria);
-      tbSightings: ;
-      tbSpecimens: ;
-      tbSamplePreps: ;
-      tbPermanentNets:
-        FindPermanentNets(aSQL, aFilter, aCriteria);
-      tbBands:
-        FindBands(aSQL, aFilter, aCriteria);
-      tbIndividuals:
-        FindIndividuals(aSQL, aFilter, aCriteria);
-      tbCaptures: ;
-      tbMolts: ;
-      tbImages: ;
-      tbAudioLibrary: ;
+      //tbNone: ;
+      tbUsers:          FindUsers(aSQL, aFilter, aCriteria);
+      //tbRecordHistory: ;
+      //tbProjectTeams: ;
+      tbPermits:        FindPermits(aSQL, aFilter, aCriteria);
+      tbGazetteer:      FindGazetteer(aSQL, aFilter, aCriteria);
+      tbBotanicTaxa:    FindBotany(aSQL, aFilter, aCriteria);
+      tbNests:          FindNests(aSQL, aFilter, aCriteria);
+      tbNestRevisions:  FindNestRevisions(aSQL, aFilter, aCriteria);
+      tbEggs:           FindEggs(aSQL, aFilter, aCriteria);
+      tbNetStations:    FindNetStations(aSQL, aFilter, aCriteria);
+      tbTaxonRanks:     FindTaxonRanks(aSQL, aFilter, aCriteria);
+      tbZooTaxa:        FindTaxa(aSQL, aFilter, aCriteria);
+      tbProjects:       FindProjects(aSQL, aFilter, aCriteria);
+      tbInstitutions:   FindInstitutions(aSQL, aFilter, aCriteria);
+      tbPeople:         FindPeople(aSQL, aFilter, aCriteria);
+      tbSurveys:        FindSurveys(aSQL, aFilter, aCriteria);
+      tbExpeditions:    FindExpeditions(aSQL, aFilter, aCriteria);
+      tbMethods:        FindMethods(aSQL, aFilter, aCriteria);
+      //tbSurveyTeams: ;
+      tbNetsEffort:     FindNetEffort(aSQL, aFilter, aCriteria);
+      tbSightings:      FindSightings(aSQL, aFilter, aCriteria);
+      tbSpecimens:      FindSpecimens(aSQL, aFilter, aCriteria);
+      tbSamplePreps:    FindSamplePreps(aSQL, aFilter, aCriteria);
+      tbPermanentNets:  FindPermanentNets(aSQL, aFilter, aCriteria);
+      tbBands:          FindBands(aSQL, aFilter, aCriteria);
+      tbIndividuals:    FindIndividuals(aSQL, aFilter, aCriteria);
+      tbCaptures:       FindCaptures(aSQL, aFilter, aCriteria);
+      tbMolts:          FindMolts(aSQL, aFilter, aCriteria);
+      //tbImages: ;
+      //tbAudioLibrary: ;
     end;
 
     if Trim(FSortField) <> EmptyStr then
@@ -1078,55 +1334,43 @@ begin
   if (qFind.RecordCount > 0) then
   begin
     case FTableType of
-      tbNone: ;
-      tbUsers:
-        SetupResult('user_id', 'user_name');
-      tbRecordHistory: ;
-      tbProjectTeams: ;
-      tbPermits: ;
-      tbGazetteer:
-        SetupResult('site_id', 'full_name');
-      tbBotanicTaxa:
-        SetupResult('taxon_id', 'taxon_name');
-      tbNests: ;
-      tbNestRevisions: ;
-      tbEggs: ;
-      tbNetStations:
-        SetupResult('net_station_id', 'station_name');
-      tbTaxonRanks:
-        SetupResult('rank_id', 'rank_name');
+      //tbNone: ;
+      tbUsers:          SetupResult('user_id', 'user_name');
+      //tbRecordHistory: ;
+      //tbProjectTeams: ;
+      tbPermits:        SetupResult('permit_id', 'permit_name');
+      tbGazetteer:      SetupResult('site_id', 'full_name');
+      tbBotanicTaxa:    SetupResult('taxon_id', 'taxon_name');
+      tbNests:          SetupResult('nest_id', 'full_name');
+      tbNestRevisions:  SetupResult('nest_revision_id', 'full_name');
+      tbEggs:           SetupResult('egg_id', 'full_name');
+      tbNetStations:    SetupResult('net_station_id', 'station_name');
+      tbTaxonRanks:     SetupResult('rank_id', 'rank_name');
       tbZooTaxa:
+      begin
         if (qFind.FieldByName('valid_id').AsInteger > 0) then
           SetupResult('valid_id', 'full_name')
         else
           SetupResult('taxon_id', 'full_name');
-      tbProjects:
-        SetupResult('project_id', 'project_title');
-      tbInstitutions:
-        SetupResult('institution_id', 'full_name');
-      tbPeople:
-        SetupResult('person_id', 'full_name');
-      tbExpeditions: ;
-      tbSurveys:
-        SetupResult('survey_id', 'full_name');
-      tbMethods:
-        SetupResult('method_id', 'method_name');
-      tbSurveyTeams: ;
-      tbNetsEffort:
-        SetupResult('net_id', 'net_number');
-      tbSightings: ;
-      tbSpecimens: ;
-      tbSamplePreps: ;
-      tbPermanentNets:
-        SetupResult('permanent_net_id', 'full_name');
-      tbBands:
-        SetupResult('band_id', 'full_name');
-      tbIndividuals:
-        SetupResult('individual_id', 'full_name');
-      tbCaptures: ;
-      tbMolts: ;
-      tbImages: ;
-      tbAudioLibrary: ;
+      end;
+      tbProjects:       SetupResult('project_id', 'project_title');
+      tbInstitutions:   SetupResult('institution_id', 'full_name');
+      tbPeople:         SetupResult('person_id', 'full_name');
+      tbExpeditions:    SetupResult('expedition_id', 'expedition_name');
+      tbSurveys:        SetupResult('survey_id', 'full_name');
+      tbMethods:        SetupResult('method_id', 'method_name');
+      //tbSurveyTeams: ;
+      tbNetsEffort:     SetupResult('net_id', 'net_number');
+      tbSightings:      SetupResult('sighting_id', 'full_name');
+      tbSpecimens:      SetupResult('specimen_id', 'full_name');
+      tbSamplePreps:    SetupResult('sample_prep_id', 'full_name');
+      tbPermanentNets:  SetupResult('permanent_net_id', 'full_name');
+      tbBands:          SetupResult('band_id', 'full_name');
+      tbIndividuals:    SetupResult('individual_id', 'full_name');
+      tbCaptures:       SetupResult('capture_id', 'full_name');
+      tbMolts:          SetupResult('molt_id', 'full_name');
+      //tbImages: ;
+      //tbAudioLibrary: ;
     end;
 
     FKeyStr := IntToStr(FKeySelected);

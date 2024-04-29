@@ -688,6 +688,7 @@ begin
   Ini.SetValue('/GENERAL/ClearDeletedPeriod', FClearDeletedPeriod);
   Ini.SetValue('/GENERAL/LastClearDeleted', FLastClearDeleted);
   Ini.SetValue('/GENERAL/LastDatabaseOptimization', FLastDatabaseOptimization);
+  Ini.SetValue('/GENERAL/AutoUpdates', FAutoUpdates);
   Ini.SetValue('/GENERAL/LastAutoUpdate', FLastAutoUpdate);
   { Appearance }
   Ini.SetValue('/APPEARANCE/SelectedTheme', FSelectedTheme);
@@ -709,7 +710,6 @@ begin
   Ini.SetValue('/SECURITY/RememberConnection', FRememberConnection);
   Ini.SetValue('/SECURITY/LastUser', FLastUser);
   Ini.SetValue('/SECURITY/LastConnection', FLastConnection);
-  Ini.SetValue('/SECURITY/AutoUpdates', FAutoUpdates);
   { Privacy }
   Ini.SetValue('/PRIVACY/AllowWriteLogs', FAllowWriteLogs);
   Ini.SetValue('/PRIVACY/AllowUsageData', FAllowUsageData);

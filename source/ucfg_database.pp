@@ -133,7 +133,8 @@ begin
     begin
       dsConn.DataSet.Post;
       if not FileExists(dsConn.DataSet.FieldByName('database_name').AsString) then
-        CreateUserDatabase(dbSqlite, dsConn.DataSet.FieldByName('database_name').AsString);
+        if MsgDlg(rsTitleCreateDatabase, rsCreateDatabasePrompt, mtConfirmation) then
+          CreateUserDatabase(dbSqlite, dsConn.DataSet.FieldByName('database_name').AsString);
     end
     else
       dsConn.DataSet.Cancel;

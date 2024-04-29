@@ -5,7 +5,7 @@ unit udm_grid;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StrUtils, Graphics,
+  Classes, SysUtils, DB, SQLDB, StrUtils, Graphics, DateUtils,
   { CBS }
   cbs_gis, cbs_entities, cbs_botany, cbs_taxonomy, cbs_birds, cbs_sampling, cbs_breeding;
 
@@ -1135,8 +1135,16 @@ type
     procedure qCapturesBeforeEdit(DataSet: TDataSet);
     procedure qCapturesBeforeOpen(DataSet: TDataSet);
     procedure qCapturesBeforePost(DataSet: TDataSet);
+    procedure qCapturesbody_moltValidate(Sender: TField);
+    procedure qCapturesbrood_patchValidate(Sender: TField);
+    procedure qCapturescapture_dateValidate(Sender: TField);
     procedure qCapturescapture_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qCapturescapture_typeSetText(Sender: TField; const aText: string);
+    procedure qCapturescloacal_protuberanceValidate(Sender: TField);
+    procedure qCapturesfatValidate(Sender: TField);
+    procedure qCapturesflight_feathers_moltValidate(Sender: TField);
+    procedure qCapturesflight_feathers_wearValidate(Sender: TField);
+    procedure qCapturesskull_ossificationValidate(Sender: TField);
     procedure qCapturessubject_ageGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qCapturessubject_ageSetText(Sender: TField; const aText: string);
     procedure qCapturessubject_sexGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -1154,6 +1162,7 @@ type
     procedure qEggseggshell_textureSetText(Sender: TField; const aText: string);
     procedure qEggsegg_shapeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qEggsegg_shapeSetText(Sender: TField; const aText: string);
+    procedure qEggsmeasure_dateValidate(Sender: TField);
     procedure qExpeditionsAfterCancel(DataSet: TDataSet);
     procedure qExpeditionsAfterPost(DataSet: TDataSet);
     procedure qExpeditionsBeforeEdit(DataSet: TDataSet);
@@ -1171,6 +1180,7 @@ type
     procedure qImagescoordinate_precisionGetText(Sender: TField; var aText: string;
       DisplayText: Boolean);
     procedure qImagescoordinate_precisionSetText(Sender: TField; const aText: string);
+    procedure qImagesimage_dateValidate(Sender: TField);
     procedure qImagesimage_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qImagesimage_typeSetText(Sender: TField; const aText: string);
     procedure qIndividualsAfterCancel(DataSet: TDataSet);
@@ -1208,11 +1218,14 @@ type
     procedure qNestRevisionsnest_statusGetText(Sender: TField; var aText: string;
       DisplayText: Boolean);
     procedure qNestRevisionsnest_statusSetText(Sender: TField; const aText: string);
+    procedure qNestRevisionsrevision_dateValidate(Sender: TField);
     procedure qNestsAfterCancel(DataSet: TDataSet);
     procedure qNestsAfterPost(DataSet: TDataSet);
     procedure qNestsBeforeEdit(DataSet: TDataSet);
     procedure qNestsBeforeOpen(DataSet: TDataSet);
     procedure qNestsBeforePost(DataSet: TDataSet);
+    procedure qNestsfound_dateValidate(Sender: TField);
+    procedure qNestslast_dateValidate(Sender: TField);
     procedure qNestsnest_fateGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qNestsnest_fateSetText(Sender: TField; const aText: string);
     procedure qNestsnest_shapeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -1230,6 +1243,8 @@ type
     procedure qPeopleBeforeEdit(DataSet: TDataSet);
     procedure qPeopleBeforeOpen(DataSet: TDataSet);
     procedure qPeopleBeforePost(DataSet: TDataSet);
+    procedure qPeoplebirth_dateValidate(Sender: TField);
+    procedure qPeopledeath_dateValidate(Sender: TField);
     procedure qPermanentNetsAfterCancel(DataSet: TDataSet);
     procedure qPermanentNetsAfterPost(DataSet: TDataSet);
     procedure qPermanentNetsBeforeEdit(DataSet: TDataSet);
@@ -1240,6 +1255,7 @@ type
     procedure qPermitsBeforeEdit(DataSet: TDataSet);
     procedure qPermitsBeforeOpen(DataSet: TDataSet);
     procedure qPermitsBeforePost(DataSet: TDataSet);
+    procedure qPermitsdispatch_dateValidate(Sender: TField);
     procedure qProjectsAfterCancel(DataSet: TDataSet);
     procedure qProjectsAfterPost(DataSet: TDataSet);
     procedure qProjectsBeforeEdit(DataSet: TDataSet);
@@ -1263,6 +1279,7 @@ type
     procedure qSightingsBeforeEdit(DataSet: TDataSet);
     procedure qSightingsBeforeOpen(DataSet: TDataSet);
     procedure qSightingsBeforePost(DataSet: TDataSet);
+    procedure qSightingssighting_dateValidate(Sender: TField);
     procedure qSpecimensAfterCancel(DataSet: TDataSet);
     procedure qSpecimensAfterPost(DataSet: TDataSet);
     procedure qSpecimensBeforeEdit(DataSet: TDataSet);
@@ -1275,6 +1292,7 @@ type
     procedure qSurveysBeforeEdit(DataSet: TDataSet);
     procedure qSurveysBeforeOpen(DataSet: TDataSet);
     procedure qSurveysBeforePost(DataSet: TDataSet);
+    procedure qSurveyssurvey_dateValidate(Sender: TField);
     procedure qTaxaBeforeOpen(DataSet: TDataSet);
     procedure qTaxonRanksBeforePost(DataSet: TDataSet);
   private
@@ -1312,7 +1330,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_getvalue, cbs_fullnames, cbs_graphics;
+uses cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_getvalue, cbs_fullnames, cbs_graphics, cbs_validations;
 
 {$R *.lfm}
 
@@ -1735,6 +1753,50 @@ begin
   SetRecordDateUser(DataSet);
 end;
 
+procedure TDMG.qCapturesbody_moltValidate(Sender: TField);
+var
+  SS, m: String;
+  i: Integer;
+begin
+  if not ValueInSet(Sender.AsString, rsBodyMolt, BodyMoltValues) then
+  begin
+    SS := EmptyStr;
+    for i := 0 to High(BodyMoltValues) do
+      if i = High(BodyMoltValues) then
+        SS := SS + BodyMoltValues[i]
+      else
+        SS := SS + BodyMoltValues[i] + ', ';
+    m := Format(rsValueNotInSet, [rsBodyMolt, SS]);
+
+    raise EValueNotInSet.Create(m);
+  end;
+end;
+
+procedure TDMG.qCapturesbrood_patchValidate(Sender: TField);
+var
+  SS, m: String;
+  i: Integer;
+begin
+  if not ValueInSet(Sender.AsString, rsBroodPatch, BroodPatchValues) then
+  begin
+    SS := EmptyStr;
+    for i := 0 to High(BroodPatchValues) do
+      if i = High(BroodPatchValues) then
+        SS := SS + BroodPatchValues[i]
+      else
+        SS := SS + BroodPatchValues[i] + ', ';
+    m := Format(rsValueNotInSet, [rsBroodPatch, SS]);
+
+    raise EValueNotInSet.Create(m);
+  end;
+end;
+
+procedure TDMG.qCapturescapture_dateValidate(Sender: TField);
+begin
+  if IsFutureDate(Sender.AsDateTime, Today, rsDateCapture, rsDateToday) then
+    raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateCapture, DateToStr(Sender.AsDateTime)]);
+end;
+
 procedure TDMG.qCapturescapture_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
 begin
   if Sender.AsString = EmptyStr then
@@ -1770,6 +1832,101 @@ begin
   else
   if aText = rsCaptureUnbanded then
     Sender.AsString := 'U';
+end;
+
+procedure TDMG.qCapturescloacal_protuberanceValidate(Sender: TField);
+var
+  SS, m: String;
+  i: Integer;
+begin
+  if not ValueInSet(Sender.AsString, rsCloacalProtuberance, CloacalProtuberanceValues) then
+  begin
+    SS := EmptyStr;
+    for i := 0 to High(CloacalProtuberanceValues) do
+      if i = High(CloacalProtuberanceValues) then
+        SS := SS + CloacalProtuberanceValues[i]
+      else
+        SS := SS + CloacalProtuberanceValues[i] + ', ';
+    m := Format(rsValueNotInSet, [rsCloacalProtuberance, SS]);
+
+    raise EValueNotInSet.Create(m);
+  end;
+end;
+
+procedure TDMG.qCapturesfatValidate(Sender: TField);
+var
+  SS, m: String;
+  i: Integer;
+begin
+  if not ValueInSet(Sender.AsString, rsSubcutaneousFat, FatValues) then
+  begin
+    SS := EmptyStr;
+    for i := 0 to High(FatValues) do
+      if i = High(FatValues) then
+        SS := SS + FatValues[i]
+      else
+        SS := SS + FatValues[i] + ', ';
+    m := Format(rsValueNotInSet, [rsSubcutaneousFat, SS]);
+
+    raise EValueNotInSet.Create(m);
+  end;
+end;
+
+procedure TDMG.qCapturesflight_feathers_moltValidate(Sender: TField);
+var
+  SS, m: String;
+  i: Integer;
+begin
+  if not ValueInSet(Sender.AsString, rsFlightMolt, FlightMoltValues) then
+  begin
+    SS := EmptyStr;
+    for i := 0 to High(FlightMoltValues) do
+      if i = High(FlightMoltValues) then
+        SS := SS + FlightMoltValues[i]
+      else
+        SS := SS + FlightMoltValues[i] + ', ';
+    m := Format(rsValueNotInSet, [rsFlightMolt, SS]);
+
+    raise EValueNotInSet.Create(m);
+  end;
+end;
+
+procedure TDMG.qCapturesflight_feathers_wearValidate(Sender: TField);
+var
+  SS, m: String;
+  i: Integer;
+begin
+  if not ValueInSet(Sender.AsString, rsFlightWear, FeatherWearValues) then
+  begin
+    SS := EmptyStr;
+    for i := 0 to High(FeatherWearValues) do
+      if i = High(FeatherWearValues) then
+        SS := SS + FeatherWearValues[i]
+      else
+        SS := SS + FeatherWearValues[i] + ', ';
+    m := Format(rsValueNotInSet, [rsFlightWear, SS]);
+
+    raise EValueNotInSet.Create(m);
+  end;
+end;
+
+procedure TDMG.qCapturesskull_ossificationValidate(Sender: TField);
+var
+  SS, m: String;
+  i: Integer;
+begin
+  if not ValueInSet(Sender.AsString, rsSkullOssification, SkullValues) then
+  begin
+    SS := EmptyStr;
+    for i := 0 to High(SkullValues) do
+      if i = High(SkullValues) then
+        SS := SS + SkullValues[i]
+      else
+        SS := SS + SkullValues[i] + ', ';
+    m := Format(rsValueNotInSet, [rsSkullOssification, SS]);
+
+    raise EValueNotInSet.Create(m);
+  end;
 end;
 
 procedure TDMG.qCapturessubject_ageGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -2105,6 +2262,12 @@ begin
     Sender.AsString := 'U';
 end;
 
+procedure TDMG.qEggsmeasure_dateValidate(Sender: TField);
+begin
+  if IsFutureDate(Sender.AsDateTime, Today, rsDateMeasured, rsDateToday) then
+    raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateMeasured, DateToStr(Sender.AsDateTime)]);
+end;
+
 procedure TDMG.qExpeditionsAfterCancel(DataSet: TDataSet);
 begin
   if Assigned(OldExpedition) then
@@ -2298,6 +2461,12 @@ begin
   else
   if aText = rsReferenceCoordinate then
     Sender.AsString := 'R';
+end;
+
+procedure TDMG.qImagesimage_dateValidate(Sender: TField);
+begin
+  if IsFutureDate(Sender.AsDateTime, Today, rsDateImage, rsDateToday) then
+    raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateImage, DateToStr(Sender.AsDateTime)]);
 end;
 
 procedure TDMG.qImagesimage_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -2846,6 +3015,12 @@ begin
     Sender.AsString := 'U';
 end;
 
+procedure TDMG.qNestRevisionsrevision_dateValidate(Sender: TField);
+begin
+  if IsFutureDate(Sender.AsDateTime, Today, rsDateNestRevision, rsDateToday) then
+    raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateNestRevision, DateToStr(Sender.AsDateTime)]);
+end;
+
 procedure TDMG.qNestsAfterCancel(DataSet: TDataSet);
 begin
   if Assigned(OldNest) then
@@ -2895,6 +3070,18 @@ end;
 procedure TDMG.qNestsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+end;
+
+procedure TDMG.qNestsfound_dateValidate(Sender: TField);
+begin
+  if IsFutureDate(Sender.AsDateTime, Today, rsDateFound, rsDateToday) then
+    raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateFound, DateToStr(Sender.AsDateTime)]);
+end;
+
+procedure TDMG.qNestslast_dateValidate(Sender: TField);
+begin
+  if IsFutureDate(Sender.AsDateTime, Today, rsDateLast, rsDateToday) then
+    raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateLast, DateToStr(Sender.AsDateTime)]);
 end;
 
 procedure TDMG.qNestsnest_fateGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -3161,6 +3348,18 @@ begin
   SetRecordDateUser(DataSet);
 end;
 
+procedure TDMG.qPeoplebirth_dateValidate(Sender: TField);
+begin
+  if IsFutureDate(Sender.AsDateTime, Today, rsDateBirth, rsDateToday) then
+    raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateBirth, DateToStr(Sender.AsDateTime)]);
+end;
+
+procedure TDMG.qPeopledeath_dateValidate(Sender: TField);
+begin
+  if IsFutureDate(Sender.AsDateTime, Today, rsDateDeath, rsDateToday) then
+    raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateDeath, DateToStr(Sender.AsDateTime)]);
+end;
+
 procedure TDMG.qPermanentNetsAfterCancel(DataSet: TDataSet);
 begin
   if Assigned(OldPermanentNet) then
@@ -3261,6 +3460,12 @@ end;
 procedure TDMG.qPermitsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+end;
+
+procedure TDMG.qPermitsdispatch_dateValidate(Sender: TField);
+begin
+  if IsFutureDate(Sender.AsDateTime, Today, rsDateDispatch, rsDateToday) then
+    raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateDispatch, DateToStr(Sender.AsDateTime)]);
 end;
 
 procedure TDMG.qProjectsAfterCancel(DataSet: TDataSet);
@@ -3627,6 +3832,12 @@ begin
     GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
+procedure TDMG.qSightingssighting_dateValidate(Sender: TField);
+begin
+  if IsFutureDate(Sender.AsDateTime, Today, rsDateSighting, rsDateToday) then
+    raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateSighting, DateToStr(Sender.AsDateTime)]);
+end;
+
 procedure TDMG.qSpecimensAfterCancel(DataSet: TDataSet);
 begin
   if Assigned(OldSpecimen) then
@@ -3819,6 +4030,12 @@ end;
 procedure TDMG.qSurveysBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+end;
+
+procedure TDMG.qSurveyssurvey_dateValidate(Sender: TField);
+begin
+  if IsFutureDate(Sender.AsDateTime, Today, rsDateSurvey, rsDateToday) then
+    raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateSurvey, DateToStr(Sender.AsDateTime)]);
 end;
 
 procedure TDMG.qTaxaBeforeOpen(DataSet: TDataSet);

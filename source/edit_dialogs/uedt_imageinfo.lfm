@@ -13,7 +13,6 @@ object edtImageInfo: TedtImageInfo
   OnKeyPress = FormKeyPress
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -360,13 +359,6 @@ object edtImageInfo: TedtImageInfo
           DataField = 'image_type'
           DataSource = dsLink
           ItemHeight = 15
-          Items.Strings = (
-            'Disponível'
-            'Usada'
-            'Removida'
-            'Quebrada'
-            'Perdida'
-          )
           MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
@@ -411,13 +403,6 @@ object edtImageInfo: TedtImageInfo
           DataField = 'coordinate_precision'
           DataSource = dsLink
           ItemHeight = 15
-          Items.Strings = (
-            'Disponível'
-            'Usada'
-            'Removida'
-            'Quebrada'
-            'Perdida'
-          )
           MaxLength = 0
           Style = csDropDownList
           TabOrder = 0

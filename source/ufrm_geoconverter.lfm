@@ -9,14 +9,13 @@ object frmGeoConverter: TfrmGeoConverter
   OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '3.2.0.0'
   object SplitSynEdit: TSplitter
     Left = 793
     Height = 712
     Top = 8
     Width = 6
     AutoSnap = False
-    Color = 15987699
+    Color = 16250871
     MinSize = 250
     ParentColor = False
   end
@@ -43,7 +42,7 @@ object frmGeoConverter: TfrmGeoConverter
     ChildSizing.ControlsPerLine = 1
     ClientHeight = 712
     ClientWidth = 311
-    Color = 15987699
+    Color = 16250871
     ParentBackground = False
     ParentColor = False
     TabOrder = 2
@@ -73,7 +72,7 @@ object frmGeoConverter: TfrmGeoConverter
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
       ChildSizing.VerticalSpacing = 8
-      Background.Color = 16448250
+      Background.Color = 15987699
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
       Background.Gradient1.GradientType = gtLinear
@@ -173,7 +172,7 @@ object frmGeoConverter: TfrmGeoConverter
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      Background.Color = 16448250
+      Background.Color = 15987699
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
       Background.Gradient1.GradientType = gtLinear
@@ -240,7 +239,7 @@ object frmGeoConverter: TfrmGeoConverter
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      Background.Color = 16448250
+      Background.Color = 15987699
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
       Background.Gradient1.GradientType = gtLinear
@@ -298,7 +297,7 @@ object frmGeoConverter: TfrmGeoConverter
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 19
         ClientWidth = 135
-        Color = 16448250
+        Color = 15987699
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
@@ -340,7 +339,7 @@ object frmGeoConverter: TfrmGeoConverter
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      Background.Color = 16448250
+      Background.Color = 15987699
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
       Background.Gradient1.GradientType = gtLinear
@@ -474,7 +473,7 @@ object frmGeoConverter: TfrmGeoConverter
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      Background.Color = 16448250
+      Background.Color = 15987699
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
       Background.Gradient1.GradientType = gtLinear
@@ -529,7 +528,7 @@ object frmGeoConverter: TfrmGeoConverter
     BevelOuter = bvNone
     ClientHeight = 712
     ClientWidth = 482
-    Color = 15987699
+    Color = 16250871
     ParentBackground = False
     ParentColor = False
     TabOrder = 3
@@ -551,7 +550,7 @@ object frmGeoConverter: TfrmGeoConverter
       OnKeyUp = seConvertFromKeyUp
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 73
+      Gutter.Width = 63
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1056,7 +1055,7 @@ object frmGeoConverter: TfrmGeoConverter
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      Background.Color = 16448250
+      Background.Color = 15987699
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
       Background.Gradient1.GradientType = gtLinear
@@ -1143,7 +1142,7 @@ object frmGeoConverter: TfrmGeoConverter
     BevelOuter = bvNone
     ClientHeight = 712
     ClientWidth = 394
-    Color = 15987699
+    Color = 16250871
     ParentBackground = False
     ParentColor = False
     TabOrder = 4
@@ -1163,7 +1162,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 0
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 73
+      Gutter.Width = 63
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1667,7 +1666,7 @@ object frmGeoConverter: TfrmGeoConverter
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
-      Background.Color = 16448250
+      Background.Color = 15987699
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
       Background.Gradient1.GradientType = gtLinear

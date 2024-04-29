@@ -372,6 +372,11 @@ uses
     rsDateNestRevision = 'Nest revision date';
     rsDatePreparation = 'Preparation date';
     rsDateCollection = 'Collection date';
+    rsDateSurvey = 'Survey date';
+    rsDateSighting = 'Sighting date';
+    rsDateFound = 'Date found';
+    rsDateLast = 'Last date active';
+    rsDateImage = 'Image date';
 
     rsInfraRank = 'Infraspecific rank';
     rsInfraEpithet = 'Infraspecific epithet';

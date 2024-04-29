@@ -823,9 +823,21 @@ msgstr ""
 msgid "Expire date"
 msgstr ""
 
+#: cbs_locale.rsdatefound
+msgid "Date found"
+msgstr ""
+
+#: cbs_locale.rsdateimage
+msgid "Image date"
+msgstr ""
+
 #: cbs_locale.rsdateissue
 msgctxt "cbs_locale.rsdateissue"
 msgid "Issue date"
+msgstr ""
+
+#: cbs_locale.rsdatelast
+msgid "Last date active"
 msgstr ""
 
 #: cbs_locale.rsdatemeasured
@@ -851,9 +863,17 @@ msgctxt "cbs_locale.rsdatereport"
 msgid "Report date"
 msgstr ""
 
+#: cbs_locale.rsdatesighting
+msgid "Sighting date"
+msgstr ""
+
 #: cbs_locale.rsdatestart
 msgctxt "cbs_locale.rsdatestart"
 msgid "Start date"
+msgstr ""
+
+#: cbs_locale.rsdatesurvey
+msgid "Survey date"
 msgstr ""
 
 #: cbs_locale.rsdatetoday
@@ -3776,14 +3796,18 @@ msgctxt "tdlgfind.ep.texthint"
 msgid "Find..."
 msgstr ""
 
-#: tdlgfind.sbclearsearch.hint
-msgctxt "tdlgfind.sbclearsearch.hint"
-msgid "Clear search"
+#: tdlgfind.pmfshowbandsavailable.caption
+msgid "Show only available bands"
 msgstr ""
 
 #: tdlgfind.sbclose.hint
 msgctxt "tdlgfind.sbclose.hint"
 msgid "Clear search"
+msgstr ""
+
+#: tdlgfind.sboptions.hint
+msgctxt "tdlgfind.sboptions.hint"
+msgid "Options"
 msgstr ""
 
 #: tdlgfind.ulist.columns[0].title.caption

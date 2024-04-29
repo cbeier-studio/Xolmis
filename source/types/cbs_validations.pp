@@ -9,6 +9,11 @@ uses
   DateUtils, Variants,
   cbs_system, cbs_datatypes, cbs_gis;
 
+type
+  EInvalidPartialDate = class(Exception);
+  EValueNotInSet = class(Exception);
+  EFutureDate = class(Exception);
+
   { Validations }
   function CheckEmail(const aEmailAddress: String; aMessageList: TStrings = nil): Boolean;
 
@@ -134,9 +139,10 @@ begin
     begin
       LogError(m);
       aMessageList.Add(m);
-    end
-    else
-      MsgDlg('', m, mtInformation);
+    end;
+    //else
+    //  raise EValueNotInSet.Create(m);
+      //MsgDlg('', m, mtInformation);
   end;
 end;
 
@@ -412,10 +418,10 @@ begin
     begin
       LogError(m);
       aMessageList.Add(m);
-    end
-    else
-    if (aDisplayName <> EmptyStr) and (aReferenceName <> EmptyStr) then
-      MsgDlg('', m, mtInformation);
+    end;
+    //else
+    //if (aDisplayName <> EmptyStr) and (aReferenceName <> EmptyStr) then
+    //  MsgDlg('', m, mtInformation);
   end;
 end;
 

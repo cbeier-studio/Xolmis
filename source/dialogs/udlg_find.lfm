@@ -91,10 +91,10 @@ object dlgFind: TdlgFind
         OnKeyDown = FormKeyDown
         OnKeyPress = FormKeyPress
       end
-      object sbClearSearch: TColorSpeedButton
+      object sbOptions: TColorSpeedButton
         Left = 249
         Height = 24
-        Hint = 'Clear search'
+        Hint = 'Options'
         Top = 1
         Width = 24
         Align = alRight
@@ -103,10 +103,10 @@ object dlgFind: TdlgFind
         Flat = True
         Font.Color = clBlack
         Images = frmMain.mPopup
-        ImageIndex = 38
+        ImageIndex = 80
         ImageWidth = 20
         Visible = False
-        OnClick = sbClearSearchClick
+        OnClick = sbOptionsClick
         ShowCaption = False
         ShowHint = True
         ParentFont = False
@@ -215,5 +215,14 @@ object dlgFind: TdlgFind
     OnTimer = TimerFindTimer
     Left = 154
     Top = 144
+  end
+  object pmOptions: TPopupMenu
+    Left = 219
+    Top = 144
+    object pmfShowBandsAvailable: TMenuItem
+      AutoCheck = True
+      Caption = 'Show only available bands'
+      OnClick = pmfShowBandsAvailableClick
+    end
   end
 end

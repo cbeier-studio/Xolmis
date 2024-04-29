@@ -115,7 +115,7 @@ const
 
 type
   TCriteriaType = (crNone,
-    crLike, crStartLike, crEqual, crDistinct,
+    crLike, crStartLike, crEqual, crNotEqual,
     crBetween, crMoreThan, crLessThan,
     crNull, crNotNull
   );
@@ -207,20 +207,6 @@ type
     property DisplayName: String read FDisplayName write FDisplayName;
   end;
 
-  { TMultiSearchField }
-
-  //TMultiSearchField = class(TCustomSearchField)
-  //private
-  //  FFieldNames: TStrings;
-  //  FDisplayNames: TStrings;
-  //public
-  //  constructor Create;
-  //  destructor Destroy; override;
-  //published
-  //  property FieldNames: String read FFieldNames write FFieldNames;
-  //  property DisplayNames: String read FDisplayNames write FDisplayNames;
-  //end;
-
   TSearchFields = specialize TObjectList<TSearchField>;
 
 type
@@ -307,37 +293,6 @@ type
     property Taxa: TStrings read FTaxa write FTaxa;
     property Dates: TStrings read FDates write FDates;
   end;
-
-
-//type
-
-  { TSearch (deprecated) }
-
-  //TSearch = class
-  //private
-  //  FFieldNames: TStrings;
-  //  FFilterType: TFilterType;
-  //  FCriteria: TCriteriaType;
-  //  FValue1: String;
-  //  FValue2: String;
-  //  function GetSQLString: String;
-  //  function GetReadableString: String;
-  //  function GetFilterString: String;
-  //public
-  //  constructor Create;
-  //  destructor Destroy; override;
-  //  procedure Clear;
-  //  function IsEmpty: Boolean;
-  //published
-  //  property FieldNames: TStrings read FFieldNames write FFieldNames;
-  //  property FilterType: TFilterType read FFilterType write FFilterType;
-  //  property Criteria: TCriteriaType read FCriteria write FCriteria;
-  //  property Value1: String read FValue1 write FValue1;
-  //  property Value2: String read FValue2 write FValue2;
-  //  property SQLString: String read GetSQLString;
-  //  property FilterString: String read GetFilterString;
-  //  property ReadableString: String read GetReadableString;
-  //end;
 
 type
 
@@ -565,237 +520,6 @@ begin
     FreeAndNil(Qry);
   end;
 end;
-
-{ TSearch }
-
-//constructor TSearch.Create;
-//begin
-//  FFieldNames := TStringList.Create;
-//end;
-//
-//destructor TSearch.Destroy;
-//begin
-//  FreeAndNil(FFieldNames);
-//  inherited Destroy;
-//end;
-//
-//function TSearch.GetSQLString: String;
-//const
-//  FMaskNull: String = '(%s %s) ';
-//  FMaskV1: String = '(%s %s %s) ';
-//  FMaskV2: String = '(%s %s %s AND %s) ';
-//  FMaskDateV1: String = '(date(%s) %s date(%s)) ';
-//  FMaskDateV2: String = '(date(%s) %s date(%s) AND date(%s)) ';
-//  FMaskTimeV1: String = '(time(%s) %s time(%s)) ';
-//  FMaskTimeV2: String = '(time(%s) %s time(%s) AND time(%s)) ';
-//  FMaskDateTimeV1: String = '(datetime(%s) %s datetime(%s)) ';
-//  FMaskDateTimeV2: String = '(datetime(%s) %s datetime(%s) AND datetime(%s)) ';
-//var
-//  i: Integer;
-//  V1, V2, S, Msk, Operador: String;
-//begin
-//  Result := EmptyStr;
-//  Msk := FMaskV1;
-//
-//  Operador := CriteriaOperators[Criteria];
-//  S := 'WHERE ';
-//  V1 := Trim(Value1);
-//  V2 := Trim(Value2);
-//  if Criteria in [crNull, crNotNull] then
-//    Msk := FMaskNull;
-//  if V1 <> EmptyStr then
-//  begin
-//    case FilterType of
-//      tcTexto, tcLista, tcLookup:
-//        begin
-//          if Pos('+', V1) > 0 then
-//            V1 := WildcardSyllables(V1) + '%'
-//          else
-//            V1 := WildcardWords(V1) + '%';
-//          if Criteria = crLike then
-//            V1 := '%' + V1;
-//          V1 := QuotedStr(V1);
-//          Msk := FMaskV1;
-//        end;
-//      tcBool:
-//        Msk := FMaskV1;
-//      tcInteiro, tcDecimal:
-//        begin
-//          V1 := StringReplace(V1, ',', '.', [rfReplaceAll]);
-//          V2 := StringReplace(V2, ',', '.', [rfReplaceAll]);
-//          if Criteria = crBetween then
-//            Msk := FMaskV2
-//          else
-//            Msk := FMaskV1;
-//        end;
-//      tcData:
-//        begin
-//          if Criteria = crBetween then
-//            Msk := FMaskDateV2
-//          else
-//            Msk := FMaskDateV1;
-//        end;
-//      tcHora:
-//        begin
-//          if Criteria = crBetween then
-//            Msk := FMaskTimeV2
-//          else
-//            Msk := FMaskTimeV1;
-//        end;
-//      tcDataHora:
-//        begin
-//          if Criteria = crBetween then
-//            Msk := FMaskDateTimeV2
-//          else
-//            Msk := FMaskDateTimeV1;
-//        end;
-//    end;
-//  end;
-//
-//  if FieldNames.Count > 1 then
-//    S := S + '(';
-//
-//  for i := 0 to FieldNames.Count - 1 do
-//  begin
-//    case Criteria of
-//      crNone: ;
-//      crLike, crStartLike, crEqual, crMoreThan, crLessThan:
-//        S := S + Format(Msk, [FieldNames[i], Operador, V1]);
-//      crBetween:
-//        S := S + Format(Msk, [FieldNames[i], Operador, V1, V2]);
-//      crNull, crNotNull:
-//        S := S + Format(Msk, [FieldNames[i], Operador]);
-//    end;
-//
-//    if i < FieldNames.Count - 1 then
-//        S := S + 'OR ';
-//  end;
-//
-//  if FieldNames.Count > 1 then
-//    S := S + ')';
-//
-//  Result := S;
-//end;
-//
-//function TSearch.GetReadableString: String;
-//begin
-//  Result := EmptyStr;
-//
-//  { #TODO: TSearch.GetReadableString }
-//end;
-//
-//function TSearch.GetFilterString: String;
-//const
-//  FMaskNull: String = '(%s %s) ';
-//  FMaskV1: String = '(%s %s %s) ';
-//  FMaskV2: String = '(%s %s %s AND %s) ';
-//  FMaskDateV1: String = '(date(%s) %s date(%s)) ';
-//  FMaskDateV2: String = '(date(%s) %s date(%s) AND date(%s)) ';
-//  FMaskTimeV1: String = '(time(%s) %s time(%s)) ';
-//  FMaskTimeV2: String = '(time(%s) %s time(%s) AND time(%s)) ';
-//  FMaskDateTimeV1: String = '(datetime(%s) %s datetime(%s)) ';
-//  FMaskDateTimeV2: String = '(datetime(%s) %s datetime(%s) AND datetime(%s)) ';
-//var
-//  i: Integer;
-//  V1, V2, S, Msk, Operador: String;
-//begin
-//  Result := EmptyStr;
-//  Msk := FMaskV1;
-//
-//  Operador := CriteriaOperators[Criteria];
-//  S := '';
-//  V1 := Trim(Value1);
-//  V2 := Trim(Value2);
-//  if Criteria in [crNull, crNotNull] then
-//    Msk := FMaskNull;
-//  if V1 <> EmptyStr then
-//  begin
-//    case FilterType of
-//      tcTexto, tcLista, tcLookup:
-//        begin
-//          if Pos('+', V1) > 0 then
-//            V1 := WildcardSyllables(V1, '*') + '*'
-//          else
-//            V1 := WildcardWords(V1, '*') + '*';
-//          if Criteria = crLike then
-//            V1 := '*' + V1;
-//          V1 := QuotedStr(V1);
-//          Operador := '=';
-//          Msk := FMaskV1;
-//        end;
-//      tcBool:
-//        Msk := FMaskV1;
-//      tcInteiro, tcDecimal:
-//        begin
-//          V1 := StringReplace(V1, ',', '.', [rfReplaceAll]);
-//          V2 := StringReplace(V2, ',', '.', [rfReplaceAll]);
-//          if Criteria = crBetween then
-//            Msk := FMaskV2
-//          else
-//            Msk := FMaskV1;
-//        end;
-//      tcData:
-//        begin
-//          if Criteria = crBetween then
-//            Msk := FMaskDateV2
-//          else
-//            Msk := FMaskDateV1;
-//        end;
-//      tcHora:
-//        begin
-//          if Criteria = crBetween then
-//            Msk := FMaskTimeV2
-//          else
-//            Msk := FMaskTimeV1;
-//        end;
-//      tcDataHora:
-//        begin
-//          if Criteria = crBetween then
-//            Msk := FMaskDateTimeV2
-//          else
-//            Msk := FMaskDateTimeV1;
-//        end;
-//    end;
-//  end;
-//
-//  if FieldNames.Count > 1 then
-//    S := S + '(';
-//
-//  for i := 0 to FieldNames.Count - 1 do
-//  begin
-//    case Criteria of
-//      crNone: ;
-//      crLike, crStartLike, crEqual, crMoreThan, crLessThan:
-//        S := S + Format(Msk, [FieldNames[i], Operador, V1]);
-//      crBetween:
-//        S := S + Format(Msk, [FieldNames[i], Operador, V1, V2]);
-//      crNull, crNotNull:
-//        S := S + Format(Msk, [FieldNames[i], Operador]);
-//    end;
-//
-//    if i < FieldNames.Count - 1 then
-//        S := S + 'OR ';
-//  end;
-//
-//  if FieldNames.Count > 1 then
-//    S := S + ')';
-//
-//  Result := S;
-//end;
-//
-//procedure TSearch.Clear;
-//begin
-//  FieldNames.Clear;
-//  Criteria := crNone;
-//  FilterType := tcTexto;
-//  Value1 := EmptyStr;
-//  Value2 := EmptyStr;
-//end;
-//
-//function TSearch.IsEmpty: Boolean;
-//begin
-//  Result := FieldNames.Count = 0;
-//end;
 
 { TTableField }
 
@@ -1196,7 +920,7 @@ begin
 
             // Fieldname, criteria, and values
             case Criteria of
-              crLike, crStartLike, crEqual, crDistinct, crMoreThan, crLessThan:
+              crLike, crStartLike, crEqual, crNotEqual, crMoreThan, crLessThan:
               begin
                 if FQuickFilters[i].Fields[f].Lookup then
                   S := S + Format(Msk, [FieldName, CriteriaOperators[Criteria], Value1])
@@ -1260,7 +984,7 @@ begin
 
             // Fieldname, criteria, and values
             case Criteria of
-              crLike, crStartLike, crEqual, crDistinct, crMoreThan, crLessThan:
+              crLike, crStartLike, crEqual, crNotEqual, crMoreThan, crLessThan:
               begin
                 if FFields[i].Fields[f].Lookup then
                   S := S + Format(Msk, [FieldName, CriteriaOperators[Criteria], Value1])

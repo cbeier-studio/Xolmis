@@ -1,10 +1,10 @@
 object frmMain: TfrmMain
   Left = -8
-  Height = 1048
+  Height = 1100
   Top = -8
-  Width = 1936
+  Width = 1940
   Caption = 'Xolmis'
-  ClientHeight = 1025
+  ClientHeight = 1061
   ClientWidth = 1924
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
@@ -16,12 +16,12 @@ object frmMain: TfrmMain
   WindowState = wsMaximized
   object pLeftTabs: TPanel
     Left = 0
-    Height = 903
+    Height = 939
     Top = 96
     Width = 1924
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 903
+    ClientHeight = 939
     ClientWidth = 1924
     TabOrder = 0
     object navTabs: TATTabs
@@ -36,10 +36,11 @@ object frmMain: TfrmMain
       OnContextPopup = navTabsContextPopup
       DoubleBuffered = True
       TabIndex = -1
-      ColorBg = 13750737
-      ColorTabActive = 15066599
-      ColorTabPassive = 15066599
-      ColorTabOver = 14540253
+      ColorBg = 15263976
+      ColorSeparator = 8945535
+      ColorTabActive = 16250871
+      ColorTabPassive = 16250871
+      ColorTabOver = 14079702
       ColorActiveMark = 16226706
       ColorFont = 9276813
       ColorFontModified = 9787178
@@ -48,6 +49,8 @@ object frmMain: TfrmMain
       ColorCloseBgOver = clNone
       ColorCloseBorderOver = clNone
       ColorCloseXOver = 6316256
+      ColorArrow = 8945535
+      ColorArrowOver = 1776411
       OptButtonLayout = ',|<>v_'
       OptVarWidth = True
       OptFillWidth = False
@@ -70,7 +73,6 @@ object frmMain: TfrmMain
       OptShowXRounded = False
       OptShowXButtons = atbxShowActiveAndMouseOver
       OptShowPlusTab = False
-      OptShowArrowsNear = False
       OptShowPinnedText = ' '
       OptShowEntireColor = True
       OptShowActiveMarkInverted = False
@@ -152,7 +154,7 @@ object frmMain: TfrmMain
     end
     object PGW: TTDICardPanel
       Left = 0
-      Height = 860
+      Height = 896
       Top = 43
       Width = 1924
       Align = alClient
@@ -1176,7 +1178,7 @@ object frmMain: TfrmMain
   object SBar: TBCPanel
     Left = 0
     Height = 26
-    Top = 999
+    Top = 1035
     Width = 1924
     Align = alBottom
     AutoSize = True
@@ -12063,6 +12065,7 @@ object frmMain: TfrmMain
       end
       object Separator10: TMenuItem
         Caption = '-'
+        Visible = False
       end
       object MenuItem8: TMenuItem
         Action = actImportWizard
@@ -12082,6 +12085,9 @@ object frmMain: TfrmMain
     end
     object mmMaintenance: TMenuItem
       Action = actMaintenance
+    end
+    object Separator7: TMenuItem
+      Caption = '-'
     end
     object mmCheckUpdates: TMenuItem
       Action = actCheckUpdates
@@ -12387,10 +12393,12 @@ object frmMain: TfrmMain
     object actImportNests: TAction
       Category = 'Import'
       Caption = 'Nests'
+      Visible = False
     end
     object actImportWizard: TAction
       Category = 'Import'
       Caption = 'Import wizard'
+      Visible = False
     end
   end
   object bStatusBar: TImageList

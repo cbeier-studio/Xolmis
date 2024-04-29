@@ -2585,6 +2585,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = True
+      OnValidate = qCapturescapture_dateValidate
     end
     object qCapturescapture_time: TTimeField
       Alignment = taCenter
@@ -2759,6 +2760,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qCaptureslatitude: TFloatField
@@ -2770,6 +2773,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qCapturescloacal_protuberance: TStringField
@@ -2783,6 +2788,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qCapturescloacal_protuberanceValidate
       Size = 5
     end
     object qCapturesbrood_patch: TStringField
@@ -2796,6 +2802,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qCapturesbrood_patchValidate
       Size = 5
     end
     object qCapturesfat: TStringField
@@ -2809,6 +2816,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qCapturesfatValidate
       Size = 5
     end
     object qCapturesbody_molt: TStringField
@@ -2822,6 +2830,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qCapturesbody_moltValidate
       Size = 5
     end
     object qCapturesflight_feathers_molt: TStringField
@@ -2835,6 +2844,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qCapturesflight_feathers_moltValidate
       Size = 5
     end
     object qCapturesflight_feathers_wear: TStringField
@@ -2848,6 +2858,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qCapturesflight_feathers_wearValidate
       Size = 5
     end
     object qCapturesright_wing_chord: TFloatField
@@ -3103,6 +3114,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qCapturesskull_ossificationValidate
       Size = 5
     end
     object qCapturescycle_code: TStringField
@@ -5200,6 +5212,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qImagesimage_dateValidate
     end
     object qImagesimage_time: TTimeField
       FieldKind = fkData
@@ -5362,6 +5375,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qImageslongitude: TFloatField
@@ -5372,6 +5387,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qImageslicense_type: TStringField
@@ -5932,6 +5949,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = True
+      OnValidate = qSurveyssurvey_dateValidate
     end
     object qSurveysstart_time: TTimeField
       Alignment = taCenter
@@ -6151,6 +6169,8 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       DisplayFormat = '###0.00000000'
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qSurveysstart_longitude: TFloatField
@@ -6163,6 +6183,8 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       DisplayFormat = '###0.00000000'
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qSurveysend_latitude: TFloatField
@@ -6175,6 +6197,8 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       DisplayFormat = '###0.00000000'
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qSurveysend_longitude: TFloatField
@@ -6187,6 +6211,8 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       DisplayFormat = '###0.00000000'
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qSurveysobservers_tally: TLongintField
@@ -6831,6 +6857,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qSightingssighting_dateValidate
     end
     object qSightingssighting_time: TTimeField
       Alignment = taCenter
@@ -7126,6 +7153,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qSightingslatitude: TFloatField
@@ -7138,6 +7167,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qSightingsindividual_id: TLongintField
@@ -8152,6 +8183,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qPeoplebirth_dateValidate
     end
     object qPeopledeath_date: TDateField
       DisplayLabel = 'Death date'
@@ -8162,6 +8194,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qPeopledeath_dateValidate
     end
     object qPeopleemail_addr: TStringField
       DisplayLabel = 'E-mail'
@@ -8946,6 +8979,8 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       DisplayFormat = '###00.00000000'
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qNestslatitude: TFloatField
@@ -8958,6 +8993,8 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       DisplayFormat = '###00.00000000'
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qNestsobserver_id: TLongintField
@@ -9274,6 +9311,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qNestsfound_dateValidate
     end
     object qNestslast_date: TDateField
       Alignment = taCenter
@@ -9285,6 +9323,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qNestslast_dateValidate
     end
     object qNestsdescription: TMemoField
       DisplayLabel = 'Description'
@@ -9696,6 +9735,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qNestRevisionsrevision_dateValidate
     end
     object qNestRevisionsrevision_time: TTimeField
       Alignment = taCenter
@@ -10359,6 +10399,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qEggsmeasure_dateValidate
     end
     object qEggsresearcher_id: TLongintField
       DisplayLabel = 'Researcher ID'
@@ -10741,6 +10782,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qGazetteerlatitude: TFloatField
@@ -10753,6 +10796,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qGazetteeraltitude: TFloatField
@@ -11207,6 +11252,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qNetStationslatitude: TFloatField
@@ -11219,6 +11266,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qNetStationsarea_shape: TStringField
@@ -12403,6 +12452,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qPermitsdispatch_dateValidate
     end
     object qPermitsexpire_date: TDateField
       Alignment = taCenter
@@ -12909,6 +12959,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qSpecimenslatitude: TFloatField
@@ -12920,6 +12972,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qSpecimensindividual_id: TLongintField
