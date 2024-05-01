@@ -13,7 +13,6 @@ object edtMolt: TedtMolt
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -85,23 +84,23 @@ object edtMolt: TedtMolt
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 1178
+      Height = 1183
       Top = 0
       Width = 408
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1178
+      ClientHeight = 1183
       ClientWidth = 408
-      Color = 15066599
+      Color = 15263976
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 114
-        Top = 1048
+        Top = 1053
         Width = 408
         Align = alTop
         BorderSpacing.Top = 13
@@ -224,17 +223,18 @@ object edtMolt: TedtMolt
       end
       object pTypeColor: TPanel
         Left = 0
-        Height = 90
+        Height = 91
         Top = 191
         Width = 408
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 5
-        ClientHeight = 90
+        ClientHeight = 91
         ClientWidth = 408
         ParentBackground = False
         TabOrder = 1
@@ -622,7 +622,7 @@ object edtMolt: TedtMolt
       object pTitleMetrics1: TPanel
         Left = 0
         Height = 24
-        Top = 294
+        Top = 295
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -649,7 +649,7 @@ object edtMolt: TedtMolt
       object pTitleMetrics2: TPanel
         Left = 0
         Height = 24
-        Top = 421
+        Top = 423
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -676,7 +676,7 @@ object edtMolt: TedtMolt
       object pTitleMetrics3: TPanel
         Left = 0
         Height = 24
-        Top = 675
+        Top = 679
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -703,7 +703,7 @@ object edtMolt: TedtMolt
       object pTitleMetrics4: TPanel
         Left = 0
         Height = 24
-        Top = 548
+        Top = 551
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -730,7 +730,7 @@ object edtMolt: TedtMolt
       object pTitleMetrics5: TPanel
         Left = 0
         Height = 24
-        Top = 757
+        Top = 761
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -757,7 +757,7 @@ object edtMolt: TedtMolt
       object pTitleMetrics6: TPanel
         Left = 0
         Height = 24
-        Top = 884
+        Top = 889
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -784,7 +784,7 @@ object edtMolt: TedtMolt
       object pTitleMetrics7: TPanel
         Left = 0
         Height = 24
-        Top = 966
+        Top = 971
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -810,17 +810,18 @@ object edtMolt: TedtMolt
       end
       object pTypeColor2: TPanel
         Left = 0
-        Height = 90
-        Top = 445
+        Height = 91
+        Top = 447
         Width = 408
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 5
-        ClientHeight = 90
+        ClientHeight = 91
         ClientWidth = 408
         ParentBackground = False
         TabOrder = 13
@@ -1025,17 +1026,18 @@ object edtMolt: TedtMolt
       end
       object pTypeColor1: TPanel
         Left = 0
-        Height = 90
-        Top = 318
+        Height = 91
+        Top = 319
         Width = 408
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 5
-        ClientHeight = 90
+        ClientHeight = 91
         ClientWidth = 408
         ParentBackground = False
         TabOrder = 14
@@ -1279,17 +1281,18 @@ object edtMolt: TedtMolt
       end
       object pTypeColor3: TPanel
         Left = 0
-        Height = 90
-        Top = 572
+        Height = 91
+        Top = 575
         Width = 408
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 5
-        ClientHeight = 90
+        ClientHeight = 91
         ClientWidth = 408
         ParentBackground = False
         TabOrder = 15
@@ -1534,9 +1537,10 @@ object edtMolt: TedtMolt
       object pTypeColor4: TPanel
         Left = 0
         Height = 45
-        Top = 699
+        Top = 703
         Width = 408
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
@@ -1625,17 +1629,18 @@ object edtMolt: TedtMolt
       end
       object pTypeColor5: TPanel
         Left = 0
-        Height = 90
-        Top = 781
+        Height = 91
+        Top = 785
         Width = 408
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 5
-        ClientHeight = 90
+        ClientHeight = 91
         ClientWidth = 408
         ParentBackground = False
         TabOrder = 17
@@ -1893,7 +1898,7 @@ object edtMolt: TedtMolt
       object pTypeColor6: TPanel
         Left = 0
         Height = 45
-        Top = 908
+        Top = 913
         Width = 408
         Align = alTop
         AutoSize = True
@@ -2010,7 +2015,7 @@ object edtMolt: TedtMolt
       object pTypeColor7: TPanel
         Left = 0
         Height = 45
-        Top = 990
+        Top = 995
         Width = 408
         Align = alTop
         BevelOuter = bvNone

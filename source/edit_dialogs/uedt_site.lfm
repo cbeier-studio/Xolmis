@@ -98,7 +98,7 @@ object edtSite: TedtSite
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 362
       ClientWidth = 400
-      Color = 15066599
+      Color = 15263976
       ParentBackground = False
       ParentColor = False
       TabOrder = 0

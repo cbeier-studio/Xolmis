@@ -1104,18 +1104,17 @@ type
     qWeatherLogsweather_id: TLongintField;
     qWeatherLogswind_speed_bft: TLongintField;
     qWeatherLogswind_speed_kmh: TFloatField;
-    procedure qAudioBeforeOpen(DataSet: TDataSet);
     procedure qAudioBeforePost(DataSet: TDataSet);
     procedure qBandHistoryAfterCancel(DataSet: TDataSet);
     procedure qBandHistoryAfterPost(DataSet: TDataSet);
     procedure qBandHistoryBeforeEdit(DataSet: TDataSet);
-    procedure qBandHistoryBeforeOpen(DataSet: TDataSet);
     procedure qBandHistoryBeforePost(DataSet: TDataSet);
     procedure qBandHistoryevent_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qBandHistoryevent_typeSetText(Sender: TField; const aText: string);
     procedure qBandsAfterCancel(DataSet: TDataSet);
     procedure qBandsAfterInsert(DataSet: TDataSet);
     procedure qBandsAfterPost(DataSet: TDataSet);
+    procedure qBandsband_numberValidate(Sender: TField);
     procedure qBandsband_sourceGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qBandsband_sourceSetText(Sender: TField; const aText: string);
     procedure qBandsband_statusGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -1123,7 +1122,6 @@ type
     procedure qBandsband_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qBandsband_typeSetText(Sender: TField; const aText: string);
     procedure qBandsBeforeEdit(DataSet: TDataSet);
-    procedure qBandsBeforeOpen(DataSet: TDataSet);
     procedure qBandsBeforePost(DataSet: TDataSet);
     procedure qBotanyAfterCancel(DataSet: TDataSet);
     procedure qBotanyAfterPost(DataSet: TDataSet);
@@ -1131,9 +1129,9 @@ type
     procedure qBotanyBeforeOpen(DataSet: TDataSet);
     procedure qBotanyBeforePost(DataSet: TDataSet);
     procedure qCapturesAfterCancel(DataSet: TDataSet);
+    procedure qCapturesAfterInsert(DataSet: TDataSet);
     procedure qCapturesAfterPost(DataSet: TDataSet);
     procedure qCapturesBeforeEdit(DataSet: TDataSet);
-    procedure qCapturesBeforeOpen(DataSet: TDataSet);
     procedure qCapturesBeforePost(DataSet: TDataSet);
     procedure qCapturesbody_moltValidate(Sender: TField);
     procedure qCapturesbrood_patchValidate(Sender: TField);
@@ -1166,16 +1164,14 @@ type
     procedure qExpeditionsAfterCancel(DataSet: TDataSet);
     procedure qExpeditionsAfterPost(DataSet: TDataSet);
     procedure qExpeditionsBeforeEdit(DataSet: TDataSet);
-    procedure qExpeditionsBeforeOpen(DataSet: TDataSet);
     procedure qExpeditionsBeforePost(DataSet: TDataSet);
+    procedure qExpeditionsend_dateValidate(Sender: TField);
     procedure qGazetteerAfterCancel(DataSet: TDataSet);
     procedure qGazetteerAfterPost(DataSet: TDataSet);
     procedure qGazetteerBeforeEdit(DataSet: TDataSet);
-    procedure qGazetteerBeforeOpen(DataSet: TDataSet);
     procedure qGazetteerBeforePost(DataSet: TDataSet);
     procedure qGazetteersite_rankGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qGazetteersite_rankSetText(Sender: TField; const aText: string);
-    procedure qImagesBeforeOpen(DataSet: TDataSet);
     procedure qImagesBeforePost(DataSet: TDataSet);
     procedure qImagescoordinate_precisionGetText(Sender: TField; var aText: string;
       DisplayText: Boolean);
@@ -1185,9 +1181,11 @@ type
     procedure qImagesimage_typeSetText(Sender: TField; const aText: string);
     procedure qIndividualsAfterCancel(DataSet: TDataSet);
     procedure qIndividualsAfterPost(DataSet: TDataSet);
+    procedure qIndividualsband_idValidate(Sender: TField);
     procedure qIndividualsBeforeEdit(DataSet: TDataSet);
-    procedure qIndividualsBeforeOpen(DataSet: TDataSet);
     procedure qIndividualsBeforePost(DataSet: TDataSet);
+    procedure qIndividualsbirth_yearValidate(Sender: TField);
+    procedure qIndividualsdeath_yearValidate(Sender: TField);
     procedure qIndividualsindividual_ageGetText(Sender: TField; var aText: string;
       DisplayText: Boolean);
     procedure qIndividualsindividual_ageSetText(Sender: TField; const aText: string);
@@ -1197,7 +1195,6 @@ type
     procedure qInstitutionsAfterCancel(DataSet: TDataSet);
     procedure qInstitutionsAfterPost(DataSet: TDataSet);
     procedure qInstitutionsBeforeEdit(DataSet: TDataSet);
-    procedure qInstitutionsBeforeOpen(DataSet: TDataSet);
     procedure qInstitutionsBeforePost(DataSet: TDataSet);
     procedure qMethodsAfterCancel(DataSet: TDataSet);
     procedure qMethodsAfterPost(DataSet: TDataSet);
@@ -1206,7 +1203,6 @@ type
     procedure qMoltsAfterCancel(DataSet: TDataSet);
     procedure qMoltsAfterPost(DataSet: TDataSet);
     procedure qMoltsBeforeEdit(DataSet: TDataSet);
-    procedure qMoltsBeforeOpen(DataSet: TDataSet);
     procedure qMoltsBeforePost(DataSet: TDataSet);
     procedure qNestRevisionsAfterCancel(DataSet: TDataSet);
     procedure qNestRevisionsAfterPost(DataSet: TDataSet);
@@ -1222,7 +1218,6 @@ type
     procedure qNestsAfterCancel(DataSet: TDataSet);
     procedure qNestsAfterPost(DataSet: TDataSet);
     procedure qNestsBeforeEdit(DataSet: TDataSet);
-    procedure qNestsBeforeOpen(DataSet: TDataSet);
     procedure qNestsBeforePost(DataSet: TDataSet);
     procedure qNestsfound_dateValidate(Sender: TField);
     procedure qNestslast_dateValidate(Sender: TField);
@@ -1235,62 +1230,62 @@ type
     procedure qNetStationsAfterCancel(DataSet: TDataSet);
     procedure qNetStationsAfterPost(DataSet: TDataSet);
     procedure qNetStationsBeforeEdit(DataSet: TDataSet);
-    procedure qNetStationsBeforeOpen(DataSet: TDataSet);
     procedure qNetStationsBeforePost(DataSet: TDataSet);
     procedure qPeopleAfterCancel(DataSet: TDataSet);
     procedure qPeopleAfterInsert(DataSet: TDataSet);
     procedure qPeopleAfterPost(DataSet: TDataSet);
     procedure qPeopleBeforeEdit(DataSet: TDataSet);
-    procedure qPeopleBeforeOpen(DataSet: TDataSet);
     procedure qPeopleBeforePost(DataSet: TDataSet);
     procedure qPeoplebirth_dateValidate(Sender: TField);
     procedure qPeopledeath_dateValidate(Sender: TField);
     procedure qPermanentNetsAfterCancel(DataSet: TDataSet);
     procedure qPermanentNetsAfterPost(DataSet: TDataSet);
     procedure qPermanentNetsBeforeEdit(DataSet: TDataSet);
-    procedure qPermanentNetsBeforeOpen(DataSet: TDataSet);
     procedure qPermanentNetsBeforePost(DataSet: TDataSet);
     procedure qPermitsAfterCancel(DataSet: TDataSet);
     procedure qPermitsAfterPost(DataSet: TDataSet);
     procedure qPermitsBeforeEdit(DataSet: TDataSet);
-    procedure qPermitsBeforeOpen(DataSet: TDataSet);
     procedure qPermitsBeforePost(DataSet: TDataSet);
     procedure qPermitsdispatch_dateValidate(Sender: TField);
+    procedure qPermitsexpire_dateValidate(Sender: TField);
+    procedure qPermitspermit_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qPermitspermit_typeSetText(Sender: TField; const aText: string);
     procedure qProjectsAfterCancel(DataSet: TDataSet);
     procedure qProjectsAfterPost(DataSet: TDataSet);
     procedure qProjectsBeforeEdit(DataSet: TDataSet);
     procedure qProjectsBeforePost(DataSet: TDataSet);
+    procedure qProjectsend_dateValidate(Sender: TField);
     procedure qProjectTeamAfterCancel(DataSet: TDataSet);
     procedure qProjectTeamAfterPost(DataSet: TDataSet);
     procedure qProjectTeamBeforeEdit(DataSet: TDataSet);
-    procedure qProjectTeamBeforeOpen(DataSet: TDataSet);
     procedure qProjectTeamBeforePost(DataSet: TDataSet);
+    procedure qSampleCollectorsAfterCancel(DataSet: TDataSet);
+    procedure qSampleCollectorsAfterPost(DataSet: TDataSet);
+    procedure qSampleCollectorsBeforeEdit(DataSet: TDataSet);
+    procedure qSampleCollectorsBeforePost(DataSet: TDataSet);
     procedure qSamplePrepsaccession_typeGetText(Sender: TField; var aText: string;
       DisplayText: Boolean);
     procedure qSamplePrepsaccession_typeSetText(Sender: TField; const aText: string);
     procedure qSamplePrepsAfterCancel(DataSet: TDataSet);
     procedure qSamplePrepsAfterPost(DataSet: TDataSet);
     procedure qSamplePrepsBeforeEdit(DataSet: TDataSet);
-    procedure qSamplePrepsBeforeOpen(DataSet: TDataSet);
     procedure qSamplePrepsBeforePost(DataSet: TDataSet);
     procedure qSightingsAfterCancel(DataSet: TDataSet);
     procedure qSightingsAfterInsert(DataSet: TDataSet);
     procedure qSightingsAfterPost(DataSet: TDataSet);
     procedure qSightingsBeforeEdit(DataSet: TDataSet);
-    procedure qSightingsBeforeOpen(DataSet: TDataSet);
     procedure qSightingsBeforePost(DataSet: TDataSet);
     procedure qSightingssighting_dateValidate(Sender: TField);
     procedure qSpecimensAfterCancel(DataSet: TDataSet);
     procedure qSpecimensAfterPost(DataSet: TDataSet);
     procedure qSpecimensBeforeEdit(DataSet: TDataSet);
-    procedure qSpecimensBeforeOpen(DataSet: TDataSet);
     procedure qSpecimensBeforePost(DataSet: TDataSet);
+    procedure qSpecimenscollection_yearValidate(Sender: TField);
     procedure qSpecimenssample_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qSpecimenssample_typeSetText(Sender: TField; const aText: string);
     procedure qSurveysAfterCancel(DataSet: TDataSet);
     procedure qSurveysAfterPost(DataSet: TDataSet);
     procedure qSurveysBeforeEdit(DataSet: TDataSet);
-    procedure qSurveysBeforeOpen(DataSet: TDataSet);
     procedure qSurveysBeforePost(DataSet: TDataSet);
     procedure qSurveyssurvey_dateValidate(Sender: TField);
     procedure qTaxaBeforeOpen(DataSet: TDataSet);
@@ -1318,6 +1313,7 @@ type
     OldMolt: TMolt;
     OldSpecimen: TSpecimen;
     OldSamplePrep: TSamplePrep;
+    OldCollector: TSpecimenCollector;
     OldNest: TNest;
     OldNestRevision: TNestRevision;
     OldEgg: TEgg;
@@ -1330,7 +1326,9 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_getvalue, cbs_fullnames, cbs_graphics, cbs_validations;
+uses
+  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_getvalue, cbs_fullnames, cbs_graphics, cbs_validations,
+  udm_main;
 
 {$R *.lfm}
 
@@ -1391,11 +1389,6 @@ begin
     FreeAndNil(OldBandHistory);
 end;
 
-procedure TDMG.qAudioBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qBandHistoryAfterPost(DataSet: TDataSet);
 var
   NewBandHistory: TBandHistory;
@@ -1429,11 +1422,6 @@ end;
 procedure TDMG.qBandHistoryBeforeEdit(DataSet: TDataSet);
 begin
   OldBandHistory := TBandHistory.Create(DataSet.FieldByName('event_id').AsInteger);
-end;
-
-procedure TDMG.qBandHistoryBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
 end;
 
 procedure TDMG.qBandHistoryevent_typeSetText(Sender: TField; const aText: string);
@@ -1497,6 +1485,34 @@ begin
   end
   else
     WriteRecHistory(tbBands, haCreated, 0, '', '', '', rsInsertedByForm);
+end;
+
+procedure TDMG.qBandsband_numberValidate(Sender: TField);
+var
+  Qry: TSQLQuery;
+begin
+  if Sender.AsInteger = 0 then
+    Exit;
+
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT band_size, band_number FROM bands');
+    Add('WHERE (band_size = :vsize) AND (band_number = :vnumber) AND (band_id != :keyv)');
+    ParamByName('VSIZE').AsString := Sender.DataSet.FieldByName('band_size').AsString;
+    ParamByName('VNUMBER').AsInteger := Sender.AsInteger;
+    ParamByName('KEYV').AsInteger := Sender.DataSet.FieldByName('band_id').AsInteger;
+    //GravaLogSQL(SQL);
+    Open;
+    if RecordCount > 0 then
+      raise ERecordDuplicated.CreateFmt(rsActiveRecordDuplicated, [GetFieldDisplayName(tbBands, 'band_number'), Sender.AsString]);
+  finally
+    Close;
+    FreeAndNil(Qry);
+  end;
 end;
 
 procedure TDMG.qBandsband_sourceGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -1635,11 +1651,6 @@ begin
   OldBand := TBand.Create(DataSet.FieldByName('band_id').AsInteger);
 end;
 
-procedure TDMG.qBandsBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qBandsBeforePost(DataSet: TDataSet);
 var
   D: TDataSet;
@@ -1699,6 +1710,8 @@ end;
 
 procedure TDMG.qBotanyBeforePost(DataSet: TDataSet);
 begin
+  GetBotanicHierarchy(DataSet, DataSet.FieldByName('parent_taxon_id').AsInteger);
+
   SetRecordDateUser(DataSet);
 end;
 
@@ -1706,6 +1719,23 @@ procedure TDMG.qCapturesAfterCancel(DataSet: TDataSet);
 begin
   if Assigned(OldCapture) then
     FreeAndNil(OldCapture);
+end;
+
+procedure TDMG.qCapturesAfterInsert(DataSet: TDataSet);
+begin
+  with DataSet do
+  begin
+    FieldByName('subject_status').AsString := 'N';
+    FieldByName('blood_sample').AsBoolean := False;
+    FieldByName('feather_sample').AsBoolean := False;
+    FieldByName('claw_sample').AsBoolean := False;
+    FieldByName('feces_sample').AsBoolean := False;
+    FieldByName('parasite_sample').AsBoolean := False;
+    FieldByName('subject_collected').AsBoolean := False;
+    FieldByName('subject_recorded').AsBoolean := False;
+    FieldByName('subject_photographed').AsBoolean := False;
+    FieldByName('escaped').AsBoolean := False;
+  end;
 end;
 
 procedure TDMG.qCapturesAfterPost(DataSet: TDataSet);
@@ -1743,14 +1773,16 @@ begin
   OldCapture := TCapture.Create(DataSet.FieldByName('capture_id').AsInteger);
 end;
 
-procedure TDMG.qCapturesBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qCapturesBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qCapturesbody_moltValidate(Sender: TField);
@@ -2309,14 +2341,18 @@ begin
   OldExpedition := TExpedition.Create(DataSet.FieldByName('expedition_id').AsInteger);
 end;
 
-procedure TDMG.qExpeditionsBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qExpeditionsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+end;
+
+procedure TDMG.qExpeditionsend_dateValidate(Sender: TField);
+begin
+  if (Sender.IsNull) or (Sender.DataSet.FieldByName('start_date').IsNull) then
+    Exit;
+
+  if Sender.AsDateTime < Sender.DataSet.FieldByName('start_date').AsDateTime then
+    raise EInvalidDateRange.CreateFmt(rsInvalidDateRange, [rsDateEnd, rsDateStart]);
 end;
 
 procedure TDMG.qGazetteerAfterCancel(DataSet: TDataSet);
@@ -2360,14 +2396,13 @@ begin
   OldSite := TSite.Create(DataSet.FieldByName('site_id').AsInteger);
 end;
 
-procedure TDMG.qGazetteerBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qGazetteerBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('parent_site_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('parent_site_id').AsInteger);
 end;
 
 procedure TDMG.qGazetteersite_rankGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -2420,14 +2455,16 @@ begin
     Sender.AsString := 'L';
 end;
 
-procedure TDMG.qImagesBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qImagesBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qImagescoordinate_precisionGetText(Sender: TField; var aText: string;
@@ -2642,19 +2679,72 @@ begin
     WriteRecHistory(tbIndividuals, haCreated, 0, '', '', '', rsInsertedByForm);
 end;
 
+procedure TDMG.qIndividualsband_idValidate(Sender: TField);
+var
+  Qry: TSQLQuery;
+begin
+  if Sender.AsInteger = 0 then
+    Exit;
+
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT individual_id FROM bands');
+    Add('WHERE (band_id = :aband) AND (individual_id != :keyv)');
+    ParamByName('ABAND').AsInteger := Sender.AsInteger;
+    ParamByName('KEYV').AsInteger := Sender.DataSet.FieldByName('individual_id').AsInteger;
+    //GravaLogSQL(SQL);
+    Open;
+    if RecordCount > 0 then
+      raise ERecordDuplicated.CreateFmt(rsActiveRecordDuplicated,
+        [GetFieldDisplayName(tbIndividuals, 'band_name'), GetName('bands', 'full_name', 'band_id', Sender.AsInteger)]);
+  finally
+    Close;
+    FreeAndNil(Qry);
+  end;
+end;
+
 procedure TDMG.qIndividualsBeforeEdit(DataSet: TDataSet);
 begin
   OldIndividual := TIndividual.Create(DataSet.FieldByName('individual_id').AsInteger);
 end;
 
-procedure TDMG.qIndividualsBeforeOpen(DataSet: TDataSet);
-begin
-  //OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qIndividualsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+end;
+
+procedure TDMG.qIndividualsbirth_yearValidate(Sender: TField);
+begin
+  if ((Sender.DataSet.FieldByName('birth_year').IsNull) and
+     (Sender.DataSet.FieldByName('birth_month').IsNull) and
+     (Sender.DataSet.FieldByName('birth_day').IsNull)) then
+    Exit;
+
+  if not ValidPartialDate(Sender.DataSet.FieldByName('birth_year').AsInteger,
+                          Sender.DataSet.FieldByName('birth_month').AsInteger,
+                          Sender.DataSet.FieldByName('birth_day').AsInteger) then
+    raise EInvalidPartialDate.CreateFmt(rsInvalidPartialDate, [rsDateBirth]);
+end;
+
+procedure TDMG.qIndividualsdeath_yearValidate(Sender: TField);
+begin
+  if ((Sender.DataSet.FieldByName('death_year').IsNull) and
+     (Sender.DataSet.FieldByName('death_month').IsNull) and
+     (Sender.DataSet.FieldByName('death_day').IsNull)) then
+    Exit;
+
+  if not ValidPartialDate(Sender.DataSet.FieldByName('death_year').AsInteger,
+                          Sender.DataSet.FieldByName('death_month').AsInteger,
+                          Sender.DataSet.FieldByName('death_day').AsInteger) then
+    raise EInvalidPartialDate.CreateFmt(rsInvalidPartialDate, [rsDateDeath]);
 end;
 
 procedure TDMG.qIndividualsindividual_ageGetText(Sender: TField; var aText: string;
@@ -2786,11 +2876,6 @@ begin
   OldInstitution := TInstitution.Create(DataSet.FieldByName('institution_id').AsInteger);
 end;
 
-procedure TDMG.qInstitutionsBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qInstitutionsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
@@ -2881,11 +2966,6 @@ end;
 procedure TDMG.qMoltsBeforeEdit(DataSet: TDataSet);
 begin
   OldMolt := TMolt.Create(DataSet.FieldByName('molt_id').AsInteger);
-end;
-
-procedure TDMG.qMoltsBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
 end;
 
 procedure TDMG.qMoltsBeforePost(DataSet: TDataSet);
@@ -3062,14 +3142,16 @@ begin
   OldNest := TNest.Create(DataSet.FieldByName('nest_id').AsInteger);
 end;
 
-procedure TDMG.qNestsBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qNestsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qNestsfound_dateValidate(Sender: TField);
@@ -3080,6 +3162,12 @@ end;
 
 procedure TDMG.qNestslast_dateValidate(Sender: TField);
 begin
+  if (Sender.IsNull) or (Sender.DataSet.FieldByName('found_date').IsNull) then
+    Exit;
+
+  if Sender.AsDateTime < Sender.DataSet.FieldByName('found_date').AsDateTime then
+    raise EInvalidDateRange.CreateFmt(rsInvalidDateRange, [rsDateLast, rsDateFound]);
+
   if IsFutureDate(Sender.AsDateTime, Today, rsDateLast, rsDateToday) then
     raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateLast, DateToStr(Sender.AsDateTime)]);
 end;
@@ -3282,14 +3370,13 @@ begin
   OldNetStation := TNetStation.Create(DataSet.FieldByName('net_station_id').AsInteger);
 end;
 
-procedure TDMG.qNetStationsBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qNetStationsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qPeopleAfterCancel(DataSet: TDataSet);
@@ -3336,11 +3423,6 @@ end;
 procedure TDMG.qPeopleBeforeEdit(DataSet: TDataSet);
 begin
   OldPerson := TPerson.Create(DataSet.FieldByName('person_id').AsInteger);
-end;
-
-procedure TDMG.qPeopleBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
 end;
 
 procedure TDMG.qPeopleBeforePost(DataSet: TDataSet);
@@ -3401,11 +3483,6 @@ begin
   OldPermanentNet := TPermanentNet.Create(DataSet.FieldByName('permanent_net_id').AsInteger);
 end;
 
-procedure TDMG.qPermanentNetsBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qPermanentNetsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
@@ -3452,11 +3529,6 @@ begin
   OldPermit := TPermit.Create(DataSet.FieldByName('permit_id').AsInteger);
 end;
 
-procedure TDMG.qPermitsBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qPermitsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
@@ -3466,6 +3538,56 @@ procedure TDMG.qPermitsdispatch_dateValidate(Sender: TField);
 begin
   if IsFutureDate(Sender.AsDateTime, Today, rsDateDispatch, rsDateToday) then
     raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateDispatch, DateToStr(Sender.AsDateTime)]);
+end;
+
+procedure TDMG.qPermitsexpire_dateValidate(Sender: TField);
+begin
+  if (Sender.IsNull) or (Sender.DataSet.FieldByName('dispatch_date').IsNull) then
+    Exit;
+
+  if Sender.AsDateTime < Sender.DataSet.FieldByName('dispatch_date').AsDateTime then
+    raise EInvalidDateRange.CreateFmt(rsInvalidDateRange, [rsDateExpire, rsDateDispatch]);
+end;
+
+procedure TDMG.qPermitspermit_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'B': aText := rsPermitBanding;
+    'C': aText := rsPermitCollection;
+    'R': aText := rsPermitResearch;
+    'E': aText := rsPermitEntry;
+    'T': aText := rsPermitTransport;
+    'O': aText := rsPermitOther;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qPermitspermit_typeSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsPermitBanding then
+    Sender.AsString := 'B'
+  else
+  if aText = rsPermitCollection then
+    Sender.AsString := 'C'
+  else
+  if aText = rsPermitResearch then
+    Sender.AsString := 'R'
+  else
+  if aText = rsPermitEntry then
+    Sender.AsString := 'E'
+  else
+  if aText = rsPermitTransport then
+    Sender.AsString := 'T'
+  else
+  if aText = rsPermitOther then
+    Sender.AsString := 'O';
 end;
 
 procedure TDMG.qProjectsAfterCancel(DataSet: TDataSet);
@@ -3514,6 +3636,15 @@ begin
   SetRecordDateUser(DataSet);
 end;
 
+procedure TDMG.qProjectsend_dateValidate(Sender: TField);
+begin
+  if (Sender.IsNull) or (Sender.DataSet.FieldByName('start_date').IsNull) then
+    Exit;
+
+  if Sender.AsDateTime < Sender.DataSet.FieldByName('start_date').AsDateTime then
+    raise EInvalidDateRange.CreateFmt(rsInvalidDateRange, [rsDateEnd, rsDateStart]);
+end;
+
 procedure TDMG.qProjectTeamAfterCancel(DataSet: TDataSet);
 begin
   if Assigned(OldProjectMember) then
@@ -3555,12 +3686,53 @@ begin
   OldProjectMember := TProjectMember.Create(DataSet.FieldByName('project_member_id').AsInteger);
 end;
 
-procedure TDMG.qProjectTeamBeforeOpen(DataSet: TDataSet);
+procedure TDMG.qProjectTeamBeforePost(DataSet: TDataSet);
 begin
-  OpenLookupDataSets(DataSet);
+  SetRecordDateUser(DataSet);
 end;
 
-procedure TDMG.qProjectTeamBeforePost(DataSet: TDataSet);
+procedure TDMG.qSampleCollectorsAfterCancel(DataSet: TDataSet);
+begin
+  if Assigned(OldCollector) then
+    FreeAndNil(OldCollector);
+end;
+
+procedure TDMG.qSampleCollectorsAfterPost(DataSet: TDataSet);
+var
+  NewCollector: TSpecimenCollector;
+  lstDiff: TStrings;
+  D: String;
+begin
+  { Save changes to the record history }
+  if Assigned(OldCollector) then
+  begin
+    NewCollector := TSpecimenCollector.Create(OldCollector.Id);
+    lstDiff := TStringList.Create;
+    try
+      if NewCollector.Diff(OldCollector, lstDiff) then
+      begin
+        for D in lstDiff do
+          WriteRecHistory(tbSpecimenCollectors, haEdited, OldCollector.Id,
+            ExtractDelimited(1, D, [';']),
+            ExtractDelimited(2, D, [';']),
+            ExtractDelimited(3, D, [';']), EditSourceStr);
+      end;
+    finally
+      FreeAndNil(NewCollector);
+      FreeAndNil(OldCollector);
+      FreeAndNil(lstDiff);
+    end;
+  end
+  else
+    WriteRecHistory(tbSpecimenCollectors, haCreated, 0, '', '', '', rsInsertedByForm);
+end;
+
+procedure TDMG.qSampleCollectorsBeforeEdit(DataSet: TDataSet);
+begin
+  OldCollector := TSpecimenCollector.Create(DataSet.FieldByName('collector_id').AsInteger);
+end;
+
+procedure TDMG.qSampleCollectorsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
 end;
@@ -3753,14 +3925,16 @@ begin
   OldSamplePrep := TSamplePrep.Create(DataSet.FieldByName('sample_prep_id').AsInteger);
 end;
 
-procedure TDMG.qSamplePrepsBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qSamplePrepsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qSightingsAfterCancel(DataSet: TDataSet);
@@ -3813,11 +3987,6 @@ end;
 procedure TDMG.qSightingsBeforeEdit(DataSet: TDataSet);
 begin
   OldSighting := TSighting.Create(DataSet.FieldByName('sighting_id').AsInteger);
-end;
-
-procedure TDMG.qSightingsBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
 end;
 
 procedure TDMG.qSightingsBeforePost(DataSet: TDataSet);
@@ -3879,14 +4048,29 @@ begin
   OldSpecimen := TSpecimen.Create(DataSet.FieldByName('specimen_id').AsInteger);
 end;
 
-procedure TDMG.qSpecimensBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
-end;
-
 procedure TDMG.qSpecimensBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+end;
+
+procedure TDMG.qSpecimenscollection_yearValidate(Sender: TField);
+begin
+  if ((Sender.DataSet.FieldByName('collection_year').IsNull) and
+     (Sender.DataSet.FieldByName('collection_month').IsNull) and
+     (Sender.DataSet.FieldByName('collection_day').IsNull)) then
+    Exit;
+
+  if not ValidPartialDate(Sender.DataSet.FieldByName('collection_year').AsInteger,
+                          Sender.DataSet.FieldByName('collection_month').AsInteger,
+                          Sender.DataSet.FieldByName('collection_day').AsInteger) then
+    raise EInvalidPartialDate.CreateFmt(rsInvalidPartialDate, [rsDateCollection]);
 end;
 
 procedure TDMG.qSpecimenssample_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -4020,11 +4204,6 @@ end;
 procedure TDMG.qSurveysBeforeEdit(DataSet: TDataSet);
 begin
   OldSurvey := TSurvey.Create(DataSet.FieldByName('survey_id').AsInteger);
-end;
-
-procedure TDMG.qSurveysBeforeOpen(DataSet: TDataSet);
-begin
-  OpenLookupDataSets(DataSet);
 end;
 
 procedure TDMG.qSurveysBeforePost(DataSet: TDataSet);

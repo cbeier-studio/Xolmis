@@ -280,6 +280,7 @@ object DMS: TDMS
         Precision = -1
         Size = 100
       end>
+    AfterInsert = qImagesAfterInsert
     BeforePost = qImagesBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -479,6 +480,8 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qImageslatitude: TFloatField
@@ -490,6 +493,8 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qImagesindividual_id: TLongintField
@@ -1338,6 +1343,8 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qSightingslatitude: TFloatField
@@ -1350,6 +1357,8 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qSightingsmethod_id: TLongintField
@@ -2871,6 +2880,8 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qCaptureslatitude: TFloatField
@@ -2882,6 +2893,8 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qCapturescloacal_protuberance: TStringField
@@ -3496,7 +3509,7 @@ object DMS: TDMS
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qCapturesfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -3737,6 +3750,7 @@ object DMS: TDMS
         Size = 30
       end>
     AfterCancel = qSurveyTeamAfterCancel
+    AfterInsert = qSurveyTeamAfterInsert
     AfterPost = qSurveyTeamAfterPost
     BeforeEdit = qSurveyTeamBeforeEdit
     BeforePost = qSurveyTeamBeforePost
@@ -3845,7 +3859,7 @@ object DMS: TDMS
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
       Visible = False
     end
     object qSurveyTeamuser_inserted: TLongintField
@@ -4100,6 +4114,7 @@ object DMS: TDMS
         Size = 50
       end>
     AfterCancel = qNetsEffortAfterCancel
+    AfterInsert = qNetsEffortAfterInsert
     AfterPost = qNetsEffortAfterPost
     BeforeEdit = qNetsEffortBeforeEdit
     BeforePost = qNetsEffortBeforePost
@@ -4138,22 +4153,11 @@ object DMS: TDMS
       Visible = False
       DisplayValues = 'True;False'
     end
-    object qNetsEffortnet_id: TLargeintField
-      DisplayLabel = 'ID'
-      FieldKind = fkData
-      FieldName = 'net_id'
-      Index = 1
-      LookupCache = False
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = False
-      Required = True
-      Visible = False
-    end
     object qNetsEffortsurvey_id: TLargeintField
       DisplayLabel = 'Survey (ID)'
       FieldKind = fkData
       FieldName = 'survey_id'
-      Index = 2
+      Index = 1
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4165,7 +4169,7 @@ object DMS: TDMS
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 3
+      Index = 2
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4176,7 +4180,7 @@ object DMS: TDMS
       DisplayLabel = 'Sampling plot (ID)'
       FieldKind = fkData
       FieldName = 'net_station_id'
-      Index = 4
+      Index = 3
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4187,7 +4191,7 @@ object DMS: TDMS
       DisplayLabel = 'Permanent net (ID)'
       FieldKind = fkData
       FieldName = 'permanent_net_id'
-      Index = 5
+      Index = 4
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4199,7 +4203,7 @@ object DMS: TDMS
       DisplayWidth = 20
       FieldKind = fkData
       FieldName = 'permanent_net_name'
-      Index = 6
+      Index = 5
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4211,7 +4215,7 @@ object DMS: TDMS
       DisplayLabel = 'Net number'
       FieldKind = fkData
       FieldName = 'net_number'
-      Index = 7
+      Index = 6
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4221,24 +4225,28 @@ object DMS: TDMS
       DisplayLabel = 'Longitude'
       FieldKind = fkData
       FieldName = 'longitude'
-      Index = 8
+      Index = 7
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       DisplayFormat = '###0.00000000'
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qNetsEffortlatitude: TFloatField
       DisplayLabel = 'Latitude'
       FieldKind = fkData
       FieldName = 'latitude'
-      Index = 9
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       DisplayFormat = '###0.00000000'
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qNetsEffortsample_date: TDateField
@@ -4246,7 +4254,7 @@ object DMS: TDMS
       DisplayLabel = 'Date'
       FieldKind = fkData
       FieldName = 'sample_date'
-      Index = 10
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4257,7 +4265,7 @@ object DMS: TDMS
       DisplayLabel = 'Open time 1'
       FieldKind = fkData
       FieldName = 'net_open_1'
-      Index = 11
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4269,7 +4277,7 @@ object DMS: TDMS
       DisplayLabel = 'Close time 1'
       FieldKind = fkData
       FieldName = 'net_close_1'
-      Index = 12
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4281,7 +4289,7 @@ object DMS: TDMS
       DisplayLabel = 'Open time 2'
       FieldKind = fkData
       FieldName = 'net_open_2'
-      Index = 13
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4293,7 +4301,7 @@ object DMS: TDMS
       DisplayLabel = 'Close time 2'
       FieldKind = fkData
       FieldName = 'net_close_2'
-      Index = 14
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4305,7 +4313,7 @@ object DMS: TDMS
       DisplayLabel = 'Open time 3'
       FieldKind = fkData
       FieldName = 'net_open_3'
-      Index = 15
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4317,7 +4325,7 @@ object DMS: TDMS
       DisplayLabel = 'Close time 3'
       FieldKind = fkData
       FieldName = 'net_close_3'
-      Index = 16
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4328,7 +4336,7 @@ object DMS: TDMS
       DisplayLabel = 'Open time 4'
       FieldKind = fkData
       FieldName = 'net_open_4'
-      Index = 17
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4339,7 +4347,7 @@ object DMS: TDMS
       DisplayLabel = 'Close time 4'
       FieldKind = fkData
       FieldName = 'net_close_4'
-      Index = 18
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4350,7 +4358,7 @@ object DMS: TDMS
       DisplayLabel = 'Total time opened (h)'
       FieldKind = fkInternalCalc
       FieldName = 'open_time_total'
-      Index = 19
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4362,7 +4370,7 @@ object DMS: TDMS
       DisplayLabel = 'Mistnet length (m)'
       FieldKind = fkData
       FieldName = 'net_length'
-      Index = 20
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4374,7 +4382,7 @@ object DMS: TDMS
       DisplayLabel = 'Mistnet height (m)'
       FieldKind = fkData
       FieldName = 'net_height'
-      Index = 21
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4386,7 +4394,7 @@ object DMS: TDMS
       DisplayLabel = 'Mistnet area (m²)'
       FieldKind = fkInternalCalc
       FieldName = 'net_area'
-      Index = 22
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4399,7 +4407,7 @@ object DMS: TDMS
       DisplayLabel = 'Mistnet mesh'
       FieldKind = fkData
       FieldName = 'net_mesh'
-      Index = 23
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4410,13 +4418,24 @@ object DMS: TDMS
       DisplayLabel = 'Notes'
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 24
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       BlobType = ftMemo
       Transliterate = False
+    end
+    object qNetsEffortnet_id: TLargeintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'net_id'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+      Visible = False
     end
     object qNetsEffortuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -4624,16 +4643,17 @@ object DMS: TDMS
     DataSource = DMG.dsSurveys
     Left = 84
     Top = 170
-    object qWeatherLogsweather_id: TLongintField
-      DisplayLabel = 'Weather log (ID)'
+    object qWeatherLogsmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
       FieldKind = fkData
-      FieldName = 'weather_id'
+      FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInWhere, pfInKey]
+      ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = True
+      Required = False
       Visible = False
+      DisplayValues = 'True;False'
     end
     object qWeatherLogssurvey_id: TLongintField
       DisplayLabel = 'Survey (ID)'
@@ -4688,6 +4708,7 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 100
     end
     object qWeatherLogsprecipitation: TStringField
       DisplayLabel = 'Precipitation'
@@ -4721,6 +4742,8 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 70
+      MinValue = -50
       Precision = -1
     end
     object qWeatherLogswind_speed_bft: TLongintField
@@ -4732,6 +4755,7 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 12
     end
     object qWeatherLogswind_speed_kmh: TFloatField
       DisplayLabel = 'Wind speed (km/h)'
@@ -4753,6 +4777,7 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 100
       Precision = -1
     end
     object qWeatherLogsatmospheric_pressure: TFloatField
@@ -4779,11 +4804,22 @@ object DMS: TDMS
       BlobType = ftMemo
       Transliterate = False
     end
+    object qWeatherLogsweather_id: TLongintField
+      DisplayLabel = 'Weather log (ID)'
+      FieldKind = fkData
+      FieldName = 'weather_id'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
     object qWeatherLogsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 14
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4794,7 +4830,7 @@ object DMS: TDMS
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 15
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4805,7 +4841,7 @@ object DMS: TDMS
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 16
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4816,7 +4852,7 @@ object DMS: TDMS
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 17
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4827,18 +4863,6 @@ object DMS: TDMS
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 18
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-      DisplayValues = 'True;False'
-    end
-    object qWeatherLogsmarked_status: TBooleanField
-      DisplayLabel = 'Marked'
-      FieldKind = fkData
-      FieldName = 'marked_status'
       Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -5177,6 +5201,8 @@ object DMS: TDMS
         Precision = -1
         Size = 255
       end>
+    AfterInsert = qSurveysAfterInsert
+    BeforePost = qSurveysBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
@@ -5455,6 +5481,8 @@ object DMS: TDMS
       ReadOnly = False
       Required = False
       DisplayFormat = '###0.00000000'
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qSurveysstart_longitude: TFloatField
@@ -5467,6 +5495,8 @@ object DMS: TDMS
       ReadOnly = False
       Required = False
       DisplayFormat = '###0.00000000'
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qSurveysend_latitude: TFloatField
@@ -5479,6 +5509,8 @@ object DMS: TDMS
       ReadOnly = False
       Required = False
       DisplayFormat = '###0.00000000'
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qSurveysend_longitude: TFloatField
@@ -5491,6 +5523,8 @@ object DMS: TDMS
       ReadOnly = False
       Required = False
       DisplayFormat = '###0.00000000'
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qSurveysobservers_tally: TLongintField
@@ -5543,7 +5577,7 @@ object DMS: TDMS
       FieldName = 'net_effort'
       Index = 28
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
       DisplayFormat = '#,##0.00'
@@ -5630,7 +5664,7 @@ object DMS: TDMS
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qSurveysuser_inserted: TLongintField
       DisplayLabel = 'Created by'

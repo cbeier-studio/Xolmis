@@ -14,7 +14,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -96,7 +95,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 327
       ClientWidth = 488
-      Color = 15066599
+      Color = 15263976
       ParentBackground = False
       ParentColor = False
       TabOrder = 0

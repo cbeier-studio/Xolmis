@@ -164,6 +164,17 @@ begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPermit)])
   else
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionPermit)]);
+
+  with cbPermitType.Items do
+  begin
+    Clear;
+    Add(rsPermitBanding);
+    Add(rsPermitCollection);
+    Add(rsPermitResearch);
+    Add(rsPermitEntry);
+    Add(rsPermitTransport);
+    Add(rsPermitOther);
+  end;
 end;
 
 function TedtPermit.IsRequiredFilled: Boolean;

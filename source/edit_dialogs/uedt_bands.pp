@@ -332,8 +332,8 @@ begin
   RequiredIsEmpty(D, tbBands, 'band_status', Msgs);
 
   // Registro duplicado
-  RecordDuplicated(tbBands, 'band_id', 'full_name',
-    D.FieldByName('full_name').AsString, D.FieldByName('band_id').AsInteger);
+  //RecordDuplicated(tbBands, 'band_id', 'full_name',
+  //  D.FieldByName('full_name').AsString, D.FieldByName('band_id').AsInteger);
 
   // Chaves estrangeiras
   ForeignValueExists(tbInstitutions, 'institution_id', D.FieldByName('supplier_id').AsInteger,

@@ -386,12 +386,14 @@ type
     procedure qCapturessubject_sexSetText(Sender: TField; const aText: string);
     procedure qCapturessubject_statusGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qCapturessubject_statusSetText(Sender: TField; const aText: string);
+    procedure qImagesAfterInsert(DataSet: TDataSet);
     procedure qImagesBeforePost(DataSet: TDataSet);
     procedure qImagescoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qImagescoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qImagesimage_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qImagesimage_typeSetText(Sender: TField; const aText: string);
     procedure qNetsEffortAfterCancel(DataSet: TDataSet);
+    procedure qNetsEffortAfterInsert(DataSet: TDataSet);
     procedure qNetsEffortAfterPost(DataSet: TDataSet);
     procedure qNetsEffortBeforeEdit(DataSet: TDataSet);
     procedure qNetsEffortBeforePost(DataSet: TDataSet);
@@ -400,7 +402,10 @@ type
     procedure qSightingsAfterPost(DataSet: TDataSet);
     procedure qSightingsBeforeEdit(DataSet: TDataSet);
     procedure qSightingsBeforePost(DataSet: TDataSet);
+    procedure qSurveysAfterInsert(DataSet: TDataSet);
+    procedure qSurveysBeforePost(DataSet: TDataSet);
     procedure qSurveyTeamAfterCancel(DataSet: TDataSet);
+    procedure qSurveyTeamAfterInsert(DataSet: TDataSet);
     procedure qSurveyTeamAfterPost(DataSet: TDataSet);
     procedure qSurveyTeamBeforeEdit(DataSet: TDataSet);
     procedure qSurveyTeamBeforePost(DataSet: TDataSet);
@@ -444,15 +449,12 @@ begin
   begin
     if Assigned(DataSource) then
     begin
-      FieldByName('taxon_id').AsInteger := DataSource.DataSet.FieldByName('taxon_id').AsInteger;
-      FieldByName('band_id').AsInteger := DataSource.DataSet.FieldByName('band_id').AsInteger;
-      FieldByName('right_leg_below').AsString := DataSource.DataSet.FieldByName('right_leg_below').AsString;
-      FieldByName('left_leg_below').AsString := DataSource.DataSet.FieldByName('left_leg_below').AsString;
+      FieldByName('locality_id').AsInteger := DataSource.DataSet.FieldByName('locality_id').AsInteger;
+      FieldByName('net_station_id').AsInteger := DataSource.DataSet.FieldByName('net_station_id').AsInteger;
+      FieldByName('project_id').AsString := DataSource.DataSet.FieldByName('project_id').AsString;
+      FieldByName('capture_date').AsString := DataSource.DataSet.FieldByName('survey_date').AsString;
     end;
-    if RecordCount > 1 then
-      FieldByName('capture_type').AsString := 'R'
-    else
-      FieldByName('capture_type').AsString := 'N';
+
     FieldByName('subject_status').AsString := 'N';
     FieldByName('blood_sample').AsBoolean := False;
     FieldByName('feather_sample').AsBoolean := False;
@@ -672,9 +674,28 @@ begin
     Sender.AsString := 'D';
 end;
 
+procedure TDMS.qImagesAfterInsert(DataSet: TDataSet);
+begin
+  with DataSet do
+  begin
+    if Assigned(DataSource) then
+    begin
+      FieldByName('locality_id').AsInteger := DataSource.DataSet.FieldByName('locality_id').AsInteger;
+      //FieldByName('survey_id').AsInteger := DataSource.DataSet.FieldByName('survey_id').AsInteger;
+    end;
+  end;
+end;
+
 procedure TDMS.qImagesBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMS.qImagescoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -849,6 +870,17 @@ begin
     FreeAndNil(OldNetEffort);
 end;
 
+procedure TDMS.qNetsEffortAfterInsert(DataSet: TDataSet);
+begin
+  with DataSet do
+  begin
+    if Assigned(DataSource) then
+    begin
+      FieldByName('net_station_id').AsInteger := DataSource.DataSet.FieldByName('net_station_id').AsInteger;
+    end;
+  end;
+end;
+
 procedure TDMS.qNetsEffortAfterPost(DataSet: TDataSet);
 var
   NewNetEffort: TNetEffort;
@@ -897,13 +929,23 @@ end;
 
 procedure TDMS.qSightingsAfterInsert(DataSet: TDataSet);
 begin
-  DataSet.FieldByName('not_surveying').AsBoolean := False;
-  DataSet.FieldByName('ebird_available').AsBoolean := False;
-  DataSet.FieldByName('subject_captured').AsBoolean := False;
-  DataSet.FieldByName('subject_seen').AsBoolean := False;
-  DataSet.FieldByName('subject_heard').AsBoolean := False;
-  DataSet.FieldByName('subject_photographed').AsBoolean := False;
-  DataSet.FieldByName('subject_recorded').AsBoolean := False;
+  with DataSet do
+  begin
+    if Assigned(DataSource) then
+    begin
+      FieldByName('locality_id').AsInteger := DataSource.DataSet.FieldByName('locality_id').AsInteger;
+      FieldByName('method_id').AsInteger := DataSource.DataSet.FieldByName('method_id').AsInteger;
+      FieldByName('sighting_date').AsString := DataSource.DataSet.FieldByName('survey_date').AsString;
+    end;
+
+    FieldByName('not_surveying').AsBoolean := False;
+    FieldByName('ebird_available').AsBoolean := False;
+    FieldByName('subject_captured').AsBoolean := False;
+    FieldByName('subject_seen').AsBoolean := False;
+    FieldByName('subject_heard').AsBoolean := False;
+    FieldByName('subject_photographed').AsBoolean := False;
+    FieldByName('subject_recorded').AsBoolean := False;
+  end;
 end;
 
 procedure TDMS.qSightingsAfterPost(DataSet: TDataSet);
@@ -953,10 +995,35 @@ begin
     GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
+procedure TDMS.qSurveysAfterInsert(DataSet: TDataSet);
+begin
+  with DataSet do
+  begin
+    if Assigned(DataSource) then
+    begin
+      FieldByName('locality_id').AsInteger := DataSource.DataSet.FieldByName('locality_id').AsInteger;
+    end;
+  end;
+end;
+
+procedure TDMS.qSurveysBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+end;
+
 procedure TDMS.qSurveyTeamAfterCancel(DataSet: TDataSet);
 begin
   if Assigned(OldSurveyMember) then
     FreeAndNil(OldSurveyMember);
+end;
+
+procedure TDMS.qSurveyTeamAfterInsert(DataSet: TDataSet);
+begin
+  DataSet.FieldByName('visitor').AsBoolean := False;
 end;
 
 procedure TDMS.qSurveyTeamAfterPost(DataSet: TDataSet);

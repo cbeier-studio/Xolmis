@@ -445,6 +445,7 @@ type
     procedure qCapturessubject_statusGetText(Sender: TField; var aText: string;
       DisplayText: Boolean);
     procedure qCapturessubject_statusSetText(Sender: TField; const aText: string);
+    procedure qImagesAfterInsert(DataSet: TDataSet);
     procedure qImagesBeforePost(DataSet: TDataSet);
     procedure qImagescoordinate_precisionGetText(Sender: TField; var aText: string;
       DisplayText: Boolean);
@@ -452,6 +453,7 @@ type
     procedure qImagesimage_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qImagesimage_typeSetText(Sender: TField; const aText: string);
     procedure qMoltsAfterCancel(DataSet: TDataSet);
+    procedure qMoltsAfterInsert(DataSet: TDataSet);
     procedure qMoltsAfterPost(DataSet: TDataSet);
     procedure qMoltsBeforeEdit(DataSet: TDataSet);
     procedure qMoltsBeforePost(DataSet: TDataSet);
@@ -465,6 +467,7 @@ type
     procedure qSightingsBeforeEdit(DataSet: TDataSet);
     procedure qSightingsBeforePost(DataSet: TDataSet);
     procedure qSpecimensAfterCancel(DataSet: TDataSet);
+    procedure qSpecimensAfterInsert(DataSet: TDataSet);
     procedure qSpecimensAfterPost(DataSet: TDataSet);
     procedure qSpecimensBeforeEdit(DataSet: TDataSet);
     procedure qSpecimensBeforePost(DataSet: TDataSet);
@@ -731,9 +734,28 @@ begin
     Sender.AsString := 'D';
 end;
 
+procedure TDMI.qImagesAfterInsert(DataSet: TDataSet);
+begin
+  with DataSet do
+  begin
+    if Assigned(DataSource) then
+    begin
+      FieldByName('taxon_id').AsInteger := DataSource.DataSet.FieldByName('taxon_id').AsInteger;
+      //FieldByName('individual_id').AsInteger := DataSource.DataSet.FieldByName('individual_id').AsInteger;
+    end;
+  end;
+end;
+
 procedure TDMI.qImagesBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMI.qImagescoordinate_precisionGetText(Sender: TField; var aText: string;
@@ -909,6 +931,19 @@ begin
     FreeAndNil(OldMolt);
 end;
 
+procedure TDMI.qMoltsAfterInsert(DataSet: TDataSet);
+begin
+  with DataSet do
+  begin
+    if Assigned(DataSource) then
+    begin
+      FieldByName('taxon_id').AsInteger := DataSource.DataSet.FieldByName('taxon_id').AsInteger;
+      //FieldByName('individual_id').AsInteger := DataSource.DataSet.FieldByName('individual_id').AsInteger;
+      FieldByName('band_id').AsInteger := DataSource.DataSet.FieldByName('band_id').AsInteger;
+    end;
+  end;
+end;
+
 procedure TDMI.qMoltsAfterPost(DataSet: TDataSet);
 var
   NewMolt: TMolt;
@@ -993,6 +1028,13 @@ end;
 procedure TDMI.qNestsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMI.qSightingsAfterCancel(DataSet: TDataSet);
@@ -1003,13 +1045,22 @@ end;
 
 procedure TDMI.qSightingsAfterInsert(DataSet: TDataSet);
 begin
-  DataSet.FieldByName('not_surveying').AsBoolean := False;
-  DataSet.FieldByName('ebird_available').AsBoolean := False;
-  DataSet.FieldByName('subject_captured').AsBoolean := False;
-  DataSet.FieldByName('subject_seen').AsBoolean := False;
-  DataSet.FieldByName('subject_heard').AsBoolean := False;
-  DataSet.FieldByName('subject_photographed').AsBoolean := False;
-  DataSet.FieldByName('subject_recorded').AsBoolean := False;
+  with DataSet do
+  begin
+    if Assigned(DataSource) then
+    begin
+      FieldByName('taxon_id').AsInteger := DataSource.DataSet.FieldByName('taxon_id').AsInteger;
+      //FieldByName('individual_id').AsInteger := DataSource.DataSet.FieldByName('individual_id').AsInteger;
+    end;
+
+    FieldByName('not_surveying').AsBoolean := False;
+    FieldByName('ebird_available').AsBoolean := False;
+    FieldByName('subject_captured').AsBoolean := False;
+    FieldByName('subject_seen').AsBoolean := False;
+    FieldByName('subject_heard').AsBoolean := False;
+    FieldByName('subject_photographed').AsBoolean := False;
+    FieldByName('subject_recorded').AsBoolean := False;
+  end;
 end;
 
 procedure TDMI.qSightingsAfterPost(DataSet: TDataSet);
@@ -1065,6 +1116,18 @@ begin
     FreeAndNil(OldSpecimen);
 end;
 
+procedure TDMI.qSpecimensAfterInsert(DataSet: TDataSet);
+begin
+  with DataSet do
+  begin
+    if Assigned(DataSource) then
+    begin
+      FieldByName('taxon_id').AsInteger := DataSource.DataSet.FieldByName('taxon_id').AsInteger;
+      //FieldByName('individual_id').AsInteger := DataSource.DataSet.FieldByName('individual_id').AsInteger;
+    end;
+  end;
+end;
+
 procedure TDMI.qSpecimensAfterPost(DataSet: TDataSet);
 var
   NewSpecimen: TSpecimen;
@@ -1103,6 +1166,13 @@ end;
 procedure TDMI.qSpecimensBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 end.

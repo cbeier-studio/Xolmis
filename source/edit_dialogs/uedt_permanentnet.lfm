@@ -80,7 +80,7 @@ object edtPermanentNet: TedtPermanentNet
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 294
     ClientWidth = 488
-    Color = 15066599
+    Color = 15263976
     ParentBackground = False
     ParentColor = False
     TabOrder = 1

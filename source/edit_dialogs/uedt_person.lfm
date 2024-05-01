@@ -96,7 +96,7 @@ object edtPerson: TedtPerson
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 1545
       ClientWidth = 399
-      Color = 15066599
+      Color = 15263976
       ParentBackground = False
       ParentColor = False
       TabOrder = 0

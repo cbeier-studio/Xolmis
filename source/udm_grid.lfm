@@ -179,7 +179,6 @@ object DMG: TDMG
     AfterInsert = qBandsAfterInsert
     AfterPost = qBandsAfterPost
     BeforeEdit = qBandsBeforeEdit
-    BeforeOpen = qBandsBeforeOpen
     BeforePost = qBandsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -225,7 +224,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = False
+      Required = True
       Size = 5
     end
     object qBandsband_number: TLongintField
@@ -236,7 +235,8 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = False
+      Required = True
+      OnValidate = qBandsband_numberValidate
     end
     object qBandsband_prefix: TStringField
       DisplayLabel = 'Prefix'
@@ -270,7 +270,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = False
+      Required = True
       OnGetText = qBandsband_statusGetText
       OnSetText = qBandsband_statusSetText
       Size = 5
@@ -285,7 +285,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = False
+      Required = True
       OnGetText = qBandsband_typeGetText
       OnSetText = qBandsband_typeSetText
       Size = 5
@@ -310,7 +310,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = False
+      Required = True
       OnGetText = qBandsband_sourceGetText
       OnSetText = qBandsband_sourceSetText
       Size = 5
@@ -323,7 +323,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = False
+      Required = True
       Visible = False
     end
     object qBandssupplier_name: TStringField
@@ -627,7 +627,6 @@ object DMG: TDMG
     AfterCancel = qExpeditionsAfterCancel
     AfterPost = qExpeditionsAfterPost
     BeforeEdit = qExpeditionsBeforeEdit
-    BeforeOpen = qExpeditionsBeforeOpen
     BeforePost = qExpeditionsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -702,6 +701,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qExpeditionsend_dateValidate
     end
     object qExpeditionsduration: TLongintField
       DisplayLabel = 'Duration (days)'
@@ -1130,7 +1130,6 @@ object DMG: TDMG
     AfterCancel = qIndividualsAfterCancel
     AfterPost = qIndividualsAfterPost
     BeforeEdit = qIndividualsBeforeEdit
-    BeforeOpen = qIndividualsBeforeOpen
     BeforePost = qIndividualsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -1164,7 +1163,7 @@ object DMG: TDMG
     Macros = <>
     Sequence.FieldName = 'individual_id'
     Left = 32
-    Top = 141
+    Top = 143
     object qIndividualsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -1308,6 +1307,7 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       Visible = False
+      OnValidate = qIndividualsband_idValidate
     end
     object qIndividualsband_full_name: TStringField
       Alignment = taCenter
@@ -1524,6 +1524,7 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       Visible = False
+      OnValidate = qIndividualsbirth_yearValidate
     end
     object qIndividualsbirth_month: TLongintField
       Alignment = taCenter
@@ -1536,6 +1537,7 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       Visible = False
+      OnValidate = qIndividualsbirth_yearValidate
     end
     object qIndividualsbirth_year: TLongintField
       Alignment = taCenter
@@ -1548,6 +1550,7 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       Visible = False
+      OnValidate = qIndividualsbirth_yearValidate
     end
     object qIndividualsbanding_date: TDateField
       Alignment = taCenter
@@ -1596,6 +1599,7 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       Visible = False
+      OnValidate = qIndividualsdeath_yearValidate
     end
     object qIndividualsdeath_month: TLongintField
       Alignment = taCenter
@@ -1608,6 +1612,7 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       Visible = False
+      OnValidate = qIndividualsdeath_yearValidate
     end
     object qIndividualsdeath_year: TLongintField
       Alignment = taCenter
@@ -1620,6 +1625,7 @@ object DMG: TDMG
       ReadOnly = False
       Required = False
       Visible = False
+      OnValidate = qIndividualsdeath_yearValidate
     end
     object qIndividualsrecognizable_markings: TMemoField
       DisplayLabel = 'Recognizable markings'
@@ -1665,7 +1671,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qIndividualsfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -2360,9 +2366,9 @@ object DMG: TDMG
         Size = 10
       end>
     AfterCancel = qCapturesAfterCancel
+    AfterInsert = qCapturesAfterInsert
     AfterPost = qCapturesAfterPost
     BeforeEdit = qCapturesBeforeEdit
-    BeforeOpen = qCapturesBeforeOpen
     BeforePost = qCapturesBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -3474,7 +3480,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qCapturesfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -3991,7 +3997,6 @@ object DMG: TDMG
     AfterCancel = qMoltsAfterCancel
     AfterPost = qMoltsAfterPost
     BeforeEdit = qMoltsBeforeEdit
-    BeforeOpen = qMoltsBeforeOpen
     BeforePost = qMoltsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -4796,7 +4801,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qMoltsfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -5169,7 +5174,6 @@ object DMG: TDMG
         Precision = -1
         Size = 100
       end>
-    BeforeOpen = qImagesBeforeOpen
     BeforePost = qImagesBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -5200,9 +5204,9 @@ object DMG: TDMG
       FieldName = 'image_id'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qImagesimage_date: TDateField
       FieldKind = fkData
@@ -5894,7 +5898,6 @@ object DMG: TDMG
     AfterCancel = qSurveysAfterCancel
     AfterPost = qSurveysAfterPost
     BeforeEdit = qSurveysBeforeEdit
-    BeforeOpen = qSurveysBeforeOpen
     BeforePost = qSurveysBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -6352,7 +6355,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qSurveysuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -6735,7 +6738,6 @@ object DMG: TDMG
     AfterInsert = qSightingsAfterInsert
     AfterPost = qSightingsAfterPost
     BeforeEdit = qSightingsBeforeEdit
-    BeforeOpen = qSightingsBeforeOpen
     BeforePost = qSightingsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -6763,7 +6765,7 @@ object DMG: TDMG
     Macros = <>
     Sequence.FieldName = 'sighting_id'
     Left = 205
-    Top = 142
+    Top = 143
     object qSightingsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -7528,7 +7530,6 @@ object DMG: TDMG
     AfterCancel = qInstitutionsAfterCancel
     AfterPost = qInstitutionsAfterPost
     BeforeEdit = qInstitutionsBeforeEdit
-    BeforeOpen = qInstitutionsBeforeOpen
     BeforePost = qInstitutionsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -8058,7 +8059,6 @@ object DMG: TDMG
     AfterInsert = qPeopleAfterInsert
     AfterPost = qPeopleAfterPost
     BeforeEdit = qPeopleBeforeEdit
-    BeforeOpen = qPeopleBeforeOpen
     BeforePost = qPeopleBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -8459,7 +8459,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qPeoplenotes: TMemoField
       DisplayLabel = 'Notes'
@@ -8857,7 +8857,6 @@ object DMG: TDMG
     AfterCancel = qNestsAfterCancel
     AfterPost = qNestsAfterPost
     BeforeEdit = qNestsBeforeEdit
-    BeforeOpen = qNestsBeforeOpen
     BeforePost = qNestsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -9382,7 +9381,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qNestsfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -9908,7 +9907,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qNestRevisionsnotes: TMemoField
       DisplayLabel = 'Notes'
@@ -10181,7 +10180,7 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Left = 371
-    Top = 142
+    Top = 143
     object qEggsmarked_status: TBooleanField
       DisplayLabel = 'Marked'
       FieldKind = fkData
@@ -10444,7 +10443,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qEggsnotes: TMemoField
       DisplayLabel = 'Notes'
@@ -10697,7 +10696,6 @@ object DMG: TDMG
     AfterCancel = qGazetteerAfterCancel
     AfterPost = qGazetteerAfterPost
     BeforeEdit = qGazetteerBeforeEdit
-    BeforeOpen = qGazetteerBeforeOpen
     BeforePost = qGazetteerBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -10767,7 +10765,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = False
+      Required = True
       OnGetText = qGazetteersite_rankGetText
       OnSetText = qGazetteersite_rankSetText
       Size = 1
@@ -10937,7 +10935,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qGazetteeruser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -11127,7 +11125,6 @@ object DMG: TDMG
     AfterCancel = qNetStationsAfterCancel
     AfterPost = qNetStationsAfterPost
     BeforeEdit = qNetStationsBeforeEdit
-    BeforeOpen = qNetStationsBeforeOpen
     BeforePost = qNetStationsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -11316,7 +11313,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qNetStationsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -11465,7 +11462,6 @@ object DMG: TDMG
     AfterCancel = qPermanentNetsAfterCancel
     AfterPost = qPermanentNetsAfterPost
     BeforeEdit = qPermanentNetsBeforeEdit
-    BeforeOpen = qPermanentNetsBeforeOpen
     BeforePost = qPermanentNetsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -11532,6 +11528,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qPermanentNetslatitude: TFloatField
@@ -11544,6 +11542,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qPermanentNetsfull_name: TStringField
@@ -11832,6 +11832,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qProjectsend_dateValidate
     end
     object qProjectswebsite_uri: TStringField
       DisplayLabel = 'Website'
@@ -11927,7 +11928,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qProjectsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -12069,7 +12070,6 @@ object DMG: TDMG
     AfterCancel = qProjectTeamAfterCancel
     AfterPost = qProjectTeamAfterPost
     BeforeEdit = qProjectTeamBeforeEdit
-    BeforeOpen = qProjectTeamBeforeOpen
     BeforePost = qProjectTeamBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -12175,7 +12175,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qProjectTeamuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -12364,7 +12364,6 @@ object DMG: TDMG
     AfterCancel = qPermitsAfterCancel
     AfterPost = qPermitsAfterPost
     BeforeEdit = qPermitsBeforeEdit
-    BeforeOpen = qPermitsBeforeOpen
     BeforePost = qPermitsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -12380,7 +12379,7 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Left = 544
-    Top = 142
+    Top = 143
     object qPermitsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -12403,6 +12402,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qPermitspermit_typeGetText
+      OnSetText = qPermitspermit_typeSetText
       Size = 5
     end
     object qPermitspermit_name: TStringField
@@ -12465,6 +12466,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qPermitsexpire_dateValidate
     end
     object qPermitsproject_id: TLongintField
       DisplayLabel = 'Project (ID)'
@@ -12534,7 +12536,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qPermitsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -12799,7 +12801,6 @@ object DMG: TDMG
     AfterCancel = qSpecimensAfterCancel
     AfterPost = qSpecimensAfterPost
     BeforeEdit = qSpecimensBeforeEdit
-    BeforeOpen = qSpecimensBeforeOpen
     BeforePost = qSpecimensBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -12904,6 +12905,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qSpecimenscollection_yearValidate
     end
     object qSpecimenscollection_month: TLongintField
       Alignment = taCenter
@@ -12915,6 +12917,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qSpecimenscollection_yearValidate
     end
     object qSpecimenscollection_year: TLongintField
       Alignment = taCenter
@@ -12926,6 +12929,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnValidate = qSpecimenscollection_yearValidate
     end
     object qSpecimenslocality_id: TLongintField
       DisplayLabel = 'Locality (ID)'
@@ -13066,7 +13070,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qSpecimensfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -13397,7 +13401,6 @@ object DMG: TDMG
     AfterCancel = qSamplePrepsAfterCancel
     AfterPost = qSamplePrepsAfterPost
     BeforeEdit = qSamplePrepsBeforeEdit
-    BeforeOpen = qSamplePrepsBeforeOpen
     BeforePost = qSamplePrepsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -13577,7 +13580,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qSamplePrepsfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -14019,7 +14022,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qBotanyorder_id: TLongintField
       DisplayLabel = 'Order (ID)'
@@ -14518,7 +14521,7 @@ object DMG: TDMG
       FieldName = 'taxon_id'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
       Required = True
     end
@@ -14998,15 +15001,21 @@ object DMG: TDMG
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT valid_id, full_name, formatted_name FROM zoo_taxa'
-      'WHERE (active_status = 1)'
+      'WHERE (valid_id = :taxon_id) AND (active_status = 1)'
       'ORDER BY full_name ASC'
       ''
     )
     Options = [sqoAutoApplyUpdates]
-    Params = <>
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'taxon_id'
+        ParamType = ptInput
+      end>
     Macros = <>
+    DataSource = dsTaxa
     Left = 710
-    Top = 141
+    Top = 143
     object qSynonymTaxavalid_id: TLargeintField
       FieldKind = fkData
       FieldName = 'valid_id'
@@ -15057,7 +15066,7 @@ object DMG: TDMG
     SQL.Strings = (
       'SELECT full_name, formatted_name'
       'FROM zoo_taxa'
-      'WHERE (parent_taxon_id = :val) AND (active_status = 1)'
+      'WHERE (parent_taxon_id = :taxon_id) AND (active_status = 1)'
       'ORDER BY full_name ASC'
       ''
     )
@@ -15065,10 +15074,11 @@ object DMG: TDMG
     Params = <    
       item
         DataType = ftUnknown
-        Name = 'val'
+        Name = 'taxon_id'
         ParamType = ptInput
       end>
     Macros = <>
+    DataSource = dsTaxa
     Left = 710
     Top = 198
     object qChildTaxafull_name: TStringField
@@ -15125,7 +15135,7 @@ object DMG: TDMG
   object dsSightings: TDataSource
     DataSet = qSightings
     Left = 282
-    Top = 142
+    Top = 143
   end
   object dsInstitutions: TDataSource
     DataSet = qInstitutions
@@ -15150,7 +15160,7 @@ object DMG: TDMG
   object dsEggs: TDataSource
     DataSet = qEggs
     Left = 435
-    Top = 142
+    Top = 143
   end
   object dsGazetteer: TDataSource
     DataSet = qGazetteer
@@ -15180,7 +15190,7 @@ object DMG: TDMG
   object dsPermits: TDataSource
     DataSet = qPermits
     Left = 610
-    Top = 142
+    Top = 143
   end
   object dsSpecimens: TDataSource
     DataSet = qSpecimens
@@ -15205,7 +15215,7 @@ object DMG: TDMG
   object dsSynonymTaxa: TDataSource
     DataSet = qSynonymTaxa
     Left = 776
-    Top = 142
+    Top = 143
   end
   object dsChildTaxa: TDataSource
     DataSet = qChildTaxa
@@ -15437,7 +15447,6 @@ object DMG: TDMG
         DataType = ftBoolean
         Precision = -1
       end>
-    BeforeOpen = qAudioBeforeOpen
     BeforePost = qAudioBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -15458,9 +15467,9 @@ object DMG: TDMG
       FieldName = 'audio_id'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qAudiosubtitle: TMemoField
       FieldKind = fkData
@@ -15935,7 +15944,6 @@ object DMG: TDMG
     AfterCancel = qBandHistoryAfterCancel
     AfterPost = qBandHistoryAfterPost
     BeforeEdit = qBandHistoryBeforeEdit
-    BeforeOpen = qBandHistoryBeforeOpen
     BeforePost = qBandHistoryBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -15960,7 +15968,7 @@ object DMG: TDMG
       end>
     Macros = <>
     DataSource = dsBands
-    Left = 34
+    Left = 32
     Top = 90
     object qBandHistorymarked_status: TBooleanField
       Alignment = taCenter
@@ -16112,7 +16120,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qBandHistoryuser_inserted: TLongintField
       Alignment = taCenter
@@ -16348,7 +16356,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qMethodsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -16801,6 +16809,10 @@ object DMG: TDMG
         Precision = -1
         Size = 100
       end>
+    AfterCancel = qSampleCollectorsAfterCancel
+    AfterPost = qSampleCollectorsAfterPost
+    BeforeEdit = qSampleCollectorsBeforeEdit
+    BeforePost = qSampleCollectorsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
@@ -16888,7 +16900,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
       Visible = False
     end
     object qSampleCollectorsuser_inserted: TLongintField

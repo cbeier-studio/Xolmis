@@ -10,9 +10,12 @@ uses
   cbs_system, cbs_datatypes, cbs_gis;
 
 type
+  { Exceptions }
   EInvalidPartialDate = class(Exception);
+  EInvalidDateRange = class(Exception);
   EValueNotInSet = class(Exception);
   EFutureDate = class(Exception);
+  ERecordDuplicated = class(Exception);
 
   { Validations }
   function CheckEmail(const aEmailAddress: String; aMessageList: TStrings = nil): Boolean;
@@ -331,6 +334,7 @@ end;
 function ValidPartialDate(aYear, aMonth, aDay: Integer): Boolean;
 begin
   Result := False;
+
   if (aYear < 0) or (aMonth < 0) or (aDay < 0) then
     Exit;
   if (aYear = 0) then
@@ -688,9 +692,9 @@ begin
     begin
       LogError(M);
       aMessageList.Add(M);
-    end
-    else
-      MsgDlg('', M, mtInformation);
+    end;
+    //else
+    //  MsgDlg('', M, mtInformation);
   end;
 end;
 

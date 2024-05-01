@@ -357,11 +357,6 @@ type
     FCountryId: Integer;
     FLatitude: Extended;
     FLongitude: Extended;
-    FCollectors: String;
-    FCollector1: Integer;
-    FCollector2: Integer;
-    FCollector3: Integer;
-    FCollector4: Integer;
     FNotes: String;
   public
     constructor Create(aValue: Integer = 0);
@@ -391,12 +386,26 @@ type
     property CountryId: Integer read FCountryId write FCountryId;
     property Latitude: Extended read FLatitude write FLatitude;
     property Longitude: Extended read FLongitude write FLongitude;
-    property Collectors: String read FCollectors write FCollectors;
-    property Collector1: Integer read FCollector1 write FCollector1;
-    property Collector2: Integer read FCollector2 write FCollector2;
-    property Collector3: Integer read FCollector3 write FCollector3;
-    property Collector4: Integer read FCollector4 write FCollector4;
     property Notes: String read FNotes write FNotes;
+  end;
+
+  { TSpecimenCollector }
+
+  TSpecimenCollector = class(TXolmisRecord)
+  protected
+    FSpecimenId: Integer;
+    FPersonId: Integer;
+    FCollectorSeq: Integer;
+  public
+    constructor Create(aValue: Integer = 0);
+    procedure Clear; override;
+    procedure GetData(aKey: Integer);
+    procedure Insert;
+    function Diff(aOld: TSpecimenCollector; var aList: TStrings): Boolean;
+  published
+    property SpecimenId: Integer read FSpecimenId write FSpecimenId;
+    property PersonId: Integer read FPersonId write FPersonId;
+    property CollectorSeq: Integer read FCollectorSeq write FCollectorSeq;
   end;
 
 type
@@ -664,11 +673,6 @@ begin
   FCountryId := 0;
   FLatitude := 0.0;
   FLongitude := 0.0;
-  FCollectors := EmptyStr;
-  FCollector1 := 0;
-  FCollector2 := 0;
-  FCollector3 := 0;
-  FCollector4 := 0;
   FNotes := EmptyStr;
 end;
 
@@ -710,11 +714,6 @@ begin
       FCountryId := FieldByName('country_id').AsInteger;
       FLatitude := FieldByName('latitude').AsFloat;
       FLongitude := FieldByName('longitude').AsFloat;
-      FCollectors := FieldByName('collectors').AsString;
-      FCollector1 := FieldByName('collector_1').AsInteger;
-      FCollector2 := FieldByName('collector_2').AsInteger;
-      FCollector3 := FieldByName('collector_3').AsInteger;
-      FCollector4 := FieldByName('collector_4').AsInteger;
       FNotes := FieldByName('notes').AsString;
       FUserInserted := FieldByName('user_inserted').AsInteger;
       FUserUpdated := FieldByName('user_updated').AsInteger;
@@ -737,11 +736,11 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('N'#186' campo', aOld.FieldNumber, FFieldNumber, R) then
+  if FieldValuesDiff('Field number', aOld.FieldNumber, FFieldNumber, R) then
     aList.Add(R);
   if FieldValuesDiff('Material', aOld.SampleType, FSampleType, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff('Full name', aOld.FullName, FFullName, R) then
     aList.Add(R);
   if FieldValuesDiff(rsCaptionTaxon, aOld.TaxonId, FTaxonId, R) then
     aList.Add(R);
@@ -751,34 +750,119 @@ begin
     aList.Add(R);
   if FieldValuesDiff(rsCaptionNest, aOld.NestId, FNestId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Ovo', aOld.EggId, FEggId, R) then
+  if FieldValuesDiff('Egg', aOld.EggId, FEggId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data coleta', aOld.CollectionDate, FCollectionDate, R) then
+  if FieldValuesDiff('Collection date', aOld.CollectionDate, FCollectionDate, R) then
     aList.Add(R);
   if FieldValuesDiff(rsLatitude, aOld.Latitude, FLatitude, R) then
     aList.Add(R);
   if FieldValuesDiff(rsLongitude, aOld.Longitude, FLongitude, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dia coleta', aOld.CollectionDay, FCollectionDay, R) then
+  if FieldValuesDiff('Collection day', aOld.CollectionDay, FCollectionDay, R) then
     aList.Add(R);
-  if FieldValuesDiff('M'#234's coleta', aOld.CollectionMonth, FCollectionMonth, R) then
+  if FieldValuesDiff('Collection month', aOld.CollectionMonth, FCollectionMonth, R) then
     aList.Add(R);
-  if FieldValuesDiff('Ano coleta', aOld.CollectionYear, FCollectionYear, R) then
+  if FieldValuesDiff('Collection year', aOld.CollectionYear, FCollectionYear, R) then
     aList.Add(R);
-  if FieldValuesDiff('Coletores', aOld.Collectors, FCollectors, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Coletor 1', aOld.Collector1, FCollector1, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Coletor 2', aOld.Collector2, FCollector2, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Coletor 3', aOld.Collector3, FCollector3, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Coletor 4', aOld.Collector4, FCollector4, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Anota'#231#245'es', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff('Notes', aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
+end;
+
+{ TSpecimenCollector }
+
+constructor TSpecimenCollector.Create(aValue: Integer);
+begin
+  if aValue > 0 then
+    GetData(aValue)
+  else
+    Clear;
+end;
+
+procedure TSpecimenCollector.Clear;
+begin
+  inherited Clear;
+  FSpecimenId := 0;
+  FPersonId := 0;
+  FCollectorSeq := 0;
+end;
+
+function TSpecimenCollector.Diff(aOld: TSpecimenCollector; var aList: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+
+  if FieldValuesDiff('Person', aOld.PersonId, FPersonId, R) then
+    aList.Add(R);
+  if FieldValuesDiff('Sequence', aOld.CollectorSeq, FCollectorSeq, R) then
+    aList.Add(R);
+
+  Result := aList.Count > 0;
+end;
+
+procedure TSpecimenCollector.GetData(aKey: Integer);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT * FROM specimen_collectors');
+    Add('WHERE collector_id = :cod');
+    ParamByName('COD').AsInteger := aKey;
+    Open;
+    if RecordCount > 0 then
+    begin
+      FId := FieldByName('collector_id').AsInteger;
+      FSpecimenId := FieldByName('specimen_id').AsInteger;
+      FPersonId := FieldByName('person_id').AsInteger;
+      FCollectorSeq := FieldByName('collector_seq').AsInteger;
+      FUserInserted := FieldByName('user_inserted').AsInteger;
+      FUserUpdated := FieldByName('user_updated').AsInteger;
+      FInsertDate := FieldByName('insert_date').AsDateTime;
+      FUpdateDate := FieldByName('update_date').AsDateTime;
+      FExported := FieldByName('exported_status').AsBoolean;
+      FMarked := FieldByName('marked_status').AsBoolean;
+      FActive := FieldByName('active_status').AsBoolean;
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSpecimenCollector.Insert;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO specimen_colletors (specimen_id, person_id, user_inserted, insert_date) ');
+    Add('VALUES (:aspecimen, :aperson, :auser, datetime(''now'',''localtime''));');
+    ParamByName('ASPECIMEN').AsInteger := FSpecimenId;
+    ParamByName('APERSON').AsInteger := FPersonId;
+    ParamByName('AUSER').AsInteger := FUserInserted;
+//    GravaLogSQL(SQL);
+    ExecSQL;
+
+    // Get the autoincrement key inserted
+    Clear;
+    Add('SELECT DISTINCT last_insert_rowid() FROM specimen_collectors');
+    Open;
+    FId := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 { TExpedition }

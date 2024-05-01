@@ -17,7 +17,6 @@ object edtDatabase: TedtDatabase
   PopupMode = pmExplicit
   PopupParent = cfgDatabase.Owner
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -79,7 +78,7 @@ object edtDatabase: TedtDatabase
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 446
     ClientWidth = 400
-    Color = 15066599
+    Color = 15263976
     Constraints.MinWidth = 390
     ParentBackground = False
     ParentColor = False

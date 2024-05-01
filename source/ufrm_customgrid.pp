@@ -6171,6 +6171,17 @@ begin
     ColumnByFieldName('project_name').ButtonStyle := cbsEllipsis;
     ColumnByFieldName('dispatch_date').ButtonStyle := cbsEllipsis;
     ColumnByFieldName('expire_date').ButtonStyle := cbsEllipsis;
+
+    with ColumnByFieldName('permit_type').PickList do
+    begin
+      Clear;
+      Add(rsPermitBanding);
+      Add(rsPermitCollection);
+      Add(rsPermitResearch);
+      Add(rsPermitEntry);
+      Add(rsPermitTransport);
+      Add(rsPermitOther);
+    end;
   end;
 end;
 

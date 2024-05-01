@@ -50,8 +50,8 @@ msgstr "Restaurado"
 #: cbs_locale.rsactiverecordduplicated
 #, object-pascal-format
 msgctxt "cbs_locale.rsactiverecordduplicated"
-msgid "A record with the same <b>%s</b> value already exists (<font color=\"blue\">%s</font>)."
-msgstr "Um registro com o mesmo valor de <b>%s</b> já existe (<font color=\"blue\">%s</font>)."
+msgid "A record with the same %s value already exists (%s)."
+msgstr "Um registro com o mesmo valor de %s já existe (%s)."
 
 #: cbs_locale.rsadminuser
 msgctxt "cbs_locale.rsadminuser"
@@ -375,17 +375,9 @@ msgctxt "cbs_locale.rscaptionband"
 msgid "Band"
 msgstr "Anilha"
 
-#: cbs_locale.rscaptionbandingpermit
-msgid "Banding Permit"
-msgstr "Licença de anilhamento"
-
 #: cbs_locale.rscaptioncapture
 msgid "Capture"
 msgstr "Captura"
-
-#: cbs_locale.rscaptioncollectionpermit
-msgid "Collection Permit"
-msgstr "Licença de coleta"
 
 #: cbs_locale.rscaptioncountry
 msgctxt "cbs_locale.rscaptioncountry"
@@ -511,10 +503,6 @@ msgctxt "cbs_locale.rscaptionname"
 msgid "Name"
 msgstr "Nome"
 
-#: cbs_locale.rscaptionnationalparkpermit
-msgid "National Park Research Permit"
-msgstr "Licença de pesquisa em Parque Nacional"
-
 #: cbs_locale.rscaptionnest
 msgctxt "cbs_locale.rscaptionnest"
 msgid "Nest"
@@ -608,10 +596,6 @@ msgstr "Grupo subespecífico"
 msgctxt "cbs_locale.rscaptionstate"
 msgid "State"
 msgstr "Estado"
-
-#: cbs_locale.rscaptionstateparkpermit
-msgid "State Park Research Permit"
-msgstr "Licença de pesquisa em Parque Estadual"
 
 #: cbs_locale.rscaptionsubfamily
 msgctxt "cbs_locale.rscaptionsubfamily"
@@ -1049,8 +1033,8 @@ msgstr "Ambiente"
 
 #: cbs_locale.rsepithetonlyininfrasp
 msgctxt "cbs_locale.rsepithetonlyininfrasp"
-msgid "The <b>Infraspecific epithet</b> must be filled when an <b>Infraspecific category</b> was selected."
-msgstr "O <b>epíteto infraespecífico</b> deve ser preenchido quando a <b>categoria infraespecífica</b> foi selecionada."
+msgid "The Infraspecific epithet must be filled when an Infraspecific category was selected."
+msgstr "O epíteto infraespecífico deve ser preenchido quando a categoria infraespecífica foi selecionada."
 
 #: cbs_locale.rserrorbackupfailed
 msgctxt "cbs_locale.rserrorbackupfailed"
@@ -1279,6 +1263,10 @@ msgctxt "cbs_locale.rsfiltermorethan"
 msgid "greater than or equal to"
 msgstr "maior que ou igual a"
 
+#: cbs_locale.rsfilternotequal
+msgid "not equal to"
+msgstr "diferente de"
+
 #: cbs_locale.rsfilternotnull
 msgctxt "cbs_locale.rsfilternotnull"
 msgid "not empty"
@@ -1327,8 +1315,8 @@ msgstr "Pegada"
 #: cbs_locale.rsforeignnotexist
 #, object-pascal-format
 msgctxt "cbs_locale.rsforeignnotexist"
-msgid "Selected <b>%s</b> does not exist. Select a valid record."
-msgstr "O(A) <b>%s</b> selecionado(a) não existe. Selecione um registro válido."
+msgid "Selected %s does not exist. Select a valid record."
+msgstr "O(A) %s selecionado(a) não existe. Selecione um registro válido."
 
 #: cbs_locale.rsfound
 msgctxt "cbs_locale.rsfound"
@@ -1404,8 +1392,8 @@ msgstr "O número inicial deve ser maior que zero."
 #: cbs_locale.rsfuturedate
 #, object-pascal-format
 msgctxt "cbs_locale.rsfuturedate"
-msgid "<b>%s</b> must be after <b>%s</b> (<font color=\"green\">%s</font>)."
-msgstr "<b>%s</b> deve ser posterior à <b>%s</b> (<font color=\"green\">%s</font>)."
+msgid "%s must be after %s (%s)."
+msgstr "%s deve ser posterior à %s (%s)."
 
 #: cbs_locale.rsfuturedatefromtoday
 msgctxt "cbs_locale.rsfuturedatefromtoday"
@@ -1415,8 +1403,8 @@ msgstr "A data deve ser de hoje ou anterior."
 #: cbs_locale.rsfuturepartialdate
 #, object-pascal-format
 msgctxt "cbs_locale.rsfuturepartialdate"
-msgid "<b>%s</b> must be before or equal to <b>%s</b> (<font color=\"green\">%s</font>)."
-msgstr "<b>%s</b> deve ser anterior ou igual a <b>%s</b> (<font color=\"green\">%s</font>)."
+msgid "%s must be before or equal to %s (%s)."
+msgstr "%s deve ser anterior ou igual a %s (%s)."
 
 #: cbs_locale.rsgenderlist
 msgid "he/him,she/her,they/them"
@@ -1501,8 +1489,8 @@ msgstr "Importar imagens"
 #: cbs_locale.rsinactiverecordduplicated
 #, object-pascal-format
 msgctxt "cbs_locale.rsinactiverecordduplicated"
-msgid "An <b>inactive</b> record with the same <b>%s</b> value already exists (<font color=\"blue\">%s</font>)."
-msgstr "Um registro <b>inativo</b> com o mesmo valor de <b>%s</b> já existe (<font color=\"blue\">%s</font>)."
+msgid "An inactive record with the same %s value already exists (%s)."
+msgstr "Um registro inativo com o mesmo valor de %s já existe (%s)."
 
 #: cbs_locale.rsincorrectpassword
 msgctxt "cbs_locale.rsincorrectpassword"
@@ -1551,25 +1539,30 @@ msgstr "Inserido por importação"
 
 #: cbs_locale.rsinvalidcpf
 msgctxt "cbs_locale.rsinvalidcpf"
-msgid "The <b>CPF number</b> entered is invalid."
-msgstr "O <b>número de CPF</b> informado é inválido."
+msgid "The CPF number entered is invalid."
+msgstr "O número de CPF informado é inválido."
 
 #: cbs_locale.rsinvaliddate
 #, object-pascal-format
 msgctxt "cbs_locale.rsinvaliddate"
-msgid "The <b>%s</b> is not a valid date."
-msgstr "A <b>%s</b> não é uma data válida."
+msgid "The %s is not a valid date."
+msgstr "A %s não é uma data válida."
+
+#: cbs_locale.rsinvaliddaterange
+#, object-pascal-format
+msgid "The %s must be later than the %s."
+msgstr "A %s deve ser posterior à %s."
 
 #: cbs_locale.rsinvalidemail
 #, object-pascal-format
 msgctxt "cbs_locale.rsinvalidemail"
-msgid "The address <font color=\"blue\">%s</font> is not a valid <b>e-mail</b>."
-msgstr "O endereço <font color=\"blue\">%s</font> não é um <b>e-mail</b> válido."
+msgid "The address %s is not a valid e-mail."
+msgstr "O endereço %s não é um e-mail válido."
 
 #: cbs_locale.rsinvalidlatitude
 msgctxt "cbs_locale.rsinvalidlatitude"
-msgid "The <b>Latitude</b> entered is not a valid decimal number."
-msgstr "A <b>latitude</b> informada não é um número decimal válido."
+msgid "The Latitude entered is not a valid decimal number."
+msgstr "A latitude informada não é um número decimal válido."
 
 #: cbs_locale.rsinvalidlogin
 msgctxt "cbs_locale.rsinvalidlogin"
@@ -1578,14 +1571,14 @@ msgstr "Usuário não encontrado."
 
 #: cbs_locale.rsinvalidlongitude
 msgctxt "cbs_locale.rsinvalidlongitude"
-msgid "The <b>Longitude</b> entered is not a valid decimal number."
-msgstr "A <b>longitude</b> informada não é um número decimal válido."
+msgid "The Longitude entered is not a valid decimal number."
+msgstr "A longitude informada não é um número decimal válido."
 
 #: cbs_locale.rsinvalidpartialdate
 #, object-pascal-format
 msgctxt "cbs_locale.rsinvalidpartialdate"
-msgid "The <b>%s</b> is not a valid date."
-msgstr "A <b>%s</b> não é uma data válida."
+msgid "The %s is not a valid date."
+msgstr "A %s não é uma data válida."
 
 #: cbs_locale.rsinvalidtimerange
 msgctxt "cbs_locale.rsinvalidtimerange"
@@ -1936,8 +1929,34 @@ msgstr "Busca original"
 #: cbs_locale.rspartialdateempty
 #, object-pascal-format
 msgctxt "cbs_locale.rspartialdateempty"
-msgid "At least the <font color=\"blue\">year</font> of <b>%s</b> must be entered."
-msgstr "No mínimo o <font color=\"blue\">ano</font> da <b>%s</b> deve ser informado."
+msgid "At least the year of %s must be entered."
+msgstr "No mínimo o ano da %s deve ser informado."
+
+#: cbs_locale.rspermitbanding
+msgctxt "cbs_locale.rspermitbanding"
+msgid "Banding Permit"
+msgstr "Licença de anilhamento"
+
+#: cbs_locale.rspermitcollection
+msgctxt "cbs_locale.rspermitcollection"
+msgid "Collection Permit"
+msgstr "Licença de coleta"
+
+#: cbs_locale.rspermitentry
+msgid "Entry Permit"
+msgstr "Licença de entrada"
+
+#: cbs_locale.rspermitother
+msgid "Other Permit"
+msgstr "Outra licença"
+
+#: cbs_locale.rspermitresearch
+msgid "Research Permit"
+msgstr "Licença de pesquisa"
+
+#: cbs_locale.rspermittransport
+msgid "Transport Permit"
+msgstr "Licença de transporte"
 
 #: cbs_locale.rsphotographed
 msgctxt "cbs_locale.rsphotographed"
@@ -2057,8 +2076,8 @@ msgstr "Despreparando..."
 
 #: cbs_locale.rsqualifieronlyingenus
 msgctxt "cbs_locale.rsqualifieronlyingenus"
-msgid "The <font color=\"green\">sp.</font> <b>qualifier</b> can only be used with genera rank."
-msgstr "O <b>qualificador</b> <font color=\"green\">sp.</font> só pode ser usado com nível de gênero."
+msgid "The sp. qualifier can only be used with genera rank."
+msgstr "O qualificador sp. só pode ser usado com nível de gênero."
 
 #: cbs_locale.rsrecnoempty
 msgctxt "cbs_locale.rsrecnoempty"
@@ -2908,14 +2927,14 @@ msgstr "usuário %d de %d"
 #: cbs_locale.rsvaluenotinrange
 #, object-pascal-format
 msgctxt "cbs_locale.rsvaluenotinrange"
-msgid "The value of <b>%s</b> must be between <font color=\"green\">%d</font> and <font color=\"green\">%d</font>."
-msgstr "O valor de <b>%s</b> deve estar entre <font color=\"green\">%d</font> e <font color=\"green\">%d</font>."
+msgid "The value of %s must be between %d and %d."
+msgstr "O valor de %s deve estar entre %d e %d."
 
 #: cbs_locale.rsvaluenotinset
 #, object-pascal-format
 msgctxt "cbs_locale.rsvaluenotinset"
-msgid "The value of <b>%s</b> must be one of the following: <font color='green'>%s</font>."
-msgstr "O valor de <b>%s</b> deve ser um dos seguintes: <font color='green'>%s</font>."
+msgid "The value of %s must be one of the following: %s."
+msgstr "O valor de %s deve ser um dos seguintes: %s."
 
 #: cbs_locale.rsversionplusstr
 #, object-pascal-format

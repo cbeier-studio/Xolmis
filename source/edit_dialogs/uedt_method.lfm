@@ -101,7 +101,7 @@ object edtMethod: TedtMethod
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 334
       ClientWidth = 404
-      Color = 15066599
+      Color = 15263976
       ParentBackground = False
       ParentColor = False
       TabOrder = 0

@@ -911,6 +911,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qCaptureslatitude: TFloatField
@@ -922,6 +924,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qCapturescloacal_protuberance: TStringField
@@ -1536,7 +1540,7 @@ object DMI: TDMI
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qCapturesfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -2051,6 +2055,7 @@ object DMI: TDMI
         Precision = -1
       end>
     AfterCancel = qMoltsAfterCancel
+    AfterInsert = qMoltsAfterInsert
     AfterPost = qMoltsAfterPost
     BeforeEdit = qMoltsBeforeEdit
     BeforePost = qMoltsBeforePost
@@ -2213,6 +2218,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsp2_molt: TFloatField
@@ -2225,6 +2231,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsp3_molt: TFloatField
@@ -2237,6 +2244,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsp4_molt: TFloatField
@@ -2249,6 +2257,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsp5_molt: TFloatField
@@ -2261,6 +2270,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsp6_molt: TFloatField
@@ -2273,6 +2283,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsp7_molt: TFloatField
@@ -2285,6 +2296,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsp8_molt: TFloatField
@@ -2297,6 +2309,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsp9_molt: TFloatField
@@ -2309,6 +2322,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsp10_molt: TFloatField
@@ -2321,6 +2335,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltss1_molt: TFloatField
@@ -2333,6 +2348,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltss2_molt: TFloatField
@@ -2345,6 +2361,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltss3_molt: TFloatField
@@ -2357,6 +2374,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltss4_molt: TFloatField
@@ -2369,6 +2387,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltss5_molt: TFloatField
@@ -2381,6 +2400,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltss6_molt: TFloatField
@@ -2393,6 +2413,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltss7_molt: TFloatField
@@ -2405,6 +2426,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltss8_molt: TFloatField
@@ -2417,6 +2439,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltss9_molt: TFloatField
@@ -2429,6 +2452,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsr1_molt: TFloatField
@@ -2441,6 +2465,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsr2_molt: TFloatField
@@ -2453,6 +2478,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsr3_molt: TFloatField
@@ -2465,6 +2491,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsr4_molt: TFloatField
@@ -2477,6 +2504,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsr5_molt: TFloatField
@@ -2489,6 +2517,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsr6_molt: TFloatField
@@ -2501,6 +2530,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltspc1_molt: TFloatField
@@ -2513,6 +2543,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltspc2_molt: TFloatField
@@ -2525,6 +2556,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltspc3_molt: TFloatField
@@ -2537,6 +2569,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltspc4_molt: TFloatField
@@ -2549,6 +2582,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltspc5_molt: TFloatField
@@ -2561,6 +2595,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltspc6_molt: TFloatField
@@ -2573,6 +2608,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltspc7_molt: TFloatField
@@ -2585,6 +2621,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltspc8_molt: TFloatField
@@ -2597,6 +2634,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltspc9_molt: TFloatField
@@ -2609,6 +2647,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsgc1_molt: TFloatField
@@ -2621,6 +2660,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsgc2_molt: TFloatField
@@ -2633,6 +2673,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsgc3_molt: TFloatField
@@ -2645,6 +2686,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsgc4_molt: TFloatField
@@ -2657,6 +2699,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsgc5_molt: TFloatField
@@ -2669,6 +2712,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsgc6_molt: TFloatField
@@ -2681,6 +2725,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsgc7_molt: TFloatField
@@ -2693,6 +2738,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsgc8_molt: TFloatField
@@ -2705,6 +2751,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsgc9_molt: TFloatField
@@ -2717,6 +2764,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsgc10_molt: TFloatField
@@ -2729,6 +2777,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltscc_molt: TFloatField
@@ -2741,6 +2790,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsal1_molt: TFloatField
@@ -2753,6 +2803,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsal2_molt: TFloatField
@@ -2765,6 +2816,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsal3_molt: TFloatField
@@ -2777,6 +2829,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsmc_molt: TFloatField
@@ -2789,6 +2842,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltslc_molt: TFloatField
@@ -2801,6 +2855,7 @@ object DMI: TDMI
       ReadOnly = False
       Required = False
       DisplayFormat = '##0.00'
+      MaxValue = 1
       Precision = -1
     end
     object qMoltsgrowth_bar_size: TFloatField
@@ -2837,7 +2892,7 @@ object DMI: TDMI
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qMoltsfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -3365,6 +3420,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qSightingslatitude: TFloatField
@@ -3377,6 +3434,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qSightingsmethod_id: TLongintField
@@ -4309,6 +4368,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qNestslatitude: TFloatField
@@ -4320,6 +4381,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qNestsobserver_id: TLongintField
@@ -4675,7 +4738,7 @@ object DMI: TDMI
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qNestsfull_name: TStringField
       FieldKind = fkData
@@ -5028,6 +5091,7 @@ object DMI: TDMI
         Precision = -1
       end>
     AfterCancel = qSpecimensAfterCancel
+    AfterInsert = qSpecimensAfterInsert
     AfterPost = qSpecimensAfterPost
     BeforeEdit = qSpecimensBeforeEdit
     BeforePost = qSpecimensBeforePost
@@ -5058,7 +5122,7 @@ object DMI: TDMI
       end>
     Macros = <>
     DataSource = DMG.dsIndividuals
-    Left = 38
+    Left = 40
     Top = 329
     object qSpecimensmarked_status: TBooleanField
       Alignment = taCenter
@@ -5195,6 +5259,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qSpecimenslatitude: TFloatField
@@ -5206,6 +5272,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qSpecimensindividual_id: TLongintField
@@ -5300,7 +5368,7 @@ object DMI: TDMI
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qSpecimensfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -5756,6 +5824,7 @@ object DMI: TDMI
         Precision = -1
         Size = 100
       end>
+    AfterInsert = qImagesAfterInsert
     BeforePost = qImagesBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -5957,6 +6026,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 180
+      MinValue = -180
       Precision = -1
     end
     object qImageslatitude: TFloatField
@@ -5968,6 +6039,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 90
+      MinValue = -90
       Precision = -1
     end
     object qImagesindividual_id: TLongintField

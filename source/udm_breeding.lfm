@@ -378,7 +378,7 @@ object DMB: TDMB
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qNestRevisionsfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -930,7 +930,7 @@ object DMB: TDMB
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qEggsfull_name: TStringField
       DisplayLabel = 'Full name'

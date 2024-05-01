@@ -167,7 +167,7 @@ begin
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbIndividuals, eBand, dsLink.DataSet, 'band_id', 'band_name', False, Key);
+    FindDlg(tbBands, eBand, dsLink.DataSet, 'band_id', 'band_full_name', False, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
@@ -197,7 +197,7 @@ begin
   if ((IsLetter(Key)) or (IsNumber(Key)) or (IsPunctuation(Key)) or
     (IsSeparator(Key)) or (IsSymbol(Key))) then
   begin
-    FindDlg(tbIndividuals, eDoubleBand, dsLink.DataSet, 'double_band_id', 'double_band_name', False, Key);
+    FindDlg(tbBands, eDoubleBand, dsLink.DataSet, 'double_band_id', 'double_band_name', False, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
@@ -297,7 +297,7 @@ begin
   if ((IsLetter(Key)) or (IsNumber(Key)) or (IsPunctuation(Key)) or
     (IsSeparator(Key)) or (IsSymbol(Key))) then
   begin
-    FindDlg(tbIndividuals, eNest, dsLink.DataSet, 'nest_id', 'nest_name', False, Key);
+    FindDlg(tbNests, eNest, dsLink.DataSet, 'nest_id', 'nest_name', False, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
@@ -327,7 +327,7 @@ begin
   if ((IsLetter(Key)) or (IsNumber(Key)) or (IsPunctuation(Key)) or
     (IsSeparator(Key)) or (IsSymbol(Key))) then
   begin
-    FindDlg(tbIndividuals, eRemovedBand, dsLink.DataSet, 'removed_band_id', 'removed_band_name', False, Key);
+    FindDlg(tbBands, eRemovedBand, dsLink.DataSet, 'removed_band_id', 'removed_band_name', False, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }

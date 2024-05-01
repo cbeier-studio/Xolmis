@@ -16,7 +16,6 @@ object edtBands: TedtBands
   ParentFont = True
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -100,7 +99,7 @@ object edtBands: TedtBands
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 586
       ClientWidth = 488
-      Color = 15066599
+      Color = 15263976
       Constraints.MinHeight = 560
       ParentBackground = False
       ParentColor = False
