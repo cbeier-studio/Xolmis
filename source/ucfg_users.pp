@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, atshapelinebgra, BCPanel,
-  StdCtrls, Menus, DBCtrls, DBGrids, DB;
+  StdCtrls, Menus, DBCtrls, DBGrids, DB, SQLDB;
 
 type
 
@@ -55,7 +55,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_datatypes, cbs_data, cbs_editdialogs, udm_main;
+uses cbs_global, cbs_system, cbs_datatypes, cbs_data, cbs_editdialogs, udm_main;
 
 {$R *.lfm}
 
@@ -76,7 +76,7 @@ end;
 
 procedure TcfgUsers.sbDeleteClick(Sender: TObject);
 begin
-  DeleteRecord(tbUsers, DMM.qUsers);
+  DeleteRecord(tbUsers, dsUsers.DataSet);
 end;
 
 procedure TcfgUsers.FormKeyPress(Sender: TObject; var Key: char);
@@ -107,10 +107,10 @@ begin
       end;
     dsBrowse:
       begin
-        sbNew.Enabled := True;
-        sbEdit.Enabled := DMM.dsUsers.DataSet.RecordCount > 0;
-        sbChangePassword.Enabled := DMM.dsUsers.DataSet.RecordCount > 0;
-        sbDelete.Enabled := DMM.dsUsers.DataSet.RecordCount > 0;
+        sbNew.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly;
+        sbEdit.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and (dsUsers.DataSet.RecordCount > 0);
+        sbChangePassword.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and (dsUsers.DataSet.RecordCount > 0);
+        sbDelete.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and (dsUsers.DataSet.RecordCount > 0);
         sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
       end;
@@ -133,13 +133,15 @@ end;
 
 procedure TcfgUsers.FormDestroy(Sender: TObject);
 begin
-  DMM.qUsers.Close;
+  dsUsers.DataSet.Close;
 end;
 
 procedure TcfgUsers.FormShow(Sender: TObject);
 begin
-  if not DMM.qUsers.Active then
-    DMM.qUsers.Open;
+  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+    (dsUsers.DataSet as TSQLQuery).ReadOnly := True;
+  if not dsUsers.DataSet.Active then
+    dsUsers.DataSet.Open;
 end;
 
 procedure TcfgUsers.sbChangePasswordClick(Sender: TObject);

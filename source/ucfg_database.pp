@@ -5,7 +5,7 @@ unit ucfg_database;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, Menus,
+  Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, Menus,
   atshapelinebgra, BCPanel, VirtualDBGrid, VirtualTrees;
 
 type
@@ -63,7 +63,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, udm_main, uedt_database;
+uses cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_data, cbs_dialogs, udm_main, uedt_database;
 
 {$R *.lfm}
 
@@ -78,6 +78,8 @@ procedure TcfgDatabase.FormShow(Sender: TObject);
 begin
   if not DMM.sysCon.Connected then
     DMM.sysCon.Open;
+  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+    (dsConn.DataSet as TSQLQuery).ReadOnly := True;
   if not dsConn.DataSet.Active then
     dsConn.DataSet.Open;
 
@@ -201,9 +203,9 @@ begin
       end;
     dsBrowse:
       begin
-        sbNew.Enabled := True;
-        sbEdit.Enabled := dsConn.DataSet.RecordCount > 0;
-        sbDelete.Enabled := dsConn.DataSet.RecordCount > 0;
+        sbNew.Enabled := not (dsConn.DataSet as TSQLQuery).ReadOnly;
+        sbEdit.Enabled := not (dsConn.DataSet as TSQLQuery).ReadOnly and (dsConn.DataSet.RecordCount > 0);
+        sbDelete.Enabled := not (dsConn.DataSet as TSQLQuery).ReadOnly and (dsConn.DataSet.RecordCount > 0);
         sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
         mmTestConnection.Enabled := dsConn.DataSet.RecordCount > 0;

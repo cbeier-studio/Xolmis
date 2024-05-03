@@ -2382,6 +2382,8 @@ begin
     Usage.AddPart('load master grid columns');
     {$ENDIF}
     AddGridColumns(FTableType, DBG);
+    if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+      (dsLink.DataSet as TSQLQuery).ReadOnly := True;
     if not (dsLink.DataSet.Active) then
       dsLink.DataSet.Open;
     //SetGridColumns(FTableType, DBG);
@@ -2411,6 +2413,14 @@ begin
         dsLink4.DataSet.Open;
         AddGridColumns(tbSpecimens, gridChild5);
         dsLink5.DataSet.Open;
+        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+        begin
+          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+          (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+          (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
+          (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
+          (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
+        end;
       end;
       tbNests:
       begin
@@ -2420,11 +2430,21 @@ begin
         dsLink2.DataSet.Open;
         AddGridColumns(tbEggs, gridChild3);
         dsLink3.DataSet.Open;
+        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+        begin
+          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+          (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+          (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
+        end;
       end;
       tbExpeditions:
       begin
         AddGridColumns(tbSurveys, gridChild1);
         dsLink1.DataSet.Open;
+        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+        begin
+          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+        end;
       end;
       tbSurveys:
       begin
@@ -2438,6 +2458,14 @@ begin
         dsLink4.DataSet.Open;
         AddGridColumns(tbSightings, gridChild5);
         dsLink5.DataSet.Open;
+        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+        begin
+          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+          (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+          (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
+          (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
+          (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
+        end;
       end;
       tbSpecimens:
       begin
@@ -2445,16 +2473,29 @@ begin
         dsLink1.DataSet.Open;
         AddGridColumns(tbSamplePreps, gridChild2);
         dsLink2.DataSet.Open;
+        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+        begin
+          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+          (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+        end;
       end;
       tbNetStations:
       begin
         AddGridColumns(tbPermanentNets, gridChild1);
         dsLink1.DataSet.Open;
+        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+        begin
+          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+        end;
       end;
       tbProjects:
       begin
         AddGridColumns(tbProjectTeams, gridChild1);
         dsLink1.DataSet.Open;
+        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+        begin
+          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+        end;
       end;
     end;
     //SetGridColumns(FChildTable, dbgChild);

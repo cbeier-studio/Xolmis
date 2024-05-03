@@ -231,12 +231,16 @@ end;
 
 procedure TdlgFindTaxon.uListPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
 begin
+  //if (gdSelected in aState) or (gdFocused in aState) then
+  //  pContent.Color := clHighlight
+  //else
+  //  pContent.Color := clWhite;
+  lblName.DefBackground := pContent.Color;
+
   if qFind.Active then
     lblName.LoadFromString(qFind.FieldByName('formatted_name').AsString)
   else
     lblName.Clear;
-
-  lblName.DefBackground := pContent.Color;
 end;
 
 function TdlgFindTaxon.Pesquisar(aValor: String): Boolean;
