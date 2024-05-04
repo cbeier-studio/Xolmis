@@ -2,6 +2,9 @@
 
 A free, open source, multi-platform ornithological data manager, built using Lazarus/FPC.
 
+> [!IMPORTANT]
+> Xolmis is in the early stages of development and is subject to some breaking changes. As soon as possible, a stable version will be made available to anyone who intends to use the app in production.
+
 Xolmis is an ornithological data management system intended for researchers and birdwatchers. It was designed to aggregate separated data files (_e.g._ CSV files and Excel spreadsheets), which may end up being lost over time. In addition to the objective of aggregating different types of data collected in research and observations, it also aims to facilitate the curation, crossing and sharing of data, while increasing its consistency and security.
 
 ![Xolmis screenshot](https://github.com/cbeier-studio/xolmis/assets/109050697/00962310-a2ac-45b0-ba88-465d806f0cab)
@@ -13,19 +16,19 @@ Xolmis is an ornithological data management system intended for researchers and 
 Here is a list of the main features:
 
 - [x] Management of database connections.
-- [ ] Start page with dashboard.
+- [x] Start page with dashboard.
 - [x] Management of expeditions and samplings.
-- [ ] Lists of sightings and samples collection.
+- [x] Lists of sightings and samples collection.
 - [x] Bands and markings management (Brazilian system/CEMAVE).
 - [x] Management of known individuals and captures (including molt data).
 - [x] Record of breeding biology data.
 - [x] Record of institutions, researchers, and projects.
-- [ ] Management of permits.
+- [x] Management of permits.
 - [x] Record of toponyms (gazetteer) and sampling plots.
 - [ ] Updated bird taxonomies (Clements/eBird, IOC, and CBRO).
 - [x] Geographical coordinates converter (WGS84) from/to Decimal Degrees, DMS, and UTM formats.
 - [x] Import eBird records (CSV file).
-- [ ] Import banding journals (CSV file).
+- [x] Import banding journals (CSV file).
 - [x] Import captures (CSV file).
 - [ ] Attachment of images, audio recording, documents and links to the field records.
 
