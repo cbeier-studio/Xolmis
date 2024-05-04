@@ -545,6 +545,7 @@ type
     qMoltssample_date: TDateField;
     qMoltssample_time: TTimeField;
     qMoltssurvey_id: TLongintField;
+    qMoltssurvey_name: TStringField;
     qMoltstaxon_id: TLongintField;
     qMoltstaxon_name: TStringField;
     qMoltsupdate_date: TDateTimeField;

@@ -118,6 +118,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('country_id').Clear;
+    dsLink.DataSet.FieldByName('country_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -159,6 +160,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('municipality_id').Clear;
+    dsLink.DataSet.FieldByName('municipality_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -188,6 +190,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('state_id').Clear;
+    dsLink.DataSet.FieldByName('state_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }

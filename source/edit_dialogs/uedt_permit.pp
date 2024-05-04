@@ -119,6 +119,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('project_id').Clear;
+    dsLink.DataSet.FieldByName('project_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }

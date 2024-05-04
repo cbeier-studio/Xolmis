@@ -143,6 +143,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('nidoparasite_id').Clear;
+    dsLink.DataSet.FieldByName('nidoparasite_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }

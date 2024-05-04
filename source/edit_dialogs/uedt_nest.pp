@@ -297,6 +297,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('project_id').Clear;
+    dsLink.DataSet.FieldByName('project_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -326,6 +327,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('support_plant_1_id').Clear;
+    dsLink.DataSet.FieldByName('support_plant_1_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -355,6 +357,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('support_plant_2_id').Clear;
+    dsLink.DataSet.FieldByName('support_plant_2_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -386,6 +389,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('taxon_id').Clear;
+    dsLink.DataSet.FieldByName('taxon_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }

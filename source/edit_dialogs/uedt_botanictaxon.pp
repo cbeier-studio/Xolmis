@@ -113,6 +113,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('parent_taxon_id').Clear;
+    dsLink.DataSet.FieldByName('parent_taxon_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -142,6 +143,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('valid_id').Clear;
+    dsLink.DataSet.FieldByName('valid_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }

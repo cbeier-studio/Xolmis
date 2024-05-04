@@ -87,14 +87,14 @@ object edtSurvey: TedtSurvey
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 973
+      Height = 974
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 973
+      ClientHeight = 974
       ClientWidth = 399
       Color = 15263976
       ParentBackground = False
@@ -103,7 +103,7 @@ object edtSurvey: TedtSurvey
       object pLocality: TPanel
         Left = 0
         Height = 46
-        Top = 225
+        Top = 226
         Width = 399
         Align = alTop
         AutoSize = True
@@ -225,7 +225,7 @@ object edtSurvey: TedtSurvey
       object pNetStation: TPanel
         Left = 0
         Height = 46
-        Top = 271
+        Top = 272
         Width = 399
         Align = alTop
         AutoSize = True
@@ -279,7 +279,7 @@ object edtSurvey: TedtSurvey
       object pNotes: TPanel
         Left = 0
         Height = 124
-        Top = 833
+        Top = 834
         Width = 399
         Align = alTop
         AutoSize = True
@@ -324,7 +324,7 @@ object edtSurvey: TedtSurvey
       object pProject: TPanel
         Left = 0
         Height = 46
-        Top = 317
+        Top = 318
         Width = 399
         Align = alTop
         AutoSize = True
@@ -377,7 +377,7 @@ object edtSurvey: TedtSurvey
       end
       object pMethod: TPanel
         Left = 0
-        Height = 45
+        Height = 46
         Top = 180
         Width = 399
         Align = alTop
@@ -388,7 +388,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
@@ -403,20 +403,29 @@ object edtSurvey: TedtSurvey
           ParentColor = False
           ParentFont = False
         end
-        object cbMethod: TDBLookupComboBox
+        object eMethod: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 24
           Top = 22
           Width = 368
+          AutoSize = True
+          BevelOuter = bvNone
+          ClientHeight = 24
+          ClientWidth = 368
+          Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          DataField = 'method_id'
-          DataSource = dsLink
-          ListFieldIndex = 0
-          LookupCache = False
-          NullValueKey = 46
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eDurationKeyPress
+          ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'method_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = eMethodButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eMethodDBEditKeyPress
         end
       end
       object pDateDuration: TPanel
@@ -500,7 +509,7 @@ object edtSurvey: TedtSurvey
       object pStartCoordinate: TPanel
         Left = 0
         Height = 46
-        Top = 363
+        Top = 364
         Width = 399
         Align = alTop
         AutoSize = True
@@ -588,7 +597,7 @@ object edtSurvey: TedtSurvey
       object pEndCoordinate: TPanel
         Left = 0
         Height = 46
-        Top = 409
+        Top = 410
         Width = 399
         Align = alTop
         AutoSize = True
@@ -676,7 +685,7 @@ object edtSurvey: TedtSurvey
       object pAreaDistance: TPanel
         Left = 0
         Height = 45
-        Top = 513
+        Top = 514
         Width = 399
         Align = alTop
         AutoSize = True
@@ -742,7 +751,7 @@ object edtSurvey: TedtSurvey
       object pNetsTotalEffort: TPanel
         Left = 0
         Height = 45
-        Top = 558
+        Top = 559
         Width = 399
         Align = alTop
         AutoSize = True
@@ -806,7 +815,7 @@ object edtSurvey: TedtSurvey
       object pObserversSampleId: TPanel
         Left = 0
         Height = 45
-        Top = 468
+        Top = 469
         Width = 399
         Align = alTop
         AutoSize = True
@@ -873,7 +882,7 @@ object edtSurvey: TedtSurvey
       object pHabitat: TPanel
         Left = 0
         Height = 92
-        Top = 616
+        Top = 617
         Width = 399
         Align = alTop
         AutoSize = True
@@ -918,7 +927,7 @@ object edtSurvey: TedtSurvey
       object pNetRounds: TPanel
         Left = 0
         Height = 99
-        Top = 721
+        Top = 722
         Width = 399
         Align = alTop
         AutoSize = True

@@ -198,6 +198,7 @@ type
     qNetsEffortpermanent_net_name: TStringField;
     qNetsEffortsample_date: TDateField;
     qNetsEffortsurvey_id: TLargeintField;
+    qNetsEffortsurvey_name: TStringField;
     qNetsEffortupdate_date: TDateTimeField;
     qNetsEffortuser_inserted: TLongintField;
     qNetsEffortuser_updated: TLongintField;
@@ -225,6 +226,7 @@ type
     qSightingsmales_tally: TStringField;
     qSightingsmarked_status: TBooleanField;
     qSightingsmethod_id: TLongintField;
+    qSightingsmethod_name: TStringField;
     qSightingsmunicipality_id: TLongintField;
     qSightingsnew_captures_tally: TLongintField;
     qSightingsnotes: TMemoField;

@@ -5083,158 +5083,6 @@ msgctxt "tedtmolt.edate.texthint"
 msgid "DD/MM/YYYY"
 msgstr ""
 
-#: tedtmolt.lblbandcolor.caption
-msgid "P2:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor1.caption
-msgid "P3:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor10.caption
-msgid "S4:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor11.caption
-msgid "S5:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor12.caption
-msgid "S7:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor13.caption
-msgid "S8:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor14.caption
-msgid "S9:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor16.caption
-msgid "R2:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor17.caption
-msgid "R3:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor18.caption
-msgid "R4:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor19.caption
-msgid "R5:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor2.caption
-msgid "P4:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor24.caption
-msgid "PC2:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor25.caption
-msgid "PC3:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor26.caption
-msgid "PC4:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor27.caption
-msgid "PC5:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor28.caption
-msgid "PC7:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor29.caption
-msgid "PC8:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor3.caption
-msgid "P5:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor30.caption
-msgid "PC9:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor32.caption
-msgid "Al2:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor33.caption
-msgid "Al3:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor4.caption
-msgid "P7:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor40.caption
-msgid "GC2:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor41.caption
-msgid "GC3:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor42.caption
-msgid "GC4:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor43.caption
-msgid "GC5:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor44.caption
-msgid "GC7:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor45.caption
-msgid "GC8:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor46.caption
-msgid "GC9:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor47.caption
-msgid "GC10:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor48.caption
-msgid "LC:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor5.caption
-msgid "P8:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor50.caption
-msgid "CC:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor6.caption
-msgid "P9:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor7.caption
-msgid "P10:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor8.caption
-msgid "S2:"
-msgstr ""
-
-#: tedtmolt.lblbandcolor9.caption
-msgid "S3:"
-msgstr ""
-
 #: tedtmolt.lblbandprefix.caption
 msgctxt "tedtmolt.lblbandprefix.caption"
 msgid "Date: *"
@@ -5245,56 +5093,9 @@ msgctxt "tedtmolt.lblbandsuffix.caption"
 msgid "Time:"
 msgstr ""
 
-#: tedtmolt.lblbandtype.caption
-msgid "P1:"
-msgstr ""
-
-#: tedtmolt.lblbandtype1.caption
-msgid "P6:"
-msgstr ""
-
-#: tedtmolt.lblbandtype10.caption
-msgid "GC1:"
-msgstr ""
-
-#: tedtmolt.lblbandtype11.caption
-msgid "GC6:"
-msgstr ""
-
-#: tedtmolt.lblbandtype12.caption
-msgid "MC:"
-msgstr ""
-
-#: tedtmolt.lblbandtype14.caption
+#: tedtmolt.lblgrowthbarwidth.caption
+msgctxt "tedtmolt.lblgrowthbarwidth.caption"
 msgid "Growth bar width:"
-msgstr ""
-
-#: tedtmolt.lblbandtype2.caption
-msgid "S1:"
-msgstr ""
-
-#: tedtmolt.lblbandtype3.caption
-msgid "S6:"
-msgstr ""
-
-#: tedtmolt.lblbandtype4.caption
-msgid "R1:"
-msgstr ""
-
-#: tedtmolt.lblbandtype5.caption
-msgid "R6:"
-msgstr ""
-
-#: tedtmolt.lblbandtype6.caption
-msgid "PC1:"
-msgstr ""
-
-#: tedtmolt.lblbandtype7.caption
-msgid "PC6:"
-msgstr ""
-
-#: tedtmolt.lblbandtype8.caption
-msgid "Al1:"
 msgstr ""
 
 #: tedtmolt.lblnotes.caption
@@ -5312,36 +5113,44 @@ msgctxt "tedtmolt.lblsupplier.caption"
 msgid "Survey:"
 msgstr ""
 
-#: tedtmolt.lbltitlemetrics.caption
-msgid "Primaries"
-msgstr ""
-
-#: tedtmolt.lbltitlemetrics1.caption
-msgid "Secondaries"
-msgstr ""
-
-#: tedtmolt.lbltitlemetrics2.caption
-msgid "Rectrices"
-msgstr ""
-
-#: tedtmolt.lbltitlemetrics3.caption
+#: tedtmolt.lbltitlealula.caption
+msgctxt "tedtmolt.lbltitlealula.caption"
 msgid "Alula"
 msgstr ""
 
-#: tedtmolt.lbltitlemetrics4.caption
-msgid "Primary coverts"
-msgstr ""
-
-#: tedtmolt.lbltitlemetrics5.caption
+#: tedtmolt.lbltitlegreatcoverts.caption
+msgctxt "tedtmolt.lbltitlegreatcoverts.caption"
 msgid "Greater coverts"
 msgstr ""
 
-#: tedtmolt.lbltitlemetrics6.caption
+#: tedtmolt.lbltitlegrowthbars.caption
+msgctxt "tedtmolt.lbltitlegrowthbars.caption"
+msgid "Growth bars"
+msgstr ""
+
+#: tedtmolt.lbltitleothercoverts.caption
+msgctxt "tedtmolt.lbltitleothercoverts.caption"
 msgid "Other coverts"
 msgstr ""
 
-#: tedtmolt.lbltitlemetrics7.caption
-msgid "Growth bars"
+#: tedtmolt.lbltitleprimaries.caption
+msgctxt "tedtmolt.lbltitleprimaries.caption"
+msgid "Primaries"
+msgstr ""
+
+#: tedtmolt.lbltitleprimarycoverts.caption
+msgctxt "tedtmolt.lbltitleprimarycoverts.caption"
+msgid "Primary coverts"
+msgstr ""
+
+#: tedtmolt.lbltitlerectrices.caption
+msgctxt "tedtmolt.lbltitlerectrices.caption"
+msgid "Rectrices"
+msgstr ""
+
+#: tedtmolt.lbltitlesecondaries.caption
+msgctxt "tedtmolt.lbltitlesecondaries.caption"
+msgid "Secondaries"
 msgstr ""
 
 #: tedtmolt.sbcancel.caption
@@ -6259,8 +6068,8 @@ msgstr ""
 msgid "Quantity:"
 msgstr ""
 
-#: tedtsighting.lblcarrier.caption
-msgctxt "tedtsighting.lblcarrier.caption"
+#: tedtsighting.lblmethod.caption
+msgctxt "tedtsighting.lblmethod.caption"
 msgid "Method: *"
 msgstr ""
 

@@ -1710,7 +1710,7 @@ object DMI: TDMI
     FieldDefs = <    
       item
         Name = 'molt_id'
-        DataType = ftAutoInc
+        DataType = ftInteger
         Precision = -1
       end    
       item
@@ -2053,6 +2053,36 @@ object DMI: TDMI
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'bander_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'survey_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'band_name'
+        DataType = ftString
+        Precision = -1
+        Size = 255
       end>
     AfterCancel = qMoltsAfterCancel
     AfterInsert = qMoltsAfterInsert
@@ -2063,8 +2093,14 @@ object DMI: TDMI
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT m.*,'
+      '  (SELECT z.full_name FROM zoo_taxa AS z'
+      '    WHERE z.taxon_id = m.taxon_id) AS taxon_name,'
+      '  (SELECT i.full_name FROM individuals AS i'
+      '    WHERE i.individual_id = m.individual_id) AS individual_name,'
       '  (SELECT p.acronym FROM people AS p'
       '    WHERE p.person_id = m.bander_id) AS bander_name,'
+      '  (SELECT a.full_name FROM surveys AS a'
+      '    WHERE a.survey_id = m.survey_id) AS survey_name,'
       '  (SELECT b.band_size||'' ''||b.band_number FROM bands AS b'
       '    WHERE b.band_id = m.band_id) AS band_name'
       'FROM molts AS m'
@@ -2108,11 +2144,21 @@ object DMI: TDMI
       Required = False
       Visible = False
     end
+    object qMoltssurvey_name: TStringField
+      FieldKind = fkData
+      FieldName = 'survey_name'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
     object qMoltscapture_id: TLongintField
       DisplayLabel = 'Capture (ID)'
       FieldKind = fkData
       FieldName = 'capture_id'
-      Index = 2
+      Index = 3
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2123,29 +2169,49 @@ object DMI: TDMI
       DisplayLabel = 'Taxon (ID)'
       FieldKind = fkData
       FieldName = 'taxon_id'
-      Index = 3
+      Index = 4
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = True
       Visible = False
     end
+    object qMoltstaxon_name: TStringField
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
     object qMoltsindividual_id: TLongintField
       DisplayLabel = 'Individual (ID)'
       FieldKind = fkData
       FieldName = 'individual_id'
-      Index = 4
+      Index = 6
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Visible = False
     end
+    object qMoltsindividual_name: TStringField
+      FieldKind = fkData
+      FieldName = 'individual_name'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
+    end
     object qMoltsbander_id: TLongintField
       DisplayLabel = 'Bander (ID)'
       FieldKind = fkData
       FieldName = 'bander_id'
-      Index = 5
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2156,7 +2222,7 @@ object DMI: TDMI
       DisplayLabel = 'Bander'
       FieldKind = fkData
       FieldName = 'bander_name'
-      Index = 6
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -2167,7 +2233,7 @@ object DMI: TDMI
       DisplayLabel = 'Band (ID)'
       FieldKind = fkData
       FieldName = 'band_id'
-      Index = 7
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2179,7 +2245,7 @@ object DMI: TDMI
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'band_name'
-      Index = 8
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -2191,7 +2257,7 @@ object DMI: TDMI
       DisplayLabel = 'Date'
       FieldKind = fkData
       FieldName = 'sample_date'
-      Index = 9
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2202,7 +2268,7 @@ object DMI: TDMI
       DisplayLabel = 'Time'
       FieldKind = fkData
       FieldName = 'sample_time'
-      Index = 10
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2212,7 +2278,7 @@ object DMI: TDMI
       DisplayLabel = 'P1'
       FieldKind = fkData
       FieldName = 'p1_molt'
-      Index = 11
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2225,7 +2291,7 @@ object DMI: TDMI
       DisplayLabel = 'P2'
       FieldKind = fkData
       FieldName = 'p2_molt'
-      Index = 12
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2238,7 +2304,7 @@ object DMI: TDMI
       DisplayLabel = 'P3'
       FieldKind = fkData
       FieldName = 'p3_molt'
-      Index = 13
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2251,7 +2317,7 @@ object DMI: TDMI
       DisplayLabel = 'P4'
       FieldKind = fkData
       FieldName = 'p4_molt'
-      Index = 14
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2264,7 +2330,7 @@ object DMI: TDMI
       DisplayLabel = 'P5'
       FieldKind = fkData
       FieldName = 'p5_molt'
-      Index = 15
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2277,7 +2343,7 @@ object DMI: TDMI
       DisplayLabel = 'P6'
       FieldKind = fkData
       FieldName = 'p6_molt'
-      Index = 16
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2290,7 +2356,7 @@ object DMI: TDMI
       DisplayLabel = 'P7'
       FieldKind = fkData
       FieldName = 'p7_molt'
-      Index = 17
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2303,7 +2369,7 @@ object DMI: TDMI
       DisplayLabel = 'P8'
       FieldKind = fkData
       FieldName = 'p8_molt'
-      Index = 18
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2316,7 +2382,7 @@ object DMI: TDMI
       DisplayLabel = 'P9'
       FieldKind = fkData
       FieldName = 'p9_molt'
-      Index = 19
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2329,7 +2395,7 @@ object DMI: TDMI
       DisplayLabel = 'P10'
       FieldKind = fkData
       FieldName = 'p10_molt'
-      Index = 20
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2342,7 +2408,7 @@ object DMI: TDMI
       DisplayLabel = 'S1'
       FieldKind = fkData
       FieldName = 's1_molt'
-      Index = 21
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2355,7 +2421,7 @@ object DMI: TDMI
       DisplayLabel = 'S2'
       FieldKind = fkData
       FieldName = 's2_molt'
-      Index = 22
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2368,7 +2434,7 @@ object DMI: TDMI
       DisplayLabel = 'S3'
       FieldKind = fkData
       FieldName = 's3_molt'
-      Index = 23
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2381,7 +2447,7 @@ object DMI: TDMI
       DisplayLabel = 'S4'
       FieldKind = fkData
       FieldName = 's4_molt'
-      Index = 24
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2394,7 +2460,7 @@ object DMI: TDMI
       DisplayLabel = 'S5'
       FieldKind = fkData
       FieldName = 's5_molt'
-      Index = 25
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2407,7 +2473,7 @@ object DMI: TDMI
       DisplayLabel = 'S6'
       FieldKind = fkData
       FieldName = 's6_molt'
-      Index = 26
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2420,7 +2486,7 @@ object DMI: TDMI
       DisplayLabel = 'S7'
       FieldKind = fkData
       FieldName = 's7_molt'
-      Index = 27
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2433,7 +2499,7 @@ object DMI: TDMI
       DisplayLabel = 'S8'
       FieldKind = fkData
       FieldName = 's8_molt'
-      Index = 28
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2446,7 +2512,7 @@ object DMI: TDMI
       DisplayLabel = 'S9'
       FieldKind = fkData
       FieldName = 's9_molt'
-      Index = 29
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2459,7 +2525,7 @@ object DMI: TDMI
       DisplayLabel = 'R1'
       FieldKind = fkData
       FieldName = 'r1_molt'
-      Index = 30
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2472,7 +2538,7 @@ object DMI: TDMI
       DisplayLabel = 'R2'
       FieldKind = fkData
       FieldName = 'r2_molt'
-      Index = 31
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2485,7 +2551,7 @@ object DMI: TDMI
       DisplayLabel = 'R3'
       FieldKind = fkData
       FieldName = 'r3_molt'
-      Index = 32
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2498,7 +2564,7 @@ object DMI: TDMI
       DisplayLabel = 'R4'
       FieldKind = fkData
       FieldName = 'r4_molt'
-      Index = 33
+      Index = 36
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2511,7 +2577,7 @@ object DMI: TDMI
       DisplayLabel = 'R5'
       FieldKind = fkData
       FieldName = 'r5_molt'
-      Index = 34
+      Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2524,7 +2590,7 @@ object DMI: TDMI
       DisplayLabel = 'R6'
       FieldKind = fkData
       FieldName = 'r6_molt'
-      Index = 35
+      Index = 38
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2537,7 +2603,7 @@ object DMI: TDMI
       DisplayLabel = 'PC1'
       FieldKind = fkData
       FieldName = 'pc1_molt'
-      Index = 36
+      Index = 39
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2550,7 +2616,7 @@ object DMI: TDMI
       DisplayLabel = 'PC2'
       FieldKind = fkData
       FieldName = 'pc2_molt'
-      Index = 37
+      Index = 40
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2563,7 +2629,7 @@ object DMI: TDMI
       DisplayLabel = 'PC3'
       FieldKind = fkData
       FieldName = 'pc3_molt'
-      Index = 38
+      Index = 41
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2576,7 +2642,7 @@ object DMI: TDMI
       DisplayLabel = 'PC4'
       FieldKind = fkData
       FieldName = 'pc4_molt'
-      Index = 39
+      Index = 42
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2589,7 +2655,7 @@ object DMI: TDMI
       DisplayLabel = 'PC5'
       FieldKind = fkData
       FieldName = 'pc5_molt'
-      Index = 40
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2602,7 +2668,7 @@ object DMI: TDMI
       DisplayLabel = 'PC6'
       FieldKind = fkData
       FieldName = 'pc6_molt'
-      Index = 41
+      Index = 44
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2615,7 +2681,7 @@ object DMI: TDMI
       DisplayLabel = 'PC7'
       FieldKind = fkData
       FieldName = 'pc7_molt'
-      Index = 42
+      Index = 45
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2628,7 +2694,7 @@ object DMI: TDMI
       DisplayLabel = 'PC8'
       FieldKind = fkData
       FieldName = 'pc8_molt'
-      Index = 43
+      Index = 46
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2641,7 +2707,7 @@ object DMI: TDMI
       DisplayLabel = 'PC9'
       FieldKind = fkData
       FieldName = 'pc9_molt'
-      Index = 44
+      Index = 47
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2654,7 +2720,7 @@ object DMI: TDMI
       DisplayLabel = 'GC1'
       FieldKind = fkData
       FieldName = 'gc1_molt'
-      Index = 45
+      Index = 48
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2667,7 +2733,7 @@ object DMI: TDMI
       DisplayLabel = 'GC2'
       FieldKind = fkData
       FieldName = 'gc2_molt'
-      Index = 46
+      Index = 49
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2680,7 +2746,7 @@ object DMI: TDMI
       DisplayLabel = 'GC3'
       FieldKind = fkData
       FieldName = 'gc3_molt'
-      Index = 47
+      Index = 50
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2693,7 +2759,7 @@ object DMI: TDMI
       DisplayLabel = 'GC4'
       FieldKind = fkData
       FieldName = 'gc4_molt'
-      Index = 48
+      Index = 51
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2706,7 +2772,7 @@ object DMI: TDMI
       DisplayLabel = 'GC5'
       FieldKind = fkData
       FieldName = 'gc5_molt'
-      Index = 49
+      Index = 52
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2719,7 +2785,7 @@ object DMI: TDMI
       DisplayLabel = 'GC6'
       FieldKind = fkData
       FieldName = 'gc6_molt'
-      Index = 50
+      Index = 53
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2732,7 +2798,7 @@ object DMI: TDMI
       DisplayLabel = 'GC7'
       FieldKind = fkData
       FieldName = 'gc7_molt'
-      Index = 51
+      Index = 54
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2745,7 +2811,7 @@ object DMI: TDMI
       DisplayLabel = 'GC8'
       FieldKind = fkData
       FieldName = 'gc8_molt'
-      Index = 52
+      Index = 55
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2758,7 +2824,7 @@ object DMI: TDMI
       DisplayLabel = 'GC9'
       FieldKind = fkData
       FieldName = 'gc9_molt'
-      Index = 53
+      Index = 56
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2771,7 +2837,7 @@ object DMI: TDMI
       DisplayLabel = 'GC10'
       FieldKind = fkData
       FieldName = 'gc10_molt'
-      Index = 54
+      Index = 57
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2784,7 +2850,7 @@ object DMI: TDMI
       DisplayLabel = 'CC'
       FieldKind = fkData
       FieldName = 'cc_molt'
-      Index = 55
+      Index = 58
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2797,7 +2863,7 @@ object DMI: TDMI
       DisplayLabel = 'Al1'
       FieldKind = fkData
       FieldName = 'al1_molt'
-      Index = 56
+      Index = 59
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2810,7 +2876,7 @@ object DMI: TDMI
       DisplayLabel = 'Al2'
       FieldKind = fkData
       FieldName = 'al2_molt'
-      Index = 57
+      Index = 60
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2823,7 +2889,7 @@ object DMI: TDMI
       DisplayLabel = 'Al3'
       FieldKind = fkData
       FieldName = 'al3_molt'
-      Index = 58
+      Index = 61
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2836,7 +2902,7 @@ object DMI: TDMI
       DisplayLabel = 'MC'
       FieldKind = fkData
       FieldName = 'mc_molt'
-      Index = 59
+      Index = 62
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2849,7 +2915,7 @@ object DMI: TDMI
       DisplayLabel = 'LC'
       FieldKind = fkData
       FieldName = 'lc_molt'
-      Index = 60
+      Index = 63
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2862,7 +2928,7 @@ object DMI: TDMI
       DisplayLabel = 'Growth bar (mm)'
       FieldKind = fkData
       FieldName = 'growth_bar_size'
-      Index = 61
+      Index = 64
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2875,7 +2941,7 @@ object DMI: TDMI
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 62
+      Index = 65
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2888,7 +2954,7 @@ object DMI: TDMI
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'molt_id'
-      Index = 63
+      Index = 66
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -2898,7 +2964,7 @@ object DMI: TDMI
       DisplayLabel = 'Full name'
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 64
+      Index = 67
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2910,7 +2976,7 @@ object DMI: TDMI
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 65
+      Index = 68
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2921,7 +2987,7 @@ object DMI: TDMI
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 66
+      Index = 69
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2933,7 +2999,7 @@ object DMI: TDMI
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 67
+      Index = 70
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2945,7 +3011,7 @@ object DMI: TDMI
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 68
+      Index = 71
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2957,7 +3023,7 @@ object DMI: TDMI
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 69
+      Index = 72
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2970,7 +3036,7 @@ object DMI: TDMI
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 70
+      Index = 73
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

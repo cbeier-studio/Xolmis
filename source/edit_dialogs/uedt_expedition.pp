@@ -104,6 +104,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('locality_id').Clear;
+    dsLink.DataSet.FieldByName('locality_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -145,6 +146,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('project_id').Clear;
+    dsLink.DataSet.FieldByName('project_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }

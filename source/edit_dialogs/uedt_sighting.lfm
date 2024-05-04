@@ -88,14 +88,14 @@ object edtSighting: TedtSighting
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1330
+      Height = 1319
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1330
+      ClientHeight = 1319
       ClientWidth = 399
       Color = 15263976
       ParentBackground = False
@@ -104,7 +104,7 @@ object edtSighting: TedtSighting
       object pNotes: TPanel
         Left = 0
         Height = 125
-        Top = 1189
+        Top = 1178
         Width = 399
         Align = alTop
         AutoSize = True
@@ -150,7 +150,7 @@ object edtSighting: TedtSighting
       object pLongitudeLatitude: TPanel
         Left = 0
         Height = 46
-        Top = 238
+        Top = 227
         Width = 399
         Align = alTop
         AutoSize = True
@@ -238,7 +238,7 @@ object edtSighting: TedtSighting
       object pDateTime: TPanel
         Left = 0
         Height = 46
-        Top = 284
+        Top = 273
         Width = 399
         Align = alTop
         AutoSize = True
@@ -317,7 +317,7 @@ object edtSighting: TedtSighting
       object pTypeColor: TPanel
         Left = 0
         Height = 45
-        Top = 435
+        Top = 424
         Width = 399
         Align = alTop
         AutoSize = True
@@ -383,7 +383,7 @@ object edtSighting: TedtSighting
       object pStatus: TPanel
         Left = 0
         Height = 45
-        Top = 526
+        Top = 515
         Width = 399
         Align = alTop
         AutoSize = True
@@ -425,7 +425,7 @@ object edtSighting: TedtSighting
       object pSourceOrderNumber: TPanel
         Left = 0
         Height = 46
-        Top = 480
+        Top = 469
         Width = 399
         Align = alTop
         AutoSize = True
@@ -513,7 +513,7 @@ object edtSighting: TedtSighting
       object pDateOrderReceipt: TPanel
         Left = 0
         Height = 137
-        Top = 684
+        Top = 673
         Width = 399
         Align = alTop
         AutoSize = True
@@ -604,7 +604,7 @@ object edtSighting: TedtSighting
       object pLocality: TPanel
         Left = 0
         Height = 46
-        Top = 192
+        Top = 181
         Width = 399
         Align = alTop
         AutoSize = True
@@ -709,7 +709,7 @@ object edtSighting: TedtSighting
       end
       object pMethod: TPanel
         Left = 0
-        Height = 57
+        Height = 46
         Top = 135
         Width = 399
         Align = alTop
@@ -718,49 +718,52 @@ object edtSighting: TedtSighting
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 57
+        ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 1
-        object lblCarrier: TLabel
+        object lblMethod: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
-          Align = alTop
+          Width = 368
           BorderSpacing.Top = 3
           Caption = 'Method: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object cbMethod: TDBLookupComboBox
+        object eMethod: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 24
           Top = 22
-          Width = 367
-          Align = alTop
-          AutoComplete = True
-          Constraints.MinWidth = 365
-          DataField = 'method_id'
-          DataSource = dsLink
-          KeyField = 'person_id'
-          ListField = 'full_name'
-          ListFieldIndex = 0
-          LookupCache = False
-          NullValueKey = 32776
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbMethodKeyPress
-          Sorted = True
-          Style = csDropDownList
+          Width = 368
+          AutoSize = True
+          BevelOuter = bvNone
+          ClientHeight = 24
+          ClientWidth = 368
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 368
+          ParentBackground = False
           TabOrder = 0
+          ButtonWidth = 24
+          ImageIndex = 99
+          Images = frmMain.mPopup
+          ImageWidth = 20
+          DataField = 'method_name'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = eMethodButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eMethodDBEditKeyPress
         end
       end
       object pTaxon: TPanel
         Left = 0
         Height = 46
-        Top = 343
+        Top = 332
         Width = 399
         Align = alTop
         AutoSize = True
@@ -814,7 +817,7 @@ object edtSighting: TedtSighting
       object pProject: TPanel
         Left = 0
         Height = 46
-        Top = 389
+        Top = 378
         Width = 399
         Align = alTop
         AutoSize = True
@@ -867,7 +870,7 @@ object edtSighting: TedtSighting
       object pDateUseDischarge: TPanel
         Left = 0
         Height = 87
-        Top = 584
+        Top = 573
         Width = 399
         Align = alTop
         AutoSize = True
@@ -974,7 +977,7 @@ object edtSighting: TedtSighting
       object pDateReported: TPanel
         Left = 0
         Height = 137
-        Top = 834
+        Top = 823
         Width = 399
         Align = alTop
         BorderSpacing.Top = 13
@@ -1064,7 +1067,7 @@ object edtSighting: TedtSighting
       object pDateReported1: TPanel
         Left = 0
         Height = 137
-        Top = 984
+        Top = 973
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1155,7 +1158,7 @@ object edtSighting: TedtSighting
       object pDateUseDischarge1: TPanel
         Left = 0
         Height = 42
-        Top = 1134
+        Top = 1123
         Width = 399
         Align = alTop
         AutoSize = True

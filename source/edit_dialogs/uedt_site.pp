@@ -117,7 +117,8 @@ begin
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('survey_id').Clear;
+    dsLink.DataSet.FieldByName('parent_site_id').Clear;
+    dsLink.DataSet.FieldByName('parent_site_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }

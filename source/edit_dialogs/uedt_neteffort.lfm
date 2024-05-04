@@ -764,6 +764,7 @@ object edtNetEffort: TedtNetEffort
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
+          DataField = 'survey_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSurveyButtonClick
@@ -891,6 +892,7 @@ object edtNetEffort: TedtNetEffort
     end
   end
   object dsLink: TDataSource
+    DataSet = DMS.qNetsEffort
     OnDataChange = dsLinkDataChange
     Left = 314
     Top = 10

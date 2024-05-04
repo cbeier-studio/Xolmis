@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="75">
+      <ExcludedIdentifiers Count="125">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -99,13 +99,63 @@
         <Item73 Value="tdlgImportCaptures.lblTitleImportFinished.Caption"/>
         <Item74 Value="tdlgImportCaptures.lblSubtitleImportFinished.Caption"/>
         <Item75 Value="tcfgDatabase.vtConnections.Columns[0].Text"/>
+        <Item76 Value="tedtMolt.lblP1.Caption"/>
+        <Item77 Value="tedtMolt.lblP2.Caption"/>
+        <Item78 Value="tedtMolt.lblP3.Caption"/>
+        <Item79 Value="tedtMolt.lblP4.Caption"/>
+        <Item80 Value="tedtMolt.lblP5.Caption"/>
+        <Item81 Value="tedtMolt.lblP6.Caption"/>
+        <Item82 Value="tedtMolt.lblP7.Caption"/>
+        <Item83 Value="tedtMolt.lblP8.Caption"/>
+        <Item84 Value="tedtMolt.lblP9.Caption"/>
+        <Item85 Value="tedtMolt.lblP10.Caption"/>
+        <Item86 Value="tedtMolt.lblS1.Caption"/>
+        <Item87 Value="tedtMolt.lblS2.Caption"/>
+        <Item88 Value="tedtMolt.lblS3.Caption"/>
+        <Item89 Value="tedtMolt.lblS4.Caption"/>
+        <Item90 Value="tedtMolt.lblS5.Caption"/>
+        <Item91 Value="tedtMolt.lblS6.Caption"/>
+        <Item92 Value="tedtMolt.lblS7.Caption"/>
+        <Item93 Value="tedtMolt.lblS8.Caption"/>
+        <Item94 Value="tedtMolt.lblS9.Caption"/>
+        <Item95 Value="tedtMolt.lblR1.Caption"/>
+        <Item96 Value="tedtMolt.lblR2.Caption"/>
+        <Item97 Value="tedtMolt.lblR3.Caption"/>
+        <Item98 Value="tedtMolt.lblR4.Caption"/>
+        <Item99 Value="tedtMolt.lblR5.Caption"/>
+        <Item100 Value="tedtMolt.lblR6.Caption"/>
+        <Item101 Value="tedtMolt.lblPC1.Caption"/>
+        <Item102 Value="tedtMolt.lblPC2.Caption"/>
+        <Item103 Value="tedtMolt.lblPC3.Caption"/>
+        <Item104 Value="tedtMolt.lblPC4.Caption"/>
+        <Item105 Value="tedtMolt.lblPC5.Caption"/>
+        <Item106 Value="tedtMolt.lblPC6.Caption"/>
+        <Item107 Value="tedtMolt.lblPC7.Caption"/>
+        <Item108 Value="tedtMolt.lblPC8.Caption"/>
+        <Item109 Value="tedtMolt.lblPC9.Caption"/>
+        <Item110 Value="tedtMolt.lblGC1.Caption"/>
+        <Item111 Value="tedtMolt.lblGC2.Caption"/>
+        <Item112 Value="tedtMolt.lblGC3.Caption"/>
+        <Item113 Value="tedtMolt.lblGC4.Caption"/>
+        <Item114 Value="tedtMolt.lblGC5.Caption"/>
+        <Item115 Value="tedtMolt.lblGC6.Caption"/>
+        <Item116 Value="tedtMolt.lblGC7.Caption"/>
+        <Item117 Value="tedtMolt.lblGC8.Caption"/>
+        <Item118 Value="tedtMolt.lblGC9.Caption"/>
+        <Item119 Value="tedtMolt.lblGC10.Caption"/>
+        <Item120 Value="tedtMolt.lblAl1.Caption"/>
+        <Item121 Value="tedtMolt.lblAl2.Caption"/>
+        <Item122 Value="tedtMolt.lblAl3.Caption"/>
+        <Item123 Value="tedtMolt.lblMC.Caption"/>
+        <Item124 Value="tedtMolt.lblLC.Caption"/>
+        <Item125 Value="tedtMolt.lblCC.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="156"/>
+      <BuildNr Value="159"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -202,9 +252,6 @@
           </Linking>
           <Other>
             <WriteFPCLogo Value="False"/>
-            <OtherDefines Count="1">
-              <Define0 Value="RELEASE"/>
-            </OtherDefines>
             <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>

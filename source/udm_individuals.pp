@@ -191,6 +191,7 @@ type
     qMoltsgc9_molt: TFloatField;
     qMoltsgrowth_bar_size: TFloatField;
     qMoltsindividual_id: TLongintField;
+    qMoltsindividual_name: TStringField;
     qMoltsinsert_date: TDateTimeField;
     qMoltslc_molt: TFloatField;
     qMoltsmarked_status: TBooleanField;
@@ -234,7 +235,9 @@ type
     qMoltssample_date: TDateField;
     qMoltssample_time: TTimeField;
     qMoltssurvey_id: TLongintField;
+    qMoltssurvey_name: TStringField;
     qMoltstaxon_id: TLongintField;
+    qMoltstaxon_name: TStringField;
     qMoltsupdate_date: TDateTimeField;
     qMoltsuser_inserted: TLongintField;
     qMoltsuser_updated: TLongintField;

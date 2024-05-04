@@ -342,7 +342,7 @@ object edtSpecimen: TedtSpecimen
           ParentBackground = False
           TabOrder = 0
           object eCollectionDay: TDBEdit
-            Left = 0
+            Left = 128
             Height = 22
             Top = 0
             Width = 48
@@ -351,13 +351,13 @@ object edtSpecimen: TedtSpecimen
             Align = alLeft
             Alignment = taCenter
             MaxLength = 0
-            TabOrder = 0
+            TabOrder = 2
             TextHint = 'DD'
             OnKeyDown = FormKeyDown
             OnKeyPress = eFieldNumberKeyPress
           end
           object eCollectionMonth: TDBEdit
-            Left = 52
+            Left = 76
             Height = 22
             Top = 0
             Width = 48
@@ -372,7 +372,7 @@ object edtSpecimen: TedtSpecimen
             OnKeyPress = eFieldNumberKeyPress
           end
           object eCollectionYear: TDBEdit
-            Left = 104
+            Left = 0
             Height = 22
             Top = 0
             Width = 72
@@ -381,7 +381,7 @@ object edtSpecimen: TedtSpecimen
             Align = alLeft
             Alignment = taCenter
             MaxLength = 0
-            TabOrder = 2
+            TabOrder = 0
             TextHint = 'YYYY'
             OnKeyDown = FormKeyDown
             OnKeyPress = eFieldNumberKeyPress
@@ -488,6 +488,9 @@ object edtSpecimen: TedtSpecimen
           DataField = 'nest_name'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eNestButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eNestDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -538,6 +541,9 @@ object edtSpecimen: TedtSpecimen
           DataField = 'egg_name'
           DataSource = dsLink
           CharCase = ecNormal
+          OnButtonClick = eEggButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eEggDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end

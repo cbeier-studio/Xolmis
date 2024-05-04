@@ -174,6 +174,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('band_id').Clear;
+    dsLink.DataSet.FieldByName('band_full_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -204,6 +205,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('double_band_id').Clear;
+    dsLink.DataSet.FieldByName('double_band_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -234,6 +236,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('father_id').Clear;
+    dsLink.DataSet.FieldByName('father_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -274,6 +277,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('mother_id').Clear;
+    dsLink.DataSet.FieldByName('mother_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -304,6 +308,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('nest_id').Clear;
+    dsLink.DataSet.FieldByName('nest_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -334,6 +339,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('removed_band_id').Clear;
+    dsLink.DataSet.FieldByName('removed_band_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
@@ -375,6 +381,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('taxon_id').Clear;
+    dsLink.DataSet.FieldByName('taxon_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }

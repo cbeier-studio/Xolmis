@@ -149,6 +149,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('individual_id').Clear;
+    dsLink.DataSet.FieldByName('individual_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -183,6 +184,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('researcher_id').Clear;
+    dsLink.DataSet.FieldByName('researcher_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -212,6 +214,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('taxon_id').Clear;
+    dsLink.DataSet.FieldByName('taxon_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }

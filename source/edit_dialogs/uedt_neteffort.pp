@@ -153,6 +153,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('permanent_net_id').Clear;
+    dsLink.DataSet.FieldByName('permanent_net_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -182,6 +183,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('survey_id').Clear;
+    dsLink.DataSet.FieldByName('survey_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }

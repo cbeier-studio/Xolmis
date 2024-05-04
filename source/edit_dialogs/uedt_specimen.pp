@@ -56,6 +56,8 @@ type
     sbSave: TButton;
     scrollContent: TScrollBox;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
+    procedure eEggButtonClick(Sender: TObject);
+    procedure eEggDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eFieldNumberKeyPress(Sender: TObject; var Key: char);
     procedure eIndividualButtonClick(Sender: TObject);
     procedure eIndividualDBEditKeyPress(Sender: TObject; var Key: char);
@@ -63,6 +65,8 @@ type
     procedure eLocalityButtonClick(Sender: TObject);
     procedure eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
+    procedure eNestButtonClick(Sender: TObject);
+    procedure eNestDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eTaxonButtonClick(Sender: TObject);
     procedure eTaxonDBEditKeyPress(Sender: TObject; var Key: char);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -97,6 +101,36 @@ begin
     sbSave.Enabled := IsRequiredFilled;
 end;
 
+procedure TedtSpecimen.eEggButtonClick(Sender: TObject);
+begin
+  FindDlg(tbEggs, eEgg, dsLink.DataSet, 'egg_id', 'egg_name');
+end;
+
+procedure TedtSpecimen.eEggDBEditKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
+  begin
+    FindDlg(tbEggs, eEgg, dsLink.DataSet, 'egg_id', 'egg_name', False, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD = Backspace }
+  if (Key = #8) then
+  begin
+    dsLink.DataSet.FieldByName('egg_id').Clear;
+    dsLink.DataSet.FieldByName('egg_name').Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
+end;
+
 procedure TedtSpecimen.eFieldNumberKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
@@ -128,6 +162,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('individual_id').Clear;
+    dsLink.DataSet.FieldByName('individual_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -178,6 +213,36 @@ begin
   GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'longitude', 'latitude');
 end;
 
+procedure TedtSpecimen.eNestButtonClick(Sender: TObject);
+begin
+  FindDlg(tbNests, eNest, dsLink.DataSet, 'nest_id', 'nest_name');
+end;
+
+procedure TedtSpecimen.eNestDBEditKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
+  begin
+    FindDlg(tbNests, eNest, dsLink.DataSet, 'nest_id', 'nest_name', False, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD = Backspace }
+  if (Key = #8) then
+  begin
+    dsLink.DataSet.FieldByName('nest_id').Clear;
+    dsLink.DataSet.FieldByName('nest_name').Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
+end;
+
 procedure TedtSpecimen.eTaxonButtonClick(Sender: TObject);
 begin
   FindTaxonDlg([tfAll], eTaxon, dsLink.DataSet, 'taxon_id', 'taxon_name', True);
@@ -197,6 +262,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('taxon_id').Clear;
+    dsLink.DataSet.FieldByName('taxon_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }

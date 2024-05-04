@@ -73,6 +73,8 @@ object edtNestOwner: TedtNestOwner
           'Unknown'
         )
         MaxLength = 0
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbRoleKeyPress
         TabOrder = 0
       end
     end
@@ -125,6 +127,7 @@ object edtNestOwner: TedtNestOwner
         DataSource = dsLink
         CharCase = ecNormal
         OnButtonClick = eIndividualButtonClick
+        OnDBEditKeyDown = FormKeyDown
         OnDBEditKeyPress = eIndividualDBEditKeyPress
       end
     end

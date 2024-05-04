@@ -13,7 +13,6 @@ type
   { TedtSighting }
 
   TedtSighting = class(TForm)
-    cbMethod: TDBLookupComboBox;
     ckCaptured: TDBCheckBox;
     ckSeen: TDBCheckBox;
     ckHeard: TDBCheckBox;
@@ -21,6 +20,7 @@ type
     ckAudioRecording: TDBCheckBox;
     ckIsInEbird: TDBCheckBox;
     ckNotSurveying: TDBCheckBox;
+    eMethod: TDBEditButton;
     eMackinnonListNumber: TDBEdit;
     eSurvey: TDBEditButton;
     eUnbandedTally: TDBEdit;
@@ -53,7 +53,7 @@ type
     lblBandStatus: TLabel;
     lblBandSuffix: TLabel;
     lblBandType: TLabel;
-    lblCarrier: TLabel;
+    lblMethod: TLabel;
     lblNotes: TLabel;
     lblOrderDate: TLabel;
     lblOrderDate1: TLabel;
@@ -106,6 +106,8 @@ type
     procedure eLocalityButtonClick(Sender: TObject);
     procedure eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
+    procedure eMethodButtonClick(Sender: TObject);
+    procedure eMethodDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eObserverButtonClick(Sender: TObject);
     procedure eObserverDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eSurveyButtonClick(Sender: TObject);
@@ -190,6 +192,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('individual_id').Clear;
+    dsLink.DataSet.FieldByName('individual_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -219,6 +222,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('locality_id').Clear;
+    dsLink.DataSet.FieldByName('locality_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -232,6 +236,36 @@ end;
 procedure TedtSighting.eLongitudeButtonClick(Sender: TObject);
 begin
   GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'longitude', 'latitude');
+end;
+
+procedure TedtSighting.eMethodButtonClick(Sender: TObject);
+begin
+  FindDlg(tbMethods, eMethod, dsLink.DataSet, 'method_id', 'method_name');
+end;
+
+procedure TedtSighting.eMethodDBEditKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
+  begin
+    FindDlg(tbMethods, eMethod, dsLink.DataSet, 'method_id', 'method_name', False, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD = Backspace }
+  if (Key = #8) then
+  begin
+    dsLink.DataSet.FieldByName('method_id').Clear;
+    dsLink.DataSet.FieldByName('method_name').Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
 end;
 
 procedure TedtSighting.eObserverButtonClick(Sender: TObject);
@@ -253,6 +287,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('observer_id').Clear;
+    dsLink.DataSet.FieldByName('observer_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -282,6 +317,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('survey_id').Clear;
+    dsLink.DataSet.FieldByName('survey_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -311,6 +347,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('taxon_id').Clear;
+    dsLink.DataSet.FieldByName('taxon_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }

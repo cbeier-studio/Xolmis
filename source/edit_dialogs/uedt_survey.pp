@@ -15,6 +15,7 @@ type
   TedtSurvey = class(TForm)
     eDate: TDBEditButton;
     eDuration: TDBEdit;
+    eMethod: TDBEditButton;
     eObserversTally: TDBEdit;
     eLatitude: TDBEditButton;
     eEndLatitude: TDBEditButton;
@@ -30,7 +31,6 @@ type
     eLocality: TDBEditButton;
     eNetStation: TDBEditButton;
     eProject: TDBEditButton;
-    cbMethod: TDBLookupComboBox;
     dsLink: TDataSource;
     lblNetStation: TLabel;
     lblEndLatitude: TLabel;
@@ -88,6 +88,8 @@ type
     procedure eLocalityButtonClick(Sender: TObject);
     procedure eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
+    procedure eMethodButtonClick(Sender: TObject);
+    procedure eMethodDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eNetStationButtonClick(Sender: TObject);
     procedure eNetStationDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
@@ -165,6 +167,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('expedition_id').Clear;
+    dsLink.DataSet.FieldByName('expedition_name').Clear;
     Key := #0;
   end;
 
@@ -195,6 +198,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('locality_id').Clear;
+    dsLink.DataSet.FieldByName('locality_name').Clear;
     Key := #0;
   end;
 
@@ -209,6 +213,37 @@ end;
 procedure TedtSurvey.eLongitudeButtonClick(Sender: TObject);
 begin
   GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'start_longitude', 'start_latitude');
+end;
+
+procedure TedtSurvey.eMethodButtonClick(Sender: TObject);
+begin
+  FindDlg(tbMethods, eMethod, dsLink.DataSet, 'method_id', 'method_name');
+end;
+
+procedure TedtSurvey.eMethodDBEditKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  // Alphabetic search in numeric fields
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbMethods, eMethod, dsLink.DataSet, 'method_id', 'method_name', False, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD = Backspace }
+  if (Key = #8) then
+  begin
+    dsLink.DataSet.FieldByName('method_id').Clear;
+    dsLink.DataSet.FieldByName('method_name').Clear;
+    Key := #0;
+  end;
+
+  // <ENTER> Key
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
 end;
 
 procedure TedtSurvey.eNetStationButtonClick(Sender: TObject);
@@ -230,6 +265,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('net_station_id').Clear;
+    dsLink.DataSet.FieldByName('net_station_name').Clear;
     Key := #0;
   end;
 
@@ -260,6 +296,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('project_id').Clear;
+    dsLink.DataSet.FieldByName('project_name').Clear;
     Key := #0;
   end;
 

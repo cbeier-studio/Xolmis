@@ -540,6 +540,7 @@ object batchNetEffort: TbatchNetEffort
         MaxLength = 0
         NumGlyphs = 1
         OnButtonClick = eSurveyButtonClick
+        OnKeyDown = FormKeyDown
         OnKeyPress = eSurveyKeyPress
         PasswordChar = #0
         Spacing = 0

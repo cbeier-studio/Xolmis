@@ -146,6 +146,7 @@ object edtInstitution: TedtInstitution
           Images = frmMain.mPopup
           ImageWidth = 20
           DataField = 'municipality_name'
+          DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eMunicipalityButtonClick
           OnDBEditKeyDown = FormKeyDown
@@ -536,6 +537,7 @@ object edtInstitution: TedtInstitution
           Images = frmMain.mPopup
           ImageWidth = 20
           DataField = 'state_name'
+          DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eStateButtonClick
           OnDBEditKeyDown = FormKeyDown
@@ -588,6 +590,7 @@ object edtInstitution: TedtInstitution
           Images = frmMain.mPopup
           ImageWidth = 20
           DataField = 'country_name'
+          DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eCountryButtonClick
           OnDBEditKeyDown = FormKeyDown

@@ -111,6 +111,7 @@ object frmDashboard: TfrmDashboard
           Columns = <          
             item
               Alignment = taCenter
+              Font.Color = clGray
               SizePriority = 0
               Title.Caption = 'Tipo'
               Width = 30
@@ -124,6 +125,7 @@ object frmDashboard: TfrmDashboard
             end          
             item
               Alignment = taRightJustify
+              Font.Color = clGray
               SizePriority = 0
               Title.Caption = 'Data'
               Width = 96

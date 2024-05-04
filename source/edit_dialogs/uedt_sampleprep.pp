@@ -109,6 +109,7 @@ begin
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('preparer_id').Clear;
+    dsLink.DataSet.FieldByName('preparer_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }

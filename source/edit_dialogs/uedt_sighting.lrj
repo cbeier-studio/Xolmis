@@ -19,7 +19,7 @@
 {"hash":218059562,"name":"tedtsighting.lblorderdate2.caption","sourcebytes":[78,117,109,98,101,114,32,111,102,32,117,110,98,97,110,100,101,100,58],"value":"Number of unbanded:"},
 {"hash":56137130,"name":"tedtsighting.lblsupplier.caption","sourcebytes":[76,111,99,97,108,105,116,121,58,32,42],"value":"Locality: *"},
 {"hash":164207050,"name":"tedtsighting.lblrequester.caption","sourcebytes":[79,98,115,101,114,118,101,114,58],"value":"Observer:"},
-{"hash":183840746,"name":"tedtsighting.lblcarrier.caption","sourcebytes":[77,101,116,104,111,100,58,32,42],"value":"Method: *"},
+{"hash":183840746,"name":"tedtsighting.lblmethod.caption","sourcebytes":[77,101,116,104,111,100,58,32,42],"value":"Method: *"},
 {"hash":150346122,"name":"tedtsighting.lblsender.caption","sourcebytes":[84,97,120,111,110,58,32,42],"value":"Taxon: *"},
 {"hash":212598010,"name":"tedtsighting.lblproject.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,58],"value":"Individual:"},
 {"hash":94550714,"name":"tedtsighting.lblusedate.caption","sourcebytes":[72,111,119,32,119,97,115,32,114,101,99,111,114,100,101,100,58],"value":"How was recorded:"},

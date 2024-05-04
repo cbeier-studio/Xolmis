@@ -25,6 +25,7 @@ type
     pIndividual: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure cbRoleKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eIndividualButtonClick(Sender: TObject);
     procedure eIndividualDBEditKeyPress(Sender: TObject; var Key: char);
@@ -52,6 +53,22 @@ uses
 {$R *.lfm}
 
 { TedtNestOwner }
+
+procedure TedtNestOwner.cbRoleKeyPress(Sender: TObject; var Key: char);
+begin
+  { CLEAR FIELD = Backspace }
+  if (Key = #8) then
+  begin
+    dsLink.DataSet.FieldByName('role').Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
+end;
 
 procedure TedtNestOwner.dsLinkDataChange(Sender: TObject; Field: TField);
 begin

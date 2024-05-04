@@ -113,7 +113,7 @@ object edtMolt: TedtMolt
         ClientHeight = 114
         ClientWidth = 408
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 19
         object lblNotes: TLabel
           Left = 16
           Height = 16
@@ -142,7 +142,7 @@ object edtMolt: TedtMolt
           TabOrder = 0
         end
       end
-      object pPrefixSuffix: TPanel
+      object pDateTime: TPanel
         Left = 0
         Height = 46
         Top = 16
@@ -221,7 +221,7 @@ object edtMolt: TedtMolt
           OnKeyPress = eDateDBEditKeyPress
         end
       end
-      object pTypeColor: TPanel
+      object pPrimaries: TPanel
         Left = 0
         Height = 91
         Top = 191
@@ -237,8 +237,8 @@ object edtMolt: TedtMolt
         ClientHeight = 91
         ClientWidth = 408
         ParentBackground = False
-        TabOrder = 1
-        object lblBandType: TLabel
+        TabOrder = 4
+        object lblP1: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -250,7 +250,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor: TLabel
+        object lblP2: TLabel
           Left = 94
           Height = 15
           Top = 3
@@ -262,7 +262,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor1: TLabel
+        object lblP3: TLabel
           Left = 172
           Height = 15
           Top = 3
@@ -274,7 +274,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor2: TLabel
+        object lblP4: TLabel
           Left = 250
           Height = 15
           Top = 3
@@ -286,7 +286,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor3: TLabel
+        object lblP5: TLabel
           Left = 328
           Height = 15
           Top = 3
@@ -298,7 +298,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit2: TDBEdit
+        object eP1: TDBEdit
           Left = 16
           Height = 23
           Top = 22
@@ -311,7 +311,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit3: TDBEdit
+        object eP2: TDBEdit
           Left = 94
           Height = 23
           Top = 22
@@ -324,7 +324,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit4: TDBEdit
+        object eP3: TDBEdit
           Left = 172
           Height = 23
           Top = 22
@@ -337,7 +337,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit5: TDBEdit
+        object eP4: TDBEdit
           Left = 250
           Height = 23
           Top = 22
@@ -350,7 +350,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit6: TDBEdit
+        object eP5: TDBEdit
           Left = 328
           Height = 23
           Top = 22
@@ -363,7 +363,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object lblBandType1: TLabel
+        object lblP6: TLabel
           Left = 16
           Height = 15
           Top = 49
@@ -375,7 +375,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor4: TLabel
+        object lblP7: TLabel
           Left = 94
           Height = 15
           Top = 49
@@ -387,7 +387,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor5: TLabel
+        object lblP8: TLabel
           Left = 172
           Height = 15
           Top = 49
@@ -399,7 +399,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor6: TLabel
+        object lblP9: TLabel
           Left = 250
           Height = 15
           Top = 49
@@ -411,7 +411,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor7: TLabel
+        object lblP10: TLabel
           Left = 328
           Height = 15
           Top = 49
@@ -423,7 +423,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit9: TDBEdit
+        object eP6: TDBEdit
           Left = 16
           Height = 23
           Top = 68
@@ -436,7 +436,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit7: TDBEdit
+        object eP7: TDBEdit
           Left = 94
           Height = 23
           Top = 68
@@ -449,7 +449,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit10: TDBEdit
+        object eP8: TDBEdit
           Left = 172
           Height = 23
           Top = 68
@@ -462,7 +462,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit8: TDBEdit
+        object eP9: TDBEdit
           Left = 250
           Height = 23
           Top = 68
@@ -475,7 +475,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit11: TDBEdit
+        object eP10: TDBEdit
           Left = 328
           Height = 23
           Top = 68
@@ -489,7 +489,7 @@ object edtMolt: TedtMolt
           OnKeyPress = eDateDBEditKeyPress
         end
       end
-      object pSupplier: TPanel
+      object pSurvey: TPanel
         Left = 0
         Height = 46
         Top = 108
@@ -533,6 +533,7 @@ object edtMolt: TedtMolt
           ImageIndex = 99
           Images = frmMain.mPopup
           ImageWidth = 20
+          DataField = 'survey_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSurveyButtonClick
@@ -540,7 +541,7 @@ object edtMolt: TedtMolt
           OnDBEditKeyPress = eSurveyDBEditKeyPress
         end
       end
-      object pRequester: TPanel
+      object pBander: TPanel
         Left = 0
         Height = 46
         Top = 62
@@ -555,7 +556,7 @@ object edtMolt: TedtMolt
         ClientHeight = 46
         ClientWidth = 408
         ParentBackground = False
-        TabOrder = 3
+        TabOrder = 1
         object lblRequester: TLabel
           Left = 16
           Height = 15
@@ -592,7 +593,7 @@ object edtMolt: TedtMolt
           OnDBEditKeyPress = eBanderDBEditKeyPress
         end
       end
-      object pTitleMetrics: TPanel
+      object pTitlePrimaries: TPanel
         Left = 0
         Height = 24
         Top = 167
@@ -608,8 +609,8 @@ object edtMolt: TedtMolt
         Font.Height = -16
         ParentBackground = False
         ParentFont = False
-        TabOrder = 5
-        object lblTitleMetrics: TLabel
+        TabOrder = 3
+        object lblTitlePrimaries: TLabel
           Left = 16
           Height = 24
           Top = 0
@@ -619,7 +620,7 @@ object edtMolt: TedtMolt
           ParentColor = False
         end
       end
-      object pTitleMetrics1: TPanel
+      object pTitleSecondaries: TPanel
         Left = 0
         Height = 24
         Top = 295
@@ -635,8 +636,8 @@ object edtMolt: TedtMolt
         Font.Height = -16
         ParentBackground = False
         ParentFont = False
-        TabOrder = 6
-        object lblTitleMetrics1: TLabel
+        TabOrder = 5
+        object lblTitleSecondaries: TLabel
           Left = 16
           Height = 24
           Top = 0
@@ -646,7 +647,7 @@ object edtMolt: TedtMolt
           ParentColor = False
         end
       end
-      object pTitleMetrics2: TPanel
+      object pTitleRectrices: TPanel
         Left = 0
         Height = 24
         Top = 423
@@ -663,7 +664,7 @@ object edtMolt: TedtMolt
         ParentBackground = False
         ParentFont = False
         TabOrder = 7
-        object lblTitleMetrics2: TLabel
+        object lblTitleRectrices: TLabel
           Left = 16
           Height = 24
           Top = 0
@@ -673,7 +674,7 @@ object edtMolt: TedtMolt
           ParentColor = False
         end
       end
-      object pTitleMetrics3: TPanel
+      object pTitleAlula: TPanel
         Left = 0
         Height = 24
         Top = 679
@@ -689,8 +690,8 @@ object edtMolt: TedtMolt
         Font.Height = -16
         ParentBackground = False
         ParentFont = False
-        TabOrder = 8
-        object lblTitleMetrics3: TLabel
+        TabOrder = 11
+        object lblTitleAlula: TLabel
           Left = 16
           Height = 24
           Top = 0
@@ -700,7 +701,7 @@ object edtMolt: TedtMolt
           ParentColor = False
         end
       end
-      object pTitleMetrics4: TPanel
+      object pTitlePrimaryCoverts: TPanel
         Left = 0
         Height = 24
         Top = 551
@@ -717,7 +718,7 @@ object edtMolt: TedtMolt
         ParentBackground = False
         ParentFont = False
         TabOrder = 9
-        object lblTitleMetrics4: TLabel
+        object lblTitlePrimaryCoverts: TLabel
           Left = 16
           Height = 24
           Top = 0
@@ -727,7 +728,7 @@ object edtMolt: TedtMolt
           ParentColor = False
         end
       end
-      object pTitleMetrics5: TPanel
+      object pTitleGreatCoverts: TPanel
         Left = 0
         Height = 24
         Top = 761
@@ -743,8 +744,8 @@ object edtMolt: TedtMolt
         Font.Height = -16
         ParentBackground = False
         ParentFont = False
-        TabOrder = 10
-        object lblTitleMetrics5: TLabel
+        TabOrder = 13
+        object lblTitleGreatCoverts: TLabel
           Left = 16
           Height = 24
           Top = 0
@@ -754,7 +755,7 @@ object edtMolt: TedtMolt
           ParentColor = False
         end
       end
-      object pTitleMetrics6: TPanel
+      object pTitleOtherCoverts: TPanel
         Left = 0
         Height = 24
         Top = 889
@@ -770,8 +771,8 @@ object edtMolt: TedtMolt
         Font.Height = -16
         ParentBackground = False
         ParentFont = False
-        TabOrder = 11
-        object lblTitleMetrics6: TLabel
+        TabOrder = 15
+        object lblTitleOtherCoverts: TLabel
           Left = 16
           Height = 24
           Top = 0
@@ -781,7 +782,7 @@ object edtMolt: TedtMolt
           ParentColor = False
         end
       end
-      object pTitleMetrics7: TPanel
+      object pTitleGrowthBars: TPanel
         Left = 0
         Height = 24
         Top = 971
@@ -797,8 +798,8 @@ object edtMolt: TedtMolt
         Font.Height = -16
         ParentBackground = False
         ParentFont = False
-        TabOrder = 12
-        object lblTitleMetrics7: TLabel
+        TabOrder = 17
+        object lblTitleGrowthBars: TLabel
           Left = 16
           Height = 24
           Top = 0
@@ -808,7 +809,7 @@ object edtMolt: TedtMolt
           ParentColor = False
         end
       end
-      object pTypeColor2: TPanel
+      object pRectrices: TPanel
         Left = 0
         Height = 91
         Top = 447
@@ -824,8 +825,8 @@ object edtMolt: TedtMolt
         ClientHeight = 91
         ClientWidth = 408
         ParentBackground = False
-        TabOrder = 13
-        object lblBandType4: TLabel
+        TabOrder = 8
+        object lblR1: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -837,7 +838,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor16: TLabel
+        object lblR2: TLabel
           Left = 94
           Height = 15
           Top = 3
@@ -849,7 +850,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor17: TLabel
+        object lblR3: TLabel
           Left = 172
           Height = 15
           Top = 3
@@ -861,7 +862,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor18: TLabel
+        object lblR4: TLabel
           Left = 250
           Height = 15
           Top = 3
@@ -873,7 +874,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor19: TLabel
+        object lblR5: TLabel
           Left = 328
           Height = 15
           Top = 3
@@ -885,7 +886,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit22: TDBEdit
+        object eR1: TDBEdit
           Left = 16
           Height = 23
           Top = 22
@@ -898,7 +899,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit23: TDBEdit
+        object eR2: TDBEdit
           Left = 94
           Height = 23
           Top = 22
@@ -911,7 +912,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit24: TDBEdit
+        object eR3: TDBEdit
           Left = 172
           Height = 23
           Top = 22
@@ -924,7 +925,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit25: TDBEdit
+        object eR4: TDBEdit
           Left = 250
           Height = 23
           Top = 22
@@ -937,7 +938,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit26: TDBEdit
+        object eR5: TDBEdit
           Left = 328
           Height = 23
           Top = 22
@@ -950,7 +951,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object lblBandType5: TLabel
+        object lblR6: TLabel
           Left = 16
           Height = 15
           Top = 49
@@ -1010,7 +1011,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit27: TDBEdit
+        object eR6: TDBEdit
           Left = 16
           Height = 23
           Top = 68
@@ -1024,7 +1025,7 @@ object edtMolt: TedtMolt
           OnKeyPress = eDateDBEditKeyPress
         end
       end
-      object pTypeColor1: TPanel
+      object pSecondaries: TPanel
         Left = 0
         Height = 91
         Top = 319
@@ -1040,8 +1041,8 @@ object edtMolt: TedtMolt
         ClientHeight = 91
         ClientWidth = 408
         ParentBackground = False
-        TabOrder = 14
-        object lblBandType2: TLabel
+        TabOrder = 6
+        object lblS1: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -1053,7 +1054,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor8: TLabel
+        object lblS2: TLabel
           Left = 94
           Height = 15
           Top = 3
@@ -1065,7 +1066,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor9: TLabel
+        object lblS3: TLabel
           Left = 172
           Height = 15
           Top = 3
@@ -1077,7 +1078,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor10: TLabel
+        object lblS4: TLabel
           Left = 250
           Height = 15
           Top = 3
@@ -1089,7 +1090,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor11: TLabel
+        object lblS5: TLabel
           Left = 328
           Height = 15
           Top = 3
@@ -1101,7 +1102,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit12: TDBEdit
+        object eS1: TDBEdit
           Left = 16
           Height = 23
           Top = 22
@@ -1114,7 +1115,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit13: TDBEdit
+        object eS2: TDBEdit
           Left = 94
           Height = 23
           Top = 22
@@ -1127,7 +1128,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit14: TDBEdit
+        object eS3: TDBEdit
           Left = 172
           Height = 23
           Top = 22
@@ -1140,7 +1141,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit15: TDBEdit
+        object eS4: TDBEdit
           Left = 250
           Height = 23
           Top = 22
@@ -1153,7 +1154,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit16: TDBEdit
+        object eS5: TDBEdit
           Left = 328
           Height = 23
           Top = 22
@@ -1166,7 +1167,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object lblBandType3: TLabel
+        object lblS6: TLabel
           Left = 16
           Height = 15
           Top = 49
@@ -1178,7 +1179,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor12: TLabel
+        object lblS7: TLabel
           Left = 94
           Height = 15
           Top = 49
@@ -1190,7 +1191,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor13: TLabel
+        object lblS8: TLabel
           Left = 172
           Height = 15
           Top = 49
@@ -1202,7 +1203,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor14: TLabel
+        object lblS9: TLabel
           Left = 250
           Height = 15
           Top = 49
@@ -1226,7 +1227,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit17: TDBEdit
+        object eS6: TDBEdit
           Left = 16
           Height = 23
           Top = 68
@@ -1239,7 +1240,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit18: TDBEdit
+        object eS7: TDBEdit
           Left = 94
           Height = 23
           Top = 68
@@ -1252,7 +1253,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit19: TDBEdit
+        object eS8: TDBEdit
           Left = 172
           Height = 23
           Top = 68
@@ -1265,7 +1266,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit20: TDBEdit
+        object eS9: TDBEdit
           Left = 250
           Height = 23
           Top = 68
@@ -1279,7 +1280,7 @@ object edtMolt: TedtMolt
           OnKeyPress = eDateDBEditKeyPress
         end
       end
-      object pTypeColor3: TPanel
+      object pPrimaryCoverts: TPanel
         Left = 0
         Height = 91
         Top = 575
@@ -1295,8 +1296,8 @@ object edtMolt: TedtMolt
         ClientHeight = 91
         ClientWidth = 408
         ParentBackground = False
-        TabOrder = 15
-        object lblBandType6: TLabel
+        TabOrder = 10
+        object lblPC1: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -1308,7 +1309,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor24: TLabel
+        object lblPC2: TLabel
           Left = 94
           Height = 15
           Top = 3
@@ -1320,7 +1321,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor25: TLabel
+        object lblPC3: TLabel
           Left = 172
           Height = 15
           Top = 3
@@ -1332,7 +1333,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor26: TLabel
+        object lblPC4: TLabel
           Left = 250
           Height = 15
           Top = 3
@@ -1344,7 +1345,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor27: TLabel
+        object lblPC5: TLabel
           Left = 328
           Height = 15
           Top = 3
@@ -1356,7 +1357,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit32: TDBEdit
+        object ePC1: TDBEdit
           Left = 16
           Height = 23
           Top = 22
@@ -1369,7 +1370,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit33: TDBEdit
+        object ePC2: TDBEdit
           Left = 94
           Height = 23
           Top = 22
@@ -1382,7 +1383,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit34: TDBEdit
+        object ePC3: TDBEdit
           Left = 172
           Height = 23
           Top = 22
@@ -1395,7 +1396,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit35: TDBEdit
+        object ePC4: TDBEdit
           Left = 250
           Height = 23
           Top = 22
@@ -1408,7 +1409,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit36: TDBEdit
+        object ePC5: TDBEdit
           Left = 328
           Height = 23
           Top = 22
@@ -1421,7 +1422,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object lblBandType7: TLabel
+        object lblPC6: TLabel
           Left = 16
           Height = 15
           Top = 49
@@ -1433,7 +1434,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor28: TLabel
+        object lblPC7: TLabel
           Left = 94
           Height = 15
           Top = 49
@@ -1445,7 +1446,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor29: TLabel
+        object lblPC8: TLabel
           Left = 172
           Height = 15
           Top = 49
@@ -1457,7 +1458,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor30: TLabel
+        object lblPC9: TLabel
           Left = 250
           Height = 15
           Top = 49
@@ -1481,7 +1482,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit37: TDBEdit
+        object ePC6: TDBEdit
           Left = 16
           Height = 23
           Top = 68
@@ -1494,7 +1495,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit38: TDBEdit
+        object ePC7: TDBEdit
           Left = 94
           Height = 23
           Top = 68
@@ -1507,7 +1508,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit39: TDBEdit
+        object ePC8: TDBEdit
           Left = 172
           Height = 23
           Top = 68
@@ -1520,7 +1521,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit40: TDBEdit
+        object ePC9: TDBEdit
           Left = 250
           Height = 23
           Top = 68
@@ -1534,7 +1535,7 @@ object edtMolt: TedtMolt
           OnKeyPress = eDateDBEditKeyPress
         end
       end
-      object pTypeColor4: TPanel
+      object pAlula: TPanel
         Left = 0
         Height = 45
         Top = 703
@@ -1550,8 +1551,8 @@ object edtMolt: TedtMolt
         ClientHeight = 45
         ClientWidth = 408
         ParentBackground = False
-        TabOrder = 16
-        object lblBandType8: TLabel
+        TabOrder = 12
+        object lblAl1: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -1563,7 +1564,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor32: TLabel
+        object lblAl2: TLabel
           Left = 94
           Height = 15
           Top = 3
@@ -1575,7 +1576,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor33: TLabel
+        object lblAl3: TLabel
           Left = 172
           Height = 15
           Top = 3
@@ -1587,7 +1588,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit42: TDBEdit
+        object eAl1: TDBEdit
           Left = 16
           Height = 23
           Top = 22
@@ -1600,7 +1601,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit43: TDBEdit
+        object eAl2: TDBEdit
           Left = 94
           Height = 23
           Top = 22
@@ -1613,7 +1614,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit44: TDBEdit
+        object eAl3: TDBEdit
           Left = 172
           Height = 23
           Top = 22
@@ -1627,7 +1628,7 @@ object edtMolt: TedtMolt
           OnKeyPress = eDateDBEditKeyPress
         end
       end
-      object pTypeColor5: TPanel
+      object pGreatCoverts: TPanel
         Left = 0
         Height = 91
         Top = 785
@@ -1643,8 +1644,8 @@ object edtMolt: TedtMolt
         ClientHeight = 91
         ClientWidth = 408
         ParentBackground = False
-        TabOrder = 17
-        object lblBandType10: TLabel
+        TabOrder = 14
+        object lblGC1: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -1656,7 +1657,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor40: TLabel
+        object lblGC2: TLabel
           Left = 94
           Height = 15
           Top = 3
@@ -1668,7 +1669,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor41: TLabel
+        object lblGC3: TLabel
           Left = 172
           Height = 15
           Top = 3
@@ -1680,7 +1681,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor42: TLabel
+        object lblGC4: TLabel
           Left = 250
           Height = 15
           Top = 3
@@ -1692,7 +1693,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor43: TLabel
+        object lblGC5: TLabel
           Left = 328
           Height = 15
           Top = 3
@@ -1704,7 +1705,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit52: TDBEdit
+        object eGC1: TDBEdit
           Left = 16
           Height = 23
           Top = 22
@@ -1717,7 +1718,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit53: TDBEdit
+        object eGC2: TDBEdit
           Left = 94
           Height = 23
           Top = 22
@@ -1730,7 +1731,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit54: TDBEdit
+        object eGC3: TDBEdit
           Left = 172
           Height = 23
           Top = 22
@@ -1743,7 +1744,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit55: TDBEdit
+        object eGC4: TDBEdit
           Left = 250
           Height = 23
           Top = 22
@@ -1756,7 +1757,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit56: TDBEdit
+        object eGC5: TDBEdit
           Left = 328
           Height = 23
           Top = 22
@@ -1769,7 +1770,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object lblBandType11: TLabel
+        object lblGC6: TLabel
           Left = 16
           Height = 15
           Top = 49
@@ -1781,7 +1782,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor44: TLabel
+        object lblGC7: TLabel
           Left = 94
           Height = 15
           Top = 49
@@ -1793,7 +1794,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor45: TLabel
+        object lblGC8: TLabel
           Left = 172
           Height = 15
           Top = 49
@@ -1805,7 +1806,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor46: TLabel
+        object lblGC9: TLabel
           Left = 250
           Height = 15
           Top = 49
@@ -1817,7 +1818,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor47: TLabel
+        object lblGC10: TLabel
           Left = 328
           Height = 15
           Top = 49
@@ -1829,7 +1830,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit57: TDBEdit
+        object eGC6: TDBEdit
           Left = 16
           Height = 23
           Top = 68
@@ -1842,7 +1843,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit58: TDBEdit
+        object eGC7: TDBEdit
           Left = 94
           Height = 23
           Top = 68
@@ -1855,7 +1856,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit59: TDBEdit
+        object eGC8: TDBEdit
           Left = 172
           Height = 23
           Top = 68
@@ -1868,7 +1869,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit60: TDBEdit
+        object eGC9: TDBEdit
           Left = 250
           Height = 23
           Top = 68
@@ -1881,7 +1882,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit61: TDBEdit
+        object eGC10: TDBEdit
           Left = 328
           Height = 23
           Top = 68
@@ -1895,7 +1896,7 @@ object edtMolt: TedtMolt
           OnKeyPress = eDateDBEditKeyPress
         end
       end
-      object pTypeColor6: TPanel
+      object pOtherCoverts: TPanel
         Left = 0
         Height = 45
         Top = 913
@@ -1911,8 +1912,8 @@ object edtMolt: TedtMolt
         ClientHeight = 45
         ClientWidth = 408
         ParentBackground = False
-        TabOrder = 18
-        object lblBandType12: TLabel
+        TabOrder = 16
+        object lblMC: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -1924,7 +1925,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor48: TLabel
+        object lblLC: TLabel
           Left = 94
           Height = 15
           Top = 3
@@ -1936,7 +1937,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor49: TLabel
+        object lblSpacer1: TLabel
           Left = 172
           Height = 15
           Top = 3
@@ -1948,7 +1949,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor50: TLabel
+        object lblCC: TLabel
           Left = 250
           Height = 15
           Top = 3
@@ -1960,7 +1961,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit62: TDBEdit
+        object eMC: TDBEdit
           Left = 16
           Height = 23
           Top = 22
@@ -1973,7 +1974,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object DBEdit63: TDBEdit
+        object eLC: TDBEdit
           Left = 94
           Height = 23
           Top = 22
@@ -1986,7 +1987,7 @@ object edtMolt: TedtMolt
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateDBEditKeyPress
         end
-        object lblBandColor51: TLabel
+        object lblSpacer2: TLabel
           Left = 172
           Height = 23
           Top = 22
@@ -1998,7 +1999,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit65: TDBEdit
+        object eCC: TDBEdit
           Left = 250
           Height = 23
           Top = 22
@@ -2012,7 +2013,7 @@ object edtMolt: TedtMolt
           OnKeyPress = eDateDBEditKeyPress
         end
       end
-      object pTypeColor7: TPanel
+      object pGrowthBars: TPanel
         Left = 0
         Height = 45
         Top = 995
@@ -2027,8 +2028,8 @@ object edtMolt: TedtMolt
         ClientHeight = 45
         ClientWidth = 408
         ParentBackground = False
-        TabOrder = 19
-        object lblBandType14: TLabel
+        TabOrder = 18
+        object lblGrowthBarWidth: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -2040,7 +2041,7 @@ object edtMolt: TedtMolt
           ParentColor = False
           ParentFont = False
         end
-        object DBEdit72: TDBEdit
+        object eGrowthBarWidth: TDBEdit
           Left = 16
           Height = 23
           Top = 22
