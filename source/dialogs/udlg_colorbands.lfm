@@ -128,6 +128,9 @@ object dlgColorBands: TdlgColorBands
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 0
+      OnClick = Band1Click
+      OnMouseEnter = Band1MouseEnter
+      OnMouseLeave = Band1MouseLeave
       object sbDelBand1: TSpeedButton
         Left = 74
         Height = 28
@@ -143,9 +146,12 @@ object dlgColorBands: TdlgColorBands
         ImageWidth = 20
         Visible = False
         OnClick = sbDelBand1Click
+        OnMouseEnter = Band1MouseEnter
+        OnMouseLeave = Band1MouseLeave
       end
     end
     object Band2: TBCPanel
+      Tag = 1
       Left = 8
       Height = 38
       Top = 47
@@ -190,6 +196,9 @@ object dlgColorBands: TdlgColorBands
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 1
+      OnClick = Band2Click
+      OnMouseEnter = Band1MouseEnter
+      OnMouseLeave = Band1MouseLeave
       object sbDelBand2: TSpeedButton
         Left = 74
         Height = 28
@@ -205,9 +214,12 @@ object dlgColorBands: TdlgColorBands
         ImageWidth = 20
         Visible = False
         OnClick = sbDelBand1Click
+        OnMouseEnter = Band1MouseEnter
+        OnMouseLeave = Band1MouseLeave
       end
     end
     object Band3: TBCPanel
+      Tag = 2
       Left = 8
       Height = 38
       Top = 86
@@ -252,6 +264,9 @@ object dlgColorBands: TdlgColorBands
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 2
+      OnClick = Band3Click
+      OnMouseEnter = Band1MouseEnter
+      OnMouseLeave = Band1MouseLeave
       object sbDelBand3: TSpeedButton
         Left = 74
         Height = 28
@@ -267,9 +282,12 @@ object dlgColorBands: TdlgColorBands
         ImageWidth = 20
         Visible = False
         OnClick = sbDelBand1Click
+        OnMouseEnter = Band1MouseEnter
+        OnMouseLeave = Band1MouseLeave
       end
     end
     object Band4: TBCPanel
+      Tag = 3
       Left = 8
       Height = 36
       Top = 125
@@ -314,6 +332,9 @@ object dlgColorBands: TdlgColorBands
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
       TabOrder = 3
+      OnClick = Band4Click
+      OnMouseEnter = Band1MouseEnter
+      OnMouseLeave = Band1MouseLeave
       object sbDelBand4: TSpeedButton
         Left = 74
         Height = 26
@@ -329,6 +350,8 @@ object dlgColorBands: TdlgColorBands
         ImageWidth = 20
         Visible = False
         OnClick = sbDelBand1Click
+        OnMouseEnter = Band1MouseEnter
+        OnMouseLeave = Band1MouseLeave
       end
     end
   end
@@ -353,6 +376,7 @@ object dlgColorBands: TdlgColorBands
       Top = 131
       Width = 30
       Align = alBottom
+      DisabledImageIndex = 186
       Enabled = False
       Flat = True
       Images = frmMain.mPopup
@@ -367,11 +391,13 @@ object dlgColorBands: TdlgColorBands
       Top = 8
       Width = 30
       Align = alTop
+      DisabledImageIndex = 124
       Enabled = False
       Flat = True
       Images = frmMain.bMenu
       ImageIndex = 88
       ImageWidth = 16
+      OnClick = sbUpClick
     end
     object sbDown: TSpeedButton
       Left = 0
@@ -380,11 +406,13 @@ object dlgColorBands: TdlgColorBands
       Top = 38
       Width = 30
       Align = alTop
+      DisabledImageIndex = 125
       Enabled = False
       Flat = True
       Images = frmMain.bMenu
       ImageIndex = 89
       ImageWidth = 16
+      OnClick = sbDownClick
     end
   end
   object pColors: TBCPanel

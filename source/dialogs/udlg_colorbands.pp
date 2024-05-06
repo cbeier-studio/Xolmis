@@ -48,6 +48,12 @@ type
     sbClear: TSpeedButton;
     sbUp: TSpeedButton;
     sbDown: TSpeedButton;
+    procedure Band1Click(Sender: TObject);
+    procedure Band1MouseEnter(Sender: TObject);
+    procedure Band1MouseLeave(Sender: TObject);
+    procedure Band2Click(Sender: TObject);
+    procedure Band3Click(Sender: TObject);
+    procedure Band4Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -58,13 +64,15 @@ type
     procedure sbCancelClick(Sender: TObject);
     procedure sbClearClick(Sender: TObject);
     procedure sbDelBand1Click(Sender: TObject);
+    procedure sbDownClick(Sender: TObject);
     procedure sbOKClick(Sender: TObject);
+    procedure sbUpClick(Sender: TObject);
   private
     FBandsStr: String;
     FLimit, FBandIdx: Integer;
     FBands: TBirdMarks;
     FBodyPart: TBodyPart;
-    procedure HabilitaBotoes;
+    procedure UpdateButtons;
     procedure PaintBand(aBand: TBandColorCode; aPanel: TBCPanel; aButton: TSpeedButton);
     procedure AddBand(aBand: TBandColorCode);
     procedure RepaintBands;
@@ -99,7 +107,7 @@ begin
   FBands.Clear;
   RepaintBands;
 
-  HabilitaBotoes;
+  UpdateButtons;
 end;
 
 procedure TdlgColorBands.sbDelBand1Click(Sender: TObject);
@@ -135,6 +143,14 @@ begin
   RepaintBands;
 end;
 
+procedure TdlgColorBands.sbDownClick(Sender: TObject);
+begin
+  FBands.Move(FBandIdx, FBandIdx + 1);
+  Inc(FBandIdx);
+
+  RepaintBands;
+end;
+
 procedure TdlgColorBands.sbOKClick(Sender: TObject);
 var
   BL: TStringList;
@@ -153,6 +169,14 @@ begin
   end;
 
   ModalResult := mrOK;
+end;
+
+procedure TdlgColorBands.sbUpClick(Sender: TObject);
+begin
+  FBands.Move(FBandIdx, FBandIdx - 1);
+  Dec(FBandIdx);
+
+  RepaintBands;
 end;
 
 procedure TdlgColorBands.FormKeyPress(Sender: TObject; var Key: char);
@@ -206,20 +230,30 @@ begin
     RepaintBands;
   end;
 
-  HabilitaBotoes;
+  UpdateButtons;
 end;
 
-procedure TdlgColorBands.HabilitaBotoes;
+procedure TdlgColorBands.UpdateButtons;
 begin
   sbClear.Enabled := (FBands.Count > 0);
-  sbUp.Enabled := (FBands.Count > 1);
-  sbDown.Enabled := (FBands.Count > 1);
+  sbUp.Enabled := (FBands.Count > 1) and (FBandIdx > 0);
+  sbDown.Enabled := (FBands.Count > 1) and (FBandIdx >= 0) and (FBandIdx < FBands.Count - 1);
 end;
 
 procedure TdlgColorBands.PaintBand(aBand: TBandColorCode; aPanel: TBCPanel; aButton: TSpeedButton);
 begin
   if aBand <> ccNone then
   begin
+    if FBandIdx = aPanel.Tag then
+    begin
+      aPanel.Border.Color := clHighlight;
+      aPanel.Border.Width := 2;
+    end
+    else
+    begin
+      aPanel.Border.Color := $00D1D1D1;
+      aPanel.Border.Width := 1;
+    end;
     aPanel.Background.Color := StringToColor(BandColors[Ord(aBand), 1]);
     if aBand in [ccAnotherMetal, ccViolet, ccBlue, ccGreen, ccUmber, ccSilver, ccBlack] then
     begin
@@ -237,6 +271,8 @@ begin
   else
   begin
     aPanel.Background.Color := $00FAFAFA;
+    aPanel.Border.Color := $00D1D1D1;
+    aPanel.Border.Width := 1;
     aPanel.FontEx.Color := clTextPrimaryLight;
     aPanel.Caption := EmptyStr;
     aButton.ImageIndex := 0;
@@ -279,9 +315,160 @@ begin
   end;
 end;
 
+procedure TdlgColorBands.Band1Click(Sender: TObject);
+begin
+  if FBands.Count = 0 then
+    Exit;
+
+  FBandIdx := 0;
+
+  RepaintBands;
+end;
+
+procedure TdlgColorBands.Band1MouseEnter(Sender: TObject);
+begin
+  if (Sender = Band1) or (Sender = sbDelBand1) then
+  begin
+    if FBands.Count = 0 then
+      Exit;
+
+    Band1.Border.Width := 1;
+    Band1.Border.Color := clHighlight;
+  end
+  else
+  if (Sender = Band2) or (Sender = sbDelBand2) then
+  begin
+    if FBands.Count <= 1 then
+      Exit;
+
+    Band2.Border.Width := 1;
+    Band2.Border.Color := clHighlight;
+  end
+  else
+  if (Sender = Band3) or (Sender = sbDelBand3) then
+  begin
+    if FBands.Count <= 2 then
+      Exit;
+
+    Band3.Border.Width := 1;
+    Band3.Border.Color := clHighlight;
+  end
+  else
+  if (Sender = Band4) or (Sender = sbDelBand4) then
+  begin
+    if FBands.Count <= 3 then
+      Exit;
+
+    Band4.Border.Width := 1;
+    Band4.Border.Color := clHighlight;
+  end;
+end;
+
+procedure TdlgColorBands.Band1MouseLeave(Sender: TObject);
+begin
+  if (Sender = Band1) or (Sender = sbDelBand1) then
+  begin
+    if FBands.Count = 0 then
+      Exit;
+
+    if FBandIdx = Band1.Tag then
+    begin
+      Band1.Border.Width := 2;
+      Band1.Border.Color := clHighlight;
+    end
+    else
+    begin
+      Band1.Border.Width := 1;
+      Band1.Border.Color := $00D1D1D1;
+    end;
+  end
+  else
+  if (Sender = Band2) or (Sender = sbDelBand2) then
+  begin
+    if FBands.Count <= 1 then
+      Exit;
+
+    if FBandIdx = Band2.Tag then
+    begin
+      Band2.Border.Width := 2;
+      Band2.Border.Color := clHighlight;
+    end
+    else
+    begin
+      Band2.Border.Width := 1;
+      Band2.Border.Color := $00D1D1D1;
+    end;
+  end
+  else
+  if (Sender = Band3) or (Sender = sbDelBand3) then
+  begin
+    if FBands.Count <= 2 then
+      Exit;
+
+    if FBandIdx = Band3.Tag then
+    begin
+      Band3.Border.Width := 2;
+      Band3.Border.Color := clHighlight;
+    end
+    else
+    begin
+      Band3.Border.Width := 1;
+      Band3.Border.Color := $00D1D1D1;
+    end;
+  end
+  else
+  if (Sender = Band4) or (Sender = sbDelBand4) then
+  begin
+    if FBands.Count <= 3 then
+      Exit;
+
+    if FBandIdx = Band4.Tag then
+    begin
+      Band4.Border.Width := 2;
+      Band4.Border.Color := clHighlight;
+    end
+    else
+    begin
+      Band4.Border.Width := 1;
+      Band4.Border.Color := $00D1D1D1;
+    end;
+  end;
+end;
+
+procedure TdlgColorBands.Band2Click(Sender: TObject);
+begin
+  if FBands.Count <= 1 then
+    Exit;
+
+  FBandIdx := 1;
+
+  RepaintBands;
+end;
+
+procedure TdlgColorBands.Band3Click(Sender: TObject);
+begin
+  if FBands.Count <= 2 then
+    Exit;
+
+  FBandIdx := 2;
+
+  RepaintBands;
+end;
+
+procedure TdlgColorBands.Band4Click(Sender: TObject);
+begin
+  if FBands.Count <= 3 then
+    Exit;
+
+  FBandIdx := 3;
+
+  RepaintBands;
+end;
+
 procedure TdlgColorBands.FormCreate(Sender: TObject);
 begin
   FBands := TBirdMarks.Create;
+  FBandIdx := -1;
 end;
 
 procedure TdlgColorBands.FormDestroy(Sender: TObject);
@@ -311,7 +498,7 @@ begin
       3: PaintBand(FBands.Items[i].Color, Band4, sbDelBand4);
     end;
 
-  HabilitaBotoes;
+  UpdateButtons;
 end;
 
 function TdlgColorBands.GetCodeFromLetter(aLetter: String): TBandColorCode;

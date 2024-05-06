@@ -6695,7 +6695,7 @@ msgid "DD/MM/YYYY"
 msgstr "DD/MM/YYYY"
 
 #: tedtsighting.edetectiontype.buttonhint
-msgid "Select detetion types"
+msgid "Select detection types"
 msgstr "Selecionar tipos de detecção"
 
 #: tedtsighting.eindividual.buttonhint

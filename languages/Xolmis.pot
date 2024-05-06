@@ -6667,7 +6667,7 @@ msgid "DD/MM/YYYY"
 msgstr ""
 
 #: tedtsighting.edetectiontype.buttonhint
-msgid "Select detetion types"
+msgid "Select detection types"
 msgstr ""
 
 #: tedtsighting.eindividual.buttonhint

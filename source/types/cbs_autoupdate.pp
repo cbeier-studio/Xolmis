@@ -9,7 +9,7 @@ uses
   fileinfo, winpeimagereader, elfreader, machoreader;
 
 const
-  CheckUpdateURL: String  = 'http://github.com/cbeier-studio/Xolmis/releases/latest/versions.json';
+  CheckUpdateURL: String  = 'http://github.com/cbeier-studio/Xolmis/releases/latest/download/versions.json';
   UpdateURL: String       = 'http://github.com/cbeier-studio/Xolmis/releases/latest';
 
 type
