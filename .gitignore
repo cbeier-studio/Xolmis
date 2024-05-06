@@ -37,6 +37,7 @@ published/
 #*.sqlite3
 test/
 data/
+Output/
 *.json
 *.ini
 
