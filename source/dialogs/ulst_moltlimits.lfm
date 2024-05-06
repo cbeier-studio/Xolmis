@@ -69,7 +69,6 @@ object lstMoltLimits: TlstMoltLimits
       Width = 156
       Caption = 'Apply'
       Default = True
-      Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
       ParentFont = False

@@ -37,7 +37,6 @@ object lstCycleCode: TlstCycleCode
       Width = 130
       Align = alRight
       Caption = 'Apply'
-      Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
       ParentFont = False

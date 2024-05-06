@@ -44,7 +44,6 @@ object lstBreedingStatus: TlstBreedingStatus
       Top = 8
       Width = 145
       Caption = 'Apply'
-      Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
       OnKeyPress = FormKeyPress

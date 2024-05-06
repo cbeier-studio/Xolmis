@@ -40,7 +40,6 @@ object lstDetectionType: TlstDetectionType
       Top = 8
       Width = 101
       Caption = 'Apply'
-      Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
       ParentFont = False

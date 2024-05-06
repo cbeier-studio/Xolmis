@@ -37,7 +37,6 @@ object dlgAuthorship: TdlgAuthorship
       Width = 130
       Align = alRight
       Caption = 'Apply'
-      Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
       ParentFont = False
@@ -85,6 +84,8 @@ object dlgAuthorship: TdlgAuthorship
       Width = 24
       Align = alTop
       BorderSpacing.Top = 16
+      DisabledImageIndex = 188
+      Enabled = False
       Flat = True
       Images = frmMain.mPopup
       ImageIndex = 34
@@ -101,6 +102,8 @@ object dlgAuthorship: TdlgAuthorship
       Top = 131
       Width = 24
       Align = alBottom
+      DisabledImageIndex = 124
+      Enabled = False
       Flat = True
       Images = frmMain.bMenu
       ImageIndex = 88
@@ -117,6 +120,8 @@ object dlgAuthorship: TdlgAuthorship
       Top = 161
       Width = 24
       Align = alBottom
+      DisabledImageIndex = 125
+      Enabled = False
       Flat = True
       Images = frmMain.bMenu
       ImageIndex = 89
@@ -133,6 +138,7 @@ object dlgAuthorship: TdlgAuthorship
       Top = 8
       Width = 24
       Align = alTop
+      DisabledImageIndex = 187
       Flat = True
       Images = frmMain.mPopup
       ImageIndex = 0

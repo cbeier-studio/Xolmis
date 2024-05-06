@@ -14,7 +14,6 @@ object lstHowSexedAged: TlstHowSexedAged
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poOwnerFormCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -41,7 +40,6 @@ object lstHowSexedAged: TlstHowSexedAged
       Top = 8
       Width = 197
       Caption = 'Apply'
-      Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
       ParentFont = False
