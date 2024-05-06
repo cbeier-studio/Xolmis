@@ -61,7 +61,7 @@ type
     procedure sbOKClick(Sender: TObject);
   private
     FBandsStr: String;
-    FLimit: Integer;
+    FLimit, FBandIdx: Integer;
     FBands: TBirdMarks;
     FBodyPart: TBodyPart;
     procedure HabilitaBotoes;

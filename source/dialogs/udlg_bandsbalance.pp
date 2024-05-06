@@ -5,14 +5,15 @@ unit udlg_bandsbalance;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, DB, SQLDB, atshapelinebgra, BCPanel,
-  Grids, DBGrids, Menus, StdCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, DB, SQLDB, fpcsvexport, atshapelinebgra,
+  BCPanel, Grids, DBGrids, Menus, StdCtrls;
 
 type
 
   { TdlgBandsBalance }
 
   TdlgBandsBalance = class(TForm)
+    CSVExporter1: TCSVExporter;
     dbgSaldo: TDBGrid;
     lineBottom: TShapeLineBGRA;
     pMsg: TBCPanel;
@@ -123,7 +124,11 @@ procedure TdlgBandsBalance.pmgSavesAsClick(Sender: TObject);
 begin
   SaveDlg.InitialDir := XSettings.LastPathUsed;
   if SaveDlg.Execute then
-    dbgSaldo.SaveToFile(SaveDlg.FileName);
+  begin
+    CSVExporter1.FileName := SaveDlg.FileName;
+    CSVExporter1.Execute;
+    //dbgSaldo.SaveToFile(SaveDlg.FileName);
+  end;
 end;
 
 end.

@@ -579,7 +579,10 @@ object edtBands: TedtBands
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find institution'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -633,7 +636,10 @@ object edtBands: TedtBands
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find carrier'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -687,7 +693,10 @@ object edtBands: TedtBands
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find project'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup

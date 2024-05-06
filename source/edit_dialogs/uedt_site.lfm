@@ -102,7 +102,7 @@ object edtSite: TedtSite
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
-      object pSupplier: TPanel
+      object pParentToponym: TPanel
         Left = 0
         Height = 46
         Top = 210
@@ -119,8 +119,8 @@ object edtSite: TedtSite
         ClientHeight = 46
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 0
-        object lblSupplier: TLabel
+        TabOrder = 4
+        object lblParentToponym: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -143,7 +143,10 @@ object edtSite: TedtSite
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find parent toponym'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -156,7 +159,7 @@ object edtSite: TedtSite
           OnDBEditKeyPress = eParentSiteDBEditKeyPress
         end
       end
-      object pRequester: TPanel
+      object pName: TPanel
         Left = 0
         Height = 45
         Top = 16
@@ -172,8 +175,8 @@ object edtSite: TedtSite
         ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 1
-        object lblRequester: TLabel
+        TabOrder = 0
+        object lblName: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -198,7 +201,7 @@ object edtSite: TedtSite
           OnKeyPress = eNameKeyPress
         end
       end
-      object pStatus1: TPanel
+      object pAcronymType: TPanel
         Left = 0
         Height = 45
         Top = 61
@@ -214,8 +217,8 @@ object edtSite: TedtSite
         ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 2
-        object lblBandStatus1: TLabel
+        TabOrder = 1
+        object lblAcronym: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -226,7 +229,7 @@ object edtSite: TedtSite
           ParentColor = False
           ParentFont = False
         end
-        object lblProject4: TLabel
+        object lblType: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -274,7 +277,7 @@ object edtSite: TedtSite
           TabOrder = 1
         end
       end
-      object pProject: TPanel
+      object pEbirdName: TPanel
         Left = 0
         Height = 45
         Top = 301
@@ -290,8 +293,8 @@ object edtSite: TedtSite
         ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 3
-        object lblProject: TLabel
+        TabOrder = 6
+        object lblEbirdName: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -316,7 +319,7 @@ object edtSite: TedtSite
           OnKeyPress = eNameKeyPress
         end
       end
-      object pProject1: TPanel
+      object pFullname: TPanel
         Left = 0
         Height = 45
         Top = 256
@@ -332,8 +335,8 @@ object edtSite: TedtSite
         ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 4
-        object lblProject1: TLabel
+        TabOrder = 5
+        object lblFullname: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -358,7 +361,7 @@ object edtSite: TedtSite
           OnKeyPress = eNameKeyPress
         end
       end
-      object pSizeNumber1: TPanel
+      object pLongitudeLatitude: TPanel
         Left = 0
         Height = 46
         Top = 106
@@ -374,8 +377,8 @@ object edtSite: TedtSite
         ClientHeight = 46
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 5
-        object lblBandSize1: TLabel
+        TabOrder = 2
+        object lblLongitude: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -386,7 +389,7 @@ object edtSite: TedtSite
           ParentColor = False
           ParentFont = False
         end
-        object lblBandNumber1: TLabel
+        object lblLatitude: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -409,7 +412,10 @@ object edtSite: TedtSite
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup
@@ -433,7 +439,10 @@ object edtSite: TedtSite
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
+          ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup
@@ -446,7 +455,7 @@ object edtSite: TedtSite
           OnDBEditKeyPress = eNameKeyPress
         end
       end
-      object pStatus2: TPanel
+      object pAltitude: TPanel
         Left = 0
         Height = 45
         Top = 152
@@ -462,14 +471,14 @@ object edtSite: TedtSite
         ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 6
-        object lblBandStatus2: TLabel
+        TabOrder = 3
+        object lblAltitude: TLabel
           Left = 16
           Height = 15
           Top = 3
           Width = 176
           BorderSpacing.Top = 3
-          Caption = 'Altitude:'
+          Caption = 'Altitude (m):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False

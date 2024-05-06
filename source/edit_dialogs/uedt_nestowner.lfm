@@ -118,7 +118,10 @@ object edtNestOwner: TedtNestOwner
         Constraints.MaxHeight = 28
         Constraints.MinWidth = 365
         ParentBackground = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
+        ButtonHint = 'Find individual'
         ButtonWidth = 24
         ImageIndex = 99
         Images = frmMain.mPopup

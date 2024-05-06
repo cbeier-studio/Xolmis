@@ -140,7 +140,10 @@ object edtInstitution: TedtInstitution
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find municipality'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -531,7 +534,10 @@ object edtInstitution: TedtInstitution
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find state'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -584,7 +590,10 @@ object edtInstitution: TedtInstitution
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find country'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup

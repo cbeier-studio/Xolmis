@@ -41,7 +41,6 @@ object dlgCalendar: TdlgCalendar
       Width = 174
       AutoSize = True
       Caption = 'Apply'
-      Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
       ParentFont = False
@@ -163,6 +162,7 @@ object dlgCalendar: TdlgCalendar
       object rbAdd: TSpeedButton
         Left = 8
         Height = 30
+        Hint = 'Add to date'
         Top = 8
         Width = 60
         Down = True
@@ -170,16 +170,21 @@ object dlgCalendar: TdlgCalendar
         Images = iCalendar
         ImageIndex = 0
         ImageWidth = 24
+        ShowHint = True
+        ParentShowHint = False
       end
       object rbSubtract: TSpeedButton
         Left = 72
         Height = 30
+        Hint = 'Subtract from date'
         Top = 8
         Width = 59
         GroupIndex = 1
         Images = iCalendar
         ImageIndex = 1
         ImageWidth = 24
+        ShowHint = True
+        ParentShowHint = False
       end
     end
     object pYears: TBCPanel

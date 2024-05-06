@@ -12,7 +12,6 @@ object dlgImportCaptures: TdlgImportCaptures
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poMainFormCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -185,6 +184,7 @@ object dlgImportCaptures: TdlgImportCaptures
           object eJournalFile: TFileNameEdit
             Left = 160
             Height = 24
+            Hint = 'Select file'
             Top = 12
             Width = 519
             DialogTitle = 'Import from file'
@@ -199,7 +199,10 @@ object dlgImportCaptures: TdlgImportCaptures
             ImageWidth = 20
             Align = alRight
             Anchors = [akTop, akLeft, akRight, akBottom]
+            Color = clDefault
             MaxLength = 0
+            ParentShowHint = False
+            ShowHint = True
             Spacing = 0
             TabOrder = 0
             OnButtonClick = eJournalFileButtonClick
@@ -209,6 +212,7 @@ object dlgImportCaptures: TdlgImportCaptures
           object sbClearJournalFile: TSpeedButton
             Left = 687
             Height = 24
+            Hint = 'Clear field'
             Top = 12
             Width = 24
             Align = alRight
@@ -216,6 +220,8 @@ object dlgImportCaptures: TdlgImportCaptures
             ImageIndex = 17
             ImageWidth = 20
             OnClick = sbClearJournalFileClick
+            ShowHint = True
+            ParentShowHint = False
           end
         end
         object pEffortFile: TBCPanel
@@ -288,6 +294,7 @@ object dlgImportCaptures: TdlgImportCaptures
           object eEffortFile: TFileNameEdit
             Left = 160
             Height = 24
+            Hint = 'Select file'
             Top = 12
             Width = 519
             DialogTitle = 'Import from file'
@@ -302,7 +309,10 @@ object dlgImportCaptures: TdlgImportCaptures
             ImageWidth = 20
             Align = alRight
             Anchors = [akTop, akLeft, akRight, akBottom]
+            Color = clDefault
             MaxLength = 0
+            ParentShowHint = False
+            ShowHint = True
             Spacing = 0
             TabOrder = 0
             OnButtonClick = eJournalFileButtonClick
@@ -313,6 +323,7 @@ object dlgImportCaptures: TdlgImportCaptures
             Tag = 1
             Left = 687
             Height = 24
+            Hint = 'Clear field'
             Top = 12
             Width = 24
             Align = alRight
@@ -320,6 +331,8 @@ object dlgImportCaptures: TdlgImportCaptures
             ImageIndex = 17
             ImageWidth = 20
             OnClick = sbClearJournalFileClick
+            ShowHint = True
+            ParentShowHint = False
           end
         end
         object pCaptureFile: TBCPanel
@@ -393,6 +406,7 @@ object dlgImportCaptures: TdlgImportCaptures
           object eCaptureFile: TFileNameEdit
             Left = 160
             Height = 24
+            Hint = 'Select file'
             Top = 12
             Width = 519
             DialogTitle = 'Import from file'
@@ -407,7 +421,10 @@ object dlgImportCaptures: TdlgImportCaptures
             ImageWidth = 20
             Align = alRight
             Anchors = [akTop, akLeft, akRight, akBottom]
+            Color = clDefault
             MaxLength = 0
+            ParentShowHint = False
+            ShowHint = True
             Spacing = 0
             TabOrder = 0
             OnButtonClick = eJournalFileButtonClick
@@ -418,6 +435,7 @@ object dlgImportCaptures: TdlgImportCaptures
             Tag = 2
             Left = 687
             Height = 24
+            Hint = 'Clear field'
             Top = 12
             Width = 24
             Align = alRight
@@ -425,6 +443,8 @@ object dlgImportCaptures: TdlgImportCaptures
             ImageIndex = 17
             ImageWidth = 20
             OnClick = sbClearJournalFileClick
+            ShowHint = True
+            ParentShowHint = False
           end
         end
         object lblSubtitleImportFiles: TLabel

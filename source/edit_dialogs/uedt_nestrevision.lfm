@@ -233,7 +233,10 @@ object edtNestRevision: TedtNestRevision
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 224
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Open calendar'
           ButtonWidth = 24
           ImageIndex = 18
           Images = frmMain.mPopup
@@ -287,7 +290,10 @@ object edtNestRevision: TedtNestRevision
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find nidoparasite taxon'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -340,7 +346,10 @@ object edtNestRevision: TedtNestRevision
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 224
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find observer'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -510,7 +519,10 @@ object edtNestRevision: TedtNestRevision
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 224
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find observer'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup

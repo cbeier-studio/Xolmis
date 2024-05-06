@@ -43,8 +43,10 @@ object dlgFirstConfig: TdlgFirstConfig
         ChildSizing.TopBottomSpacing = 16
         ClientHeight = 240
         ClientWidth = 390
+        Color = 15066599
         Constraints.MinWidth = 390
         ParentBackground = False
+        ParentColor = False
         TabOrder = 0
         object pTitleConnection: TPanel
           Left = 16
@@ -113,6 +115,7 @@ object dlgFirstConfig: TdlgFirstConfig
           Width = 358
           Align = alTop
           BorderSpacing.Bottom = 8
+          ButtonHint = 'Select file'
           ButtonWidth = 24
           Images = frmMain.mPopup
           ImageIndex = 43
@@ -122,7 +125,9 @@ object dlgFirstConfig: TdlgFirstConfig
           OnButtonClick = eDBFileButtonClick
           OnChange = eNameChange
           OnKeyPress = eNameKeyPress
+          ParentShowHint = False
           PasswordChar = #0
+          ShowHint = True
           Spacing = 0
           TabOrder = 2
         end
@@ -218,6 +223,7 @@ object dlgFirstConfig: TdlgFirstConfig
           Width = 358
           Align = alTop
           BorderSpacing.Bottom = 8
+          ButtonHint = 'Show/hide password'
           ButtonWidth = 24
           EchoMode = emPassword
           Images = frmMain.bMenu
@@ -228,7 +234,9 @@ object dlgFirstConfig: TdlgFirstConfig
           OnButtonClick = eNewPassButtonClick
           OnChange = eNewPassChange
           OnKeyPress = eNewPassKeyPress
+          ParentShowHint = False
           PasswordChar = '*'
+          ShowHint = True
           Spacing = 0
           TabOrder = 1
         end
@@ -261,6 +269,7 @@ object dlgFirstConfig: TdlgFirstConfig
           Width = 358
           Align = alTop
           BorderSpacing.Bottom = 8
+          ButtonHint = 'Show/hide password'
           ButtonWidth = 24
           EchoMode = emPassword
           Images = frmMain.bMenu
@@ -271,7 +280,9 @@ object dlgFirstConfig: TdlgFirstConfig
           OnButtonClick = eConfirmPassButtonClick
           OnChange = eNewPassChange
           OnKeyPress = eNewPassKeyPress
+          ParentShowHint = False
           PasswordChar = '*'
+          ShowHint = True
           Spacing = 0
           TabOrder = 2
         end

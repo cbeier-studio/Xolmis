@@ -13,6 +13,11 @@ type
   { TbatchNetEffort }
 
   TbatchNetEffort = class(TForm)
+    eCloseTime4: TTimeEdit;
+    eOpenTime4: TTimeEdit;
+    lblCloseTime4: TLabel;
+    lblOpenTime4: TLabel;
+    pOpenCloseTime4: TPanel;
     pSurvey: TBCPanel;
     cbNetMesh: TComboBox;
     eEndNumber: TSpinEdit;
@@ -124,6 +129,10 @@ begin
         Add('time(:opentime3), ');
       if not (eCloseTime3.Text = EmptyStr) then
         Add('time(:closetime3), ');
+      if not (eOpenTime4.Text = EmptyStr) then
+        Add('time(:opentime4), ');
+      if not (eCloseTime4.Text = EmptyStr) then
+        Add('time(:closetime4), ');
       Add(':alength, :aheight, :amesh, ');
       if SurveyId > 0 then
       begin
@@ -154,6 +163,10 @@ begin
           ParamByName('OPENTIME3').AsString := TimeToStr(eOpenTime3.Time);
         if not (eCloseTime3.Text = EmptyStr) then
           ParamByName('CLOSETIME3').AsString := TimeToStr(eCloseTime3.Time);
+        if not (eOpenTime4.Text = EmptyStr) then
+          ParamByName('OPENTIME4').AsString := TimeToStr(eOpenTime4.Time);
+        if not (eCloseTime4.Text = EmptyStr) then
+          ParamByName('CLOSETIME4').AsString := TimeToStr(eCloseTime4.Time);
         if eNetLength.Value = 0.0 then
           ParamByName('ALENGTH').Clear
         else

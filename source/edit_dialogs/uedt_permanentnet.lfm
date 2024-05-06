@@ -129,7 +129,7 @@ object edtPermanentNet: TedtPermanentNet
         TabOrder = 0
       end
     end
-    object pFromToNumber: TPanel
+    object pNetNumber: TPanel
       Left = 0
       Height = 46
       Top = 16
@@ -146,7 +146,7 @@ object edtPermanentNet: TedtPermanentNet
       ClientWidth = 488
       ParentBackground = False
       TabOrder = 1
-      object lblEndNumber: TLabel
+      object lblNetNumber: TLabel
         Left = 16
         Height = 15
         Top = 4
@@ -171,7 +171,7 @@ object edtPermanentNet: TedtPermanentNet
         OnKeyPress = eNetNumberKeyPress
       end
     end
-    object pFromToNumber1: TPanel
+    object pLongitudeLatitude: TPanel
       Left = 0
       Height = 47
       Top = 62
@@ -188,7 +188,7 @@ object edtPermanentNet: TedtPermanentNet
       ClientWidth = 488
       ParentBackground = False
       TabOrder = 2
-      object lblStartNumber1: TLabel
+      object lblLongitude: TLabel
         Left = 16
         Height = 15
         Top = 4
@@ -199,7 +199,7 @@ object edtPermanentNet: TedtPermanentNet
         ParentColor = False
         ParentFont = False
       end
-      object lblEndNumber1: TLabel
+      object lblLatitude: TLabel
         Left = 252
         Height = 15
         Top = 4
@@ -222,7 +222,10 @@ object edtPermanentNet: TedtPermanentNet
         Constraints.MaxHeight = 28
         Constraints.MinWidth = 220
         ParentBackground = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
+        ButtonHint = 'Edit coordinates in DMS format'
         ButtonWidth = 24
         ImageIndex = 69
         Images = frmMain.mPopup
@@ -246,7 +249,10 @@ object edtPermanentNet: TedtPermanentNet
         Constraints.MaxHeight = 28
         Constraints.MinWidth = 220
         ParentBackground = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 1
+        ButtonHint = 'Edit coordinates in DMS format'
         ButtonWidth = 24
         ImageIndex = 69
         Images = frmMain.mPopup

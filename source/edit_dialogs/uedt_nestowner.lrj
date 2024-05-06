@@ -2,6 +2,7 @@
 {"hash":184659234,"name":"tedtnestowner.caption","sourcebytes":[78,101,119,32,110,101,115,116,32,111,119,110,101,114],"value":"New nest owner"},
 {"hash":157453434,"name":"tedtnestowner.lblrole.caption","sourcebytes":[82,111,108,101,58,32,42],"value":"Role: *"},
 {"hash":212598010,"name":"tedtnestowner.lblindividual.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,58],"value":"Individual:"},
+{"hash":78213836,"name":"tedtnestowner.eindividual.buttonhint","sourcebytes":[70,105,110,100,32,105,110,100,105,118,105,100,117,97,108],"value":"Find individual"},
 {"hash":366789,"name":"tedtnestowner.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtnestowner.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
 ]}

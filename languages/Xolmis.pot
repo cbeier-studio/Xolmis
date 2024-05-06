@@ -2932,14 +2932,47 @@ msgctxt "tbatchbands.caption"
 msgid "New batch of bands"
 msgstr ""
 
+#: tbatchbands.ecarrier.buttonhint
+msgctxt "tbatchbands.ecarrier.buttonhint"
+msgid "Find carrier"
+msgstr ""
+
+#: tbatchbands.eorderdate.buttonhint
+msgctxt "tbatchbands.eorderdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tbatchbands.eorderdate.texthint
 msgctxt "tbatchbands.eorderdate.texthint"
 msgid "DD/MM/YYYY"
 msgstr ""
 
+#: tbatchbands.eproject.buttonhint
+msgctxt "tbatchbands.eproject.buttonhint"
+msgid "Find project"
+msgstr ""
+
+#: tbatchbands.ereceiptdate.buttonhint
+msgctxt "tbatchbands.ereceiptdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tbatchbands.ereceiptdate.texthint
 msgctxt "tbatchbands.ereceiptdate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tbatchbands.erequester.buttonhint
+msgid "Find requester"
+msgstr ""
+
+#: tbatchbands.esender.buttonhint
+msgid "Find sender"
+msgstr ""
+
+#: tbatchbands.esupplier.buttonhint
+msgctxt "tbatchbands.esupplier.buttonhint"
+msgid "Find institution"
 msgstr ""
 
 #: tbatchbands.lblbandsize.caption
@@ -3016,9 +3049,19 @@ msgstr ""
 msgid "New series of mistnets"
 msgstr ""
 
+#: tbatchneteffort.eclosetime1.buttonhint
+msgctxt "tbatchneteffort.eclosetime1.buttonhint"
+msgid "Select time"
+msgstr ""
+
 #: tbatchneteffort.eclosetime1.texthint
 msgctxt "tbatchneteffort.eclosetime1.texthint"
 msgid "HH:MM"
+msgstr ""
+
+#: tbatchneteffort.eclosetime2.buttonhint
+msgctxt "tbatchneteffort.eclosetime2.buttonhint"
+msgid "Select time"
 msgstr ""
 
 #: tbatchneteffort.eclosetime2.texthint
@@ -3026,9 +3069,29 @@ msgctxt "tbatchneteffort.eclosetime2.texthint"
 msgid "HH:MM"
 msgstr ""
 
+#: tbatchneteffort.eclosetime3.buttonhint
+msgctxt "tbatchneteffort.eclosetime3.buttonhint"
+msgid "Select time"
+msgstr ""
+
 #: tbatchneteffort.eclosetime3.texthint
 msgctxt "tbatchneteffort.eclosetime3.texthint"
 msgid "HH:MM"
+msgstr ""
+
+#: tbatchneteffort.eclosetime4.buttonhint
+msgctxt "tbatchneteffort.eclosetime4.buttonhint"
+msgid "Select time"
+msgstr ""
+
+#: tbatchneteffort.eclosetime4.texthint
+msgctxt "tbatchneteffort.eclosetime4.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tbatchneteffort.eopentime1.buttonhint
+msgctxt "tbatchneteffort.eopentime1.buttonhint"
+msgid "Select time"
 msgstr ""
 
 #: tbatchneteffort.eopentime1.texthint
@@ -3036,14 +3099,38 @@ msgctxt "tbatchneteffort.eopentime1.texthint"
 msgid "HH:MM"
 msgstr ""
 
+#: tbatchneteffort.eopentime2.buttonhint
+msgctxt "tbatchneteffort.eopentime2.buttonhint"
+msgid "Select time"
+msgstr ""
+
 #: tbatchneteffort.eopentime2.texthint
 msgctxt "tbatchneteffort.eopentime2.texthint"
 msgid "HH:MM"
 msgstr ""
 
+#: tbatchneteffort.eopentime3.buttonhint
+msgctxt "tbatchneteffort.eopentime3.buttonhint"
+msgid "Select time"
+msgstr ""
+
 #: tbatchneteffort.eopentime3.texthint
 msgctxt "tbatchneteffort.eopentime3.texthint"
 msgid "HH:MM"
+msgstr ""
+
+#: tbatchneteffort.eopentime4.buttonhint
+msgctxt "tbatchneteffort.eopentime4.buttonhint"
+msgid "Select time"
+msgstr ""
+
+#: tbatchneteffort.eopentime4.texthint
+msgctxt "tbatchneteffort.eopentime4.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tbatchneteffort.esurvey.buttonhint
+msgid "Select survey to copy mistnets from"
 msgstr ""
 
 #: tbatchneteffort.lblclosetime1.caption
@@ -3059,6 +3146,11 @@ msgstr ""
 #: tbatchneteffort.lblclosetime3.caption
 msgctxt "tbatchneteffort.lblclosetime3.caption"
 msgid "Closing time 3:"
+msgstr ""
+
+#: tbatchneteffort.lblclosetime4.caption
+msgctxt "tbatchneteffort.lblclosetime4.caption"
+msgid "Closing time 4:"
 msgstr ""
 
 #: tbatchneteffort.lblendnumber.caption
@@ -3092,6 +3184,11 @@ msgstr ""
 #: tbatchneteffort.lblopentime3.caption
 msgctxt "tbatchneteffort.lblopentime3.caption"
 msgid "Opening time 3:"
+msgstr ""
+
+#: tbatchneteffort.lblopentime4.caption
+msgctxt "tbatchneteffort.lblopentime4.caption"
+msgid "Opening time 4:"
 msgstr ""
 
 #: tbatchneteffort.lblstartnumber.caption
@@ -3422,12 +3519,12 @@ msgstr ""
 
 #: tdlgabout.sbclose.caption
 msgctxt "tdlgabout.sbclose.caption"
-msgid "Fechar"
+msgid "Close"
 msgstr ""
 
 #: tdlgabout.sbcopy.caption
 msgctxt "tdlgabout.sbcopy.caption"
-msgid "Copiar"
+msgid "Copy"
 msgstr ""
 
 #: tdlgauthorship.caption
@@ -3643,6 +3740,14 @@ msgstr ""
 msgid "Years:"
 msgstr ""
 
+#: tdlgcalendar.rbadd.hint
+msgid "Add to date"
+msgstr ""
+
+#: tdlgcalendar.rbsubtract.hint
+msgid "Subtract from date"
+msgstr ""
+
 #: tdlgcalendar.sbcancel.caption
 msgctxt "tdlgcalendar.sbcancel.caption"
 msgid "Cancel"
@@ -3660,12 +3765,12 @@ msgstr ""
 
 #: tdlgchangepassword.econfirmpassword.buttonhint
 msgctxt "tdlgchangepassword.econfirmpassword.buttonhint"
-msgid "Mostrar/ocultar senha"
+msgid "Show/hide password"
 msgstr ""
 
 #: tdlgchangepassword.enewpassword.buttonhint
 msgctxt "tdlgchangepassword.enewpassword.buttonhint"
-msgid "Mostrar/ocultar senha"
+msgid "Show/hide password"
 msgstr ""
 
 #: tdlgchangepassword.lblconfirmpassword.caption
@@ -3761,14 +3866,46 @@ msgctxt "tdlgcolorbands.sbcancel.caption"
 msgid "Cancel"
 msgstr ""
 
+#: tdlgcolorbands.sbclear.hint
+msgid "Clear bands"
+msgstr ""
+
+#: tdlgcolorbands.sbdelband1.hint
+msgctxt "tdlgcolorbands.sbdelband1.hint"
+msgid "Remove band color"
+msgstr ""
+
+#: tdlgcolorbands.sbdelband2.hint
+msgctxt "tdlgcolorbands.sbdelband2.hint"
+msgid "Remove band color"
+msgstr ""
+
+#: tdlgcolorbands.sbdelband3.hint
+msgctxt "tdlgcolorbands.sbdelband3.hint"
+msgid "Remove band color"
+msgstr ""
+
+#: tdlgcolorbands.sbdelband4.hint
+msgctxt "tdlgcolorbands.sbdelband4.hint"
+msgid "Remove band color"
+msgstr ""
+
+#: tdlgcolorbands.sbdown.hint
+msgid "Move band down"
+msgstr ""
+
 #: tdlgcolorbands.sbok.caption
 msgctxt "tdlgcolorbands.sbok.caption"
 msgid "Apply"
 msgstr ""
 
+#: tdlgcolorbands.sbup.hint
+msgid "Move band up"
+msgstr ""
+
 #: tdlgconnect.epassword.buttonhint
 msgctxt "tdlgconnect.epassword.buttonhint"
-msgid "Mostrar/ocultar senha"
+msgid "Show/hide password"
 msgstr ""
 
 #: tdlgconnect.lblconnection.caption
@@ -3835,6 +3972,7 @@ msgid "Name"
 msgstr ""
 
 #: tdlgfindtaxon.caption
+msgctxt "tdlgfindtaxon.caption"
 msgid "Find taxon"
 msgstr ""
 
@@ -3855,6 +3993,21 @@ msgstr ""
 
 #: tdlgfirstconfig.caption
 msgid "Initial configuration"
+msgstr ""
+
+#: tdlgfirstconfig.econfirmpass.buttonhint
+msgctxt "tdlgfirstconfig.econfirmpass.buttonhint"
+msgid "Show/hide password"
+msgstr ""
+
+#: tdlgfirstconfig.edbfile.buttonhint
+msgctxt "tdlgfirstconfig.edbfile.buttonhint"
+msgid "Select file"
+msgstr ""
+
+#: tdlgfirstconfig.enewpass.buttonhint
+msgctxt "tdlgfirstconfig.enewpass.buttonhint"
+msgid "Show/hide password"
 msgstr ""
 
 #: tdlgfirstconfig.lbladmininstruction.caption
@@ -3943,14 +4096,29 @@ msgctxt "tdlgimportcaptures.caption"
 msgid "Import data"
 msgstr ""
 
+#: tdlgimportcaptures.ecapturefile.hint
+msgctxt "tdlgimportcaptures.ecapturefile.hint"
+msgid "Select file"
+msgstr ""
+
 #: tdlgimportcaptures.ecapturefile.texthint
 msgctxt "tdlgimportcaptures.ecapturefile.texthint"
 msgid "Select a file..."
 msgstr ""
 
+#: tdlgimportcaptures.eeffortfile.hint
+msgctxt "tdlgimportcaptures.eeffortfile.hint"
+msgid "Select file"
+msgstr ""
+
 #: tdlgimportcaptures.eeffortfile.texthint
 msgctxt "tdlgimportcaptures.eeffortfile.texthint"
 msgid "Select a file..."
+msgstr ""
+
+#: tdlgimportcaptures.ejournalfile.hint
+msgctxt "tdlgimportcaptures.ejournalfile.hint"
+msgid "Select file"
 msgstr ""
 
 #: tdlgimportcaptures.ejournalfile.texthint
@@ -3984,6 +4152,21 @@ msgctxt "tdlgimportcaptures.sbcancel.caption"
 msgid "Cancel"
 msgstr ""
 
+#: tdlgimportcaptures.sbclearcapturefile.hint
+msgctxt "tdlgimportcaptures.sbclearcapturefile.hint"
+msgid "Clear field"
+msgstr ""
+
+#: tdlgimportcaptures.sbcleareffortfile.hint
+msgctxt "tdlgimportcaptures.sbcleareffortfile.hint"
+msgid "Clear field"
+msgstr ""
+
+#: tdlgimportcaptures.sbclearjournalfile.hint
+msgctxt "tdlgimportcaptures.sbclearjournalfile.hint"
+msgid "Clear field"
+msgstr ""
+
 #: tdlgimportcaptures.sbclose.caption
 msgctxt "tdlgimportcaptures.sbclose.caption"
 msgid "Close"
@@ -4000,7 +4183,7 @@ msgstr ""
 
 #: tdlglogin.epassword.buttonhint
 msgctxt "tdlglogin.epassword.buttonhint"
-msgid "Mostrar/ocultar senha"
+msgid "Show/hide password"
 msgstr ""
 
 #: tdlglogin.lbllogin.caption
@@ -4118,6 +4301,21 @@ msgctxt "tedtbands.ckreported.caption"
 msgid "Reported"
 msgstr ""
 
+#: tedtbands.ecarrier.buttonhint
+msgctxt "tedtbands.ecarrier.buttonhint"
+msgid "Find carrier"
+msgstr ""
+
+#: tedtbands.eproject.buttonhint
+msgctxt "tedtbands.eproject.buttonhint"
+msgid "Find project"
+msgstr ""
+
+#: tedtbands.esupplier.buttonhint
+msgctxt "tedtbands.esupplier.buttonhint"
+msgid "Find institution"
+msgstr ""
+
 #: tedtbands.lblbandcolor.caption
 msgctxt "tedtbands.lblbandcolor.caption"
 msgid "Color:"
@@ -4186,6 +4384,18 @@ msgstr ""
 #: tedtbands.sbsave.caption
 msgctxt "tedtbands.sbsave.caption"
 msgid "Save"
+msgstr ""
+
+#: tedtbotanictaxon.ename.buttonhint
+msgid "Check name"
+msgstr ""
+
+#: tedtbotanictaxon.eparenttaxon.buttonhint
+msgid "Find parent taxon"
+msgstr ""
+
+#: tedtbotanictaxon.evalidname.buttonhint
+msgid "Find valid taxon"
 msgstr ""
 
 #: tedtbotanictaxon.lblauthorship.caption
@@ -4266,6 +4476,25 @@ msgstr ""
 msgid "Specimen (whole)"
 msgstr ""
 
+#: tedtcapture.eannotator.buttonhint
+msgid "Find annotator"
+msgstr ""
+
+#: tedtcapture.eband.buttonhint
+msgctxt "tedtcapture.eband.buttonhint"
+msgid "Find band"
+msgstr ""
+
+#: tedtcapture.ebander.buttonhint
+msgctxt "tedtcapture.ebander.buttonhint"
+msgid "Find bander"
+msgstr ""
+
+#: tedtcapture.ecapturedate.buttonhint
+msgctxt "tedtcapture.ecapturedate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtcapture.ecapturedate.texthint
 msgctxt "tedtcapture.ecapturedate.texthint"
 msgid "DD/MM/YYYY"
@@ -4274,6 +4503,76 @@ msgstr ""
 #: tedtcapture.ecapturetime.texthint
 msgctxt "tedtcapture.ecapturetime.texthint"
 msgid "HH:MM"
+msgstr ""
+
+#: tedtcapture.ecyclecode.buttonhint
+msgid "Select molt cycle code"
+msgstr ""
+
+#: tedtcapture.ehowaged.buttonhint
+msgid "Select how was aged"
+msgstr ""
+
+#: tedtcapture.ehowsexed.buttonhint
+msgid "Select how was sexed"
+msgstr ""
+
+#: tedtcapture.elatitude.buttonhint
+msgctxt "tedtcapture.elatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtcapture.elefttarsus.buttonhint
+msgctxt "tedtcapture.elefttarsus.buttonhint"
+msgid "Select colors"
+msgstr ""
+
+#: tedtcapture.elocality.buttonhint
+msgctxt "tedtcapture.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtcapture.elongitude.buttonhint
+msgctxt "tedtcapture.elongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtcapture.emoltlimits.buttonhint
+msgid "Select molt limits"
+msgstr ""
+
+#: tedtcapture.enet.buttonhint
+msgid "Find mistnet"
+msgstr ""
+
+#: tedtcapture.ephotographer1.buttonhint
+msgctxt "tedtcapture.ephotographer1.buttonhint"
+msgid "Find photographer"
+msgstr ""
+
+#: tedtcapture.ephotographer2.buttonhint
+msgctxt "tedtcapture.ephotographer2.buttonhint"
+msgid "Find photographer"
+msgstr ""
+
+#: tedtcapture.eremovedband.buttonhint
+msgctxt "tedtcapture.eremovedband.buttonhint"
+msgid "Find band"
+msgstr ""
+
+#: tedtcapture.erighttarsus.buttonhint
+msgctxt "tedtcapture.erighttarsus.buttonhint"
+msgid "Select colors"
+msgstr ""
+
+#: tedtcapture.esurvey.buttonhint
+msgctxt "tedtcapture.esurvey.buttonhint"
+msgid "Find survey"
+msgstr ""
+
+#: tedtcapture.etaxon.buttonhint
+msgctxt "tedtcapture.etaxon.buttonhint"
+msgid "Find taxon"
 msgstr ""
 
 #: tedtcapture.label44.caption
@@ -4590,6 +4889,26 @@ msgstr ""
 msgid "Hatched"
 msgstr ""
 
+#: tedtegg.eindividual.buttonhint
+msgctxt "tedtegg.eindividual.buttonhint"
+msgid "Find individual"
+msgstr ""
+
+#: tedtegg.emeasuredate.buttonhint
+msgctxt "tedtegg.emeasuredate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tedtegg.eobserver.buttonhint
+msgctxt "tedtegg.eobserver.buttonhint"
+msgid "Find observer"
+msgstr ""
+
+#: tedtegg.etaxon.buttonhint
+msgctxt "tedtegg.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr ""
+
 #: tedtegg.lbleggseq.caption
 msgid "Egg number: *"
 msgstr ""
@@ -4668,9 +4987,29 @@ msgctxt "tedtegg.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtexpedition.eenddate.buttonhint
+msgctxt "tedtexpedition.eenddate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtexpedition.eenddate.texthint
 msgctxt "tedtexpedition.eenddate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtexpedition.elocality.buttonhint
+msgctxt "tedtexpedition.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtexpedition.eproject.buttonhint
+msgctxt "tedtexpedition.eproject.buttonhint"
+msgid "Find project"
+msgstr ""
+
+#: tedtexpedition.estartdate.buttonhint
+msgctxt "tedtexpedition.estartdate.buttonhint"
+msgid "Open calendar"
 msgstr ""
 
 #: tedtexpedition.estartdate.texthint
@@ -4824,9 +5163,24 @@ msgctxt "tedtimageinfo.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtindividual.eband.buttonhint
+msgctxt "tedtindividual.eband.buttonhint"
+msgid "Find band"
+msgstr ""
+
+#: tedtindividual.ebandchangedate.buttonhint
+msgctxt "tedtindividual.ebandchangedate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtindividual.ebandchangedate.texthint
 msgctxt "tedtindividual.ebandchangedate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtindividual.ebandingdate.buttonhint
+msgctxt "tedtindividual.ebandingdate.buttonhint"
+msgid "Open calendar"
 msgstr ""
 
 #: tedtindividual.ebandingdate.texthint
@@ -4862,6 +5216,56 @@ msgstr ""
 #: tedtindividual.edeathyear.texthint
 msgctxt "tedtindividual.edeathyear.texthint"
 msgid "YYYY"
+msgstr ""
+
+#: tedtindividual.edoubleband.buttonhint
+msgctxt "tedtindividual.edoubleband.buttonhint"
+msgid "Find band"
+msgstr ""
+
+#: tedtindividual.efather.buttonhint
+msgctxt "tedtindividual.efather.buttonhint"
+msgid "Find individual"
+msgstr ""
+
+#: tedtindividual.elefttarsus.buttonhint
+msgctxt "tedtindividual.elefttarsus.buttonhint"
+msgid "Select colors"
+msgstr ""
+
+#: tedtindividual.elefttibia.buttonhint
+msgctxt "tedtindividual.elefttibia.buttonhint"
+msgid "Select colors"
+msgstr ""
+
+#: tedtindividual.emother.buttonhint
+msgctxt "tedtindividual.emother.buttonhint"
+msgid "Find individual"
+msgstr ""
+
+#: tedtindividual.enest.buttonhint
+msgctxt "tedtindividual.enest.buttonhint"
+msgid "Find nest"
+msgstr ""
+
+#: tedtindividual.eremovedband.buttonhint
+msgctxt "tedtindividual.eremovedband.buttonhint"
+msgid "Find band"
+msgstr ""
+
+#: tedtindividual.erighttarsus.buttonhint
+msgctxt "tedtindividual.erighttarsus.buttonhint"
+msgid "Select colors"
+msgstr ""
+
+#: tedtindividual.erighttibia.buttonhint
+msgctxt "tedtindividual.erighttibia.buttonhint"
+msgid "Select colors"
+msgstr ""
+
+#: tedtindividual.etaxon.buttonhint
+msgctxt "tedtindividual.etaxon.buttonhint"
+msgid "Find taxon"
 msgstr ""
 
 #: tedtindividual.lblage.caption
@@ -4969,6 +5373,21 @@ msgctxt "tedtindividual.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtinstitution.ecountry.buttonhint
+msgctxt "tedtinstitution.ecountry.buttonhint"
+msgid "Find country"
+msgstr ""
+
+#: tedtinstitution.emunicipality.buttonhint
+msgctxt "tedtinstitution.emunicipality.buttonhint"
+msgid "Find municipality"
+msgstr ""
+
+#: tedtinstitution.estate.buttonhint
+msgctxt "tedtinstitution.estate.buttonhint"
+msgid "Find state"
+msgstr ""
+
 #: tedtinstitution.lblacronym.caption
 msgctxt "tedtinstitution.lblacronym.caption"
 msgid "Acronym: *"
@@ -5073,14 +5492,29 @@ msgctxt "tedtmethod.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtmolt.ebander.buttonhint
+msgctxt "tedtmolt.ebander.buttonhint"
+msgid "Find bander"
+msgstr ""
+
 #: tedtmolt.ecapturetime.texthint
 msgctxt "tedtmolt.ecapturetime.texthint"
 msgid "HH:MM"
 msgstr ""
 
+#: tedtmolt.edate.buttonhint
+msgctxt "tedtmolt.edate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtmolt.edate.texthint
 msgctxt "tedtmolt.edate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtmolt.esurvey.buttonhint
+msgctxt "tedtmolt.esurvey.buttonhint"
+msgid "Find survey"
 msgstr ""
 
 #: tedtmolt.lblbandprefix.caption
@@ -5163,14 +5597,64 @@ msgctxt "tedtmolt.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtnest.efounddate.buttonhint
+msgctxt "tedtnest.efounddate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtnest.efounddate.texthint
 msgctxt "tedtnest.efounddate.texthint"
 msgid "DD/MM/YYYY"
 msgstr ""
 
+#: tedtnest.elastdate.buttonhint
+msgctxt "tedtnest.elastdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtnest.elastdate.texthint
 msgctxt "tedtnest.elastdate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtnest.elatitude.buttonhint
+msgctxt "tedtnest.elatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtnest.elocality.buttonhint
+msgctxt "tedtnest.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtnest.elongitude.buttonhint
+msgctxt "tedtnest.elongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtnest.eobserver.buttonhint
+msgctxt "tedtnest.eobserver.buttonhint"
+msgid "Find observer"
+msgstr ""
+
+#: tedtnest.eproject.buttonhint
+msgctxt "tedtnest.eproject.buttonhint"
+msgid "Find project"
+msgstr ""
+
+#: tedtnest.esupportplant1.buttonhint
+msgctxt "tedtnest.esupportplant1.buttonhint"
+msgid "Find support plant taxon"
+msgstr ""
+
+#: tedtnest.esupportplant2.buttonhint
+msgctxt "tedtnest.esupportplant2.buttonhint"
+msgid "Find support plant taxon"
+msgstr ""
+
+#: tedtnest.etaxon.buttonhint
+msgctxt "tedtnest.etaxon.buttonhint"
+msgid "Find taxon"
 msgstr ""
 
 #: tedtnest.lblbandstatus1.caption
@@ -5337,6 +5821,11 @@ msgctxt "tedtnestowner.caption"
 msgid "New nest owner"
 msgstr ""
 
+#: tedtnestowner.eindividual.buttonhint
+msgctxt "tedtnestowner.eindividual.buttonhint"
+msgid "Find individual"
+msgstr ""
+
 #: tedtnestowner.lblindividual.caption
 msgctxt "tedtnestowner.lblindividual.caption"
 msgid "Individual:"
@@ -5359,6 +5848,25 @@ msgstr ""
 #: tedtnestrevision.ckhasphilornislarvae.caption
 msgctxt "tedtnestrevision.ckhasphilornislarvae.caption"
 msgid "Parasitized by Philornis sp. larvae"
+msgstr ""
+
+#: tedtnestrevision.enidoparasite.buttonhint
+msgid "Find nidoparasite taxon"
+msgstr ""
+
+#: tedtnestrevision.eobserver1.buttonhint
+msgctxt "tedtnestrevision.eobserver1.buttonhint"
+msgid "Find observer"
+msgstr ""
+
+#: tedtnestrevision.eobserver2.buttonhint
+msgctxt "tedtnestrevision.eobserver2.buttonhint"
+msgid "Find observer"
+msgstr ""
+
+#: tedtnestrevision.erevisiondate.buttonhint
+msgctxt "tedtnestrevision.erevisiondate.buttonhint"
+msgid "Open calendar"
 msgstr ""
 
 #: tedtnestrevision.erevisiontime.texthint
@@ -5433,9 +5941,24 @@ msgctxt "tedtnestrevision.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtneteffort.edate.buttonhint
+msgctxt "tedtneteffort.edate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtneteffort.edate.texthint
 msgctxt "tedtneteffort.edate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtneteffort.elatitude.buttonhint
+msgctxt "tedtneteffort.elatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtneteffort.elongitude.buttonhint
+msgctxt "tedtneteffort.elongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
 msgstr ""
 
 #: tedtneteffort.enetclose1.texthint
@@ -5478,6 +6001,15 @@ msgctxt "tedtneteffort.enetopen4.texthint"
 msgid "HH:MM"
 msgstr ""
 
+#: tedtneteffort.epermanentnet.buttonhint
+msgid "Find permanent mistnet"
+msgstr ""
+
+#: tedtneteffort.esurvey.buttonhint
+msgctxt "tedtneteffort.esurvey.buttonhint"
+msgid "Find survey"
+msgstr ""
+
 #: tedtneteffort.lbldate.caption
 msgctxt "tedtneteffort.lbldate.caption"
 msgid "Survey date: *"
@@ -5514,6 +6046,7 @@ msgid "Closing time 3:"
 msgstr ""
 
 #: tedtneteffort.lblnetclose4.caption
+msgctxt "tedtneteffort.lblnetclose4.caption"
 msgid "Closing time 4:"
 msgstr ""
 
@@ -5553,6 +6086,7 @@ msgid "Opening time 3:"
 msgstr ""
 
 #: tedtneteffort.lblnetopen4.caption
+msgctxt "tedtneteffort.lblnetopen4.caption"
 msgid "Opening time 4:"
 msgstr ""
 
@@ -5586,39 +6120,54 @@ msgctxt "tedtneteffort.sbsave.caption"
 msgid "Save"
 msgstr ""
 
-#: tedtnetstation.lblbandstatus3.caption
-msgctxt "tedtnetstation.lblbandstatus3.caption"
+#: tedtnetstation.elatitude.buttonhint
+msgctxt "tedtnetstation.elatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtnetstation.elocality.buttonhint
+msgctxt "tedtnetstation.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtnetstation.elongitude.buttonhint
+msgctxt "tedtnetstation.elongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtnetstation.lblacronym.caption
+msgctxt "tedtnetstation.lblacronym.caption"
 msgid "Acronym: *"
 msgstr ""
 
-#: tedtnetstation.lblbandstatus4.caption
-msgctxt "tedtnetstation.lblbandstatus4.caption"
+#: tedtnetstation.lbldescription.caption
+msgctxt "tedtnetstation.lbldescription.caption"
+msgid "Description:"
+msgstr ""
+
+#: tedtnetstation.lbllatitude.caption
+msgctxt "tedtnetstation.lbllatitude.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtnetstation.lbllocality.caption
+msgctxt "tedtnetstation.lbllocality.caption"
+msgid "Locality: *"
+msgstr ""
+
+#: tedtnetstation.lbllongitude.caption
+msgctxt "tedtnetstation.lbllongitude.caption"
 msgid "Longitude:"
 msgstr ""
 
-#: tedtnetstation.lblbandstatus9.caption
-msgctxt "tedtnetstation.lblbandstatus9.caption"
-msgid "Latitude:"
+#: tedtnetstation.lblname.caption
+msgctxt "tedtnetstation.lblname.caption"
+msgid "Name: *"
 msgstr ""
 
 #: tedtnetstation.lblnotes.caption
 msgctxt "tedtnetstation.lblnotes.caption"
 msgid "Notes:"
-msgstr ""
-
-#: tedtnetstation.lblnotes1.caption
-msgctxt "tedtnetstation.lblnotes1.caption"
-msgid "Description:"
-msgstr ""
-
-#: tedtnetstation.lblrequester1.caption
-msgctxt "tedtnetstation.lblrequester1.caption"
-msgid "Name: *"
-msgstr ""
-
-#: tedtnetstation.lblsupplier.caption
-msgctxt "tedtnetstation.lblsupplier.caption"
-msgid "Locality: *"
 msgstr ""
 
 #: tedtnetstation.sbcancel.caption
@@ -5631,24 +6180,34 @@ msgctxt "tedtnetstation.sbsave.caption"
 msgid "Save"
 msgstr ""
 
-#: tedtpermanentnet.lblendnumber.caption
-msgctxt "tedtpermanentnet.lblendnumber.caption"
-msgid "Mistnet number: *"
+#: tedtpermanentnet.elatitude.buttonhint
+msgctxt "tedtpermanentnet.elatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
 msgstr ""
 
-#: tedtpermanentnet.lblendnumber1.caption
-msgctxt "tedtpermanentnet.lblendnumber1.caption"
+#: tedtpermanentnet.elongitude.buttonhint
+msgctxt "tedtpermanentnet.elongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtpermanentnet.lbllatitude.caption
+msgctxt "tedtpermanentnet.lbllatitude.caption"
 msgid "Latitude: *"
+msgstr ""
+
+#: tedtpermanentnet.lbllongitude.caption
+msgctxt "tedtpermanentnet.lbllongitude.caption"
+msgid "Longitude: *"
+msgstr ""
+
+#: tedtpermanentnet.lblnetnumber.caption
+msgctxt "tedtpermanentnet.lblnetnumber.caption"
+msgid "Mistnet number: *"
 msgstr ""
 
 #: tedtpermanentnet.lblnotes.caption
 msgctxt "tedtpermanentnet.lblnotes.caption"
 msgid "Notes:"
-msgstr ""
-
-#: tedtpermanentnet.lblstartnumber1.caption
-msgctxt "tedtpermanentnet.lblstartnumber1.caption"
-msgid "Longitude: *"
 msgstr ""
 
 #: tedtpermanentnet.sbcancel.caption
@@ -5661,14 +6220,29 @@ msgctxt "tedtpermanentnet.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtpermit.edispatchdate.buttonhint
+msgctxt "tedtpermit.edispatchdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtpermit.edispatchdate.texthint
 msgctxt "tedtpermit.edispatchdate.texthint"
 msgid "DD/MM/YYYY"
 msgstr ""
 
+#: tedtpermit.eexpiredate.buttonhint
+msgctxt "tedtpermit.eexpiredate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtpermit.eexpiredate.texthint
 msgctxt "tedtpermit.eexpiredate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtpermit.eproject.buttonhint
+msgctxt "tedtpermit.eproject.buttonhint"
+msgid "Find project"
 msgstr ""
 
 #: tedtpermit.lbldispatchdate.caption
@@ -5717,14 +6291,44 @@ msgctxt "tedtpermit.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtperson.ebirthdate.buttonhint
+msgctxt "tedtperson.ebirthdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtperson.ebirthdate.texthint
 msgctxt "tedtperson.ebirthdate.texthint"
 msgid "DD/MM/YYYY"
 msgstr ""
 
+#: tedtperson.ecountry.buttonhint
+msgctxt "tedtperson.ecountry.buttonhint"
+msgid "Find country"
+msgstr ""
+
+#: tedtperson.edeathdate.buttonhint
+msgctxt "tedtperson.edeathdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtperson.edeathdate.texthint
 msgctxt "tedtperson.edeathdate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtperson.einstitution.buttonhint
+msgctxt "tedtperson.einstitution.buttonhint"
+msgid "Find institution"
+msgstr ""
+
+#: tedtperson.emunicipality.buttonhint
+msgctxt "tedtperson.emunicipality.buttonhint"
+msgid "Find municipality"
+msgstr ""
+
+#: tedtperson.estate.buttonhint
+msgctxt "tedtperson.estate.buttonhint"
+msgid "Find state"
 msgstr ""
 
 #: tedtperson.lblacronym.caption
@@ -5779,7 +6383,8 @@ msgctxt "tedtperson.lblfullname.caption"
 msgid "Name: *"
 msgstr ""
 
-#: tedtperson.lblgenre.caption
+#: tedtperson.lblgender.caption
+msgctxt "tedtperson.lblgender.caption"
 msgid "Gender:"
 msgstr ""
 
@@ -5854,24 +6459,29 @@ msgctxt "tedtperson.lblzipcode.caption"
 msgid "Postal code:"
 msgstr ""
 
-#: tedtperson.menuitem1.caption
-msgid "Adicionar imagem do arquivo..."
+#: tedtperson.mmaddimagefromfile.caption
+msgid "Add/change profile picture from file..."
 msgstr ""
 
-#: tedtperson.menuitem2.caption
-msgid "Salvar imagem como..."
+#: tedtperson.mmcopyimage.caption
+msgid "Copy profile picture"
 msgstr ""
 
-#: tedtperson.menuitem3.caption
-msgid "Copiar imagem"
+#: tedtperson.mmpasteimage.caption
+msgid "Paste profile picture"
 msgstr ""
 
-#: tedtperson.menuitem4.caption
-msgid "Colar imagem"
+#: tedtperson.mmremoveimage.caption
+msgctxt "tedtperson.mmremoveimage.caption"
+msgid "Remove profile picture"
 msgstr ""
 
-#: tedtperson.menuitem5.caption
-msgid "Apagar imagem"
+#: tedtperson.mmsaveimageas.caption
+msgid "Save profile picture as..."
+msgstr ""
+
+#: tedtperson.sbaddimage.hint
+msgid "Add/change profile picture"
 msgstr ""
 
 #: tedtperson.sbcancel.caption
@@ -5879,14 +6489,29 @@ msgctxt "tedtperson.sbcancel.caption"
 msgid "Cancel"
 msgstr ""
 
+#: tedtperson.sbremoveimage.hint
+msgctxt "tedtperson.sbremoveimage.hint"
+msgid "Remove profile picture"
+msgstr ""
+
 #: tedtperson.sbsave.caption
 msgctxt "tedtperson.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtproject.eenddate.buttonhint
+msgctxt "tedtproject.eenddate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtproject.eenddate.texthint
 msgctxt "tedtproject.eenddate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtproject.estartdate.buttonhint
+msgctxt "tedtproject.estartdate.buttonhint"
+msgid "Open calendar"
 msgstr ""
 
 #: tedtproject.estartdate.texthint
@@ -5942,6 +6567,11 @@ msgstr ""
 #: tedtproject.sbsave.caption
 msgctxt "tedtproject.sbsave.caption"
 msgid "Save"
+msgstr ""
+
+#: tedtsampleprep.epreparationdate.buttonhint
+msgctxt "tedtsampleprep.epreparationdate.buttonhint"
+msgid "Open calendar"
 msgstr ""
 
 #: tedtsampleprep.epreparationdate.texthint
@@ -6022,9 +6652,62 @@ msgctxt "tedtsighting.ckseen.caption"
 msgid "Seen"
 msgstr ""
 
+#: tedtsighting.ebreedingstatus.buttonhint
+msgid "Select breeding/behavior code"
+msgstr ""
+
+#: tedtsighting.edate.buttonhint
+msgctxt "tedtsighting.edate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtsighting.edate.texthint
 msgctxt "tedtsighting.edate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtsighting.edetectiontype.buttonhint
+msgid "Select detetion types"
+msgstr ""
+
+#: tedtsighting.eindividual.buttonhint
+msgctxt "tedtsighting.eindividual.buttonhint"
+msgid "Find individual"
+msgstr ""
+
+#: tedtsighting.elatitude.buttonhint
+msgctxt "tedtsighting.elatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtsighting.elocality.buttonhint
+msgctxt "tedtsighting.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtsighting.elongitude.buttonhint
+msgctxt "tedtsighting.elongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtsighting.emethod.buttonhint
+msgctxt "tedtsighting.emethod.buttonhint"
+msgid "Find method"
+msgstr ""
+
+#: tedtsighting.eobserver.buttonhint
+msgctxt "tedtsighting.eobserver.buttonhint"
+msgid "Find observer"
+msgstr ""
+
+#: tedtsighting.esurvey.buttonhint
+msgctxt "tedtsighting.esurvey.buttonhint"
+msgid "Find survey"
+msgstr ""
+
+#: tedtsighting.etaxon.buttonhint
+msgctxt "tedtsighting.etaxon.buttonhint"
+msgid "Find taxon"
 msgstr ""
 
 #: tedtsighting.etime.texthint
@@ -6032,40 +6715,74 @@ msgctxt "tedtsighting.etime.texthint"
 msgid "HH:MM"
 msgstr ""
 
-#: tedtsighting.lblbandcolor.caption
-msgid "Distance (m):"
+#: tedtsighting.lbladultstally.caption
+msgctxt "tedtsighting.lbladultstally.caption"
+msgid "Number of adults:"
 msgstr ""
 
-#: tedtsighting.lblbandnumber.caption
-msgctxt "tedtsighting.lblbandnumber.caption"
-msgid "Latitude:"
+#: tedtsighting.lblbreedingstatus.caption
+msgctxt "tedtsighting.lblbreedingstatus.caption"
+msgid "Breeding/behavior code:"
 msgstr ""
 
-#: tedtsighting.lblbandprefix.caption
-msgctxt "tedtsighting.lblbandprefix.caption"
+#: tedtsighting.lbldate.caption
+msgctxt "tedtsighting.lbldate.caption"
 msgid "Date: *"
 msgstr ""
 
-#: tedtsighting.lblbandsize.caption
-msgctxt "tedtsighting.lblbandsize.caption"
-msgid "Longitude:"
-msgstr ""
-
-#: tedtsighting.lblbandsource.caption
+#: tedtsighting.lbldetectiontype.caption
+msgctxt "tedtsighting.lbldetectiontype.caption"
 msgid "Detection type:"
 msgstr ""
 
-#: tedtsighting.lblbandstatus.caption
+#: tedtsighting.lbldistance.caption
+msgctxt "tedtsighting.lbldistance.caption"
+msgid "Distance (m):"
+msgstr ""
+
+#: tedtsighting.lblfemalestally.caption
+msgctxt "tedtsighting.lblfemalestally.caption"
+msgid "Number of females:"
+msgstr ""
+
+#: tedtsighting.lblhowwasrecorded.caption
+msgctxt "tedtsighting.lblhowwasrecorded.caption"
+msgid "How was recorded:"
+msgstr ""
+
+#: tedtsighting.lblimmaturestally.caption
+msgctxt "tedtsighting.lblimmaturestally.caption"
+msgid "Number of immatures:"
+msgstr ""
+
+#: tedtsighting.lblindividual.caption
+msgctxt "tedtsighting.lblindividual.caption"
+msgid "Individual:"
+msgstr ""
+
+#: tedtsighting.lbllatitude.caption
+msgctxt "tedtsighting.lbllatitude.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtsighting.lbllocality.caption
+msgctxt "tedtsighting.lbllocality.caption"
+msgid "Locality: *"
+msgstr ""
+
+#: tedtsighting.lbllongitude.caption
+msgctxt "tedtsighting.lbllongitude.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtsighting.lblmackinnonlistnumber.caption
+msgctxt "tedtsighting.lblmackinnonlistnumber.caption"
 msgid "Mackinnon list number:"
 msgstr ""
 
-#: tedtsighting.lblbandsuffix.caption
-msgctxt "tedtsighting.lblbandsuffix.caption"
-msgid "Time:"
-msgstr ""
-
-#: tedtsighting.lblbandtype.caption
-msgid "Quantity:"
+#: tedtsighting.lblmalestally.caption
+msgctxt "tedtsighting.lblmalestally.caption"
+msgid "Number of males:"
 msgstr ""
 
 #: tedtsighting.lblmethod.caption
@@ -6073,54 +6790,34 @@ msgctxt "tedtsighting.lblmethod.caption"
 msgid "Method: *"
 msgstr ""
 
+#: tedtsighting.lblnewcapturestally.caption
+msgctxt "tedtsighting.lblnewcapturestally.caption"
+msgid "Number of new captures:"
+msgstr ""
+
+#: tedtsighting.lblnotagedtally.caption
+msgctxt "tedtsighting.lblnotagedtally.caption"
+msgid "Number of birds not aged:"
+msgstr ""
+
 #: tedtsighting.lblnotes.caption
 msgctxt "tedtsighting.lblnotes.caption"
 msgid "Notes:"
 msgstr ""
 
-#: tedtsighting.lblorderdate.caption
-msgid "Number of new captures:"
-msgstr ""
-
-#: tedtsighting.lblorderdate1.caption
-msgid "Number of recaptures:"
-msgstr ""
-
-#: tedtsighting.lblorderdate2.caption
-msgid "Number of unbanded:"
-msgstr ""
-
-#: tedtsighting.lblordernumber.caption
-msgid "Breeding/behavior code:"
-msgstr ""
-
-#: tedtsighting.lblproject.caption
-msgctxt "tedtsighting.lblproject.caption"
-msgid "Individual:"
-msgstr ""
-
-#: tedtsighting.lblreportdate.caption
-msgid "Number of males:"
-msgstr ""
-
-#: tedtsighting.lblreportdate1.caption
-msgid "Number of females:"
-msgstr ""
-
-#: tedtsighting.lblreportdate2.caption
+#: tedtsighting.lblnotsexedtally.caption
+msgctxt "tedtsighting.lblnotsexedtally.caption"
 msgid "Number of birds not sexed:"
 msgstr ""
 
-#: tedtsighting.lblreportdate3.caption
-msgid "Number of adults:"
+#: tedtsighting.lblquantity.caption
+msgctxt "tedtsighting.lblquantity.caption"
+msgid "Quantity:"
 msgstr ""
 
-#: tedtsighting.lblreportdate4.caption
-msgid "Number of immatures:"
-msgstr ""
-
-#: tedtsighting.lblreportdate5.caption
-msgid "Number of birds not aged:"
+#: tedtsighting.lblrecapturestally.caption
+msgctxt "tedtsighting.lblrecapturestally.caption"
+msgid "Number of recaptures:"
 msgstr ""
 
 #: tedtsighting.lblrequester.caption
@@ -6128,23 +6825,24 @@ msgctxt "tedtsighting.lblrequester.caption"
 msgid "Observer:"
 msgstr ""
 
-#: tedtsighting.lblsender.caption
-msgctxt "tedtsighting.lblsender.caption"
-msgid "Taxon: *"
-msgstr ""
-
-#: tedtsighting.lblsupplier.caption
-msgctxt "tedtsighting.lblsupplier.caption"
-msgid "Locality: *"
-msgstr ""
-
 #: tedtsighting.lblsurvey.caption
 msgctxt "tedtsighting.lblsurvey.caption"
 msgid "Survey:"
 msgstr ""
 
-#: tedtsighting.lblusedate.caption
-msgid "How was recorded:"
+#: tedtsighting.lbltaxon.caption
+msgctxt "tedtsighting.lbltaxon.caption"
+msgid "Taxon: *"
+msgstr ""
+
+#: tedtsighting.lbltime.caption
+msgctxt "tedtsighting.lbltime.caption"
+msgid "Time:"
+msgstr ""
+
+#: tedtsighting.lblunbandedtally.caption
+msgctxt "tedtsighting.lblunbandedtally.caption"
+msgid "Number of unbanded:"
 msgstr ""
 
 #: tedtsighting.sbcancel.caption
@@ -6157,46 +6855,62 @@ msgctxt "tedtsighting.sbsave.caption"
 msgid "Save"
 msgstr ""
 
-#: tedtsite.lblbandnumber1.caption
-msgctxt "tedtsite.lblbandnumber1.caption"
-msgid "Latitude:"
+#: tedtsite.elatitude.buttonhint
+msgctxt "tedtsite.elatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
 msgstr ""
 
-#: tedtsite.lblbandsize1.caption
-msgctxt "tedtsite.lblbandsize1.caption"
-msgid "Longitude:"
+#: tedtsite.elongitude.buttonhint
+msgctxt "tedtsite.elongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
 msgstr ""
 
-#: tedtsite.lblbandstatus1.caption
-msgctxt "tedtsite.lblbandstatus1.caption"
+#: tedtsite.eparentsite.buttonhint
+msgid "Find parent toponym"
+msgstr ""
+
+#: tedtsite.lblacronym.caption
+msgctxt "tedtsite.lblacronym.caption"
 msgid "Acronym:"
 msgstr ""
 
-#: tedtsite.lblbandstatus2.caption
-msgid "Altitude:"
+#: tedtsite.lblaltitude.caption
+msgid "Altitude (m):"
 msgstr ""
 
-#: tedtsite.lblproject.caption
+#: tedtsite.lblebirdname.caption
+msgctxt "tedtsite.lblebirdname.caption"
 msgid "Site name on eBird:"
 msgstr ""
 
-#: tedtsite.lblproject1.caption
-msgctxt "tedtsite.lblproject1.caption"
+#: tedtsite.lblfullname.caption
+msgctxt "tedtsite.lblfullname.caption"
 msgid "Full name: *"
 msgstr ""
 
-#: tedtsite.lblproject4.caption
-msgctxt "tedtsite.lblproject4.caption"
-msgid "Type: *"
+#: tedtsite.lbllatitude.caption
+msgctxt "tedtsite.lbllatitude.caption"
+msgid "Latitude:"
 msgstr ""
 
-#: tedtsite.lblrequester.caption
-msgctxt "tedtsite.lblrequester.caption"
+#: tedtsite.lbllongitude.caption
+msgctxt "tedtsite.lbllongitude.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtsite.lblname.caption
+msgctxt "tedtsite.lblname.caption"
 msgid "Name: *"
 msgstr ""
 
-#: tedtsite.lblsupplier.caption
+#: tedtsite.lblparenttoponym.caption
+msgctxt "tedtsite.lblparenttoponym.caption"
 msgid "Parent toponym:"
+msgstr ""
+
+#: tedtsite.lbltype.caption
+msgctxt "tedtsite.lbltype.caption"
+msgid "Type: *"
 msgstr ""
 
 #: tedtsite.sbcancel.caption
@@ -6222,6 +6936,40 @@ msgstr ""
 #: tedtspecimen.ecollectionyear.texthint
 msgctxt "tedtspecimen.ecollectionyear.texthint"
 msgid "YYYY"
+msgstr ""
+
+#: tedtspecimen.eegg.buttonhint
+msgid "Find egg"
+msgstr ""
+
+#: tedtspecimen.eindividual.buttonhint
+msgctxt "tedtspecimen.eindividual.buttonhint"
+msgid "Find individual"
+msgstr ""
+
+#: tedtspecimen.elatitude.buttonhint
+msgctxt "tedtspecimen.elatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtspecimen.elocality.buttonhint
+msgctxt "tedtspecimen.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtspecimen.elongitude.buttonhint
+msgctxt "tedtspecimen.elongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtspecimen.enest.buttonhint
+msgctxt "tedtspecimen.enest.buttonhint"
+msgid "Find nest"
+msgstr ""
+
+#: tedtspecimen.etaxon.buttonhint
+msgctxt "tedtspecimen.etaxon.buttonhint"
+msgid "Find taxon"
 msgstr ""
 
 #: tedtspecimen.lblbandstatus4.caption
@@ -6288,14 +7036,62 @@ msgctxt "tedtspecimen.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtsurvey.edate.buttonhint
+msgctxt "tedtsurvey.edate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtsurvey.edate.texthint
 msgctxt "tedtsurvey.edate.texthint"
 msgid "DD/MM/YYYY"
 msgstr ""
 
+#: tedtsurvey.eendlatitude.buttonhint
+msgctxt "tedtsurvey.eendlatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtsurvey.eendlongitude.buttonhint
+msgctxt "tedtsurvey.eendlongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
 #: tedtsurvey.eendtime.texthint
 msgctxt "tedtsurvey.eendtime.texthint"
 msgid "HH:MM"
+msgstr ""
+
+#: tedtsurvey.eexpedition.buttonhint
+msgid "Find expedition"
+msgstr ""
+
+#: tedtsurvey.elatitude.buttonhint
+msgctxt "tedtsurvey.elatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtsurvey.elocality.buttonhint
+msgctxt "tedtsurvey.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtsurvey.elongitude.buttonhint
+msgctxt "tedtsurvey.elongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtsurvey.emethod.buttonhint
+msgctxt "tedtsurvey.emethod.buttonhint"
+msgid "Find method"
+msgstr ""
+
+#: tedtsurvey.enetstation.buttonhint
+msgid "Find mistnet station"
+msgstr ""
+
+#: tedtsurvey.eproject.buttonhint
+msgctxt "tedtsurvey.eproject.buttonhint"
+msgid "Find project"
 msgstr ""
 
 #: tedtsurvey.estarttime.texthint

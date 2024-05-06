@@ -2,11 +2,14 @@
 {"hash":81075838,"name":"tedtnetstation.caption","sourcebytes":[78,101,119,32,109,105,115,116,110,101,116,32,115,116,97,116,105,111,110],"value":"New mistnet station"},
 {"hash":366789,"name":"tedtnetstation.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtnetstation.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
-{"hash":56137130,"name":"tedtnetstation.lblsupplier.caption","sourcebytes":[76,111,99,97,108,105,116,121,58,32,42],"value":"Locality: *"},
+{"hash":56137130,"name":"tedtnetstation.lbllocality.caption","sourcebytes":[76,111,99,97,108,105,116,121,58,32,42],"value":"Locality: *"},
+{"hash":143939529,"name":"tedtnetstation.elocality.buttonhint","sourcebytes":[70,105,110,100,32,108,111,99,97,108,105,116,121],"value":"Find locality"},
 {"hash":89566314,"name":"tedtnetstation.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
-{"hash":75730042,"name":"tedtnetstation.lblrequester1.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
-{"hash":106723002,"name":"tedtnetstation.lblbandstatus3.caption","sourcebytes":[65,99,114,111,110,121,109,58,32,42],"value":"Acronym: *"},
-{"hash":235834570,"name":"tedtnetstation.lblbandstatus4.caption","sourcebytes":[76,111,110,103,105,116,117,100,101,58],"value":"Longitude:"},
-{"hash":185329674,"name":"tedtnetstation.lblbandstatus9.caption","sourcebytes":[76,97,116,105,116,117,100,101,58],"value":"Latitude:"},
-{"hash":81166474,"name":"tedtnetstation.lblnotes1.caption","sourcebytes":[68,101,115,99,114,105,112,116,105,111,110,58],"value":"Description:"}
+{"hash":75730042,"name":"tedtnetstation.lblname.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
+{"hash":106723002,"name":"tedtnetstation.lblacronym.caption","sourcebytes":[65,99,114,111,110,121,109,58,32,42],"value":"Acronym: *"},
+{"hash":235834570,"name":"tedtnetstation.lbllongitude.caption","sourcebytes":[76,111,110,103,105,116,117,100,101,58],"value":"Longitude:"},
+{"hash":185329674,"name":"tedtnetstation.lbllatitude.caption","sourcebytes":[76,97,116,105,116,117,100,101,58],"value":"Latitude:"},
+{"hash":12937236,"name":"tedtnetstation.elongitude.buttonhint","sourcebytes":[69,100,105,116,32,99,111,111,114,100,105,110,97,116,101,115,32,105,110,32,68,77,83,32,102,111,114,109,97,116],"value":"Edit coordinates in DMS format"},
+{"hash":12937236,"name":"tedtnetstation.elatitude.buttonhint","sourcebytes":[69,100,105,116,32,99,111,111,114,100,105,110,97,116,101,115,32,105,110,32,68,77,83,32,102,111,114,109,97,116],"value":"Edit coordinates in DMS format"},
+{"hash":81166474,"name":"tedtnetstation.lbldescription.caption","sourcebytes":[68,101,115,99,114,105,112,116,105,111,110,58],"value":"Description:"}
 ]}

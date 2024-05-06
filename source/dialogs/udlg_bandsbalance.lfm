@@ -171,7 +171,24 @@ object dlgBandsBalance: TdlgBandsBalance
     end
   end
   object SaveDlg: TSaveDialog
+    DefaultExt = '.csv'
+    Filter = 'CSV (Comma Separated Value)|*.csv'
+    Options = [ofOverwritePrompt, ofEnableSizing]
     Left = 175
     Top = 324
+  end
+  object CSVExporter1: TCSVExporter
+    Dataset = DMC.qBandsBalance
+    ExportFields = <>
+    FromCurrent = False
+    RestorePosition = False
+    FormatSettings.DecimalSeparator = ','
+    FormatSettings.CurrencyDigits = 0
+    FormatSettings.FieldDelimiter = ';'
+    FormatSettings.IgnoreOuterWhitespace = False
+    FormatSettings.RowDelimiter = #13#10
+    FormatSettings.QuoteChar = '"'
+    Left = 108
+    Top = 270
   end
 end

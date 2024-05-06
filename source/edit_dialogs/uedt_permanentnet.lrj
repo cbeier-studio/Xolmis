@@ -3,7 +3,9 @@
 {"hash":366789,"name":"tedtpermanentnet.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtpermanentnet.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
 {"hash":89566314,"name":"tedtpermanentnet.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
-{"hash":119415610,"name":"tedtpermanentnet.lblendnumber.caption","sourcebytes":[77,105,115,116,110,101,116,32,110,117,109,98,101,114,58,32,42],"value":"Mistnet number: *"},
-{"hash":244105770,"name":"tedtpermanentnet.lblstartnumber1.caption","sourcebytes":[76,111,110,103,105,116,117,100,101,58,32,42],"value":"Longitude: *"},
-{"hash":199755562,"name":"tedtpermanentnet.lblendnumber1.caption","sourcebytes":[76,97,116,105,116,117,100,101,58,32,42],"value":"Latitude: *"}
+{"hash":119415610,"name":"tedtpermanentnet.lblnetnumber.caption","sourcebytes":[77,105,115,116,110,101,116,32,110,117,109,98,101,114,58,32,42],"value":"Mistnet number: *"},
+{"hash":244105770,"name":"tedtpermanentnet.lbllongitude.caption","sourcebytes":[76,111,110,103,105,116,117,100,101,58,32,42],"value":"Longitude: *"},
+{"hash":199755562,"name":"tedtpermanentnet.lbllatitude.caption","sourcebytes":[76,97,116,105,116,117,100,101,58,32,42],"value":"Latitude: *"},
+{"hash":12937236,"name":"tedtpermanentnet.elongitude.buttonhint","sourcebytes":[69,100,105,116,32,99,111,111,114,100,105,110,97,116,101,115,32,105,110,32,68,77,83,32,102,111,114,109,97,116],"value":"Edit coordinates in DMS format"},
+{"hash":12937236,"name":"tedtpermanentnet.elatitude.buttonhint","sourcebytes":[69,100,105,116,32,99,111,111,114,100,105,110,97,116,101,115,32,105,110,32,68,77,83,32,102,111,114,109,97,116],"value":"Edit coordinates in DMS format"}
 ]}

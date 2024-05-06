@@ -84,6 +84,7 @@ object edtPerson: TedtPerson
     Constraints.MinWidth = 176
     Color = clDefault
     ParentColor = False
+    ParentShowHint = False
     TabOrder = 0
     object pContent: TPanel
       Left = 0
@@ -140,7 +141,10 @@ object edtPerson: TedtPerson
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find municipality'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -533,7 +537,10 @@ object edtPerson: TedtPerson
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find state'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -586,7 +593,10 @@ object edtPerson: TedtPerson
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find country'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -765,7 +775,10 @@ object edtPerson: TedtPerson
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Open calendar'
           ButtonWidth = 24
           ImageIndex = 18
           Images = frmMain.mPopup
@@ -1032,7 +1045,10 @@ object edtPerson: TedtPerson
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find institution'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -1287,6 +1303,7 @@ object edtPerson: TedtPerson
           object sbAddImage: TSpeedButton
             Left = 9
             Height = 22
+            Hint = 'Add/change profile picture'
             Top = 9
             Width = 19
             Align = alTop
@@ -1295,10 +1312,13 @@ object edtPerson: TedtPerson
             ImageIndex = 56
             ImageWidth = 20
             OnClick = sbAddImageClick
+            ShowHint = True
+            ParentShowHint = False
           end
           object sbRemoveImage: TSpeedButton
             Left = 9
             Height = 22
+            Hint = 'Remove profile picture'
             Top = 59
             Width = 19
             Align = alBottom
@@ -1308,6 +1328,8 @@ object edtPerson: TedtPerson
             ImageWidth = 20
             Visible = False
             OnClick = sbRemoveImageClick
+            ShowHint = True
+            ParentShowHint = False
           end
         end
       end
@@ -1351,7 +1373,10 @@ object edtPerson: TedtPerson
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Open calendar'
           ButtonWidth = 24
           ImageIndex = 18
           Images = frmMain.mPopup
@@ -1420,7 +1445,7 @@ object edtPerson: TedtPerson
           TabOrder = 0
         end
       end
-      object pGenre: TPanel
+      object pGender: TPanel
         Left = 0
         Height = 45
         Top = 299
@@ -1437,7 +1462,7 @@ object edtPerson: TedtPerson
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
-        object lblGenre: TLabel
+        object lblGender: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -1481,31 +1506,34 @@ object edtPerson: TedtPerson
     ImagesWidth = 20
     Left = 243
     Top = 38
-    object MenuItem1: TMenuItem
-      Caption = 'Adicionar imagem do arquivo...'
-      ImageIndex = 54
+    object mmAddImageFromFile: TMenuItem
+      Caption = 'Add/change profile picture from file...'
+      ImageIndex = 56
       OnClick = sbAddImageClick
     end
-    object MenuItem2: TMenuItem
-      Caption = 'Salvar imagem como...'
+    object mmSaveImageAs: TMenuItem
+      Caption = 'Save profile picture as...'
       ImageIndex = 98
+      Visible = False
     end
     object Separator1: TMenuItem
       Caption = '-'
     end
-    object MenuItem3: TMenuItem
-      Caption = 'Copiar imagem'
+    object mmCopyImage: TMenuItem
+      Caption = 'Copy profile picture'
       ImageIndex = 27
+      OnClick = mmCopyImageClick
     end
-    object MenuItem4: TMenuItem
-      Caption = 'Colar imagem'
+    object mmPasteImage: TMenuItem
+      Caption = 'Paste profile picture'
       ImageIndex = 24
+      OnClick = mmPasteImageClick
     end
     object Separator2: TMenuItem
       Caption = '-'
     end
-    object MenuItem5: TMenuItem
-      Caption = 'Apagar imagem'
+    object mmRemoveImage: TMenuItem
+      Caption = 'Remove profile picture'
       ImageIndex = 141
       OnClick = sbRemoveImageClick
     end

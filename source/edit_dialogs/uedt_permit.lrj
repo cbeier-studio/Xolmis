@@ -7,9 +7,12 @@
 {"hash":48641226,"name":"tedtpermit.lbldispatcher.caption","sourcebytes":[68,105,115,112,97,116,99,104,101,114,58,32,42],"value":"Dispatcher: *"},
 {"hash":201631466,"name":"tedtpermit.lbldispatchdate.caption","sourcebytes":[68,105,115,112,97,116,99,104,32,100,97,116,101,58,32,42],"value":"Dispatch date: *"},
 {"hash":61209098,"name":"tedtpermit.lblexpiredate.caption","sourcebytes":[69,120,112,105,114,101,32,100,97,116,101,58],"value":"Expire date:"},
+{"hash":38292546,"name":"tedtpermit.edispatchdate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
 {"hash":33581481,"name":"tedtpermit.edispatchdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":38292546,"name":"tedtpermit.eexpiredate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
 {"hash":33581481,"name":"tedtpermit.eexpiredate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
 {"hash":154636106,"name":"tedtpermit.lblpermitnumber.caption","sourcebytes":[80,101,114,109,105,116,32,110,117,109,98,101,114,58],"value":"Permit number:"},
 {"hash":201755770,"name":"tedtpermit.lblpermittype.caption","sourcebytes":[84,121,112,101,58,32,42],"value":"Type: *"},
-{"hash":157335306,"name":"tedtpermit.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"}
+{"hash":157335306,"name":"tedtpermit.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"},
+{"hash":57036244,"name":"tedtpermit.eproject.buttonhint","sourcebytes":[70,105,110,100,32,112,114,111,106,101,99,116],"value":"Find project"}
 ]}

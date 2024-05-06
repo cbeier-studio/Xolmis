@@ -285,7 +285,10 @@ object edtSpecimen: TedtSpecimen
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find individual'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -427,7 +430,10 @@ object edtSpecimen: TedtSpecimen
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find taxon'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -480,7 +486,10 @@ object edtSpecimen: TedtSpecimen
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find nest'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -533,7 +542,10 @@ object edtSpecimen: TedtSpecimen
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find egg'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -586,7 +598,10 @@ object edtSpecimen: TedtSpecimen
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find locality'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -651,7 +666,10 @@ object edtSpecimen: TedtSpecimen
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup
@@ -676,7 +694,10 @@ object edtSpecimen: TedtSpecimen
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
+          ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup

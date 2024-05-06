@@ -44,7 +44,7 @@ type
     eInstagram: TDBEdit;
     eWebsite: TDBEdit;
     lblTreatment: TLabel;
-    lblGenre: TLabel;
+    lblGender: TLabel;
     lblDeathDate: TLabel;
     lblLattes: TLabel;
     lblOrcid: TLabel;
@@ -72,15 +72,15 @@ type
     lblCountry: TLabel;
     lblInstitution: TLabel;
     lineBottom: TShapeLineBGRA;
-    MenuItem1: TMenuItem;
-    MenuItem2: TMenuItem;
-    MenuItem3: TMenuItem;
-    MenuItem4: TMenuItem;
-    MenuItem5: TMenuItem;
+    mmAddImageFromFile: TMenuItem;
+    mmSaveImageAs: TMenuItem;
+    mmCopyImage: TMenuItem;
+    mmPasteImage: TMenuItem;
+    mmRemoveImage: TMenuItem;
     mNotes: TDBMemo;
     pmImage: TPopupMenu;
     pTreatment: TPanel;
-    pGenre: TPanel;
+    pGender: TPanel;
     pDeathDate: TPanel;
     pBottom: TPanel;
     pContent: TPanel;
@@ -133,6 +133,8 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure mmCopyImageClick(Sender: TObject);
+    procedure mmPasteImageClick(Sender: TObject);
     procedure sbAddImageClick(Sender: TObject);
     procedure sbRemoveImageClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
@@ -353,6 +355,16 @@ begin
     (dsLink.DataSet.FieldByName('acronym').AsString <> EmptyStr) and
     (dsLink.DataSet.FieldByName('citation').AsString <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtPerson.mmCopyImageClick(Sender: TObject);
+begin
+  imgProfile.CopyToClipboard;
+end;
+
+procedure TedtPerson.mmPasteImageClick(Sender: TObject);
+begin
+  imgProfile.PasteFromClipboard;
 end;
 
 procedure TedtPerson.sbAddImageClick(Sender: TObject);

@@ -121,7 +121,7 @@ object dlgLogin: TdlgLogin
       Width = 248
       Align = alTop
       BorderSpacing.Bottom = 8
-      ButtonHint = 'Mostrar/ocultar senha'
+      ButtonHint = 'Show/hide password'
       ButtonWidth = 23
       EchoMode = emPassword
       Images = frmMain.bMenu
@@ -132,7 +132,9 @@ object dlgLogin: TdlgLogin
       OnButtonClick = ePasswordButtonClick
       OnKeyDown = eUsernameKeyDown
       OnKeyPress = eUsernameKeyPress
+      ParentShowHint = False
       PasswordChar = '*'
+      ShowHint = True
       Spacing = 0
       TabOrder = 1
     end

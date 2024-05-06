@@ -48,7 +48,7 @@ object dlgAbout: TdlgAbout
       Top = 8
       Width = 98
       Align = alLeft
-      Caption = 'Copiar'
+      Caption = 'Copy'
       Images = frmMain.mPopup
       ImageIndex = 27
       ImageWidth = 24
@@ -61,7 +61,7 @@ object dlgAbout: TdlgAbout
       Top = 8
       Width = 98
       Align = alRight
-      Caption = 'Fechar'
+      Caption = 'Close'
       ModalResult = 11
       TabOrder = 1
     end

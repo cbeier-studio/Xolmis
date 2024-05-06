@@ -44,7 +44,6 @@ object dlgColorBands: TdlgColorBands
       AutoSize = True
       Caption = 'Apply'
       Constraints.MinWidth = 142
-      Font.Color = 14120960
       Font.Name = 'Segoe UI Semibold'
       OnClick = sbOKClick
       ParentFont = False
@@ -132,6 +131,7 @@ object dlgColorBands: TdlgColorBands
       object sbDelBand1: TSpeedButton
         Left = 74
         Height = 28
+        Hint = 'Remove band color'
         Top = 5
         Width = 26
         Align = alRight
@@ -193,6 +193,7 @@ object dlgColorBands: TdlgColorBands
       object sbDelBand2: TSpeedButton
         Left = 74
         Height = 28
+        Hint = 'Remove band color'
         Top = 5
         Width = 26
         Align = alRight
@@ -254,6 +255,7 @@ object dlgColorBands: TdlgColorBands
       object sbDelBand3: TSpeedButton
         Left = 74
         Height = 28
+        Hint = 'Remove band color'
         Top = 5
         Width = 26
         Align = alRight
@@ -315,6 +317,7 @@ object dlgColorBands: TdlgColorBands
       object sbDelBand4: TSpeedButton
         Left = 74
         Height = 26
+        Hint = 'Remove band color'
         Top = 5
         Width = 26
         Align = alRight
@@ -346,6 +349,7 @@ object dlgColorBands: TdlgColorBands
     object sbClear: TSpeedButton
       Left = 0
       Height = 30
+      Hint = 'Clear bands'
       Top = 131
       Width = 30
       Align = alBottom
@@ -359,6 +363,7 @@ object dlgColorBands: TdlgColorBands
     object sbUp: TSpeedButton
       Left = 0
       Height = 30
+      Hint = 'Move band up'
       Top = 8
       Width = 30
       Align = alTop
@@ -371,6 +376,7 @@ object dlgColorBands: TdlgColorBands
     object sbDown: TSpeedButton
       Left = 0
       Height = 30
+      Hint = 'Move band down'
       Top = 38
       Width = 30
       Align = alTop

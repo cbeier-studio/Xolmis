@@ -101,7 +101,7 @@ object edtNetStation: TedtNetStation
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
-      object pSupplier: TPanel
+      object pLocality: TPanel
         Left = 0
         Height = 46
         Top = 106
@@ -118,7 +118,7 @@ object edtNetStation: TedtNetStation
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 0
-        object lblSupplier: TLabel
+        object lblLocality: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -141,7 +141,10 @@ object edtNetStation: TedtNetStation
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find locality'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -198,7 +201,7 @@ object edtNetStation: TedtNetStation
           TabOrder = 0
         end
       end
-      object pRequester1: TPanel
+      object pName: TPanel
         Left = 0
         Height = 45
         Top = 16
@@ -215,7 +218,7 @@ object edtNetStation: TedtNetStation
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 2
-        object lblRequester1: TLabel
+        object lblName: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -240,7 +243,7 @@ object edtNetStation: TedtNetStation
           OnKeyPress = eNameKeyPress
         end
       end
-      object pStatus3: TPanel
+      object pAcronym: TPanel
         Left = 0
         Height = 45
         Top = 61
@@ -257,7 +260,7 @@ object edtNetStation: TedtNetStation
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 3
-        object lblBandStatus3: TLabel
+        object lblAcronym: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -282,7 +285,7 @@ object edtNetStation: TedtNetStation
           OnKeyPress = eNameKeyPress
         end
       end
-      object pStatus4: TPanel
+      object pLongitudeLatitude: TPanel
         Left = 0
         Height = 46
         Top = 152
@@ -299,7 +302,7 @@ object edtNetStation: TedtNetStation
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
-        object lblBandStatus4: TLabel
+        object lblLongitude: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -310,7 +313,7 @@ object edtNetStation: TedtNetStation
           ParentColor = False
           ParentFont = False
         end
-        object lblBandStatus9: TLabel
+        object lblLatitude: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -333,7 +336,10 @@ object edtNetStation: TedtNetStation
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup
@@ -357,7 +363,10 @@ object edtNetStation: TedtNetStation
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
+          ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup
@@ -370,7 +379,7 @@ object edtNetStation: TedtNetStation
           OnDBEditKeyPress = eNameKeyPress
         end
       end
-      object pNotes1: TPanel
+      object pDescription: TPanel
         Left = 0
         Height = 93
         Top = 211
@@ -387,7 +396,7 @@ object edtNetStation: TedtNetStation
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 5
-        object lblNotes1: TLabel
+        object lblDescription: TLabel
           Left = 16
           Height = 16
           Top = 3

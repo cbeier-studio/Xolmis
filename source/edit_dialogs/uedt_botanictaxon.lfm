@@ -139,7 +139,10 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find parent taxon'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -191,7 +194,10 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Check name'
           ButtonWidth = 24
           ImageIndex = 63
           Images = frmMain.mPopup
@@ -327,7 +333,10 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find valid taxon'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup

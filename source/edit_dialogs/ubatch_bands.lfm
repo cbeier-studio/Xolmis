@@ -14,7 +14,6 @@ object batchBands: TbatchBands
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -276,6 +275,7 @@ object batchBands: TbatchBands
         Height = 23
         Top = 22
         Width = 368
+        ButtonHint = 'Find project'
         ButtonWidth = 23
         Images = frmMain.mPopup
         ImageIndex = 99
@@ -285,7 +285,9 @@ object batchBands: TbatchBands
         OnButtonClick = eProjectButtonClick
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
+        ParentShowHint = False
         PasswordChar = #0
+        ShowHint = True
         Spacing = 0
         TabOrder = 0
       end
@@ -404,6 +406,7 @@ object batchBands: TbatchBands
         Width = 176
         CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
         DateOrder = doNone
+        ButtonHint = 'Open calendar'
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
@@ -413,6 +416,8 @@ object batchBands: TbatchBands
         MaxLength = 0
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
         Spacing = 0
         TextHint = 'DD/MM/YYYY'
@@ -424,6 +429,7 @@ object batchBands: TbatchBands
         Width = 176
         CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
         DateOrder = doNone
+        ButtonHint = 'Open calendar'
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
@@ -433,6 +439,8 @@ object batchBands: TbatchBands
         MaxLength = 0
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 1
         Spacing = 0
         TextHint = 'DD/MM/YYYY'
@@ -468,6 +476,7 @@ object batchBands: TbatchBands
         Height = 23
         Top = 22
         Width = 368
+        ButtonHint = 'Find institution'
         ButtonWidth = 23
         Images = frmMain.mPopup
         ImageIndex = 99
@@ -477,7 +486,9 @@ object batchBands: TbatchBands
         OnButtonClick = eSupplierButtonClick
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
+        ParentShowHint = False
         PasswordChar = #0
+        ShowHint = True
         Spacing = 0
         TabOrder = 0
       end
@@ -512,6 +523,7 @@ object batchBands: TbatchBands
         Height = 23
         Top = 22
         Width = 368
+        ButtonHint = 'Find requester'
         ButtonWidth = 23
         Images = frmMain.mPopup
         ImageIndex = 99
@@ -521,7 +533,9 @@ object batchBands: TbatchBands
         OnButtonClick = eRequesterButtonClick
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
+        ParentShowHint = False
         PasswordChar = #0
+        ShowHint = True
         Spacing = 0
         TabOrder = 0
       end
@@ -556,6 +570,7 @@ object batchBands: TbatchBands
         Height = 23
         Top = 22
         Width = 368
+        ButtonHint = 'Find carrier'
         ButtonWidth = 23
         Images = frmMain.mPopup
         ImageIndex = 99
@@ -565,7 +580,9 @@ object batchBands: TbatchBands
         OnButtonClick = eCarrierButtonClick
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
+        ParentShowHint = False
         PasswordChar = #0
+        ShowHint = True
         Spacing = 0
         TabOrder = 0
       end
@@ -602,6 +619,7 @@ object batchBands: TbatchBands
         Height = 23
         Top = 22
         Width = 368
+        ButtonHint = 'Find sender'
         ButtonWidth = 23
         Images = frmMain.mPopup
         ImageIndex = 99
@@ -611,7 +629,9 @@ object batchBands: TbatchBands
         OnButtonClick = eSenderButtonClick
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
+        ParentShowHint = False
         PasswordChar = #0
+        ShowHint = True
         Spacing = 0
         TabOrder = 0
       end

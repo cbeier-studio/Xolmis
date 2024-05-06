@@ -14,7 +14,6 @@ object dlgConnect: TdlgConnect
   PopupMode = pmExplicit
   PopupParent = frmMain.Owner
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object pClient: TPanel
     Left = 0
     Height = 437
@@ -63,7 +62,7 @@ object dlgConnect: TdlgConnect
       Width = 248
       Align = alTop
       BorderSpacing.Bottom = 12
-      ButtonHint = 'Mostrar/ocultar senha'
+      ButtonHint = 'Show/hide password'
       ButtonWidth = 23
       EchoMode = emPassword
       Images = frmMain.bMenu
@@ -74,7 +73,9 @@ object dlgConnect: TdlgConnect
       OnButtonClick = ePasswordButtonClick
       OnKeyDown = eUsernameKeyDown
       OnKeyPress = eUsernameKeyPress
+      ParentShowHint = False
       PasswordChar = '*'
+      ShowHint = True
       Spacing = 0
       TabOrder = 2
     end

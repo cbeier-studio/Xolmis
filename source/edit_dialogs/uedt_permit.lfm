@@ -281,7 +281,10 @@ object edtPermit: TedtPermit
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Open calendar'
           ButtonWidth = 24
           ImageIndex = 18
           Images = frmMain.mPopup
@@ -306,7 +309,10 @@ object edtPermit: TedtPermit
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
+          ButtonHint = 'Open calendar'
           ButtonWidth = 24
           ImageIndex = 18
           Images = frmMain.mPopup
@@ -461,7 +467,10 @@ object edtPermit: TedtPermit
           Constraints.MaxHeight = 28
           ParentBackground = False
           ParentColor = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find project'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup

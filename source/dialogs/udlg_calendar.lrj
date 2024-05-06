@@ -2,6 +2,8 @@
 {"hash":171928085,"name":"tdlgcalendar.caption","sourcebytes":[83,101,108,101,99,116,32,100,97,116,101],"value":"Select date"},
 {"hash":4749113,"name":"tdlgcalendar.sbok.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
 {"hash":77089212,"name":"tdlgcalendar.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":189861589,"name":"tdlgcalendar.rbadd.hint","sourcebytes":[65,100,100,32,116,111,32,100,97,116,101],"value":"Add to date"},
+{"hash":133914293,"name":"tdlgcalendar.rbsubtract.hint","sourcebytes":[83,117,98,116,114,97,99,116,32,102,114,111,109,32,100,97,116,101],"value":"Subtract from date"},
 {"hash":100370794,"name":"tdlgcalendar.lblyears.caption","sourcebytes":[89,101,97,114,115,58],"value":"Years:"},
 {"hash":73772858,"name":"tdlgcalendar.lblmonths.caption","sourcebytes":[77,111,110,116,104,115,58],"value":"Months:"},
 {"hash":4886634,"name":"tdlgcalendar.lbldays.caption","sourcebytes":[68,97,121,115,58],"value":"Days:"}

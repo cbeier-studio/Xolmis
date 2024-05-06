@@ -118,7 +118,7 @@ object edtSighting: TedtSighting
         ClientHeight = 125
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 15
+        TabOrder = 16
         object lblNotes: TLabel
           Left = 16
           Height = 16
@@ -163,8 +163,8 @@ object edtSighting: TedtSighting
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 3
-        object lblBandSize: TLabel
+        TabOrder = 4
+        object lblLongitude: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -175,7 +175,7 @@ object edtSighting: TedtSighting
           ParentColor = False
           ParentFont = False
         end
-        object lblBandNumber: TLabel
+        object lblLatitude: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -198,7 +198,10 @@ object edtSighting: TedtSighting
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup
@@ -222,7 +225,10 @@ object edtSighting: TedtSighting
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
+          ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
           ImageIndex = 69
           Images = frmMain.mPopup
@@ -251,8 +257,8 @@ object edtSighting: TedtSighting
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 4
-        object lblBandPrefix: TLabel
+        TabOrder = 5
+        object lblDate: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -263,7 +269,7 @@ object edtSighting: TedtSighting
           ParentColor = False
           ParentFont = False
         end
-        object lblBandSuffix: TLabel
+        object lblTime: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -286,7 +292,10 @@ object edtSighting: TedtSighting
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Open calendar'
           ButtonWidth = 24
           ImageIndex = 18
           Images = frmMain.mPopup
@@ -314,7 +323,7 @@ object edtSighting: TedtSighting
           OnKeyPress = cbMethodKeyPress
         end
       end
-      object pTypeColor: TPanel
+      object pQuantityDistance: TPanel
         Left = 0
         Height = 45
         Top = 424
@@ -330,8 +339,8 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 7
-        object lblBandType: TLabel
+        TabOrder = 8
+        object lblQuantity: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -342,7 +351,7 @@ object edtSighting: TedtSighting
           ParentColor = False
           ParentFont = False
         end
-        object lblBandColor: TLabel
+        object lblDistance: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -380,7 +389,7 @@ object edtSighting: TedtSighting
           OnKeyPress = cbMethodKeyPress
         end
       end
-      object pStatus: TPanel
+      object pMackinnonListNumber: TPanel
         Left = 0
         Height = 45
         Top = 515
@@ -396,8 +405,8 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 9
-        object lblBandStatus: TLabel
+        TabOrder = 10
+        object lblMackinnonListNumber: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -422,7 +431,7 @@ object edtSighting: TedtSighting
           OnKeyPress = cbMethodKeyPress
         end
       end
-      object pSourceOrderNumber: TPanel
+      object pDetectionBreeding: TPanel
         Left = 0
         Height = 46
         Top = 469
@@ -438,8 +447,8 @@ object edtSighting: TedtSighting
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 8
-        object lblBandSource: TLabel
+        TabOrder = 9
+        object lblDetectionType: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -450,7 +459,7 @@ object edtSighting: TedtSighting
           ParentColor = False
           ParentFont = False
         end
-        object lblOrderNumber: TLabel
+        object lblBreedingStatus: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -473,7 +482,10 @@ object edtSighting: TedtSighting
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Select detection types'
           ButtonWidth = 24
           ImageIndex = 78
           Images = frmMain.mPopup
@@ -497,7 +509,10 @@ object edtSighting: TedtSighting
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
+          ButtonHint = 'Select breeding/behavior code'
           ButtonWidth = 24
           ImageIndex = 78
           Images = frmMain.mPopup
@@ -510,7 +525,7 @@ object edtSighting: TedtSighting
           OnDBEditKeyPress = cbMethodKeyPress
         end
       end
-      object pDateOrderReceipt: TPanel
+      object pCapturesRecapturesUnbanded: TPanel
         Left = 0
         Height = 137
         Top = 673
@@ -527,8 +542,8 @@ object edtSighting: TedtSighting
         ClientHeight = 137
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 11
-        object lblOrderDate: TLabel
+        TabOrder = 12
+        object lblNewCapturesTally: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -552,7 +567,7 @@ object edtSighting: TedtSighting
           OnKeyDown = FormKeyDown
           OnKeyPress = cbMethodKeyPress
         end
-        object lblOrderDate1: TLabel
+        object lblRecapturesTally: TLabel
           Left = 16
           Height = 15
           Top = 49
@@ -576,7 +591,7 @@ object edtSighting: TedtSighting
           OnKeyDown = FormKeyDown
           OnKeyPress = cbMethodKeyPress
         end
-        object lblOrderDate2: TLabel
+        object lblUnbandedTally: TLabel
           Left = 16
           Height = 15
           Top = 95
@@ -617,8 +632,8 @@ object edtSighting: TedtSighting
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 2
-        object lblSupplier: TLabel
+        TabOrder = 3
+        object lblLocality: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -641,7 +656,10 @@ object edtSighting: TedtSighting
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find locality'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -670,7 +688,7 @@ object edtSighting: TedtSighting
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 0
+        TabOrder = 1
         object lblRequester: TLabel
           Left = 16
           Height = 15
@@ -694,7 +712,10 @@ object edtSighting: TedtSighting
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find observer'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -723,7 +744,7 @@ object edtSighting: TedtSighting
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 1
+        TabOrder = 2
         object lblMethod: TLabel
           Left = 16
           Height = 15
@@ -747,7 +768,10 @@ object edtSighting: TedtSighting
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find method'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -777,8 +801,8 @@ object edtSighting: TedtSighting
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 5
-        object lblSender: TLabel
+        TabOrder = 6
+        object lblTaxon: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -801,7 +825,10 @@ object edtSighting: TedtSighting
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find taxon'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -814,7 +841,7 @@ object edtSighting: TedtSighting
           OnDBEditKeyPress = eTaxonDBEditKeyPress
         end
       end
-      object pProject: TPanel
+      object pIndividual: TPanel
         Left = 0
         Height = 46
         Top = 378
@@ -830,8 +857,8 @@ object edtSighting: TedtSighting
         ClientHeight = 46
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 6
-        object lblProject: TLabel
+        TabOrder = 7
+        object lblIndividual: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -854,7 +881,10 @@ object edtSighting: TedtSighting
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
           ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find individual'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
@@ -867,7 +897,7 @@ object edtSighting: TedtSighting
           OnDBEditKeyPress = eIndividualDBEditKeyPress
         end
       end
-      object pDateUseDischarge: TPanel
+      object pHowWasRecorded: TPanel
         Left = 0
         Height = 87
         Top = 573
@@ -884,8 +914,8 @@ object edtSighting: TedtSighting
         ClientHeight = 87
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 10
-        object lblUseDate: TLabel
+        TabOrder = 11
+        object lblHowWasRecorded: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -974,7 +1004,7 @@ object edtSighting: TedtSighting
           ValueUnchecked = 'False'
         end
       end
-      object pDateReported: TPanel
+      object pMalesFemalesNotSexed: TPanel
         Left = 0
         Height = 137
         Top = 823
@@ -990,8 +1020,8 @@ object edtSighting: TedtSighting
         ClientHeight = 137
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 12
-        object lblReportDate: TLabel
+        TabOrder = 13
+        object lblMalesTally: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -1015,7 +1045,7 @@ object edtSighting: TedtSighting
           OnKeyDown = FormKeyDown
           OnKeyPress = cbMethodKeyPress
         end
-        object lblReportDate1: TLabel
+        object lblFemalesTally: TLabel
           Left = 16
           Height = 15
           Top = 49
@@ -1039,7 +1069,7 @@ object edtSighting: TedtSighting
           OnKeyDown = FormKeyDown
           OnKeyPress = cbMethodKeyPress
         end
-        object lblReportDate2: TLabel
+        object lblNotSexedTally: TLabel
           Left = 16
           Height = 15
           Top = 95
@@ -1064,7 +1094,7 @@ object edtSighting: TedtSighting
           OnKeyPress = cbMethodKeyPress
         end
       end
-      object pDateReported1: TPanel
+      object pAdultsImmaturesNotAged: TPanel
         Left = 0
         Height = 137
         Top = 973
@@ -1081,8 +1111,8 @@ object edtSighting: TedtSighting
         ClientHeight = 137
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 13
-        object lblReportDate3: TLabel
+        TabOrder = 14
+        object lblAdultsTally: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -1106,7 +1136,7 @@ object edtSighting: TedtSighting
           OnKeyDown = FormKeyDown
           OnKeyPress = cbMethodKeyPress
         end
-        object lblReportDate4: TLabel
+        object lblImmaturesTally: TLabel
           Left = 16
           Height = 15
           Top = 49
@@ -1130,7 +1160,7 @@ object edtSighting: TedtSighting
           OnKeyDown = FormKeyDown
           OnKeyPress = cbMethodKeyPress
         end
-        object lblReportDate5: TLabel
+        object lblNotAgedTally: TLabel
           Left = 16
           Height = 15
           Top = 95
@@ -1155,7 +1185,7 @@ object edtSighting: TedtSighting
           OnKeyPress = cbMethodKeyPress
         end
       end
-      object pDateUseDischarge1: TPanel
+      object pInEbirdNotSurveying: TPanel
         Left = 0
         Height = 42
         Top = 1123
@@ -1172,7 +1202,7 @@ object edtSighting: TedtSighting
         ClientHeight = 42
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 14
+        TabOrder = 15
         object ckIsInEbird: TDBCheckBox
           Left = 16
           Height = 19
@@ -1246,7 +1276,7 @@ object edtSighting: TedtSighting
         ParentBackground = False
         Rounding.RoundX = 8
         Rounding.RoundY = 8
-        TabOrder = 16
+        TabOrder = 0
         Visible = False
         object lblSurvey: TLabel
           Left = 17
@@ -1274,7 +1304,10 @@ object edtSighting: TedtSighting
           Constraints.MaxHeight = 28
           ParentBackground = False
           ParentColor = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          ButtonHint = 'Find survey'
           ButtonWidth = 24
           ImageIndex = 99
           Images = frmMain.mPopup
