@@ -101,14 +101,14 @@ object frmCustomGrid: TfrmCustomGrid
           object bvSpacerFilters: TBevel
             Left = 0
             Height = 15
-            Top = 4330
+            Top = 5165
             Width = 447
             Align = alTop
             Shape = bsSpacer
           end
           object pQuickFiltersContent: TBCPanel
             Left = 0
-            Height = 4330
+            Height = 5165
             Top = 0
             Width = 447
             Align = alTop
@@ -361,7 +361,7 @@ object frmCustomGrid: TfrmCustomGrid
                 Style = csDropDownList
                 TabOrder = 0
                 Text = 'All'
-                TextHint = 'Nenhum'
+                TextHint = 'None'
                 OnChange = SetFilters
                 OnKeyDown = FormKeyDown
                 OnKeyPress = FormKeyPress
@@ -370,7 +370,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pTaxonRanksFilters: TBCPanel
               Left = 9
               Height = 375
-              Top = 2549
+              Top = 3384
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 10
@@ -477,7 +477,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pMaterialFilter: TBCPanel
               Left = 9
               Height = 48
-              Top = 1702
+              Top = 1765
               Width = 429
               Align = alTop
               AutoSize = True
@@ -569,7 +569,7 @@ object frmCustomGrid: TfrmCustomGrid
                 Style = csDropDownList
                 TabOrder = 0
                 Text = 'All'
-                TextHint = 'Nenhum'
+                TextHint = 'None'
                 OnChange = SetFilters
                 OnKeyDown = FormKeyDown
                 OnKeyPress = FormKeyPress
@@ -578,7 +578,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pMethodFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 1144
+              Top = 1207
               Width = 429
               Align = alTop
               AutoSize = True
@@ -668,7 +668,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pBandSizeFilter: TBCPanel
               Left = 9
               Height = 48
-              Top = 1766
+              Top = 1829
               Width = 429
               Align = alTop
               AutoSize = True
@@ -767,7 +767,7 @@ object frmCustomGrid: TfrmCustomGrid
                 Style = csDropDownList
                 TabOrder = 0
                 Text = 'All'
-                TextHint = 'Nenhum'
+                TextHint = 'None'
                 OnChange = SetFilters
                 OnKeyDown = FormKeyDown
                 OnKeyPress = FormKeyPress
@@ -776,7 +776,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pWithRecapturesFilter: TBCPanel
               Left = 9
               Height = 52
-              Top = 2481
+              Top = 3316
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 16
@@ -859,7 +859,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pFatFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 4063
+              Top = 4898
               Width = 429
               Align = alTop
               AutoSize = True
@@ -946,7 +946,7 @@ object frmCustomGrid: TfrmCustomGrid
                 Style = csDropDownList
                 TabOrder = 0
                 Text = 'All'
-                TextHint = 'Nenhum'
+                TextHint = 'None'
                 OnChange = SetFilters
                 OnKeyDown = FormKeyDown
                 OnKeyPress = FormKeyPress
@@ -955,7 +955,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pBandStatusFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 1824
+              Top = 1887
               Width = 429
               Align = alTop
               AutoSize = True
@@ -1039,7 +1039,7 @@ object frmCustomGrid: TfrmCustomGrid
                 Style = csDropDownList
                 TabOrder = 0
                 Text = 'All'
-                TextHint = 'Nenhum'
+                TextHint = 'None'
                 OnChange = SetFilters
                 OnKeyDown = FormKeyDown
                 OnKeyPress = FormKeyPress
@@ -1048,7 +1048,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pDatesFilters: TBCPanel
               Left = 9
               Height = 375
-              Top = 1207
+              Top = 1270
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 10
@@ -1178,7 +1178,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNestFateFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 2356
+              Top = 3191
               Width = 429
               Align = alTop
               AutoSize = True
@@ -1260,7 +1260,7 @@ object frmCustomGrid: TfrmCustomGrid
                 Style = csDropDownList
                 TabOrder = 0
                 Text = 'All'
-                TextHint = 'Nenhum'
+                TextHint = 'None'
                 OnChange = SetFilters
                 OnKeyDown = FormKeyDown
                 OnKeyPress = FormKeyPress
@@ -1269,7 +1269,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNestSupportFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 2241
+              Top = 2860
               Width = 429
               Align = alTop
               AutoSize = True
@@ -1356,7 +1356,7 @@ object frmCustomGrid: TfrmCustomGrid
                 Style = csDropDownList
                 TabOrder = 0
                 Text = 'All'
-                TextHint = 'Nenhum'
+                TextHint = 'None'
                 OnChange = SetFilters
                 OnKeyDown = FormKeyDown
                 OnKeyPress = FormKeyPress
@@ -1365,7 +1365,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pTaxonFilters: TBCPanel
               Left = 9
               Height = 375
-              Top = 2934
+              Top = 3769
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 10
@@ -1491,7 +1491,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pExtinctFilter: TBCPanel
               Left = 9
               Height = 52
-              Top = 3599
+              Top = 4434
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 16
@@ -1574,7 +1574,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pWithColorBandsFilter: TBCPanel
               Left = 9
               Height = 52
-              Top = 2419
+              Top = 3254
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 10
@@ -1657,7 +1657,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSexingFilters: TBCPanel
               Left = 9
               Height = 189
-              Top = 4120
+              Top = 4955
               Width = 429
               Align = alTop
               AutoSize = True
@@ -1781,7 +1781,7 @@ object frmCustomGrid: TfrmCustomGrid
                   Style = csDropDownList
                   TabOrder = 0
                   Text = 'All'
-                  TextHint = 'Nenhum'
+                  TextHint = 'None'
                   OnChange = SetFilters
                   OnKeyDown = FormKeyDown
                   OnKeyPress = FormKeyPress
@@ -1869,7 +1869,7 @@ object frmCustomGrid: TfrmCustomGrid
                   Style = csDropDownList
                   TabOrder = 0
                   Text = 'All'
-                  TextHint = 'Nenhum'
+                  TextHint = 'None'
                   OnChange = SetFilters
                   OnKeyDown = FormKeyDown
                   OnKeyPress = FormKeyPress
@@ -1957,7 +1957,7 @@ object frmCustomGrid: TfrmCustomGrid
                   Style = csDropDownList
                   TabOrder = 0
                   Text = 'All'
-                  TextHint = 'Nenhum'
+                  TextHint = 'None'
                   OnChange = SetFilters
                   OnKeyDown = FormKeyDown
                   OnKeyPress = FormKeyPress
@@ -2051,7 +2051,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pBandReportFilters: TBCPanel
               Left = 9
               Height = 104
-              Top = 1881
+              Top = 2500
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2256,7 +2256,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSynonymFilters: TBCPanel
               Left = 9
               Height = 104
-              Top = 3485
+              Top = 4320
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2461,7 +2461,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pMoltingFilters: TBCPanel
               Left = 9
               Height = 235
-              Top = 3818
+              Top = 4653
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2589,7 +2589,7 @@ object frmCustomGrid: TfrmCustomGrid
                   Style = csDropDownList
                   TabOrder = 0
                   Text = 'All'
-                  TextHint = 'Nenhum'
+                  TextHint = 'None'
                   OnChange = SetFilters
                   OnKeyDown = FormKeyDown
                   OnKeyPress = FormKeyPress
@@ -2675,7 +2675,7 @@ object frmCustomGrid: TfrmCustomGrid
                   Style = csDropDownList
                   TabOrder = 0
                   Text = 'All'
-                  TextHint = 'Nenhum'
+                  TextHint = 'None'
                   OnChange = SetFilters
                   OnKeyDown = FormKeyDown
                   OnKeyPress = FormKeyPress
@@ -2764,7 +2764,7 @@ object frmCustomGrid: TfrmCustomGrid
                   Style = csDropDownList
                   TabOrder = 0
                   Text = 'All'
-                  TextHint = 'Nenhum'
+                  TextHint = 'None'
                   OnChange = SetFilters
                   OnKeyDown = FormKeyDown
                   OnKeyPress = FormKeyPress
@@ -2942,7 +2942,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pTaxonomiesFilters: TBCPanel
               Left = 9
               Height = 156
-              Top = 3319
+              Top = 4154
               Width = 429
               Align = alTop
               AutoSize = True
@@ -3226,7 +3226,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pTimeFilters: TBCPanel
               Left = 9
               Height = 94
-              Top = 1592
+              Top = 1655
               Width = 429
               Align = alTop
               AutoSize = True
@@ -3440,7 +3440,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pAgingFilters: TBCPanel
               Left = 9
               Height = 141
-              Top = 3667
+              Top = 4502
               Width = 429
               Align = alTop
               AutoSize = True
@@ -3550,7 +3550,7 @@ object frmCustomGrid: TfrmCustomGrid
                   Style = csDropDownList
                   TabOrder = 0
                   Text = 'All'
-                  TextHint = 'Nenhum'
+                  TextHint = 'None'
                   OnChange = SetFilters
                   OnKeyDown = FormKeyDown
                   OnKeyPress = FormKeyPress
@@ -3661,7 +3661,7 @@ object frmCustomGrid: TfrmCustomGrid
                   Style = csDropDownList
                   TabOrder = 0
                   Text = 'All'
-                  TextHint = 'Nenhum'
+                  TextHint = 'None'
                   OnChange = SetFilters
                   OnKeyDown = FormKeyDown
                   OnKeyPress = FormKeyPress
@@ -4765,7 +4765,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNeedsReviewFilters: TBCPanel
               Left = 9
               Height = 104
-              Top = 2001
+              Top = 2620
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4970,7 +4970,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pEscapedFilters: TBCPanel
               Left = 9
               Height = 104
-              Top = 2121
+              Top = 2740
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5175,7 +5175,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pRecordInEbirdFilter: TBCPanel
               Left = 9
               Height = 48
-              Top = 2298
+              Top = 2917
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5274,6 +5274,1434 @@ object frmCustomGrid: TfrmCustomGrid
                 Caption = 'No'
                 TabOrder = 1
                 OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pEggFilter: TBCPanel
+              Left = 9
+              Height = 47
+              Top = 1144
+              Width = 429
+              Align = alTop
+              BorderSpacing.Bottom = 16
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 35
+              Visible = False
+              object icoEggFilter: TImage
+                Left = 16
+                Height = 23
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 143
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblEggFilter: TLabel
+                Left = 54
+                Height = 23
+                Top = 12
+                Width = 20
+                Align = alLeft
+                Caption = 'Egg'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object eEggFilter: TEditButton
+                Left = 128
+                Height = 23
+                Top = 12
+                Width = 285
+                AutoSelect = False
+                Align = alRight
+                ButtonWidth = 24
+                DirectInput = False
+                Images = frmMain.mPopup
+                ImageIndex = 99
+                ImageWidth = 20
+                MaxLength = 0
+                NumGlyphs = 1
+                OnButtonClick = eEggFilterButtonClick
+                OnChange = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = eEggFilterKeyPress
+                PasswordChar = #0
+                Spacing = 0
+                TabOrder = 0
+              end
+            end
+            object pOutOfSampleFilter: TBCPanel
+              Left = 9
+              Height = 44
+              Top = 2975
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 36
+              Visible = False
+              object icoOutOfSampleFilter: TImage
+                Left = 16
+                Height = 20
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 191
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblOutOfSampleFilter: TLabel
+                Left = 54
+                Height = 20
+                Top = 12
+                Width = 86
+                Align = alLeft
+                Caption = 'Out of sampling'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object rbOutOfSampleAll: TRadioButton
+                Left = 295
+                Height = 20
+                Top = 12
+                Width = 32
+                Align = alRight
+                Caption = 'All'
+                Checked = True
+                TabOrder = 2
+                TabStop = True
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+              object rbOutOfSampleYes: TRadioButton
+                Left = 335
+                Height = 20
+                Top = 12
+                Width = 36
+                Align = alRight
+                Caption = 'Yes'
+                TabOrder = 0
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+              object rbOutOfSampleNo: TRadioButton
+                Left = 379
+                Height = 20
+                Top = 12
+                Width = 34
+                Align = alRight
+                Caption = 'No'
+                TabOrder = 1
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pNidoparasiteFilter: TBCPanel
+              Left = 9
+              Height = 44
+              Top = 3029
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 37
+              Visible = False
+              object icoNidoparasiteFilter: TImage
+                Left = 16
+                Height = 20
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 171
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblNidoparasiteFilter: TLabel
+                Left = 54
+                Height = 20
+                Top = 12
+                Width = 117
+                Align = alLeft
+                Caption = 'Nidoparasite presence'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object rbNidoparasiteAll: TRadioButton
+                Left = 295
+                Height = 20
+                Top = 12
+                Width = 32
+                Align = alRight
+                Caption = 'All'
+                Checked = True
+                TabOrder = 2
+                TabStop = True
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+              object rbNidoparasiteYes: TRadioButton
+                Left = 335
+                Height = 20
+                Top = 12
+                Width = 36
+                Align = alRight
+                Caption = 'Yes'
+                TabOrder = 0
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+              object rbNidoparasiteNo: TRadioButton
+                Left = 379
+                Height = 20
+                Top = 12
+                Width = 34
+                Align = alRight
+                Caption = 'No'
+                TabOrder = 1
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pHatchedFilter: TBCPanel
+              Left = 9
+              Height = 44
+              Top = 3137
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 38
+              Visible = False
+              object icoHatchedFilter: TImage
+                Left = 16
+                Height = 20
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 145
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblHatchedFilter: TLabel
+                Left = 54
+                Height = 20
+                Top = 12
+                Width = 45
+                Align = alLeft
+                Caption = 'Hatched'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object rbHatchedAll: TRadioButton
+                Left = 295
+                Height = 20
+                Top = 12
+                Width = 32
+                Align = alRight
+                Caption = 'All'
+                Checked = True
+                TabOrder = 2
+                TabStop = True
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+              object rbHatchedYes: TRadioButton
+                Left = 335
+                Height = 20
+                Top = 12
+                Width = 36
+                Align = alRight
+                Caption = 'Yes'
+                TabOrder = 0
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+              object rbHatchedNo: TRadioButton
+                Left = 379
+                Height = 20
+                Top = 12
+                Width = 34
+                Align = alRight
+                Caption = 'No'
+                TabOrder = 1
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pPhilornisFilter: TBCPanel
+              Left = 9
+              Height = 44
+              Top = 3083
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 39
+              Visible = False
+              object icoPhilornisFilter: TImage
+                Left = 16
+                Height = 20
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 192
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblPhilornisFilter: TLabel
+                Left = 54
+                Height = 20
+                Top = 12
+                Width = 130
+                Align = alLeft
+                Caption = 'Philornis larvae presence'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object rbPhilornisAll: TRadioButton
+                Left = 295
+                Height = 20
+                Top = 12
+                Width = 32
+                Align = alRight
+                Caption = 'All'
+                Checked = True
+                TabOrder = 2
+                TabStop = True
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+              object rbPhilornisYes: TRadioButton
+                Left = 335
+                Height = 20
+                Top = 12
+                Width = 36
+                Align = alRight
+                Caption = 'Yes'
+                TabOrder = 0
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+              object rbPhilornisNo: TRadioButton
+                Left = 379
+                Height = 20
+                Top = 12
+                Width = 34
+                Align = alRight
+                Caption = 'No'
+                TabOrder = 1
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pCaptureTypeFilter: TBCPanel
+              Left = 9
+              Height = 47
+              Top = 1944
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 40
+              Visible = False
+              object icoCaptureTypeFilter: TImage
+                Left = 16
+                Height = 23
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 135
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblCaptureTypeFilter: TLabel
+                Left = 54
+                Height = 23
+                Top = 12
+                Width = 68
+                Align = alLeft
+                Caption = 'Capture type'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object cbCaptureTypeFilter: TComboBox
+                Left = 201
+                Height = 23
+                Top = 12
+                Width = 212
+                Align = alRight
+                Color = 16119285
+                ItemHeight = 15
+                ItemIndex = 0
+                Items.Strings = (
+                  'All'
+                )
+                Style = csDropDownList
+                TabOrder = 0
+                Text = 'All'
+                TextHint = 'None'
+                OnChange = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pCaptureStatusFilter: TBCPanel
+              Left = 9
+              Height = 47
+              Top = 2001
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 41
+              Visible = False
+              object icoCaptureStatusFilter: TImage
+                Left = 16
+                Height = 23
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 135
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblCaptureStatusFilter: TLabel
+                Left = 54
+                Height = 23
+                Top = 12
+                Width = 73
+                Align = alLeft
+                Caption = 'Release status'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object cbCaptureStatusFilter: TComboBox
+                Left = 201
+                Height = 23
+                Top = 12
+                Width = 212
+                Align = alRight
+                Color = 16119285
+                ItemHeight = 15
+                ItemIndex = 0
+                Items.Strings = (
+                  'All'
+                )
+                Style = csDropDownList
+                TabOrder = 0
+                Text = 'All'
+                TextHint = 'None'
+                OnChange = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pBandTypeFilter: TBCPanel
+              Left = 9
+              Height = 47
+              Top = 2058
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 42
+              Visible = False
+              object icoBandTypeFilter: TImage
+                Left = 16
+                Height = 23
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 176
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblBandTypeFilter: TLabel
+                Left = 54
+                Height = 23
+                Top = 12
+                Width = 53
+                Align = alLeft
+                Caption = 'Band type'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object cbBandTypeFilter: TComboBox
+                Left = 201
+                Height = 23
+                Top = 12
+                Width = 212
+                Align = alRight
+                Color = 16119285
+                ItemHeight = 15
+                ItemIndex = 0
+                Items.Strings = (
+                  'All'
+                )
+                Style = csDropDownList
+                TabOrder = 0
+                Text = 'All'
+                TextHint = 'None'
+                OnChange = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pBandSourceFilter: TBCPanel
+              Left = 9
+              Height = 47
+              Top = 2115
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 43
+              Visible = False
+              object icoBandSourceFilter: TImage
+                Left = 16
+                Height = 23
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 176
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblBandSourceFilter: TLabel
+                Left = 54
+                Height = 23
+                Top = 12
+                Width = 65
+                Align = alLeft
+                Caption = 'Band source'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object cbBandSourceFilter: TComboBox
+                Left = 201
+                Height = 23
+                Top = 12
+                Width = 212
+                Align = alRight
+                Color = 16119285
+                ItemHeight = 15
+                ItemIndex = 0
+                Items.Strings = (
+                  'All'
+                )
+                Style = csDropDownList
+                TabOrder = 0
+                Text = 'All'
+                TextHint = 'None'
+                OnChange = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pNestStatusFilter: TBCPanel
+              Left = 9
+              Height = 47
+              Top = 2172
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 44
+              Visible = False
+              object icoNestStatusFilter: TImage
+                Left = 16
+                Height = 23
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 175
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblNestStatusFilter: TLabel
+                Left = 54
+                Height = 23
+                Top = 12
+                Width = 58
+                Align = alLeft
+                Caption = 'Nest status'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object cbNestStatusFilter: TComboBox
+                Left = 201
+                Height = 23
+                Top = 12
+                Width = 212
+                Align = alRight
+                Color = 16119285
+                ItemHeight = 15
+                ItemIndex = 0
+                Items.Strings = (
+                  'All'
+                )
+                Style = csDropDownList
+                TabOrder = 0
+                Text = 'All'
+                TextHint = 'None'
+                OnChange = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pNestStageFilter: TBCPanel
+              Left = 9
+              Height = 47
+              Top = 2229
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 45
+              Visible = False
+              object icoNestStageFilter: TImage
+                Left = 16
+                Height = 23
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 175
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblNestStageFilter: TLabel
+                Left = 54
+                Height = 23
+                Top = 12
+                Width = 55
+                Align = alLeft
+                Caption = 'Nest stage'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object cbNestStageFilter: TComboBox
+                Left = 201
+                Height = 23
+                Top = 12
+                Width = 212
+                Align = alRight
+                Color = 16119285
+                ItemHeight = 15
+                ItemIndex = 0
+                Items.Strings = (
+                  'All'
+                )
+                Style = csDropDownList
+                TabOrder = 0
+                Text = 'All'
+                TextHint = 'None'
+                OnChange = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pEggTraitsFilters: TBCPanel
+              Left = 9
+              Height = 141
+              Top = 2343
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 16
+              Background.Color = clBtnFace
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Style = bboNone
+              Border.Width = 0
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 1
+              Rounding.RoundY = 1
+              TabOrder = 46
+              Visible = False
+              object pEggPatternFilter: TBCPanel
+                Left = 0
+                Height = 47
+                Top = 47
+                Width = 429
+                Align = alTop
+                ChildSizing.LeftRightSpacing = 16
+                ChildSizing.TopBottomSpacing = 12
+                ChildSizing.HorizontalSpacing = 8
+                Background.Color = 16448250
+                Background.Gradient1.StartColor = clWhite
+                Background.Gradient1.EndColor = clBlack
+                Background.Gradient1.GradientType = gtLinear
+                Background.Gradient1.Point1XPercent = 0
+                Background.Gradient1.Point1YPercent = 0
+                Background.Gradient1.Point2XPercent = 0
+                Background.Gradient1.Point2YPercent = 100
+                Background.Gradient2.StartColor = clWhite
+                Background.Gradient2.EndColor = clBlack
+                Background.Gradient2.GradientType = gtLinear
+                Background.Gradient2.Point1XPercent = 0
+                Background.Gradient2.Point1YPercent = 0
+                Background.Gradient2.Point2XPercent = 0
+                Background.Gradient2.Point2YPercent = 100
+                Background.Gradient1EndPercent = 35
+                Background.Style = bbsColor
+                BevelInner = bvNone
+                BevelOuter = bvNone
+                BevelWidth = 1
+                Border.Color = 13750737
+                Border.Style = bboSolid
+                BorderBCStyle = bpsBorder
+                FontEx.Color = clDefault
+                FontEx.FontQuality = fqSystemClearType
+                FontEx.Shadow = False
+                FontEx.ShadowRadius = 5
+                FontEx.ShadowOffsetX = 5
+                FontEx.ShadowOffsetY = 5
+                FontEx.Style = []
+                ParentBackground = False
+                Rounding.RoundX = 0
+                Rounding.RoundY = 0
+                TabOrder = 0
+                object icoEggPatternFilter: TImage
+                  Left = 16
+                  Height = 23
+                  Top = 12
+                  Width = 30
+                  Align = alLeft
+                  Center = True
+                  ImageIndex = -1
+                  ImageWidth = 20
+                  Images = frmMain.mPopup
+                end
+                object lblEggPatternFilter: TLabel
+                  Left = 54
+                  Height = 23
+                  Top = 12
+                  Width = 38
+                  Align = alLeft
+                  Caption = 'Pattern'
+                  Layout = tlCenter
+                  ParentColor = False
+                end
+                object cbEggPatternFilter: TComboBox
+                  Left = 201
+                  Height = 23
+                  Top = 12
+                  Width = 212
+                  Align = alRight
+                  Color = 16119285
+                  ItemHeight = 15
+                  ItemIndex = 0
+                  Items.Strings = (
+                    'All'
+                  )
+                  Style = csDropDownList
+                  TabOrder = 0
+                  Text = 'All'
+                  TextHint = 'None'
+                  OnChange = SetFilters
+                  OnKeyDown = FormKeyDown
+                  OnKeyPress = FormKeyPress
+                end
+              end
+              object pEggTextureFilter: TBCPanel
+                Left = 0
+                Height = 47
+                Top = 94
+                Width = 429
+                Align = alTop
+                ChildSizing.LeftRightSpacing = 16
+                ChildSizing.TopBottomSpacing = 12
+                ChildSizing.HorizontalSpacing = 8
+                Background.Color = 16448250
+                Background.Gradient1.StartColor = clWhite
+                Background.Gradient1.EndColor = clBlack
+                Background.Gradient1.GradientType = gtLinear
+                Background.Gradient1.Point1XPercent = 0
+                Background.Gradient1.Point1YPercent = 0
+                Background.Gradient1.Point2XPercent = 0
+                Background.Gradient1.Point2YPercent = 100
+                Background.Gradient2.StartColor = clWhite
+                Background.Gradient2.EndColor = clBlack
+                Background.Gradient2.GradientType = gtLinear
+                Background.Gradient2.Point1XPercent = 0
+                Background.Gradient2.Point1YPercent = 0
+                Background.Gradient2.Point2XPercent = 0
+                Background.Gradient2.Point2YPercent = 100
+                Background.Gradient1EndPercent = 35
+                Background.Style = bbsColor
+                BevelInner = bvNone
+                BevelOuter = bvNone
+                BevelWidth = 1
+                Border.Color = 13750737
+                Border.Style = bboSolid
+                BorderBCStyle = bpsBorder
+                FontEx.Color = clDefault
+                FontEx.FontQuality = fqSystemClearType
+                FontEx.Shadow = False
+                FontEx.ShadowRadius = 5
+                FontEx.ShadowOffsetX = 5
+                FontEx.ShadowOffsetY = 5
+                FontEx.Style = []
+                ParentBackground = False
+                Rounding.RoundX = 8
+                Rounding.RoundY = 8
+                Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+                TabOrder = 1
+                object lblEggTextureFilter: TLabel
+                  Left = 54
+                  Height = 23
+                  Top = 12
+                  Width = 38
+                  Align = alLeft
+                  Caption = 'Texture'
+                  Layout = tlCenter
+                  ParentColor = False
+                end
+                object icoEggTextureFilter: TImage
+                  Left = 16
+                  Height = 23
+                  Top = 12
+                  Width = 30
+                  Align = alLeft
+                  Center = True
+                end
+                object cbEggTextureFilter: TComboBox
+                  Left = 201
+                  Height = 23
+                  Top = 12
+                  Width = 212
+                  Align = alRight
+                  Color = 16119285
+                  ItemHeight = 15
+                  ItemIndex = 0
+                  Items.Strings = (
+                    'All'
+                  )
+                  Style = csDropDownList
+                  TabOrder = 0
+                  Text = 'All'
+                  TextHint = 'None'
+                  OnChange = SetFilters
+                  OnKeyDown = FormKeyDown
+                  OnKeyPress = FormKeyPress
+                end
+              end
+              object pEggShapeFilter: TBCPanel
+                Left = 0
+                Height = 47
+                Top = 0
+                Width = 429
+                Align = alTop
+                AutoSize = True
+                ChildSizing.LeftRightSpacing = 16
+                ChildSizing.TopBottomSpacing = 12
+                ChildSizing.HorizontalSpacing = 8
+                Background.Color = 16448250
+                Background.Gradient1.StartColor = clWhite
+                Background.Gradient1.EndColor = clBlack
+                Background.Gradient1.GradientType = gtLinear
+                Background.Gradient1.Point1XPercent = 0
+                Background.Gradient1.Point1YPercent = 0
+                Background.Gradient1.Point2XPercent = 0
+                Background.Gradient1.Point2YPercent = 100
+                Background.Gradient2.StartColor = clWhite
+                Background.Gradient2.EndColor = clBlack
+                Background.Gradient2.GradientType = gtLinear
+                Background.Gradient2.Point1XPercent = 0
+                Background.Gradient2.Point1YPercent = 0
+                Background.Gradient2.Point2XPercent = 0
+                Background.Gradient2.Point2YPercent = 100
+                Background.Gradient1EndPercent = 35
+                Background.Style = bbsColor
+                BevelInner = bvNone
+                BevelOuter = bvNone
+                BevelWidth = 1
+                Border.Color = 13750737
+                Border.Style = bboSolid
+                BorderBCStyle = bpsBorder
+                FontEx.Color = clDefault
+                FontEx.FontQuality = fqSystemClearType
+                FontEx.Shadow = False
+                FontEx.ShadowRadius = 5
+                FontEx.ShadowOffsetX = 5
+                FontEx.ShadowOffsetY = 5
+                FontEx.Style = []
+                ParentBackground = False
+                Rounding.RoundX = 8
+                Rounding.RoundY = 8
+                Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+                TabOrder = 2
+                object icoEggShapeFilter: TImage
+                  Left = 16
+                  Height = 23
+                  Top = 12
+                  Width = 30
+                  Align = alLeft
+                  Center = True
+                  ImageIndex = 143
+                  ImageWidth = 20
+                  Images = frmMain.mPopup
+                end
+                object lblEggShapeFilter: TLabel
+                  Left = 54
+                  Height = 23
+                  Top = 12
+                  Width = 54
+                  Align = alLeft
+                  Caption = 'Egg shape'
+                  Layout = tlCenter
+                  ParentColor = False
+                end
+                object cbEggShapeFilter: TComboBox
+                  Left = 201
+                  Height = 23
+                  Top = 12
+                  Width = 212
+                  Align = alRight
+                  Color = 16119285
+                  ItemHeight = 15
+                  ItemIndex = 0
+                  Items.Strings = (
+                    'All'
+                  )
+                  Style = csDropDownList
+                  TabOrder = 0
+                  Text = 'All'
+                  TextHint = 'None'
+                  OnChange = SetFilters
+                  OnKeyDown = FormKeyDown
+                  OnKeyPress = FormKeyPress
+                end
+              end
+            end
+            object pPermitTypeFilter: TBCPanel
+              Left = 9
+              Height = 47
+              Top = 2286
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 47
+              Visible = False
+              object icoPermitTypeFilter: TImage
+                Left = 16
+                Height = 23
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 193
+                ImageWidth = 20
+                Images = frmMain.mPopup
+              end
+              object lblPermitTypeFilter: TLabel
+                Left = 54
+                Height = 23
+                Top = 12
+                Width = 61
+                Align = alLeft
+                Caption = 'Permit type'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object cbPermitTypeFilter: TComboBox
+                Left = 201
+                Height = 23
+                Top = 12
+                Width = 212
+                Align = alRight
+                Color = 16119285
+                ItemHeight = 15
+                ItemIndex = 0
+                Items.Strings = (
+                  'All'
+                )
+                Style = csDropDownList
+                TabOrder = 0
+                Text = 'All'
+                TextHint = 'None'
+                OnChange = SetFilters
                 OnKeyDown = FormKeyDown
                 OnKeyPress = FormKeyPress
               end

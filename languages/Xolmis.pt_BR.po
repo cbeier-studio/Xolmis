@@ -365,6 +365,11 @@ msgctxt "cbs_locale.rscantdeleteuser"
 msgid "User %s should not be deleted, because it could compromise the Xolmis functioning!"
 msgstr "Usuário %s não deve ser apagado, pois pode comprometer o funcionamento do Xolmis!"
 
+#: cbs_locale.rscaptionall
+msgctxt "cbs_locale.rscaptionall"
+msgid "All"
+msgstr "Tudo"
+
 #: cbs_locale.rscaptionaudiolibrary
 msgctxt "cbs_locale.rscaptionaudiolibrary"
 msgid "Audio recordings"
@@ -525,6 +530,11 @@ msgstr "Próximo"
 msgctxt "cbs_locale.rscaptionno"
 msgid "No"
 msgstr "Não"
+
+#: cbs_locale.rscaptionnone
+msgctxt "cbs_locale.rscaptionnone"
+msgid "None"
+msgstr "Nenhum"
 
 #: cbs_locale.rscaptionobserver
 msgctxt "cbs_locale.rscaptionobserver"
@@ -1990,6 +2000,7 @@ msgid "Mist"
 msgstr "Nevoeiro"
 
 #: cbs_locale.rsprecipitationnone
+msgctxt "cbs_locale.rsprecipitationnone"
 msgid "None"
 msgstr "Nenhum"
 
@@ -4914,6 +4925,7 @@ msgid "Save"
 msgstr "Salvar"
 
 #: tedtegg.ckhatched.caption
+msgctxt "tedtegg.ckhatched.caption"
 msgid "Hatched"
 msgstr "Eclodiu"
 
@@ -7352,7 +7364,7 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbagefilter.texthint
 msgctxt "tfrmcustomgrid.cbagefilter.texthint"
-msgid "Nenhum"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbbandsizefilter.text
@@ -7362,7 +7374,17 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbbandsizefilter.texthint
 msgctxt "tfrmcustomgrid.cbbandsizefilter.texthint"
-msgid "Nenhum"
+msgid "None"
+msgstr "Nenhum"
+
+#: tfrmcustomgrid.cbbandsourcefilter.text
+msgctxt "tfrmcustomgrid.cbbandsourcefilter.text"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.cbbandsourcefilter.texthint
+msgctxt "tfrmcustomgrid.cbbandsourcefilter.texthint"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbbandstatusfilter.text
@@ -7372,7 +7394,17 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbbandstatusfilter.texthint
 msgctxt "tfrmcustomgrid.cbbandstatusfilter.texthint"
-msgid "Nenhum"
+msgid "None"
+msgstr "Nenhum"
+
+#: tfrmcustomgrid.cbbandtypefilter.text
+msgctxt "tfrmcustomgrid.cbbandtypefilter.text"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.cbbandtypefilter.texthint
+msgctxt "tfrmcustomgrid.cbbandtypefilter.texthint"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbbodymoltfilter.text
@@ -7382,7 +7414,7 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbbodymoltfilter.texthint
 msgctxt "tfrmcustomgrid.cbbodymoltfilter.texthint"
-msgid "Nenhum"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbbroodpatchfilter.text
@@ -7392,7 +7424,27 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbbroodpatchfilter.texthint
 msgctxt "tfrmcustomgrid.cbbroodpatchfilter.texthint"
-msgid "Nenhum"
+msgid "None"
+msgstr "Nenhum"
+
+#: tfrmcustomgrid.cbcapturestatusfilter.text
+msgctxt "tfrmcustomgrid.cbcapturestatusfilter.text"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.cbcapturestatusfilter.texthint
+msgctxt "tfrmcustomgrid.cbcapturestatusfilter.texthint"
+msgid "None"
+msgstr "Nenhum"
+
+#: tfrmcustomgrid.cbcapturetypefilter.text
+msgctxt "tfrmcustomgrid.cbcapturetypefilter.text"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.cbcapturetypefilter.texthint
+msgctxt "tfrmcustomgrid.cbcapturetypefilter.texthint"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbcloacalprotuberancefilter.text
@@ -7402,7 +7454,37 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbcloacalprotuberancefilter.texthint
 msgctxt "tfrmcustomgrid.cbcloacalprotuberancefilter.texthint"
-msgid "Nenhum"
+msgid "None"
+msgstr "Nenhum"
+
+#: tfrmcustomgrid.cbeggpatternfilter.text
+msgctxt "tfrmcustomgrid.cbeggpatternfilter.text"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.cbeggpatternfilter.texthint
+msgctxt "tfrmcustomgrid.cbeggpatternfilter.texthint"
+msgid "None"
+msgstr "Nenhum"
+
+#: tfrmcustomgrid.cbeggshapefilter.text
+msgctxt "tfrmcustomgrid.cbeggshapefilter.text"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.cbeggshapefilter.texthint
+msgctxt "tfrmcustomgrid.cbeggshapefilter.texthint"
+msgid "None"
+msgstr "Nenhum"
+
+#: tfrmcustomgrid.cbeggtexturefilter.text
+msgctxt "tfrmcustomgrid.cbeggtexturefilter.text"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.cbeggtexturefilter.texthint
+msgctxt "tfrmcustomgrid.cbeggtexturefilter.texthint"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbfatfilter.text
@@ -7412,7 +7494,7 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbfatfilter.texthint
 msgctxt "tfrmcustomgrid.cbfatfilter.texthint"
-msgid "Nenhum"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbffmoltfilter.text
@@ -7422,7 +7504,7 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbffmoltfilter.texthint
 msgctxt "tfrmcustomgrid.cbffmoltfilter.texthint"
-msgid "Nenhum"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbffwearfilter.text
@@ -7432,7 +7514,7 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbffwearfilter.texthint
 msgctxt "tfrmcustomgrid.cbffwearfilter.texthint"
-msgid "Nenhum"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbmaterialfilter.text
@@ -7442,7 +7524,7 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbmaterialfilter.texthint
 msgctxt "tfrmcustomgrid.cbmaterialfilter.texthint"
-msgid "Nenhum"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbnestfatefilter.text
@@ -7452,7 +7534,27 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbnestfatefilter.texthint
 msgctxt "tfrmcustomgrid.cbnestfatefilter.texthint"
-msgid "Nenhum"
+msgid "None"
+msgstr "Nenhum"
+
+#: tfrmcustomgrid.cbneststagefilter.text
+msgctxt "tfrmcustomgrid.cbneststagefilter.text"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.cbneststagefilter.texthint
+msgctxt "tfrmcustomgrid.cbneststagefilter.texthint"
+msgid "None"
+msgstr "Nenhum"
+
+#: tfrmcustomgrid.cbneststatusfilter.text
+msgctxt "tfrmcustomgrid.cbneststatusfilter.text"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.cbneststatusfilter.texthint
+msgctxt "tfrmcustomgrid.cbneststatusfilter.texthint"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbnestsupportfilter.text
@@ -7462,7 +7564,17 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbnestsupportfilter.texthint
 msgctxt "tfrmcustomgrid.cbnestsupportfilter.texthint"
-msgid "Nenhum"
+msgid "None"
+msgstr "Nenhum"
+
+#: tfrmcustomgrid.cbpermittypefilter.text
+msgctxt "tfrmcustomgrid.cbpermittypefilter.text"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.cbpermittypefilter.texthint
+msgctxt "tfrmcustomgrid.cbpermittypefilter.texthint"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbsexfilter.text
@@ -7472,7 +7584,7 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbsexfilter.texthint
 msgctxt "tfrmcustomgrid.cbsexfilter.texthint"
-msgid "Nenhum"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbsiterankfilter.text
@@ -7482,7 +7594,7 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbsiterankfilter.texthint
 msgctxt "tfrmcustomgrid.cbsiterankfilter.texthint"
-msgid "Nenhum"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.cbskullossificationfilter.text
@@ -7492,7 +7604,7 @@ msgstr "Tudo"
 
 #: tfrmcustomgrid.cbskullossificationfilter.texthint
 msgctxt "tfrmcustomgrid.cbskullossificationfilter.texthint"
-msgid "Nenhum"
+msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.eaddchild.texthint
@@ -7510,10 +7622,18 @@ msgctxt "tfrmcustomgrid.lblbandsizefilter.caption"
 msgid "Size"
 msgstr "Tamanho"
 
+#: tfrmcustomgrid.lblbandsourcefilter.caption
+msgid "Band source"
+msgstr "Origem da anilha"
+
 #: tfrmcustomgrid.lblbandstatusfilter.caption
 msgctxt "tfrmcustomgrid.lblbandstatusfilter.caption"
 msgid "Status"
 msgstr "Status"
+
+#: tfrmcustomgrid.lblbandtypefilter.caption
+msgid "Band type"
+msgstr "Tipo de anilha"
 
 #: tfrmcustomgrid.lblbodymoltfilter.caption
 msgid "Body molt"
@@ -7522,6 +7642,14 @@ msgstr "Muda do corpo"
 #: tfrmcustomgrid.lblbroodpatchfilter.caption
 msgid "Brood patch"
 msgstr "Placa de incubação"
+
+#: tfrmcustomgrid.lblcapturestatusfilter.caption
+msgid "Release status"
+msgstr "Status na soltura"
+
+#: tfrmcustomgrid.lblcapturetypefilter.caption
+msgid "Capture type"
+msgstr "Tipo de captura"
 
 #: tfrmcustomgrid.lblchildstatus.caption
 msgctxt "tfrmcustomgrid.lblchildstatus.caption"
@@ -7595,6 +7723,23 @@ msgstr "Datas"
 msgid "Do not need review"
 msgstr "Não precisa de revisão"
 
+#: tfrmcustomgrid.lbleggfilter.caption
+msgctxt "tfrmcustomgrid.lbleggfilter.caption"
+msgid "Egg"
+msgstr "Ovo"
+
+#: tfrmcustomgrid.lbleggpatternfilter.caption
+msgid "Pattern"
+msgstr "Padrão"
+
+#: tfrmcustomgrid.lbleggshapefilter.caption
+msgid "Egg shape"
+msgstr "Formato do ovo"
+
+#: tfrmcustomgrid.lbleggtexturefilter.caption
+msgid "Texture"
+msgstr "Textura"
+
 #: tfrmcustomgrid.lblemptyquery.caption
 msgid "Result query is empty"
 msgstr "Resultado da busca está vazio"
@@ -7632,6 +7777,11 @@ msgstr "Desgaste das penas de voo"
 #: tfrmcustomgrid.lblhassynonymsfilter.caption
 msgid "Have synonyms"
 msgstr "Possui sinônimos"
+
+#: tfrmcustomgrid.lblhatchedfilter.caption
+msgctxt "tfrmcustomgrid.lblhatchedfilter.caption"
+msgid "Hatched"
+msgstr "Eclodiu"
 
 #: tfrmcustomgrid.lblhowagedfilter.caption
 msgid "How was aged"
@@ -7683,9 +7833,21 @@ msgctxt "tfrmcustomgrid.lblnestfilter.caption"
 msgid "Nest"
 msgstr "Ninho"
 
+#: tfrmcustomgrid.lblneststagefilter.caption
+msgid "Nest stage"
+msgstr "Estágio do ninho"
+
+#: tfrmcustomgrid.lblneststatusfilter.caption
+msgid "Nest status"
+msgstr "Status do ninho"
+
 #: tfrmcustomgrid.lblnestsupportfilter.caption
 msgid "Support type"
 msgstr "Tipo de suporte"
+
+#: tfrmcustomgrid.lblnidoparasitefilter.caption
+msgid "Nidoparasite presence"
+msgstr "Presença de nidoparasita"
 
 #: tfrmcustomgrid.lblnotescapedfilter.caption
 msgid "Did not escape"
@@ -7695,9 +7857,21 @@ msgstr "Não escapou"
 msgid "Not reported"
 msgstr "Não reportada"
 
+#: tfrmcustomgrid.lbloutofsamplefilter.caption
+msgid "Out of sampling"
+msgstr "Fora da amostragem"
+
+#: tfrmcustomgrid.lblpermittypefilter.caption
+msgid "Permit type"
+msgstr "Tipo de licença"
+
 #: tfrmcustomgrid.lblpersonfilter.caption
 msgid "Person"
 msgstr "Pessoa"
+
+#: tfrmcustomgrid.lblphilornisfilter.caption
+msgid "Philornis larvae presence"
+msgstr "Presença de larvas de Philornis"
 
 #: tfrmcustomgrid.lblplantfilter.caption
 msgid "Support plant"
@@ -7957,6 +8131,66 @@ msgstr "Expandir todos"
 msgctxt "tfrmcustomgrid.pmtrefresh.caption"
 msgid "Refresh"
 msgstr "Atualizar"
+
+#: tfrmcustomgrid.rbhatchedall.caption
+msgctxt "tfrmcustomgrid.rbhatchedall.caption"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.rbhatchedno.caption
+msgctxt "tfrmcustomgrid.rbhatchedno.caption"
+msgid "No"
+msgstr "Não"
+
+#: tfrmcustomgrid.rbhatchedyes.caption
+msgctxt "tfrmcustomgrid.rbhatchedyes.caption"
+msgid "Yes"
+msgstr "Sim"
+
+#: tfrmcustomgrid.rbnidoparasiteall.caption
+msgctxt "tfrmcustomgrid.rbnidoparasiteall.caption"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.rbnidoparasiteno.caption
+msgctxt "tfrmcustomgrid.rbnidoparasiteno.caption"
+msgid "No"
+msgstr "Não"
+
+#: tfrmcustomgrid.rbnidoparasiteyes.caption
+msgctxt "tfrmcustomgrid.rbnidoparasiteyes.caption"
+msgid "Yes"
+msgstr "Sim"
+
+#: tfrmcustomgrid.rboutofsampleall.caption
+msgctxt "tfrmcustomgrid.rboutofsampleall.caption"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.rboutofsampleno.caption
+msgctxt "tfrmcustomgrid.rboutofsampleno.caption"
+msgid "No"
+msgstr "Não"
+
+#: tfrmcustomgrid.rboutofsampleyes.caption
+msgctxt "tfrmcustomgrid.rboutofsampleyes.caption"
+msgid "Yes"
+msgstr "Sim"
+
+#: tfrmcustomgrid.rbphilornisall.caption
+msgctxt "tfrmcustomgrid.rbphilornisall.caption"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.rbphilornisno.caption
+msgctxt "tfrmcustomgrid.rbphilornisno.caption"
+msgid "No"
+msgstr "Não"
+
+#: tfrmcustomgrid.rbphilornisyes.caption
+msgctxt "tfrmcustomgrid.rbphilornisyes.caption"
+msgid "Yes"
+msgstr "Sim"
 
 #: tfrmcustomgrid.rbrecordinebirdall.caption
 msgctxt "tfrmcustomgrid.rbrecordinebirdall.caption"

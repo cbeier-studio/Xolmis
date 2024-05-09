@@ -746,6 +746,8 @@ uses
     rsCaptionHigh = 'High';
     rsCaptionMedium = 'Medium';
     rsCaptionLow = 'Low';
+    rsCaptionAll = 'All';
+    rsCaptionNone = 'None';
     rsCaptionTaxon = 'Taxon';
     rsCaptionRank = 'Rank';
     rsCaptionBand = 'Band';

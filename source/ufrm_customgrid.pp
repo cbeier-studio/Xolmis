@@ -34,6 +34,16 @@ type
   { TfrmCustomGrid }
 
   TfrmCustomGrid = class(TForm)
+    cbEggShapeFilter: TComboBox;
+    cbEggPatternFilter: TComboBox;
+    cbEggTextureFilter: TComboBox;
+    cbPermitTypeFilter: TComboBox;
+    cbNestStatusFilter: TComboBox;
+    cbBandTypeFilter: TComboBox;
+    cbBandSourceFilter: TComboBox;
+    cbCaptureTypeFilter: TComboBox;
+    cbCaptureStatusFilter: TComboBox;
+    cbNestStageFilter: TComboBox;
     DBG: TDBGrid;
     dbgRecycle: TDBControlGrid;
     DBText3: TDBText;
@@ -46,6 +56,7 @@ type
     eNestFilter: TEditButton;
     eIndividualFilter: TEditButton;
     eExpeditionFilter: TEditButton;
+    eEggFilter: TEditButton;
     ePlantFilter: TEditButton;
     eSamplingPlotFilter: TEditButton;
     eSurveyFilter: TEditButton;
@@ -54,7 +65,20 @@ type
     eMethodFilter: TEditButton;
     eProjectFilter: TEditButton;
     iButtons: TImageList;
+    icoEggTextureFilter: TImage;
+    icoEggShapeFilter: TImage;
+    icoPermitTypeFilter: TImage;
+    icoNestStatusFilter: TImage;
+    icoBandTypeFilter: TImage;
+    icoBandSourceFilter: TImage;
+    icoCaptureTypeFilter: TImage;
+    icoCaptureStatusFilter: TImage;
     icoDontNeedReviewFilter: TImage;
+    icoEggFilter: TImage;
+    icoNestStageFilter: TImage;
+    icoNidoparasiteFilter: TImage;
+    icoHatchedFilter: TImage;
+    icoPhilornisFilter: TImage;
     icoRecordInEbirdFilter: TImage;
     icoNotEscapedFilter: TImage;
     icoEscapedFilter: TImage;
@@ -63,6 +87,8 @@ type
     icoExpeditionFilter: TImage;
     icoPlantFilter: TImage;
     icoNeedsReviewFilter: TImage;
+    icoOutOfSampleFilter: TImage;
+    icoEggPatternFilter: TImage;
     icoSamplingPlotFilter: TImage;
     icoSurveyFilter: TImage;
     icoPersonFilter: TImage;
@@ -70,6 +96,19 @@ type
     icoProjectFilter: TImage;
     iHeaders: TImageList;
     icoEmptyQuery: TImage;
+    lblEggShapeFilter: TLabel;
+    lblPermitTypeFilter: TLabel;
+    lblNestStatusFilter: TLabel;
+    lblBandTypeFilter: TLabel;
+    lblBandSourceFilter: TLabel;
+    lblCaptureTypeFilter: TLabel;
+    lblCaptureStatusFilter: TLabel;
+    lblEggFilter: TLabel;
+    lblNestStageFilter: TLabel;
+    lblNidoparasiteFilter: TLabel;
+    lblHatchedFilter: TLabel;
+    lblEggTextureFilter: TLabel;
+    lblPhilornisFilter: TLabel;
     lblRecordInEbirdFilter: TLabel;
     lblNotEscapedFilter: TLabel;
     lblEmptyQuery: TLabel;
@@ -80,6 +119,8 @@ type
     lblDontNeedReviewFilter: TLabel;
     lblPlantFilter: TLabel;
     lblNeedsReviewFilter: TLabel;
+    lblOutOfSampleFilter: TLabel;
+    lblEggPatternFilter: TLabel;
     lblSamplingPlotFilter: TLabel;
     lblSurveyFilter: TLabel;
     lblPersonFilter: TLabel;
@@ -89,7 +130,21 @@ type
     lblRecycleModifiedDate: TDBText;
     lblRecycleName: TDBText;
     lblProjectFilter: TLabel;
+    pEggShapeFilter: TBCPanel;
+    pEggTraitsFilters: TBCPanel;
+    pPermitTypeFilter: TBCPanel;
+    pNestStatusFilter: TBCPanel;
+    pBandTypeFilter: TBCPanel;
+    pBandSourceFilter: TBCPanel;
+    pCaptureTypeFilter: TBCPanel;
+    pCaptureStatusFilter: TBCPanel;
     pFiltersToolbar: TBCPanel;
+    pEggFilter: TBCPanel;
+    pNestStageFilter: TBCPanel;
+    pNidoparasiteFilter: TBCPanel;
+    pHatchedFilter: TBCPanel;
+    pEggTextureFilter: TBCPanel;
+    pPhilornisFilter: TBCPanel;
     pRecordInEbirdFilter: TBCPanel;
     pNotEscapedFilter: TBCPanel;
     pEscapedFilter: TBCPanel;
@@ -107,6 +162,8 @@ type
     pDontNeedReviewFilter: TBCPanel;
     pPlantFilter: TBCPanel;
     pNeedsReviewFilter: TBCPanel;
+    pOutOfSampleFilter: TBCPanel;
+    pEggPatternFilter: TBCPanel;
     pSamplingPlotFilter: TBCPanel;
     pSurveyFilter: TBCPanel;
     pPersonFilter: TBCPanel;
@@ -340,9 +397,21 @@ type
     pUnmarkedFilter: TBCPanel;
     pWithColorBandsFilter: TBCPanel;
     pWithRecapturesFilter: TBCPanel;
+    rbNidoparasiteAll: TRadioButton;
+    rbHatchedAll: TRadioButton;
+    rbPhilornisAll: TRadioButton;
+    rbNidoparasiteNo: TRadioButton;
+    rbHatchedNo: TRadioButton;
+    rbPhilornisNo: TRadioButton;
+    rbNidoparasiteYes: TRadioButton;
+    rbHatchedYes: TRadioButton;
+    rbPhilornisYes: TRadioButton;
     rbRecordInEbirdAll: TRadioButton;
+    rbOutOfSampleAll: TRadioButton;
+    rbOutOfSampleNo: TRadioButton;
     rbRecordInEbirdYes: TRadioButton;
     rbRecordInEbirdNo: TRadioButton;
+    rbOutOfSampleYes: TRadioButton;
     sbAddChild: TSpeedButton;
     sbCancelRecord: TSpeedButton;
     sbClearFilters: TSpeedButton;
@@ -482,6 +551,8 @@ type
     procedure eAddChildKeyPress(Sender: TObject; var Key: char);
     procedure eCycleCodeFilterButtonClick(Sender: TObject);
     procedure eCycleCodeFilterKeyPress(Sender: TObject; var Key: char);
+    procedure eEggFilterButtonClick(Sender: TObject);
+    procedure eEggFilterKeyPress(Sender: TObject; var Key: char);
     procedure eExpeditionFilterButtonClick(Sender: TObject);
     procedure eExpeditionFilterKeyPress(Sender: TObject; var Key: char);
     procedure eHowAgedFilterButtonClick(Sender: TObject);
@@ -617,7 +688,7 @@ type
     FSearchString, OldSearchString: String;
     FPersonKeyFilter, FInstitutionKeyFilter, FSurveyKeyFilter, FMethodKeyFilter: Integer;
     FProjectKeyFilter, FNestKeyFilter, FIndividualKeyFilter, FExpeditionKeyFilter: Integer;
-    FPlantKeyFilter, FSamplingPlotKeyFilter: Integer;
+    FPlantKeyFilter, FSamplingPlotKeyFilter, FEggKeyFilter: Integer;
     CanToggle: Boolean;
     FSidePanelFactor: Double;
     FChildPanelFactor: Double;
@@ -950,13 +1021,18 @@ begin
   cbBandSizeFilter.ItemIndex := 0;
 
   cbBandStatusFilter.ItemIndex := 0;
+  cbBandTypeFilter.ItemIndex := 0;
+  cbBandSourceFilter.ItemIndex := 0;
 
   tsBandReported.StateOn := sw_off;
   tsBandNotReported.StateOn := sw_off;
 
   ePersonFilter.Clear;
+  FPersonKeyFilter := 0;
   eInstitutionFilter.Clear;
+  FInstitutionKeyFilter := 0;
   eProjectFilter.Clear;
+  FProjectKeyFilter := 0
 end;
 
 procedure TfrmCustomGrid.ClearBotanicTaxaFilters;
@@ -979,6 +1055,9 @@ begin
   lblCountDateFilter.Caption := rsNoneSelectedFemale;
   tvDateFilter.ClearChecked;
 
+  cbCaptureTypeFilter.ItemIndex := 0;
+  cbCaptureStatusFilter.ItemIndex := 0;
+
   cbAgeFilter.ItemIndex := 0;
   cbSkullOssificationFilter.ItemIndex := 0;
   eHowAgedFilter.Clear;
@@ -1000,16 +1079,23 @@ begin
   eEndTimeFilter.Clear;
 
   ePersonFilter.Clear;
+  FPersonKeyFilter := 0;
   eSurveyFilter.Clear;
+  FSurveyKeyFilter := 0;
   eMethodFilter.Clear;
+  FMethodKeyFilter := 0;
   eSamplingPlotFilter.Clear;
+  FSamplingPlotKeyFilter := 0;
   eIndividualFilter.Clear;
+  FIndividualKeyFilter := 0;
 
   tsNeedsReview.StateOn := sw_off;
   tsDontNeedReview.StateOn := sw_off;
 
   tsEscaped.StateOn := sw_off;
   tsNotEscaped.StateOn := sw_off;
+
+  rbPhilornisAll.Checked := True;
 end;
 
 procedure TfrmCustomGrid.ClearEggFilters;
@@ -1020,9 +1106,18 @@ begin
   lblCountDateFilter.Caption := rsNoneSelectedFemale;
   tvDateFilter.ClearChecked;
 
+  cbEggShapeFilter.ItemIndex := 0;
+  cbEggPatternFilter.ItemIndex := 0;
+  cbEggTextureFilter.ItemIndex := 0;
+
   ePersonFilter.Clear;
+  FPersonKeyFilter := 0;
   eNestFilter.Clear;
+  FNestKeyFilter := 0;
   eIndividualFilter.Clear;
+  FIndividualKeyFilter := 0;
+
+  rbHatchedAll.Checked := True;
 end;
 
 procedure TfrmCustomGrid.ClearExpeditionFilters;
@@ -1034,6 +1129,7 @@ begin
   tvDateFilter.ClearChecked;
 
   eProjectFilter.Clear;
+  FProjectKeyFilter := 0;
 end;
 
 procedure TfrmCustomGrid.ClearGazetteerFilters;
@@ -1065,7 +1161,9 @@ begin
   tsfWithRecapturesFilter.StateOn := sw_off;
 
   eNestFilter.Clear;
+  FNestKeyFilter := 0;
   eIndividualFilter.Clear;
+  FIndividualKeyFilter := 0;
 end;
 
 procedure TfrmCustomGrid.ClearInstitutionFilters;
@@ -1095,8 +1193,11 @@ begin
   cbNestSupportFilter.ItemIndex := 0;
 
   ePersonFilter.Clear;
+  FPersonKeyFilter := 0;
   eProjectFilter.Clear;
+  FProjectKeyFilter := 0;
   ePlantFilter.Clear;
+  FPlantKeyFilter := 0;
 end;
 
 procedure TfrmCustomGrid.ClearNestRevisionFilters;
@@ -1104,11 +1205,19 @@ begin
   lblCountDateFilter.Caption := rsNoneSelectedFemale;
   tvDateFilter.ClearChecked;
 
+  cbNestStatusFilter.ItemIndex := 0;
+  cbNestStageFilter.ItemIndex := 0;
+
   eStartTimeFilter.Clear;
   eEndTimeFilter.Clear;
 
   ePersonFilter.Clear;
+  FPersonKeyFilter := 0;
   eNestFilter.Clear;
+  FNestKeyFilter := 0;
+
+  rbNidoparasiteAll.Checked := True;
+  rbPhilornisAll.Checked := True;
 end;
 
 procedure TfrmCustomGrid.ClearNetStationFilters;
@@ -1126,6 +1235,7 @@ begin
   tvDateFilter.ClearChecked;
 
   eInstitutionFilter.Clear;
+  FInstitutionKeyFilter := 0;
 end;
 
 procedure TfrmCustomGrid.ClearPermitFilters;
@@ -1134,6 +1244,7 @@ begin
   tvDateFilter.ClearChecked;
 
   eProjectFilter.Clear;
+  FProjectKeyFilter := 0;
 end;
 
 procedure TfrmCustomGrid.ClearProjectFilters;
@@ -1206,11 +1317,16 @@ begin
   eEndTimeFilter.Clear;
 
   ePersonFilter.Clear;
+  FPersonKeyFilter := 0;
   eSurveyFilter.Clear;
+  FSurveyKeyFilter := 0;
   eMethodFilter.Clear;
+  FMethodKeyFilter := 0;
   eIndividualFilter.Clear;
+  FIndividualKeyFilter := 0;
 
   rbRecordInEbirdAll.Checked := True;
+  rbOutOfSampleAll.Checked := True;
 end;
 
 procedure TfrmCustomGrid.ClearSpecimenFilters;
@@ -1227,7 +1343,11 @@ begin
   cbMaterialFilter.ItemIndex := 0;
 
   eNestFilter.Clear;
+  FNestKeyFilter := 0;
+  eEggFilter.Clear;
+  FEggKeyFilter := 0;
   eIndividualFilter.Clear;
+  FIndividualKeyFilter := 0;
 end;
 
 procedure TfrmCustomGrid.ClearSurveyFilters;
@@ -1242,9 +1362,13 @@ begin
   eEndTimeFilter.Clear;
 
   eMethodFilter.Clear;
+  FMethodKeyFilter := 0;
   eProjectFilter.Clear;
+  FProjectKeyFilter := 0;
   eSamplingPlotFilter.Clear;
+  FSamplingPlotKeyFilter := 0;
   eExpeditionFilter.Clear;
+  FExpeditionKeyFilter := 0;
 end;
 
 procedure TfrmCustomGrid.ClearTaxonRankFilters;
@@ -1811,6 +1935,42 @@ begin
   if (Key = #8) then
   begin
     eCycleCodeFilter.Clear;
+    Key := #0;
+  end;
+  //{ <ENTER/RETURN> key }
+  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //begin
+  //  SelectNext(Sender as TWinControl, True, True);
+  //  Key := #0;
+  //end;
+end;
+
+procedure TfrmCustomGrid.eEggFilterButtonClick(Sender: TObject);
+begin
+  if not CanToggle then
+    Exit;
+
+  FindDlg(tbEggs, eEggFilter, FEggKeyFilter);
+end;
+
+procedure TfrmCustomGrid.eEggFilterKeyPress(Sender: TObject; var Key: char);
+begin
+  if not CanToggle then
+    Exit;
+
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbEggs, eEggFilter, FEggKeyFilter, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    eEggFilter.Clear;
+    FEggKeyFilter := 0;
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
@@ -2570,6 +2730,8 @@ end;
 procedure TfrmCustomGrid.GetBandFilters;
 const
   BandStatus: array of String = ('D', 'U', 'R', 'T', 'Q', 'P');
+  BandTypes: array of String = ('A', 'F', 'N', 'W', 'T', 'L', 'R', 'C', 'O');
+  BandSources: array of String = ('A', 'T', 'L', 'D', 'F');
 var
   sf: Integer;
 begin
@@ -2585,6 +2747,20 @@ begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('band_status', 'Band status', sdtText,
       crEqual, False, BandStatus[cbBandStatusFilter.ItemIndex - 1]));
+  end;
+
+  if cbBandTypeFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('band_type', 'Band type', sdtText,
+      crEqual, False, BandTypes[cbBandTypeFilter.ItemIndex - 1]));
+  end;
+
+  if cbBandSourceFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('band_source', 'Band source', sdtText,
+      crEqual, False, BandSources[cbBandSourceFilter.ItemIndex - 1]));
   end;
 
   if tsBandReported.StateOn = sw_on then
@@ -2643,12 +2819,28 @@ procedure TfrmCustomGrid.GetCaptureFilters;
 const
   BirdAge: array of String = ('U', 'A', 'I', 'J', 'N', 'F', 'S', 'T', '4', '5');
   BirdSex: array of String = ('M', 'F', 'U');
+  CaptureType: array of String = ('N', 'R', 'S', 'C', 'U');
+  CaptureStatus: array of String = ('N', 'I', 'W', 'X', 'D');
 var
   sf: Integer;
 begin
   TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
   SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if cbCaptureTypeFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('capture_type', 'Type', sdtText,
+      crEqual, False, CaptureType[cbCaptureTypeFilter.ItemIndex - 1]));
+  end;
+
+  if cbCaptureStatusFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('subject_status', 'Status', sdtText,
+      crEqual, False, CaptureStatus[cbCaptureStatusFilter.ItemIndex - 1]));
+  end;
 
   if cbAgeFilter.ItemIndex > 0 then
   begin
@@ -2792,6 +2984,19 @@ begin
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('escaped', 'Escaped', sdtBoolean,
       crEqual, False, '0'));
   end;
+
+  if rbPhilornisYes.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('philornis_larvae_tally', '# Philornis larae', sdtInteger,
+      crMoreThan, False, '1'));
+  end;
+  if rbPhilornisNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('philornis_larvae_tally', '# Philornis larvae', sdtInteger,
+      crEqual, False, '0'));
+  end;
 end;
 
 function TfrmCustomGrid.GetChildDataSet: TDataSet;
@@ -2869,6 +3074,10 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetEggFilters;
+const
+  EggShapes: array of String = ('S', 'E', 'O', 'P', 'C', 'B', 'Y', 'L', 'U');
+  EggPatterns: array of String = ('P', 'B', 'S', 'T', 'W', 'PS', 'BS', 'U');
+  EggTextures: array of String = ('C', 'S', 'G', 'P', 'U');
 var
   sf: Integer;
 begin
@@ -2890,6 +3099,38 @@ begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('individual_id', 'Individual', sdtInteger,
       crEqual, False, IntToStr(FIndividualKeyFilter)));
+  end;
+
+  if cbEggShapeFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('egg_shape', 'Shape', sdtText,
+      crEqual, False, EggShapes[cbEggShapeFilter.ItemIndex - 1]));
+  end;
+  if cbEggPatternFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('eggshell_pattern', 'Pattern', sdtText,
+      crEqual, False, EggPatterns[cbEggPatternFilter.ItemIndex - 1]));
+  end;
+  if cbEggTextureFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('eggshell_texture', 'Texture', sdtText,
+      crEqual, False, EggTextures[cbEggTextureFilter.ItemIndex - 1]));
+  end;
+
+  if rbHatchedYes.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('egg_hatched', 'Hatched', sdtBoolean,
+      crEqual, False, '1'));
+  end;
+  if rbHatchedNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('egg_hatched', 'Hatched', sdtBoolean,
+      crEqual, False, '0'));
   end;
 end;
 
@@ -3092,10 +3333,26 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetNestRevisionFilters;
+const
+  NestStatus: array of String = ('A', 'I', 'U');
+  NestStages: array of String = ('C', 'L', 'I', 'H', 'N', 'X', 'U');
 var
   sf: Integer;
 begin
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if cbNestStatusFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('nest_status', 'Nest status', sdtText,
+      crEqual, False, NestStatus[cbNestStatusFilter.ItemIndex - 1]));
+  end;
+  if cbNestStageFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('nest_stage', 'Nest stage', sdtText,
+      crEqual, False, NestStages[cbNestStageFilter.ItemIndex - 1]));
+  end;
 
   if ePersonFilter.Text <> EmptyStr then
     PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
@@ -3116,6 +3373,32 @@ begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('nest_id', 'Nest', sdtInteger,
       crEqual, False, IntToStr(FNestKeyFilter)));
+  end;
+
+  if rbNidoparasiteYes.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('nidoparasite_id', 'Nidoparasite', sdtInteger,
+      crMoreThan, False, '1'));
+  end;
+  if rbNidoparasiteNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('nidoparasite_id', 'Nidoparasite', sdtInteger,
+      crEqual, False, '0'));
+  end;
+
+  if rbPhilornisYes.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('have_philornis_larvae', 'Philornis larvae', sdtBoolean,
+      crEqual, False, '1'));
+  end;
+  if rbPhilornisNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('have_philornis_larvae', 'Philornis larvae', sdtBoolean,
+      crEqual, False, '0'));
   end;
 end;
 
@@ -3140,6 +3423,8 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetPermitFilters;
+const
+  PermitTypes: array of String = ('B', 'C', 'R', 'E', 'T', 'O');
 var
   sf: Integer;
 begin
@@ -3150,6 +3435,13 @@ begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('project_id', 'Project', sdtInteger,
       crEqual, False, IntToStr(FProjectKeyFilter)));
+  end;
+
+  if cbPermitTypeFilter.ItemIndex > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('permit_type', 'Permit type', sdtText,
+      crEqual, False, PermitTypes[cbPermitTypeFilter.ItemIndex - 1]));
   end;
 end;
 
@@ -3212,6 +3504,19 @@ begin
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('ebird_available', 'Record is on eBird', sdtBoolean,
       crEqual, False, '0'));
   end;
+
+  if rbOutOfSampleYes.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('not_surveying', 'Out of sample', sdtBoolean,
+      crEqual, False, '1'));
+  end;
+  if rbOutOfSampleNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('not_surveying', 'Out of sample', sdtBoolean,
+      crEqual, False, '0'));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetSpecimenFilters;
@@ -3236,6 +3541,12 @@ begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('nest_id', 'Nest', sdtInteger,
       crEqual, False, IntToStr(FNestKeyFilter)));
+  end;
+  if FEggKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('egg_id', 'Egg', sdtInteger,
+      crEqual, False, IntToStr(FEggKeyFilter)));
   end;
 
   if FIndividualKeyFilter > 0 then
@@ -7605,9 +7916,18 @@ procedure TfrmCustomGrid.UpdateFilterPanelsBands;
 begin
   pBandSizeFilter.Visible := True;
   cbBandStatusFilter.Items.Clear;
-  cbBandStatusFilter.Items.Add('All');
+  cbBandStatusFilter.Items.Add(rsCaptionAll);
   cbBandStatusFilter.Items.AddCommaText(rsBandStatusList);
   pBandStatusFilter.Visible := True;
+  cbBandTypeFilter.Items.Clear;
+  cbBandTypeFilter.Items.Add(rsCaptionAll);
+  cbBandTypeFilter.Items.AddCommaText(rsBandTypeList);
+  cbBandSourceFilter.Items.Clear;
+  cbBandSourceFilter.Items.CommaText := rsCaptionAll + ',"' + rsBandAcquiredFromSupplier + '","' +
+    rsBandTransferBetweenBanders + '","' + rsBandLivingBirdBandedByOthers + '","' +
+    rsBandDeadBirdBandedByOthers + '","' + rsBandFoundLoose + '"';
+  pBandSourceFilter.Visible := True;
+  pBandTypeFilter.Visible := True;
   pBandReportFilters.Visible := True;
   pPersonFilter.Visible := True;
   pInstitutionFilter.Visible := True;
@@ -7631,13 +7951,21 @@ begin
   LoadDateTreeData(FTableType, tvDateFilter);
   pSiteFilters.Visible := True;
   LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+  cbCaptureTypeFilter.Items.Clear;
+  cbCaptureTypeFilter.Items.Add(rsCaptionAll);
+  cbCaptureTypeFilter.Items.AddCommaText(rsCaptureTypeList);
+  pCaptureTypeFilter.Visible := True;
+  cbCaptureStatusFilter.Items.Clear;
+  cbCaptureStatusFilter.Items.CommaText := rsCaptionAll + ',"' + rsStatusNormal + '","' + rsStatusInjured + '","' +
+    rsStatusWingSprain + '","' + rsStatusStressed + '","' + rsStatusDead + '"';
+  pCaptureStatusFilter.Visible := True;
   cbAgeFilter.Items.Clear;
-  cbAgeFilter.Items.CommaText := 'All,' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeImmature + ',' +
+  cbAgeFilter.Items.CommaText := rsCaptionAll + ',' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeImmature + ',' +
     rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
     rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
   pAgingFilters.Visible := True;
   cbSexFilter.Items.Clear;
-  cbSexFilter.Items.CommaText := 'All,' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
+  cbSexFilter.Items.CommaText := rsCaptionAll + ',' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
   pSexingFilters.Visible := True;
   pFatFilter.Visible := True;
   pMoltingFilters.Visible := True;
@@ -7649,6 +7977,7 @@ begin
   pSamplingPlotFilter.Visible := True;
   pNeedsReviewFilters.Visible := True;
   pEscapedFilters.Visible := True;
+  pPhilornisFilter.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsEggs;
@@ -7657,9 +7986,22 @@ begin
   LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
   pDatesFilters.Visible := True;
   LoadDateTreeData(FTableType, tvDateFilter);
+  cbEggShapeFilter.Items.Clear;
+  cbEggShapeFilter.Items.CommaText := rsCaptionAll + ',' + rsEggSpherical + ',' + rsEggElliptical + ',' + rsEggOval + ',' +
+    rsEggPyriform + ',' + rsEggConical + ',' + rsEggBiconical + ',' + rsEggCylindrical + ',' +
+    rsEggLongitudinal + ',' + rsEggUnknown;
+  cbEggPatternFilter.Items.Clear;
+  cbEggPatternFilter.Items.CommaText := rsCaptionAll + ',"' + rsEggSpots + '","' + rsEggBlotches + '","' +
+    rsEggSquiggles + '","' + rsEggStreaks + '","' + rsEggScrawls + '","' + rsEggSpotsSquiggles + '","' +
+    rsEggBlotchesSquiggles + '","' + rsEggUnknown + '"';
+  cbEggTextureFilter.Items.Clear;
+  cbEggTextureFilter.Items.CommaText := rsCaptionAll + ',' + rsEggChalky + ',' + rsEggShiny + ',' + rsEggGlossy + ',' +
+    rsEggPitted + ',' + rsEggUnknown;
+  pEggTraitsFilters.Visible := True;
   pPersonFilter.Visible := True;
   pNestFilter.Visible := True;
   pIndividualFilter.Visible := True;
+  pHatchedFilter.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsExpeditions;
@@ -7674,7 +8016,7 @@ end;
 procedure TfrmCustomGrid.UpdateFilterPanelsGazetteer;
 begin
   cbSiteRankFilter.Items.Clear;
-  cbSiteRankFilter.Items.Add('All');
+  cbSiteRankFilter.Items.Add(rsCaptionAll);
   cbSiteRankFilter.Items.Add(rsCaptionCountry);
   cbSiteRankFilter.Items.Add(rsCaptionState);
   cbSiteRankFilter.Items.Add(rsCaptionRegion);
@@ -7720,11 +8062,11 @@ begin
   pSiteFilters.Visible := True;
   LoadSiteTreeData(FTableType, tvSiteFilter, 4);
   cbNestFateFilter.Items.Clear;
-  cbNestFateFilter.Items.CommaText := 'All,"' + rsNestLost + '","' + rsNestSuccess + '","' +
+  cbNestFateFilter.Items.CommaText := rsCaptionAll + ',"' + rsNestLost + '","' + rsNestSuccess + '","' +
     rsNestUnknown + '"';
   pNestFateFilter.Visible := True;
   cbNestSupportFilter.Items.Clear;
-  cbNestSupportFilter.Items.CommaText := 'All,"' + rsSupportGround + '","' +
+  cbNestSupportFilter.Items.CommaText := rsCaptionAll + ',"' + rsSupportGround + '","' +
     rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportLeaves + '","' +
     rsSupportLedge + '","' + rsSupportRockCliff + '","' + rsSupportRavine + '","' + rsSupportNestBox + '","' +
     rsSupportAnthropic + '","' + rsSupportOther + '"';
@@ -7738,9 +8080,18 @@ procedure TfrmCustomGrid.UpdateFilterPanelsNestRevisions;
 begin
   pDatesFilters.Visible := True;
   LoadDateTreeData(FTableType, tvDateFilter);
+  cbNestStatusFilter.Items.Clear;
+  cbNestStatusFilter.Items.CommaText := rsCaptionAll + ',' + rsNestActive + ',' + rsNestInactive + ',' + rsNestUnknown;
+  pNestStatusFilter.Visible := True;
+  cbNestStageFilter.Items.CommaText := rsCaptionAll + ',' + rsNestBuilding + ',' + rsNestLaying + ',' +
+    rsNestIncubating + ',' + rsNestHatching + ',' + rsNestNestling + ',' + rsNestInactive + ',' +
+    rsNestUnknown;
+  pNestStageFilter.Visible := True;
   pPersonFilter.Visible := True;
   pTimeFilters.Visible := True;
   pNestFilter.Visible := True;
+  pNidoparasiteFilter.Visible := True;
+  pPhilornisFilter.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsNetStations;
@@ -7763,6 +8114,10 @@ begin
   pDatesFilters.Visible := True;
   LoadDateTreeData(FTableType, tvDateFilter);
   pProjectFilter.Visible := True;
+  cbPermitTypeFilter.Items.Clear;
+  cbPermitTypeFilter.Items.CommaText := rsCaptionAll + ',"' + rsPermitBanding + '","' + rsPermitCollection + '","' +
+    rsPermitResearch + '","' + rsPermitEntry + '","' + rsPermitTransport + '","' + rsPermitOther + '"';
+  pPermitTypeFilter.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsProjects;
@@ -7785,11 +8140,13 @@ begin
   pMethodFilter.Visible := True;
   pIndividualFilter.Visible := True;
   pRecordInEbirdFilter.Visible := True;
+  pOutOfSampleFilter.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsSpecimens;
 begin
   cbMaterialFilter.Items.Clear;
+  cbMaterialFilter.Items.Add(rsCaptionAll);
   cbMaterialFilter.Items.Add(rsSpecimenCarcassWhole);
   cbMaterialFilter.Items.Add(rsSpecimenCarcassPartial);
   cbMaterialFilter.Items.Add(rsSpecimenNest);
@@ -7811,6 +8168,7 @@ begin
   pSiteFilters.Visible := True;
   LoadSiteTreeData(FTableType, tvSiteFilter, 4);
   pNestFilter.Visible := True;
+  pEggFilter.Visible := True;
   pIndividualFilter.Visible := True;
 end;
 
