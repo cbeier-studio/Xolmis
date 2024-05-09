@@ -7563,12 +7563,21 @@ msgctxt "tfrmcustomgrid.lbldatefilter.caption"
 msgid "Dates"
 msgstr ""
 
+#: tfrmcustomgrid.lbldontneedreviewfilter.caption
+msgid "Do not need review"
+msgstr ""
+
 #: tfrmcustomgrid.lblemptyquery.caption
 msgid "Result query is empty"
 msgstr ""
 
 #: tfrmcustomgrid.lblendtimefilter.caption
 msgid "and"
+msgstr ""
+
+#: tfrmcustomgrid.lblescapedfilter.caption
+msgctxt "tfrmcustomgrid.lblescapedfilter.caption"
+msgid "Escaped"
 msgstr ""
 
 #: tfrmcustomgrid.lblexpeditionfilter.caption
@@ -7633,6 +7642,10 @@ msgctxt "tfrmcustomgrid.lblmoltlimitsfilter.caption"
 msgid "Molt limits"
 msgstr ""
 
+#: tfrmcustomgrid.lblneedsreviewfilter.caption
+msgid "Needs review"
+msgstr ""
+
 #: tfrmcustomgrid.lblnestfatefilter.caption
 msgid "Fate"
 msgstr ""
@@ -7644,6 +7657,10 @@ msgstr ""
 
 #: tfrmcustomgrid.lblnestsupportfilter.caption
 msgid "Support type"
+msgstr ""
+
+#: tfrmcustomgrid.lblnotescapedfilter.caption
+msgid "Did not escape"
 msgstr ""
 
 #: tfrmcustomgrid.lblnotreportedfilter.caption
@@ -7661,6 +7678,11 @@ msgstr ""
 #: tfrmcustomgrid.lblprojectfilter.caption
 msgctxt "tfrmcustomgrid.lblprojectfilter.caption"
 msgid "Project"
+msgstr ""
+
+#: tfrmcustomgrid.lblrecordinebirdfilter.caption
+msgctxt "tfrmcustomgrid.lblrecordinebirdfilter.caption"
+msgid "Record is on eBird"
 msgstr ""
 
 #: tfrmcustomgrid.lblrecordstatus.caption
@@ -7908,6 +7930,21 @@ msgctxt "tfrmcustomgrid.pmtrefresh.caption"
 msgid "Refresh"
 msgstr ""
 
+#: tfrmcustomgrid.rbrecordinebirdall.caption
+msgctxt "tfrmcustomgrid.rbrecordinebirdall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbrecordinebirdno.caption
+msgctxt "tfrmcustomgrid.rbrecordinebirdno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbrecordinebirdyes.caption
+msgctxt "tfrmcustomgrid.rbrecordinebirdyes.caption"
+msgid "Yes"
+msgstr ""
+
 #: tfrmcustomgrid.sbaddchild.hint
 msgctxt "tfrmcustomgrid.sbaddchild.hint"
 msgid "New related record"
@@ -7930,6 +7967,10 @@ msgstr ""
 #: tfrmcustomgrid.sbchildnewtab.hint
 msgctxt "tfrmcustomgrid.sbchildnewtab.hint"
 msgid "Open records in a new tab"
+msgstr ""
+
+#: tfrmcustomgrid.sbclearfilters.hint
+msgid "Clear all quick filters"
 msgstr ""
 
 #: tfrmcustomgrid.sbcolumnhide.hint

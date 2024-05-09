@@ -807,7 +807,7 @@ const
   MaskDateTimeV2: String = '(datetime(%s) %s datetime(%s) AND datetime(%s)) ';
 var
   i, f: Integer;
-  V1, V2, S, AndOrWhere, Msk, aCriteria, aSort: String;
+  S, AndOrWhere, Msk, aSort: String;
 
   // Select mask using criteria and data type
   function GetValueMask(aCriteriaType: TCriteriaType; aDataType: TSearchDataType): String;
@@ -890,11 +890,10 @@ var
 begin
   Result := EmptyStr;
   Msk := MaskV1;
-  V1 := EmptyStr;
-  V2 := EmptyStr;
 
   FDataSet.SQL.Clear;
 
+  // Add SELECT ... FROM ... statements
   SetSelectSQL(FDataSet.SQL, FTableType, FTableAlias);
   AndOrWhere := 'WHERE ';
 
@@ -944,7 +943,7 @@ begin
             end;
           end;
 
-          // Close parenthesis, and AND/OR
+          // AND/OR fields
           if f < (FQuickFilters[i].Fields.Count - 1) then
           begin
             AndOrWhere := AndOrStr[FQuickFilters[i].AndOr] + ' ';
@@ -953,7 +952,7 @@ begin
 
           FDataSet.SQL.Add(S);
         end;
-        // Close parenthesis, and AND/OR
+        // Close parenthesis, and AND/OR groups
         AndOrWhere := 'OR ';
         if i < (FQuickFilters.Count - 1) then
           FDataSet.SQL.Add(') ' + AndOrWhere)
@@ -1007,7 +1006,7 @@ begin
               end;
             end;
 
-            // Close parenthesis, and AND/OR
+            // AND/OR fields
             if f < (FFields[i].Fields.Count - 1) then
             begin
               AndOrWhere := AndOrStr[FFields[i].AndOr] + ' ';
@@ -1017,6 +1016,7 @@ begin
 
           FDataSet.SQL.Add(S);
         end;
+        // Close parenthesis, and AND/OR groups
         FDataSet.SQL.Add(')');
         AndOrWhere := 'AND ';
       end;
@@ -1024,6 +1024,7 @@ begin
   end;
   S := EmptyStr;
 
+  // Active/inactive records
   case FRecordActive of
     rsAll: S := EmptyStr;
     rsActive: S := '1';

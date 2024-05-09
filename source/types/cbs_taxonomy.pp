@@ -240,7 +240,6 @@ function FormattedBirdName(aName: String; aRank: Integer; aAuthor: String = ''):
 const
   colorGroup: String      = 'clGreen';
   colorSlash: String      = 'clMaroon';
-  //colorSp: String         = 'clBlack';
   colorSpuh: String       = 'clPurple';
   colorEnglish: String    = 'clTeal';
   colorDomestic: String   = '$00FF870F';
@@ -248,6 +247,15 @@ const
   colorHybrid: String     = '$00D2003F';
   colorIntergrade: String = '$0000D2D2';
   colorAuthorship: String = 'clGray';
+  //colorGroup: String      = 'green';
+  //colorSlash: String      = 'maroon';
+  //colorSpuh: String       = 'purple';
+  //colorEnglish: String    = 'teal';
+  //colorDomestic: String   = 'cornflowerblue';
+  //colorForm: String       = 'cadetblue';
+  //colorHybrid: String     = 'darkslateblue';
+  //colorIntergrade: String = 'goldenrod';
+  //colorAuthorship: String = 'gray';
   Bracks: array of String = ('(', ')', '[', ']');
 var
   b: Integer;

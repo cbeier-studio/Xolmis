@@ -57,7 +57,6 @@ type
     tabTaxonomy: TPage;
     procedure navTabsTabChanged(Sender: TObject);
     procedure sbRecreateImageThumbnailsClick(Sender: TObject);
-    procedure sbRewriteIndividualsFullnameClick(Sender: TObject);
     procedure sbRewriteTaxaHierarchyClick(Sender: TObject);
   private
 
@@ -93,12 +92,6 @@ procedure TfrmMaintenance.sbRecreateImageThumbnailsClick(Sender: TObject);
 begin
   if MsgDlg(rsTitleRecreateThumbnails, rsRecreateThumbnailsPrompt, mtConfirmation) then
     RecreateThumbnails;
-end;
-
-procedure TfrmMaintenance.sbRewriteIndividualsFullnameClick(Sender: TObject);
-begin
-  if MsgDlg(rsTitleRewriteFullnames, rsRewriteFullnamesPrompt, mtConfirmation) then
-
 end;
 
 end.

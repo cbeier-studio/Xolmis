@@ -54,10 +54,15 @@ type
     eMethodFilter: TEditButton;
     eProjectFilter: TEditButton;
     iButtons: TImageList;
+    icoDontNeedReviewFilter: TImage;
+    icoRecordInEbirdFilter: TImage;
+    icoNotEscapedFilter: TImage;
+    icoEscapedFilter: TImage;
     icoNestFilter: TImage;
     icoIndividualFilter: TImage;
     icoExpeditionFilter: TImage;
     icoPlantFilter: TImage;
+    icoNeedsReviewFilter: TImage;
     icoSamplingPlotFilter: TImage;
     icoSurveyFilter: TImage;
     icoPersonFilter: TImage;
@@ -65,11 +70,16 @@ type
     icoProjectFilter: TImage;
     iHeaders: TImageList;
     icoEmptyQuery: TImage;
+    lblRecordInEbirdFilter: TLabel;
+    lblNotEscapedFilter: TLabel;
     lblEmptyQuery: TLabel;
+    lblEscapedFilter: TLabel;
     lblNestFilter: TLabel;
     lblIndividualFilter: TLabel;
     lblExpeditionFilter: TLabel;
+    lblDontNeedReviewFilter: TLabel;
     lblPlantFilter: TLabel;
+    lblNeedsReviewFilter: TLabel;
     lblSamplingPlotFilter: TLabel;
     lblSurveyFilter: TLabel;
     lblPersonFilter: TLabel;
@@ -79,16 +89,24 @@ type
     lblRecycleModifiedDate: TDBText;
     lblRecycleName: TDBText;
     lblProjectFilter: TLabel;
+    pFiltersToolbar: TBCPanel;
+    pRecordInEbirdFilter: TBCPanel;
+    pNotEscapedFilter: TBCPanel;
+    pEscapedFilter: TBCPanel;
+    pNeedsReviewFilters: TBCPanel;
     pmcNewNestOwner: TMenuItem;
     pEmptyQuery: TBCPanel;
     pmcDel: TMenuItem;
     pmcEdit: TMenuItem;
     pmcRefresh: TMenuItem;
     pmGridChild: TPopupMenu;
+    pEscapedFilters: TBCPanel;
     pNestFilter: TBCPanel;
     pIndividualFilter: TBCPanel;
     pExpeditionFilter: TBCPanel;
+    pDontNeedReviewFilter: TBCPanel;
     pPlantFilter: TBCPanel;
+    pNeedsReviewFilter: TBCPanel;
     pSamplingPlotFilter: TBCPanel;
     pSurveyFilter: TBCPanel;
     pPersonFilter: TBCPanel;
@@ -322,8 +340,12 @@ type
     pUnmarkedFilter: TBCPanel;
     pWithColorBandsFilter: TBCPanel;
     pWithRecapturesFilter: TBCPanel;
+    rbRecordInEbirdAll: TRadioButton;
+    rbRecordInEbirdYes: TRadioButton;
+    rbRecordInEbirdNo: TRadioButton;
     sbAddChild: TSpeedButton;
     sbCancelRecord: TSpeedButton;
+    sbClearFilters: TSpeedButton;
     sbDelChild: TSpeedButton;
     sbDelRecord: TSpeedButton;
     sbEditChild: TSpeedButton;
@@ -417,13 +439,17 @@ type
     titleImages: TLabel;
     titleQuickFilters: TLabel;
     tsBandNotReported: TRxSwitch;
+    tsDontNeedReview: TRxSwitch;
     tsBandReported: TRxSwitch;
+    tsNotEscaped: TRxSwitch;
+    tsNeedsReview: TRxSwitch;
     tsfMarked: TRxSwitch;
     tsfUnmarked: TRxSwitch;
     tsfWithColorBandsFilter: TRxSwitch;
     tsfWithRecapturesFilter: TRxSwitch;
     tsHasSynonyms: TRxSwitch;
     tsIsSynonym: TRxSwitch;
+    tsEscaped: TRxSwitch;
     tsTaxonExtinct: TRxSwitch;
     tsTaxonomyCbro: TRxSwitch;
     tsTaxonomyClements: TRxSwitch;
@@ -516,6 +542,7 @@ type
     procedure pmtRefreshClick(Sender: TObject);
     procedure sbAddChildClick(Sender: TObject);
     procedure sbCancelRecordClick(Sender: TObject);
+    procedure sbClearFiltersClick(Sender: TObject);
     procedure sbColumnHideClick(Sender: TObject);
     procedure sbColumnWidthAutoAdjustClick(Sender: TObject);
     procedure sbDelChildClick(Sender: TObject);
@@ -920,125 +947,131 @@ end;
 
 procedure TfrmCustomGrid.ClearBandFilters;
 begin
-  if Filtrado then
-  begin
-    cbBandSizeFilter.ItemIndex := -1;
+  cbBandSizeFilter.ItemIndex := 0;
 
-    cbBandStatusFilter.ItemIndex := -1;
+  cbBandStatusFilter.ItemIndex := 0;
 
-    lblCountDateFilter.Caption := rsNoneSelectedFemale;
-    tvDateFilter.ClearChecked;
+  tsBandReported.StateOn := sw_off;
+  tsBandNotReported.StateOn := sw_off;
 
-    tsBandReported.StateOn := sw_off;
-    tsBandNotReported.StateOn := sw_off;
-
-    Filtrado := False;
-  end;
+  ePersonFilter.Clear;
+  eInstitutionFilter.Clear;
+  eProjectFilter.Clear;
 end;
 
 procedure TfrmCustomGrid.ClearBotanicTaxaFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountTaxonRanksFilter.Caption := rsNoneSelected;
-    clbTaxonRanksFilter.CheckAll(cbUnchecked, False);
+  lblCountTaxonRanksFilter.Caption := rsNoneSelected;
+  clbTaxonRanksFilter.CheckAll(cbUnchecked, False);
 
-    tsIsSynonym.StateOn := sw_off;
-    tsHasSynonyms.StateOn := sw_off;
-
-    Filtrado := False;
-  end;
+  tsIsSynonym.StateOn := sw_off;
+  tsHasSynonyms.StateOn := sw_off;
 end;
 
 procedure TfrmCustomGrid.ClearCaptureFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountTaxonFilter.Caption := rsNoneSelected;
-    tvTaxaFilter.ClearChecked;
+  lblCountTaxonFilter.Caption := rsNoneSelected;
+  tvTaxaFilter.ClearChecked;
 
-    lblCountSiteFilter.Caption := rsNoneSelected;
-    tvSiteFilter.ClearChecked;
+  lblCountSiteFilter.Caption := rsNoneSelected;
+  tvSiteFilter.ClearChecked;
 
-    lblCountDateFilter.Caption := rsNoneSelectedFemale;
-    tvDateFilter.ClearChecked;
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
 
-    if cbSexFilter.ItemIndex > 0 then
-      cbSexFilter.ItemIndex := -1;
-    if cbCloacalProtuberanceFilter.ItemIndex > 0 then
-      cbCloacalProtuberanceFilter.ItemIndex := -1;
-    if cbBroodPatchFilter.ItemIndex > 0 then
-      cbBroodPatchFilter.ItemIndex := -1;
-    eHowSexedFilter.Clear;
+  cbAgeFilter.ItemIndex := 0;
+  cbSkullOssificationFilter.ItemIndex := 0;
+  eHowAgedFilter.Clear;
 
-    Filtrado := False;
-  end;
+  cbSexFilter.ItemIndex := 0;
+  cbCloacalProtuberanceFilter.ItemIndex := 0;
+  cbBroodPatchFilter.ItemIndex := 0;
+  eHowSexedFilter.Clear;
+
+  cbFatFilter.ItemIndex := 0;
+
+  cbBodyMoltFilter.ItemIndex := 0;
+  cbFFMoltFilter.ItemIndex := 0;
+  cbFFWearFilter.ItemIndex := 0;
+  eMoltLimitsFilter.Clear;
+  eCycleCodeFilter.Clear;
+
+  eStartTimeFilter.Clear;
+  eEndTimeFilter.Clear;
+
+  ePersonFilter.Clear;
+  eSurveyFilter.Clear;
+  eMethodFilter.Clear;
+  eSamplingPlotFilter.Clear;
+  eIndividualFilter.Clear;
+
+  tsNeedsReview.StateOn := sw_off;
+  tsDontNeedReview.StateOn := sw_off;
+
+  tsEscaped.StateOn := sw_off;
+  tsNotEscaped.StateOn := sw_off;
 end;
 
 procedure TfrmCustomGrid.ClearEggFilters;
 begin
+  lblCountTaxonFilter.Caption := rsNoneSelected;
+  tvTaxaFilter.ClearChecked;
 
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
+
+  ePersonFilter.Clear;
+  eNestFilter.Clear;
+  eIndividualFilter.Clear;
 end;
 
 procedure TfrmCustomGrid.ClearExpeditionFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountSiteFilter.Caption := rsNoneSelected;
-    tvSiteFilter.ClearChecked;
+  lblCountSiteFilter.Caption := rsNoneSelected;
+  tvSiteFilter.ClearChecked;
 
-    lblCountDateFilter.Caption := rsNoneSelectedFemale;
-    tvDateFilter.ClearChecked;
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
 
-    Filtrado := False;
-  end;
+  eProjectFilter.Clear;
 end;
 
 procedure TfrmCustomGrid.ClearGazetteerFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountSiteFilter.Caption := rsNoneSelected;
-    tvSiteFilter.ClearChecked;
+  lblCountSiteFilter.Caption := rsNoneSelected;
+  tvSiteFilter.ClearChecked;
 
-    cbSiteRankFilter.ItemIndex := -1;
-
-    Filtrado := False;
-  end;
+  cbSiteRankFilter.ItemIndex := 0;
 end;
 
 procedure TfrmCustomGrid.ClearIndividualFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountTaxonFilter.Caption := rsNoneSelected;
-    tvTaxaFilter.ClearChecked;
+  lblCountTaxonFilter.Caption := rsNoneSelected;
+  tvTaxaFilter.ClearChecked;
 
-    lblCountDateFilter.Caption := rsNoneSelectedFemale;
-    tvDateFilter.ClearChecked;
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
 
-    if cbSexFilter.ItemIndex > 0 then
-      cbSexFilter.ItemIndex := -1;
+  cbSexFilter.ItemIndex := 0;
+  cbCloacalProtuberanceFilter.ItemIndex := 0;
+  cbBroodPatchFilter.ItemIndex := 0;
+  eHowSexedFilter.Clear;
 
-    if cbAgeFilter.ItemIndex > 0 then
-      cbAgeFilter.ItemIndex := -1;
+  cbAgeFilter.ItemIndex := 0;
+  cbSkullOssificationFilter.ItemIndex := 0;
+  eHowAgedFilter.Clear;
 
-    tsfWithColorBandsFilter.StateOn := sw_off;
-    tsfWithRecapturesFilter.StateOn := sw_off;
+  tsfWithColorBandsFilter.StateOn := sw_off;
+  tsfWithRecapturesFilter.StateOn := sw_off;
 
-    Filtrado := False;
-  end;
+  eNestFilter.Clear;
+  eIndividualFilter.Clear;
 end;
 
 procedure TfrmCustomGrid.ClearInstitutionFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountSiteFilter.Caption := rsNoneSelected;
-    tvSiteFilter.ClearChecked;
-
-    Filtrado := False;
-  end;
+  lblCountSiteFilter.Caption := rsNoneSelected;
+  tvSiteFilter.ClearChecked;
 end;
 
 procedure TfrmCustomGrid.ClearMethodFilters;
@@ -1048,69 +1081,65 @@ end;
 
 procedure TfrmCustomGrid.ClearNestFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountTaxonFilter.Caption := rsNoneSelected;
-    tvTaxaFilter.ClearChecked;
+  lblCountTaxonFilter.Caption := rsNoneSelected;
+  tvTaxaFilter.ClearChecked;
 
-    lblCountSiteFilter.Caption := rsNoneSelected;
-    tvSiteFilter.ClearChecked;
+  lblCountSiteFilter.Caption := rsNoneSelected;
+  tvSiteFilter.ClearChecked;
 
-    lblCountDateFilter.Caption := rsNoneSelectedFemale;
-    tvDateFilter.ClearChecked;
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
 
-    cbNestFateFilter.ItemIndex := -1;
+  cbNestFateFilter.ItemIndex := 0;
 
-    cbNestSupportFilter.ItemIndex := -1;
+  cbNestSupportFilter.ItemIndex := 0;
 
-    Filtrado := False;
-  end;
+  ePersonFilter.Clear;
+  eProjectFilter.Clear;
+  ePlantFilter.Clear;
 end;
 
 procedure TfrmCustomGrid.ClearNestRevisionFilters;
 begin
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
 
+  eStartTimeFilter.Clear;
+  eEndTimeFilter.Clear;
+
+  ePersonFilter.Clear;
+  eNestFilter.Clear;
 end;
 
 procedure TfrmCustomGrid.ClearNetStationFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountSiteFilter.Caption := rsNoneSelected;
-    tvSiteFilter.ClearChecked;
-
-    Filtrado := False;
-  end;
+  lblCountSiteFilter.Caption := rsNoneSelected;
+  tvSiteFilter.ClearChecked;
 end;
 
 procedure TfrmCustomGrid.ClearPeopleFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountSiteFilter.Caption := rsNoneSelected;
-    tvSiteFilter.ClearChecked;
+  lblCountSiteFilter.Caption := rsNoneSelected;
+  tvSiteFilter.ClearChecked;
 
-    lblCountDateFilter.Caption := rsNoneSelectedFemale;
-    tvDateFilter.ClearChecked;
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
 
-    Filtrado := False;
-  end;
+  eInstitutionFilter.Clear;
 end;
 
 procedure TfrmCustomGrid.ClearPermitFilters;
 begin
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
 
+  eProjectFilter.Clear;
 end;
 
 procedure TfrmCustomGrid.ClearProjectFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountDateFilter.Caption := rsNoneSelectedFemale;
-    tvDateFilter.ClearChecked;
-
-    Filtrado := False;
-  end;
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
 end;
 
 procedure TfrmCustomGrid.ClearSearch;
@@ -1164,50 +1193,58 @@ end;
 
 procedure TfrmCustomGrid.ClearSightingFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountTaxonFilter.Caption := rsNoneSelected;
-    tvTaxaFilter.ClearChecked;
+  lblCountTaxonFilter.Caption := rsNoneSelected;
+  tvTaxaFilter.ClearChecked;
 
-    lblCountSiteFilter.Caption := rsNoneSelected;
-    tvSiteFilter.ClearChecked;
+  lblCountSiteFilter.Caption := rsNoneSelected;
+  tvSiteFilter.ClearChecked;
 
-    lblCountDateFilter.Caption := rsNoneSelectedFemale;
-    tvDateFilter.ClearChecked;
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
 
-    Filtrado := False;
-  end;
+  eStartTimeFilter.Clear;
+  eEndTimeFilter.Clear;
+
+  ePersonFilter.Clear;
+  eSurveyFilter.Clear;
+  eMethodFilter.Clear;
+  eIndividualFilter.Clear;
+
+  rbRecordInEbirdAll.Checked := True;
 end;
 
 procedure TfrmCustomGrid.ClearSpecimenFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountTaxonFilter.Caption := rsNoneSelected;
-    tvTaxaFilter.ClearChecked;
+  lblCountTaxonFilter.Caption := rsNoneSelected;
+  tvTaxaFilter.ClearChecked;
 
-    lblCountSiteFilter.Caption := rsNoneSelected;
-    tvSiteFilter.ClearChecked;
+  lblCountSiteFilter.Caption := rsNoneSelected;
+  tvSiteFilter.ClearChecked;
 
-    lblCountDateFilter.Caption := rsNoneSelectedFemale;
-    tvDateFilter.ClearChecked;
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
 
-    Filtrado := False;
-  end;
+  cbMaterialFilter.ItemIndex := 0;
+
+  eNestFilter.Clear;
+  eIndividualFilter.Clear;
 end;
 
 procedure TfrmCustomGrid.ClearSurveyFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountSiteFilter.Caption := rsNoneSelected;
-    tvSiteFilter.ClearChecked;
+  lblCountSiteFilter.Caption := rsNoneSelected;
+  tvSiteFilter.ClearChecked;
 
-    lblCountDateFilter.Caption := rsNoneSelectedFemale;
-    tvDateFilter.ClearChecked;
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
 
-    Filtrado := False;
-  end;
+  eStartTimeFilter.Clear;
+  eEndTimeFilter.Clear;
+
+  eMethodFilter.Clear;
+  eProjectFilter.Clear;
+  eSamplingPlotFilter.Clear;
+  eExpeditionFilter.Clear;
 end;
 
 procedure TfrmCustomGrid.ClearTaxonRankFilters;
@@ -1217,22 +1254,17 @@ end;
 
 procedure TfrmCustomGrid.ClearZooTaxaFilters;
 begin
-  if Filtrado then
-  begin
-    lblCountTaxonRanksFilter.Caption := rsNoneSelected;
-    clbTaxonRanksFilter.CheckAll(cbUnchecked, False);
+  lblCountTaxonRanksFilter.Caption := rsNoneSelected;
+  clbTaxonRanksFilter.CheckAll(cbUnchecked, False);
 
-    tsTaxonomyClements.StateOn := sw_off;
-    tsTaxonomyIoc.StateOn := sw_off;
-    tsTaxonomyCbro.StateOn := sw_off;
+  tsTaxonomyClements.StateOn := sw_off;
+  tsTaxonomyIoc.StateOn := sw_off;
+  tsTaxonomyCbro.StateOn := sw_off;
 
-    tsTaxonExtinct.StateOn := sw_off;
+  tsTaxonExtinct.StateOn := sw_off;
 
-    tsIsSynonym.StateOn := sw_off;
-    tsHasSynonyms.StateOn := sw_off;
-
-    Filtrado := False;
-  end;
+  tsIsSynonym.StateOn := sw_off;
+  tsHasSynonyms.StateOn := sw_off;
 end;
 
 procedure TfrmCustomGrid.DBGColExit(Sender: TObject);
@@ -2734,6 +2766,32 @@ begin
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('individual_id', 'Individual', sdtInteger,
       crEqual, False, IntToStr(FIndividualKeyFilter)));
   end;
+
+  if tsNeedsReview.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('needs_review', 'Needs review', sdtBoolean,
+      crEqual, False, '1'));
+  end;
+  if tsDontNeedReview.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('Needs review', 'Needs review', sdtBoolean,
+      crEqual, False, '0'));
+  end;
+
+  if tsEscaped.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('escaped', 'Escaped', sdtBoolean,
+      crEqual, False, '1'));
+  end;
+  if tsNotEscaped.StateOn = sw_on then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('escaped', 'Escaped', sdtBoolean,
+      crEqual, False, '0'));
+  end;
 end;
 
 function TfrmCustomGrid.GetChildDataSet: TDataSet;
@@ -3140,6 +3198,19 @@ begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('individual_id', 'Individual', sdtInteger,
       crEqual, False, IntToStr(FIndividualKeyFilter)));
+  end;
+
+  if rbRecordInEbirdYes.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('ebird_available', 'Record is on eBird', sdtBoolean,
+      crEqual, False, '1'));
+  end;
+  if rbRecordInEbirdNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('ebird_available', 'Record is on eBird', sdtBoolean,
+      crEqual, False, '0'));
   end;
 end;
 
@@ -4171,6 +4242,11 @@ begin
     4: aDataSet := gridChild5.DataSource.DataSet;
   end;
   ShowHistory(FChildTable, aDataSet.FieldByName(aKeyField).AsInteger);
+end;
+
+procedure TfrmCustomGrid.sbClearFiltersClick(Sender: TObject);
+begin
+  ClearSearch;
 end;
 
 procedure TfrmCustomGrid.sbColumnHideClick(Sender: TObject);
@@ -7100,6 +7176,8 @@ begin
   pmgDel.Enabled := sbDelRecord.Enabled;
   pmgRecordHistory.Enabled := sbChildHistory.Enabled;
 
+  sbClearFilters.Enabled := FSearch.QuickFilters.Count > 0;
+
   if dsLink.DataSet.RecordCount = 1 then
     lblRecordStatus.Caption := Format(rsRecordsFound, [dsLink.DataSet.RecordCount, rsRecords])
   else
@@ -7569,6 +7647,8 @@ begin
   pMethodFilter.Visible := True;
   pIndividualFilter.Visible := True;
   pSamplingPlotFilter.Visible := True;
+  pNeedsReviewFilters.Visible := True;
+  pEscapedFilters.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsEggs;
@@ -7704,6 +7784,7 @@ begin
   pSurveyFilter.Visible := True;
   pMethodFilter.Visible := True;
   pIndividualFilter.Visible := True;
+  pRecordInEbirdFilter.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsSpecimens;

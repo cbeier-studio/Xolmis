@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.3\n"
 
 #: cbs_locale.rsaccepted
 msgctxt "cbs_locale.rsaccepted"
@@ -7591,6 +7591,10 @@ msgctxt "tfrmcustomgrid.lbldatefilter.caption"
 msgid "Dates"
 msgstr "Datas"
 
+#: tfrmcustomgrid.lbldontneedreviewfilter.caption
+msgid "Do not need review"
+msgstr "Não precisa de revisão"
+
 #: tfrmcustomgrid.lblemptyquery.caption
 msgid "Result query is empty"
 msgstr "Resultado da busca está vazio"
@@ -7598,6 +7602,11 @@ msgstr "Resultado da busca está vazio"
 #: tfrmcustomgrid.lblendtimefilter.caption
 msgid "and"
 msgstr "e"
+
+#: tfrmcustomgrid.lblescapedfilter.caption
+msgctxt "tfrmcustomgrid.lblescapedfilter.caption"
+msgid "Escaped"
+msgstr "Escapou"
 
 #: tfrmcustomgrid.lblexpeditionfilter.caption
 msgctxt "tfrmcustomgrid.lblexpeditionfilter.caption"
@@ -7661,6 +7670,10 @@ msgctxt "tfrmcustomgrid.lblmoltlimitsfilter.caption"
 msgid "Molt limits"
 msgstr "Limites de muda"
 
+#: tfrmcustomgrid.lblneedsreviewfilter.caption
+msgid "Needs review"
+msgstr "Precisa de revisão"
+
 #: tfrmcustomgrid.lblnestfatefilter.caption
 msgid "Fate"
 msgstr "Destino"
@@ -7673,6 +7686,10 @@ msgstr "Ninho"
 #: tfrmcustomgrid.lblnestsupportfilter.caption
 msgid "Support type"
 msgstr "Tipo de suporte"
+
+#: tfrmcustomgrid.lblnotescapedfilter.caption
+msgid "Did not escape"
+msgstr "Não escapou"
 
 #: tfrmcustomgrid.lblnotreportedfilter.caption
 msgid "Not reported"
@@ -7690,6 +7707,11 @@ msgstr "Planta suporte"
 msgctxt "tfrmcustomgrid.lblprojectfilter.caption"
 msgid "Project"
 msgstr "Projeto"
+
+#: tfrmcustomgrid.lblrecordinebirdfilter.caption
+msgctxt "tfrmcustomgrid.lblrecordinebirdfilter.caption"
+msgid "Record is on eBird"
+msgstr "Registro no eBird"
 
 #: tfrmcustomgrid.lblrecordstatus.caption
 msgctxt "tfrmcustomgrid.lblrecordstatus.caption"
@@ -7936,6 +7958,21 @@ msgctxt "tfrmcustomgrid.pmtrefresh.caption"
 msgid "Refresh"
 msgstr "Atualizar"
 
+#: tfrmcustomgrid.rbrecordinebirdall.caption
+msgctxt "tfrmcustomgrid.rbrecordinebirdall.caption"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.rbrecordinebirdno.caption
+msgctxt "tfrmcustomgrid.rbrecordinebirdno.caption"
+msgid "No"
+msgstr "Não"
+
+#: tfrmcustomgrid.rbrecordinebirdyes.caption
+msgctxt "tfrmcustomgrid.rbrecordinebirdyes.caption"
+msgid "Yes"
+msgstr "Sim"
+
 #: tfrmcustomgrid.sbaddchild.hint
 msgctxt "tfrmcustomgrid.sbaddchild.hint"
 msgid "New related record"
@@ -7959,6 +7996,10 @@ msgstr "Visualizar histórico do registro"
 msgctxt "tfrmcustomgrid.sbchildnewtab.hint"
 msgid "Open records in a new tab"
 msgstr "Abrir registros em uma nova aba"
+
+#: tfrmcustomgrid.sbclearfilters.hint
+msgid "Clear all quick filters"
+msgstr "Limpar todos filtros rápidos"
 
 #: tfrmcustomgrid.sbcolumnhide.hint
 msgid "Hide the selected column"
