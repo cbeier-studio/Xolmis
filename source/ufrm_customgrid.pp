@@ -5,8 +5,8 @@ unit ufrm_customgrid;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils,
-  Grids, DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB,
+  DateUtils, Grids, DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character,
   Buttons, CheckLst, DBCtrls, laz.VirtualTrees, rxswitch, attabs, atshapelinebgra, BCPanel,
   DBControlGrid, ColorSpeedButton, cbs_datatypes, cbs_filters, Types;
 
@@ -67,6 +67,7 @@ type
     iButtons: TImageList;
     icoEggTextureFilter: TImage;
     icoEggShapeFilter: TImage;
+    icoReplacedBandFilter: TImage;
     icoPermitTypeFilter: TImage;
     icoNestStatusFilter: TImage;
     icoBandTypeFilter: TImage;
@@ -97,6 +98,7 @@ type
     iHeaders: TImageList;
     icoEmptyQuery: TImage;
     lblEggShapeFilter: TLabel;
+    lblReplacedBandFilter: TLabel;
     lblPermitTypeFilter: TLabel;
     lblNestStatusFilter: TLabel;
     lblBandTypeFilter: TLabel;
@@ -132,6 +134,7 @@ type
     lblProjectFilter: TLabel;
     pEggShapeFilter: TBCPanel;
     pEggTraitsFilters: TBCPanel;
+    pReplacedBandFilter: TBCPanel;
     pPermitTypeFilter: TBCPanel;
     pNestStatusFilter: TBCPanel;
     pBandTypeFilter: TBCPanel;
@@ -397,6 +400,9 @@ type
     pUnmarkedFilter: TBCPanel;
     pWithColorBandsFilter: TBCPanel;
     pWithRecapturesFilter: TBCPanel;
+    rbReplacedBandAll: TRadioButton;
+    rbReplacedBandNo: TRadioButton;
+    rbReplacedBandYes: TRadioButton;
     rbNidoparasiteAll: TRadioButton;
     rbHatchedAll: TRadioButton;
     rbPhilornisAll: TRadioButton;
@@ -419,6 +425,7 @@ type
     sbDelRecord: TSpeedButton;
     sbEditChild: TSpeedButton;
     sbEditRecord: TSpeedButton;
+    sbShareRecords: TSpeedButton;
     sbRefreshChild: TSpeedButton;
     sbRowHeightDecrease: TSpeedButton;
     sbEditRecord10: TSpeedButton;
@@ -637,6 +644,7 @@ type
     procedure sbRowHeightDefaultClick(Sender: TObject);
     procedure sbRowHeightIncreaseClick(Sender: TObject);
     procedure sbSaveRecordClick(Sender: TObject);
+    procedure sbShareRecordsClick(Sender: TObject);
     procedure sbShowRecordClick(Sender: TObject);
     procedure sbSortChildsClick(Sender: TObject);
     procedure sbSortRecordsClick(Sender: TObject);
@@ -1096,6 +1104,7 @@ begin
   tsNotEscaped.StateOn := sw_off;
 
   rbPhilornisAll.Checked := True;
+  rbReplacedBandAll.Checked := True;
 end;
 
 procedure TfrmCustomGrid.ClearEggFilters;
@@ -1159,6 +1168,8 @@ begin
 
   tsfWithColorBandsFilter.StateOn := sw_off;
   tsfWithRecapturesFilter.StateOn := sw_off;
+
+  rbReplacedBandAll.Checked := True;
 
   eNestFilter.Clear;
   FNestKeyFilter := 0;
@@ -2988,13 +2999,26 @@ begin
   if rbPhilornisYes.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('philornis_larvae_tally', '# Philornis larae', sdtInteger,
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('philornis_larvae_tally', '# Philornis larvae', sdtInteger,
       crMoreThan, False, '1'));
   end;
   if rbPhilornisNo.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('philornis_larvae_tally', '# Philornis larvae', sdtInteger,
+      crEqual, False, '0'));
+  end;
+
+  if rbReplacedBandYes.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('removed_band_id', 'Removed band', sdtInteger,
+      crMoreThan, False, '1'));
+  end;
+  if rbReplacedBandNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('removed_band_id', 'Removed band', sdtInteger,
       crEqual, False, '0'));
   end;
 end;
@@ -3275,6 +3299,19 @@ begin
       crEqual, False, IntToStr(FIndividualKeyFilter)));
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('mother_id', 'Mother', sdtInteger,
       crEqual, False, IntToStr(FIndividualKeyFilter)));
+  end;
+
+  if rbReplacedBandYes.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('removed_band_id', 'Removed band', sdtInteger,
+      crMoreThan, False, '1'));
+  end;
+  if rbReplacedBandNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('removed_band_id', 'Removed band', sdtInteger,
+      crEqual, False, '0'));
   end;
 end;
 
@@ -4995,6 +5032,11 @@ begin
   Working := True;
   dsLink.DataSet.Post;
   Working := False;
+end;
+
+procedure TfrmCustomGrid.sbShareRecordsClick(Sender: TObject);
+begin
+  ExportDlg(dsLink.DataSet);
 end;
 
 procedure TfrmCustomGrid.sbShowRecordClick(Sender: TObject);
@@ -7978,6 +8020,7 @@ begin
   pNeedsReviewFilters.Visible := True;
   pEscapedFilters.Visible := True;
   pPhilornisFilter.Visible := True;
+  pReplacedBandFilter.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsEggs;
@@ -8045,6 +8088,7 @@ begin
   pSexingFilters.Visible := True;
   pNestFilter.Visible := True;
   pIndividualFilter.Visible := True;
+  pReplacedBandFilter.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsInstitutions;

@@ -13,7 +13,6 @@ object cfgDelimiters: TcfgDelimiters
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 43
@@ -43,7 +42,6 @@ object cfgDelimiters: TcfgDelimiters
       Caption = 'Apply'
       Constraints.MinHeight = 27
       Constraints.MinWidth = 120
-      Enabled = False
       Font.Height = -12
       Font.Name = 'Segoe UI Semibold'
       ParentFont = False

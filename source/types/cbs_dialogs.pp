@@ -11,6 +11,8 @@ uses
   procedure ProgressDlg(aTitle, aText: String; aMin: Integer = 0; aMax: Integer = 100);
   procedure ValidateDlg(aList: TStrings);
 
+  procedure ExportDlg(aDataSet: TDataSet);
+
   procedure FindPlantminerDlg(const aPlantName: String; aDataset: TDataset;
     aNameField, aAuthorField: String; aControl: TControl);
 
@@ -37,7 +39,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_sampling, udm_main,
-  udlg_find, udlg_validate, udlg_plantminer, udlg_authorship,
+  udlg_find, udlg_validate, udlg_plantminer, udlg_authorship, udlg_export,
   udlg_calendar, udlg_colorbands, ulst_cyclecode, ulst_moltlimits, ulst_howsexedaged,
   ulst_detectiontype, ulst_breedingstatus;
 
@@ -576,6 +578,18 @@ begin
     {$IFDEF DEBUG}
     LogDebug('CLOSE LIST: Breeding code');
     {$ENDIF}
+  end;
+end;
+
+procedure ExportDlg(aDataSet: TDataSet);
+begin
+  dlgExport := TdlgExport.Create(nil);
+  with dlgExport do
+  try
+    DataSet := aDataSet;
+    ShowModal;
+  finally
+    FreeAndNil(dlgExport);
   end;
 end;
 

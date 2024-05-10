@@ -9,6 +9,9 @@ uses
   Dialogs,
   Process;
 
+type
+  TExportFiletype = (xfCSV, xfJSON, xfXML, xfXLSX, xfODS);
+
   function LibreOfficeExists(var aPath: String): Boolean;
   procedure ConvertFileToCsv(aFile, aDestFolder: String);
   procedure ConvertFileToXls(aFile, aDestFolder: String; aOpenXML: Boolean = True);

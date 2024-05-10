@@ -5,15 +5,18 @@ unit udm_main;
 interface
 
 uses
-  Classes, SysUtils, StrUtils, Forms, Dialogs, ExtDlgs, Controls, UniqueInstance, DB, BufDataset, SdfData,
-  SQLDB, SQLDBLib, IBConnection, SQLite3Conn, fpjson, eventlog, cbs_system, SQLScript;
+  Classes, SysUtils, StrUtils, Forms, Dialogs, ExtDlgs, Controls, fpsexport, UniqueInstance, DB, BufDataset,
+  SdfData, SQLDB, SQLDBLib, IBConnection, SQLite3Conn, fpjson, eventlog, cbs_system, SQLScript, fpcsvexport,
+  fpSimpleXMLExport, fpsimplejsonexport, fpDBExport;
 
 type
 
   { TDMM }
 
   TDMM = class(TDataModule)
+    CSVExport: TCSVExporter;
     evLog: TEventLog;
+    FPSExport: TFPSExport;
     iLogos: TImageList;
     iBandTypes: TImageList;
     iTrees: TImageList;
@@ -35,6 +38,8 @@ type
     qsUsageDatausage_id: TLongintField;
     qUsersuuid: TStringField;
     scriptUserDBInit: TSQLScript;
+    JSONExport: TSimpleJSONExporter;
+    XMLExport: TSimpleXMLExporter;
     sqlCon: TSQLConnector;
     sysCon: TSQLConnector;
     sqliteLibLoader: TSQLDBLibraryLoader;

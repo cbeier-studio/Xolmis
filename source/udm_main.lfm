@@ -5,7 +5,7 @@ object DMM: TDMM
   Height = 424
   HorizontalOffset = 352
   VerticalOffset = 33
-  Width = 657
+  Width = 768
   object batchCsvRead: TSdfDataSet
     FileMustExist = True
     ReadOnly = False
@@ -9987,5 +9987,77 @@ object DMM: TDMM
     OnOtherInstance = UniqueInstance1OtherInstance
     Left = 432
     Top = 333
+  end
+  object CSVExport: TCSVExporter
+    ExportFields = <>
+    FromCurrent = False
+    RestorePosition = True
+    FormatSettings.IntegerFormat = '%d'
+    FormatSettings.DecimalSeparator = ','
+    FormatSettings.CurrencyDigits = 0
+    FormatSettings.BooleanTrue = '1'
+    FormatSettings.BooleanFalse = '0'
+    FormatSettings.DateFormat = 'dd/MM/yyyy'
+    FormatSettings.TimeFormat = 'hh:nn'
+    FormatSettings.DateTimeFormat = 'dd/MM/yyyy hh:nn:ss'
+    FormatSettings.FieldDelimiter = ';'
+    FormatSettings.IgnoreOuterWhitespace = False
+    FormatSettings.RowDelimiter = #13#10
+    FormatSettings.QuoteChar = '"'
+    Left = 680
+    Top = 112
+  end
+  object XMLExport: TSimpleXMLExporter
+    ExportFields = <>
+    FromCurrent = False
+    RestorePosition = True
+    FormatSettings.IntegerFormat = '%d'
+    FormatSettings.DecimalSeparator = ','
+    FormatSettings.CurrencyDigits = 0
+    FormatSettings.BooleanTrue = '1'
+    FormatSettings.BooleanFalse = '0'
+    FormatSettings.DateFormat = 'dd/MM/yyyy'
+    FormatSettings.TimeFormat = 'hh:nn'
+    FormatSettings.DateTimeFormat = 'dd/MM/yyyy hh:nn:ss'
+    FormatSettings.FieldAsAttributes = False
+    FormatSettings.IndentSize = 0
+    Left = 680
+    Top = 173
+  end
+  object JSONExport: TSimpleJSONExporter
+    ExportFields = <>
+    FromCurrent = False
+    RestorePosition = True
+    FormatSettings.IntegerFormat = '%d'
+    FormatSettings.DecimalSeparator = ','
+    FormatSettings.CurrencyDigits = 0
+    FormatSettings.BooleanTrue = '1'
+    FormatSettings.BooleanFalse = '0'
+    FormatSettings.DateFormat = 'dd/MM/yyyy'
+    FormatSettings.TimeFormat = 'hh:nn'
+    FormatSettings.DateTimeFormat = 'dd/MM/yyyy hh:nn:ss'
+    FormatSettings.RowFormat = rfArray
+    FormatSettings.ColumnFormat = cfObject
+    FormatSettings.IndentSize = 0
+    Left = 680
+    Top = 237
+  end
+  object FPSExport: TFPSExport
+    ExportFields = <>
+    FormatSettings.IntegerFormat = '%d'
+    FormatSettings.DecimalSeparator = ','
+    FormatSettings.CurrencySymbol = 'R$'
+    FormatSettings.CurrencyDigits = 0
+    FormatSettings.BooleanTrue = '1'
+    FormatSettings.BooleanFalse = '0'
+    FormatSettings.DateFormat = 'dd/MM/yyyy'
+    FormatSettings.TimeFormat = 'hh:nn'
+    FormatSettings.DateTimeFormat = 'dd/MM/yyyy hh:nn:ss'
+    FormatSettings.ExportFormat = efXLSX
+    FormatSettings.HeaderRow = True
+    FormatSettings.SheetName = 'Sheet'
+    FromCurrent = False
+    Left = 680
+    Top = 301
   end
 end

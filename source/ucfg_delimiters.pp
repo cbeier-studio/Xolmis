@@ -84,7 +84,31 @@ end;
 procedure TcfgDelimiters.FormShow(Sender: TObject);
 begin
   { #todo : Get the values from config }
-  RoundPanels(pClient);
+  if FQuotes then
+    tsQuotedAsText.StateOn := sw_on
+  else
+    tsQuotedAsText.StateOn := sw_off;
+
+  case FDelimiter of
+    ';': cbDelimiter.ItemIndex := 0;
+    ',': cbDelimiter.ItemIndex := 1;
+    #9 : cbDelimiter.ItemIndex := 2;
+  else
+    cbDelimiter.ItemIndex := 3;
+    eOther.Visible := True;
+    eOther.Text := FDelimiter;
+  end;
+
+  if FHeader then
+    tsHaveHeader.StateOn := sw_on
+  else
+    tsHaveHeader.StateOn := sw_off;
+
+  case FDecimal of
+    ',': cbDecimalSeparator.ItemIndex := 0;
+    '.': cbDecimalSeparator.ItemIndex := 1;
+  end;
+
 end;
 
 procedure TcfgDelimiters.sbOKClick(Sender: TObject);
@@ -149,8 +173,8 @@ procedure TcfgDelimiters.SetDecimalSeparator(aValue: Char);
 begin
   FDecimal := aValue;
   case FDecimal of
-    ',': cbDelimiter.ItemIndex := 0;
-    '.': cbDelimiter.ItemIndex := 1;
+    ',': cbDecimalSeparator.ItemIndex := 0;
+    '.': cbDecimalSeparator.ItemIndex := 1;
   end;
 end;
 

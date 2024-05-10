@@ -1111,6 +1111,13 @@ msgstr ""
 msgid "Error loading field info: the field name is blank."
 msgstr ""
 
+#: cbs_locale.rserrorexporting
+#, object-pascal-format
+msgid ""
+"An error occurred exporting:\n"
+"%s"
+msgstr ""
+
 #: cbs_locale.rserrorfilenotfound
 #, object-pascal-format
 msgctxt "cbs_locale.rserrorfilenotfound"
@@ -1191,14 +1198,22 @@ msgctxt "cbs_locale.rsexactcoordinate"
 msgid "Exact"
 msgstr ""
 
-#: cbs_locale.rsexportcancelled
-msgctxt "cbs_locale.rsexportcancelled"
-msgid "Export was cancelled by user."
+#: cbs_locale.rsexportcanceled
+msgid "Export canceled!"
+msgstr ""
+
+#: cbs_locale.rsexportcanceledbyuser
+msgid "Export canceled by the user."
+msgstr ""
+
+#: cbs_locale.rsexportdatatitle
+msgctxt "cbs_locale.rsexportdatatitle"
+msgid "Export data"
 msgstr ""
 
 #: cbs_locale.rsexportempty
 msgctxt "cbs_locale.rsexportempty"
-msgid "No records found! Export cancelled."
+msgid "No records found! Export canceled."
 msgstr ""
 
 #: cbs_locale.rsexportfieldsnotfound
@@ -3951,6 +3966,37 @@ msgstr ""
 #: tdlgconnect.sbok.caption
 msgctxt "tdlgconnect.sbok.caption"
 msgid "Connect"
+msgstr ""
+
+#: tdlgexport.btnoptions.caption
+msgid "More options"
+msgstr ""
+
+#: tdlgexport.caption
+msgctxt "tdlgexport.caption"
+msgid "Export data"
+msgstr ""
+
+#: tdlgexport.ckusedarwincoreformat.caption
+msgid "Use Darwin Core format"
+msgstr ""
+
+#: tdlgexport.lblcolumns.caption
+msgid "Select the columns to export:"
+msgstr ""
+
+#: tdlgexport.lblfilename.caption
+msgid "Save to file:"
+msgstr ""
+
+#: tdlgexport.sbcancel.caption
+msgctxt "tdlgexport.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgexport.sbrun.caption
+msgctxt "tdlgexport.sbrun.caption"
+msgid "Export"
 msgstr ""
 
 #: tdlgfind.caption
@@ -7219,6 +7265,7 @@ msgid "Manage collection"
 msgstr ""
 
 #: tedtuser.ckallowexport.caption
+msgctxt "tedtuser.ckallowexport.caption"
 msgid "Export data"
 msgstr ""
 
@@ -7864,6 +7911,10 @@ msgctxt "tfrmcustomgrid.lblrecordstatus.caption"
 msgid "Loading records..."
 msgstr ""
 
+#: tfrmcustomgrid.lblreplacedbandfilter.caption
+msgid "Replaced band"
+msgstr ""
+
 #: tfrmcustomgrid.lblreportedfilter.caption
 msgctxt "tfrmcustomgrid.lblreportedfilter.caption"
 msgid "Reported"
@@ -8179,6 +8230,21 @@ msgctxt "tfrmcustomgrid.rbrecordinebirdyes.caption"
 msgid "Yes"
 msgstr ""
 
+#: tfrmcustomgrid.rbreplacedbandall.caption
+msgctxt "tfrmcustomgrid.rbreplacedbandall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbreplacedbandno.caption
+msgctxt "tfrmcustomgrid.rbreplacedbandno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbreplacedbandyes.caption
+msgctxt "tfrmcustomgrid.rbreplacedbandyes.caption"
+msgid "Yes"
+msgstr ""
+
 #: tfrmcustomgrid.sbaddchild.hint
 msgctxt "tfrmcustomgrid.sbaddchild.hint"
 msgid "New related record"
@@ -8308,11 +8374,6 @@ msgctxt "tfrmcustomgrid.sbpriorrecord.hint"
 msgid "Previous record"
 msgstr ""
 
-#: tfrmcustomgrid.sbrecordhistory.caption
-msgctxt "tfrmcustomgrid.sbrecordhistory.caption"
-msgid "History"
-msgstr ""
-
 #: tfrmcustomgrid.sbrecordhistory.hint
 msgctxt "tfrmcustomgrid.sbrecordhistory.hint"
 msgid "View record history"
@@ -8355,6 +8416,10 @@ msgstr ""
 
 #: tfrmcustomgrid.sbsaverecord.hint
 msgid "Save changes"
+msgstr ""
+
+#: tfrmcustomgrid.sbsharerecords.hint
+msgid "Export records"
 msgstr ""
 
 #: tfrmcustomgrid.sbshowaudio.hint

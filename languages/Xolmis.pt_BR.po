@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.3\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: cbs_locale.rsaccepted
 msgctxt "cbs_locale.rsaccepted"
@@ -1123,6 +1123,15 @@ msgstr "Erro executando Sweep e Analyze do banco de dados"
 msgid "Error loading field info: the field name is blank."
 msgstr "Erro carregando informação do campo: nome do campo está em branco."
 
+#: cbs_locale.rserrorexporting
+#, object-pascal-format
+msgid ""
+"An error occurred exporting:\n"
+"%s"
+msgstr ""
+"Ocorreu um erro exportando:\n"
+"%s"
+
 #: cbs_locale.rserrorfilenotfound
 #, object-pascal-format
 msgctxt "cbs_locale.rserrorfilenotfound"
@@ -1207,14 +1216,22 @@ msgctxt "cbs_locale.rsexactcoordinate"
 msgid "Exact"
 msgstr "Exato"
 
-#: cbs_locale.rsexportcancelled
-msgctxt "cbs_locale.rsexportcancelled"
-msgid "Export was cancelled by user."
-msgstr "Exportação foi cancelada pelo usuário."
+#: cbs_locale.rsexportcanceled
+msgid "Export canceled!"
+msgstr "Exportação cancelada!"
+
+#: cbs_locale.rsexportcanceledbyuser
+msgid "Export canceled by the user."
+msgstr "Exportação cancelada pelo usuário."
+
+#: cbs_locale.rsexportdatatitle
+msgctxt "cbs_locale.rsexportdatatitle"
+msgid "Export data"
+msgstr "Exportar dados"
 
 #: cbs_locale.rsexportempty
 msgctxt "cbs_locale.rsexportempty"
-msgid "No records found! Export cancelled."
+msgid "No records found! Export canceled."
 msgstr "Não foram encontrados registros! Exportação cancelada."
 
 #: cbs_locale.rsexportfieldsnotfound
@@ -3980,6 +3997,37 @@ msgstr "Cancelar"
 msgctxt "tdlgconnect.sbok.caption"
 msgid "Connect"
 msgstr "Conectar"
+
+#: tdlgexport.btnoptions.caption
+msgid "More options"
+msgstr "Mais opções"
+
+#: tdlgexport.caption
+msgctxt "tdlgexport.caption"
+msgid "Export data"
+msgstr "Exportar dados"
+
+#: tdlgexport.ckusedarwincoreformat.caption
+msgid "Use Darwin Core format"
+msgstr "Usar formato Darwin Core"
+
+#: tdlgexport.lblcolumns.caption
+msgid "Select the columns to export:"
+msgstr "Selecione as colunas a exportar:"
+
+#: tdlgexport.lblfilename.caption
+msgid "Save to file:"
+msgstr "Salvar no arquivo:"
+
+#: tdlgexport.sbcancel.caption
+msgctxt "tdlgexport.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tdlgexport.sbrun.caption
+msgctxt "tdlgexport.sbrun.caption"
+msgid "Export"
+msgstr "Exportar"
 
 #: tdlgfind.caption
 msgctxt "tdlgfind.caption"
@@ -7247,6 +7295,7 @@ msgid "Manage collection"
 msgstr "Gerenciar acervo"
 
 #: tedtuser.ckallowexport.caption
+msgctxt "tedtuser.ckallowexport.caption"
 msgid "Export data"
 msgstr "Exportar dados"
 
@@ -7892,6 +7941,10 @@ msgctxt "tfrmcustomgrid.lblrecordstatus.caption"
 msgid "Loading records..."
 msgstr "Carregando registros..."
 
+#: tfrmcustomgrid.lblreplacedbandfilter.caption
+msgid "Replaced band"
+msgstr "Anilha substituída"
+
 #: tfrmcustomgrid.lblreportedfilter.caption
 msgctxt "tfrmcustomgrid.lblreportedfilter.caption"
 msgid "Reported"
@@ -8207,6 +8260,21 @@ msgctxt "tfrmcustomgrid.rbrecordinebirdyes.caption"
 msgid "Yes"
 msgstr "Sim"
 
+#: tfrmcustomgrid.rbreplacedbandall.caption
+msgctxt "tfrmcustomgrid.rbreplacedbandall.caption"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.rbreplacedbandno.caption
+msgctxt "tfrmcustomgrid.rbreplacedbandno.caption"
+msgid "No"
+msgstr "Não"
+
+#: tfrmcustomgrid.rbreplacedbandyes.caption
+msgctxt "tfrmcustomgrid.rbreplacedbandyes.caption"
+msgid "Yes"
+msgstr "Sim"
+
 #: tfrmcustomgrid.sbaddchild.hint
 msgctxt "tfrmcustomgrid.sbaddchild.hint"
 msgid "New related record"
@@ -8336,11 +8404,6 @@ msgctxt "tfrmcustomgrid.sbpriorrecord.hint"
 msgid "Previous record"
 msgstr "Registro anterior"
 
-#: tfrmcustomgrid.sbrecordhistory.caption
-msgctxt "tfrmcustomgrid.sbrecordhistory.caption"
-msgid "History"
-msgstr "Histórico"
-
 #: tfrmcustomgrid.sbrecordhistory.hint
 msgctxt "tfrmcustomgrid.sbrecordhistory.hint"
 msgid "View record history"
@@ -8384,6 +8447,10 @@ msgstr "Salvar"
 #: tfrmcustomgrid.sbsaverecord.hint
 msgid "Save changes"
 msgstr "Salvar alterações"
+
+#: tfrmcustomgrid.sbsharerecords.hint
+msgid "Export records"
+msgstr "Exportar registros"
 
 #: tfrmcustomgrid.sbshowaudio.hint
 msgctxt "tfrmcustomgrid.sbshowaudio.hint"

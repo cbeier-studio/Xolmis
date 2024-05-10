@@ -112,6 +112,7 @@ uses
     rsErrorGeneratingMap = 'Error generating map.';
     rsErrorFileNotFound = 'File %s not found.';
     rsErrorImporting = 'An error occurred importing:' + LineEnding + '%s';
+    rsErrorExporting = 'An error occurred exporting:' + LineEnding + '%s';
     rsErrorDatabaseNotFound = 'Database file not found:' + LineEnding + '%s';
     rsErrorDatabaseCorrupted = 'The database file is corrupted.' + LineEnding +
       'Restoring a database backup is recommended.';
@@ -178,10 +179,12 @@ uses
       'This operation will overwrite the database and records may be lost.';
 
     { Exportation messages }
+    rsExportDataTitle = 'Export data';
+    rsExportCanceled = 'Export canceled!';
+    rsExportCanceledByUser = 'Export canceled by the user.';
     rsExportFieldsNotFound = 'No fields selected to export!';
-    rsExportEmpty = 'No records found! Export cancelled.';
+    rsExportEmpty = 'No records found! Export canceled.';
     rsExportFinished = 'Export to %s: Finished!';
-    rsExportCancelled = 'Export was cancelled by user.';
 
     { LibreOffice messages }
     rsLibreOfficeError = 'Error running LibreOffice: %d';
