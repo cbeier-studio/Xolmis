@@ -87,6 +87,7 @@ type
     qNestRevisionsupdate_date: TDateTimeField;
     qNestRevisionsuser_inserted: TLongintField;
     qNestRevisionsuser_updated: TLongintField;
+    procedure DataModuleCreate(Sender: TObject);
     procedure qEggsAfterCancel(DataSet: TDataSet);
     procedure qEggsAfterPost(DataSet: TDataSet);
     procedure qEggsBeforeEdit(DataSet: TDataSet);
@@ -125,9 +126,16 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_data;
+  cbs_locale, cbs_global, cbs_data, cbs_datacolumns;
 
 { TDMB }
+
+procedure TDMB.DataModuleCreate(Sender: TObject);
+begin
+  TranslateNestRevisions(qNestRevisions);
+  TranslateEggs(qEggs);
+  TranslateNestOwners(qNestOwners);
+end;
 
 procedure TDMB.qEggsAfterCancel(DataSet: TDataSet);
 begin

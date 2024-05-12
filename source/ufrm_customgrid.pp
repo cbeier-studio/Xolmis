@@ -46,7 +46,7 @@ type
     cbNestStageFilter: TComboBox;
     DBG: TDBGrid;
     dbgRecycle: TDBControlGrid;
-    DBText3: TDBText;
+    lblRecycleId: TDBText;
     dsLink: TDataSource;
     dsLink1: TDataSource;
     dsLink2: TDataSource;

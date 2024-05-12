@@ -62,7 +62,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_data, udm_grid;
+uses cbs_locale, cbs_global, cbs_data, cbs_datacolumns, udm_grid;
 
 {$R *.lfm}
 
@@ -90,6 +90,7 @@ end;
 
 procedure TdlgRecHistory.FormShow(Sender: TObject);
 begin
+  TranslateRecordHistory(qHistory);
   LoadData;
 end;
 

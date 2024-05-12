@@ -1,4 +1,5 @@
 object DMB: TDMB
+  OnCreate = DataModuleCreate
   OldCreateOrder = False
   Height = 410
   HorizontalOffset = 373

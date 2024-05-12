@@ -433,6 +433,7 @@ type
     qSpecimensuser_inserted1: TLongintField;
     qSpecimensuser_updated: TLongintField;
     qSpecimensuser_updated1: TLongintField;
+    procedure DataModuleCreate(Sender: TObject);
     procedure qCapturesAfterCancel(DataSet: TDataSet);
     procedure qCapturesAfterInsert(DataSet: TDataSet);
     procedure qCapturesAfterPost(DataSet: TDataSet);
@@ -490,7 +491,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_getvalue;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_datacolumns, cbs_getvalue;
 
 {$R *.lfm}
 
@@ -510,6 +511,15 @@ begin
   end;
 
   DisplayText := True;
+end;
+
+procedure TDMI.DataModuleCreate(Sender: TObject);
+begin
+  TranslateCaptures(qCaptures);
+  TranslateSightings(qSightings);
+  TranslateMolts(qMolts);
+  TranslateNests(qNests);
+  TranslateSpecimens(qSpecimens);
 end;
 
 procedure TDMI.qCapturesAfterCancel(DataSet: TDataSet);

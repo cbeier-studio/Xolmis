@@ -12,6 +12,1898 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.4.4\n"
 
+#: cbs_datacolumns.rsc1stsecondarychord
+msgid "1st secondary chord"
+msgstr ""
+
+#: cbs_datacolumns.rscabstract
+msgid "Abstract"
+msgstr ""
+
+#: cbs_datacolumns.rscaccessionnr
+msgid "Accession nr."
+msgstr ""
+
+#: cbs_datacolumns.rscaccesslevel
+#, fuzzy
+msgctxt "cbs_datacolumns.rscaccesslevel"
+msgid "Access level"
+msgstr "Nível de acesso"
+
+#: cbs_datacolumns.rscacronym
+msgid "Acronym"
+msgstr ""
+
+#: cbs_datacolumns.rscaction
+#, fuzzy
+msgctxt "cbs_datacolumns.rscaction"
+msgid "Action"
+msgstr "Ação"
+
+#: cbs_datacolumns.rscactivedays
+msgid "Active-days"
+msgstr ""
+
+#: cbs_datacolumns.rscactivestatus
+#, fuzzy
+msgctxt "cbs_datacolumns.rscactivestatus"
+msgid "Active"
+msgstr "Ativo"
+
+#: cbs_datacolumns.rscaddress1
+msgid "Address 1"
+msgstr ""
+
+#: cbs_datacolumns.rscaddress2
+msgid "Address 2"
+msgstr ""
+
+#: cbs_datacolumns.rscadults
+msgid "# adults"
+msgstr ""
+
+#: cbs_datacolumns.rscage
+#, fuzzy
+msgctxt "cbs_datacolumns.rscage"
+msgid "Age"
+msgstr "Idade"
+
+#: cbs_datacolumns.rscal1
+msgid "Al1"
+msgstr ""
+
+#: cbs_datacolumns.rscal2
+msgid "Al2"
+msgstr ""
+
+#: cbs_datacolumns.rscal3
+msgid "Al3"
+msgstr ""
+
+#: cbs_datacolumns.rscaltitude
+msgid "Altitude"
+msgstr ""
+
+#: cbs_datacolumns.rscannotator
+msgid "Annotator"
+msgstr ""
+
+#: cbs_datacolumns.rscannotatorid
+msgid "Annotator ID"
+msgstr ""
+
+#: cbs_datacolumns.rscareaha
+msgid "Area (ha)"
+msgstr ""
+
+#: cbs_datacolumns.rscareashape
+msgid "Area shape"
+msgstr ""
+
+#: cbs_datacolumns.rscatmosphericpressureh
+msgid "Atmospheric pressure (hPa)"
+msgstr ""
+
+#: cbs_datacolumns.rscaudiorecorded
+#, fuzzy
+msgctxt "cbs_datacolumns.rscaudiorecorded"
+msgid "Audio recorded"
+msgstr "Áudio gravado"
+
+#: cbs_datacolumns.rscauthorship
+#, fuzzy
+msgctxt "cbs_datacolumns.rscauthorship"
+msgid "Authorship"
+msgstr "Autoria"
+
+#: cbs_datacolumns.rscband
+#, fuzzy
+msgctxt "cbs_datacolumns.rscband"
+msgid "Band"
+msgstr "Anilha"
+
+#: cbs_datacolumns.rscbander
+msgid "Bander"
+msgstr ""
+
+#: cbs_datacolumns.rscbanderid
+msgid "Bander ID"
+msgstr ""
+
+#: cbs_datacolumns.rscbandid
+msgid "Band ID"
+msgstr ""
+
+#: cbs_datacolumns.rscbillheight
+msgid "Bill height"
+msgstr ""
+
+#: cbs_datacolumns.rscbillwidth
+msgid "Bill width"
+msgstr ""
+
+#: cbs_datacolumns.rscbirthdate
+#, fuzzy
+msgctxt "cbs_datacolumns.rscbirthdate"
+msgid "Birth date"
+msgstr "Data de nascimento"
+
+#: cbs_datacolumns.rscbirthday
+msgid "Birth day"
+msgstr ""
+
+#: cbs_datacolumns.rscbirthmonth
+msgid "Birth month"
+msgstr ""
+
+#: cbs_datacolumns.rscbirthyear
+msgid "Birth year"
+msgstr ""
+
+#: cbs_datacolumns.rscblood
+#, fuzzy
+msgctxt "cbs_datacolumns.rscblood"
+msgid "Blood"
+msgstr "Sangue"
+
+#: cbs_datacolumns.rscbodymolt
+#, fuzzy
+msgctxt "cbs_datacolumns.rscbodymolt"
+msgid "Body molt"
+msgstr "Muda do corpo"
+
+#: cbs_datacolumns.rscbotanicalcode
+msgid "ICBN"
+msgstr ""
+
+#: cbs_datacolumns.rscbreedingcode
+msgid "Breeding code"
+msgstr ""
+
+#: cbs_datacolumns.rscbroodpatch
+#, fuzzy
+msgctxt "cbs_datacolumns.rscbroodpatch"
+msgid "Brood patch"
+msgstr "Placa de incubação"
+
+#: cbs_datacolumns.rscbuildingdays
+msgid "Building (days)"
+msgstr ""
+
+#: cbs_datacolumns.rsccamera
+msgid "Camera"
+msgstr ""
+
+#: cbs_datacolumns.rsccaptured
+#, fuzzy
+msgctxt "cbs_datacolumns.rsccaptured"
+msgid "Captured"
+msgstr "Capturado"
+
+#: cbs_datacolumns.rsccaptureid
+msgid "Capture ID"
+msgstr ""
+
+#: cbs_datacolumns.rsccaptures
+msgid "# captures"
+msgstr ""
+
+#: cbs_datacolumns.rsccarrier
+msgid "Carrier"
+msgstr ""
+
+#: cbs_datacolumns.rsccarrierid
+msgid "Carrier ID"
+msgstr ""
+
+#: cbs_datacolumns.rsccbro
+#, fuzzy
+msgctxt "cbs_datacolumns.rsccbro"
+msgid "CBRO"
+msgstr "CBRO"
+
+#: cbs_datacolumns.rsccc
+msgid "CC"
+msgstr ""
+
+#: cbs_datacolumns.rsccentralretrixlength
+msgid "Central retrix length"
+msgstr ""
+
+#: cbs_datacolumns.rsccitation
+msgid "Citation"
+msgstr ""
+
+#: cbs_datacolumns.rscclaw
+#, fuzzy
+msgctxt "cbs_datacolumns.rscclaw"
+msgid "Claw"
+msgstr "Garra"
+
+#: cbs_datacolumns.rscclements
+msgid "Clements"
+msgstr ""
+
+#: cbs_datacolumns.rsccloacalprotuberance
+#, fuzzy
+msgctxt "cbs_datacolumns.rsccloacalprotuberance"
+msgid "Cloacal protuberance"
+msgstr "Protuberância cloacal"
+
+#: cbs_datacolumns.rscclosetime1
+msgid "Close time 1"
+msgstr ""
+
+#: cbs_datacolumns.rscclosetime2
+msgid "Close time 2"
+msgstr ""
+
+#: cbs_datacolumns.rscclosetime3
+msgid "Close time 3"
+msgstr ""
+
+#: cbs_datacolumns.rscclosetime4
+msgid "Close time 4"
+msgstr ""
+
+#: cbs_datacolumns.rsccloudcover
+msgid "Cloud cover (%)"
+msgstr ""
+
+#: cbs_datacolumns.rsccollectedwhole
+msgid "Collected (whole)"
+msgstr ""
+
+#: cbs_datacolumns.rsccollectiondate
+#, fuzzy
+msgctxt "cbs_datacolumns.rsccollectiondate"
+msgid "Collection date"
+msgstr "Data de coleta"
+
+#: cbs_datacolumns.rsccollectionday
+msgid "Collection day"
+msgstr ""
+
+#: cbs_datacolumns.rsccollectionmonth
+msgid "Collection month"
+msgstr ""
+
+#: cbs_datacolumns.rsccollectionyear
+msgid "Collection year"
+msgstr ""
+
+#: cbs_datacolumns.rsccollector
+msgid "Collector"
+msgstr ""
+
+#: cbs_datacolumns.rsccolor
+msgid "Color"
+msgstr ""
+
+#: cbs_datacolumns.rscconnectionname
+msgid "Connection name"
+msgstr ""
+
+#: cbs_datacolumns.rsccontactperson
+msgid "Contact person"
+msgstr ""
+
+#: cbs_datacolumns.rsccontractfile
+msgid "Contract file"
+msgstr ""
+
+#: cbs_datacolumns.rsccountry
+#, fuzzy
+msgctxt "cbs_datacolumns.rsccountry"
+msgid "Country"
+msgstr "País"
+
+#: cbs_datacolumns.rsccountryid
+msgid "Country ID"
+msgstr ""
+
+#: cbs_datacolumns.rsccover
+msgid "Cover (%)"
+msgstr ""
+
+#: cbs_datacolumns.rsccpf
+msgid "CPF"
+msgstr ""
+
+#: cbs_datacolumns.rscdatabasename
+msgid "Database file"
+msgstr ""
+
+#: cbs_datacolumns.rscdatabasetype
+msgid "Database type"
+msgstr ""
+
+#: cbs_datacolumns.rscdate
+#, fuzzy
+msgctxt "cbs_datacolumns.rscdate"
+msgid "Date"
+msgstr "Data"
+
+#: cbs_datacolumns.rscdeathdate
+#, fuzzy
+msgctxt "cbs_datacolumns.rscdeathdate"
+msgid "Death date"
+msgstr "Data de óbito"
+
+#: cbs_datacolumns.rscdeathday
+msgid "Death day"
+msgstr ""
+
+#: cbs_datacolumns.rscdeathmonth
+msgid "Death month"
+msgstr ""
+
+#: cbs_datacolumns.rscdeathyear
+msgid "Death year"
+msgstr ""
+
+#: cbs_datacolumns.rscdepartment
+msgid "Department"
+msgstr ""
+
+#: cbs_datacolumns.rscdescription
+msgid "Description"
+msgstr ""
+
+#: cbs_datacolumns.rscdetectiontype
+#, fuzzy
+msgctxt "cbs_datacolumns.rscdetectiontype"
+msgid "Detection type"
+msgstr "Tipo de detecção"
+
+#: cbs_datacolumns.rscdispatchdate
+#, fuzzy
+msgctxt "cbs_datacolumns.rscdispatchdate"
+msgid "Dispatch date"
+msgstr "Data de emissão"
+
+#: cbs_datacolumns.rscdispatcher
+msgid "Dispatcher"
+msgstr ""
+
+#: cbs_datacolumns.rscdistancekm
+msgid "Distance (km)"
+msgstr ""
+
+#: cbs_datacolumns.rscdistancem
+msgid "Distance (m)"
+msgstr ""
+
+#: cbs_datacolumns.rscdistribution
+msgid "Distribution"
+msgstr ""
+
+#: cbs_datacolumns.rscdoubleband
+#, fuzzy
+msgctxt "cbs_datacolumns.rscdoubleband"
+msgid "Double band"
+msgstr "Anilha dupla"
+
+#: cbs_datacolumns.rscdoublebandid
+msgid "Double band ID"
+msgstr ""
+
+#: cbs_datacolumns.rscduplicatenr
+msgid "Duplicate nr."
+msgstr ""
+
+#: cbs_datacolumns.rscdurationdays
+msgid "Duration (days)"
+msgstr ""
+
+#: cbs_datacolumns.rscdurationmin
+msgid "Duration (min)"
+msgstr ""
+
+#: cbs_datacolumns.rscebirdcode
+msgid "eBird code"
+msgstr ""
+
+#: cbs_datacolumns.rscebirdname
+msgid "eBird name"
+msgstr ""
+
+#: cbs_datacolumns.rscegg
+#, fuzzy
+msgctxt "cbs_datacolumns.rscegg"
+msgid "Egg"
+msgstr "Ovo"
+
+#: cbs_datacolumns.rsceggid
+msgid "Egg ID"
+msgstr ""
+
+#: cbs_datacolumns.rsceggnumber
+msgid "Egg number"
+msgstr ""
+
+#: cbs_datacolumns.rsceggshape
+#, fuzzy
+msgctxt "cbs_datacolumns.rsceggshape"
+msgid "Egg shape"
+msgstr "Formato do ovo"
+
+#: cbs_datacolumns.rsceggshellcolor
+msgid "Eggshell color"
+msgstr ""
+
+#: cbs_datacolumns.rsceggshellpattern
+msgid "Eggshell pattern"
+msgstr ""
+
+#: cbs_datacolumns.rsceggshelltexture
+msgid "Eggshell texture"
+msgstr ""
+
+#: cbs_datacolumns.rsceggshost
+msgid "# eggs (host)"
+msgstr ""
+
+#: cbs_datacolumns.rsceggsnidoparasite
+msgid "# eggs (nidoparasite)"
+msgstr ""
+
+#: cbs_datacolumns.rscemail
+msgid "E-mail"
+msgstr ""
+
+#: cbs_datacolumns.rscenddate
+#, fuzzy
+msgctxt "cbs_datacolumns.rscenddate"
+msgid "End date"
+msgstr "Data final"
+
+#: cbs_datacolumns.rscendlatitude
+msgid "End latitude"
+msgstr ""
+
+#: cbs_datacolumns.rscendlongitude
+msgid "End longitude"
+msgstr ""
+
+#: cbs_datacolumns.rscendtime
+msgid "End time"
+msgstr ""
+
+#: cbs_datacolumns.rscenglishname
+msgid "English name"
+msgstr ""
+
+#: cbs_datacolumns.rscescaped
+#, fuzzy
+msgctxt "cbs_datacolumns.rscescaped"
+msgid "Escaped"
+msgstr "Escapou"
+
+#: cbs_datacolumns.rscexpedition
+#, fuzzy
+msgctxt "cbs_datacolumns.rscexpedition"
+msgid "Expedition"
+msgstr "Expedição"
+
+#: cbs_datacolumns.rscexpeditionid
+msgid "Expedition ID"
+msgstr ""
+
+#: cbs_datacolumns.rscexpiredate
+#, fuzzy
+msgctxt "cbs_datacolumns.rscexpiredate"
+msgid "Expire date"
+msgstr "Data de validade"
+
+#: cbs_datacolumns.rscexportdata
+#, fuzzy
+msgctxt "cbs_datacolumns.rscexportdata"
+msgid "Export data"
+msgstr "Exportar dados"
+
+#: cbs_datacolumns.rscexportedstatus
+#, fuzzy
+msgctxt "cbs_datacolumns.rscexportedstatus"
+msgid "Exported"
+msgstr "Exportado"
+
+#: cbs_datacolumns.rscexposedculmen
+msgid "Exposed culmen"
+msgstr ""
+
+#: cbs_datacolumns.rscexternaldiameter
+msgid "External diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscexternalheight
+msgid "External height"
+msgstr ""
+
+#: cbs_datacolumns.rscexternalretrixlength
+msgid "External retrix length"
+msgstr ""
+
+#: cbs_datacolumns.rscextinct
+#, fuzzy
+msgctxt "cbs_datacolumns.rscextinct"
+msgid "Extinct"
+msgstr "Extinto"
+
+#: cbs_datacolumns.rscextinctionyear
+msgid "Extinction year"
+msgstr ""
+
+#: cbs_datacolumns.rscfamilyid
+msgid "Family ID"
+msgstr ""
+
+#: cbs_datacolumns.rscfat
+msgid "Fat"
+msgstr ""
+
+#: cbs_datacolumns.rscfather
+#, fuzzy
+msgctxt "cbs_datacolumns.rscfather"
+msgid "Father"
+msgstr "Pai"
+
+#: cbs_datacolumns.rscfatherid
+msgid "Father ID"
+msgstr ""
+
+#: cbs_datacolumns.rscfeathermites
+msgid "Feather mites"
+msgstr ""
+
+#: cbs_datacolumns.rscfeathers
+#, fuzzy
+msgctxt "cbs_datacolumns.rscfeathers"
+msgid "Feathers"
+msgstr "Penas"
+
+#: cbs_datacolumns.rscfeces
+#, fuzzy
+msgctxt "cbs_datacolumns.rscfeces"
+msgid "Feces"
+msgstr "Fezes"
+
+#: cbs_datacolumns.rscfemales
+msgid "# females"
+msgstr ""
+
+#: cbs_datacolumns.rscfieldnumber
+msgid "Field number"
+msgstr ""
+
+#: cbs_datacolumns.rscfile
+#, fuzzy
+msgctxt "cbs_datacolumns.rscfile"
+msgid "File"
+msgstr "Arquivo"
+
+#: cbs_datacolumns.rscfilename
+msgid "File name"
+msgstr ""
+
+#: cbs_datacolumns.rscfinalphotonr
+msgid "Final photo nr."
+msgstr ""
+
+#: cbs_datacolumns.rscflightfeathersmolt
+#, fuzzy
+msgctxt "cbs_datacolumns.rscflightfeathersmolt"
+msgid "Flight feathers molt"
+msgstr "Muda das penas de voo"
+
+#: cbs_datacolumns.rscflightfeatherswear
+#, fuzzy
+msgctxt "cbs_datacolumns.rscflightfeatherswear"
+msgid "Flight feathers wear"
+msgstr "Desgaste das penas de voo"
+
+#: cbs_datacolumns.rscfounddate
+msgid "Found date"
+msgstr ""
+
+#: cbs_datacolumns.rscfullname
+msgid "Full name"
+msgstr ""
+
+#: cbs_datacolumns.rscgc1
+msgid "GC1"
+msgstr ""
+
+#: cbs_datacolumns.rscgc10
+msgid "GC10"
+msgstr ""
+
+#: cbs_datacolumns.rscgc2
+msgid "GC2"
+msgstr ""
+
+#: cbs_datacolumns.rscgc3
+msgid "GC3"
+msgstr ""
+
+#: cbs_datacolumns.rscgc4
+msgid "GC4"
+msgstr ""
+
+#: cbs_datacolumns.rscgc5
+msgid "GC5"
+msgstr ""
+
+#: cbs_datacolumns.rscgc6
+msgid "GC6"
+msgstr ""
+
+#: cbs_datacolumns.rscgc7
+msgid "GC7"
+msgstr ""
+
+#: cbs_datacolumns.rscgc8
+msgid "GC8"
+msgstr ""
+
+#: cbs_datacolumns.rscgc9
+msgid "GC9"
+msgstr ""
+
+#: cbs_datacolumns.rscgender
+msgid "Gender"
+msgstr ""
+
+#: cbs_datacolumns.rscgenusepithet
+msgid "Genus epithet"
+msgstr ""
+
+#: cbs_datacolumns.rscgenusid
+msgid "Genus ID"
+msgstr ""
+
+#: cbs_datacolumns.rscglucose
+msgid "Glucose"
+msgstr ""
+
+#: cbs_datacolumns.rscgrowthbarwidth
+msgid "Growth bar width"
+msgstr ""
+
+#: cbs_datacolumns.rschabitat
+msgid "Habitat"
+msgstr ""
+
+#: cbs_datacolumns.rschaluxlengthclaw
+msgid "Halux length (claw)"
+msgstr ""
+
+#: cbs_datacolumns.rschaluxlengthfinger
+msgid "Halux length (finger)"
+msgstr ""
+
+#: cbs_datacolumns.rschaluxlengthtotal
+msgid "Halux length (total)"
+msgstr ""
+
+#: cbs_datacolumns.rschasphilornislarvae
+msgid "Has Philornis larvae"
+msgstr ""
+
+#: cbs_datacolumns.rschatched
+#, fuzzy
+msgctxt "cbs_datacolumns.rschatched"
+msgid "Hatched"
+msgstr "Eclodiu"
+
+#: cbs_datacolumns.rscheard
+#, fuzzy
+msgctxt "cbs_datacolumns.rscheard"
+msgid "Heard"
+msgstr "Ouvido"
+
+#: cbs_datacolumns.rscheightaboveground
+msgid "Height above ground"
+msgstr ""
+
+#: cbs_datacolumns.rschematocrit
+msgid "Hematocrit"
+msgstr ""
+
+#: cbs_datacolumns.rschemoglobin
+msgid "Hemoglobin"
+msgstr ""
+
+#: cbs_datacolumns.rschowwasaged
+#, fuzzy
+msgctxt "cbs_datacolumns.rschowwasaged"
+msgid "How was aged"
+msgstr "Como foi etariado"
+
+#: cbs_datacolumns.rschowwassexed
+#, fuzzy
+msgctxt "cbs_datacolumns.rschowwassexed"
+msgid "How was sexed"
+msgstr "Como foi sexado"
+
+#: cbs_datacolumns.rscid
+msgid "ID"
+msgstr ""
+
+#: cbs_datacolumns.rscimmatures
+msgid "# immatures"
+msgstr ""
+
+#: cbs_datacolumns.rscimportdata
+#, fuzzy
+msgctxt "cbs_datacolumns.rscimportdata"
+msgid "Import data"
+msgstr "Importar dados"
+
+#: cbs_datacolumns.rscincertaesedis
+msgid "Incertae sedis"
+msgstr ""
+
+#: cbs_datacolumns.rscincubationdays
+msgid "Incubation (days)"
+msgstr ""
+
+#: cbs_datacolumns.rscindividual
+#, fuzzy
+msgctxt "cbs_datacolumns.rscindividual"
+msgid "Individual"
+msgstr "Indivíduo"
+
+#: cbs_datacolumns.rscindividualid
+msgid "Individual ID"
+msgstr ""
+
+#: cbs_datacolumns.rscindividuals
+msgid "# individuals"
+msgstr ""
+
+#: cbs_datacolumns.rscinfrarank
+msgid "Infra rank"
+msgstr ""
+
+#: cbs_datacolumns.rscinfraspecific
+msgid "Infraspecific"
+msgstr ""
+
+#: cbs_datacolumns.rscinitialphotonr
+msgid "Initial photo nr."
+msgstr ""
+
+#: cbs_datacolumns.rscinsertdate
+#, fuzzy
+msgctxt "cbs_datacolumns.rscinsertdate"
+msgid "Creation date"
+msgstr "Data de criação"
+
+#: cbs_datacolumns.rscinstagram
+msgid "Instagram"
+msgstr ""
+
+#: cbs_datacolumns.rscinstitution
+#, fuzzy
+msgctxt "cbs_datacolumns.rscinstitution"
+msgid "Institution"
+msgstr "Instituição"
+
+#: cbs_datacolumns.rscinstitutionid
+msgid "Institution ID"
+msgstr ""
+
+#: cbs_datacolumns.rscinternaldiameter
+msgid "Internal diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscinternalheight
+msgid "Internal height"
+msgstr ""
+
+#: cbs_datacolumns.rscioc
+#, fuzzy
+msgctxt "cbs_datacolumns.rscioc"
+msgid "IOC"
+msgstr "IOC"
+
+#: cbs_datacolumns.rscisinebird
+msgid "Is in eBird"
+msgstr ""
+
+#: cbs_datacolumns.rsckippsdistance
+msgid "Kipp's distance"
+msgstr ""
+
+#: cbs_datacolumns.rsclanguage
+msgid "Language"
+msgstr ""
+
+#: cbs_datacolumns.rsclastdateactive
+#, fuzzy
+msgctxt "cbs_datacolumns.rsclastdateactive"
+msgid "Last date active"
+msgstr "Última data ativo"
+
+#: cbs_datacolumns.rsclatitude
+#, fuzzy
+msgctxt "cbs_datacolumns.rsclatitude"
+msgid "Latitude"
+msgstr "Latitude"
+
+#: cbs_datacolumns.rsclattes
+msgid "Lattes"
+msgstr ""
+
+#: cbs_datacolumns.rsclc
+msgid "LC"
+msgstr ""
+
+#: cbs_datacolumns.rsclefttarsus
+msgid "Left tarsus"
+msgstr ""
+
+#: cbs_datacolumns.rsclefttibia
+msgid "Left tibia"
+msgstr ""
+
+#: cbs_datacolumns.rsclength
+msgid "Length"
+msgstr ""
+
+#: cbs_datacolumns.rsclocality
+#, fuzzy
+msgctxt "cbs_datacolumns.rsclocality"
+msgid "Locality"
+msgstr "Localidade"
+
+#: cbs_datacolumns.rsclocalityid
+msgid "Locality ID"
+msgstr ""
+
+#: cbs_datacolumns.rsclongitude
+#, fuzzy
+msgctxt "cbs_datacolumns.rsclongitude"
+msgid "Longitude"
+msgstr "Longitude"
+
+#: cbs_datacolumns.rscmackinnonlist
+msgid "Mackinnon list"
+msgstr ""
+
+#: cbs_datacolumns.rscmainrank
+msgid "Main rank"
+msgstr ""
+
+#: cbs_datacolumns.rscmales
+msgid "# males"
+msgstr ""
+
+#: cbs_datacolumns.rscmanagecollection
+#, fuzzy
+msgctxt "cbs_datacolumns.rscmanagecollection"
+msgid "Manage collection"
+msgstr "Gerenciar acervo"
+
+#: cbs_datacolumns.rscmanager
+msgid "Manager"
+msgstr ""
+
+#: cbs_datacolumns.rscmarkedstatus
+#, fuzzy
+msgctxt "cbs_datacolumns.rscmarkedstatus"
+msgid "Marked"
+msgstr "Marcado"
+
+#: cbs_datacolumns.rscmass
+msgid "Mass"
+msgstr ""
+
+#: cbs_datacolumns.rscmaxplantdiameter
+msgid "Max. plant diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscmc
+msgid "MC"
+msgstr ""
+
+#: cbs_datacolumns.rscmethod
+#, fuzzy
+msgctxt "cbs_datacolumns.rscmethod"
+msgid "Method"
+msgstr "Método"
+
+#: cbs_datacolumns.rscmethodid
+msgid "Method ID"
+msgstr ""
+
+#: cbs_datacolumns.rscminplantdiameter
+msgid "Min. plant diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetaream
+msgid "Mistnet area (m²)"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetefforthm
+msgid "Mistnet effort (h•m²)"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetheightm
+msgid "Mistnet height (m)"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetid
+msgid "Mistnet ID"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetlengthm
+msgid "Mistnet length (m)"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetmesh
+msgid "Mistnet mesh"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetnr
+msgid "Mistnet nr."
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetrounds
+msgid "Mistnet rounds"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnets
+msgid "# mistnets"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetstationid
+msgid "Mistnet station ID"
+msgstr ""
+
+#: cbs_datacolumns.rscmobilephone
+msgid "Mobile phone"
+msgstr ""
+
+#: cbs_datacolumns.rscmoltcycle
+#, fuzzy
+msgctxt "cbs_datacolumns.rscmoltcycle"
+msgid "Molt cycle"
+msgstr "Ciclo de muda"
+
+#: cbs_datacolumns.rscmoltlimits
+#, fuzzy
+msgctxt "cbs_datacolumns.rscmoltlimits"
+msgid "Molt limits"
+msgstr "Limites de muda"
+
+#: cbs_datacolumns.rscmoment
+msgid "Moment"
+msgstr ""
+
+#: cbs_datacolumns.rscmother
+#, fuzzy
+msgctxt "cbs_datacolumns.rscmother"
+msgid "Mother"
+msgstr "Mãe"
+
+#: cbs_datacolumns.rscmotherid
+msgid "Mother ID"
+msgstr ""
+
+#: cbs_datacolumns.rscmunicipality
+#, fuzzy
+msgctxt "cbs_datacolumns.rscmunicipality"
+msgid "Municipality"
+msgstr "Município"
+
+#: cbs_datacolumns.rscmunicipalityid
+msgid "Municipality ID"
+msgstr ""
+
+#: cbs_datacolumns.rscname
+#, fuzzy
+msgctxt "cbs_datacolumns.rscname"
+msgid "Name"
+msgstr "Nome"
+
+#: cbs_datacolumns.rscneedsreview
+#, fuzzy
+msgctxt "cbs_datacolumns.rscneedsreview"
+msgid "Needs review"
+msgstr "Precisa de revisão"
+
+#: cbs_datacolumns.rscneighborhood
+msgid "Neighborhood"
+msgstr ""
+
+#: cbs_datacolumns.rscnest
+#, fuzzy
+msgctxt "cbs_datacolumns.rscnest"
+msgid "Nest"
+msgstr "Ninho"
+
+#: cbs_datacolumns.rscnestfate
+msgid "Nest fate"
+msgstr ""
+
+#: cbs_datacolumns.rscnestid
+msgid "Nest ID"
+msgstr ""
+
+#: cbs_datacolumns.rscnestlingdays
+msgid "Nestling (days)"
+msgstr ""
+
+#: cbs_datacolumns.rscnestlingshost
+msgid "# nestlings (host)"
+msgstr ""
+
+#: cbs_datacolumns.rscnestlingsnidoparasit
+msgid "# nestlings (nidoparasite)"
+msgstr ""
+
+#: cbs_datacolumns.rscnestproductivity
+msgid "Nest productivity"
+msgstr ""
+
+#: cbs_datacolumns.rscneststage
+#, fuzzy
+msgctxt "cbs_datacolumns.rscneststage"
+msgid "Nest stage"
+msgstr "Estágio do ninho"
+
+#: cbs_datacolumns.rscnewcaptures
+msgid "# new captures"
+msgstr ""
+
+#: cbs_datacolumns.rscnewvalue
+msgid "New value"
+msgstr ""
+
+#: cbs_datacolumns.rscnidoparasite
+msgid "Nidoparasite"
+msgstr ""
+
+#: cbs_datacolumns.rscnidoparasiteid
+msgid "Nidoparasite ID"
+msgstr ""
+
+#: cbs_datacolumns.rscnostriltobilltip
+msgid "Nostril to bill tip"
+msgstr ""
+
+#: cbs_datacolumns.rscnotaged
+msgid "# not aged"
+msgstr ""
+
+#: cbs_datacolumns.rscnotes
+#, fuzzy
+msgctxt "cbs_datacolumns.rscnotes"
+msgid "Notes"
+msgstr "Anotações"
+
+#: cbs_datacolumns.rscnotsexed
+msgid "# not sexed"
+msgstr ""
+
+#: cbs_datacolumns.rscnumber
+msgid "Number"
+msgstr ""
+
+#: cbs_datacolumns.rscobserver
+#, fuzzy
+msgctxt "cbs_datacolumns.rscobserver"
+msgid "Observer"
+msgstr "Observador"
+
+#: cbs_datacolumns.rscobserver1
+msgid "Observer 1"
+msgstr ""
+
+#: cbs_datacolumns.rscobserver1id
+msgid "Observer 1 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscobserver2
+msgid "Observer 2"
+msgstr ""
+
+#: cbs_datacolumns.rscobserver2id
+msgid "Observer 2 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscobserverid
+msgid "Observer ID"
+msgstr ""
+
+#: cbs_datacolumns.rscobservers
+msgid "# observers"
+msgstr ""
+
+#: cbs_datacolumns.rscoldvalue
+msgid "Old value"
+msgstr ""
+
+#: cbs_datacolumns.rscopentime1
+msgid "Open time 1"
+msgstr ""
+
+#: cbs_datacolumns.rscopentime2
+msgid "Open time 2"
+msgstr ""
+
+#: cbs_datacolumns.rscopentime3
+msgid "Open time 3"
+msgstr ""
+
+#: cbs_datacolumns.rscopentime4
+msgid "Open time 4"
+msgstr ""
+
+#: cbs_datacolumns.rscorcid
+msgid "Orcid"
+msgstr ""
+
+#: cbs_datacolumns.rscorderid
+msgid "Order ID"
+msgstr ""
+
+#: cbs_datacolumns.rscordernr
+msgid "Order nr."
+msgstr ""
+
+#: cbs_datacolumns.rscotherportuguesenames
+msgid "Other portuguese names"
+msgstr ""
+
+#: cbs_datacolumns.rscothersupport
+msgid "Other support"
+msgstr ""
+
+#: cbs_datacolumns.rscoutofsample
+msgid "Out of sample"
+msgstr ""
+
+#: cbs_datacolumns.rscp1
+msgid "P1"
+msgstr ""
+
+#: cbs_datacolumns.rscp10
+msgid "P10"
+msgstr ""
+
+#: cbs_datacolumns.rscp2
+msgid "P2"
+msgstr ""
+
+#: cbs_datacolumns.rscp3
+msgid "P3"
+msgstr ""
+
+#: cbs_datacolumns.rscp4
+msgid "P4"
+msgstr ""
+
+#: cbs_datacolumns.rscp5
+msgid "P5"
+msgstr ""
+
+#: cbs_datacolumns.rscp6
+msgid "P6"
+msgstr ""
+
+#: cbs_datacolumns.rscp7
+msgid "P7"
+msgstr ""
+
+#: cbs_datacolumns.rscp8
+msgid "P8"
+msgstr ""
+
+#: cbs_datacolumns.rscp9
+msgid "P9"
+msgstr ""
+
+#: cbs_datacolumns.rscparasites
+#, fuzzy
+msgctxt "cbs_datacolumns.rscparasites"
+msgid "Parasites"
+msgstr "Parasitas"
+
+#: cbs_datacolumns.rscparentsite
+msgid "Parent site"
+msgstr ""
+
+#: cbs_datacolumns.rscparentsiteid
+msgid "Parent site ID"
+msgstr ""
+
+#: cbs_datacolumns.rscparenttaxon
+msgid "Parent taxon"
+msgstr ""
+
+#: cbs_datacolumns.rscparenttaxonid
+msgid "Parent taxon ID"
+msgstr ""
+
+#: cbs_datacolumns.rscpassword
+msgid "Password"
+msgstr ""
+
+#: cbs_datacolumns.rscpc1
+msgid "PC1"
+msgstr ""
+
+#: cbs_datacolumns.rscpc2
+msgid "PC2"
+msgstr ""
+
+#: cbs_datacolumns.rscpc3
+msgid "PC3"
+msgstr ""
+
+#: cbs_datacolumns.rscpc4
+msgid "PC4"
+msgstr ""
+
+#: cbs_datacolumns.rscpc5
+msgid "PC5"
+msgstr ""
+
+#: cbs_datacolumns.rscpc6
+msgid "PC6"
+msgstr ""
+
+#: cbs_datacolumns.rscpc7
+msgid "PC7"
+msgstr ""
+
+#: cbs_datacolumns.rscpc8
+msgid "PC8"
+msgstr ""
+
+#: cbs_datacolumns.rscpc9
+msgid "PC9"
+msgstr ""
+
+#: cbs_datacolumns.rscpermanentnet
+msgid "Permanent net"
+msgstr ""
+
+#: cbs_datacolumns.rscpermanentnetid
+msgid "Permanent net ID"
+msgstr ""
+
+#: cbs_datacolumns.rscperson
+#, fuzzy
+msgctxt "cbs_datacolumns.rscperson"
+msgid "Person"
+msgstr "Pessoa"
+
+#: cbs_datacolumns.rscpersonid
+msgid "Person ID"
+msgstr ""
+
+#: cbs_datacolumns.rscphone
+msgid "Phone"
+msgstr ""
+
+#: cbs_datacolumns.rscphotographed
+#, fuzzy
+msgctxt "cbs_datacolumns.rscphotographed"
+msgid "Photographed"
+msgstr "Fotografado"
+
+#: cbs_datacolumns.rscphotographer1
+msgid "Photographer 1"
+msgstr ""
+
+#: cbs_datacolumns.rscphotographer1id
+msgid "Photographer 1 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscphotographer2
+msgid "Photographer 2"
+msgstr ""
+
+#: cbs_datacolumns.rscphotographer2id
+msgid "Photographer 2 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscplantcenterdistance
+msgid "Plant center distance"
+msgstr ""
+
+#: cbs_datacolumns.rscplantdbh
+msgid "Plant DBH"
+msgstr ""
+
+#: cbs_datacolumns.rscplantedgedistance
+msgid "Plant edge distance"
+msgstr ""
+
+#: cbs_datacolumns.rscplantheight
+msgid "Plant height"
+msgstr ""
+
+#: cbs_datacolumns.rscport
+msgid "Port"
+msgstr ""
+
+#: cbs_datacolumns.rscportuguesename
+msgid "Portuguese name"
+msgstr ""
+
+#: cbs_datacolumns.rscprecipitation
+msgid "Precipitation"
+msgstr ""
+
+#: cbs_datacolumns.rscprefix
+msgid "Prefix"
+msgstr ""
+
+#: cbs_datacolumns.rscpreparationdate
+#, fuzzy
+msgctxt "cbs_datacolumns.rscpreparationdate"
+msgid "Preparation date"
+msgstr "Data de preparação"
+
+#: cbs_datacolumns.rscpreparer
+msgid "Preparer"
+msgstr ""
+
+#: cbs_datacolumns.rscpreparerid
+msgid "Preparer ID"
+msgstr ""
+
+#: cbs_datacolumns.rscprintreports
+#, fuzzy
+msgctxt "cbs_datacolumns.rscprintreports"
+msgid "Print reports"
+msgstr "Imprimir relatórios"
+
+#: cbs_datacolumns.rscprofilecolor
+msgid "Profile color"
+msgstr ""
+
+#: cbs_datacolumns.rscprofileimage
+msgid "Profile image"
+msgstr ""
+
+#: cbs_datacolumns.rscproject
+#, fuzzy
+msgctxt "cbs_datacolumns.rscproject"
+msgid "Project"
+msgstr "Projeto"
+
+#: cbs_datacolumns.rscprojectfile
+msgid "Project file"
+msgstr ""
+
+#: cbs_datacolumns.rscprojectid
+msgid "Project ID"
+msgstr ""
+
+#: cbs_datacolumns.rscproperty
+#, fuzzy
+msgctxt "cbs_datacolumns.rscproperty"
+msgid "Property"
+msgstr "Propriedade"
+
+#: cbs_datacolumns.rscquantphilornislarvae
+msgid "# Philornis larvae"
+msgstr ""
+
+#: cbs_datacolumns.rscquickcode
+msgid "Quick code"
+msgstr ""
+
+#: cbs_datacolumns.rscr1
+msgid "R1"
+msgstr ""
+
+#: cbs_datacolumns.rscr2
+msgid "R2"
+msgstr ""
+
+#: cbs_datacolumns.rscr3
+msgid "R3"
+msgstr ""
+
+#: cbs_datacolumns.rscr4
+msgid "R4"
+msgstr ""
+
+#: cbs_datacolumns.rscr5
+msgid "R5"
+msgstr ""
+
+#: cbs_datacolumns.rscr6
+msgid "R6"
+msgstr ""
+
+#: cbs_datacolumns.rscrainfallmm
+msgid "Rainfall (mm)"
+msgstr ""
+
+#: cbs_datacolumns.rscrecaptures
+msgid "# recaptures"
+msgstr ""
+
+#: cbs_datacolumns.rscrecognizablemarkings
+msgid "Recognizable markings"
+msgstr ""
+
+#: cbs_datacolumns.rscrecorded
+msgid "Recorded"
+msgstr ""
+
+#: cbs_datacolumns.rscrelativehumidity
+msgid "Relative humidity (%)"
+msgstr ""
+
+#: cbs_datacolumns.rscremovedband
+#, fuzzy
+msgctxt "cbs_datacolumns.rscremovedband"
+msgid "Removed band"
+msgstr "Anilha removida"
+
+#: cbs_datacolumns.rscremovedbandid
+msgid "Removed band ID"
+msgstr ""
+
+#: cbs_datacolumns.rscreported
+#, fuzzy
+msgctxt "cbs_datacolumns.rscreported"
+msgid "Reported"
+msgstr "Relatada"
+
+#: cbs_datacolumns.rscrequester
+#, fuzzy
+msgctxt "cbs_datacolumns.rscrequester"
+msgid "Requester"
+msgstr "Solicitante"
+
+#: cbs_datacolumns.rscrequesterid
+msgid "Requester ID"
+msgstr ""
+
+#: cbs_datacolumns.rscresearcher
+#, fuzzy
+msgctxt "cbs_datacolumns.rscresearcher"
+msgid "Researcher"
+msgstr "Pesquisador"
+
+#: cbs_datacolumns.rscresearcherid
+msgid "Researcher ID"
+msgstr ""
+
+#: cbs_datacolumns.rscrg
+msgid "RG"
+msgstr ""
+
+#: cbs_datacolumns.rscrighttarsus
+msgid "Right tarsus"
+msgstr ""
+
+#: cbs_datacolumns.rscrighttibia
+msgid "Right tibia"
+msgstr ""
+
+#: cbs_datacolumns.rscrightwingchord
+msgid "Right wing chord"
+msgstr ""
+
+#: cbs_datacolumns.rscrole
+msgid "Role"
+msgstr ""
+
+#: cbs_datacolumns.rscs1
+msgid "S1"
+msgstr ""
+
+#: cbs_datacolumns.rscs2
+msgid "S2"
+msgstr ""
+
+#: cbs_datacolumns.rscs3
+msgid "S3"
+msgstr ""
+
+#: cbs_datacolumns.rscs4
+msgid "S4"
+msgstr ""
+
+#: cbs_datacolumns.rscs5
+msgid "S5"
+msgstr ""
+
+#: cbs_datacolumns.rscs6
+msgid "S6"
+msgstr ""
+
+#: cbs_datacolumns.rscs7
+msgid "S7"
+msgstr ""
+
+#: cbs_datacolumns.rscs8
+msgid "S8"
+msgstr ""
+
+#: cbs_datacolumns.rscs9
+msgid "S9"
+msgstr ""
+
+#: cbs_datacolumns.rscsampleid
+msgid "Sample ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsamplingplot
+#, fuzzy
+msgctxt "cbs_datacolumns.rscsamplingplot"
+msgid "Sampling plot"
+msgstr "Parcela amostral"
+
+#: cbs_datacolumns.rscsamplingplotid
+msgid "Sampling plot ID"
+msgstr ""
+
+#: cbs_datacolumns.rscscientificname
+msgid "Scientific name"
+msgstr ""
+
+#: cbs_datacolumns.rscseen
+#, fuzzy
+msgctxt "cbs_datacolumns.rscseen"
+msgid "Seen"
+msgstr "Visto"
+
+#: cbs_datacolumns.rscsender
+#, fuzzy
+msgctxt "cbs_datacolumns.rscsender"
+msgid "Sender"
+msgstr "Remetente"
+
+#: cbs_datacolumns.rscsenderid
+msgid "Sender ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsequence
+msgid "Sequence"
+msgstr ""
+
+#: cbs_datacolumns.rscserver
+msgid "Server"
+msgstr ""
+
+#: cbs_datacolumns.rscsex
+#, fuzzy
+msgctxt "cbs_datacolumns.rscsex"
+msgid "Sex"
+msgstr "Sexo"
+
+#: cbs_datacolumns.rscshape
+msgid "Shape"
+msgstr ""
+
+#: cbs_datacolumns.rscshorttitle
+msgid "Short title"
+msgstr ""
+
+#: cbs_datacolumns.rscsitename
+msgid "Site name"
+msgstr ""
+
+#: cbs_datacolumns.rscsize
+#, fuzzy
+msgctxt "cbs_datacolumns.rscsize"
+msgid "Size"
+msgstr "Tamanho"
+
+#: cbs_datacolumns.rscskulllength
+msgid "Skull length"
+msgstr ""
+
+#: cbs_datacolumns.rscskullossification
+#, fuzzy
+msgctxt "cbs_datacolumns.rscskullossification"
+msgid "Skull ossification"
+msgstr "Ossificação craniana"
+
+#: cbs_datacolumns.rscsource
+msgid "Source"
+msgstr ""
+
+#: cbs_datacolumns.rscspanishname
+msgid "Spanish name"
+msgstr ""
+
+#: cbs_datacolumns.rscspeciesepithet
+msgid "Species epithet"
+msgstr ""
+
+#: cbs_datacolumns.rscspeciesid
+msgid "Species ID"
+msgstr ""
+
+#: cbs_datacolumns.rscspecimenid
+msgid "Specimen ID"
+msgstr ""
+
+#: cbs_datacolumns.rscstage
+msgid "Stage"
+msgstr ""
+
+#: cbs_datacolumns.rscstartdate
+#, fuzzy
+msgctxt "cbs_datacolumns.rscstartdate"
+msgid "Start date"
+msgstr "Data inicial"
+
+#: cbs_datacolumns.rscstarttime
+msgid "Start time"
+msgstr ""
+
+#: cbs_datacolumns.rscstate
+#, fuzzy
+msgctxt "cbs_datacolumns.rscstate"
+msgid "State"
+msgstr "Estado"
+
+#: cbs_datacolumns.rscstateid
+msgid "State ID"
+msgstr ""
+
+#: cbs_datacolumns.rscstatus
+#, fuzzy
+msgctxt "cbs_datacolumns.rscstatus"
+msgid "Status"
+msgstr "Status"
+
+#: cbs_datacolumns.rscsubfamilyid
+msgid "Subfamily ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsubrank
+msgid "Sub rank"
+msgstr ""
+
+#: cbs_datacolumns.rscsubspeciesepithet
+msgid "Subspecies epithet"
+msgstr ""
+
+#: cbs_datacolumns.rscsubspeciesgroup
+msgid "Subspecies group"
+msgstr ""
+
+#: cbs_datacolumns.rscsubspeciesgroupid
+msgid "Subspecies group ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsuffix
+msgid "Suffix"
+msgstr ""
+
+#: cbs_datacolumns.rscsupplier
+#, fuzzy
+msgctxt "cbs_datacolumns.rscsupplier"
+msgid "Supplier"
+msgstr "Fornecedor"
+
+#: cbs_datacolumns.rscsupplierid
+msgid "Supplier ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsupportplant1
+msgid "Support plant 1"
+msgstr ""
+
+#: cbs_datacolumns.rscsupportplant1id
+msgid "Support plant 1 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsupportplant2
+msgid "Support plant 2"
+msgstr ""
+
+#: cbs_datacolumns.rscsupportplant2id
+msgid "Support plant 2 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsupporttype
+#, fuzzy
+msgctxt "cbs_datacolumns.rscsupporttype"
+msgid "Support type"
+msgstr "Tipo de suporte"
+
+#: cbs_datacolumns.rscsurvey
+#, fuzzy
+msgctxt "cbs_datacolumns.rscsurvey"
+msgid "Survey"
+msgstr "Amostragem"
+
+#: cbs_datacolumns.rscsurveyid
+msgid "Survey ID"
+msgstr ""
+
+#: cbs_datacolumns.rsctaillength
+msgid "Tail length"
+msgstr ""
+
+#: cbs_datacolumns.rsctarsusdiameter
+msgid "Tarsus diameter"
+msgstr ""
+
+#: cbs_datacolumns.rsctarsuslength
+msgid "Tarsus length"
+msgstr ""
+
+#: cbs_datacolumns.rsctaxon
+#, fuzzy
+msgctxt "cbs_datacolumns.rsctaxon"
+msgid "Taxon"
+msgstr "Táxon"
+
+#: cbs_datacolumns.rsctaxonid
+msgid "Taxon ID"
+msgstr ""
+
+#: cbs_datacolumns.rsctaxonomicrank
+msgid "Taxonomic rank"
+msgstr ""
+
+#: cbs_datacolumns.rsctaxonomicrankid
+msgid "Taxonomic rank ID"
+msgstr ""
+
+#: cbs_datacolumns.rsctaxonomicsequence
+msgid "Taxonomic sequence"
+msgstr ""
+
+#: cbs_datacolumns.rsctemperaturec
+msgid "Temperature (°C)"
+msgstr ""
+
+#: cbs_datacolumns.rsctime
+msgid "Time"
+msgstr ""
+
+#: cbs_datacolumns.rsctitle
+msgid "Title"
+msgstr ""
+
+#: cbs_datacolumns.rsctotalculmen
+msgid "Total culmen"
+msgstr ""
+
+#: cbs_datacolumns.rsctotallength
+msgid "Total length"
+msgstr ""
+
+#: cbs_datacolumns.rsctotaltimeopenedh
+msgid "Total time opened (h)"
+msgstr ""
+
+#: cbs_datacolumns.rsctreatment
+msgid "Treatment"
+msgstr ""
+
+#: cbs_datacolumns.rsctype
+#, fuzzy
+msgctxt "cbs_datacolumns.rsctype"
+msgid "Type"
+msgstr "Tipo"
+
+#: cbs_datacolumns.rscunbanded
+msgid "# unbanded"
+msgstr ""
+
+#: cbs_datacolumns.rscupdatedate
+#, fuzzy
+msgctxt "cbs_datacolumns.rscupdatedate"
+msgid "Last modified date"
+msgstr "Data da última modificação"
+
+#: cbs_datacolumns.rscuserid
+msgid "User ID"
+msgstr ""
+
+#: cbs_datacolumns.rscuserinserted
+#, fuzzy
+msgctxt "cbs_datacolumns.rscuserinserted"
+msgid "Created by"
+msgstr "Criado por"
+
+#: cbs_datacolumns.rscusername
+#, fuzzy
+msgctxt "cbs_datacolumns.rscusername"
+msgid "Username"
+msgstr "Nome de usuário"
+
+#: cbs_datacolumns.rscuserupdated
+msgid "Last modified by"
+msgstr ""
+
+#: cbs_datacolumns.rscuuid
+msgid "UUID"
+msgstr ""
+
+#: cbs_datacolumns.rscvalidname
+msgid "Valid name"
+msgstr ""
+
+#: cbs_datacolumns.rscvalidnameid
+msgid "Valid name ID"
+msgstr ""
+
+#: cbs_datacolumns.rscvernacularnames
+msgid "Vernacular name(s)"
+msgstr ""
+
+#: cbs_datacolumns.rscvisitor
+msgid "Visitor"
+msgstr ""
+
+#: cbs_datacolumns.rscvolume
+msgid "Volume"
+msgstr ""
+
+#: cbs_datacolumns.rscwebsite
+#, fuzzy
+msgctxt "cbs_datacolumns.rscwebsite"
+msgid "Website"
+msgstr "Website"
+
+#: cbs_datacolumns.rscweight
+msgid "Weight"
+msgstr ""
+
+#: cbs_datacolumns.rscwidth
+msgid "Width"
+msgstr ""
+
+#: cbs_datacolumns.rscwindbft
+msgid "Wind (Bft)"
+msgstr ""
+
+#: cbs_datacolumns.rscwindkmh
+msgid "Wind (km/h)"
+msgstr ""
+
+#: cbs_datacolumns.rscxtwitter
+msgid "X (Twitter)"
+msgstr ""
+
+#: cbs_datacolumns.rsczipcode
+msgid "Zip code"
+msgstr ""
+
+#: cbs_datacolumns.rsczoologicalcode
+msgid "ICZN"
+msgstr ""
+
 #: cbs_locale.rsaccepted
 msgctxt "cbs_locale.rsaccepted"
 msgid "Accepted"
@@ -560,6 +2452,7 @@ msgid "Permit"
 msgstr "Licença"
 
 #: cbs_locale.rscaptionperson
+msgctxt "cbs_locale.rscaptionperson"
 msgid "Researcher"
 msgstr "Pesquisador"
 
@@ -790,6 +2683,7 @@ msgid "capture date"
 msgstr "data da captura"
 
 #: cbs_locale.rsdatecollection
+msgctxt "cbs_locale.rsdatecollection"
 msgid "Collection date"
 msgstr "Data de coleta"
 
@@ -804,6 +2698,7 @@ msgid "Discharge date"
 msgstr "Data de baixa"
 
 #: cbs_locale.rsdatedispatch
+msgctxt "cbs_locale.rsdatedispatch"
 msgid "Dispatch date"
 msgstr "Data de emissão"
 
@@ -818,6 +2713,7 @@ msgid "Expiration date"
 msgstr "Data de validade"
 
 #: cbs_locale.rsdateexpire
+msgctxt "cbs_locale.rsdateexpire"
 msgid "Expire date"
 msgstr "Data de validade"
 
@@ -835,6 +2731,7 @@ msgid "Issue date"
 msgstr "Data de emissão"
 
 #: cbs_locale.rsdatelast
+msgctxt "cbs_locale.rsdatelast"
 msgid "Last date active"
 msgstr "Última data ativo"
 
@@ -848,6 +2745,7 @@ msgid "Nest revision date"
 msgstr "Data da revisão do ninho"
 
 #: cbs_locale.rsdatepreparation
+msgctxt "cbs_locale.rsdatepreparation"
 msgid "Preparation date"
 msgstr "Data de preparação"
 
@@ -3562,6 +5460,7 @@ msgid "Third-party announcements"
 msgstr "Anúncios de terceiros"
 
 #: tdlgabout.linkwebsite.caption
+msgctxt "tdlgabout.linkwebsite.caption"
 msgid "Website"
 msgstr "Website"
 
@@ -3629,6 +5528,7 @@ msgid "Marked"
 msgstr "Marcado"
 
 #: tdlgbandhistory.dbg.columns[10].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[10].title.caption"
 msgid "Requester"
 msgstr "Solicitante"
 
@@ -3642,6 +5542,7 @@ msgid "Notes"
 msgstr "Anotações"
 
 #: tdlgbandhistory.dbg.columns[13].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[13].title.caption"
 msgid "Created by"
 msgstr "Criado por"
 
@@ -3701,6 +5602,7 @@ msgid "Sender (Id)"
 msgstr "Remetente (ID)"
 
 #: tdlgbandhistory.dbg.columns[8].title.caption
+msgctxt "tdlgbandhistory.dbg.columns[8].title.caption"
 msgid "Sender"
 msgstr "Remetente"
 
@@ -3999,7 +5901,10 @@ msgid "Connect"
 msgstr "Conectar"
 
 #: tdlgexport.btnoptions.caption
-msgid "More options"
+#, fuzzy
+#| msgid "More options"
+msgctxt "tdlgexport.btnoptions.caption"
+msgid "Options"
 msgstr "Mais opções"
 
 #: tdlgexport.caption
@@ -4342,10 +6247,12 @@ msgid "Date"
 msgstr "Data"
 
 #: tdlgrechistory.dbghistory.columns[1].title.caption
+msgctxt "tdlgrechistory.dbghistory.columns[1].title.caption"
 msgid "Action"
 msgstr "Ação"
 
 #: tdlgrechistory.dbghistory.columns[2].title.caption
+msgctxt "tdlgrechistory.dbghistory.columns[2].title.caption"
 msgid "Property"
 msgstr "Propriedade"
 
@@ -7291,6 +9198,7 @@ msgid "Save"
 msgstr "Salvar"
 
 #: tedtuser.ckallowcollectionedit.caption
+msgctxt "tedtuser.ckallowcollectionedit.caption"
 msgid "Manage collection"
 msgstr "Gerenciar acervo"
 
@@ -7305,6 +9213,7 @@ msgid "Import data"
 msgstr "Importar dados"
 
 #: tedtuser.ckallowprint.caption
+msgctxt "tedtuser.ckallowprint.caption"
 msgid "Print reports"
 msgstr "Imprimir relatórios"
 
@@ -7685,10 +9594,12 @@ msgid "Band type"
 msgstr "Tipo de anilha"
 
 #: tfrmcustomgrid.lblbodymoltfilter.caption
+msgctxt "tfrmcustomgrid.lblbodymoltfilter.caption"
 msgid "Body molt"
 msgstr "Muda do corpo"
 
 #: tfrmcustomgrid.lblbroodpatchfilter.caption
+msgctxt "tfrmcustomgrid.lblbroodpatchfilter.caption"
 msgid "Brood patch"
 msgstr "Placa de incubação"
 
@@ -7736,6 +9647,7 @@ msgid "Clements/eBird"
 msgstr "Clements/eBird"
 
 #: tfrmcustomgrid.lblcloacalprotuberancefilter.caption
+msgctxt "tfrmcustomgrid.lblcloacalprotuberancefilter.caption"
 msgid "Cloacal protuberance"
 msgstr "Protuberância cloacal"
 
@@ -7760,6 +9672,7 @@ msgid "none selected"
 msgstr "nenhum selecionado"
 
 #: tfrmcustomgrid.lblcyclecodefilter.caption
+msgctxt "tfrmcustomgrid.lblcyclecodefilter.caption"
 msgid "Molt cycle"
 msgstr "Ciclo de muda"
 
@@ -7782,6 +9695,7 @@ msgid "Pattern"
 msgstr "Padrão"
 
 #: tfrmcustomgrid.lbleggshapefilter.caption
+msgctxt "tfrmcustomgrid.lbleggshapefilter.caption"
 msgid "Egg shape"
 msgstr "Formato do ovo"
 
@@ -7808,6 +9722,7 @@ msgid "Expedition"
 msgstr "Expedição"
 
 #: tfrmcustomgrid.lblextinctfilter.caption
+msgctxt "tfrmcustomgrid.lblextinctfilter.caption"
 msgid "Extinct"
 msgstr "Extinto"
 
@@ -7816,10 +9731,12 @@ msgid "Subcutaneous fat"
 msgstr "Gordura subcutânea"
 
 #: tfrmcustomgrid.lblffmoltfilter.caption
+msgctxt "tfrmcustomgrid.lblffmoltfilter.caption"
 msgid "Flight feathers molt"
 msgstr "Muda das penas de voo"
 
 #: tfrmcustomgrid.lblffwearfilter.caption
+msgctxt "tfrmcustomgrid.lblffwearfilter.caption"
 msgid "Flight feathers wear"
 msgstr "Desgaste das penas de voo"
 
@@ -7833,10 +9750,12 @@ msgid "Hatched"
 msgstr "Eclodiu"
 
 #: tfrmcustomgrid.lblhowagedfilter.caption
+msgctxt "tfrmcustomgrid.lblhowagedfilter.caption"
 msgid "How was aged"
 msgstr "Como foi etariado"
 
 #: tfrmcustomgrid.lblhowsexedfilter.caption
+msgctxt "tfrmcustomgrid.lblhowsexedfilter.caption"
 msgid "How was sexed"
 msgstr "Como foi sexado"
 
@@ -7870,6 +9789,7 @@ msgid "Molt limits"
 msgstr "Limites de muda"
 
 #: tfrmcustomgrid.lblneedsreviewfilter.caption
+msgctxt "tfrmcustomgrid.lblneedsreviewfilter.caption"
 msgid "Needs review"
 msgstr "Precisa de revisão"
 
@@ -7883,6 +9803,7 @@ msgid "Nest"
 msgstr "Ninho"
 
 #: tfrmcustomgrid.lblneststagefilter.caption
+msgctxt "tfrmcustomgrid.lblneststagefilter.caption"
 msgid "Nest stage"
 msgstr "Estágio do ninho"
 
@@ -7891,6 +9812,7 @@ msgid "Nest status"
 msgstr "Status do ninho"
 
 #: tfrmcustomgrid.lblnestsupportfilter.caption
+msgctxt "tfrmcustomgrid.lblnestsupportfilter.caption"
 msgid "Support type"
 msgstr "Tipo de suporte"
 
@@ -7915,6 +9837,7 @@ msgid "Permit type"
 msgstr "Tipo de licença"
 
 #: tfrmcustomgrid.lblpersonfilter.caption
+msgctxt "tfrmcustomgrid.lblpersonfilter.caption"
 msgid "Person"
 msgstr "Pessoa"
 
@@ -7970,6 +9893,7 @@ msgid "Site rank"
 msgstr "Nível do local"
 
 #: tfrmcustomgrid.lblskullossificationfilter.caption
+msgctxt "tfrmcustomgrid.lblskullossificationfilter.caption"
 msgid "Skull ossification"
 msgstr "Ossificação craniana"
 
@@ -9170,6 +11094,7 @@ msgid "Clear search"
 msgstr "Limpar busca"
 
 #: tfrmmain.sbfilemenu.caption
+msgctxt "tfrmmain.sbfilemenu.caption"
 msgid "File"
 msgstr "Arquivo"
 
@@ -9305,6 +11230,7 @@ msgid "Apply"
 msgstr "Aplicar"
 
 #: tlstdetectiontype.caption
+msgctxt "tlstdetectiontype.caption"
 msgid "Detection type"
 msgstr "Tipo de detecção"
 
@@ -9346,3 +11272,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

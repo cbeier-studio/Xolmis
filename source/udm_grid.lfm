@@ -1,4 +1,5 @@
 object DMG: TDMG
+  OnCreate = DataModuleCreate
   OldCreateOrder = False
   Height = 630
   HorizontalOffset = 477
@@ -9943,28 +9944,28 @@ object DMG: TDMG
       OnSetText = qNestRevisionsnest_stageSetText
       Size = 1
     end
-    object qNestRevisionsnest_revision_id: TAutoIncField
-      DisplayLabel = 'ID'
-      FieldKind = fkData
-      FieldName = 'nest_revision_id'
-      Index = 17
-      LookupCache = False
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = False
-      Required = False
-    end
     object qNestRevisionsnotes: TMemoField
       DisplayLabel = 'Notes'
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 18
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       BlobType = ftMemo
       Transliterate = False
+    end
+    object qNestRevisionsnest_revision_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'nest_revision_id'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
     end
     object qNestRevisionsfull_name: TStringField
       DisplayLabel = 'Full name'
@@ -11816,7 +11817,7 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Left = 544
-    Top = 35
+    Top = 307
     object qProjectsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -12140,7 +12141,7 @@ object DMG: TDMG
     Macros = <>
     DataSource = dsProjects
     Left = 544
-    Top = 90
+    Top = 362
     object qProjectTeammarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -12423,7 +12424,7 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Left = 544
-    Top = 143
+    Top = 415
     object qPermitsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -12866,8 +12867,8 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
-    Left = 544
-    Top = 251
+    Left = 536
+    Top = 36
     object qSpecimensmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -13465,8 +13466,8 @@ object DMG: TDMG
       end>
     Macros = <>
     DataSource = dsSpecimens
-    Left = 544
-    Top = 306
+    Left = 536
+    Top = 90
     object qSamplePrepsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -14560,14 +14561,15 @@ object DMG: TDMG
     Macros = <>
     Left = 710
     Top = 90
-    object qTaxataxon_id: TLargeintField
+    object qTaxamarked_status: TBooleanField
       FieldKind = fkData
-      FieldName = 'taxon_id'
+      FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInWhere, pfInKey]
+      ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = True
+      Required = False
+      DisplayValues = 'True;False'
     end
     object qTaxafull_name: TStringField
       FieldKind = fkData
@@ -14954,10 +14956,19 @@ object DMG: TDMG
       BlobType = ftMemo
       Transliterate = False
     end
+    object qTaxataxon_id: TLargeintField
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 41
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
     object qTaxauser_inserted: TLongintField
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 41
+      Index = 42
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -14966,7 +14977,7 @@ object DMG: TDMG
     object qTaxauser_updated: TLongintField
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 42
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -14975,7 +14986,7 @@ object DMG: TDMG
     object qTaxainsert_date: TDateTimeField
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 43
+      Index = 44
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -14984,7 +14995,7 @@ object DMG: TDMG
     object qTaxaupdate_date: TDateTimeField
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 44
+      Index = 45
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -14993,16 +15004,6 @@ object DMG: TDMG
     object qTaxaexported_status: TBooleanField
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 45
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      DisplayValues = 'True;False'
-    end
-    object qTaxamarked_status: TBooleanField
-      FieldKind = fkData
-      FieldName = 'marked_status'
       Index = 46
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -15224,27 +15225,27 @@ object DMG: TDMG
   object dsProjects: TDataSource
     DataSet = qProjects
     Left = 610
-    Top = 35
+    Top = 307
   end
   object dsProjectTeam: TDataSource
     DataSet = qProjectTeam
     Left = 610
-    Top = 90
+    Top = 362
   end
   object dsPermits: TDataSource
     DataSet = qPermits
     Left = 610
-    Top = 143
+    Top = 415
   end
   object dsSpecimens: TDataSource
     DataSet = qSpecimens
-    Left = 610
-    Top = 250
+    Left = 602
+    Top = 35
   end
   object dsSamplePreps: TDataSource
     DataSet = qSamplePreps
-    Left = 610
-    Top = 306
+    Left = 602
+    Top = 90
   end
   object dsBotany: TDataSource
     DataSet = qBotany
@@ -16876,8 +16877,8 @@ object DMG: TDMG
       end>
     Macros = <>
     DataSource = dsSpecimens
-    Left = 544
-    Top = 365
+    Left = 536
+    Top = 143
     object qSampleCollectorsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -17018,7 +17019,7 @@ object DMG: TDMG
   end
   object dsSampleCollectors: TDataSource
     DataSet = qSampleCollectors
-    Left = 610
-    Top = 365
+    Left = 602
+    Top = 143
   end
 end

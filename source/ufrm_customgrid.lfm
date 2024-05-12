@@ -34,7 +34,7 @@ object frmCustomGrid: TfrmCustomGrid
       Height = 614
       Top = 0
       Width = 464
-      PageIndex = 0
+      PageIndex = 7
       Align = alClient
       TabOrder = 0
       object cardViewRecord: TPage
@@ -7449,11 +7449,11 @@ object frmCustomGrid: TfrmCustomGrid
           )
           object pRecycleContent: TPanel
             Left = 15
-            Height = 79
+            Height = 56
             Top = 0
             Width = 412
             BevelOuter = bvNone
-            ClientHeight = 79
+            ClientHeight = 56
             ClientWidth = 412
             Color = clWindow
             ParentBackground = False
@@ -7463,28 +7463,30 @@ object frmCustomGrid: TfrmCustomGrid
             object lblRecycleName: TDBText
               Left = 50
               Height = 15
-              Top = 10
+              Top = 8
               Width = 85
             end
             object lblRecycleModifiedDate: TDBText
               Left = 50
               Height = 15
-              Top = 40
+              Top = 28
               Width = 125
               Font.Color = 6381921
               ParentFont = False
             end
-            object DBText3: TDBText
-              Left = 300
+            object lblRecycleId: TDBText
+              Left = 296
               Height = 15
-              Top = 40
-              Width = 41
+              Top = 28
+              Width = 63
+              Alignment = taRightJustify
+              Anchors = [akTop, akRight]
               Font.Color = 6381921
               ParentFont = False
             end
             object sbRecycleRestore: TColorSpeedButton
               Left = 0
-              Height = 79
+              Height = 56
               Hint = 'Restore record'
               Top = 0
               Width = 38
@@ -7516,7 +7518,7 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object sbRecycleDelete: TColorSpeedButton
               Left = 374
-              Height = 79
+              Height = 56
               Hint = 'Delete record permanently'
               Top = 0
               Width = 38

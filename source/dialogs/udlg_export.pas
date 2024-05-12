@@ -46,7 +46,7 @@ var
 implementation
 
 uses
-  cbs_dialogs, cbs_locale, udm_main, ucfg_delimiters;
+  cbs_global, cbs_dialogs, cbs_locale, udm_main, ucfg_delimiters;
 
 {$R *.lfm}
 
@@ -94,12 +94,13 @@ begin
   begin
     for i := 0 to FDataSet.FieldCount - 1 do
     begin
-      cklbColumns.Items.Add(FDataSet.Fields[i].FieldName);
+      cklbColumns.Items.Add(FDataSet.Fields[i].DisplayLabel);
       cklbColumns.Checked[i] := FDataSet.Fields[i].Visible;
     end;
   end;
 
   tvFiletype.Selected := tvFiletype.Items.GetFirstNode;
+  eFilename.InitialDir := XSettings.LastPathUsed;
 end;
 
 function TdlgExport.IsRequiredFilled: Boolean;
@@ -119,8 +120,16 @@ end;
 procedure TdlgExport.sbRunClick(Sender: TObject);
 var
   i: Integer;
+  expField: TExportFieldItem;
 begin
   sbRun.Enabled := False;
+  eFilename.Enabled := False;
+  tvFiletype.Enabled := False;
+  cklbColumns.Enabled := False;
+  btnOptions.Enabled := False;
+  ckUseDarwinCoreFormat.Enabled := False;
+
+  XSettings.LastPathUsed := ExtractFilePath(eFilename.FileName);
 
   case tvFiletype.Selected.Index of
     0: // CSV
@@ -129,7 +138,10 @@ begin
       DMM.CSVExport.Dataset := FDataSet;
       for i := 0 to cklbColumns.Count - 1 do
         if cklbColumns.Checked[i] then
-          DMM.CSVExport.ExportFields.AddField(cklbColumns.Items[i]);
+        begin
+          expField := DMM.CSVExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
+          expField.ExportedName := cklbColumns.Items[i];
+        end;
 
       if DMM.CSVExport.Execute > 0 then
         MsgDlg(rsExportDataTitle, Format(rsExportFinished, [eFilename.FileName]), mtInformation)
@@ -142,7 +154,10 @@ begin
       DMM.JSONExport.Dataset := FDataSet;
       for i := 0 to cklbColumns.Count - 1 do
         if cklbColumns.Checked[i] then
-          DMM.JSONExport.ExportFields.AddField(cklbColumns.Items[i]);
+        begin
+          expField := DMM.JSONExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
+          expField.ExportedName := cklbColumns.Items[i];
+        end;
 
       if DMM.JSONExport.Execute > 0 then
         MsgDlg(rsExportDataTitle, Format(rsExportFinished, [eFilename.FileName]), mtInformation)
@@ -156,7 +171,10 @@ begin
       DMM.FPSExport.Dataset := FDataSet;
       for i := 0 to cklbColumns.Count - 1 do
         if cklbColumns.Checked[i] then
-          DMM.FPSExport.ExportFields.AddField(cklbColumns.Items[i]);
+        begin
+          expField := DMM.FPSExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
+          expField.ExportedName := cklbColumns.Items[i];
+        end;
 
       if DMM.FPSExport.Execute > 0 then
         MsgDlg(rsExportDataTitle, Format(rsExportFinished, [eFilename.FileName]), mtInformation)
@@ -170,7 +188,10 @@ begin
       DMM.FPSExport.Dataset := FDataSet;
       for i := 0 to cklbColumns.Count - 1 do
         if cklbColumns.Checked[i] then
-          DMM.FPSExport.ExportFields.AddField(cklbColumns.Items[i]);
+        begin
+          expField := DMM.FPSExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
+          expField.ExportedName := cklbColumns.Items[i];
+        end;
 
       if DMM.FPSExport.Execute > 0 then
         MsgDlg(rsExportDataTitle, Format(rsExportFinished, [eFilename.FileName]), mtInformation)
@@ -183,7 +204,10 @@ begin
       DMM.XMLExport.Dataset := FDataSet;
       for i := 0 to cklbColumns.Count - 1 do
         if cklbColumns.Checked[i] then
-          DMM.XMLExport.ExportFields.AddField(cklbColumns.Items[i]);
+        begin
+          expField := DMM.XMLExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
+          expField.ExportedName := cklbColumns.Items[i];
+        end;
 
       if DMM.XMLExport.Execute > 0 then
         MsgDlg(rsExportDataTitle, Format(rsExportFinished, [eFilename.FileName]), mtInformation)
@@ -216,12 +240,12 @@ begin
     2: // ODS
     begin
       btnOptions.Enabled := False;
-      ckUseDarwinCoreFormat.Enabled := False;
+      ckUseDarwinCoreFormat.Enabled := True;
     end;
     3: // XLSX
     begin
       btnOptions.Enabled := False;
-      ckUseDarwinCoreFormat.Enabled := False;
+      ckUseDarwinCoreFormat.Enabled := True;
     end;
     4: // XML
     begin

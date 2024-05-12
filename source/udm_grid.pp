@@ -1105,6 +1105,7 @@ type
     qWeatherLogsweather_id: TLongintField;
     qWeatherLogswind_speed_bft: TLongintField;
     qWeatherLogswind_speed_kmh: TFloatField;
+    procedure DataModuleCreate(Sender: TObject);
     procedure qAudioBeforePost(DataSet: TDataSet);
     procedure qBandHistoryAfterCancel(DataSet: TDataSet);
     procedure qBandHistoryAfterPost(DataSet: TDataSet);
@@ -1328,7 +1329,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_getvalue, cbs_fullnames, cbs_graphics, cbs_validations,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_datacolumns, cbs_getvalue, cbs_fullnames, cbs_graphics,
+  cbs_validations,
   udm_main;
 
 {$R *.lfm}
@@ -1377,6 +1379,37 @@ end;
 procedure TDMG.qBandHistoryBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+end;
+
+procedure TDMG.DataModuleCreate(Sender: TObject);
+begin
+  TranslateMethods(qMethods);
+  TranslateTaxonRanks(qTaxonRanks);
+  TranslateBotanicTaxa(qBotany);
+
+  TranslateInstitutions(qInstitutions);
+  TranslatePeople(qPeople);
+  TranslateProjects(qProjects);
+  TranslateProjectTeams(qProjectTeam);
+  TranslatePermits(qPermits);
+  TranslateGazetteer(qGazetteer);
+  TranslateSamplingPlots(qNetStations);
+  TranslatePermanentNets(qPermanentNets);
+  TranslateExpeditions(qExpeditions);
+  TranslateSurveys(qSurveys);
+  TranslateSightings(qSightings);
+  TranslateBands(qBands);
+  TranslateBandHistory(qBandHistory);
+  TranslateIndividuals(qIndividuals);
+  TranslateCaptures(qCaptures);
+  TranslateMolts(qMolts);
+  TranslateNests(qNests);
+  TranslateNestRevisions(qNestRevisions);
+  TranslateEggs(qEggs);
+  TranslateSpecimens(qSpecimens);
+  TranslateSpecimenCollectors(qSampleCollectors);
+  TranslateSamplePreps(qSamplePreps);
+
 end;
 
 procedure TDMG.qAudioBeforePost(DataSet: TDataSet);

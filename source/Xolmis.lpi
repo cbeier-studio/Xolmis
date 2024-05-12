@@ -155,7 +155,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="169"/>
+      <BuildNr Value="172"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1110,6 +1110,10 @@
         <ComponentName Value="dlgExport"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="types\cbs_datacolumns.pas"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
     <Debugger>

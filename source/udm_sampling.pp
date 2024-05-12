@@ -375,6 +375,7 @@ type
     qWeatherLogsweather_id: TLongintField;
     qWeatherLogswind_speed_bft: TLongintField;
     qWeatherLogswind_speed_kmh: TFloatField;
+    procedure DataModuleCreate(Sender: TObject);
     procedure qCapturesAfterCancel(DataSet: TDataSet);
     procedure qCapturesAfterInsert(DataSet: TDataSet);
     procedure qCapturesAfterPost(DataSet: TDataSet);
@@ -435,9 +436,19 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_getvalue;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_datacolumns, cbs_getvalue;
 
 { TDMS }
+
+procedure TDMS.DataModuleCreate(Sender: TObject);
+begin
+  TranslateCaptures(qCaptures);
+  TranslateSightings(qSightings);
+  TranslateSurveys(qSurveys);
+  TranslateSurveyTeams(qSurveyTeam);
+  TranslateNetsEffort(qNetsEffort);
+  TranslateWeatherLogs(qWeatherLogs);
+end;
 
 procedure TDMS.qCapturesAfterCancel(DataSet: TDataSet);
 begin

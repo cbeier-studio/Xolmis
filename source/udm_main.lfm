@@ -2160,6 +2160,7 @@ object DMM: TDMM
     AfterInsert = qUsersAfterInsert
     AfterPost = qUsersAfterPost
     BeforeEdit = qUsersBeforeEdit
+    BeforeOpen = qUsersBeforeOpen
     BeforePost = qUsersBeforePost
     Database = sqlCon
     Transaction = sqlTrans
@@ -2174,7 +2175,7 @@ object DMM: TDMM
     Left = 32
     Top = 102
     object qUsersmarked_status: TBooleanField
-      DisplayLabel = 'Marcado'
+      DisplayLabel = 'Marked'
       FieldKind = fkData
       FieldName = 'marked_status'
       Index = 0
@@ -2185,7 +2186,7 @@ object DMM: TDMM
       DisplayValues = 'True;False'
     end
     object qUsersfull_name: TStringField
-      DisplayLabel = 'Nome completo'
+      DisplayLabel = 'Full name'
       FieldKind = fkData
       FieldName = 'full_name'
       Index = 1
@@ -2196,7 +2197,7 @@ object DMM: TDMM
       Size = 60
     end
     object qUsersuser_name: TStringField
-      DisplayLabel = 'Nome de usuário'
+      DisplayLabel = 'Username'
       FieldKind = fkData
       FieldName = 'user_name'
       Index = 2
@@ -2207,7 +2208,7 @@ object DMM: TDMM
       Size = 30
     end
     object qUsersuser_password: TMemoField
-      DisplayLabel = 'Senha'
+      DisplayLabel = 'Password'
       FieldKind = fkData
       FieldName = 'user_password'
       Index = 3
@@ -2220,7 +2221,7 @@ object DMM: TDMM
       Transliterate = False
     end
     object qUsersuser_rank: TStringField
-      DisplayLabel = 'Nível de acesso'
+      DisplayLabel = 'Access level'
       FieldKind = fkData
       FieldName = 'user_rank'
       Index = 4
@@ -2233,7 +2234,7 @@ object DMM: TDMM
       Size = 5
     end
     object qUsersallow_collection_edit: TBooleanField
-      DisplayLabel = 'Gerenciar acervo'
+      DisplayLabel = 'Manage collection'
       FieldKind = fkData
       FieldName = 'allow_collection_edit'
       Index = 5
@@ -2244,7 +2245,7 @@ object DMM: TDMM
       DisplayValues = 'True;False'
     end
     object qUsersallow_print: TBooleanField
-      DisplayLabel = 'Imprimir relatórios'
+      DisplayLabel = 'Print reports'
       FieldKind = fkData
       FieldName = 'allow_print'
       Index = 6
@@ -2255,7 +2256,7 @@ object DMM: TDMM
       DisplayValues = 'True;False'
     end
     object qUsersallow_export: TBooleanField
-      DisplayLabel = 'Exportar dados'
+      DisplayLabel = 'Export data'
       FieldKind = fkData
       FieldName = 'allow_export'
       Index = 7
@@ -2266,7 +2267,7 @@ object DMM: TDMM
       DisplayValues = 'True;False'
     end
     object qUsersallow_import: TBooleanField
-      DisplayLabel = 'Importar dados'
+      DisplayLabel = 'Import data'
       FieldKind = fkData
       FieldName = 'allow_import'
       Index = 8
@@ -2277,7 +2278,7 @@ object DMM: TDMM
       DisplayValues = 'True;False'
     end
     object qUsersuser_id: TLongintField
-      DisplayLabel = 'Nº interno'
+      DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'user_id'
       Index = 9
@@ -2298,7 +2299,7 @@ object DMM: TDMM
       Size = 40
     end
     object qUsersuser_inserted: TLongintField
-      DisplayLabel = 'Criado por'
+      DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
       Index = 11
@@ -2309,7 +2310,7 @@ object DMM: TDMM
       Visible = False
     end
     object qUsersuser_updated: TLongintField
-      DisplayLabel = 'Modificado por'
+      DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
       Index = 12
@@ -2320,7 +2321,7 @@ object DMM: TDMM
       Visible = False
     end
     object qUsersinsert_date: TDateTimeField
-      DisplayLabel = 'Data de criação'
+      DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
       Index = 13
@@ -2331,7 +2332,7 @@ object DMM: TDMM
       Visible = False
     end
     object qUsersupdate_date: TDateTimeField
-      DisplayLabel = 'Data de modificação'
+      DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
       Index = 14
@@ -2342,7 +2343,7 @@ object DMM: TDMM
       Visible = False
     end
     object qUsersexported_status: TBooleanField
-      DisplayLabel = 'Exportado'
+      DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
       Index = 15
@@ -2354,7 +2355,7 @@ object DMM: TDMM
       DisplayValues = 'True;False'
     end
     object qUsersactive_status: TBooleanField
-      DisplayLabel = 'Ativo'
+      DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
       Index = 16
@@ -2436,6 +2437,7 @@ object DMM: TDMM
         Precision = -1
       end>
     AfterInsert = qsConnAfterInsert
+    BeforeOpen = qsConnBeforeOpen
     BeforePost = qsConnBeforePost
     Database = sysCon
     Transaction = sysTrans

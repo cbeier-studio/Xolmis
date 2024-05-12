@@ -36,6 +36,7 @@ type
     qsUsageDatamodule: TStringField;
     qsUsageDatarun_tally: TLongintField;
     qsUsageDatausage_id: TLongintField;
+    qUsersallow_print: TBooleanField;
     qUsersuuid: TStringField;
     scriptUserDBInit: TSQLScript;
     JSONExport: TSimpleJSONExporter;
@@ -56,7 +57,6 @@ type
     qUsersallow_collection_edit: TBooleanField;
     qUsersallow_export: TBooleanField;
     qUsersallow_import: TBooleanField;
-    qUsersallow_print: TBooleanField;
     qUsersexported_status: TBooleanField;
     qUsersfull_name: TStringField;
     qUsersinsert_date: TDateTimeField;
@@ -82,12 +82,14 @@ type
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure qsConnAfterInsert(DataSet: TDataSet);
+    procedure qsConnBeforeOpen(DataSet: TDataSet);
     procedure qsConnBeforePost(DataSet: TDataSet);
     procedure qsConndatabase_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qsConndatabase_typeSetText(Sender: TField; const aText: string);
     procedure qUsersAfterInsert(DataSet: TDataSet);
     procedure qUsersAfterPost(DataSet: TDataSet);
     procedure qUsersBeforeEdit(DataSet: TDataSet);
+    procedure qUsersBeforeOpen(DataSet: TDataSet);
     procedure qUsersBeforePost(DataSet: TDataSet);
     procedure qUsersuser_rankGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qUsersuser_rankSetText(Sender: TField; const aText: string);
@@ -108,7 +110,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs;
+uses cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_datacolumns, cbs_dialogs;
 
 {$R *.lfm}
 
@@ -163,6 +165,11 @@ end;
 procedure TDMM.qsConnAfterInsert(DataSet: TDataSet);
 begin
   DataSet.FieldByName('database_type').AsInteger := 0;
+end;
+
+procedure TDMM.qsConnBeforeOpen(DataSet: TDataSet);
+begin
+  TranslateConnections(DataSet);
 end;
 
 procedure TDMM.qsConnBeforePost(DataSet: TDataSet);
@@ -241,6 +248,11 @@ end;
 procedure TDMM.qUsersBeforeEdit(DataSet: TDataSet);
 begin
   OldUser := TUser.Create(DataSet.FieldByName('user_id').AsInteger);
+end;
+
+procedure TDMM.qUsersBeforeOpen(DataSet: TDataSet);
+begin
+  TranslateUsers(DataSet);
 end;
 
 procedure TDMM.qUsersBeforePost(DataSet: TDataSet);
