@@ -443,6 +443,7 @@ type
     sbEditRecord6: TSpeedButton;
     sbImageInfo: TSpeedButton;
     sbSaveImage: TSpeedButton;
+    sbShareChild: TSpeedButton;
     sbViewImage: TSpeedButton;
     sbFirstRecord: TSpeedButton;
     sbFirstChild: TSpeedButton;
@@ -467,8 +468,6 @@ type
     sbShowColumns: TSpeedButton;
     sbShowRecycle: TSpeedButton;
     sbShowSummary: TSpeedButton;
-    sbChildNewTab: TSpeedButton;
-    sbSortChilds: TSpeedButton;
     sbSortRecords: TSpeedButton;
     Separator10: TShapeLineBGRA;
     Separator11: TShapeLineBGRA;
@@ -477,7 +476,6 @@ type
     Separator15: TMenuItem;
     Separator16: TShapeLineBGRA;
     Separator5: TShapeLineBGRA;
-    Separator6: TShapeLineBGRA;
     Separator7: TShapeLineBGRA;
     Separator8: TShapeLineBGRA;
     Separator9: TShapeLineBGRA;
@@ -653,6 +651,7 @@ type
     procedure sbRowHeightDefaultClick(Sender: TObject);
     procedure sbRowHeightIncreaseClick(Sender: TObject);
     procedure sbSaveRecordClick(Sender: TObject);
+    procedure sbShareChildClick(Sender: TObject);
     procedure sbShareRecordsClick(Sender: TObject);
     procedure sbShowRecordClick(Sender: TObject);
     procedure sbSortChildsClick(Sender: TObject);
@@ -5104,6 +5103,17 @@ begin
   Working := True;
   dsLink.DataSet.Post;
   Working := False;
+end;
+
+procedure TfrmCustomGrid.sbShareChildClick(Sender: TObject);
+begin
+  case nbChilds.PageIndex of
+    0: ExportDlg(dsLink1.DataSet);
+    1: ExportDlg(dsLink2.DataSet);
+    2: ExportDlg(dsLink3.DataSet);
+    3: ExportDlg(dsLink4.DataSet);
+    4: ExportDlg(dsLink5.DataSet);
+  end;
 end;
 
 procedure TfrmCustomGrid.sbShareRecordsClick(Sender: TObject);
