@@ -3927,6 +3927,20 @@ msgid ""
 "Once completed, this operation cannot be undone."
 msgstr ""
 
+#: cbs_locale.rsrecycleautodeleteinfo
+#, object-pascal-format
+msgid "The records that stayed more than %d days in the recycle bin will be deleted automaticaly."
+msgstr ""
+
+#: cbs_locale.rsrecycledeletepermanentlyprompt
+msgid "Do you really want to delete permanently ALL records in this recycle bin list?"
+msgstr ""
+
+#: cbs_locale.rsrecycledeletetitle
+msgctxt "cbs_locale.rsrecycledeletetitle"
+msgid "Delete permanently"
+msgstr ""
+
 #: cbs_locale.rsreferencecoordinate
 msgctxt "cbs_locale.rsreferencecoordinate"
 msgid "Reference coordinate"
@@ -4886,19 +4900,9 @@ msgctxt "tbatchneteffort.eclosetime1.buttonhint"
 msgid "Select time"
 msgstr ""
 
-#: tbatchneteffort.eclosetime1.texthint
-msgctxt "tbatchneteffort.eclosetime1.texthint"
-msgid "HH:MM"
-msgstr ""
-
 #: tbatchneteffort.eclosetime2.buttonhint
 msgctxt "tbatchneteffort.eclosetime2.buttonhint"
 msgid "Select time"
-msgstr ""
-
-#: tbatchneteffort.eclosetime2.texthint
-msgctxt "tbatchneteffort.eclosetime2.texthint"
-msgid "HH:MM"
 msgstr ""
 
 #: tbatchneteffort.eclosetime3.buttonhint
@@ -4906,19 +4910,9 @@ msgctxt "tbatchneteffort.eclosetime3.buttonhint"
 msgid "Select time"
 msgstr ""
 
-#: tbatchneteffort.eclosetime3.texthint
-msgctxt "tbatchneteffort.eclosetime3.texthint"
-msgid "HH:MM"
-msgstr ""
-
 #: tbatchneteffort.eclosetime4.buttonhint
 msgctxt "tbatchneteffort.eclosetime4.buttonhint"
 msgid "Select time"
-msgstr ""
-
-#: tbatchneteffort.eclosetime4.texthint
-msgctxt "tbatchneteffort.eclosetime4.texthint"
-msgid "HH:MM"
 msgstr ""
 
 #: tbatchneteffort.eopentime1.buttonhint
@@ -4926,19 +4920,9 @@ msgctxt "tbatchneteffort.eopentime1.buttonhint"
 msgid "Select time"
 msgstr ""
 
-#: tbatchneteffort.eopentime1.texthint
-msgctxt "tbatchneteffort.eopentime1.texthint"
-msgid "HH:MM"
-msgstr ""
-
 #: tbatchneteffort.eopentime2.buttonhint
 msgctxt "tbatchneteffort.eopentime2.buttonhint"
 msgid "Select time"
-msgstr ""
-
-#: tbatchneteffort.eopentime2.texthint
-msgctxt "tbatchneteffort.eopentime2.texthint"
-msgid "HH:MM"
 msgstr ""
 
 #: tbatchneteffort.eopentime3.buttonhint
@@ -4946,19 +4930,9 @@ msgctxt "tbatchneteffort.eopentime3.buttonhint"
 msgid "Select time"
 msgstr ""
 
-#: tbatchneteffort.eopentime3.texthint
-msgctxt "tbatchneteffort.eopentime3.texthint"
-msgid "HH:MM"
-msgstr ""
-
 #: tbatchneteffort.eopentime4.buttonhint
 msgctxt "tbatchneteffort.eopentime4.buttonhint"
 msgid "Select time"
-msgstr ""
-
-#: tbatchneteffort.eopentime4.texthint
-msgctxt "tbatchneteffort.eopentime4.texthint"
-msgid "HH:MM"
 msgstr ""
 
 #: tbatchneteffort.esurvey.buttonhint
@@ -10080,6 +10054,11 @@ msgctxt "tfrmcustomgrid.sbaddchild.hint"
 msgid "New related record"
 msgstr ""
 
+#: tfrmcustomgrid.sbaddimage.hint
+msgctxt "tfrmcustomgrid.sbaddimage.hint"
+msgid "Add image"
+msgstr ""
+
 #: tfrmcustomgrid.sbcancelrecord.caption
 msgctxt "tfrmcustomgrid.sbcancelrecord.caption"
 msgid "Cancel"
@@ -10116,6 +10095,16 @@ msgctxt "tfrmcustomgrid.sbdelchild.hint"
 msgid "Delete selected record"
 msgstr ""
 
+#: tfrmcustomgrid.sbdelimage.hint
+msgctxt "tfrmcustomgrid.sbdelimage.hint"
+msgid "Delete image"
+msgstr ""
+
+#: tfrmcustomgrid.sbdelpermanently.caption
+msgctxt "tfrmcustomgrid.sbdelpermanently.caption"
+msgid "Delete permanently"
+msgstr ""
+
 #: tfrmcustomgrid.sbdelrecord.hint
 msgctxt "tfrmcustomgrid.sbdelrecord.hint"
 msgid "Delete selected record"
@@ -10131,28 +10120,12 @@ msgctxt "tfrmcustomgrid.sbeditrecord.hint"
 msgid "Edit selected record"
 msgstr ""
 
-#: tfrmcustomgrid.sbeditrecord10.hint
-msgid "Delete image"
-msgstr ""
-
 #: tfrmcustomgrid.sbeditrecord5.hint
 msgid "Move the column position down"
 msgstr ""
 
 #: tfrmcustomgrid.sbeditrecord6.hint
 msgid "Move the column position up"
-msgstr ""
-
-#: tfrmcustomgrid.sbeditrecord7.hint
-msgid "View and edit image info"
-msgstr ""
-
-#: tfrmcustomgrid.sbeditrecord8.hint
-msgid "Save image as..."
-msgstr ""
-
-#: tfrmcustomgrid.sbeditrecord9.hint
-msgid "View image"
 msgstr ""
 
 #: tfrmcustomgrid.sbfirstchild.hint
@@ -10165,13 +10138,14 @@ msgctxt "tfrmcustomgrid.sbfirstrecord.hint"
 msgid "First record"
 msgstr ""
 
+#: tfrmcustomgrid.sbimageinfo.hint
+msgctxt "tfrmcustomgrid.sbimageinfo.hint"
+msgid "View and edit image info"
+msgstr ""
+
 #: tfrmcustomgrid.sbinsertrecord.hint
 msgctxt "tfrmcustomgrid.sbinsertrecord.hint"
 msgid "New record"
-msgstr ""
-
-#: tfrmcustomgrid.sbinsertrecord2.hint
-msgid "Add image"
 msgstr ""
 
 #: tfrmcustomgrid.sblastchild.hint
@@ -10209,15 +10183,6 @@ msgctxt "tfrmcustomgrid.sbrecordhistory.hint"
 msgid "View record history"
 msgstr ""
 
-#: tfrmcustomgrid.sbrecycledelete.hint
-msgid "Delete record permanently"
-msgstr ""
-
-#: tfrmcustomgrid.sbrecyclerestore.hint
-msgctxt "tfrmcustomgrid.sbrecyclerestore.hint"
-msgid "Restore record"
-msgstr ""
-
 #: tfrmcustomgrid.sbrefreshchild.hint
 msgid "Refresh related records"
 msgstr ""
@@ -10225,6 +10190,11 @@ msgstr ""
 #: tfrmcustomgrid.sbrefreshrecords.hint
 msgctxt "tfrmcustomgrid.sbrefreshrecords.hint"
 msgid "Refresh records"
+msgstr ""
+
+#: tfrmcustomgrid.sbrestorerecord.caption
+msgctxt "tfrmcustomgrid.sbrestorerecord.caption"
+msgid "Restore selected"
 msgstr ""
 
 #: tfrmcustomgrid.sbrowheightdecrease.hint
@@ -10237,6 +10207,11 @@ msgstr ""
 
 #: tfrmcustomgrid.sbrowheightincrease.hint
 msgid "Increase the row height"
+msgstr ""
+
+#: tfrmcustomgrid.sbsaveimage.hint
+msgctxt "tfrmcustomgrid.sbsaveimage.hint"
+msgid "Save image as..."
 msgstr ""
 
 #: tfrmcustomgrid.sbsaverecord.caption
@@ -10300,6 +10275,11 @@ msgstr ""
 #: tfrmcustomgrid.sbsortrecords.hint
 msgctxt "tfrmcustomgrid.sbsortrecords.hint"
 msgid "Sort records"
+msgstr ""
+
+#: tfrmcustomgrid.sbviewimage.hint
+msgctxt "tfrmcustomgrid.sbviewimage.hint"
+msgid "View image"
 msgstr ""
 
 #: tfrmcustomgrid.titleaudios.caption

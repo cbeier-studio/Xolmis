@@ -172,6 +172,10 @@ uses
     rsCantDeleteRecord = 'This record cannot be deleted, because it is linked to other records.';
     rsCantDeleteUser = 'User %s should not be deleted, because it could compromise the Xolmis functioning!';
 
+    rsRecycleAutoDeleteInfo = 'The records that stayed more than %d days in the recycle bin will be deleted automaticaly.';
+    rsRecycleDeleteTitle = 'Delete permanently';
+    rsRecycleDeletePermanentlyPrompt = 'Do you really want to delete permanently ALL records in this recycle bin list?';
+
     { Restoration messages }
     rsRestoreRecordTitle = 'Restore record';
     rsRestoreRecordPrompt = 'Do you really want to restore this record?';

@@ -44,8 +44,11 @@ type
     cbCaptureTypeFilter: TComboBox;
     cbCaptureStatusFilter: TComboBox;
     cbNestStageFilter: TComboBox;
+    dsRecycle: TDataSource;
     DBG: TDBGrid;
     dbgRecycle: TDBControlGrid;
+    icoRecycleWarning: TImage;
+    lblRecycleWarning: TLabel;
     lblRecycleId: TDBText;
     dsLink: TDataSource;
     dsLink1: TDataSource;
@@ -134,6 +137,8 @@ type
     lblProjectFilter: TLabel;
     pEggShapeFilter: TBCPanel;
     pEggTraitsFilters: TBCPanel;
+    pRecycleToolbar: TBCPanel;
+    pRecycleWarning: TBCPanel;
     pReplacedBandFilter: TBCPanel;
     pPermitTypeFilter: TBCPanel;
     pNestStatusFilter: TBCPanel;
@@ -425,23 +430,25 @@ type
     sbDelRecord: TSpeedButton;
     sbEditChild: TSpeedButton;
     sbEditRecord: TSpeedButton;
+    sbDelPermanently: TSpeedButton;
+    sbRestoreRecord: TSpeedButton;
     sbShareRecords: TSpeedButton;
     sbRefreshChild: TSpeedButton;
     sbRowHeightDecrease: TSpeedButton;
-    sbEditRecord10: TSpeedButton;
+    sbDelImage: TSpeedButton;
     sbRowHeightDefault: TSpeedButton;
     sbColumnWidthAutoAdjust: TSpeedButton;
     sbColumnHide: TSpeedButton;
     sbEditRecord5: TSpeedButton;
     sbEditRecord6: TSpeedButton;
-    sbEditRecord7: TSpeedButton;
-    sbEditRecord8: TSpeedButton;
-    sbEditRecord9: TSpeedButton;
+    sbImageInfo: TSpeedButton;
+    sbSaveImage: TSpeedButton;
+    sbViewImage: TSpeedButton;
     sbFirstRecord: TSpeedButton;
     sbFirstChild: TSpeedButton;
     sbInsertRecord: TSpeedButton;
     sbRowHeightIncrease: TSpeedButton;
-    sbInsertRecord2: TSpeedButton;
+    sbAddImage: TSpeedButton;
     sbLastRecord: TSpeedButton;
     sbLastChild: TSpeedButton;
     sbNextRecord: TSpeedButton;
@@ -450,8 +457,6 @@ type
     sbPriorChild: TSpeedButton;
     sbChildHistory: TSpeedButton;
     sbRecordHistory: TSpeedButton;
-    sbRecycleDelete: TColorSpeedButton;
-    sbRecycleRestore: TColorSpeedButton;
     sbRefreshRecords: TSpeedButton;
     sbSaveRecord: TSpeedButton;
     sbShowRecord: TSpeedButton;
@@ -505,6 +510,7 @@ type
     scrollFilter: TScrollBox;
     gridColumns: TStringGrid;
     gridRecord: TStringGrid;
+    qRecycle: TSQLQuery;
     TimerUpdate: TTimer;
     titleViewRecord: TLabel;
     titleRecycle: TLabel;
@@ -554,6 +560,7 @@ type
     procedure dsLink5StateChange(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure dsLinkStateChange(Sender: TObject);
+    procedure dsRecycleStateChange(Sender: TObject);
     procedure eAddChildEnter(Sender: TObject);
     procedure eAddChildKeyPress(Sender: TObject; var Key: char);
     procedure eCycleCodeFilterButtonClick(Sender: TObject);
@@ -624,6 +631,7 @@ type
     procedure sbColumnHideClick(Sender: TObject);
     procedure sbColumnWidthAutoAdjustClick(Sender: TObject);
     procedure sbDelChildClick(Sender: TObject);
+    procedure sbDelPermanentlyClick(Sender: TObject);
     procedure sbDelRecordClick(Sender: TObject);
     procedure sbEditChildClick(Sender: TObject);
     procedure sbEditRecordClick(Sender: TObject);
@@ -640,6 +648,7 @@ type
     procedure sbChildHistoryClick(Sender: TObject);
     procedure sbRefreshChildClick(Sender: TObject);
     procedure sbRefreshRecordsClick(Sender: TObject);
+    procedure sbRestoreRecordClick(Sender: TObject);
     procedure sbRowHeightDecreaseClick(Sender: TObject);
     procedure sbRowHeightDefaultClick(Sender: TObject);
     procedure sbRowHeightIncreaseClick(Sender: TObject);
@@ -823,6 +832,7 @@ type
     procedure SetGridSurveys;
     procedure SetGridTaxonRanks;
 
+    procedure SetRecycle;
     procedure SetSidePanel(aValue: Boolean);
     procedure SetSideIndex(aValue: Integer);
     procedure SetSearchString(aValue: String);
@@ -1826,6 +1836,27 @@ begin
   UpdateChildBar;
 end;
 
+procedure TfrmCustomGrid.dsRecycleStateChange(Sender: TObject);
+begin
+  case dsRecycle.State of
+    dsInactive:
+    begin
+      sbRestoreRecord.Enabled := False;
+      sbDelPermanently.Enabled := False;
+    end;
+    dsBrowse:
+    begin
+      sbRestoreRecord.Enabled := (qRecycle.RecordCount > 0);
+      sbDelPermanently.Enabled := (qRecycle.RecordCount > 0);
+    end;
+    dsEdit, dsInsert:
+    begin
+      sbRestoreRecord.Enabled := False;
+      sbDelPermanently.Enabled := False;
+    end;
+  end;
+end;
+
 procedure TfrmCustomGrid.eAddChildEnter(Sender: TObject);
 var
   aSurvey: Integer;
@@ -2445,6 +2476,9 @@ begin
   TimerUpdate.Enabled := False;
   //TimerFind.Enabled := False;
 
+  if qRecycle.Active then
+    qRecycle.Close;
+
   if Assigned(dsLink5.DataSet) then
     dsLink5.DataSet.Close;
   if Assigned(dsLink4.DataSet) then
@@ -2728,6 +2762,7 @@ begin
   UpdateChildCount;
   if DBG.CanSetFocus then
     DBG.SetFocus;
+  SetRecycle;
   CanToggle := True;
   Application.ProcessMessages;
 
@@ -4682,6 +4717,32 @@ begin
   Working := False;
 end;
 
+procedure TfrmCustomGrid.sbDelPermanentlyClick(Sender: TObject);
+var
+  Qry: TSQLQuery;
+begin
+  if Working then
+    Exit;
+
+  Working := True;
+  if MsgDlg(rsRecycleDeleteTitle, rsRecycleDeletePermanentlyPrompt, mtConfirmation) then
+  begin
+    Qry := TSQLQuery.Create(nil);
+    with Qry do
+    try
+      SQLConnection := DMM.sqlCon;
+      MacroCheck := True;
+      SQL.Add('DELETE FROM %ftable WHERE (active_status = 0)');
+      MacroByName('FTABLE').AsString := TableNames[FTableType];
+      ExecSQL;
+      qRecycle.Refresh;
+    finally
+      FreeAndNil(Qry);
+    end;
+  end;
+  Working := False;
+end;
+
 procedure TfrmCustomGrid.sbDelRecordClick(Sender: TObject);
 begin
   if Working then
@@ -5005,6 +5066,17 @@ begin
   if not dsLink.DataSet.Active then
     dsLink.DataSet.Open;
   dsLink.DataSet.Refresh;
+  UpdateButtons(dsLink.DataSet);
+  Working := False;
+end;
+
+procedure TfrmCustomGrid.sbRestoreRecordClick(Sender: TObject);
+begin
+  if Working then
+    Exit;
+
+  Working := True;
+  RestoreRecord(FTableType, dsLink.DataSet);
   UpdateButtons(dsLink.DataSet);
   Working := False;
 end;
@@ -7132,6 +7204,179 @@ begin
   Caption := rsTitleTaxonRanks;
   AddSortedField('rank_seq', sdAscending);
   dsLink.DataSet := DMG.qTaxonRanks;
+end;
+
+procedure TfrmCustomGrid.SetRecycle;
+begin
+
+  case FTableType of
+    tbNone: ;
+    tbUsers: ;
+    tbRecordHistory: ;
+    tbGazetteer:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'site_id';
+      qRecycle.MacroByName('FNAME').AsString := 'site_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'site_id';
+      lblRecycleName.DataField := 'site_name';
+    end;
+    tbNetStations:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'net_station_id';
+      qRecycle.MacroByName('FNAME').AsString := 'station_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'net_station_id';
+      lblRecycleName.DataField := 'station_name';
+    end;
+    tbPermanentNets: ;
+    tbInstitutions:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'institution_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'institution_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
+    tbPeople:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'person_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'person_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
+    tbProjects:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'project_id';
+      qRecycle.MacroByName('FNAME').AsString := 'project_title';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'project_id';
+      lblRecycleName.DataField := 'project_title';
+    end;
+    tbProjectTeams: ;
+    tbPermits:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'permit_id';
+      qRecycle.MacroByName('FNAME').AsString := 'permit_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'permit_id';
+      lblRecycleName.DataField := 'permit_name';
+    end;
+    tbTaxonRanks: ;
+    tbZooTaxa: ;
+    tbBotanicTaxa:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'taxon_id';
+      qRecycle.MacroByName('FNAME').AsString := 'taxon_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'taxon_id';
+      lblRecycleName.DataField := 'taxon_name';
+    end;
+    tbBands:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'band_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'band_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
+    tbBandHistory: ;
+    tbIndividuals:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'individual_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'individual_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
+    tbCaptures:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'capture_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'capture_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
+    tbMolts: ;
+    tbNests:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'nest_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'nest_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
+    tbNestOwners: ;
+    tbNestRevisions:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'nest_revision_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'nest_revision_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
+    tbEggs:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'egg_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'egg_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
+    tbMethods:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'method_id';
+      qRecycle.MacroByName('FNAME').AsString := 'method_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'method_id';
+      lblRecycleName.DataField := 'method_name';
+    end;
+    tbExpeditions:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'expedition_id';
+      qRecycle.MacroByName('FNAME').AsString := 'expedition_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'expedition_id';
+      lblRecycleName.DataField := 'expedition_name';
+    end;
+    tbSurveys:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'survey_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'survey_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
+    tbSurveyTeams: ;
+    tbNetsEffort: ;
+    tbWeatherLogs: ;
+    tbSightings:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'sighting_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'sighting_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
+    tbSpecimens:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'specimen_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'specimen_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
+    tbSamplePreps: ;
+    tbSpecimenCollectors: ;
+    tbImages: ;
+    tbAudioLibrary: ;
+  end;
+
+  qRecycle.Open;
+
+  lblRecycleWarning.Caption := Format(rsRecycleAutoDeleteInfo, [XSettings.ClearDeletedPeriod * 30]);
+  pRecycleWarning.Visible := XSettings.ClearDeletedPeriod > 0;
 end;
 
 procedure TfrmCustomGrid.SetSidePanel(aValue: Boolean);
