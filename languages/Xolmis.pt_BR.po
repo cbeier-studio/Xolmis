@@ -14,1895 +14,1803 @@ msgstr ""
 
 #: cbs_datacolumns.rsc1stsecondarychord
 msgid "1st secondary chord"
-msgstr ""
+msgstr "Corda da 1ª secundária"
 
 #: cbs_datacolumns.rscabstract
 msgid "Abstract"
-msgstr ""
+msgstr "Resumo"
 
 #: cbs_datacolumns.rscaccessionnr
 msgid "Accession nr."
-msgstr ""
+msgstr "Nº de tombo"
 
 #: cbs_datacolumns.rscaccesslevel
-#, fuzzy
 msgctxt "cbs_datacolumns.rscaccesslevel"
 msgid "Access level"
 msgstr "Nível de acesso"
 
 #: cbs_datacolumns.rscacronym
 msgid "Acronym"
-msgstr ""
+msgstr "Abreviatura"
 
 #: cbs_datacolumns.rscaction
-#, fuzzy
 msgctxt "cbs_datacolumns.rscaction"
 msgid "Action"
 msgstr "Ação"
 
 #: cbs_datacolumns.rscactivedays
 msgid "Active-days"
-msgstr ""
+msgstr "Dias-ativo"
 
 #: cbs_datacolumns.rscactivestatus
-#, fuzzy
 msgctxt "cbs_datacolumns.rscactivestatus"
 msgid "Active"
 msgstr "Ativo"
 
 #: cbs_datacolumns.rscaddress1
 msgid "Address 1"
-msgstr ""
+msgstr "Endereço"
 
 #: cbs_datacolumns.rscaddress2
 msgid "Address 2"
-msgstr ""
+msgstr "Complemento"
 
 #: cbs_datacolumns.rscadults
 msgid "# adults"
-msgstr ""
+msgstr "# adultos"
 
 #: cbs_datacolumns.rscage
-#, fuzzy
 msgctxt "cbs_datacolumns.rscage"
 msgid "Age"
 msgstr "Idade"
 
 #: cbs_datacolumns.rscal1
 msgid "Al1"
-msgstr ""
+msgstr "Al1"
 
 #: cbs_datacolumns.rscal2
 msgid "Al2"
-msgstr ""
+msgstr "Al2"
 
 #: cbs_datacolumns.rscal3
 msgid "Al3"
-msgstr ""
+msgstr "Al3"
 
 #: cbs_datacolumns.rscaltitude
 msgid "Altitude"
-msgstr ""
+msgstr "Altitude"
 
 #: cbs_datacolumns.rscannotator
 msgid "Annotator"
-msgstr ""
+msgstr "Anotador"
 
 #: cbs_datacolumns.rscannotatorid
 msgid "Annotator ID"
-msgstr ""
+msgstr "Anotador ID"
 
 #: cbs_datacolumns.rscareaha
 msgid "Area (ha)"
-msgstr ""
+msgstr "Área (ha)"
 
 #: cbs_datacolumns.rscareashape
 msgid "Area shape"
-msgstr ""
+msgstr "Forma da área"
 
 #: cbs_datacolumns.rscatmosphericpressureh
 msgid "Atmospheric pressure (hPa)"
-msgstr ""
+msgstr "Pressão atmosférica (hPa)"
 
 #: cbs_datacolumns.rscaudiorecorded
-#, fuzzy
 msgctxt "cbs_datacolumns.rscaudiorecorded"
 msgid "Audio recorded"
 msgstr "Áudio gravado"
 
 #: cbs_datacolumns.rscauthorship
-#, fuzzy
 msgctxt "cbs_datacolumns.rscauthorship"
 msgid "Authorship"
 msgstr "Autoria"
 
 #: cbs_datacolumns.rscband
-#, fuzzy
 msgctxt "cbs_datacolumns.rscband"
 msgid "Band"
 msgstr "Anilha"
 
 #: cbs_datacolumns.rscbander
 msgid "Bander"
-msgstr ""
+msgstr "Anilhador"
 
 #: cbs_datacolumns.rscbanderid
 msgid "Bander ID"
-msgstr ""
+msgstr "Anilhador ID"
 
 #: cbs_datacolumns.rscbandid
 msgid "Band ID"
-msgstr ""
+msgstr "Anilha ID"
 
 #: cbs_datacolumns.rscbillheight
 msgid "Bill height"
-msgstr ""
+msgstr "Altura do bico"
 
 #: cbs_datacolumns.rscbillwidth
 msgid "Bill width"
-msgstr ""
+msgstr "Largura do bico"
 
 #: cbs_datacolumns.rscbirthdate
-#, fuzzy
 msgctxt "cbs_datacolumns.rscbirthdate"
 msgid "Birth date"
 msgstr "Data de nascimento"
 
 #: cbs_datacolumns.rscbirthday
 msgid "Birth day"
-msgstr ""
+msgstr "Dia de nascimento"
 
 #: cbs_datacolumns.rscbirthmonth
 msgid "Birth month"
-msgstr ""
+msgstr "Mês de nascimento"
 
 #: cbs_datacolumns.rscbirthyear
 msgid "Birth year"
-msgstr ""
+msgstr "Ano de nascimento"
 
 #: cbs_datacolumns.rscblood
-#, fuzzy
 msgctxt "cbs_datacolumns.rscblood"
 msgid "Blood"
 msgstr "Sangue"
 
 #: cbs_datacolumns.rscbodymolt
-#, fuzzy
 msgctxt "cbs_datacolumns.rscbodymolt"
 msgid "Body molt"
 msgstr "Muda do corpo"
 
 #: cbs_datacolumns.rscbotanicalcode
 msgid "ICBN"
-msgstr ""
+msgstr "ICBN"
 
 #: cbs_datacolumns.rscbreedingcode
 msgid "Breeding code"
-msgstr ""
+msgstr "Código de reprodução"
 
 #: cbs_datacolumns.rscbroodpatch
-#, fuzzy
 msgctxt "cbs_datacolumns.rscbroodpatch"
 msgid "Brood patch"
 msgstr "Placa de incubação"
 
 #: cbs_datacolumns.rscbuildingdays
 msgid "Building (days)"
-msgstr ""
+msgstr "Construção (dias)"
 
 #: cbs_datacolumns.rsccamera
 msgid "Camera"
-msgstr ""
+msgstr "Câmera"
 
 #: cbs_datacolumns.rsccaptured
-#, fuzzy
 msgctxt "cbs_datacolumns.rsccaptured"
 msgid "Captured"
 msgstr "Capturado"
 
 #: cbs_datacolumns.rsccaptureid
 msgid "Capture ID"
-msgstr ""
+msgstr "Captura ID"
 
 #: cbs_datacolumns.rsccaptures
 msgid "# captures"
-msgstr ""
+msgstr "# capturas"
 
 #: cbs_datacolumns.rsccarrier
 msgid "Carrier"
-msgstr ""
+msgstr "Portador"
 
 #: cbs_datacolumns.rsccarrierid
 msgid "Carrier ID"
-msgstr ""
+msgstr "Portador ID"
 
 #: cbs_datacolumns.rsccbro
-#, fuzzy
 msgctxt "cbs_datacolumns.rsccbro"
 msgid "CBRO"
 msgstr "CBRO"
 
 #: cbs_datacolumns.rsccc
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: cbs_datacolumns.rsccentralretrixlength
 msgid "Central retrix length"
-msgstr ""
+msgstr "Comprimento retriz central"
 
 #: cbs_datacolumns.rsccitation
 msgid "Citation"
-msgstr ""
+msgstr "Citação"
 
 #: cbs_datacolumns.rscclaw
-#, fuzzy
 msgctxt "cbs_datacolumns.rscclaw"
 msgid "Claw"
 msgstr "Garra"
 
 #: cbs_datacolumns.rscclements
 msgid "Clements"
-msgstr ""
+msgstr "Clements"
 
 #: cbs_datacolumns.rsccloacalprotuberance
-#, fuzzy
 msgctxt "cbs_datacolumns.rsccloacalprotuberance"
 msgid "Cloacal protuberance"
 msgstr "Protuberância cloacal"
 
 #: cbs_datacolumns.rscclosetime1
 msgid "Close time 1"
-msgstr ""
+msgstr "Hora de fechamento 1"
 
 #: cbs_datacolumns.rscclosetime2
 msgid "Close time 2"
-msgstr ""
+msgstr "Hora de fechamento 2"
 
 #: cbs_datacolumns.rscclosetime3
 msgid "Close time 3"
-msgstr ""
+msgstr "Hora de fechamento 3"
 
 #: cbs_datacolumns.rscclosetime4
 msgid "Close time 4"
-msgstr ""
+msgstr "Hora de fechamento 4"
 
 #: cbs_datacolumns.rsccloudcover
 msgid "Cloud cover (%)"
-msgstr ""
+msgstr "Cobertura de nuvens (%)"
 
 #: cbs_datacolumns.rsccollectedwhole
 msgid "Collected (whole)"
-msgstr ""
+msgstr "Coletado (inteiro)"
 
 #: cbs_datacolumns.rsccollectiondate
-#, fuzzy
 msgctxt "cbs_datacolumns.rsccollectiondate"
 msgid "Collection date"
 msgstr "Data de coleta"
 
 #: cbs_datacolumns.rsccollectionday
 msgid "Collection day"
-msgstr ""
+msgstr "Dia da coleta"
 
 #: cbs_datacolumns.rsccollectionmonth
 msgid "Collection month"
-msgstr ""
+msgstr "Mês de coleta"
 
 #: cbs_datacolumns.rsccollectionyear
 msgid "Collection year"
-msgstr ""
+msgstr "Ano de coleta"
 
 #: cbs_datacolumns.rsccollector
 msgid "Collector"
-msgstr ""
+msgstr "Coletor"
 
 #: cbs_datacolumns.rsccolor
 msgid "Color"
-msgstr ""
+msgstr "Cor"
 
 #: cbs_datacolumns.rscconnectionname
 msgid "Connection name"
-msgstr ""
+msgstr "Nome da conexão"
 
 #: cbs_datacolumns.rsccontactperson
 msgid "Contact person"
-msgstr ""
+msgstr "Pessoa para contato"
 
 #: cbs_datacolumns.rsccontractfile
 msgid "Contract file"
-msgstr ""
+msgstr "Arquivo do contrato"
 
 #: cbs_datacolumns.rsccountry
-#, fuzzy
 msgctxt "cbs_datacolumns.rsccountry"
 msgid "Country"
 msgstr "País"
 
 #: cbs_datacolumns.rsccountryid
 msgid "Country ID"
-msgstr ""
+msgstr "País ID"
 
 #: cbs_datacolumns.rsccover
 msgid "Cover (%)"
-msgstr ""
+msgstr "Cobertura (%)"
 
 #: cbs_datacolumns.rsccpf
 msgid "CPF"
-msgstr ""
+msgstr "CPF"
 
 #: cbs_datacolumns.rscdatabasename
 msgid "Database file"
-msgstr ""
+msgstr "Arquivo de banco de dados"
 
 #: cbs_datacolumns.rscdatabasetype
 msgid "Database type"
-msgstr ""
+msgstr "Tipo de banco de dados"
 
 #: cbs_datacolumns.rscdate
-#, fuzzy
 msgctxt "cbs_datacolumns.rscdate"
 msgid "Date"
 msgstr "Data"
 
 #: cbs_datacolumns.rscdeathdate
-#, fuzzy
 msgctxt "cbs_datacolumns.rscdeathdate"
 msgid "Death date"
 msgstr "Data de óbito"
 
 #: cbs_datacolumns.rscdeathday
 msgid "Death day"
-msgstr ""
+msgstr "Dia do óbito"
 
 #: cbs_datacolumns.rscdeathmonth
 msgid "Death month"
-msgstr ""
+msgstr "Mês do óbito"
 
 #: cbs_datacolumns.rscdeathyear
 msgid "Death year"
-msgstr ""
+msgstr "Ano do óbito"
 
 #: cbs_datacolumns.rscdepartment
 msgid "Department"
-msgstr ""
+msgstr "Departamento"
 
 #: cbs_datacolumns.rscdescription
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #: cbs_datacolumns.rscdetectiontype
-#, fuzzy
 msgctxt "cbs_datacolumns.rscdetectiontype"
 msgid "Detection type"
 msgstr "Tipo de detecção"
 
 #: cbs_datacolumns.rscdispatchdate
-#, fuzzy
 msgctxt "cbs_datacolumns.rscdispatchdate"
 msgid "Dispatch date"
 msgstr "Data de emissão"
 
 #: cbs_datacolumns.rscdispatcher
 msgid "Dispatcher"
-msgstr ""
+msgstr "Emissor"
 
 #: cbs_datacolumns.rscdistancekm
 msgid "Distance (km)"
-msgstr ""
+msgstr "Distância (km)"
 
 #: cbs_datacolumns.rscdistancem
 msgid "Distance (m)"
-msgstr ""
+msgstr "Distância (m)"
 
 #: cbs_datacolumns.rscdistribution
 msgid "Distribution"
-msgstr ""
+msgstr "Distribuição"
 
 #: cbs_datacolumns.rscdoubleband
-#, fuzzy
 msgctxt "cbs_datacolumns.rscdoubleband"
 msgid "Double band"
 msgstr "Anilha dupla"
 
 #: cbs_datacolumns.rscdoublebandid
 msgid "Double band ID"
-msgstr ""
+msgstr "Anilha dupla ID"
 
 #: cbs_datacolumns.rscduplicatenr
 msgid "Duplicate nr."
-msgstr ""
+msgstr "Nº da duplicata"
 
 #: cbs_datacolumns.rscdurationdays
 msgid "Duration (days)"
-msgstr ""
+msgstr "Duração (dias)"
 
 #: cbs_datacolumns.rscdurationmin
 msgid "Duration (min)"
-msgstr ""
+msgstr "Duração (min)"
 
 #: cbs_datacolumns.rscebirdcode
 msgid "eBird code"
-msgstr ""
+msgstr "Código do eBird"
 
 #: cbs_datacolumns.rscebirdname
 msgid "eBird name"
-msgstr ""
+msgstr "Nome no eBird"
 
 #: cbs_datacolumns.rscegg
-#, fuzzy
 msgctxt "cbs_datacolumns.rscegg"
 msgid "Egg"
 msgstr "Ovo"
 
 #: cbs_datacolumns.rsceggid
 msgid "Egg ID"
-msgstr ""
+msgstr "Ovo ID"
 
 #: cbs_datacolumns.rsceggnumber
 msgid "Egg number"
-msgstr ""
+msgstr "Número do ovo"
 
 #: cbs_datacolumns.rsceggshape
-#, fuzzy
 msgctxt "cbs_datacolumns.rsceggshape"
 msgid "Egg shape"
 msgstr "Formato do ovo"
 
 #: cbs_datacolumns.rsceggshellcolor
 msgid "Eggshell color"
-msgstr ""
+msgstr "Cor da casca"
 
 #: cbs_datacolumns.rsceggshellpattern
 msgid "Eggshell pattern"
-msgstr ""
+msgstr "Padrão da casca"
 
 #: cbs_datacolumns.rsceggshelltexture
 msgid "Eggshell texture"
-msgstr ""
+msgstr "Textura da casca"
 
 #: cbs_datacolumns.rsceggshost
 msgid "# eggs (host)"
-msgstr ""
+msgstr "# ovos (hospedeiro)"
 
 #: cbs_datacolumns.rsceggsnidoparasite
 msgid "# eggs (nidoparasite)"
-msgstr ""
+msgstr "# ovos (nidoparasita)"
 
 #: cbs_datacolumns.rscemail
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: cbs_datacolumns.rscenddate
-#, fuzzy
 msgctxt "cbs_datacolumns.rscenddate"
 msgid "End date"
 msgstr "Data final"
 
 #: cbs_datacolumns.rscendlatitude
 msgid "End latitude"
-msgstr ""
+msgstr "Latitude final"
 
 #: cbs_datacolumns.rscendlongitude
 msgid "End longitude"
-msgstr ""
+msgstr "Longitude final"
 
 #: cbs_datacolumns.rscendtime
 msgid "End time"
-msgstr ""
+msgstr "Hora final"
 
 #: cbs_datacolumns.rscenglishname
 msgid "English name"
-msgstr ""
+msgstr "Nome inglês"
 
 #: cbs_datacolumns.rscescaped
-#, fuzzy
 msgctxt "cbs_datacolumns.rscescaped"
 msgid "Escaped"
 msgstr "Escapou"
 
 #: cbs_datacolumns.rscexpedition
-#, fuzzy
 msgctxt "cbs_datacolumns.rscexpedition"
 msgid "Expedition"
 msgstr "Expedição"
 
 #: cbs_datacolumns.rscexpeditionid
 msgid "Expedition ID"
-msgstr ""
+msgstr "Expedição ID"
 
 #: cbs_datacolumns.rscexpiredate
-#, fuzzy
 msgctxt "cbs_datacolumns.rscexpiredate"
 msgid "Expire date"
 msgstr "Data de validade"
 
 #: cbs_datacolumns.rscexportdata
-#, fuzzy
 msgctxt "cbs_datacolumns.rscexportdata"
 msgid "Export data"
 msgstr "Exportar dados"
 
 #: cbs_datacolumns.rscexportedstatus
-#, fuzzy
 msgctxt "cbs_datacolumns.rscexportedstatus"
 msgid "Exported"
 msgstr "Exportado"
 
 #: cbs_datacolumns.rscexposedculmen
 msgid "Exposed culmen"
-msgstr ""
+msgstr "Culmen exposto"
 
 #: cbs_datacolumns.rscexternaldiameter
 msgid "External diameter"
-msgstr ""
+msgstr "Diâmetro externo"
 
 #: cbs_datacolumns.rscexternalheight
 msgid "External height"
-msgstr ""
+msgstr "Altura externa"
 
 #: cbs_datacolumns.rscexternalretrixlength
 msgid "External retrix length"
-msgstr ""
+msgstr "Comprimento retriz externa"
 
 #: cbs_datacolumns.rscextinct
-#, fuzzy
 msgctxt "cbs_datacolumns.rscextinct"
 msgid "Extinct"
 msgstr "Extinto"
 
 #: cbs_datacolumns.rscextinctionyear
 msgid "Extinction year"
-msgstr ""
+msgstr "Ano da extinção"
 
 #: cbs_datacolumns.rscfamilyid
 msgid "Family ID"
-msgstr ""
+msgstr "Família ID"
 
 #: cbs_datacolumns.rscfat
 msgid "Fat"
-msgstr ""
+msgstr "Gordura"
 
 #: cbs_datacolumns.rscfather
-#, fuzzy
 msgctxt "cbs_datacolumns.rscfather"
 msgid "Father"
 msgstr "Pai"
 
 #: cbs_datacolumns.rscfatherid
 msgid "Father ID"
-msgstr ""
+msgstr "Pai ID"
 
 #: cbs_datacolumns.rscfeathermites
 msgid "Feather mites"
-msgstr ""
+msgstr "Ácaros das penas"
 
 #: cbs_datacolumns.rscfeathers
-#, fuzzy
 msgctxt "cbs_datacolumns.rscfeathers"
 msgid "Feathers"
 msgstr "Penas"
 
 #: cbs_datacolumns.rscfeces
-#, fuzzy
 msgctxt "cbs_datacolumns.rscfeces"
 msgid "Feces"
 msgstr "Fezes"
 
 #: cbs_datacolumns.rscfemales
 msgid "# females"
-msgstr ""
+msgstr "# fêmeas"
 
 #: cbs_datacolumns.rscfieldnumber
 msgid "Field number"
-msgstr ""
+msgstr "Número de campo"
 
 #: cbs_datacolumns.rscfile
-#, fuzzy
 msgctxt "cbs_datacolumns.rscfile"
 msgid "File"
 msgstr "Arquivo"
 
 #: cbs_datacolumns.rscfilename
 msgid "File name"
-msgstr ""
+msgstr "Nome do arquivo"
 
 #: cbs_datacolumns.rscfinalphotonr
 msgid "Final photo nr."
-msgstr ""
+msgstr "Nº da foto final"
 
 #: cbs_datacolumns.rscflightfeathersmolt
-#, fuzzy
 msgctxt "cbs_datacolumns.rscflightfeathersmolt"
 msgid "Flight feathers molt"
 msgstr "Muda das penas de voo"
 
 #: cbs_datacolumns.rscflightfeatherswear
-#, fuzzy
 msgctxt "cbs_datacolumns.rscflightfeatherswear"
 msgid "Flight feathers wear"
 msgstr "Desgaste das penas de voo"
 
 #: cbs_datacolumns.rscfounddate
 msgid "Found date"
-msgstr ""
+msgstr "Data do encontro"
 
 #: cbs_datacolumns.rscfullname
 msgid "Full name"
-msgstr ""
+msgstr "Nome completo"
 
 #: cbs_datacolumns.rscgc1
 msgid "GC1"
-msgstr ""
+msgstr "GC1"
 
 #: cbs_datacolumns.rscgc10
 msgid "GC10"
-msgstr ""
+msgstr "GC10"
 
 #: cbs_datacolumns.rscgc2
 msgid "GC2"
-msgstr ""
+msgstr "GC2"
 
 #: cbs_datacolumns.rscgc3
 msgid "GC3"
-msgstr ""
+msgstr "GC3"
 
 #: cbs_datacolumns.rscgc4
 msgid "GC4"
-msgstr ""
+msgstr "GC4"
 
 #: cbs_datacolumns.rscgc5
 msgid "GC5"
-msgstr ""
+msgstr "GC5"
 
 #: cbs_datacolumns.rscgc6
 msgid "GC6"
-msgstr ""
+msgstr "GC6"
 
 #: cbs_datacolumns.rscgc7
 msgid "GC7"
-msgstr ""
+msgstr "GC7"
 
 #: cbs_datacolumns.rscgc8
 msgid "GC8"
-msgstr ""
+msgstr "GC8"
 
 #: cbs_datacolumns.rscgc9
 msgid "GC9"
-msgstr ""
+msgstr "GC9"
 
 #: cbs_datacolumns.rscgender
 msgid "Gender"
-msgstr ""
+msgstr "Gênero"
 
 #: cbs_datacolumns.rscgenusepithet
 msgid "Genus epithet"
-msgstr ""
+msgstr "Epíteto genérico"
 
 #: cbs_datacolumns.rscgenusid
 msgid "Genus ID"
-msgstr ""
+msgstr "Gênero ID"
 
 #: cbs_datacolumns.rscglucose
 msgid "Glucose"
-msgstr ""
+msgstr "Glicose"
 
 #: cbs_datacolumns.rscgrowthbarwidth
 msgid "Growth bar width"
-msgstr ""
+msgstr "Largura da barra de crescimento"
 
 #: cbs_datacolumns.rschabitat
 msgid "Habitat"
-msgstr ""
+msgstr "Habitat"
 
 #: cbs_datacolumns.rschaluxlengthclaw
 msgid "Halux length (claw)"
-msgstr ""
+msgstr "Comprimento do hálux (garra)"
 
 #: cbs_datacolumns.rschaluxlengthfinger
 msgid "Halux length (finger)"
-msgstr ""
+msgstr "Comprimento do hálux (dedo)"
 
 #: cbs_datacolumns.rschaluxlengthtotal
 msgid "Halux length (total)"
-msgstr ""
+msgstr "Comprimento do hálux (total)"
 
 #: cbs_datacolumns.rschasphilornislarvae
 msgid "Has Philornis larvae"
-msgstr ""
+msgstr "Possui larvas de Philornis"
 
 #: cbs_datacolumns.rschatched
-#, fuzzy
 msgctxt "cbs_datacolumns.rschatched"
 msgid "Hatched"
 msgstr "Eclodiu"
 
 #: cbs_datacolumns.rscheard
-#, fuzzy
 msgctxt "cbs_datacolumns.rscheard"
 msgid "Heard"
 msgstr "Ouvido"
 
 #: cbs_datacolumns.rscheightaboveground
 msgid "Height above ground"
-msgstr ""
+msgstr "Altura acima do solo"
 
 #: cbs_datacolumns.rschematocrit
 msgid "Hematocrit"
-msgstr ""
+msgstr "Hematócrito"
 
 #: cbs_datacolumns.rschemoglobin
 msgid "Hemoglobin"
-msgstr ""
+msgstr "Hemoglobina"
 
 #: cbs_datacolumns.rschowwasaged
-#, fuzzy
 msgctxt "cbs_datacolumns.rschowwasaged"
 msgid "How was aged"
 msgstr "Como foi etariado"
 
 #: cbs_datacolumns.rschowwassexed
-#, fuzzy
 msgctxt "cbs_datacolumns.rschowwassexed"
 msgid "How was sexed"
 msgstr "Como foi sexado"
 
 #: cbs_datacolumns.rscid
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: cbs_datacolumns.rscimmatures
 msgid "# immatures"
-msgstr ""
+msgstr "# imaturos"
 
 #: cbs_datacolumns.rscimportdata
-#, fuzzy
 msgctxt "cbs_datacolumns.rscimportdata"
 msgid "Import data"
 msgstr "Importar dados"
 
 #: cbs_datacolumns.rscincertaesedis
 msgid "Incertae sedis"
-msgstr ""
+msgstr "Incertae sedis"
 
 #: cbs_datacolumns.rscincubationdays
 msgid "Incubation (days)"
-msgstr ""
+msgstr "Incubação (dias)"
 
 #: cbs_datacolumns.rscindividual
-#, fuzzy
 msgctxt "cbs_datacolumns.rscindividual"
 msgid "Individual"
 msgstr "Indivíduo"
 
 #: cbs_datacolumns.rscindividualid
 msgid "Individual ID"
-msgstr ""
+msgstr "Indivíduo ID"
 
 #: cbs_datacolumns.rscindividuals
 msgid "# individuals"
-msgstr ""
+msgstr "# indivíduos"
 
 #: cbs_datacolumns.rscinfrarank
 msgid "Infra rank"
-msgstr ""
+msgstr "Infra nível"
 
 #: cbs_datacolumns.rscinfraspecific
 msgid "Infraspecific"
-msgstr ""
+msgstr "Infraespecífico"
 
 #: cbs_datacolumns.rscinitialphotonr
 msgid "Initial photo nr."
-msgstr ""
+msgstr "Nº da foto inicial"
 
 #: cbs_datacolumns.rscinsertdate
-#, fuzzy
 msgctxt "cbs_datacolumns.rscinsertdate"
 msgid "Creation date"
 msgstr "Data de criação"
 
 #: cbs_datacolumns.rscinstagram
 msgid "Instagram"
-msgstr ""
+msgstr "Instagram"
 
 #: cbs_datacolumns.rscinstitution
-#, fuzzy
 msgctxt "cbs_datacolumns.rscinstitution"
 msgid "Institution"
 msgstr "Instituição"
 
 #: cbs_datacolumns.rscinstitutionid
 msgid "Institution ID"
-msgstr ""
+msgstr "Instituição ID"
 
 #: cbs_datacolumns.rscinternaldiameter
 msgid "Internal diameter"
-msgstr ""
+msgstr "Diâmetro interno"
 
 #: cbs_datacolumns.rscinternalheight
 msgid "Internal height"
-msgstr ""
+msgstr "Altura interna"
 
 #: cbs_datacolumns.rscioc
-#, fuzzy
 msgctxt "cbs_datacolumns.rscioc"
 msgid "IOC"
 msgstr "IOC"
 
 #: cbs_datacolumns.rscisinebird
 msgid "Is in eBird"
-msgstr ""
+msgstr "Está no eBird"
 
 #: cbs_datacolumns.rsckippsdistance
 msgid "Kipp's distance"
-msgstr ""
+msgstr "Distância de Kipp"
 
 #: cbs_datacolumns.rsclanguage
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: cbs_datacolumns.rsclastdateactive
-#, fuzzy
 msgctxt "cbs_datacolumns.rsclastdateactive"
 msgid "Last date active"
 msgstr "Última data ativo"
 
 #: cbs_datacolumns.rsclatitude
-#, fuzzy
 msgctxt "cbs_datacolumns.rsclatitude"
 msgid "Latitude"
 msgstr "Latitude"
 
 #: cbs_datacolumns.rsclattes
 msgid "Lattes"
-msgstr ""
+msgstr "Lattes"
 
 #: cbs_datacolumns.rsclc
 msgid "LC"
-msgstr ""
+msgstr "LC"
 
 #: cbs_datacolumns.rsclefttarsus
 msgid "Left tarsus"
-msgstr ""
+msgstr "Tarso esquerdo"
 
 #: cbs_datacolumns.rsclefttibia
 msgid "Left tibia"
-msgstr ""
+msgstr "Tíbia esquerda"
 
 #: cbs_datacolumns.rsclength
 msgid "Length"
-msgstr ""
+msgstr "Comprimento"
 
 #: cbs_datacolumns.rsclocality
-#, fuzzy
 msgctxt "cbs_datacolumns.rsclocality"
 msgid "Locality"
 msgstr "Localidade"
 
 #: cbs_datacolumns.rsclocalityid
 msgid "Locality ID"
-msgstr ""
+msgstr "Localidade ID"
 
 #: cbs_datacolumns.rsclongitude
-#, fuzzy
 msgctxt "cbs_datacolumns.rsclongitude"
 msgid "Longitude"
 msgstr "Longitude"
 
 #: cbs_datacolumns.rscmackinnonlist
 msgid "Mackinnon list"
-msgstr ""
+msgstr "Lista de Mackinnon"
 
 #: cbs_datacolumns.rscmainrank
 msgid "Main rank"
-msgstr ""
+msgstr "Principal"
 
 #: cbs_datacolumns.rscmales
 msgid "# males"
-msgstr ""
+msgstr "# machos"
 
 #: cbs_datacolumns.rscmanagecollection
-#, fuzzy
 msgctxt "cbs_datacolumns.rscmanagecollection"
 msgid "Manage collection"
 msgstr "Gerenciar acervo"
 
 #: cbs_datacolumns.rscmanager
 msgid "Manager"
-msgstr ""
+msgstr "Gerente"
 
 #: cbs_datacolumns.rscmarkedstatus
-#, fuzzy
 msgctxt "cbs_datacolumns.rscmarkedstatus"
 msgid "Marked"
 msgstr "Marcado"
 
 #: cbs_datacolumns.rscmass
 msgid "Mass"
-msgstr ""
+msgstr "Massa"
 
 #: cbs_datacolumns.rscmaxplantdiameter
 msgid "Max. plant diameter"
-msgstr ""
+msgstr "Diâmetro máximo da planta"
 
 #: cbs_datacolumns.rscmc
 msgid "MC"
-msgstr ""
+msgstr "MC"
 
 #: cbs_datacolumns.rscmethod
-#, fuzzy
 msgctxt "cbs_datacolumns.rscmethod"
 msgid "Method"
 msgstr "Método"
 
 #: cbs_datacolumns.rscmethodid
 msgid "Method ID"
-msgstr ""
+msgstr "Método ID"
 
 #: cbs_datacolumns.rscminplantdiameter
 msgid "Min. plant diameter"
-msgstr ""
+msgstr "Diâmetro mínimo da planta"
 
 #: cbs_datacolumns.rscmistnetaream
 msgid "Mistnet area (m²)"
-msgstr ""
+msgstr "Área da rede (m²)"
 
 #: cbs_datacolumns.rscmistnetefforthm
 msgid "Mistnet effort (h•m²)"
-msgstr ""
+msgstr "Esforço de rede (h•m²)"
 
 #: cbs_datacolumns.rscmistnetheightm
 msgid "Mistnet height (m)"
-msgstr ""
+msgstr "Altura da rede (m)"
 
 #: cbs_datacolumns.rscmistnetid
 msgid "Mistnet ID"
-msgstr ""
+msgstr "Rede ID"
 
 #: cbs_datacolumns.rscmistnetlengthm
 msgid "Mistnet length (m)"
-msgstr ""
+msgstr "Comprimento da rede (m)"
 
 #: cbs_datacolumns.rscmistnetmesh
 msgid "Mistnet mesh"
-msgstr ""
+msgstr "Malha da rede"
 
 #: cbs_datacolumns.rscmistnetnr
 msgid "Mistnet nr."
-msgstr ""
+msgstr "Nº da rede"
 
 #: cbs_datacolumns.rscmistnetrounds
 msgid "Mistnet rounds"
-msgstr ""
+msgstr "Revisões de redes"
 
 #: cbs_datacolumns.rscmistnets
 msgid "# mistnets"
-msgstr ""
+msgstr "# redes"
 
 #: cbs_datacolumns.rscmistnetstationid
 msgid "Mistnet station ID"
-msgstr ""
+msgstr "Estação de rede ID"
 
 #: cbs_datacolumns.rscmobilephone
 msgid "Mobile phone"
-msgstr ""
+msgstr "Celular"
 
 #: cbs_datacolumns.rscmoltcycle
-#, fuzzy
 msgctxt "cbs_datacolumns.rscmoltcycle"
 msgid "Molt cycle"
 msgstr "Ciclo de muda"
 
 #: cbs_datacolumns.rscmoltlimits
-#, fuzzy
 msgctxt "cbs_datacolumns.rscmoltlimits"
 msgid "Molt limits"
 msgstr "Limites de muda"
 
 #: cbs_datacolumns.rscmoment
 msgid "Moment"
-msgstr ""
+msgstr "Momento"
 
 #: cbs_datacolumns.rscmother
-#, fuzzy
 msgctxt "cbs_datacolumns.rscmother"
 msgid "Mother"
 msgstr "Mãe"
 
 #: cbs_datacolumns.rscmotherid
 msgid "Mother ID"
-msgstr ""
+msgstr "Mãe ID"
 
 #: cbs_datacolumns.rscmunicipality
-#, fuzzy
 msgctxt "cbs_datacolumns.rscmunicipality"
 msgid "Municipality"
 msgstr "Município"
 
 #: cbs_datacolumns.rscmunicipalityid
 msgid "Municipality ID"
-msgstr ""
+msgstr "Município ID"
 
 #: cbs_datacolumns.rscname
-#, fuzzy
 msgctxt "cbs_datacolumns.rscname"
 msgid "Name"
 msgstr "Nome"
 
 #: cbs_datacolumns.rscneedsreview
-#, fuzzy
 msgctxt "cbs_datacolumns.rscneedsreview"
 msgid "Needs review"
 msgstr "Precisa de revisão"
 
 #: cbs_datacolumns.rscneighborhood
 msgid "Neighborhood"
-msgstr ""
+msgstr "Bairro"
 
 #: cbs_datacolumns.rscnest
-#, fuzzy
 msgctxt "cbs_datacolumns.rscnest"
 msgid "Nest"
 msgstr "Ninho"
 
 #: cbs_datacolumns.rscnestfate
 msgid "Nest fate"
-msgstr ""
+msgstr "Destino do ninho"
 
 #: cbs_datacolumns.rscnestid
 msgid "Nest ID"
-msgstr ""
+msgstr "Ninho ID"
 
 #: cbs_datacolumns.rscnestlingdays
 msgid "Nestling (days)"
-msgstr ""
+msgstr "Ninhego (dias)"
 
 #: cbs_datacolumns.rscnestlingshost
 msgid "# nestlings (host)"
-msgstr ""
+msgstr "# ninhegos (hospedeiro)"
 
 #: cbs_datacolumns.rscnestlingsnidoparasit
 msgid "# nestlings (nidoparasite)"
-msgstr ""
+msgstr "# ninhegos (nidoparasita)"
 
 #: cbs_datacolumns.rscnestproductivity
 msgid "Nest productivity"
-msgstr ""
+msgstr "Produtividade do ninho"
 
 #: cbs_datacolumns.rscneststage
-#, fuzzy
 msgctxt "cbs_datacolumns.rscneststage"
 msgid "Nest stage"
 msgstr "Estágio do ninho"
 
 #: cbs_datacolumns.rscnewcaptures
 msgid "# new captures"
-msgstr ""
+msgstr "# novas capturas"
 
 #: cbs_datacolumns.rscnewvalue
 msgid "New value"
-msgstr ""
+msgstr "Novo valor"
 
 #: cbs_datacolumns.rscnidoparasite
 msgid "Nidoparasite"
-msgstr ""
+msgstr "Nidoparasita"
 
 #: cbs_datacolumns.rscnidoparasiteid
 msgid "Nidoparasite ID"
-msgstr ""
+msgstr "Nidoparasita ID"
 
 #: cbs_datacolumns.rscnostriltobilltip
 msgid "Nostril to bill tip"
-msgstr ""
+msgstr "Narina à ponta do bico"
 
 #: cbs_datacolumns.rscnotaged
 msgid "# not aged"
-msgstr ""
+msgstr "# não etariados"
 
 #: cbs_datacolumns.rscnotes
-#, fuzzy
 msgctxt "cbs_datacolumns.rscnotes"
 msgid "Notes"
 msgstr "Anotações"
 
 #: cbs_datacolumns.rscnotsexed
 msgid "# not sexed"
-msgstr ""
+msgstr "# não sexados"
 
 #: cbs_datacolumns.rscnumber
 msgid "Number"
-msgstr ""
+msgstr "Número"
 
 #: cbs_datacolumns.rscobserver
-#, fuzzy
 msgctxt "cbs_datacolumns.rscobserver"
 msgid "Observer"
 msgstr "Observador"
 
 #: cbs_datacolumns.rscobserver1
 msgid "Observer 1"
-msgstr ""
+msgstr "Observador 1"
 
 #: cbs_datacolumns.rscobserver1id
 msgid "Observer 1 ID"
-msgstr ""
+msgstr "Observador 1 ID"
 
 #: cbs_datacolumns.rscobserver2
 msgid "Observer 2"
-msgstr ""
+msgstr "Observador 2"
 
 #: cbs_datacolumns.rscobserver2id
 msgid "Observer 2 ID"
-msgstr ""
+msgstr "Observador 2 ID"
 
 #: cbs_datacolumns.rscobserverid
 msgid "Observer ID"
-msgstr ""
+msgstr "Observador ID"
 
 #: cbs_datacolumns.rscobservers
 msgid "# observers"
-msgstr ""
+msgstr "# observadores"
 
 #: cbs_datacolumns.rscoldvalue
 msgid "Old value"
-msgstr ""
+msgstr "Valor antigo"
 
 #: cbs_datacolumns.rscopentime1
 msgid "Open time 1"
-msgstr ""
+msgstr "Hora de abertura 1"
 
 #: cbs_datacolumns.rscopentime2
 msgid "Open time 2"
-msgstr ""
+msgstr "Hora de abertura 2"
 
 #: cbs_datacolumns.rscopentime3
 msgid "Open time 3"
-msgstr ""
+msgstr "Hora de abertura 3"
 
 #: cbs_datacolumns.rscopentime4
 msgid "Open time 4"
-msgstr ""
+msgstr "Hora de abertura 4"
 
 #: cbs_datacolumns.rscorcid
 msgid "Orcid"
-msgstr ""
+msgstr "Orcid"
 
 #: cbs_datacolumns.rscorderid
 msgid "Order ID"
-msgstr ""
+msgstr "Ordem ID"
 
 #: cbs_datacolumns.rscordernr
 msgid "Order nr."
-msgstr ""
+msgstr "Nº do pedido"
 
 #: cbs_datacolumns.rscotherportuguesenames
 msgid "Other portuguese names"
-msgstr ""
+msgstr "Outros nomes em português"
 
 #: cbs_datacolumns.rscothersupport
 msgid "Other support"
-msgstr ""
+msgstr "Outro suporte"
 
 #: cbs_datacolumns.rscoutofsample
 msgid "Out of sample"
-msgstr ""
+msgstr "Fora da amostra"
 
 #: cbs_datacolumns.rscp1
 msgid "P1"
-msgstr ""
+msgstr "P1"
 
 #: cbs_datacolumns.rscp10
 msgid "P10"
-msgstr ""
+msgstr "P10"
 
 #: cbs_datacolumns.rscp2
 msgid "P2"
-msgstr ""
+msgstr "P2"
 
 #: cbs_datacolumns.rscp3
 msgid "P3"
-msgstr ""
+msgstr "P3"
 
 #: cbs_datacolumns.rscp4
 msgid "P4"
-msgstr ""
+msgstr "P4"
 
 #: cbs_datacolumns.rscp5
 msgid "P5"
-msgstr ""
+msgstr "P5"
 
 #: cbs_datacolumns.rscp6
 msgid "P6"
-msgstr ""
+msgstr "P6"
 
 #: cbs_datacolumns.rscp7
 msgid "P7"
-msgstr ""
+msgstr "P7"
 
 #: cbs_datacolumns.rscp8
 msgid "P8"
-msgstr ""
+msgstr "P8"
 
 #: cbs_datacolumns.rscp9
 msgid "P9"
-msgstr ""
+msgstr "P9"
 
 #: cbs_datacolumns.rscparasites
-#, fuzzy
 msgctxt "cbs_datacolumns.rscparasites"
 msgid "Parasites"
 msgstr "Parasitas"
 
 #: cbs_datacolumns.rscparentsite
 msgid "Parent site"
-msgstr ""
+msgstr "Local pai"
 
 #: cbs_datacolumns.rscparentsiteid
 msgid "Parent site ID"
-msgstr ""
+msgstr "Local pai ID"
 
 #: cbs_datacolumns.rscparenttaxon
 msgid "Parent taxon"
-msgstr ""
+msgstr "Táxon pai"
 
 #: cbs_datacolumns.rscparenttaxonid
 msgid "Parent taxon ID"
-msgstr ""
+msgstr "Táxon pai ID"
 
 #: cbs_datacolumns.rscpassword
 msgid "Password"
-msgstr ""
+msgstr "Senha"
 
 #: cbs_datacolumns.rscpc1
 msgid "PC1"
-msgstr ""
+msgstr "PC1"
 
 #: cbs_datacolumns.rscpc2
 msgid "PC2"
-msgstr ""
+msgstr "PC2"
 
 #: cbs_datacolumns.rscpc3
 msgid "PC3"
-msgstr ""
+msgstr "PC3"
 
 #: cbs_datacolumns.rscpc4
 msgid "PC4"
-msgstr ""
+msgstr "PC4"
 
 #: cbs_datacolumns.rscpc5
 msgid "PC5"
-msgstr ""
+msgstr "PC5"
 
 #: cbs_datacolumns.rscpc6
 msgid "PC6"
-msgstr ""
+msgstr "PC6"
 
 #: cbs_datacolumns.rscpc7
 msgid "PC7"
-msgstr ""
+msgstr "PC7"
 
 #: cbs_datacolumns.rscpc8
 msgid "PC8"
-msgstr ""
+msgstr "PC8"
 
 #: cbs_datacolumns.rscpc9
 msgid "PC9"
-msgstr ""
+msgstr "PC9"
 
 #: cbs_datacolumns.rscpermanentnet
 msgid "Permanent net"
-msgstr ""
+msgstr "Rede permanente"
 
 #: cbs_datacolumns.rscpermanentnetid
 msgid "Permanent net ID"
-msgstr ""
+msgstr "Rede permanente ID"
 
 #: cbs_datacolumns.rscperson
-#, fuzzy
 msgctxt "cbs_datacolumns.rscperson"
 msgid "Person"
 msgstr "Pessoa"
 
 #: cbs_datacolumns.rscpersonid
 msgid "Person ID"
-msgstr ""
+msgstr "Pessoa ID"
 
 #: cbs_datacolumns.rscphone
 msgid "Phone"
-msgstr ""
+msgstr "Telefone"
 
 #: cbs_datacolumns.rscphotographed
-#, fuzzy
 msgctxt "cbs_datacolumns.rscphotographed"
 msgid "Photographed"
 msgstr "Fotografado"
 
 #: cbs_datacolumns.rscphotographer1
 msgid "Photographer 1"
-msgstr ""
+msgstr "Fotógrafo 1"
 
 #: cbs_datacolumns.rscphotographer1id
 msgid "Photographer 1 ID"
-msgstr ""
+msgstr "Fotógrafo 1 ID"
 
 #: cbs_datacolumns.rscphotographer2
 msgid "Photographer 2"
-msgstr ""
+msgstr "Fotógrafo 2"
 
 #: cbs_datacolumns.rscphotographer2id
 msgid "Photographer 2 ID"
-msgstr ""
+msgstr "Fotógrafo 2 ID"
 
 #: cbs_datacolumns.rscplantcenterdistance
 msgid "Plant center distance"
-msgstr ""
+msgstr "Distância do centro da planta"
 
 #: cbs_datacolumns.rscplantdbh
 msgid "Plant DBH"
-msgstr ""
+msgstr "DAP da planta"
 
 #: cbs_datacolumns.rscplantedgedistance
 msgid "Plant edge distance"
-msgstr ""
+msgstr "Distância da borda da planta"
 
 #: cbs_datacolumns.rscplantheight
 msgid "Plant height"
-msgstr ""
+msgstr "Altura da planta"
 
 #: cbs_datacolumns.rscport
 msgid "Port"
-msgstr ""
+msgstr "Porta"
 
 #: cbs_datacolumns.rscportuguesename
 msgid "Portuguese name"
-msgstr ""
+msgstr "Nome português"
 
 #: cbs_datacolumns.rscprecipitation
 msgid "Precipitation"
-msgstr ""
+msgstr "Precipitação"
 
 #: cbs_datacolumns.rscprefix
 msgid "Prefix"
-msgstr ""
+msgstr "Prefixo"
 
 #: cbs_datacolumns.rscpreparationdate
-#, fuzzy
 msgctxt "cbs_datacolumns.rscpreparationdate"
 msgid "Preparation date"
 msgstr "Data de preparação"
 
 #: cbs_datacolumns.rscpreparer
 msgid "Preparer"
-msgstr ""
+msgstr "Preparador"
 
 #: cbs_datacolumns.rscpreparerid
 msgid "Preparer ID"
-msgstr ""
+msgstr "Preparador ID"
 
 #: cbs_datacolumns.rscprintreports
-#, fuzzy
 msgctxt "cbs_datacolumns.rscprintreports"
 msgid "Print reports"
 msgstr "Imprimir relatórios"
 
 #: cbs_datacolumns.rscprofilecolor
 msgid "Profile color"
-msgstr ""
+msgstr "Cor do perfil"
 
 #: cbs_datacolumns.rscprofileimage
 msgid "Profile image"
-msgstr ""
+msgstr "Imagem do perfil"
 
 #: cbs_datacolumns.rscproject
-#, fuzzy
 msgctxt "cbs_datacolumns.rscproject"
 msgid "Project"
 msgstr "Projeto"
 
 #: cbs_datacolumns.rscprojectfile
 msgid "Project file"
-msgstr ""
+msgstr "Arquivo do projeto"
 
 #: cbs_datacolumns.rscprojectid
 msgid "Project ID"
-msgstr ""
+msgstr "Projeto ID"
 
 #: cbs_datacolumns.rscproperty
-#, fuzzy
 msgctxt "cbs_datacolumns.rscproperty"
 msgid "Property"
 msgstr "Propriedade"
 
 #: cbs_datacolumns.rscquantphilornislarvae
 msgid "# Philornis larvae"
-msgstr ""
+msgstr "# larvas de Philornis"
 
 #: cbs_datacolumns.rscquickcode
 msgid "Quick code"
-msgstr ""
+msgstr "Código rápido"
 
 #: cbs_datacolumns.rscr1
 msgid "R1"
-msgstr ""
+msgstr "R1"
 
 #: cbs_datacolumns.rscr2
 msgid "R2"
-msgstr ""
+msgstr "R2"
 
 #: cbs_datacolumns.rscr3
 msgid "R3"
-msgstr ""
+msgstr "R3"
 
 #: cbs_datacolumns.rscr4
 msgid "R4"
-msgstr ""
+msgstr "R4"
 
 #: cbs_datacolumns.rscr5
 msgid "R5"
-msgstr ""
+msgstr "R5"
 
 #: cbs_datacolumns.rscr6
 msgid "R6"
-msgstr ""
+msgstr "R6"
 
 #: cbs_datacolumns.rscrainfallmm
 msgid "Rainfall (mm)"
-msgstr ""
+msgstr "Pluviosidade (mm)"
 
 #: cbs_datacolumns.rscrecaptures
 msgid "# recaptures"
-msgstr ""
+msgstr "# recapturas"
 
 #: cbs_datacolumns.rscrecognizablemarkings
 msgid "Recognizable markings"
-msgstr ""
+msgstr "Marcas reconhecíveis"
 
 #: cbs_datacolumns.rscrecorded
 msgid "Recorded"
-msgstr ""
+msgstr "Gravado"
 
 #: cbs_datacolumns.rscrelativehumidity
 msgid "Relative humidity (%)"
-msgstr ""
+msgstr "Umidade relativa (%)"
 
 #: cbs_datacolumns.rscremovedband
-#, fuzzy
 msgctxt "cbs_datacolumns.rscremovedband"
 msgid "Removed band"
 msgstr "Anilha removida"
 
 #: cbs_datacolumns.rscremovedbandid
 msgid "Removed band ID"
-msgstr ""
+msgstr "Anilha removida ID"
 
 #: cbs_datacolumns.rscreported
-#, fuzzy
 msgctxt "cbs_datacolumns.rscreported"
 msgid "Reported"
 msgstr "Relatada"
 
 #: cbs_datacolumns.rscrequester
-#, fuzzy
 msgctxt "cbs_datacolumns.rscrequester"
 msgid "Requester"
 msgstr "Solicitante"
 
 #: cbs_datacolumns.rscrequesterid
 msgid "Requester ID"
-msgstr ""
+msgstr "Solicitante ID"
 
 #: cbs_datacolumns.rscresearcher
-#, fuzzy
 msgctxt "cbs_datacolumns.rscresearcher"
 msgid "Researcher"
 msgstr "Pesquisador"
 
 #: cbs_datacolumns.rscresearcherid
 msgid "Researcher ID"
-msgstr ""
+msgstr "Pesquisador ID"
 
 #: cbs_datacolumns.rscrg
 msgid "RG"
-msgstr ""
+msgstr "RG"
 
 #: cbs_datacolumns.rscrighttarsus
 msgid "Right tarsus"
-msgstr ""
+msgstr "Tarso direito"
 
 #: cbs_datacolumns.rscrighttibia
 msgid "Right tibia"
-msgstr ""
+msgstr "Tíbia direita"
 
 #: cbs_datacolumns.rscrightwingchord
 msgid "Right wing chord"
-msgstr ""
+msgstr "Corda da asa direita"
 
 #: cbs_datacolumns.rscrole
 msgid "Role"
-msgstr ""
+msgstr "Função"
 
 #: cbs_datacolumns.rscs1
 msgid "S1"
-msgstr ""
+msgstr "S1"
 
 #: cbs_datacolumns.rscs2
 msgid "S2"
-msgstr ""
+msgstr "S2"
 
 #: cbs_datacolumns.rscs3
 msgid "S3"
-msgstr ""
+msgstr "S3"
 
 #: cbs_datacolumns.rscs4
 msgid "S4"
-msgstr ""
+msgstr "S4"
 
 #: cbs_datacolumns.rscs5
 msgid "S5"
-msgstr ""
+msgstr "S5"
 
 #: cbs_datacolumns.rscs6
 msgid "S6"
-msgstr ""
+msgstr "S6"
 
 #: cbs_datacolumns.rscs7
 msgid "S7"
-msgstr ""
+msgstr "S7"
 
 #: cbs_datacolumns.rscs8
 msgid "S8"
-msgstr ""
+msgstr "S8"
 
 #: cbs_datacolumns.rscs9
 msgid "S9"
-msgstr ""
+msgstr "S9"
 
 #: cbs_datacolumns.rscsampleid
 msgid "Sample ID"
-msgstr ""
+msgstr "ID da amostra"
 
 #: cbs_datacolumns.rscsamplingplot
-#, fuzzy
 msgctxt "cbs_datacolumns.rscsamplingplot"
 msgid "Sampling plot"
 msgstr "Parcela amostral"
 
 #: cbs_datacolumns.rscsamplingplotid
 msgid "Sampling plot ID"
-msgstr ""
+msgstr "Parcela amostral ID"
 
 #: cbs_datacolumns.rscscientificname
 msgid "Scientific name"
-msgstr ""
+msgstr "Nome científico"
 
 #: cbs_datacolumns.rscseen
-#, fuzzy
 msgctxt "cbs_datacolumns.rscseen"
 msgid "Seen"
 msgstr "Visto"
 
 #: cbs_datacolumns.rscsender
-#, fuzzy
 msgctxt "cbs_datacolumns.rscsender"
 msgid "Sender"
 msgstr "Remetente"
 
 #: cbs_datacolumns.rscsenderid
 msgid "Sender ID"
-msgstr ""
+msgstr "Remetente ID"
 
 #: cbs_datacolumns.rscsequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sequência"
 
 #: cbs_datacolumns.rscserver
 msgid "Server"
-msgstr ""
+msgstr "Servidor"
 
 #: cbs_datacolumns.rscsex
-#, fuzzy
 msgctxt "cbs_datacolumns.rscsex"
 msgid "Sex"
 msgstr "Sexo"
 
 #: cbs_datacolumns.rscshape
 msgid "Shape"
-msgstr ""
+msgstr "Forma"
 
 #: cbs_datacolumns.rscshorttitle
 msgid "Short title"
-msgstr ""
+msgstr "Titulo curto"
 
 #: cbs_datacolumns.rscsitename
 msgid "Site name"
-msgstr ""
+msgstr "Topônimo"
 
 #: cbs_datacolumns.rscsize
-#, fuzzy
 msgctxt "cbs_datacolumns.rscsize"
 msgid "Size"
 msgstr "Tamanho"
 
 #: cbs_datacolumns.rscskulllength
 msgid "Skull length"
-msgstr ""
+msgstr "Comprimento do crânio"
 
 #: cbs_datacolumns.rscskullossification
-#, fuzzy
 msgctxt "cbs_datacolumns.rscskullossification"
 msgid "Skull ossification"
 msgstr "Ossificação craniana"
 
 #: cbs_datacolumns.rscsource
 msgid "Source"
-msgstr ""
+msgstr "Origem"
 
 #: cbs_datacolumns.rscspanishname
 msgid "Spanish name"
-msgstr ""
+msgstr "Nome espanhol"
 
 #: cbs_datacolumns.rscspeciesepithet
 msgid "Species epithet"
-msgstr ""
+msgstr "Epíteto específico"
 
 #: cbs_datacolumns.rscspeciesid
 msgid "Species ID"
-msgstr ""
+msgstr "Espécie ID"
 
 #: cbs_datacolumns.rscspecimenid
 msgid "Specimen ID"
-msgstr ""
+msgstr "Espécime ID"
 
 #: cbs_datacolumns.rscstage
 msgid "Stage"
-msgstr ""
+msgstr "Estágio"
 
 #: cbs_datacolumns.rscstartdate
-#, fuzzy
 msgctxt "cbs_datacolumns.rscstartdate"
 msgid "Start date"
 msgstr "Data inicial"
 
 #: cbs_datacolumns.rscstarttime
 msgid "Start time"
-msgstr ""
+msgstr "Hora de início"
 
 #: cbs_datacolumns.rscstate
-#, fuzzy
 msgctxt "cbs_datacolumns.rscstate"
 msgid "State"
 msgstr "Estado"
 
 #: cbs_datacolumns.rscstateid
 msgid "State ID"
-msgstr ""
+msgstr "Estado ID"
 
 #: cbs_datacolumns.rscstatus
-#, fuzzy
 msgctxt "cbs_datacolumns.rscstatus"
 msgid "Status"
 msgstr "Status"
 
 #: cbs_datacolumns.rscsubfamilyid
 msgid "Subfamily ID"
-msgstr ""
+msgstr "Subfamília ID"
 
 #: cbs_datacolumns.rscsubrank
 msgid "Sub rank"
-msgstr ""
+msgstr "Sub nível"
 
 #: cbs_datacolumns.rscsubspeciesepithet
 msgid "Subspecies epithet"
-msgstr ""
+msgstr "Epíteto subespecífico"
 
 #: cbs_datacolumns.rscsubspeciesgroup
 msgid "Subspecies group"
-msgstr ""
+msgstr "Grupo subespecífico"
 
 #: cbs_datacolumns.rscsubspeciesgroupid
 msgid "Subspecies group ID"
-msgstr ""
+msgstr "Grupo subespecífico ID"
 
 #: cbs_datacolumns.rscsuffix
 msgid "Suffix"
-msgstr ""
+msgstr "Sufixo"
 
 #: cbs_datacolumns.rscsupplier
-#, fuzzy
 msgctxt "cbs_datacolumns.rscsupplier"
 msgid "Supplier"
 msgstr "Fornecedor"
 
 #: cbs_datacolumns.rscsupplierid
 msgid "Supplier ID"
-msgstr ""
+msgstr "Fornecedor ID"
 
 #: cbs_datacolumns.rscsupportplant1
 msgid "Support plant 1"
-msgstr ""
+msgstr "Planta suporte 1"
 
 #: cbs_datacolumns.rscsupportplant1id
 msgid "Support plant 1 ID"
-msgstr ""
+msgstr "Planta suporte 1 ID"
 
 #: cbs_datacolumns.rscsupportplant2
 msgid "Support plant 2"
-msgstr ""
+msgstr "Planta suporte 2"
 
 #: cbs_datacolumns.rscsupportplant2id
 msgid "Support plant 2 ID"
-msgstr ""
+msgstr "Planta suporte 2 ID"
 
 #: cbs_datacolumns.rscsupporttype
-#, fuzzy
 msgctxt "cbs_datacolumns.rscsupporttype"
 msgid "Support type"
 msgstr "Tipo de suporte"
 
 #: cbs_datacolumns.rscsurvey
-#, fuzzy
 msgctxt "cbs_datacolumns.rscsurvey"
 msgid "Survey"
 msgstr "Amostragem"
 
 #: cbs_datacolumns.rscsurveyid
 msgid "Survey ID"
-msgstr ""
+msgstr "Amostragem ID"
 
 #: cbs_datacolumns.rsctaillength
 msgid "Tail length"
-msgstr ""
+msgstr "Comprimento da cauda"
 
 #: cbs_datacolumns.rsctarsusdiameter
 msgid "Tarsus diameter"
-msgstr ""
+msgstr "Diâmetro do tarso"
 
 #: cbs_datacolumns.rsctarsuslength
 msgid "Tarsus length"
-msgstr ""
+msgstr "Comprimento do tarso"
 
 #: cbs_datacolumns.rsctaxon
-#, fuzzy
 msgctxt "cbs_datacolumns.rsctaxon"
 msgid "Taxon"
 msgstr "Táxon"
 
 #: cbs_datacolumns.rsctaxonid
 msgid "Taxon ID"
-msgstr ""
+msgstr "Táxon ID"
 
 #: cbs_datacolumns.rsctaxonomicrank
 msgid "Taxonomic rank"
-msgstr ""
+msgstr "Nível taxonômico"
 
 #: cbs_datacolumns.rsctaxonomicrankid
 msgid "Taxonomic rank ID"
-msgstr ""
+msgstr "Nível taxonômico ID"
 
 #: cbs_datacolumns.rsctaxonomicsequence
 msgid "Taxonomic sequence"
-msgstr ""
+msgstr "Sequência taxonômica"
 
 #: cbs_datacolumns.rsctemperaturec
 msgid "Temperature (°C)"
-msgstr ""
+msgstr "Temperatura (°C)"
 
 #: cbs_datacolumns.rsctime
 msgid "Time"
-msgstr ""
+msgstr "Hora"
 
 #: cbs_datacolumns.rsctitle
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: cbs_datacolumns.rsctotalculmen
 msgid "Total culmen"
-msgstr ""
+msgstr "Culmen total"
 
 #: cbs_datacolumns.rsctotallength
 msgid "Total length"
-msgstr ""
+msgstr "Comprimento total"
 
 #: cbs_datacolumns.rsctotaltimeopenedh
 msgid "Total time opened (h)"
-msgstr ""
+msgstr "Tempo total aberta (h)"
 
 #: cbs_datacolumns.rsctreatment
 msgid "Treatment"
-msgstr ""
+msgstr "Tratamento"
 
 #: cbs_datacolumns.rsctype
-#, fuzzy
 msgctxt "cbs_datacolumns.rsctype"
 msgid "Type"
 msgstr "Tipo"
 
 #: cbs_datacolumns.rscunbanded
 msgid "# unbanded"
-msgstr ""
+msgstr "# não anilhados"
 
 #: cbs_datacolumns.rscupdatedate
-#, fuzzy
 msgctxt "cbs_datacolumns.rscupdatedate"
 msgid "Last modified date"
 msgstr "Data da última modificação"
 
 #: cbs_datacolumns.rscuserid
 msgid "User ID"
-msgstr ""
+msgstr "Usuário ID"
 
 #: cbs_datacolumns.rscuserinserted
-#, fuzzy
 msgctxt "cbs_datacolumns.rscuserinserted"
 msgid "Created by"
 msgstr "Criado por"
 
 #: cbs_datacolumns.rscusername
-#, fuzzy
 msgctxt "cbs_datacolumns.rscusername"
 msgid "Username"
 msgstr "Nome de usuário"
 
 #: cbs_datacolumns.rscuserupdated
 msgid "Last modified by"
-msgstr ""
+msgstr "Última modificação por"
 
 #: cbs_datacolumns.rscuuid
 msgid "UUID"
-msgstr ""
+msgstr "UUID"
 
 #: cbs_datacolumns.rscvalidname
 msgid "Valid name"
-msgstr ""
+msgstr "Nome válido"
 
 #: cbs_datacolumns.rscvalidnameid
 msgid "Valid name ID"
-msgstr ""
+msgstr "Nome válido ID"
 
 #: cbs_datacolumns.rscvernacularnames
 msgid "Vernacular name(s)"
-msgstr ""
+msgstr "Nome(s) vernacular(es)"
 
 #: cbs_datacolumns.rscvisitor
 msgid "Visitor"
-msgstr ""
+msgstr "Visitante"
 
 #: cbs_datacolumns.rscvolume
 msgid "Volume"
-msgstr ""
+msgstr "Volume"
 
 #: cbs_datacolumns.rscwebsite
-#, fuzzy
 msgctxt "cbs_datacolumns.rscwebsite"
 msgid "Website"
 msgstr "Website"
 
 #: cbs_datacolumns.rscweight
 msgid "Weight"
-msgstr ""
+msgstr "Peso"
 
 #: cbs_datacolumns.rscwidth
 msgid "Width"
-msgstr ""
+msgstr "Largura"
 
 #: cbs_datacolumns.rscwindbft
 msgid "Wind (Bft)"
-msgstr ""
+msgstr "Vento (Bft)"
 
 #: cbs_datacolumns.rscwindkmh
 msgid "Wind (km/h)"
-msgstr ""
+msgstr "Vento (km/h)"
 
 #: cbs_datacolumns.rscxtwitter
 msgid "X (Twitter)"
-msgstr ""
+msgstr "X (Twitter)"
 
 #: cbs_datacolumns.rsczipcode
 msgid "Zip code"
-msgstr ""
+msgstr "CEP"
 
 #: cbs_datacolumns.rsczoologicalcode
 msgid "ICZN"
-msgstr ""
+msgstr "ICZN"
 
 #: cbs_locale.rsaccepted
 msgctxt "cbs_locale.rsaccepted"
@@ -5901,11 +5809,9 @@ msgid "Connect"
 msgstr "Conectar"
 
 #: tdlgexport.btnoptions.caption
-#, fuzzy
-#| msgid "More options"
 msgctxt "tdlgexport.btnoptions.caption"
 msgid "Options"
-msgstr "Mais opções"
+msgstr "Opções"
 
 #: tdlgexport.caption
 msgctxt "tdlgexport.caption"
@@ -11272,4 +11178,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-
