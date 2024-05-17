@@ -1,0 +1,23 @@
+{"version":1,"strings":[
+{"hash":154595265,"name":"tdlgimportnests.caption","sourcebytes":[73,109,112,111,114,116,32,100,97,116,97],"value":"Import data"},
+{"hash":77089212,"name":"tdlgimportnests.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":84178580,"name":"tdlgimportnests.sbrun.caption","sourcebytes":[73,109,112,111,114,116],"value":"Import"},
+{"hash":4863637,"name":"tdlgimportnests.sbclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
+{"hash":71396996,"name":"tdlgimportnests.lbltitleimportfiles.caption","sourcebytes":[70,105,108,101,115,32,116,111,32,105,109,112,111,114,116],"value":"Files to import"},
+{"hash":5556915,"name":"tdlgimportnests.lblnestfile.caption","sourcebytes":[78,101,115,116,115],"value":"Nests"},
+{"hash":171904661,"name":"tdlgimportnests.enestfile.hint","sourcebytes":[83,101,108,101,99,116,32,102,105,108,101],"value":"Select file"},
+{"hash":123838542,"name":"tdlgimportnests.enestfile.texthint","sourcebytes":[83,101,108,101,99,116,32,97,32,102,105,108,101,46,46,46],"value":"Select a file..."},
+{"hash":69652900,"name":"tdlgimportnests.sbclearnestfile.hint","sourcebytes":[67,108,101,97,114,32,102,105,101,108,100],"value":"Clear field"},
+{"hash":28285395,"name":"tdlgimportnests.lblrevisionfile.caption","sourcebytes":[78,101,115,116,32,114,101,118,105,115,105,111,110,115],"value":"Nest revisions"},
+{"hash":171904661,"name":"tdlgimportnests.erevisionfile.hint","sourcebytes":[83,101,108,101,99,116,32,102,105,108,101],"value":"Select file"},
+{"hash":123838542,"name":"tdlgimportnests.erevisionfile.texthint","sourcebytes":[83,101,108,101,99,116,32,97,32,102,105,108,101,46,46,46],"value":"Select a file..."},
+{"hash":69652900,"name":"tdlgimportnests.sbclearrevisionfile.hint","sourcebytes":[67,108,101,97,114,32,102,105,101,108,100],"value":"Clear field"},
+{"hash":310755,"name":"tdlgimportnests.lbleggfile.caption","sourcebytes":[69,103,103,115],"value":"Eggs"},
+{"hash":171904661,"name":"tdlgimportnests.eeggfile.hint","sourcebytes":[83,101,108,101,99,116,32,102,105,108,101],"value":"Select file"},
+{"hash":123838542,"name":"tdlgimportnests.eeggfile.texthint","sourcebytes":[83,101,108,101,99,116,32,97,32,102,105,108,101,46,46,46],"value":"Select a file..."},
+{"hash":69652900,"name":"tdlgimportnests.sbcleareggfile.hint","sourcebytes":[67,108,101,97,114,32,102,105,101,108,100],"value":"Clear field"},
+{"hash":202137918,"name":"tdlgimportnests.lblsubtitleimportfiles.caption","sourcebytes":[83,101,108,101,99,116,32,97,116,32,108,101,97,115,116,32,111,110,101,32,102,105,108,101,32,116,111,32,115,116,97,114,116,32,105,109,112,111,114,116,105,110,103,46],"value":"Select at least one file to start importing."},
+{"hash":16714049,"name":"tdlgimportnests.lbltitleimportfinished.caption","sourcebytes":[70,105,110,105,115,104,101,100,32,105,109,112,111,114,116,105,110,103,33],"value":"Finished importing!"},
+{"hash":108267038,"name":"tdlgimportnests.lblsubtitleimportfinished.caption","sourcebytes":[84,104,101,32,115,101,108,101,99,116,101,100,32,102,105,108,101,40,115,41,32,119,101,114,101,32,115,117,99,101,115,115,102,117,108,108,121,32,105,109,112,111,114,116,101,100,46],"value":"The selected file(s) were sucessfully imported."},
+{"hash":191335534,"name":"tdlgimportnests.sbretry.caption","sourcebytes":[84,114,121,32,97,103,97,105,110],"value":"Try again"}
+]}

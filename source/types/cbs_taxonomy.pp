@@ -113,17 +113,18 @@ type
     FSpanishName: String;
     FSortNum: Double;
     FQuickCode: String;
+    FIucnStatus: String;
     FExtinct: Boolean;
     FExtinctionYear: String;
     FDistribution: String;
     FEbirdCode: String;
     FClementsTaxonomy: Boolean;
     FSubfamilyId: Integer;
-    FGenusEpithet: String;
-    FSpeciesEpithet: String;
+    //FGenusEpithet: String;
+    //FSpeciesEpithet: String;
     FSubspeciesGroupId: Integer;
     FSubspeciesGroupEpithet: String;
-    FSubspeciesEpithet: String;
+    //FSubspeciesEpithet: String;
     FIncertaeSedis: Integer;
     FIocTaxonomy: Boolean;
     FIocEnglishName: String;
@@ -134,10 +135,10 @@ type
     FIocSortNum: Double;
     FCbroTaxonomy: Boolean;
     FOtherPortugueseNames: String;
-    FCbroParentTaxonId: Integer;
-    FCbroRankId: Integer;
-    FCbroValidId: Integer;
-    FCbroSortNum: Double;
+    //FCbroParentTaxonId: Integer;
+    //FCbroRankId: Integer;
+    //FCbroValidId: Integer;
+    //FCbroSortNum: Double;
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
@@ -149,17 +150,18 @@ type
     property SpanishName: String read FSpanishName write FSpanishName;
     property SortNum: Double read FSortNum write FSortNum;
     property QuickCode: String read FQuickCode write FQuickCode;
+    property IucnStatus: String read FIucnStatus write FIucnStatus;
     property Extinct: Boolean read FExtinct write FExtinct;
     property ExtinctionYear: String read FExtinctionYear write FExtinctionYear;
     property Distribution: String read FDistribution write FDistribution;
     property EbirdCode: String read FEbirdCode write FEbirdCode;
     property ClementsTaxonomy: Boolean read FClementsTaxonomy write FClementsTaxonomy;
     property SubfamilyId: Integer read FSubfamilyId write FSubfamilyId;
-    property GenusEpithet: String read FGenusEpithet write FGenusEpithet;
-    property SpeciesEpithet: String read FSpeciesEpithet write FSpeciesEpithet;
+    //property GenusEpithet: String read FGenusEpithet write FGenusEpithet;
+    //property SpeciesEpithet: String read FSpeciesEpithet write FSpeciesEpithet;
     property SubspeciesGroupId: Integer read FSubspeciesGroupId write FSubspeciesGroupId;
     property SubspeciesGroupEpithet: String read FSubspeciesGroupEpithet write FSubspeciesGroupEpithet;
-    property SubspeciesEpithet: String read FSubspeciesEpithet write FSubspeciesEpithet;
+    //property SubspeciesEpithet: String read FSubspeciesEpithet write FSubspeciesEpithet;
     property IncertaeSedis: Integer read FIncertaeSedis write FIncertaeSedis;
     property IocTaxonomy: Boolean read FIocTaxonomy write FIocTaxonomy;
     property IocEnglishName: String read FIocEnglishName write FIocEnglishName;
@@ -170,10 +172,10 @@ type
     property IocSortNum: Double read FIocSortNum write FIocSortNum;
     property CbroTaxonomy: Boolean read FCbroTaxonomy write FCbroTaxonomy;
     property OtherPortugueseNames: String read FOtherPortugueseNames write FOtherPortugueseNames;
-    property CbroParentTaxonId: Integer read FCbroParentTaxonId write FCbroParentTaxonId;
-    property CbroRankId: Integer read FCbroRankId write FCbroRankId;
-    property CbroValidId: Integer read FCbroValidId write FCbroValidId;
-    property CbroSortNum: Double read FCbroSortNum write FCbroSortNum;
+    //property CbroParentTaxonId: Integer read FCbroParentTaxonId write FCbroParentTaxonId;
+    //property CbroRankId: Integer read FCbroRankId write FCbroRankId;
+    //property CbroValidId: Integer read FCbroValidId write FCbroValidId;
+    //property CbroSortNum: Double read FCbroSortNum write FCbroSortNum;
   end;
 
   function GetRankType(aKey: Integer): TZooRank;
@@ -217,7 +219,7 @@ type
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_getvalue, cbs_validations, cbs_system,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_datacolumns, cbs_getvalue, cbs_validations, cbs_system,
   udm_main, udlg_progress;
 
 function GetRankType(aKey: Integer): TZooRank;
@@ -1368,9 +1370,9 @@ begin
         ParamByName('ASUBFAMILY').AsInteger := MoveToSp.SubfamilyId;
         ParamByName('AFAMILY').AsInteger := MoveToSp.FamilyId;
         ParamByName('AORDER').AsInteger := MoveToSp.OrderId;
-        ParamByName('AGENUSNAME').AsString := MoveToSp.GenusEpithet;
-        ParamByName('AEPITHET').AsString := MoveToSp.SpeciesEpithet;
-        ParamByName('ASSPEPITHET').AsString := ExtractWord(3, NewName, [' ']);
+        //ParamByName('AGENUSNAME').AsString := MoveToSp.GenusEpithet;
+        //ParamByName('AEPITHET').AsString := MoveToSp.SpeciesEpithet;
+        //ParamByName('ASSPEPITHET').AsString := ExtractWord(3, NewName, [' ']);
         if (btClements in aTaxonomy) then
         begin
           ParamByName('GEODIST').DataType := ftMemo;
@@ -1813,17 +1815,18 @@ begin
   FSpanishName := EmptyStr;
   FSortNum := 0.0;
   FQuickCode := EmptyStr;
+  FIucnStatus := EmptyStr;
   FExtinct := False;
   FExtinctionYear := EmptyStr;
   FDistribution := EmptyStr;
   FEbirdCode := EmptyStr;
   FClementsTaxonomy := False;
   FSubfamilyId := 0;
-  FGenusEpithet := EmptyStr;
-  FSpeciesEpithet := EmptyStr;
+  //FGenusEpithet := EmptyStr;
+  //FSpeciesEpithet := EmptyStr;
   FSubspeciesGroupId := 0;
   FSubspeciesGroupEpithet := EmptyStr;
-  FSubspeciesEpithet := EmptyStr;
+  //FSubspeciesEpithet := EmptyStr;
   FIncertaeSedis := 0;
   FIocTaxonomy := False;
   FIocEnglishName := EmptyStr;
@@ -1834,10 +1837,10 @@ begin
   FIocSortNum := 0.0;
   FCbroTaxonomy := False;
   FOtherPortugueseNames := EmptyStr;
-  FCbroParentTaxonId := 0;
-  FCbroRankId := 0;
-  FCbroValidId := 0;
-  FCbroSortNum := 0.0;
+  //FCbroParentTaxonId := 0;
+  //FCbroRankId := 0;
+  //FCbroValidId := 0;
+  //FCbroSortNum := 0.0;
 end;
 
 procedure TTaxon.GetData(aKey: Integer);
@@ -1867,6 +1870,7 @@ begin
       FPortugueseName := FieldByName('portuguese_name').AsString;
       FSpanishName := FieldByName('spanish_name').AsString;
       FValidId := FieldByName('valid_id').AsInteger;
+      FIucnStatus := FieldByName('iucn_status').AsString;
       FExtinct := FieldByName('extinct').AsBoolean;
       FExtinctionYear := FieldByName('extinction_year').AsString;
       FDistribution := FieldByName('distribution').AsString;
@@ -1876,12 +1880,12 @@ begin
       FFamilyId := FieldByName('family_id').AsInteger;
       FSubfamilyId := FieldByName('subfamily_id').AsInteger;
       FGenusId := FieldByName('genus_id').AsInteger;
-      FGenusEpithet := FieldByName('genus_name').AsString;
+      //FGenusEpithet := FieldByName('genus_name').AsString;
       FSpeciesId := FieldByName('species_id').AsInteger;
-      FSpeciesEpithet := FieldByName('species_epithet').AsString;
+      //FSpeciesEpithet := FieldByName('species_epithet').AsString;
       FSubspeciesGroupId := FieldByName('subspecies_group_id').AsInteger;
       FSubspeciesGroupEpithet := FieldByName('group_name').AsString;
-      FSubspeciesEpithet := FieldByName('subspecies_epithet').AsString;
+      //FSubspeciesEpithet := FieldByName('subspecies_epithet').AsString;
       FIncertaeSedis := FieldByName('incertae_sedis').AsInteger;
       FIocTaxonomy := FieldByName('ioc_taxonomy').AsBoolean;
       FIocEnglishName := FieldByName('ioc_english_name').AsString;
@@ -1892,10 +1896,10 @@ begin
       FIocSortNum := FieldByName('ioc_sort_num').AsFloat;
       FCbroTaxonomy := FieldByName('cbro_taxonomy').AsBoolean;
       FOtherPortugueseNames := FieldByName('other_portuguese_names').AsString;
-      FCbroParentTaxonId := FieldByName('cbro_parent_taxon_id').AsInteger;
-      FCbroRankId := FieldByName('cbro_rank_id').AsInteger;
-      FCbroValidId := FieldByName('cbro_valid_id').AsInteger;
-      FCbroSortNum := FieldByName('cbro_sort_num').AsFloat;
+      //FCbroParentTaxonId := FieldByName('cbro_parent_taxon_id').AsInteger;
+      //FCbroRankId := FieldByName('cbro_rank_id').AsInteger;
+      //FCbroValidId := FieldByName('cbro_valid_id').AsInteger;
+      //FCbroSortNum := FieldByName('cbro_sort_num').AsFloat;
       FUserInserted := FieldByName('user_inserted').AsInteger;
       FUserUpdated := FieldByName('user_updated').AsInteger;
       FInsertDate := FieldByName('insert_date').AsDateTime;
@@ -1917,86 +1921,88 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff(rsCaptionName, aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscScientificName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome (formatado)', aOld.FormattedName, FFormattedName, R) then
+  if FieldValuesDiff(rscScientificName + ' (HTML)', aOld.FormattedName, FFormattedName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nível superior', aOld.ParentTaxonId, FParentTaxonId, R) then
+  if FieldValuesDiff(rscParentTaxonID, aOld.ParentTaxonId, FParentTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nível', aOld.RankId, FRankId, R) then
+  if FieldValuesDiff(rscTaxonomicRankID, aOld.RankId, FRankId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Autoria', aOld.Authorship, FAuthorship, R) then
+  if FieldValuesDiff(rscAuthorship, aOld.Authorship, FAuthorship, R) then
     aList.Add(R);
-  if FieldValuesDiff('Ordenação', aOld.SortNum, FSortNum, R) then
+  if FieldValuesDiff(rscTaxonomicSequence, aOld.SortNum, FSortNum, R) then
     aList.Add(R);
-  if FieldValuesDiff('Código rápido', aOld.QuickCode, FQuickCode, R) then
+  if FieldValuesDiff(rscQuickCode, aOld.QuickCode, FQuickCode, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome inglês', aOld.EnglishName, FEnglishName, R) then
+  if FieldValuesDiff(rscEnglishName, aOld.EnglishName, FEnglishName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome português', aOld.PortugueseName, FPortugueseName, R) then
+  if FieldValuesDiff(rscPortugueseName, aOld.PortugueseName, FPortugueseName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome espanhol', aOld.SpanishName, FSpanishName, R) then
+  if FieldValuesDiff(rscSpanishName, aOld.SpanishName, FSpanishName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome válido', aOld.ValidId, FValidId, R) then
+  if FieldValuesDiff(rscValidNameID, aOld.ValidId, FValidId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Extinto', aOld.Extinct, FExtinct, R) then
+  if FieldValuesDiff(rscConservationStatus, aOld.IucnStatus, FIucnStatus, R) then
     aList.Add(R);
-  if FieldValuesDiff('Ano da extinção', aOld.ExtinctionYear, FExtinctionYear, R) then
+  if FieldValuesDiff(rscExtinct, aOld.Extinct, FExtinct, R) then
     aList.Add(R);
-  if FieldValuesDiff('Distribuição geográfica', aOld.Distribution, FDistribution, R) then
+  if FieldValuesDiff(rscExtinctionYear, aOld.ExtinctionYear, FExtinctionYear, R) then
     aList.Add(R);
-  if FieldValuesDiff('Código eBird', aOld.EbirdCode, FEbirdCode, R) then
+  if FieldValuesDiff(rscDistribution, aOld.Distribution, FDistribution, R) then
     aList.Add(R);
-  if FieldValuesDiff('Clements/eBird', aOld.ClementsTaxonomy, FClementsTaxonomy, R) then
+  if FieldValuesDiff(rscEbirdCode, aOld.EbirdCode, FEbirdCode, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionOrder, aOld.OrderId, FOrderId, R) then
+  if FieldValuesDiff(rscClements, aOld.ClementsTaxonomy, FClementsTaxonomy, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionFamily, aOld.FamilyId, FFamilyId, R) then
+  if FieldValuesDiff(rscOrderID, aOld.OrderId, FOrderId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionSubfamily, aOld.SubfamilyId, FSubfamilyId, R) then
+  if FieldValuesDiff(rscFamilyID, aOld.FamilyId, FFamilyId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionGenus, aOld.GenusId, FGenusId, R) then
+  if FieldValuesDiff(rscSubfamilyID, aOld.SubfamilyId, FSubfamilyId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionSpecies, aOld.SpeciesId, FSpeciesId, R) then
+  if FieldValuesDiff(rscGenusID, aOld.GenusId, FGenusId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionSspGroup, aOld.SubspeciesGroupId, FSubspeciesGroupId, R) then
+  if FieldValuesDiff(rscSpeciesID, aOld.SpeciesId, FSpeciesId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome gênero', aOld.GenusEpithet, FGenusEpithet, R) then
+  if FieldValuesDiff(rscSubspeciesGroupID, aOld.SubspeciesGroupId, FSubspeciesGroupId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Epíteto específico', aOld.SpeciesEpithet, FSpeciesEpithet, R) then
+  //if FieldValuesDiff('Nome gênero', aOld.GenusEpithet, FGenusEpithet, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff('Epíteto específico', aOld.SpeciesEpithet, FSpeciesEpithet, R) then
+  //  aList.Add(R);
+  if FieldValuesDiff(rscSubspeciesGroup, aOld.SubspeciesGroupEpithet, FSubspeciesGroupEpithet, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome grupo subespecífico', aOld.SubspeciesGroupEpithet, FSubspeciesGroupEpithet, R) then
+  //if FieldValuesDiff('Epíteto subespecífico', aOld.SubspeciesEpithet, FSubspeciesEpithet, R) then
+  //  aList.Add(R);
+  if FieldValuesDiff(rscIncertaeSedis, aOld.IncertaeSedis, FIncertaeSedis, R) then
     aList.Add(R);
-  if FieldValuesDiff('Epíteto subespecífico', aOld.SubspeciesEpithet, FSubspeciesEpithet, R) then
+  if FieldValuesDiff(rscIOC, aOld.IocTaxonomy, FIocTaxonomy, R) then
     aList.Add(R);
-  if FieldValuesDiff('Incertae sedis', aOld.IncertaeSedis, FIncertaeSedis, R) then
+  if FieldValuesDiff(rscEnglishName + ' (IOC)', aOld.IocEnglishName, FIocEnglishName, R) then
     aList.Add(R);
-  if FieldValuesDiff('IOC', aOld.IocTaxonomy, FIocTaxonomy, R) then
+  if FieldValuesDiff(rscParentTaxonID + ' (IOC)', aOld.IocParentTaxonId, FIocParentTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome inglês (IOC)', aOld.IocEnglishName, FIocEnglishName, R) then
+  if FieldValuesDiff(rscTaxonomicRankID + ' (IOC)', aOld.IocRankId, FIocRankId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nível superior (IOC)', aOld.IocParentTaxonId, FIocParentTaxonId, R) then
+  if FieldValuesDiff(rscValidNameID + ' (IOC)', aOld.IocValidId, FIocValidId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nível (IOC)', aOld.IocRankId, FIocRankId, R) then
+  if FieldValuesDiff(rscDistribution + ' (IOC)', aOld.IocDistribution, FIocDistribution, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome válido (IOC)', aOld.IocValidId, FIocValidId, R) then
+  if FieldValuesDiff(rscTaxonomicSequence + ' (IOC)', aOld.IocSortNum, FIocSortNum, R) then
     aList.Add(R);
-  if FieldValuesDiff('Distribuição geográfica (IOC)', aOld.IocDistribution, FIocDistribution, R) then
+  if FieldValuesDiff(rscCBRO, aOld.CbroTaxonomy, FCbroTaxonomy, R) then
     aList.Add(R);
-  if FieldValuesDiff('Ordenação (IOC)', aOld.IocSortNum, FIocSortNum, R) then
+  if FieldValuesDiff(rscOtherPortugueseNames, aOld.OtherPortugueseNames, FOtherPortugueseNames, R) then
     aList.Add(R);
-  if FieldValuesDiff('CBRO', aOld.CbroTaxonomy, FCbroTaxonomy, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Outros nomes português', aOld.OtherPortugueseNames, FOtherPortugueseNames, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Nível superior (CBRO)', aOld.CbroParentTaxonId, FCbroParentTaxonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Nível (CBRO)', aOld.CbroRankId, FCbroRankId, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Nome válido (CBRO)', aOld.CbroValidId, FCbroValidId, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Ordenação (CBRO)', aOld.CbroSortNum, FCbroSortNum, R) then
-    aList.Add(R);
+  //if FieldValuesDiff('Nível superior (CBRO)', aOld.CbroParentTaxonId, FCbroParentTaxonId, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff('Nível (CBRO)', aOld.CbroRankId, FCbroRankId, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff('Nome válido (CBRO)', aOld.CbroValidId, FCbroValidId, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff('Ordenação (CBRO)', aOld.CbroSortNum, FCbroSortNum, R) then
+  //  aList.Add(R);
 
   Result := aList.Count > 0;
 end;

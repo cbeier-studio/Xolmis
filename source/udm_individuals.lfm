@@ -4035,7 +4035,7 @@ object DMI: TDMI
     FieldDefs = <    
       item
         Name = 'nest_id'
-        DataType = ftAutoInc
+        DataType = ftInteger
         Precision = -1
       end    
       item
@@ -4075,31 +4075,6 @@ object DMI: TDMI
         Precision = -1
       end    
       item
-        Name = 'male_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'female_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'helper_1_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'helper_2_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'helper_3_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
         Name = 'nest_shape'
         DataType = ftString
         Precision = -1
@@ -4133,12 +4108,22 @@ object DMI: TDMI
         Precision = -1
       end    
       item
-        Name = 'internal_diameter'
+        Name = 'internal_max_diameter'
         DataType = ftFloat
         Precision = -1
       end    
       item
-        Name = 'external_diameter'
+        Name = 'internal_min_diameter'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'external_max_diameter'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'external_min_diameter'
         DataType = ftFloat
         Precision = -1
       end    
@@ -4318,6 +4303,48 @@ object DMI: TDMI
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'observer_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'project_name'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'taxon_formatted_name'
+        DataType = ftString
+        Precision = -1
+        Size = 250
+      end    
+      item
+        Name = 'support_plant_1_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'support_plant_2_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
       end>
     AfterCancel = qNestsAfterCancel
     AfterPost = qNestsAfterPost
@@ -4403,11 +4430,21 @@ object DMI: TDMI
       Required = False
       Size = 100
     end
+    object qNeststaxon_formatted_name: TStringField
+      FieldKind = fkData
+      FieldName = 'taxon_formatted_name'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 250
+    end
     object qNestslocality_id: TLongintField
       DisplayLabel = 'Locality (Id)'
       FieldKind = fkData
       FieldName = 'locality_id'
-      Index = 4
+      Index = 5
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4419,7 +4456,7 @@ object DMI: TDMI
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'locality_name'
-      Index = 5
+      Index = 6
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4430,7 +4467,7 @@ object DMI: TDMI
       DisplayLabel = 'Longitude'
       FieldKind = fkData
       FieldName = 'longitude'
-      Index = 6
+      Index = 7
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4443,7 +4480,7 @@ object DMI: TDMI
       DisplayLabel = 'Latitude'
       FieldKind = fkData
       FieldName = 'latitude'
-      Index = 7
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4456,7 +4493,7 @@ object DMI: TDMI
       DisplayLabel = 'Observer (Id)'
       FieldKind = fkData
       FieldName = 'observer_id'
-      Index = 8
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4468,7 +4505,7 @@ object DMI: TDMI
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'observer_name'
-      Index = 9
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4479,7 +4516,7 @@ object DMI: TDMI
       DisplayLabel = 'Project (Id)'
       FieldKind = fkData
       FieldName = 'project_id'
-      Index = 10
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4491,7 +4528,7 @@ object DMI: TDMI
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'project_name'
-      Index = 11
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4502,7 +4539,7 @@ object DMI: TDMI
       DisplayWidth = 12
       FieldKind = fkData
       FieldName = 'nest_shape'
-      Index = 12
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4513,7 +4550,7 @@ object DMI: TDMI
       DisplayWidth = 12
       FieldKind = fkData
       FieldName = 'support_type'
-      Index = 13
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4523,7 +4560,7 @@ object DMI: TDMI
     object qNestssupport_plant_1_id: TLongintField
       FieldKind = fkData
       FieldName = 'support_plant_1_id'
-      Index = 14
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4534,7 +4571,7 @@ object DMI: TDMI
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'support_plant_1_name'
-      Index = 15
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4544,7 +4581,7 @@ object DMI: TDMI
     object qNestssupport_plant_2_id: TLongintField
       FieldKind = fkData
       FieldName = 'support_plant_2_id'
-      Index = 16
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4555,7 +4592,7 @@ object DMI: TDMI
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'support_plant_2_name'
-      Index = 17
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4566,7 +4603,7 @@ object DMI: TDMI
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'other_support'
-      Index = 18
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4576,16 +4613,6 @@ object DMI: TDMI
     object qNestsheight_above_ground: TFloatField
       FieldKind = fkData
       FieldName = 'height_above_ground'
-      Index = 19
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Precision = -1
-    end
-    object qNestsinternal_diameter: TFloatField
-      FieldKind = fkData
-      FieldName = 'internal_diameter'
       Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -4593,10 +4620,40 @@ object DMI: TDMI
       Required = False
       Precision = -1
     end
-    object qNestsexternal_diameter: TFloatField
+    object qNestsinternal_max_diameter: TFloatField
       FieldKind = fkData
-      FieldName = 'external_diameter'
+      FieldName = 'internal_max_diameter'
       Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsinternal_min_diameter: TFloatField
+      FieldKind = fkData
+      FieldName = 'internal_min_diameter'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsexternal_max_diameter: TFloatField
+      FieldKind = fkData
+      FieldName = 'external_max_diameter'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qNestsexternal_min_diameter: TFloatField
+      FieldKind = fkData
+      FieldName = 'external_min_diameter'
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4606,7 +4663,7 @@ object DMI: TDMI
     object qNestsinternal_height: TFloatField
       FieldKind = fkData
       FieldName = 'internal_height'
-      Index = 22
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4616,7 +4673,7 @@ object DMI: TDMI
     object qNestsexternal_height: TFloatField
       FieldKind = fkData
       FieldName = 'external_height'
-      Index = 23
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4626,7 +4683,7 @@ object DMI: TDMI
     object qNestsedge_distance: TFloatField
       FieldKind = fkData
       FieldName = 'edge_distance'
-      Index = 24
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4636,7 +4693,7 @@ object DMI: TDMI
     object qNestscenter_distance: TFloatField
       FieldKind = fkData
       FieldName = 'center_distance'
-      Index = 25
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4646,7 +4703,7 @@ object DMI: TDMI
     object qNestsnest_cover: TLongintField
       FieldKind = fkData
       FieldName = 'nest_cover'
-      Index = 26
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4655,7 +4712,7 @@ object DMI: TDMI
     object qNestsplant_max_diameter: TFloatField
       FieldKind = fkData
       FieldName = 'plant_max_diameter'
-      Index = 27
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4665,7 +4722,7 @@ object DMI: TDMI
     object qNestsplant_min_diameter: TFloatField
       FieldKind = fkData
       FieldName = 'plant_min_diameter'
-      Index = 28
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4675,7 +4732,7 @@ object DMI: TDMI
     object qNestsplant_height: TFloatField
       FieldKind = fkData
       FieldName = 'plant_height'
-      Index = 29
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4685,7 +4742,7 @@ object DMI: TDMI
     object qNestsplant_dbh: TFloatField
       FieldKind = fkData
       FieldName = 'plant_dbh'
-      Index = 30
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4695,7 +4752,7 @@ object DMI: TDMI
     object qNestsconstruction_days: TFloatField
       FieldKind = fkData
       FieldName = 'construction_days'
-      Index = 31
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4705,7 +4762,7 @@ object DMI: TDMI
     object qNestsincubation_days: TFloatField
       FieldKind = fkData
       FieldName = 'incubation_days'
-      Index = 32
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4715,7 +4772,7 @@ object DMI: TDMI
     object qNestsnestling_days: TFloatField
       FieldKind = fkData
       FieldName = 'nestling_days'
-      Index = 33
+      Index = 36
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4725,7 +4782,7 @@ object DMI: TDMI
     object qNestsactive_days: TFloatField
       FieldKind = fkData
       FieldName = 'active_days'
-      Index = 34
+      Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4736,7 +4793,7 @@ object DMI: TDMI
       Alignment = taCenter
       FieldKind = fkData
       FieldName = 'nest_fate'
-      Index = 35
+      Index = 38
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4746,7 +4803,7 @@ object DMI: TDMI
     object qNestsnest_productivity: TLongintField
       FieldKind = fkData
       FieldName = 'nest_productivity'
-      Index = 36
+      Index = 39
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4756,7 +4813,7 @@ object DMI: TDMI
       Alignment = taCenter
       FieldKind = fkData
       FieldName = 'found_date'
-      Index = 37
+      Index = 40
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4766,7 +4823,7 @@ object DMI: TDMI
       Alignment = taCenter
       FieldKind = fkData
       FieldName = 'last_date'
-      Index = 38
+      Index = 41
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4776,7 +4833,7 @@ object DMI: TDMI
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'description'
-      Index = 39
+      Index = 42
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4789,7 +4846,7 @@ object DMI: TDMI
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 40
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4801,7 +4858,7 @@ object DMI: TDMI
     object qNestsnest_id: TAutoIncField
       FieldKind = fkData
       FieldName = 'nest_id'
-      Index = 41
+      Index = 44
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -4810,7 +4867,7 @@ object DMI: TDMI
     object qNestsfull_name: TStringField
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 42
+      Index = 45
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4821,7 +4878,7 @@ object DMI: TDMI
     object qNestsorder_id: TLongintField
       FieldKind = fkData
       FieldName = 'order_id'
-      Index = 43
+      Index = 46
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4831,7 +4888,7 @@ object DMI: TDMI
     object qNestsfamily_id: TLongintField
       FieldKind = fkData
       FieldName = 'family_id'
-      Index = 44
+      Index = 47
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4841,7 +4898,7 @@ object DMI: TDMI
     object qNestssubfamily_id: TLongintField
       FieldKind = fkData
       FieldName = 'subfamily_id'
-      Index = 45
+      Index = 48
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4851,7 +4908,7 @@ object DMI: TDMI
     object qNestsgenus_id: TLongintField
       FieldKind = fkData
       FieldName = 'genus_id'
-      Index = 46
+      Index = 49
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4861,7 +4918,7 @@ object DMI: TDMI
     object qNestsspecies_id: TLongintField
       FieldKind = fkData
       FieldName = 'species_id'
-      Index = 47
+      Index = 50
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4871,7 +4928,7 @@ object DMI: TDMI
     object qNestscountry_id: TLongintField
       FieldKind = fkData
       FieldName = 'country_id'
-      Index = 48
+      Index = 51
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4881,7 +4938,7 @@ object DMI: TDMI
     object qNestsstate_id: TLongintField
       FieldKind = fkData
       FieldName = 'state_id'
-      Index = 49
+      Index = 52
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4891,7 +4948,7 @@ object DMI: TDMI
     object qNestsmunicipality_id: TLongintField
       FieldKind = fkData
       FieldName = 'municipality_id'
-      Index = 50
+      Index = 53
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4901,7 +4958,7 @@ object DMI: TDMI
     object qNestsuser_inserted: TLongintField
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 51
+      Index = 54
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4911,7 +4968,7 @@ object DMI: TDMI
     object qNestsuser_updated: TLongintField
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 52
+      Index = 55
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4922,7 +4979,7 @@ object DMI: TDMI
       Alignment = taCenter
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 53
+      Index = 56
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4933,7 +4990,7 @@ object DMI: TDMI
       Alignment = taCenter
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 54
+      Index = 57
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4944,7 +5001,7 @@ object DMI: TDMI
       Alignment = taCenter
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 55
+      Index = 58
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4956,7 +5013,7 @@ object DMI: TDMI
       Alignment = taCenter
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 56
+      Index = 59
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

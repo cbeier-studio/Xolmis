@@ -27,14 +27,17 @@ type
     FLatitude: Extended;
     FLongitude: Extended;
     FTaxonId: Integer;
+    FNestShape: String;
     FSupportType: String;
     FSupportPlant1Id: Integer;
     FSupportPlant2Id: Integer;
     FOtherSupport: String;
     FHeightAboveGround: Double;
     FProjectId: Integer;
-    FInternalDiameter: Double;
-    FExternalDiameter: Double;
+    FInternalMaxDiameter: Double;
+    FInternalMinDiameter: Double;
+    FExternalMaxDiameter: Double;
+    FExternalMinDiameter: Double;
     FInternalHeight: Double;
     FExternalHeight: Double;
     FEdgeDistance: Double;
@@ -53,11 +56,15 @@ type
     FFoundDate: TDate;
     FLastDate: TDate;
     FDescription: String;
+    FNotes: String;
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
     procedure GetData(aKey: Integer);
+    function Find(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate): Boolean;
     function Diff(aOld: TNest; var aList: TStrings): Boolean;
+    procedure Insert;
+    procedure Update;
   published
     property FieldNumber: String read FFieldNumber write FFieldNumber;
     property FullName: String read FFullName write FFullName;
@@ -67,13 +74,16 @@ type
     property Longitude: Extended read FLongitude write FLongitude;
     property ProjectId: Integer read FProjectId write FProjectId;
     property TaxonId: Integer read FTaxonId write FTaxonId;
+    property NestShape: String read FNestShape write FNestShape;
     property SupportType: String read FSupportType write FSupportType;
     property SupportPlant1Id: Integer read FSupportPlant1Id write FSupportPlant1Id;
     property SupportPlant2Id: Integer read FSupportPlant2Id write FSupportPlant2Id;
     property OtherSupport: String read FOtherSupport write FOtherSupport;
     property HeightAboveGround: Double read FHeightAboveGround write FHeightAboveGround;
-    property InternalDiameter: Double read FInternalDiameter write FInternalDiameter;
-    property ExternalDiameter: Double read FExternalDiameter write FExternalDiameter;
+    property InternalMaxDiameter: Double read FInternalMaxDiameter write FInternalMaxDiameter;
+    property InternalMinDiameter: Double read FInternalMinDiameter write FInternalMinDiameter;
+    property ExternalMaxDiameter: Double read FExternalMaxDiameter write FExternalMaxDiameter;
+    property ExternalMinDiameter: Double read FExternalMinDiameter write FExternalMinDiameter;
     property InternalHeight: Double read FInternalHeight write FInternalHeight;
     property ExternalHeight: Double read FExternalHeight write FExternalHeight;
     property EdgeDistance: Double read FEdgeDistance write FEdgeDistance;
@@ -92,6 +102,7 @@ type
     property FoundDate: TDate read FFoundDate write FFoundDate;
     property LastDate: TDate read FLastDate write FLastDate;
     property Description: String read FDescription write FDescription;
+    property Notes: String read FNotes write FNotes;
   end;
 
 type
@@ -224,7 +235,7 @@ type
 implementation
 
 uses
-  cbs_locale, cbs_validations, udm_main;
+  cbs_locale, cbs_datacolumns, cbs_validations, udm_main;
 
 { TNestRevision }
 
@@ -308,35 +319,35 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff(rsCaptionNest, aOld.NestId, FNestId, R) then
+  if FieldValuesDiff(rscNest, aOld.NestId, FNestId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionDate, aOld.RevisionDate, FRevisionDate, R) then
+  if FieldValuesDiff(rscDate, aOld.RevisionDate, FRevisionDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Hora', aOld.RevisionTime, FRevisionTime, R) then
+  if FieldValuesDiff(rscTime, aOld.RevisionTime, FRevisionTime, R) then
     aList.Add(R);
-  if FieldValuesDiff('Observador 1', aOld.Observer1Id, FObserver1Id, R) then
+  if FieldValuesDiff(rscObserver1ID, aOld.Observer1Id, FObserver1Id, R) then
     aList.Add(R);
-  if FieldValuesDiff('Observador 2', aOld.Observer2Id, FObserver2Id, R) then
+  if FieldValuesDiff(rscObserver2ID, aOld.Observer2Id, FObserver2Id, R) then
     aList.Add(R);
-  if FieldValuesDiff('Status', aOld.NestStatus, FNestStatus, R) then
+  if FieldValuesDiff(rscStatus, aOld.NestStatus, FNestStatus, R) then
     aList.Add(R);
-  if FieldValuesDiff('# ovos (hospedeiro)', aOld.HostEggsTally, FHostEggsTally, R) then
+  if FieldValuesDiff(rscEggsHost, aOld.HostEggsTally, FHostEggsTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('# ninhegos (hospedeiro)', aOld.HostNestlingsTally, FHostNestlingsTally, R) then
+  if FieldValuesDiff(rscNestlingsHost, aOld.HostNestlingsTally, FHostNestlingsTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('# ovos nidoparasita', aOld.NidoparasiteEggsTally, FNidoparasiteEggsTally, R) then
+  if FieldValuesDiff(rscEggsNidoparasite, aOld.NidoparasiteEggsTally, FNidoparasiteEggsTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('# ninhegos nidoparasita', aOld.NidoparasiteNestlingsTally, FNidoparasiteNestlingsTally, R) then
+  if FieldValuesDiff(rscNestlingsNidoparasite, aOld.NidoparasiteNestlingsTally, FNidoparasiteNestlingsTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nidoparasita', aOld.NidoparasiteId, FNidoparasiteId, R) then
+  if FieldValuesDiff(rscNidoparasiteID, aOld.NidoparasiteId, FNidoparasiteId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Philornis', aOld.HavePhilornisLarvae, FHavePhilornisLarvae, R) then
+  if FieldValuesDiff(rscHasPhilornisLarvae, aOld.HavePhilornisLarvae, FHavePhilornisLarvae, R) then
     aList.Add(R);
-  if FieldValuesDiff('Estágio', aOld.NestStage, FNestStage, R) then
+  if FieldValuesDiff(rscNestStage, aOld.NestStage, FNestStage, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anotações', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -428,39 +439,39 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Número de campo', aOld.FieldNumber, FFieldNumber, R) then
+  if FieldValuesDiff(rscFieldNumber, aOld.FieldNumber, FFieldNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionNest, aOld.NestId, FNestId, R) then
+  if FieldValuesDiff(rscNestID, aOld.NestId, FNestId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Formato', aOld.EggShape, FEggShape, R) then
+  if FieldValuesDiff(rscEggShape, aOld.EggShape, FEggShape, R) then
     aList.Add(R);
-  if FieldValuesDiff('Largura', aOld.Width, FWidth, R) then
+  if FieldValuesDiff(rscWidth, aOld.Width, FWidth, R) then
     aList.Add(R);
-  if FieldValuesDiff('Comprimento', aOld.Length, FLength, R) then
+  if FieldValuesDiff(rscLength, aOld.Length, FLength, R) then
     aList.Add(R);
-  if FieldValuesDiff('Massa', aOld.Mass, FMass, R) then
+  if FieldValuesDiff(rscMass, aOld.Mass, FMass, R) then
     aList.Add(R);
-  if FieldValuesDiff('Volume', aOld.Volume, FVolume, R) then
+  if FieldValuesDiff(rscVolume, aOld.Volume, FVolume, R) then
     aList.Add(R);
-  if FieldValuesDiff('Estágio', aOld.EggStage, FEggStage, R) then
+  if FieldValuesDiff(rscStage, aOld.EggStage, FEggStage, R) then
     aList.Add(R);
-  if FieldValuesDiff('Cor', aOld.EggshellColor, FEggshellColor, R) then
+  if FieldValuesDiff(rscEggshellColor, aOld.EggshellColor, FEggshellColor, R) then
     aList.Add(R);
-  if FieldValuesDiff('Manchas', aOld.EggshellPattern, FEggshellPattern, R) then
+  if FieldValuesDiff(rscEggshellPattern, aOld.EggshellPattern, FEggshellPattern, R) then
     aList.Add(R);
-  if FieldValuesDiff('Textura', aOld.EggshellTexture, FEggshellTexture, R) then
+  if FieldValuesDiff(rscEggshellTexture, aOld.EggshellTexture, FEggshellTexture, R) then
     aList.Add(R);
-  if FieldValuesDiff('Eclodiu', aOld.EggHatched, FEggHatched, R) then
+  if FieldValuesDiff(rscHatched, aOld.EggHatched, FEggHatched, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionIndividual, aOld.IndividualId, FIndividualId, R) then
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data da medição', aOld.MeasureDate, FMeasureDate, R) then
+  if FieldValuesDiff(rscDate, aOld.MeasureDate, FMeasureDate, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionTaxon, aOld.TaxonId, FTaxonId, R) then
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Descrição', aOld.Description, FDescription, R) then
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -486,14 +497,17 @@ begin
   FLatitude := 0.0;
   FLongitude := 0.0;
   FTaxonId := 0;
+  FNestShape := EmptyStr;
   FSupportType := EmptyStr;
   FSupportPlant1Id := 0;
   FSupportPlant2Id := 0;
   FOtherSupport := EmptyStr;
   FHeightAboveGround := 0.0;
   FProjectId := 0;
-  FInternalDiameter := 0.0;
-  FExternalDiameter := 0.0;
+  FInternalMaxDiameter := 0.0;
+  FInternalMinDiameter := 0.0;
+  FExternalMaxDiameter := 0.0;
+  FExternalMinDiameter := 0.0;
   FInternalHeight := 0.0;
   FExternalHeight := 0.0;
   FEdgeDistance := 0.0;
@@ -512,6 +526,7 @@ begin
   FFoundDate := StrToDate('30/12/1500');
   FLastDate := StrToDate('30/12/1500');
   FDescription := EmptyStr;
+  FNotes := EmptyStr;
 end;
 
 procedure TNest.GetData(aKey: Integer);
@@ -537,14 +552,17 @@ begin
       FLatitude := FieldByName('latitude').AsFloat;
       FLongitude := FieldByName('longitude').AsFloat;
       FTaxonId := FieldByName('taxon_id').AsInteger;
+      FNestShape := FieldByName('nest_shape').AsString;
       FSupportType := FieldByName('support_type').AsString;
       FSupportPlant1Id := FieldByName('support_plant_1_id').AsInteger;
       FSupportPlant2Id := FieldByName('support_plant_2_id').AsInteger;
       FOtherSupport := FieldByName('other_support').AsString;
       FHeightAboveGround := FieldByName('height_above_ground').AsFloat;
       FProjectId := FieldByName('project_id').AsInteger;
-      FInternalDiameter := FieldByName('internal_diameter').AsFloat;
-      FExternalDiameter := FieldByName('external_diameter').AsFloat;
+      FInternalMaxDiameter := FieldByName('internal_max_diameter').AsFloat;
+      FInternalMinDiameter := FieldByName('internal_min_diameter').AsFloat;
+      FExternalMaxDiameter := FieldByName('external_max_diameter').AsFloat;
+      FExternalMinDiameter := FieldByName('external_min_diameter').AsFloat;
       FInternalHeight := FieldByName('internal_height').AsFloat;
       FExternalHeight := FieldByName('external_height').AsFloat;
       FEdgeDistance := FieldByName('edge_distance').AsFloat;
@@ -563,6 +581,7 @@ begin
       FFoundDate := FieldByName('found_date').AsDateTime;
       FLastDate := FieldByName('last_date').AsDateTime;
       FDescription := FieldByName('description').AsString;
+      FNotes := FieldByName('notes').AsString;
       FInsertDate := FieldByName('insert_date').AsDateTime;
       FUserInserted := FieldByName('user_inserted').AsInteger;
       FUpdateDate := FieldByName('update_date').AsDateTime;
@@ -577,6 +596,88 @@ begin
   end;
 end;
 
+procedure TNest.Insert;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('INSERT INTO nests (field_number, observer_id, project_id, locality_id, longitude, latitude, ' +
+      'taxon_id, nest_shape, support_type, support_plant_1_id, support_plant_2_id, other_support, ' +
+      'height_above_ground, internal_max_diameter, internal_min_diameter, external_max_diameter, ' +
+      'external_min_diameter, internal_height, external_height, edge_distance, center_distance, ' +
+      'nest_cover, plant_max_diameter, plant_min_diameter, plant_height, plant_dbh, nest_fate,' +
+      'nest_productivity, found_date, last_date, full_name, description, notes, ' +
+      'construction_days, incubation_days, nestling_days, active_days, ' +
+      'user_inserted, insert_date) ');
+    Add('VALUES (:afieldnumber, :aobserver, :aproject, :alocality, :alongitude, :alatitude, ' +
+      ':ataxon, :ashape, :asupporttype, :asupportplant1, :asupportplant2, :aothersupport, ' +
+      ':aheightaboveground, :amaxinternaldiam, :amininternaldiam, :amaxexternaldiam, ' +
+      ':aminexternaldiam, :ainternalheight, :aexternalheight, :aedgedistance, :acenterdistance, ' +
+      ':acover, :amaxplantdiam, :aminplantdiam, :aplantheight, :aplantdbh, :afate, ' +
+      ':aproductivity, :afounddate, :alastdate, :afullname, :adescription, :anotes, ' +
+      ':constructiondays, :incubationdays, :nestlingdays, :activedays, ' +
+      ':auser, datetime(''now'',''localtime''));');
+    ParamByName('AFIELDNUMBER').AsString := FFieldNumber;
+    ParamByName('AOBSERVER').AsInteger := FObserverId;
+    ParamByName('APROJECT').AsInteger := FProjectId;
+    ParamByName('ALOCALITY').AsInteger := FLocalityId;
+    ParamByName('ALONGITUDE').AsFloat := FLongitude;
+    ParamByName('ALATITUDE').AsFloat := FLatitude;
+    ParamByName('ATAXON').AsInteger := FTaxonId;
+    ParamByName('ASHAPE').AsString := FNestShape;
+    ParamByName('ASUPPORTTYPE').AsString := FSupportType;
+    ParamByName('ASUPPORTPLANT1').AsInteger := FSupportPlant1Id;
+    ParamByName('ASUPPORTPLANT2').AsInteger := FSupportPlant2Id;
+    ParamByName('AOTHERSUPPORT').AsString := FOtherSupport;
+    ParamByName('AHEIGHTABOVEGROUND').AsFloat := FHeightAboveGround;
+    ParamByName('AMAXINTERNALDIAM').AsFloat := FInternalMaxDiameter;
+    ParamByName('AMININTERNALDIAM').AsFloat := FInternalMinDiameter;
+    ParamByName('AMAXEXTERNALDIAM').AsFloat := FExternalMaxDiameter;
+    ParamByName('AMINEXTERNALDIAM').AsFloat := FExternalMinDiameter;
+    ParamByName('AINTERNALHEIGHT').AsFloat := FInternalHeight;
+    ParamByName('AEXTERNALHEIGHT').AsFloat := FExternalHeight;
+    ParamByName('AEDGEDISTANCE').AsFloat := FEdgeDistance;
+    ParamByName('ACENTERDISTANCE').AsFloat := FCenterDistance;
+    ParamByName('ACOVER').AsFloat := FNestCover;
+    ParamByName('AMAXPLANTDIAM').AsFloat := FPlantMaxDiameter;
+    ParamByName('AMINPLANTDIAM').AsFloat := FPlantMinDiameter;
+    ParamByName('APLANTHEIGHT').AsFloat := FPlantHeight;
+    ParamByName('APLANTDBH').AsFloat := FPlantDbh;
+    ParamByName('AFATE').AsString := FNestFate;
+    ParamByName('APRODUCTIVITY').AsInteger := FNestProductivity;
+    ParamByName('AFOUNDDATE').AsDateTime := FFoundDate;
+    ParamByName('ALASTDATE').AsDateTime := FLastDate;
+    ParamByName('AFULLNAME').AsString := FFullName;
+    ParamByName('ADESCRIPTION').AsString := FDescription;
+    ParamByName('ANOTES').AsString := FNotes;
+    ParamByName('CONSTRUCTIONDAYS').AsFloat := FConstructionDays;
+    ParamByName('INCUBATIONDAYS').AsFloat := FIncubationDays;
+    ParamByName('NESTLINGDAYS').AsFloat := FNestlingDays;
+    ParamByName('ACTIVEDAYS').AsFloat := FActiveDays;
+    ParamByName('AUSER').AsInteger := FUserInserted;
+
+    ExecSQL;
+
+    // Get the autoincrement key inserted
+    Clear;
+    Add('SELECT DISTINCT last_insert_rowid() FROM nests');
+    Open;
+    FId := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNest.Update;
+begin
+
+end;
+
 function TNest.Diff(aOld: TNest; var aList: TStrings): Boolean;
 var
   R: String;
@@ -584,74 +685,115 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('N'#186' campo', aOld.FieldNumber, FFieldNumber, R) then
+  if FieldValuesDiff(rscFieldNumber, aOld.FieldNumber, FFieldNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Observador', aOld.ObserverId, FObserverId, R) then
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionLocality, aOld.LocalityId, FLocalityId, R) then
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLatitude, aOld.Latitude, FLatitude, R) then
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLongitude, aOld.Longitude, FLongitude, R) then
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionTaxon, aOld.TaxonId, FTaxonId, R) then
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tipo suporte', aOld.SupportType, FSupportType, R) then
+  if FieldValuesDiff(rscShape, aOld.NestShape, FNestShape, R) then
     aList.Add(R);
-  if FieldValuesDiff('Planta suporte 1', aOld.SupportPlant1Id, FSupportPlant1Id, R) then
+  if FieldValuesDiff(rscSupportType, aOld.SupportType, FSupportType, R) then
     aList.Add(R);
-  if FieldValuesDiff('Planta suporte 2', aOld.SupportPlant2Id, FSupportPlant2Id, R) then
+  if FieldValuesDiff(rscSupportPlant1ID, aOld.SupportPlant1Id, FSupportPlant1Id, R) then
     aList.Add(R);
-  if FieldValuesDiff('Outro suporte', aOld.OtherSupport, FOtherSupport, R) then
+  if FieldValuesDiff(rscSupportPlant2ID, aOld.SupportPlant2Id, FSupportPlant2Id, R) then
     aList.Add(R);
-  if FieldValuesDiff('Altura solo', aOld.HeightAboveGround, FHeightAboveGround, R) then
+  if FieldValuesDiff(rscOtherSupport, aOld.OtherSupport, FOtherSupport, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionProject, aOld.ProjectId, FProjectId, R) then
+  if FieldValuesDiff(rscHeightAboveGround, aOld.HeightAboveGround, FHeightAboveGround, R) then
     aList.Add(R);
-  if FieldValuesDiff('Di'#226'metro interno', aOld.InternalDiameter, FInternalDiameter, R) then
+  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Di'#226'metro externo', aOld.ExternalDiameter, FExternalDiameter, R) then
+  if FieldValuesDiff(rscMaxInternalDiameter, aOld.InternalMaxDiameter, FInternalMaxDiameter, R) then
     aList.Add(R);
-  if FieldValuesDiff('Altura interna', aOld.InternalHeight, FInternalHeight, R) then
+  if FieldValuesDiff(rscMinInternalDiameter, aOld.InternalMinDiameter, FInternalMinDiameter, R) then
     aList.Add(R);
-  if FieldValuesDiff('Altura externa', aOld.ExternalHeight, FExternalHeight, R) then
+  if FieldValuesDiff(rscMaxExternalDiameter, aOld.ExternalMaxDiameter, FExternalMaxDiameter, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dist'#226'ncia borda', aOld.EdgeDistance, FEdgeDistance, R) then
+  if FieldValuesDiff(rscMinExternalDiameter, aOld.ExternalMinDiameter, FExternalMinDiameter, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dist'#226'ncia fuste', aOld.CenterDistance, FCenterDistance, R) then
+  if FieldValuesDiff(rscInternalHeight, aOld.InternalHeight, FInternalHeight, R) then
     aList.Add(R);
-  if FieldValuesDiff('Diâmetro máximo da planta', aOld.PlantMaxDiameter, FPlantMaxDiameter, R) then
+  if FieldValuesDiff(rscExternalHeight, aOld.ExternalHeight, FExternalHeight, R) then
     aList.Add(R);
-  if FieldValuesDiff('Diâmetro mínimo da planta', aOld.PlantMinDiameter, FPlantMinDiameter, R) then
+  if FieldValuesDiff(rscPlantEdgeDistance, aOld.EdgeDistance, FEdgeDistance, R) then
     aList.Add(R);
-  if FieldValuesDiff('Altura da planta', aOld.PlantHeight, FPlantHeight, R) then
+  if FieldValuesDiff(rscPlantCenterDistance, aOld.CenterDistance, FCenterDistance, R) then
     aList.Add(R);
-  if FieldValuesDiff('Diâmetro à altura do peito', aOld.PlantDbh, FPlantDbh, R) then
+  if FieldValuesDiff(rscMaxPlantDiameter, aOld.PlantMaxDiameter, FPlantMaxDiameter, R) then
     aList.Add(R);
-  if FieldValuesDiff('Cobertura', aOld.NestCover, FNestCover, R) then
+  if FieldValuesDiff(rscMinPlantDiameter, aOld.PlantMinDiameter, FPlantMinDiameter, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dias constru'#231#227'o', aOld.ConstructionDays, FConstructionDays, R) then
+  if FieldValuesDiff(rscPlantHeight, aOld.PlantHeight, FPlantHeight, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dias incuba'#231#227'o', aOld.IncubationDays, FIncubationDays, R) then
+  if FieldValuesDiff(rscPlantDBH, aOld.PlantDbh, FPlantDbh, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dias ninhego', aOld.NestlingDays, FNestlingDays, R) then
+  if FieldValuesDiff(rscCover, aOld.NestCover, FNestCover, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dias ativo', aOld.ActiveDays, FActiveDays, R) then
+  if FieldValuesDiff(rscBuildingDays, aOld.ConstructionDays, FConstructionDays, R) then
     aList.Add(R);
-  if FieldValuesDiff('Destino', aOld.NestFate, FNestFate, R) then
+  if FieldValuesDiff(rscIncubationDays, aOld.IncubationDays, FIncubationDays, R) then
     aList.Add(R);
-  if FieldValuesDiff('Produtividade', aOld.NestProductivity, FNestProductivity, R) then
+  if FieldValuesDiff(rscNestlingDays, aOld.NestlingDays, FNestlingDays, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data encontro', aOld.FoundDate, FFoundDate, R) then
+  if FieldValuesDiff(rscActiveDays, aOld.ActiveDays, FActiveDays, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data final', aOld.LastDate, FLastDate, R) then
+  if FieldValuesDiff(rscNestFate, aOld.NestFate, FNestFate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Descri'#231#227'o', aOld.Description, FDescription, R) then
+  if FieldValuesDiff(rscNestProductivity, aOld.NestProductivity, FNestProductivity, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscFoundDate, aOld.FoundDate, FFoundDate, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscLastDateActive, aOld.LastDate, FLastDate, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
+end;
+
+function TNest.Find(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Result := False;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('SELECT nest_id FROM nests');
+    Add('WHERE (field_number = :afieldnumber)');
+    Add('AND (taxon_id = :ataxon)');
+    Add('AND (locality_id = :asite)');
+    Add('AND (found_date = :adate)');
+    ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
+    ParamByName('ATAXON').AsInteger := aTaxon;
+    ParamByName('ASITE').AsInteger := aSite;
+    ParamByName('ADATE').AsDateTime := aDate;
+    Open;
+    Result := RecordCount > 0;
+    if Result = True then
+    begin
+      GetData(FieldByName('nest_id').AsInteger);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 { TNestOwner }
@@ -679,9 +821,9 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Role', aOld.Role, FRole, R) then
+  if FieldValuesDiff(rscRole, aOld.Role, FRole, R) then
     aList.Add(R);
-  if FieldValuesDiff('Individual', aOld.IndividualId, FIndividualId, R) then
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;

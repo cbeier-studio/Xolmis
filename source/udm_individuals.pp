@@ -250,8 +250,9 @@ type
     qNestsdescription: TMemoField;
     qNestsedge_distance: TFloatField;
     qNestsexported_status: TBooleanField;
-    qNestsexternal_diameter: TFloatField;
     qNestsexternal_height: TFloatField;
+    qNestsexternal_max_diameter: TFloatField;
+    qNestsexternal_min_diameter: TFloatField;
     qNestsfamily_id: TLongintField;
     qNestsfield_number: TStringField;
     qNestsfound_date: TDateField;
@@ -260,8 +261,9 @@ type
     qNestsheight_above_ground: TFloatField;
     qNestsincubation_days: TFloatField;
     qNestsinsert_date: TDateTimeField;
-    qNestsinternal_diameter: TFloatField;
     qNestsinternal_height: TFloatField;
+    qNestsinternal_max_diameter: TFloatField;
+    qNestsinternal_min_diameter: TFloatField;
     qNestslast_date: TDateField;
     qNestslatitude: TFloatField;
     qNestslocality_id: TLongintField;
@@ -294,6 +296,7 @@ type
     qNestssupport_plant_2_id: TLongintField;
     qNestssupport_plant_2_name: TStringField;
     qNestssupport_type: TStringField;
+    qNeststaxon_formatted_name: TStringField;
     qNeststaxon_id: TLongintField;
     qNeststaxon_name: TStringField;
     qNestsupdate_date: TDateTimeField;

@@ -33,6 +33,17 @@ const
     'CRANIO;CULMEN EXPOSTO;NP;LARGURA BICO;ALTURA BICO;SANGUE;PENAS;LONGITUDE;LATITUDE;' +
     'KIPPS;GLICOSE;HEMOGLOBINA;HEMATOCRITO;GPS NUMBER';
 
+  NestSchema: String = 'field_number;taxon;male;female;latitude;longitude;altitude;locality;' +
+    'height_above_ground;support_plant_1;support_plant_2;max_internal_diameter;min_internal_diameter;' +
+    'max_external_diameter;min_external_diameter;internal_height;external_height;plant_center_distance;' +
+    'plant_edge_distance;nest_cover;max_plant_diameter;min_plant_diameter;plant_height;plant_dbh;' +
+    'productivity;nest_fate;philornis_larvae;found_stage;cause_of_loss;loss_stage;found_day;' +
+    'last_day_active;last_seen;nest_age;nest_days_egg;nest_days_nestling;notes';
+
+  NestRevisionSchema: String = 'nest;date;observer;status;eggs_tally;nestlings_tally;photos;notes';
+
+  EggSchema: String = 'nest;date;egg_num;length;width;mass;shape;color;photos;notes';
+
 type
 
   { TEbirdDownloadFormat }
@@ -180,16 +191,85 @@ type
     procedure Clear;
   end;
 
+  TNestRecord = record
+    FieldNumber: String;
+    Taxon: String;
+    Male: String;
+    Female: String;
+    Latitude: Extended;
+    Longitude: Extended;
+    Altitude: Double;
+    Locality: String;
+    HeightAboveGround: Double;
+    SupportPlant1: String;
+    SupportPlant2: String;
+    MaxInternalDiameter: Double;
+    MinInternalDiameter: Double;
+    MaxExternalDiameter: Double;
+    MinExternalDiameter: Double;
+    InternalHeight: Double;
+    ExternalHeight: Double;
+    PlantCenterDistance: Double;
+    PlantEdgeDistance: Double;
+    NestCover: Double;
+    MaxPlantDiameter: Double;
+    MinPlantDiameter: Double;
+    PlantHeight: Double;
+    PlantDbh: Double;
+    Productivity: Integer;
+    NestFate: String;
+    PhilornisLarvae: Boolean;
+    FoundStage: String;
+    CauseOfLoss: String;
+    LossStage: String;
+    FoundDay: String;
+    LastDayActive: String;
+    LastDaySeen: String;
+    NestAge: Double;
+    NestDaysEgg: Double;
+    NestDaysNestling: Double;
+    Notes: String;
+  end;
+
+  TNestJournal = record
+    Nest: String;
+    Date: TDate;
+    Observer: String;
+    Status: String;
+    EggsTally: Integer;
+    NestlingsTally: Integer;
+    Photos: String;
+    Notes: String;
+  end;
+
+  TEggRecord = record
+    Nest: String;
+    Date: TDate;
+    EggNum: Integer;
+    Length: Double;
+    Width: Double;
+    Mass: Double;
+    Shape: String;
+    Color: String;
+    Photos: String;
+    Notes: String;
+  end;
+
   procedure ImportEbirdData(aCSVFile: String);
+
   procedure ImportBandingDataV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
   procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
   procedure ImportBandingEffortV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
+
+  procedure ImportNestDataV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
+  procedure ImportNestRevisionsV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
+  procedure ImportEggDataV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
 
 implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_datatypes, cbs_data, cbs_taxonomy, cbs_birds, cbs_sampling, cbs_gis,
-  cbs_system, cbs_getvalue, udm_main, udlg_progress;
+  cbs_breeding, cbs_system, cbs_getvalue, cbs_fullnames, udm_main, udlg_progress;
 
 procedure ImportEbirdData(aCSVFile: String);
 var
@@ -1480,37 +1560,37 @@ begin
           Reg.NetBout1.CloseTime := CSV.FieldByName('CLOSE TIME 1').AsDateTime
         else
           Reg.NetBout1.CloseTime := StrToTime('00:00:01');
-        { 6 - OpenTime 2 }
+        { 8 - OpenTime 2 }
         if (not CSV.FieldByName('OPEN TIME 2').IsNull) then
           Reg.NetBout2.OpenTime := CSV.FieldByName('OPEN TIME 2').AsDateTime
         else
           Reg.NetBout2.OpenTime := StrToTime('00:00:01');
-        { 7 - CloseTime 2 }
+        { 9 - CloseTime 2 }
         if (not CSV.FieldByName('CLOSE TIME 2').IsNull) then
           Reg.NetBout2.CloseTime := CSV.FieldByName('CLOSE TIME 2').AsDateTime
         else
           Reg.NetBout2.CloseTime := StrToTime('00:00:01');
-        { 6 - OpenTime 3 }
+        { 10 - OpenTime 3 }
         if (not CSV.FieldByName('OPEN TIME 3').IsNull) then
           Reg.NetBout3.OpenTime := CSV.FieldByName('OPEN TIME 3').AsDateTime
         else
           Reg.NetBout3.OpenTime := StrToTime('00:00:01');
-        { 7 - CloseTime 3 }
+        { 11 - CloseTime 3 }
         if (not CSV.FieldByName('CLOSE TIME 3').IsNull) then
           Reg.NetBout3.CloseTime := CSV.FieldByName('CLOSE TIME 3').AsDateTime
         else
           Reg.NetBout3.CloseTime := StrToTime('00:00:01');
-        { 6 - OpenTime 4 }
+        { 12 - OpenTime 4 }
         if (not CSV.FieldByName('OPEN TIME 4').IsNull) then
           Reg.NetBout4.OpenTime := CSV.FieldByName('OPEN TIME 4').AsDateTime
         else
           Reg.NetBout4.OpenTime := StrToTime('00:00:01');
-        { 7 - CloseTime 4 }
+        { 13 - CloseTime 4 }
         if (not CSV.FieldByName('CLOSE TIME 4').IsNull) then
           Reg.NetBout4.CloseTime := CSV.FieldByName('CLOSE TIME 4').AsDateTime
         else
           Reg.NetBout4.CloseTime := StrToTime('00:00:01');
-        { 8 - Notes }
+        { 14 - Notes }
         Reg.Notes := CSV.FieldByName('NOTES').AsString;
 
         try
@@ -1598,6 +1678,178 @@ begin
       FreeAndNil(dlgProgress);
     end;
   end;
+end;
+
+procedure ImportNestDataV1(aCSVFile: String; aProgressBar: TProgressBar);
+var
+  CSV: TSdfDataSet;
+  //Reg: TNestRecord;
+  Toponimo: TSite;
+  Taxon: TTaxon;
+  Nest: TNest;
+begin
+  if not FileExists(aCSVFile) then
+  begin
+    MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
+    Exit;
+  end;
+
+  Parar := False;
+  if not Assigned(aProgressBar) then
+  begin
+    dlgProgress := TdlgProgress.Create(nil);
+    dlgProgress.Show;
+    dlgProgress.Title := rsTitleImportFile;
+    dlgProgress.Text := rsLoadingCSVFile;
+  end;
+  CSV := TSdfDataSet.Create(nil);
+  try
+    { Define CSV format settings }
+    with CSV do
+    begin
+      Delimiter := ';';
+      FirstLineAsSchema := True;
+      CodePage := 'Windows-1252';
+      //Schema.AddDelimitedText(NetEffortSchema, ';', True);
+      FileName := aCSVFile;
+      Open;
+    end;
+
+    if Assigned(aProgressBar) then
+    begin
+      aProgressBar.Position := 0;
+      aProgressBar.Max := CSV.RecordCount;
+    end
+    else
+    if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Position := 0;
+      dlgProgress.Max := CSV.RecordCount;
+    end;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      CSV.First;
+      repeat
+        if Assigned(dlgProgress) then
+          dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
+        // Reset variables
+
+        try
+          Taxon := TTaxon.Create;
+          Toponimo := TSite.Create;
+          Nest := TNest.Create;
+
+          // Get taxon
+          if (CSV.FieldByName('taxon').AsString <> EmptyStr) then
+            Taxon.GetData(GetKey('zoo_taxa', 'taxon_id', 'full_name', CSV.FieldByName('taxon').AsString));
+
+          // Get locality
+          if (CSV.FieldByName('locality').AsString <> EmptyStr) then
+            Toponimo.GetData(GetKey('gazetteer', 'site_id', 'site_name', CSV.FieldByName('locality').AsString));
+
+
+          // Check if the nest exists
+          if not Nest.Find(CSV.FieldByName('field_number').AsString, Taxon.Id, Toponimo.Id,
+                    StrToDate(CSV.FieldByName('found_day').AsString)) then
+          begin
+            Nest.FieldNumber := CSV.FieldByName('field_number').AsString;
+            //Nest.ObserverId := GetKey('people', 'person_id', 'acronym', CSV.FieldByName('observer').AsString);
+            Nest.LocalityId := Toponimo.Id;
+            Nest.Latitude := CSV.FieldByName('latitude').AsFloat;
+            Nest.Longitude := CSV.FieldByName('longitude').AsFloat;
+            Nest.TaxonId := Taxon.Id;
+            //Nest.SupportType := CSV.FieldByName('support_type').AsString;
+            Nest.SupportPlant1Id := GetKey('botanic_taxa', 'taxon_id', 'taxon_name', CSV.FieldByName('support_plant_1').AsString);
+            Nest.SupportPlant2Id := GetKey('botanic_taxa', 'taxon_id', 'taxon_name', CSV.FieldByName('support_plant_2').AsString);
+            //Nest.OtherSupport := CSV.FieldByName('other_support').AsString;
+            Nest.HeightAboveGround := CSV.FieldByName('height_above_ground').AsFloat;
+            //Nest.ProjectId := GetKey('projects', 'project_id', 'project_title', CSV.FieldByName('project').AsString);
+            Nest.InternalMaxDiameter := CSV.FieldByName('max_internal_diameter').AsFloat;
+            Nest.InternalMinDiameter := CSV.FieldByName('min_internal_diameter').AsFloat;
+            Nest.ExternalMaxDiameter := CSV.FieldByName('max_external_diameter').AsFloat;
+            Nest.ExternalMinDiameter := CSV.FieldByName('min_external_diameter').AsFloat;
+            Nest.InternalHeight := CSV.FieldByName('internal_height').AsFloat;
+            Nest.ExternalHeight := CSV.FieldByName('external_height').AsFloat;
+            Nest.EdgeDistance := CSV.FieldByName('plant_edge_distance').AsFloat;
+            Nest.CenterDistance := CSV.FieldByName('plant_center_distance').AsFloat;
+            Nest.NestCover := CSV.FieldByName('nest_cover').AsInteger;
+            Nest.PlantMaxDiameter := CSV.FieldByName('max_plant_diameter').AsFloat;
+            Nest.PlantMinDiameter := CSV.FieldByName('min_plant_diameter').AsFloat;
+            Nest.PlantHeight := CSV.FieldByName('plant_height').AsFloat;
+            Nest.PlantDbh := CSV.FieldByName('plant_dbh').AsFloat;
+            //Nest.ConstructionDays: Double;
+            Nest.IncubationDays := CSV.FieldByName('nest_days_egg').AsFloat;
+            Nest.NestlingDays := CSV.FieldByName('nest_days_nestling').AsFloat;
+            Nest.ActiveDays := Nest.IncubationDays + Nest.NestlingDays;
+            Nest.NestFate := CSV.FieldByName('nest_fate').AsString;
+            Nest.NestProductivity := CSV.FieldByName('productivity').AsInteger;
+            Nest.FoundDate := StrToDate(CSV.FieldByName('found_day').AsString);
+            Nest.LastDate := StrToDate(CSV.FieldByName('last_day_active').AsString);
+            //Nest.Description := CSV.FieldByName('description').AsString;
+            Nest.FullName := GetNestFullName(Nest.FoundDate, Nest.TaxonId, Nest.LocalityId, Nest.FieldNumber);
+            Nest.UserInserted := ActiveUser.Id;
+
+            Nest.Insert;
+
+            // Insert record history
+            WriteRecHistory(tbNests, haCreated, Nest.Id, '', '', '', rsInsertedByImport);
+
+          end;
+
+        finally
+          FreeAndNil(Nest);
+          FreeAndNil(Toponimo);
+          FreeAndNil(Taxon);
+        end;
+
+        if Assigned(aProgressBar) then
+          aProgressBar.Position := CSV.RecNo
+        else
+        if Assigned(dlgProgress) then
+          dlgProgress.Position := CSV.RecNo;
+        Application.ProcessMessages;
+        CSV.Next;
+      until CSV.Eof or Parar;
+
+      if Parar then
+      begin
+        DMM.sqlTrans.Rollback;
+        MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
+      end
+      else
+      begin
+        if Assigned(dlgProgress) then
+        begin
+          dlgProgress.Text := rsProgressFinishing;
+          MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingEffort, mtInformation);
+        end;
+        DMM.sqlTrans.CommitRetaining;
+      end;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+
+  finally
+    CSV.Close;
+    FreeAndNil(CSV);
+    if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Close;
+      FreeAndNil(dlgProgress);
+    end;
+  end;
+end;
+
+procedure ImportNestRevisionsV1(aCSVFile: String; aProgressBar: TProgressBar);
+begin
+
+end;
+
+procedure ImportEggDataV1(aCSVFile: String; aProgressBar: TProgressBar);
+begin
+
 end;
 
 { TBandingEffort }

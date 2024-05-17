@@ -286,6 +286,10 @@ msgstr ""
 msgid "Connection name"
 msgstr ""
 
+#: cbs_datacolumns.rscconservationstatus
+msgid "Conservation status"
+msgstr ""
+
 #: cbs_datacolumns.rsccontactperson
 msgid "Contact person"
 msgstr ""
@@ -498,10 +502,6 @@ msgstr ""
 
 #: cbs_datacolumns.rscexposedculmen
 msgid "Exposed culmen"
-msgstr ""
-
-#: cbs_datacolumns.rscexternaldiameter
-msgid "External diameter"
 msgstr ""
 
 #: cbs_datacolumns.rscexternalheight
@@ -767,10 +767,6 @@ msgstr ""
 msgid "Institution ID"
 msgstr ""
 
-#: cbs_datacolumns.rscinternaldiameter
-msgid "Internal diameter"
-msgstr ""
-
 #: cbs_datacolumns.rscinternalheight
 msgid "Internal height"
 msgstr ""
@@ -866,8 +862,16 @@ msgstr ""
 msgid "Mass"
 msgstr ""
 
+#: cbs_datacolumns.rscmaxexternaldiameter
+msgid "Greater external diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscmaxinternaldiameter
+msgid "Greater internal diameter"
+msgstr ""
+
 #: cbs_datacolumns.rscmaxplantdiameter
-msgid "Max. plant diameter"
+msgid "Greater plant diameter"
 msgstr ""
 
 #: cbs_datacolumns.rscmc
@@ -883,8 +887,16 @@ msgstr ""
 msgid "Method ID"
 msgstr ""
 
+#: cbs_datacolumns.rscminexternaldiameter
+msgid "Lesser external diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscmininternaldiameter
+msgid "Lesser internal diameter"
+msgstr ""
+
 #: cbs_datacolumns.rscminplantdiameter
-msgid "Min. plant diameter"
+msgid "Lesser plant diameter"
 msgstr ""
 
 #: cbs_datacolumns.rscmistnetaream
@@ -998,7 +1010,8 @@ msgstr ""
 msgid "# nestlings (host)"
 msgstr ""
 
-#: cbs_datacolumns.rscnestlingsnidoparasit
+#: cbs_datacolumns.rscnestlingsnidoparasite
+msgctxt "cbs_datacolumns.rscnestlingsnidoparasite"
 msgid "# nestlings (nidoparasite)"
 msgstr ""
 
@@ -5982,10 +5995,12 @@ msgid "Field journal"
 msgstr ""
 
 #: tdlgimportcaptures.lblsubtitleimportfiles.caption
+msgctxt "tdlgimportcaptures.lblsubtitleimportfiles.caption"
 msgid "Select at least one file to start importing."
 msgstr ""
 
 #: tdlgimportcaptures.lbltitleimportfiles.caption
+msgctxt "tdlgimportcaptures.lbltitleimportfiles.caption"
 msgid "Files to import"
 msgstr ""
 
@@ -6015,11 +6030,117 @@ msgid "Close"
 msgstr ""
 
 #: tdlgimportcaptures.sbretry.caption
+msgctxt "tdlgimportcaptures.sbretry.caption"
 msgid "Try again"
 msgstr ""
 
 #: tdlgimportcaptures.sbrun.caption
 msgctxt "tdlgimportcaptures.sbrun.caption"
+msgid "Import"
+msgstr ""
+
+#: tdlgimportnests.caption
+msgctxt "tdlgimportnests.caption"
+msgid "Import data"
+msgstr ""
+
+#: tdlgimportnests.eeggfile.hint
+msgctxt "tdlgimportnests.eeggfile.hint"
+msgid "Select file"
+msgstr ""
+
+#: tdlgimportnests.eeggfile.texthint
+msgctxt "tdlgimportnests.eeggfile.texthint"
+msgid "Select a file..."
+msgstr ""
+
+#: tdlgimportnests.enestfile.hint
+msgctxt "tdlgimportnests.enestfile.hint"
+msgid "Select file"
+msgstr ""
+
+#: tdlgimportnests.enestfile.texthint
+msgctxt "tdlgimportnests.enestfile.texthint"
+msgid "Select a file..."
+msgstr ""
+
+#: tdlgimportnests.erevisionfile.hint
+msgctxt "tdlgimportnests.erevisionfile.hint"
+msgid "Select file"
+msgstr ""
+
+#: tdlgimportnests.erevisionfile.texthint
+msgctxt "tdlgimportnests.erevisionfile.texthint"
+msgid "Select a file..."
+msgstr ""
+
+#: tdlgimportnests.lbleggfile.caption
+msgctxt "tdlgimportnests.lbleggfile.caption"
+msgid "Eggs"
+msgstr ""
+
+#: tdlgimportnests.lblnestfile.caption
+msgctxt "tdlgimportnests.lblnestfile.caption"
+msgid "Nests"
+msgstr ""
+
+#: tdlgimportnests.lblrevisionfile.caption
+msgctxt "tdlgimportnests.lblrevisionfile.caption"
+msgid "Nest revisions"
+msgstr ""
+
+#: tdlgimportnests.lblsubtitleimportfiles.caption
+msgctxt "tdlgimportnests.lblsubtitleimportfiles.caption"
+msgid "Select at least one file to start importing."
+msgstr ""
+
+#: tdlgimportnests.lblsubtitleimportfinished.caption
+msgctxt "tdlgimportnests.lblsubtitleimportfinished.caption"
+msgid "The selected file(s) were sucessfully imported."
+msgstr ""
+
+#: tdlgimportnests.lbltitleimportfiles.caption
+msgctxt "tdlgimportnests.lbltitleimportfiles.caption"
+msgid "Files to import"
+msgstr ""
+
+#: tdlgimportnests.lbltitleimportfinished.caption
+msgctxt "tdlgimportnests.lbltitleimportfinished.caption"
+msgid "Finished importing!"
+msgstr ""
+
+#: tdlgimportnests.sbcancel.caption
+msgctxt "tdlgimportnests.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgimportnests.sbcleareggfile.hint
+msgctxt "tdlgimportnests.sbcleareggfile.hint"
+msgid "Clear field"
+msgstr ""
+
+#: tdlgimportnests.sbclearnestfile.hint
+msgctxt "tdlgimportnests.sbclearnestfile.hint"
+msgid "Clear field"
+msgstr ""
+
+#: tdlgimportnests.sbclearrevisionfile.hint
+msgctxt "tdlgimportnests.sbclearrevisionfile.hint"
+msgid "Clear field"
+msgstr ""
+
+#: tdlgimportnests.sbclose.caption
+msgctxt "tdlgimportnests.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tdlgimportnests.sbretry.caption
+msgctxt "tdlgimportnests.sbretry.caption"
+msgid "Try again"
+msgstr ""
+
+#: tdlgimportnests.sbrun.caption
+msgctxt "tdlgimportnests.sbrun.caption"
 msgid "Import"
 msgstr ""
 
@@ -7502,57 +7623,14 @@ msgctxt "tedtnest.etaxon.buttonhint"
 msgid "Find taxon"
 msgstr ""
 
-#: tedtnest.lblbandstatus1.caption
-msgctxt "tedtnest.lblbandstatus1.caption"
-msgid "Taxon:"
-msgstr ""
-
-#: tedtnest.lblbandstatus11.caption
-msgid "Stem thickness:"
-msgstr ""
-
-#: tedtnest.lblbandstatus12.caption
-msgid "Lesser plant diameter:"
-msgstr ""
-
-#: tedtnest.lblbandstatus13.caption
-msgid "Days building:"
-msgstr ""
-
-#: tedtnest.lblbandstatus14.caption
-msgid "Days incubating:"
-msgstr ""
-
-#: tedtnest.lblbandstatus15.caption
-msgid "Nestling-days:"
-msgstr ""
-
-#: tedtnest.lblbandstatus16.caption
+#: tedtnest.lblactivedays.caption
+msgctxt "tedtnest.lblactivedays.caption"
 msgid "Total active-days:"
 msgstr ""
 
-#: tedtnest.lblbandstatus17.caption
-msgid "Internal diameter:"
-msgstr ""
-
-#: tedtnest.lblbandstatus18.caption
-msgid "External diameter:"
-msgstr ""
-
-#: tedtnest.lblbandstatus19.caption
-msgid "Distance from plant edge:"
-msgstr ""
-
-#: tedtnest.lblbandstatus20.caption
-msgid "Distance from plant center:"
-msgstr ""
-
-#: tedtnest.lblbandstatus21.caption
-msgid "Internal height:"
-msgstr ""
-
-#: tedtnest.lblbandstatus22.caption
-msgid "External height:"
+#: tedtnest.lblbandstatus1.caption
+msgctxt "tedtnest.lblbandstatus1.caption"
+msgid "Taxon:"
 msgstr ""
 
 #: tedtnest.lblbandstatus3.caption
@@ -7564,14 +7642,6 @@ msgctxt "tedtnest.lblbandstatus4.caption"
 msgid "Longitude:"
 msgstr ""
 
-#: tedtnest.lblbandstatus6.caption
-msgid "Plant height:"
-msgstr ""
-
-#: tedtnest.lblbandstatus7.caption
-msgid "Greater plant diameter:"
-msgstr ""
-
 #: tedtnest.lblbandstatus8.caption
 msgid "Last date:"
 msgstr ""
@@ -7581,14 +7651,70 @@ msgctxt "tedtnest.lblbandstatus9.caption"
 msgid "Latitude:"
 msgstr ""
 
+#: tedtnest.lblcenterdistance.caption
+msgctxt "tedtnest.lblcenterdistance.caption"
+msgid "Distance from plant center:"
+msgstr ""
+
+#: tedtnest.lblconstructiondays.caption
+msgctxt "tedtnest.lblconstructiondays.caption"
+msgid "Days building:"
+msgstr ""
+
+#: tedtnest.lbledgedistance.caption
+msgctxt "tedtnest.lbledgedistance.caption"
+msgid "Distance from plant edge:"
+msgstr ""
+
+#: tedtnest.lblexternalheight.caption
+msgctxt "tedtnest.lblexternalheight.caption"
+msgid "External height:"
+msgstr ""
+
+#: tedtnest.lblexternalmaxdiameter.caption
+msgid "Max. external diameter:"
+msgstr ""
+
+#: tedtnest.lblexternalmindiameter.caption
+msgid "Min. external diameter:"
+msgstr ""
+
 #: tedtnest.lblheightaboveground.caption
 msgctxt "tedtnest.lblheightaboveground.caption"
 msgid "Height at ground level:"
 msgstr ""
 
+#: tedtnest.lblincubationdays.caption
+msgctxt "tedtnest.lblincubationdays.caption"
+msgid "Days incubating:"
+msgstr ""
+
+#: tedtnest.lblinternalheight.caption
+msgctxt "tedtnest.lblinternalheight.caption"
+msgid "Internal height:"
+msgstr ""
+
+#: tedtnest.lblinternalmaxdiameter.caption
+msgid "Max. internal diameter:"
+msgstr ""
+
+#: tedtnest.lblinternalmindiameter.caption
+msgid "Min. internal diameter:"
+msgstr ""
+
 #: tedtnest.lbllocality.caption
 msgctxt "tedtnest.lbllocality.caption"
 msgid "Locality:"
+msgstr ""
+
+#: tedtnest.lblnestcover.caption
+msgctxt "tedtnest.lblnestcover.caption"
+msgid "Cover (%):"
+msgstr ""
+
+#: tedtnest.lblnestlingdays.caption
+msgctxt "tedtnest.lblnestlingdays.caption"
+msgid "Nestling-days:"
 msgstr ""
 
 #: tedtnest.lblnotes.caption
@@ -7603,6 +7729,26 @@ msgstr ""
 #: tedtnest.lblothersupport.caption
 msgctxt "tedtnest.lblothersupport.caption"
 msgid "Other support:"
+msgstr ""
+
+#: tedtnest.lblplantdbh.caption
+msgctxt "tedtnest.lblplantdbh.caption"
+msgid "Stem thickness:"
+msgstr ""
+
+#: tedtnest.lblplantheight.caption
+msgctxt "tedtnest.lblplantheight.caption"
+msgid "Plant height:"
+msgstr ""
+
+#: tedtnest.lblplantmaxdiameter.caption
+msgctxt "tedtnest.lblplantmaxdiameter.caption"
+msgid "Greater plant diameter:"
+msgstr ""
+
+#: tedtnest.lblplantmindiameter.caption
+msgctxt "tedtnest.lblplantmindiameter.caption"
+msgid "Lesser plant diameter:"
 msgstr ""
 
 #: tedtnest.lblrequester.caption
@@ -7621,10 +7767,6 @@ msgstr ""
 
 #: tedtnest.lblrequester3.caption
 msgid "Fate:"
-msgstr ""
-
-#: tedtnest.lblrequester4.caption
-msgid "Cover (%):"
 msgstr ""
 
 #: tedtnest.lblrequester5.caption
@@ -9909,6 +10051,14 @@ msgctxt "tfrmcustomgrid.pmgrefresh.caption"
 msgid "Refresh"
 msgstr ""
 
+#: tfrmcustomgrid.pmrdelpermanently.caption
+msgid "Delete permanently all records"
+msgstr ""
+
+#: tfrmcustomgrid.pmrrestorerecord.caption
+msgid "Restore selected record"
+msgstr ""
+
 #: tfrmcustomgrid.pmssortalphabetic.caption
 msgctxt "tfrmcustomgrid.pmssortalphabetic.caption"
 msgid "Alphabetic"
@@ -10073,11 +10223,6 @@ msgctxt "tfrmcustomgrid.sbchildhistory.hint"
 msgid "View record history"
 msgstr ""
 
-#: tfrmcustomgrid.sbchildnewtab.hint
-msgctxt "tfrmcustomgrid.sbchildnewtab.hint"
-msgid "Open records in a new tab"
-msgstr ""
-
 #: tfrmcustomgrid.sbclearfilters.hint
 msgid "Clear all quick filters"
 msgstr ""
@@ -10223,7 +10368,13 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
+#: tfrmcustomgrid.sbsharechild.hint
+msgctxt "tfrmcustomgrid.sbsharechild.hint"
+msgid "Export records"
+msgstr ""
+
 #: tfrmcustomgrid.sbsharerecords.hint
+msgctxt "tfrmcustomgrid.sbsharerecords.hint"
 msgid "Export records"
 msgstr ""
 
@@ -10265,11 +10416,6 @@ msgstr ""
 #: tfrmcustomgrid.sbshowsummary.hint
 msgctxt "tfrmcustomgrid.sbshowsummary.hint"
 msgid "Summary"
-msgstr ""
-
-#: tfrmcustomgrid.sbsortchilds.hint
-msgctxt "tfrmcustomgrid.sbsortchilds.hint"
-msgid "Sort records"
 msgstr ""
 
 #: tfrmcustomgrid.sbsortrecords.hint
@@ -10650,7 +10796,7 @@ msgstr ""
 
 #: tfrmmain.actimportnests.caption
 msgctxt "tfrmmain.actimportnests.caption"
-msgid "Nests"
+msgid "Nests data"
 msgstr ""
 
 #: tfrmmain.actimportwizard.caption
@@ -10758,6 +10904,7 @@ msgid "Molts"
 msgstr ""
 
 #: tfrmmain.actopennestrevisions.caption
+msgctxt "tfrmmain.actopennestrevisions.caption"
 msgid "Nest revisions"
 msgstr ""
 

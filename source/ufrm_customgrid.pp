@@ -135,8 +135,11 @@ type
     lblRecycleModifiedDate: TDBText;
     lblRecycleName: TDBText;
     lblProjectFilter: TLabel;
+    pmrRestoreRecord: TMenuItem;
+    pmrDelPermanently: TMenuItem;
     pEggShapeFilter: TBCPanel;
     pEggTraitsFilters: TBCPanel;
+    pmRecycle: TPopupMenu;
     pRecycleToolbar: TBCPanel;
     pRecycleWarning: TBCPanel;
     pReplacedBandFilter: TBCPanel;
@@ -476,6 +479,7 @@ type
     Separator15: TMenuItem;
     Separator16: TShapeLineBGRA;
     Separator5: TShapeLineBGRA;
+    Separator6: TMenuItem;
     Separator7: TShapeLineBGRA;
     Separator8: TShapeLineBGRA;
     Separator9: TShapeLineBGRA;
@@ -2841,10 +2845,20 @@ end;
 
 procedure TfrmCustomGrid.GetBotanicTaxaFilters;
 var
-  sf: Integer;
+  sf, cc, i: Integer;
 begin
-  //if RanksFilter <> EmptyStr then
-  //  aList.Add(RanksFilter);
+  cc := 0;
+  for i := 0 to clbTaxonRanksFilter.Count - 1 do
+    if clbTaxonRanksFilter.Checked[i] then
+      Inc(cc);
+  if cc > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    for i := 0 to clbTaxonRanksFilter.Count - 1 do
+      if clbTaxonRanksFilter.Checked[i] then
+        FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('rank_id', 'Rank', sdtInteger,
+          crEqual, False, IntToStr(GetKey('taxon_ranks', 'rank_id', 'rank_name', clbTaxonRanksFilter.Items[i]))));
+  end;
 
   if tsIsSynonym.StateOn = sw_on then
   begin
@@ -3878,6 +3892,8 @@ begin
     3: UpdateChildButtons(dsLink4.DataSet);
     4: UpdateChildButtons(dsLink5.DataSet);
   end;
+
+  UpdateChildStatus;
 end;
 
 procedure TfrmCustomGrid.pChildTag1MouseEnter(Sender: TObject);
@@ -7701,6 +7717,7 @@ begin
       sbNextRecord.Enabled := False;
       sbLastRecord.Enabled := False;
       sbRecordHistory.Enabled := False;
+      sbShareRecords.Enabled := False;
       sbSortRecords.Enabled := False;
 
       sbShowQuickFilters.Enabled := False;
@@ -7725,6 +7742,7 @@ begin
       sbEditRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbDelRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbRecordHistory.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbShareRecords.Enabled := (aDataSet.RecordCount > 0) and (ActiveUser.AllowExport);
       sbSortRecords.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
 
       sbFirstRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
@@ -7745,7 +7763,8 @@ begin
       sbCancelRecord.Visible := False;
 
       //navGrid.Enabled := True;
-      //frmMain.navTabs.GetTabData((Self.Parent as TPage).PageIndex).TabModified := False;
+      if (Self.Parent is TPage) and (frmMain.navTabs.TabCount = frmMain.PGW.PageCount) then
+        frmMain.navTabs.GetTabData((Self.Parent as TPage).PageIndex).TabModified := False;
       pSide.Enabled := True;
     end;
     dsEdit, dsInsert:
@@ -7758,6 +7777,7 @@ begin
       sbNextRecord.Enabled := False;
       sbLastRecord.Enabled := False;
       sbRecordHistory.Enabled := False;
+      sbShareRecords.Enabled := False;
       sbSortRecords.Enabled := False;
 
       sbShowQuickFilters.Enabled := False;
@@ -7773,7 +7793,8 @@ begin
       sbRefreshRecords.Enabled := False;
 
       //navGrid.Enabled := False;
-      //frmMain.navTabs.GetTabData((Self.Parent as TPage).PageIndex).TabModified := True;
+      if (Self.Parent is TPage) and (frmMain.navTabs.TabCount = frmMain.PGW.PageCount) then
+        frmMain.navTabs.GetTabData((Self.Parent as TPage).PageIndex).TabModified := True;
       pSide.Enabled := False;
     end;
 
@@ -7823,6 +7844,7 @@ begin
       sbNextChild.Enabled := False;
       sbLastChild.Enabled := False;
       sbChildHistory.Enabled := False;
+      sbShareChild.Enabled := False;
       sbRefreshChild.Enabled := True;
 
       pSide.Enabled := False;
@@ -7833,6 +7855,7 @@ begin
       sbEditChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbDelChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbChildHistory.Enabled := (aDataSet.RecordCount > 0);
+      sbShareChild.Enabled := (aDataSet.RecordCount > 0) and (ActiveUser.AllowExport);
       sbRefreshChild.Enabled := True;
       sbFirstChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
       sbPriorChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
@@ -7851,6 +7874,7 @@ begin
       sbNextChild.Enabled := False;
       sbLastChild.Enabled := False;
       sbChildHistory.Enabled := False;
+      sbShareChild.Enabled := False;
       sbRefreshChild.Enabled := False;
 
       pSide.Enabled := False;

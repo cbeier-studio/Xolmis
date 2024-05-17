@@ -12,7 +12,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   sdflaz,
-  tachartlazaruspkg, lazcontrols, lazdbexport, tachartbgra,
+  tachartlazaruspkg, lazdbexport, tachartbgra,
   rxnew,
   virtualdbgrid_package,
   FrameViewer09,
@@ -70,7 +70,7 @@ uses
   udlg_find,
   udlg_findtaxon,
   udlg_geoeditor,
-  udlg_importcaptures,
+  udlg_importnests,
   udlg_login,
   udlg_plantminer,
   udlg_progress,

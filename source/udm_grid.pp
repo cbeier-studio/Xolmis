@@ -590,6 +590,11 @@ type
     qNestRevisionsuser_inserted: TLongintField;
     qNestRevisionsuser_updated: TLongintField;
     qMethods: TSQLQuery;
+    qNestsexternal_max_diameter: TFloatField;
+    qNestsexternal_min_diameter: TFloatField;
+    qNestsinternal_max_diameter: TFloatField;
+    qNestsinternal_min_diameter: TFloatField;
+    qNeststaxon_formatted_name: TStringField;
     qPermitsnotes: TMemoField;
     qSampleCollectors: TSQLQuery;
     qSampleCollectorsactive_status: TBooleanField;
@@ -616,6 +621,17 @@ type
     qSurveysexpedition_name: TStringField;
     qSurveysmunicipality_name: TStringField;
     qSurveysstate_name: TStringField;
+    qTaxafamily_name: TStringField;
+    qTaxagenero_name: TStringField;
+    qTaxaioc_parent_name: TStringField;
+    qTaxaioc_valid_name: TStringField;
+    qTaxaiucn_status: TStringField;
+    qTaxaorder_name: TStringField;
+    qTaxaparent_taxon_name: TStringField;
+    qTaxaspecies_name: TStringField;
+    qTaxasubfamily_name: TStringField;
+    qTaxasubspecies_group_name: TStringField;
+    qTaxavalid_name: TStringField;
     qTaxonRanks: TSQLQuery;
     qNestsactive_days: TFloatField;
     qNestsactive_status: TBooleanField;
@@ -625,7 +641,6 @@ type
     qNestsdescription: TMemoField;
     qNestsedge_distance: TFloatField;
     qNestsexported_status: TBooleanField;
-    qNestsexternal_diameter: TFloatField;
     qNestsexternal_height: TFloatField;
     qNestsfamily_id: TLongintField;
     qNestsfield_number: TStringField;
@@ -635,7 +650,6 @@ type
     qNestsheight_above_ground: TFloatField;
     qNestsincubation_days: TFloatField;
     qNestsinsert_date: TDateTimeField;
-    qNestsinternal_diameter: TFloatField;
     qNestsinternal_height: TFloatField;
     qNestslast_date: TDateField;
     qNestslatitude: TFloatField;
@@ -1020,11 +1034,7 @@ type
     qAttachments: TSQLQuery;
     qTaxaactive_status: TBooleanField;
     qTaxaauthorship: TStringField;
-    qTaxacbro_parent_taxon_id: TLargeintField;
-    qTaxacbro_rank_id: TLargeintField;
-    qTaxacbro_sort_num: TFloatField;
     qTaxacbro_taxonomy: TBooleanField;
-    qTaxacbro_valid_id: TLargeintField;
     qTaxaclements_taxonomy: TBooleanField;
     qTaxadistribution: TMemoField;
     qTaxaebird_code: TStringField;
@@ -1035,7 +1045,6 @@ type
     qTaxafamily_id: TLargeintField;
     qTaxaformatted_name: TStringField;
     qTaxafull_name: TStringField;
-    qTaxagenus_epithet: TStringField;
     qTaxagenus_id: TLargeintField;
     qTaxagroup_name: TStringField;
     qTaxaincertae_sedis: TLargeintField;
@@ -1056,10 +1065,8 @@ type
     qTaxarank_id: TLargeintField;
     qTaxasort_num: TFloatField;
     qTaxaspanish_name: TStringField;
-    qTaxaspecies_epithet: TStringField;
     qTaxaspecies_id: TLargeintField;
     qTaxasubfamily_id: TLargeintField;
-    qTaxasubspecies_epithet: TStringField;
     qTaxasubspecies_group_id: TLargeintField;
     qTaxataxon_id: TLargeintField;
     qTaxaupdate_date: TDateTimeField;

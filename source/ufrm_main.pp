@@ -215,6 +215,7 @@ type
     procedure actGiveFeedbackExecute(Sender: TObject);
     procedure actImportCapturesExecute(Sender: TObject);
     procedure actImportEbirdExecute(Sender: TObject);
+    procedure actImportNestsExecute(Sender: TObject);
     procedure actInsertRecordExecute(Sender: TObject);
     procedure actLogoffExecute(Sender: TObject);
     procedure actMaintenanceExecute(Sender: TObject);
@@ -328,7 +329,7 @@ uses
   cbs_taxonomy, cbs_editdialogs, cbs_themes,
   udm_main, udm_lookup, udm_grid, udm_client, udm_sampling, udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
-  ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures,
+  ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
   ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance;
 
 {$R *.lfm}
@@ -408,6 +409,17 @@ begin
   if DMM.OpenCsvDlg.Execute then
   begin
     ImportEbirdData(DMM.OpenCsvDlg.Filename);
+  end;
+end;
+
+procedure TfrmMain.actImportNestsExecute(Sender: TObject);
+begin
+  dlgImportNests := TdlgImportNests.Create(nil);
+  with dlgImportNests do
+  try
+    ShowModal;
+  finally
+    FreeAndNil(dlgImportNests);
   end;
 end;
 

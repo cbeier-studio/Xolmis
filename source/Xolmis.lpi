@@ -164,7 +164,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="173"/>
+      <BuildNr Value="179"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -432,9 +432,6 @@
       </Item>
       <Item>
         <PackageName Value="uniqueinstance_package"/>
-      </Item>
-      <Item>
-        <PackageName Value="LazControls"/>
       </Item>
       <Item>
         <PackageName Value="TAChartBgra"/>
@@ -1037,9 +1034,9 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="dialogs\udlg_importcaptures.pp"/>
+        <Filename Value="dialogs\udlg_importnests.pp"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="dlgImportCaptures"/>
+        <ComponentName Value="dlgImportNests"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
@@ -1123,6 +1120,11 @@
       <Unit>
         <Filename Value="types\cbs_datacolumns.pas"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_importcaptures.pp"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
       </Unit>
     </Units>
     <Debugger>

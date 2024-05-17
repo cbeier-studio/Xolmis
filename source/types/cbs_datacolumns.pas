@@ -317,15 +317,17 @@ resourcestring
   rscSupportPlant2 = 'Support plant 2';
   rscOtherSupport = 'Other support';
   rscHeightAboveGround = 'Height above ground';
-  rscInternalDiameter = 'Internal diameter';
-  rscExternalDiameter = 'External diameter';
+  rscMaxInternalDiameter = 'Greater internal diameter';
+  rscMinInternalDiameter = 'Lesser internal diameter';
+  rscMaxExternalDiameter = 'Greater external diameter';
+  rscMinExternalDiameter = 'Lesser external diameter';
   rscInternalHeight = 'Internal height';
   rscExternalHeight = 'External height';
   rscPlantEdgeDistance = 'Plant edge distance';
   rscPlantCenterDistance = 'Plant center distance';
   rscCover = 'Cover (%)';
-  rscMaxPlantDiameter = 'Max. plant diameter';
-  rscMinPlantDiameter = 'Min. plant diameter';
+  rscMaxPlantDiameter = 'Greater plant diameter';
+  rscMinPlantDiameter = 'Lesser plant diameter';
   rscPlantHeight = 'Plant height';
   rscPlantDBH = 'Plant DBH';
   rscBuildingDays = 'Building (days)';
@@ -344,7 +346,7 @@ resourcestring
   rscNidoparasiteID = 'Nidoparasite ID';
   rscNidoparasite = 'Nidoparasite';
   rscEggsNidoparasite = '# eggs (nidoparasite)';
-  rscNestlingsNidoparasit = '# nestlings (nidoparasite)';
+  rscNestlingsNidoparasite = '# nestlings (nidoparasite)';
   rscHasPhilornisLarvae = 'Has Philornis larvae';
   rscNestStage = 'Nest stage';
   rscEggNumber = 'Egg number';
@@ -435,6 +437,7 @@ resourcestring
   rscMethod = 'Method';
   rscSampleID = 'Sample ID';
   rscHabitat = 'Habitat';
+  rscConservationStatus = 'Conservation status';
 
 
   procedure TranslateRecordHistory(aDataSet: TDataSet);
@@ -666,6 +669,7 @@ begin
         'parent_taxon_name':      Fields[i].DisplayLabel := rscParentTaxon;
         'valid_id':               Fields[i].DisplayLabel := rscValidNameID;
         'valid_name':             Fields[i].DisplayLabel := rscValidName;
+        'iucn_status':            Fields[i].DisplayLabel := rscConservationStatus;
         'extinct':                Fields[i].DisplayLabel := rscExtinct;
         'extinction_year':        Fields[i].DisplayLabel := rscExtinctionYear;
         'sort_num':               Fields[i].DisplayLabel := rscTaxonomicSequence;
@@ -690,6 +694,7 @@ begin
         'ioc_english_name':       Fields[i].DisplayLabel := rscEnglishName;
         'cbro_taxonomy':          Fields[i].DisplayLabel := rscCBRO;
         'other_portuguese_names': Fields[i].DisplayLabel := rscOtherPortugueseNames;
+        { --- deprecated --- }
         'cbro_rank_id':           Fields[i].DisplayLabel := rscTaxonomicRankID;
         'cbro_rank_name':         Fields[i].DisplayLabel := rscTaxonomicRank;
         'cbro_parent_taxon_id':   Fields[i].DisplayLabel := rscParentTaxonID;
@@ -700,6 +705,7 @@ begin
         'genus_epithet':          Fields[i].DisplayLabel := rscGenusEpithet;
         'species_epithet':        Fields[i].DisplayLabel := rscSpeciesEpithet;
         'subspecies_epithet':     Fields[i].DisplayLabel := rscSubspeciesEpithet;
+        { ------------------ }
         'distribution':           Fields[i].DisplayLabel := rscDistribution;
         'ioc_distribution':       Fields[i].DisplayLabel := rscDistribution;
         'taxon_id':               Fields[i].DisplayLabel := rscId;
@@ -1638,8 +1644,10 @@ begin
         'support_plant_2_name':   Fields[i].DisplayLabel := rscSupportPlant2;
         'other_support':          Fields[i].DisplayLabel := rscOtherSupport;
         'height_above_ground':    Fields[i].DisplayLabel := rscHeightAboveGround;
-        'internal_diameter':      Fields[i].DisplayLabel := rscInternalDiameter;
-        'external_diameter':      Fields[i].DisplayLabel := rscExternalDiameter;
+        'internal_max_diameter':  Fields[i].DisplayLabel := rscMaxInternalDiameter;
+        'internal_min_diameter':  Fields[i].DisplayLabel := rscMinInternalDiameter;
+        'external_max_diameter':  Fields[i].DisplayLabel := rscMaxExternalDiameter;
+        'external_min_diameter':  Fields[i].DisplayLabel := rscMinExternalDiameter;
         'internal_height':        Fields[i].DisplayLabel := rscInternalHeight;
         'external_height':        Fields[i].DisplayLabel := rscExternalHeight;
         'edge_distance':          Fields[i].DisplayLabel := rscPlantEdgeDistance;
@@ -1730,7 +1738,7 @@ begin
         'nidoparasite_id':              Fields[i].DisplayLabel := rscNidoparasiteID;
         'nidoparasite_name':            Fields[i].DisplayLabel := rscNidoparasite;
         'nidoparasite_eggs_tally':      Fields[i].DisplayLabel := rscEggsNidoparasite;
-        'nidoparasite_nestlings_tally': Fields[i].DisplayLabel := rscNestlingsNidoparasit;
+        'nidoparasite_nestlings_tally': Fields[i].DisplayLabel := rscNestlingsNidoparasite;
         'have_philornis_larvae':        Fields[i].DisplayLabel := rscHasPhilornisLarvae;
         'nest_stage':                   Fields[i].DisplayLabel := rscNestStage;
         'full_name':                    Fields[i].DisplayLabel := rscFullName;
