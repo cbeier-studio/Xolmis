@@ -9200,10 +9200,10 @@ object DMG: TDMG
       DisplayFormat = '#,##0.00'
       Precision = -1
     end
-    object qNestsinternal_max_diameter: TFloatField
-      DisplayLabel = 'Max. internal diameter'
+    object qNestsinternal_min_diameter: TFloatField
+      DisplayLabel = 'Lesser internal diameter'
       FieldKind = fkData
-      FieldName = 'internal_max_diameter'
+      FieldName = 'internal_min_diameter'
       Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -9212,10 +9212,10 @@ object DMG: TDMG
       DisplayFormat = '#,##0.00'
       Precision = -1
     end
-    object qNestsinternal_min_diameter: TFloatField
-      DisplayLabel = 'Min. internal diameter'
+    object qNestsinternal_max_diameter: TFloatField
+      DisplayLabel = 'Greater internal diameter'
       FieldKind = fkData
-      FieldName = 'internal_min_diameter'
+      FieldName = 'internal_max_diameter'
       Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -9224,10 +9224,10 @@ object DMG: TDMG
       DisplayFormat = '#,##0.00'
       Precision = -1
     end
-    object qNestsexternal_max_diameter: TFloatField
-      DisplayLabel = 'Max. external diameter'
+    object qNestsexternal_min_diameter: TFloatField
+      DisplayLabel = 'Lesser external diameter'
       FieldKind = fkData
-      FieldName = 'external_max_diameter'
+      FieldName = 'external_min_diameter'
       Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -9236,10 +9236,10 @@ object DMG: TDMG
       DisplayFormat = '#,##0.00'
       Precision = -1
     end
-    object qNestsexternal_min_diameter: TFloatField
-      DisplayLabel = 'Min. external diameter'
+    object qNestsexternal_max_diameter: TFloatField
+      DisplayLabel = 'Greater external diameter'
       FieldKind = fkData
-      FieldName = 'external_min_diameter'
+      FieldName = 'external_max_diameter'
       Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]

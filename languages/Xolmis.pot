@@ -7672,11 +7672,11 @@ msgid "External height:"
 msgstr ""
 
 #: tedtnest.lblexternalmaxdiameter.caption
-msgid "Max. external diameter:"
+msgid "Greater external diameter:"
 msgstr ""
 
 #: tedtnest.lblexternalmindiameter.caption
-msgid "Min. external diameter:"
+msgid "Lesser external diameter:"
 msgstr ""
 
 #: tedtnest.lblheightaboveground.caption
@@ -7695,11 +7695,11 @@ msgid "Internal height:"
 msgstr ""
 
 #: tedtnest.lblinternalmaxdiameter.caption
-msgid "Max. internal diameter:"
+msgid "Greater internal diameter:"
 msgstr ""
 
 #: tedtnest.lblinternalmindiameter.caption
-msgid "Min. internal diameter:"
+msgid "Lesser internal diameter:"
 msgstr ""
 
 #: tedtnest.lbllocality.caption
@@ -7733,7 +7733,7 @@ msgstr ""
 
 #: tedtnest.lblplantdbh.caption
 msgctxt "tedtnest.lblplantdbh.caption"
-msgid "Stem thickness:"
+msgid "Stem thickness (DBH):"
 msgstr ""
 
 #: tedtnest.lblplantheight.caption

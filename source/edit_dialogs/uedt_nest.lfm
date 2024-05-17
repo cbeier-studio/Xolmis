@@ -760,7 +760,7 @@ object edtNest: TedtNest
           Top = 3
           Width = 176
           BorderSpacing.Top = 3
-          Caption = 'Stem thickness:'
+          Caption = 'Stem thickness (DBH):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -1297,7 +1297,7 @@ object edtNest: TedtNest
           Top = 3
           Width = 176
           BorderSpacing.Top = 3
-          Caption = 'Min. internal diameter:'
+          Caption = 'Lesser internal diameter:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -1308,7 +1308,7 @@ object edtNest: TedtNest
           Top = 3
           Width = 176
           BorderSpacing.Top = 3
-          Caption = 'Max. internal diameter:'
+          Caption = 'Greater internal diameter:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -1537,7 +1537,7 @@ object edtNest: TedtNest
           Top = 3
           Width = 176
           BorderSpacing.Top = 3
-          Caption = 'Min. external diameter:'
+          Caption = 'Lesser external diameter:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -1548,7 +1548,7 @@ object edtNest: TedtNest
           Top = 3
           Width = 176
           BorderSpacing.Top = 3
-          Caption = 'Max. external diameter:'
+          Caption = 'Greater external diameter:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
