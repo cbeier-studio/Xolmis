@@ -10049,6 +10049,11 @@ msgstr "Novo participante da amostragem"
 msgid "New weather log"
 msgstr "Novo log do tempo"
 
+#: tfrmcustomgrid.pmcrecordhistory.caption
+msgctxt "tfrmcustomgrid.pmcrecordhistory.caption"
+msgid "Record history"
+msgstr "Histórico do registro"
+
 #: tfrmcustomgrid.pmcrefresh.caption
 msgctxt "tfrmcustomgrid.pmcrefresh.caption"
 msgid "Refresh"
@@ -10087,10 +10092,9 @@ msgstr "Apagar permanentemente todos registros"
 msgid "Restore selected record"
 msgstr "Restaurar registro selecionado"
 
-#: tfrmcustomgrid.pmssortalphabetic.caption
-msgctxt "tfrmcustomgrid.pmssortalphabetic.caption"
-msgid "Alphabetic"
-msgstr "Alfabética"
+#: tfrmcustomgrid.pmssortalphanumeric.caption
+msgid "Alphanumeric"
+msgstr "Alfanumérica"
 
 #: tfrmcustomgrid.pmssortascending.caption
 msgctxt "tfrmcustomgrid.pmssortascending.caption"
@@ -10236,6 +10240,10 @@ msgstr "Novo registro relacionado"
 msgctxt "tfrmcustomgrid.sbaddimage.hint"
 msgid "Add image"
 msgstr "Adicionar imagem"
+
+#: tfrmcustomgrid.sbaddnetsbatch.hint
+msgid "New batch of mistnets"
+msgstr "Novo lote de redes"
 
 #: tfrmcustomgrid.sbcancelrecord.caption
 msgctxt "tfrmcustomgrid.sbcancelrecord.caption"

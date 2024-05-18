@@ -10021,6 +10021,11 @@ msgstr ""
 msgid "New weather log"
 msgstr ""
 
+#: tfrmcustomgrid.pmcrecordhistory.caption
+msgctxt "tfrmcustomgrid.pmcrecordhistory.caption"
+msgid "Record history"
+msgstr ""
+
 #: tfrmcustomgrid.pmcrefresh.caption
 msgctxt "tfrmcustomgrid.pmcrefresh.caption"
 msgid "Refresh"
@@ -10059,9 +10064,8 @@ msgstr ""
 msgid "Restore selected record"
 msgstr ""
 
-#: tfrmcustomgrid.pmssortalphabetic.caption
-msgctxt "tfrmcustomgrid.pmssortalphabetic.caption"
-msgid "Alphabetic"
+#: tfrmcustomgrid.pmssortalphanumeric.caption
+msgid "Alphanumeric"
 msgstr ""
 
 #: tfrmcustomgrid.pmssortascending.caption
@@ -10207,6 +10211,10 @@ msgstr ""
 #: tfrmcustomgrid.sbaddimage.hint
 msgctxt "tfrmcustomgrid.sbaddimage.hint"
 msgid "Add image"
+msgstr ""
+
+#: tfrmcustomgrid.sbaddnetsbatch.hint
+msgid "New batch of mistnets"
 msgstr ""
 
 #: tfrmcustomgrid.sbcancelrecord.caption

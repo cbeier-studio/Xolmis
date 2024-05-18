@@ -1352,66 +1352,11 @@ object DMS: TDMS
       MinValue = -90
       Precision = -1
     end
-    object qSightingsmethod_id: TLongintField
-      DisplayLabel = 'Method (ID)'
-      FieldKind = fkData
-      FieldName = 'method_id'
-      Index = 9
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qSightingsmethod_name: TStringField
-      FieldKind = fkData
-      FieldName = 'method_name'
-      Index = 10
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 100
-    end
-    object qSightingsmackinnon_list_num: TLongintField
-      Alignment = taCenter
-      DisplayLabel = 'Mackinnon list nr.'
-      FieldKind = fkData
-      FieldName = 'mackinnon_list_num'
-      Index = 11
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-    end
-    object qSightingsobserver_id: TLongintField
-      DisplayLabel = 'Observer (ID)'
-      FieldKind = fkData
-      FieldName = 'observer_id'
-      Index = 12
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qSightingsobserver_name: TStringField
-      DisplayLabel = 'Observer'
-      DisplayWidth = 30
-      FieldKind = fkData
-      FieldName = 'observer_name'
-      Index = 13
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 100
-    end
     object qSightingstaxon_id: TLongintField
       DisplayLabel = 'Taxon (ID)'
       FieldKind = fkData
       FieldName = 'taxon_id'
-      Index = 14
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1423,7 +1368,7 @@ object DMS: TDMS
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'taxon_name'
-      Index = 15
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -1435,13 +1380,70 @@ object DMS: TDMS
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'taxon_formatted_name'
-      Index = 16
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
       Visible = False
       Size = 250
+    end
+    object qSightingsmethod_id: TLongintField
+      DisplayLabel = 'Method (ID)'
+      FieldKind = fkData
+      FieldName = 'method_id'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsmethod_name: TStringField
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'method_name'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qSightingsmackinnon_list_num: TLongintField
+      Alignment = taCenter
+      DisplayLabel = 'Mackinnon list nr.'
+      FieldKind = fkData
+      FieldName = 'mackinnon_list_num'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingsobserver_id: TLongintField
+      DisplayLabel = 'Observer (ID)'
+      FieldKind = fkData
+      FieldName = 'observer_id'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingsobserver_name: TStringField
+      DisplayLabel = 'Observer'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'observer_name'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
     end
     object qSightingsindividual_id: TLongintField
       DisplayLabel = 'Individual (ID)'
@@ -4184,30 +4186,30 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 100
-    end
-    object qNetsEffortfull_name: TStringField
-      DisplayLabel = 'Full name'
-      DisplayWidth = 30
-      FieldKind = fkData
-      FieldName = 'full_name'
-      Index = 3
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 40
     end
     object qNetsEffortnet_station_id: TLargeintField
       DisplayLabel = 'Sampling plot (ID)'
       FieldKind = fkData
       FieldName = 'net_station_id'
-      Index = 4
+      Index = 3
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Visible = False
+    end
+    object qNetsEffortnet_number: TLongintField
+      Alignment = taCenter
+      DisplayLabel = 'Net number'
+      FieldKind = fkData
+      FieldName = 'net_number'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
     end
     object qNetsEffortpermanent_net_id: TLargeintField
       DisplayLabel = 'Permanent net (ID)'
@@ -4232,16 +4234,17 @@ object DMS: TDMS
       Required = False
       Size = 50
     end
-    object qNetsEffortnet_number: TLongintField
+    object qNetsEffortsample_date: TDateField
       Alignment = taCenter
-      DisplayLabel = 'Net number'
+      DisplayLabel = 'Date'
       FieldKind = fkData
-      FieldName = 'net_number'
+      FieldName = 'sample_date'
       Index = 7
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qNetsEffortlongitude: TFloatField
       DisplayLabel = 'Longitude'
@@ -4271,23 +4274,12 @@ object DMS: TDMS
       MinValue = -90
       Precision = -1
     end
-    object qNetsEffortsample_date: TDateField
-      Alignment = taCenter
-      DisplayLabel = 'Date'
-      FieldKind = fkData
-      FieldName = 'sample_date'
-      Index = 10
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-    end
     object qNetsEffortnet_open_1: TTimeField
       Alignment = taCenter
       DisplayLabel = 'Open time 1'
       FieldKind = fkData
       FieldName = 'net_open_1'
-      Index = 11
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4299,7 +4291,7 @@ object DMS: TDMS
       DisplayLabel = 'Close time 1'
       FieldKind = fkData
       FieldName = 'net_close_1'
-      Index = 12
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4311,7 +4303,7 @@ object DMS: TDMS
       DisplayLabel = 'Open time 2'
       FieldKind = fkData
       FieldName = 'net_open_2'
-      Index = 13
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4323,7 +4315,7 @@ object DMS: TDMS
       DisplayLabel = 'Close time 2'
       FieldKind = fkData
       FieldName = 'net_close_2'
-      Index = 14
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4335,7 +4327,7 @@ object DMS: TDMS
       DisplayLabel = 'Open time 3'
       FieldKind = fkData
       FieldName = 'net_open_3'
-      Index = 15
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4347,7 +4339,7 @@ object DMS: TDMS
       DisplayLabel = 'Close time 3'
       FieldKind = fkData
       FieldName = 'net_close_3'
-      Index = 16
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4358,7 +4350,7 @@ object DMS: TDMS
       DisplayLabel = 'Open time 4'
       FieldKind = fkData
       FieldName = 'net_open_4'
-      Index = 17
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4369,7 +4361,7 @@ object DMS: TDMS
       DisplayLabel = 'Close time 4'
       FieldKind = fkData
       FieldName = 'net_close_4'
-      Index = 18
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4380,7 +4372,7 @@ object DMS: TDMS
       DisplayLabel = 'Total time opened (h)'
       FieldKind = fkInternalCalc
       FieldName = 'open_time_total'
-      Index = 19
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4392,7 +4384,7 @@ object DMS: TDMS
       DisplayLabel = 'Mistnet length (m)'
       FieldKind = fkData
       FieldName = 'net_length'
-      Index = 20
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4404,7 +4396,7 @@ object DMS: TDMS
       DisplayLabel = 'Mistnet height (m)'
       FieldKind = fkData
       FieldName = 'net_height'
-      Index = 21
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4416,7 +4408,7 @@ object DMS: TDMS
       DisplayLabel = 'Mistnet area (m²)'
       FieldKind = fkInternalCalc
       FieldName = 'net_area'
-      Index = 22
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4429,7 +4421,7 @@ object DMS: TDMS
       DisplayLabel = 'Mistnet mesh'
       FieldKind = fkData
       FieldName = 'net_mesh'
-      Index = 23
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4440,13 +4432,25 @@ object DMS: TDMS
       DisplayLabel = 'Notes'
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 24
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       BlobType = ftMemo
       Transliterate = False
+    end
+    object qNetsEffortfull_name: TStringField
+      DisplayLabel = 'Full name'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 40
     end
     object qNetsEffortnet_id: TLargeintField
       DisplayLabel = 'ID'
@@ -5387,6 +5391,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 150
     end
     object qSurveyslocality_id: TLongintField
@@ -5410,6 +5415,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 180
     end
     object qSurveyscountry_id: TLongintField
@@ -5433,6 +5439,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 60
     end
     object qSurveysstate_id: TLongintField
@@ -5456,6 +5463,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 60
     end
     object qSurveysmunicipality_id: TLongintField
@@ -5479,6 +5487,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 60
     end
     object qSurveyssample_id: TStringField

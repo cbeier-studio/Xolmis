@@ -19,6 +19,7 @@ type
     FPSExport: TFPSExport;
     iLogos: TImageList;
     iBandTypes: TImageList;
+    iMaps: TImageList;
     iTrees: TImageList;
     iCheckbox: TImageList;
     qsConnconnection_id: TLongintField;

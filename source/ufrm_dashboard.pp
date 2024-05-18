@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, Menus, DB, SQLDB,
   DBGrids, ATLinkLabel, TAGraph, TATools, TASeries, TASources, TAGUIConnectorBGRA, BCPanel, DateUtils,
-  BCButton, BCTypes, mvMapViewer, mvTypes, mvGpsObj;
+  BCButton, BCTypes, mvMapViewer, mvTypes, mvGpsObj, mvDrawingEngine;
 
 type
 
@@ -315,7 +315,7 @@ end;
 procedure TfrmDashboard.FormShow(Sender: TObject);
 begin
   mapSurveys.CachePath := IncludeTrailingPathDelimiter(ConcatPaths([AppDataDir, 'map-cache']));
-  frmMain.bMenu.GetBitmap(15, mapSurveys.POIImage);
+  DMM.iMaps.GetBitmap(1, mapSurveys.POIImage);
   mapSurveys.Active := True;
 
   TimerLoad.Enabled := True;

@@ -135,6 +135,7 @@ type
     lblRecycleModifiedDate: TDBText;
     lblRecycleName: TDBText;
     lblProjectFilter: TLabel;
+    pmcRecordHistory: TMenuItem;
     pmrRestoreRecord: TMenuItem;
     pmrDelPermanently: TMenuItem;
     pEggShapeFilter: TBCPanel;
@@ -181,7 +182,7 @@ type
     pmcNewSurvey: TMenuItem;
     pmcNewCollector: TMenuItem;
     pmgInsert: TMenuItem;
-    pmsSortAlphabetic: TMenuItem;
+    pmsSortAlphanumeric: TMenuItem;
     pmsSortTaxonomic: TMenuItem;
     pmsSortCreationDate: TMenuItem;
     pmsSortLastModifiedDate: TMenuItem;
@@ -432,11 +433,13 @@ type
     sbDelChild: TSpeedButton;
     sbDelRecord: TSpeedButton;
     sbEditChild: TSpeedButton;
+    sbAddNetsBatch: TSpeedButton;
     sbEditRecord: TSpeedButton;
     sbDelPermanently: TSpeedButton;
+    sbRefreshChild: TSpeedButton;
+    sbRefreshRecords: TSpeedButton;
     sbRestoreRecord: TSpeedButton;
     sbShareRecords: TSpeedButton;
-    sbRefreshChild: TSpeedButton;
     sbRowHeightDecrease: TSpeedButton;
     sbDelImage: TSpeedButton;
     sbRowHeightDefault: TSpeedButton;
@@ -461,7 +464,6 @@ type
     sbPriorChild: TSpeedButton;
     sbChildHistory: TSpeedButton;
     sbRecordHistory: TSpeedButton;
-    sbRefreshRecords: TSpeedButton;
     sbSaveRecord: TSpeedButton;
     sbShowRecord: TSpeedButton;
     sbShowQuickFilters: TSpeedButton;
@@ -628,6 +630,7 @@ type
     procedure pmtExpandAllClick(Sender: TObject);
     procedure pmtRefreshClick(Sender: TObject);
     procedure sbAddChildClick(Sender: TObject);
+    procedure sbAddNetsBatchClick(Sender: TObject);
     procedure sbCancelRecordClick(Sender: TObject);
     procedure sbClearFiltersClick(Sender: TObject);
     procedure sbColumnHideClick(Sender: TObject);
@@ -904,7 +907,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs,
   cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, {$IFDEF DEBUG}cbs_debug,{$ENDIF}
-  udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main;
+  udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
 
 {$R *.lfm}
 
@@ -3825,6 +3828,7 @@ begin
 
   ChildTagClick(aTag, aCountTag);
   eAddChild.Visible := False;
+  sbAddNetsBatch.Visible := False;
 
   case FTableType of
     tbIndividuals:
@@ -3857,7 +3861,11 @@ begin
           FChildTable := tbSurveyTeams;
           eAddChild.Visible := True;
         end;
-        1: FChildTable := tbNetsEffort;
+        1:
+        begin
+          FChildTable := tbNetsEffort;
+          sbAddNetsBatch.Visible := True;
+        end;
         2: FChildTable := tbWeatherLogs;
         3: FChildTable := tbCaptures;
         4: FChildTable := tbSightings;
@@ -4606,6 +4614,17 @@ procedure TfrmCustomGrid.sbAddChildClick(Sender: TObject);
 begin
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
     pmAddChild.Popup(X, Y);
+end;
+
+procedure TfrmCustomGrid.sbAddNetsBatchClick(Sender: TObject);
+begin
+  batchNetEffort := TbatchNetEffort.Create(nil);
+  with batchNetEffort do
+  try
+    ShowModal;
+  finally
+    FreeAndNil(batchNetEffort);
+  end;
 end;
 
 procedure TfrmCustomGrid.sbCancelRecordClick(Sender: TObject);
@@ -7881,6 +7900,7 @@ begin
     end;
   end;
   eAddChild.Enabled := sbAddChild.Enabled;
+  sbAddNetsBatch.Enabled := sbAddChild.Enabled;
   pmcEdit.Enabled := sbEditChild.Enabled;
   pmcDel.Enabled := sbDelChild.Enabled;
   pmcRefresh.Enabled := sbRefreshChild.Enabled;
