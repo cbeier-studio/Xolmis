@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, Menus, DB, SQLDB,
-  DBGrids, ATLinkLabel, TAGraph, TATools, TASeries, TASources, TAGUIConnectorBGRA, BCPanel, DateUtils,
-  BCButton, BCTypes, mvMapViewer, mvTypes, mvGpsObj, mvDrawingEngine;
+  DBGrids, ATLinkLabel, TAGraph, TASeries, TASources, TAGUIConnectorBGRA, BCPanel, DateUtils,
+  BCButton, BCTypes, mvMapViewer, mvTypes, mvGpsObj, mvDrawingEngine, ImgList;
 
 type
 
@@ -19,7 +19,6 @@ type
     ChartBGRA: TChartGUIConnectorBGRA;
     chartIndividuals: TChart;
     chartSpecies: TChart;
-    dbgLifers: TDBGrid;
     icoShortcutConverter: TImage;
     icoShortcutNewSighting: TImage;
     lblTitleBandsBalance: TLabel;
@@ -101,6 +100,7 @@ type
   private
     procedure AddBandBalance(aBandSize: String; aBandQuantity: Integer);
     procedure AddBirthday(aName, aBirthday: String);
+    procedure AddLifer(aType, aName, aDate: String);
     procedure AddPermit(aName, aExpireDate: String);
     procedure RefreshBandBalance;
     procedure RefreshBirthday;
@@ -108,6 +108,7 @@ type
     procedure RefreshNumbers;
     procedure RefreshChart;
     procedure RefreshMap;
+    procedure RefreshLifers;
   public
 
   end;
@@ -245,6 +246,65 @@ begin
   end;
 end;
 
+procedure TfrmDashboard.AddLifer(aType, aName, aDate: String);
+var
+  B: TBCPanel;
+  N, D: TLabel;
+  I: TImage;
+begin
+  B := TBCPanel.Create(pLifers);
+  with B do
+  begin
+    Top := lblTitleLifers.Top + lblTitleLifers.Height + 2;
+    Height := 24;
+    Align := alTop;
+    Caption := EmptyStr;
+    BorderBCStyle := bpsBorder;
+    Background.Color := clWhite;
+    ChildSizing.HorizontalSpacing := 8;
+    //BorderSpacing.Bottom := 2;
+    //Border.Style := TBCBorderStyle.bboSolid;
+    B.Parent := pLifers;
+  end;
+
+  I := TImage.Create(B);
+  with I do
+  begin
+    Align := alLeft;
+    Center := True;
+    Proportional := True;
+    ImageWidth := 16;
+    Images := vIcons;
+    case aType of
+      'C': ImageIndex := 1;
+      'S': ImageIndex := 0;
+    end;
+    AutoSize := True;
+    I.Parent := B;
+  end;
+
+  D := TLabel.Create(B);
+  with D do
+  begin
+    Align := alRight;
+    Alignment := taRightJustify;
+    Layout := tlCenter;
+    Caption := aDate;
+    Font.Color := clDefaultFG2Light;
+    D.Parent := B;
+  end;
+
+  N := TLabel.Create(B);
+  with N do
+  begin
+    Align := alClient;
+    Layout := tlCenter;
+    Font.Style := [fsItalic];
+    Caption := aName;
+    N.Parent := B;
+  end;
+end;
+
 procedure TfrmDashboard.AddPermit(aName, aExpireDate: String);
 var
   B: TBCPanel;
@@ -375,6 +435,7 @@ begin
     DMC.qLastLifers.Refresh
   else
     DMC.qLastLifers.Open;
+  RefreshLifers;
   Application.ProcessMessages;
 
   RefreshBandBalance;
@@ -569,6 +630,36 @@ begin
     end;
     //else
     //  pCharts1.Visible := False;
+  end;
+end;
+
+procedure TfrmDashboard.RefreshLifers;
+var
+  i: Integer;
+begin
+  with pLifers do
+  begin
+    Visible := False;
+    AutoSize := False;
+    for i := (ComponentCount - 1) downto 0 do
+      if Components[i] is TBCPanel then
+        Components[i].Free;
+
+    if DMC.qLastLifers.RecordCount = 0 then
+      Exit;
+
+    with DMC.qLastLifers do
+    begin
+      Last;
+      AutoSize := True;
+      repeat
+        AddLifer(FieldByName('tipo').AsString, FieldByName('nome_taxon').AsString, FieldByName('data_registro').AsString);
+        Prior;
+      until BOF;
+    end;
+
+    Visible := True;
+    //Top := pLoading.Top + pLoading.Height + 1;
   end;
 end;
 

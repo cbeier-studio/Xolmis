@@ -212,20 +212,31 @@ object DMC: TDMC
     Macros = <>
     Left = 65
     Top = 182
-    object qLastLiferstaxon: TLongintField
+    object qLastLiferstipo: TStringField
+      DisplayLabel = 'Tipo'
       FieldKind = fkData
-      FieldName = 'taxon'
+      FieldName = 'tipo'
       Index = 0
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
     end
+    object qLastLiferstaxon: TLongintField
+      FieldKind = fkData
+      FieldName = 'taxon'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
     object qLastLifersnome_taxon: TStringField
       DisplayLabel = 'Táxon'
       FieldKind = fkData
       FieldName = 'nome_taxon'
-      Index = 1
+      Index = 2
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -236,7 +247,7 @@ object DMC: TDMC
       DisplayLabel = 'Data'
       FieldKind = fkData
       FieldName = 'data_registro'
-      Index = 2
+      Index = 3
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -247,23 +258,13 @@ object DMC: TDMC
       DisplayLabel = 'Ativo'
       FieldKind = fkData
       FieldName = 'ativo'
-      Index = 3
+      Index = 4
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Visible = False
       DisplayValues = 'True;False'
-    end
-    object qLastLiferstipo: TStringField
-      DisplayLabel = 'Tipo'
-      FieldKind = fkData
-      FieldName = 'tipo'
-      Index = 4
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
     end
   end
   object qLastSurveys: TSQLQuery

@@ -2,131 +2,54 @@ object frmMaintenance: TfrmMaintenance
   Left = 352
   Height = 270
   Top = 33
-  Width = 622
+  Width = 771
   Caption = 'Maintenance'
   ClientHeight = 270
-  ClientWidth = 622
+  ClientWidth = 771
   Font.Height = -12
+  OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
-  object navTabs: TATTabs
-    Left = 0
-    Height = 42
-    Top = 0
-    Width = 622
-    Align = alTop
-    ParentColor = False
-    Tabs = <    
-      item
-        TabCaption = 'Taxonomy'
-      end    
-      item
-        TabCaption = 'Geo'
-      end    
-      item
-        TabCaption = 'Individuals'
-      end    
-      item
-        TabCaption = 'Images'
-      end>
-    DoubleBuffered = True
-    ColorBg = 15066599
-    ColorBorderActive = 16226706
-    ColorBorderPassive = 13750737
-    ColorSeparator = 13750737
-    ColorTabActive = 15987699
-    ColorTabPassive = 15987699
-    ColorTabOver = 15066599
-    ColorActiveMark = 16226706
-    ColorFont = 9276813
-    ColorFontModified = 9584128
-    ColorFontActive = 1776411
-    ColorFontHot = 1776411
-    OptButtonLayout = ',v'
-    OptVarWidth = True
-    OptFillWidth = False
-    OptTruncateCaption = acsmRight
-    OptTabHeight = 35
-    OptTabRounded = False
-    OptSpaceSide = 2
-    OptSpaceBetweenTabs = 4
-    OptSpaceBetweenLines = 0
-    OptSpaceInitial = 8
-    OptSpaceBeforeText = 8
-    OptSpaceAfterText = 8
-    OptSpacer = 8
-    OptSpacer2 = 8
-    OptSpaceXSize = 14
-    OptColoredBandSize = 2
-    OptActiveMarkSize = 2
-    OptCaptionAlignment = taCenter
-    OptShowFlat = True
-    OptShowFlatMouseOver = False
-    OptShowFlatSepar = False
-    OptShowXRounded = False
-    OptShowXButtons = atbxShowNone
-    OptShowPlusTab = False
-    OptShowPinnedText = '📌'
-    OptShowEntireColor = True
-    OptShowActiveMarkInverted = False
-    OptActiveFontStyle = [fsBold]
-    OptHotFontStyle = [fsBold]
-    OptMouseMiddleClickClose = True
-    OptMouseDragEnabled = False
-    OptMouseDragOutEnabled = False
-    OptHintForX = 'Close tab'
-    OptHintForPlus = 'Add tab'
-    OptHintForArrowLeft = 'Scroll tabs left'
-    OptHintForArrowRight = 'Scroll tabs right'
-    OptHintForArrowMenu = 'Show tabs list'
-    OptHintForUser0 = '0'
-    OptHintForUser1 = '1'
-    OptHintForUser2 = '2'
-    OptHintForUser3 = '3'
-    OptHintForUser4 = '4'
-    OnTabChanged = navTabsTabChanged
-  end
   object PG: TNotebook
-    Left = 0
-    Height = 185
-    Top = 42
-    Width = 622
+    Left = 152
+    Height = 227
+    Top = 0
+    Width = 619
     PageIndex = 0
     Align = alClient
-    TabOrder = 1
+    TabOrder = 0
     object tabTaxonomy: TPage
       object scrollTaxonomy: TScrollBox
         Left = 0
-        Height = 185
+        Height = 227
         Top = 0
-        Width = 622
+        Width = 619
         HorzScrollBar.Page = 293
         VertScrollBar.Page = 175
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 185
-        ClientWidth = 622
+        ClientHeight = 227
+        ClientWidth = 619
         TabOrder = 0
         object pTaxonomy: TPanel
           Left = 0
-          Height = 185
+          Height = 227
           Top = 0
-          Width = 622
+          Width = 619
           Align = alClient
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
           ChildSizing.VerticalSpacing = 2
-          ClientHeight = 185
-          ClientWidth = 622
+          ClientHeight = 227
+          ClientWidth = 619
           ParentBackground = False
           TabOrder = 0
           object lblTitleTaxaHierarchy: TLabel
             Left = 16
             Height = 25
             Top = 16
-            Width = 590
+            Width = 587
             Align = alTop
             BorderSpacing.Bottom = 10
             Caption = 'Hierarchies'
@@ -139,7 +62,7 @@ object frmMaintenance: TfrmMaintenance
             Left = 16
             Height = 49
             Top = 51
-            Width = 590
+            Width = 587
             Align = alTop
             AutoSize = True
             BorderSpacing.Bottom = 10
@@ -206,7 +129,7 @@ object frmMaintenance: TfrmMaintenance
               ParentColor = False
             end
             object cbTaxaHierarchy: TComboBox
-              Left = 346
+              Left = 343
               Height = 23
               Top = 12
               Width = 100
@@ -223,7 +146,7 @@ object frmMaintenance: TfrmMaintenance
               Text = 'Zoological'
             end
             object sbRewriteTaxaHierarchy: TBitBtn
-              Left = 454
+              Left = 451
               Height = 25
               Top = 12
               Width = 120
@@ -239,7 +162,7 @@ object frmMaintenance: TfrmMaintenance
             Left = 16
             Height = 49
             Top = 110
-            Width = 590
+            Width = 587
             Align = alTop
             AutoSize = True
             BorderSpacing.Bottom = 10
@@ -306,7 +229,7 @@ object frmMaintenance: TfrmMaintenance
               ParentColor = False
             end
             object cbTaxaSequence: TComboBox
-              Left = 346
+              Left = 343
               Height = 23
               Top = 12
               Width = 100
@@ -324,7 +247,7 @@ object frmMaintenance: TfrmMaintenance
               Visible = False
             end
             object sbRewriteTaxaSequence: TBitBtn
-              Left = 454
+              Left = 451
               Height = 25
               Top = 12
               Width = 120
@@ -341,35 +264,35 @@ object frmMaintenance: TfrmMaintenance
     object tabGeo: TPage
       object scrollGeo: TScrollBox
         Left = 0
-        Height = 185
+        Height = 227
         Top = 0
-        Width = 622
+        Width = 619
         HorzScrollBar.Page = 345
         VertScrollBar.Page = 116
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 185
-        ClientWidth = 622
+        ClientHeight = 227
+        ClientWidth = 619
         TabOrder = 0
         object pGeo: TPanel
           Left = 0
-          Height = 185
+          Height = 227
           Top = 0
-          Width = 622
+          Width = 619
           Align = alClient
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
           ChildSizing.VerticalSpacing = 2
-          ClientHeight = 185
-          ClientWidth = 622
+          ClientHeight = 227
+          ClientWidth = 619
           ParentBackground = False
           TabOrder = 0
           object lblTitleGeoHierarchy: TLabel
             Left = 16
             Height = 25
             Top = 16
-            Width = 590
+            Width = 587
             Align = alTop
             BorderSpacing.Bottom = 10
             Caption = 'Hierarchies'
@@ -382,7 +305,7 @@ object frmMaintenance: TfrmMaintenance
             Left = 16
             Height = 49
             Top = 51
-            Width = 590
+            Width = 587
             Align = alTop
             AutoSize = True
             BorderSpacing.Bottom = 10
@@ -447,7 +370,7 @@ object frmMaintenance: TfrmMaintenance
               ParentColor = False
             end
             object sbRewriteGeoHierarchy: TBitBtn
-              Left = 454
+              Left = 451
               Height = 25
               Top = 12
               Width = 120
@@ -465,23 +388,23 @@ object frmMaintenance: TfrmMaintenance
     object tabIndividuals: TPage
       object pGeo1: TPanel
         Left = 0
-        Height = 185
+        Height = 227
         Top = 0
-        Width = 622
+        Width = 619
         Align = alClient
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
         ChildSizing.VerticalSpacing = 2
-        ClientHeight = 185
-        ClientWidth = 622
+        ClientHeight = 227
+        ClientWidth = 619
         ParentBackground = False
         TabOrder = 0
         object lblTitleGeoHierarchy1: TLabel
           Left = 16
           Height = 25
           Top = 16
-          Width = 590
+          Width = 587
           Align = alTop
           BorderSpacing.Bottom = 10
           Caption = 'Full names'
@@ -494,7 +417,7 @@ object frmMaintenance: TfrmMaintenance
           Left = 16
           Height = 49
           Top = 51
-          Width = 590
+          Width = 587
           Align = alTop
           AutoSize = True
           BorderSpacing.Bottom = 10
@@ -559,7 +482,7 @@ object frmMaintenance: TfrmMaintenance
             ParentColor = False
           end
           object sbRewriteIndividualsFullname: TBitBtn
-            Left = 454
+            Left = 451
             Height = 25
             Top = 12
             Width = 120
@@ -575,35 +498,35 @@ object frmMaintenance: TfrmMaintenance
     object tabImages: TPage
       object scrollImages: TScrollBox
         Left = 0
-        Height = 185
+        Height = 227
         Top = 0
-        Width = 622
+        Width = 619
         HorzScrollBar.Page = 333
         VertScrollBar.Page = 116
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 185
-        ClientWidth = 622
+        ClientHeight = 227
+        ClientWidth = 619
         TabOrder = 0
         object pImages: TPanel
           Left = 0
-          Height = 185
+          Height = 227
           Top = 0
-          Width = 622
+          Width = 619
           Align = alClient
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
           ChildSizing.VerticalSpacing = 2
-          ClientHeight = 185
-          ClientWidth = 622
+          ClientHeight = 227
+          ClientWidth = 619
           ParentBackground = False
           TabOrder = 0
           object lblTitleImageThumbnails: TLabel
             Left = 16
             Height = 25
             Top = 16
-            Width = 590
+            Width = 587
             Align = alTop
             BorderSpacing.Bottom = 10
             Caption = 'Thumbnails'
@@ -616,7 +539,7 @@ object frmMaintenance: TfrmMaintenance
             Left = 16
             Height = 49
             Top = 51
-            Width = 590
+            Width = 587
             Align = alTop
             AutoSize = True
             BorderSpacing.Bottom = 10
@@ -681,7 +604,7 @@ object frmMaintenance: TfrmMaintenance
               ParentColor = False
             end
             object sbRecreateImageThumbnails: TBitBtn
-              Left = 454
+              Left = 451
               Height = 25
               Top = 12
               Width = 120
@@ -701,7 +624,7 @@ object frmMaintenance: TfrmMaintenance
     Left = 0
     Height = 2
     Top = 227
-    Width = 622
+    Width = 771
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -711,7 +634,7 @@ object frmMaintenance: TfrmMaintenance
     Left = 0
     Height = 41
     Top = 229
-    Width = 622
+    Width = 771
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
@@ -719,13 +642,13 @@ object frmMaintenance: TfrmMaintenance
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
     ClientHeight = 41
-    ClientWidth = 622
+    ClientWidth = 771
     Color = 15987699
     ParentBackground = False
     ParentColor = False
-    TabOrder = 2
+    TabOrder = 1
     object sbClose: TButton
-      Left = 488
+      Left = 637
       Height = 25
       Top = 8
       Width = 118
@@ -734,5 +657,40 @@ object frmMaintenance: TfrmMaintenance
       ModalResult = 11
       TabOrder = 0
     end
+  end
+  object tvMenu: TTreeView
+    Left = 8
+    Height = 195
+    Top = 16
+    Width = 144
+    Align = alLeft
+    BorderSpacing.Left = 8
+    BorderSpacing.Top = 16
+    BorderSpacing.Bottom = 16
+    BackgroundColor = clBtnFace
+    BorderStyle = bsNone
+    Color = clBtnFace
+    DefaultItemHeight = 32
+    HideSelection = False
+    Images = frmMain.mPopup
+    ImagesWidth = 24
+    Indent = 16
+    ReadOnly = True
+    RightClickSelect = True
+    RowSelect = True
+    ScrollBars = ssNone
+    SelectionColor = 13066075
+    SelectionFontColorUsed = True
+    ShowRoot = False
+    TabOrder = 2
+    OnSelectionChanged = tvMenuSelectionChanged
+    Options = [tvoKeepCollapsedNodes, tvoReadOnly, tvoRightClickSelect, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoToolTips]
+    Items.Data = {
+      F9FFFFFF0200040000005100000051000000FFFFFFFFFFFFFFFF000000000000
+      000000080000005461786F6E6F6D793100000031000000FFFFFFFFFFFFFFFF00
+      00000000000000000300000047656FAB000000AB000000FFFFFFFFFFFFFFFF00
+      00000000000000000B000000496E646976696475616C733500000035000000FF
+      FFFFFFFFFFFFFF00000000000000000006000000496D61676573
+    }
   end
 end

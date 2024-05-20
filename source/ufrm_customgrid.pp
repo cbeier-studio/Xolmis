@@ -7,8 +7,8 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB,
   DateUtils, Grids, DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character,
-  Buttons, CheckLst, DBCtrls, laz.VirtualTrees, rxswitch, attabs, atshapelinebgra, BCPanel,
-  DBControlGrid, ColorSpeedButton, cbs_datatypes, cbs_filters, Types;
+  Buttons, CheckLst, DBCtrls, laz.VirtualTrees, rxswitch, atshapelinebgra, BCPanel,
+  DBControlGrid, cbs_datatypes, cbs_filters, Types;
 
 type
   { TStringMemoEditor }

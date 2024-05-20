@@ -11,7 +11,6 @@ object frmDashboard: TfrmDashboard
   OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMenu = pmDashboard
-  LCLVersion = '3.2.0.0'
   object sBox: TScrollBox
     Left = 0
     Height = 478
@@ -62,7 +61,6 @@ object frmDashboard: TfrmDashboard
         Width = 371
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
-        ChildSizing.VerticalSpacing = 8
         Background.Color = clWhite
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
@@ -100,44 +98,6 @@ object frmDashboard: TfrmDashboard
         Rounding.RoundX = 8
         Rounding.RoundY = 8
         TabOrder = 0
-        object dbgLifers: TDBGrid
-          Left = 16
-          Height = 173
-          Top = 36
-          Width = 339
-          Align = alClient
-          AutoFillColumns = True
-          BorderStyle = bsNone
-          Color = clWhite
-          Columns = <          
-            item
-              Alignment = taCenter
-              Font.Color = clGray
-              SizePriority = 0
-              Title.Caption = 'Tipo'
-              Width = 30
-              FieldName = 'tipo'
-            end          
-            item
-              Font.Style = [fsItalic]
-              Title.Caption = 'Táxon'
-              Width = 213
-              FieldName = 'nome_taxon'
-            end          
-            item
-              Alignment = taRightJustify
-              Font.Color = clGray
-              SizePriority = 0
-              Title.Caption = 'Data'
-              Width = 96
-              FieldName = 'data_registro'
-            end>
-          DataSource = DMC.dsLastLifers
-          FixedCols = 0
-          Options = [dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgCellEllipsis, dgDisplayMemoText]
-          Scrollbars = ssNone
-          TabOrder = 0
-        end
         object linkShowMoreLifers: TATLabelLink
           Cursor = crHandPoint
           Left = 16
@@ -153,6 +113,7 @@ object frmDashboard: TfrmDashboard
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
+          Visible = False
           ColorLinkNormal = 13066075
           ColorLinkMouseover = 9520964
         end
@@ -163,6 +124,7 @@ object frmDashboard: TfrmDashboard
           Width = 339
           Align = alTop
           Alignment = taRightJustify
+          BorderSpacing.Bottom = 8
           Caption = 'Last lifers'
           Color = 16448250
           Font.Color = 13066075

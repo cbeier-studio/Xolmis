@@ -5,7 +5,7 @@ unit ufrm_maintenance;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, Buttons,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls,
   attabs, atshapelinebgra, BCPanel;
 
 type
@@ -43,7 +43,6 @@ type
     lblTitleTaxaHierarchy: TLabel;
     lblTitleImageThumbnails: TLabel;
     lineBottom: TShapeLineBGRA;
-    navTabs: TATTabs;
     pBottom: TPanel;
     pImages: TPanel;
     sbClose: TButton;
@@ -55,9 +54,11 @@ type
     scrollTaxonomy: TScrollBox;
     tabIndividuals: TPage;
     tabTaxonomy: TPage;
-    procedure navTabsTabChanged(Sender: TObject);
+    tvMenu: TTreeView;
+    procedure FormShow(Sender: TObject);
     procedure sbRecreateImageThumbnailsClick(Sender: TObject);
     procedure sbRewriteTaxaHierarchyClick(Sender: TObject);
+    procedure tvMenuSelectionChanged(Sender: TObject);
   private
 
   public
@@ -83,9 +84,14 @@ begin
   end;
 end;
 
-procedure TfrmMaintenance.navTabsTabChanged(Sender: TObject);
+procedure TfrmMaintenance.tvMenuSelectionChanged(Sender: TObject);
 begin
-  PG.PageIndex := navTabs.TabIndex;
+  PG.PageIndex := tvMenu.Selected.Index;
+end;
+
+procedure TfrmMaintenance.FormShow(Sender: TObject);
+begin
+  tvMenu.Selected := tvMenu.Items.GetFirstNode;
 end;
 
 procedure TfrmMaintenance.sbRecreateImageThumbnailsClick(Sender: TObject);

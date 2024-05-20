@@ -10499,21 +10499,6 @@ msgctxt "tfrmdashboard.chartspecies.axislist[1].title.caption"
 msgid "month"
 msgstr ""
 
-#: tfrmdashboard.dbglifers.columns[0].title.caption
-msgctxt "tfrmdashboard.dbglifers.columns[0].title.caption"
-msgid "Tipo"
-msgstr ""
-
-#: tfrmdashboard.dbglifers.columns[1].title.caption
-msgctxt "tfrmdashboard.dbglifers.columns[1].title.caption"
-msgid "Táxon"
-msgstr ""
-
-#: tfrmdashboard.dbglifers.columns[2].title.caption
-msgctxt "tfrmdashboard.dbglifers.columns[2].title.caption"
-msgid "Data"
-msgstr ""
-
 #: tfrmdashboard.lbltitleappupdate.caption
 msgctxt "tfrmdashboard.lbltitleappupdate.caption"
 msgid "Software update"
