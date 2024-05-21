@@ -32,11 +32,15 @@ Here is a list of the main features:
 - [x] Import captures (CSV file).
 - [ ] Attachment of images, audio recording, documents and links to the field records.
 
-See the roadmap for more information on planned features.
+See the [Milestones](https://github.com/cbeier-studio/Xolmis/milestones) for more information on planned features.
 
 ## Download and installation
 
-🚧 Not yet available.
+See the [Wiki](https://github.com/cbeier-studio/Xolmis/wiki/Installing) for options and instructions of how to install.
+
+> [!NOTE]
+> Linux and MacOS versions are not released yet. They need more work.
+> Let me know if you are interested in helping.
 
 ## How to contribute
 
