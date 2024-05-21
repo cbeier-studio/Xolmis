@@ -16,6 +16,7 @@ object dlgProgress: TdlgProgress
   OnClose = FormClose
   PopupMode = pmAuto
   Position = poMainFormCenter
+  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 46

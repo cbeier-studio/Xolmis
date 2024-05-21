@@ -1,37 +1,37 @@
 object dlgValidate: TdlgValidate
   Left = 352
-  Height = 285
+  Height = 228
   Top = 33
-  Width = 630
+  Width = 504
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Xolmis'
-  ClientHeight = 285
-  ClientWidth = 630
-  DesignTimePPI = 120
+  ClientHeight = 228
+  ClientWidth = 504
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poMainFormCenter
+  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
-    Height = 48
-    Top = 237
+    Height = 38
+    Top = 247
     Width = 630
     Align = alBottom
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 48
+    ClientHeight = 38
     ClientWidth = 630
     TabOrder = 0
     object sbOK: TButton
-      Left = 484
+      Left = 510
       Height = 32
       Top = 8
-      Width = 130
+      Width = 104
       Align = alRight
       Caption = 'OK'
       Default = True

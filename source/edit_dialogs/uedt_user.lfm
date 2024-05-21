@@ -15,6 +15,7 @@ object edtUser: TedtUser
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41

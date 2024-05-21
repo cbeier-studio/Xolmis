@@ -14,6 +14,7 @@ object edtNestOwner: TedtNestOwner
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poMainFormCenter
+  LCLVersion = '3.2.0.0'
   object pContent: TPanel
     Left = 0
     Height = 131

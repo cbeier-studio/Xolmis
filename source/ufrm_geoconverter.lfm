@@ -9,6 +9,7 @@ object frmGeoConverter: TfrmGeoConverter
   OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
+  LCLVersion = '3.2.0.0'
   object SplitSynEdit: TSplitter
     Left = 793
     Height = 712
@@ -550,7 +551,7 @@ object frmGeoConverter: TfrmGeoConverter
       OnKeyUp = seConvertFromKeyUp
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 63
+      Gutter.Width = 73
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1162,7 +1163,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 0
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 63
+      Gutter.Width = 73
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>

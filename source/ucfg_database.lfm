@@ -11,6 +11,7 @@ object cfgDatabase: TcfgDatabase
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   Position = poScreenCenter
+  LCLVersion = '3.2.0.0'
   object pClient: TPanel
     Left = 0
     Height = 396

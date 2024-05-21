@@ -16,6 +16,7 @@ object dlgLogin: TdlgLogin
   PopupMode = pmAuto
   Position = poScreenCenter
   ShowInTaskBar = stAlways
+  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 43

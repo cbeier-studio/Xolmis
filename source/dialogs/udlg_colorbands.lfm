@@ -15,6 +15,7 @@ object dlgColorBands: TdlgColorBands
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
+  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41

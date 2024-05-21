@@ -12,6 +12,7 @@ object dlgRecHistory: TdlgRecHistory
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poMainFormCenter
+  LCLVersion = '3.2.0.0'
   object pTop: TPanel
     Left = 0
     Height = 35

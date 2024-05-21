@@ -1,6 +1,10 @@
-(*
-  TDI Card Panel
-  Based on:
+{ TDI Card Panel
+  - Show multiple forms in Pages.
+  - Pages navigation must be coded separatly.
+
+  Copyright (C) 2024 Christian Beier <hello@christianbeier.studio>
+
+  Modified from:
 
   TDI - Tabbed Document Interface for Lazarus - Show multiple forms in Tabs
   Copyright (C) 2012  Daniel Simões de Almeida
@@ -26,7 +30,7 @@
 
   Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br
        Rua Coronel Aureliano de Camargo, 973 - Tatuí - SP - 18270-170
-*)
+}
 
 unit TDICardPanel;
 
