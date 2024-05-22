@@ -227,10 +227,11 @@ type
 
 type
   TSortDirection = (sdNone, sdAscending, sdDescending);
-  TSortType = (stNone, stAlfanumeric, stNumeric, stDateTime, stBoolean, stTaxonomic);
+  TSortType = (stNone, stAlphanumeric, stNumeric, stDateTime, stBoolean, stTaxonomic);
 
   TSortedField = class
     FieldName: String;
+    SortType: TSortType;
     Direction: TSortDirection;
     Collation: String;
     Lookup: Boolean;
@@ -1061,10 +1062,20 @@ begin
     for i := 0 to (FSortFields.Count - 1) do
     begin
       // Field name
-      if (FSortFields[i].Lookup) or (FTableAlias = EmptyStr) then
-        aSort := aSort + FSortFields[i].FieldName
+      if (FSortFields[i].SortType = stDateTime) then
+      begin
+        if (FSortFields[i].Lookup) or (FTableAlias = EmptyStr) then
+          aSort := aSort + 'datetime(' + FSortFields[i].FieldName + ')'
+        else
+          aSort := aSort + 'datetime(' + FTableAlias + '.' + FSortFields[i].FieldName + ')';
+      end
       else
-        aSort := aSort + FTableAlias + '.' + FSortFields[i].FieldName;
+      begin
+        if (FSortFields[i].Lookup) or (FTableAlias = EmptyStr) then
+          aSort := aSort + FSortFields[i].FieldName
+        else
+          aSort := aSort + FTableAlias + '.' + FSortFields[i].FieldName;
+      end;
 
       // Collation
       if FSortFields[i].Collation <> EmptyStr then

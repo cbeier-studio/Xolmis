@@ -991,10 +991,27 @@ var
   p: Integer;
 begin
   p := FSearch.SortFields.Add(TSortedField.Create);
-  FSearch.SortFields.Items[p].FieldName := aFieldName;
-  FSearch.SortFields.Items[p].Direction := aDirection;
-  FSearch.SortFields.Items[p].Collation := aCollation;
-  FSearch.SortFields.Items[p].Lookup := IsAnAlias;
+  FSearch.SortFields[p].FieldName := aFieldName;
+  if Assigned(FSearch.DataSet) then
+    case FSearch.DataSet.FieldByName(aFieldName).DataType of
+      ftUnknown, ftGuid:
+        FSearch.SortFields[p].SortType := stNone;
+      ftString, ftMemo, ftFmtMemo, ftFixedChar, ftWideString, ftFixedWideChar, ftWideMemo:
+        FSearch.SortFields[p].SortType := stAlphanumeric;
+      ftSmallint, ftInteger, ftLargeint, ftWord, ftAutoInc, ftBytes, ftVarBytes:
+        FSearch.SortFields[p].SortType := stNumeric;
+      ftBoolean:
+        FSearch.SortFields[p].SortType := stBoolean;
+      ftFloat, ftCurrency, ftBCD, ftFMTBcd:
+        FSearch.SortFields[p].SortType := stNumeric;
+      ftDate, ftTime, ftDateTime, ftTimeStamp:
+        FSearch.SortFields[p].SortType := stDateTime;
+    else
+      FSearch.SortFields[p].SortType := stNone;
+    end;
+  FSearch.SortFields[p].Direction := aDirection;
+  FSearch.SortFields[p].Collation := aCollation;
+  FSearch.SortFields[p].Lookup    := IsAnAlias;
 
   UpdateGridTitles(DBG, FSearch);
 end;
@@ -6918,7 +6935,7 @@ begin
     tbSightings:      SetGridSightings;
     tbSpecimens:      SetGridSpecimens;
   end;
-  FSearch.DataSet := TSQLQuery(dsLink.DataSet);
+  dsLink.DataSet := FSearch.DataSet;
 
   SplitChild.Visible := pChild.Visible;
   Search(EmptyStr);
@@ -6927,22 +6944,22 @@ end;
 procedure TfrmCustomGrid.SetGridBands;
 begin
   Caption := rsTitleBands;
+  FSearch.DataSet := DMG.qBands;
   AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qBands;
 end;
 
 procedure TfrmCustomGrid.SetGridBotanicTaxa;
 begin
   Caption := rsTitleBotanicTaxa;
+  FSearch.DataSet := DMG.qBotany;
   AddSortedField('taxon_name', sdAscending);
-  dsLink.DataSet := DMG.qBotany;
 end;
 
 procedure TfrmCustomGrid.SetGridCaptures;
 begin
   Caption := rsTitleCaptures;
+  FSearch.DataSet := DMG.qCaptures;
   AddSortedField('capture_date', sdDescending);
-  dsLink.DataSet := DMG.qCaptures;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -6991,8 +7008,8 @@ end;
 procedure TfrmCustomGrid.SetGridEggs;
 begin
   Caption := rsTitleEggs;
+  FSearch.DataSet := DMG.qEggs;
   AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qEggs;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -7002,8 +7019,8 @@ end;
 procedure TfrmCustomGrid.SetGridExpeditions;
 begin
   Caption := rsCaptionExpeditions;
+  FSearch.DataSet := DMG.qExpeditions;
   AddSortedField('start_date', sdDescending);
-  dsLink.DataSet := DMG.qExpeditions;
 
   lblChildTag1.Caption := rsTitleSurveys;
   pChildTag1.Visible := True;
@@ -7024,8 +7041,8 @@ end;
 procedure TfrmCustomGrid.SetGridGazetteer;
 begin
   Caption := rsTitleGazetteer;
+  FSearch.DataSet := DMG.qGazetteer;
   AddSortedField('site_name', sdAscending);
-  dsLink.DataSet := DMG.qGazetteer;
 
   //sbShowDocs.Visible := True;
 end;
@@ -7033,8 +7050,8 @@ end;
 procedure TfrmCustomGrid.SetGridIndividuals;
 begin
   Caption := rsTitleIndividuals;
+  FSearch.DataSet := DMG.qIndividuals;
   AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qIndividuals;
 
   lblChildTag1.Caption := rsTitleCaptures;
   lblChildTag2.Caption := rsTitleMolts;
@@ -7078,15 +7095,15 @@ end;
 procedure TfrmCustomGrid.SetGridInstitutions;
 begin
   Caption := rsTitleInstitutions;
+  FSearch.DataSet := DMG.qInstitutions;
   AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qInstitutions;
 end;
 
 procedure TfrmCustomGrid.SetGridMethods;
 begin
   Caption := rsTitleMethods;
+  FSearch.DataSet := DMG.qMethods;
   AddSortedField('method_name', sdAscending);
-  dsLink.DataSet := DMG.qMethods;
 
   //sbShowDocs.Visible := True;
 end;
@@ -7094,8 +7111,8 @@ end;
 procedure TfrmCustomGrid.SetGridNests;
 begin
   Caption := rsTitleNests;
+  FSearch.DataSet := DMG.qNests;
   AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qNests;
 
   lblChildTag1.Caption := rsTitleNestOwners;
   lblChildTag2.Caption := rsTitleNestRevisions;
@@ -7124,8 +7141,8 @@ end;
 procedure TfrmCustomGrid.SetGridNestRevisions;
 begin
   Caption := rsTitleNestRevisions;
+  FSearch.DataSet := DMG.qNestRevisions;
   AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qNestRevisions;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -7135,8 +7152,8 @@ end;
 procedure TfrmCustomGrid.SetGridNetStations;
 begin
   Caption := rsTitleSamplingPlots;
+  FSearch.DataSet := DMG.qNetStations;
   AddSortedField('station_name', sdAscending);
-  dsLink.DataSet := DMG.qNetStations;
 
   lblChildTag1.Caption := rsTitlePermanentNets;
   pChildTag1.Visible := True;
@@ -7151,15 +7168,15 @@ end;
 procedure TfrmCustomGrid.SetGridPeople;
 begin
   Caption := rsTitleResearchers;
+  FSearch.DataSet := DMG.qPeople;
   AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qPeople;
 end;
 
 procedure TfrmCustomGrid.SetGridPermits;
 begin
   Caption := rsTitlePermits;
+  FSearch.DataSet := DMG.qPermits;
   AddSortedField('permit_name', sdAscending);
-  dsLink.DataSet := DMG.qPermits;
 
   //sbShowDocs.Visible := True;
 end;
@@ -7167,8 +7184,8 @@ end;
 procedure TfrmCustomGrid.SetGridProjects;
 begin
   Caption := rsTitleProjects;
+  FSearch.DataSet := DMG.qProjects;
   AddSortedField('project_title', sdAscending);
-  dsLink.DataSet := DMG.qProjects;
 
   lblChildTag1.Caption := rsTitleTeam;
   pChildTag1.Visible := True;
@@ -7185,8 +7202,8 @@ end;
 procedure TfrmCustomGrid.SetGridSightings;
 begin
   Caption := rsTitleSightings;
+  FSearch.DataSet := DMG.qSightings;
   AddSortedField('sighting_date', sdDescending);
-  dsLink.DataSet := DMG.qSightings;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -7196,8 +7213,8 @@ end;
 procedure TfrmCustomGrid.SetGridSpecimens;
 begin
   Caption := rsTitleSpecimens;
+  FSearch.DataSet := DMG.qSpecimens;
   AddSortedField('full_name', sdAscending);
-  dsLink.DataSet := DMG.qSpecimens;
 
   lblChildTag1.Caption := rsTitleCollectors;
   lblChildTag2.Caption := rsTitleSamplePreps;
@@ -7220,8 +7237,8 @@ end;
 procedure TfrmCustomGrid.SetGridSurveys;
 begin
   Caption := rsTitleSurveys;
+  FSearch.DataSet := DMG.qSurveys;
   AddSortedField('survey_date', sdDescending);
-  dsLink.DataSet := DMG.qSurveys;
 
   lblChildTag1.Caption := rsTitleTeam;
   lblChildTag2.Caption := rsTitleNetsEffort;
@@ -7258,8 +7275,8 @@ end;
 procedure TfrmCustomGrid.SetGridTaxonRanks;
 begin
   Caption := rsTitleTaxonRanks;
+  FSearch.DataSet := DMG.qTaxonRanks;
   AddSortedField('rank_seq', sdAscending);
-  dsLink.DataSet := DMG.qTaxonRanks;
 end;
 
 procedure TfrmCustomGrid.SetRecycle;
