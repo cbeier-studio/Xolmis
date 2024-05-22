@@ -710,7 +710,7 @@ object DMG: TDMG
       FieldName = 'duration'
       Index = 4
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
     end
@@ -6313,7 +6313,7 @@ object DMG: TDMG
       FieldName = 'net_effort'
       Index = 28
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
       DisplayFormat = '#,##0.00'
