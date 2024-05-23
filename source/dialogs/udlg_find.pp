@@ -30,6 +30,7 @@ type
   { TdlgFind }
 
   TdlgFind = class(TForm)
+    iButtons: TImageList;
     pmfShowBandsAvailable: TMenuItem;
     pmOptions: TPopupMenu;
     sbOptions: TColorSpeedButton;

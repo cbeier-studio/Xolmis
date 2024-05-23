@@ -16,7 +16,6 @@ object edtBands: TedtBands
   ParentFont = True
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -80,7 +79,7 @@ object edtBands: TedtBands
     Top = 0
     Width = 488
     HorzScrollBar.Page = 488
-    VertScrollBar.Page = 586
+    VertScrollBar.Page = 583
     Align = alTop
     BorderStyle = bsNone
     ClientHeight = 587
@@ -91,14 +90,14 @@ object edtBands: TedtBands
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 586
+      Height = 583
       Top = 0
       Width = 488
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 586
+      ClientHeight = 583
       ClientWidth = 488
       Color = 15263976
       Constraints.MinHeight = 560
@@ -108,7 +107,7 @@ object edtBands: TedtBands
       object pNotes: TPanel
         Left = 0
         Height = 148
-        Top = 422
+        Top = 419
         Width = 488
         Align = alTop
         AutoSize = True
@@ -543,7 +542,7 @@ object edtBands: TedtBands
       end
       object pSupplier: TPanel
         Left = 0
-        Height = 47
+        Height = 46
         Top = 265
         Width = 488
         Align = alTop
@@ -554,7 +553,7 @@ object edtBands: TedtBands
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 5
@@ -571,11 +570,11 @@ object edtBands: TedtBands
         end
         object eSupplier: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 456
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 456
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
@@ -585,9 +584,8 @@ object edtBands: TedtBands
           TabOrder = 0
           ButtonHint = 'Find institution'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'supplier_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -600,8 +598,8 @@ object edtBands: TedtBands
       end
       object pCarrier: TPanel
         Left = 0
-        Height = 47
-        Top = 312
+        Height = 46
+        Top = 311
         Width = 488
         Align = alTop
         AutoSize = True
@@ -611,7 +609,7 @@ object edtBands: TedtBands
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 6
@@ -628,11 +626,11 @@ object edtBands: TedtBands
         end
         object eCarrier: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 456
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 456
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
@@ -642,9 +640,8 @@ object edtBands: TedtBands
           TabOrder = 0
           ButtonHint = 'Find carrier'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'carrier_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -657,8 +654,8 @@ object edtBands: TedtBands
       end
       object pProject: TPanel
         Left = 0
-        Height = 47
-        Top = 359
+        Height = 46
+        Top = 357
         Width = 488
         Align = alTop
         AutoSize = True
@@ -668,7 +665,7 @@ object edtBands: TedtBands
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 7
@@ -685,11 +682,11 @@ object edtBands: TedtBands
         end
         object eProject: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 456
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 456
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
@@ -699,9 +696,8 @@ object edtBands: TedtBands
           TabOrder = 0
           ButtonHint = 'Find project'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'project_name'
           DataSource = dsLink
           CharCase = ecNormal

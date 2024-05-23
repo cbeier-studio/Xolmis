@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB,
   DateUtils, Grids, DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character,
   Buttons, CheckLst, DBCtrls, laz.VirtualTrees, rxswitch, atshapelinebgra, BCPanel,
-  DBControlGrid, cbs_datatypes, cbs_filters, Types;
+  DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList;
 
 type
   { TStringMemoEditor }
@@ -58,7 +58,9 @@ type
     dsRecycle: TDataSource;
     DBG: TDBGrid;
     dbgRecycle: TDBControlGrid;
+    iButtons: TImageList;
     icoRecycleWarning: TImage;
+    iIcons: TImageList;
     lblRecycleWarning: TLabel;
     lblRecycleId: TDBText;
     dsLink: TDataSource;
@@ -78,7 +80,6 @@ type
     eInstitutionFilter: TEditButton;
     eMethodFilter: TEditButton;
     eProjectFilter: TEditButton;
-    iButtons: TImageList;
     icoEggTextureFilter: TImage;
     icoEggShapeFilter: TImage;
     icoReplacedBandFilter: TImage;
@@ -555,6 +556,7 @@ type
     tvSiteFilter: TLazVirtualStringTree;
     tvTaxaFilter: TLazVirtualStringTree;
     procedure DBGColExit(Sender: TObject);
+    procedure DBGDblClick(Sender: TObject);
     procedure DBGEditButtonClick(Sender: TObject);
     procedure DBGEditingDone(Sender: TObject);
     procedure DBGMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
@@ -617,6 +619,8 @@ type
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure gridChild1DblClick(Sender: TObject);
+    procedure iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
+      var AResultWidth: Integer);
     procedure pChildTag1Click(Sender: TObject);
     procedure pChildTag1MouseEnter(Sender: TObject);
     procedure pChildTag1MouseLeave(Sender: TObject);
@@ -1455,6 +1459,12 @@ begin
   TDBGrid(Sender).DefaultRowHeight := TDBGrid(Sender).DefaultRowHeight - 1;
   TDBGrid(Sender).EndUpdate;
   {$ENDIF}
+end;
+
+procedure TfrmCustomGrid.DBGDblClick(Sender: TObject);
+begin
+  if sbEditRecord.Enabled then
+    sbEditRecordClick(nil);
 end;
 
 procedure TfrmCustomGrid.DBGEditButtonClick(Sender: TObject);
@@ -3777,6 +3787,12 @@ procedure TfrmCustomGrid.gridChild1DblClick(Sender: TObject);
 begin
   if sbEditChild.Enabled then
     sbEditChildClick(Sender);
+end;
+
+procedure TfrmCustomGrid.iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
+  var AResultWidth: Integer);
+begin
+  AResultWidth := AImageWidth * APPI div 96;
 end;
 
 procedure TfrmCustomGrid.LoadRecordColumns;

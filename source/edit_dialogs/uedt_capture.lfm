@@ -16,7 +16,6 @@ object edtCapture: TedtCapture
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -87,14 +86,14 @@ object edtCapture: TedtCapture
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1048
+      Height = 1041
       Top = 0
       Width = 779
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1048
+      ClientHeight = 1041
       ClientWidth = 779
       Color = 15263976
       ParentBackground = False
@@ -103,7 +102,7 @@ object edtCapture: TedtCapture
       object pAgeEscapedStatus: TPanel
         Left = 0
         Height = 46
-        Top = 289
+        Top = 285
         Width = 779
         Align = alTop
         AutoSize = True
@@ -208,7 +207,7 @@ object edtCapture: TedtCapture
       object pSamples: TPanel
         Left = 0
         Height = 42
-        Top = 846
+        Top = 840
         Width = 779
         Align = alTop
         AutoSize = True
@@ -338,8 +337,8 @@ object edtCapture: TedtCapture
       end
       object pDateTimeBander: TPanel
         Left = 0
-        Height = 47
-        Top = 101
+        Height = 46
+        Top = 100
         Width = 779
         Align = alTop
         AutoSize = True
@@ -349,7 +348,7 @@ object edtCapture: TedtCapture
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 779
         ParentBackground = False
         TabOrder = 2
@@ -399,12 +398,12 @@ object edtCapture: TedtCapture
         end
         object eCaptureDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -414,9 +413,8 @@ object edtCapture: TedtCapture
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'capture_date'
           DataSource = dsLink
@@ -429,7 +427,7 @@ object edtCapture: TedtCapture
         end
         object eCaptureTime: TDBEdit
           Left = 206
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           DataField = 'capture_time'
@@ -443,12 +441,12 @@ object edtCapture: TedtCapture
         end
         object eBander: TDBEditButton
           Left = 396
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -458,9 +456,8 @@ object edtCapture: TedtCapture
           TabOrder = 2
           ButtonHint = 'Find bander'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'bander_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -472,12 +469,12 @@ object edtCapture: TedtCapture
         end
         object eAnnotator: TDBEditButton
           Left = 586
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -487,9 +484,8 @@ object edtCapture: TedtCapture
           TabOrder = 3
           ButtonHint = 'Find annotator'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'annotator_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -501,7 +497,7 @@ object edtCapture: TedtCapture
       end
       object pSurveyLocality: TPanel
         Left = 0
-        Height = 47
+        Height = 46
         Top = 54
         Width = 779
         Align = alTop
@@ -512,7 +508,7 @@ object edtCapture: TedtCapture
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 779
         ParentBackground = False
         TabOrder = 1
@@ -540,12 +536,12 @@ object edtCapture: TedtCapture
         end
         object eSurvey: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 364
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 364
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 364
@@ -556,9 +552,8 @@ object edtCapture: TedtCapture
           OnExit = eSurveyExit
           ButtonHint = 'Find survey'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'survey_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -570,12 +565,12 @@ object edtCapture: TedtCapture
         end
         object eLocality: TDBEditButton
           Left = 396
-          Height = 24
+          Height = 23
           Top = 23
           Width = 364
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 364
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 364
@@ -585,9 +580,8 @@ object edtCapture: TedtCapture
           TabOrder = 1
           ButtonHint = 'Find locality'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'locality_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -601,7 +595,7 @@ object edtCapture: TedtCapture
       object pColorBands: TPanel
         Left = 0
         Height = 47
-        Top = 242
+        Top = 238
         Width = 779
         Align = alTop
         AutoSize = True
@@ -675,9 +669,8 @@ object edtCapture: TedtCapture
           OnExit = eRightLegBelowExit
           ButtonHint = 'Select colors'
           ButtonWidth = 24
-          ImageIndex = 13
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 4
+          Images = DMM.iEdits
           DataField = 'right_leg_below'
           DataSource = dsLink
           CharCase = ecUppercase
@@ -763,9 +756,8 @@ object edtCapture: TedtCapture
           OnExit = eRightLegBelowExit
           ButtonHint = 'Select colors'
           ButtonWidth = 24
-          ImageIndex = 13
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 4
+          Images = DMM.iEdits
           DataField = 'left_leg_below'
           DataSource = dsLink
           CharCase = ecUppercase
@@ -836,8 +828,8 @@ object edtCapture: TedtCapture
       end
       object pTaxonBand: TPanel
         Left = 0
-        Height = 47
-        Top = 195
+        Height = 46
+        Top = 192
         Width = 779
         Align = alTop
         AutoSize = True
@@ -847,7 +839,7 @@ object edtCapture: TedtCapture
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 3
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 779
         ParentBackground = False
         TabOrder = 4
@@ -886,12 +878,12 @@ object edtCapture: TedtCapture
         end
         object eTaxon: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 364
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 364
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 364
@@ -901,9 +893,8 @@ object edtCapture: TedtCapture
           TabOrder = 0
           ButtonHint = 'Find taxon'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -915,12 +906,12 @@ object edtCapture: TedtCapture
         end
         object eBand: TDBEditButton
           Left = 396
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -930,9 +921,8 @@ object edtCapture: TedtCapture
           TabOrder = 1
           ButtonHint = 'Find band'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'band_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -944,12 +934,12 @@ object edtCapture: TedtCapture
         end
         object eRemovedBand: TDBEditButton
           Left = 586
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -959,9 +949,8 @@ object edtCapture: TedtCapture
           TabOrder = 2
           ButtonHint = 'Find band'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'removed_band_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -975,7 +964,7 @@ object edtCapture: TedtCapture
       object pNotes: TPanel
         Left = 0
         Height = 79
-        Top = 713
+        Top = 707
         Width = 779
         Align = alTop
         AutoSize = True
@@ -1016,8 +1005,8 @@ object edtCapture: TedtCapture
       end
       object pPhotographersCamera: TPanel
         Left = 0
-        Height = 47
-        Top = 893
+        Height = 46
+        Top = 887
         Width = 779
         Align = alTop
         AutoSize = True
@@ -1027,7 +1016,7 @@ object edtCapture: TedtCapture
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 779
         ParentBackground = False
         TabOrder = 18
@@ -1076,11 +1065,11 @@ object edtCapture: TedtCapture
         end
         object ePhotographer1: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -1090,9 +1079,8 @@ object edtCapture: TedtCapture
           TabOrder = 0
           ButtonHint = 'Find photographer'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'photographer_1_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -1104,11 +1092,11 @@ object edtCapture: TedtCapture
         end
         object ePhotographer2: TDBEditButton
           Left = 206
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -1118,9 +1106,8 @@ object edtCapture: TedtCapture
           TabOrder = 1
           ButtonHint = 'Find photographer'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'photographer_2_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -1180,7 +1167,7 @@ object edtCapture: TedtCapture
       object pTitleMetrics: TPanel
         Left = 0
         Height = 38
-        Top = 351
+        Top = 347
         Width = 779
         Align = alTop
         Alignment = taLeftJustify
@@ -1209,7 +1196,7 @@ object edtCapture: TedtCapture
       object pTitleCollection: TPanel
         Left = 0
         Height = 38
-        Top = 808
+        Top = 802
         Width = 779
         Align = alTop
         Alignment = taLeftJustify
@@ -1237,8 +1224,8 @@ object edtCapture: TedtCapture
       end
       object pTypeNetLongLat: TPanel
         Left = 0
-        Height = 47
-        Top = 148
+        Height = 46
+        Top = 146
         Width = 779
         Align = alTop
         AutoSize = True
@@ -1248,7 +1235,7 @@ object edtCapture: TedtCapture
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 779
         ParentBackground = False
         TabOrder = 3
@@ -1313,12 +1300,12 @@ object edtCapture: TedtCapture
         end
         object eNet: TDBEditButton
           Left = 206
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -1329,9 +1316,8 @@ object edtCapture: TedtCapture
           OnExit = eNetExit
           ButtonHint = 'Find mistnet'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'net_number'
           DataSource = dsLink
           CharCase = ecNormal
@@ -1343,12 +1329,12 @@ object edtCapture: TedtCapture
         end
         object eLongitude: TDBEditButton
           Left = 396
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -1359,9 +1345,8 @@ object edtCapture: TedtCapture
           OnExit = eLongitudeExit
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'longitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -1373,12 +1358,12 @@ object edtCapture: TedtCapture
         end
         object eLatitude: TDBEditButton
           Left = 586
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -1389,9 +1374,8 @@ object edtCapture: TedtCapture
           OnExit = eLongitudeExit
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'latitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -1405,7 +1389,7 @@ object edtCapture: TedtCapture
       object pMetrics1: TPanel
         Left = 0
         Height = 46
-        Top = 389
+        Top = 385
         Width = 779
         Align = alTop
         AutoSize = True
@@ -1556,7 +1540,7 @@ object edtCapture: TedtCapture
       object pMetrics2: TPanel
         Left = 0
         Height = 46
-        Top = 435
+        Top = 431
         Width = 779
         Align = alTop
         AutoSize = True
@@ -1685,7 +1669,7 @@ object edtCapture: TedtCapture
       object pMetrics3: TPanel
         Left = 0
         Height = 46
-        Top = 481
+        Top = 477
         Width = 779
         Align = alTop
         AutoSize = True
@@ -1799,7 +1783,7 @@ object edtCapture: TedtCapture
       object pMetrics5: TPanel
         Left = 0
         Height = 46
-        Top = 573
+        Top = 569
         Width = 779
         Align = alTop
         AutoSize = True
@@ -1913,7 +1897,7 @@ object edtCapture: TedtCapture
       object pMetrics4: TPanel
         Left = 0
         Height = 46
-        Top = 527
+        Top = 523
         Width = 779
         Align = alTop
         AutoSize = True
@@ -2026,8 +2010,8 @@ object edtCapture: TedtCapture
       end
       object pKippMoltLimitsSkull: TPanel
         Left = 0
-        Height = 47
-        Top = 619
+        Height = 46
+        Top = 615
         Width = 779
         Align = alTop
         AutoSize = True
@@ -2037,7 +2021,7 @@ object edtCapture: TedtCapture
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 779
         ParentBackground = False
         TabOrder = 13
@@ -2086,7 +2070,7 @@ object edtCapture: TedtCapture
         end
         object eKippsIndex: TDBEdit
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           DataField = 'kipps_index'
@@ -2101,11 +2085,11 @@ object edtCapture: TedtCapture
         end
         object eMoltLimits: TDBEditButton
           Left = 206
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -2115,9 +2099,8 @@ object edtCapture: TedtCapture
           TabOrder = 1
           ButtonHint = 'Select molt limits'
           ButtonWidth = 24
-          ImageIndex = 78
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 7
+          Images = DMM.iEdits
           DataField = 'molt_limits'
           DataSource = dsLink
           CharCase = ecNormal
@@ -2153,8 +2136,8 @@ object edtCapture: TedtCapture
       end
       object pCycleSex: TPanel
         Left = 0
-        Height = 47
-        Top = 666
+        Height = 46
+        Top = 661
         Width = 779
         Align = alTop
         AutoSize = True
@@ -2164,7 +2147,7 @@ object edtCapture: TedtCapture
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 779
         ParentBackground = False
         TabOrder = 14
@@ -2214,11 +2197,11 @@ object edtCapture: TedtCapture
         end
         object eCycleCode: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -2228,9 +2211,8 @@ object edtCapture: TedtCapture
           TabOrder = 0
           ButtonHint = 'Select molt cycle code'
           ButtonWidth = 24
-          ImageIndex = 78
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 7
+          Images = DMM.iEdits
           DataField = 'cycle_code'
           DataSource = dsLink
           CharCase = ecNormal
@@ -2242,11 +2224,11 @@ object edtCapture: TedtCapture
         end
         object eHowAged: TDBEditButton
           Left = 206
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -2256,9 +2238,8 @@ object edtCapture: TedtCapture
           TabOrder = 1
           ButtonHint = 'Select how was aged'
           ButtonWidth = 24
-          ImageIndex = 78
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 7
+          Images = DMM.iEdits
           DataField = 'how_aged'
           DataSource = dsLink
           CharCase = ecNormal
@@ -2289,11 +2270,11 @@ object edtCapture: TedtCapture
         end
         object eHowSexed: TDBEditButton
           Left = 586
-          Height = 24
+          Height = 23
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -2303,9 +2284,8 @@ object edtCapture: TedtCapture
           TabOrder = 3
           ButtonHint = 'Select how was sexed'
           ButtonWidth = 24
-          ImageIndex = 78
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 7
+          Images = DMM.iEdits
           DataField = 'how_sexed'
           DataSource = dsLink
           CharCase = ecNormal
@@ -2319,7 +2299,7 @@ object edtCapture: TedtCapture
       object pPhotosFieldNumber: TPanel
         Left = 0
         Height = 46
-        Top = 940
+        Top = 933
         Width = 779
         Align = alTop
         AutoSize = True
@@ -2431,7 +2411,7 @@ object edtCapture: TedtCapture
       object pHemoglobinGlucose: TPanel
         Left = 0
         Height = 46
-        Top = 986
+        Top = 979
         Width = 779
         Align = alTop
         AutoSize = True

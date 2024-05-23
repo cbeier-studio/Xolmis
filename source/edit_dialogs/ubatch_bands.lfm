@@ -14,7 +14,6 @@ object batchBands: TbatchBands
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -278,9 +277,8 @@ object batchBands: TbatchBands
         Width = 368
         ButtonHint = 'Find project'
         ButtonWidth = 23
-        Images = frmMain.mPopup
-        ImageIndex = 99
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
         OnButtonClick = eProjectButtonClick
@@ -411,9 +409,8 @@ object batchBands: TbatchBands
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
-        Images = frmMain.mPopup
-        ImageIndex = 18
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 1
         MaxLength = 0
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
@@ -434,9 +431,8 @@ object batchBands: TbatchBands
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
-        Images = frmMain.mPopup
-        ImageIndex = 18
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 1
         MaxLength = 0
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
@@ -479,9 +475,8 @@ object batchBands: TbatchBands
         Width = 368
         ButtonHint = 'Find institution'
         ButtonWidth = 23
-        Images = frmMain.mPopup
-        ImageIndex = 99
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
         OnButtonClick = eSupplierButtonClick
@@ -526,9 +521,8 @@ object batchBands: TbatchBands
         Width = 368
         ButtonHint = 'Find requester'
         ButtonWidth = 23
-        Images = frmMain.mPopup
-        ImageIndex = 99
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
         OnButtonClick = eRequesterButtonClick
@@ -573,9 +567,8 @@ object batchBands: TbatchBands
         Width = 368
         ButtonHint = 'Find carrier'
         ButtonWidth = 23
-        Images = frmMain.mPopup
-        ImageIndex = 99
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
         OnButtonClick = eCarrierButtonClick
@@ -622,9 +615,8 @@ object batchBands: TbatchBands
         Width = 368
         ButtonHint = 'Find sender'
         ButtonWidth = 23
-        Images = frmMain.mPopup
-        ImageIndex = 99
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
         OnButtonClick = eSenderButtonClick

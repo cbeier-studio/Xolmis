@@ -32,6 +32,7 @@ type
     BCrypt: TDCP_blowfish;
     ePassword: TEditButton;
     eUsername: TEdit;
+    iButtons: TImageList;
     imgLogin: TImage;
     lblLogin: TLabel;
     lblPassword: TLabel;

@@ -5563,8 +5563,8 @@ msgstr "Atualizar"
 
 #: tdlgbandsbalance.pmgsavesas.caption
 msgctxt "tdlgbandsbalance.pmgsavesas.caption"
-msgid "Save as..."
-msgstr "Salvar como..."
+msgid "Export CSV"
+msgstr "Exportar CSV"
 
 #: tdlgbandsbalance.pmsg.caption
 msgid "Calculating band balance..."
@@ -10085,8 +10085,9 @@ msgid "Refresh"
 msgstr "Atualizar"
 
 #: tfrmcustomgrid.pmrdelpermanently.caption
-msgid "Delete permanently all records"
-msgstr "Apagar permanentemente todos registros"
+msgctxt "tfrmcustomgrid.pmrdelpermanently.caption"
+msgid "Delete permanently"
+msgstr "Apagar permanentemente"
 
 #: tfrmcustomgrid.pmrrestorerecord.caption
 msgid "Restore selected record"
@@ -11296,4 +11297,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

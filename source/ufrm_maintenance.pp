@@ -31,6 +31,7 @@ type
   TfrmMaintenance = class(TForm)
     icoRewriteGeoHierarchy: TImage;
     icoRewriteGeoHierarchy1: TImage;
+    iIcons: TImageList;
     lblRewriteGeoHierarchy: TLabel;
     lblRewriteGeoHierarchy1: TLabel;
     lblTitleGeoHierarchy: TLabel;

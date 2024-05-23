@@ -82,6 +82,9 @@ type
     actOpenBands: TAction;
     ActList: TActionList;
     AppEvents: TApplicationProperties;
+    iSearch: TImageList;
+    iMenu: TImageList;
+    iPopup: TImageList;
     MarqueeBar: TProgressBar;
     sbClearSearch: TColorSpeedButton;
     icoSbarDatabase: TImage;
@@ -143,7 +146,6 @@ type
     pmtCloseAllOtherTabs: TMenuItem;
     pmTabs: TPopupMenu;
     bStatusBar: TImageList;
-    mPopup: TImageList;
     navTabs: TATTabs;
     mmExport: TMenuItem;
     mmImport: TMenuItem;
@@ -153,7 +155,6 @@ type
     mmDBConnect: TMenuItem;
     mmDBSettings: TMenuItem;
     pLeftTabs: TPanel;
-    bMenu: TImageList;
     mmOpenUsers: TMenuItem;
     mmLogoff: TMenuItem;
     mmSettings: TMenuItem;

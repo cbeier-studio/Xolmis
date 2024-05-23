@@ -29,6 +29,7 @@ type
   { TdlgProgress }
 
   TdlgProgress = class(TForm)
+    iButtons: TImageList;
     sbCancel: TBitBtn;
     lineBottom: TShapeLineBGRA;
     lStatus: TLabel;

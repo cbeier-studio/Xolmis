@@ -13,7 +13,6 @@ object batchNetEffort: TbatchNetEffort
   OnKeyPress = FormKeyPress
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -304,9 +303,8 @@ object batchNetEffort: TbatchNetEffort
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
-        Images = frmMain.mPopup
-        ImageIndex = 139
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 2
         MaxLength = 0
         ParentShowHint = False
         ShowHint = True
@@ -323,9 +321,8 @@ object batchNetEffort: TbatchNetEffort
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
-        Images = frmMain.mPopup
-        ImageIndex = 139
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 2
         MaxLength = 0
         ParentShowHint = False
         ShowHint = True
@@ -380,9 +377,8 @@ object batchNetEffort: TbatchNetEffort
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
-        Images = frmMain.mPopup
-        ImageIndex = 139
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 2
         MaxLength = 0
         ParentShowHint = False
         ShowHint = True
@@ -399,9 +395,8 @@ object batchNetEffort: TbatchNetEffort
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
-        Images = frmMain.mPopup
-        ImageIndex = 139
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 2
         MaxLength = 0
         ParentShowHint = False
         ShowHint = True
@@ -456,9 +451,8 @@ object batchNetEffort: TbatchNetEffort
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
-        Images = frmMain.mPopup
-        ImageIndex = 139
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 2
         MaxLength = 0
         ParentShowHint = False
         ShowHint = True
@@ -475,9 +469,8 @@ object batchNetEffort: TbatchNetEffort
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
-        Images = frmMain.mPopup
-        ImageIndex = 139
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 2
         MaxLength = 0
         ParentShowHint = False
         ShowHint = True
@@ -554,9 +547,8 @@ object batchNetEffort: TbatchNetEffort
         ButtonHint = 'Select survey to copy mistnets from'
         ButtonWidth = 23
         Color = clWhite
-        Images = frmMain.mPopup
-        ImageIndex = 99
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
         OnButtonClick = eSurveyButtonClick
@@ -615,9 +607,8 @@ object batchNetEffort: TbatchNetEffort
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
-        Images = frmMain.mPopup
-        ImageIndex = 139
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 2
         MaxLength = 0
         ParentShowHint = False
         ShowHint = True
@@ -634,9 +625,8 @@ object batchNetEffort: TbatchNetEffort
         ButtonWidth = 23
         Constraints.MinWidth = 176
         NumGlyphs = 1
-        Images = frmMain.mPopup
-        ImageIndex = 139
-        ImageWidth = 20
+        Images = DMM.iEdits
+        ImageIndex = 2
         MaxLength = 0
         ParentShowHint = False
         ShowHint = True

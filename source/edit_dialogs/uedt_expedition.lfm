@@ -1,11 +1,11 @@
 object edtExpedition: TedtExpedition
   Left = 352
-  Height = 454
+  Height = 450
   Top = 33
   Width = 398
   AutoSize = True
   Caption = 'New expedition'
-  ClientHeight = 454
+  ClientHeight = 450
   ClientWidth = 398
   Font.Height = -12
   OnClose = FormClose
@@ -14,11 +14,10 @@ object edtExpedition: TedtExpedition
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 411
+    Top = 407
     Width = 398
     Align = alTop
     LineColor = 9276813
@@ -28,7 +27,7 @@ object edtExpedition: TedtExpedition
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 413
+    Top = 409
     Width = 398
     Align = alTop
     AutoSize = True
@@ -72,15 +71,15 @@ object edtExpedition: TedtExpedition
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 411
+    Height = 407
     Top = 0
     Width = 398
     HorzScrollBar.Page = 397
-    VertScrollBar.Page = 411
+    VertScrollBar.Page = 407
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 411
+    ClientHeight = 407
     ClientWidth = 398
     Constraints.MinWidth = 176
     Color = clDefault
@@ -88,14 +87,14 @@ object edtExpedition: TedtExpedition
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 411
+      Height = 407
       Top = 0
       Width = 398
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 411
+      ClientHeight = 407
       ClientWidth = 398
       Color = 15263976
       ParentBackground = False
@@ -146,7 +145,7 @@ object edtExpedition: TedtExpedition
       object pDescription: TPanel
         Left = 0
         Height = 124
-        Top = 271
+        Top = 267
         Width = 398
         Align = alTop
         AutoSize = True
@@ -189,7 +188,7 @@ object edtExpedition: TedtExpedition
       end
       object pLocality: TPanel
         Left = 0
-        Height = 46
+        Height = 45
         Top = 61
         Width = 398
         Align = alTop
@@ -200,7 +199,7 @@ object edtExpedition: TedtExpedition
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 398
         ParentBackground = False
         TabOrder = 1
@@ -217,11 +216,11 @@ object edtExpedition: TedtExpedition
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -231,9 +230,8 @@ object edtExpedition: TedtExpedition
           TabOrder = 0
           ButtonHint = 'Find locality'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'locality_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -244,8 +242,8 @@ object edtExpedition: TedtExpedition
       end
       object pStartDate: TPanel
         Left = 0
-        Height = 46
-        Top = 107
+        Height = 45
+        Top = 106
         Width = 398
         Align = alTop
         AutoSize = True
@@ -255,7 +253,7 @@ object edtExpedition: TedtExpedition
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 398
         ParentBackground = False
         TabOrder = 2
@@ -272,12 +270,12 @@ object edtExpedition: TedtExpedition
         end
         object eStartDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -287,9 +285,8 @@ object edtExpedition: TedtExpedition
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'start_date'
           DataSource = dsLink
@@ -301,8 +298,8 @@ object edtExpedition: TedtExpedition
       end
       object pProject: TPanel
         Left = 0
-        Height = 46
-        Top = 212
+        Height = 45
+        Top = 209
         Width = 398
         Align = alTop
         AutoSize = True
@@ -313,7 +310,7 @@ object edtExpedition: TedtExpedition
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 398
         ParentBackground = False
         TabOrder = 4
@@ -330,12 +327,12 @@ object edtExpedition: TedtExpedition
         end
         object eProject: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -345,9 +342,8 @@ object edtExpedition: TedtExpedition
           TabOrder = 0
           ButtonHint = 'Find project'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'project_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -358,8 +354,8 @@ object edtExpedition: TedtExpedition
       end
       object pEndDate: TPanel
         Left = 0
-        Height = 46
-        Top = 153
+        Height = 45
+        Top = 151
         Width = 398
         Align = alTop
         AutoSize = True
@@ -369,7 +365,7 @@ object edtExpedition: TedtExpedition
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 398
         ParentBackground = False
         TabOrder = 3
@@ -397,12 +393,12 @@ object edtExpedition: TedtExpedition
         end
         object eEndDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -412,9 +408,8 @@ object edtExpedition: TedtExpedition
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'end_date'
           DataSource = dsLink
@@ -425,7 +420,7 @@ object edtExpedition: TedtExpedition
         end
         object txtDuration: TDBText
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 84
           Alignment = taRightJustify

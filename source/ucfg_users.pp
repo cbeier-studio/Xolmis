@@ -31,6 +31,7 @@ type
   TcfgUsers = class(TForm)
     dsUsers: TDataSource;
     gridUsers: TDBGrid;
+    iButtons: TImageList;
     lineBottom: TShapeLineBGRA;
     pmgRefresh: TMenuItem;
     pmgNew: TMenuItem;

@@ -33,6 +33,7 @@ type
     cbConnection: TComboBox;
     ePassword: TEditButton;
     eUsername: TEdit;
+    iButtons: TImageList;
     imgLogin: TImage;
     lblConnection: TLabel;
     lblLogin: TLabel;

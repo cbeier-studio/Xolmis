@@ -1,12 +1,12 @@
 object edtSamplePrep: TedtSamplePrep
   Left = 373
-  Height = 440
+  Height = 438
   Top = 34
   Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New sample preparation'
-  ClientHeight = 440
+  ClientHeight = 438
   ClientWidth = 400
   Font.Height = -12
   OnClose = FormClose
@@ -15,11 +15,10 @@ object edtSamplePrep: TedtSamplePrep
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 397
+    Top = 395
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -29,7 +28,7 @@ object edtSamplePrep: TedtSamplePrep
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 399
+    Top = 397
     Width = 400
     Align = alTop
     AutoSize = True
@@ -77,16 +76,16 @@ object edtSamplePrep: TedtSamplePrep
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 397
+    Height = 395
     Top = 0
     Width = 400
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 397
+    VertScrollBar.Page = 395
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 397
+    ClientHeight = 395
     ClientWidth = 400
     Constraints.MinWidth = 176
     Color = clDefault
@@ -94,14 +93,14 @@ object edtSamplePrep: TedtSamplePrep
     TabOrder = 1
     object pContent: TPanel
       Left = 0
-      Height = 397
+      Height = 395
       Top = 0
       Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 397
+      ClientHeight = 395
       ClientWidth = 400
       Color = 15263976
       ParentBackground = False
@@ -110,7 +109,7 @@ object edtSamplePrep: TedtSamplePrep
       object pNotes: TPanel
         Left = 0
         Height = 125
-        Top = 256
+        Top = 254
         Width = 400
         Align = alTop
         AutoSize = True
@@ -302,8 +301,8 @@ object edtSamplePrep: TedtSamplePrep
       end
       object pPreparer: TPanel
         Left = 0
-        Height = 46
-        Top = 197
+        Height = 45
+        Top = 196
         Width = 400
         Align = alTop
         AutoSize = True
@@ -312,7 +311,7 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
@@ -329,21 +328,20 @@ object edtSamplePrep: TedtSamplePrep
         end
         object ePreparer: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'preparer_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -354,7 +352,7 @@ object edtSamplePrep: TedtSamplePrep
       end
       object pPreparationDate: TPanel
         Left = 0
-        Height = 46
+        Height = 45
         Top = 151
         Width = 400
         Align = alTop
@@ -364,7 +362,7 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 3
@@ -381,12 +379,12 @@ object edtSamplePrep: TedtSamplePrep
         end
         object ePreparationDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -396,9 +394,8 @@ object edtSamplePrep: TedtSamplePrep
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'preparation_date'
           DataSource = dsLink

@@ -14,7 +14,6 @@ object edtSurvey: TedtSurvey
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -88,14 +87,14 @@ object edtSurvey: TedtSurvey
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 974
+      Height = 966
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 974
+      ClientHeight = 966
       ClientWidth = 399
       Color = 15263976
       ParentBackground = False
@@ -103,8 +102,8 @@ object edtSurvey: TedtSurvey
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
-        Height = 46
-        Top = 226
+        Height = 45
+        Top = 223
         Width = 399
         Align = alTop
         AutoSize = True
@@ -114,7 +113,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 3
@@ -131,12 +130,12 @@ object edtSurvey: TedtSurvey
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -146,9 +145,8 @@ object edtSurvey: TedtSurvey
           TabOrder = 0
           ButtonHint = 'Find locality'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'locality_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -161,7 +159,7 @@ object edtSurvey: TedtSurvey
       object pStartEndDate: TPanel
         Left = 0
         Height = 45
-        Top = 135
+        Top = 133
         Width = 399
         Align = alTop
         AutoSize = True
@@ -228,8 +226,8 @@ object edtSurvey: TedtSurvey
       end
       object pNetStation: TPanel
         Left = 0
-        Height = 46
-        Top = 272
+        Height = 45
+        Top = 268
         Width = 399
         Align = alTop
         AutoSize = True
@@ -239,7 +237,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
@@ -256,12 +254,12 @@ object edtSurvey: TedtSurvey
         end
         object eNetStation: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -271,9 +269,8 @@ object edtSurvey: TedtSurvey
           TabOrder = 0
           ButtonHint = 'Find mistnet station'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'net_station_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -286,7 +283,7 @@ object edtSurvey: TedtSurvey
       object pNotes: TPanel
         Left = 0
         Height = 124
-        Top = 834
+        Top = 826
         Width = 399
         Align = alTop
         AutoSize = True
@@ -330,8 +327,8 @@ object edtSurvey: TedtSurvey
       end
       object pProject: TPanel
         Left = 0
-        Height = 46
-        Top = 318
+        Height = 45
+        Top = 313
         Width = 399
         Align = alTop
         AutoSize = True
@@ -341,7 +338,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
@@ -358,12 +355,12 @@ object edtSurvey: TedtSurvey
         end
         object eProject: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -373,9 +370,8 @@ object edtSurvey: TedtSurvey
           TabOrder = 0
           ButtonHint = 'Find project'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'project_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -387,8 +383,8 @@ object edtSurvey: TedtSurvey
       end
       object pMethod: TPanel
         Left = 0
-        Height = 46
-        Top = 180
+        Height = 45
+        Top = 178
         Width = 399
         Align = alTop
         AutoSize = True
@@ -398,7 +394,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
@@ -415,12 +411,12 @@ object edtSurvey: TedtSurvey
         end
         object eMethod: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -430,9 +426,8 @@ object edtSurvey: TedtSurvey
           TabOrder = 0
           ButtonHint = 'Find method'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'method_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -443,8 +438,8 @@ object edtSurvey: TedtSurvey
       end
       object pDateDuration: TPanel
         Left = 0
-        Height = 46
-        Top = 89
+        Height = 45
+        Top = 88
         Width = 399
         Align = alTop
         AutoSize = True
@@ -454,7 +449,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
@@ -482,12 +477,12 @@ object edtSurvey: TedtSurvey
         end
         object eDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -497,9 +492,8 @@ object edtSurvey: TedtSurvey
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'survey_date'
           DataSource = dsLink
@@ -510,7 +504,7 @@ object edtSurvey: TedtSurvey
         end
         object eDuration: TDBEdit
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           DataField = 'duration'
@@ -524,8 +518,8 @@ object edtSurvey: TedtSurvey
       end
       object pStartCoordinate: TPanel
         Left = 0
-        Height = 46
-        Top = 364
+        Height = 45
+        Top = 358
         Width = 399
         Align = alTop
         AutoSize = True
@@ -535,7 +529,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 6
@@ -563,12 +557,12 @@ object edtSurvey: TedtSurvey
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -578,9 +572,8 @@ object edtSurvey: TedtSurvey
           TabOrder = 0
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'start_longitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -590,12 +583,12 @@ object edtSurvey: TedtSurvey
         end
         object eLatitude: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -605,9 +598,8 @@ object edtSurvey: TedtSurvey
           TabOrder = 1
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'start_latitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -618,8 +610,8 @@ object edtSurvey: TedtSurvey
       end
       object pEndCoordinate: TPanel
         Left = 0
-        Height = 46
-        Top = 410
+        Height = 45
+        Top = 403
         Width = 399
         Align = alTop
         AutoSize = True
@@ -629,7 +621,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 7
@@ -657,12 +649,12 @@ object edtSurvey: TedtSurvey
         end
         object eEndLongitude: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -672,9 +664,8 @@ object edtSurvey: TedtSurvey
           TabOrder = 0
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'end_longitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -684,12 +675,12 @@ object edtSurvey: TedtSurvey
         end
         object eEndLatitude: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -699,9 +690,8 @@ object edtSurvey: TedtSurvey
           TabOrder = 1
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'end_latitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -713,7 +703,7 @@ object edtSurvey: TedtSurvey
       object pAreaDistance: TPanel
         Left = 0
         Height = 45
-        Top = 514
+        Top = 506
         Width = 399
         Align = alTop
         AutoSize = True
@@ -779,7 +769,7 @@ object edtSurvey: TedtSurvey
       object pNetsTotalEffort: TPanel
         Left = 0
         Height = 45
-        Top = 559
+        Top = 551
         Width = 399
         Align = alTop
         AutoSize = True
@@ -843,7 +833,7 @@ object edtSurvey: TedtSurvey
       object pObserversSampleId: TPanel
         Left = 0
         Height = 45
-        Top = 469
+        Top = 461
         Width = 399
         Align = alTop
         AutoSize = True
@@ -910,7 +900,7 @@ object edtSurvey: TedtSurvey
       object pHabitat: TPanel
         Left = 0
         Height = 92
-        Top = 617
+        Top = 609
         Width = 399
         Align = alTop
         AutoSize = True
@@ -955,7 +945,7 @@ object edtSurvey: TedtSurvey
       object pNetRounds: TPanel
         Left = 0
         Height = 99
-        Top = 722
+        Top = 714
         Width = 399
         Align = alTop
         AutoSize = True
@@ -999,7 +989,7 @@ object edtSurvey: TedtSurvey
       end
       object pExpedition: TBCPanel
         Left = 13
-        Height = 60
+        Height = 59
         Top = 16
         Width = 373
         Align = alTop
@@ -1058,13 +1048,13 @@ object edtSurvey: TedtSurvey
         end
         object eExpedition: TDBEditButton
           Left = 17
-          Height = 24
+          Height = 23
           Top = 27
           Width = 339
           Align = alTop
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 339
           Color = 16448250
           Constraints.MaxHeight = 28
@@ -1075,9 +1065,8 @@ object edtSurvey: TedtSurvey
           TabOrder = 0
           ButtonHint = 'Find expedition'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'expedition_name'
           DataSource = dsLink
           CharCase = ecNormal

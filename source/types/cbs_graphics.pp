@@ -165,14 +165,14 @@ begin
     { oculta senha }
     //aEdit.PasswordChar := #$25CF;
     aEdit.EchoMode := emPassword;
-    aEdit.ImageIndex := 92;
+    aEdit.ImageIndex := 0;
   end
   else
   begin
     { mostra senha }
     //aEdit.PasswordChar := #0;
     aEdit.EchoMode := emNormal;
-    aEdit.ImageIndex := 93;
+    aEdit.ImageIndex := 1;
   end;
 end;
 

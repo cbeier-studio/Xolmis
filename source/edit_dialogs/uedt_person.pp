@@ -35,6 +35,7 @@ type
     eCountry: TDBEditButton;
     eMunicipality: TDBEditButton;
     eState: TDBEditButton;
+    iButtons: TImageList;
     pImageToolbar: TBCPanel;
     cbTreatment: TDBComboBox;
     cbGender: TDBComboBox;

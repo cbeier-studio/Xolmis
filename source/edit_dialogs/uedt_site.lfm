@@ -1,12 +1,12 @@
 object edtSite: TedtSite
   Left = 352
-  Height = 405
+  Height = 403
   Top = 33
   Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New toponym'
-  ClientHeight = 405
+  ClientHeight = 403
   ClientWidth = 400
   Font.Height = -12
   OnClose = FormClose
@@ -15,11 +15,10 @@ object edtSite: TedtSite
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 362
+    Top = 360
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -29,7 +28,7 @@ object edtSite: TedtSite
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 364
+    Top = 362
     Width = 400
     Align = alTop
     AutoSize = True
@@ -73,16 +72,16 @@ object edtSite: TedtSite
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 362
+    Height = 360
     Top = 0
     Width = 400
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 362
+    VertScrollBar.Page = 360
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 362
+    ClientHeight = 360
     ClientWidth = 400
     Constraints.MinWidth = 176
     Color = clDefault
@@ -90,14 +89,14 @@ object edtSite: TedtSite
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 362
+      Height = 360
       Top = 0
       Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 362
+      ClientHeight = 360
       ClientWidth = 400
       Color = 15263976
       ParentBackground = False
@@ -105,8 +104,8 @@ object edtSite: TedtSite
       TabOrder = 0
       object pParentToponym: TPanel
         Left = 0
-        Height = 46
-        Top = 210
+        Height = 45
+        Top = 209
         Width = 400
         Align = alTop
         AutoSize = True
@@ -117,7 +116,7 @@ object edtSite: TedtSite
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
@@ -134,12 +133,12 @@ object edtSite: TedtSite
         end
         object eParentSite: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -149,9 +148,8 @@ object edtSite: TedtSite
           TabOrder = 0
           ButtonHint = 'Find parent toponym'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'parent_site_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -281,7 +279,7 @@ object edtSite: TedtSite
       object pEbirdName: TPanel
         Left = 0
         Height = 45
-        Top = 301
+        Top = 299
         Width = 400
         Align = alTop
         AutoSize = True
@@ -323,7 +321,7 @@ object edtSite: TedtSite
       object pFullname: TPanel
         Left = 0
         Height = 45
-        Top = 256
+        Top = 254
         Width = 400
         Align = alTop
         AutoSize = True
@@ -364,7 +362,7 @@ object edtSite: TedtSite
       end
       object pLongitudeLatitude: TPanel
         Left = 0
-        Height = 46
+        Height = 45
         Top = 106
         Width = 400
         Align = alTop
@@ -375,7 +373,7 @@ object edtSite: TedtSite
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 2
@@ -403,12 +401,12 @@ object edtSite: TedtSite
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -418,9 +416,8 @@ object edtSite: TedtSite
           TabOrder = 0
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'longitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -430,12 +427,12 @@ object edtSite: TedtSite
         end
         object eLatitude: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -445,9 +442,8 @@ object edtSite: TedtSite
           TabOrder = 1
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'latitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -459,7 +455,7 @@ object edtSite: TedtSite
       object pAltitude: TPanel
         Left = 0
         Height = 45
-        Top = 152
+        Top = 151
         Width = 400
         Align = alTop
         AutoSize = True

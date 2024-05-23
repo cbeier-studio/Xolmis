@@ -34,6 +34,7 @@ type
     cklbColumns: TCheckListBox;
     eFilename: TFileNameEdit;
     iIcons: TImageList;
+    iButtons: TImageList;
     lblFilename: TLabel;
     lblColumns: TLabel;
     lineBottom: TShapeLineBGRA;

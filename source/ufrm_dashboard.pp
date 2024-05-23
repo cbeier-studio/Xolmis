@@ -289,7 +289,7 @@ begin
     Align := alLeft;
     Center := True;
     Proportional := True;
-    ImageWidth := 16;
+    //ImageWidth := 16;
     Images := vIcons;
     case aType of
       'C': ImageIndex := 1;

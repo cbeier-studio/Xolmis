@@ -15,10 +15,9 @@ object dlgFind: TdlgFind
   OnShow = FormShow
   PopupMode = pmAuto
   ShowInTaskBar = stNever
-  LCLVersion = '3.2.0.0'
   object pHeader: TPanel
     Left = 0
-    Height = 34
+    Height = 31
     Top = 0
     Width = 317
     Align = alTop
@@ -27,12 +26,12 @@ object dlgFind: TdlgFind
     ChildSizing.LeftRightSpacing = 4
     ChildSizing.TopBottomSpacing = 4
     ChildSizing.HorizontalSpacing = 4
-    ClientHeight = 34
+    ClientHeight = 31
     ClientWidth = 317
     TabOrder = 0
     object pEP: TBCPanel
       Left = 4
-      Height = 26
+      Height = 23
       Top = 4
       Width = 309
       Align = alTop
@@ -78,7 +77,7 @@ object dlgFind: TdlgFind
       TabOrder = 0
       object EP: TEdit
         Left = 4
-        Height = 18
+        Height = 15
         Top = 5
         Width = 237
         Align = alClient
@@ -94,7 +93,7 @@ object dlgFind: TdlgFind
       end
       object sbOptions: TColorSpeedButton
         Left = 249
-        Height = 24
+        Height = 21
         Hint = 'Options'
         Top = 1
         Width = 24
@@ -103,9 +102,8 @@ object dlgFind: TdlgFind
         BorderSpacing.Bottom = 1
         Flat = True
         Font.Color = clBlack
-        Images = frmMain.mPopup
-        ImageIndex = 80
-        ImageWidth = 20
+        Images = iButtons
+        ImageIndex = 1
         Visible = False
         OnClick = sbOptionsClick
         ShowCaption = False
@@ -131,7 +129,7 @@ object dlgFind: TdlgFind
       end
       object sbClose: TColorSpeedButton
         Left = 281
-        Height = 24
+        Height = 21
         Hint = 'Clear search'
         Top = 1
         Width = 24
@@ -140,9 +138,8 @@ object dlgFind: TdlgFind
         BorderSpacing.Bottom = 1
         Flat = True
         Font.Color = clBlack
-        Images = frmMain.mPopup
-        ImageIndex = 23
-        ImageWidth = 20
+        Images = iButtons
+        ImageIndex = 0
         OnClick = sbCloseClick
         ShowCaption = False
         ShowHint = True
@@ -169,8 +166,8 @@ object dlgFind: TdlgFind
   end
   object uList: TDBGrid
     Left = 0
-    Height = 179
-    Top = 34
+    Height = 182
+    Top = 31
     Width = 317
     Align = alClient
     AlternateColor = cl3DLight
@@ -180,7 +177,7 @@ object dlgFind: TdlgFind
     Columns = <    
       item
         Title.Caption = 'Name'
-        Width = 317
+        Width = 296
       end>
     DataSource = dsFind
     FixedCols = 0
@@ -225,5 +222,40 @@ object dlgFind: TdlgFind
       Caption = 'Show only available bands'
       OnClick = pmfShowBandsAvailableClick
     end
+  end
+  object iButtons: TImageList
+    Scaled = True
+    Left = 219
+    Top = 88
+    Bitmap = {
+      4C7A020000001000000010000000860000000000000078DA63601805B880A2A2
+      22130893A9971F884F02F109109B4CBD39504CB419C87A91C48832039B5E62CD
+      C0A79718338062BBF1E94533631716716912C2577A34758F983CEC08C457A1D8
+      118FBA34206EC0829FECDEBDFB3F0803D98FA1620958F42790A03F8D44F75F81
+      62C7E112DE78C21F5B78A1637CE14F8CFEB4E112DE940200125D6A47
+    }
+    BitmapAdv = {
+      4C69020000004C7A020000001400000014000000E90000000000000078DA6360
+      18052319282A2AB200F11C2866A182596B80F81214AF21D74C34B344A0982C33
+      D1CD421227D94C5C6691632621B348319358B388351328E607C4A789310BCD4C
+      901EBFD19C350A4678B92A07C42B81F80510CF0362010ACDDBD8DDDDFDFFE9D3
+      A7FFCBCBCBFF03F99308A8DF01C4FF71616565E5FF6FDFBEFDFFEBD7AFFF57AF
+      5E45975F4605F74DA642F8AD8086DF5C4AC36F149014F61240BC14885F02F122
+      2016A5D0BC652D2D2DE0B4515F5F0F4A1B73C930039E9E959494FE3F7BF60C9C
+      76EFDFBFFF1F5F3A27263D23BBAFAEAE8E2CF76109BF25D0B4BB90943A74A401
+      00AAEDA1654C7A0200000018000000180000006F0100000000000078DA636018
+      05A36078004545C54C10A691D96D40FC0F8A5B696476321453CD0E64B391C4A8
+      620736B3A965073EB329B58318B3C9B58314B349B50328DF40AAD958ECA8C7A3
+      662A102750901E1240668C9644A360148C021AD6F3A140BC0B889F03F1142056
+      A2A2D93640FC3F3030F07F5555D57F4343C3FF40FE49206626A0CF0C5A3E13C2
+      37FDFDFDFF7FFFFEFDFFAF5FBFFE9F3A750A643E082F42526387C5FC5EA83A82
+      B8A2A2026C36087FFAF4E9BF929212BA9AAD14844F979696D6FFDDBB77FF7FF6
+      ECD9FF92921290793F8058954AE1CF0DC49791DCFA07888BA99C7E1881D81288
+      D380587C04E72301689DED06C42C54363B02887F22C5E3132096A492D9C240FC
+      3A2121E1FF83070FC079C8C4C40464C72A0ACC9C8A9E8F6EDEBC09CF4793274F
+      FE4F6CFE03E2B558CCD743CADF9340EAD6AF5F0F373F3D3D1DA4EF259165881B
+      11FE5903CAA7A0FC191B1B0B73572415E3570C88DB81F83E101F01E27450BE1A
+      AD9D861600006341FBE4
+    }
   end
 end

@@ -31,6 +31,7 @@ type
   TdlgBandsBalance = class(TForm)
     CSVExporter1: TCSVExporter;
     dbgSaldo: TDBGrid;
+    iPopup: TImageList;
     lineBottom: TShapeLineBGRA;
     pMsg: TBCPanel;
     pmgRefresh: TMenuItem;

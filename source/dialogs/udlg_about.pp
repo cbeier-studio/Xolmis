@@ -29,6 +29,7 @@ type
   { TdlgAbout }
 
   TdlgAbout = class(TForm)
+    iButtons: TImageList;
     pClementsVersion: TLabel;
     pAppVersion: TLabel;
     pIocVersion: TLabel;

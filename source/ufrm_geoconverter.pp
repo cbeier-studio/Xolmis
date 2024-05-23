@@ -35,6 +35,7 @@ type
     ckAddUnitsZone: TCheckBox;
     eUTMZone: TEdit;
     icoConverter: TImage;
+    iButtons: TImageList;
     Label2: TLabel;
     Label3: TLabel;
     lblLineCol: TLabel;

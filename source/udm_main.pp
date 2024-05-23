@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, StrUtils, Forms, Dialogs, ExtDlgs, Controls, fpsexport, UniqueInstance, DB, BufDataset,
   SdfData, SQLDB, SQLDBLib, IBConnection, SQLite3Conn, fpjson, eventlog, cbs_system, SQLScript, fpcsvexport,
-  fpSimpleXMLExport, fpsimplejsonexport, fpDBExport;
+  fpSimpleXMLExport, fpsimplejsonexport, fpDBExport, ImgList;
 
 type
 
@@ -35,6 +35,8 @@ type
     FPSExport: TFPSExport;
     iLogos: TImageList;
     iBandTypes: TImageList;
+    iEdits: TImageList;
+    iAddMenu: TImageList;
     iMaps: TImageList;
     iTrees: TImageList;
     iCheckbox: TImageList;
@@ -98,6 +100,12 @@ type
     UniqueInstance1: TUniqueInstance;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
+    procedure iCheckboxGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
+      var AResultWidth: Integer);
+    procedure iMapsGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
+      var AResultWidth: Integer);
+    procedure iTreesGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
+      var AResultWidth: Integer);
     procedure qsConnAfterInsert(DataSet: TDataSet);
     procedure qsConnBeforeOpen(DataSet: TDataSet);
     procedure qsConnBeforePost(DataSet: TDataSet);
@@ -177,6 +185,24 @@ begin
   sysCon.Close;
 
   evLog.Active := False;
+end;
+
+procedure TDMM.iCheckboxGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
+  var AResultWidth: Integer);
+begin
+  AResultWidth := AImageWidth * APPI div 96;
+end;
+
+procedure TDMM.iMapsGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
+  var AResultWidth: Integer);
+begin
+  AResultWidth := AImageWidth * APPI div 96;
+end;
+
+procedure TDMM.iTreesGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
+  var AResultWidth: Integer);
+begin
+  AResultWidth := AImageWidth * APPI div 96;
 end;
 
 procedure TDMM.qsConnAfterInsert(DataSet: TDataSet);

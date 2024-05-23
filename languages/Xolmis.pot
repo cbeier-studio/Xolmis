@@ -5535,7 +5535,7 @@ msgstr ""
 
 #: tdlgbandsbalance.pmgsavesas.caption
 msgctxt "tdlgbandsbalance.pmgsavesas.caption"
-msgid "Save as..."
+msgid "Export CSV"
 msgstr ""
 
 #: tdlgbandsbalance.pmsg.caption
@@ -10057,7 +10057,8 @@ msgid "Refresh"
 msgstr ""
 
 #: tfrmcustomgrid.pmrdelpermanently.caption
-msgid "Delete permanently all records"
+msgctxt "tfrmcustomgrid.pmrdelpermanently.caption"
+msgid "Delete permanently"
 msgstr ""
 
 #: tfrmcustomgrid.pmrrestorerecord.caption

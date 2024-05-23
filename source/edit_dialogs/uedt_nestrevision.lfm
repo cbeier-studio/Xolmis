@@ -16,7 +16,6 @@ object edtNestRevision: TedtNestRevision
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -87,14 +86,14 @@ object edtNestRevision: TedtNestRevision
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 729
+      Height = 725
       Top = 0
       Width = 383
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 729
+      ClientHeight = 725
       ClientWidth = 383
       Color = 15263976
       ParentBackground = False
@@ -103,7 +102,7 @@ object edtNestRevision: TedtNestRevision
       object pNestStage: TPanel
         Left = 0
         Height = 45
-        Top = 199
+        Top = 196
         Width = 383
         Align = alTop
         AutoSize = True
@@ -155,7 +154,7 @@ object edtNestRevision: TedtNestRevision
       object pHostEggsTally: TPanel
         Left = 0
         Height = 45
-        Top = 302
+        Top = 299
         Width = 383
         Align = alTop
         AutoSize = True
@@ -196,7 +195,7 @@ object edtNestRevision: TedtNestRevision
       end
       object pRevisionDate: TPanel
         Left = 0
-        Height = 46
+        Height = 45
         Top = 16
         Width = 383
         Align = alTop
@@ -206,7 +205,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 383
         ParentBackground = False
         TabOrder = 0
@@ -223,13 +222,13 @@ object edtNestRevision: TedtNestRevision
         end
         object eRevisionDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 224
           Alignment = taLeftJustify
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 224
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 224
@@ -239,9 +238,8 @@ object edtNestRevision: TedtNestRevision
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'revision_date'
           DataSource = dsLink
@@ -253,8 +251,8 @@ object edtNestRevision: TedtNestRevision
       end
       object pNidoparasite: TPanel
         Left = 0
-        Height = 46
-        Top = 405
+        Height = 45
+        Top = 402
         Width = 383
         Align = alTop
         AutoSize = True
@@ -264,7 +262,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 383
         ParentBackground = False
         TabOrder = 8
@@ -281,12 +279,12 @@ object edtNestRevision: TedtNestRevision
         end
         object eNidoparasite: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -296,9 +294,8 @@ object edtNestRevision: TedtNestRevision
           TabOrder = 0
           ButtonHint = 'Find nidoparasite taxon'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'nidoparasite_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -309,8 +306,8 @@ object edtNestRevision: TedtNestRevision
       end
       object pObserver1: TPanel
         Left = 0
-        Height = 46
-        Top = 107
+        Height = 45
+        Top = 106
         Width = 383
         Align = alTop
         AutoSize = True
@@ -319,7 +316,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 383
         ParentBackground = False
         TabOrder = 2
@@ -336,13 +333,13 @@ object edtNestRevision: TedtNestRevision
         end
         object eObserver1: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 224
           Alignment = taLeftJustify
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 224
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 224
@@ -352,9 +349,8 @@ object edtNestRevision: TedtNestRevision
           TabOrder = 0
           ButtonHint = 'Find observer'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'observer_1_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -366,7 +362,7 @@ object edtNestRevision: TedtNestRevision
       object pNotes: TPanel
         Left = 0
         Height = 124
-        Top = 589
+        Top = 585
         Width = 383
         Align = alTop
         AutoSize = True
@@ -410,7 +406,7 @@ object edtNestRevision: TedtNestRevision
       object pPhilornis: TPanel
         Left = 0
         Height = 35
-        Top = 541
+        Top = 537
         Width = 383
         Align = alTop
         AutoSize = True
@@ -441,7 +437,7 @@ object edtNestRevision: TedtNestRevision
       object pRevisionTime: TPanel
         Left = 0
         Height = 45
-        Top = 62
+        Top = 61
         Width = 383
         Align = alTop
         AutoSize = True
@@ -482,8 +478,8 @@ object edtNestRevision: TedtNestRevision
       end
       object pObserver2: TPanel
         Left = 0
-        Height = 46
-        Top = 153
+        Height = 45
+        Top = 151
         Width = 383
         Align = alTop
         AutoSize = True
@@ -492,7 +488,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 383
         ParentBackground = False
         TabOrder = 3
@@ -509,13 +505,13 @@ object edtNestRevision: TedtNestRevision
         end
         object eObserver2: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 224
           Alignment = taLeftJustify
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 224
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 224
@@ -525,9 +521,8 @@ object edtNestRevision: TedtNestRevision
           TabOrder = 0
           ButtonHint = 'Find observer'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'observer_2_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -539,7 +534,7 @@ object edtNestRevision: TedtNestRevision
       object pNestStatus: TPanel
         Left = 0
         Height = 45
-        Top = 244
+        Top = 241
         Width = 383
         Align = alTop
         AutoSize = True
@@ -586,7 +581,7 @@ object edtNestRevision: TedtNestRevision
       object pHostNestlingsTally: TPanel
         Left = 0
         Height = 45
-        Top = 347
+        Top = 344
         Width = 383
         Align = alTop
         AutoSize = True
@@ -627,7 +622,7 @@ object edtNestRevision: TedtNestRevision
       object pNidoparasiteEggsTally: TPanel
         Left = 0
         Height = 45
-        Top = 451
+        Top = 447
         Width = 383
         Align = alTop
         AutoSize = True
@@ -668,7 +663,7 @@ object edtNestRevision: TedtNestRevision
       object pNidoparasiteNestlingsTally: TPanel
         Left = 0
         Height = 45
-        Top = 496
+        Top = 492
         Width = 383
         Align = alTop
         AutoSize = True

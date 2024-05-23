@@ -30,6 +30,8 @@ type
 
   TdlgImportNests = class(TForm)
     barProgress: TProgressBar;
+    iButtons: TImageList;
+    iIcons: TImageList;
     pRetry: TBCPanel;
     imgFinished: TImageList;
     hvProgress: THtmlViewer;

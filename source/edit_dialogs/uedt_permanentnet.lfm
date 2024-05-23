@@ -1,11 +1,11 @@
 object edtPermanentNet: TedtPermanentNet
   Left = 352
-  Height = 337
+  Height = 336
   Top = 33
   Width = 488
   AutoSize = True
   Caption = 'New permanent mistnet'
-  ClientHeight = 337
+  ClientHeight = 336
   ClientWidth = 488
   Font.Height = -12
   OnClose = FormClose
@@ -14,11 +14,10 @@ object edtPermanentNet: TedtPermanentNet
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 294
+    Top = 293
     Width = 488
     Align = alTop
     LineColor = 9276813
@@ -28,7 +27,7 @@ object edtPermanentNet: TedtPermanentNet
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 296
+    Top = 295
     Width = 488
     Align = alTop
     AutoSize = True
@@ -72,14 +71,14 @@ object edtPermanentNet: TedtPermanentNet
   end
   object pClient: TPanel
     Left = 0
-    Height = 294
+    Height = 293
     Top = 0
     Width = 488
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 294
+    ClientHeight = 293
     ClientWidth = 488
     Color = 15263976
     ParentBackground = False
@@ -88,7 +87,7 @@ object edtPermanentNet: TedtPermanentNet
     object pNotes: TPanel
       Left = 0
       Height = 153
-      Top = 125
+      Top = 124
       Width = 488
       Align = alTop
       AutoSize = True
@@ -174,7 +173,7 @@ object edtPermanentNet: TedtPermanentNet
     end
     object pLongitudeLatitude: TPanel
       Left = 0
-      Height = 47
+      Height = 46
       Top = 62
       Width = 488
       Align = alTop
@@ -185,7 +184,7 @@ object edtPermanentNet: TedtPermanentNet
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
-      ClientHeight = 47
+      ClientHeight = 46
       ClientWidth = 488
       ParentBackground = False
       TabOrder = 2
@@ -213,12 +212,12 @@ object edtPermanentNet: TedtPermanentNet
       end
       object eLongitude: TDBEditButton
         Left = 16
-        Height = 24
+        Height = 23
         Top = 23
         Width = 220
         AutoSize = True
         BevelOuter = bvNone
-        ClientHeight = 24
+        ClientHeight = 23
         ClientWidth = 220
         Constraints.MaxHeight = 28
         Constraints.MinWidth = 220
@@ -228,9 +227,8 @@ object edtPermanentNet: TedtPermanentNet
         TabOrder = 0
         ButtonHint = 'Edit coordinates in DMS format'
         ButtonWidth = 24
-        ImageIndex = 69
-        Images = frmMain.mPopup
-        ImageWidth = 20
+        ImageIndex = 3
+        Images = DMM.iEdits
         DataField = 'longitude'
         DataSource = dsLink
         CharCase = ecNormal
@@ -240,12 +238,12 @@ object edtPermanentNet: TedtPermanentNet
       end
       object eLatitude: TDBEditButton
         Left = 252
-        Height = 24
+        Height = 23
         Top = 23
         Width = 220
         AutoSize = True
         BevelOuter = bvNone
-        ClientHeight = 24
+        ClientHeight = 23
         ClientWidth = 220
         Constraints.MaxHeight = 28
         Constraints.MinWidth = 220
@@ -255,9 +253,8 @@ object edtPermanentNet: TedtPermanentNet
         TabOrder = 1
         ButtonHint = 'Edit coordinates in DMS format'
         ButtonWidth = 24
-        ImageIndex = 69
-        Images = frmMain.mPopup
-        ImageWidth = 20
+        ImageIndex = 3
+        Images = DMM.iEdits
         DataField = 'latitude'
         DataSource = dsLink
         CharCase = ecNormal

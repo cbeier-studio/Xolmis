@@ -29,6 +29,7 @@ type
   { TdlgAuthorship }
 
   TdlgAuthorship = class(TForm)
+    iButtons: TImageList;
     lblTotal: TLabel;
     lbColetor: TListBox;
     pBottom: TPanel;

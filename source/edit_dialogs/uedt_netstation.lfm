@@ -1,11 +1,11 @@
 object edtNetStation: TedtNetStation
   Left = 352
-  Height = 495
+  Height = 493
   Top = 33
   Width = 400
   AutoSize = True
   Caption = 'New mistnet station'
-  ClientHeight = 495
+  ClientHeight = 493
   ClientWidth = 400
   Font.Height = -12
   OnClose = FormClose
@@ -14,11 +14,10 @@ object edtNetStation: TedtNetStation
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 452
+    Top = 450
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -28,7 +27,7 @@ object edtNetStation: TedtNetStation
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 454
+    Top = 452
     Width = 400
     Align = alTop
     AutoSize = True
@@ -72,16 +71,16 @@ object edtNetStation: TedtNetStation
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 452
+    Height = 450
     Top = 0
     Width = 400
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 452
+    VertScrollBar.Page = 450
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 452
+    ClientHeight = 450
     ClientWidth = 400
     Constraints.MinWidth = 176
     Color = clDefault
@@ -89,14 +88,14 @@ object edtNetStation: TedtNetStation
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 452
+      Height = 450
       Top = 0
       Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 452
+      ClientHeight = 450
       ClientWidth = 400
       Color = 15263976
       ParentBackground = False
@@ -104,7 +103,7 @@ object edtNetStation: TedtNetStation
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
-        Height = 46
+        Height = 45
         Top = 106
         Width = 400
         Align = alTop
@@ -115,7 +114,7 @@ object edtNetStation: TedtNetStation
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 0
@@ -132,12 +131,12 @@ object edtNetStation: TedtNetStation
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -147,9 +146,8 @@ object edtNetStation: TedtNetStation
           TabOrder = 0
           ButtonHint = 'Find locality'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'locality_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -161,7 +159,7 @@ object edtNetStation: TedtNetStation
       object pNotes: TPanel
         Left = 0
         Height = 124
-        Top = 312
+        Top = 310
         Width = 400
         Align = alTop
         AutoSize = True
@@ -288,8 +286,8 @@ object edtNetStation: TedtNetStation
       end
       object pLongitudeLatitude: TPanel
         Left = 0
-        Height = 46
-        Top = 152
+        Height = 45
+        Top = 151
         Width = 400
         Align = alTop
         AutoSize = True
@@ -299,7 +297,7 @@ object edtNetStation: TedtNetStation
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
@@ -327,12 +325,12 @@ object edtNetStation: TedtNetStation
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -342,9 +340,8 @@ object edtNetStation: TedtNetStation
           TabOrder = 0
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'longitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -354,12 +351,12 @@ object edtNetStation: TedtNetStation
         end
         object eLatitude: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -369,9 +366,8 @@ object edtNetStation: TedtNetStation
           TabOrder = 1
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'latitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -383,7 +379,7 @@ object edtNetStation: TedtNetStation
       object pDescription: TPanel
         Left = 0
         Height = 93
-        Top = 211
+        Top = 209
         Width = 400
         Align = alTop
         AutoSize = True

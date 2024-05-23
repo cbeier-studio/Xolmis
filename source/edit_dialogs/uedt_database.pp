@@ -38,6 +38,7 @@ type
     eDBServer: TDBEdit;
     eDBPort: TDBEdit;
     eDBUser: TDBEdit;
+    iButtons: TImageList;
     lblTitleAuthentication: TLabel;
     lblDBFile: TLabel;
     lblDBManager: TLabel;

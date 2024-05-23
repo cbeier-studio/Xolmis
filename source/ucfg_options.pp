@@ -54,7 +54,7 @@ type
     Image7: TImage;
     Image8: TImage;
     Image9: TImage;
-    iPanels: TImageList;
+    iIcons: TImageList;
     lblAllowUsageData: TLabel;
     lblAllowUsageData1: TLabel;
     lblAllowWriteLog: TLabel;

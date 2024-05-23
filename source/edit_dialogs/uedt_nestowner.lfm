@@ -1,12 +1,12 @@
 object edtNestOwner: TedtNestOwner
   Left = 362
-  Height = 174
+  Height = 173
   Top = 250
   Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New nest owner'
-  ClientHeight = 174
+  ClientHeight = 173
   ClientWidth = 400
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
@@ -14,17 +14,16 @@ object edtNestOwner: TedtNestOwner
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poMainFormCenter
-  LCLVersion = '3.2.0.0'
   object pContent: TPanel
     Left = 0
-    Height = 131
+    Height = 130
     Top = 0
     Width = 400
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 131
+    ClientHeight = 130
     ClientWidth = 400
     Color = 15263976
     ParentBackground = False
@@ -81,7 +80,7 @@ object edtNestOwner: TedtNestOwner
     end
     object pIndividual: TPanel
       Left = 0
-      Height = 46
+      Height = 45
       Top = 69
       Width = 400
       Align = alTop
@@ -92,7 +91,7 @@ object edtNestOwner: TedtNestOwner
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 46
+      ClientHeight = 45
       ClientWidth = 400
       ParentBackground = False
       TabOrder = 1
@@ -109,12 +108,12 @@ object edtNestOwner: TedtNestOwner
       end
       object eIndividual: TDBEditButton
         Left = 16
-        Height = 24
+        Height = 23
         Top = 22
         Width = 365
         AutoSize = True
         BevelOuter = bvNone
-        ClientHeight = 24
+        ClientHeight = 23
         ClientWidth = 365
         Constraints.MaxHeight = 28
         Constraints.MinWidth = 365
@@ -124,9 +123,8 @@ object edtNestOwner: TedtNestOwner
         TabOrder = 0
         ButtonHint = 'Find individual'
         ButtonWidth = 24
-        ImageIndex = 99
-        Images = frmMain.mPopup
-        ImageWidth = 20
+        ImageIndex = 0
+        Images = DMM.iEdits
         DataField = 'individual_name'
         DataSource = dsLink
         CharCase = ecNormal
@@ -139,7 +137,7 @@ object edtNestOwner: TedtNestOwner
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 131
+    Top = 130
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -149,7 +147,7 @@ object edtNestOwner: TedtNestOwner
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 133
+    Top = 132
     Width = 400
     Align = alTop
     AutoSize = True

@@ -1,12 +1,12 @@
 object edtProject: TedtProject
   Left = 373
-  Height = 588
+  Height = 587
   Top = 34
   Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New project'
-  ClientHeight = 588
+  ClientHeight = 587
   ClientWidth = 400
   Font.Height = -12
   OnClose = FormClose
@@ -16,11 +16,10 @@ object edtProject: TedtProject
   PopupMode = pmAuto
   Position = poScreenCenter
   ShowInTaskBar = stNever
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 545
+    Top = 544
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -30,7 +29,7 @@ object edtProject: TedtProject
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 547
+    Top = 546
     Width = 400
     Align = alTop
     AutoSize = True
@@ -74,16 +73,16 @@ object edtProject: TedtProject
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 545
+    Height = 544
     Top = 0
     Width = 400
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 545
+    VertScrollBar.Page = 544
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 545
+    ClientHeight = 544
     ClientWidth = 400
     Constraints.MinWidth = 176
     Color = clDefault
@@ -91,14 +90,14 @@ object edtProject: TedtProject
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 545
+      Height = 544
       Top = 0
       Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 545
+      ClientHeight = 544
       ClientWidth = 400
       Color = 15263976
       ParentBackground = False
@@ -107,7 +106,7 @@ object edtProject: TedtProject
       object pNotes: TPanel
         Left = 0
         Height = 124
-        Top = 405
+        Top = 404
         Width = 400
         Align = alTop
         AutoSize = True
@@ -236,7 +235,7 @@ object edtProject: TedtProject
       object pAbstract: TPanel
         Left = 0
         Height = 92
-        Top = 300
+        Top = 299
         Width = 400
         Align = alTop
         AutoSize = True
@@ -280,7 +279,7 @@ object edtProject: TedtProject
       end
       object pStartEndDate: TPanel
         Left = 0
-        Height = 46
+        Height = 45
         Top = 106
         Width = 400
         Align = alTop
@@ -291,7 +290,7 @@ object edtProject: TedtProject
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 2
@@ -319,12 +318,12 @@ object edtProject: TedtProject
         end
         object eStartDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -334,9 +333,8 @@ object edtProject: TedtProject
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'start_date'
           DataSource = dsLink
@@ -347,12 +345,12 @@ object edtProject: TedtProject
         end
         object eEndDate: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -362,9 +360,8 @@ object edtProject: TedtProject
           TabOrder = 1
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'end_date'
           DataSource = dsLink
@@ -377,7 +374,7 @@ object edtProject: TedtProject
       object pWebsite: TPanel
         Left = 0
         Height = 45
-        Top = 152
+        Top = 151
         Width = 400
         Align = alTop
         AutoSize = True
@@ -419,7 +416,7 @@ object edtProject: TedtProject
       object pEmail: TPanel
         Left = 0
         Height = 45
-        Top = 197
+        Top = 196
         Width = 400
         Align = alTop
         AutoSize = True
@@ -461,7 +458,7 @@ object edtProject: TedtProject
       object pContactName: TPanel
         Left = 0
         Height = 45
-        Top = 242
+        Top = 241
         Width = 400
         Align = alTop
         AutoSize = True

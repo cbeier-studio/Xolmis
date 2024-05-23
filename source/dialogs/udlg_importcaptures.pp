@@ -30,6 +30,8 @@ type
 
   TdlgImportCaptures = class(TForm)
     barProgress: TProgressBar;
+    iIcons: TImageList;
+    iButtons: TImageList;
     pRetry: TBCPanel;
     imgFinished: TImageList;
     hvProgress: THtmlViewer;

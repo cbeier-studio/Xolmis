@@ -14,7 +14,6 @@ object edtPerson: TedtPerson
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -89,14 +88,14 @@ object edtPerson: TedtPerson
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 1545
+      Height = 1539
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1545
+      ClientHeight = 1539
       ClientWidth = 399
       Color = 15263976
       ParentBackground = False
@@ -104,8 +103,8 @@ object edtPerson: TedtPerson
       TabOrder = 0
       object pMunicipality: TPanel
         Left = 0
-        Height = 46
-        Top = 867
+        Height = 45
+        Top = 865
         Width = 399
         Align = alTop
         AutoSize = True
@@ -115,7 +114,7 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 17
@@ -132,12 +131,12 @@ object edtPerson: TedtPerson
         end
         object eMunicipality: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -147,9 +146,8 @@ object edtPerson: TedtPerson
           TabOrder = 0
           ButtonHint = 'Find municipality'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'municipality_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -245,7 +243,7 @@ object edtPerson: TedtPerson
       object pAddress2: TPanel
         Left = 0
         Height = 45
-        Top = 777
+        Top = 775
         Width = 399
         Align = alTop
         AutoSize = True
@@ -287,7 +285,7 @@ object edtPerson: TedtPerson
       object pAddress1: TPanel
         Left = 0
         Height = 45
-        Top = 732
+        Top = 730
         Width = 399
         Align = alTop
         AutoSize = True
@@ -329,7 +327,7 @@ object edtPerson: TedtPerson
       object pLattes: TPanel
         Left = 0
         Height = 45
-        Top = 1167
+        Top = 1161
         Width = 399
         Align = alTop
         AutoSize = True
@@ -372,7 +370,7 @@ object edtPerson: TedtPerson
       object pZipCode: TPanel
         Left = 0
         Height = 45
-        Top = 687
+        Top = 685
         Width = 399
         Align = alTop
         AutoSize = True
@@ -415,7 +413,7 @@ object edtPerson: TedtPerson
       object pNotes: TPanel
         Left = 0
         Height = 124
-        Top = 1405
+        Top = 1399
         Width = 399
         Align = alTop
         AutoSize = True
@@ -459,7 +457,7 @@ object edtPerson: TedtPerson
       object pNeighborhood: TPanel
         Left = 0
         Height = 45
-        Top = 822
+        Top = 820
         Width = 399
         Align = alTop
         AutoSize = True
@@ -500,8 +498,8 @@ object edtPerson: TedtPerson
       end
       object pState: TPanel
         Left = 0
-        Height = 46
-        Top = 913
+        Height = 45
+        Top = 910
         Width = 399
         Align = alTop
         AutoSize = True
@@ -511,7 +509,7 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 18
@@ -528,12 +526,12 @@ object edtPerson: TedtPerson
         end
         object eState: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -543,9 +541,8 @@ object edtPerson: TedtPerson
           TabOrder = 0
           ButtonHint = 'Find state'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'state_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -556,8 +553,8 @@ object edtPerson: TedtPerson
       end
       object pCountry: TPanel
         Left = 0
-        Height = 46
-        Top = 959
+        Height = 45
+        Top = 955
         Width = 399
         Align = alTop
         AutoSize = True
@@ -567,7 +564,7 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 19
@@ -584,12 +581,12 @@ object edtPerson: TedtPerson
         end
         object eCountry: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -599,9 +596,8 @@ object edtPerson: TedtPerson
           TabOrder = 0
           ButtonHint = 'Find country'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'country_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -613,7 +609,7 @@ object edtPerson: TedtPerson
       object pDepartment: TPanel
         Left = 0
         Height = 45
-        Top = 1064
+        Top = 1058
         Width = 399
         Align = alTop
         AutoSize = True
@@ -655,7 +651,7 @@ object edtPerson: TedtPerson
       object pJobRole: TPanel
         Left = 0
         Height = 45
-        Top = 1109
+        Top = 1103
         Width = 399
         Align = alTop
         AutoSize = True
@@ -738,7 +734,7 @@ object edtPerson: TedtPerson
       end
       object pBirthDate: TPanel
         Left = 0
-        Height = 46
+        Height = 45
         Top = 344
         Width = 399
         Align = alTop
@@ -749,7 +745,7 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 6
@@ -766,12 +762,12 @@ object edtPerson: TedtPerson
         end
         object eBirthDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -781,9 +777,8 @@ object edtPerson: TedtPerson
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'birth_date'
           DataSource = dsLink
@@ -797,7 +792,7 @@ object edtPerson: TedtPerson
       object pNationalIDCard: TPanel
         Left = 0
         Height = 45
-        Top = 436
+        Top = 434
         Width = 399
         Align = alTop
         AutoSize = True
@@ -839,7 +834,7 @@ object edtPerson: TedtPerson
       object pCPF: TPanel
         Left = 0
         Height = 45
-        Top = 481
+        Top = 479
         Width = 399
         Align = alTop
         AutoSize = True
@@ -881,7 +876,7 @@ object edtPerson: TedtPerson
       object pPhone1: TPanel
         Left = 0
         Height = 45
-        Top = 584
+        Top = 582
         Width = 399
         Align = alTop
         AutoSize = True
@@ -923,7 +918,7 @@ object edtPerson: TedtPerson
       object pPhone2: TPanel
         Left = 0
         Height = 45
-        Top = 629
+        Top = 627
         Width = 399
         Align = alTop
         AutoSize = True
@@ -965,7 +960,7 @@ object edtPerson: TedtPerson
       object pEmail: TPanel
         Left = 0
         Height = 45
-        Top = 539
+        Top = 537
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1007,8 +1002,8 @@ object edtPerson: TedtPerson
       end
       object pInstitution: TPanel
         Left = 0
-        Height = 46
-        Top = 1018
+        Height = 45
+        Top = 1013
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1019,7 +1014,7 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 20
@@ -1036,12 +1031,12 @@ object edtPerson: TedtPerson
         end
         object eInstitution: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -1051,9 +1046,8 @@ object edtPerson: TedtPerson
           TabOrder = 0
           ButtonHint = 'Find institution'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'institution_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -1065,7 +1059,7 @@ object edtPerson: TedtPerson
       object pOrcid: TPanel
         Left = 0
         Height = 45
-        Top = 1212
+        Top = 1206
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1107,7 +1101,7 @@ object edtPerson: TedtPerson
       object pTwitter: TPanel
         Left = 0
         Height = 45
-        Top = 1257
+        Top = 1251
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1149,7 +1143,7 @@ object edtPerson: TedtPerson
       object pInstagram: TPanel
         Left = 0
         Height = 45
-        Top = 1302
+        Top = 1296
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1191,7 +1185,7 @@ object edtPerson: TedtPerson
       object pWebsite: TPanel
         Left = 0
         Height = 45
-        Top = 1347
+        Top = 1341
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1309,9 +1303,8 @@ object edtPerson: TedtPerson
             Width = 19
             Align = alTop
             Flat = True
-            Images = frmMain.mPopup
-            ImageIndex = 56
-            ImageWidth = 20
+            Images = iButtons
+            ImageIndex = 0
             OnClick = sbAddImageClick
             ShowHint = True
             ParentShowHint = False
@@ -1324,9 +1317,8 @@ object edtPerson: TedtPerson
             Width = 19
             Align = alBottom
             Flat = True
-            Images = frmMain.mPopup
-            ImageIndex = 141
-            ImageWidth = 20
+            Images = iButtons
+            ImageIndex = 1
             Visible = False
             OnClick = sbRemoveImageClick
             ShowHint = True
@@ -1336,8 +1328,8 @@ object edtPerson: TedtPerson
       end
       object pDeathDate: TPanel
         Left = 0
-        Height = 46
-        Top = 390
+        Height = 45
+        Top = 389
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1347,7 +1339,7 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 7
@@ -1364,12 +1356,12 @@ object edtPerson: TedtPerson
         end
         object eDeathDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -1379,9 +1371,8 @@ object edtPerson: TedtPerson
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'death_date'
           DataSource = dsLink
@@ -1538,5 +1529,90 @@ object edtPerson: TedtPerson
       ImageIndex = 141
       OnClick = sbRemoveImageClick
     end
+  end
+  object iButtons: TImageList
+    Scaled = True
+    Left = 177
+    Top = 35
+    Bitmap = {
+      4C7A020000001000000010000000730200000000000078DACD934B6B13511886
+      5389C54D318B2014E92289B405E3261B574209762D9592852ED45DDDB4E4B2F1
+      2FB8ADD112B268170DA4680AD914CD26534C8AB956B0CA90181253686E9D4C26
+      D709C6F13DC904C23099181071E081C37CEF73CE99EFCC51A9FE8F47A7D3DD02
+      1E7009AA63A8807DA097F10F1C0E47B05C2ED72A950A2747A95462AD566B90CC
+      21E3732CCB36BBDDAE20656767274CE6AE56AB4D320FB28C8CDFE438AE2D7523
+      91086D30180A26932961B3D9820CC33490ADFDA99FCBE58AA83530C7C5F6F676
+      685A9F90CD660BE170F81B19D7EBF58FC86E4CF2A3D1286D341ABF82B3783C9E
+      12DFFB02CF358F8E9EA852607F9C4FD6D2EBF545B7DB7DE2743A43D87B31140A
+      B9021BD79FC1EB01416451EA53147506B7E4F57AA3C3BD783C9E57878F679E4A
+      DC049819F1EB7EBF3F415C9FCF171BF9FE439975BF801B92FDBF237D26EBA247
+      3CA1D56AE58F5FDC5E9BE48AFED2700ED01679892C35C9557A902F896E605A57
+      F40DE0E6BFBFD1F45D70040EC0D2942ECE954E020BB083B713F266501CA10404
+      715C01BF24F502581CF1AF00DBF2722694CFB72F95D068529F917D28B387FB5A
+      6D2A2177FF4651ABE93CB27A195F8FDA39C9349BBCB0BE7EDECFD76ABC60B10C
+      C68D06DF45AE03AECAF86A52231986E9087373A9BE53287404AD36DD1F9F9E36
+      B2C87C57E8633A996C64C7F97B7B4C0C990F0AFEFBDD5D2636CEDFDABAA09079
+      A3E0BFDEDCBCA0C6F966738EF80E05DFBEB292A3D003647FF41D96E585D5D5C1
+      786121FD09993505FFC1FC7C3A2A3D339E1F303B4B6790B9A3E05F031997EB32
+      D26EF3BDA1C7713C6FB7178E513B19FCDB8AFFF2BD418FE99FA02742CEDC078C
+      7FFB96FE06D27CDC1A
+    }
+    BitmapAdv = {
+      4C69020000004C7A020000001400000014000000030300000000000078DAD595
+      5F4853511CC7A7CE07C57A494811926DB8E9DC30B0DE7CF2A5414F0E868F3D04
+      658D9216D17A484629E15B282208417BC882410F0DFF1018DBAC266D6A890EEF
+      9D5A8B6D36FFB0A6DBBC7792EB7B96D375D976EF580F79E103F79CFBFB7E3887
+      F3BBF78A4427EB924824F5A00BE879B80ECEF1B886C1BE42A1F0363636D2F940
+      CD0AA90503395C52F2DCED76D38944222904A7D3B97CE8ACCFE2BBDDDCDCBC9C
+      2F1F0A85C27D7D7D0E97CB45A5E7B0562FB237B2F80C2A95CA93CF47F628954A
+      B7519B5A1B99532A9514C6B70AF5ADAFAF13CFAFFEFEFE6938374C2693A3181F
+      41ABD53A88532E977F0B0683DBC5FA088140608B65D9F4F8B346A3D1225B2BD4
+      67B55AE7C8BC5AAD5E24F719CF261D0F942D1357446F800768F97CA3A3A39F30
+      CFEA743A7B474707D92B63B158DC2997B1E93C1C3F40F2103F28CBE5339BCD33
+      984B180C065B7A4EAFD7DB6432D95816176131D7FA4646463E923E351A8D36CE
+      FE27AD37EB5AB2B8587089E3EB463F7B8686863E10574F4F8F9DE37A9B635DC4
+      7539CB79C8419CB87A7B7B1D1CD74FCFABFB2AA1AE0CE773B087B35C22E79906
+      3DF110B981425C194E05B803EE65D084ACB75057BE0BF9591003E3E042B1DF59
+      384A40F9FFF917A0D4A0E91F784AC004F8029680A5485F3B7877E825B8C04581
+      D997C0CF6107EC668CA32092A5EE5916DF69D02D91AC3AD7D6E22121D4D6AEB8
+      91B90A4EE5DA5F75B5775EE8FFADAA8AF62093A717A986F272CA9799999D8D1E
+      DDCFCD45FFF29596529BC89CCDE3AB007B0CC31E907A864924C5623A95DDDD65
+      939595F4912B126118520B4A79CE25E4F3C537D3BEB2322A95DFD961931515C7
+      BE8585A80FB52B02CED93D3515F1F0F92C96F0FC9F5EE2F5BD1E1CDC9AE1F399
+      4C1BEF516B16E07BDAD515B4F3F93A3BFD36D43E16E0BBDBDEEEB3F1F95A5BBF
+      3A507B4D804F2793AD3A49866513C9B1B1C891637CFCF8BEA626D5CB1A01BE06
+      B198FA1E8BB1FBB9FA381C66E2E8BD206AEB04BECB2FDADA7C76F24E715D341D
+      0B62AFD3A8192EE0BB829EA79E800038E040FAEE1138233A81D76FFDA84C314C
+      7A020000001800000018000000A50300000000000078DAED966D485351188035
+      410A24FCA8B47E54B2A1207E4BFD2854345A200E653A109589608811E20F3508
+      7FB90503FB115212443342347F872644B68FDCC4525BCECFF9913AD399AEA99B
+      775BEAED3DF36CDACDCD73D77E45171E90D7F33EF7EC3DEF39F70404FC7FD83C
+      D1D1D139402F600096094163DF01BC63DC7C80E67038CB7C3E5F291008884063
+      21C78872815B5EFC7D5C2ED760B55A7F3A1C0E9A0D168BC501EF5801C77B2FFE
+      75A150A820F18D8F8FCF7776767EA4286AD715CBCBCB53A27A79F19B8B8B8BE5
+      C7B91B1A1A1430760FD523262666667B7B7B07C50B0B0B517CF56FFD50C3A5C4
+      C4C411B1588CE64BB7B7B70FF8D39F9696360463375352523E23BF56AB9DF5A7
+      5FA3D14CA4A6A60EA13EABADAD758FF797DF03632D2D2D3C709CF7C5DFDADADA
+      1F1F1F3F86EA2E93C9348CFF2BF5AFA5E7DE940588815940065C20F5E37EA113
+      121246E3E2E22650EF48241225C3DD0BD0876826F1D7D5D5C9913B2B2B4B8DFA
+      10EDBD8C8C8C7E1483FE91797023D4C7F96B6A6A9C6E1E8FD777781FA1F7E4E7
+      E7BFB89D1EEEC98DA8F0E6AFAAAA72BA73727254369B6D8F5133859779D3B8FE
+      278EF09BC0AFA8A8A870BAD1B965B7DB996BADF2C58DFD1AB46F901BCE45C511
+      6E8AB26E5E86FCB76CDDD82FC467ACA5A4A4442E12897E432A95DE87FC525FDC
+      8C770CA0B500B618DC004797AF6E92073C4686FBA9BFDCD8FF10D001CF80F4FF
+      370AD733790AB80E6403A7FDECBE0A7C0568CC3AC0F7933B045800E68072A000
+      18062CC0253FF87978CE4587625770EC0E0B4F2D9E239335EC5A64C4516CC343
+      CEE323FC59800C580D0A9A5C494A9A53B12138787206726DD851E4E577748784
+      4C8DB2FDFEC6C6CEF641EE14419D9EC3FCBFB1F54744E8D19A2B08FC12C061B3
+      D9DDDF94FA7A23DDD3B3E1760D0F5B68916889A6A8033FAECF2B02FF5DB47606
+      03B5EECA8D8A9AA62B2B97DDAEA6A6EFCE7D6032D9DCB1C040E75A3F22F0A3FE
+      A6D5EA2D3DA9DF6CB651B89FEE11F8AFA1B16D6DA64152BF4E675DC07E11813F
+      1A8D6D6C5CFD40EAEFEA328F60FF4DC2738C2E2B5B9293FA9B9BD7FAB13F9E70
+      2F9B3333E715A4FEEAEA6505F69F21F48F73B9336A527F6EEEA21CF5341048E8
+      EF0D0BD36B5DBED2D225BAA3E387DBAF546ED1D9D90B708FDBBFBF2427CFA9F6
+      CF58E2B3EE253A8328CABEE369BFDAED077F8786EABF408E9A85BF9CD9439EE8
+      EEDED0E1DA3F60E13F090C027B9191D39F048245794181E10F389C190DAEBB01
+      38CBF2BB120E3C01E6815D0F18810EE0E2BF7AEBF8052E2B314D
+    }
   end
 end

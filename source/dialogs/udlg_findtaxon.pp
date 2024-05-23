@@ -30,6 +30,7 @@ type
   { TdlgFindTaxon }
 
   TdlgFindTaxon = class(TForm)
+    iButtons: TImageList;
     lblName: THtmlViewer;
     lblVernacular: TDBText;
     dsFind: TDataSource;

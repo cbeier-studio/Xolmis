@@ -13,7 +13,6 @@ object edtMolt: TedtMolt
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -185,11 +184,11 @@ object edtMolt: TedtMolt
         end
         object eDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 179
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 179
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 179
@@ -199,9 +198,8 @@ object edtMolt: TedtMolt
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'sample_date'
           DataSource = dsLink
@@ -212,7 +210,7 @@ object edtMolt: TedtMolt
         end
         object eCaptureTime: TDBEdit
           Left = 211
-          Height = 24
+          Height = 23
           Top = 22
           Width = 179
           DataField = 'sample_time'
@@ -523,11 +521,11 @@ object edtMolt: TedtMolt
         end
         object eSurvey: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 374
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 374
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 374
@@ -537,9 +535,8 @@ object edtMolt: TedtMolt
           TabOrder = 0
           ButtonHint = 'Find survey'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'survey_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -578,11 +575,11 @@ object edtMolt: TedtMolt
         end
         object eBander: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 374
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 374
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 374
@@ -592,9 +589,8 @@ object edtMolt: TedtMolt
           TabOrder = 0
           ButtonHint = 'Find bander'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'bander_name'
           DataSource = dsLink
           CharCase = ecNormal

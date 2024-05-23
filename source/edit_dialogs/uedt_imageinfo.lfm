@@ -13,7 +13,6 @@ object edtImageInfo: TedtImageInfo
   OnKeyPress = FormKeyPress
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -87,14 +86,14 @@ object edtImageInfo: TedtImageInfo
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 886
+      Height = 872
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 886
+      ClientHeight = 872
       ClientWidth = 399
       Color = 15263976
       ParentBackground = False
@@ -102,8 +101,8 @@ object edtImageInfo: TedtImageInfo
       TabOrder = 0
       object pSupplier: TPanel
         Left = 0
-        Height = 46
-        Top = 306
+        Height = 45
+        Top = 303
         Width = 399
         Align = alTop
         AutoSize = True
@@ -114,7 +113,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
@@ -131,21 +130,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLocalityButtonClick
@@ -154,7 +152,7 @@ object edtImageInfo: TedtImageInfo
       end
       object pRequester: TPanel
         Left = 0
-        Height = 46
+        Height = 45
         Top = 110
         Width = 399
         Align = alTop
@@ -165,7 +163,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 1
@@ -182,21 +180,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eAuthor: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eAuthorButtonClick
@@ -248,8 +245,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pPrefixSuffix1: TPanel
         Left = 0
-        Height = 46
-        Top = 156
+        Height = 45
+        Top = 155
         Width = 399
         Align = alTop
         AutoSize = True
@@ -259,7 +256,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 3
@@ -287,21 +284,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eImageDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'image_date'
           DataSource = dsLink
@@ -310,7 +306,7 @@ object edtImageInfo: TedtImageInfo
         end
         object eImageTime: TDBEdit
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           DataField = 'image_time'
@@ -324,7 +320,7 @@ object edtImageInfo: TedtImageInfo
       object pStatus1: TPanel
         Left = 0
         Height = 45
-        Top = 202
+        Top = 200
         Width = 399
         Align = alTop
         AutoSize = True
@@ -368,7 +364,7 @@ object edtImageInfo: TedtImageInfo
       object pStatus2: TPanel
         Left = 0
         Height = 45
-        Top = 352
+        Top = 348
         Width = 399
         Align = alTop
         AutoSize = True
@@ -411,8 +407,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pSizeNumber1: TPanel
         Left = 0
-        Height = 46
-        Top = 397
+        Height = 45
+        Top = 393
         Width = 399
         Align = alTop
         AutoSize = True
@@ -422,7 +418,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 6
@@ -450,21 +446,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'longitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -473,21 +468,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eLatitude: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
           ParentBackground = False
           TabOrder = 1
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'latitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -497,8 +491,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pSender1: TPanel
         Left = 0
-        Height = 46
-        Top = 456
+        Height = 45
+        Top = 451
         Width = 399
         Align = alTop
         AutoSize = True
@@ -509,7 +503,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 7
@@ -526,21 +520,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eTaxon: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -551,8 +544,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pProject: TPanel
         Left = 0
-        Height = 46
-        Top = 502
+        Height = 45
+        Top = 496
         Width = 399
         Align = alTop
         AutoSize = True
@@ -562,7 +555,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 8
@@ -579,21 +572,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eIndividual: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eIndividualButtonClick
@@ -603,8 +595,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pProject1: TPanel
         Left = 0
-        Height = 46
-        Top = 548
+        Height = 45
+        Top = 541
         Width = 399
         Align = alTop
         AutoSize = True
@@ -614,7 +606,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 9
@@ -631,21 +623,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eCapture: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -656,8 +647,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pProject2: TPanel
         Left = 0
-        Height = 46
-        Top = 594
+        Height = 45
+        Top = 586
         Width = 399
         Align = alTop
         AutoSize = True
@@ -667,7 +658,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 10
@@ -684,21 +675,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eSurvey: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -709,8 +699,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pProject3: TPanel
         Left = 0
-        Height = 46
-        Top = 640
+        Height = 45
+        Top = 631
         Width = 399
         Align = alTop
         AutoSize = True
@@ -720,7 +710,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 11
@@ -737,21 +727,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eSighting: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -762,8 +751,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pProject4: TPanel
         Left = 0
-        Height = 46
-        Top = 247
+        Height = 45
+        Top = 245
         Width = 399
         Align = alTop
         AutoSize = True
@@ -773,7 +762,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 12
@@ -790,21 +779,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eImageFilename: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 43
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 6
+          Images = DMM.iEdits
           DataField = 'image_filename'
           DataSource = dsLink
           ReadOnly = True
@@ -815,8 +803,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pProject5: TPanel
         Left = 0
-        Height = 46
-        Top = 824
+        Height = 45
+        Top = 811
         Width = 399
         Align = alTop
         AutoSize = True
@@ -826,7 +814,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 13
@@ -843,21 +831,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eSpecimen: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -868,8 +855,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pProject6: TPanel
         Left = 0
-        Height = 46
-        Top = 778
+        Height = 45
+        Top = 766
         Width = 399
         Align = alTop
         AutoSize = True
@@ -879,7 +866,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 14
@@ -896,21 +883,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eEgg: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -921,8 +907,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pProject7: TPanel
         Left = 0
-        Height = 46
-        Top = 732
+        Height = 45
+        Top = 721
         Width = 399
         Align = alTop
         AutoSize = True
@@ -932,7 +918,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 15
@@ -949,21 +935,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eNestRevision: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -974,8 +959,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pProject8: TPanel
         Left = 0
-        Height = 46
-        Top = 686
+        Height = 45
+        Top = 676
         Width = 399
         Align = alTop
         AutoSize = True
@@ -985,7 +970,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 16
@@ -1002,21 +987,20 @@ object edtImageInfo: TedtImageInfo
         end
         object eNest: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal

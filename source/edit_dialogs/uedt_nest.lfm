@@ -15,7 +15,6 @@ object edtNest: TedtNest
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -89,14 +88,14 @@ object edtNest: TedtNest
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1279
+      Height = 1271
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1279
+      ClientHeight = 1271
       ClientWidth = 399
       Color = 15263976
       ParentBackground = False
@@ -104,8 +103,8 @@ object edtNest: TedtNest
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
-        Height = 46
-        Top = 245
+        Height = 45
+        Top = 241
         Width = 399
         Align = alTop
         AutoSize = True
@@ -115,7 +114,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
@@ -132,12 +131,12 @@ object edtNest: TedtNest
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -147,9 +146,8 @@ object edtNest: TedtNest
           TabOrder = 0
           ButtonHint = 'Find locality'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'locality_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -162,7 +160,7 @@ object edtNest: TedtNest
       object pFieldNumberFate: TPanel
         Left = 0
         Height = 45
-        Top = 62
+        Top = 61
         Width = 399
         Align = alTop
         AutoSize = True
@@ -234,7 +232,7 @@ object edtNest: TedtNest
       end
       object pTaxon: TPanel
         Left = 0
-        Height = 46
+        Height = 45
         Top = 16
         Width = 399
         Align = alTop
@@ -245,7 +243,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
@@ -262,12 +260,12 @@ object edtNest: TedtNest
         end
         object eTaxon: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -277,9 +275,8 @@ object edtNest: TedtNest
           TabOrder = 0
           ButtonHint = 'Find taxon'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -292,7 +289,7 @@ object edtNest: TedtNest
       object pNotes: TPanel
         Left = 0
         Height = 124
-        Top = 1139
+        Top = 1131
         Width = 399
         Align = alTop
         AutoSize = True
@@ -335,8 +332,8 @@ object edtNest: TedtNest
       end
       object pProject: TPanel
         Left = 0
-        Height = 46
-        Top = 153
+        Height = 45
+        Top = 151
         Width = 399
         Align = alTop
         AutoSize = True
@@ -346,7 +343,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 3
@@ -363,12 +360,12 @@ object edtNest: TedtNest
         end
         object eProject: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -378,9 +375,8 @@ object edtNest: TedtNest
           TabOrder = 0
           ButtonHint = 'Find project'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'project_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -392,8 +388,8 @@ object edtNest: TedtNest
       end
       object pObserver: TPanel
         Left = 0
-        Height = 46
-        Top = 199
+        Height = 45
+        Top = 196
         Width = 399
         Align = alTop
         AutoSize = True
@@ -403,7 +399,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
@@ -420,12 +416,12 @@ object edtNest: TedtNest
         end
         object eObserver: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -435,9 +431,8 @@ object edtNest: TedtNest
           TabOrder = 0
           ButtonHint = 'Find observer'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'observer_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -449,8 +444,8 @@ object edtNest: TedtNest
       end
       object pDateFoundLast: TPanel
         Left = 0
-        Height = 46
-        Top = 107
+        Height = 45
+        Top = 106
         Width = 399
         Align = alTop
         AutoSize = True
@@ -460,7 +455,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
@@ -488,12 +483,12 @@ object edtNest: TedtNest
         end
         object eFoundDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -503,9 +498,8 @@ object edtNest: TedtNest
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'found_date'
           DataSource = dsLink
@@ -518,12 +512,12 @@ object edtNest: TedtNest
         end
         object eLastDate: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -533,9 +527,8 @@ object edtNest: TedtNest
           TabOrder = 1
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'last_date'
           DataSource = dsLink
@@ -549,8 +542,8 @@ object edtNest: TedtNest
       end
       object pLongLat: TPanel
         Left = 0
-        Height = 46
-        Top = 291
+        Height = 45
+        Top = 286
         Width = 399
         Align = alTop
         AutoSize = True
@@ -560,7 +553,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 6
@@ -588,12 +581,12 @@ object edtNest: TedtNest
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -603,9 +596,8 @@ object edtNest: TedtNest
           TabOrder = 0
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'longitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -617,12 +609,12 @@ object edtNest: TedtNest
         end
         object eLatitude: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -632,9 +624,8 @@ object edtNest: TedtNest
           TabOrder = 1
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 69
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 3
+          Images = DMM.iEdits
           DataField = 'latitude'
           DataSource = dsLink
           CharCase = ecNormal
@@ -648,7 +639,7 @@ object edtNest: TedtNest
       object pTypeHeight: TPanel
         Left = 0
         Height = 45
-        Top = 513
+        Top = 507
         Width = 399
         Align = alTop
         AutoSize = True
@@ -730,7 +721,7 @@ object edtNest: TedtNest
       object pPlantHeightDbh: TPanel
         Left = 0
         Height = 45
-        Top = 695
+        Top = 687
         Width = 399
         Align = alTop
         AutoSize = True
@@ -796,7 +787,7 @@ object edtNest: TedtNest
       object pPlantDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 740
+        Top = 732
         Width = 399
         Align = alTop
         AutoSize = True
@@ -862,7 +853,7 @@ object edtNest: TedtNest
       object pProductivity: TPanel
         Left = 0
         Height = 45
-        Top = 455
+        Top = 449
         Width = 399
         Align = alTop
         AutoSize = True
@@ -943,7 +934,7 @@ object edtNest: TedtNest
       object pDescription: TPanel
         Left = 0
         Height = 92
-        Top = 350
+        Top = 344
         Width = 399
         Align = alTop
         AutoSize = True
@@ -986,8 +977,8 @@ object edtNest: TedtNest
       end
       object pSupportPlant1: TPanel
         Left = 0
-        Height = 46
-        Top = 558
+        Height = 45
+        Top = 552
         Width = 399
         Align = alTop
         AutoSize = True
@@ -997,7 +988,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 10
@@ -1014,12 +1005,12 @@ object edtNest: TedtNest
         end
         object eSupportPlant1: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -1029,9 +1020,8 @@ object edtNest: TedtNest
           TabOrder = 0
           ButtonHint = 'Find support plant taxon'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'support_plant_1_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -1044,7 +1034,7 @@ object edtNest: TedtNest
       object pOtherSupport: TPanel
         Left = 0
         Height = 45
-        Top = 650
+        Top = 642
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1086,8 +1076,8 @@ object edtNest: TedtNest
       end
       object pSupportPlant2: TPanel
         Left = 0
-        Height = 46
-        Top = 604
+        Height = 45
+        Top = 597
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1097,7 +1087,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 11
@@ -1114,12 +1104,12 @@ object edtNest: TedtNest
         end
         object eSupportPlant2: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -1129,9 +1119,8 @@ object edtNest: TedtNest
           TabOrder = 0
           ButtonHint = 'Find support plant taxon'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'support_plant_2_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -1144,7 +1133,7 @@ object edtNest: TedtNest
       object pConstructionIncubationDays: TPanel
         Left = 0
         Height = 45
-        Top = 798
+        Top = 790
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1211,7 +1200,7 @@ object edtNest: TedtNest
       object pNestlingActiveDays: TPanel
         Left = 0
         Height = 45
-        Top = 843
+        Top = 835
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1277,7 +1266,7 @@ object edtNest: TedtNest
       object pInternalDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 901
+        Top = 893
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1344,7 +1333,7 @@ object edtNest: TedtNest
       object pEdgeCenterDistance: TPanel
         Left = 0
         Height = 45
-        Top = 1036
+        Top = 1028
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1410,7 +1399,7 @@ object edtNest: TedtNest
       object pInternalExternalHeight: TPanel
         Left = 0
         Height = 45
-        Top = 991
+        Top = 983
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1476,7 +1465,7 @@ object edtNest: TedtNest
       object pNestCover: TPanel
         Left = 0
         Height = 45
-        Top = 1081
+        Top = 1073
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1518,7 +1507,7 @@ object edtNest: TedtNest
       object pExternalDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 946
+        Top = 938
         Width = 399
         Align = alTop
         AutoSize = True

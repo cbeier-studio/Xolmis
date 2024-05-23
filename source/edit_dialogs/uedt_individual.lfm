@@ -88,14 +88,14 @@ object edtIndividual: TedtIndividual
     TabOrder = 1
     object pContent: TPanel
       Left = 0
-      Height = 803
+      Height = 794
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 803
+      ClientHeight = 794
       ClientWidth = 399
       Color = 15263976
       ParentBackground = False
@@ -103,8 +103,8 @@ object edtIndividual: TedtIndividual
       TabOrder = 0
       object pMother: TPanel
         Left = 0
-        Height = 46
-        Top = 499
+        Height = 45
+        Top = 491
         Width = 399
         Align = alTop
         AutoSize = True
@@ -114,7 +114,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 10
@@ -131,12 +131,12 @@ object edtIndividual: TedtIndividual
         end
         object eMother: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -146,9 +146,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 0
           ButtonHint = 'Find individual'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'mother_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -161,8 +160,8 @@ object edtIndividual: TedtIndividual
       end
       object pBand: TPanel
         Left = 0
-        Height = 46
-        Top = 62
+        Height = 45
+        Top = 61
         Width = 399
         Align = alTop
         AutoSize = True
@@ -172,7 +171,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 1
@@ -200,12 +199,12 @@ object edtIndividual: TedtIndividual
         end
         object eBand: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -215,9 +214,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 0
           ButtonHint = 'Find band'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'band_full_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -229,12 +227,12 @@ object edtIndividual: TedtIndividual
         end
         object eBandingDate: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -244,9 +242,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 1
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'banding_date'
           DataSource = dsLink
@@ -260,7 +257,7 @@ object edtIndividual: TedtIndividual
       end
       object pTaxon: TPanel
         Left = 0
-        Height = 46
+        Height = 45
         Top = 16
         Width = 399
         Align = alTop
@@ -271,7 +268,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
@@ -288,12 +285,12 @@ object edtIndividual: TedtIndividual
         end
         object eTaxon: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -303,9 +300,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 0
           ButtonHint = 'Find taxon'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -319,7 +315,7 @@ object edtIndividual: TedtIndividual
       object pNotes: TPanel
         Left = 0
         Height = 124
-        Top = 663
+        Top = 654
         Width = 399
         Align = alTop
         AutoSize = True
@@ -362,8 +358,8 @@ object edtIndividual: TedtIndividual
       end
       object pNest: TPanel
         Left = 0
-        Height = 46
-        Top = 407
+        Height = 45
+        Top = 401
         Width = 399
         Align = alTop
         AutoSize = True
@@ -374,7 +370,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 8
@@ -391,12 +387,12 @@ object edtIndividual: TedtIndividual
         end
         object eNest: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -406,9 +402,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 0
           ButtonHint = 'Find nest'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'nest_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -421,8 +416,8 @@ object edtIndividual: TedtIndividual
       end
       object pFather: TPanel
         Left = 0
-        Height = 46
-        Top = 453
+        Height = 45
+        Top = 446
         Width = 399
         Align = alTop
         AutoSize = True
@@ -432,7 +427,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 9
@@ -449,12 +444,12 @@ object edtIndividual: TedtIndividual
         end
         object eFather: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -464,9 +459,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 0
           ButtonHint = 'Find individual'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'father_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -480,7 +474,7 @@ object edtIndividual: TedtIndividual
       object pBirthDeath: TPanel
         Left = 0
         Height = 44
-        Top = 305
+        Top = 299
         Width = 399
         Align = alTop
         AutoSize = True
@@ -642,8 +636,8 @@ object edtIndividual: TedtIndividual
       end
       object pColorTarsi: TPanel
         Left = 0
-        Height = 46
-        Top = 200
+        Height = 45
+        Top = 196
         Width = 399
         Align = alTop
         AutoSize = True
@@ -653,7 +647,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
@@ -681,12 +675,12 @@ object edtIndividual: TedtIndividual
         end
         object eRightTarsus: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -696,9 +690,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 0
           ButtonHint = 'Select colors'
           ButtonWidth = 24
-          ImageIndex = 13
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 4
+          Images = DMM.iEdits
           DataField = 'right_leg_below'
           DataSource = dsLink
           CharCase = ecNormal
@@ -710,12 +703,12 @@ object edtIndividual: TedtIndividual
         end
         object eLeftTarsus: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -725,9 +718,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 1
           ButtonHint = 'Select colors'
           ButtonWidth = 24
-          ImageIndex = 13
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 4
+          Images = DMM.iEdits
           DataField = 'left_leg_below'
           DataSource = dsLink
           CharCase = ecNormal
@@ -741,7 +733,7 @@ object edtIndividual: TedtIndividual
       object pRecognizableMarkings: TPanel
         Left = 0
         Height = 92
-        Top = 558
+        Top = 549
         Width = 399
         Align = alTop
         AutoSize = True
@@ -784,8 +776,8 @@ object edtIndividual: TedtIndividual
       end
       object pColorTibiae: TPanel
         Left = 0
-        Height = 46
-        Top = 246
+        Height = 45
+        Top = 241
         Width = 399
         Align = alTop
         AutoSize = True
@@ -795,7 +787,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
@@ -823,12 +815,12 @@ object edtIndividual: TedtIndividual
         end
         object eRightTibia: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -838,9 +830,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 0
           ButtonHint = 'Select colors'
           ButtonWidth = 24
-          ImageIndex = 13
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 4
+          Images = DMM.iEdits
           DataField = 'right_leg_above'
           DataSource = dsLink
           CharCase = ecNormal
@@ -852,12 +843,12 @@ object edtIndividual: TedtIndividual
         end
         object eLeftTibia: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -867,9 +858,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 1
           ButtonHint = 'Select colors'
           ButtonWidth = 24
-          ImageIndex = 13
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 4
+          Images = DMM.iEdits
           DataField = 'left_leg_above'
           DataSource = dsLink
           CharCase = ecNormal
@@ -882,8 +872,8 @@ object edtIndividual: TedtIndividual
       end
       object pRemovedBand: TPanel
         Left = 0
-        Height = 46
-        Top = 154
+        Height = 45
+        Top = 151
         Width = 399
         Align = alTop
         AutoSize = True
@@ -893,7 +883,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 3
@@ -921,12 +911,12 @@ object edtIndividual: TedtIndividual
         end
         object eRemovedBand: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -936,9 +926,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 0
           ButtonHint = 'Find band'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'removed_band_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -950,12 +939,12 @@ object edtIndividual: TedtIndividual
         end
         object eBandChangeDate: TDBEditButton
           Left = 208
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -965,9 +954,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 1
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'band_change_date'
           DataSource = dsLink
@@ -981,8 +969,8 @@ object edtIndividual: TedtIndividual
       end
       object pDoubleBand: TPanel
         Left = 0
-        Height = 46
-        Top = 108
+        Height = 45
+        Top = 106
         Width = 399
         Align = alTop
         AutoSize = True
@@ -992,7 +980,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
@@ -1009,12 +997,12 @@ object edtIndividual: TedtIndividual
         end
         object eDoubleBand: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -1024,9 +1012,8 @@ object edtIndividual: TedtIndividual
           TabOrder = 0
           ButtonHint = 'Find band'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'double_band_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -1040,7 +1027,7 @@ object edtIndividual: TedtIndividual
       object pSexAge: TPanel
         Left = 0
         Height = 45
-        Top = 349
+        Top = 343
         Width = 399
         Align = alTop
         AutoSize = True

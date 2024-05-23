@@ -14,7 +14,6 @@ object edtInstitution: TedtInstitution
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -88,14 +87,14 @@ object edtInstitution: TedtInstitution
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 783
+      Height = 780
       Top = 0
       Width = 493
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 783
+      ClientHeight = 780
       ClientWidth = 493
       Color = 15263976
       ParentBackground = False
@@ -103,7 +102,7 @@ object edtInstitution: TedtInstitution
       TabOrder = 0
       object pMunicipality: TPanel
         Left = 0
-        Height = 47
+        Height = 46
         Top = 308
         Width = 493
         Align = alTop
@@ -114,7 +113,7 @@ object edtInstitution: TedtInstitution
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 493
         ParentBackground = False
         TabOrder = 0
@@ -131,12 +130,12 @@ object edtInstitution: TedtInstitution
         end
         object eMunicipality: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 456
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 456
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
@@ -146,9 +145,8 @@ object edtInstitution: TedtInstitution
           TabOrder = 0
           ButtonHint = 'Find municipality'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'municipality_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -327,7 +325,7 @@ object edtInstitution: TedtInstitution
       object pPhone: TPanel
         Left = 0
         Height = 46
-        Top = 557
+        Top = 554
         Width = 493
         Align = alTop
         AutoSize = True
@@ -412,7 +410,7 @@ object edtInstitution: TedtInstitution
       object pNotes: TPanel
         Left = 0
         Height = 148
-        Top = 619
+        Top = 616
         Width = 493
         Align = alTop
         AutoSize = True
@@ -497,8 +495,8 @@ object edtInstitution: TedtInstitution
       end
       object pState: TPanel
         Left = 0
-        Height = 47
-        Top = 355
+        Height = 46
+        Top = 354
         Width = 493
         Align = alTop
         AutoSize = True
@@ -508,7 +506,7 @@ object edtInstitution: TedtInstitution
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 493
         ParentBackground = False
         TabOrder = 9
@@ -525,12 +523,12 @@ object edtInstitution: TedtInstitution
         end
         object eState: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 456
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 456
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
@@ -540,9 +538,8 @@ object edtInstitution: TedtInstitution
           TabOrder = 0
           ButtonHint = 'Find state'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'state_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -553,8 +550,8 @@ object edtInstitution: TedtInstitution
       end
       object pCountry: TPanel
         Left = 0
-        Height = 47
-        Top = 402
+        Height = 46
+        Top = 400
         Width = 493
         Align = alTop
         AutoSize = True
@@ -564,7 +561,7 @@ object edtInstitution: TedtInstitution
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 47
+        ClientHeight = 46
         ClientWidth = 493
         ParentBackground = False
         TabOrder = 10
@@ -581,12 +578,12 @@ object edtInstitution: TedtInstitution
         end
         object eCountry: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 23
           Width = 456
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 456
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
@@ -596,9 +593,8 @@ object edtInstitution: TedtInstitution
           TabOrder = 0
           ButtonHint = 'Find country'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'country_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -610,7 +606,7 @@ object edtInstitution: TedtInstitution
       object pManagerName: TPanel
         Left = 0
         Height = 46
-        Top = 465
+        Top = 462
         Width = 493
         Align = alTop
         AutoSize = True
@@ -653,7 +649,7 @@ object edtInstitution: TedtInstitution
       object pEmail: TPanel
         Left = 0
         Height = 46
-        Top = 511
+        Top = 508
         Width = 493
         Align = alTop
         AutoSize = True

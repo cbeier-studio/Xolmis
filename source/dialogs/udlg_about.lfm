@@ -1,18 +1,17 @@
 object dlgAbout: TdlgAbout
   Left = 352
-  Height = 485
+  Height = 477
   Top = 33
   Width = 307
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'About'
-  ClientHeight = 485
+  ClientHeight = 477
   ClientWidth = 307
   Font.Height = -12
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -25,7 +24,7 @@ object dlgAbout: TdlgAbout
   end
   object pBottom: TPanel
     Left = 0
-    Height = 50
+    Height = 42
     Top = 435
     Width = 307
     Align = alTop
@@ -37,7 +36,7 @@ object dlgAbout: TdlgAbout
     ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 50
+    ClientHeight = 42
     ClientWidth = 307
     Color = 15987699
     ParentBackground = False
@@ -45,20 +44,19 @@ object dlgAbout: TdlgAbout
     TabOrder = 0
     object sbCopy: TBitBtn
       Left = 16
-      Height = 34
+      Height = 26
       Top = 8
       Width = 98
       Align = alLeft
       Caption = 'Copy'
-      Images = frmMain.mPopup
-      ImageIndex = 27
-      ImageWidth = 24
+      Images = iButtons
+      ImageIndex = 0
       OnClick = sbCopyClick
       TabOrder = 0
     end
     object sbClose: TButton
       Left = 193
-      Height = 34
+      Height = 26
       Top = 8
       Width = 98
       Align = alRight
@@ -552,5 +550,33 @@ object dlgAbout: TdlgAbout
       ParentColor = False
       ParentFont = False
     end
+  end
+  object iButtons: TImageList
+    Scaled = True
+    Left = 136
+    Top = 423
+    Bitmap = {
+      4C7A0100000010000000100000006F0000000000000078DA6360187C607B3C43
+      31107F06E2FF68F80B488E08FD9F3F3DBFF3FFD7AF5F2818240692C3A54F5151
+      B116AA1F432F0C83E4F0E8FF46A1FEFF235D3F10F352107FA78138154FFAF98C
+      2FFD00F52602F173204E07620E52D32D500F1B102740DDF11F097F83A5ADC106
+      00F85D1332
+    }
+    BitmapAdv = {
+      4C69020000004C7A010000001400000014000000950000000000000078DA6360
+      189A607B3C8303109F03E2FF38F021203620DE3CC6732F2EEEF8FFEBD72FACF8
+      E1C1792033371332475151D115A88E7947122B4EB340F8CBDBA720F35E1061DE
+      5D2A9BF76FD4BC51F306D0BC9F40CC0BC96FDB71E7B7037389CD6FA78138035A
+      1E9CC1531E1C24A63C009AE50BC44F813813E44E6A94554073FC80F82C10FF06
+      E2FF68F806105B0CD162980100AE71F4A44C7A010000001800000018000000F9
+      0000000000000078DA636018BE607B3C4309103F06E2FF04F06F205E01C40A24
+      98AD07D2BB274BF8C2D949C107F0E113ED4E07816AFF02F10C62CC5654549404
+      AAAD0499FFFDCB87EFBF7EFDFA4F081FAED13F0C54FF8408B32B81B80DA8B606
+      64FEAF9F3FFF1363FEB1268B4340F5CF8930FF218DCDFF3E6AFEA8F9A3E60F59
+      F35F02F154A0DA7890F98F0E2D3843C8EC6F1F5F7FDE99CA7513A8FE1411E6EF
+      00E24BF342587980EA5F1251F623E33822CC0F01E2FF40DC3C3F949517A82719
+      881B08E06A20D620B66E019A3D0B6AC73920EE03E27A3CB80E88F949A91781EA
+      1981381288F703F127A85DD8F033202EA6A40E86DA85130F741B01009BA337E7
+    }
   end
 end

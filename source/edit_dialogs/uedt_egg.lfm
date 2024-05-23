@@ -14,7 +14,6 @@ object edtEgg: TedtEgg
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -84,14 +83,14 @@ object edtEgg: TedtEgg
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 896
+      Height = 892
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 896
+      ClientHeight = 892
       ClientWidth = 399
       Color = 15263976
       ParentBackground = False
@@ -181,7 +180,7 @@ object edtEgg: TedtEgg
       end
       object pMeasureDate: TPanel
         Left = 0
-        Height = 46
+        Height = 45
         Top = 106
         Width = 399
         Align = alTop
@@ -191,7 +190,7 @@ object edtEgg: TedtEgg
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
@@ -208,12 +207,12 @@ object edtEgg: TedtEgg
         end
         object eMeasureDate: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -223,9 +222,8 @@ object edtEgg: TedtEgg
           TabOrder = 0
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 18
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 1
+          Images = DMM.iEdits
           TextHint = 'DD/MM/YYYY'
           DataField = 'measure_date'
           DataSource = dsLink
@@ -237,8 +235,8 @@ object edtEgg: TedtEgg
       end
       object pTaxon: TPanel
         Left = 0
-        Height = 46
-        Top = 152
+        Height = 45
+        Top = 151
         Width = 399
         Align = alTop
         AutoSize = True
@@ -247,7 +245,7 @@ object edtEgg: TedtEgg
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 3
@@ -264,12 +262,12 @@ object edtEgg: TedtEgg
         end
         object eTaxon: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -279,9 +277,8 @@ object edtEgg: TedtEgg
           TabOrder = 0
           ButtonHint = 'Find taxon'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'taxon_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -293,8 +290,8 @@ object edtEgg: TedtEgg
       end
       object pObserver: TPanel
         Left = 0
-        Height = 46
-        Top = 198
+        Height = 45
+        Top = 196
         Width = 399
         Align = alTop
         AutoSize = True
@@ -303,7 +300,7 @@ object edtEgg: TedtEgg
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
@@ -320,12 +317,12 @@ object edtEgg: TedtEgg
         end
         object eObserver: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -335,9 +332,8 @@ object edtEgg: TedtEgg
           TabOrder = 0
           ButtonHint = 'Find observer'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'researcher_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -349,8 +345,8 @@ object edtEgg: TedtEgg
       end
       object pIndividual: TPanel
         Left = 0
-        Height = 46
-        Top = 244
+        Height = 45
+        Top = 241
         Width = 399
         Align = alTop
         AutoSize = True
@@ -359,7 +355,7 @@ object edtEgg: TedtEgg
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
@@ -376,12 +372,12 @@ object edtEgg: TedtEgg
         end
         object eIndividual: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 23
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 23
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -391,9 +387,8 @@ object edtEgg: TedtEgg
           TabOrder = 0
           ButtonHint = 'Find individual'
           ButtonWidth = 24
-          ImageIndex = 99
-          Images = frmMain.mPopup
-          ImageWidth = 20
+          ImageIndex = 0
+          Images = DMM.iEdits
           DataField = 'individual_name'
           DataSource = dsLink
           CharCase = ecNormal
@@ -406,7 +401,7 @@ object edtEgg: TedtEgg
       object pShape: TPanel
         Left = 0
         Height = 45
-        Top = 303
+        Top = 299
         Width = 399
         Align = alTop
         AutoSize = True
@@ -456,7 +451,7 @@ object edtEgg: TedtEgg
       object pStage: TPanel
         Left = 0
         Height = 45
-        Top = 348
+        Top = 344
         Width = 399
         Align = alTop
         AutoSize = True
@@ -498,7 +493,7 @@ object edtEgg: TedtEgg
       object pShellColor: TPanel
         Left = 0
         Height = 45
-        Top = 393
+        Top = 389
         Width = 399
         Align = alTop
         AutoSize = True
@@ -539,7 +534,7 @@ object edtEgg: TedtEgg
       object pShellPattern: TPanel
         Left = 0
         Height = 45
-        Top = 438
+        Top = 434
         Width = 399
         Align = alTop
         AutoSize = True
@@ -581,7 +576,7 @@ object edtEgg: TedtEgg
       object pVolume: TPanel
         Left = 0
         Height = 45
-        Top = 663
+        Top = 659
         Width = 399
         Align = alTop
         AutoSize = True
@@ -619,7 +614,7 @@ object edtEgg: TedtEgg
       object pWeight: TPanel
         Left = 0
         Height = 45
-        Top = 618
+        Top = 614
         Width = 399
         Align = alTop
         AutoSize = True
@@ -660,7 +655,7 @@ object edtEgg: TedtEgg
       object pWidth: TPanel
         Left = 0
         Height = 45
-        Top = 573
+        Top = 569
         Width = 399
         Align = alTop
         AutoSize = True
@@ -701,7 +696,7 @@ object edtEgg: TedtEgg
       object pLength: TPanel
         Left = 0
         Height = 45
-        Top = 528
+        Top = 524
         Width = 399
         Align = alTop
         AutoSize = True
@@ -742,7 +737,7 @@ object edtEgg: TedtEgg
       object pNotes: TPanel
         Left = 0
         Height = 124
-        Top = 756
+        Top = 752
         Width = 399
         Align = alTop
         AutoSize = True
@@ -786,7 +781,7 @@ object edtEgg: TedtEgg
       object pHatched: TPanel
         Left = 0
         Height = 35
-        Top = 708
+        Top = 704
         Width = 399
         Align = alTop
         AutoSize = True
@@ -817,7 +812,7 @@ object edtEgg: TedtEgg
       object pShellTexture: TPanel
         Left = 0
         Height = 45
-        Top = 483
+        Top = 479
         Width = 399
         Align = alTop
         AutoSize = True

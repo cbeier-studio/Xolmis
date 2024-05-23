@@ -30,6 +30,7 @@ type
 
   TdlgChangePassword = class(TForm)
     BCrypt: TDCP_blowfish;
+    iButtons: TImageList;
     lblUsername: TDBText;
     eNewPassword: TEditButton;
     eConfirmPassword: TEditButton;

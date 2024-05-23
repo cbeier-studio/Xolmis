@@ -34,6 +34,7 @@ type
     eDBFile: TEditButton;
     eName: TEdit;
     eNewPass: TEditButton;
+    iButtons: TImageList;
     lblConnectionInstruction: TLabel;
     lblAdminInstruction: TLabel;
     lblDBFile: TLabel;

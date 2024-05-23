@@ -248,5 +248,5 @@
 {"hash":111949177,"name":"tfrmcustomgrid.pmcrecordhistory.caption","sourcebytes":[82,101,99,111,114,100,32,104,105,115,116,111,114,121],"value":"Record history"},
 {"hash":78392485,"name":"tfrmcustomgrid.pmcdel.caption","sourcebytes":[68,101,108,101,116,101],"value":"Delete"},
 {"hash":65969908,"name":"tfrmcustomgrid.pmrrestorerecord.caption","sourcebytes":[82,101,115,116,111,114,101,32,115,101,108,101,99,116,101,100,32,114,101,99,111,114,100],"value":"Restore selected record"},
-{"hash":105940579,"name":"tfrmcustomgrid.pmrdelpermanently.caption","sourcebytes":[68,101,108,101,116,101,32,112,101,114,109,97,110,101,110,116,108,121,32,97,108,108,32,114,101,99,111,114,100,115],"value":"Delete permanently all records"}
+{"hash":93503657,"name":"tfrmcustomgrid.pmrdelpermanently.caption","sourcebytes":[68,101,108,101,116,101,32,112,101,114,109,97,110,101,110,116,108,121],"value":"Delete permanently"}
 ]}
