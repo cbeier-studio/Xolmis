@@ -7,7 +7,7 @@ A free, open source, multi-platform ornithological data manager, built using Laz
 
 Xolmis is an ornithological data management system intended for researchers and birdwatchers. It was designed to aggregate separated data files (_e.g._ CSV files and Excel spreadsheets), which may end up being lost over time. In addition to the objective of aggregating different types of data collected in research and observations, it also aims to facilitate the curation, crossing and sharing of data, while increasing its consistency and security.
 
-![Xolmis screenshot](https://github.com/cbeier-studio/xolmis/assets/109050697/00962310-a2ac-45b0-ba88-465d806f0cab)
+![Xolmis screenshot](https://github.com/cbeier-studio/Xolmis/assets/109050697/bab3f797-63db-4739-ac43-7c4cbc935cf3)
 
 :dove: _Xolmis_ is a genus of Neotropical passerines. Today it is represented by two species: [_Xolmis irupero_](https://www.wikiaves.com.br/wiki/noivinha) and [_Xolmis velatus_](https://www.wikiaves.com.br/wiki/noivinha-branca).
 
