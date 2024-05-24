@@ -82,9 +82,13 @@ type
     actOpenBands: TAction;
     ActList: TActionList;
     AppEvents: TApplicationProperties;
+    bStatusBarDark: TImageList;
+    iMenuDark: TImageList;
+    iPopupDark: TImageList;
     iSearch: TImageList;
     iMenu: TImageList;
     iPopup: TImageList;
+    iSearchDark: TImageList;
     MarqueeBar: TProgressBar;
     sbClearSearch: TColorSpeedButton;
     icoSbarDatabase: TImage;

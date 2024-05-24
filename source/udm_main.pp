@@ -33,6 +33,10 @@ type
     CSVExport: TCSVExporter;
     evLog: TEventLog;
     FPSExport: TFPSExport;
+    iAddMenuDark: TImageList;
+    iBandTypesDark: TImageList;
+    iCheckboxDark: TImageList;
+    iEditsDark: TImageList;
     iLogos: TImageList;
     iBandTypes: TImageList;
     iEdits: TImageList;
@@ -40,6 +44,7 @@ type
     iMaps: TImageList;
     iTrees: TImageList;
     iCheckbox: TImageList;
+    iTreesDark: TImageList;
     qsConnconnection_id: TLongintField;
     qsConnconnection_name: TStringField;
     qsConndatabase_name: TStringField;

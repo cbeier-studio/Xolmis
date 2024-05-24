@@ -59,8 +59,11 @@ type
     DBG: TDBGrid;
     dbgRecycle: TDBControlGrid;
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     icoRecycleWarning: TImage;
+    iHeadersDark: TImageList;
     iIcons: TImageList;
+    iIconsDark: TImageList;
     lblRecycleWarning: TLabel;
     lblRecycleId: TDBText;
     dsLink: TDataSource;
