@@ -37,6 +37,7 @@ type
     eAudiosPath: TDirectoryEdit;
     eBackupPath: TDirectoryEdit;
     eImagesPath: TDirectoryEdit;
+    iIconsDark: TImageList;
     Image1: TImage;
     Image10: TImage;
     Image11: TImage;

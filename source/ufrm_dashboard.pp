@@ -96,6 +96,7 @@ type
     vIcons: TImageList;
     pFlow: TPanel;
     sBox: TScrollBox;
+    vIconsDark: TImageList;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

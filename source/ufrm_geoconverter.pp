@@ -34,8 +34,10 @@ type
     cbConvertTo: TComboBox;
     ckAddUnitsZone: TCheckBox;
     eUTMZone: TEdit;
+    iButtonsDark: TImageList;
     icoConverter: TImage;
     iButtons: TImageList;
+    imgSBarDark: TImageList;
     Label2: TLabel;
     Label3: TLabel;
     lblLineCol: TLabel;
