@@ -43,9 +43,6 @@ object edtExpedition: TedtExpedition
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 398
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16
@@ -82,8 +79,6 @@ object edtExpedition: TedtExpedition
     ClientHeight = 407
     ClientWidth = 398
     Constraints.MinWidth = 176
-    Color = clDefault
-    ParentColor = False
     TabOrder = 0
     object pClient: TPanel
       Left = 0
@@ -96,9 +91,6 @@ object edtExpedition: TedtExpedition
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 407
       ClientWidth = 398
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pName: TPanel
         Left = 0

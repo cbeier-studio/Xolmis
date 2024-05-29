@@ -118,6 +118,7 @@ type
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -128,11 +129,29 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_themes,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtSurvey }
+
+procedure TedtSurvey.ApplyDarkMode;
+begin
+  pExpedition.Background.Color := clCardBGDefaultDark;
+  pExpedition.Border.Color := clCardBGSecondaryDark;
+
+  eExpedition.Images := DMM.iEditsDark;
+  eDate.Images := DMM.iEditsDark;
+  eMethod.Images := DMM.iEditsDark;
+  eLocality.Images := DMM.iEditsDark;
+  eNetStation.Images := DMM.iEditsDark;
+  eProject.Images := DMM.iEditsDark;
+  eLongitude.Images := DMM.iEditsDark;
+  eLatitude.Images := DMM.iEditsDark;
+  eEndLongitude.Images := DMM.iEditsDark;
+  eEndLatitude.Images := DMM.iEditsDark;
+end;
 
 procedure TedtSurvey.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
@@ -355,6 +374,9 @@ end;
 
 procedure TedtSurvey.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSurvey)])
   else

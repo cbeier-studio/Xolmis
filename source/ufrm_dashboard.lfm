@@ -1101,8 +1101,8 @@ object frmDashboard: TfrmDashboard
     FontEx.ShadowOffsetY = 5
     FontEx.Style = []
     ParentBackground = False
-    Rounding.RoundX = 1
-    Rounding.RoundY = 1
+    Rounding.RoundX = 0
+    Rounding.RoundY = 0
     TabOrder = 1
     object pAppUpdate: TBCPanel
       Left = 14
@@ -1653,8 +1653,8 @@ object frmDashboard: TfrmDashboard
           FontEx.ShadowOffsetY = 5
           FontEx.Style = []
           ParentBackground = False
-          Rounding.RoundX = 1
-          Rounding.RoundY = 1
+          Rounding.RoundX = 0
+          Rounding.RoundY = 0
           TabOrder = 0
         end
       end
@@ -1755,7 +1755,7 @@ object frmDashboard: TfrmDashboard
         FontEx.ShadowOffsetX = 5
         FontEx.ShadowOffsetY = 5
         FontEx.Style = []
-        ParentBackground = False
+        ParentBackground = True
         Rounding.RoundX = 8
         Rounding.RoundY = 8
         TabOrder = 2

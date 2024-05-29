@@ -43,9 +43,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 488
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
@@ -81,8 +78,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
     ClientHeight = 327
     ClientWidth = 488
     Constraints.MinWidth = 220
-    Color = clDefault
-    ParentColor = False
     TabOrder = 1
     object pClient: TPanel
       Left = 0
@@ -95,9 +90,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 324
       ClientWidth = 488
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pParentTaxon: TPanel
         Left = 0

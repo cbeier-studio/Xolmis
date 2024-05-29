@@ -156,6 +156,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    procedure ApplyDarkMode;
     procedure AssembleFullName;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
@@ -170,11 +171,25 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_fullnames,
-  cbs_taxonomy, cbs_gis;
+  cbs_taxonomy, cbs_gis, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtNest }
+
+procedure TedtNest.ApplyDarkMode;
+begin
+  eTaxon.Images := DMM.iEditsDark;
+  eFoundDate.Images := DMM.iEditsDark;
+  eLastDate.Images := DMM.iEditsDark;
+  eProject.Images := DMM.iEditsDark;
+  eObserver.Images := DMM.iEditsDark;
+  eLocality.Images := DMM.iEditsDark;
+  eLongitude.Images := DMM.iEditsDark;
+  eLatitude.Images := DMM.iEditsDark;
+  eSupportPlant1.Images := DMM.iEditsDark;
+  eSupportPlant2.Images := DMM.iEditsDark;
+end;
 
 procedure TedtNest.AssembleFullName;
 var
@@ -464,6 +479,9 @@ end;
 
 procedure TedtNest.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNest)])
   else

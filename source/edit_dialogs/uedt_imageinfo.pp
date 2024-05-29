@@ -120,10 +120,12 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
+    procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -135,11 +137,30 @@ implementation
 
 uses
   cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
-  udm_main;
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtImageInfo }
+
+procedure TedtImageInfo.ApplyDarkMode;
+begin
+  eAuthor.Images := DMM.iEditsDark;
+  eImageDate.Images := DMM.iEditsDark;
+  eImageFilename.Images := DMM.iEditsDark;
+  eLocality.Images := DMM.iEditsDark;
+  eLongitude.Images := DMM.iEditsDark;
+  eLatitude.Images := DMM.iEditsDark;
+  eTaxon.Images := DMM.iEditsDark;
+  eIndividual.Images := DMM.iEditsDark;
+  eCapture.Images := DMM.iEditsDark;
+  eSurvey.Images := DMM.iEditsDark;
+  eSighting.Images := DMM.iEditsDark;
+  eNest.Images := DMM.iEditsDark;
+  eNestRevision.Images := DMM.iEditsDark;
+  eEgg.Images := DMM.iEditsDark;
+  eSpecimen.Images := DMM.iEditsDark;
+end;
 
 procedure TedtImageInfo.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
@@ -513,6 +534,12 @@ begin
 
     ModalResult := mrCancel; { Cancel insert/edit }
   end;
+end;
+
+procedure TedtImageInfo.FormShow(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 end;
 
 function TedtImageInfo.IsRequiredFilled: Boolean;

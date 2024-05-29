@@ -44,9 +44,6 @@ object edtNest: TedtNest
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 416
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16
@@ -83,8 +80,6 @@ object edtNest: TedtNest
     ClientHeight = 600
     ClientWidth = 399
     Constraints.MinWidth = 176
-    Color = clDefault
-    ParentColor = False
     TabOrder = 0
     object pClient: TPanel
       Left = 0
@@ -97,9 +92,6 @@ object edtNest: TedtNest
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 1271
       ClientWidth = 399
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pLocality: TPanel
         Left = 0

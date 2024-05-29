@@ -9,7 +9,6 @@
 {"hash":91650015,"name":"tdlgabout.linkwebsite.hint","sourcebytes":[104,116,116,112,58,47,47,120,111,108,109,105,115,46,103,105,116,104,117,98,46,105,111],"value":"http://xolmis.github.io"},
 {"hash":230269173,"name":"tdlgabout.linkwebsite.caption","sourcebytes":[87,101,98,115,105,116,101],"value":"Website"},
 {"hash":214540302,"name":"tdlgabout.lblappversion.caption","sourcebytes":[86,101,114,115,105,111,110],"value":"Version"},
-{"hash":4732641,"name":"tdlgabout.pappprerelease.caption","sourcebytes":[65,108,112,104,97],"value":"Alpha"},
 {"hash":51647264,"name":"tdlgabout.pappversion.caption","sourcebytes":[48,46,49,46,48,46,48],"value":"0.1.0.0"},
 {"hash":144331156,"name":"tdlgabout.lblclementsversion.caption","sourcebytes":[67,108,101,109,101,110,116,115,47,101,66,105,114,100],"value":"Clements/eBird"},
 {"hash":217937,"name":"tdlgabout.pclementsversion.caption","sourcebytes":[50,48,50,49],"value":"2021"},

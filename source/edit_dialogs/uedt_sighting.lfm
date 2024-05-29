@@ -15,6 +15,7 @@ object edtSighting: TedtSighting
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -44,9 +45,7 @@ object edtSighting: TedtSighting
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 416
-    Color = 15987699
     ParentBackground = False
-    ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16
@@ -83,8 +82,6 @@ object edtSighting: TedtSighting
     ClientHeight = 663
     ClientWidth = 399
     Constraints.MinWidth = 176
-    Color = clDefault
-    ParentColor = False
     TabOrder = 0
     object pClient: TPanel
       Left = 0
@@ -97,9 +94,6 @@ object edtSighting: TedtSighting
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 1310
       ClientWidth = 399
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
@@ -1263,7 +1257,7 @@ object edtSighting: TedtSighting
         FontEx.ShadowOffsetX = 5
         FontEx.ShadowOffsetY = 5
         FontEx.Style = []
-        ParentBackground = False
+        ParentBackground = True
         Rounding.RoundX = 8
         Rounding.RoundY = 8
         TabOrder = 0

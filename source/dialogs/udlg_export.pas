@@ -33,14 +33,16 @@ type
     ckUseDarwinCoreFormat: TCheckBox;
     cklbColumns: TCheckListBox;
     eFilename: TFileNameEdit;
+    iButtonsDark: TImageList;
     iIcons: TImageList;
     iButtons: TImageList;
+    iIconsDark: TImageList;
     lblFilename: TLabel;
     lblColumns: TLabel;
     lineBottom: TShapeLineBGRA;
     pContent: TPanel;
     pBottom: TPanel;
-    pDecimalSeparator: TBCPanel;
+    pOptions: TBCPanel;
     sbCancel: TButton;
     sbRun: TButton;
     tvFiletype: TTreeView;
@@ -53,6 +55,7 @@ type
   private
     FDataSet: TDataSet;
     function IsRequiredFilled: Boolean;
+    procedure ApplyDarkMode;
   public
     property DataSet: TDataSet read FDataSet write FDataSet;
   end;
@@ -63,11 +66,20 @@ var
 implementation
 
 uses
-  cbs_global, cbs_dialogs, cbs_locale, udm_main, ucfg_delimiters;
+  cbs_global, cbs_dialogs, cbs_locale, cbs_themes, udm_main, ucfg_delimiters, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgExport }
+
+procedure TdlgExport.ApplyDarkMode;
+begin
+  pOptions.Background.Color := clCardBGDefaultDark;
+  eFilename.Images := iButtonsDark;
+  btnOptions.Images := iButtonsDark;
+  tvFiletype.Images := iIconsDark;
+  pBottom.Color := clSolidBGBaseDark;
+end;
 
 procedure TdlgExport.btnOptionsClick(Sender: TObject);
 begin
@@ -107,6 +119,9 @@ procedure TdlgExport.FormShow(Sender: TObject);
 var
   i: Integer;
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   with FDataSet do
   begin
     for i := 0 to FDataSet.FieldCount - 1 do

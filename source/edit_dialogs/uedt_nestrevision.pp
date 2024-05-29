@@ -91,6 +91,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    procedure ApplyDarkMode;
     procedure AssembleFullName;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
@@ -105,11 +106,19 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy,
-  cbs_fullnames, cbs_validations, udm_breeding;
+  cbs_fullnames, cbs_validations, udm_breeding, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtNestRevision }
+
+procedure TedtNestRevision.ApplyDarkMode;
+begin
+  eRevisionDate.Images := DMM.iEditsDark;
+  eObserver1.Images := DMM.iEditsDark;
+  eObserver2.Images := DMM.iEditsDark;
+  eNidoparasite.Images := DMM.iEditsDark;
+end;
 
 procedure TedtNestRevision.AssembleFullName;
 var
@@ -285,6 +294,9 @@ end;
 
 procedure TedtNestRevision.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNestRevision)])
   else

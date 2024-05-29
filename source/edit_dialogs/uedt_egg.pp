@@ -103,6 +103,7 @@ type
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -112,7 +113,9 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_validations;
+uses
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_validations, udm_main,
+  uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -121,6 +124,14 @@ uses cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_ta
 procedure TedtEgg.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   // CloseAction := caFree;
+end;
+
+procedure TedtEgg.ApplyDarkMode;
+begin
+  eMeasureDate.Images := DMM.iEditsDark;
+  eTaxon.Images := DMM.iEditsDark;
+  eObserver.Images := DMM.iEditsDark;
+  eIndividual.Images := DMM.iEditsDark;
 end;
 
 procedure TedtEgg.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -267,6 +278,9 @@ end;
 
 procedure TedtEgg.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionEgg)])
   else

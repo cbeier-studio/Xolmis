@@ -32,6 +32,7 @@ type
     dsUsers: TDataSource;
     gridUsers: TDBGrid;
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     lineBottom: TShapeLineBGRA;
     pmgRefresh: TMenuItem;
     pmgNew: TMenuItem;
@@ -62,7 +63,7 @@ type
     procedure sbNewClick(Sender: TObject);
     procedure sbRefreshRecordsClick(Sender: TObject);
   private
-
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -72,7 +73,8 @@ var
 
 implementation
 
-uses cbs_global, cbs_system, cbs_datatypes, cbs_data, cbs_editdialogs, udm_main;
+uses
+  cbs_global, cbs_system, cbs_datatypes, cbs_data, cbs_editdialogs, cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -108,6 +110,20 @@ begin
     Key := #0;
     ModalResult := mrClose;
   end;
+end;
+
+procedure TcfgUsers.ApplyDarkMode;
+begin
+  pChildToolbar.Background.Color := clCardBGDefaultDark;
+  pChildToolbar.Border.Color := clCardBGSecondaryDark;
+  pClient.Color := clSolidBGBaseDark;
+
+  sbNew.Images := iButtonsDark;
+  sbEdit.Images := iButtonsDark;
+  sbChangePassword.Images := iButtonsDark;
+  sbRefreshRecords.Images := iButtonsDark;
+  sbDelete.Images := iButtonsDark;
+  pmGrid.Images := iButtonsDark;
 end;
 
 procedure TcfgUsers.dsUsersStateChange(Sender: TObject);
@@ -155,6 +171,9 @@ end;
 
 procedure TcfgUsers.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
     (dsUsers.DataSet as TSQLQuery).ReadOnly := True;
   if not dsUsers.DataSet.Active then

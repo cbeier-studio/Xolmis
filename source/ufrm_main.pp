@@ -312,6 +312,7 @@ type
     //procedure OpenIndividuals(Sender: TObject; var aForm: TfrmIndividuals; aTableType: TTableType;
     //  aCaption: String; aIcon: Integer = -1); overload;
     procedure CloseAllTabs(ClosePinned: Boolean = False; ExceptIndex: Integer = -1);
+    procedure ApplyDarkMode;
   public
     procedure CarregaPref;
     procedure UpdateStatusBar;
@@ -347,13 +348,25 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions,
-  cbs_taxonomy, cbs_editdialogs, cbs_themes,
+  cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_client, udm_sampling, udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
   ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance;
 
 {$R *.lfm}
+
+//procedure SetDarkStyle;
+//begin
+//  case XSettings.SelectedTheme of
+//    0: PreferredAppMode := pamDefault;
+//    1: PreferredAppMode := pamAllowDark;
+//    2: PreferredAppMode := pamForceDark;
+//    3: PreferredAppMode := pamForceLight;
+//  end;
+//
+//  uMetaDarkStyle.ApplyMetaDarkStyle(DefaultDark);
+//end;
 
 { TfrmMain }
 
@@ -622,6 +635,80 @@ begin
   MsgDlg(rsTitleError, E.Message, mtError);
 end;
 
+procedure TfrmMain.ApplyDarkMode;
+begin
+  pSplash.Color := clSmokeBGDefaultDark;
+  nbMenu.Color := clSolidBGBaseDark;
+  pMainMenu.Color := clSolidBGBaseDark;
+  menuTabs.ColorBg := clSolidBGBaseDark;
+  menuTabs.ColorTabActive := clSolidBGBaseDark;
+  menuTabs.ColorTabOver := clSolidBGBaseDark;
+  menuTabs.ColorTabPassive := clSolidBGBaseDark;
+  menuTabs.ColorFontActive := clTextPrimaryDark;
+  menuTabs.ColorFontHot := clTextPrimaryDark;
+  navTabs.ColorBg := clSolidBGQuaternaryDark;
+  navTabs.ColorTabActive := clSolidBGBaseDark;
+  navTabs.ColorTabOver := clSolidBGTertiaryDark;
+  navTabs.ColorTabPassive := clSolidBGBaseDark;
+  navTabs.ColorFontActive := clTextPrimaryDark;
+  navTabs.ColorFontHot := clTextPrimaryDark;
+
+  pmMenu.Images := iPopupDark;
+  pmTabs.Images := iPopupDark;
+  pmAddMenu.Images := DMM.iAddMenuDark;
+
+  icoSbarDatabase.Images := bStatusBarDark;
+  icoSbarUser.Images := bStatusBarDark;
+  icoSbarTaxonomy.Images := bStatusBarDark;
+  sbarDatabase.Border.Color := clSolidBGSecondaryDark;
+  sbarUser.Border.Color := clSolidBGSecondaryDark;
+  sbarTaxonomy.Border.Color := clSolidBGSecondaryDark;
+  sbarStatus.Border.Color := clSolidBGSecondaryDark;
+  sbarProgress.Border.Color := clSolidBGSecondaryDark;
+
+  pSearch.Background.Color := clSystemSolidNeutralBGDark;
+  pSearch.Border.Color := clSystemNeutralBGDark;
+  pSearch.ParentBackground := True;
+  eSearch.Color := pSearch.Background.Color;
+  iconSearch.Images := iSearchDark;
+  sbClearSearch.Images := iSearchDark;
+  sbClearSearch.StateHover.Color := clSolidBGBaseDark;
+  sbClearSearch.StateActive.Color := clSolidBGSecondaryDark;
+  sbClearSearch.StateNormal.Color := pSearch.Background.Color;
+
+  sbmSurveys.Images := iMenuDark;
+  sbmSightings.Images := iMenuDark;
+  sbmMethods.Images := iMenuDark;
+  sbmSpecimens.Images := iMenuDark;
+  sbmExpeditions.Images := iMenuDark;
+  sbmIndividuals.Images := iMenuDark;
+  sbmBands.Images := iMenuDark;
+  sbmNewBandsBatch.Images := iMenuDark;
+  sbmBandHistory.Images := iMenuDark;
+  sbmBandsBalance.Images := iMenuDark;
+  sbmCaptures.Images := iMenuDark;
+  sbmMolts.Images := iMenuDark;
+  sbmNests.Images := iMenuDark;
+  sbmNestRevisions.Images := iMenuDark;
+  sbmEggs.Images := iMenuDark;
+  sbmInstitutions.Images := iMenuDark;
+  sbmResearchers.Images := iMenuDark;
+  sbmProjects.Images := iMenuDark;
+  sbmPermits.Images := iMenuDark;
+  sbmGazetteer.Images := iMenuDark;
+  sbmSamplingPlots.Images := iMenuDark;
+  sbmGeoEditor.Images := iMenuDark;
+  sbmGeoConverter.Images := iMenuDark;
+  sbmZooTaxa.Images := iMenuDark;
+  sbmBotanicTaxa.Images := iMenuDark;
+  sbmImageGallery.Images := iMenuDark;
+  sbmAudioLibrary.Images := iMenuDark;
+  sbmAttachments.Images := iMenuDark;
+  sbmHelp.Images := iMenuDark;
+  sbmAbout.Images := iMenuDark;
+  sbmFeedback.Images := iMenuDark;
+end;
+
 procedure TfrmMain.CarregaPref;
 begin
   // Update active taxonomy
@@ -675,8 +762,16 @@ procedure TfrmMain.eSearchEnter(Sender: TObject);
 begin
   if eSearch.Text = EmptyStr then
     pSearch.Width := ClientWidth div 4;
-  pSearch.Background.Color := clWhite;
-  pSearch.Border.Color := clAccentFillTertiaryLight;
+  if IsDarkModeEnabled then
+  begin
+    pSearch.Background.Color := clSystemNeutralBGDark;
+    pSearch.Border.Color := clSystemSolidNeutralBGDark;
+  end
+  else
+  begin
+    pSearch.Background.Color := clWhite;
+    pSearch.Border.Color := clAccentFillTertiaryLight;
+  end;
   //pSearch.Border.Width := 2;
   eSearch.Color := pSearch.Background.Color;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
@@ -687,8 +782,16 @@ procedure TfrmMain.eSearchExit(Sender: TObject);
 begin
   if eSearch.Text = EmptyStr then
     pSearch.Width := 148;
-  pSearch.Background.Color := $00FAFAFA;
-  pSearch.Border.Color := clDefaultBorderLight;
+  if IsDarkModeEnabled then
+  begin
+    pSearch.Background.Color := clSystemNeutralBGDark;
+    pSearch.Border.Color := clSystemSolidNeutralBGDark;
+  end
+  else
+  begin
+    pSearch.Background.Color := $00FAFAFA;
+    pSearch.Border.Color := clDefaultBorderLight;
+  end;
   pSearch.Border.Width := 1;
   eSearch.Color := pSearch.Background.Color;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
@@ -763,6 +866,9 @@ end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   pSplash.Top := 0;
   pSplash.Left := 0;
   pSplash.Height := Self.ClientHeight;

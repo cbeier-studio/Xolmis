@@ -5188,6 +5188,14 @@ msgstr ""
 msgid "Remember user from last session"
 msgstr ""
 
+#: tcfgoptions.lblselectedtheme.caption
+msgid "Theme"
+msgstr ""
+
+#: tcfgoptions.lblselectedthemerestart.caption
+msgid "Xolmis need to be restarted to apply changes"
+msgstr ""
+
 #: tcfgoptions.lblshowsynonyms.caption
 msgid "Show synonyms in search results"
 msgstr ""
@@ -5331,10 +5339,6 @@ msgstr ""
 
 #: tdlgabout.linkwebsite.hint
 msgid "http://xolmis.github.io"
-msgstr ""
-
-#: tdlgabout.pappprerelease.caption
-msgid "Alpha"
 msgstr ""
 
 #: tdlgabout.sbclose.caption
@@ -5836,14 +5840,14 @@ msgctxt "tdlgfindtaxon.ep.texthint"
 msgid "Find..."
 msgstr ""
 
-#: tdlgfindtaxon.sbclearsearch.hint
-msgctxt "tdlgfindtaxon.sbclearsearch.hint"
-msgid "Clear search"
-msgstr ""
-
 #: tdlgfindtaxon.sbclose.hint
 msgctxt "tdlgfindtaxon.sbclose.hint"
 msgid "Clear search"
+msgstr ""
+
+#: tdlgfindtaxon.sboptions.hint
+msgctxt "tdlgfindtaxon.sboptions.hint"
+msgid "Options"
 msgstr ""
 
 #: tdlgfirstconfig.caption

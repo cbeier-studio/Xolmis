@@ -30,6 +30,7 @@ type
 
   TdlgAuthorship = class(TForm)
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     lblTotal: TLabel;
     lbColetor: TListBox;
     pBottom: TPanel;
@@ -55,6 +56,7 @@ type
     xLinha: String;
     xLimite: Integer;
     xAutores: TAuthors;
+    procedure ApplyDarkMode;
     procedure HabilitaBotoes;
   public
     procedure SetDialogPosition(X, Y: Integer; ControlWidth, ControlHeight: Integer);
@@ -70,11 +72,20 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_themes, udlg_find;
+uses
+  cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_themes, udlg_find, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgAuthorship }
+
+procedure TdlgAuthorship.ApplyDarkMode;
+begin
+  sbAdd.Images := iButtonsDark;
+  sbDel.Images := iButtonsDark;
+  sbUp.Images := iButtonsDark;
+  sbDown.Images := iButtonsDark;
+end;
 
 procedure TdlgAuthorship.FormCreate(Sender: TObject);
 begin
@@ -118,6 +129,9 @@ begin
   {$IFDEF MSWINDOWS}
   SetRoundedCorners(Self.Handle, rcSmall);
   {$ENDIF}
+
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 
   if Length(Linha) > 0 then
   begin

@@ -94,6 +94,7 @@ type
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -105,9 +106,20 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_taxonomy,
-  cbs_validations;
+  cbs_validations, udm_main, uDarkStyleParams;
 
 { TedtSpecimen }
+
+procedure TedtSpecimen.ApplyDarkMode;
+begin
+  eLocality.Images := DMM.iEditsDark;
+  eLongitude.Images := DMM.iEditsDark;
+  eLatitude.Images := DMM.iEditsDark;
+  eTaxon.Images := DMM.iEditsDark;
+  eIndividual.Images := DMM.iEditsDark;
+  eNest.Images := DMM.iEditsDark;
+  eEgg.Images := DMM.iEditsDark;
+end;
 
 procedure TedtSpecimen.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
@@ -338,6 +350,9 @@ end;
 
 procedure TedtSpecimen.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionEgg)])
   else

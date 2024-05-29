@@ -30,8 +30,11 @@ type
 
   TdlgImportCaptures = class(TForm)
     barProgress: TProgressBar;
+    iButtonsDark: TImageList;
     iIcons: TImageList;
     iButtons: TImageList;
+    iIconsDark: TImageList;
+    imgFinishedDark: TImageList;
     pRetry: TBCPanel;
     imgFinished: TImageList;
     hvProgress: THtmlViewer;
@@ -75,12 +78,14 @@ type
     procedure eJournalFileChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbClearJournalFileClick(Sender: TObject);
     procedure sbRetryClick(Sender: TObject);
     procedure sbRunClick(Sender: TObject);
   private
     FProgressList: TStrings;
+    procedure ApplyDarkMode;
     procedure UpdateButtons;
   public
 
@@ -92,11 +97,39 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_import;
+  cbs_locale, cbs_global, cbs_import, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgImportCaptures }
+
+procedure TdlgImportCaptures.ApplyDarkMode;
+begin
+  eJournalFile.Images := iButtonsDark;
+  eEffortFile.Images := iButtonsDark;
+  eCaptureFile.Images := iButtonsDark;
+  sbClearJournalFile.Images := iButtonsDark;
+  sbClearEffortFile.Images := iButtonsDark;
+  sbClearCaptureFile.Images := iButtonsDark;
+  sbRetry.Images := iButtonsDark;
+
+  icoJournalFile.Images := iIconsDark;
+  icoEffortFile.Images := iIconsDark;
+  icoCaptureFile.Images := iIconsDark;
+
+  icoImportFinished.Images := imgFinishedDark;
+
+  pProgress.Background.Color := clCardBGDefaultDark;
+  pProgress.Border.Color := clCardBGSecondaryDark;
+  pProgress.Color := pContentProgress.Background.Color;
+
+  pJournalFile.Background.Color := clCardBGDefaultDark;
+  pJournalFile.Border.Color := clCardBGSecondaryDark;
+  pEffortFile.Background.Color := clCardBGDefaultDark;
+  pEffortFile.Border.Color := clCardBGSecondaryDark;
+  pCaptureFile.Background.Color := clCardBGDefaultDark;
+  pCaptureFile.Border.Color := clCardBGSecondaryDark;
+end;
 
 procedure TdlgImportCaptures.eCaptureFileChange(Sender: TObject);
 begin
@@ -127,6 +160,12 @@ end;
 procedure TdlgImportCaptures.FormDestroy(Sender: TObject);
 begin
   FProgressList.Free;
+end;
+
+procedure TdlgImportCaptures.FormShow(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 end;
 
 procedure TdlgImportCaptures.sbCancelClick(Sender: TObject);

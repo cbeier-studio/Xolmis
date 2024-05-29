@@ -43,9 +43,6 @@ object edtPermanentNet: TedtPermanentNet
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 488
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
@@ -80,9 +77,6 @@ object edtPermanentNet: TedtPermanentNet
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 293
     ClientWidth = 488
-    Color = 15263976
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 1
     object pNotes: TPanel
       Left = 0

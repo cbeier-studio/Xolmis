@@ -738,6 +738,7 @@ type
     procedure AddGridColumns(aTable: TTableType; aGrid: TDBGrid);
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
       IsAnAlias: Boolean = False);
+    procedure ApplyDarkMode;
 
     procedure ChildTagClick(aTag, aCountTag: TBCPanel);
     procedure ChildTagMouseEnter(aTag, aCountTag: TBCPanel);
@@ -924,7 +925,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs,
-  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, {$IFDEF DEBUG}cbs_debug,{$ENDIF}
+  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
 
 {$R *.lfm}
@@ -1023,29 +1024,353 @@ begin
   UpdateGridTitles(DBG, FSearch);
 end;
 
+procedure TfrmCustomGrid.ApplyDarkMode;
+begin
+  pClient.Color := clSolidBGBaseDark;
+  pSide.Color := clSolidBGTertiaryDark;
+  scrollFilter.Color := clSolidBGTertiaryDark;
+  pQuickFiltersContent.Background.Color := clSolidBGTertiaryDark;
+  pFiltersToolbar.Background.Color := clCardBGDefaultDark;
+  pFiltersToolbar.Border.Color := clCardBGSecondaryDark;
+  pRecycleToolbar.Background.Color := clCardBGDefaultDark;
+  pRecycleToolbar.Border.Color := clCardBGSecondaryDark;
+
+  DBG.TitleImageList := iHeadersDark;
+  pmGrid.Images := iButtonsDark;
+  pmGridChild.Images := iButtonsDark;
+  pmTree.Images := iButtonsDark;
+  pmRecycle.Images := iButtonsDark;
+  pmAddChild.Images := DMM.iAddMenuDark;
+
+  pEmptyQuery.Background.Color := clCardBGDefaultDark;
+  pEmptyQuery.Border.Color := clCardBGSecondaryDark;
+  pEmptyQuery.Color := DBG.Color;
+  icoEmptyQuery.Images := iButtonsDark;
+
+  pRecordToolbar.Background.Color := clCardBGDefaultDark;
+  pRecordToolbar.Border.Color := clCardBGSecondaryDark;
+  pRecordStatus.Background.Color := clCardBGDefaultDark;
+  pRecordStatus.Border.Color := clCardBGSecondaryDark;
+  pChildToolbar.Background.Color := clCardBGDefaultDark;
+  pChildToolbar.Border.Color := clCardBGSecondaryDark;
+  pChildStatus.Background.Color := clCardBGDefaultDark;
+  pChildStatus.Border.Color := clCardBGSecondaryDark;
+  pChildsBar.Background.Color := clCardBGDefaultDark;
+  pChildsBar.Border.Color := clCardBGSecondaryDark;
+  pChildTag1.Background.Color := clCardBGSecondaryDark;
+  pChildTag1.Border.Color := clSolidBGTertiaryDark;
+  pChildTag1.Color := clCardBGDefaultDark;
+  pChildTag2.Background.Color := clCardBGSecondaryDark;
+  pChildTag2.Border.Color := clSolidBGTertiaryDark;
+  pChildTag2.Color := clCardBGDefaultDark;
+  pChildTag3.Background.Color := clCardBGSecondaryDark;
+  pChildTag3.Border.Color := clSolidBGTertiaryDark;
+  pChildTag3.Color := clCardBGDefaultDark;
+  pChildTag4.Background.Color := clCardBGSecondaryDark;
+  pChildTag4.Border.Color := clSolidBGTertiaryDark;
+  pChildTag4.Color := clCardBGDefaultDark;
+  pChildTag5.Background.Color := clCardBGSecondaryDark;
+  pChildTag5.Border.Color := clSolidBGTertiaryDark;
+  pChildTag5.Color := clCardBGDefaultDark;
+  pChildCount1.Color := pChildTag1.Background.Color;
+  pChildCount2.Color := pChildTag2.Background.Color;
+  pChildCount3.Color := pChildTag3.Background.Color;
+  pChildCount4.Color := pChildTag4.Background.Color;
+  pChildCount5.Color := pChildTag5.Background.Color;
+
+  pSideToolbar.Color := clSolidBGQuaternaryDark;
+
+  sbInsertRecord.Images := iButtonsDark;
+  sbEditRecord.Images := iButtonsDark;
+  sbRecordHistory.Images := iButtonsDark;
+  sbShareRecords.Images := iButtonsDark;
+  sbSaveRecord.Images := iButtonsDark;
+  sbCancelRecord.Images := iButtonsDark;
+  sbSortRecords.Images := iButtonsDark;
+  sbDelRecord.Images := iButtonsDark;
+  sbRefreshRecords.Images := iButtonsDark;
+  sbFirstRecord.Images := iButtonsDark;
+  sbPriorRecord.Images := iButtonsDark;
+  sbNextRecord.Images := iButtonsDark;
+  sbLastRecord.Images := iButtonsDark;
+  sbAddChild.Images := iButtonsDark;
+  sbAddNetsBatch.Images := iButtonsDark;
+  sbEditChild.Images := iButtonsDark;
+  sbChildHistory.Images := iButtonsDark;
+  sbShareChild.Images := iButtonsDark;
+  sbDelChild.Images := iButtonsDark;
+  sbRefreshChild.Images := iButtonsDark;
+  sbFirstChild.Images := iButtonsDark;
+  sbPriorChild.Images := iButtonsDark;
+  sbNextChild.Images := iButtonsDark;
+  sbLastChild.Images := iButtonsDark;
+  sbShowRecord.Images := iButtonsDark;
+  sbShowQuickFilters.Images := iButtonsDark;
+  sbShowImages.Images := iButtonsDark;
+  sbShowAudio.Images := iButtonsDark;
+  sbShowDocs.Images := iButtonsDark;
+  sbShowSummary.Images := iButtonsDark;
+  sbShowColumns.Images := iButtonsDark;
+  sbShowRecycle.Images := iButtonsDark;
+  sbClearFilters.Images := iButtonsDark;
+  sbRestoreRecord.Images := iButtonsDark;
+  sbDelPermanently.Images := iButtonsDark;
+
+  pSiteFilters.Background.Color := clCardBGDefaultDark;
+  pSiteFilters.Border.Color := clCardBGSecondaryDark;
+  pTitleSiteFilter.Color := clCardBGDefaultDark;
+  pSiteRankFilter.Background.Color := clCardBGDefaultDark;
+  pSiteRankFilter.Border.Color := clCardBGSecondaryDark;
+  pTaxonRanksFilters.Background.Color := clCardBGDefaultDark;
+  pTaxonRanksFilters.Border.Color := clCardBGSecondaryDark;
+  pTitleTaxonRanksFilter.Color := clCardBGDefaultDark;
+  pMaterialFilter.Background.Color := clCardBGDefaultDark;
+  pMaterialFilter.Border.Color := clCardBGSecondaryDark;
+  pMethodFilter.Background.Color := clCardBGDefaultDark;
+  pMethodFilter.Border.Color := clCardBGSecondaryDark;
+  pBandSizeFilter.Background.Color := clCardBGDefaultDark;
+  pBandSizeFilter.Border.Color := clCardBGSecondaryDark;
+  pWithRecapturesFilter.Background.Color := clCardBGDefaultDark;
+  pWithRecapturesFilter.Border.Color := clCardBGSecondaryDark;
+  pFatFilter.Background.Color := clCardBGDefaultDark;
+  pFatFilter.Border.Color := clCardBGSecondaryDark;
+  pBandStatusFilter.Background.Color := clCardBGDefaultDark;
+  pBandStatusFilter.Border.Color := clCardBGSecondaryDark;
+  pDatesFilters.Background.Color := clCardBGDefaultDark;
+  pDatesFilters.Border.Color := clCardBGSecondaryDark;
+  pDateFilter.Color := clCardBGDefaultDark;
+  pNestFateFilter.Background.Color := clCardBGDefaultDark;
+  pNestFateFilter.Border.Color := clCardBGSecondaryDark;
+  pNestSupportFilter.Background.Color := clCardBGDefaultDark;
+  pNestSupportFilter.Border.Color := clCardBGSecondaryDark;
+  pTaxonFilters.Background.Color := clCardBGDefaultDark;
+  pTaxonFilters.Border.Color := clCardBGSecondaryDark;
+  pTitleTaxonFilter.Color := clCardBGDefaultDark;
+  pExtinctFilter.Background.Color := clCardBGDefaultDark;
+  pExtinctFilter.Border.Color := clCardBGSecondaryDark;
+  pWithColorBandsFilter.Background.Color := clCardBGDefaultDark;
+  pWithColorBandsFilter.Border.Color := clCardBGSecondaryDark;
+  pSexFilter.Background.Color := clCardBGDefaultDark;
+  pSexFilter.Border.Color := clCardBGSecondaryDark;
+  pCloacalProtuberanceFilter.Background.Color := clCardBGDefaultDark;
+  pCloacalProtuberanceFilter.Border.Color := clCardBGSecondaryDark;
+  pBroodPatchFilter.Background.Color := clCardBGDefaultDark;
+  pBroodPatchFilter.Border.Color := clCardBGSecondaryDark;
+  pHowSexedFilter.Background.Color := clCardBGDefaultDark;
+  pHowSexedFilter.Border.Color := clCardBGSecondaryDark;
+  pReportedFilter.Background.Color := clCardBGDefaultDark;
+  pReportedFilter.Border.Color := clCardBGSecondaryDark;
+  pNotReportedFilter.Background.Color := clCardBGDefaultDark;
+  pNotReportedFilter.Border.Color := clCardBGSecondaryDark;
+  pIsSynonymFilter.Background.Color := clCardBGDefaultDark;
+  pIsSynonymFilter.Border.Color := clCardBGSecondaryDark;
+  pHasSynonymsFilter.Background.Color := clCardBGDefaultDark;
+  pHasSynonymsFilter.Border.Color := clCardBGSecondaryDark;
+  pBodyMoltFilter.Background.Color := clCardBGDefaultDark;
+  pBodyMoltFilter.Border.Color := clCardBGSecondaryDark;
+  pFFMoltFilter.Background.Color := clCardBGDefaultDark;
+  pFFMoltFilter.Border.Color := clCardBGSecondaryDark;
+  pFFWearFilter.Background.Color := clCardBGDefaultDark;
+  pFFWearFilter.Border.Color := clCardBGSecondaryDark;
+  pMoltLimitsFilter.Background.Color := clCardBGDefaultDark;
+  pMoltLimitsFilter.Border.Color := clCardBGSecondaryDark;
+  pMoltCycleFilter.Background.Color := clCardBGDefaultDark;
+  pMoltCycleFilter.Border.Color := clCardBGSecondaryDark;
+  pTaxonomyClementsFilter.Background.Color := clCardBGDefaultDark;
+  pTaxonomyClementsFilter.Border.Color := clCardBGSecondaryDark;
+  pTaxonomyIocFilter.Background.Color := clCardBGDefaultDark;
+  pTaxonomyIocFilter.Border.Color := clCardBGSecondaryDark;
+  pTaxonomyCbroFilter.Background.Color := clCardBGDefaultDark;
+  pTaxonomyCbroFilter.Border.Color := clCardBGSecondaryDark;
+  pStartTimeFilter.Background.Color := clCardBGDefaultDark;
+  pStartTimeFilter.Border.Color := clCardBGSecondaryDark;
+  pEndTimeFilter.Background.Color := clCardBGDefaultDark;
+  pEndTimeFilter.Border.Color := clCardBGSecondaryDark;
+  pAgeFilter.Background.Color := clCardBGDefaultDark;
+  pAgeFilter.Border.Color := clCardBGSecondaryDark;
+  pSkullOssificationFilter.Background.Color := clCardBGDefaultDark;
+  pSkullOssificationFilter.Border.Color := clCardBGSecondaryDark;
+  pHowAgedFilter.Background.Color := clCardBGDefaultDark;
+  pHowAgedFilter.Border.Color := clCardBGSecondaryDark;
+  pMarkedFilter.Background.Color := clCardBGDefaultDark;
+  pMarkedFilter.Border.Color := clCardBGSecondaryDark;
+  pUnmarkedFilter.Background.Color := clCardBGDefaultDark;
+  pUnmarkedFilter.Border.Color := clCardBGSecondaryDark;
+  pPersonFilter.Background.Color := clCardBGDefaultDark;
+  pPersonFilter.Border.Color := clCardBGSecondaryDark;
+  pInstitutionFilter.Background.Color := clCardBGDefaultDark;
+  pInstitutionFilter.Border.Color := clCardBGSecondaryDark;
+  pSurveyFilter.Background.Color := clCardBGDefaultDark;
+  pSurveyFilter.Border.Color := clCardBGSecondaryDark;
+  pProjectFilter.Background.Color := clCardBGDefaultDark;
+  pProjectFilter.Border.Color := clCardBGSecondaryDark;
+  pNestFilter.Background.Color := clCardBGDefaultDark;
+  pNestFilter.Border.Color := clCardBGSecondaryDark;
+  pIndividualFilter.Background.Color := clCardBGDefaultDark;
+  pIndividualFilter.Border.Color := clCardBGSecondaryDark;
+  pSamplingPlotFilter.Background.Color := clCardBGDefaultDark;
+  pSamplingPlotFilter.Border.Color := clCardBGSecondaryDark;
+  pExpeditionFilter.Background.Color := clCardBGDefaultDark;
+  pExpeditionFilter.Border.Color := clCardBGSecondaryDark;
+  pPlantFilter.Background.Color := clCardBGDefaultDark;
+  pPlantFilter.Border.Color := clCardBGSecondaryDark;
+  pNeedsReviewFilter.Background.Color := clCardBGDefaultDark;
+  pNeedsReviewFilter.Border.Color := clCardBGSecondaryDark;
+  pDontNeedReviewFilter.Background.Color := clCardBGDefaultDark;
+  pDontNeedReviewFilter.Border.Color := clCardBGSecondaryDark;
+  pEscapedFilter.Background.Color := clCardBGDefaultDark;
+  pEscapedFilter.Border.Color := clCardBGSecondaryDark;
+  pNotEscapedFilter.Background.Color := clCardBGDefaultDark;
+  pNotEscapedFilter.Border.Color := clCardBGSecondaryDark;
+  pRecordInEbirdFilter.Background.Color := clCardBGDefaultDark;
+  pRecordInEbirdFilter.Border.Color := clCardBGSecondaryDark;
+  pEggFilter.Background.Color := clCardBGDefaultDark;
+  pEggFilter.Border.Color := clCardBGSecondaryDark;
+  pOutOfSampleFilter.Background.Color := clCardBGDefaultDark;
+  pOutOfSampleFilter.Border.Color := clCardBGSecondaryDark;
+  pNidoparasiteFilter.Background.Color := clCardBGDefaultDark;
+  pNidoparasiteFilter.Border.Color := clCardBGSecondaryDark;
+  pHatchedFilter.Background.Color := clCardBGDefaultDark;
+  pHatchedFilter.Border.Color := clCardBGSecondaryDark;
+  pPhilornisFilter.Background.Color := clCardBGDefaultDark;
+  pPhilornisFilter.Border.Color := clCardBGSecondaryDark;
+  pCaptureTypeFilter.Background.Color := clCardBGDefaultDark;
+  pCaptureTypeFilter.Border.Color := clCardBGSecondaryDark;
+  pCaptureStatusFilter.Background.Color := clCardBGDefaultDark;
+  pCaptureStatusFilter.Border.Color := clCardBGSecondaryDark;
+  pBandTypeFilter.Background.Color := clCardBGDefaultDark;
+  pBandTypeFilter.Border.Color := clCardBGSecondaryDark;
+  pBandSourceFilter.Background.Color := clCardBGDefaultDark;
+  pBandSourceFilter.Border.Color := clCardBGSecondaryDark;
+  pNestStatusFilter.Background.Color := clCardBGDefaultDark;
+  pNestStatusFilter.Border.Color := clCardBGSecondaryDark;
+  pNestStageFilter.Background.Color := clCardBGDefaultDark;
+  pNestStageFilter.Border.Color := clCardBGSecondaryDark;
+  pEggPatternFilter.Background.Color := clCardBGDefaultDark;
+  pEggPatternFilter.Border.Color := clCardBGSecondaryDark;
+  pEggTextureFilter.Background.Color := clCardBGDefaultDark;
+  pEggTextureFilter.Border.Color := clCardBGSecondaryDark;
+  pEggShapeFilter.Background.Color := clCardBGDefaultDark;
+  pEggShapeFilter.Border.Color := clCardBGSecondaryDark;
+  pPermitTypeFilter.Background.Color := clCardBGDefaultDark;
+  pPermitTypeFilter.Border.Color := clCardBGSecondaryDark;
+  pReplacedBandFilter.Background.Color := clCardBGDefaultDark;
+  pReplacedBandFilter.Border.Color := clCardBGSecondaryDark;
+
+  eEggFilter.Images := DMM.iEditsDark;
+  ePlantFilter.Images := DMM.iEditsDark;
+  eExpeditionFilter.Images := DMM.iEditsDark;
+  eSamplingPlotFilter.Images := DMM.iEditsDark;
+  eIndividualFilter.Images := DMM.iEditsDark;
+  eNestFilter.Images := DMM.iEditsDark;
+  eProjectFilter.Images := DMM.iEditsDark;
+  eSurveyFilter.Images := DMM.iEditsDark;
+  eInstitutionFilter.Images := DMM.iEditsDark;
+  ePersonFilter.Images := DMM.iEditsDark;
+  eHowAgedFilter.Images := DMM.iEditsDark;
+  eStartTimeFilter.Images := DMM.iEditsDark;
+  eEndTimeFilter.Images := DMM.iEditsDark;
+  eCycleCodeFilter.Images := DMM.iEditsDark;
+  eMoltLimitsFilter.Images := DMM.iEditsDark;
+  eHowSexedFilter.Images := DMM.iEditsDark;
+  eMethodFilter.Images := DMM.iEditsDark;
+  tvSiteFilter.Colors.TreeLineColor := clTextSecondaryDark;
+  tvDateFilter.Colors.TreeLineColor := clTextSecondaryDark;
+  tvTaxaFilter.Colors.TreeLineColor := clTextSecondaryDark;
+
+  icoSiteFilter.Images := iIconsDark;
+  icoSiteRankFilter.Images := iIconsDark;
+  icoTaxonRanksFilter.Images := iIconsDark;
+  icoMaterialFilter.Images := iIconsDark;
+  icoMethodFilter.Images := iIconsDark;
+  icoBandSizeFilter.Images := iIconsDark;
+  icoWithRecapturesFilter.Images := iIconsDark;
+  icoFatFilter.Images := iIconsDark;
+  icoBandStatusFilter.Images := iIconsDark;
+  icoDateFilter.Images := iIconsDark;
+  icoNestFateFilter.Images := iIconsDark;
+  icoNestSupportFilter.Images := iIconsDark;
+  icoTaxaFilter.Images := iIconsDark;
+  icoExtinctFilter.Images := iIconsDark;
+  icoWithColorBandsFilter.Images := iIconsDark;
+  icoSexFilter.Images := iIconsDark;
+  icoReportedFilter.Images := iIconsDark;
+  icoSynonymsFilter.Images := iIconsDark;
+  icoMoltFilter.Images := iIconsDark;
+  icoTaxonomiesFilter.Images := iIconsDark;
+  icoStartTimeFilter.Images := iIconsDark;
+  icoAgingFilter.Images := iIconsDark;
+  icoMarkedFilter.Images := iIconsDark;
+  icoUnmarkedFilter.Images := iIconsDark;
+  icoPersonFilter.Images := iIconsDark;
+  icoInstitutionFilter.Images := iIconsDark;
+  icoSurveyFilter.Images := iIconsDark;
+  icoProjectFilter.Images := iIconsDark;
+  icoNestFilter.Images := iIconsDark;
+  icoIndividualFilter.Images := iIconsDark;
+  icoSamplingPlotFilter.Images := iIconsDark;
+  icoExpeditionFilter.Images := iIconsDark;
+  icoPlantFilter.Images := iIconsDark;
+  icoNeedsReviewFilter.Images := iIconsDark;
+  icoEscapedFilter.Images := iIconsDark;
+  icoRecordInEbirdFilter.Images := iIconsDark;
+  icoEggFilter.Images := iIconsDark;
+  icoOutOfSampleFilter.Images := iIconsDark;
+  icoNidoparasiteFilter.Images := iIconsDark;
+  icoHatchedFilter.Images := iIconsDark;
+  icoPhilornisFilter.Images := iIconsDark;
+  icoCaptureTypeFilter.Images := iIconsDark;
+  icoCaptureStatusFilter.Images := iIconsDark;
+  icoBandTypeFilter.Images := iIconsDark;
+  icoBandSourceFilter.Images := iIconsDark;
+  icoNestStatusFilter.Images := iIconsDark;
+  icoNestStageFilter.Images := iIconsDark;
+  icoEggPatternFilter.Images := iIconsDark;
+  icoPermitTypeFilter.Images := iIconsDark;
+  icoReplacedBandFilter.Images := iIconsDark;
+
+end;
+
 procedure TfrmCustomGrid.ChildTagClick(aTag, aCountTag: TBCPanel);
 begin
   if Working then
     Exit;
 
   Working := True;
-  pChildTag1.Border.Color := $00D1D1D1;
+  if IsDarkModeEnabled then
+  begin
+    pChildTag1.Border.Color := clSolidBGTertiaryDark;
+    pChildTag2.Border.Color := clSolidBGTertiaryDark;
+    pChildTag3.Border.Color := clSolidBGTertiaryDark;
+    pChildTag4.Border.Color := clSolidBGTertiaryDark;
+    pChildTag5.Border.Color := clSolidBGTertiaryDark;
+  end
+  else
+  begin
+    pChildTag1.Border.Color := $00D1D1D1;
+    pChildTag2.Border.Color := $00D1D1D1;
+    pChildTag3.Border.Color := $00D1D1D1;
+    pChildTag4.Border.Color := $00D1D1D1;
+    pChildTag5.Border.Color := $00D1D1D1;
+  end;
   pChildTag1.Border.Width := 1;
-  pChildTag2.Border.Color := $00D1D1D1;
   pChildTag2.Border.Width := 1;
-  pChildTag3.Border.Color := $00D1D1D1;
   pChildTag3.Border.Width := 1;
-  pChildTag4.Border.Color := $00D1D1D1;
   pChildTag4.Border.Width := 1;
-  pChildTag5.Border.Color := $00D1D1D1;
   pChildTag5.Border.Width := 1;
 
-  aTag.Background.Color := $00FAEBE8;
+  if IsDarkModeEnabled then
+    aTag.Background.Color := clVioletBG1Dark
+  else
+    aTag.Background.Color := clVioletBG1Light;
   aCountTag.Color := aTag.Background.Color;
   if (pChild.Visible) and (aTag.Tag = nbChilds.PageIndex) then
   begin
     pChild.Visible := False;
-    aTag.Border.Color := $00D1D1D1;
+    if IsDarkModeEnabled then
+      aTag.Border.Color := clSolidBGTertiaryDark
+    else
+      aTag.Border.Color := $00D1D1D1;
     aTag.Border.Width := 1;
   end
   else
@@ -1054,7 +1379,7 @@ begin
     if not pChild.Visible then
       pChild.Visible := True;
     pChild.Top := pChildsBar.Top + pChildsBar.Height + 1;
-    aTag.Border.Color := $00C75F5B;
+    aTag.Border.Color := clVioletFGLight;
     aTag.Border.Width := 2;
   end;
   //splitChild.Visible := pChild.Visible;
@@ -1065,13 +1390,19 @@ end;
 
 procedure TfrmCustomGrid.ChildTagMouseEnter(aTag, aCountTag: TBCPanel);
 begin
-  aTag.Background.Color := $00E0C0C0;
+  if IsDarkModeEnabled then
+    aTag.Background.Color := clVioletBG1Dark
+  else
+    aTag.Background.Color := $00E0C0C0;
   aCountTag.Color := aTag.Background.Color;
 end;
 
 procedure TfrmCustomGrid.ChildTagMouseLeave(aTag, aCountTag: TBCPanel);
 begin
-  aTag.Background.Color := $00FAFAFA;
+  if IsDarkModeEnabled then
+    aTag.Background.Color := clCardBGSecondaryDark
+  else
+    aTag.Background.Color := clCardBGSecondaryLight;
   aCountTag.Color := aTag.Background.Color;
 end;
 
@@ -2643,6 +2974,9 @@ var
   Usage: TElapsedTimer;
 {$ENDIF}
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   FSearch := TCustomSearch.Create(FTableType);
 
   { Resize panels }
@@ -4193,35 +4527,83 @@ begin
     {$ENDIF}
     case Column.Field.AsString of
       'U': // Used
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
         end;
+      end;
       'D': // Available
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemNeutralFGLight;
         end;
+      end;
       'R': // Removed
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemMediumBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemMediumFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemMediumBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemMediumFGLight;
         end;
+      end;
       'Q': // Broken
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
         end;
+      end;
       'P': // Lost
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
         end;
+      end;
       'T': // Transfered
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clVioletBrand1Dark;
+          TDBGrid(Sender).Canvas.Font.Color := clVioletFG1Dark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clVioletBrand1Light;
           TDBGrid(Sender).Canvas.Font.Color := clVioletFG2Light;
         end;
+      end;
     end;
   end;
 end;
@@ -4237,25 +4619,57 @@ begin
   begin
     case Column.Field.AsString of
       'N':
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clBlueBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clBlueBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryLight;
         end;
+      end;
       'R', 'S':
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
         end;
+      end;
       'C':
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
         end;
+      end;
       'U':
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
         end;
+      end;
     end;
   end
   else
@@ -4270,13 +4684,19 @@ begin
       (TDBGrid(Sender).Columns.ColumnByFieldname('capture_type').Field.AsString = 'S') then
     begin
       //TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-      TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+      if IsDarkModeEnabled then
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark
+      else
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
     end
     else
     if (TDBGrid(Sender).Columns.ColumnByFieldname('capture_type').Field.AsString = 'C') then
     begin
       //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+      if IsDarkModeEnabled then
+        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark
+      else
+        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
     end;
   end
   else
@@ -4290,7 +4710,10 @@ begin
     if (TDBGrid(Sender).Columns.ColumnByFieldname('capture_type').Field.AsString = 'C') then
     begin
       //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+      if IsDarkModeEnabled then
+        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark
+      else
+        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
     end;
   end;
 
@@ -4300,7 +4723,10 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, CloacalProtuberanceValues)) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      if IsDarkModeEnabled then
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
+      else
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
     end;
   end
   else
@@ -4309,7 +4735,10 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, BroodPatchValues)) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      if IsDarkModeEnabled then
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
+      else
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
     end;
   end
   else
@@ -4318,7 +4747,10 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, FatValues)) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      if IsDarkModeEnabled then
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
+      else
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
     end;
   end
   else
@@ -4327,7 +4759,10 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, BodyMoltValues)) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      if IsDarkModeEnabled then
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
+      else
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
     end;
   end
   else
@@ -4336,7 +4771,10 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, FlightMoltValues)) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      if IsDarkModeEnabled then
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
+      else
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
     end;
   end
   else
@@ -4345,7 +4783,10 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, FeatherWearValues)) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      if IsDarkModeEnabled then
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
+      else
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
     end;
   end
   else
@@ -4354,7 +4795,10 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, SkullValues)) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      if IsDarkModeEnabled then
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
+      else
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
     end;
   end;
 end;
@@ -4404,20 +4848,44 @@ begin
     {$ENDIF}
     case Column.Field.AsString of
       'U':
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
         end;
+      end;
       'M':
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
         end;
+      end;
       'F':
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
         end;
+      end;
     end;
   end
   else
@@ -4482,20 +4950,44 @@ begin
     {$ENDIF}
     case Column.Field.AsString of
       'U':       // Unknown
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
         end;
+      end;
       'P':       // Lost
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
         end;
+      end;
       'S':       // Success
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
         end;
+      end;
     end;
   end;
 end;
@@ -4516,20 +5008,44 @@ begin
     {$ENDIF}
     case Column.Field.AsString of
       'U':       // Unknown
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
         end;
-      'I':       // Lost
+      end;
+      'I':       // Inactive
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
         end;
-      'A':       // Success
+      end;
+      'A':       // Active
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
+        end
+        else
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
           TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
         end;
+      end;
     end;
   end;
 end;

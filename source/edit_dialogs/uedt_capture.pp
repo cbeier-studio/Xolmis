@@ -246,6 +246,7 @@ type
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
     procedure AssembleFullName;
     procedure PaintColorBands(aLeg: TBodyPart);
     procedure GetCameras;
@@ -260,11 +261,34 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_taxonomy,
-  cbs_validations, cbs_fullnames, udm_main;
+  cbs_validations, cbs_fullnames, cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtCapture }
+
+procedure TedtCapture.ApplyDarkMode;
+begin
+  eSurvey.Images := DMM.iEditsDark;
+  eLocality.Images := DMM.iEditsDark;
+  eCaptureDate.Images := DMM.iEditsDark;
+  eBander.Images := DMM.iEditsDark;
+  eAnnotator.Images := DMM.iEditsDark;
+  eNet.Images := DMM.iEditsDark;
+  eLongitude.Images := DMM.iEditsDark;
+  eLatitude.Images := DMM.iEditsDark;
+  eTaxon.Images := DMM.iEditsDark;
+  eBand.Images := DMM.iEditsDark;
+  eRemovedBand.Images := DMM.iEditsDark;
+  eRightTarsus.Images := DMM.iEditsDark;
+  eLeftTarsus.Images := DMM.iEditsDark;
+  eMoltLimits.Images := DMM.iEditsDark;
+  eCycleCode.Images := DMM.iEditsDark;
+  eHowAged.Images := DMM.iEditsDark;
+  eHowSexed.Images := DMM.iEditsDark;
+  ePhotographer1.Images := DMM.iEditsDark;
+  ePhotographer2.Images := DMM.iEditsDark;
+end;
 
 procedure TedtCapture.AssembleFullName;
 var
@@ -969,6 +993,9 @@ end;
 
 procedure TedtCapture.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionCapture)])
   else

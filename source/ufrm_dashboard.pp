@@ -119,6 +119,7 @@ type
     procedure AddBirthday(aName, aBirthday: String);
     procedure AddLifer(aType, aName, aDate: String);
     procedure AddPermit(aName, aExpireDate: String);
+    procedure ApplyDarkMode;
     procedure RefreshBandBalance;
     procedure RefreshBirthday;
     procedure RefreshPermits;
@@ -135,7 +136,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_themes, udm_main, udm_client, ufrm_main;
+uses cbs_global, cbs_themes, udm_main, udm_client, ufrm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -177,7 +178,10 @@ begin
       FontEx.Color := clSystemCautionBGLight;
     end;
     Border.Style := TBCBorderStyle.bboSolid;
-    ParentBackground := True;
+    if IsDarkModeEnabled then
+      Color := clCardBGDefaultDark
+    else
+      ParentBackground := True;
     B.Parent := pBandsContent;
   end;
 
@@ -222,7 +226,12 @@ begin
     Align := alTop;
     Caption := EmptyStr;
     BorderBCStyle := bpsBorder;
-    Background.Color := clCardBGSecondaryLight;
+    Rounding.RoundX := 0;
+    Rounding.RoundY := 0;
+    if IsDarkModeEnabled then
+      Background.Color := clCardBGDefaultDark
+    else
+      Background.Color := clCardBGDefaultLight;
     ChildSizing.HorizontalSpacing := 8;
     BorderSpacing.Bottom := 2;
     //Border.Style := TBCBorderStyle.bboSolid;
@@ -249,7 +258,10 @@ begin
     Alignment := taRightJustify;
     Layout := tlCenter;
     Caption := aBirthday;
-    Font.Color := clDefaultFG2Light;
+    if IsDarkModeEnabled then
+      Font.Color := clDefaultFGDark
+    else
+      Font.Color := clDefaultFG2Light;
     D.Parent := B;
   end;
 
@@ -277,7 +289,12 @@ begin
     Align := alTop;
     Caption := EmptyStr;
     BorderBCStyle := bpsBorder;
-    Background.Color := clWhite;
+    Rounding.RoundX := 0;
+    Rounding.RoundY := 0;
+    if IsDarkModeEnabled then
+      Background.Color := clCardBGDefaultDark
+    else
+      Background.Color := clCardBGDefaultLight;
     ChildSizing.HorizontalSpacing := 8;
     //BorderSpacing.Bottom := 2;
     //Border.Style := TBCBorderStyle.bboSolid;
@@ -291,7 +308,10 @@ begin
     Center := True;
     Proportional := True;
     //ImageWidth := 16;
-    Images := vIcons;
+    if IsDarkModeEnabled then
+      Images := vIconsDark
+    else
+      Images := vIcons;
     case aType of
       'C': ImageIndex := 1;
       'S': ImageIndex := 0;
@@ -307,7 +327,10 @@ begin
     Alignment := taRightJustify;
     Layout := tlCenter;
     Caption := aDate;
-    Font.Color := clDefaultFG2Light;
+    if IsDarkModeEnabled then
+      Font.Color := clDefaultFGDark
+    else
+      Font.Color := clDefaultFG2Light;
     D.Parent := B;
   end;
 
@@ -364,6 +387,47 @@ begin
   end;
 end;
 
+procedure TfrmDashboard.ApplyDarkMode;
+begin
+  sBox.Color := clSolidBGBaseDark;
+  pNumbers.Background.Color := clSolidBGBaseDark;
+  pFlow.Color := clSolidBGBaseDark;
+  pTotalSpecies.Background.Color := clCardBGDefaultDark;
+  pTotalSpecies.Border.Color := clCardBGSecondaryDark;
+  pTotalIndividuals.Background.Color := clCardBGDefaultDark;
+  pTotalIndividuals.Border.Color := clCardBGSecondaryDark;
+  pTotalNests.Background.Color := clCardBGDefaultDark;
+  pTotalNests.Border.Color := clCardBGSecondaryDark;
+  pTotalSamplings.Background.Color := clCardBGDefaultDark;
+  pTotalSamplings.Border.Color := clCardBGSecondaryDark;
+  pLifers.Background.Color := clCardBGDefaultDark;
+  pLifers.Border.Color := clCardBGSecondaryDark;
+  pCharts.Background.Color := clCardBGDefaultDark;
+  pCharts.Border.Color := clCardBGSecondaryDark;
+  chartIndividuals.Color := clCardBGDefaultDark;
+  chartIndividuals.BackColor := clCardBGDefaultDark;
+  chartIndividuals.LeftAxis.Marks.LabelFont.Color := clTextPrimaryDark;
+  chartIndividuals.BottomAxis.Marks.LabelFont.Color := clTextPrimaryDark;
+  pCharts1.Background.Color := clCardBGDefaultDark;
+  pCharts1.Border.Color := clCardBGSecondaryDark;
+  chartSpecies.Color := clCardBGDefaultDark;
+  chartSpecies.BackColor := clCardBGDefaultDark;
+  chartSpecies.LeftAxis.Marks.LabelFont.Color := clTextPrimaryDark;
+  chartSpecies.BottomAxis.Marks.LabelFont.Color := clTextPrimaryDark;
+  pMapSurveys.Background.Color := clCardBGDefaultDark;
+  pMapSurveys.Border.Color := clCardBGSecondaryDark;
+
+  pNotificationCenter.Background.Color := clVioletBG1Dark;
+  pNotificationCenter.Border.Color := clCardBGSecondaryDark;
+  pTitleNotificationCenter.Background.Color := clVioletBG1Dark;
+  scrollNotifications.Color := clVioletBG1Dark;
+  pBandsBalance.Background.Color := clCardBGDefaultDark;
+  pBandsBalance.Border.Color := clCardBGSecondaryDark;
+  pBandsContent.Background.Color := clCardBGDefaultDark;
+  pBirthdays.Background.Color := clCardBGDefaultDark;
+  pBirthdays.Border.Color := clCardBGSecondaryDark;
+end;
+
 procedure TfrmDashboard.FormDestroy(Sender: TObject);
 begin
   TimerLoad.Enabled := False;
@@ -394,6 +458,9 @@ begin
   mapSurveys.CachePath := IncludeTrailingPathDelimiter(ConcatPaths([AppDataDir, 'map-cache']));
   DMM.iMaps.GetBitmap(1, mapSurveys.POIImage);
   mapSurveys.Active := True;
+
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 
   TimerLoad.Enabled := True;
 end;

@@ -62,6 +62,7 @@ type
     FDecPoint: TMapPoint;
     FDmsPoint: TDMSPoint;
     FPointStr: String;
+    procedure ApplyDarkMode;
   public
     procedure SetDialogPosition(X, Y: Integer; ControlWidth, ControlHeight: Integer);
 
@@ -81,7 +82,7 @@ var
 implementation
 
 uses
-  cbs_global;
+  cbs_global, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -139,6 +140,16 @@ begin
     Self.Top := Y - Self.Height
   else
     Self.Top := Y + ControlHeight;
+end;
+
+procedure TdlgGeoEditor.ApplyDarkMode;
+begin
+  pLong.Background.Color := clCardBGDefaultDark;
+  pLong.Border.Color := clCardBGSecondaryDark;
+  pLat.Background.Color := clCardBGDefaultDark;
+  pLat.Border.Color := clCardBGSecondaryDark;
+  pDecimal.Background.Color := clCardBGDefaultDark;
+  pDecimal.Border.Color := clCardBGSecondaryDark;
 end;
 
 procedure TdlgGeoEditor.eLongDegChange(Sender: TObject);

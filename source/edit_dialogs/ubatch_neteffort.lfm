@@ -11,6 +11,7 @@ object batchNetEffort: TbatchNetEffort
   Font.Height = -12
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
+  OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
@@ -40,9 +41,6 @@ object batchNetEffort: TbatchNetEffort
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 400
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16
@@ -159,7 +157,6 @@ object batchNetEffort: TbatchNetEffort
       ChildSizing.ControlsPerLine = 2
       ClientHeight = 45
       ClientWidth = 400
-      ParentBackground = False
       TabOrder = 0
       object lblStartNumber: TLabel
         Left = 16

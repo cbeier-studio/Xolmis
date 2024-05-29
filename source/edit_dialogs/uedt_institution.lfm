@@ -43,9 +43,6 @@ object edtInstitution: TedtInstitution
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 510
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
@@ -82,8 +79,6 @@ object edtInstitution: TedtInstitution
     ClientHeight = 646
     ClientWidth = 493
     Constraints.MinWidth = 220
-    Color = clDefault
-    ParentColor = False
     TabOrder = 1
     object pClient: TPanel
       Left = 0
@@ -96,9 +91,6 @@ object edtInstitution: TedtInstitution
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 780
       ClientWidth = 493
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pMunicipality: TPanel
         Left = 0

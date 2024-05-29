@@ -33,9 +33,6 @@ object edtBands: TedtBands
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 488
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
@@ -99,10 +96,7 @@ object edtBands: TedtBands
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 583
       ClientWidth = 488
-      Color = 15263976
       Constraints.MinHeight = 560
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
@@ -196,6 +190,7 @@ object edtBands: TedtBands
           Constraints.MinWidth = 220
           DataField = 'band_size'
           DataSource = dsLink
+          DropDownCount = 12
           ItemHeight = 15
           Items.Strings = (
             'A'
@@ -353,6 +348,7 @@ object edtBands: TedtBands
           Constraints.MinWidth = 220
           DataField = 'band_type'
           DataSource = dsLink
+          DropDownCount = 12
           ItemHeight = 20
           Items.Strings = (
             'Butt-end'
@@ -382,6 +378,7 @@ object edtBands: TedtBands
           Constraints.MinWidth = 220
           DataField = 'band_color'
           DataSource = dsLink
+          DropDownCount = 12
           ItemHeight = 20
           Items.Strings = (
             'yellow'

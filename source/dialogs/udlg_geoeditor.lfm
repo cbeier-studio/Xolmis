@@ -9,13 +9,11 @@ object dlgGeoEditor: TdlgGeoEditor
   Caption = 'Coordinates editor'
   ClientHeight = 230
   ClientWidth = 369
-  Color = 16444392
   Constraints.MinHeight = 205
   Constraints.MinWidth = 349
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -33,10 +31,8 @@ object dlgGeoEditor: TdlgGeoEditor
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 369
-    Color = 15987699
     Constraints.MinWidth = 112
     ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbOK: TButton
       Left = 16
@@ -113,8 +109,8 @@ object dlgGeoEditor: TdlgGeoEditor
     FontEx.ShadowOffsetY = 5
     FontEx.Style = []
     ParentBackground = False
-    Rounding.RoundX = 1
-    Rounding.RoundY = 1
+    Rounding.RoundX = 0
+    Rounding.RoundY = 0
     TabOrder = 1
     object pLong: TBCPanel
       Left = 17
@@ -156,7 +152,7 @@ object dlgGeoEditor: TdlgGeoEditor
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
@@ -258,7 +254,7 @@ object dlgGeoEditor: TdlgGeoEditor
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
@@ -360,7 +356,7 @@ object dlgGeoEditor: TdlgGeoEditor
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       TabOrder = 2

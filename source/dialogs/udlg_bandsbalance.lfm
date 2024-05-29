@@ -22,9 +22,6 @@ object dlgBandsBalance: TdlgBandsBalance
     ChildSizing.TopBottomSpacing = 8
     ClientHeight = 38
     ClientWidth = 320
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbClose: TButton
       Left = 200

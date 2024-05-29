@@ -34,6 +34,7 @@ type
     ePassword: TEditButton;
     eUsername: TEdit;
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     imgLogin: TImage;
     lblConnection: TLabel;
     lblLogin: TLabel;
@@ -58,6 +59,7 @@ type
   private
     sConnect: String;
     sUser: Integer;
+    procedure ApplyDarkMode;
     procedure LoadConnectionList;
     procedure UpdateButtons;
     function ValidatePassword: Boolean;
@@ -70,11 +72,18 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_dialogs, cbs_graphics, udm_main, ucfg_database;
+uses cbs_locale, cbs_global, cbs_dialogs, cbs_graphics, udm_main, ucfg_database, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgConnect }
+
+procedure TdlgConnect.ApplyDarkMode;
+begin
+  pBottom.ParentBackground := True;
+  ePassword.Images := iButtonsDark;
+
+end;
 
 procedure TdlgConnect.cbConnectionChange(Sender: TObject);
 begin
@@ -144,6 +153,9 @@ procedure TdlgConnect.FormShow(Sender: TObject);
 var
   LastConn: Integer;
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   LoadConnectionList;
 
   // Load connection of last session

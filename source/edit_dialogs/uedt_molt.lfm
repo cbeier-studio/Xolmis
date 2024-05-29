@@ -41,9 +41,6 @@ object edtMolt: TedtMolt
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 40
     ClientWidth = 425
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
@@ -79,8 +76,6 @@ object edtMolt: TedtMolt
     ClientHeight = 462
     ClientWidth = 408
     Constraints.MinWidth = 176
-    Color = clDefault
-    ParentColor = False
     TabOrder = 1
     object pClient: TPanel
       Left = 0
@@ -93,9 +88,6 @@ object edtMolt: TedtMolt
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 1183
       ClientWidth = 408
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0

@@ -67,6 +67,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    procedure ApplyDarkMode;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
   public
@@ -79,11 +80,19 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_finddialogs, cbs_dialogs, cbs_taxonomy, cbs_validations;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_finddialogs, cbs_dialogs, cbs_taxonomy, cbs_validations, cbs_themes,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtBotanicTaxon }
+
+procedure TedtBotanicTaxon.ApplyDarkMode;
+begin
+  eName.Images := DMM.iEditsDark;
+  eParentTaxon.Images := DMM.iEditsDark;
+  eValidName.Images := DMM.iEditsDark;
+end;
 
 procedure TedtBotanicTaxon.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
@@ -201,6 +210,9 @@ end;
 
 procedure TedtBotanicTaxon.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionTaxon)])
   else

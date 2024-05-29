@@ -35,6 +35,7 @@ type
     eName: TEdit;
     eNewPass: TEditButton;
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     lblConnectionInstruction: TLabel;
     lblAdminInstruction: TLabel;
     lblDBFile: TLabel;
@@ -67,6 +68,7 @@ type
     procedure eNewPassKeyPress(Sender: TObject; var Key: char);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
+    procedure FormShow(Sender: TObject);
     procedure sbApplyAdminClick(Sender: TObject);
     procedure sbCreateDBClick(Sender: TObject);
   private
@@ -76,6 +78,7 @@ type
     function UpdateAdmin: Boolean;
     function ValidateDatabase: Boolean;
     function ValidatePassword: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -86,11 +89,18 @@ var
 implementation
 
 uses
-  cbs_global, cbs_locale, cbs_datatypes, cbs_data, cbs_graphics, cbs_dialogs, udm_main;
+  cbs_global, cbs_locale, cbs_datatypes, cbs_data, cbs_graphics, cbs_dialogs, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgFirstConfig }
+
+procedure TdlgFirstConfig.ApplyDarkMode;
+begin
+  eDBFile.Images := iButtonsDark;
+  eNewPass.Images := iButtonsDark;
+  eConfirmPass.Images := iButtonsDark;
+end;
 
 procedure TdlgFirstConfig.eConfirmPassButtonClick(Sender: TObject);
 begin
@@ -165,6 +175,12 @@ begin
     Key := #0;
     ModalResult := mrCancel;
   end;
+end;
+
+procedure TdlgFirstConfig.FormShow(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 end;
 
 function TdlgFirstConfig.IsRequiredAdminFilled: Boolean;

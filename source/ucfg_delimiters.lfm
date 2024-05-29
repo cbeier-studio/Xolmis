@@ -13,7 +13,6 @@ object cfgDelimiters: TcfgDelimiters
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 43
@@ -31,9 +30,6 @@ object cfgDelimiters: TcfgDelimiters
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 43
     ClientWidth = 416
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 1
     object sbOK: TButton
       Left = 16
@@ -82,9 +78,6 @@ object cfgDelimiters: TcfgDelimiters
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 318
     ClientWidth = 416
-    Color = clBtnFace
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object lblTitleFields: TLabel
       Left = 16
@@ -153,7 +146,7 @@ object cfgDelimiters: TcfgDelimiters
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
@@ -247,7 +240,7 @@ object cfgDelimiters: TcfgDelimiters
         Left = 16
         Height = 28
         Top = 12
-        Width = 113
+        Width = 112
         Align = alLeft
         Caption = 'Quoted values as text'
         Layout = tlCenter
@@ -306,7 +299,7 @@ object cfgDelimiters: TcfgDelimiters
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
@@ -374,7 +367,7 @@ object cfgDelimiters: TcfgDelimiters
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       TabOrder = 3

@@ -42,12 +42,12 @@ type
     pHeader: TPanel;
     pBottom: TPanel;
     sbClose: TButton;
-    ScrollBox1: TScrollBox;
+    SBox: TScrollBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
-
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -57,11 +57,17 @@ var
 
 implementation
 
-uses cbs_locale, udm_grid;
+uses
+  cbs_locale, cbs_themes, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgBandHistory }
+
+procedure TdlgBandHistory.ApplyDarkMode;
+begin
+  SBox.Color := clCardBGDefaultDark;
+end;
 
 procedure TdlgBandHistory.FormCreate(Sender: TObject);
 begin
@@ -75,6 +81,9 @@ end;
 
 procedure TdlgBandHistory.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   DBG.Columns.ColumnByFieldname('event_type').PickList.CommaText := rsBandEventTypeList;
 end;
 

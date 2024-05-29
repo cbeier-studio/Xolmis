@@ -30,6 +30,7 @@ type
 
   TcfgDatabase = class(TForm)
     dsConn: TDataSource;
+    iButtonsDark: TImageList;
     iconDB: TImageList;
     iButtons: TImageList;
     lineBottom: TShapeLineBGRA;
@@ -69,6 +70,7 @@ type
     procedure vtConnectionsGetImageIndex(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Kind: TVTImageKind; Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer);
   private
+    procedure ApplyDarkMode;
     procedure UpdateButtons;
   public
 
@@ -79,7 +81,9 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_data, cbs_dialogs, udm_main, uedt_database;
+uses
+  cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_data, cbs_dialogs, cbs_themes, udm_main, uedt_database,
+  uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -92,6 +96,9 @@ end;
 
 procedure TcfgDatabase.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if not DMM.sysCon.Connected then
     DMM.sysCon.Open;
   if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
@@ -133,6 +140,21 @@ begin
     Key := #0;
     ModalResult := mrClose;
   end;
+end;
+
+procedure TcfgDatabase.ApplyDarkMode;
+begin
+  pChildToolbar.Background.Color := clCardBGDefaultDark;
+  pChildToolbar.Border.Color := clCardBGSecondaryDark;
+  pClient.Color := clSolidBGBaseDark;
+
+  sbNew.Images := iButtonsDark;
+  sbEdit.Images := iButtonsDark;
+  sbMore.Images := iButtonsDark;
+  sbRefreshRecords.Images := iButtonsDark;
+  sbDelete.Images := iButtonsDark;
+  pmTools.Images := iButtonsDark;
+  pmGrid.Images := iButtonsDark;
 end;
 
 procedure TcfgDatabase.dsConnStateChange(Sender: TObject);

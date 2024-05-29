@@ -155,8 +155,8 @@ begin
 
   { >> Create active user and settings objects }
   ActiveUser := TUser.Create;
-  XSettings := TXolmisSettings.Create;
-  XSettings.LoadFromFile;
+  //XSettings := TXolmisSettings.Create;
+  //XSettings.LoadFromFile;
 
   { >> Log file }
   logFull := CheckLogsFull;

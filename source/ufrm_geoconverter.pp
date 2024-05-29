@@ -50,12 +50,12 @@ type
     pConverted: TPanel;
     pConvertFrom: TPanel;
     pConvertedToolbar: TBCPanel;
-    pConvertFromToolbar1: TBCPanel;
-    pConvertFromToolbar2: TBCPanel;
-    pConvertFromToolbar3: TBCPanel;
-    pConvertFromToolbar4: TBCPanel;
-    pConvertFromToolbar5: TBCPanel;
-    pConvertFromToolbar6: TBCPanel;
+    pConvert: TBCPanel;
+    pUtmZone: TBCPanel;
+    pUtmHemisphere: TBCPanel;
+    pAddUnitsZone: TBCPanel;
+    pFormatInfo: TBCPanel;
+    pCaretPos: TBCPanel;
     pLeft: TPanel;
     pmtSaveFile: TMenuItem;
     pmtCopy: TMenuItem;
@@ -102,6 +102,7 @@ type
       ALogStartPos: TPoint; var AnAction: TSynCopyPasteAction);
   private
     procedure AddMark(aLine: Integer);
+    procedure ApplyDarkMode;
     procedure FormatCoordinates;
     procedure UpdateButtons;
     procedure UpdateCurrentCaretPos;
@@ -114,7 +115,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_dialogs, cbs_gis, udm_main;
+uses cbs_locale, cbs_global, cbs_dialogs, cbs_gis, cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -134,6 +135,9 @@ end;
 
 procedure TfrmGeoConverter.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   UpdateCurrentCaretPos;
 end;
 
@@ -375,6 +379,56 @@ begin
   m.ImageIndex := 1;
   m.Visible := True;
   seConverted.Marks.Add(m);
+end;
+
+procedure TfrmGeoConverter.ApplyDarkMode;
+begin
+  pLeft.Color := clSolidBGBaseDark;
+  pConvertFrom.Color := clSolidBGBaseDark;
+  pConverted.Color := clSolidBGBaseDark;
+
+  pConvert.Background.Color := clCardBGDefaultDark;
+  pConvert.Border.Color := clCardBGSecondaryDark;
+  pUtmZone.Background.Color := clCardBGDefaultDark;
+  pUtmZone.Border.Color := clCardBGSecondaryDark;
+  pUtmHemisphere.Background.Color := clCardBGDefaultDark;
+  pUtmHemisphere.Border.Color := clCardBGSecondaryDark;
+  Panel2.Color := clCardBGDefaultDark;
+  pAddUnitsZone.Background.Color := clCardBGDefaultDark;
+  pAddUnitsZone.Border.Color := clCardBGSecondaryDark;
+  pCaretPos.Background.Color := clCardBGDefaultDark;
+  pCaretPos.Border.Color := clCardBGSecondaryDark;
+  pConvertFromToolbar.Background.Color := clCardBGDefaultDark;
+  pConvertFromToolbar.Border.Color := clCardBGSecondaryDark;
+  pConvertedToolbar.Background.Color := clCardBGDefaultDark;
+  pConvertedToolbar.Border.Color := clCardBGSecondaryDark;
+
+  pFormatInfo.Background.Color := clVioletBG1Dark;
+  pFormatInfo.Border.Color := clCardBGSecondaryDark;
+
+  SplitSynEdit.ParentColor := True;
+  seConvertFrom.Color := clSolidBGSecondaryDark;
+  seConvertFrom.Gutter.Color := clSolidBGSecondaryDark;
+  seConvertFrom.Gutter.Parts[1].MarkupInfo.Background := clSolidBGSecondaryDark;
+  seConvertFrom.Gutter.Parts[1].MarkupInfo.Foreground := clTextTertiaryDark;
+  seConvertFrom.Gutter.Parts[3].MarkupInfo.Background := clSolidBGSecondaryDark;
+  seConvertFrom.Gutter.Parts[4].MarkupInfo.Background := clSolidBGSecondaryDark;
+  seConvertFrom.Font.Color := clTextPrimaryDark;
+  seConverted.Color := clSolidBGSecondaryDark;
+  seConverted.Gutter.Color := clSolidBGSecondaryDark;
+  seConverted.Gutter.Parts[1].MarkupInfo.Background := clSolidBGSecondaryDark;
+  seConverted.Gutter.Parts[1].MarkupInfo.Foreground := clTextTertiaryDark;
+  seConverted.Font.Color := clTextPrimaryDark;
+
+  pmConvertFrom.Images := iButtonsDark;
+  pmConverted.Images := iButtonsDark;
+  sbConvert.Images := iButtonsDark;
+  sbOpenFile.Images := iButtonsDark;
+  sbPaste.Images := iButtonsDark;
+  sbClear.Images := iButtonsDark;
+  sbSaveFile.Images := iButtonsDark;
+  sbCopy.Images := iButtonsDark;
+  sbAddToGeoEditor.Images := iButtonsDark;
 end;
 
 procedure TfrmGeoConverter.FormatCoordinates;

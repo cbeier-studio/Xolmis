@@ -44,9 +44,6 @@ object edtWeatherLog: TedtWeatherLog
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 400
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
@@ -87,8 +84,6 @@ object edtWeatherLog: TedtWeatherLog
     ClientHeight = 423
     ClientWidth = 400
     Constraints.MinWidth = 176
-    Color = clDefault
-    ParentColor = False
     TabOrder = 1
     object pContent: TPanel
       Left = 0
@@ -101,9 +96,6 @@ object edtWeatherLog: TedtWeatherLog
       ChildSizing.TopBottomSpacing = 8
       ClientHeight = 423
       ClientWidth = 400
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0

@@ -43,9 +43,6 @@ object edtEgg: TedtEgg
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 416
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16
@@ -92,9 +89,6 @@ object edtEgg: TedtEgg
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 892
       ClientWidth = 399
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pFieldNumber: TPanel
         Left = 0
@@ -593,7 +587,7 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 15
           Top = 3
-          Width = 54
+          Width = 53
           BorderSpacing.Top = 3
           Caption = 'Volume:'
           Font.Color = 6579300
@@ -604,7 +598,7 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 15
           Top = 22
-          Width = 54
+          Width = 53
           BorderSpacing.Bottom = 8
           DataField = 'egg_volume'
           DataSource = dsLink

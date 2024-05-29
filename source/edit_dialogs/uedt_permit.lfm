@@ -15,6 +15,7 @@ object edtPermit: TedtPermit
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -44,9 +45,6 @@ object edtPermit: TedtPermit
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 400
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
@@ -84,8 +82,6 @@ object edtPermit: TedtPermit
     ClientHeight = 421
     ClientWidth = 400
     Constraints.MinWidth = 176
-    Color = clDefault
-    ParentColor = False
     TabOrder = 1
     object pClient: TPanel
       Left = 0
@@ -98,9 +94,6 @@ object edtPermit: TedtPermit
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 421
       ClientWidth = 400
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
@@ -434,7 +427,7 @@ object edtPermit: TedtPermit
         FontEx.ShadowOffsetX = 5
         FontEx.ShadowOffsetY = 5
         FontEx.Style = []
-        ParentBackground = False
+        ParentBackground = True
         Rounding.RoundX = 8
         Rounding.RoundY = 8
         TabOrder = 5

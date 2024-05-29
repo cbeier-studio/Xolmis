@@ -158,6 +158,7 @@ type
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -168,11 +169,24 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, udm_main;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_themes,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtPerson }
+
+procedure TedtPerson.ApplyDarkMode;
+begin
+  pImageToolbar.Background.Color := clCardBGDefaultDark;
+
+  eBirthDate.Images := DMM.iEditsDark;
+  eDeathDate.Images := DMM.iEditsDark;
+  eMunicipality.Images := DMM.iEditsDark;
+  eState.Images := DMM.iEditsDark;
+  eCountry.Images := DMM.iEditsDark;
+  eInstitution.Images := DMM.iEditsDark;
+end;
 
 procedure TedtPerson.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
@@ -355,6 +369,9 @@ end;
 
 procedure TedtPerson.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPerson)])
   else

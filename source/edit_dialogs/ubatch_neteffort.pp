@@ -74,12 +74,14 @@ type
     procedure eSurveyKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
+    procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     fromSurvey, xSurveyId: Integer;
     aSurvey: TSurvey;
     function ValidateData: Boolean;
     procedure AddNetsBatch;
+    procedure ApplyDarkMode;
   public
     property SurveyId: Integer read xSurveyId write xSurveyId;
   end;
@@ -90,7 +92,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_system, udm_main;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_system, cbs_themes, udm_main,
+  uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -213,6 +216,24 @@ begin
   end;
 end;
 
+procedure TbatchNetEffort.ApplyDarkMode;
+begin
+  pEdit.Color := clVioletBG1Dark;
+  pSurvey.Background.Color := clCardBGDefaultDark;
+  pSurvey.Border.Color := clCardBGSecondaryDark;
+  pSurvey.Color := pEdit.Color;
+
+  eSurvey.Images := DMM.iEditsDark;
+  eOpenTime1.Images := DMM.iEditsDark;
+  eCloseTime1.Images := DMM.iEditsDark;
+  eOpenTime2.Images := DMM.iEditsDark;
+  eCloseTime2.Images := DMM.iEditsDark;
+  eOpenTime3.Images := DMM.iEditsDark;
+  eCloseTime3.Images := DMM.iEditsDark;
+  eOpenTime4.Images := DMM.iEditsDark;
+  eCloseTime4.Images := DMM.iEditsDark;
+end;
+
 procedure TbatchNetEffort.eSurveyButtonClick(Sender: TObject);
 begin
   FindDlg(tbSurveys, eSurvey, fromSurvey);
@@ -272,6 +293,12 @@ begin
     ModalResult := mrCancel;
     Key := #0;
   end;
+end;
+
+procedure TbatchNetEffort.FormShow(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 end;
 
 procedure TbatchNetEffort.sbSaveClick(Sender: TObject);

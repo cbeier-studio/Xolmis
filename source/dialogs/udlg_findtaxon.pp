@@ -31,6 +31,7 @@ type
 
   TdlgFindTaxon = class(TForm)
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     lblName: THtmlViewer;
     lblVernacular: TDBText;
     dsFind: TDataSource;
@@ -40,7 +41,7 @@ type
     pContent: TPanel;
     pEP: TBCPanel;
     qFind: TSQLQuery;
-    sbClearSearch: TColorSpeedButton;
+    sbOptions: TColorSpeedButton;
     sbClose: TColorSpeedButton;
     TimerFind: TTimer;
     uList: TDBControlGrid;
@@ -52,7 +53,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure lblNameEnter(Sender: TObject);
     procedure pContentClick(Sender: TObject);
-    procedure sbClearSearchClick(Sender: TObject);
+    procedure sbOptionsClick(Sender: TObject);
     procedure sbCloseClick(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
     procedure uListPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
@@ -64,6 +65,7 @@ type
     oOrder, oDirection: String;
     function Pesquisar(aValor: String): Boolean;
     function PesquisarHashtag(aValor: String): Boolean;
+    procedure ApplyDarkMode;
     procedure GetRankFilter(const aSQL: TStrings; aFilter: TTaxonFilters);
     procedure SetSelect(const aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
   public
@@ -83,11 +85,28 @@ var
 
 implementation
 
-uses cbs_global, cbs_getvalue, cbs_conversions;
+uses
+  cbs_global, cbs_getvalue, cbs_conversions, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgFindTaxon }
+
+procedure TdlgFindTaxon.ApplyDarkMode;
+begin
+  pEP.Background.Color := clSystemSolidNeutralBGDark;
+  pEP.Border.Color := clSystemNeutralBGDark;
+  pEP.ParentBackground := True;
+  EP.Color := pEP.Background.Color;
+  sbClose.Images := iButtonsDark;
+  sbClose.StateHover.Color := clSolidBGBaseDark;
+  sbClose.StateActive.Color := clSolidBGSecondaryDark;
+  sbClose.StateNormal.Color := pEP.Background.Color;
+  sbOptions.Images := iButtonsDark;
+  sbOptions.StateHover.Color := clSolidBGBaseDark;
+  sbOptions.StateActive.Color := clSolidBGSecondaryDark;
+  sbOptions.StateNormal.Color := pEP.Background.Color;
+end;
 
 procedure TdlgFindTaxon.EPChange(Sender: TObject);
 begin
@@ -202,6 +221,9 @@ begin
   SetRoundedCorners(Self.Handle, rcSmall);
   {$ENDIF}
 
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   Verna := XSettings.VernacularNamesLanguage;
   case Verna of
     0:
@@ -221,7 +243,7 @@ begin
   end;
 end;
 
-procedure TdlgFindTaxon.sbClearSearchClick(Sender: TObject);
+procedure TdlgFindTaxon.sbOptionsClick(Sender: TObject);
 begin
   {$IFDEF DEBUG}
   LogDebug('Search cleared');

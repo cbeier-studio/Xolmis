@@ -31,6 +31,7 @@ type
   TdlgCalendar = class(TForm)
     Cal: TCalendar;
     iCalendar: TImageList;
+    iCalendarDark: TImageList;
     pCalendar: TBCPanel;
     pRight: TBCPanel;
     pOperations: TBCPanel;
@@ -58,6 +59,7 @@ type
   private
     xData, BaseDate: TDate;
     xDataStr: String;
+    procedure ApplyDarkMode;
   public
     procedure SetDialogPosition(X, Y: Integer; ControlWidth, ControlHeight: Integer);
 
@@ -70,11 +72,27 @@ var
 
 implementation
 
-uses cbs_global;
+uses
+  cbs_global, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgCalendar }
+
+procedure TdlgCalendar.ApplyDarkMode;
+begin
+  pOperations.Background.Color := clCardBGDefaultDark;
+  pOperations.Border.Color := clCardBGSecondaryDark;
+  pYears.Background.Color := clCardBGDefaultDark;
+  pYears.Border.Color := clCardBGSecondaryDark;
+  pMonths.Background.Color := clCardBGDefaultDark;
+  pMonths.Border.Color := clCardBGSecondaryDark;
+  pDays.Background.Color := clCardBGDefaultDark;
+  pDays.Border.Color := clCardBGSecondaryDark;
+
+  rbAdd.Images := iCalendarDark;
+  rbSubtract.Images := iCalendarDark;
+end;
 
 procedure TdlgCalendar.eYearsChange(Sender: TObject);
 var
@@ -141,11 +159,12 @@ end;
 
 procedure TdlgCalendar.FormShow(Sender: TObject);
 begin
-  // Posição na tela
-  //PositionWindow(WindowPos, Self);
   {$IFDEF MSWINDOWS}
   SetRoundedCorners(Self.Handle, rcSmall);
   {$ENDIF}
+
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 
   if (Length(DateString) > 0) then
     Cal.DateTime := Date

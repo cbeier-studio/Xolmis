@@ -124,6 +124,7 @@ type
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -135,11 +136,28 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy,
-  cbs_validations;
+  cbs_validations, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtIndividual }
+
+procedure TedtIndividual.ApplyDarkMode;
+begin
+  eTaxon.Images := DMM.iEditsDark;
+  eBand.Images := DMM.iEditsDark;
+  eBandingDate.Images := DMM.iEditsDark;
+  eDoubleBand.Images := DMM.iEditsDark;
+  eRemovedBand.Images := DMM.iEditsDark;
+  eBandChangeDate.Images := DMM.iEditsDark;
+  eRightTarsus.Images := DMM.iEditsDark;
+  eLeftTarsus.Images := DMM.iEditsDark;
+  eRightTibia.Images := DMM.iEditsDark;
+  eLeftTibia.Images := DMM.iEditsDark;
+  eNest.Images := DMM.iEditsDark;
+  eFather.Images := DMM.iEditsDark;
+  eMother.Images := DMM.iEditsDark;
+end;
 
 procedure TedtIndividual.cbSexKeyPress(Sender: TObject; var Key: char);
 begin
@@ -447,6 +465,9 @@ end;
 
 procedure TedtIndividual.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionIndividual)])
   else

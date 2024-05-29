@@ -7,6 +7,8 @@
 {"hash":105607833,"name":"tcfgoptions.lblcleardeleted.caption","sourcebytes":[67,108,101,97,114,32,100,101,108,101,116,101,100,32,114,101,99,111,114,100,115,32,97,117,116,111,109,97,116,105,99,97,108,108,121,32,40,105,110,32,100,97,121,115,41],"value":"Clear deleted records automatically (in days)"},
 {"hash":70677491,"name":"tcfgoptions.lblcheckupdates.caption","sourcebytes":[67,104,101,99,107,32,102,111,114,32,88,111,108,109,105,115,32,117,112,100,97,116,101,115],"value":"Check for Xolmis updates"},
 {"hash":194854535,"name":"tcfgoptions.sbcheckupdatesnow.caption","sourcebytes":[67,104,101,99,107,32,110,111,119],"value":"Check now"},
+{"hash":5958709,"name":"tcfgoptions.lblselectedtheme.caption","sourcebytes":[84,104,101,109,101],"value":"Theme"},
+{"hash":96157427,"name":"tcfgoptions.lblselectedthemerestart.caption","sourcebytes":[88,111,108,109,105,115,32,110,101,101,100,32,116,111,32,98,101,32,114,101,115,116,97,114,116,101,100,32,116,111,32,97,112,112,108,121,32,99,104,97,110,103,101,115],"value":"Xolmis need to be restarted to apply changes"},
 {"hash":46008942,"name":"tcfgoptions.lbltitlecollection.caption","sourcebytes":[67,111,108,108,101,99,116,105,111,110],"value":"Collection"},
 {"hash":188478083,"name":"tcfgoptions.lblvernacularnames.caption","sourcebytes":[76,97,110,103,117,97,103,101,32,111,102,32,118,101,114,110,97,99,117,108,97,114,32,110,97,109,101,115],"value":"Language of vernacular names"},
 {"hash":72006185,"name":"tcfgoptions.lblmaintaxonomy.caption","sourcebytes":[80,114,101,102,101,114,101,100,32,116,97,120,111,110,111,109,121],"value":"Prefered taxonomy"},

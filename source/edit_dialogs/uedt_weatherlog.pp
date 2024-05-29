@@ -78,6 +78,7 @@ type
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -88,9 +89,14 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs;
+  cbs_locale, cbs_global, cbs_dialogs, udm_main, uDarkStyleParams;
 
 { TedtWeatherLog }
+
+procedure TedtWeatherLog.ApplyDarkMode;
+begin
+  eSampleDate.Images := DMM.iEditsDark;
+end;
 
 procedure TedtWeatherLog.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
@@ -148,6 +154,9 @@ end;
 
 procedure TedtWeatherLog.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionWeatherLogEntry)])
   else

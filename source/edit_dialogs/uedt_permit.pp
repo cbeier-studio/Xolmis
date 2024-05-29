@@ -72,6 +72,7 @@ type
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -82,9 +83,20 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_themes, udm_main,
+  uDarkStyleParams;
 
 { TedtPermit }
+
+procedure TedtPermit.ApplyDarkMode;
+begin
+  pProject.Background.Color := clCardBGDefaultDark;
+  pProject.Border.Color := clCardBGSecondaryDark;
+
+  eProject.Images := DMM.iEditsDark;
+  eDispatchDate.Images := DMM.iEditsDark;
+  eExpireDate.Images := DMM.iEditsDark;
+end;
 
 procedure TedtPermit.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
@@ -177,6 +189,9 @@ end;
 
 procedure TedtPermit.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPermit)])
   else

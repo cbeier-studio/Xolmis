@@ -34,6 +34,7 @@ type
     Band3: TBCPanel;
     Band4: TBCPanel;
     bBands: TImageList;
+    bBandsDark: TImageList;
     pColor_M: TBCPanel;
     pColor_B: TBCPanel;
     pColor_G: TBCPanel;
@@ -88,6 +89,7 @@ type
     FLimit, FBandIdx: Integer;
     FBands: TBirdMarks;
     FBodyPart: TBodyPart;
+    procedure ApplyDarkMode;
     procedure UpdateButtons;
     procedure PaintBand(aBand: TBandColorCode; aPanel: TBCPanel; aButton: TSpeedButton);
     procedure AddBand(aBand: TBandColorCode);
@@ -106,7 +108,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_themes, cbs_system;
+uses cbs_global, cbs_themes, cbs_system, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -230,6 +232,9 @@ begin
   SetRoundedCorners(Self.Handle, rcSmall);
   {$ENDIF}
 
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if BandsLimit = 0 then
     BandsLimit := 4;
 
@@ -329,6 +334,21 @@ begin
     FBands.Items[n].Index := n;
     FBands.Items[n].BodyPart := FBodyPart;
   end;
+end;
+
+procedure TdlgColorBands.ApplyDarkMode;
+begin
+  pColors.Background.Color := clCardBGDefaultDark;
+  pBands.Color := clCardBGDefaultDark;
+  pCenter.Color := clCardBGDefaultDark;
+
+  sbClear.Images := bBandsDark;
+  sbDown.Images := bBandsDark;
+  sbUp.Images := bBandsDark;
+  sbDelBand1.Images := bBandsDark;
+  sbDelBand2.Images := bBandsDark;
+  sbDelBand3.Images := bBandsDark;
+  sbDelBand4.Images := bBandsDark;
 end;
 
 procedure TdlgColorBands.Band1Click(Sender: TObject);

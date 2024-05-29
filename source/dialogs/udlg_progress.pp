@@ -30,6 +30,7 @@ type
 
   TdlgProgress = class(TForm)
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     sbCancel: TBitBtn;
     lineBottom: TShapeLineBGRA;
     lStatus: TLabel;
@@ -38,11 +39,13 @@ type
     PBar: TProgressBar;
     pBottom: TPanel;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormShow(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
   private
     sTitle, sText: String;
     vMin, vMax, vPosition: Integer;
     bAllowCancel: Boolean;
+    procedure ApplyDarkMode;
     procedure SetTitle(aTitle: String);
     procedure SetText(aText: String);
     procedure SetMin(aMin: Integer);
@@ -63,7 +66,7 @@ var
 
 implementation
 
-uses cbs_global;
+uses cbs_global, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -74,9 +77,21 @@ begin
   Parar := True;
 end;
 
+procedure TdlgProgress.ApplyDarkMode;
+begin
+  lblTitle.Font.Color := clVioletFG1Dark;
+  sbCancel.Images := iButtonsDark;
+end;
+
 procedure TdlgProgress.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   CloseAction := caFree;
+end;
+
+procedure TdlgProgress.FormShow(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 end;
 
 procedure TdlgProgress.SetTitle(aTitle: String);

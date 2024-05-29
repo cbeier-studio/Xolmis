@@ -31,6 +31,7 @@ type
   TdlgChangePassword = class(TForm)
     BCrypt: TDCP_blowfish;
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     lblUsername: TDBText;
     eNewPassword: TEditButton;
     eConfirmPassword: TEditButton;
@@ -47,9 +48,11 @@ type
     procedure eNewPasswordKeyPress(Sender: TObject; var Key: char);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
+    procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     xPass: String;
+    procedure ApplyDarkMode;
     function ValidatePassword: Boolean;
   public
     property Pass: String read xPass write xPass;
@@ -60,7 +63,8 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_graphics, cbs_dialogs, udm_main;
+uses
+  cbs_locale, cbs_global, cbs_graphics, cbs_dialogs, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -82,6 +86,18 @@ begin
     Key := #0;
     ModalResult := mrCancel;
   end;
+end;
+
+procedure TdlgChangePassword.FormShow(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+end;
+
+procedure TdlgChangePassword.ApplyDarkMode;
+begin
+  eNewPassword.Images := iButtonsDark;
+  eConfirmPassword.Images := iButtonsDark;
 end;
 
 procedure TdlgChangePassword.eNewPasswordButtonClick(Sender: TObject);

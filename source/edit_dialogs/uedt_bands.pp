@@ -88,6 +88,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    procedure ApplyDarkMode;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
   public
@@ -101,11 +102,18 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_validations, cbs_dialogs, cbs_finddialogs, cbs_birds,
-  udm_main;
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtBands }
+
+procedure TedtBands.ApplyDarkMode;
+begin
+  eSupplier.Images := DMM.iEditsDark;
+  eCarrier.Images := DMM.iEditsDark;
+  eProject.Images := DMM.iEditsDark;
+end;
 
 procedure TedtBands.cbBandColorDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState
   );
@@ -162,7 +170,10 @@ begin
   cbBandType.Canvas.TextStyle := aTextStyle;
   cbBandType.Canvas.TextRect(ARect, 24, ARect.Top, cbBandType.Items[Index]);
   if Index < cbBandType.Items.Count - 1 then
-    DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType);
+    if IsDarkModeEnabled then
+      DMM.iBandTypesDark.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType)
+    else
+      DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType);
 end;
 
 procedure TedtBands.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -302,7 +313,8 @@ end;
 
 procedure TedtBands.FormShow(Sender: TObject);
 begin
-
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionBand)])

@@ -38,9 +38,6 @@ object dlgAbout: TdlgAbout
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 42
     ClientWidth = 307
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbCopy: TBitBtn
       Left = 16
@@ -229,57 +226,6 @@ object dlgAbout: TdlgAbout
         Align = alLeft
         Caption = 'Version'
         Layout = tlCenter
-      end
-      object pAppPrerelease: TBCPanel
-        Left = 114
-        Height = 21
-        Top = 11
-        Width = 69
-        Align = alRight
-        BorderSpacing.Top = 10
-        BorderSpacing.Bottom = 10
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.TopBottomSpacing = 4
-        Background.Color = 14284539
-        Background.Gradient1.StartColor = clWhite
-        Background.Gradient1.EndColor = clBlack
-        Background.Gradient1.GradientType = gtLinear
-        Background.Gradient1.Point1XPercent = 0
-        Background.Gradient1.Point1YPercent = 0
-        Background.Gradient1.Point2XPercent = 0
-        Background.Gradient1.Point2YPercent = 100
-        Background.Gradient2.StartColor = clWhite
-        Background.Gradient2.EndColor = clBlack
-        Background.Gradient2.GradientType = gtLinear
-        Background.Gradient2.Point1XPercent = 0
-        Background.Gradient2.Point1YPercent = 0
-        Background.Gradient2.Point2XPercent = 0
-        Background.Gradient2.Point2YPercent = 100
-        Background.Gradient1EndPercent = 35
-        Background.Style = bbsColor
-        BevelInner = bvNone
-        BevelOuter = bvRaised
-        BevelWidth = 1
-        Border.Color = 4500223
-        Border.Style = bboSolid
-        BorderBCStyle = bpsBorder
-        Caption = 'Alpha'
-        Color = 16448250
-        Constraints.MaxWidth = 150
-        FontEx.Color = 1871359
-        FontEx.FontQuality = fqSystemClearType
-        FontEx.Height = 12
-        FontEx.Shadow = False
-        FontEx.ShadowRadius = 5
-        FontEx.ShadowOffsetX = 5
-        FontEx.ShadowOffsetY = 5
-        FontEx.Style = [fsBold]
-        FontEx.PaddingLeft = 8
-        FontEx.PaddingRight = 8
-        ParentBackground = False
-        Rounding.RoundX = 12
-        Rounding.RoundY = 12
-        TabOrder = 0
       end
       object pAppVersion: TLabel
         Left = 199
@@ -577,6 +523,36 @@ object dlgAbout: TdlgAbout
       00E24BF342587980EA5F1251F623E33822CC0F01E2FF40DC3C3F949517A82719
       881B08E06A20D620B66E019A3D0B6AC73920EE03E27A3CB80E88F949A91781EA
       1981381288F703F127A85DD8F033202EA6A40E86DA85130F741B01009BA337E7
+    }
+  end
+  object iButtonsDark: TImageList
+    Scaled = True
+    Left = 184
+    Top = 424
+    Bitmap = {
+      4C7A010000001000000010000000960000000000000078DA6360187CE0FFD984
+      2420BE03C42FD1F05D901C11FADF877819FFB734D541C12031901C2E7DBF7EFD
+      CA87EAFFAFA1A1811583E4F0E8FF42A1FEFF235D3F10F300D57C71B0D6C3D00B
+      1203C9E1D17F168853806A4AFE9E8EFFF2E754FC7F640C1203C9E1D19F04C4CF
+      8038FDD7D7575C7F1EAF6542C640BD8CF8D21D501F1B10C703F10920FE8B843F
+      0371F520CC6A0C00EF4C05A7
+    }
+    BitmapAdv = {
+      4C69020000004C7A010000001400000014000000B20000000000000078DA6360
+      189AE0FFD9040320DE08C48FB1E04740BC0C88954930EF4879AAED7F3B4B3DAC
+      B8BBC4E93F50CD0A42E6FCFAF5CB14A88EE9F7A9F8FF1A1A1A38B195992EC8BC
+      E74498770DA88E9948F35E1061DEBF51F346CD1B40F37E0231EFDF33F1E71382
+      CD709A57966203326F0B11E69D06E274A05A47A09967FF9E49F88F0D03E50F01
+      B12111E6F900F15320CE02627E2066C2864929AB80EABD81F824107F07E23F68
+      F80A109B0DD162980100410AA02A4C7A010000001800000018000000F2000000
+      0000000078DA636018BEE0FFD9841020DE0FC47708E0EB40DC06C4C22498AD0C
+      C4FF7E9E88BB7B637DD8117CF8C98EC81340B5FF81B88B18B37FFDFAC503545B
+      0AD26369AAF34E4343E33F217C6F4BF831A0FA0744989D0AC4CD40B53520F335
+      35099B0DC2E796071F02AA7F4E84F9B780B88D86E67F1F357FD4FC51F387ACF9
+      AF80780A506D02C8FCA244EB3384CC3631D4FEFCF568EC0DA0FAD34498BF0388
+      2FFDBB5CCE0B54FF0A5AEEFE2380FF43713C11E68700F17F206E81DA9104C4F5
+      047015106B125BB700CD9E01B5E302104F04E2263CB81188F949AD1B817A4281
+      781710BF05E2DF38F00320CE1FC64D04060094A1CE4E
     }
   end
 end

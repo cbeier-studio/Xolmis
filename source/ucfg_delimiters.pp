@@ -56,6 +56,7 @@ type
   private
     FDelimiter, FDecimal: Char;
     FQuotes, FHeader: Boolean;
+    procedure ApplyDarkMode;
     procedure SetQuotedAsText(aValue: Boolean);
     procedure SetDelimiter(aValue: Char);
     procedure SetDecimalSeparator(aValue: Char);
@@ -72,11 +73,26 @@ var
 
 implementation
 
-uses cbs_global, cbs_graphics;
+uses cbs_global, cbs_graphics, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TcfgDelimiters }
+
+procedure TcfgDelimiters.ApplyDarkMode;
+begin
+  pHaveHeader.Background.Color := clCardBGDefaultDark;
+  pHaveHeader.Border.Color := clCardBGSecondaryDark;
+  pQuotedAsText.Background.Color := clCardBGDefaultDark;
+  pQuotedAsText.Border.Color := clCardBGSecondaryDark;
+  pDelimiter.Background.Color := clCardBGDefaultDark;
+  pDelimiter.Border.Color := clCardBGSecondaryDark;
+  pDecimalSeparator.Background.Color := clCardBGDefaultDark;
+  pDecimalSeparator.Border.Color := clCardBGSecondaryDark;
+
+  tsHaveHeader.Color := pHaveHeader.Background.Color;
+  tsQuotedAsText.Color := pQuotedAsText.Background.Color;
+end;
 
 procedure TcfgDelimiters.cbDelimiterSelect(Sender: TObject);
 begin
@@ -99,6 +115,9 @@ end;
 
 procedure TcfgDelimiters.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   { #todo : Get the values from config }
   if FQuotes then
     tsQuotedAsText.StateOn := sw_on

@@ -43,9 +43,6 @@ object edtNetStation: TedtNetStation
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 400
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
@@ -83,8 +80,6 @@ object edtNetStation: TedtNetStation
     ClientHeight = 450
     ClientWidth = 400
     Constraints.MinWidth = 176
-    Color = clDefault
-    ParentColor = False
     TabOrder = 1
     object pClient: TPanel
       Left = 0
@@ -97,9 +92,6 @@ object edtNetStation: TedtNetStation
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 450
       ClientWidth = 400
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pLocality: TPanel
         Left = 0

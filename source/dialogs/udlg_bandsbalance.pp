@@ -51,6 +51,7 @@ type
     procedure TimerLoadTimer(Sender: TObject);
   private
     MediaDiasExpedicao: Integer;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -60,7 +61,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_themes, udm_main, udm_client;
+uses cbs_global, cbs_themes, udm_main, udm_client, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -97,6 +98,14 @@ begin
   DMC.qBandsBalance.Close;
 end;
 
+procedure TdlgBandsBalance.ApplyDarkMode;
+begin
+  pMsg.Background.Color := clCardBGDefaultDark;
+  pMsg.Border.Color := clCardBGSecondaryDark;
+  pMsg.FontEx.Color := clTextPrimaryDark;
+  pMsg.Color := dbgSaldo.Color;
+end;
+
 procedure TdlgBandsBalance.dbgSaldoPrepareCanvas(sender: TObject; DataCol: Integer;
   Column: TColumn; AState: TGridDrawState);
 var
@@ -115,12 +124,28 @@ begin
         Canvas.Font.Style := Canvas.Font.Style + [fsBold];
         if vSaldo = 0 then
         begin
-          Canvas.Font.Color := clSystemCriticalFGLight;
-          Canvas.Brush.Color := clSystemCriticalBGLight;
+          if IsDarkModeEnabled then
+          begin
+            Canvas.Brush.Color := clSystemCriticalBGDark;
+            Canvas.Font.Color := clSystemCriticalFGDark;
+          end
+          else
+          begin
+            Canvas.Brush.Color := clSystemCriticalBGLight;
+            Canvas.Font.Color := clSystemCriticalFGLight;
+          end;
         end else
         begin
-          Canvas.Font.Color := clSystemCautionFGLight;
-          Canvas.Brush.Color := clSystemCautionBGLight
+          if IsDarkModeEnabled then
+          begin
+            Canvas.Brush.Color := clSystemCautionBGDark;
+            Canvas.Font.Color := clSystemCautionFGDark;
+          end
+          else
+          begin
+            Canvas.Brush.Color := clSystemCautionBGLight;
+            Canvas.Font.Color := clSystemCautionFGLight;
+          end;
         end;
       end;
     end;
@@ -129,6 +154,9 @@ end;
 
 procedure TdlgBandsBalance.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   TimerLoad.Enabled := True;
 end;
 

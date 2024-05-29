@@ -31,6 +31,7 @@ type
 
   TdlgFind = class(TForm)
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     pmfShowBandsAvailable: TMenuItem;
     pmOptions: TPopupMenu;
     sbOptions: TColorSpeedButton;
@@ -64,6 +65,7 @@ type
     function GetCriteria(aCriteria: TCriteriaType): String;
     function HashtagFilter(aValue: String): Boolean;
     function Search(aValue: String): Boolean;
+    procedure ApplyDarkMode;
     procedure FindBands(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindBotany(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindCaptures(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
@@ -111,11 +113,27 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_conversions, cbs_getvalue, cbs_dialogs;
+  cbs_locale, cbs_global, cbs_conversions, cbs_getvalue, cbs_dialogs, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgFind }
+
+procedure TdlgFind.ApplyDarkMode;
+begin
+  pEP.Background.Color := clSystemSolidNeutralBGDark;
+  pEP.Border.Color := clSystemNeutralBGDark;
+  pEP.ParentBackground := True;
+  EP.Color := pEP.Background.Color;
+  sbClose.Images := iButtonsDark;
+  sbClose.StateHover.Color := clSolidBGBaseDark;
+  sbClose.StateActive.Color := clSolidBGSecondaryDark;
+  sbClose.StateNormal.Color := pEP.Background.Color;
+  sbOptions.Images := iButtonsDark;
+  sbOptions.StateHover.Color := clSolidBGBaseDark;
+  sbOptions.StateActive.Color := clSolidBGSecondaryDark;
+  sbOptions.StateNormal.Color := pEP.Background.Color;
+end;
 
 procedure TdlgFind.EPChange(Sender: TObject);
 begin
@@ -1061,6 +1079,9 @@ begin
   {$IFDEF MSWINDOWS}
   SetRoundedCorners(Self.Handle, rcSmall);
   {$ENDIF}
+
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 
   if FTableType = tbNone then
   begin

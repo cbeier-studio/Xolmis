@@ -32,6 +32,7 @@ type
     icoRewriteGeoHierarchy: TImage;
     icoRewriteGeoHierarchy1: TImage;
     iIcons: TImageList;
+    iIconsDark: TImageList;
     lblRewriteGeoHierarchy: TLabel;
     lblRewriteGeoHierarchy1: TLabel;
     lblTitleGeoHierarchy: TLabel;
@@ -77,7 +78,7 @@ type
     procedure sbRewriteTaxaHierarchyClick(Sender: TObject);
     procedure tvMenuSelectionChanged(Sender: TObject);
   private
-
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -87,7 +88,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_dialogs, cbs_taxonomy, cbs_blobs, cbs_graphics, cbs_fullnames;
+uses cbs_locale, cbs_dialogs, cbs_taxonomy, cbs_blobs, cbs_graphics, cbs_fullnames, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -106,8 +107,32 @@ begin
   PG.PageIndex := tvMenu.Selected.Index;
 end;
 
+procedure TfrmMaintenance.ApplyDarkMode;
+begin
+  tvMenu.Images := iIconsDark;
+  icoRewriteTaxaHierarchy.Images := iIconsDark;
+  icoRewriteTaxaSequence.Images := iIconsDark;
+  icoRewriteGeoHierarchy.Images := iIconsDark;
+  icoRewriteGeoHierarchy1.Images := iIconsDark;
+  icoRecreateImageThumbnails.Images := iIconsDark;
+
+  pRecreateImageThumbnails.Background.Color := clCardBGDefaultDark;
+  pRecreateImageThumbnails.Border.Color := clCardBGSecondaryDark;
+  pRewriteGeoHierarchy1.Background.Color := clCardBGDefaultDark;
+  pRewriteGeoHierarchy1.Border.Color := clCardBGSecondaryDark;
+  pRewriteGeoHierarchy.Background.Color := clCardBGDefaultDark;
+  pRewriteGeoHierarchy.Border.Color := clCardBGSecondaryDark;
+  pRewriteTaxaHierarchy.Background.Color := clCardBGDefaultDark;
+  pRewriteTaxaHierarchy.Border.Color := clCardBGSecondaryDark;
+  pRewriteTaxaSequence.Background.Color := clCardBGDefaultDark;
+  pRewriteTaxaSequence.Border.Color := clCardBGSecondaryDark;
+end;
+
 procedure TfrmMaintenance.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   tvMenu.Selected := tvMenu.Items.GetFirstNode;
 end;
 

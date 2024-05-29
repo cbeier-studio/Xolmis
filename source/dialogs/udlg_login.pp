@@ -33,6 +33,7 @@ type
     ePassword: TEditButton;
     eUsername: TEdit;
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     imgLogin: TImage;
     lblLogin: TLabel;
     lblPassword: TLabel;
@@ -54,6 +55,7 @@ type
     xCodUser, uForce: Integer;
     xNome, xUser: String;
     nAdmin, LoginOK: Boolean;
+    procedure ApplyDarkMode;
     function ValidatePassword: Boolean;
   public
     property NeedAdmin: Boolean read nAdmin write nAdmin;
@@ -68,7 +70,9 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_graphics, cbs_themes, cbs_dialogs, cbs_getvalue, udm_main, LCLType;
+uses
+  cbs_locale, cbs_global, cbs_graphics, cbs_themes, cbs_dialogs, cbs_getvalue, udm_main, LCLType,
+  uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -90,6 +94,11 @@ begin
     Key := 0;
     SelectNext(Sender as TWinControl, False, True);
   end;
+end;
+
+procedure TdlgLogin.ApplyDarkMode;
+begin
+  ePassword.Images := iButtonsDark;
 end;
 
 procedure TdlgLogin.ePasswordButtonClick(Sender: TObject);
@@ -143,6 +152,9 @@ end;
 
 procedure TdlgLogin.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   { If it needs administrator permission }
   if NeedAdmin then
   begin

@@ -9,13 +9,11 @@ object lstBreedingStatus: TlstBreedingStatus
   Caption = 'Breeding and behavior code'
   ClientHeight = 710
   ClientWidth = 334
-  Color = 16444392
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poOwnerFormCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -35,9 +33,7 @@ object lstBreedingStatus: TlstBreedingStatus
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 334
-    Color = 15987699
     ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbOK: TBitBtn
       Left = 16

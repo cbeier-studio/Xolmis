@@ -32,6 +32,7 @@ uses
   rxnew,
   virtualdbgrid_package,
   FrameViewer09,
+  uDarkStyleParams, uMetaDarkStyle, uDarkStyleSchemes,
   { CBS }
   cbs_autoupdate,
   cbs_backup,
@@ -130,13 +131,24 @@ uses
   ufrm_dashboard,
   ufrm_geoconverter,
   ufrm_maintenance, udm_breeding, uedt_method, udm_sampling, uedt_weatherlog, uedt_project, uedt_permit, 
-uedt_sampleprep, uedt_specimen, uedt_nestowner, udlg_firstconfig, udlg_export, cbs_datacolumns;
+  uedt_sampleprep, uedt_specimen, uedt_nestowner, udlg_firstconfig, udlg_export, cbs_datacolumns;
 
 {$R *.res}
 
 begin
   RequireDerivedFormResource := True;
   Application.Scaled := True;
+
+  XSettings := TXolmisSettings.Create;
+  XSettings.LoadFromFile;
+  case XSettings.SelectedTheme of
+    0: PreferredAppMode := pamDefault;
+    1: PreferredAppMode := pamAllowDark;
+    2: PreferredAppMode := pamForceDark;
+    3: PreferredAppMode := pamForceLight;
+  end;
+  uMetaDarkStyle.ApplyMetaDarkStyle(DefaultDark);
+
   Application.Initialize;
   Application.CreateForm(TDMM, DMM);
   {$IFDEF WINDOWS}

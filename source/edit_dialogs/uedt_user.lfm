@@ -15,7 +15,6 @@ object edtUser: TedtUser
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -35,9 +34,6 @@ object edtUser: TedtUser
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 400
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16
@@ -85,9 +81,6 @@ object edtUser: TedtUser
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 305
     ClientWidth = 400
-    Color = 15263976
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object pUsername: TPanel
       Left = 0

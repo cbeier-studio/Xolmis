@@ -39,6 +39,7 @@ type
     eDBPort: TDBEdit;
     eDBUser: TDBEdit;
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     lblTitleAuthentication: TLabel;
     lblDBFile: TLabel;
     lblDBManager: TLabel;
@@ -69,6 +70,7 @@ type
     procedure sbSaveClick(Sender: TObject);
   private
     function IsRequiredFilled: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -78,7 +80,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_graphics, cbs_datatypes, udm_main;
+uses cbs_locale, cbs_global, cbs_graphics, cbs_datatypes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -92,6 +94,9 @@ end;
 
 procedure TedtDatabase.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   OpenDlg.InitialDir := InstallDir;
   OpenDlg.Title := rsTitleSelectDatabaseFile;
   cbDBManagerSelect(nil);
@@ -158,6 +163,12 @@ begin
 
     sbSaveClick(nil);
   end;
+end;
+
+procedure TedtDatabase.ApplyDarkMode;
+begin
+  eDBFile.Images := DMM.iEditsDark;
+  eDBPass.Images := iButtonsDark;
 end;
 
 procedure TedtDatabase.cbDBManagerSelect(Sender: TObject);

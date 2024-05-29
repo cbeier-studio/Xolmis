@@ -31,7 +31,10 @@ type
   TdlgImportNests = class(TForm)
     barProgress: TProgressBar;
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     iIcons: TImageList;
+    iIconsDark: TImageList;
+    imgFinishedDark: TImageList;
     pRetry: TBCPanel;
     imgFinished: TImageList;
     hvProgress: THtmlViewer;
@@ -75,12 +78,14 @@ type
     procedure eNestFileChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbClearNestFileClick(Sender: TObject);
     procedure sbRetryClick(Sender: TObject);
     procedure sbRunClick(Sender: TObject);
   private
     FProgressList: TStrings;
+    procedure ApplyDarkMode;
     procedure UpdateButtons;
   public
 
@@ -92,11 +97,39 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_import;
+  cbs_locale, cbs_global, cbs_import, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgImportNests }
+
+procedure TdlgImportNests.ApplyDarkMode;
+begin
+  eNestFile.Images := iButtonsDark;
+  eRevisionFile.Images := iButtonsDark;
+  eEggFile.Images := iButtonsDark;
+  sbClearNestFile.Images := iButtonsDark;
+  sbClearRevisionFile.Images := iButtonsDark;
+  sbClearEggFile.Images := iButtonsDark;
+  sbRetry.Images := iButtonsDark;
+
+  icoNestFile.Images := iIconsDark;
+  icoRevisionFile.Images := iIconsDark;
+  icoEggFile.Images := iIconsDark;
+
+  icoImportFinished.Images := imgFinishedDark;
+
+  pProgress.Background.Color := clCardBGDefaultDark;
+  pProgress.Border.Color := clCardBGSecondaryDark;
+  pProgress.Color := pContentProgress.Background.Color;
+
+  pNestFile.Background.Color := clCardBGDefaultDark;
+  pNestFile.Border.Color := clCardBGSecondaryDark;
+  pRevisionFile.Background.Color := clCardBGDefaultDark;
+  pRevisionFile.Border.Color := clCardBGSecondaryDark;
+  pEggFile.Background.Color := clCardBGDefaultDark;
+  pEggFile.Border.Color := clCardBGSecondaryDark;
+end;
 
 procedure TdlgImportNests.eEggFileChange(Sender: TObject);
 begin
@@ -127,6 +160,12 @@ end;
 procedure TdlgImportNests.FormDestroy(Sender: TObject);
 begin
   FProgressList.Free;
+end;
+
+procedure TdlgImportNests.FormShow(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 end;
 
 procedure TdlgImportNests.sbCancelClick(Sender: TObject);

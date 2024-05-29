@@ -31,6 +31,7 @@ type
   TcfgOptions = class(TForm)
     cbCheckUpdates: TComboBox;
     cbClearDeleted: TComboBox;
+    cbSelectedTheme: TComboBox;
     cbMainTaxonomy: TComboBox;
     cbVernacularNames: TComboBox;
     eAttachmentsPath: TDirectoryEdit;
@@ -47,6 +48,7 @@ type
     Image15: TImage;
     Image16: TImage;
     Image17: TImage;
+    icoSelectedTheme: TImage;
     Image2: TImage;
     Image3: TImage;
     Image4: TImage;
@@ -64,6 +66,7 @@ type
     lblBackupPath: TLabel;
     lblCheckUpdates: TLabel;
     lblClearDeleted: TLabel;
+    lblSelectedTheme: TLabel;
     lblConfirmCancel: TLabel;
     lblEnterAsTab: TLabel;
     lblImagesPath: TLabel;
@@ -71,6 +74,7 @@ type
     lblManageBackups: TLabel;
     lblRememberConnection: TLabel;
     lblRememberUser: TLabel;
+    lblSelectedThemeRestart: TLabel;
     lblShowSynonyms: TLabel;
     lblStartupBackup: TLabel;
     lblTitleBackup: TLabel;
@@ -85,6 +89,7 @@ type
     pAllowWriteLog: TBCPanel;
     pBackupPath: TBCPanel;
     pCheckUpdates: TBCPanel;
+    pSelectedTheme: TBCPanel;
     pgSecurity: TPage;
     pgBackup: TPage;
     pContentSecurity: TPanel;
@@ -132,6 +137,7 @@ type
     procedure cbCheckUpdatesChange(Sender: TObject);
     procedure cbClearDeletedChange(Sender: TObject);
     procedure cbMainTaxonomyChange(Sender: TObject);
+    procedure cbSelectedThemeChange(Sender: TObject);
     procedure cbVernacularNamesChange(Sender: TObject);
     procedure eAttachmentsPathChange(Sender: TObject);
     procedure eAudiosPathChange(Sender: TObject);
@@ -151,6 +157,7 @@ type
     procedure tsStartupBackupOn(Sender: TObject);
     procedure tvMenuSelectionChanged(Sender: TObject);
   private
+    procedure ApplyDarkMode;
     procedure LoadConfig;
   public
 
@@ -161,7 +168,9 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_dialogs, cbs_backup, cbs_autoupdate, cbs_system;
+uses
+  cbs_locale, cbs_global, cbs_dialogs, cbs_backup, cbs_autoupdate, cbs_system, cbs_themes, udm_main,
+  uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -210,9 +219,91 @@ begin
   XSettings.Taxonomy := cbMainTaxonomy.ItemIndex;
 end;
 
+procedure TcfgOptions.cbSelectedThemeChange(Sender: TObject);
+begin
+  XSettings.SelectedTheme := cbSelectedTheme.ItemIndex;
+  lblSelectedThemeRestart.Visible := True;
+end;
+
 procedure TcfgOptions.cbClearDeletedChange(Sender: TObject);
 begin
   XSettings.ClearDeletedPeriod := cbClearDeleted.ItemIndex;
+end;
+
+procedure TcfgOptions.ApplyDarkMode;
+begin
+  tvMenu.Images := iIconsDark;
+  Image4.Images := iIconsDark;
+  Image1.Images := iIconsDark;
+  Image2.Images := iIconsDark;
+  Image10.Images := iIconsDark;
+  icoSelectedTheme.Images := iIconsDark;
+  Image5.Images := iIconsDark;
+  Image3.Images := iIconsDark;
+  Image6.Images := iIconsDark;
+  Image7.Images := iIconsDark;
+  Image8.Images := iIconsDark;
+  Image9.Images := iIconsDark;
+  Image11.Images := iIconsDark;
+  Image12.Images := iIconsDark;
+  Image13.Images := iIconsDark;
+  Image14.Images := iIconsDark;
+  Image17.Images := iIconsDark;
+  Image15.Images := iIconsDark;
+  Image16.Images := iIconsDark;
+
+  pEnterAsTab.Background.Color := clCardBGDefaultDark;
+  pEnterAsTab.Border.Color := clCardBGSecondaryDark;
+  pConfirmCancel.Background.Color := clCardBGDefaultDark;
+  pConfirmCancel.Border.Color := clCardBGSecondaryDark;
+  pClearDeleted.Background.Color := clCardBGDefaultDark;
+  pClearDeleted.Border.Color := clCardBGSecondaryDark;
+  pCheckUpdates.Background.Color := clCardBGDefaultDark;
+  pCheckUpdates.Border.Color := clCardBGSecondaryDark;
+  pSelectedTheme.Background.Color := clCardBGDefaultDark;
+  pSelectedTheme.Border.Color := clCardBGSecondaryDark;
+  pVernacularNames.Background.Color := clCardBGDefaultDark;
+  pVernacularNames.Border.Color := clCardBGSecondaryDark;
+  pMainTaxonomy.Background.Color := clCardBGDefaultDark;
+  pMainTaxonomy.Border.Color := clCardBGSecondaryDark;
+  pShowSynonyms.Background.Color := clCardBGDefaultDark;
+  pShowSynonyms.Border.Color := clCardBGSecondaryDark;
+  pImagesPath.Background.Color := clCardBGDefaultDark;
+  pImagesPath.Border.Color := clCardBGSecondaryDark;
+  pAudiosPath.Background.Color := clCardBGDefaultDark;
+  pAudiosPath.Border.Color := clCardBGSecondaryDark;
+  pAttachmentsPath.Background.Color := clCardBGDefaultDark;
+  pAttachmentsPath.Border.Color := clCardBGSecondaryDark;
+  pRememberConnection.Background.Color := clCardBGDefaultDark;
+  pRememberConnection.Border.Color := clCardBGSecondaryDark;
+  pRememberUser.Background.Color := clCardBGDefaultDark;
+  pRememberUser.Border.Color := clCardBGSecondaryDark;
+  pAllowWriteLog.Background.Color := clCardBGDefaultDark;
+  pAllowWriteLog.Border.Color := clCardBGSecondaryDark;
+  pAllowUsageData.Background.Color := clCardBGDefaultDark;
+  pAllowUsageData.Border.Color := clCardBGSecondaryDark;
+  pAllowUsageData1.Background.Color := clCardBGDefaultDark;
+  pAllowUsageData1.Border.Color := clCardBGSecondaryDark;
+  pBackupPath.Background.Color := clCardBGDefaultDark;
+  pBackupPath.Border.Color := clCardBGSecondaryDark;
+  pStartupBackup.Background.Color := clCardBGDefaultDark;
+  pStartupBackup.Border.Color := clCardBGSecondaryDark;
+  pManageBackups.Background.Color := clCardBGDefaultDark;
+  pManageBackups.Border.Color := clCardBGSecondaryDark;
+
+  tsEnterAsTab.Color := pEnterAsTab.Background.Color;
+  tsConfirmCancel.Color := pConfirmCancel.Background.Color;
+  tsShowSynonyms.Color := pConfirmCancel.Background.Color;
+  tsRememberConnection.Color := pConfirmCancel.Background.Color;
+  tsRememberUser.Color := pConfirmCancel.Background.Color;
+  tsWriteLogs.Color := pConfirmCancel.Background.Color;
+  tsAllowUsageData.Color := pConfirmCancel.Background.Color;
+  tsStartupBackup.Color := pConfirmCancel.Background.Color;
+
+  eImagesPath.Images := DMM.iEditsDark;
+  eAudiosPath.Images := DMM.iEditsDark;
+  eAttachmentsPath.Images := DMM.iEditsDark;
+  eBackupPath.Images := DMM.iEditsDark;
 end;
 
 procedure TcfgOptions.cbCheckUpdatesChange(Sender: TObject);
@@ -242,6 +333,9 @@ end;
 
 procedure TcfgOptions.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   //SBox.VertScrollBar.Position := 0;
   tvMenu.Selected := tvMenu.Items.GetFirstNode;
   pManageBackups.Enabled := not (ActiveUser.IsVisitor);
@@ -314,6 +408,9 @@ begin
     tsEnterAsTab.StateOn := sw_on
   else
     tsEnterAsTab.StateOn := sw_off;
+
+  { APPEARANCE }
+  cbSelectedTheme.ItemIndex := XSettings.SelectedTheme;
 
   { COLLECTION }
   cbVernacularNames.ItemIndex := XSettings.VernacularNamesLanguage;

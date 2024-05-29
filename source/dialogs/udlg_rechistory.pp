@@ -56,7 +56,7 @@ type
     pBottom: TPanel;
     pTop: TPanel;
     qHistory: TSQLQuery;
-    ScrollBox1: TScrollBox;
+    SBox: TScrollBox;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -65,6 +65,7 @@ type
     FTableType: TTableType;
     Tab: String;
     Cod: Integer;
+    procedure ApplyDarkMode;
   public
     procedure LoadData;
 
@@ -78,11 +79,17 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_data, cbs_datacolumns, udm_grid;
+uses
+  cbs_locale, cbs_global, cbs_data, cbs_datacolumns, cbs_themes, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgRecHistory }
+
+procedure TdlgRecHistory.ApplyDarkMode;
+begin
+  SBox.Color := clCardBGDefaultDark;
+end;
 
 procedure TdlgRecHistory.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
@@ -106,6 +113,9 @@ end;
 
 procedure TdlgRecHistory.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   TranslateRecordHistory(qHistory);
   LoadData;
 end;

@@ -11,6 +11,7 @@ object edtImageInfo: TedtImageInfo
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
+  OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
@@ -42,9 +43,6 @@ object edtImageInfo: TedtImageInfo
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 416
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
@@ -81,8 +79,6 @@ object edtImageInfo: TedtImageInfo
     ClientHeight = 638
     ClientWidth = 399
     Constraints.MinWidth = 176
-    Color = clDefault
-    ParentColor = False
     TabOrder = 1
     object pClient: TPanel
       Left = 0
@@ -95,9 +91,6 @@ object edtImageInfo: TedtImageInfo
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 872
       ClientWidth = 399
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pSupplier: TPanel
         Left = 0

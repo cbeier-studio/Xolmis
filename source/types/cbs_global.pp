@@ -100,7 +100,7 @@ type
     FLastClearDeleted, FLastDatabaseOptimization, FLastAutoUpdate: TDateTime;
     FLastPathUsed: String;
     { Appearance }
-    FSelectedTheme: String;
+    FSelectedTheme: Integer;
     FShowGridLines, FAutoAdjustColumns: Boolean;
     FUseConditionalFormatting: Boolean;
     FDefaultRowHeight: Integer;
@@ -148,7 +148,7 @@ type
     property LastAutoUpdate: TDateTime read FLastAutoUpdate write FLastAutoUpdate;
     property LastPathUsed: String read FLastPathUsed write SetLastPathUsed;
     { Appearance }
-    property SelectedTheme: String read FSelectedTheme write FSelectedTheme;
+    property SelectedTheme: Integer read FSelectedTheme write FSelectedTheme;
     property ShowGridLines: Boolean read FShowGridLines write FShowGridLines;
     property AutoAdjustColumns: Boolean read FAutoAdjustColumns write FAutoAdjustColumns;
     property UseConditionalFormatting: Boolean read FUseConditionalFormatting write FUseConditionalFormatting;
@@ -661,7 +661,7 @@ begin
   FLastDatabaseOptimization := Ini.GetValue('/GENERAL/LastDatabaseOptimization', StrToDateTime('30/12/1500 00:00:00'));
   FLastAutoUpdate := Ini.GetValue('/GENERAL/LastAutoUpdate', StrToDateTime('30/12/1500 00:00:00'));
   { Appearance }
-  FSelectedTheme := Ini.GetValue('/APPEARANCE/SelectedTheme', 'Light');
+  FSelectedTheme := Ini.GetValue('/APPEARANCE/SelectedTheme', 1);
   FShowGridLines := Ini.GetValue('/APPEARANCE/ShowGridLines', True);
   FAutoAdjustColumns := Ini.GetValue('/APPEARANCE/AutoAdjustColumns', False);
   FUseConditionalFormatting := Ini.GetValue('/APPEARANCE/UseConditionalFormatting', True);

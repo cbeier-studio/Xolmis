@@ -30,6 +30,7 @@ type
 
   TdlgAbout = class(TForm)
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     pClementsVersion: TLabel;
     pAppVersion: TLabel;
     pIocVersion: TLabel;
@@ -49,7 +50,6 @@ type
     linkLicense: TATLabelLink;
     linkThirdParty: TATLabelLink;
     linkWebsite: TATLabelLink;
-    pAppPrerelease: TBCPanel;
     pTitle: TPanel;
     sbClose: TButton;
     sbCopy: TBitBtn;
@@ -61,7 +61,7 @@ type
     procedure linkThirdPartyClick(Sender: TObject);
     procedure sbCopyClick(Sender: TObject);
   private
-
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -71,17 +71,37 @@ var
 
 implementation
 
-uses cbs_global, cbs_autoupdate;
+uses cbs_global, cbs_autoupdate, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgAbout }
 
+procedure TdlgAbout.ApplyDarkMode;
+begin
+  pTitle.Color := clSolidBGBaseDark;
+  pContent.Color := clVioletBG1Dark;
+
+  pVersion.Background.Color := clCardBGDefaultDark;
+  pVersion.Border.Color := clCardBGSecondaryDark;
+  pClements.Background.Color := clCardBGDefaultDark;
+  pClements.Border.Color := clCardBGSecondaryDark;
+  pIOC.Background.Color := clCardBGDefaultDark;
+  pIOC.Border.Color := clCardBGSecondaryDark;
+  pCBRO.Background.Color := clCardBGDefaultDark;
+  pCBRO.Border.Color := clCardBGSecondaryDark;
+
+  pAppVersion.Font.Color := clTextPrimaryDark;
+
+  sbCopy.Images := iButtonsDark;
+end;
+
 procedure TdlgAbout.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   pAppVersion.Caption := GetBuildInfoAsString;
-  pAppPrerelease.Visible := PrereleaseStage <> EmptyStr;
-  pAppPrerelease.Caption := PrereleaseStage;
 
   pClementsVersion.Caption := XSettings.ClementsVersion;
   pIocVersion.Caption := XSettings.IocVersion;

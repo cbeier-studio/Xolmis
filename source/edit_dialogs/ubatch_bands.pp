@@ -87,6 +87,7 @@ type
     DtRec, DtPed: TDate;
     function ValidateData(aInitial, aFinal: Integer; aSupplier: String): Boolean;
     procedure AddBandsBatch;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -98,7 +99,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_system,
-  cbs_validations, udm_main, udlg_progress;
+  cbs_validations, cbs_themes, udm_main, udlg_progress, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -398,6 +399,19 @@ begin
   end;
 end;
 
+procedure TbatchBands.ApplyDarkMode;
+begin
+  pEdit.Color := clVioletBG1Dark;
+
+  eProject.Images := DMM.iEditsDark;
+  eOrderDate.Images := DMM.iEditsDark;
+  eReceiptDate.Images := DMM.iEditsDark;
+  eSupplier.Images := DMM.iEditsDark;
+  eRequester.Images := DMM.iEditsDark;
+  eSender.Images := DMM.iEditsDark;
+  eCarrier.Images := DMM.iEditsDark;
+end;
+
 procedure TbatchBands.cbBandSizeChange(Sender: TObject);
 begin
   if (cbBandSize.ItemIndex >= 0) and (cbBandType.ItemIndex >= 0) and (cbBandSource.ItemIndex >= 0) and
@@ -499,7 +513,10 @@ begin
   cbBandType.Canvas.FillRect(ARect);
   cbBandType.Canvas.TextRect(ARect, 24, ARect.Top, cbBandType.Items[Index]);
   if Index < cbBandType.Items.Count - 1 then
-    DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType);
+    if IsDarkModeEnabled then
+      DMM.iBandTypesDark.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType)
+    else
+      DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType);
 end;
 
 procedure TbatchBands.eCarrierButtonClick(Sender: TObject);
@@ -552,6 +569,9 @@ end;
 
 procedure TbatchBands.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   { Load default values }
   // Supplier initial value: CEMAVE
   CodSupplier := GetKey('institutions', 'institution_id', 'acronym', 'CEMAVE');

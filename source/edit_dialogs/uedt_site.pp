@@ -74,6 +74,7 @@ type
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -84,11 +85,19 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, udm_main,
+  uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtSite }
+
+procedure TedtSite.ApplyDarkMode;
+begin
+  eLongitude.Images := DMM.iEditsDark;
+  eLatitude.Images := DMM.iEditsDark;
+  eParentSite.Images := DMM.iEditsDark;
+end;
 
 procedure TedtSite.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
@@ -176,6 +185,9 @@ end;
 
 procedure TedtSite.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionToponym)])
   else

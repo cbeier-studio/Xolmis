@@ -15,7 +15,6 @@ object edtMethod: TedtMethod
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -45,9 +44,6 @@ object edtMethod: TedtMethod
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 404
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object sbSave: TButton
       Left = 16
@@ -88,8 +84,6 @@ object edtMethod: TedtMethod
     ClientHeight = 334
     ClientWidth = 404
     Constraints.MinWidth = 220
-    Color = clDefault
-    ParentColor = False
     TabOrder = 1
     object pContent: TPanel
       Left = 0
@@ -102,9 +96,6 @@ object edtMethod: TedtMethod
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 334
       ClientWidth = 404
-      Color = 15263976
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pName: TPanel
         Left = 0

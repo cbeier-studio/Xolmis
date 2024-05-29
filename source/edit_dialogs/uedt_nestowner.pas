@@ -53,6 +53,7 @@ type
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -64,11 +65,16 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy,
-  cbs_validations, udm_breeding;
+  cbs_validations, udm_breeding, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtNestOwner }
+
+procedure TedtNestOwner.ApplyDarkMode;
+begin
+  eIndividual.Images := DMM.iEditsDark;
+end;
 
 procedure TedtNestOwner.cbRoleKeyPress(Sender: TObject; var Key: char);
 begin
@@ -155,6 +161,9 @@ end;
 
 procedure TedtNestOwner.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNestOwner)])
   else

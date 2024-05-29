@@ -25,9 +25,6 @@ object edtNestOwner: TedtNestOwner
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 130
     ClientWidth = 400
-    Color = 15263976
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 0
     object pRole: TPanel
       Left = 0
@@ -163,9 +160,6 @@ object edtNestOwner: TedtNestOwner
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 400
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16

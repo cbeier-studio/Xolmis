@@ -45,9 +45,6 @@ object edtProject: TedtProject
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 400
-    Color = 15987699
-    ParentBackground = False
-    ParentColor = False
     TabOrder = 1
     object sbSave: TButton
       Left = 16
@@ -85,8 +82,6 @@ object edtProject: TedtProject
     ClientHeight = 544
     ClientWidth = 400
     Constraints.MinWidth = 176
-    Color = clDefault
-    ParentColor = False
     TabOrder = 0
     object pClient: TPanel
       Left = 0
@@ -99,9 +94,7 @@ object edtProject: TedtProject
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 544
       ClientWidth = 400
-      Color = 15263976
       ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0

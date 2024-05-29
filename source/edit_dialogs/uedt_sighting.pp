@@ -138,6 +138,7 @@ type
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -148,11 +149,30 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
+  cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtSighting }
+
+procedure TedtSighting.ApplyDarkMode;
+begin
+  pSurvey.Background.Color := clCardBGDefaultDark;
+  pSurvey.Border.Color := clCardBGSecondaryDark;
+
+  eSurvey.Images := DMM.iEditsDark;
+  eObserver.Images := DMM.iEditsDark;
+  eMethod.Images := DMM.iEditsDark;
+  eLocality.Images := DMM.iEditsDark;
+  eLongitude.Images := DMM.iEditsDark;
+  eLatitude.Images := DMM.iEditsDark;
+  eDate.Images := DMM.iEditsDark;
+  eTaxon.Images := DMM.iEditsDark;
+  eIndividual.Images := DMM.iEditsDark;
+  eDetectionType.Images := DMM.iEditsDark;
+  eBreedingStatus.Images := DMM.iEditsDark;
+end;
 
 procedure TedtSighting.cbMethodKeyPress(Sender: TObject; var Key: char);
 begin
@@ -405,6 +425,9 @@ end;
 
 procedure TedtSighting.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if dsLink.State = dsInsert then
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSighting)])
   else

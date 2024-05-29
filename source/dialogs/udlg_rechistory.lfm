@@ -12,7 +12,6 @@ object dlgRecHistory: TdlgRecHistory
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poMainFormCenter
-  LCLVersion = '3.2.0.0'
   object pTop: TPanel
     Left = 0
     Height = 35
@@ -26,7 +25,6 @@ object dlgRecHistory: TdlgRecHistory
     ChildSizing.HorizontalSpacing = 8
     ClientHeight = 35
     ClientWidth = 824
-    ParentBackground = False
     TabOrder = 0
     object Label1: TLabel
       Left = 16
@@ -53,7 +51,7 @@ object dlgRecHistory: TdlgRecHistory
       ParentFont = False
     end
     object ckAtivo: TDBCheckBox
-      Left = 618
+      Left = 619
       Height = 19
       Top = 8
       Width = 51
@@ -67,7 +65,7 @@ object dlgRecHistory: TdlgRecHistory
       ValueUnchecked = 'False'
     end
     object ckMarcado: TDBCheckBox
-      Left = 677
+      Left = 678
       Height = 19
       Top = 8
       Width = 58
@@ -81,10 +79,10 @@ object dlgRecHistory: TdlgRecHistory
       ValueUnchecked = 'False'
     end
     object ckExportado: TDBCheckBox
-      Left = 743
+      Left = 744
       Height = 19
       Top = 8
-      Width = 65
+      Width = 64
       Align = alRight
       AutoSize = True
       Caption = 'Exported'
@@ -155,7 +153,7 @@ object dlgRecHistory: TdlgRecHistory
     TitleFont.Color = 6579300
     TitleStyle = tsNative
   end
-  object ScrollBox1: TScrollBox
+  object SBox: TScrollBox
     Left = 488
     Height = 294
     Top = 35

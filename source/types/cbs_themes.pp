@@ -112,6 +112,14 @@ const
 
 const
   { Dark mode }
+  clSolidBGBaseDark       = TColor($00202020); // rgb(32, 32, 32)
+  clSolidBGSecondaryDark  = TColor($001C1C1C); // rgb(28, 28, 28)
+  clSolidBGTertiaryDark   = TColor($00282828); // rgb(40, 40, 40)
+  clSolidBGQuaternaryDark = TColor($002C2C2C); // rgb(44, 44, 44)
+  clSmokeBGDefaultDark    = TColor($001F1F1F); // rgb(31, 31, 31)
+  clCardBGDefaultDark     = TColor($00373737); // rgb(55, 55, 55)
+  clCardBGSecondaryDark   = TColor($00333333); // rgb(51, 51, 51)
+
   clDefaultFGDark    = TColor($00FFFFFF); // RGB(255, 255, 255)
   clDefaultBG1Dark   = TColor($00242424); // rgb(36, 36, 36)
   clDefaultBG6Dark   = TColor($001F1F1F); // rgb(31, 31, 31)
@@ -138,6 +146,7 @@ const
   clSystemCriticalFGDark     = TColor($00A499FF); // rgb(255, 153, 164)
   clSystemNeutralFGDark      = TColor($009F9F9F); // rgb(159, 159, 159)
   clSystemSolidNeutralFGDark = TColor($008A8A8A); // rgb(138, 138, 138)
+  clSystemMediumFGDark       = TColor($003E9EFF);
 
   clSystemAttentionBGDark      = TColor($00333333); // rgb(51, 51, 51)
   clSystemSolidAttentionBGDark = TColor($002E2E2E); // rgb(46, 46, 46)
@@ -146,6 +155,7 @@ const
   clSystemCriticalBGDark       = TColor($00262744); // rgb(68, 39, 38)
   clSystemNeutralBGDark        = TColor($00333333); // rgb(51, 51, 51)
   clSystemSolidNeutralBGDark   = TColor($002E2E2E); // rgb(46, 46, 46)
+  clSystemMediumBGDark         = TColor($0000376F);
 
   clVioletFG1Dark    = TColor($00F5857F); // rgb(127, 133, 245)
   clVioletBG2Dark    = TColor($00783E3D); // rgb(61, 62, 120)
@@ -163,6 +173,7 @@ const
   clGreenFG2Dark     = TColor($0053C392);
   clGreenBGDark      = TColor($0053C392);
   clGreenBG2Dark     = TColor($000D2E0D); // rgb(13, 46, 13)
+  clBlueBGDark       = TColor($00482400);
 
 type
   TColorTheme = record
