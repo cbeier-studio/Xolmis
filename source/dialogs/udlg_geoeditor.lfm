@@ -14,6 +14,7 @@ object dlgGeoEditor: TdlgGeoEditor
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
+  LCLVersion = '3.4.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41

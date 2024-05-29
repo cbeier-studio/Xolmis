@@ -145,11 +145,11 @@ end;
 procedure TdlgGeoEditor.ApplyDarkMode;
 begin
   pLong.Background.Color := clCardBGDefaultDark;
-  pLong.Border.Color := clCardBGSecondaryDark;
+  pLong.Border.Color := clSystemSolidNeutralFGDark;
   pLat.Background.Color := clCardBGDefaultDark;
-  pLat.Border.Color := clCardBGSecondaryDark;
+  pLat.Border.Color := clSystemSolidNeutralFGDark;
   pDecimal.Background.Color := clCardBGDefaultDark;
-  pDecimal.Border.Color := clCardBGSecondaryDark;
+  pDecimal.Border.Color := clSystemSolidNeutralFGDark;
 end;
 
 procedure TdlgGeoEditor.eLongDegChange(Sender: TObject);
@@ -193,6 +193,9 @@ begin
   {$IFDEF MSWINDOWS}
   SetRoundedCorners(Self.Handle, rcSmall);
   {$ENDIF}
+
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 
   if Length(FPointStr) > 0 then
     FDecPoint.FromString(FPointStr);

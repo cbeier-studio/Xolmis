@@ -117,15 +117,15 @@ begin
   icoRecreateImageThumbnails.Images := iIconsDark;
 
   pRecreateImageThumbnails.Background.Color := clCardBGDefaultDark;
-  pRecreateImageThumbnails.Border.Color := clCardBGSecondaryDark;
+  pRecreateImageThumbnails.Border.Color := clSystemSolidNeutralFGDark;
   pRewriteGeoHierarchy1.Background.Color := clCardBGDefaultDark;
-  pRewriteGeoHierarchy1.Border.Color := clCardBGSecondaryDark;
+  pRewriteGeoHierarchy1.Border.Color := clSystemSolidNeutralFGDark;
   pRewriteGeoHierarchy.Background.Color := clCardBGDefaultDark;
-  pRewriteGeoHierarchy.Border.Color := clCardBGSecondaryDark;
+  pRewriteGeoHierarchy.Border.Color := clSystemSolidNeutralFGDark;
   pRewriteTaxaHierarchy.Background.Color := clCardBGDefaultDark;
-  pRewriteTaxaHierarchy.Border.Color := clCardBGSecondaryDark;
+  pRewriteTaxaHierarchy.Border.Color := clSystemSolidNeutralFGDark;
   pRewriteTaxaSequence.Background.Color := clCardBGDefaultDark;
-  pRewriteTaxaSequence.Border.Color := clCardBGSecondaryDark;
+  pRewriteTaxaSequence.Border.Color := clSystemSolidNeutralFGDark;
 end;
 
 procedure TfrmMaintenance.FormShow(Sender: TObject);

@@ -10,6 +10,7 @@ object frmMaintenance: TfrmMaintenance
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.4.0.0'
   object PG: TNotebook
     Left = 152
     Height = 227

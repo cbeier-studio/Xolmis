@@ -638,12 +638,12 @@ end;
 procedure TfrmMain.ApplyDarkMode;
 begin
   pSplash.Color := clSmokeBGDefaultDark;
-  nbMenu.Color := clSolidBGBaseDark;
-  pMainMenu.Color := clSolidBGBaseDark;
-  menuTabs.ColorBg := clSolidBGBaseDark;
-  menuTabs.ColorTabActive := clSolidBGBaseDark;
-  menuTabs.ColorTabOver := clSolidBGBaseDark;
-  menuTabs.ColorTabPassive := clSolidBGBaseDark;
+  nbMenu.Color := clCardBGSecondaryDark;
+  pMainMenu.Color := clCardBGSecondaryDark;
+  menuTabs.ColorBg := clCardBGSecondaryDark;
+  menuTabs.ColorTabActive := clCardBGSecondaryDark;
+  menuTabs.ColorTabOver := clCardBGSecondaryDark;
+  menuTabs.ColorTabPassive := clCardBGSecondaryDark;
   menuTabs.ColorFontActive := clTextPrimaryDark;
   menuTabs.ColorFontHot := clTextPrimaryDark;
   navTabs.ColorBg := clSolidBGQuaternaryDark;

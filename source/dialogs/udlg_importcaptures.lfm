@@ -13,6 +13,7 @@ object dlgImportCaptures: TdlgImportCaptures
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poMainFormCenter
+  LCLVersion = '3.4.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2

@@ -120,15 +120,15 @@ begin
   icoImportFinished.Images := imgFinishedDark;
 
   pProgress.Background.Color := clCardBGDefaultDark;
-  pProgress.Border.Color := clCardBGSecondaryDark;
+  pProgress.Border.Color := clSystemSolidNeutralFGDark;
   pProgress.Color := pContentProgress.Background.Color;
 
   pNestFile.Background.Color := clCardBGDefaultDark;
-  pNestFile.Border.Color := clCardBGSecondaryDark;
+  pNestFile.Border.Color := clSystemSolidNeutralFGDark;
   pRevisionFile.Background.Color := clCardBGDefaultDark;
-  pRevisionFile.Border.Color := clCardBGSecondaryDark;
+  pRevisionFile.Border.Color := clSystemSolidNeutralFGDark;
   pEggFile.Background.Color := clCardBGDefaultDark;
-  pEggFile.Border.Color := clCardBGSecondaryDark;
+  pEggFile.Border.Color := clSystemSolidNeutralFGDark;
 end;
 
 procedure TdlgImportNests.eEggFileChange(Sender: TObject);

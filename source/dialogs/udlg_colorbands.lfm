@@ -1,13 +1,13 @@
 object dlgColorBands: TdlgColorBands
   Left = 352
-  Height = 212
+  Height = 213
   Top = 33
   Width = 324
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
   Caption = 'Auxiliary bands'
-  ClientHeight = 212
+  ClientHeight = 213
   ClientWidth = 324
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -17,7 +17,7 @@ object dlgColorBands: TdlgColorBands
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 171
+    Top = 172
     Width = 324
     Align = alBottom
     AutoSize = True
@@ -60,9 +60,9 @@ object dlgColorBands: TdlgColorBands
   end
   object pBands: TPanel
     Left = 0
-    Height = 169
+    Height = 170
     Top = 0
-    Width = 125
+    Width = 124
     Align = alClient
     AutoSize = True
     BevelOuter = bvNone
@@ -75,8 +75,8 @@ object dlgColorBands: TdlgColorBands
     ChildSizing.ShrinkVertical = crsHomogenousChildResize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
-    ClientHeight = 169
-    ClientWidth = 125
+    ClientHeight = 170
+    ClientWidth = 124
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
@@ -84,7 +84,7 @@ object dlgColorBands: TdlgColorBands
       Left = 8
       Height = 38
       Top = 8
-      Width = 109
+      Width = 108
       BorderSpacing.Left = 8
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 4
@@ -129,7 +129,7 @@ object dlgColorBands: TdlgColorBands
       OnMouseEnter = Band1MouseEnter
       OnMouseLeave = Band1MouseLeave
       object sbDelBand1: TSpeedButton
-        Left = 74
+        Left = 73
         Height = 28
         Hint = 'Remove band color'
         Top = 5
@@ -151,7 +151,7 @@ object dlgColorBands: TdlgColorBands
       Left = 8
       Height = 38
       Top = 47
-      Width = 109
+      Width = 108
       BorderSpacing.Left = 8
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 4
@@ -196,7 +196,7 @@ object dlgColorBands: TdlgColorBands
       OnMouseEnter = Band1MouseEnter
       OnMouseLeave = Band1MouseLeave
       object sbDelBand2: TSpeedButton
-        Left = 74
+        Left = 73
         Height = 28
         Hint = 'Remove band color'
         Top = 5
@@ -218,7 +218,7 @@ object dlgColorBands: TdlgColorBands
       Left = 8
       Height = 38
       Top = 86
-      Width = 109
+      Width = 108
       BorderSpacing.Left = 8
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 4
@@ -263,7 +263,7 @@ object dlgColorBands: TdlgColorBands
       OnMouseEnter = Band1MouseEnter
       OnMouseLeave = Band1MouseLeave
       object sbDelBand3: TSpeedButton
-        Left = 74
+        Left = 73
         Height = 28
         Hint = 'Remove band color'
         Top = 5
@@ -283,9 +283,9 @@ object dlgColorBands: TdlgColorBands
     object Band4: TBCPanel
       Tag = 3
       Left = 8
-      Height = 36
+      Height = 37
       Top = 125
-      Width = 109
+      Width = 108
       BorderSpacing.Left = 8
       ChildSizing.LeftRightSpacing = 8
       ChildSizing.TopBottomSpacing = 4
@@ -330,8 +330,8 @@ object dlgColorBands: TdlgColorBands
       OnMouseEnter = Band1MouseEnter
       OnMouseLeave = Band1MouseLeave
       object sbDelBand4: TSpeedButton
-        Left = 74
-        Height = 26
+        Left = 73
+        Height = 27
         Hint = 'Remove band color'
         Top = 5
         Width = 26
@@ -349,14 +349,14 @@ object dlgColorBands: TdlgColorBands
     end
   end
   object pCenter: TPanel
-    Left = 125
-    Height = 169
+    Left = 124
+    Height = 170
     Top = 0
     Width = 30
     Align = alRight
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 169
+    ClientHeight = 170
     ClientWidth = 30
     Color = clBtnFace
     ParentBackground = False
@@ -366,7 +366,7 @@ object dlgColorBands: TdlgColorBands
       Left = 0
       Height = 30
       Hint = 'Clear bands'
-      Top = 131
+      Top = 132
       Width = 30
       Align = alBottom
       DisabledImageIndex = 7
@@ -406,10 +406,10 @@ object dlgColorBands: TdlgColorBands
     end
   end
   object pColors: TBCPanel
-    Left = 155
-    Height = 169
+    Left = 154
+    Height = 170
     Top = 0
-    Width = 169
+    Width = 170
     Align = alRight
     AutoSize = True
     ChildSizing.LeftRightSpacing = 8
@@ -457,10 +457,10 @@ object dlgColorBands: TdlgColorBands
     Rounding.RoundY = 1
     TabOrder = 3
     object pColor_M: TBCPanel
-      Left = 8
-      Height = 36
-      Top = 8
-      Width = 36
+      Left = 9
+      Height = 35
+      Top = 9
+      Width = 35
       Background.Color = clSilver
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -506,8 +506,8 @@ object dlgColorBands: TdlgColorBands
     object pColor_A: TBCPanel
       Tag = 1
       Left = 48
-      Height = 36
-      Top = 8
+      Height = 35
+      Top = 9
       Width = 35
       Background.Color = clOlive
       Background.Gradient1.StartColor = clWhite
@@ -553,8 +553,8 @@ object dlgColorBands: TdlgColorBands
     object pColor_Y: TBCPanel
       Tag = 2
       Left = 87
-      Height = 36
-      Top = 8
+      Height = 35
+      Top = 9
       Width = 35
       Background.Color = clYellow
       Background.Gradient1.StartColor = clWhite
@@ -600,8 +600,8 @@ object dlgColorBands: TdlgColorBands
     object pColor_O: TBCPanel
       Tag = 3
       Left = 126
-      Height = 36
-      Top = 8
+      Height = 35
+      Top = 9
       Width = 35
       Background.Color = 1750527
       Background.Gradient1.StartColor = clWhite
@@ -647,10 +647,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_R: TBCPanel
       Tag = 4
-      Left = 8
+      Left = 9
       Height = 35
       Top = 48
-      Width = 36
+      Width = 35
       Background.Color = clRed
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -835,10 +835,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_P: TBCPanel
       Tag = 8
-      Left = 8
+      Left = 9
       Height = 35
       Top = 87
-      Width = 36
+      Width = 35
       Background.Color = 16753994
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -1023,10 +1023,10 @@ object dlgColorBands: TdlgColorBands
     end
     object pColor_U: TBCPanel
       Tag = 12
-      Left = 8
+      Left = 9
       Height = 35
       Top = 126
-      Width = 36
+      Width = 35
       Background.Color = 16512
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -1215,7 +1215,7 @@ object dlgColorBands: TdlgColorBands
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 169
+    Top = 170
     Width = 324
     Align = alBottom
     LineColor = 9276813

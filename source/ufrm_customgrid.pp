@@ -1034,6 +1034,9 @@ begin
   pFiltersToolbar.Border.Color := clCardBGSecondaryDark;
   pRecycleToolbar.Background.Color := clCardBGDefaultDark;
   pRecycleToolbar.Border.Color := clCardBGSecondaryDark;
+  pRecycleWarning.Background.Color := clSystemAttentionBGDark;
+  pRecycleWarning.Border.Color := clSystemAttentionFGDark;
+  icoRecycleWarning.Images := iIconsDark;
 
   DBG.TitleImageList := iHeadersDark;
   pmGrid.Images := iButtonsDark;

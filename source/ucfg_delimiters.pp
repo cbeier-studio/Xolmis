@@ -82,13 +82,13 @@ uses cbs_global, cbs_graphics, cbs_themes, uDarkStyleParams;
 procedure TcfgDelimiters.ApplyDarkMode;
 begin
   pHaveHeader.Background.Color := clCardBGDefaultDark;
-  pHaveHeader.Border.Color := clCardBGSecondaryDark;
+  pHaveHeader.Border.Color := clSystemSolidNeutralFGDark;
   pQuotedAsText.Background.Color := clCardBGDefaultDark;
-  pQuotedAsText.Border.Color := clCardBGSecondaryDark;
+  pQuotedAsText.Border.Color := clSystemSolidNeutralFGDark;
   pDelimiter.Background.Color := clCardBGDefaultDark;
-  pDelimiter.Border.Color := clCardBGSecondaryDark;
+  pDelimiter.Border.Color := clSystemSolidNeutralFGDark;
   pDecimalSeparator.Background.Color := clCardBGDefaultDark;
-  pDecimalSeparator.Border.Color := clCardBGSecondaryDark;
+  pDecimalSeparator.Border.Color := clSystemSolidNeutralFGDark;
 
   tsHaveHeader.Color := pHaveHeader.Background.Color;
   tsQuotedAsText.Color := pQuotedAsText.Background.Color;

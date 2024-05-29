@@ -120,15 +120,15 @@ begin
   icoImportFinished.Images := imgFinishedDark;
 
   pProgress.Background.Color := clCardBGDefaultDark;
-  pProgress.Border.Color := clCardBGSecondaryDark;
+  pProgress.Border.Color := clSystemSolidNeutralFGDark;
   pProgress.Color := pContentProgress.Background.Color;
 
   pJournalFile.Background.Color := clCardBGDefaultDark;
-  pJournalFile.Border.Color := clCardBGSecondaryDark;
+  pJournalFile.Border.Color := clSystemSolidNeutralFGDark;
   pEffortFile.Background.Color := clCardBGDefaultDark;
-  pEffortFile.Border.Color := clCardBGSecondaryDark;
+  pEffortFile.Border.Color := clSystemSolidNeutralFGDark;
   pCaptureFile.Background.Color := clCardBGDefaultDark;
-  pCaptureFile.Border.Color := clCardBGSecondaryDark;
+  pCaptureFile.Border.Color := clSystemSolidNeutralFGDark;
 end;
 
 procedure TdlgImportCaptures.eCaptureFileChange(Sender: TObject);

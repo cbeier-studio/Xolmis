@@ -13,6 +13,7 @@ object cfgDelimiters: TcfgDelimiters
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.4.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 43

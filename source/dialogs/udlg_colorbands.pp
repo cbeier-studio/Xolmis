@@ -291,7 +291,10 @@ begin
   end
   else
   begin
-    aPanel.Background.Color := $00FAFAFA;
+    if IsDarkModeEnabled then
+      aPanel.Background.Color := clCardBGSecondaryDark
+    else
+      aPanel.Background.Color := $00FAFAFA;
     aPanel.Border.Color := $00D1D1D1;
     aPanel.Border.Width := 1;
     aPanel.FontEx.Color := clTextPrimaryLight;
@@ -340,7 +343,15 @@ procedure TdlgColorBands.ApplyDarkMode;
 begin
   pColors.Background.Color := clCardBGDefaultDark;
   pBands.Color := clCardBGDefaultDark;
+  Band1.Background.Color := clCardBGSecondaryDark;
+  Band2.Background.Color := clCardBGSecondaryDark;
+  Band3.Background.Color := clCardBGSecondaryDark;
+  Band4.Background.Color := clCardBGSecondaryDark;
   pCenter.Color := clCardBGDefaultDark;
+  pColor_M.Color := pColors.Background.Color;
+  pColor_O.Color := pColors.Background.Color;
+  pColor_U.Color := pColors.Background.Color;
+  pColor_N.Color := pColors.Background.Color;
 
   sbClear.Images := bBandsDark;
   sbDown.Images := bBandsDark;
