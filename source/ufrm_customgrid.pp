@@ -60,10 +60,17 @@ type
     dbgRecycle: TDBControlGrid;
     iButtons: TImageList;
     iButtonsDark: TImageList;
+    icoReportedFilter: TImage;
+    icoEscapedFilter: TImage;
+    icoNeedsReviewFilter: TImage;
     icoRecycleWarning: TImage;
+    icoMarkedFilter: TImage;
     iHeadersDark: TImageList;
     iIcons: TImageList;
     iIconsDark: TImageList;
+    lblReportedFilter: TLabel;
+    lblEscapedFilter: TLabel;
+    lblNeedsReviewFilter: TLabel;
     lblRecycleWarning: TLabel;
     lblRecycleId: TDBText;
     dsLink: TDataSource;
@@ -92,20 +99,16 @@ type
     icoBandSourceFilter: TImage;
     icoCaptureTypeFilter: TImage;
     icoCaptureStatusFilter: TImage;
-    icoDontNeedReviewFilter: TImage;
     icoEggFilter: TImage;
     icoNestStageFilter: TImage;
     icoNidoparasiteFilter: TImage;
     icoHatchedFilter: TImage;
     icoPhilornisFilter: TImage;
     icoRecordInEbirdFilter: TImage;
-    icoNotEscapedFilter: TImage;
-    icoEscapedFilter: TImage;
     icoNestFilter: TImage;
     icoIndividualFilter: TImage;
     icoExpeditionFilter: TImage;
     icoPlantFilter: TImage;
-    icoNeedsReviewFilter: TImage;
     icoOutOfSampleFilter: TImage;
     icoEggPatternFilter: TImage;
     icoSamplingPlotFilter: TImage;
@@ -130,17 +133,14 @@ type
     lblEggTextureFilter: TLabel;
     lblPhilornisFilter: TLabel;
     lblRecordInEbirdFilter: TLabel;
-    lblNotEscapedFilter: TLabel;
     lblEmptyQuery: TLabel;
-    lblEscapedFilter: TLabel;
     lblNestFilter: TLabel;
     lblIndividualFilter: TLabel;
     lblExpeditionFilter: TLabel;
-    lblDontNeedReviewFilter: TLabel;
     lblPlantFilter: TLabel;
-    lblNeedsReviewFilter: TLabel;
     lblOutOfSampleFilter: TLabel;
     lblEggPatternFilter: TLabel;
+    lblMarkedFilter: TLabel;
     lblSamplingPlotFilter: TLabel;
     lblSurveyFilter: TLabel;
     lblPersonFilter: TLabel;
@@ -156,6 +156,9 @@ type
     pEggShapeFilter: TBCPanel;
     pEggTraitsFilters: TBCPanel;
     pmRecycle: TPopupMenu;
+    pReportedFilter: TBCPanel;
+    pEscapedFilter: TBCPanel;
+    pNeedsReviewFilter: TBCPanel;
     pRecycleToolbar: TBCPanel;
     pRecycleWarning: TBCPanel;
     pReplacedBandFilter: TBCPanel;
@@ -173,24 +176,19 @@ type
     pEggTextureFilter: TBCPanel;
     pPhilornisFilter: TBCPanel;
     pRecordInEbirdFilter: TBCPanel;
-    pNotEscapedFilter: TBCPanel;
-    pEscapedFilter: TBCPanel;
-    pNeedsReviewFilters: TBCPanel;
     pmcNewNestOwner: TMenuItem;
     pEmptyQuery: TBCPanel;
     pmcDel: TMenuItem;
     pmcEdit: TMenuItem;
     pmcRefresh: TMenuItem;
     pmGridChild: TPopupMenu;
-    pEscapedFilters: TBCPanel;
     pNestFilter: TBCPanel;
     pIndividualFilter: TBCPanel;
     pExpeditionFilter: TBCPanel;
-    pDontNeedReviewFilter: TBCPanel;
     pPlantFilter: TBCPanel;
-    pNeedsReviewFilter: TBCPanel;
     pOutOfSampleFilter: TBCPanel;
     pEggPatternFilter: TBCPanel;
+    pMarkedFilter: TBCPanel;
     pSamplingPlotFilter: TBCPanel;
     pSurveyFilter: TBCPanel;
     pPersonFilter: TBCPanel;
@@ -229,7 +227,6 @@ type
     gridChild3: TDBGrid;
     gridChild5: TDBGrid;
     icoAgingFilter: TImage;
-    icoBandNotReportedFilter: TImage;
     icoSkullOssificationFilter: TImage;
     icoTaxonomyCbroFilter: TImage;
     icoBandSizeFilter12: TImage;
@@ -240,13 +237,10 @@ type
     icoBandSizeFilter7: TImage;
     icoBandSizeFilter8: TImage;
     icoTaxonomyIocFilter: TImage;
-    icoMarkedFilter: TImage;
     icoStartTimeFilter: TImage;
     icoMoltFilter: TImage;
-    icoReportedFilter: TImage;
     icoSynonymsFilter: TImage;
     icoTaxonomiesFilter: TImage;
-    icoUnmarkedFilter: TImage;
     lblAgeFilter: TLabel;
     lblBodyMoltFilter: TLabel;
     lblChildCount1: TLabel;
@@ -258,14 +252,11 @@ type
     lblFFWearFilter: TLabel;
     lblHasSynonymsFilter: TLabel;
     lblHowAgedFilter: TLabel;
-    lblMarkedFilter: TLabel;
     lblMoltLimitsFilter: TLabel;
     lblChildCount2: TLabel;
     lblChildTag2: TLabel;
     lblChildCount4: TLabel;
     lblChildTag4: TLabel;
-    lblNotReportedFilter: TLabel;
-    lblReportedFilter: TLabel;
     lblChildCount3: TLabel;
     lblChildTag3: TLabel;
     lblSkullOssificationFilter: TLabel;
@@ -275,7 +266,6 @@ type
     lblSynonymFilter: TLabel;
     lblTaxonomyCbroFilter: TLabel;
     lblTaxonomyIocFilter: TLabel;
-    lblUnmarkedFilter: TLabel;
     nbChilds: TNotebook;
     pAgeFilter: TBCPanel;
     pBodyMoltFilter: TBCPanel;
@@ -294,7 +284,6 @@ type
     pHowAgedFilter: TBCPanel;
     pIsSynonymFilter: TBCPanel;
     pmAddChild: TPopupMenu;
-    pMarkedFilter: TBCPanel;
     pmcNewCapture: TMenuItem;
     pmcNewMolt: TMenuItem;
     pmcNewNest: TMenuItem;
@@ -307,7 +296,6 @@ type
     pChildCount4: TBCPanel;
     pChildTag4: TBCPanel;
     pmSort: TPopupMenu;
-    pNotReportedFilter: TBCPanel;
     pInstitutionFilter: TBCPanel;
     pRecordStatus: TBCPanel;
     pChildStatus: TBCPanel;
@@ -315,14 +303,12 @@ type
     pColumnsToolbar: TBCPanel;
     pImagesToolbar: TBCPanel;
     pRecycleContent: TPanel;
-    pReportedFilter: TBCPanel;
     pChildCount3: TBCPanel;
     pChildTag3: TBCPanel;
     pSkullOssificationFilter: TBCPanel;
     pChildCount5: TBCPanel;
     pChildTag5: TBCPanel;
     pStartTimeFilter: TBCPanel;
-    pBandReportFilters: TBCPanel;
     cbBroodPatchFilter: TComboBox;
     cbCloacalProtuberanceFilter: TComboBox;
     cbSexFilter: TComboBox;
@@ -402,7 +388,6 @@ type
     pTaxonomiesFilters: TBCPanel;
     pTimeFilters: TBCPanel;
     pAgingFilters: TBCPanel;
-    pMarksFilters: TBCPanel;
     pTaxonFilters: TBCPanel;
     pTaxonomyCbroFilter: TBCPanel;
     pTaxonomyClementsFilter: TBCPanel;
@@ -421,11 +406,36 @@ type
     pClient: TPanel;
     pTitleTaxonFilter: TPanel;
     pTitleTaxonRanksFilter: TPanel;
-    pUnmarkedFilter: TBCPanel;
     pWithColorBandsFilter: TBCPanel;
     pWithRecapturesFilter: TBCPanel;
+    rbReportedAll: TRadioButton;
+    rbEscapedAll: TRadioButton;
+    rbNeedsReviewAll: TRadioButton;
+    rbMarkedAll: TRadioButton;
+    rbReportedNo: TRadioButton;
+    rbEscapedNo: TRadioButton;
+    rbNeedsReviewNo: TRadioButton;
+    rbMarkedNo: TRadioButton;
+    rbReportedYes: TRadioButton;
+    rbEscapedYes: TRadioButton;
+    rbNeedsReviewYes: TRadioButton;
     rbReplacedBandAll: TRadioButton;
+    rbIsSynonymAll: TRadioButton;
+    rbIsSynonymNo: TRadioButton;
+    rbIsSynonymYes: TRadioButton;
+    rbHasSynonymsAll: TRadioButton;
+    rbHasSynonymsNo: TRadioButton;
+    rbHasSynonymsYes: TRadioButton;
+    rbExtinctAll: TRadioButton;
+    rbExtinctNo: TRadioButton;
+    rbExtinctYes: TRadioButton;
+    rbMarkedYes: TRadioButton;
+    rbWithRecapturesAll: TRadioButton;
+    rbWithRecapturesNo: TRadioButton;
+    rbWithRecapturesYes: TRadioButton;
+    rbWithColorBandsAll: TRadioButton;
     rbReplacedBandNo: TRadioButton;
+    rbWithColorBandsNo: TRadioButton;
     rbReplacedBandYes: TRadioButton;
     rbNidoparasiteAll: TRadioButton;
     rbHatchedAll: TRadioButton;
@@ -442,6 +452,7 @@ type
     rbRecordInEbirdYes: TRadioButton;
     rbRecordInEbirdNo: TRadioButton;
     rbOutOfSampleYes: TRadioButton;
+    rbWithColorBandsYes: TRadioButton;
     sbAddChild: TSpeedButton;
     sbCancelRecord: TSpeedButton;
     sbClearFilters: TSpeedButton;
@@ -451,6 +462,8 @@ type
     sbAddNetsBatch: TSpeedButton;
     sbEditRecord: TSpeedButton;
     sbDelPermanently: TSpeedButton;
+    sbUnmarkAll: TSpeedButton;
+    sbMarkAll: TSpeedButton;
     sbRefreshChild: TSpeedButton;
     sbRefreshRecords: TSpeedButton;
     sbRestoreRecord: TSpeedButton;
@@ -539,19 +552,6 @@ type
     titleAudios: TLabel;
     titleImages: TLabel;
     titleQuickFilters: TLabel;
-    tsBandNotReported: TRxSwitch;
-    tsDontNeedReview: TRxSwitch;
-    tsBandReported: TRxSwitch;
-    tsNotEscaped: TRxSwitch;
-    tsNeedsReview: TRxSwitch;
-    tsfMarked: TRxSwitch;
-    tsfUnmarked: TRxSwitch;
-    tsfWithColorBandsFilter: TRxSwitch;
-    tsfWithRecapturesFilter: TRxSwitch;
-    tsHasSynonyms: TRxSwitch;
-    tsIsSynonym: TRxSwitch;
-    tsEscaped: TRxSwitch;
-    tsTaxonExtinct: TRxSwitch;
     tsTaxonomyCbro: TRxSwitch;
     tsTaxonomyClements: TRxSwitch;
     tsTaxonomyIoc: TRxSwitch;
@@ -663,6 +663,7 @@ type
     procedure sbInsertRecordClick(Sender: TObject);
     procedure sbLastChildClick(Sender: TObject);
     procedure sbLastRecordClick(Sender: TObject);
+    procedure sbMarkAllClick(Sender: TObject);
     procedure sbNextChildClick(Sender: TObject);
     procedure sbNextRecordClick(Sender: TObject);
     procedure sbPriorChildClick(Sender: TObject);
@@ -681,15 +682,11 @@ type
     procedure sbShowRecordClick(Sender: TObject);
     procedure sbSortChildsClick(Sender: TObject);
     procedure sbSortRecordsClick(Sender: TObject);
+    procedure sbUnmarkAllClick(Sender: TObject);
     procedure SetFilters(Sender: TObject);
     procedure SplitChildMoved(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
     procedure tsfMarkedOff(Sender: TObject);
-    procedure tsfMarkedOn(Sender: TObject);
-    procedure tsfUnmarkedOff(Sender: TObject);
-    procedure tsfUnmarkedOn(Sender: TObject);
-    procedure tsfWithColorBandsFilterOn(Sender: TObject);
-    procedure tsfWithRecapturesFilterOn(Sender: TObject);
     procedure tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure tvDateFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode; var NewState: TCheckState;
       var Allowed: Boolean);
@@ -1085,6 +1082,8 @@ begin
 
   sbInsertRecord.Images := iButtonsDark;
   sbEditRecord.Images := iButtonsDark;
+  sbUnmarkAll.Images := iButtonsDark;
+  sbMarkAll.Images := iButtonsDark;
   sbRecordHistory.Images := iButtonsDark;
   sbShareRecords.Images := iButtonsDark;
   sbSaveRecord.Images := iButtonsDark;
@@ -1120,145 +1119,137 @@ begin
   sbDelPermanently.Images := iButtonsDark;
 
   pSiteFilters.Background.Color := clCardBGDefaultDark;
-  pSiteFilters.Border.Color := clCardBGSecondaryDark;
+  pSiteFilters.Border.Color := clSystemSolidNeutralFGDark;
   pTitleSiteFilter.Color := clCardBGDefaultDark;
   pSiteRankFilter.Background.Color := clCardBGDefaultDark;
-  pSiteRankFilter.Border.Color := clCardBGSecondaryDark;
+  pSiteRankFilter.Border.Color := clSystemSolidNeutralFGDark;
   pTaxonRanksFilters.Background.Color := clCardBGDefaultDark;
-  pTaxonRanksFilters.Border.Color := clCardBGSecondaryDark;
+  pTaxonRanksFilters.Border.Color := clSystemSolidNeutralFGDark;
   pTitleTaxonRanksFilter.Color := clCardBGDefaultDark;
   pMaterialFilter.Background.Color := clCardBGDefaultDark;
-  pMaterialFilter.Border.Color := clCardBGSecondaryDark;
+  pMaterialFilter.Border.Color := clSystemSolidNeutralFGDark;
   pMethodFilter.Background.Color := clCardBGDefaultDark;
-  pMethodFilter.Border.Color := clCardBGSecondaryDark;
+  pMethodFilter.Border.Color := clSystemSolidNeutralFGDark;
   pBandSizeFilter.Background.Color := clCardBGDefaultDark;
-  pBandSizeFilter.Border.Color := clCardBGSecondaryDark;
+  pBandSizeFilter.Border.Color := clSystemSolidNeutralFGDark;
   pWithRecapturesFilter.Background.Color := clCardBGDefaultDark;
-  pWithRecapturesFilter.Border.Color := clCardBGSecondaryDark;
+  pWithRecapturesFilter.Border.Color := clSystemSolidNeutralFGDark;
   pFatFilter.Background.Color := clCardBGDefaultDark;
-  pFatFilter.Border.Color := clCardBGSecondaryDark;
+  pFatFilter.Border.Color := clSystemSolidNeutralFGDark;
   pBandStatusFilter.Background.Color := clCardBGDefaultDark;
-  pBandStatusFilter.Border.Color := clCardBGSecondaryDark;
+  pBandStatusFilter.Border.Color := clSystemSolidNeutralFGDark;
   pDatesFilters.Background.Color := clCardBGDefaultDark;
-  pDatesFilters.Border.Color := clCardBGSecondaryDark;
+  pDatesFilters.Border.Color := clSystemSolidNeutralFGDark;
   pDateFilter.Color := clCardBGDefaultDark;
   pNestFateFilter.Background.Color := clCardBGDefaultDark;
-  pNestFateFilter.Border.Color := clCardBGSecondaryDark;
+  pNestFateFilter.Border.Color := clSystemSolidNeutralFGDark;
   pNestSupportFilter.Background.Color := clCardBGDefaultDark;
-  pNestSupportFilter.Border.Color := clCardBGSecondaryDark;
+  pNestSupportFilter.Border.Color := clSystemSolidNeutralFGDark;
   pTaxonFilters.Background.Color := clCardBGDefaultDark;
-  pTaxonFilters.Border.Color := clCardBGSecondaryDark;
+  pTaxonFilters.Border.Color := clSystemSolidNeutralFGDark;
   pTitleTaxonFilter.Color := clCardBGDefaultDark;
   pExtinctFilter.Background.Color := clCardBGDefaultDark;
-  pExtinctFilter.Border.Color := clCardBGSecondaryDark;
+  pExtinctFilter.Border.Color := clSystemSolidNeutralFGDark;
   pWithColorBandsFilter.Background.Color := clCardBGDefaultDark;
-  pWithColorBandsFilter.Border.Color := clCardBGSecondaryDark;
+  pWithColorBandsFilter.Border.Color := clSystemSolidNeutralFGDark;
   pSexFilter.Background.Color := clCardBGDefaultDark;
-  pSexFilter.Border.Color := clCardBGSecondaryDark;
+  pSexFilter.Border.Color := clSystemSolidNeutralFGDark;
   pCloacalProtuberanceFilter.Background.Color := clCardBGDefaultDark;
-  pCloacalProtuberanceFilter.Border.Color := clCardBGSecondaryDark;
+  pCloacalProtuberanceFilter.Border.Color := clSystemSolidNeutralFGDark;
   pBroodPatchFilter.Background.Color := clCardBGDefaultDark;
-  pBroodPatchFilter.Border.Color := clCardBGSecondaryDark;
+  pBroodPatchFilter.Border.Color := clSystemSolidNeutralFGDark;
   pHowSexedFilter.Background.Color := clCardBGDefaultDark;
-  pHowSexedFilter.Border.Color := clCardBGSecondaryDark;
+  pHowSexedFilter.Border.Color := clSystemSolidNeutralFGDark;
   pReportedFilter.Background.Color := clCardBGDefaultDark;
-  pReportedFilter.Border.Color := clCardBGSecondaryDark;
-  pNotReportedFilter.Background.Color := clCardBGDefaultDark;
-  pNotReportedFilter.Border.Color := clCardBGSecondaryDark;
+  pReportedFilter.Border.Color := clSystemSolidNeutralFGDark;
   pIsSynonymFilter.Background.Color := clCardBGDefaultDark;
-  pIsSynonymFilter.Border.Color := clCardBGSecondaryDark;
+  pIsSynonymFilter.Border.Color := clSystemSolidNeutralFGDark;
   pHasSynonymsFilter.Background.Color := clCardBGDefaultDark;
-  pHasSynonymsFilter.Border.Color := clCardBGSecondaryDark;
+  pHasSynonymsFilter.Border.Color := clSystemSolidNeutralFGDark;
   pBodyMoltFilter.Background.Color := clCardBGDefaultDark;
-  pBodyMoltFilter.Border.Color := clCardBGSecondaryDark;
+  pBodyMoltFilter.Border.Color := clSystemSolidNeutralFGDark;
   pFFMoltFilter.Background.Color := clCardBGDefaultDark;
-  pFFMoltFilter.Border.Color := clCardBGSecondaryDark;
+  pFFMoltFilter.Border.Color := clSystemSolidNeutralFGDark;
   pFFWearFilter.Background.Color := clCardBGDefaultDark;
-  pFFWearFilter.Border.Color := clCardBGSecondaryDark;
+  pFFWearFilter.Border.Color := clSystemSolidNeutralFGDark;
   pMoltLimitsFilter.Background.Color := clCardBGDefaultDark;
-  pMoltLimitsFilter.Border.Color := clCardBGSecondaryDark;
+  pMoltLimitsFilter.Border.Color := clSystemSolidNeutralFGDark;
   pMoltCycleFilter.Background.Color := clCardBGDefaultDark;
-  pMoltCycleFilter.Border.Color := clCardBGSecondaryDark;
+  pMoltCycleFilter.Border.Color := clSystemSolidNeutralFGDark;
   pTaxonomyClementsFilter.Background.Color := clCardBGDefaultDark;
-  pTaxonomyClementsFilter.Border.Color := clCardBGSecondaryDark;
+  pTaxonomyClementsFilter.Border.Color := clSystemSolidNeutralFGDark;
   pTaxonomyIocFilter.Background.Color := clCardBGDefaultDark;
-  pTaxonomyIocFilter.Border.Color := clCardBGSecondaryDark;
+  pTaxonomyIocFilter.Border.Color := clSystemSolidNeutralFGDark;
   pTaxonomyCbroFilter.Background.Color := clCardBGDefaultDark;
-  pTaxonomyCbroFilter.Border.Color := clCardBGSecondaryDark;
+  pTaxonomyCbroFilter.Border.Color := clSystemSolidNeutralFGDark;
   pStartTimeFilter.Background.Color := clCardBGDefaultDark;
-  pStartTimeFilter.Border.Color := clCardBGSecondaryDark;
+  pStartTimeFilter.Border.Color := clSystemSolidNeutralFGDark;
   pEndTimeFilter.Background.Color := clCardBGDefaultDark;
-  pEndTimeFilter.Border.Color := clCardBGSecondaryDark;
+  pEndTimeFilter.Border.Color := clSystemSolidNeutralFGDark;
   pAgeFilter.Background.Color := clCardBGDefaultDark;
-  pAgeFilter.Border.Color := clCardBGSecondaryDark;
+  pAgeFilter.Border.Color := clSystemSolidNeutralFGDark;
   pSkullOssificationFilter.Background.Color := clCardBGDefaultDark;
-  pSkullOssificationFilter.Border.Color := clCardBGSecondaryDark;
+  pSkullOssificationFilter.Border.Color := clSystemSolidNeutralFGDark;
   pHowAgedFilter.Background.Color := clCardBGDefaultDark;
-  pHowAgedFilter.Border.Color := clCardBGSecondaryDark;
+  pHowAgedFilter.Border.Color := clSystemSolidNeutralFGDark;
   pMarkedFilter.Background.Color := clCardBGDefaultDark;
-  pMarkedFilter.Border.Color := clCardBGSecondaryDark;
-  pUnmarkedFilter.Background.Color := clCardBGDefaultDark;
-  pUnmarkedFilter.Border.Color := clCardBGSecondaryDark;
+  pMarkedFilter.Border.Color := clSystemSolidNeutralFGDark;
   pPersonFilter.Background.Color := clCardBGDefaultDark;
-  pPersonFilter.Border.Color := clCardBGSecondaryDark;
+  pPersonFilter.Border.Color := clSystemSolidNeutralFGDark;
   pInstitutionFilter.Background.Color := clCardBGDefaultDark;
-  pInstitutionFilter.Border.Color := clCardBGSecondaryDark;
+  pInstitutionFilter.Border.Color := clSystemSolidNeutralFGDark;
   pSurveyFilter.Background.Color := clCardBGDefaultDark;
-  pSurveyFilter.Border.Color := clCardBGSecondaryDark;
+  pSurveyFilter.Border.Color := clSystemSolidNeutralFGDark;
   pProjectFilter.Background.Color := clCardBGDefaultDark;
-  pProjectFilter.Border.Color := clCardBGSecondaryDark;
+  pProjectFilter.Border.Color := clSystemSolidNeutralFGDark;
   pNestFilter.Background.Color := clCardBGDefaultDark;
-  pNestFilter.Border.Color := clCardBGSecondaryDark;
+  pNestFilter.Border.Color := clSystemSolidNeutralFGDark;
   pIndividualFilter.Background.Color := clCardBGDefaultDark;
-  pIndividualFilter.Border.Color := clCardBGSecondaryDark;
+  pIndividualFilter.Border.Color := clSystemSolidNeutralFGDark;
   pSamplingPlotFilter.Background.Color := clCardBGDefaultDark;
-  pSamplingPlotFilter.Border.Color := clCardBGSecondaryDark;
+  pSamplingPlotFilter.Border.Color := clSystemSolidNeutralFGDark;
   pExpeditionFilter.Background.Color := clCardBGDefaultDark;
-  pExpeditionFilter.Border.Color := clCardBGSecondaryDark;
+  pExpeditionFilter.Border.Color := clSystemSolidNeutralFGDark;
   pPlantFilter.Background.Color := clCardBGDefaultDark;
-  pPlantFilter.Border.Color := clCardBGSecondaryDark;
+  pPlantFilter.Border.Color := clSystemSolidNeutralFGDark;
   pNeedsReviewFilter.Background.Color := clCardBGDefaultDark;
-  pNeedsReviewFilter.Border.Color := clCardBGSecondaryDark;
-  pDontNeedReviewFilter.Background.Color := clCardBGDefaultDark;
-  pDontNeedReviewFilter.Border.Color := clCardBGSecondaryDark;
+  pNeedsReviewFilter.Border.Color := clSystemSolidNeutralFGDark;
   pEscapedFilter.Background.Color := clCardBGDefaultDark;
-  pEscapedFilter.Border.Color := clCardBGSecondaryDark;
-  pNotEscapedFilter.Background.Color := clCardBGDefaultDark;
-  pNotEscapedFilter.Border.Color := clCardBGSecondaryDark;
+  pEscapedFilter.Border.Color := clSystemSolidNeutralFGDark;
   pRecordInEbirdFilter.Background.Color := clCardBGDefaultDark;
-  pRecordInEbirdFilter.Border.Color := clCardBGSecondaryDark;
+  pRecordInEbirdFilter.Border.Color := clSystemSolidNeutralFGDark;
   pEggFilter.Background.Color := clCardBGDefaultDark;
-  pEggFilter.Border.Color := clCardBGSecondaryDark;
+  pEggFilter.Border.Color := clSystemSolidNeutralFGDark;
   pOutOfSampleFilter.Background.Color := clCardBGDefaultDark;
-  pOutOfSampleFilter.Border.Color := clCardBGSecondaryDark;
+  pOutOfSampleFilter.Border.Color := clSystemSolidNeutralFGDark;
   pNidoparasiteFilter.Background.Color := clCardBGDefaultDark;
-  pNidoparasiteFilter.Border.Color := clCardBGSecondaryDark;
+  pNidoparasiteFilter.Border.Color := clSystemSolidNeutralFGDark;
   pHatchedFilter.Background.Color := clCardBGDefaultDark;
-  pHatchedFilter.Border.Color := clCardBGSecondaryDark;
+  pHatchedFilter.Border.Color := clSystemSolidNeutralFGDark;
   pPhilornisFilter.Background.Color := clCardBGDefaultDark;
-  pPhilornisFilter.Border.Color := clCardBGSecondaryDark;
+  pPhilornisFilter.Border.Color := clSystemSolidNeutralFGDark;
   pCaptureTypeFilter.Background.Color := clCardBGDefaultDark;
-  pCaptureTypeFilter.Border.Color := clCardBGSecondaryDark;
+  pCaptureTypeFilter.Border.Color := clSystemSolidNeutralFGDark;
   pCaptureStatusFilter.Background.Color := clCardBGDefaultDark;
-  pCaptureStatusFilter.Border.Color := clCardBGSecondaryDark;
+  pCaptureStatusFilter.Border.Color := clSystemSolidNeutralFGDark;
   pBandTypeFilter.Background.Color := clCardBGDefaultDark;
-  pBandTypeFilter.Border.Color := clCardBGSecondaryDark;
+  pBandTypeFilter.Border.Color := clSystemSolidNeutralFGDark;
   pBandSourceFilter.Background.Color := clCardBGDefaultDark;
-  pBandSourceFilter.Border.Color := clCardBGSecondaryDark;
+  pBandSourceFilter.Border.Color := clSystemSolidNeutralFGDark;
   pNestStatusFilter.Background.Color := clCardBGDefaultDark;
-  pNestStatusFilter.Border.Color := clCardBGSecondaryDark;
+  pNestStatusFilter.Border.Color := clSystemSolidNeutralFGDark;
   pNestStageFilter.Background.Color := clCardBGDefaultDark;
-  pNestStageFilter.Border.Color := clCardBGSecondaryDark;
+  pNestStageFilter.Border.Color := clSystemSolidNeutralFGDark;
   pEggPatternFilter.Background.Color := clCardBGDefaultDark;
-  pEggPatternFilter.Border.Color := clCardBGSecondaryDark;
+  pEggPatternFilter.Border.Color := clSystemSolidNeutralFGDark;
   pEggTextureFilter.Background.Color := clCardBGDefaultDark;
-  pEggTextureFilter.Border.Color := clCardBGSecondaryDark;
+  pEggTextureFilter.Border.Color := clSystemSolidNeutralFGDark;
   pEggShapeFilter.Background.Color := clCardBGDefaultDark;
-  pEggShapeFilter.Border.Color := clCardBGSecondaryDark;
+  pEggShapeFilter.Border.Color := clSystemSolidNeutralFGDark;
   pPermitTypeFilter.Background.Color := clCardBGDefaultDark;
-  pPermitTypeFilter.Border.Color := clCardBGSecondaryDark;
+  pPermitTypeFilter.Border.Color := clSystemSolidNeutralFGDark;
   pReplacedBandFilter.Background.Color := clCardBGDefaultDark;
-  pReplacedBandFilter.Border.Color := clCardBGSecondaryDark;
+  pReplacedBandFilter.Border.Color := clSystemSolidNeutralFGDark;
 
   eEggFilter.Images := DMM.iEditsDark;
   ePlantFilter.Images := DMM.iEditsDark;
@@ -1280,6 +1271,9 @@ begin
   tvSiteFilter.Colors.TreeLineColor := clTextSecondaryDark;
   tvDateFilter.Colors.TreeLineColor := clTextSecondaryDark;
   tvTaxaFilter.Colors.TreeLineColor := clTextSecondaryDark;
+  tsTaxonomyClements.Color := pTaxonomyClementsFilter.Background.Color;
+  tsTaxonomyIoc.Color := pTaxonomyIocFilter.Background.Color;
+  tsTaxonomyCbro.Color := pTaxonomyCbroFilter.Background.Color;
 
   icoSiteFilter.Images := iIconsDark;
   icoSiteRankFilter.Images := iIconsDark;
@@ -1304,7 +1298,6 @@ begin
   icoStartTimeFilter.Images := iIconsDark;
   icoAgingFilter.Images := iIconsDark;
   icoMarkedFilter.Images := iIconsDark;
-  icoUnmarkedFilter.Images := iIconsDark;
   icoPersonFilter.Images := iIconsDark;
   icoInstitutionFilter.Images := iIconsDark;
   icoSurveyFilter.Images := iIconsDark;
@@ -1417,8 +1410,7 @@ begin
   cbBandTypeFilter.ItemIndex := 0;
   cbBandSourceFilter.ItemIndex := 0;
 
-  tsBandReported.StateOn := sw_off;
-  tsBandNotReported.StateOn := sw_off;
+  rbReportedAll.Checked := True;
 
   ePersonFilter.Clear;
   FPersonKeyFilter := 0;
@@ -1433,8 +1425,8 @@ begin
   lblCountTaxonRanksFilter.Caption := rsNoneSelected;
   clbTaxonRanksFilter.CheckAll(cbUnchecked, False);
 
-  tsIsSynonym.StateOn := sw_off;
-  tsHasSynonyms.StateOn := sw_off;
+  rbIsSynonymAll.Checked := True;
+  rbHasSynonymsAll.Checked := True;
 end;
 
 procedure TfrmCustomGrid.ClearCaptureFilters;
@@ -1482,11 +1474,8 @@ begin
   eIndividualFilter.Clear;
   FIndividualKeyFilter := 0;
 
-  tsNeedsReview.StateOn := sw_off;
-  tsDontNeedReview.StateOn := sw_off;
-
-  tsEscaped.StateOn := sw_off;
-  tsNotEscaped.StateOn := sw_off;
+  rbNeedsReviewAll.Checked := True;
+  rbEscapedAll.Checked := True;
 
   rbPhilornisAll.Checked := True;
   rbReplacedBandAll.Checked := True;
@@ -1551,8 +1540,8 @@ begin
   cbSkullOssificationFilter.ItemIndex := 0;
   eHowAgedFilter.Clear;
 
-  tsfWithColorBandsFilter.StateOn := sw_off;
-  tsfWithRecapturesFilter.StateOn := sw_off;
+  rbWithColorBandsAll.Checked := True;
+  rbWithRecapturesAll.Checked := True;
 
   rbReplacedBandAll.Checked := True;
 
@@ -1655,8 +1644,7 @@ begin
     Exit;
 
   CanToggle := False;
-  tsfMarked.StateOn := sw_off;
-  tsfUnmarked.StateOn := sw_off;
+  rbMarkedAll.Checked := True;
 
   case TableType of
     tbNone: ;
@@ -1781,10 +1769,10 @@ begin
   tsTaxonomyIoc.StateOn := sw_off;
   tsTaxonomyCbro.StateOn := sw_off;
 
-  tsTaxonExtinct.StateOn := sw_off;
+  rbExtinctAll.Checked := True;
 
-  tsIsSynonym.StateOn := sw_off;
-  tsHasSynonyms.StateOn := sw_off;
+  rbIsSynonymAll.Checked := True;
+  rbHasSynonymsAll.Checked := True;
 end;
 
 procedure TfrmCustomGrid.DBGColExit(Sender: TObject);
@@ -3193,13 +3181,13 @@ begin
       crEqual, False, BandSources[cbBandSourceFilter.ItemIndex - 1]));
   end;
 
-  if tsBandReported.StateOn = sw_on then
+  if rbReportedYes.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('band_reported', 'Band reported', sdtBoolean,
       crEqual, False, '1'));
   end;
-  if tsBandNotReported.StateOn = sw_on then
+  if rbReportedNo.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('band_reported', 'Band reported', sdtBoolean,
@@ -3241,17 +3229,29 @@ begin
           crEqual, False, IntToStr(GetKey('taxon_ranks', 'rank_id', 'rank_name', clbTaxonRanksFilter.Items[i]))));
   end;
 
-  if tsIsSynonym.StateOn = sw_on then
+  if rbIsSynonymYes.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
       crNotEqual, False, '0'));
   end;
-  //if tsHasSynonyms.StateOn = sw_on then
+  if rbIsSynonymNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
+      crEqual, False, '0'));
+  end;
+  //if rbHasSynonymsYes.Checked then
   //begin
   //  sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
   //  FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
   //    crMoreThan, False, '1'));
+  //end;
+  //if rbHasSynonymsNo.Checked then
+  //begin
+  //  sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+  //  FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
+  //    crEqual, False, '0'));
   //end;
 end;
 
@@ -3399,26 +3399,26 @@ begin
       crEqual, False, IntToStr(FIndividualKeyFilter)));
   end;
 
-  if tsNeedsReview.StateOn = sw_on then
+  if rbNeedsReviewYes.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('needs_review', 'Needs review', sdtBoolean,
       crEqual, False, '1'));
   end;
-  if tsDontNeedReview.StateOn = sw_on then
+  if rbNeedsReviewNo.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('Needs review', 'Needs review', sdtBoolean,
       crEqual, False, '0'));
   end;
 
-  if tsEscaped.StateOn = sw_on then
+  if rbEscapedYes.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('escaped', 'Escaped', sdtBoolean,
       crEqual, False, '1'));
   end;
-  if tsNotEscaped.StateOn = sw_on then
+  if rbEscapedNo.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('escaped', 'Escaped', sdtBoolean,
@@ -3611,14 +3611,14 @@ begin
 
   CanToggle := False;
 
-  if (tsfMarked.StateOn = sw_on) then
+  if (rbMarkedYes.Checked) then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('marked_status', 'Marked', sdtBoolean,
       crEqual, False, '1'));
   end
   else
-  if (tsfUnmarked.StateOn = sw_on) then
+  if (rbMarkedNo.Checked) then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('marked_status', 'Marked', sdtBoolean,
@@ -3699,7 +3699,7 @@ begin
       crEqual, False, BirdAge[cbAgeFilter.ItemIndex - 1]));
   end;
 
-  if tsfWithColorBandsFilter.StateOn = sw_on then
+  if rbWithColorBandsYes.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('right_leg_below', 'Right tarsus', sdtText,
@@ -3707,11 +3707,26 @@ begin
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('left_leg_below', 'Left tarsus', sdtText,
       crNotEqual, False, ''));
   end;
-  if tsfWithRecapturesFilter.StateOn = sw_on then
+  if rbWithColorBandsNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('right_leg_below', 'Right tarsus', sdtText,
+      crEqual, False, ''));
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('left_leg_below', 'Left tarsus', sdtText,
+      crEqual, False, ''));
+  end;
+
+  if rbWithRecapturesYes.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('captures_tally', 'Captures', sdtInteger,
       crMoreThan, True, '2'));
+  end;
+  if rbWithRecapturesNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('captures_tally', 'Captures', sdtInteger,
+      crLessThan, True, '1'));
   end;
 
   if FNestKeyFilter > 0 then
@@ -4102,24 +4117,43 @@ begin
       crEqual, False, '1'));
   end;
 
-  if tsTaxonExtinct.StateOn = sw_on then
+  if rbExtinctYes.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('extinct', 'Extinct', sdtBoolean,
       crEqual, False, '1'));
   end;
+  if rbExtinctNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('extinct', 'Extinct', sdtBoolean,
+      crEqual, False, '0'));
+  end;
 
-  if tsIsSynonym.StateOn = sw_on then
+  if rbIsSynonymYes.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
       crNotEqual, False, '0'));
   end;
-  //if tsHasSynonyms.StateOn = sw_on then
+  if rbIsSynonymNo.Checked then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
+      crEqual, False, '0'));
+  end;
+
+  //if rbHasSynonymsYes.Checked then
   //begin
   //  sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
   //  FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
   //    crMoreThan, False, '1'));
+  //end;
+  //if rbHasSynonymsNo.Checked then
+  //begin
+  //  sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+  //  FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
+  //    crEqual, False, '0'));
   //end;
 end;
 
@@ -5571,6 +5605,30 @@ begin
   Working := False;
 end;
 
+procedure TfrmCustomGrid.sbMarkAllClick(Sender: TObject);
+var
+  BM: TBookmark;
+begin
+  CanToggle := False;
+
+  with dsLink.DataSet do
+  try
+    BM := Bookmark;
+    DisableControls;
+    First;
+    repeat
+      Edit;
+      FieldByName('marked_status').AsBoolean := True;
+      Post;
+      Next;
+    until Eof;
+  finally
+    EnableControls;
+    Bookmark := BM;
+    CanToggle := True;
+  end;
+end;
+
 procedure TfrmCustomGrid.sbNextChildClick(Sender: TObject);
 var
   aDataSet: TDataSet;
@@ -5743,6 +5801,30 @@ procedure TfrmCustomGrid.sbSortRecordsClick(Sender: TObject);
 begin
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
     pmSort.Popup(X, Y);
+end;
+
+procedure TfrmCustomGrid.sbUnmarkAllClick(Sender: TObject);
+var
+  BM: TBookmark;
+begin
+  CanToggle := False;
+
+  with dsLink.DataSet do
+  try
+    BM := Bookmark;
+    DisableControls;
+    First;
+    repeat
+      Edit;
+      FieldByName('marked_status').AsBoolean := False;
+      Post;
+      Next;
+    until Eof;
+  finally
+    EnableControls;
+    Bookmark := BM;
+    CanToggle := True;
+  end;
 end;
 
 function TfrmCustomGrid.Search(aValue: String): Boolean;
@@ -8037,57 +8119,6 @@ begin
   Search(FSearchString);
 end;
 
-procedure TfrmCustomGrid.tsfMarkedOn(Sender: TObject);
-begin
-  if (tsfUnmarked.StateOn = sw_on) then
-    tsfUnmarked.StateOn := sw_off;
-
-  if (tsfMarked.StateOn = sw_on) then
-    //FSearch.QuickFilters.Add(TSearchField.Create('marked_status', 'Marked', sdtBoolean, crEqual,
-    //  False, '1'));
-
-  Search(FSearchString);
-end;
-
-procedure TfrmCustomGrid.tsfUnmarkedOff(Sender: TObject);
-begin
-  Search(FSearchString);
-end;
-
-procedure TfrmCustomGrid.tsfUnmarkedOn(Sender: TObject);
-begin
-  if (tsfMarked.StateOn = sw_on) then
-    tsfMarked.StateOn := sw_off;
-
-  if (tsfUnmarked.StateOn = sw_on) then
-    //FSearch.QuickFilters.Add(TSearchField.Create('marked_status', 'Marked', sdtBoolean, crEqual,
-    //  False, '0'));
-
-  Search(FSearchString);
-end;
-
-procedure TfrmCustomGrid.tsfWithColorBandsFilterOn(Sender: TObject);
-begin
-  if tsfWithColorBandsFilter.StateOn = sw_on then
-  begin
-    //FSearch.QuickFilters.Add(TSearchField.Create('right_leg_below', 'Right tarsus', sdtText, crDistinct,
-    //  False, ''));
-    //FSearch.QuickFilters.Add(TSearchField.Create('left_leg_below', 'Left tarsus', sdtText, crDistinct,
-    //  False, ''));
-    //FSearch.QuickFilters.Add(TSearchField.Create('right_leg_above', 'Right tibia', sdtText, crDistinct,
-    //  False, ''));
-    //FSearch.QuickFilters.Add(TSearchField.Create('left_leg_above', 'Left tibia', sdtText, crDistinct,
-    //  False, ''));
-  end;
-end;
-
-procedure TfrmCustomGrid.tsfWithRecapturesFilterOn(Sender: TObject);
-begin
-  //if tsfWithRecapturesFilter.StateOn = sw_on then
-    //FSearch.QuickFilters.Add(TSearchField.Create('captures_tally', '# of captures', sdtInteger, crMoreThan,
-    //  False, '1'));
-end;
-
 procedure TfrmCustomGrid.tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
 var
   Data: PSiteNodeData;
@@ -8304,6 +8335,8 @@ begin
       sbRecordHistory.Enabled := False;
       sbShareRecords.Enabled := False;
       sbSortRecords.Enabled := False;
+      sbMarkAll.Enabled := False;
+      sbUnmarkAll.Enabled := False;
 
       sbShowQuickFilters.Enabled := False;
       sbShowImages.Enabled := False;
@@ -8329,6 +8362,8 @@ begin
       sbRecordHistory.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbShareRecords.Enabled := (aDataSet.RecordCount > 0) and (ActiveUser.AllowExport);
       sbSortRecords.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbMarkAll.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbUnmarkAll.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
 
       sbFirstRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
       sbPriorRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
@@ -8364,6 +8399,8 @@ begin
       sbRecordHistory.Enabled := False;
       sbShareRecords.Enabled := False;
       sbSortRecords.Enabled := False;
+      sbMarkAll.Enabled := False;
+      sbUnmarkAll.Enabled := False;
 
       sbShowQuickFilters.Enabled := False;
       sbShowImages.Enabled := False;
@@ -8835,7 +8872,7 @@ begin
     rsBandDeadBirdBandedByOthers + '","' + rsBandFoundLoose + '"';
   pBandSourceFilter.Visible := True;
   pBandTypeFilter.Visible := True;
-  pBandReportFilters.Visible := True;
+  pReportedFilter.Visible := True;
   pPersonFilter.Visible := True;
   pInstitutionFilter.Visible := True;
   pProjectFilter.Visible := True;
@@ -8882,8 +8919,8 @@ begin
   pMethodFilter.Visible := True;
   pIndividualFilter.Visible := True;
   pSamplingPlotFilter.Visible := True;
-  pNeedsReviewFilters.Visible := True;
-  pEscapedFilters.Visible := True;
+  pNeedsReviewFilter.Visible := True;
+  pEscapedFilter.Visible := True;
   pPhilornisFilter.Visible := True;
   pReplacedBandFilter.Visible := True;
 end;

@@ -9677,10 +9677,6 @@ msgctxt "tfrmcustomgrid.lbldatefilter.caption"
 msgid "Dates"
 msgstr ""
 
-#: tfrmcustomgrid.lbldontneedreviewfilter.caption
-msgid "Do not need review"
-msgstr ""
-
 #: tfrmcustomgrid.lbleggfilter.caption
 msgctxt "tfrmcustomgrid.lbleggfilter.caption"
 msgid "Egg"
@@ -9816,14 +9812,6 @@ msgstr ""
 msgid "Nidoparasite presence"
 msgstr ""
 
-#: tfrmcustomgrid.lblnotescapedfilter.caption
-msgid "Did not escape"
-msgstr ""
-
-#: tfrmcustomgrid.lblnotreportedfilter.caption
-msgid "Not reported"
-msgstr ""
-
 #: tfrmcustomgrid.lbloutofsamplefilter.caption
 msgid "Out of sampling"
 msgstr ""
@@ -9923,11 +9911,6 @@ msgstr ""
 
 #: tfrmcustomgrid.lbltaxonranksfilter.caption
 msgid "Ranks"
-msgstr ""
-
-#: tfrmcustomgrid.lblunmarkedfilter.caption
-msgctxt "tfrmcustomgrid.lblunmarkedfilter.caption"
-msgid "Unmarked records"
 msgstr ""
 
 #: tfrmcustomgrid.lblwithcolorbandsfilter.caption
@@ -10118,6 +10101,51 @@ msgctxt "tfrmcustomgrid.pmtrefresh.caption"
 msgid "Refresh"
 msgstr ""
 
+#: tfrmcustomgrid.rbescapedall.caption
+msgctxt "tfrmcustomgrid.rbescapedall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbescapedno.caption
+msgctxt "tfrmcustomgrid.rbescapedno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbescapedyes.caption
+msgctxt "tfrmcustomgrid.rbescapedyes.caption"
+msgid "Yes"
+msgstr ""
+
+#: tfrmcustomgrid.rbextinctall.caption
+msgctxt "tfrmcustomgrid.rbextinctall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbextinctno.caption
+msgctxt "tfrmcustomgrid.rbextinctno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbextinctyes.caption
+msgctxt "tfrmcustomgrid.rbextinctyes.caption"
+msgid "Yes"
+msgstr ""
+
+#: tfrmcustomgrid.rbhassynonymsall.caption
+msgctxt "tfrmcustomgrid.rbhassynonymsall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbhassynonymsno.caption
+msgctxt "tfrmcustomgrid.rbhassynonymsno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbhassynonymsyes.caption
+msgctxt "tfrmcustomgrid.rbhassynonymsyes.caption"
+msgid "Yes"
+msgstr ""
+
 #: tfrmcustomgrid.rbhatchedall.caption
 msgctxt "tfrmcustomgrid.rbhatchedall.caption"
 msgid "All"
@@ -10130,6 +10158,51 @@ msgstr ""
 
 #: tfrmcustomgrid.rbhatchedyes.caption
 msgctxt "tfrmcustomgrid.rbhatchedyes.caption"
+msgid "Yes"
+msgstr ""
+
+#: tfrmcustomgrid.rbissynonymall.caption
+msgctxt "tfrmcustomgrid.rbissynonymall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbissynonymno.caption
+msgctxt "tfrmcustomgrid.rbissynonymno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbissynonymyes.caption
+msgctxt "tfrmcustomgrid.rbissynonymyes.caption"
+msgid "Yes"
+msgstr ""
+
+#: tfrmcustomgrid.rbmarkedall.caption
+msgctxt "tfrmcustomgrid.rbmarkedall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbmarkedno.caption
+msgctxt "tfrmcustomgrid.rbmarkedno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbmarkedyes.caption
+msgctxt "tfrmcustomgrid.rbmarkedyes.caption"
+msgid "Yes"
+msgstr ""
+
+#: tfrmcustomgrid.rbneedsreviewall.caption
+msgctxt "tfrmcustomgrid.rbneedsreviewall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbneedsreviewno.caption
+msgctxt "tfrmcustomgrid.rbneedsreviewno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbneedsreviewyes.caption
+msgctxt "tfrmcustomgrid.rbneedsreviewyes.caption"
 msgid "Yes"
 msgstr ""
 
@@ -10205,6 +10278,51 @@ msgstr ""
 
 #: tfrmcustomgrid.rbreplacedbandyes.caption
 msgctxt "tfrmcustomgrid.rbreplacedbandyes.caption"
+msgid "Yes"
+msgstr ""
+
+#: tfrmcustomgrid.rbreportedall.caption
+msgctxt "tfrmcustomgrid.rbreportedall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbreportedno.caption
+msgctxt "tfrmcustomgrid.rbreportedno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbreportedyes.caption
+msgctxt "tfrmcustomgrid.rbreportedyes.caption"
+msgid "Yes"
+msgstr ""
+
+#: tfrmcustomgrid.rbwithcolorbandsall.caption
+msgctxt "tfrmcustomgrid.rbwithcolorbandsall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbwithcolorbandsno.caption
+msgctxt "tfrmcustomgrid.rbwithcolorbandsno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbwithcolorbandsyes.caption
+msgctxt "tfrmcustomgrid.rbwithcolorbandsyes.caption"
+msgid "Yes"
+msgstr ""
+
+#: tfrmcustomgrid.rbwithrecapturesall.caption
+msgctxt "tfrmcustomgrid.rbwithrecapturesall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbwithrecapturesno.caption
+msgctxt "tfrmcustomgrid.rbwithrecapturesno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbwithrecapturesyes.caption
+msgctxt "tfrmcustomgrid.rbwithrecapturesyes.caption"
 msgid "Yes"
 msgstr ""
 
@@ -10314,6 +10432,10 @@ msgstr ""
 #: tfrmcustomgrid.sblastrecord.hint
 msgctxt "tfrmcustomgrid.sblastrecord.hint"
 msgid "Last record"
+msgstr ""
+
+#: tfrmcustomgrid.sbmarkall.hint
+msgid "Mark all records in the query"
 msgstr ""
 
 #: tfrmcustomgrid.sbnextchild.hint
@@ -10434,6 +10556,10 @@ msgstr ""
 #: tfrmcustomgrid.sbsortrecords.hint
 msgctxt "tfrmcustomgrid.sbsortrecords.hint"
 msgid "Sort records"
+msgstr ""
+
+#: tfrmcustomgrid.sbunmarkall.hint
+msgid "Unmark all records in the query"
 msgstr ""
 
 #: tfrmcustomgrid.sbviewimage.hint
