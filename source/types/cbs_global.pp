@@ -103,6 +103,7 @@ type
     FSelectedTheme: Integer;
     FShowGridLines, FAutoAdjustColumns: Boolean;
     FUseConditionalFormatting: Boolean;
+    FShowOutliersOnGrid: Boolean;
     FDefaultRowHeight: Integer;
     FAlternateRowColor: TColor;
     { Collection }
@@ -152,6 +153,7 @@ type
     property ShowGridLines: Boolean read FShowGridLines write FShowGridLines;
     property AutoAdjustColumns: Boolean read FAutoAdjustColumns write FAutoAdjustColumns;
     property UseConditionalFormatting: Boolean read FUseConditionalFormatting write FUseConditionalFormatting;
+    property ShowOutliersOnGrid: Boolean read FShowOutliersOnGrid write FShowOutliersOnGrid;
     property DefaultRowHeight: Integer read FDefaultRowHeight write FDefaultRowHeight;
     property AlternateRowColor: TColor read FAlternateRowColor write FAlternateRowColor;
     { Collection }
@@ -665,6 +667,7 @@ begin
   FShowGridLines := Ini.GetValue('/APPEARANCE/ShowGridLines', True);
   FAutoAdjustColumns := Ini.GetValue('/APPEARANCE/AutoAdjustColumns', False);
   FUseConditionalFormatting := Ini.GetValue('/APPEARANCE/UseConditionalFormatting', True);
+  FShowOutliersOnGrid := Ini.GetValue('/APPEARANCE/ShowOutliersOnGrid', True);
   FDefaultRowHeight := Ini.GetValue('/APPEARANCE/DefaultRowHeight', 25);
   FAlternateRowColor := Ini.GetValue('/APPEARANCE/AlternateRowColor', StringToColor('$00FFFFFF'));
   { Collection }
@@ -711,6 +714,7 @@ begin
   Ini.SetValue('/APPEARANCE/ShowGridLines', FShowGridLines);
   Ini.SetValue('/APPEARANCE/AutoAdjustColumns', FAutoAdjustColumns);
   Ini.SetValue('/APPEARANCE/UseConditionalFormatting', FUseConditionalFormatting);
+  Ini.SetValue('/APPEARANCE/ShowOutliersOnGrid', FShowOutliersOnGrid);
   Ini.SetValue('/APPEARANCE/DefaultRowHeight', FDefaultRowHeight);
   Ini.SetValue('/APPEARANCE/AlternateRowColor', ColorToString(FAlternateRowColor));
   { Collection }

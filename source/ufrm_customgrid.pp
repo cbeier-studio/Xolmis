@@ -921,7 +921,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs,
+  cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
   cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
 
@@ -4646,7 +4646,13 @@ begin
 end;
 
 procedure TfrmCustomGrid.PrepareCanvasCaptures(var Column: TColumn; var sender: TObject);
+var
+  z: Extended;
+  aTaxon: Integer;
 begin
+  z := 0;
+  aTaxon := 0;
+
   if (Column.FieldName = 'taxon_name') then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
@@ -4755,6 +4761,9 @@ begin
   end;
 
   { Paint the cell background red the invalid values }
+  if not XSettings.UseConditionalFormatting then
+    Exit;
+
   if (Column.FieldName = 'cloacal_protuberance') then
   begin
     if (Column.Field.AsString <> '') and
@@ -4838,6 +4847,203 @@ begin
         TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
     end;
   end;
+
+  { Paint the cell background yellow the outliers }
+  if not XSettings.ShowOutliersOnGrid then
+    Exit;
+
+  if (Column.FieldName = 'right_wing_chord') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'first_secondary_chord') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'tail_length') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'tarsus_length') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'tarsus_diameter') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'weight') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'exposed_culmen') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'bill_width') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'bill_height') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'nostril_bill_tip') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'skull_length') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = 'kipps_index') then
+  begin
+    if (Column.Field.AsFloat <> 0.0) then
+    begin
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
+                    TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      begin
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
+        else
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      end;
+    end;
+  end;
+
 end;
 
 procedure TfrmCustomGrid.PrepareCanvasEggs(var Column: TColumn; var sender: TObject);

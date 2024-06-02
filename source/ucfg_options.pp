@@ -31,13 +31,14 @@ type
   TcfgOptions = class(TForm)
     cbCheckUpdates: TComboBox;
     cbClearDeleted: TComboBox;
-    cbSelectedTheme: TComboBox;
     cbMainTaxonomy: TComboBox;
+    cbSelectedTheme: TComboBox;
     cbVernacularNames: TComboBox;
     eAttachmentsPath: TDirectoryEdit;
     eAudiosPath: TDirectoryEdit;
     eBackupPath: TDirectoryEdit;
     eImagesPath: TDirectoryEdit;
+    icoSelectedTheme: TImage;
     iIconsDark: TImageList;
     Image1: TImage;
     Image10: TImage;
@@ -48,7 +49,8 @@ type
     Image15: TImage;
     Image16: TImage;
     Image17: TImage;
-    icoSelectedTheme: TImage;
+    icoUseConditionalFormatting: TImage;
+    icoShowOutliers: TImage;
     Image2: TImage;
     Image3: TImage;
     Image4: TImage;
@@ -66,7 +68,8 @@ type
     lblBackupPath: TLabel;
     lblCheckUpdates: TLabel;
     lblClearDeleted: TLabel;
-    lblSelectedTheme: TLabel;
+    lblShowOutliers: TLabel;
+    lblUseConditionalFormatting: TLabel;
     lblConfirmCancel: TLabel;
     lblEnterAsTab: TLabel;
     lblImagesPath: TLabel;
@@ -74,22 +77,27 @@ type
     lblManageBackups: TLabel;
     lblRememberConnection: TLabel;
     lblRememberUser: TLabel;
+    lblSelectedTheme: TLabel;
     lblSelectedThemeRestart: TLabel;
     lblShowSynonyms: TLabel;
     lblStartupBackup: TLabel;
     lblTitleBackup: TLabel;
     lblTitleCollection: TLabel;
     lblTitleInterface: TLabel;
+    lblTitleAppearance: TLabel;
     lblTitleMedia: TLabel;
     lblTitleSecurity: TLabel;
     lblVernacularNames: TLabel;
     nbPages: TNotebook;
+    pShowOutliers: TBCPanel;
+    pContentAppearance: TPanel;
+    pUseConditionalFormatting: TBCPanel;
+    pgAppearance: TPage;
     pAllowUsageData: TBCPanel;
     pAllowUsageData1: TBCPanel;
     pAllowWriteLog: TBCPanel;
     pBackupPath: TBCPanel;
     pCheckUpdates: TBCPanel;
-    pSelectedTheme: TBCPanel;
     pgSecurity: TPage;
     pgBackup: TPage;
     pContentSecurity: TPanel;
@@ -110,6 +118,7 @@ type
     pManageBackups: TBCPanel;
     pRememberConnection: TBCPanel;
     pRememberUser: TBCPanel;
+    pSelectedTheme: TBCPanel;
     pShowSynonyms: TBCPanel;
     OpenDlg: TOpenDialog;
     lineBottom: TShapeLineBGRA;
@@ -122,9 +131,12 @@ type
     sbRestoreBackup: TBitBtn;
     scrollGeneral: TScrollBox;
     scrollCollection: TScrollBox;
+    scrollAppearance: TScrollBox;
     scrollMedia: TScrollBox;
     scrollSecurity: TScrollBox;
     scrollBackup: TScrollBox;
+    tsShowOutliers: TRxSwitch;
+    tsUseConditionalFormatting: TRxSwitch;
     tvMenu: TTreeView;
     tsAllowUsageData: TRxSwitch;
     tsConfirmCancel: TRxSwitch;
@@ -148,6 +160,8 @@ type
     procedure sbNewBackupClick(Sender: TObject);
     procedure sbRestoreBackupClick(Sender: TObject);
     procedure tsAllowUsageDataOn(Sender: TObject);
+    procedure tsShowOutliersOn(Sender: TObject);
+    procedure tsUseConditionalFormattingOn(Sender: TObject);
     procedure tsWriteLogsOn(Sender: TObject);
     procedure tsConfirmCancelOn(Sender: TObject);
     procedure tsEnterAsTabOn(Sender: TObject);
@@ -238,6 +252,8 @@ begin
   Image2.Images := iIconsDark;
   Image10.Images := iIconsDark;
   icoSelectedTheme.Images := iIconsDark;
+  icoUseConditionalFormatting.Images := iIconsDark;
+  icoShowOutliers.Images := iIconsDark;
   Image5.Images := iIconsDark;
   Image3.Images := iIconsDark;
   Image6.Images := iIconsDark;
@@ -262,6 +278,10 @@ begin
   pCheckUpdates.Border.Color := clSystemSolidNeutralFGDark;
   pSelectedTheme.Background.Color := clCardBGDefaultDark;
   pSelectedTheme.Border.Color := clSystemSolidNeutralFGDark;
+  pUseConditionalFormatting.Background.Color := clCardBGDefaultDark;
+  pUseConditionalFormatting.Border.Color := clSystemSolidNeutralFGDark;
+  pShowOutliers.Background.Color := clCardBGDefaultDark;
+  pShowOutliers.Border.Color := clSystemSolidNeutralFGDark;
   pVernacularNames.Background.Color := clCardBGDefaultDark;
   pVernacularNames.Border.Color := clSystemSolidNeutralFGDark;
   pMainTaxonomy.Background.Color := clCardBGDefaultDark;
@@ -293,6 +313,8 @@ begin
 
   tsEnterAsTab.Color := pEnterAsTab.Background.Color;
   tsConfirmCancel.Color := pConfirmCancel.Background.Color;
+  tsUseConditionalFormatting.Color := pConfirmCancel.Background.Color;
+  tsShowOutliers.Color := pConfirmCancel.Background.Color;
   tsShowSynonyms.Color := pConfirmCancel.Background.Color;
   tsRememberConnection.Color := pConfirmCancel.Background.Color;
   tsRememberUser.Color := pConfirmCancel.Background.Color;
@@ -386,6 +408,11 @@ begin
     XSettings.Delete('SECURITY', 'LastUser');
 end;
 
+procedure TcfgOptions.tsShowOutliersOn(Sender: TObject);
+begin
+  XSettings.ShowOutliersOnGrid := tsShowOutliers.StateOn = sw_on;
+end;
+
 procedure TcfgOptions.tsShowSynonymsOn(Sender: TObject);
 begin
   XSettings.ShowSynonyms := tsShowSynonyms.StateOn = sw_on;
@@ -394,6 +421,14 @@ end;
 procedure TcfgOptions.tsStartupBackupOn(Sender: TObject);
 begin
   XSettings.StartupBackup := tsStartupBackup.StateOn = sw_on;
+end;
+
+procedure TcfgOptions.tsUseConditionalFormattingOn(Sender: TObject);
+begin
+  XSettings.UseConditionalFormatting := tsUseConditionalFormatting.StateOn = sw_on;
+
+  lblShowOutliers.Enabled := tsUseConditionalFormatting.StateOn = sw_on;
+  tsShowOutliers.Enabled := tsUseConditionalFormatting.StateOn = sw_on;
 end;
 
 procedure TcfgOptions.LoadConfig;
@@ -411,6 +446,14 @@ begin
 
   { APPEARANCE }
   cbSelectedTheme.ItemIndex := XSettings.SelectedTheme;
+  if XSettings.UseConditionalFormatting then
+    tsUseConditionalFormatting.StateOn := sw_on
+  else
+    tsUseConditionalFormatting.StateOn := sw_off;
+  if XSettings.ShowOutliersOnGrid then
+    tsShowOutliers.StateOn := sw_on
+  else
+    tsShowOutliers.StateOn := sw_off;
 
   { COLLECTION }
   cbVernacularNames.ItemIndex := XSettings.VernacularNamesLanguage;

@@ -5196,12 +5196,20 @@ msgstr ""
 msgid "Xolmis need to be restarted to apply changes"
 msgstr ""
 
+#: tcfgoptions.lblshowoutliers.caption
+msgid "Show outlier measurements in captures"
+msgstr ""
+
 #: tcfgoptions.lblshowsynonyms.caption
 msgid "Show synonyms in search results"
 msgstr ""
 
 #: tcfgoptions.lblstartupbackup.caption
 msgid "Create a database copy when Xolmis starts"
+msgstr ""
+
+#: tcfgoptions.lbltitleappearance.caption
+msgid "Appearance"
 msgstr ""
 
 #: tcfgoptions.lbltitlebackup.caption
@@ -5227,6 +5235,10 @@ msgstr ""
 #: tcfgoptions.lbltitlesecurity.caption
 msgctxt "tcfgoptions.lbltitlesecurity.caption"
 msgid "Security and privacy"
+msgstr ""
+
+#: tcfgoptions.lbluseconditionalformatting.caption
+msgid "Use conditional formatting in grids"
 msgstr ""
 
 #: tcfgoptions.lblvernacularnames.caption

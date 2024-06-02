@@ -5224,6 +5224,10 @@ msgstr "Tema"
 msgid "Xolmis need to be restarted to apply changes"
 msgstr "Xolmis precisa ser reiniciado para aplicar mudanças"
 
+#: tcfgoptions.lblshowoutliers.caption
+msgid "Show outlier measurements in captures"
+msgstr "Mostrar outliers das medidas nas capturas"
+
 #: tcfgoptions.lblshowsynonyms.caption
 msgid "Show synonyms in search results"
 msgstr "Mostrar sinônimos nos resultados das buscas"
@@ -5231,6 +5235,10 @@ msgstr "Mostrar sinônimos nos resultados das buscas"
 #: tcfgoptions.lblstartupbackup.caption
 msgid "Create a database copy when Xolmis starts"
 msgstr "Criar uma cópia do banco de dados quando o Xolmis iniciar"
+
+#: tcfgoptions.lbltitleappearance.caption
+msgid "Appearance"
+msgstr "Aparência"
 
 #: tcfgoptions.lbltitlebackup.caption
 msgctxt "tcfgoptions.lbltitlebackup.caption"
@@ -5256,6 +5264,10 @@ msgstr "Mídias"
 msgctxt "tcfgoptions.lbltitlesecurity.caption"
 msgid "Security and privacy"
 msgstr "Segurança e privacidade"
+
+#: tcfgoptions.lbluseconditionalformatting.caption
+msgid "Use conditional formatting in grids"
+msgstr "Usar formatação condicional nas grades"
 
 #: tcfgoptions.lblvernacularnames.caption
 msgid "Language of vernacular names"
