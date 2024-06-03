@@ -87,7 +87,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function IsAdmin: Boolean;
     function IsVisitor: Boolean;
     function Diff(aOld: TUser; var aList: TStrings): Boolean;
@@ -306,6 +307,32 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TUser.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('user_id').AsInteger;
+    FGuid := FieldByName('uuid').AsString;
+    FFullName := FieldByName('full_name').AsString;
+    FUserName := FieldByName('user_name').AsString;
+    FRank := FieldByName('user_rank').AsString;
+    FAllowManageCollection := FieldByName('allow_collection_edit').AsBoolean;
+    FAllowPrint := FieldByName('allow_print').AsBoolean;
+    FAllowExport := FieldByName('allow_export').AsBoolean;
+    FAllowImport := FieldByName('allow_import').AsBoolean;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 

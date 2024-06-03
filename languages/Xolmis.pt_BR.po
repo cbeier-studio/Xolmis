@@ -115,6 +115,10 @@ msgctxt "cbs_datacolumns.rscband"
 msgid "Band"
 msgstr "Anilha"
 
+#: cbs_datacolumns.rscbandchangedate
+msgid "Band change date"
+msgstr "Data de troca da anilha"
+
 #: cbs_datacolumns.rscbander
 msgid "Bander"
 msgstr "Anilhador"
@@ -126,6 +130,11 @@ msgstr "Anilhador ID"
 #: cbs_datacolumns.rscbandid
 msgid "Band ID"
 msgstr "Anilha ID"
+
+#: cbs_datacolumns.rscbandingdate
+msgctxt "cbs_datacolumns.rscbandingdate"
+msgid "Banding date"
+msgstr "Data de anilhamento"
 
 #: cbs_datacolumns.rscbillheight
 msgid "Bill height"

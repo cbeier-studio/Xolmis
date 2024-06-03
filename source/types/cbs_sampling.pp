@@ -43,15 +43,18 @@ type
   protected
     FName: String;
     FAcronym: String;
+    FEbirdName: String;
     FDescription: String;
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TMethod; var aList: TStrings): Boolean;
   published
     property Name: String read FName write FName;
     property Acronym: String read FAcronym write FAcronym;
+    property EbirdName: String read FEbirdName write FEbirdName;
     property Description: String read FDescription write FDescription;
   end;
 
@@ -73,7 +76,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TExpedition; var aList: TStrings): Boolean;
   published
     property Name: String read FName write FName;
@@ -113,21 +117,6 @@ type
     FTotalArea: Double;
     FTotalDistance: Double;
     FTotalNets: Integer;
-    FCloudCoverOpen: Integer;
-    FCloudCoverMid: Integer;
-    FCloudCoverClose: Integer;
-    FPrecipitationOpen: String;
-    FPrecipitationMid: String;
-    FPrecipitationClose: String;
-    FTemperatureOpen: Double;
-    FTemperatureMid: Double;
-    FTemperatureClose: Double;
-    FWindOpen: Integer;
-    FWindMid: Integer;
-    FWindClose: Integer;
-    FHumidityOpen: Double;
-    FHumidityMid: Double;
-    FHumidityClose: Double;
     FHabitat: String;
     FNetRounds: String;
     FFullName: String;
@@ -135,7 +124,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     procedure Insert;
     function Diff(aOld: TSurvey; var aList: TStrings): Boolean;
     function Find(aLocal: Integer; aDate: String; aNetStation: Integer = 0): Boolean;
@@ -188,7 +178,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     procedure Insert;
     function Diff(aOld: TWeatherLog; var aList: TStrings): Boolean;
   published
@@ -219,7 +210,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     procedure Insert;
     function Diff(aOld: TSurveyMember; var aList: TStrings): Boolean;
   published
@@ -259,7 +251,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     procedure Insert;
     function Find(aSurvey: Integer; aNetNumber: String): Boolean;
     function Diff(aOld: TNetEffort; var aList: TStrings): Boolean;
@@ -305,7 +298,8 @@ type
   public
     constructor Create (aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Find(aAcronym: String): Boolean;
     function Diff(aOld: TNetStation; var aList: TStrings): Boolean;
   published
@@ -334,7 +328,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TPermanentNet; var aList: TStrings): Boolean;
   published
     property FullName: String read FFullName write FFullName;
@@ -377,7 +372,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TSpecimen; var aList: TStrings): Boolean;
   published
     property FieldNumber: String read FFieldNumber write FFieldNumber;
@@ -415,7 +411,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     procedure Insert;
     function Diff(aOld: TSpecimenCollector; var aList: TStrings): Boolean;
   published
@@ -453,7 +450,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TSamplePrep; var aList: TStrings): Boolean;
   published
     property SpecimenId: Integer read FSpecimenId write FSpecimenId;
@@ -484,7 +482,7 @@ type
 implementation
 
 uses
-  cbs_locale, cbs_validations, cbs_fullnames, udm_main;
+  cbs_locale, cbs_validations, cbs_fullnames, cbs_datacolumns, udm_main;
 
 function AuthorListToString(aAuthors: TAuthors): String;
 var
@@ -621,6 +619,44 @@ begin
   end;
 end;
 
+procedure TSamplePrep.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('sample_prep_id').AsInteger;
+    FSpecimenId := FieldByName('specimen_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FAccessionNum := FieldByName('accession_num').AsString;
+    FAccessionType := FieldByName('accession_type').AsString;
+    FAccessionSeq := FieldByName('accession_seq').AsInteger;
+    FTaxonId := FieldByName('taxon_id').AsInteger;
+    FOrderId := FieldByName('order_id').AsInteger;
+    FFamilyId := FieldByName('family_id').AsInteger;
+    FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+    FGenusId := FieldByName('genus_id').AsInteger;
+    FSpeciesId := FieldByName('species_id').AsInteger;
+    FIndividualId := FieldByName('individual_id').AsInteger;
+    FNestId := FieldByName('nest_id').AsInteger;
+    FEggId := FieldByName('egg_id').AsInteger;
+    FPreparationDate := FieldByName('preparation_date').AsDateTime;
+    FPreparerId := FieldByName('preparer_id').AsInteger;
+    FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    FStateId := FieldByName('state_id').AsInteger;
+    FCountryId := FieldByName('country_id').AsInteger;
+    FNotes := FieldByName('notes').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 function TSamplePrep.Diff(aOld: TSamplePrep; var aList: TStrings): Boolean;
 var
   R: String;
@@ -628,27 +664,27 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('N'#186' tombo', aOld.AccessionNum, FAccessionNum, R) then
+  if FieldValuesDiff(rscAccessionNr, aOld.AccessionNum, FAccessionNum, R) then
     aList.Add(R);
-  if FieldValuesDiff('Material', aOld.AccessionType, FAccessionType, R) then
+  if FieldValuesDiff(rscType, aOld.AccessionType, FAccessionType, R) then
     aList.Add(R);
-  if FieldValuesDiff('N'#186' sequencial', aOld.AccessionSeq, FAccessionSeq, R) then
+  if FieldValuesDiff(rscDuplicateNr, aOld.AccessionSeq, FAccessionSeq, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionTaxon, aOld.TaxonId, FTaxonId, R) then
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionIndividual, aOld.IndividualId, FIndividualId, R) then
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionNest, aOld.NestId, FNestId, R) then
+  if FieldValuesDiff(rscNestID, aOld.NestId, FNestId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Ovo', aOld.EggId, FEggId, R) then
+  if FieldValuesDiff(rscEggID, aOld.EggId, FEggId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data de preparo', aOld.PreparationDate, FPreparationDate, R) then
+  if FieldValuesDiff(rscPreparationDate, aOld.PreparationDate, FPreparationDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Preparador', aOld.PreparerId, FPreparerId, R) then
+  if FieldValuesDiff(rscPreparerID, aOld.PreparerId, FPreparerId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anota'#231#245'es', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -745,6 +781,47 @@ begin
   end;
 end;
 
+procedure TSpecimen.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('specimen_id').AsInteger;
+    FFieldNumber := FieldByName('field_number').AsString;
+    FSampleType := FieldByName('sample_type').AsString;
+    FFullName := FieldByName('full_name').AsString;
+    FTaxonId := FieldByName('taxon_id').AsInteger;
+    FOrderId := FieldByName('order_id').AsInteger;
+    FFamilyId := FieldByName('family_id').AsInteger;
+    FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+    FGenusId := FieldByName('genus_id').AsInteger;
+    FSpeciesId := FieldByName('species_id').AsInteger;
+    FIndividualId := FieldByName('individual_id').AsInteger;
+    FNestId := FieldByName('nest_id').AsInteger;
+    FEggId := FieldByName('egg_id').AsInteger;
+    FCollectionDate := FieldByName('collection_date').AsString;
+    FCollectionDay := FieldByName('collection_day').AsInteger;
+    FCollectionMonth := FieldByName('collection_month').AsInteger;
+    FCollectionYear := FieldByName('collection_year').AsInteger;
+    FLocalityId := FieldByName('locality_id').AsInteger;
+    FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    FStateId := FieldByName('state_id').AsInteger;
+    FCountryId := FieldByName('country_id').AsInteger;
+    FLatitude := FieldByName('latitude').AsFloat;
+    FLongitude := FieldByName('longitude').AsFloat;
+    FNotes := FieldByName('notes').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 function TSpecimen.Diff(aOld: TSpecimen; var aList: TStrings): Boolean;
 var
   R: String;
@@ -752,35 +829,35 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Field number', aOld.FieldNumber, FFieldNumber, R) then
+  if FieldValuesDiff(rscFieldNumber, aOld.FieldNumber, FFieldNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff('Material', aOld.SampleType, FSampleType, R) then
+  if FieldValuesDiff(rscType, aOld.SampleType, FSampleType, R) then
     aList.Add(R);
-  if FieldValuesDiff('Full name', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionTaxon, aOld.TaxonId, FTaxonId, R) then
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionLocality, aOld.LocalityId, FLocalityId, R) then
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionIndividual, aOld.IndividualId, FIndividualId, R) then
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionNest, aOld.NestId, FNestId, R) then
+  if FieldValuesDiff(rscNestID, aOld.NestId, FNestId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Egg', aOld.EggId, FEggId, R) then
+  if FieldValuesDiff(rscEggID, aOld.EggId, FEggId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Collection date', aOld.CollectionDate, FCollectionDate, R) then
+  if FieldValuesDiff(rscCollectionDate, aOld.CollectionDate, FCollectionDate, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLatitude, aOld.Latitude, FLatitude, R) then
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLongitude, aOld.Longitude, FLongitude, R) then
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
     aList.Add(R);
-  if FieldValuesDiff('Collection day', aOld.CollectionDay, FCollectionDay, R) then
+  if FieldValuesDiff(rscCollectionDay, aOld.CollectionDay, FCollectionDay, R) then
     aList.Add(R);
-  if FieldValuesDiff('Collection month', aOld.CollectionMonth, FCollectionMonth, R) then
+  if FieldValuesDiff(rscCollectionMonth, aOld.CollectionMonth, FCollectionMonth, R) then
     aList.Add(R);
-  if FieldValuesDiff('Collection year', aOld.CollectionYear, FCollectionYear, R) then
+  if FieldValuesDiff(rscCollectionYear, aOld.CollectionYear, FCollectionYear, R) then
     aList.Add(R);
-  if FieldValuesDiff('Notes', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -811,9 +888,9 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Person', aOld.PersonId, FPersonId, R) then
+  if FieldValuesDiff(rscPersonID, aOld.PersonId, FPersonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Sequence', aOld.CollectorSeq, FCollectorSeq, R) then
+  if FieldValuesDiff(rscSequence, aOld.CollectorSeq, FCollectorSeq, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -849,6 +926,27 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSpecimenCollector.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('collector_id').AsInteger;
+    FSpecimenId := FieldByName('specimen_id').AsInteger;
+    FPersonId := FieldByName('person_id').AsInteger;
+    FCollectorSeq := FieldByName('collector_seq').AsInteger;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 
@@ -943,6 +1041,33 @@ begin
   end;
 end;
 
+procedure TExpedition.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('expedition_id').AsInteger;
+    FName := FieldByName('expedition_name').AsString;
+    FStartDate := FieldByName('start_date').AsDateTime;
+    FEndDate := FieldByName('end_date').AsDateTime;
+    FLocalityId := FieldByName('locality_id').AsInteger;
+    FProjectId := FieldByName('project_id').AsInteger;
+    FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    FStateId := FieldByName('state_id').AsInteger;
+    FCountryId := FieldByName('country_id').AsInteger;
+    FDescription := FieldByName('description').AsString;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 function TExpedition.Diff(aOld: TExpedition; var aList: TStrings): Boolean;
 var
   R: string;
@@ -950,17 +1075,17 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff(rsCaptionName, aOld.Name, FName, R) then
+  if FieldValuesDiff(rscName, aOld.Name, FName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data inicial', aOld.StartDate, FStartDate, R) then
+  if FieldValuesDiff(rscStartDate, aOld.StartDate, FStartDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data final', aOld.EndDate, FEndDate, R) then
+  if FieldValuesDiff(rscEndDate, aOld.EndDate, FEndDate, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionLocality, aOld.LocalityId, FLocalityId, R) then
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionProject, aOld.ProjectId, FProjectId, R) then
+  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Descri'#231#227'o', aOld.Description, FDescription, R) then
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -1052,6 +1177,46 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNetEffort.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('net_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FSurveyId := FieldByName('survey_id').AsInteger;
+    FNetStationId := FieldByName('net_station_id').AsInteger;
+    FPermanentNetId := FieldByName('permanent_net_id').AsInteger;
+    FNetNumber := FieldByName('net_number').AsInteger;
+    FLatitude := FieldByName('latitude').AsFloat;
+    FLongitude := FieldByName('longitude').AsFloat;
+    FSampleDate := FieldByName('sample_date').AsDateTime;
+    FNetOpen1 := FieldByName('net_open_1').AsDateTime;
+    FNetClose1 := FieldByName('net_close_1').AsDateTime;
+    FNetOpen2 := FieldByName('net_open_2').AsDateTime;
+    FNetClose2 := FieldByName('net_close_2').AsDateTime;
+    FNetOpen3 := FieldByName('net_open_3').AsDateTime;
+    FNetClose3 := FieldByName('net_close_3').AsDateTime;
+    FNetOpen4 := FieldByName('net_open_4').AsDateTime;
+    FNetClose4 := FieldByName('net_close_4').AsDateTime;
+    FTotalOpenTime := FieldByName('open_time_total').AsFloat;
+    FNetLength := FieldByName('net_length').AsFloat;
+    FNetHeight := FieldByName('net_height').AsFloat;
+    FNetArea := FieldByName('net_area').AsFloat;
+    FNetMesh := FieldByName('net_mesh').AsString;
+    FNotes := FieldByName('notes').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 
@@ -1176,47 +1341,43 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionSamplingPlot, aOld.NetStationId, FNetStationId, R) then
+  if FieldValuesDiff(rscSamplingPlotID, aOld.NetStationId, FNetStationId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Rede permanente', aOld.PermanentNetId, FPermanentNetId, R) then
+  if FieldValuesDiff(rscPermanentNetID, aOld.PermanentNetId, FPermanentNetId, R) then
     aList.Add(R);
-  if FieldValuesDiff('N'#186' da rede', aOld.NetNumber, FNetNumber, R) then
+  if FieldValuesDiff(rscMistnetNr, aOld.NetNumber, FNetNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLatitude, aOld.Latitude, FLatitude, R) then
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLongitude, aOld.Longitude, FLongitude, R) then
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionDate, aOld.SampleDate, FSampleDate, R) then
+  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Abertura 1', aOld.NetOpen1, FNetOpen1, R) then
+  if FieldValuesDiff(rscOpenTime1, aOld.NetOpen1, FNetOpen1, R) then
     aList.Add(R);
-  if FieldValuesDiff('Fechamento 1', aOld.NetClose1, FNetClose1, R) then
+  if FieldValuesDiff(rscCloseTime1, aOld.NetClose1, FNetClose1, R) then
     aList.Add(R);
-  if FieldValuesDiff('Abertura 2', aOld.NetOpen2, FNetOpen2, R) then
+  if FieldValuesDiff(rscOpenTime2, aOld.NetOpen2, FNetOpen2, R) then
     aList.Add(R);
-  if FieldValuesDiff('Fechamento 2', aOld.NetClose2, FNetClose2, R) then
+  if FieldValuesDiff(rscCloseTime2, aOld.NetClose2, FNetClose2, R) then
     aList.Add(R);
-  if FieldValuesDiff('Abertura 3', aOld.NetOpen3, FNetOpen3, R) then
+  if FieldValuesDiff(rscOpenTime3, aOld.NetOpen3, FNetOpen3, R) then
     aList.Add(R);
-  if FieldValuesDiff('Fechamento 3', aOld.NetClose3, FNetClose3, R) then
+  if FieldValuesDiff(rscCloseTime3, aOld.NetClose3, FNetClose3, R) then
     aList.Add(R);
-  if FieldValuesDiff('Abertura 4', aOld.NetOpen4, FNetOpen4, R) then
+  if FieldValuesDiff(rscOpenTime4, aOld.NetOpen4, FNetOpen4, R) then
     aList.Add(R);
-  if FieldValuesDiff('Fechamento 4', aOld.NetClose4, FNetClose4, R) then
+  if FieldValuesDiff(rscCloseTime4, aOld.NetClose4, FNetClose4, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tempo aberta', aOld.TotalOpenTime, FTotalOpenTime, R) then
+  if FieldValuesDiff(rscMistnetLengthM, aOld.NetLength, FNetLength, R) then
     aList.Add(R);
-  if FieldValuesDiff('Comprimento', aOld.NetLength, FNetLength, R) then
+  if FieldValuesDiff(rscMistnetHeightM, aOld.NetHeight, FNetHeight, R) then
     aList.Add(R);
-  if FieldValuesDiff('Altura', aOld.NetHeight, FNetHeight, R) then
+  if FieldValuesDiff(rscMistnetMesh, aOld.NetMesh, FNetMesh, R) then
     aList.Add(R);
-  if FieldValuesDiff(#193'rea', aOld.NetArea, FNetArea, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Malha', aOld.NetMesh, FNetMesh, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Notes', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -1273,6 +1434,27 @@ begin
   end;
 end;
 
+procedure TSurveyMember.GetData(aDataSet: TDataSet);
+begin
+  if not aDataset.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('survey_member_id').AsInteger;
+    FSurveyId := FieldByName('survey_id').AsInteger;
+    FPersonId := FieldByName('person_id').AsInteger;
+    FVisitor := FieldByName('visitor').AsBoolean;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 procedure TSurveyMember.Insert;
 var
   Qry: TSQLQuery;
@@ -1311,9 +1493,9 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Person', aOld.PersonId, FPersonId, R) then
+  if FieldValuesDiff(rscPersonID, aOld.PersonId, FPersonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Visitor', aOld.Visitor, FVisitor, R) then
+  if FieldValuesDiff(rscVisitor, aOld.Visitor, FVisitor, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -1352,21 +1534,6 @@ begin
   FTotalArea := 0.0;
   FTotalDistance := 0.0;
   FTotalNets := 0;
-  FCloudCoverOpen := 0;
-  FCloudCoverMid := 0;
-  FCloudCoverClose := 0;
-  FPrecipitationOpen := EmptyStr;
-  FPrecipitationMid := EmptyStr;
-  FPrecipitationClose := EmptyStr;
-  FTemperatureOpen := 0.0;
-  FTemperatureMid := 0.0;
-  FTemperatureClose := 0.0;
-  FWindOpen := 0;
-  FWindMid := 0;
-  FWindClose := 0;
-  FHumidityOpen := 0.0;
-  FHumidityMid := 0.0;
-  FHumidityClose := 0.0;
   FHabitat := EmptyStr;
   FNetRounds := EmptyStr;
   FFullName := EmptyStr;
@@ -1409,22 +1576,6 @@ begin
       FTotalArea := FieldByName('area_total').AsFloat;
       FTotalDistance := FieldByName('distance_total').AsFloat;
       FTotalNets := FieldByName('nets_total').AsInteger;
-//      TotalNetEffort := FieldByName('AMO_NET_EFFORT').AsFloat;
-      FCloudCoverOpen := FieldByName('cloud_cover_start').AsInteger;
-      FCloudCoverMid := FieldByName('cloud_cover_middle').AsInteger;
-      FCloudCoverClose := FieldByName('cloud_cover_end').AsInteger;
-      FPrecipitationOpen := FieldByName('precipitation_start').AsString;
-      FPrecipitationMid := FieldByName('precipitation_middle').AsString;
-      FPrecipitationClose := FieldByName('precipitation_end').AsString;
-      FTemperatureOpen := FieldByName('temperature_start').AsFloat;
-      FTemperatureMid := FieldByName('temperature_middle').AsFloat;
-      FTemperatureClose := FieldByName('temperature_end').AsFloat;
-      FWindOpen := FieldByName('wind_speed_start').AsInteger;
-      FWindMid := FieldByName('wind_speed_middle').AsInteger;
-      FWindClose := FieldByName('wind_speed_end').AsInteger;
-      FHumidityOpen := FieldByName('relative_humidity_start').AsFloat;
-      FHumidityMid := FieldByName('relative_humidity_middle').AsFloat;
-      FHumidityClose := FieldByName('relative_humidity_end').AsFloat;
       FHabitat := FieldByName('habitat').AsString;
       FNetRounds := FieldByName('net_rounds').AsString;
       FFullName := FieldByName('full_name').AsString;
@@ -1440,6 +1591,48 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSurvey.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('survey_id').AsInteger;
+    FSurveyDate := FieldByName('survey_date').AsDateTime;
+    FStartTime := FieldByName('start_time').AsDateTime;
+    FEndTime := FieldByName('end_time').AsDateTime;
+    FDuration := FieldByName('duration').AsInteger;
+    FMethodId := FieldByName('method_id').AsInteger;
+    FNetStationId := FieldByName('net_station_id').AsInteger;
+    FExpeditionId := FieldByName('expedition_id').AsInteger;
+    FLocalityId := FieldByName('locality_id').AsInteger;
+    FProjectId := FieldByName('project_id').AsInteger;
+    FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    FStateId := FieldByName('state_id').AsInteger;
+    FCountryId := FieldByName('country_id').AsInteger;
+    FSampleId := FieldByName('sample_id').AsString;
+    FStartLatitude := FieldByName('start_latitude').AsFloat;
+    FStartLongitude := FieldByName('start_longitude').AsFloat;
+    FEndLatitude := FieldByName('end_latitude').AsFloat;
+    FEndLongitude := FieldByName('end_longitude').AsFloat;
+    FTotalArea := FieldByName('area_total').AsFloat;
+    FTotalDistance := FieldByName('distance_total').AsFloat;
+    FTotalNets := FieldByName('nets_total').AsInteger;
+    FHabitat := FieldByName('habitat').AsString;
+    FNetRounds := FieldByName('net_rounds').AsString;
+    FFullName := FieldByName('full_name').AsString;
+    FNotes := FieldByName('notes').AsString;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 
@@ -1500,53 +1693,47 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff(rsCaptionDate, aOld.SurveyDate, FSurveyDate, R) then
+  if FieldValuesDiff(rscDate, aOld.SurveyDate, FSurveyDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Hora inicial', aOld.StartTime, FStartTime, R) then
+  if FieldValuesDiff(rscStartTime, aOld.StartTime, FStartTime, R) then
     aList.Add(R);
-  if FieldValuesDiff('Hora final', aOld.EndTime, FEndTime, R) then
+  if FieldValuesDiff(rscEndTime, aOld.EndTime, FEndTime, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dura'#231#227'o', aOld.Duration, FDuration, R) then
+  if FieldValuesDiff(rscDurationMin, aOld.Duration, FDuration, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionMethod, aOld.MethodId, FMethodId, R) then
+  if FieldValuesDiff(rscMethodID, aOld.MethodId, FMethodId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionSamplingPlot, aOld.NetStationId, FNetStationId, R) then
+  if FieldValuesDiff(rscSamplingPlotID, aOld.NetStationId, FNetStationId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Expedi'#231#227'o', aOld.ExpeditionId, FExpeditionId, R) then
+  if FieldValuesDiff(rscExpeditionID, aOld.ExpeditionId, FExpeditionId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionLocality, aOld.LocalityId, FLocalityId, R) then
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionMunicipality, aOld.MunicipalityId, FMunicipalityId, R) then
+  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionState, aOld.StateId, FStateId, R) then
+  if FieldValuesDiff(rscSampleID, aOld.SampleId, FSampleId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionCountry, aOld.CountryId, FCountryId, R) then
+  if FieldValuesDiff(rscLatitude, aOld.StartLatitude, FStartLatitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionProject, aOld.ProjectId, FProjectId, R) then
+  if FieldValuesDiff(rscLongitude, aOld.StartLongitude, FStartLongitude, R) then
     aList.Add(R);
-  if FieldValuesDiff('ID amostra', aOld.SampleId, FSampleId, R) then
+  if FieldValuesDiff(rscEndLatitude, aOld.EndLatitude, FEndLatitude, R) then
     aList.Add(R);
-  if FieldValuesDiff('Latitude inicial', aOld.StartLatitude, FStartLatitude, R) then
+  if FieldValuesDiff(rscEndLongitude, aOld.EndLongitude, FEndLongitude, R) then
     aList.Add(R);
-  if FieldValuesDiff('Longitude inicial', aOld.StartLongitude, FStartLongitude, R) then
+  if FieldValuesDiff(rscAreaHa, aOld.TotalArea, FTotalArea, R) then
     aList.Add(R);
-  if FieldValuesDiff('Latitude final', aOld.EndLatitude, FEndLatitude, R) then
+  if FieldValuesDiff(rscDistanceKm, aOld.TotalDistance, FTotalDistance, R) then
     aList.Add(R);
-  if FieldValuesDiff('Longitude final', aOld.EndLongitude, FEndLongitude, R) then
+  if FieldValuesDiff(rscMistnets, aOld.TotalNets, FTotalNets, R) then
     aList.Add(R);
-  if FieldValuesDiff(#193'rea', aOld.TotalArea, FTotalArea, R) then
+  if FieldValuesDiff(rscHabitat, aOld.Habitat, FHabitat, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dist'#226'ncia', aOld.TotalDistance, FTotalDistance, R) then
+  if FieldValuesDiff(rscMistnetRounds, aOld.NetRounds, FNetRounds, R) then
     aList.Add(R);
-  if FieldValuesDiff('Total redes', aOld.TotalNets, FTotalNets, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Habitat', aOld.Habitat, FHabitat, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Revis'#245'es rede', aOld.NetRounds, FNetRounds, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Anota'#231#245'es', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -1620,29 +1807,29 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Atmospheric pressure', aOld.AtmosphericPressure, FAtmosphericPressure, R) then
+  if FieldValuesDiff(rscAtmosphericPressureH, aOld.AtmosphericPressure, FAtmosphericPressure, R) then
     aList.Add(R);
-  if FieldValuesDiff('Cloud cover', aOld.CloudCover, FCloudCover, R) then
+  if FieldValuesDiff(rscCloudCover, aOld.CloudCover, FCloudCover, R) then
     aList.Add(R);
-  if FieldValuesDiff('Precipitation', aOld.Precipitation, FPrecipitation, R) then
+  if FieldValuesDiff(rscPrecipitation, aOld.Precipitation, FPrecipitation, R) then
     aList.Add(R);
-  if FieldValuesDiff('Rainfall', aOld.Rainfall, FRainfall, R) then
+  if FieldValuesDiff(rscRainfallMm, aOld.Rainfall, FRainfall, R) then
     aList.Add(R);
-  if FieldValuesDiff('Relative humidity', aOld.RelativeHumidity, FRelativeHumidity, R) then
+  if FieldValuesDiff(rscRelativeHumidity, aOld.RelativeHumidity, FRelativeHumidity, R) then
     aList.Add(R);
-  if FieldValuesDiff('Date', aOld.SampleDate, FSampleDate, R) then
+  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Time', aOld.SampleTime, FSampleTime, R) then
+  if FieldValuesDiff(rscTime, aOld.SampleTime, FSampleTime, R) then
     aList.Add(R);
-  if FieldValuesDiff('Moment', aOld.SampleMoment, FSampleMoment, R) then
+  if FieldValuesDiff(rscMoment, aOld.SampleMoment, FSampleMoment, R) then
     aList.Add(R);
-  if FieldValuesDiff('Temperature', aOld.Temperature, FTemperature, R) then
+  if FieldValuesDiff(rscTemperatureC, aOld.Temperature, FTemperature, R) then
     aList.Add(R);
-  if FieldValuesDiff('Wind speed (Bft)', aOld.WindSpeedBft, FWindSpeedBft, R) then
+  if FieldValuesDiff(rscWindBft, aOld.WindSpeedBft, FWindSpeedBft, R) then
     aList.Add(R);
-  if FieldValuesDiff('Wind speed (km/h)', aOld.WindSpeedKmH, FWindSpeedKmH, R) then
+  if FieldValuesDiff(rscWindKmH, aOld.WindSpeedKmH, FWindSpeedKmH, R) then
     aList.Add(R);
-  if FieldValuesDiff('Notes', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -1681,6 +1868,30 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TWeatherLog.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('weather_id').AsInteger;
+    FSurveyId := FieldByName('survey_id').AsInteger;
+    FAtmosphericPressure := FieldByName('atmospheric_pressure').AsFloat;
+    FCloudCover := FieldByName('cloud_cover').AsInteger;
+    FNotes := FieldByName('notes').AsString;
+    FPrecipitation := FieldByName('precipitation').AsString;
+    FRainfall := FieldByName('rainfall').AsInteger;
+    FRelativeHumidity := FieldByName('relative_humidity').AsFloat;
+    FSampleDate := FieldByName('sample_date').AsDateTime;
+    FSampleMoment := FieldByName('sample_moment').AsString;
+    FSampleTime := FieldByName('sample_time').AsDateTime;
+    FTemperature := FieldByName('temperature').AsFloat;
+    FWindSpeedBft := FieldByName('wind_speed_bft').AsInteger;
+    FWindSpeedKmH := FieldByName('wind_speed_kmh').AsFloat;
   end;
 end;
 
@@ -1786,6 +1997,28 @@ begin
   end;
 end;
 
+procedure TNetStation.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('net_station_id').AsInteger;
+    FName := FieldByName('station_name').AsString;
+    FAcronym := FieldByName('station_acronym').AsString;
+    FLatitude := FieldByName('latitude').AsFloat;
+    FLongitude := FieldByName('longitude').AsFloat;
+    FLocalityId := FieldByName('locality_id').AsInteger;
+    FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    FStateId := FieldByName('state_id').AsInteger;
+    FCountryId := FieldByName('country_id').AsInteger;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 function TNetStation.Find(aAcronym: String): Boolean;
 var
   Qry: TSQLQuery;
@@ -1820,22 +2053,22 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff(rsCaptionName, aOld.Name, FName, R) then
+  if FieldValuesDiff(rscName, aOld.Name, FName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Sigla', aOld.Acronym, FAcronym, R) then
+  if FieldValuesDiff(rscAcronym, aOld.Acronym, FAcronym, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLatitude, aOld.Latitude, FLatitude, R) then
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLongitude, aOld.Longitude, FLongitude, R) then
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionLocality, aOld.LocalityId, FLocalityId, R) then
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionMunicipality, aOld.MunicipalityId, FMunicipalityId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rsCaptionState, aOld.StateId, FStateId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rsCaptionCountry, aOld.CountryId, FCountryId, R) then
-    aList.Add(R);
+  //if FieldValuesDiff(rsCaptionMunicipality, aOld.MunicipalityId, FMunicipalityId, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff(rsCaptionState, aOld.StateId, FStateId, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff(rsCaptionCountry, aOld.CountryId, FCountryId, R) then
+  //  aList.Add(R);
 
   Result := aList.Count > 0;
 end;
@@ -1897,6 +2130,30 @@ begin
   end;
 end;
 
+procedure TPermanentNet.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('permanent_net_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FNetStationId := FieldByName('net_station_id').AsInteger;
+    FNetNumber := FieldByName('net_number').AsInteger;
+    FLatitude := FieldByName('latitude').AsFloat;
+    FLongitude := FieldByName('longitude').AsFloat;
+    FNotes := FieldByName('notes').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 function TPermanentNet.Diff(aOld: TPermanentNet; var aList: TStrings): Boolean;
 var
   R: String;
@@ -1904,13 +2161,13 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('N'#186' de rede', aOld.NetNumber, FNetNumber, R) then
+  if FieldValuesDiff(rscMistnetNr, aOld.NetNumber, FNetNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLatitude, aOld.Latitude, FLatitude, R) then
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLongitude, aOld.Longitude, FLongitude, R) then
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anota'#231#245'es', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -1931,6 +2188,7 @@ begin
   inherited;
   FName := EmptyStr;
   FAcronym := EmptyStr;
+  FEbirdName := EmptyStr;
   FDescription := EmptyStr;
 end;
 
@@ -1952,6 +2210,7 @@ begin
       FId := FieldByName('method_id').AsInteger;
       FName := FieldByName('method_name').AsString;
       FAcronym := FieldByName('method_acronym').AsString;
+      FEbirdName := FieldByName('ebird_name').AsString;
       FDescription := FieldByName('description').AsString;
       FUserInserted := FieldByName('user_inserted').AsInteger;
       FUserUpdated := FieldByName('user_updated').AsInteger;
@@ -1967,6 +2226,28 @@ begin
   end;
 end;
 
+procedure TMethod.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('method_id').AsInteger;
+    FName := FieldByName('method_name').AsString;
+    FAcronym := FieldByName('method_acronym').AsString;
+    FEbirdName := FieldByName('ebird_name').AsString;
+    FDescription := FieldByName('description').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 function TMethod.Diff(aOld: TMethod; var aList: TStrings): Boolean;
 var
   R: String;
@@ -1974,11 +2255,13 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff(rsCaptionName, aOld.Name, FName, R) then
+  if FieldValuesDiff(rscName, aOld.Name, FName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Abreviatura', aOld.Acronym, FAcronym, R) then
+  if FieldValuesDiff(rscAcronym, aOld.Acronym, FAcronym, R) then
     aList.Add(R);
-  if FieldValuesDiff('Descrição', aOld.Description, FDescription, R) then
+  if FieldValuesDiff(rscEBirdName, aOld.EbirdName, FEbirdName, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;

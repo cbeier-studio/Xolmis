@@ -99,7 +99,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     procedure Insert;
     function Find(aSize: String; aNumber: Integer): Boolean;
     function Diff(aOld: TBand; var aList: TStrings): Boolean;
@@ -194,7 +195,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     procedure Insert;
     function Find(aTaxon, aBand: Integer; aRightLeg: String = ''; aLeftLeg: String = ''): Boolean;
     function Diff(aOld: TIndividual; var aList: TStrings): Boolean;
@@ -337,7 +339,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     procedure Insert;
     procedure Update;
     function Find(aTaxon, aBand: Integer; aCaptureType, aDate, aTime: String): Boolean;
@@ -501,7 +504,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TMolt; var aList: TStrings): Boolean;
   published
     property FullName: String read FFullName write FFullName;
@@ -615,7 +619,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     procedure Insert;
     procedure Update;
     function Diff(aOld: TSighting; var aList: TStrings): Boolean;
@@ -665,7 +670,7 @@ type
 implementation
 
 uses
-  cbs_locale, cbs_validations, cbs_fullnames, udm_main;
+  cbs_locale, cbs_validations, cbs_fullnames, cbs_datacolumns, udm_main;
 
 { TBandHistory }
 
@@ -954,6 +959,63 @@ begin
   end;
 end;
 
+procedure TSighting.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('sighting_id').AsInteger;
+    FSurveyId := FieldByName('survey_id').AsInteger;
+    FSightingDate := FieldByName('sighting_date').AsDateTime;
+    FSightingTime := FieldByName('sighting_time').AsDateTime;
+    FLocalityId := FieldByName('locality_id').AsInteger;
+    FLatitude := FieldByName('latitude').AsFloat;
+    FLongitude := FieldByName('longitude').AsFloat;
+    FObserverId := FieldByName('observer_id').AsInteger;
+    FTaxonId := FieldByName('taxon_id').AsInteger;
+    FIndividualId := FieldByName('individual_id').AsInteger;
+    FSubjectTally := FieldByName('subjects_tally').AsInteger;
+    FSubjectDistance := FieldByName('subject_distance').AsFloat;
+    FMethodId := FieldByName('method_id').AsInteger;
+    FMackinnonListNumber := FieldByName('mackinnon_list_num').AsInteger;
+    FSubjectCaptured := FieldByName('subject_captured').AsBoolean;
+    FSubjectSeen := FieldByName('subject_seen').AsBoolean;
+    FSubjectHeard := FieldByName('subject_heard').AsBoolean;
+    FSubjectPhotographed := FieldByName('subject_photographed').AsBoolean;
+    FSubjectRecorded := FieldByName('subject_recorded').AsBoolean;
+    FMalesTally := FieldByName('males_tally').AsString;
+    FFemalesTally := FieldByName('females_tally').AsString;
+    FNotSexedTally := FieldByName('not_sexed_tally').AsString;
+    FAdultsTally := FieldByName('adults_tally').AsString;
+    FImmatureTally := FieldByName('immatures_tally').AsString;
+    FNotAgedTally := FieldByName('not_aged_tally').AsString;
+    FRecapturesTally := FieldByName('recaptures_tally').AsInteger;
+    FNewCapturesTally := FieldByName('new_captures_tally').AsInteger;
+    FUnbandedTally := FieldByName('unbanded_tally').AsInteger;
+    FDetectionType := FieldByName('detection_type').AsString;
+    FBreedingStatus := FieldByName('breeding_status').AsString;
+    FNotSurveying := FieldByName('not_surveying').AsBoolean;
+    FIsOnEbird := FieldByName('ebird_available').AsBoolean;
+    FNotes := FieldByName('notes').AsString;
+    FOrderId := FieldByName('order_id').AsInteger;
+    FFamilyId := FieldByName('family_id').AsInteger;
+    FGenusId := FieldByName('genus_id').AsInteger;
+    FSpeciesId := FieldByName('species_id').AsInteger;
+    FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    FStateId := FieldByName('state_id').AsInteger;
+    FCountryId := FieldByName('country_id').AsInteger;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 procedure TSighting.Insert;
 var
   Qry: TSQLQuery;
@@ -1033,57 +1095,57 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Amostragem', aOld.SurveyId, FSurveyId, R) then
+  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionDate, aOld.SightingDate, FSightingDate, R) then
+  if FieldValuesDiff(rscDate, aOld.SightingDate, FSightingDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Hora', aOld.SightingTime, FSightingTime, R) then
+  if FieldValuesDiff(rscTime, aOld.SightingTime, FSightingTime, R) then
     aList.Add(R);
-  if FieldValuesDiff('Observador', aOld.ObserverId, FObserverId, R) then
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionIndividual, aOld.IndividualId, FIndividualId, R) then
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionTaxon, aOld.TaxonId, FTaxonId, R) then
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('N'#186' de indiv'#237'duos', aOld.SubjectTally, FSubjectTally, R) then
+  if FieldValuesDiff(rscIndividuals, aOld.SubjectTally, FSubjectTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('Dist'#226'ncia', aOld.SubjectDistance, FSubjectDistance, R) then
+  if FieldValuesDiff(rscDistanceM, aOld.SubjectDistance, FSubjectDistance, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionMethod, aOld.MethodId, FMethodId, R) then
+  if FieldValuesDiff(rscMethodID, aOld.MethodId, FMethodId, R) then
     aList.Add(R);
-  if FieldValuesDiff('N'#186' da lista', aOld.MackinnonListNumber, FMackinnonListNumber, R) then
+  if FieldValuesDiff(rscMackinnonList, aOld.MackinnonListNumber, FMackinnonListNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff('Capturado', aOld.SubjectCaptured, FSubjectCaptured, R) then
+  if FieldValuesDiff(rscCaptured, aOld.SubjectCaptured, FSubjectCaptured, R) then
     aList.Add(R);
-  if FieldValuesDiff('Visto', aOld.SubjectSeen, FSubjectSeen, R) then
+  if FieldValuesDiff(rscSeen, aOld.SubjectSeen, FSubjectSeen, R) then
     aList.Add(R);
-  if FieldValuesDiff('Ouvido', aOld.SubjectHeard, FSubjectHeard, R) then
+  if FieldValuesDiff(rscHeard, aOld.SubjectHeard, FSubjectHeard, R) then
     aList.Add(R);
-  if FieldValuesDiff('Fotografado', aOld.SubjectPhotographed, FSubjectPhotographed, R) then
+  if FieldValuesDiff(rscPhotographed, aOld.SubjectPhotographed, FSubjectPhotographed, R) then
     aList.Add(R);
-  if FieldValuesDiff('Gravado som', aOld.SubjectRecorded, FSubjectRecorded, R) then
+  if FieldValuesDiff(rscAudioRecorded, aOld.SubjectRecorded, FSubjectRecorded, R) then
     aList.Add(R);
-  if FieldValuesDiff('Machos', aOld.MalesTally, FMalesTally, R) then
+  if FieldValuesDiff(rscMales, aOld.MalesTally, FMalesTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('F'#234'meas', aOld.FemalesTally, FFemalesTally, R) then
+  if FieldValuesDiff(rscFemales, aOld.FemalesTally, FFemalesTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('Adultos', aOld.AdultsTally, FAdultsTally, R) then
+  if FieldValuesDiff(rscAdults, aOld.AdultsTally, FAdultsTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('Imaturos', aOld.ImmatureTally, FImmatureTally, R) then
+  if FieldValuesDiff(rscImmatures, aOld.ImmatureTally, FImmatureTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('Recapturas', aOld.RecapturesTally, FRecapturesTally, R) then
+  if FieldValuesDiff(rscRecaptures, aOld.RecapturesTally, FRecapturesTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('Novas capturas', aOld.NewCapturesTally, FNewCapturesTally, R) then
+  if FieldValuesDiff(rscNewCaptures, aOld.NewCapturesTally, FNewCapturesTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('N'#227'o marcados', aOld.UnbandedTally, FUnbandedTally, R) then
+  if FieldValuesDiff(rscUnbanded, aOld.UnbandedTally, FUnbandedTally, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tipo de detec'#231#227'o', aOld.DetectionType, FDetectionType, R) then
+  if FieldValuesDiff(rscDetectionType, aOld.DetectionType, FDetectionType, R) then
     aList.Add(R);
-  if FieldValuesDiff('Status reprodutivo', aOld.BreedingStatus, FBreedingStatus, R) then
+  if FieldValuesDiff(rscBreedingCode, aOld.BreedingStatus, FBreedingStatus, R) then
     aList.Add(R);
-  if FieldValuesDiff('Fora da amostragem', aOld.NotSurveying, FNotSurveying, R) then
+  if FieldValuesDiff(rscOutOfSample, aOld.NotSurveying, FNotSurveying, R) then
     aList.Add(R);
-  if FieldValuesDiff('Est'#225' no eBird', aOld.IsOnEbird, FIsOnEbird, R) then
+  if FieldValuesDiff(rscIsInEBird, aOld.IsOnEbird, FIsOnEbird, R) then
     aList.Add(R);
   //if FieldValuesDiff(rsCaptionOrder, aOld.OrderId, OrderId, R) then
   //  aList.Add(R);
@@ -1099,7 +1161,7 @@ begin
   //  aList.Add(R);
   //if FieldValuesDiff(rsCaptionCountry, aOld.CountryId, CountryId, R) then
   //  aList.Add(R);
-  if FieldValuesDiff('Anota'#231#245'es', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -1387,6 +1449,85 @@ begin
   end;
 end;
 
+procedure TMolt.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('molt_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FSurveyId := FieldByName('survey_id').AsInteger;
+    FTaxonId := FieldByName('taxon_id').AsInteger;
+    FIndividualId := FieldByName('individual_id').AsInteger;
+    FCaptureId := FieldByName('capture_id').AsInteger;
+    FCaptureDate := FieldByName('sample_date').AsDateTime;
+    FCaptureTime := FieldByName('sample_time').AsDateTime;
+    FBanderId := FieldByName('bander_id').AsInteger;
+    FBandId := FieldByName('band_id').AsInteger;
+    FPrimary1 := FieldByName('p1_molt').AsFloat;
+    FPrimary2 := FieldByName('p2_molt').AsFloat;
+    FPrimary3 := FieldByName('p3_molt').AsFloat;
+    FPrimary4 := FieldByName('p4_molt').AsFloat;
+    FPrimary5 := FieldByName('p5_molt').AsFloat;
+    FPrimary6 := FieldByName('p6_molt').AsFloat;
+    FPrimary7 := FieldByName('p7_molt').AsFloat;
+    FPrimary8 := FieldByName('p8_molt').AsFloat;
+    FPrimary9 := FieldByName('p9_molt').AsFloat;
+    FPrimary10 := FieldByName('p10_molt').AsFloat;
+    FSecondary1 := FieldByName('s1_molt').AsFloat;
+    FSecondary2 := FieldByName('s2_molt').AsFloat;
+    FSecondary3 := FieldByName('s3_molt').AsFloat;
+    FSecondary4 := FieldByName('s4_molt').AsFloat;
+    FSecondary5 := FieldByName('s5_molt').AsFloat;
+    FSecondary6 := FieldByName('s6_molt').AsFloat;
+    FSecondary7 := FieldByName('s7_molt').AsFloat;
+    FSecondary8 := FieldByName('s8_molt').AsFloat;
+    FSecondary9 := FieldByName('s9_molt').AsFloat;
+    FRetrix1 := FieldByName('r1_molt').AsFloat;
+    FRetrix2 := FieldByName('r2_molt').AsFloat;
+    FRetrix3 := FieldByName('r3_molt').AsFloat;
+    FRetrix4 := FieldByName('r4_molt').AsFloat;
+    FRetrix5 := FieldByName('r5_molt').AsFloat;
+    FRetrix6 := FieldByName('r6_molt').AsFloat;
+    FPrimaryCovert1 := FieldByName('pc1_molt').AsFloat;
+    FPrimaryCovert2 := FieldByName('pc2_molt').AsFloat;
+    FPrimaryCovert3 := FieldByName('pc3_molt').AsFloat;
+    FPrimaryCovert4 := FieldByName('pc4_molt').AsFloat;
+    FPrimaryCovert5 := FieldByName('pc5_molt').AsFloat;
+    FPrimaryCovert6 := FieldByName('pc6_molt').AsFloat;
+    FPrimaryCovert7 := FieldByName('pc7_molt').AsFloat;
+    FPrimaryCovert8 := FieldByName('pc8_molt').AsFloat;
+    FPrimaryCovert9 := FieldByName('pc9_molt').AsFloat;
+    FCarpalCovert := FieldByName('cc_molt').AsFloat;
+    FGreatCovert1 := FieldByName('gc1_molt').AsFloat;
+    FGreatCovert2 := FieldByName('gc2_molt').AsFloat;
+    FGreatCovert3 := FieldByName('gc3_molt').AsFloat;
+    FGreatCovert4 := FieldByName('gc4_molt').AsFloat;
+    FGreatCovert5 := FieldByName('gc5_molt').AsFloat;
+    FGreatCovert6 := FieldByName('gc6_molt').AsFloat;
+    FGreatCovert7 := FieldByName('gc7_molt').AsFloat;
+    FGreatCovert8 := FieldByName('gc8_molt').AsFloat;
+    FGreatCovert9 := FieldByName('gc9_molt').AsFloat;
+    FGreatCovert10 := FieldByName('gc10_molt').AsFloat;
+    FAlula1 := FieldByName('al1_molt').AsFloat;
+    FAlula2 := FieldByName('al2_molt').AsFloat;
+    FAlula3 := FieldByName('al3_molt').AsFloat;
+    FLeastCoverts := FieldByName('lc_molt').AsFloat;
+    FMedianCoverts := FieldByName('mc_molt').AsFloat;
+    FGrowthBarWidth := FieldByName('growth_bar_size').AsFloat;
+    FNotes := FieldByName('notes').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 function TMolt.Diff(aOld: TMolt; var aList: TStrings): Boolean;
 var
   R: String;
@@ -1394,127 +1535,127 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionTaxon, aOld.TaxonId, FTaxonId, R) then
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Amostragem', aOld.SurveyId, FSurveyId, R) then
+  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionIndividual, aOld.IndividualId, FIndividualId, R) then
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Captura', aOld.CaptureId, FCaptureId, R) then
+  if FieldValuesDiff(rscCaptureID, aOld.CaptureId, FCaptureId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data captura', aOld.CaptureDate, FCaptureDate, R) then
+  if FieldValuesDiff(rscDate, aOld.CaptureDate, FCaptureDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Hora captura', aOld.CaptureTime, FCaptureTime, R) then
+  if FieldValuesDiff(rscTime, aOld.CaptureTime, FCaptureTime, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anilhador', aOld.BanderId, FBanderId, R) then
+  if FieldValuesDiff(rscBanderID, aOld.BanderId, FBanderId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anilha', aOld.BandId, FBandId, R) then
+  if FieldValuesDiff(rscBandID, aOld.BandId, FBandId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda P1', aOld.Primary1, FPrimary1, R) then
+  if FieldValuesDiff(rscP1, aOld.Primary1, FPrimary1, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda P2', aOld.Primary2, FPrimary2, R) then
+  if FieldValuesDiff(rscP2, aOld.Primary2, FPrimary2, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda P3', aOld.Primary3, FPrimary3, R) then
+  if FieldValuesDiff(rscP3, aOld.Primary3, FPrimary3, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda P4', aOld.Primary4, FPrimary4, R) then
+  if FieldValuesDiff(rscP4, aOld.Primary4, FPrimary4, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda P5', aOld.Primary5, FPrimary5, R) then
+  if FieldValuesDiff(rscP5, aOld.Primary5, FPrimary5, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda P6', aOld.Primary6, FPrimary6, R) then
+  if FieldValuesDiff(rscP6, aOld.Primary6, FPrimary6, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda P7', aOld.Primary7, FPrimary7, R) then
+  if FieldValuesDiff(rscP7, aOld.Primary7, FPrimary7, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda P8', aOld.Primary8, FPrimary8, R) then
+  if FieldValuesDiff(rscP8, aOld.Primary8, FPrimary8, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda P9', aOld.Primary9, FPrimary9, R) then
+  if FieldValuesDiff(rscP9, aOld.Primary9, FPrimary9, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda P10', aOld.Primary10, FPrimary10, R) then
+  if FieldValuesDiff(rscP10, aOld.Primary10, FPrimary10, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda S1', aOld.Secondary1, FSecondary1, R) then
+  if FieldValuesDiff(rscS1, aOld.Secondary1, FSecondary1, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda S2', aOld.Secondary2, FSecondary2, R) then
+  if FieldValuesDiff(rscS2, aOld.Secondary2, FSecondary2, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda S3', aOld.Secondary3, FSecondary3, R) then
+  if FieldValuesDiff(rscS3, aOld.Secondary3, FSecondary3, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda S4', aOld.Secondary4, FSecondary4, R) then
+  if FieldValuesDiff(rscS4, aOld.Secondary4, FSecondary4, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda S5', aOld.Secondary5, FSecondary5, R) then
+  if FieldValuesDiff(rscS5, aOld.Secondary5, FSecondary5, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda S6', aOld.Secondary6, FSecondary6, R) then
+  if FieldValuesDiff(rscS6, aOld.Secondary6, FSecondary6, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda S7', aOld.Secondary7, FSecondary7, R) then
+  if FieldValuesDiff(rscS7, aOld.Secondary7, FSecondary7, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda S8', aOld.Secondary8, FSecondary8, R) then
+  if FieldValuesDiff(rscS8, aOld.Secondary8, FSecondary8, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda S9', aOld.Secondary9, FSecondary9, R) then
+  if FieldValuesDiff(rscS9, aOld.Secondary9, FSecondary9, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda R1', aOld.Retrix1, FRetrix1, R) then
+  if FieldValuesDiff(rscR1, aOld.Retrix1, FRetrix1, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda R2', aOld.Retrix2, FRetrix2, R) then
+  if FieldValuesDiff(rscR2, aOld.Retrix2, FRetrix2, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda R3', aOld.Retrix3, FRetrix3, R) then
+  if FieldValuesDiff(rscR3, aOld.Retrix3, FRetrix3, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda R4', aOld.Retrix4, FRetrix4, R) then
+  if FieldValuesDiff(rscR4, aOld.Retrix4, FRetrix4, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda R5', aOld.Retrix5, FRetrix5, R) then
+  if FieldValuesDiff(rscR5, aOld.Retrix5, FRetrix5, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda R6', aOld.Retrix6, FRetrix6, R) then
+  if FieldValuesDiff(rscR6, aOld.Retrix6, FRetrix6, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda PC1', aOld.PrimaryCovert1, FPrimaryCovert1, R) then
+  if FieldValuesDiff(rscPC1, aOld.PrimaryCovert1, FPrimaryCovert1, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda PC2', aOld.PrimaryCovert2, FPrimaryCovert2, R) then
+  if FieldValuesDiff(rscPC2, aOld.PrimaryCovert2, FPrimaryCovert2, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda PC3', aOld.PrimaryCovert3, FPrimaryCovert3, R) then
+  if FieldValuesDiff(rscPC3, aOld.PrimaryCovert3, FPrimaryCovert3, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda PC4', aOld.PrimaryCovert4, FPrimaryCovert4, R) then
+  if FieldValuesDiff(rscPC4, aOld.PrimaryCovert4, FPrimaryCovert4, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda PC5', aOld.PrimaryCovert5, FPrimaryCovert5, R) then
+  if FieldValuesDiff(rscPC5, aOld.PrimaryCovert5, FPrimaryCovert5, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda PC6', aOld.PrimaryCovert6, FPrimaryCovert6, R) then
+  if FieldValuesDiff(rscPC6, aOld.PrimaryCovert6, FPrimaryCovert6, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda PC7', aOld.PrimaryCovert7, FPrimaryCovert7, R) then
+  if FieldValuesDiff(rscPC7, aOld.PrimaryCovert7, FPrimaryCovert7, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda PC8', aOld.PrimaryCovert8, FPrimaryCovert8, R) then
+  if FieldValuesDiff(rscPC8, aOld.PrimaryCovert8, FPrimaryCovert8, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda PC9', aOld.PrimaryCovert9, FPrimaryCovert9, R) then
+  if FieldValuesDiff(rscPC9, aOld.PrimaryCovert9, FPrimaryCovert9, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda CC', aOld.CarpalCovert, FCarpalCovert, R) then
+  if FieldValuesDiff(rscCC, aOld.CarpalCovert, FCarpalCovert, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda GC1', aOld.GreatCovert1, FGreatCovert1, R) then
+  if FieldValuesDiff(rscGC1, aOld.GreatCovert1, FGreatCovert1, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda GC2', aOld.GreatCovert2, FGreatCovert2, R) then
+  if FieldValuesDiff(rscGC2, aOld.GreatCovert2, FGreatCovert2, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda GC3', aOld.GreatCovert3, FGreatCovert3, R) then
+  if FieldValuesDiff(rscGC3, aOld.GreatCovert3, FGreatCovert3, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda GC4', aOld.GreatCovert4, FGreatCovert4, R) then
+  if FieldValuesDiff(rscGC4, aOld.GreatCovert4, FGreatCovert4, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda GC5', aOld.GreatCovert5, FGreatCovert5, R) then
+  if FieldValuesDiff(rscGC5, aOld.GreatCovert5, FGreatCovert5, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda GC6', aOld.GreatCovert6, FGreatCovert6, R) then
+  if FieldValuesDiff(rscGC6, aOld.GreatCovert6, FGreatCovert6, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda GC7', aOld.GreatCovert7, FGreatCovert7, R) then
+  if FieldValuesDiff(rscGC7, aOld.GreatCovert7, FGreatCovert7, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda GC8', aOld.GreatCovert8, FGreatCovert8, R) then
+  if FieldValuesDiff(rscGC8, aOld.GreatCovert8, FGreatCovert8, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda GC9', aOld.GreatCovert9, FGreatCovert9, R) then
+  if FieldValuesDiff(rscGC9, aOld.GreatCovert9, FGreatCovert9, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda GC10', aOld.GreatCovert10, FGreatCovert10, R) then
+  if FieldValuesDiff(rscGC10, aOld.GreatCovert10, FGreatCovert10, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda Al1', aOld.Alula1, FAlula1, R) then
+  if FieldValuesDiff(rscAl1, aOld.Alula1, FAlula1, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda Al2', aOld.Alula2, FAlula2, R) then
+  if FieldValuesDiff(rscAl2, aOld.Alula2, FAlula2, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda Al3', aOld.Alula3, FAlula3, R) then
+  if FieldValuesDiff(rscAl3, aOld.Alula3, FAlula3, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda LC', aOld.LeastCoverts, FLeastCoverts, R) then
+  if FieldValuesDiff(rscLC, aOld.LeastCoverts, FLeastCoverts, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda MC', aOld.MedianCoverts, FMedianCoverts, R) then
+  if FieldValuesDiff(rscMC, aOld.MedianCoverts, FMedianCoverts, R) then
     aList.Add(R);
-  if FieldValuesDiff('Barra de crescimento', aOld.GrowthBarWidth, FGrowthBarWidth, R) then
+  if FieldValuesDiff(rscGrowthBarWidth, aOld.GrowthBarWidth, FGrowthBarWidth, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anota'#231#245'es', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -1681,11 +1822,11 @@ begin
       FFat := FieldByName('fat').AsString;
       FBroodPatch := FieldByName('brood_patch').AsString;
       FCloacalProtuberance := FieldByName('cloacal_protuberance').AsString;
-      FOldMolt := FieldByName('old_molt').AsString;
-      FOldPrimariesMolt := FieldByName('old_primaries_molt').AsString;
-      FOldSecondariesMolt := FieldByName('old_secondaries_molt').AsString;
-      FOldRetricesMolt := FieldByName('old_retrices_molt').AsString;
-      FOldBodyMolt := FieldByName('old_body_molt').AsString;
+      //FOldMolt := FieldByName('old_molt').AsString;
+      //FOldPrimariesMolt := FieldByName('old_primaries_molt').AsString;
+      //FOldSecondariesMolt := FieldByName('old_secondaries_molt').AsString;
+      //FOldRetricesMolt := FieldByName('old_retrices_molt').AsString;
+      //FOldBodyMolt := FieldByName('old_body_molt').AsString;
       FBodyMolt := FieldByName('body_molt').AsString;
       FFlightFeathersMolt := FieldByName('flight_feathers_molt').AsString;
       FFlightFeathersWear := FieldByName('flight_feathers_wear').AsString;
@@ -1727,6 +1868,103 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TCapture.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('capture_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FSurveyId := FieldByName('survey_id').AsInteger;
+    FTaxonId := FieldByName('taxon_id').AsInteger;
+    FIndividualId := FieldByName('individual_id').AsInteger;
+    FProjectId := FieldByName('project_id').AsInteger;
+    FCaptureDate := FieldByName('capture_date').AsDateTime;
+    FCaptureTime := FieldByName('capture_time').AsDateTime;
+    FLocalityId := FieldByName('locality_id').AsInteger;
+    FNetStationId := FieldByName('net_station_id').AsInteger;
+    FNetId := FieldByName('net_id').AsInteger;
+    FLatitude := FieldByName('latitude').AsFloat;
+    FLongitude := FieldByName('longitude').AsFloat;
+    FBanderId := FieldByName('bander_id').AsInteger;
+    FAnnotatorId := FieldByName('annotator_id').AsInteger;
+    FSubjectStatus := FieldByName('subject_status').AsString;
+    FCaptureType := FieldByName('capture_type').AsString;
+    FSubjectSex := FieldByName('subject_sex').AsString;
+    FHowSexed := FieldByName('how_sexed').AsString;
+    FBandId := FieldByName('band_id').AsInteger;
+    FRemovedBandId := FieldByName('removed_band_id').AsInteger;
+    FRightLegBelow := FieldByName('right_leg_below').AsString;
+    FLeftLegBelow := FieldByName('left_leg_below').AsString;
+    FWeight := FieldByName('weight').AsFloat;
+    FTarsusLength := FieldByName('tarsus_length').AsFloat;
+    FTarsusDiameter := FieldByName('tarsus_diameter').AsFloat;
+    FCulmenLength := FieldByName('culmen_length').AsFloat;
+    FExposedCulmen := FieldByName('exposed_culmen').AsFloat;
+    FBillWidth := FieldByName('bill_width').AsFloat;
+    FBillHeight := FieldByName('bill_height').AsFloat;
+    FNostrilBillTip := FieldByName('nostril_bill_tip').AsFloat;
+    FSkullLength := FieldByName('skull_length').AsFloat;
+    FHaluxLengthTotal := FieldByName('halux_length_total').AsFloat;
+    FHaluxLengthFinger := FieldByName('halux_length_finger').AsFloat;
+    FHaluxLengthClaw := FieldByName('halux_length_claw').AsFloat;
+    FRightWingChord := FieldByName('right_wing_chord').AsFloat;
+    FFirstSecondaryChord := FieldByName('first_secondary_chord').AsFloat;
+    FTailLength := FieldByName('tail_length').AsFloat;
+    FCentralRetrixLength := FieldByName('central_retrix_length').AsFloat;
+    FExternalRetrixLength := FieldByName('external_retrix_length').AsFloat;
+    FTotalLength := FieldByName('total_length').AsFloat;
+    FFeatherMites := FieldByName('feather_mites').AsString;
+    FFat := FieldByName('fat').AsString;
+    FBroodPatch := FieldByName('brood_patch').AsString;
+    FCloacalProtuberance := FieldByName('cloacal_protuberance').AsString;
+    //FOldMolt := FieldByName('old_molt').AsString;
+    //FOldPrimariesMolt := FieldByName('old_primaries_molt').AsString;
+    //FOldSecondariesMolt := FieldByName('old_secondaries_molt').AsString;
+    //FOldRetricesMolt := FieldByName('old_retrices_molt').AsString;
+    //FOldBodyMolt := FieldByName('old_body_molt').AsString;
+    FBodyMolt := FieldByName('body_molt').AsString;
+    FFlightFeathersMolt := FieldByName('flight_feathers_molt').AsString;
+    FFlightFeathersWear := FieldByName('flight_feathers_wear').AsString;
+    FMoltLimits := FieldByName('molt_limits').AsString;
+    FCycleCode := FieldByName('cycle_code').AsString;
+    FSubjectAge := FieldByName('subject_age').AsString;
+    FHowAged := FieldByName('how_aged').AsString;
+    FSkullOssification := FieldByName('skull_ossification').AsString;
+    FKippsIndex := FieldByName('kipps_index').AsFloat;
+    FGlucose := FieldByName('glucose').AsFloat;
+    FHemoglobin := FieldByName('hemoglobin').AsFloat;
+    FHematocrit := FieldByName('hematocrit').AsFloat;
+    FPhilornisLarvaeTally := FieldByName('philornis_larvae_tally').AsInteger;
+    FBloodSample := FieldByName('blood_sample').AsBoolean;
+    FFeatherSample := FieldByName('feather_sample').AsBoolean;
+    FClawSample := FieldByName('claw_sample').AsBoolean;
+    FFecesSample := FieldByName('feces_sample').AsBoolean;
+    FParasiteSample := FieldByName('parasite_sample').AsBoolean;
+    FSubjectRecorded := FieldByName('subject_recorded').AsBoolean;
+    FSubjectCollected := FieldByName('subject_collected').AsBoolean;
+    FSubjectPhotographed := FieldByName('subject_photographed').AsBoolean;
+    FFieldNumber := FieldByName('field_number').AsString;
+    FPhotographer1Id := FieldByName('photographer_1_id').AsInteger;
+    FPhotographer2Id := FieldByName('photographer_2_id').AsInteger;
+    FStartPhotoNumber := FieldByName('start_photo_number').AsString;
+    FEndPhotoNumber := FieldByName('end_photo_number').AsString;
+    FCameraName := FieldByName('camera_name').AsString;
+    FEscaped := FieldByName('escaped').AsBoolean;
+    FNeedsReview := FieldByName('needs_review').AsBoolean;
+    FNotes := FieldByName('notes').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 
@@ -2012,163 +2250,163 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionTaxon, aOld.TaxonId, FTaxonId, R) then
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Amostragem', aOld.SurveyId, FSurveyId, R) then
+  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionIndividual, aOld.IndividualId, FIndividualId, R) then
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionProject, aOld.ProjectId, FProjectId, R) then
+  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data captura', aOld.CaptureDate, FCaptureDate, R) then
+  if FieldValuesDiff(rscDate, aOld.CaptureDate, FCaptureDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Hora captura', aOld.CaptureTime, FCaptureTime, R) then
+  if FieldValuesDiff(rscTime, aOld.CaptureTime, FCaptureTime, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionLocality, aOld.LocalityId, FLocalityId, R) then
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionSamplingPlot, aOld.NetStationId, FNetStationId, R) then
+  if FieldValuesDiff(rscSamplingPlotID, aOld.NetStationId, FNetStationId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Rede n'#186, aOld.NetId, FNetId, R) then
+  if FieldValuesDiff(rscMistnetID, aOld.NetId, FNetId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLatitude, aOld.Latitude, FLatitude, R) then
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLongitude, aOld.Longitude, FLongitude, R) then
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anilhador', aOld.BanderId, FBanderId, R) then
+  if FieldValuesDiff(rscBanderID, aOld.BanderId, FBanderId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anotador', aOld.AnnotatorId, FAnnotatorId, R) then
+  if FieldValuesDiff(rscAnnotatorID, aOld.AnnotatorId, FAnnotatorId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Status', aOld.SubjectStatus, FSubjectStatus, R) then
+  if FieldValuesDiff(rscStatus, aOld.SubjectStatus, FSubjectStatus, R) then
     aList.Add(R);
-  if FieldValuesDiff('Natureza', aOld.CaptureType, FCaptureType, R) then
+  if FieldValuesDiff(rscType, aOld.CaptureType, FCaptureType, R) then
     aList.Add(R);
-  if FieldValuesDiff('Sexo', aOld.SubjectSex, FSubjectSex, R) then
+  if FieldValuesDiff(rscSex, aOld.SubjectSex, FSubjectSex, R) then
     aList.Add(R);
-  if FieldValuesDiff('Sexado como', aOld.HowSexed, FHowSexed, R) then
+  if FieldValuesDiff(rscHowWasSexed, aOld.HowSexed, FHowSexed, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionBand, aOld.BandId, FBandId, R) then
+  if FieldValuesDiff(rscBandID, aOld.BandId, FBandId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anilha removida', aOld.RemovedBandId, FRemovedBandId, R) then
+  if FieldValuesDiff(rscRemovedBandID, aOld.RemovedBandId, FRemovedBandId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tarso direito', aOld.RightLegBelow, FRightLegBelow, R) then
+  if FieldValuesDiff(rscRightTarsus, aOld.RightLegBelow, FRightLegBelow, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tarso esquerdo', aOld.LeftLegBelow, FLeftLegBelow, R) then
+  if FieldValuesDiff(rscLeftTarsus, aOld.LeftLegBelow, FLeftLegBelow, R) then
     aList.Add(R);
-  if FieldValuesDiff('Peso', aOld.Weight, FWeight, R) then
+  if FieldValuesDiff(rscWeight, aOld.Weight, FWeight, R) then
     aList.Add(R);
-  if FieldValuesDiff('Comprimento tarso', aOld.TarsusLength, FTarsusLength, R) then
+  if FieldValuesDiff(rscTarsusLength, aOld.TarsusLength, FTarsusLength, R) then
     aList.Add(R);
-  if FieldValuesDiff('Di'#226'metro tarso', aOld.TarsusDiameter, FTarsusDiameter, R) then
+  if FieldValuesDiff(rscTarsusDiameter, aOld.TarsusDiameter, FTarsusDiameter, R) then
     aList.Add(R);
-  if FieldValuesDiff('C'#250'lmen total', aOld.CulmenLength, FCulmenLength, R) then
+  if FieldValuesDiff(rscTotalCulmen, aOld.CulmenLength, FCulmenLength, R) then
     aList.Add(R);
-  if FieldValuesDiff('C'#250'lmen exposto', aOld.ExposedCulmen, FExposedCulmen, R) then
+  if FieldValuesDiff(rscExposedCulmen, aOld.ExposedCulmen, FExposedCulmen, R) then
     aList.Add(R);
-  if FieldValuesDiff('Largura bico', aOld.BillWidth, FBillWidth, R) then
+  if FieldValuesDiff(rscBillWidth, aOld.BillWidth, FBillWidth, R) then
     aList.Add(R);
-  if FieldValuesDiff('Altura bico', aOld.BillHeight, FBillHeight, R) then
+  if FieldValuesDiff(rscBillHeight, aOld.BillHeight, FBillHeight, R) then
     aList.Add(R);
-  if FieldValuesDiff('Comprimento narina-ponta', aOld.NostrilBillTip, FNostrilBillTip, R) then
+  if FieldValuesDiff(rscNostrilToBillTip, aOld.NostrilBillTip, FNostrilBillTip, R) then
     aList.Add(R);
-  if FieldValuesDiff('Comprimento cr'#226'nio', aOld.SkullLength, FSkullLength, R) then
+  if FieldValuesDiff(rscSkullLength, aOld.SkullLength, FSkullLength, R) then
     aList.Add(R);
-  if FieldValuesDiff('H'#225'lux total', aOld.HaluxLengthTotal, FHaluxLengthTotal, R) then
+  if FieldValuesDiff(rscHaluxLengthTotal, aOld.HaluxLengthTotal, FHaluxLengthTotal, R) then
     aList.Add(R);
-  if FieldValuesDiff('H'#225'lux dedo', aOld.HaluxLengthFinger, FHaluxLengthFinger, R) then
+  if FieldValuesDiff(rscHaluxLengthFinger, aOld.HaluxLengthFinger, FHaluxLengthFinger, R) then
     aList.Add(R);
-  if FieldValuesDiff('H'#225'lux garra', aOld.HaluxLengthClaw, FHaluxLengthClaw, R) then
+  if FieldValuesDiff(rscHaluxLengthClaw, aOld.HaluxLengthClaw, FHaluxLengthClaw, R) then
     aList.Add(R);
-  if FieldValuesDiff('Corda asa direita', aOld.RightWingChord, FRightWingChord, R) then
+  if FieldValuesDiff(rscRightWingChord, aOld.RightWingChord, FRightWingChord, R) then
     aList.Add(R);
-  if FieldValuesDiff('Primeira secund'#225'ria', aOld.FirstSecondaryChord, FFirstSecondaryChord, R) then
+  if FieldValuesDiff(rsc1stSecondaryChord, aOld.FirstSecondaryChord, FFirstSecondaryChord, R) then
     aList.Add(R);
-  if FieldValuesDiff('Comprimento cauda', aOld.TailLength, FTailLength, R) then
+  if FieldValuesDiff(rscTailLength, aOld.TailLength, FTailLength, R) then
     aList.Add(R);
-  if FieldValuesDiff('Retriz central', aOld.CentralRetrixLength, FCentralRetrixLength, R) then
+  if FieldValuesDiff(rscCentralRetrixLength, aOld.CentralRetrixLength, FCentralRetrixLength, R) then
     aList.Add(R);
-  if FieldValuesDiff('Retriz externa', aOld.ExternalRetrixLength, FExternalRetrixLength, R) then
+  if FieldValuesDiff(rscExternalRetrixLength, aOld.ExternalRetrixLength, FExternalRetrixLength, R) then
     aList.Add(R);
-  if FieldValuesDiff('Comprimento total', aOld.TotalLength, FTotalLength, R) then
+  if FieldValuesDiff(rscTotalLength, aOld.TotalLength, FTotalLength, R) then
     aList.Add(R);
-  if FieldValuesDiff('Plum'#237'colas', aOld.FeatherMites, FFeatherMites, R) then
+  if FieldValuesDiff(rscFeatherMites, aOld.FeatherMites, FFeatherMites, R) then
     aList.Add(R);
-  if FieldValuesDiff('Gordura', aOld.Fat, FFat, R) then
+  if FieldValuesDiff(rscFat, aOld.Fat, FFat, R) then
     aList.Add(R);
-  if FieldValuesDiff('Placa incuba'#231#227'o', aOld.BroodPatch, FBroodPatch, R) then
+  if FieldValuesDiff(rscBroodPatch, aOld.BroodPatch, FBroodPatch, R) then
     aList.Add(R);
-  if FieldValuesDiff('Protuber'#226'ncia cloacal', aOld.CloacalProtuberance, FCloacalProtuberance, R) then
+  if FieldValuesDiff(rscCloacalProtuberance, aOld.CloacalProtuberance, FCloacalProtuberance, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda (leg.)', aOld.OldMolt, FOldMolt, R) then
+  //if FieldValuesDiff('Muda (leg.)', aOld.OldMolt, FOldMolt, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff('Muda prim'#225'rias (leg.)', aOld.OldPrimariesMolt, FOldPrimariesMolt, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff('Muda secund'#225'rias (leg.)', aOld.OldSecondariesMolt, FOldSecondariesMolt, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff('Muda retrizes (leg.)', aOld.OldRetricesMolt, FOldRetricesMolt, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff('Muda corpo (leg.)', aOld.OldBodyMolt, FOldBodyMolt, R) then
+  //  aList.Add(R);
+  if FieldValuesDiff(rscBodyMolt, aOld.BodyMolt, FBodyMolt, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda prim'#225'rias (leg.)', aOld.OldPrimariesMolt, FOldPrimariesMolt, R) then
+  if FieldValuesDiff(rscFlightFeathersMolt, aOld.FlightFeathersMolt, FFlightFeathersMolt, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda secund'#225'rias (leg.)', aOld.OldSecondariesMolt, FOldSecondariesMolt, R) then
+  if FieldValuesDiff(rscFlightFeathersWear, aOld.FlightFeathersWear, FFlightFeathersWear, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda retrizes (leg.)', aOld.OldRetricesMolt, FOldRetricesMolt, R) then
+  if FieldValuesDiff(rscMoltLimits, aOld.MoltLimits, FMoltLimits, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda corpo (leg.)', aOld.OldBodyMolt, FOldBodyMolt, R) then
+  if FieldValuesDiff(rscMoltCycle, aOld.CycleCode, FCycleCode, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda corpo', aOld.BodyMolt, FBodyMolt, R) then
+  if FieldValuesDiff(rscAge, aOld.SubjectAge, FSubjectAge, R) then
     aList.Add(R);
-  if FieldValuesDiff('Muda voo', aOld.FlightFeathersMolt, FFlightFeathersMolt, R) then
+  if FieldValuesDiff(rscHowWasAged, aOld.HowAged, FHowAged, R) then
     aList.Add(R);
-  if FieldValuesDiff('Desgaste voo', aOld.FlightFeathersWear, FFlightFeathersWear, R) then
+  if FieldValuesDiff(rscSkullOssification, aOld.SkullOssification, FSkullOssification, R) then
     aList.Add(R);
-  if FieldValuesDiff('Limites muda', aOld.MoltLimits, FMoltLimits, R) then
+  if FieldValuesDiff(rscKippsDistance, aOld.KippsIndex, FKippsIndex, R) then
     aList.Add(R);
-  if FieldValuesDiff('Ciclo muda', aOld.CycleCode, FCycleCode, R) then
+  if FieldValuesDiff(rscGlucose, aOld.Glucose, FGlucose, R) then
     aList.Add(R);
-  if FieldValuesDiff('Idade', aOld.SubjectAge, FSubjectAge, R) then
+  if FieldValuesDiff(rscHemoglobin, aOld.Hemoglobin, FHemoglobin, R) then
     aList.Add(R);
-  if FieldValuesDiff('Etariado como', aOld.HowAged, FHowAged, R) then
+  if FieldValuesDiff(rscHematocrit, aOld.Hematocrit, FHematocrit, R) then
     aList.Add(R);
-  if FieldValuesDiff('Ossifica'#231#227'o craniana', aOld.SkullOssification, FSkullOssification, R) then
+  if FieldValuesDiff(rscQuantPhilornisLarvae, aOld.PhilornisLarvaeTally, FPhilornisLarvaeTally, R) then
     aList.Add(R);
-  if FieldValuesDiff(#205'ndice de Kipp', aOld.KippsIndex, FKippsIndex, R) then
+  if FieldValuesDiff(rscBlood, aOld.BloodSample, FBloodSample, R) then
     aList.Add(R);
-  if FieldValuesDiff('Glicose', aOld.Glucose, FGlucose, R) then
+  if FieldValuesDiff(rscFeathers, aOld.FeatherSample, FFeatherSample, R) then
     aList.Add(R);
-  if FieldValuesDiff('Hemoglobina', aOld.Hemoglobin, FHemoglobin, R) then
+  if FieldValuesDiff(rscClaw, aOld.ClawSample, FClawSample, R) then
     aList.Add(R);
-  if FieldValuesDiff('Hemat'#243'crito', aOld.Hematocrit, FHematocrit, R) then
+  if FieldValuesDiff(rscFeces, aOld.FecesSample, FFecesSample, R) then
     aList.Add(R);
-  if FieldValuesDiff('Larvas Philornis', aOld.PhilornisLarvaeTally, FPhilornisLarvaeTally, R) then
+  if FieldValuesDiff(rscParasites, aOld.ParasiteSample, FParasiteSample, R) then
     aList.Add(R);
-  if FieldValuesDiff('Coletado sangue', aOld.BloodSample, FBloodSample, R) then
+  if FieldValuesDiff(rscCollectedWhole, aOld.SubjectCollected, FSubjectCollected, R) then
     aList.Add(R);
-  if FieldValuesDiff('Coletadas penas', aOld.FeatherSample, FFeatherSample, R) then
+  if FieldValuesDiff(rscRecorded, aOld.SubjectRecorded, FSubjectRecorded, R) then
     aList.Add(R);
-  if FieldValuesDiff('Coletada garra', aOld.ClawSample, FClawSample, R) then
+  if FieldValuesDiff(rscPhotographed, aOld.SubjectPhotographed, FSubjectPhotographed, R) then
     aList.Add(R);
-  if FieldValuesDiff('Coletadas fezes', aOld.FecesSample, FFecesSample, R) then
+  if FieldValuesDiff(rscFieldNumber, aOld.FieldNumber, FFieldNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff('Coletado parasita', aOld.ParasiteSample, FParasiteSample, R) then
+  if FieldValuesDiff(rscPhotographer1ID, aOld.Photographer1Id, FPhotographer1Id, R) then
     aList.Add(R);
-  if FieldValuesDiff('Coletado indiv'#237'duo', aOld.SubjectCollected, FSubjectCollected, R) then
+  if FieldValuesDiff(rscPhotographer2ID, aOld.Photographer2Id, FPhotographer2Id, R) then
     aList.Add(R);
-  if FieldValuesDiff('Gravado som', aOld.SubjectRecorded, FSubjectRecorded, R) then
+  if FieldValuesDiff(rscInitialPhotoNr, aOld.StartPhotoNumber, FStartPhotoNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff('Fotografado', aOld.SubjectPhotographed, FSubjectPhotographed, R) then
+  if FieldValuesDiff(rscFinalPhotoNr, aOld.EndPhotoNumber, FEndPhotoNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff('N'#186' de campo', aOld.FieldNumber, FFieldNumber, R) then
+  if FieldValuesDiff(rscCamera, aOld.CameraName, FCameraName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Fot'#243'grafo', aOld.Photographer1Id, FPhotographer1Id, R) then
+  if FieldValuesDiff(rscEscaped, aOld.Escaped, FEscaped, R) then
     aList.Add(R);
-  if FieldValuesDiff('Fot'#243'grafo 2', aOld.Photographer2Id, FPhotographer2Id, R) then
+  if FieldValuesDiff(rscNeedsReview, aOld.NeedsReview, FNeedsReview, R) then
     aList.Add(R);
-  if FieldValuesDiff('Foto inicial', aOld.StartPhotoNumber, FStartPhotoNumber, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Foto final', aOld.EndPhotoNumber, FEndPhotoNumber, R) then
-    aList.Add(R);
-  if FieldValuesDiff('C'#226'mera', aOld.CameraName, FCameraName, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Escapou', aOld.Escaped, FEscaped, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Revisar', aOld.NeedsReview, FNeedsReview, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Anota'#231#245'es', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -2283,6 +2521,56 @@ begin
   end;
 end;
 
+procedure TIndividual.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('individual_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FTaxonId := FieldByName('taxon_id').AsInteger;
+    FOrderId := FieldByName('order_id').AsInteger;
+    FFamilyId := FieldByName('family_id').AsInteger;
+    FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+    FGenusId := FieldByName('genus_id').AsInteger;
+    FSpeciesId := FieldByName('species_id').AsInteger;
+    FSex := FieldByName('individual_sex').AsString;
+    FAge := FieldByName('individual_age').AsString;
+    FNestId := FieldByName('nest_id').AsInteger;
+    FBirthDate := FieldByName('birth_date').AsString;
+    FBirthDay := FieldByName('birth_day').AsInteger;
+    FBirthMonth := FieldByName('birth_month').AsInteger;
+    FBirthYear := FieldByName('birth_year').AsInteger;
+    FBandingDate := FieldByName('banding_date').AsDateTime;
+    FBandChangeDate := FieldByName('band_change_date').AsDateTime;
+    FBandId := FieldByName('band_id').AsInteger;
+    FBandName := FieldByName('band_name').AsString;
+    FDoubleBandId := FieldByName('double_band_id').AsInteger;
+    FRemovedBandId := FieldByName('removed_band_id').AsInteger;
+    FRightLegBelow := FieldByName('right_leg_below').AsString;
+    FLeftLegBelow := FieldByName('left_leg_below').AsString;
+    FRightLegAbove := FieldByName('right_leg_above').AsString;
+    FLeftLegAbove := FieldByName('left_leg_above').AsString;
+    FFatherId := FieldByName('father_id').AsInteger;
+    FMotherId := FieldByName('mother_id').AsInteger;
+    FDeathDate := FieldByName('death_date').AsString;
+    FDeathDay := FieldByName('death_day').AsInteger;
+    FDeathMonth := FieldByName('death_month').AsInteger;
+    FDeathYear := FieldByName('death_year').AsInteger;
+    FRecognizableMarkings := FieldByName('recognizable_markings').AsString;
+    FNotes := FieldByName('notes').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 procedure TIndividual.Insert;
 var
   Qry: TSQLQuery;
@@ -2373,57 +2661,57 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Full name', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionTaxon, aOld.TaxonId, FTaxonId, R) then
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Sex', aOld.Sex, FSex, R) then
+  if FieldValuesDiff(rscSex, aOld.Sex, FSex, R) then
     aList.Add(R);
-  if FieldValuesDiff('Age', aOld.Age, FAge, R) then
+  if FieldValuesDiff(rscAge, aOld.Age, FAge, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionNest, aOld.NestId, FNestId, R) then
+  if FieldValuesDiff(rscNestID, aOld.NestId, FNestId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Birth date', aOld.BirthDate, FBirthDate, R) then
+  if FieldValuesDiff(rscBirthDate, aOld.BirthDate, FBirthDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Birth day', aOld.BirthDay, FBirthDay, R) then
+  if FieldValuesDiff(rscBirthDay, aOld.BirthDay, FBirthDay, R) then
     aList.Add(R);
-  if FieldValuesDiff('Birth month', aOld.BirthMonth, FBirthMonth, R) then
+  if FieldValuesDiff(rscBirthMonth, aOld.BirthMonth, FBirthMonth, R) then
     aList.Add(R);
-  if FieldValuesDiff('Birth year', aOld.BirthYear, FBirthYear, R) then
+  if FieldValuesDiff(rscBirthYear, aOld.BirthYear, FBirthYear, R) then
     aList.Add(R);
-  if FieldValuesDiff('Banding date', aOld.BandingDate, FBandingDate, R) then
+  if FieldValuesDiff(rscBandingDate, aOld.BandingDate, FBandingDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Band change date', aOld.BandChangeDate, FBandChangeDate, R) then
+  if FieldValuesDiff(rscBandChangeDate, aOld.BandChangeDate, FBandChangeDate, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionBand, aOld.BandId, FBandId, R) then
+  if FieldValuesDiff(rscBandID, aOld.BandId, FBandId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Double band', aOld.DoubleBandId, FDoubleBandId, R) then
+  if FieldValuesDiff(rscDoubleBandID, aOld.DoubleBandId, FDoubleBandId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Removed band', aOld.RemovedBandId, FRemovedBandId, R) then
+  if FieldValuesDiff(rscRemovedBandID, aOld.RemovedBandId, FRemovedBandId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Right tarsus', aOld.RightLegBelow, FRightLegBelow, R) then
+  if FieldValuesDiff(rscRightTarsus, aOld.RightLegBelow, FRightLegBelow, R) then
     aList.Add(R);
-  if FieldValuesDiff('Left Tarsus', aOld.LeftLegBelow, FLeftLegBelow, R) then
+  if FieldValuesDiff(rscLeftTarsus, aOld.LeftLegBelow, FLeftLegBelow, R) then
     aList.Add(R);
-  if FieldValuesDiff('Right tibia', aOld.RightLegAbove, FRightLegAbove, R) then
+  if FieldValuesDiff(rscRightTibia, aOld.RightLegAbove, FRightLegAbove, R) then
     aList.Add(R);
-  if FieldValuesDiff('Left tibia', aOld.LeftLegAbove, FLeftLegAbove, R) then
+  if FieldValuesDiff(rscLeftTibia, aOld.LeftLegAbove, FLeftLegAbove, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionFather, aOld.FatherId, FFatherId, R) then
+  if FieldValuesDiff(rscFatherID, aOld.FatherId, FFatherId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionMother, aOld.MotherId, FMotherId, R) then
+  if FieldValuesDiff(rscMotherID, aOld.MotherId, FMotherId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Death date', aOld.DeathDate, FDeathDate, R) then
+  if FieldValuesDiff(rscDeathDate, aOld.DeathDate, FDeathDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Death day', aOld.DeathDay, FDeathDay, R) then
+  if FieldValuesDiff(rscDeathDay, aOld.DeathDay, FDeathDay, R) then
     aList.Add(R);
-  if FieldValuesDiff('Death month', aOld.DeathMonth, FDeathMonth, R) then
+  if FieldValuesDiff(rscDeathMonth, aOld.DeathMonth, FDeathMonth, R) then
     aList.Add(R);
-  if FieldValuesDiff('Death year', aOld.DeathYear, FDeathYear, R) then
+  if FieldValuesDiff(rscDeathYear, aOld.DeathYear, FDeathYear, R) then
     aList.Add(R);
-  if FieldValuesDiff('Recognizable markings', aOld.RecognizableMarkings, FRecognizableMarkings, R) then
+  if FieldValuesDiff(rscRecognizableMarkings, aOld.RecognizableMarkings, FRecognizableMarkings, R) then
     aList.Add(R);
-  if FieldValuesDiff('Notes', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -2504,6 +2792,39 @@ begin
   end;
 end;
 
+procedure TBand.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('band_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FSize := FieldByName('band_size').AsString;
+    FNumber := FieldByName('band_number').AsInteger;
+    FStatus := FieldByName('band_status').AsString;
+    FSource := FieldByName('band_source').AsString;
+    FPrefix := FieldByName('band_prefix').AsString;
+    FSuffix := FieldByName('band_suffix').AsString;
+    FSupplierId := FieldByName('supplier_id').AsInteger;
+    FBandColor := FieldByName('band_color').AsString;
+    FBandType := FieldByName('band_type').AsString;
+    FCarrierId := FieldByName('carrier_id').AsInteger;
+    FIndividualId := FieldByName('individual_id').AsInteger;
+    FProjectId := FieldByName('project_id').AsInteger;
+    FReported := FieldByName('band_reported').AsBoolean;
+    FNotes := FieldByName('notes').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 procedure TBand.Insert;
 var
   Qry: TSQLQuery;
@@ -2573,35 +2894,35 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tamanho', aOld.Size, FSize, R) then
+  if FieldValuesDiff(rscSize, aOld.Size, FSize, R) then
     aList.Add(R);
-  if FieldValuesDiff('Número', aOld.Number, FNumber, R) then
+  if FieldValuesDiff(rscNumber, aOld.Number, FNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff('Status', aOld.Status, FStatus, R) then
+  if FieldValuesDiff(rscStatus, aOld.Status, FStatus, R) then
     aList.Add(R);
-  if FieldValuesDiff('Origem', aOld.Source, FSource, R) then
+  if FieldValuesDiff(rscSource, aOld.Source, FSource, R) then
     aList.Add(R);
-  if FieldValuesDiff('Prefixo', aOld.Prefix, FPrefix, R) then
+  if FieldValuesDiff(rscPrefix, aOld.Prefix, FPrefix, R) then
     aList.Add(R);
-  if FieldValuesDiff('Sufixo', aOld.Suffix, FSuffix, R) then
+  if FieldValuesDiff(rscSuffix, aOld.Suffix, FSuffix, R) then
     aList.Add(R);
-  if FieldValuesDiff('Fornecedor', aOld.SupplierId, FSupplierId, R) then
+  if FieldValuesDiff(rscSupplierID, aOld.SupplierId, FSupplierId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Cor', aOld.BandColor, FBandColor, R) then
+  if FieldValuesDiff(rscColor, aOld.BandColor, FBandColor, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tipo', aOld.BandType, FBandType, R) then
+  if FieldValuesDiff(rscType, aOld.BandType, FBandType, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anilhador portador', aOld.CarrierId, FCarrierId, R) then
+  if FieldValuesDiff(rscCarrierID, aOld.CarrierId, FCarrierId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionIndividual, aOld.IndividualId, FIndividualId, R) then
+  //if FieldValuesDiff(rsCaptionIndividual, aOld.IndividualId, FIndividualId, R) then
+  //  aList.Add(R);
+  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionProject, aOld.ProjectId, FProjectId, R) then
+  if FieldValuesDiff(rscReported, aOld.Reported, FReported, R) then
     aList.Add(R);
-  if FieldValuesDiff('Reportada', aOld.Reported, FReported, R) then
-    aList.Add(R);
-  if FieldValuesDiff('Anotações', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;

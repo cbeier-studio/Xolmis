@@ -113,6 +113,10 @@ msgctxt "cbs_datacolumns.rscband"
 msgid "Band"
 msgstr ""
 
+#: cbs_datacolumns.rscbandchangedate
+msgid "Band change date"
+msgstr ""
+
 #: cbs_datacolumns.rscbander
 msgid "Bander"
 msgstr ""
@@ -123,6 +127,11 @@ msgstr ""
 
 #: cbs_datacolumns.rscbandid
 msgid "Band ID"
+msgstr ""
+
+#: cbs_datacolumns.rscbandingdate
+msgctxt "cbs_datacolumns.rscbandingdate"
+msgid "Banding date"
 msgstr ""
 
 #: cbs_datacolumns.rscbillheight

@@ -111,7 +111,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TSite; var aList: TStrings): Boolean;
   published
     property Name: String read FName write FName;
@@ -159,7 +160,7 @@ type
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_conversions, cbs_validations, udm_main, udlg_geoeditor;
+uses cbs_locale, cbs_global, cbs_conversions, cbs_validations, cbs_datacolumns, udm_main, udlg_geoeditor;
 
 function RemoveSymbolsDMS(aCoord: String): String;
 begin
@@ -726,6 +727,35 @@ begin
   end;
 end;
 
+procedure TSite.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('site_id').AsInteger;
+    FName := FieldByName('site_name').AsString;
+    FAcronym := FieldByName('site_acronym').AsString;
+    FRank := FieldByName('site_rank').AsString;
+    FParentSiteId := FieldByName('parent_site_id').AsInteger;
+    FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    FStateId := FieldByName('state_id').AsInteger;
+    FCountryId := FieldByName('country_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FLatitude := FieldByName('latitude').AsFloat;
+    FLongitude := FieldByName('longitude').AsFloat;
+    FAltitude := FieldByName('altitude').AsFloat;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 function TSite.Diff(aOld: TSite; var aList: TStrings): Boolean;
 var
   R: String;
@@ -733,27 +763,27 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff(rsCaptionName, aOld.Name, FName, R) then
+  if FieldValuesDiff(rscSiteName, aOld.Name, FName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Abreviatura', aOld.Acronym, FAcronym, R) then
+  if FieldValuesDiff(rscAcronym, aOld.Acronym, FAcronym, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tipo', aOld.Rank, FRank, R) then
+  if FieldValuesDiff(rscType, aOld.Rank, FRank, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nível superior', aOld.ParentSiteId, FParentSiteId, R) then
+  if FieldValuesDiff(rscParentSiteId, aOld.ParentSiteId, FParentSiteId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome completo', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLatitude, aOld.Latitude, FLatitude, R) then
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsLongitude, aOld.Longitude, FLongitude, R) then
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
     aList.Add(R);
-  if FieldValuesDiff('Altitude', aOld.Altitude, FAltitude, R) then
+  if FieldValuesDiff(rscAltitude, aOld.Altitude, FAltitude, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionMunicipality, aOld.MunicipalityId, FMunicipalityId, R) then
+  if FieldValuesDiff(rscMunicipalityID, aOld.MunicipalityId, FMunicipalityId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionState, aOld.StateId, FStateId, R) then
+  if FieldValuesDiff(rscStateID, aOld.StateId, FStateId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionCountry, aOld.CountryId, FCountryId, R) then
+  if FieldValuesDiff(rscCountryID, aOld.CountryId, FCountryId, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;

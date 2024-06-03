@@ -207,6 +207,8 @@ resourcestring
   rscFather = 'Father';
   rscMotherID = 'Mother ID';
   rscMother = 'Mother';
+  rscBandingDate = 'Banding date';
+  rscBandChangeDate = 'Band change date';
   rscBirthDay = 'Birth day';
   rscBirthMonth = 'Birth month';
   rscBirthYear = 'Birth year';

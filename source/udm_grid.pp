@@ -1523,7 +1523,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldBand) then
   begin
-    NewBand := TBand.Create(OldBand.Id);
+    NewBand := TBand.Create;
+    NewBand.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewBand.Diff(OldBand, lstDiff) then
@@ -1734,7 +1735,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldBotany) then
   begin
-    NewBotany := TBotanicTaxon.Create(OldBotany.Id);
+    NewBotany := TBotanicTaxon.Create;
+    NewBotany.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewBotany.Diff(OldBotany, lstDiff) then
@@ -1804,7 +1806,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldCapture) then
   begin
-    NewCapture := TCapture.Create(OldCapture.Id);
+    NewCapture := TCapture.Create;
+    NewCapture.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewCapture.Diff(OldCapture, lstDiff) then
@@ -2181,7 +2184,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldEgg) then
   begin
-    NewEgg := TEgg.Create(OldEgg.Id);
+    NewEgg := TEgg.Create;
+    NewEgg.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewEgg.Diff(OldEgg, lstDiff) then
@@ -2372,7 +2376,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldExpedition) then
   begin
-    NewExpedition := TExpedition.Create(OldExpedition.Id);
+    NewExpedition := TExpedition.Create;
+    NewExpedition.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewExpedition.Diff(OldExpedition, lstDiff) then
@@ -2427,7 +2432,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldSite) then
   begin
-    NewSite := TSite.Create(OldSite.Id);
+    NewSite := TSite.Create;
+    NewSite.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewSite.Diff(OldSite, lstDiff) then
@@ -2715,7 +2721,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldIndividual) then
   begin
-    NewIndividual := TIndividual.Create(OldIndividual.Id);
+    NewIndividual := TIndividual.Create;
+    NewIndividual.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewIndividual.Diff(OldIndividual, lstDiff) then
@@ -2907,7 +2914,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldInstitution) then
   begin
-    NewInstitution := TInstitution.Create(OldInstitution.Id);
+    NewInstitution := TInstitution.Create;
+    NewInstitution.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewInstitution.Diff(OldInstitution, lstDiff) then
@@ -2953,7 +2961,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldMethod) then
   begin
-    NewMethod := TMethod.Create(OldMethod.Id);
+    NewMethod := TMethod.Create;
+    NewMethod.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewMethod.Diff(OldMethod, lstDiff) then
@@ -2999,7 +3008,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldMolt) then
   begin
-    NewMolt := TMolt.Create(OldMolt.Id);
+    NewMolt := TMolt.Create;
+    NewMolt.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewMolt.Diff(OldMolt, lstDiff) then
@@ -3045,7 +3055,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldNestRevision) then
   begin
-    NewNestRevision := TNestRevision.Create(OldNestRevision.Id);
+    NewNestRevision := TNestRevision.Create;
+    NewNestRevision.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewNestRevision.Diff(OldNestRevision, lstDiff) then
@@ -3173,7 +3184,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldNest) then
   begin
-    NewNest := TNest.Create(OldNest.Id);
+    NewNest := TNest.Create;
+    NewNest.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewNest.Diff(OldNest, lstDiff) then
@@ -3401,7 +3413,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldNetStation) then
   begin
-    NewNetStation := TNetStation.Create(OldNetStation.Id);
+    NewNetStation := TNetStation.Create;
+    NewNetStation.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewNetStation.Diff(OldNetStation, lstDiff) then
@@ -3456,7 +3469,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldPerson) then
   begin
-    NewPerson := TPerson.Create(OldPerson.Id);
+    NewPerson := TPerson.Create;
+    NewPerson.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewPerson.Diff(OldPerson, lstDiff) then
@@ -3514,7 +3528,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldPermanentNet) then
   begin
-    NewPermanentNet := TPermanentNet.Create(OldPermanentNet.Id);
+    NewPermanentNet := TPermanentNet.Create;
+    NewPermanentNet.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewPermanentNet.Diff(OldPermanentNet, lstDiff) then
@@ -3560,7 +3575,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldPermit) then
   begin
-    NewPermit := TPermit.Create(OldPermit.Id);
+    NewPermit := TPermit.Create;
+    NewPermit.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewPermit.Diff(OldPermit, lstDiff) then
@@ -3662,7 +3678,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldProject) then
   begin
-    NewProject := TProject.Create(OldProject.Id);
+    NewProject := TProject.Create;
+    NewProject.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewProject.Diff(OldProject, lstDiff) then
@@ -3717,7 +3734,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldProjectMember) then
   begin
-    NewProjectMember := TProjectMember.Create(OldProjectMember.Id);
+    NewProjectMember := TProjectMember.Create;
+    NewProjectMember.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewProjectMember.Diff(OldProjectMember, lstDiff) then
@@ -3763,7 +3781,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldCollector) then
   begin
-    NewCollector := TSpecimenCollector.Create(OldCollector.Id);
+    NewCollector := TSpecimenCollector.Create;
+    NewCollector.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewCollector.Diff(OldCollector, lstDiff) then
@@ -3956,7 +3975,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldSamplePrep) then
   begin
-    NewSamplePrep := TSamplePrep.Create(OldSamplePrep.Id);
+    NewSamplePrep := TSamplePrep.Create;
+    NewSamplePrep.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewSamplePrep.Diff(OldSamplePrep, lstDiff) then
@@ -4020,7 +4040,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldSighting) then
   begin
-    NewSighting := TSighting.Create(OldSighting.Id);
+    NewSighting := TSighting.Create;
+    NewSighting.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewSighting.Diff(OldSighting, lstDiff) then
@@ -4079,7 +4100,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldSpecimen) then
   begin
-    NewSpecimen := TSpecimen.Create(OldSpecimen.Id);
+    NewSpecimen := TSpecimen.Create;
+    NewSpecimen.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewSpecimen.Diff(OldSpecimen, lstDiff) then
@@ -4237,7 +4259,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldSurvey) then
   begin
-    NewSurvey := TSurvey.Create(OldSurvey.Id);
+    NewSurvey := TSurvey.Create;
+    NewSurvey.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewSurvey.Diff(OldSurvey, lstDiff) then

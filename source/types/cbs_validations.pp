@@ -59,7 +59,7 @@ type
     aReferenceName: String = ''; aMessageList: TStrings = nil): Boolean;
 
   { Database validations }
-  function FieldValuesDiff(aFieldName: String; OldValue, NewValue: Variant; var OutputStr: String): Boolean;
+  function FieldValuesDiff(aFieldName: String; OldValue, NewValue: Variant; out OutputStr: String): Boolean;
   function KeyExists(aTable: TTableType; aFieldName: String; aValue: Integer): Boolean;
   function CheckRequiredFilled(aField: TField; aControl: TControl; aLabel: TLabel): Boolean;
   function RequiredIsEmpty(aDataset: TDataset; aTable: TTableType; aFieldName: String;
@@ -496,7 +496,7 @@ begin
   end;
 end;
 
-function FieldValuesDiff(aFieldName: String; OldValue, NewValue: Variant; var OutputStr: String): Boolean;
+function FieldValuesDiff(aFieldName: String; OldValue, NewValue: Variant; out OutputStr: String): Boolean;
 var
   IsSame: Boolean;
   O, N: String;
@@ -516,7 +516,7 @@ begin
     OutputStr := aFieldName + ';' + O + ';' + N;
   end;
 
-  Result := IsSame;
+  Result := not IsSame;
 end;
 
 function KeyExists(aTable: TTableType; aFieldName: String; aValue: Integer): Boolean;

@@ -51,7 +51,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TBotanicTaxon; var aList: TStrings): Boolean;
   published
     property VernacularName: String read FVernacularName write FVernacularName;
@@ -62,7 +63,7 @@ type
 
 implementation
 
-uses cbs_locale, cbs_getvalue, cbs_validations, udm_main;
+uses cbs_locale, cbs_getvalue, cbs_validations, cbs_datacolumns, udm_main;
 
 function IsInfraspecific(aTaxonRank: Integer): Boolean;
 var
@@ -263,6 +264,35 @@ begin
   end;
 end;
 
+procedure TBotanicTaxon.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('taxon_id').AsInteger;
+    FFullName := FieldByName('taxon_name').AsString;
+    FAuthorship := FieldByName('authorship').AsString;
+    FFormattedName := FieldByName('formatted_name').AsString;
+    FVernacularName := FieldByName('vernacular_name').AsString;
+    FValidId := FieldByName('valid_id').AsInteger;
+    FRankId := FieldByName('rank_id').AsInteger;
+    FParentTaxonId := FieldByName('parent_taxon_id').AsInteger;
+    FSpeciesId := FieldByName('species_id').AsInteger;
+    FGenusId := FieldByName('genus_id').AsInteger;
+    FFamilyId := FieldByName('family_id').AsInteger;
+    FOrderId := FieldByName('order_id').AsInteger;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 function TBotanicTaxon.Diff(aOld: TBotanicTaxon; var aList: TStrings): Boolean;
 var
   R: String;
@@ -270,25 +300,25 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff(rsCaptionName, aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscScientificName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Parent taxon', aOld.ParentTaxonId, FParentTaxonId, R) then
+  if FieldValuesDiff(rscParentTaxonID, aOld.ParentTaxonId, FParentTaxonId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionRank, aOld.RankId, FRankId, R) then
+  if FieldValuesDiff(rscTaxonomicRankID, aOld.RankId, FRankId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsAuthorship, aOld.Authorship, FAuthorship, R) then
+  if FieldValuesDiff(rscAuthorship, aOld.Authorship, FAuthorship, R) then
     aList.Add(R);
-  if FieldValuesDiff('Vernacular name', aOld.VernacularName, FVernacularName, R) then
+  if FieldValuesDiff(rscVernacularNameS, aOld.VernacularName, FVernacularName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Valid name', aOld.ValidId, FValidId, R) then
+  if FieldValuesDiff(rscValidNameID, aOld.ValidId, FValidId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionOrder, aOld.OrderId, FOrderId, R) then
+  if FieldValuesDiff(rscOrderID, aOld.OrderId, FOrderId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionFamily, aOld.FamilyId, FFamilyId, R) then
+  if FieldValuesDiff(rscFamilyID, aOld.FamilyId, FFamilyId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionGenus, aOld.GenusId, FGenusId, R) then
+  if FieldValuesDiff(rscGenusID, aOld.GenusId, FGenusId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionSpecies, aOld.SpeciesId, FSpeciesId, R) then
+  if FieldValuesDiff(rscSpeciesID, aOld.SpeciesId, FSpeciesId, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;

@@ -14570,7 +14570,7 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Left = 710
-    Top = 90
+    Top = 88
     object qTaxamarked_status: TBooleanField
       FieldKind = fkData
       FieldName = 'marked_status'

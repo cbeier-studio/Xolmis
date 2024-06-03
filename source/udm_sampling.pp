@@ -506,7 +506,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldCapture) then
   begin
-    NewCapture := TCapture.Create(OldCapture.Id);
+    NewCapture := TCapture.Create;
+    NewCapture.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewCapture.Diff(OldCapture, lstDiff) then
@@ -919,7 +920,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldNetEffort) then
   begin
-    NewNetEffort := TNetEffort.Create(OldNetEffort.Id);
+    NewNetEffort := TNetEffort.Create;
+    NewNetEffort.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewNetEffort.Diff(OldNetEffort, lstDiff) then
@@ -986,7 +988,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldSighting) then
   begin
-    NewSighting := TSighting.Create(OldSighting.Id);
+    NewSighting := TSighting.Create;
+    NewSighting.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewSighting.Diff(OldSighting, lstDiff) then
@@ -1064,7 +1067,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldSurveyMember) then
   begin
-    NewSurveyMember := TSurveyMember.Create(OldSurveyMember.Id);
+    NewSurveyMember := TSurveyMember.Create;
+    NewSurveyMember.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewSurveyMember.Diff(OldSurveyMember, lstDiff) then
@@ -1110,7 +1114,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldWeatherLog) then
   begin
-    NewWeatherLog := TWeatherLog.Create(OldWeatherLog.Id);
+    NewWeatherLog := TWeatherLog.Create;
+    NewWeatherLog.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewWeatherLog.Diff(OldWeatherLog, lstDiff) then

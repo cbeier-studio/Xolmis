@@ -168,7 +168,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldEgg) then
   begin
-    NewEgg := TEgg.Create(OldEgg.Id);
+    NewEgg := TEgg.Create;
+    NewEgg.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewEgg.Diff(OldEgg, lstDiff) then
@@ -353,7 +354,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldNestOwner) then
   begin
-    NewNestOwner := TNestOwner.Create(OldNestOwner.Id);
+    NewNestOwner := TNestOwner.Create;
+    NewNestOwner.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewNestOwner.Diff(OldNestOwner, lstDiff) then
@@ -436,7 +438,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldNestRevision) then
   begin
-    NewNestRevision := TNestRevision.Create(OldNestRevision.Id);
+    NewNestRevision := TNestRevision.Create;
+    NewNestRevision.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewNestRevision.Diff(OldNestRevision, lstDiff) then

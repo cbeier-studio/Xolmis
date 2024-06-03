@@ -105,7 +105,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
   published
     property Name: String read FName write FName;
     property Acronym: String read FAcronym write FAcronym;
@@ -158,7 +159,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TTaxon; var aList: TStrings): Boolean;
   published
     property EnglishName: String read FEnglishName write FEnglishName;
@@ -1930,6 +1932,65 @@ begin
   end;
 end;
 
+procedure TTaxon.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('taxon_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FFormattedName := FieldByName('formatted_name').AsString;
+    FParentTaxonId := FieldByName('parent_taxon_id').AsInteger;
+    FRankId := FieldByName('rank_id').AsInteger;
+    FAuthorship := FieldByName('authorship').AsString;
+    FSortNum := FieldByName('sort_num').AsFloat;
+    FQuickCode := FieldByName('quick_code').AsString;
+    FEnglishName := FieldByName('english_name').AsString;
+    FPortugueseName := FieldByName('portuguese_name').AsString;
+    FSpanishName := FieldByName('spanish_name').AsString;
+    FValidId := FieldByName('valid_id').AsInteger;
+    FIucnStatus := FieldByName('iucn_status').AsString;
+    FExtinct := FieldByName('extinct').AsBoolean;
+    FExtinctionYear := FieldByName('extinction_year').AsString;
+    FDistribution := FieldByName('distribution').AsString;
+    FEbirdCode := FieldByName('ebird_code').AsString;
+    FClementsTaxonomy := FieldByName('clements_taxonomy').AsBoolean;
+    FOrderId := FieldByName('order_id').AsInteger;
+    FFamilyId := FieldByName('family_id').AsInteger;
+    FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+    FGenusId := FieldByName('genus_id').AsInteger;
+    //FGenusEpithet := FieldByName('genus_name').AsString;
+    FSpeciesId := FieldByName('species_id').AsInteger;
+    //FSpeciesEpithet := FieldByName('species_epithet').AsString;
+    FSubspeciesGroupId := FieldByName('subspecies_group_id').AsInteger;
+    FSubspeciesGroupEpithet := FieldByName('group_name').AsString;
+    //FSubspeciesEpithet := FieldByName('subspecies_epithet').AsString;
+    FIncertaeSedis := FieldByName('incertae_sedis').AsInteger;
+    FIocTaxonomy := FieldByName('ioc_taxonomy').AsBoolean;
+    FIocEnglishName := FieldByName('ioc_english_name').AsString;
+    FIocParentTaxonId := FieldByName('ioc_parent_taxon_id').AsInteger;
+    FIocRankId := FieldByName('ioc_rank_id').AsInteger;
+    FIocValidId := FieldByName('ioc_valid_id').AsInteger;
+    FIocDistribution := FieldByName('ioc_distribution').AsString;
+    FIocSortNum := FieldByName('ioc_sort_num').AsFloat;
+    FCbroTaxonomy := FieldByName('cbro_taxonomy').AsBoolean;
+    FOtherPortugueseNames := FieldByName('other_portuguese_names').AsString;
+    //FCbroParentTaxonId := FieldByName('cbro_parent_taxon_id').AsInteger;
+    //FCbroRankId := FieldByName('cbro_rank_id').AsInteger;
+    //FCbroValidId := FieldByName('cbro_valid_id').AsInteger;
+    //FCbroSortNum := FieldByName('cbro_sort_num').AsFloat;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 function TTaxon.Diff(aOld: TTaxon; var aList: TStrings): Boolean;
 var
   R: String;
@@ -2083,6 +2144,33 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TRank.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('rank_id').AsInteger;
+    FName := FieldByName('rank_name').AsString;
+    FAcronym := FieldByName('rank_acronym').AsString;
+    FRankIndex := FieldByName('sort_num').AsInteger;
+    FMainRank := FieldByName('main_rank').AsBoolean;
+    FSubrank := FieldByName('subrank').AsBoolean;
+    FInfrarank := FieldByName('infrarank').AsBoolean;
+    FInfraspecific := FieldByName('infraspecific').AsBoolean;
+    FZoologicalCode := FieldByName('zoological_code').AsBoolean;
+    FBotanicalCode := FieldByName('botanical_code').AsBoolean;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 

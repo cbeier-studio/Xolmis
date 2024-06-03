@@ -270,7 +270,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldUser) then
   begin
-    NewUser := TUser.Create(OldUser.Id);
+    NewUser := TUser.Create;
+    NewUser.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewUser.Diff(OldUser, lstDiff) then

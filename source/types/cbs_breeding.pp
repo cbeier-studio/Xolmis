@@ -76,7 +76,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Find(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate): Boolean;
     function Diff(aOld: TNest; var aList: TStrings): Boolean;
     procedure Insert;
@@ -133,7 +134,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TNestOwner; var aList: TStrings): Boolean;
   published
     property NestId: Integer read FNestId write FNestId;
@@ -173,7 +175,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TEgg; var aList: TStrings): Boolean;
   published
     property FieldNumber: String read FFieldNumber write FFieldNumber;
@@ -228,7 +231,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TNestRevision; var aList: TStrings): Boolean;
   published
     property NestId: Integer read FNestId write FNestId;
@@ -325,6 +329,39 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNestRevision.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('nest_revision_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FNestId := FieldByName('nest_id').AsInteger;
+    FRevisionDate := FieldByName('revision_date').AsDateTime;
+    FRevisionTime := FieldByName('revision_time').AsDateTime;
+    FObserver1Id := FieldByName('observer_1_id').AsInteger;
+    FObserver2Id := FieldByName('observer_2_id').AsInteger;
+    FNestStatus := FieldByName('nest_status').AsString;
+    FHostEggsTally := FieldByName('host_eggs_tally').AsInteger;
+    FHostNestlingsTally := FieldByName('host_nestlings_tally').AsInteger;
+    FNidoparasiteEggsTally := FieldByName('nidoparasite_eggs_tally').AsInteger;
+    FNidoparasiteNestlingsTally := FieldByName('nidoparasite_nestlings_tally').AsInteger;
+    FNidoparasiteId := FieldByName('nidoparasite_id').AsInteger;
+    FHavePhilornisLarvae := FieldByName('have_philornis_larvae').AsBoolean;
+    FNestStage := FieldByName('nest_stage').AsString;
+    FNotes := FieldByName('notes').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 
@@ -445,6 +482,41 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TEgg.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('egg_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FFieldNumber := FieldByName('field_number').AsString;
+    FNestId := FieldByName('nest_id').AsInteger;
+    FEggShape := FieldByName('egg_shape').AsString;
+    FWidth := FieldByName('egg_width').AsFloat;
+    FLength := FieldByName('egg_length').AsFloat;
+    FMass := FieldByName('egg_mass').AsFloat;
+    FVolume := FieldByName('egg_volume').AsFloat;
+    FEggStage := FieldByName('egg_stage').AsString;
+    FEggshellColor := FieldByName('eggshell_color').AsString;
+    FEggshellPattern := FieldByName('eggshell_pattern').AsString;
+    FEggshellTexture := FieldByName('eggshell_texture').AsString;
+    FEggHatched := FieldByName('egg_hatched').AsBoolean;
+    FIndividualId := FieldByName('individual_id').AsInteger;
+    FMeasureDate := FieldByName('measure_date').AsDateTime;
+    FTaxonId := FieldByName('taxon_id').AsInteger;
+    FDescription := FieldByName('description').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 
@@ -609,6 +681,61 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNest.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('nest_id').AsInteger;
+    FFieldNumber := FieldByName('field_number').AsString;
+    FFullName := FieldByName('full_name').AsString;
+    FObserverId := FieldByName('observer_id').AsInteger;
+    FLocalityId := FieldByName('locality_id').AsInteger;
+    FLatitude := FieldByName('latitude').AsFloat;
+    FLongitude := FieldByName('longitude').AsFloat;
+    FTaxonId := FieldByName('taxon_id').AsInteger;
+    FNestShape := FieldByName('nest_shape').AsString;
+    FSupportType := FieldByName('support_type').AsString;
+    FSupportPlant1Id := FieldByName('support_plant_1_id').AsInteger;
+    FSupportPlant2Id := FieldByName('support_plant_2_id').AsInteger;
+    FOtherSupport := FieldByName('other_support').AsString;
+    FHeightAboveGround := FieldByName('height_above_ground').AsFloat;
+    FProjectId := FieldByName('project_id').AsInteger;
+    FInternalMaxDiameter := FieldByName('internal_max_diameter').AsFloat;
+    FInternalMinDiameter := FieldByName('internal_min_diameter').AsFloat;
+    FExternalMaxDiameter := FieldByName('external_max_diameter').AsFloat;
+    FExternalMinDiameter := FieldByName('external_min_diameter').AsFloat;
+    FInternalHeight := FieldByName('internal_height').AsFloat;
+    FExternalHeight := FieldByName('external_height').AsFloat;
+    FEdgeDistance := FieldByName('edge_distance').AsFloat;
+    FCenterDistance := FieldByName('center_distance').AsFloat;
+    FNestCover := FieldByName('nest_cover').AsInteger;
+    FPlantMaxDiameter := FieldByName('plant_max_diameter').AsFloat;
+    FPlantMinDiameter := FieldByName('plant_min_diameter').AsFloat;
+    FPlantHeight := FieldByName('plant_height').AsFloat;
+    FPlantDbh := FieldByName('plant_dbh').AsFloat;
+    FConstructionDays := FieldByName('construction_days').AsFloat;
+    FIncubationDays := FieldByName('incubation_days').AsFloat;
+    FNestlingDays := FieldByName('nestling_days').AsFloat;
+    FActiveDays := FieldByName('active_days').AsFloat;
+    FNestFate := FieldByName('nest_fate').AsString;
+    FNestProductivity := FieldByName('nest_productivity').AsInteger;
+    FFoundDate := FieldByName('found_date').AsDateTime;
+    FLastDate := FieldByName('last_date').AsDateTime;
+    FDescription := FieldByName('description').AsString;
+    FNotes := FieldByName('notes').AsString;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 
@@ -875,6 +1002,27 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNestOwner.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('nest_owner_id').AsInteger;
+    FNestId := FieldByName('nest_id').AsInteger;
+    FRole := FieldByName('role').AsString;
+    FIndividualId := FieldByName('individual_id').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 

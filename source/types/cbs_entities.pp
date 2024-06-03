@@ -48,7 +48,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TProject; var aList: TStrings): Boolean;
   published
     property Title: String read FTitle write FTitle;
@@ -74,7 +75,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TProjectMember; var aList: TStrings): Boolean;
   published
     property ProjectId: Integer read FProjectId write FProjectId;
@@ -99,7 +101,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TPermit; var aList: TStrings): Boolean;
   published
     property ProjectId: Integer read FProjectId write FProjectId;
@@ -134,7 +137,8 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TInstitution; var aList: TStrings): Boolean;
   published
     property FullName: String read FFullName write FFullName;
@@ -162,7 +166,7 @@ type
     FAcronym: String;
     FCitation: String;
     FTitleTreatment: String;
-    FGenre: String;
+    FGender: String;
     FBirthDate: TDate;
     FDeathDate: TDate;
     FIdDocument1: String;
@@ -191,14 +195,15 @@ type
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TPerson; var aList: TStrings): Boolean;
   published
     property FullName: String read FFullName write FFullName;
     property Acronym: String read FAcronym write FAcronym;
     property Citation: String read FCitation write FCitation;
     property TitleTreatment: String read FTitleTreatment write FTitleTreatment;
-    property Genre: String read FGenre write FGenre;
+    property Gender: String read FGender write FGender;
     property BirthDate: TDate read FBirthDate write FBirthDate;
     property DeathDate: TDate read FDeathDate write FDeathDate;
     property IdDocument1: String read FIdDocument1 write FIdDocument1;
@@ -228,7 +233,7 @@ type
 
 implementation
 
-uses cbs_locale, cbs_validations;
+uses cbs_locale, cbs_validations, cbs_datacolumns;
 
 
 { TProject }
@@ -240,23 +245,23 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Título', aOld.Title, FTitle, R) then
+  if FieldValuesDiff(rscTitle, aOld.Title, FTitle, R) then
     aList.Add(R);
-  if FieldValuesDiff('Título curto', aOld.ShortTitle, FShortTitle, R) then
+  if FieldValuesDiff(rscShortTitle, aOld.ShortTitle, FShortTitle, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data inicial', aOld.StartDate, FStartDate, R) then
+  if FieldValuesDiff(rscStartDate, aOld.StartDate, FStartDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data final', aOld.EndDate, FEndDate, R) then
+  if FieldValuesDiff(rscEndDate, aOld.EndDate, FEndDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Website', aOld.WebsiteUri, FWebsiteUri, R) then
+  if FieldValuesDiff(rscWebsite, aOld.WebsiteUri, FWebsiteUri, R) then
     aList.Add(R);
-  if FieldValuesDiff('E-mail', aOld.EmailAddress, FEmailAddress, R) then
+  if FieldValuesDiff(rscEmail, aOld.EmailAddress, FEmailAddress, R) then
     aList.Add(R);
-  if FieldValuesDiff('Contato', aOld.ContactName, FContactName, R) then
+  if FieldValuesDiff(rscContactPerson, aOld.ContactName, FContactName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Resumo', aOld.ProjectAbstract, FAbstract, R) then
+  if FieldValuesDiff(rscAbstract, aOld.ProjectAbstract, FAbstract, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anotações', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -319,6 +324,29 @@ begin
   end;
 end;
 
+procedure TProject.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('project_id').AsInteger;
+    FTitle := FieldByName('project_title').AsString;
+    FStartDate := FieldByName('start_date').AsDateTime;
+    FEndDate := FieldByName('end_date').AsDateTime;
+    FShortTitle := FieldByName('short_title').AsString;
+    FWebsiteUri := FieldByName('website_uri').AsString;
+    FEmailAddress := FieldByName('email_addr').AsString;
+    FContactName := FieldByName('contact_name').AsString;
+    FNotes := FieldByName('notes').AsString;
+    FAbstract := FieldByName('project_abstract').AsString;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 { TInstitution }
 
 function TInstitution.Diff(aOld: TInstitution; var aList: TStrings): Boolean;
@@ -328,31 +356,31 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff(rsCaptionName, aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Abreviatura', aOld.Acronym, FAcronym, R) then
+  if FieldValuesDiff(rscAcronym, aOld.Acronym, FAcronym, R) then
     aList.Add(R);
-  if FieldValuesDiff('Respons'#225'vel', aOld.ManagerName, FManagerName, R) then
+  if FieldValuesDiff(rscManager, aOld.ManagerName, FManagerName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Endere'#231'o', aOld.Address1, FAddress1, R) then
+  if FieldValuesDiff(rscAddress1, aOld.Address1, FAddress1, R) then
     aList.Add(R);
-  if FieldValuesDiff('Complemento', aOld.Address2, FAddress2, R) then
+  if FieldValuesDiff(rscAddress2, aOld.Address2, FAddress2, R) then
     aList.Add(R);
-  if FieldValuesDiff('Bairro', aOld.Neighborhood, FNeighborhood, R) then
+  if FieldValuesDiff(rscNeighborhood, aOld.Neighborhood, FNeighborhood, R) then
     aList.Add(R);
-  if FieldValuesDiff('CEP', aOld.ZipCode, FZipCode, R) then
+  if FieldValuesDiff(rscZipCode, aOld.ZipCode, FZipCode, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionMunicipality, aOld.MunicipalityId, FMunicipalityId, R) then
+  if FieldValuesDiff(rscMunicipalityID, aOld.MunicipalityId, FMunicipalityId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionState, aOld.StateId, FStateId, R) then
+  if FieldValuesDiff(rscStateID, aOld.StateId, FStateId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionCountry, aOld.CountryId, FCountryId, R) then
+  if FieldValuesDiff(rscCountryID, aOld.CountryId, FCountryId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Telefone', aOld.Phone, FPhone, R) then
+  if FieldValuesDiff(rscPhone, aOld.Phone, FPhone, R) then
     aList.Add(R);
-  if FieldValuesDiff('E-mail', aOld.Email, FEmail, R) then
+  if FieldValuesDiff(rscEmail, aOld.Email, FEmail, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anota'#231#245'es', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -427,6 +455,37 @@ begin
   end;
 end;
 
+procedure TInstitution.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('institution_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FAcronym := FieldByName('acronym').AsString;
+    FManagerName := FieldByName('manager_name').AsString;
+    FAddress1 := FieldByName('address_1').AsString;
+    FAddress2 := FieldByName('address_2').AsString;
+    FNeighborhood := FieldByName('neighborhood').AsString;
+    FZipCode := FieldByName('zip_code').AsString;
+    FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    FStateId := FieldByName('state_id').AsInteger;
+    FCountryId := FieldByName('country_id').AsInteger;
+    FEmail := FieldByName('email_addr').AsString;
+    FPhone := FieldByName('phone_num').AsString;
+    FNotes := FieldByName('notes').AsString;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 { TPerson }
 
 function TPerson.Diff(aOld: TPerson; var aList: TStrings): Boolean;
@@ -436,63 +495,63 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff(rsCaptionName, aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Abreviatura', aOld.Acronym, FAcronym, R) then
+  if FieldValuesDiff(rscAcronym, aOld.Acronym, FAcronym, R) then
     aList.Add(R);
-  if FieldValuesDiff('Citação', aOld.Citation, FCitation, R) then
+  if FieldValuesDiff(rscCitation, aOld.Citation, FCitation, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tratamento', aOld.TitleTreatment, FTitleTreatment, R) then
+  if FieldValuesDiff(rscTreatment, aOld.TitleTreatment, FTitleTreatment, R) then
     aList.Add(R);
-  if FieldValuesDiff('Gênero', aOld.Genre, FGenre, R) then
+  if FieldValuesDiff(rscGender, aOld.Gender, FGender, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsDateBirth, aOld.BirthDate, FBirthDate, R) then
+  if FieldValuesDiff(rscBirthDate, aOld.BirthDate, FBirthDate, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsDateDeath, aOld.DeathDate, FDeathDate, R) then
+  if FieldValuesDiff(rscDeathDate, aOld.DeathDate, FDeathDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('RG', aOld.IdDocument1, FIdDocument1, R) then
+  if FieldValuesDiff(rscRG, aOld.IdDocument1, FIdDocument1, R) then
     aList.Add(R);
-  if FieldValuesDiff('CPF', aOld.IdDocument2, FIdDocument2, R) then
+  if FieldValuesDiff(rscCPF, aOld.IdDocument2, FIdDocument2, R) then
     aList.Add(R);
-  if FieldValuesDiff('E-mail', aOld.Email, FEmail, R) then
+  if FieldValuesDiff(rscEmail, aOld.Email, FEmail, R) then
     aList.Add(R);
-  if FieldValuesDiff('Telefone', aOld.Phone1, FPhone1, R) then
+  if FieldValuesDiff(rscPhone, aOld.Phone1, FPhone1, R) then
     aList.Add(R);
-  if FieldValuesDiff('Celular', aOld.Phone2, FPhone2, R) then
+  if FieldValuesDiff(rscMobilePhone, aOld.Phone2, FPhone2, R) then
     aList.Add(R);
-  if FieldValuesDiff('Endereço', aOld.Address1, FAddress1, R) then
+  if FieldValuesDiff(rscAddress1, aOld.Address1, FAddress1, R) then
     aList.Add(R);
-  if FieldValuesDiff('Complemento', aOld.Address2, FAddress2, R) then
+  if FieldValuesDiff(rscAddress2, aOld.Address2, FAddress2, R) then
     aList.Add(R);
-  if FieldValuesDiff('Bairro', aOld.Neighborhood, FNeighborhood, R) then
+  if FieldValuesDiff(rscNeighborhood, aOld.Neighborhood, FNeighborhood, R) then
     aList.Add(R);
-  if FieldValuesDiff('CEP', aOld.ZipCode, FZipCode, R) then
+  if FieldValuesDiff(rscZipCode, aOld.ZipCode, FZipCode, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionMunicipality, aOld.MunicipalityId, FMunicipalityId, R) then
+  if FieldValuesDiff(rscMunicipalityID, aOld.MunicipalityId, FMunicipalityId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionState, aOld.StateId, FStateId, R) then
+  if FieldValuesDiff(rscStateID, aOld.StateId, FStateId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionCountry, aOld.CountryId, FCountryId, R) then
+  if FieldValuesDiff(rscCountryID, aOld.CountryId, FCountryId, R) then
     aList.Add(R);
-  if FieldValuesDiff(rsCaptionInstitution, aOld.InstitutionId, FInstitutionId, R) then
+  if FieldValuesDiff(rscInstitutionID, aOld.InstitutionId, FInstitutionId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Departamento', aOld.Department, FDepartment, R) then
+  if FieldValuesDiff(rscDepartment, aOld.Department, FDepartment, R) then
     aList.Add(R);
-  if FieldValuesDiff('Cargo', aOld.JobRole, FJobRole, R) then
+  if FieldValuesDiff(rscRole, aOld.JobRole, FJobRole, R) then
     aList.Add(R);
-  if FieldValuesDiff('Lattes', aOld.LattesUri, FLattesUri, R) then
+  if FieldValuesDiff(rscLattes, aOld.LattesUri, FLattesUri, R) then
     aList.Add(R);
-  if FieldValuesDiff('Orcid', aOld.OrcidUri, FOrcidUri, R) then
+  if FieldValuesDiff(rscOrcid, aOld.OrcidUri, FOrcidUri, R) then
     aList.Add(R);
-  if FieldValuesDiff('Twitter', aOld.TwitterUri, FTwitterUri, R) then
+  if FieldValuesDiff(rscXTwitter, aOld.TwitterUri, FTwitterUri, R) then
     aList.Add(R);
-  if FieldValuesDiff('Instagram', aOld.InstagramUri, FInstagramUri, R) then
+  if FieldValuesDiff(rscInstagram, aOld.InstagramUri, FInstagramUri, R) then
     aList.Add(R);
-  if FieldValuesDiff('Website', aOld.WebsiteUri, FWebsiteUri, R) then
+  if FieldValuesDiff(rscWebsite, aOld.WebsiteUri, FWebsiteUri, R) then
     aList.Add(R);
-  if FieldValuesDiff('Cor do perfil', aOld.ProfileColor, FProfileColor, R) then
+  if FieldValuesDiff(rscProfileColor, aOld.ProfileColor, FProfileColor, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anotações', aOld.Notes, FNotes, R) then
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -513,7 +572,7 @@ begin
   FAcronym := EmptyStr;
   FCitation := EmptyStr;
   FTitleTreatment := EmptyStr;
-  FGenre := EmptyStr;
+  FGender := EmptyStr;
   FBirthDate := StrToDate('30/12/1500');
   FDeathDate := StrToDate('30/12/1500');
   FIdDocument1 := EmptyStr;
@@ -563,7 +622,7 @@ begin
       FAcronym := FieldByName('acronym').AsString;
       FCitation := FieldByName('citation').AsString;
       FTitleTreatment := FieldByName('title_treatment').AsString;
-      FGenre := FieldByName('gender').AsString;
+      FGender := FieldByName('gender').AsString;
       FBirthDate := FieldByName('birth_date').AsDateTime;
       FDeathDate := FieldByName('death_date').AsDateTime;
       FIdDocument1 := FieldByName('national_id_card').AsString;
@@ -603,6 +662,54 @@ begin
   end;
 end;
 
+procedure TPerson.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('person_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FAcronym := FieldByName('acronym').AsString;
+    FCitation := FieldByName('citation').AsString;
+    FTitleTreatment := FieldByName('title_treatment').AsString;
+    FGender := FieldByName('gender').AsString;
+    FBirthDate := FieldByName('birth_date').AsDateTime;
+    FDeathDate := FieldByName('death_date').AsDateTime;
+    FIdDocument1 := FieldByName('national_id_card').AsString;
+    FIdDocument2 := FieldByName('social_security_number').AsString;
+    FEmail := FieldByName('email_addr').AsString;
+    FPhone1 := FieldByName('phone_1').AsString;
+    FPhone2 := FieldByName('phone_2').AsString;
+    FAddress1 := FieldByName('address_1').AsString;
+    FAddress2 := FieldByName('address_2').AsString;
+    FNeighborhood := FieldByName('neighborhood').AsString;
+    FZipCode := FieldByName('zip_code').AsString;
+    FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    FStateId := FieldByName('state_id').AsInteger;
+    FCountryId := FieldByName('country_id').AsInteger;
+    FInstitutionId := FieldByName('institution_id').AsInteger;
+    FInstitutionName := FieldByName('institution_name').AsString;
+    FDepartment := FieldByName('department').AsString;
+    FJobRole := FieldByName('job_role').AsString;
+    FLattesUri := FieldByName('lattes_uri').AsString;
+    FOrcidUri := FieldByName('orcid_uri').AsString;
+    FTwitterUri := FieldByName('twitter_uri').AsString;
+    FInstagramUri := FieldByName('instagram_uri').AsString;
+    FWebsiteUri := FieldByName('website_uri').AsString;
+    FProfileColor := FieldByName('profile_color').AsString;
+    FNotes := FieldByName('notes').AsString;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 { TProjectMember }
 
 function TProjectMember.Diff(aOld: TProjectMember; var aList: TStrings): Boolean;
@@ -612,9 +719,9 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Pesquisador', aOld.PersonId, FPersonId, R) then
+  if FieldValuesDiff(rscPersonID, aOld.PersonId, FPersonId, R) then
     aList.Add(R);
-  if FieldValuesDiff('Respons'#225'vel', aOld.IsProjectManager, FProjectManager, R) then
+  if FieldValuesDiff(rscManager, aOld.IsProjectManager, FProjectManager, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -669,6 +776,27 @@ begin
   end;
 end;
 
+procedure TProjectMember.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('project_member_id').AsInteger;
+    FProjectId := FieldByName('project_id').AsInteger;
+    FPersonId := FieldByName('person_id').AsInteger;
+    FProjectManager := FieldByName('project_manager').AsBoolean;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 { TPermit }
 
 function TPermit.Diff(aOld: TPermit; var aList: TStrings): Boolean;
@@ -678,19 +806,19 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Nome', aOld.Name, FName, R) then
+  if FieldValuesDiff(rscName, aOld.Name, FName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Número', aOld.Number, FNumber, R) then
+  if FieldValuesDiff(rscNumber, aOld.Number, FNumber, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tipo', aOld.PermitType, FPermitType, R) then
+  if FieldValuesDiff(rscType, aOld.PermitType, FPermitType, R) then
     aList.Add(R);
-  if FieldValuesDiff('Expedidor', aOld.Dispatcher, FDispatcher, R) then
+  if FieldValuesDiff(rscDispatcher, aOld.Dispatcher, FDispatcher, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data de emiss'#227'o', aOld.DispatchDate, FDispatchDate, R) then
+  if FieldValuesDiff(rscDispatchDate, aOld.DispatchDate, FDispatchDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Data de validade', aOld.ExpireDate, FExpireDate, R) then
+  if FieldValuesDiff(rscExpireDate, aOld.ExpireDate, FExpireDate, R) then
     aList.Add(R);
-  if FieldValuesDiff('Anexo', aOld.FileName, FFileName, R) then
+  if FieldValuesDiff(rscFileName, aOld.FileName, FFileName, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -752,6 +880,32 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TPermit.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('permit_id').AsInteger;
+    FProjectId := FieldByName('project_id').AsInteger;
+    FName := FieldByName('permit_name').AsString;
+    FNumber := FieldByName('permit_number').AsString;
+    FPermitType := FieldByName('permit_type').AsString;
+    FDispatcher := FieldByName('dispatcher_name').AsString;
+    FDispatchDate := FieldByName('dispatch_date').AsDateTime;
+    FExpireDate := FieldByName('expire_date').AsDateTime;
+    FFileName := FieldByName('permit_filename').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 

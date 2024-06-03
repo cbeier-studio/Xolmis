@@ -584,7 +584,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldCapture) then
   begin
-    NewCapture := TCapture.Create(OldCapture.Id);
+    NewCapture := TCapture.Create;
+    NewCapture.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewCapture.Diff(OldCapture, lstDiff) then
@@ -985,7 +986,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldMolt) then
   begin
-    NewMolt := TMolt.Create(OldMolt.Id);
+    NewMolt := TMolt.Create;
+    NewMolt.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewMolt.Diff(OldMolt, lstDiff) then
@@ -1031,7 +1033,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldNest) then
   begin
-    NewNest := TNest.Create(OldNest.Id);
+    NewNest := TNest.Create;
+    NewNest.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewNest.Diff(OldNest, lstDiff) then
@@ -1104,7 +1107,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldSighting) then
   begin
-    NewSighting := TSighting.Create(OldSighting.Id);
+    NewSighting := TSighting.Create;
+    NewSighting.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewSighting.Diff(OldSighting, lstDiff) then
@@ -1169,7 +1173,8 @@ begin
   { Save changes to the record history }
   if Assigned(OldSpecimen) then
   begin
-    NewSpecimen := TSpecimen.Create(OldSpecimen.Id);
+    NewSpecimen := TSpecimen.Create;
+    NewSpecimen.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewSpecimen.Diff(OldSpecimen, lstDiff) then
