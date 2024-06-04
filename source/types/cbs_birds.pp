@@ -1910,16 +1910,22 @@ begin
     FBillHeight := FieldByName('bill_height').AsFloat;
     FNostrilBillTip := FieldByName('nostril_bill_tip').AsFloat;
     FSkullLength := FieldByName('skull_length').AsFloat;
-    FHaluxLengthTotal := FieldByName('halux_length_total').AsFloat;
-    FHaluxLengthFinger := FieldByName('halux_length_finger').AsFloat;
-    FHaluxLengthClaw := FieldByName('halux_length_claw').AsFloat;
+    if FindField('halux_length_total') <> nil then
+      FHaluxLengthTotal := FieldByName('halux_length_total').AsFloat;
+    if FindField('halux_length_finger') <> nil then
+      FHaluxLengthFinger := FieldByName('halux_length_finger').AsFloat;
+    if FindField('halux_length_claw') <> nil then
+      FHaluxLengthClaw := FieldByName('halux_length_claw').AsFloat;
     FRightWingChord := FieldByName('right_wing_chord').AsFloat;
     FFirstSecondaryChord := FieldByName('first_secondary_chord').AsFloat;
     FTailLength := FieldByName('tail_length').AsFloat;
-    FCentralRetrixLength := FieldByName('central_retrix_length').AsFloat;
-    FExternalRetrixLength := FieldByName('external_retrix_length').AsFloat;
+    if FindField('central_retrix_length') <> nil then
+      FCentralRetrixLength := FieldByName('central_retrix_length').AsFloat;
+    if FindField('external_retrix_length') <> nil then
+      FExternalRetrixLength := FieldByName('external_retrix_length').AsFloat;
     FTotalLength := FieldByName('total_length').AsFloat;
-    FFeatherMites := FieldByName('feather_mites').AsString;
+    if FindField('feather_mites') <> nil then
+      FFeatherMites := FieldByName('feather_mites').AsString;
     FFat := FieldByName('fat').AsString;
     FBroodPatch := FieldByName('brood_patch').AsString;
     FCloacalProtuberance := FieldByName('cloacal_protuberance').AsString;
@@ -2312,22 +2318,22 @@ begin
     aList.Add(R);
   if FieldValuesDiff(rscSkullLength, aOld.SkullLength, FSkullLength, R) then
     aList.Add(R);
-  if FieldValuesDiff(rscHaluxLengthTotal, aOld.HaluxLengthTotal, FHaluxLengthTotal, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscHaluxLengthFinger, aOld.HaluxLengthFinger, FHaluxLengthFinger, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscHaluxLengthClaw, aOld.HaluxLengthClaw, FHaluxLengthClaw, R) then
-    aList.Add(R);
+  //if FieldValuesDiff(rscHaluxLengthTotal, aOld.HaluxLengthTotal, FHaluxLengthTotal, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff(rscHaluxLengthFinger, aOld.HaluxLengthFinger, FHaluxLengthFinger, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff(rscHaluxLengthClaw, aOld.HaluxLengthClaw, FHaluxLengthClaw, R) then
+  //  aList.Add(R);
   if FieldValuesDiff(rscRightWingChord, aOld.RightWingChord, FRightWingChord, R) then
     aList.Add(R);
   if FieldValuesDiff(rsc1stSecondaryChord, aOld.FirstSecondaryChord, FFirstSecondaryChord, R) then
     aList.Add(R);
   if FieldValuesDiff(rscTailLength, aOld.TailLength, FTailLength, R) then
     aList.Add(R);
-  if FieldValuesDiff(rscCentralRetrixLength, aOld.CentralRetrixLength, FCentralRetrixLength, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscExternalRetrixLength, aOld.ExternalRetrixLength, FExternalRetrixLength, R) then
-    aList.Add(R);
+  //if FieldValuesDiff(rscCentralRetrixLength, aOld.CentralRetrixLength, FCentralRetrixLength, R) then
+  //  aList.Add(R);
+  //if FieldValuesDiff(rscExternalRetrixLength, aOld.ExternalRetrixLength, FExternalRetrixLength, R) then
+  //  aList.Add(R);
   if FieldValuesDiff(rscTotalLength, aOld.TotalLength, FTotalLength, R) then
     aList.Add(R);
   if FieldValuesDiff(rscFeatherMites, aOld.FeatherMites, FFeatherMites, R) then

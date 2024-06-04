@@ -349,6 +349,7 @@ end;
 
 procedure TfrmGeoConverter.seConvertFromChange(Sender: TObject);
 begin
+  UpdateButtons;
   UpdateCurrentCaretPos;
 end;
 
@@ -411,13 +412,13 @@ begin
   seConvertFrom.Gutter.Color := clSolidBGSecondaryDark;
   seConvertFrom.Gutter.Parts[1].MarkupInfo.Background := clSolidBGSecondaryDark;
   seConvertFrom.Gutter.Parts[1].MarkupInfo.Foreground := clTextTertiaryDark;
-  seConvertFrom.Gutter.Parts[3].MarkupInfo.Background := clSolidBGSecondaryDark;
-  seConvertFrom.Gutter.Parts[4].MarkupInfo.Background := clSolidBGSecondaryDark;
+  seConvertFrom.RightEdgeColor := clSolidBGTertiaryDark;
   seConvertFrom.Font.Color := clTextPrimaryDark;
   seConverted.Color := clSolidBGSecondaryDark;
   seConverted.Gutter.Color := clSolidBGSecondaryDark;
   seConverted.Gutter.Parts[1].MarkupInfo.Background := clSolidBGSecondaryDark;
   seConverted.Gutter.Parts[1].MarkupInfo.Foreground := clTextTertiaryDark;
+  seConverted.RightEdgeColor := clSolidBGTertiaryDark;
   seConverted.Font.Color := clTextPrimaryDark;
 
   pmConvertFrom.Images := iButtonsDark;

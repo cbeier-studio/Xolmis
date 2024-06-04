@@ -4760,7 +4760,7 @@ begin
     end;
   end;
 
-  { Paint the cell background red the invalid values }
+  { Paint the cell background red for invalid values }
   if not XSettings.UseConditionalFormatting then
     Exit;
 
@@ -4848,7 +4848,7 @@ begin
     end;
   end;
 
-  { Paint the cell background yellow the outliers }
+  { Paint the cell background yellow for outliers }
   if not XSettings.ShowOutliersOnGrid then
     Exit;
 

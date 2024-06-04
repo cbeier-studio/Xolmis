@@ -551,7 +551,7 @@ object frmGeoConverter: TfrmGeoConverter
       OnKeyUp = seConvertFromKeyUp
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 63
+      Gutter.Width = 61
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1030,6 +1030,7 @@ object frmGeoConverter: TfrmGeoConverter
         end
         object SynGutterSeparator1: TSynGutterSeparator
           Width = 2
+          Visible = False
           MouseActions = <>
           MarkupInfo.Background = clNone
           MarkupInfo.Foreground = clNone
@@ -1163,7 +1164,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 0
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 63
+      Gutter.Width = 61
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1641,6 +1642,7 @@ object frmGeoConverter: TfrmGeoConverter
         end
         object SynGutterSeparator1: TSynGutterSeparator
           Width = 2
+          Visible = False
           MouseActions = <>
           MarkupInfo.Background = clNone
           MarkupInfo.Foreground = clNone

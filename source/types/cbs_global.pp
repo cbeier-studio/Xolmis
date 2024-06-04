@@ -693,8 +693,8 @@ begin
   FLastBackup := Ini.GetValue('/BACKUP/LastBackup', StrToDateTime('30/12/1500 00:00:00'));
   FBackupsToKeep := Ini.GetValue('/BACKUP/BackupsToKeep', 10);
   { Versions }
-  FClementsVersion := Ini.GetValue('/VERSIONS/Clements', '2021');
-  FIocVersion := Ini.GetValue('/VERSIONS/IOC', '11.2');
+  FClementsVersion := Ini.GetValue('/VERSIONS/Clements', '2023');
+  FIocVersion := Ini.GetValue('/VERSIONS/IOC', '14.1');
   FCbroVersion := Ini.GetValue('/VERSIONS/CBRO', '2021');
 end;
 
