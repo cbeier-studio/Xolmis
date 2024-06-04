@@ -136,7 +136,6 @@ type
     crNull, crNotNull
   );
   TTableFieldType = (ctString, ctInteger, ctFloat, ctDate, ctTime, ctDateTime, ctBoolean);
-  TFilterType = (tcTexto, tcInteiro, tcDecimal, tcData, tcHora, tcDataHora, tcLista, tcBool, tcLookup);
   TSearchDataType = (sdtText, sdtInteger, sdtFloat, sdtDate, sdtTime, sdtDateTime, sdtBoolean, sdtList,
     sdtLookup);
   TFilterValue = (fvNone, fvReset, fvAll, fvMarked, fvUnmarked, fvDeleted, fvQueued);
@@ -152,9 +151,7 @@ const
   AndOrStr: array[TSQLAndOr] of String = ('', 'AND', 'OR');
   TiposCampo: array[TTableFieldType] of String = ('String', 'Integer', 'Float', 'Date', 'Time',
     'DateTime', 'Boolean');
-  TiposFiltro: array[TFilterType] of String = ('Texto', 'Inteiro', 'Decimal', 'Data', 'Hora',
-    'DataHora', 'Lista', 'Bool', 'Lookup');
-  SearchDataTypes: array[TFilterType] of String = ('Text', 'Integer', 'Float', 'Date', 'Time',
+  SearchDataTypes: array[TSearchDataType] of String = ('Text', 'Integer', 'Float', 'Date', 'Time',
     'DateTime', 'Boolean', 'List', 'Lookup');
   StrSeparators: array [TSeparator] of Char = (#0, ';', ',', ':', '.', '|', '/', '-', '_');
 
@@ -168,25 +165,6 @@ type
     Queue: (rqAll, rqQueued, rqUnqueued);
     Share: (rxAll, rxExported, rxNotExported);
     procedure Reset;
-  end;
-
-  { TFilterField (deprecated) }
-
-  TFilterField = record
-    FieldName: String;
-    ReadableName: String;
-    TableAlias: String;
-    FilterType: TFilterType;
-    Criteria: TCriteriaType;
-    Value1: String;
-    Value2: String;
-    OpenParenthesis: Word;
-    CloseParenthesis: Word;
-    AndOr: TSQLAndOr;
-    function ToSQL(aTabela, aLookupField, aKeyField: String): String;
-    function ToHTML: String;
-    function ToString: String;
-    procedure Clear;
   end;
 
 type
@@ -322,7 +300,7 @@ type
     TextualKey: Boolean;
     DarwinCoreName: String;
     DataType: TTableFieldType;
-    FilterType: TFilterType;
+    FilterType: TSearchDataType;
     LookupTable: String;
     LookupKey: String;
     LookupResult: String;
@@ -371,7 +349,7 @@ var
   UID: TGUID;
 
   function CampoByName(const aCampoName: String): TTableFieldType;
-  function FilterByName(const aFilterName: String): TFilterType;
+  function SearchTypeByName(const aFilterName: String): TSearchDataType;
 
 implementation
 
@@ -392,16 +370,17 @@ begin
   end;
 end;
 
-function FilterByName(const aFilterName: String): TFilterType;
+function SearchTypeByName(const aFilterName: String): TSearchDataType;
 var
   i: Integer;
 begin
-  Result := tcTexto;
-  for i := 0 to Ord(High(TFilterType)) do
+  Result := sdtText;
+
+  for i := 0 to Ord(High(TSearchDataType)) do
   begin
-    if TiposFiltro[TFilterType(i)] = aFilterName then
+    if SearchDataTypes[TSearchDataType(i)] = aFilterName then
     begin
-      Result := TFilterType(i);
+      Result := TSearchDataType(i);
       Break;
     end;
   end;
@@ -512,7 +491,7 @@ begin
         FFields.Items[i].TextualKey := FieldByName('text_key').AsBoolean;
         FFields.Items[i].DarwinCoreName := FieldByName('darwin_core_name').AsString;
         FFields.Items[i].DataType := CampoByName(FieldByName('field_type').AsString);
-        FFields.Items[i].FilterType := FilterByName(FieldByName('filter_type').AsString);
+        FFields.Items[i].FilterType := SearchTypeByName(FieldByName('filter_type').AsString);
         FFields.Items[i].LookupTable := FieldByName('lookup_table').AsString;
         FFields.Items[i].LookupKey := FieldByName('lookup_key').AsString;
         FFields.Items[i].LookupResult := FieldByName('lookup_result').AsString;
@@ -568,7 +547,7 @@ begin
       TextualKey := FieldByName('text_key').AsBoolean;
       DarwinCoreName := FieldByName('darwin_core_name').AsString;
       DataType := CampoByName(FieldByName('field_type').AsString);
-      FilterType := FilterByName(FieldByName('filter_type').AsString);;
+      FilterType := SearchTypeByName(FieldByName('filter_type').AsString);;
       LookupTable := FieldByName('lookup_table').AsString;
       LookupKey := FieldByName('lookup_key').AsString;
       LookupResult := FieldByName('lookup_result').AsString;
@@ -583,171 +562,6 @@ begin
   finally
     FreeAndNil(Qry);
   end;
-end;
-
-{ TFilterField }
-
-function TFilterField.ToSQL(aTabela, aLookupField, aKeyField: String): String;
-var
-  OP, CP, CR, AO, FN, VL1: String;
-  v: Integer;
-begin
-  OP := StringOfChar('(', OpenParenthesis);
-  CP := StringOfChar(')', CloseParenthesis);
-  case FilterType of
-    tcData:
-      FN := Format('date(%s)', [TableAlias + FieldName]);
-    tcHora:
-      FN := Format('time(%s)', [TableAlias + FieldName]);
-    tcDataHora:
-      FN := Format('datetime(%s)', [TableAlias + FieldName]);
-  else
-    FN := TableAlias + FieldName;
-  end;
-  case AndOr of
-    aoNone:
-      AO := '';
-    aoAnd:
-      AO := 'AND';
-    aoOr:
-      AO := 'OR';
-  end;
-  CR := CriteriaOperators[Criteria];
-
-  if FilterType = tcLookup then
-  begin
-    with TSQLQuery.Create(DMM.sqlCon) do
-    try
-      MacroCheck := True;
-      DataBase := DMM.sqlCon;
-      SQL.Add('SELECT %keyf FROM %tabname WHERE %lookup = :vlook');
-      MacroByName('KEYF').AsString := aKeyField;
-      MacroByName('TABNAME').AsString := aTabela;
-      MacroByName('LOOKUP').AsString := aLookupField;
-      ParamByName('VLOOK').AsString := Value1;
-      Open;
-      v := Fields[0].AsInteger;
-      Close;
-      VL1 := IntToStr(v);
-    finally
-      Free;
-    end;
-  end
-  else
-    VL1 := Value1;
-  if (Criteria = crNull) or (Criteria = crNotNull) then
-    Result := Format('%s %s%s %s%s', [AO, OP, FN, CR, CP])
-  else
-    if (Value2 <> '') then
-      Result := Format('%s %s%s %s %s and %s%s', [AO, OP, FN, CR, Value1, Value2, CP])
-    else
-      Result := Format('%s %s%s %s %s%s', [AO, OP, FN, CR, VL1, CP]);
-end;
-
-function TFilterField.ToHTML: String;
-const
-  ColorAndOr: String = 'clHotLight';
-  ColorCriteria: String = '$000F87FF';
-  FormatTagFont: String = '<font color="%s">%s</font> ';
-var
-  OP, CP, CR, AO, VL1: String;
-begin
-  OP := StringOfChar('(', OpenParenthesis);
-  CP := StringOfChar(')', CloseParenthesis);
-  case AndOr of
-    aoNone:
-      AO := EmptyStr;
-    aoAnd:
-      AO := Format(FormatTagFont, [ColorAndOr, Trim(rsFilterAnd)]);
-    aoOr:
-      AO := Format(FormatTagFont, [ColorAndOr, Trim(rsFilterOr)]);
-  end;
-  case Criteria of
-    crLike:
-      begin
-        if ExecRegExpr('^%[A-Za-z0-9 .,-@]+%$', Value1) then
-          CR := Format(FormatTagFont, [ColorCriteria, Trim(rsFilterLike)])
-        else
-          CR := Format(FormatTagFont, [ColorCriteria, Trim(rsFilterStartLike)]);
-      end;
-    crEqual:
-      CR := Format(FormatTagFont, [ColorCriteria, Trim(rsFilterEqual)]);
-    crBetween:
-      CR := Format(FormatTagFont, [ColorCriteria, Trim(rsFilterBetween)]);
-    crMoreThan:
-      CR := Format(FormatTagFont, [ColorCriteria, Trim(rsFilterMoreThan)]);
-    crLessThan:
-      CR := Format(FormatTagFont, [ColorCriteria, Trim(rsFilterLessThan)]);
-    crNull:
-      CR := Format(FormatTagFont, [ColorCriteria, Trim(rsFilterNull)]);
-    crNotNull:
-      CR := Format(FormatTagFont, [ColorCriteria, Trim(rsFilterNotNull)]);
-  end;
-  VL1 := StringReplace(Value1, '%', '', [rfReplaceAll]);
-  if (Criteria = crNull) or (Criteria = crNotNull) then
-    Result := Format('%s%s<i>%s</i> <b>%s</b>%s', [AO, OP, ReadableName, CR, CP])
-  else
-    if Value2 <> EmptyStr then
-      Result := Format('%s%s<i>%s</i> %s <b>%s</b> <font color="%s">%s</font> <b>%s</b>%s',
-        [AO, OP, ReadableName, CR, Value1, ColorCriteria, Trim(rsFilterAnd), Value2, CP])
-    else
-      Result := Format('%s%s<i>%s</i> %s <b>%s</b>%s', [AO, OP, ReadableName, CR, VL1, CP]);
-end;
-
-function TFilterField.ToString: String;
-var
-  OP, CP, CR, AO, VL1: String;
-begin
-  OP := StringOfChar('(', OpenParenthesis);
-  CP := StringOfChar(')', CloseParenthesis);
-  case AndOr of
-    aoNone:
-      AO := EmptyStr;
-    aoAnd:
-      AO := rsFilterAnd;
-    aoOr:
-      AO := rsFilterOr;
-  end;
-  case Criteria of
-    crLike:
-      CR := rsFilterLike;
-    crStartLike:
-      CR := rsFilterStartLike;
-    crEqual:
-      CR := rsFilterEqual;
-    crBetween:
-      CR := rsFilterBetween;
-    crMoreThan:
-      CR := rsFilterMoreThan;
-    crLessThan:
-      CR := rsFilterLessThan;
-    crNull:
-      CR := rsFilterNull;
-    crNotNull:
-      CR := rsFilterNotNull;
-  end;
-  VL1 := StringReplace(Value1, '%', '', [rfReplaceAll]);
-  if (Criteria = crNull) or (Criteria = crNotNull) then
-    Result := Format('%s %s%s %s%s', [AO, OP, ReadableName, CR, CP])
-  else
-    if Value2 <> '' then
-      Result := Format('%s %s%s %s %s e %s%s', [AO, OP, ReadableName, CR, Value1, Value2, CP])
-    else
-      Result := Format('%s %s%s %s %s%s', [AO, OP, ReadableName, CR, VL1, CP]);
-end;
-
-procedure TFilterField.Clear;
-begin
-  FieldName := EmptyStr;
-  ReadableName := EmptyStr;
-  TableAlias := EmptyStr;
-  FilterType := tcTexto;
-  Criteria := crLike;
-  Value1 := EmptyStr;
-  Value2 := EmptyStr;
-  OpenParenthesis := 1;
-  CloseParenthesis := 1;
-  AndOr := aoNone;
 end;
 
 { TSearchField }

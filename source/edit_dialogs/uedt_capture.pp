@@ -1027,14 +1027,17 @@ begin
     //GravaLogSQL(SQL);
     Open;
     First;
-    cbCamera.Items.BeginUpdate;
-    cbCamera.Items.Clear;
-    repeat
-      cbCamera.Items.Add(Fields[0].AsString);
-      Next;
-    until Eof;
-    cbCamera.Sorted := True;
-    cbCamera.Items.EndUpdate;
+    try
+      cbCamera.Items.BeginUpdate;
+      cbCamera.Items.Clear;
+      repeat
+        cbCamera.Items.Add(Fields[0].AsString);
+        Next;
+      until Eof;
+      cbCamera.Sorted := True;
+    finally
+      cbCamera.Items.EndUpdate;
+    end;
     Close;
   finally
     FreeAndNil(Qry);

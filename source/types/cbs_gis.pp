@@ -700,27 +700,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('site_id').AsInteger;
-      FName := FieldByName('site_name').AsString;
-      FAcronym := FieldByName('site_acronym').AsString;
-      FRank := FieldByName('site_rank').AsString;
-      FParentSiteId := FieldByName('parent_site_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FFullName := FieldByName('full_name').AsString;
-      FLatitude := FieldByName('latitude').AsFloat;
-      FLongitude := FieldByName('longitude').AsFloat;
-      FAltitude := FieldByName('altitude').AsFloat;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);

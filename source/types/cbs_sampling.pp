@@ -583,36 +583,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('sample_prep_id').AsInteger;
-      FSpecimenId := FieldByName('specimen_id').AsInteger;
-      FFullName := FieldByName('full_name').AsString;
-      FAccessionNum := FieldByName('accession_num').AsString;
-      FAccessionType := FieldByName('accession_type').AsString;
-      FAccessionSeq := FieldByName('accession_seq').AsInteger;
-      FTaxonId := FieldByName('taxon_id').AsInteger;
-      FOrderId := FieldByName('order_id').AsInteger;
-      FFamilyId := FieldByName('family_id').AsInteger;
-      FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-      FGenusId := FieldByName('genus_id').AsInteger;
-      FSpeciesId := FieldByName('species_id').AsInteger;
-      FIndividualId := FieldByName('individual_id').AsInteger;
-      FNestId := FieldByName('nest_id').AsInteger;
-      FEggId := FieldByName('egg_id').AsInteger;
-      FPreparationDate := FieldByName('preparation_date').AsDateTime;
-      FPreparerId := FieldByName('preparer_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FNotes := FieldByName('notes').AsString;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -742,39 +713,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('specimen_id').AsInteger;
-      FFieldNumber := FieldByName('field_number').AsString;
-      FSampleType := FieldByName('sample_type').AsString;
-      FFullName := FieldByName('full_name').AsString;
-      FTaxonId := FieldByName('taxon_id').AsInteger;
-      FOrderId := FieldByName('order_id').AsInteger;
-      FFamilyId := FieldByName('family_id').AsInteger;
-      FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-      FGenusId := FieldByName('genus_id').AsInteger;
-      FSpeciesId := FieldByName('species_id').AsInteger;
-      FIndividualId := FieldByName('individual_id').AsInteger;
-      FNestId := FieldByName('nest_id').AsInteger;
-      FEggId := FieldByName('egg_id').AsInteger;
-      FCollectionDate := FieldByName('collection_date').AsString;
-      FCollectionDay := FieldByName('collection_day').AsInteger;
-      FCollectionMonth := FieldByName('collection_month').AsInteger;
-      FCollectionYear := FieldByName('collection_year').AsInteger;
-      FLocalityId := FieldByName('locality_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FLatitude := FieldByName('latitude').AsFloat;
-      FLongitude := FieldByName('longitude').AsFloat;
-      FNotes := FieldByName('notes').AsString;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -910,19 +849,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('collector_id').AsInteger;
-      FSpecimenId := FieldByName('specimen_id').AsInteger;
-      FPersonId := FieldByName('person_id').AsInteger;
-      FCollectorSeq := FieldByName('collector_seq').AsInteger;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -1016,25 +943,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('expedition_id').AsInteger;
-      FName := FieldByName('expedition_name').AsString;
-      FStartDate := FieldByName('start_date').AsDateTime;
-      FEndDate := FieldByName('end_date').AsDateTime;
-      FLocalityId := FieldByName('locality_id').AsInteger;
-      FProjectId := FieldByName('project_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FDescription := FieldByName('description').AsString;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -1142,38 +1051,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('net_id').AsInteger;
-      FFullName := FieldByName('full_name').AsString;
-      FSurveyId := FieldByName('survey_id').AsInteger;
-      FNetStationId := FieldByName('net_station_id').AsInteger;
-      FPermanentNetId := FieldByName('permanent_net_id').AsInteger;
-      FNetNumber := FieldByName('net_number').AsInteger;
-      FLatitude := FieldByName('latitude').AsFloat;
-      FLongitude := FieldByName('longitude').AsFloat;
-      FSampleDate := FieldByName('sample_date').AsDateTime;
-      FNetOpen1 := FieldByName('net_open_1').AsDateTime;
-      FNetClose1 := FieldByName('net_close_1').AsDateTime;
-      FNetOpen2 := FieldByName('net_open_2').AsDateTime;
-      FNetClose2 := FieldByName('net_close_2').AsDateTime;
-      FNetOpen3 := FieldByName('net_open_3').AsDateTime;
-      FNetClose3 := FieldByName('net_close_3').AsDateTime;
-      FNetOpen4 := FieldByName('net_open_4').AsDateTime;
-      FNetClose4 := FieldByName('net_close_4').AsDateTime;
-      FTotalOpenTime := FieldByName('open_time_total').AsFloat;
-      FNetLength := FieldByName('net_length').AsFloat;
-      FNetHeight := FieldByName('net_height').AsFloat;
-      FNetArea := FieldByName('net_area').AsFloat;
-      FNetMesh := FieldByName('net_mesh').AsString;
-      FNotes := FieldByName('notes').AsString;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -1415,19 +1293,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('survey_member_id').AsInteger;
-      FSurveyId := FieldByName('survey_id').AsInteger;
-      FPersonId := FieldByName('person_id').AsInteger;
-      FVisitor := FieldByName('visitor').AsBoolean;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -1554,40 +1420,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('survey_id').AsInteger;
-      FSurveyDate := FieldByName('survey_date').AsDateTime;
-      FStartTime := FieldByName('start_time').AsDateTime;
-      FEndTime := FieldByName('end_time').AsDateTime;
-      FDuration := FieldByName('duration').AsInteger;
-      FMethodId := FieldByName('method_id').AsInteger;
-      FNetStationId := FieldByName('net_station_id').AsInteger;
-      FExpeditionId := FieldByName('expedition_id').AsInteger;
-      FLocalityId := FieldByName('locality_id').AsInteger;
-      FProjectId := FieldByName('project_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FSampleId := FieldByName('sample_id').AsString;
-      FStartLatitude := FieldByName('start_latitude').AsFloat;
-      FStartLongitude := FieldByName('start_longitude').AsFloat;
-      FEndLatitude := FieldByName('end_latitude').AsFloat;
-      FEndLongitude := FieldByName('end_longitude').AsFloat;
-      FTotalArea := FieldByName('area_total').AsFloat;
-      FTotalDistance := FieldByName('distance_total').AsFloat;
-      FTotalNets := FieldByName('nets_total').AsInteger;
-      FHabitat := FieldByName('habitat').AsString;
-      FNetRounds := FieldByName('net_rounds').AsString;
-      FFullName := FieldByName('full_name').AsString;
-      FNotes := FieldByName('notes').AsString;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -1849,22 +1682,7 @@ begin
     ParamByName('ANID').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('weather_id').AsInteger;
-      FSurveyId := FieldByName('survey_id').AsInteger;
-      FAtmosphericPressure := FieldByName('atmospheric_pressure').AsFloat;
-      FCloudCover := FieldByName('cloud_cover').AsInteger;
-      FNotes := FieldByName('notes').AsString;
-      FPrecipitation := FieldByName('precipitation').AsString;
-      FRainfall := FieldByName('rainfall').AsInteger;
-      FRelativeHumidity := FieldByName('relative_humidity').AsFloat;
-      FSampleDate := FieldByName('sample_date').AsDateTime;
-      FSampleMoment := FieldByName('sample_moment').AsString;
-      FSampleTime := FieldByName('sample_time').AsDateTime;
-      FTemperature := FieldByName('temperature').AsFloat;
-      FWindSpeedBft := FieldByName('wind_speed_bft').AsInteger;
-      FWindSpeedKmH := FieldByName('wind_speed_kmh').AsFloat;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -1977,20 +1795,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('net_station_id').AsInteger;
-      FName := FieldByName('station_name').AsString;
-      FAcronym := FieldByName('station_acronym').AsString;
-      FLatitude := FieldByName('latitude').AsFloat;
-      FLongitude := FieldByName('longitude').AsFloat;
-      FLocalityId := FieldByName('locality_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -2108,22 +1913,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('permanent_net_id').AsInteger;
-      FFullName := FieldByName('full_name').AsString;
-      FNetStationId := FieldByName('net_station_id').AsInteger;
-      FNetNumber := FieldByName('net_number').AsInteger;
-      FLatitude := FieldByName('latitude').AsFloat;
-      FLongitude := FieldByName('longitude').AsFloat;
-      FNotes := FieldByName('notes').AsString;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -2206,20 +1996,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('method_id').AsInteger;
-      FName := FieldByName('method_name').AsString;
-      FAcronym := FieldByName('method_acronym').AsString;
-      FEbirdName := FieldByName('ebird_name').AsString;
-      FDescription := FieldByName('description').AsString;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);

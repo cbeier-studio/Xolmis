@@ -286,24 +286,7 @@ begin
     ParamByName('KEYV').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('user_id').AsInteger;
-      FGuid := FieldByName('uuid').AsString;
-      FFullName := FieldByName('full_name').AsString;
-      FUserName := FieldByName('user_name').AsString;
-      FRank := FieldByName('user_rank').AsString;
-      FAllowManageCollection := FieldByName('allow_collection_edit').AsBoolean;
-      FAllowPrint := FieldByName('allow_print').AsBoolean;
-      FAllowExport := FieldByName('allow_export').AsBoolean;
-      FAllowImport := FieldByName('allow_import').AsBoolean;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);

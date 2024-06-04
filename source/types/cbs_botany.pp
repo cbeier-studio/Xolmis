@@ -237,27 +237,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('taxon_id').AsInteger;
-      FFullName := FieldByName('taxon_name').AsString;
-      FAuthorship := FieldByName('authorship').AsString;
-      FFormattedName := FieldByName('formatted_name').AsString;
-      FVernacularName := FieldByName('vernacular_name').AsString;
-      FValidId := FieldByName('valid_id').AsInteger;
-      FRankId := FieldByName('rank_id').AsInteger;
-      FParentTaxonId := FieldByName('parent_taxon_id').AsInteger;
-      FSpeciesId := FieldByName('species_id').AsInteger;
-      FGenusId := FieldByName('genus_id').AsInteger;
-      FFamilyId := FieldByName('family_id').AsInteger;
-      FOrderId := FieldByName('order_id').AsInteger;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);

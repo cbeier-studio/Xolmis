@@ -303,21 +303,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('project_id').AsInteger;
-      FTitle := FieldByName('project_title').AsString;
-      FStartDate := FieldByName('start_date').AsDateTime;
-      FEndDate := FieldByName('end_date').AsDateTime;
-      FShortTitle := FieldByName('short_title').AsString;
-      FWebsiteUri := FieldByName('website_uri').AsString;
-      FEmailAddress := FieldByName('email_addr').AsString;
-      FContactName := FieldByName('contact_name').AsString;
-      FNotes := FieldByName('notes').AsString;
-      FAbstract := FieldByName('project_abstract').AsString;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -426,29 +412,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('institution_id').AsInteger;
-      FFullName := FieldByName('full_name').AsString;
-      FAcronym := FieldByName('acronym').AsString;
-      FManagerName := FieldByName('manager_name').AsString;
-      FAddress1 := FieldByName('address_1').AsString;
-      FAddress2 := FieldByName('address_2').AsString;
-      FNeighborhood := FieldByName('neighborhood').AsString;
-      FZipCode := FieldByName('zip_code').AsString;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FEmail := FieldByName('email_addr').AsString;
-      FPhone := FieldByName('phone_num').AsString;
-      FNotes := FieldByName('notes').AsString;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -616,46 +580,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('person_id').AsInteger;
-      FFullName := FieldByName('full_name').AsString;
-      FAcronym := FieldByName('acronym').AsString;
-      FCitation := FieldByName('citation').AsString;
-      FTitleTreatment := FieldByName('title_treatment').AsString;
-      FGender := FieldByName('gender').AsString;
-      FBirthDate := FieldByName('birth_date').AsDateTime;
-      FDeathDate := FieldByName('death_date').AsDateTime;
-      FIdDocument1 := FieldByName('national_id_card').AsString;
-      FIdDocument2 := FieldByName('social_security_number').AsString;
-      FEmail := FieldByName('email_addr').AsString;
-      FPhone1 := FieldByName('phone_1').AsString;
-      FPhone2 := FieldByName('phone_2').AsString;
-      FAddress1 := FieldByName('address_1').AsString;
-      FAddress2 := FieldByName('address_2').AsString;
-      FNeighborhood := FieldByName('neighborhood').AsString;
-      FZipCode := FieldByName('zip_code').AsString;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FInstitutionId := FieldByName('institution_id').AsInteger;
-      FInstitutionName := FieldByName('institution_name').AsString;
-      FDepartment := FieldByName('department').AsString;
-      FJobRole := FieldByName('job_role').AsString;
-      FLattesUri := FieldByName('lattes_uri').AsString;
-      FOrcidUri := FieldByName('orcid_uri').AsString;
-      FTwitterUri := FieldByName('twitter_uri').AsString;
-      FInstagramUri := FieldByName('instagram_uri').AsString;
-      FWebsiteUri := FieldByName('website_uri').AsString;
-      FProfileColor := FieldByName('profile_color').AsString;
-      FNotes := FieldByName('notes').AsString;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -757,19 +682,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('project_member_id').AsInteger;
-      FProjectId := FieldByName('project_id').AsInteger;
-      FPersonId := FieldByName('person_id').AsInteger;
-      FProjectManager := FieldByName('project_manager').AsBoolean;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -859,24 +772,7 @@ begin
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('permit_id').AsInteger;
-      FProjectId := FieldByName('project_id').AsInteger;
-      FName := FieldByName('permit_name').AsString;
-      FNumber := FieldByName('permit_number').AsString;
-      FPermitType := FieldByName('permit_type').AsString;
-      FDispatcher := FieldByName('dispatcher_name').AsString;
-      FDispatchDate := FieldByName('dispatch_date').AsDateTime;
-      FExpireDate := FieldByName('expire_date').AsDateTime;
-      FFileName := FieldByName('permit_filename').AsString;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      FInsertDate := FieldByName('insert_date').AsDateTime;
-      FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      GetData(Qry);
     Close;
   finally
     FreeAndNil(Qry);
