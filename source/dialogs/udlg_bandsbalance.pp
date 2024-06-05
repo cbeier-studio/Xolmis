@@ -32,6 +32,7 @@ type
     CSVExporter1: TCSVExporter;
     dbgSaldo: TDBGrid;
     iPopup: TImageList;
+    iPopupDark: TImageList;
     lineBottom: TShapeLineBGRA;
     pMsg: TBCPanel;
     pmgRefresh: TMenuItem;
@@ -104,6 +105,8 @@ begin
   pMsg.Border.Color := clCardBGSecondaryDark;
   pMsg.FontEx.Color := clTextPrimaryDark;
   pMsg.Color := dbgSaldo.Color;
+
+  pmGrid.Images := iPopupDark;
 end;
 
 procedure TdlgBandsBalance.dbgSaldoPrepareCanvas(sender: TObject; DataCol: Integer;

@@ -666,14 +666,14 @@ begin
   sbarStatus.Border.Color := clSolidBGSecondaryDark;
   sbarProgress.Border.Color := clSolidBGSecondaryDark;
 
-  pSearch.Background.Color := clSystemSolidNeutralBGDark;
-  pSearch.Border.Color := clSystemNeutralBGDark;
+  pSearch.Background.Color := clCardBGDefaultDark;
+  pSearch.Border.Color := clSolidBGSecondaryDark;
   pSearch.ParentBackground := True;
   eSearch.Color := pSearch.Background.Color;
   iconSearch.Images := iSearchDark;
   sbClearSearch.Images := iSearchDark;
-  sbClearSearch.StateHover.Color := clSolidBGBaseDark;
-  sbClearSearch.StateActive.Color := clSolidBGSecondaryDark;
+  sbClearSearch.StateHover.Color := clSolidBGSecondaryDark;
+  sbClearSearch.StateActive.Color := clSolidBGTertiaryDark;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
 
   sbmSurveys.Images := iMenuDark;
@@ -764,8 +764,8 @@ begin
     pSearch.Width := ClientWidth div 4;
   if IsDarkModeEnabled then
   begin
-    pSearch.Background.Color := clSystemNeutralBGDark;
-    pSearch.Border.Color := clSystemSolidNeutralBGDark;
+    pSearch.Background.Color := clSolidBGBaseDark;
+    pSearch.Border.Color := clSolidBGTertiaryDark;
   end
   else
   begin
@@ -784,8 +784,8 @@ begin
     pSearch.Width := 148;
   if IsDarkModeEnabled then
   begin
-    pSearch.Background.Color := clSystemNeutralBGDark;
-    pSearch.Border.Color := clSystemSolidNeutralBGDark;
+    pSearch.Background.Color := clCardBGDefaultDark;
+    pSearch.Border.Color := clSolidBGSecondaryDark;
   end
   else
   begin
