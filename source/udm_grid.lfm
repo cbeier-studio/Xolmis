@@ -1514,11 +1514,11 @@ object DMG: TDMG
       Required = False
       Size = 15
     end
-    object qIndividualsbirth_day: TLongintField
+    object qIndividualsbirth_year: TLongintField
       Alignment = taCenter
-      DisplayLabel = 'Birth day'
+      DisplayLabel = 'Birth year'
       FieldKind = fkData
-      FieldName = 'birth_day'
+      FieldName = 'birth_year'
       Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -1540,11 +1540,11 @@ object DMG: TDMG
       Visible = False
       OnValidate = qIndividualsbirth_yearValidate
     end
-    object qIndividualsbirth_year: TLongintField
+    object qIndividualsbirth_day: TLongintField
       Alignment = taCenter
-      DisplayLabel = 'Birth year'
+      DisplayLabel = 'Birth day'
       FieldKind = fkData
-      FieldName = 'birth_year'
+      FieldName = 'birth_day'
       Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -1589,11 +1589,11 @@ object DMG: TDMG
       Required = False
       Size = 15
     end
-    object qIndividualsdeath_day: TLongintField
+    object qIndividualsdeath_year: TLongintField
       Alignment = taCenter
-      DisplayLabel = 'Death day'
+      DisplayLabel = 'Death year'
       FieldKind = fkData
-      FieldName = 'death_day'
+      FieldName = 'death_year'
       Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -1615,11 +1615,11 @@ object DMG: TDMG
       Visible = False
       OnValidate = qIndividualsdeath_yearValidate
     end
-    object qIndividualsdeath_year: TLongintField
+    object qIndividualsdeath_day: TLongintField
       Alignment = taCenter
-      DisplayLabel = 'Death year'
+      DisplayLabel = 'Death day'
       FieldKind = fkData
-      FieldName = 'death_year'
+      FieldName = 'death_day'
       Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -13003,11 +13003,11 @@ object DMG: TDMG
       Required = False
       Visible = False
     end
-    object qSpecimenscollection_day: TLongintField
+    object qSpecimenscollection_year: TLongintField
       Alignment = taCenter
-      DisplayLabel = 'Collection day'
+      DisplayLabel = 'Collection year'
       FieldKind = fkData
-      FieldName = 'collection_day'
+      FieldName = 'collection_year'
       Index = 6
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -13027,11 +13027,11 @@ object DMG: TDMG
       Required = False
       OnValidate = qSpecimenscollection_yearValidate
     end
-    object qSpecimenscollection_year: TLongintField
+    object qSpecimenscollection_day: TLongintField
       Alignment = taCenter
-      DisplayLabel = 'Collection year'
+      DisplayLabel = 'Collection day'
       FieldKind = fkData
-      FieldName = 'collection_year'
+      FieldName = 'collection_day'
       Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]

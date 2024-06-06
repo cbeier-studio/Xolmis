@@ -1799,12 +1799,22 @@ begin
     if FieldName = 'taxon_name' then
       FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
         DataSource.DataSet, 'taxon_id', 'taxon_name', True);
+    if FieldName = 'nidoparasite_name' then
+      FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+        DataSource.DataSet, 'nidoparasite_id', 'nidoparasite_name', True);
+
     if FieldName = 'parent_taxon_name' then
-      FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
-        DataSource.DataSet, 'parent_taxon_id', 'parent_taxon_name', True);
+      FindBotanicDlg([tfAll], InplaceEditor,
+        DataSource.DataSet, 'parent_taxon_id', 'parent_taxon_name');
     if FieldName = 'valid_name' then
-      FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
-        DataSource.DataSet, 'valid_id', 'valid_name', True);
+      FindBotanicDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+        DataSource.DataSet, 'valid_id', 'valid_name');
+    if FieldName = 'support_plant_1_name' then
+      FindBotanicDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+        DataSource.DataSet, 'suppor_plant_1_id', 'support_plant_1_name');
+    if FieldName = 'support_plant_2_name' then
+      FindBotanicDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+        DataSource.DataSet, 'suppor_plant_2_id', 'support_plant_2_name');
 
     if FieldName = 'country_name' then
       FindSiteDlg([gfCountries], InplaceEditor, DataSource.DataSet, 'country_id', 'country_name');
@@ -1822,13 +1832,31 @@ begin
     if FieldName = 'supplier_name' then
       FindDlg(tbInstitutions, InplaceEditor, DataSource.DataSet, 'supplier_id', 'supplier_name');
 
+    if FieldName = 'expedition_name' then
+      FindDlg(tbExpeditions, InplaceEditor, DataSource.DataSet, 'expedition_id', 'expedition_name');
+
     if FieldName = 'survey_name' then
       FindDlg(tbSurveys, InplaceEditor, DataSource.DataSet, 'survey_id', 'survey_name');
 
+    if FieldName = 'net_station_name' then
+      FindDlg(tbNetStations, InplaceEditor, DataSource.DataSet, 'net_station_id', 'net_station_name');
+
     if FieldName = 'observer_name' then
       FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_id', 'observer_name');
+    if FieldName = 'observer_1_name' then
+      FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_1_id', 'observer_1_name');
+    if FieldName = 'observer_2_name' then
+      FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_2_id', 'observer_2_name');
     if FieldName = 'carrier_name' then
       FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'carrier_id', 'carrier_name');
+    if FieldName = 'bander_name' then
+      FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'bander_id', 'bander_name');
+    if FieldName = 'annotator_name' then
+      FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'annotator_id', 'annotator_name');
+    if FieldName = 'photographer_1_name' then
+      FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'photographer_1_id', 'photographer_1_name');
+    if FieldName = 'photographer_2_name' then
+      FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'photographer_2_id', 'photographer_2_name');
 
     if FieldName = 'project_name' then
       FindDlg(tbProjects, InplaceEditor, DataSource.DataSet, 'project_id', 'project_name');
@@ -1843,8 +1871,13 @@ begin
     if FieldName = 'nest_name' then
       FindDlg(tbNests, InplaceEditor, DataSource.DataSet, 'nest_id', 'nest_name');
 
+    if FieldName = 'egg_name' then
+      FindDlg(tbEggs, InplaceEditor, DataSource.DataSet, 'egg_id', 'egg_name');
+
     if FieldName = 'band_full_name' then
       FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_full_name');
+    if FieldName = 'band_name' then
+      FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_name');
     if FieldName = 'double_band_name' then
       FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'double_band_id', 'double_band_name');
     if FieldName = 'removed_band_name' then
@@ -7237,6 +7270,10 @@ begin
   with aGrid, Columns do
   begin
     ColumnByFieldname('band_id').ReadOnly := True;
+    if DataSource.DataSet.FieldByName('individual_id').Visible then
+      ColumnByFieldname('individual_id').ReadOnly := True;
+    if DataSource.DataSet.FieldByName('individual_name').Visible then
+      ColumnByFieldname('individual_name').ReadOnly := True;
 
     ColumnByFieldName('band_size').PickList.AddCommaText('A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z');
     ColumnByFieldName('band_status').PickList.AddCommaText(rsBandStatusList);
@@ -7287,10 +7324,20 @@ begin
       ColumnByFieldName('left_leg_above').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('locality_name').Visible then
       ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('net_station_name').Visible then
+      ColumnByFieldname('net_station_name').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('longitude').Visible then
       ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('latitude').Visible then
       ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('bander_name').Visible then
+      ColumnByFieldname('bander_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('annotator_name').Visible then
+      ColumnByFieldname('annotator_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('band_name').Visible then
+      ColumnByFieldname('band_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('removed_band_name').Visible then
+      ColumnByFieldname('removed_band_name').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('molt_limits').Visible then
       ColumnByFieldName('molt_limits').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('cycle_code').Visible then
@@ -7299,6 +7346,10 @@ begin
       ColumnByFieldName('how_aged').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('how_sexed').Visible then
       ColumnByFieldName('how_sexed').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('photographer_1_name').Visible then
+      ColumnByFieldname('photographer_1_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('photographer_2_name').Visible then
+      ColumnByFieldname('photographer_2_name').ButtonStyle := cbsEllipsis;
 
     if DataSource.DataSet.FieldByName('cloacal_protuberance').Visible then
       ColumnByFieldName('cloacal_protuberance').PickList.AddCommaText('U,N,S,M,L');
@@ -7391,6 +7442,8 @@ begin
 
     if DataSource.DataSet.FieldByName('locality_name').Visible then
       ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('project_name').Visible then
+      ColumnByFieldname('project_name').ButtonStyle := cbsEllipsis;
     ColumnByFieldName('start_date').ButtonStyle := cbsEllipsis;
     ColumnByFieldName('end_date').ButtonStyle := cbsEllipsis;
   end;
@@ -7427,6 +7480,8 @@ begin
       ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('band_full_name').Visible then
       ColumnByFieldName('band_full_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('band_name').Visible then
+      ColumnByFieldName('band_name').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('double_band_name').Visible then
       ColumnByFieldName('double_band_name').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('removed_band_name').Visible then
@@ -7513,6 +7568,12 @@ begin
 
     if DataSource.DataSet.FieldByName('revision_date').Visible then
       ColumnByFieldName('revision_date').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('observer_1_name').Visible then
+      ColumnByFieldName('observer_1_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('observer_2_name').Visible then
+      ColumnByFieldName('observer_2_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('nidoparasite_name').Visible then
+      ColumnByFieldName('nidoparasite_name').ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -7533,6 +7594,14 @@ begin
       ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
     ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
     ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('observer_name').Visible then
+      ColumnByFieldName('observer_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('support_plant_1_name').Visible then
+      ColumnByFieldName('support_plant_1_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('support_plant_2_name').Visible then
+      ColumnByFieldName('support_plant_2_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('project_name').Visible then
+      ColumnByFieldName('project_name').ButtonStyle := cbsEllipsis;
 
     ColumnByFieldname('nest_shape').PickList.Add(rsNestShapeScrape);
     ColumnByFieldname('nest_shape').PickList.Add(rsNestShapeCup);
@@ -7676,10 +7745,34 @@ begin
       //ColumnByFieldname('specimen_id').Footer.Alignment := taCenter;
     end;
 
+    with ColumnByFieldName('sample_type').PickList do
+    begin
+      Clear;
+      Add(rsSpecimenCarcassWhole);
+      Add(rsSpecimenCarcassPartial);
+      Add(rsSpecimenNest);
+      Add(rsSpecimenBones);
+      Add(rsSpecimenEgg);
+      Add(rsSpecimenParasites);
+      Add(rsSpecimenFeathers);
+      Add(rsSpecimenBlood);
+      Add(rsSpecimenClaw);
+      Add(rsSpecimenSwab);
+      Add(rsSpecimenTissues);
+      Add(rsSpecimenFeces);
+      Add(rsSpecimenRegurgite);
+    end;
+
     if DataSource.DataSet.FieldByName('taxon_name').Visible then
       ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('locality_name').Visible then
       ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('individual_name').Visible then
+      ColumnByFieldName('individual_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('nest_name').Visible then
+      ColumnByFieldName('nest_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('egg_name').Visible then
+      ColumnByFieldName('egg_name').ButtonStyle := cbsEllipsis;
     ColumnByFieldname('longitude').ButtonStyle := cbsEllipsis;
     ColumnByFieldname('latitude').ButtonStyle := cbsEllipsis;
   end;
@@ -7692,12 +7785,25 @@ begin
     ColumnByFieldname('survey_id').ReadOnly := True;
 
     ColumnByFieldName('survey_date').ButtonStyle := cbsEllipsis;
+    ColumnByFieldName('method_name').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('locality_name').Visible then
       ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('country_name').Visible then
+      ColumnByFieldname('country_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('state_name').Visible then
+      ColumnByFieldname('state_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('municipality_name').Visible then
+      ColumnByFieldname('municipality_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('expedition_name').Visible then
+      ColumnByFieldname('expedition_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('net_station_name').Visible then
+      ColumnByFieldname('net_station_name').ButtonStyle := cbsEllipsis;
     ColumnByFieldname('start_longitude').ButtonStyle := cbsEllipsis;
     ColumnByFieldname('start_latitude').ButtonStyle := cbsEllipsis;
     ColumnByFieldname('end_longitude').ButtonStyle := cbsEllipsis;
     ColumnByFieldname('end_latitude').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('project_name').Visible then
+      ColumnByFieldname('project_name').ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -8631,7 +8737,7 @@ begin
   pmgInsert.Enabled := sbInsertRecord.Enabled;
   pmgEdit.Enabled := sbEditRecord.Enabled;
   pmgDel.Enabled := sbDelRecord.Enabled;
-  pmgRecordHistory.Enabled := sbChildHistory.Enabled;
+  pmgRecordHistory.Enabled := sbRecordHistory.Enabled;
 
   sbClearFilters.Enabled := FSearch.QuickFilters.Count > 0;
 
@@ -8713,6 +8819,7 @@ begin
   pmcEdit.Enabled := sbEditChild.Enabled;
   pmcDel.Enabled := sbDelChild.Enabled;
   pmcRefresh.Enabled := sbRefreshChild.Enabled;
+  pmcRecordHistory.Enabled := sbChildHistory.Enabled;
 
   //UpdateChildCount;
 end;
