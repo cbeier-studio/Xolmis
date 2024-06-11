@@ -749,27 +749,27 @@ begin
             Msk := GetValueMask(FCriteria, FDataType);
 
             // Fieldname, criteria, and values
-            case Criteria of
+            case FCriteria of
               crLike, crStartLike, crEqual, crNotEqual, crMoreThan, crLessThan:
               begin
                 if FQuickFilters[i].Fields[f].Lookup then
-                  S := S + Format(Msk, [FieldName, CriteriaOperators[Criteria], Value1])
+                  S := S + Format(Msk, [FFieldName, CriteriaOperators[FCriteria], FValue1])
                 else
-                  S := S + Format(Msk, [FTableAlias+'.'+FieldName, CriteriaOperators[Criteria], Value1]);
+                  S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CriteriaOperators[FCriteria], FValue1]);
               end;
               crBetween:
               begin
                 if FQuickFilters[i].Fields[f].Lookup then
-                  S := S + Format(Msk, [FieldName, CriteriaOperators[Criteria], Value1, Value2])
+                  S := S + Format(Msk, [FFieldName, CriteriaOperators[FCriteria], FValue1, FValue2])
                 else
-                  S := S + Format(Msk, [FTableAlias+'.'+FieldName, CriteriaOperators[Criteria], Value1, Value2]);
+                  S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CriteriaOperators[FCriteria], FValue1, FValue2]);
               end;
               crNull, crNotNull:
               begin
                 if FQuickFilters[i].Fields[f].Lookup then
-                  S := S + Format(Msk, [FieldName, CriteriaOperators[Criteria]])
+                  S := S + Format(Msk, [FFieldName, CriteriaOperators[FCriteria]])
                 else
-                  S := S + Format(Msk, [FTableAlias+'.'+FieldName, CriteriaOperators[Criteria]]);
+                  S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CriteriaOperators[FCriteria]]);
               end;
             end;
           end;
@@ -817,23 +817,23 @@ begin
               crLike, crStartLike, crEqual, crNotEqual, crMoreThan, crLessThan:
               begin
                 if FFields[i].Fields[f].Lookup then
-                  S := S + Format(Msk, [FieldName, CriteriaOperators[Criteria], Value1])
+                  S := S + Format(Msk, [FFieldName, CriteriaOperators[FCriteria], FValue1])
                 else
-                  S := S + Format(Msk, [FTableAlias+'.'+FieldName, CriteriaOperators[Criteria], Value1]);
+                  S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CriteriaOperators[FCriteria], FValue1]);
               end;
               crBetween:
               begin
                 if FFields[i].Fields[f].Lookup then
-                  S := S + Format(Msk, [FieldName, CriteriaOperators[Criteria], Value1, Value2])
+                  S := S + Format(Msk, [FFieldName, CriteriaOperators[FCriteria], FValue1, FValue2])
                 else
-                  S := S + Format(Msk, [FTableAlias+'.'+FieldName, CriteriaOperators[Criteria], Value1, Value2]);
+                  S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CriteriaOperators[FCriteria], FValue1, FValue2]);
               end;
               crNull, crNotNull:
               begin
                 if FFields[i].Fields[f].Lookup then
-                  S := S + Format(Msk, [FieldName, CriteriaOperators[Criteria]])
+                  S := S + Format(Msk, [FFieldName, CriteriaOperators[FCriteria]])
                 else
-                  S := S + Format(Msk, [FTableAlias+'.'+FieldName, CriteriaOperators[Criteria]]);
+                  S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CriteriaOperators[FCriteria]]);
               end;
             end;
 

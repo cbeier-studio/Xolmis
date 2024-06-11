@@ -6158,8 +6158,8 @@ begin
       Crit := crBetween;
       aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
       { split strings: unicode characters #$002D e #$2012 }
-      V1 := ExtractDelimited(0, aValue, ['-', #$2012]);
-      V2 := ExtractDelimited(1, aValue, ['-', #$2012]);
+      V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
+      V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('band_number', 'Band number', sdtInteger, Crit,
         False, V1, V2));
@@ -6169,9 +6169,9 @@ begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('full_name', 'Full name', sdtText, Crit,
         False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create('carrier_name', 'Project', sdtText, Crit,
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('carrier_name', 'Carrier', sdtText, Crit,
         True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create('supplier_name', 'Project', sdtText, Crit,
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('supplier_name', 'Supplier', sdtText, Crit,
         True, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('project_name', 'Project', sdtText, Crit,
         True, aValue));
@@ -6289,6 +6289,12 @@ begin
       FSearch.Fields[g].Fields.Add(TSearchField.Create('removed_band_name', 'Removed band', sdtText, Crit,
         True, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('locality_name', 'Locality', sdtText, Crit,
+        True, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('net_station_name', 'Misnet station', sdtText, Crit,
+        True, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('bander_name', 'Bander', sdtText, Crit,
+        True, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('annotator_name', 'Annotator', sdtText, Crit,
         True, aValue));
     end;
   end;
@@ -6677,6 +6683,12 @@ begin
       FSearch.Fields[g].Fields.Add(TSearchField.Create('locality_name', 'Locality', sdtText, Crit,
         True, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('taxon_name', 'Taxon', sdtText, Crit,
+        True, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('observer_name', 'Observer', sdtText, Crit,
+        True, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('support_plant_1_name', 'Support plant 1', sdtText, Crit,
+        True, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('support_plant_2_name', 'Support plant 2', sdtText, Crit,
         True, aValue));
     end;
   end;

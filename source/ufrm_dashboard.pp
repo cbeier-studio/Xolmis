@@ -231,7 +231,7 @@ begin
     if IsDarkModeEnabled then
       Background.Color := clCardBGDefaultDark
     else
-      Background.Color := clCardBGDefaultLight;
+      Background.Color := clCardBGSecondaryLight;
     ChildSizing.HorizontalSpacing := 8;
     BorderSpacing.Bottom := 2;
     //Border.Style := TBCBorderStyle.bboSolid;
