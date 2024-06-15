@@ -22,7 +22,7 @@ unit cbs_datatypes;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, DB, SQLDB, Generics.Collections, RegExpr;
+  Classes, SysUtils, Dialogs, DB, SQLDB, Generics.Collections, RegExpr, StrUtils;
 
 type
   TDBManager = (dbSqlite, dbFirebird, dbPostgre, dbMaria);
@@ -137,7 +137,7 @@ type
   );
   TTableFieldType = (ctString, ctInteger, ctFloat, ctDate, ctTime, ctDateTime, ctBoolean);
   TSearchDataType = (sdtText, sdtInteger, sdtFloat, sdtDate, sdtTime, sdtDateTime, sdtBoolean, sdtList,
-    sdtLookup);
+    sdtLookup, sdtYear, sdtMonthYear);
   TFilterValue = (fvNone, fvReset, fvAll, fvMarked, fvUnmarked, fvDeleted, fvQueued);
   TSeparator = (spNone, spSemicolon, spComma, spColon, spPeriod, spPipe, spSlash, spHyphen, spUnderline);
   TSQLAndOr = (aoNone, aoAnd, aoOr);
@@ -152,7 +152,7 @@ const
   TiposCampo: array[TTableFieldType] of String = ('String', 'Integer', 'Float', 'Date', 'Time',
     'DateTime', 'Boolean');
   SearchDataTypes: array[TSearchDataType] of String = ('Text', 'Integer', 'Float', 'Date', 'Time',
-    'DateTime', 'Boolean', 'List', 'Lookup');
+    'DateTime', 'Boolean', 'List', 'Lookup', 'Year', 'MonthYear');
   StrSeparators: array [TSeparator] of Char = (#0, ';', ',', ':', '.', '|', '/', '-', '_');
 
 type
@@ -636,6 +636,10 @@ const
   MaskTimeV2: String = '(time(%s) %s time(%s) AND time(%s)) ';
   MaskDateTimeV1: String = '(datetime(%s) %s datetime(%s)) ';
   MaskDateTimeV2: String = '(datetime(%s) %s datetime(%s) AND datetime(%s)) ';
+  MaskYearV1: String = '(strftime(''%%Y'', %s) %s %s)';
+  MaskYearV2: String = '(strftime(''%%Y'', %s) %s %s AND %s)';
+  MaskMonthYearV1: String = '(strftime(''%%Y-%%m'', %s) %s %s)';
+  MaskMonthYearV2: String = '(strftime(''%%Y-%%m'', %s) %s %s AND %s)';
 var
   i, f: Integer;
   S, AndOrWhere, Msk, aSort: String;
@@ -681,6 +685,20 @@ var
           else
             Result := MaskDateTimeV1;
         end;
+      sdtYear:
+        begin
+          if aCriteriaType = crBetween then
+            Result := MaskYearV2
+          else
+            Result := MaskYearV1;
+        end;
+      sdtMonthYear:
+        begin
+          if aCriteriaType = crBetween then
+            Result := MaskMonthYearV2
+          else
+            Result := MaskMonthYearV1;
+        end;
     end;
   end;
 
@@ -715,6 +733,18 @@ var
       sdtDate: ;
       sdtTime: ;
       sdtDateTime: ;
+      sdtYear: ;
+      sdtMonthYear:
+        begin
+          //aValue1 := ExtractDelimited(2, aValue1, ['/']) + '-' + ExtractDelimited(1, aValue1, ['/']);
+          aValue1 := QuotedStr(aValue1);
+
+          if aCriteriaType = crBetween then
+          begin
+            //aValue2 := ExtractDelimited(2, aValue2, ['/']) + '-' + ExtractDelimited(1, aValue2, ['/']);
+            aValue2 := QuotedStr(aValue2);
+          end;
+        end;
     end;
   end;
 
@@ -784,7 +814,7 @@ begin
           FDataSet.SQL.Add(S);
         end;
         // Close parenthesis, and AND/OR groups
-        AndOrWhere := 'OR ';
+        AndOrWhere := 'AND ';
         if i < (FQuickFilters.Count - 1) then
           FDataSet.SQL.Add(') ' + AndOrWhere)
         else

@@ -551,19 +551,8 @@ begin
 end;
 
 procedure TfrmMain.actOpenManualExecute(Sender: TObject);
-var
-  P: String;
 begin
-  P := ConcatPaths([HelpDir, 'index.html']);
-  if not FileExists(P) then
-  begin
-    LogError('Help files not found');
-    MsgDlg(rsErrorTitleHelpNotFound, Format(rsErrorHelpNotFound, [HelpDir]), mtError);
-    Exit;
-  end;
-
-  ExecuteProcess(P, '', []);
-  //ShellExecute(Handle, 'open', PChar(P), nil, nil, SW_SHOWNORMAL);
+  OpenUrl('https://github.com/cbeier-studio/Xolmis/wiki');
 end;
 
 procedure TfrmMain.actOpenMethodsExecute(Sender: TObject);

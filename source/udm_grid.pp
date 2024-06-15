@@ -2026,35 +2026,18 @@ begin
   if Sender.AsString = EmptyStr then
     Exit;
 
-  if Sender.AsString = 'U' then
-    aText := rsAgeUnknown
-  else
-  if Sender.AsString = 'A' then
-    aText := rsAgeAdult
-  else
-  if Sender.AsString = 'I' then
-    aText := rsAgeImmature
-  else
-  if Sender.AsString = 'J' then
-    aText := rsAgeFledgling
-  else
-  if Sender.AsString = 'N' then
-    aText := rsAgeNestling
-  else
-  if Sender.AsString = 'F' then
-    aText := rsAgeFirstYear
-  else
-  if Sender.AsString = 'S' then
-    aText := rsAgeSecondYear
-  else
-  if Sender.AsString = 'T' then
-    aText := rsAgeThirdYear
-  else
-  if Sender.AsString = '4' then
-    aText := rsAgeFourthYear
-  else
-  if Sender.AsString = '5' then
-    aText := rsAgeFifthYear;
+  case Sender.AsString of
+    'U': aText := rsAgeUnknown;
+    'A': aText := rsAgeAdult;
+    'I': aText := rsAgeImmature;
+    'J': aText := rsAgeFledgling;
+    'N': aText := rsAgeNestling;
+    'F': aText := rsAgeFirstYear;
+    'S': aText := rsAgeSecondYear;
+    'T': aText := rsAgeThirdYear;
+    '4': aText := rsAgeFourthYear;
+    '5': aText := rsAgeFifthYear;
+  end;
 
   DisplayText := True;
 end;

@@ -6238,6 +6238,7 @@ var
   i, g: Longint;
   dt: TDateTime;
   Crit: TCriteriaType;
+  V1, V2, m, y: String;
 begin
   Result := False;
 
@@ -6263,6 +6264,8 @@ begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('capture_id', 'Capture (ID)', sdtInteger, crEqual,
         False, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('capture_date', 'Capture date', sdtYear, crEqual,
+        False, aValue));
     end
     else
     if TryStrToDate(aValue, dt) then
@@ -6278,6 +6281,28 @@ begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('capture_time', 'Capture time', sdtTime, crEqual,
         False, aValue));
+    end
+    else
+    if ExecRegExpr('^\d{4}[-‒]{1}\d{4}$', aValue) then
+    begin
+      Crit := crBetween;
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      { split strings: unicode characters #$002D e #$2012 }
+      V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
+      V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('capture_date', 'Capture date', sdtYear, Crit,
+        False, V1, V2));
+    end
+    else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('capture_date', 'Capture date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
     end
     else
     begin
@@ -6309,6 +6334,7 @@ var
   i, g: Longint;
   Dt: TDateTime;
   Crit: TCriteriaType;
+  m, y: String;
 begin
   Result := False;
 
@@ -6344,6 +6370,16 @@ begin
         False, aValue));
     end
     else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('measure_date', 'Measured date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+    end
+    else
     begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('full_name', 'Full name', sdtText, Crit,
@@ -6365,6 +6401,7 @@ var
   i, g: Integer;
   dt: TDateTime;
   Crit: TCriteriaType;
+  m, y: String;
 begin
   Result := False;
 
@@ -6400,6 +6437,18 @@ begin
         False, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('end_date', 'End date', sdtDate, crEqual,
         False, aValue));
+    end
+    else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('start_date', 'Start date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('end_date', 'End date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
     end
     else
     begin
@@ -6478,6 +6527,7 @@ var
   i, g: Integer;
   dt: TDateTime;
   Crit: TCriteriaType;
+  m, y: String;
 begin
   Result := False;
 
@@ -6514,6 +6564,18 @@ begin
       FSearch.Fields[g].Fields.Add(TSearchField.Create('band_change_date', 'Band change date', sdtDate, crEqual,
         False, aValue));
       { #todo : PartialDate fields: birth_date and death_date }
+    end
+    else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('banding_date', 'Banding date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('band_change_date', 'Band change date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
     end
     else
     begin
@@ -6637,6 +6699,7 @@ var
   i, g: Longint;
   Dt: TDateTime;
   Crit: TCriteriaType;
+  m, y: String;
 begin
   Result := False;
 
@@ -6674,6 +6737,18 @@ begin
         False, aValue));
     end
     else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('found_date', 'Date found', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('last_date', 'Last date seen', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+    end
+    else
     begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('full_name', 'Full name', sdtText, Crit,
@@ -6703,6 +6778,7 @@ var
   i, g: Longint;
   Dt: TDateTime;
   Crit: TCriteriaType;
+  m, y: String;
 begin
   Result := False;
 
@@ -6736,6 +6812,16 @@ begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('revision_date', 'Revision date', sdtDate, crEqual,
         False, aValue));
+    end
+    else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('revision_date', 'Revision date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
     end
     else
     begin
@@ -6812,6 +6898,7 @@ var
   i, g: Integer;
   dt: TDateTime;
   Crit: TCriteriaType;
+  m, y: String;
 begin
   Result := False;
 
@@ -6845,6 +6932,20 @@ begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('birth_date', 'Birth date', sdtDate, crEqual,
         False, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('death_date', 'Death date', sdtDate, crEqual,
+        False, aValue));
+    end
+    else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('birth_date', 'Birth date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('death_date', 'Death date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
     end
     else
     begin
@@ -6868,6 +6969,7 @@ var
   i, g: Longint;
   dt: TDateTime;
   Crit: TCriteriaType;
+  m, y: String;
 begin
   Result := False;
 
@@ -6905,6 +7007,18 @@ begin
         False, aValue));
     end
     else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('dispatch_date', 'Dispatch date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('expire_date', 'Expire date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+    end
+    else
     begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('permit_name', 'Permit name', sdtText, Crit,
@@ -6926,6 +7040,7 @@ var
   i, g: Integer;
   dt: TDateTime;
   Crit: TCriteriaType;
+  m, y: String;
 begin
   Result := False;
 
@@ -6963,6 +7078,18 @@ begin
         False, aValue));
     end
     else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('start_date', 'Start date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('end_date', 'End date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+    end
+    else
     begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('project_title', 'Title', sdtText, Crit,
@@ -6986,6 +7113,7 @@ var
   i, g: Longint;
   dt: TDateTime;
   Crit: TCriteriaType;
+  m, y: String;
 begin
   Result := False;
 
@@ -7028,6 +7156,16 @@ begin
         False, aValue));
     end
     else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('sighting_date', 'Sighting date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+    end
+    else
     begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('taxon_name', 'Taxon', sdtText, Crit,
@@ -7049,6 +7187,7 @@ var
   i, g: Longint;
   dt: TDateTime;
   Crit: TCriteriaType;
+  m, y: String;
 begin
   Result := False;
 
@@ -7084,6 +7223,16 @@ begin
         False, aValue));
     end
     else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('collection_date', 'Collection date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+    end
+    else
     begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('taxon_name', 'Taxon', sdtText, Crit,
@@ -7111,6 +7260,7 @@ var
   i, g: Longint;
   Dt: TDateTime;
   Crit: TCriteriaType;
+  m, y: String;
 begin
   Result := False;
 
@@ -7155,6 +7305,18 @@ begin
         False, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('end_time', 'End time', sdtTime, crEqual,
         False, aValue));
+    end
+    else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('start_date', 'Start date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('end_date', 'End date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
     end
     else
     begin
