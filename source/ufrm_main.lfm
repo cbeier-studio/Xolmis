@@ -1554,18 +1554,6 @@ object frmMain: TfrmMain
       AutoSize = True
       Images = DMM.iLogos
     end
-    object MarqueeBar: TProgressBar
-      AnchorSideLeft.Control = lblLoading
-      AnchorSideLeft.Side = asrCenter
-      AnchorSideTop.Control = lblLoading
-      AnchorSideTop.Side = asrBottom
-      Left = 60
-      Height = 7
-      Top = 383
-      Width = 256
-      Style = pbstMarquee
-      TabOrder = 0
-    end
   end
   object pmMenu: TPopupMenu
     Images = iPopup

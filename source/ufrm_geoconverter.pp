@@ -248,7 +248,9 @@ begin
     PBar.Visible := True;
     //frm_Main.Taskbar.ProgressValue := 0;
     //frm_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
+    FormatCoordinates;
     seConverted.Lines.Clear;
+    seConverted.Marks.ClearLine(1);
 
     for i := 0 to seConvertFrom.Lines.Count - 1 do
     begin
@@ -257,6 +259,9 @@ begin
         cvSame: { nothing } ;
         cvDecimalDms:          // Decimal -> DMS
           begin
+            if Trim(l) = EmptyStr then
+              seConverted.Lines.Add('')
+            else
             if pDec.FromString(l) then
               seConverted.Lines.Add(DecimalToDms(pDec).ToString(ckAddUnitsZone.Checked))
             else
@@ -264,6 +269,9 @@ begin
           end;
         cvDecimalUtm:          // Decimal -> UTM
           begin
+            if Trim(l) = EmptyStr then
+              seConverted.Lines.Add('')
+            else
             if pDec.FromString(l) then
               seConverted.Lines.Add(DecimalToUtm(pDec).ToString(ckAddUnitsZone.Checked))
             else
@@ -271,6 +279,9 @@ begin
           end;
         cvDmsDecimal:          // DMS -> Decimal
           begin
+            if Trim(l) = EmptyStr then
+              seConverted.Lines.Add('')
+            else
             if pDms.FromString(l) then
               seConverted.Lines.Add(DmsToDecimal(pDms).ToString)
             else
@@ -278,6 +289,9 @@ begin
           end;
         cvDmsUtm:              // DMS -> UTM
           begin
+            if Trim(l) = EmptyStr then
+              seConverted.Lines.Add('')
+            else
             if pDms.FromString(l) then
               seConverted.Lines.Add(DmsToUtm(pDms).ToString(ckAddUnitsZone.Checked))
             else
@@ -285,6 +299,9 @@ begin
           end;
         cvUtmDecimal:          // UTM -> Decimal
           begin
+            if Trim(l) = EmptyStr then
+              seConverted.Lines.Add('')
+            else
             if pUtm.FromString(l) then
               seConverted.Lines.Add(UtmToDecimal(pUtm).ToString)
             else
@@ -292,15 +309,18 @@ begin
           end;
         cvUtmDms:              // UTM -> DMS
           begin
+            if Trim(l) = EmptyStr then
+              seConverted.Lines.Add('')
+            else
             if pUtm.FromString(l) then
               seConverted.Lines.Add(UtmToDms(pUtm).ToString(ckAddUnitsZone.Checked))
             else
               seConverted.Lines.Add(Format('%s: %s [%d]',[rsTitleError, l, i + 1]));
           end;
       end;
-      if seConverted.Lines[seConverted.Lines.Count - 1].StartsWith(rsTitleError, True) then
+      if seConverted.Lines[i].StartsWith(rsTitleError, True) then
       begin
-        AddMark(seConverted.Lines.Count - 1);
+        AddMark(i + 1);
       end;
 
       PBar.Position := i + 1;
@@ -493,6 +513,12 @@ begin
   sbSaveFile.Enabled := Trim(seConverted.Lines.Text) <> EmptyStr;
   sbCopy.Enabled := Trim(seConverted.Lines.Text) <> EmptyStr;
   sbAddToGeoEditor.Enabled := Trim(seConverted.Lines.Text) <> EmptyStr;
+
+  pmfClear.Enabled := sbClear.Enabled;
+  pmtSaveFile.Enabled := sbSaveFile.Enabled;
+  pmtCopy.Enabled := sbCopy.Enabled;
+  pmtAddToGeoBank.Enabled := sbAddToGeoEditor.Enabled;
+  pmtClear.Enabled := sbClear.Enabled;
 end;
 
 procedure TfrmGeoConverter.UpdateCurrentCaretPos;

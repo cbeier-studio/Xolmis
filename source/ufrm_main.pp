@@ -89,7 +89,6 @@ type
     iMenu: TImageList;
     iPopup: TImageList;
     iSearchDark: TImageList;
-    MarqueeBar: TProgressBar;
     sbClearSearch: TColorSpeedButton;
     icoSbarDatabase: TImage;
     icoSbarUser: TImage;
