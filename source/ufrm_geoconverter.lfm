@@ -1172,7 +1172,6 @@ object frmGeoConverter: TfrmGeoConverter
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
-      Highlighter = SynGeo
       Keystrokes = <      
         item
           Command = ecUp

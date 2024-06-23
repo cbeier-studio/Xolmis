@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, ComCtrls,
-  Menus, SynEdit, BCPanel, SynEditTypes, SynEditMarks, SynHighlighterAny, StrUtils,
+  Menus, SynEdit, BCPanel, SynEditTypes, SynEditMarks, SynHighlighterAny, StrUtils, LConvEncoding,
   RegExpr;
 
 type
@@ -149,31 +149,36 @@ end;
 procedure TfrmGeoConverter.sbAddToGeoEditorClick(Sender: TObject);
 var
   i: Integer;
-  aTemp: TStringList;
-  S, Nome: String;
+  S: String;
+  MP: TMapPoint;
+  L: TStrings;
 begin
   if seConverted.Lines.Count = 0 then
     Exit;
 
-  Nome := InputBox(rsTitleImportCoordinates, rsCoordinatesNameInput, '');
-  for i := 0 to seConverted.Lines.Count - 1 do
+  if not DMM.tabGeoBank.Active then
+    DMM.tabGeoBank.Open;
+
+  L := TStringList.Create;
+  L.Text := seConverted.Lines.Text;
+
+  for i := 0 to L.Count - 1 do
   begin
-    aTemp := TStringList.Create;
-    try
-      S := seConverted.Lines[i];
-      ExtractStrings([';'], [' '], PChar(S), aTemp);
-      with DMM.TabGeoBank do
+    S := Trim(L[i]);
+    if S <> EmptyStr then
+    begin
+      MP.FromString(S);
+      with DMM.tabGeoBank do
       begin
         Append;
-        FieldByName('coordinate_name').AsString := Nome + ' ' + IntToStr(i + 1);
-        FieldByName('longitude').AsFloat := StrToFloat(aTemp[0]);
-        FieldByName('latitude').AsFloat := StrToFloat(aTemp[1]);
+        FieldByName('coordinate_name').AsString := 'Converted_' + IntToStr(i + 1);
+        FieldByName('longitude').AsFloat := MP.X;
+        FieldByName('latitude').AsFloat := MP.Y;
         Post;
       end;
-    finally
-      FreeAndNil(aTemp);
     end;
   end;
+  L.Free;
   MsgDlg(rsSuccessfulImportCoordinates, rsCoordinatesAvailableToUse, mtInformation);
 end;
 
@@ -334,6 +339,8 @@ begin
     //frm_Main.Taskbar.ProgressState := TTaskBarProgressState.None;
     //frm_Main.Taskbar.ProgressValue := 0;
   end;
+
+  UpdateButtons;
 end;
 
 procedure TfrmGeoConverter.sbCopyClick(Sender: TObject);

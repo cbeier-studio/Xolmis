@@ -39,6 +39,7 @@ const
 const
   DefaultSettingsFile: String   = 'settings.json';
   LogFile: String               = 'xlmslog.txt';
+  GeoBankFile: String           = 'geobank.dat';
   BFKey: String                 = 'support lottery birds sample';
 
   { Format masks constants }

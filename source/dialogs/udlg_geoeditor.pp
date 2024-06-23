@@ -21,37 +21,47 @@ unit udlg_geoeditor;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, MaskEdit, Spin,
-  atshapelinebgra, BCPanel, SpinEx,
-  cbs_system, cbs_gis;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, MaskEdit, Spin, DBGrids,
+  ComCtrls, mvMapViewer, mvTypes, mvGpsObj, mvDE_BGRA, atshapelinebgra, BCPanel, SpinEx, Types,
+  cbs_system, cbs_gis, DB, mvDrawingEngine;
 
 type
 
   { TdlgGeoEditor }
 
   TdlgGeoEditor = class(TForm)
-    pLong: TBCPanel;
-    pLat: TBCPanel;
-    pDecimal: TBCPanel;
-    pContent: TBCPanel;
-    cbLongHem: TComboBox;
     cbLatHem: TComboBox;
-    eLongDeg: TSpinEdit;
-    eLongSec: TFloatSpinEdit;
-    eLatSec: TFloatSpinEdit;
-    lblLongitude: TLabel;
-    lblLatitude: TLabel;
-    lineBottom: TShapeLineBGRA;
-    pBottom: TPanel;
-    eLongMin: TSpinEdit;
+    cbLongHem: TComboBox;
+    dsGeoBank: TDataSource;
     eLatDeg: TSpinEdit;
     eLatMin: TSpinEdit;
+    eLatSec: TFloatSpinEdit;
+    eLongDeg: TSpinEdit;
+    eLongMin: TSpinEdit;
+    eLongSec: TFloatSpinEdit;
+    gridBank: TDBGrid;
+    lblLatitude: TLabel;
+    lblLongitude: TLabel;
+    mapGeo: TMapView;
+    MvBGRADraw: TMvBGRADrawingEngine;
+    PG: TPageControl;
+    lineBottom: TShapeLineBGRA;
+    pBottom: TPanel;
+    pContent: TBCPanel;
+    pDecimal: TBCPanel;
+    pLat: TBCPanel;
+    pLong: TBCPanel;
     sbCancel: TButton;
     sbOK: TButton;
-    procedure eLongDegChange(Sender: TObject);
+    tabConvert: TTabSheet;
+    tabImported: TTabSheet;
+    procedure eLongDegEditingDone(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure gridBankCellClick(Column: TColumn);
     procedure longSecKeyPress(Sender: TObject; var Key: char);
+    procedure mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
+    procedure PGChange(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbOKClick(Sender: TObject);
   private
@@ -59,10 +69,13 @@ type
     xLinha: String;
     xDMS: TDMS;
     xDec: Extended;
+    FChangeZoom: Boolean;
     FDecPoint: TMapPoint;
     FDmsPoint: TDMSPoint;
     FPointStr: String;
     procedure ApplyDarkMode;
+    procedure RefreshMap;
+    procedure UpdateButtons;
   public
     procedure SetDialogPosition(X, Y: Integer; ControlWidth, ControlHeight: Integer);
 
@@ -82,7 +95,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_themes, uDarkStyleParams;
+  cbs_global, cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -110,6 +123,144 @@ begin
     Key := #0;
 end;
 
+procedure TdlgGeoEditor.mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
+const
+  R = 8;
+var
+  P: TPoint;
+  ext: TSize;
+  img: TBitmap;
+begin
+  // Screen coordinates of the GPS point
+  P := TMapView(Sender).LonLatToScreen(APoint.RealPoint);
+
+  // Draw the GPS point with MapMarker bitmap
+  //img := TBitmap.Create;
+  //try
+  //  img.TransparentColor := clBlack;
+  //  img.Transparent := True;
+  //  img.Width := 16;
+  //  img.Height := 16;
+  //  DMM.iMaps.DrawForPPI(img.Canvas, 0, 0, APoint.IdOwner, 16, 96, 1);
+  //  ADrawer.DrawBitmap(P.X - mapGeo.POIImagesWidth div 2, P.Y - mapGeo.POIImagesWidth, img, True);
+  //finally
+  //  img.Free;
+  //end;
+  //end
+  //else
+  //begin
+    // Draw the GPS point as a circle
+    if APoint.IdOwner = 1 then
+    begin
+      ADrawer.BrushColor := clRedFGDark;
+      ADrawer.PenColor := clRedBGLight;
+    end
+    else
+    begin
+      ADrawer.BrushColor := clYellowFG4Dark;
+      ADrawer.PenColor := clYellowBGLight;
+    end;
+    ADrawer.BrushStyle := bsSolid;
+    ADrawer.PenWidth := 2;
+    ADrawer.Ellipse(P.X - R, P.Y - R, P.X + R, P.Y + R);
+    P.Y := P.Y + R;
+  //end;
+
+  // Draw the caption of the GPS point
+  ext := ADrawer.TextExtent(APoint.Name);
+  ADrawer.BrushColor := clWhite;
+  ADrawer.BrushStyle := bsClear;
+  ADrawer.TextOut(P.X - ext.CX div 2, P.Y + 5, APoint.Name);
+end;
+
+procedure TdlgGeoEditor.PGChange(Sender: TObject);
+begin
+  FChangeZoom := True;
+  RefreshMap;
+
+  UpdateButtons;
+end;
+
+procedure TdlgGeoEditor.RefreshMap;
+var
+  poi: TGpsPoint;
+  rp, rpsel: TRealPoint;
+  BM: TBookmark;
+begin
+  mapGeo.GPSItems.Clear(0);
+  mapGeo.GPSItems.Clear(1);
+  mapGeo.Refresh;
+
+  if PG.ActivePage = tabConvert then
+  begin
+    if not (FDecPoint.X = 0) and not (FDecPoint.Y = 0) then
+    begin
+      //DMM.iMaps.GetBitmap(1, mapGeo.POIImage);
+      rpsel.Lon := FDecPoint.X;
+      rpsel.Lat := FDecPoint.Y;
+      poi := TGpsPoint.CreateFrom(rpsel);
+      //poi.Name := FieldByName('coordinate_name').AsString;
+      mapGeo.GPSItems.Add(poi, 1);
+    end;
+  end
+  else
+  if PG.ActivePage = tabImported then
+  begin
+    with dsGeoBank.DataSet do
+    begin
+      if not dsGeoBank.DataSet.Active then
+        Open;
+
+      if RecordCount > 0 then
+      try
+        BM := Bookmark;
+        DisableControls;
+        //DMM.iMaps.GetBitmap(1, mapGeo.POIImage);
+        rpsel.Lon := FieldByName('longitude').AsFloat;
+        rpsel.Lat := FieldByName('latitude').AsFloat;
+        if not (rpsel.Lon = 0) and not (rpsel.Lat = 0) then
+        begin
+          poi := TGpsPoint.CreateFrom(rpsel);
+          poi.Name := FieldByName('coordinate_name').AsString;
+            //+ #10 + FieldByName('locality_name').AsString + #10 +
+            //FieldByName('method_name').AsString;
+          mapGeo.GPSItems.Add(poi, 1, 999);
+          if not FChangeZoom then
+            mapGeo.Center := rpsel;
+        end;
+        First;
+        //DMM.iMaps.GetBitmap(0, mapGeo.POIImage);
+        repeat
+          rp.Lon := FieldByName('longitude').AsFloat;
+          rp.Lat := FieldByName('latitude').AsFloat;
+          if (not (rp.Lon = 0) and not (rp.Lat = 0)) and
+            (not (rp.Lon = rpsel.Lon) and not (rp.Lat = rpsel.Lat)) then
+          begin
+            poi := TGpsPoint.CreateFrom(rp);
+            //poi.Name := FieldByName('coordinate_name').AsString;
+              //+ #10 + FieldByName('locality_name').AsString + #10 +
+              //FieldByName('method_name').AsString;
+            mapGeo.GPSItems.Add(poi, 0);
+          end;
+          Next;
+        until EOF;
+      finally
+        EnableControls;
+        Bookmark := BM;
+      end;
+    end;
+  end;
+
+  if FChangeZoom and (mapGeo.GPSItems.Count > 0) then
+  begin
+    mapGeo.ZoomOnArea(mapGeo.GPSItems.BoundingBox);
+    if mapGeo.Zoom > 14 then
+      mapGeo.Zoom := 14
+    else
+      mapGeo.Zoom := mapGeo.Zoom - 1;
+  end;
+end;
+
 procedure TdlgGeoEditor.sbCancelClick(Sender: TObject);
 begin
   GravaStat(Name, 'sbCancel', 'click');
@@ -121,6 +272,11 @@ procedure TdlgGeoEditor.sbOKClick(Sender: TObject);
 begin
   GravaStat(Name, 'sbOK', 'click');
 
+  if PG.ActivePage = tabImported then
+  begin
+    FDecPoint.X := dsGeoBank.DataSet.FieldByName('longitude').AsFloat;
+    FDecPoint.Y := dsGeoBank.DataSet.FieldByName('latitude').AsFloat;
+  end;
   FPointStr := FDecPoint.ToString;
 
   ModalResult := mrOK;
@@ -142,6 +298,11 @@ begin
     Self.Top := Y + ControlHeight;
 end;
 
+procedure TdlgGeoEditor.UpdateButtons;
+begin
+  sbOK.Enabled := (FDecPoint.X <> 0) and (FDecPoint.Y <> 0);
+end;
+
 procedure TdlgGeoEditor.ApplyDarkMode;
 begin
   pLong.Background.Color := clCardBGDefaultDark;
@@ -152,20 +313,31 @@ begin
   pDecimal.Border.Color := clSystemSolidNeutralFGDark;
 end;
 
-procedure TdlgGeoEditor.eLongDegChange(Sender: TObject);
+procedure TdlgGeoEditor.eLongDegEditingDone(Sender: TObject);
 begin
   FDmsPoint.X.Degrees := elongDeg.Value;
   FDmsPoint.X.Minutes := elongMin.Value;
   FDmsPoint.X.Seconds := elongSec.Value;
-  FDmsPoint.X.Hemisphere := cblongHem.Text[1];
+  if cblongHem.ItemIndex >= 0 then
+    FDmsPoint.X.Hemisphere := cblongHem.Text[1]
+  else
+    FDmsPoint.X.Hemisphere := 'W';
 
   FDmsPoint.Y.Degrees := elatDeg.Value;
   FDmsPoint.Y.Minutes := elatMin.Value;
   FDmsPoint.Y.Seconds := elatSec.Value;
-  FDmsPoint.Y.Hemisphere := cblatHem.Text[1];
+  if cblatHem.ItemIndex >= 0 then
+    FDmsPoint.Y.Hemisphere := cblatHem.Text[1]
+  else
+    FDmsPoint.Y.Hemisphere := 'S';
 
   FDecPoint := DmsToDecimal(FDmsPoint);
   pDecimal.Caption := FDecPoint.ToString;
+
+  FChangeZoom := True;
+  RefreshMap;
+
+  UpdateButtons;
 end;
 
 procedure TdlgGeoEditor.FormKeyPress(Sender: TObject; var Key: char);
@@ -190,9 +362,9 @@ end;
 
 procedure TdlgGeoEditor.FormShow(Sender: TObject);
 begin
-  {$IFDEF MSWINDOWS}
-  SetRoundedCorners(Self.Handle, rcSmall);
-  {$ENDIF}
+  //{$IFDEF MSWINDOWS}
+  //SetRoundedCorners(Self.Handle, rcSmall);
+  //{$ENDIF}
 
   if IsDarkModeEnabled then
     ApplyDarkMode;
@@ -200,25 +372,50 @@ begin
   if Length(FPointStr) > 0 then
     FDecPoint.FromString(FPointStr);
 
-  FDmsPoint := DecimalToDms(FDecPoint);
+  if not (FDecPoint.X = 0) and not (FDecPoint.Y = 0) then
+  begin
+    FDmsPoint := DecimalToDms(FDecPoint);
+
+    elongDeg.Value := FDMSPoint.X.Degrees;
+    elongMin.Value := FDMSPoint.X.Minutes;
+    elongSec.Value := FDMSPoint.X.Seconds;
+    cblongHem.ItemIndex := cblongHem.Items.IndexOf(FDMSPoint.X.Hemisphere);
+
+    elatDeg.Value := FDMSPoint.Y.Degrees;
+    elatMin.Value := FDMSPoint.Y.Minutes;
+    elatSec.Value := FDMSPoint.Y.Seconds;
+    cblatHem.ItemIndex := cblatHem.Items.IndexOf(FDMSPoint.Y.Hemisphere);
+  end;
 
   if cblongHem.ItemIndex < 0 then
     cblongHem.ItemIndex := 1;
   if cblatHem.ItemIndex < 0 then
     cblatHem.ItemIndex := 1;
 
-  elongDeg.Value := FDMSPoint.X.Degrees;
-  elongMin.Value := FDMSPoint.X.Minutes;
-  elongSec.Value := FDMSPoint.X.Seconds;
-  cblongHem.ItemIndex := cblongHem.Items.IndexOf(FDMSPoint.X.Hemisphere);
-
-  elatDeg.Value := FDMSPoint.Y.Degrees;
-  elatMin.Value := FDMSPoint.Y.Minutes;
-  elatSec.Value := FDMSPoint.Y.Seconds;
-  cblatHem.ItemIndex := cblatHem.Items.IndexOf(FDMSPoint.Y.Hemisphere);
-
-  FDecPoint := DmsToDecimal(FDmsPoint);
+  //FDecPoint := DmsToDecimal(FDmsPoint);
   pDecimal.Caption := FDecPoint.ToString;
+
+  if not dsGeoBank.DataSet.Active then
+    dsGeoBank.DataSet.Open;
+  dsGeoBank.DataSet.First;
+
+  mapGeo.CachePath := IncludeTrailingPathDelimiter(ConcatPaths([AppDataDir, 'map-cache']));
+  mapGeo.Active := True;
+  FChangeZoom := True;
+  RefreshMap;
+
+  UpdateButtons;
+end;
+
+procedure TdlgGeoEditor.gridBankCellClick(Column: TColumn);
+begin
+  FDecPoint.X := dsGeoBank.DataSet.FieldByName('longitude').AsFloat;
+  FDecPoint.Y := dsGeoBank.DataSet.FieldByName('latitude').AsFloat;
+
+  FChangeZoom := False;
+  RefreshMap;
+
+  UpdateButtons;
 end;
 
 end.

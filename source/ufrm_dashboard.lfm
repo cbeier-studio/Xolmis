@@ -343,7 +343,7 @@ object frmDashboard: TfrmDashboard
           Align = alClient
           CachePath = 'map-cache'
           DownloadEngine = mapSurveys.BuiltInDLE
-          DrawingEngine = mapSurveys.BuiltInDE
+          DrawingEngine = MvBGRADraw
           Font.Color = clBlack
           MapProvider = 'OpenStreetMap Mapnik'
           POIImagesWidth = 20
@@ -2061,5 +2061,9 @@ object frmDashboard: TfrmDashboard
       422A6BB4159C06B5C0ADE95FBAFAD4F647B89680DB3C47C9B9E73DFFB72438E8
       8FB2BF78C6ABBF8FD7F507B4554604
     }
+  end
+  object MvBGRADraw: TMvBGRADrawingEngine
+    Left = 848
+    Top = 262
   end
 end

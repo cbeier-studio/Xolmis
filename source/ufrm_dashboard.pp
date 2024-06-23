@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, Menus, DB, SQLDB,
   DBGrids, ATLinkLabel, TAGraph, TASeries, TASources, TAGUIConnectorBGRA, BCPanel, DateUtils,
-  BCButton, BCTypes, mvMapViewer, mvTypes, mvGpsObj, mvDrawingEngine, ImgList;
+  BCButton, BCTypes, mvMapViewer, mvTypes, mvGpsObj, mvDrawingEngine, mvDE_BGRA, ImgList;
 
 type
 
@@ -57,6 +57,7 @@ type
     linkShowMoreLifers: TATLabelLink;
     mapSurveys: TMapView;
     lcsIndividualsMonth: TListChartSource;
+    MvBGRADraw: TMvBGRADrawingEngine;
     pBandsBalance: TBCPanel;
     pBandsContent: TBCPanel;
     pBirthdays: TBCPanel;
@@ -761,7 +762,7 @@ begin
 
     mapSurveys.GPSItems.Clear(20);
 
-    if DMC.qLastSurveys.RecordCount > 0 then
+    if RecordCount > 0 then
     begin
       First;
       repeat

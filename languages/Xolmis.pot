@@ -5951,6 +5951,21 @@ msgstr ""
 msgid "Coordinates editor"
 msgstr ""
 
+#: tdlggeoeditor.gridbank.columns[0].title.caption
+msgctxt "tdlggeoeditor.gridbank.columns[0].title.caption"
+msgid "Name"
+msgstr ""
+
+#: tdlggeoeditor.gridbank.columns[1].title.caption
+msgctxt "tdlggeoeditor.gridbank.columns[1].title.caption"
+msgid "Longitude"
+msgstr ""
+
+#: tdlggeoeditor.gridbank.columns[2].title.caption
+msgctxt "tdlggeoeditor.gridbank.columns[2].title.caption"
+msgid "Latitude"
+msgstr ""
+
 #: tdlggeoeditor.lbllatitude.caption
 msgctxt "tdlggeoeditor.lbllatitude.caption"
 msgid "Latitude:"
@@ -5969,6 +5984,15 @@ msgstr ""
 #: tdlggeoeditor.sbok.caption
 msgctxt "tdlggeoeditor.sbok.caption"
 msgid "Apply"
+msgstr ""
+
+#: tdlggeoeditor.tabconvert.caption
+msgctxt "tdlggeoeditor.tabconvert.caption"
+msgid "Convert"
+msgstr ""
+
+#: tdlggeoeditor.tabimported.caption
+msgid "Imported"
 msgstr ""
 
 #: tdlgimportcaptures.caption

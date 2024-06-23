@@ -21,9 +21,9 @@ unit udm_main;
 interface
 
 uses
-  Classes, SysUtils, StrUtils, Forms, Dialogs, ExtDlgs, Controls, fpsexport, UniqueInstance, DB, BufDataset,
-  SdfData, SQLDB, SQLDBLib, IBConnection, SQLite3Conn, fpjson, eventlog, cbs_system, SQLScript, fpcsvexport,
-  fpSimpleXMLExport, fpsimplejsonexport, fpDBExport, ImgList;
+  Classes, SysUtils, StrUtils, Forms, Dialogs, ExtDlgs, Controls, fpsexport, UniqueInstance, DB,
+  SdfData, SQLDB, SQLDBLib, SQLite3Conn, fpjson, eventlog, cbs_system, SQLScript,
+  fpcsvexport, fpSimpleXMLExport, fpsimplejsonexport, fpDBExport, memds, ImgList;
 
 type
 
@@ -45,6 +45,7 @@ type
     iTrees: TImageList;
     iCheckbox: TImageList;
     iTreesDark: TImageList;
+    tabGeoBank: TMemDataset;
     qsConnconnection_id: TLongintField;
     qsConnconnection_name: TStringField;
     qsConndatabase_name: TStringField;
@@ -64,6 +65,13 @@ type
     qUsersuuid: TStringField;
     scriptUserDBInit: TSQLScript;
     JSONExport: TSimpleJSONExporter;
+    tabGeoBank1altitude: TFloatField;
+    tabGeoBank1latitude: TFloatField;
+    tabGeoBank1longitude: TFloatField;
+    tabGeoBankaltitude: TFloatField;
+    tabGeoBankcoordinate_name: TStringField;
+    tabGeoBanklatitude: TFloatField;
+    tabGeoBanklongitude: TFloatField;
     XMLExport: TSimpleXMLExporter;
     sqlCon: TSQLConnector;
     sysCon: TSQLConnector;
@@ -95,12 +103,8 @@ type
     sysTrans: TSQLTransaction;
     OpenCsvDlg: TOpenDialog;
     OpenImgs: TOpenPictureDialog;
-    tabGeoBank: TBufDataset;
-    tabGeoBankaltitude: TFloatField;
-    tabGeoBankcoordinate_id: TAutoIncField;
-    tabGeoBankcoordinate_name: TStringField;
-    tabGeoBanklatitude: TFloatField;
-    tabGeoBanklongitude: TFloatField;
+    tabGeoBank1coordinate_id: TAutoIncField;
+    tabGeoBank1coordinate_name: TStringField;
     TaskDlg: TTaskDialog;
     UniqueInstance1: TUniqueInstance;
     procedure DataModuleCreate(Sender: TObject);
@@ -182,10 +186,20 @@ begin
   {$ENDIF}
 
   OpenSystemDatabase;
+
+  tabGeoBank.FileName := ConcatPaths([AppDataDir, GeoBankFile]);
+  //if not FileExists(ConcatPaths([AppDataDir, GeoBankFile])) then
+  //  tabGeoBank.CreateDataset;
+  tabGeoBank.Open;
 end;
 
 procedure TDMM.DataModuleDestroy(Sender: TObject);
 begin
+  //tabGeoBank.SaveToFile(ConcatPaths([AppDataDir, GeoBankFile]));
+  //tabGeoBank.SaveFileAs(ConcatPaths([AppDataDir, GeoBankFile]));
+  //tabGeoBank.SaveToFile(ConcatPaths([AppDataDir, GeoBankFile]), True);
+  tabGeoBank.Close;
+
   sqlCon.Close;
   sysCon.Close;
 

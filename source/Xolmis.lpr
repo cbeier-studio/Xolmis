@@ -28,7 +28,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   sdflaz,
-  tachartlazaruspkg, lazdbexport, tachartbgra,
+  tachartlazaruspkg, lazdbexport, memdslaz, tachartbgra,
   rxnew,
   virtualdbgrid_package,
   FrameViewer09,

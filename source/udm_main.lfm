@@ -1987,84 +1987,6 @@ object DMM: TDMM
     Left = 262
     Top = 40
   end
-  object tabGeoBank: TBufDataset
-    PacketRecords = 50
-    MaxIndexesCount = 5
-    FieldDefs = <    
-      item
-        Name = 'coordinate_id'
-        DataType = ftAutoInc
-      end    
-      item
-        Name = 'coordinate_name'
-        Attributes = [faRequired]
-        DataType = ftString
-        Size = 80
-      end    
-      item
-        Name = 'longitude'
-        DataType = ftFloat
-        Precision = 15
-      end    
-      item
-        Name = 'latitude'
-        DataType = ftFloat
-        Precision = 15
-      end    
-      item
-        Name = 'altitude'
-        DataType = ftFloat
-        Precision = 15
-      end>
-    Left = 115
-    Top = 186
-    object tabGeoBankcoordinate_id: TAutoIncField
-      FieldKind = fkData
-      FieldName = 'coordinate_id'
-      Index = 0
-      LookupCache = False
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = False
-      Required = False
-    end
-    object tabGeoBankcoordinate_name: TStringField
-      FieldKind = fkData
-      FieldName = 'coordinate_name'
-      Index = 1
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 80
-    end
-    object tabGeoBanklongitude: TFloatField
-      FieldKind = fkData
-      FieldName = 'longitude'
-      Index = 2
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-    end
-    object tabGeoBanklatitude: TFloatField
-      FieldKind = fkData
-      FieldName = 'latitude'
-      Index = 3
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-    end
-    object tabGeoBankaltitude: TFloatField
-      FieldKind = fkData
-      FieldName = 'altitude'
-      Index = 4
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-    end
-  end
   object qUsers: TSQLQuery
     PacketRecords = -1
     FieldDefs = <    
@@ -13216,5 +13138,69 @@ object DMM: TDMM
       7C9484B57FDED4D7F4B2F1FE96C17A39B56003C520762D16EBEE55F5BA8E097C
       BCFFFC3F376AC576
     }
+  end
+  object tabGeoBank: TMemDataset
+    FieldDefs = <    
+      item
+        Name = 'coordinate_name'
+        DataType = ftString
+        Size = 80
+      end    
+      item
+        Name = 'longitude'
+        DataType = ftFloat
+      end    
+      item
+        Name = 'latitude'
+        DataType = ftFloat
+      end    
+      item
+        Name = 'altitude'
+        DataType = ftFloat
+      end>
+    Left = 120
+    Top = 186
+    object tabGeoBankcoordinate_name: TStringField
+      FieldKind = fkData
+      FieldName = 'coordinate_name'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 80
+    end
+    object tabGeoBanklongitude: TFloatField
+      FieldKind = fkData
+      FieldName = 'longitude'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '###0.00000000'
+      Precision = 2
+    end
+    object tabGeoBanklatitude: TFloatField
+      FieldKind = fkData
+      FieldName = 'latitude'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '###0.00000000'
+      Precision = 2
+    end
+    object tabGeoBankaltitude: TFloatField
+      FieldKind = fkData
+      FieldName = 'altitude'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = 2
+    end
   end
 end

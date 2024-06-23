@@ -1,26 +1,26 @@
 object dlgGeoEditor: TdlgGeoEditor
   Left = 352
-  Height = 230
+  Height = 333
   Top = 33
-  Width = 369
+  Width = 722
   AutoSize = True
   BorderIcons = [biSystemMenu]
-  BorderStyle = bsNone
+  BorderStyle = bsDialog
   Caption = 'Coordinates editor'
-  ClientHeight = 230
-  ClientWidth = 369
+  ClientHeight = 333
+  ClientWidth = 722
   Constraints.MinHeight = 205
   Constraints.MinWidth = 349
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PopupMode = pmAuto
-  LCLVersion = '3.4.0.0'
+  Position = poScreenCenter
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 189
-    Width = 369
-    Align = alTop
+    Top = 292
+    Width = 722
+    Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
@@ -28,32 +28,32 @@ object dlgGeoEditor: TdlgGeoEditor
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 369
-    Constraints.MinWidth = 112
+    ClientWidth = 722
+    Constraints.MinWidth = 722
     ParentBackground = False
     TabOrder = 0
     object sbOK: TButton
-      Left = 16
+      Left = 458
       Height = 25
       Top = 8
-      Width = 165
+      Width = 120
+      Align = alRight
       AutoSize = True
       Caption = 'Apply'
       Constraints.MinWidth = 120
-      Enabled = False
       Font.Name = 'Segoe UI Semibold'
       ParentFont = False
       TabOrder = 0
       OnClick = sbOKClick
     end
     object sbCancel: TButton
-      Left = 189
+      Left = 586
       Height = 25
       Top = 8
-      Width = 164
+      Width = 120
+      Align = alRight
       AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
@@ -64,303 +64,388 @@ object dlgGeoEditor: TdlgGeoEditor
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 187
-    Width = 369
-    Align = alTop
+    Top = 290
+    Width = 722
+    Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
-  object pContent: TBCPanel
-    Left = 0
-    Height = 187
+  object mapGeo: TMapView
+    Left = 377
+    Height = 290
     Top = 0
-    Width = 369
-    Align = alTop
+    Width = 345
+    Align = alClient
+    CachePath = 'map-cache'
+    DownloadEngine = mapGeo.BuiltInDLE
+    DrawingEngine = MvBGRADraw
+    Font.Color = clBlack
+    MapProvider = 'OpenStreetMap Mapnik'
+    POIImages = DMM.iMaps
+    POIImagesWidth = 20
+    UseThreads = True
+    OnDrawGpsPoint = mapGeoDrawGpsPoint
+  end
+  object PG: TPageControl
+    Left = 0
+    Height = 290
+    Top = 0
+    Width = 377
+    ActivePage = tabConvert
+    Align = alLeft
     AutoSize = True
-    ChildSizing.LeftRightSpacing = 16
-    ChildSizing.TopBottomSpacing = 16
-    Background.Color = clBtnFace
-    Background.Gradient1.StartColor = clWhite
-    Background.Gradient1.EndColor = clBlack
-    Background.Gradient1.GradientType = gtLinear
-    Background.Gradient1.Point1XPercent = 0
-    Background.Gradient1.Point1YPercent = 0
-    Background.Gradient1.Point2XPercent = 0
-    Background.Gradient1.Point2YPercent = 100
-    Background.Gradient2.StartColor = clWhite
-    Background.Gradient2.EndColor = clBlack
-    Background.Gradient2.GradientType = gtLinear
-    Background.Gradient2.Point1XPercent = 0
-    Background.Gradient2.Point1YPercent = 0
-    Background.Gradient2.Point2XPercent = 0
-    Background.Gradient2.Point2YPercent = 100
-    Background.Gradient1EndPercent = 35
-    Background.Style = bbsColor
-    BevelInner = bvNone
-    BevelOuter = bvRaised
-    BevelWidth = 1
-    Border.Style = bboNone
-    BorderBCStyle = bpsBorder
-    FontEx.Color = clDefault
-    FontEx.FontQuality = fqSystemClearType
-    FontEx.Shadow = False
-    FontEx.ShadowRadius = 5
-    FontEx.ShadowOffsetX = 5
-    FontEx.ShadowOffsetY = 5
-    FontEx.Style = []
-    ParentBackground = False
-    Rounding.RoundX = 0
-    Rounding.RoundY = 0
-    TabOrder = 1
-    object pLong: TBCPanel
-      Left = 17
-      Height = 49
-      Top = 17
-      Width = 335
-      Align = alTop
-      AutoSize = True
-      ChildSizing.LeftRightSpacing = 16
-      ChildSizing.TopBottomSpacing = 12
-      ChildSizing.HorizontalSpacing = 8
-      Background.Color = 16448250
-      Background.Gradient1.StartColor = clWhite
-      Background.Gradient1.EndColor = clBlack
-      Background.Gradient1.GradientType = gtLinear
-      Background.Gradient1.Point1XPercent = 0
-      Background.Gradient1.Point1YPercent = 0
-      Background.Gradient1.Point2XPercent = 0
-      Background.Gradient1.Point2YPercent = 100
-      Background.Gradient2.StartColor = clWhite
-      Background.Gradient2.EndColor = clBlack
-      Background.Gradient2.GradientType = gtLinear
-      Background.Gradient2.Point1XPercent = 0
-      Background.Gradient2.Point1YPercent = 0
-      Background.Gradient2.Point2XPercent = 0
-      Background.Gradient2.Point2YPercent = 100
-      Background.Gradient1EndPercent = 35
-      Background.Style = bbsColor
-      BevelInner = bvNone
-      BevelOuter = bvRaised
-      BevelWidth = 1
-      Border.Color = 13750737
-      Border.Style = bboSolid
-      BorderBCStyle = bpsBorder
-      FontEx.Color = clDefault
-      FontEx.FontQuality = fqSystemClearType
-      FontEx.Shadow = False
-      FontEx.ShadowRadius = 5
-      FontEx.ShadowOffsetX = 5
-      FontEx.ShadowOffsetY = 5
-      FontEx.Style = []
-      ParentBackground = True
-      Rounding.RoundX = 8
-      Rounding.RoundY = 8
-      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
-      TabOrder = 0
-      object eLongDeg: TSpinEdit
-        Left = 82
-        Height = 23
-        Top = 13
-        Width = 50
+    TabIndex = 0
+    TabOrder = 2
+    OnChange = PGChange
+    object tabConvert: TTabSheet
+      Caption = 'Convert'
+      ClientHeight = 262
+      ClientWidth = 369
+      object pContent: TBCPanel
+        Left = 0
+        Height = 262
+        Top = 0
+        Width = 369
         Align = alLeft
-        MaxValue = 180
-        OnChange = eLongDegChange
+        AutoSize = True
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 16
+        Background.Color = clBtnFace
+        Background.Gradient1.StartColor = clWhite
+        Background.Gradient1.EndColor = clBlack
+        Background.Gradient1.GradientType = gtLinear
+        Background.Gradient1.Point1XPercent = 0
+        Background.Gradient1.Point1YPercent = 0
+        Background.Gradient1.Point2XPercent = 0
+        Background.Gradient1.Point2YPercent = 100
+        Background.Gradient2.StartColor = clWhite
+        Background.Gradient2.EndColor = clBlack
+        Background.Gradient2.GradientType = gtLinear
+        Background.Gradient2.Point1XPercent = 0
+        Background.Gradient2.Point1YPercent = 0
+        Background.Gradient2.Point2XPercent = 0
+        Background.Gradient2.Point2YPercent = 100
+        Background.Gradient1EndPercent = 35
+        Background.Style = bbsColor
+        BevelInner = bvNone
+        BevelOuter = bvRaised
+        BevelWidth = 1
+        Border.Style = bboNone
+        BorderBCStyle = bpsBorder
+        FontEx.Color = clDefault
+        FontEx.FontQuality = fqSystemClearType
+        FontEx.Shadow = False
+        FontEx.ShadowRadius = 5
+        FontEx.ShadowOffsetX = 5
+        FontEx.ShadowOffsetY = 5
+        FontEx.Style = []
+        ParentBackground = False
+        Rounding.RoundX = 0
+        Rounding.RoundY = 0
         TabOrder = 0
-      end
-      object eLongMin: TSpinEdit
-        Left = 140
-        Height = 23
-        Top = 13
-        Width = 50
-        Align = alLeft
-        MaxValue = 60
-        OnChange = eLongDegChange
-        TabOrder = 1
-      end
-      object eLongSec: TFloatSpinEdit
-        Left = 198
-        Height = 23
-        Top = 13
-        Width = 61
-        Align = alLeft
-        MaxValue = 60
-        OnChange = eLongDegChange
-        TabOrder = 2
-      end
-      object cbLongHem: TComboBox
-        Left = 267
-        Height = 23
-        Top = 13
-        Width = 51
-        Align = alLeft
-        ItemHeight = 15
-        Items.Strings = (
-          'E'
-          'W'
-        )
-        Style = csDropDownList
-        TabOrder = 3
-        OnChange = eLongDegChange
-      end
-      object lblLongitude: TLabel
-        Left = 17
-        Height = 23
-        Top = 13
-        Width = 57
-        Align = alLeft
-        Alignment = taRightJustify
-        Caption = 'Longitude:'
-        Layout = tlCenter
+        object pLong: TBCPanel
+          Left = 17
+          Height = 49
+          Top = 17
+          Width = 335
+          Align = alTop
+          AutoSize = True
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvRaised
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+          TabOrder = 0
+          object eLongDeg: TSpinEdit
+            Left = 82
+            Height = 23
+            Top = 13
+            Width = 50
+            Align = alLeft
+            MaxValue = 180
+            OnEditingDone = eLongDegEditingDone
+            TabOrder = 0
+          end
+          object eLongMin: TSpinEdit
+            Left = 140
+            Height = 23
+            Top = 13
+            Width = 50
+            Align = alLeft
+            MaxValue = 60
+            OnEditingDone = eLongDegEditingDone
+            TabOrder = 1
+          end
+          object eLongSec: TFloatSpinEdit
+            Left = 198
+            Height = 23
+            Top = 13
+            Width = 61
+            Align = alLeft
+            MaxValue = 60
+            OnEditingDone = eLongDegEditingDone
+            TabOrder = 2
+          end
+          object cbLongHem: TComboBox
+            Left = 267
+            Height = 23
+            Top = 13
+            Width = 51
+            Align = alLeft
+            ItemHeight = 15
+            Items.Strings = (
+              'E'
+              'W'
+            )
+            Style = csDropDownList
+            TabOrder = 3
+            OnSelect = eLongDegEditingDone
+          end
+          object lblLongitude: TLabel
+            Left = 17
+            Height = 23
+            Top = 13
+            Width = 57
+            Align = alLeft
+            Alignment = taRightJustify
+            Caption = 'Longitude:'
+            Layout = tlCenter
+          end
+        end
+        object pLat: TBCPanel
+          Left = 17
+          Height = 49
+          Top = 66
+          Width = 335
+          Align = alTop
+          AutoSize = True
+          BorderSpacing.Bottom = 12
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvRaised
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+          TabOrder = 1
+          object eLatDeg: TSpinEdit
+            Left = 81
+            Height = 23
+            Top = 13
+            Width = 50
+            Align = alLeft
+            MaxValue = 90
+            OnEditingDone = eLongDegEditingDone
+            TabOrder = 0
+          end
+          object eLatMin: TSpinEdit
+            Left = 139
+            Height = 23
+            Top = 13
+            Width = 50
+            Align = alLeft
+            MaxValue = 60
+            OnEditingDone = eLongDegEditingDone
+            TabOrder = 1
+          end
+          object eLatSec: TFloatSpinEdit
+            Left = 197
+            Height = 23
+            Top = 13
+            Width = 61
+            Align = alLeft
+            MaxValue = 60
+            OnEditingDone = eLongDegEditingDone
+            TabOrder = 2
+          end
+          object cbLatHem: TComboBox
+            Left = 266
+            Height = 23
+            Top = 13
+            Width = 51
+            Align = alLeft
+            ItemHeight = 15
+            Items.Strings = (
+              'N'
+              'S'
+            )
+            Style = csDropDownList
+            TabOrder = 3
+            OnSelect = eLongDegEditingDone
+          end
+          object lblLatitude: TLabel
+            Left = 17
+            Height = 23
+            Top = 13
+            Width = 56
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Latitude:'
+            Layout = tlCenter
+          end
+        end
+        object pDecimal: TBCPanel
+          Left = 17
+          Height = 42
+          Top = 127
+          Width = 335
+          Align = alTop
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvRaised
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          Caption = '0,00000000; 0,00000000'
+          FontEx.Color = 13066075
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          TabOrder = 2
+        end
       end
     end
-    object pLat: TBCPanel
-      Left = 17
-      Height = 49
-      Top = 66
-      Width = 335
-      Align = alTop
-      AutoSize = True
-      BorderSpacing.Bottom = 13
+    object tabImported: TTabSheet
+      Caption = 'Imported'
       ChildSizing.LeftRightSpacing = 16
-      ChildSizing.TopBottomSpacing = 12
-      ChildSizing.HorizontalSpacing = 8
-      Background.Color = 16448250
-      Background.Gradient1.StartColor = clWhite
-      Background.Gradient1.EndColor = clBlack
-      Background.Gradient1.GradientType = gtLinear
-      Background.Gradient1.Point1XPercent = 0
-      Background.Gradient1.Point1YPercent = 0
-      Background.Gradient1.Point2XPercent = 0
-      Background.Gradient1.Point2YPercent = 100
-      Background.Gradient2.StartColor = clWhite
-      Background.Gradient2.EndColor = clBlack
-      Background.Gradient2.GradientType = gtLinear
-      Background.Gradient2.Point1XPercent = 0
-      Background.Gradient2.Point1YPercent = 0
-      Background.Gradient2.Point2XPercent = 0
-      Background.Gradient2.Point2YPercent = 100
-      Background.Gradient1EndPercent = 35
-      Background.Style = bbsColor
-      BevelInner = bvNone
-      BevelOuter = bvRaised
-      BevelWidth = 1
-      Border.Color = 13750737
-      Border.Style = bboSolid
-      BorderBCStyle = bpsBorder
-      FontEx.Color = clDefault
-      FontEx.FontQuality = fqSystemClearType
-      FontEx.Shadow = False
-      FontEx.ShadowRadius = 5
-      FontEx.ShadowOffsetX = 5
-      FontEx.ShadowOffsetY = 5
-      FontEx.Style = []
-      ParentBackground = True
-      Rounding.RoundX = 8
-      Rounding.RoundY = 8
-      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
-      TabOrder = 1
-      object eLatDeg: TSpinEdit
-        Left = 81
-        Height = 23
-        Top = 13
-        Width = 50
-        Align = alLeft
-        MaxValue = 90
-        OnChange = eLongDegChange
+      ChildSizing.TopBottomSpacing = 16
+      ChildSizing.VerticalSpacing = 12
+      ClientHeight = 262
+      ClientWidth = 369
+      object gridBank: TDBGrid
+        Left = 16
+        Height = 230
+        Top = 16
+        Width = 337
+        Align = alClient
+        AutoEdit = False
+        AutoFillColumns = True
+        Color = clWindow
+        Columns = <        
+          item
+            Title.Caption = 'Name'
+            Width = 106
+            FieldName = 'coordinate_name'
+          end        
+          item
+            Title.Caption = 'Longitude'
+            Width = 105
+            FieldName = 'longitude'
+          end        
+          item
+            Title.Caption = 'Latitude'
+            Width = 105
+            FieldName = 'latitude'
+          end>
+        Constraints.MinHeight = 230
+        DataSource = dsGeoBank
+        FixedCols = 0
+        Options = [dgColumnResize, dgColumnMove, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgCellEllipsis, dgThumbTracking]
+        Scrollbars = ssVertical
         TabOrder = 0
-      end
-      object eLatMin: TSpinEdit
-        Left = 139
-        Height = 23
-        Top = 13
-        Width = 50
-        Align = alLeft
-        MaxValue = 60
-        OnChange = eLongDegChange
-        TabOrder = 1
-      end
-      object eLatSec: TFloatSpinEdit
-        Left = 197
-        Height = 23
-        Top = 13
-        Width = 61
-        Align = alLeft
-        MaxValue = 60
-        OnChange = eLongDegChange
-        TabOrder = 2
-      end
-      object cbLatHem: TComboBox
-        Left = 266
-        Height = 23
-        Top = 13
-        Width = 51
-        Align = alLeft
-        ItemHeight = 15
-        Items.Strings = (
-          'N'
-          'S'
-        )
-        Style = csDropDownList
-        TabOrder = 3
-        OnChange = eLongDegChange
-      end
-      object lblLatitude: TLabel
-        Left = 17
-        Height = 23
-        Top = 13
-        Width = 56
-        Align = alLeft
-        Alignment = taRightJustify
-        AutoSize = False
-        Caption = 'Latitude:'
-        Layout = tlCenter
+        TitleStyle = tsNative
+        OnCellClick = gridBankCellClick
       end
     end
-    object pDecimal: TBCPanel
-      Left = 17
-      Height = 42
-      Top = 128
-      Width = 335
-      Align = alTop
-      ChildSizing.LeftRightSpacing = 16
-      ChildSizing.TopBottomSpacing = 12
-      ChildSizing.HorizontalSpacing = 8
-      Background.Color = 16448250
-      Background.Gradient1.StartColor = clWhite
-      Background.Gradient1.EndColor = clBlack
-      Background.Gradient1.GradientType = gtLinear
-      Background.Gradient1.Point1XPercent = 0
-      Background.Gradient1.Point1YPercent = 0
-      Background.Gradient1.Point2XPercent = 0
-      Background.Gradient1.Point2YPercent = 100
-      Background.Gradient2.StartColor = clWhite
-      Background.Gradient2.EndColor = clBlack
-      Background.Gradient2.GradientType = gtLinear
-      Background.Gradient2.Point1XPercent = 0
-      Background.Gradient2.Point1YPercent = 0
-      Background.Gradient2.Point2XPercent = 0
-      Background.Gradient2.Point2YPercent = 100
-      Background.Gradient1EndPercent = 35
-      Background.Style = bbsColor
-      BevelInner = bvNone
-      BevelOuter = bvRaised
-      BevelWidth = 1
-      Border.Color = 13750737
-      Border.Style = bboSolid
-      BorderBCStyle = bpsBorder
-      Caption = '0,00000000; 0,00000000'
-      FontEx.Color = 13066075
-      FontEx.FontQuality = fqSystemClearType
-      FontEx.Shadow = False
-      FontEx.ShadowRadius = 5
-      FontEx.ShadowOffsetX = 5
-      FontEx.ShadowOffsetY = 5
-      FontEx.Style = []
-      ParentBackground = True
-      Rounding.RoundX = 8
-      Rounding.RoundY = 8
-      TabOrder = 2
-    end
+  end
+  object dsGeoBank: TDataSource
+    AutoEdit = False
+    DataSet = DMM.tabGeoBank
+    Left = 56
+    Top = 216
+  end
+  object MvBGRADraw: TMvBGRADrawingEngine
+    Left = 424
+    Top = 72
   end
 end

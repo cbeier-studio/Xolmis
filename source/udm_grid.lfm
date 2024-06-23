@@ -2767,6 +2767,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = '###0.00000000'
       MaxValue = 180
       MinValue = -180
       Precision = -1
@@ -2780,6 +2781,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = '###0.00000000'
       MaxValue = 90
       MinValue = -90
       Precision = -1

@@ -558,8 +558,8 @@ begin
 end;
 
 function GeoEditorDlg(aDMS: String; aAxis: TMapAxis; aControl: TControl; var aDecimal: Extended): Boolean;
-var
-  PControl: TPoint;
+//var
+//  PControl: TPoint;
 begin
   Result := False;
   {$IFDEF DEBUG}
@@ -573,8 +573,8 @@ begin
   try
     Axis := aAxis;
     Linha := aDMS;
-    PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
-    SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+    //PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
+    //SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
     if ShowModal = mrOK then
     begin
       aDecimal := CoordDec;
@@ -589,8 +589,8 @@ begin
 end;
 
 function GeoEditorDlg(aDMS: TDMS; aAxis: TMapAxis; aControl: TControl; var aDecimal: Extended): Boolean;
-var
-  PControl: TPoint;
+//var
+//  PControl: TPoint;
 begin
   Result := False;
   {$IFDEF DEBUG}
@@ -607,8 +607,8 @@ begin
     Linha := '';
     CoordDMS := aDMS;
     //PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
-    PControl := aControl.ClientOrigin;
-    SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+    //PControl := aControl.ClientOrigin;
+    //SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
     if ShowModal = mrOK then
     begin
       aDecimal := CoordDec;
@@ -623,8 +623,8 @@ begin
 end;
 
 function GeoEditorDlg(aControl: TControl; aDataSet: TDataSet; LongitudeField, LatitudeField: String): Boolean;
-var
-  PControl: TPoint;
+//var
+//  PControl: TPoint;
 begin
   Result := False;
   {$IFDEF DEBUG}
@@ -637,14 +637,14 @@ begin
     PointStr := EmptyStr;
     DecimalPoint.FromString(aDataSet.FieldByName(LongitudeField).AsString + '; ' +
       aDataSet.FieldByName(LatitudeField).AsString);
-    if Assigned(aControl) then
-    begin
+    //if Assigned(aControl) then
+    //begin
       //PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
-      PControl := aControl.ClientOrigin;
-      SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
-    end
-    else
-      Position := poScreenCenter;
+    //  PControl := aControl.ClientOrigin;
+    //  SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+    //end
+    //else
+    //  Position := poScreenCenter;
     //SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
     if ShowModal = mrOK then
     begin
