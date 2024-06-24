@@ -10,6 +10,7 @@ object cfgOptions: TcfgOptions
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.4.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -1792,7 +1793,7 @@ object cfgOptions: TcfgOptions
         Top = 0
         Width = 657
         HorzScrollBar.Page = 481
-        VertScrollBar.Page = 216
+        VertScrollBar.Page = 211
         Align = alClient
         BorderStyle = bsNone
         ClientHeight = 422
@@ -1801,23 +1802,23 @@ object cfgOptions: TcfgOptions
         TabOrder = 0
         object pContentBackup: TPanel
           Left = 0
-          Height = 216
+          Height = 211
           Top = 0
-          Width = 640
+          Width = 657
           Align = alTop
           AutoSize = True
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
-          ClientHeight = 216
-          ClientWidth = 640
+          ClientHeight = 211
+          ClientWidth = 657
           ParentBackground = False
           TabOrder = 0
           object lblTitleBackup: TLabel
             Left = 16
             Height = 28
             Top = 16
-            Width = 608
+            Width = 625
             Align = alTop
             BorderSpacing.Top = 16
             BorderSpacing.Bottom = 8
@@ -1832,7 +1833,7 @@ object cfgOptions: TcfgOptions
             Left = 16
             Height = 47
             Top = 52
-            Width = 608
+            Width = 625
             Align = alTop
             AutoSize = True
             ChildSizing.LeftRightSpacing = 16
@@ -1895,7 +1896,7 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object eBackupPath: TDirectoryEdit
-              Left = 175
+              Left = 192
               Height = 23
               Top = 12
               Width = 417
@@ -1913,10 +1914,11 @@ object cfgOptions: TcfgOptions
           end
           object pStartupBackup: TBCPanel
             Left = 16
-            Height = 52
+            Height = 47
             Top = 99
-            Width = 608
+            Width = 625
             Align = alTop
+            AutoSize = True
             ChildSizing.LeftRightSpacing = 16
             ChildSizing.TopBottomSpacing = 12
             ChildSizing.HorizontalSpacing = 8
@@ -1943,7 +1945,6 @@ object cfgOptions: TcfgOptions
             Border.Color = 13750737
             Border.Style = bboSolid
             BorderBCStyle = bpsBorder
-            Constraints.MinHeight = 52
             FontEx.Color = clDefault
             FontEx.FontQuality = fqSystemClearType
             FontEx.Shadow = False
@@ -1958,7 +1959,7 @@ object cfgOptions: TcfgOptions
             TabOrder = 1
             object Image16: TImage
               Left = 16
-              Height = 28
+              Height = 23
               Top = 12
               Width = 27
               Align = alLeft
@@ -1969,34 +1970,37 @@ object cfgOptions: TcfgOptions
             end
             object lblStartupBackup: TLabel
               Left = 51
-              Height = 28
+              Height = 23
               Top = 12
-              Width = 224
+              Width = 178
               Align = alLeft
-              Caption = 'Create a database copy when Xolmis starts'
+              Caption = 'Create backup when Xolmis starts'
               Layout = tlCenter
               ParentColor = False
             end
-            object tsStartupBackup: TRxSwitch
-              Left = 542
-              Height = 28
+            object cbStartupBackup: TComboBox
+              Left = 434
+              Height = 23
               Top = 12
-              Width = 50
+              Width = 175
               Align = alRight
-              Color = 16448250
-              ParentColor = False
+              ItemHeight = 15
+              Items.Strings = (
+                'Never'
+                'Daily'
+                'Weekly'
+                'Monthly'
+              )
+              Style = csDropDownList
               TabOrder = 0
-              TextPosition = tpLeft
-              Style = swsHorizontal
-              OnOn = tsStartupBackupOn
-              OnOff = tsStartupBackupOn
+              OnSelect = cbStartupBackupSelect
             end
           end
           object pManageBackups: TBCPanel
             Left = 16
             Height = 49
-            Top = 151
-            Width = 608
+            Top = 146
+            Width = 625
             Align = alTop
             AutoSize = True
             BorderSpacing.Bottom = 16
@@ -2049,7 +2053,7 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object sbNewBackup: TBitBtn
-              Left = 417
+              Left = 434
               Height = 25
               Top = 12
               Width = 102
@@ -2060,7 +2064,7 @@ object cfgOptions: TcfgOptions
               TabOrder = 0
             end
             object sbRestoreBackup: TBitBtn
-              Left = 527
+              Left = 544
               Height = 25
               Top = 12
               Width = 65

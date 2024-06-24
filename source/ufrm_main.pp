@@ -346,7 +346,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions,
+  cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions, cbs_backup,
   cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_client, udm_sampling, udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
@@ -917,6 +917,26 @@ begin
     if not Assigned(DMG) then
       DMG := TDMG.Create(Application);
     Application.ProcessMessages;
+
+    { Run backup }
+    case XSettings.StartupBackup of
+      0: ;
+      1:
+      begin
+        if DaysBetween(Now, XSettings.LastBackup) >= 1 then
+          NewBackup;
+      end;
+      2:
+      begin
+        if DaysBetween(Now, XSettings.LastBackup) >= 7 then
+          NewBackup;
+      end;
+      3:
+      begin
+        if DaysBetween(Now, XSettings.LastBackup) >= 30 then
+          NewBackup;
+      end;
+    end;
 
     { Check for updates }
     case XSettings.AutoUpdates of

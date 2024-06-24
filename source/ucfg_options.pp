@@ -34,6 +34,7 @@ type
     cbMainTaxonomy: TComboBox;
     cbSelectedTheme: TComboBox;
     cbVernacularNames: TComboBox;
+    cbStartupBackup: TComboBox;
     eAttachmentsPath: TDirectoryEdit;
     eAudiosPath: TDirectoryEdit;
     eBackupPath: TDirectoryEdit;
@@ -144,12 +145,12 @@ type
     tsRememberConnection: TRxSwitch;
     tsRememberUser: TRxSwitch;
     tsShowSynonyms: TRxSwitch;
-    tsStartupBackup: TRxSwitch;
     tsWriteLogs: TRxSwitch;
     procedure cbCheckUpdatesChange(Sender: TObject);
     procedure cbClearDeletedChange(Sender: TObject);
     procedure cbMainTaxonomyChange(Sender: TObject);
     procedure cbSelectedThemeChange(Sender: TObject);
+    procedure cbStartupBackupSelect(Sender: TObject);
     procedure cbVernacularNamesChange(Sender: TObject);
     procedure eAttachmentsPathChange(Sender: TObject);
     procedure eAudiosPathChange(Sender: TObject);
@@ -168,7 +169,6 @@ type
     procedure tsRememberConnectionOn(Sender: TObject);
     procedure tsRememberUserOn(Sender: TObject);
     procedure tsShowSynonymsOn(Sender: TObject);
-    procedure tsStartupBackupOn(Sender: TObject);
     procedure tvMenuSelectionChanged(Sender: TObject);
   private
     procedure ApplyDarkMode;
@@ -237,6 +237,11 @@ procedure TcfgOptions.cbSelectedThemeChange(Sender: TObject);
 begin
   XSettings.SelectedTheme := cbSelectedTheme.ItemIndex;
   lblSelectedThemeRestart.Visible := True;
+end;
+
+procedure TcfgOptions.cbStartupBackupSelect(Sender: TObject);
+begin
+  XSettings.StartupBackup := cbStartupBackup.ItemIndex;
 end;
 
 procedure TcfgOptions.cbClearDeletedChange(Sender: TObject);
@@ -320,7 +325,6 @@ begin
   tsRememberUser.Color := pConfirmCancel.Background.Color;
   tsWriteLogs.Color := pConfirmCancel.Background.Color;
   tsAllowUsageData.Color := pConfirmCancel.Background.Color;
-  tsStartupBackup.Color := pConfirmCancel.Background.Color;
 
   eImagesPath.Images := DMM.iEditsDark;
   eAudiosPath.Images := DMM.iEditsDark;
@@ -418,11 +422,6 @@ begin
   XSettings.ShowSynonyms := tsShowSynonyms.StateOn = sw_on;
 end;
 
-procedure TcfgOptions.tsStartupBackupOn(Sender: TObject);
-begin
-  XSettings.StartupBackup := tsStartupBackup.StateOn = sw_on;
-end;
-
 procedure TcfgOptions.tsUseConditionalFormattingOn(Sender: TObject);
 begin
   XSettings.UseConditionalFormatting := tsUseConditionalFormatting.StateOn = sw_on;
@@ -491,10 +490,7 @@ begin
 
   { BACKUP AND RESTORE }
   eBackupPath.Text := XSettings.BackupFolder;
-  if XSettings.StartupBackup then
-    tsStartupBackup.StateOn := sw_on
-  else
-    tsStartupBackup.StateOn := sw_off;
+  cbStartupBackup.ItemIndex := XSettings.StartupBackup;
 
 end;
 

@@ -5242,8 +5242,8 @@ msgid "Show synonyms in search results"
 msgstr "Mostrar sinônimos nos resultados das buscas"
 
 #: tcfgoptions.lblstartupbackup.caption
-msgid "Create a database copy when Xolmis starts"
-msgstr "Criar uma cópia do banco de dados quando o Xolmis iniciar"
+msgid "Create backup when Xolmis starts"
+msgstr "Criar backup quando o Xolmis iniciar"
 
 #: tcfgoptions.lbltitleappearance.caption
 msgid "Appearance"
