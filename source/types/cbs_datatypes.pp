@@ -47,8 +47,10 @@ type
     GUIDEndian: (ideLittle, ideBig);
     UserName: String;
     Password: String;
+    LastBackup: TDateTime;
     procedure Clear;
     procedure LoadParams;
+    procedure SetLastBackup;
     function TestConnection: Boolean;
   end;
 
@@ -1006,6 +1008,7 @@ begin
   GUIDEndian := ideLittle;
   UserName := EmptyStr;
   Password := EmptyStr;
+  LastBackup := StrToDateTime('30/01/1500 00:00:00');
 end;
 
 procedure TDBParams.LoadParams;
@@ -1027,6 +1030,7 @@ begin
     Port := C.FieldByName('database_port').AsInteger;
     UserName := C.FieldByName('user_name').AsString;
     Password := C.FieldByName('user_password').AsString;
+    LastBackup := C.FieldByName('last_backup').AsDateTime;
     IsLocal := Server = 'localhost';
     case Manager of
       dbSqlite:
@@ -1065,6 +1069,12 @@ begin
   end;
 
   C.Close;
+end;
+
+procedure TDBParams.SetLastBackup;
+begin
+  DMM.sysCon.ExecuteDirect('UPDATE connections SET last_backup = strftime(''now'', ''localtime'') ' +
+    'WHERE connection_name = ' + QuotedStr(Name));
 end;
 
 function TDBParams.TestConnection: Boolean;

@@ -241,7 +241,7 @@ end;
 
 procedure TcfgOptions.cbStartupBackupSelect(Sender: TObject);
 begin
-  XSettings.StartupBackup := cbStartupBackup.ItemIndex;
+  XSettings.AutomaticBackup := cbStartupBackup.ItemIndex;
 end;
 
 procedure TcfgOptions.cbClearDeletedChange(Sender: TObject);
@@ -490,7 +490,7 @@ begin
 
   { BACKUP AND RESTORE }
   eBackupPath.Text := XSettings.BackupFolder;
-  cbStartupBackup.ItemIndex := XSettings.StartupBackup;
+  cbStartupBackup.ItemIndex := XSettings.AutomaticBackup;
 
 end;
 

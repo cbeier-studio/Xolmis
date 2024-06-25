@@ -3930,6 +3930,14 @@ msgctxt "cbs_locale.rsprogressunpreparing"
 msgid "Unpreparing..."
 msgstr "Despreparando..."
 
+#: cbs_locale.rspromptbackupnow
+msgid ""
+"The automatic backup will run now and it could take several minutes.\n"
+"Do you want to continue with backup?"
+msgstr ""
+"O backup automático será executado agora e pode demorar vários minutos.\n"
+"Você deseja continuar com o backup?"
+
 #: cbs_locale.rsqualifieronlyingenus
 msgctxt "cbs_locale.rsqualifieronlyingenus"
 msgid "The sp. qualifier can only be used with genera rank."

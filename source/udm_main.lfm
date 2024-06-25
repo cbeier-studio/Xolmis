@@ -2349,6 +2349,11 @@ object DMM: TDMM
         Precision = -1
       end    
       item
+        Name = 'last_backup'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
         Name = 'insert_date'
         DataType = ftDateTime
         Precision = -1
@@ -2458,11 +2463,21 @@ object DMM: TDMM
       BlobType = ftMemo
       Transliterate = False
     end
+    object qsConnlast_backup: TDateTimeField
+      DisplayLabel = 'Last backup'
+      FieldKind = fkData
+      FieldName = 'last_backup'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
     object qsConninsert_date: TDateTimeField
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 8
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2472,7 +2487,7 @@ object DMM: TDMM
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 9
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8684,7 +8699,7 @@ object DMM: TDMM
     Connected = False
     LoginPrompt = False
     BeforeConnect = sysConBeforeConnect
-    DatabaseName = 'D:\Desenv\Xolmis\data\systemdb.sqlite3'
+    DatabaseName = 'D:\Desenv\Xolmis_Local\data\systemdb.sqlite3'
     KeepConnection = False
     Params.Strings = (
       ''

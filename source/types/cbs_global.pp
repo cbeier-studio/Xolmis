@@ -120,8 +120,7 @@ type
     FAllowWriteLogs, FAllowUsageData: Boolean;
     { Backup }
     FBackupFolder: String;
-    FStartupBackup: Integer;
-    FLastBackup: TDateTime;
+    FAutomaticBackup: Integer;
     FBackupsToKeep: Integer;
     { Versions }
     FClementsVersion, FIocVersion, FCbroVersion: String;
@@ -176,8 +175,7 @@ type
     property AllowSendUsageData: Boolean read FAllowUsageData write FAllowUsageData;
     { Backup }
     property BackupFolder: String read FBackupFolder write SetBackupFolder;
-    property StartupBackup: Integer read FStartupBackup write FStartupBackup;
-    property LastBackup: TDateTime read FLastBackup write FLastBackup;
+    property AutomaticBackup: Integer read FAutomaticBackup write FAutomaticBackup;
     property BackupsToKeep: Integer read FBackupsToKeep write FBackupsToKeep;
     { Versions }
     property ClementsVersion: String read FClementsVersion;
@@ -690,8 +688,7 @@ begin
   FAllowUsageData := Ini.GetValue('/PRIVACY/AllowUsageData', False);
   { Backup }
   FBackupFolder := Ini.GetValue('/BACKUP/BackupFolder', ConcatPaths([InstallDir, 'backup']));
-  FStartupBackup := Ini.GetValue('/BACKUP/StartupBackup', 1);
-  FLastBackup := Ini.GetValue('/BACKUP/LastBackup', StrToDateTime('30/12/1500 00:00:00'));
+  FAutomaticBackup := Ini.GetValue('/BACKUP/StartupBackup', 1);
   FBackupsToKeep := Ini.GetValue('/BACKUP/BackupsToKeep', 10);
   { Versions }
   FClementsVersion := Ini.GetValue('/VERSIONS/Clements', '2023');
@@ -736,8 +733,7 @@ begin
   Ini.SetValue('/PRIVACY/AllowUsageData', FAllowUsageData);
   { Backup }
   Ini.SetValue('/BACKUP/BackupFolder', FBackupFolder);
-  Ini.SetValue('/BACKUP/StartupBackup', FStartupBackup);
-  Ini.SetValue('/BACKUP/LastBackup', FLastBackup);
+  Ini.SetValue('/BACKUP/StartupBackup', FAutomaticBackup);
   Ini.SetValue('/BACKUP/BackupsToKeep', FBackupsToKeep);
 
   Ini.Flush;

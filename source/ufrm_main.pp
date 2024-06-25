@@ -792,21 +792,21 @@ begin
   TimerScreen.Enabled := False;
 
   { Run backup }
-  case XSettings.StartupBackup of
+  case XSettings.AutomaticBackup of
     0: ;
     1:
     begin
-      if DaysBetween(Now, XSettings.LastBackup) >= 1 then
+      if DaysBetween(Now, ConexaoDB.LastBackup) >= 1 then
         NewBackup;
     end;
     2:
     begin
-      if DaysBetween(Now, XSettings.LastBackup) >= 7 then
+      if DaysBetween(Now, ConexaoDB.LastBackup) >= 7 then
         NewBackup;
     end;
     3:
     begin
-      if DaysBetween(Now, XSettings.LastBackup) >= 30 then
+      if DaysBetween(Now, ConexaoDB.LastBackup) >= 30 then
         NewBackup;
     end;
   end;

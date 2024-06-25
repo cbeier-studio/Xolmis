@@ -127,7 +127,10 @@ begin
         {$ENDIF}
 
         if FileExists(zipName) then
+        begin
+          ConexaoDB.SetLastBackup;
           MsgDlg(rsTitleBackup, Format(rsSuccessfulBackup, [ExtractFileName(zipName)]), mtInformation)
+        end
         else
           MsgDlg(rsTitleBackup, rsErrorBackupFailed, mtError);
       end;
