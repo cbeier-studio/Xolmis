@@ -220,6 +220,8 @@ uses
     rsLoadingCSVFile = 'Loading CSV file...';
 
     { Backup messages }
+    rsPromptBackupNow = 'The automatic backup will run now and it could take several minutes.' + LineEnding +
+      'Do you want to continue with backup?';
     rsCreatingBackup = 'Creating backup...';
     rsCompressingBackup = 'Compressing backup...';
     rsDecompressingBackup = 'Decompressing backup...';

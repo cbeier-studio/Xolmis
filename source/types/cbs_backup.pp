@@ -32,7 +32,7 @@ uses
 
   function NewBackup: boolean;
   function RestoreBackup(aFilename: String): boolean;
-  procedure OnBackupProgress(Sender: TObject; Remaining, PageCount: integer);
+  procedure OnBkpProgress(Sender: TObject; Remaining, PageCount: integer);
   procedure RunStartupBackup;
 
 implementation
@@ -50,6 +50,9 @@ var
 begin
   Result := False;
 
+  if not MsgDlg(rsTitleBackup, rsPromptBackupNow, mtConfirmation) then
+    Exit;
+
   if not FileExists(ConexaoDB.Database) then
   begin
     raise Exception.Create(Format(rsErrorDatabaseNotFound, [ConexaoDB.Database]));
@@ -63,9 +66,11 @@ begin
       dlgProgress.Show;
       dlgProgress.Title := rsTitleBackup;
       dlgProgress.Text := rsPreparingBackup;
+      dlgProgress.Min := 0;
+      dlgProgress.Max := 100;
       if not (DirectoryExists(XSettings.BackupFolder)) then
         CreateDir(XSettings.BackupFolder);
-      dbName := ExtractFileNameWithoutExt(DMM.sqlCon.DatabaseName);
+      dbName := ExtractFileNameWithoutExt(ExtractFileName(DMM.sqlCon.DatabaseName));
       bkpName := Format('backup_%s_%s.sbk', [dbName, FormatDateTime('yyyyMMdd_HHmm', Now)]);
       bkpName := ConcatPaths([XSettings.BackupFolder, bkpName]);
       dlgProgress.Max := 100;
@@ -88,7 +93,7 @@ begin
       Bck := TSQLite3Backup.Create;
       try
         //F_Main.Cursor := crHourGlass;
-        TMethod(aBckProgress).Code := @OnBackupProgress;
+        TMethod(aBckProgress).Code := @OnBkpProgress;
         TMethod(aBckProgress).Data := Pointer(Bck);
         dlgProgress.Text := rsCreatingBackup;
         Bck.OnBackupProgress := aBckProgress;
@@ -107,10 +112,11 @@ begin
         LogDebug('START Compressing backup: ' + ExtractFileName(zipName));
         {$ENDIF}
         dlgProgress.Max := 100;
+        dlgProgress.Position := 0;
         //F_Main.Taskbar.ProgressMaxValue := 100;
         fzip := TZipper.Create;
         try
-          // fzip.OnProgress:= OnProgress;
+          // fzip.OnProgress:= @OnProgress;
           fzip.ZipFile(zipName, bkpName);
         finally
           fzip.Free;
@@ -169,6 +175,8 @@ begin
       dlgProgress.Show;
       dlgProgress.Title := rsTitleRestore;
       dlgProgress.Text := rsPreparingRestore;
+      dlgProgress.Min := 0;
+      dlgProgress.Max := 100;
       {$IFDEF DEBUG}
       LogDebug('START Restore backup: ' + aFilename + ' --> ' + DMM.sqlCon.DatabaseName);
       {$ENDIF}
@@ -211,7 +219,7 @@ begin
           BckConn.Params.Add('Synchronous=Off');
           Bck := TSQLite3Backup.Create;
           try
-            TMethod(aBckProgress).Code := @OnBackupProgress;
+            TMethod(aBckProgress).Code := @OnBkpProgress;
             TMethod(aBckProgress).Data := Pointer(Bck);
             dlgProgress.Text := rsRestoringBackup;
             Bck.OnBackupProgress := aBckProgress;
@@ -246,11 +254,14 @@ begin
   end;
 end;
 
-procedure OnBackupProgress(Sender: TObject; Remaining, PageCount: integer);
+procedure OnBkpProgress(Sender: TObject; Remaining, PageCount: integer);
 begin
   if Assigned(dlgProgress) then
   begin
-    dlgProgress.Position := 100 * (PageCount - Remaining) div PageCount;
+    if dlgProgress.Max = 100 then
+      dlgProgress.Max := PageCount;
+    dlgProgress.Position := dlgProgress.Max - PageCount;
+    //dlgProgress.Position := 100 * (PageCount - Remaining) div PageCount;
     //F_Main.Taskbar.ProgressValue := dlgProgress.PBar.Position;
     Application.ProcessMessages;
   end;

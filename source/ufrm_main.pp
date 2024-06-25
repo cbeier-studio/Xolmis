@@ -791,6 +791,26 @@ begin
   Closing := True;
   TimerScreen.Enabled := False;
 
+  { Run backup }
+  case XSettings.StartupBackup of
+    0: ;
+    1:
+    begin
+      if DaysBetween(Now, XSettings.LastBackup) >= 1 then
+        NewBackup;
+    end;
+    2:
+    begin
+      if DaysBetween(Now, XSettings.LastBackup) >= 7 then
+        NewBackup;
+    end;
+    3:
+    begin
+      if DaysBetween(Now, XSettings.LastBackup) >= 30 then
+        NewBackup;
+    end;
+  end;
+
   CloseAllTabs(True);
 
   LogInfo('END -----------------------------------------');
@@ -917,26 +937,6 @@ begin
     if not Assigned(DMG) then
       DMG := TDMG.Create(Application);
     Application.ProcessMessages;
-
-    { Run backup }
-    case XSettings.StartupBackup of
-      0: ;
-      1:
-      begin
-        if DaysBetween(Now, XSettings.LastBackup) >= 1 then
-          NewBackup;
-      end;
-      2:
-      begin
-        if DaysBetween(Now, XSettings.LastBackup) >= 7 then
-          NewBackup;
-      end;
-      3:
-      begin
-        if DaysBetween(Now, XSettings.LastBackup) >= 30 then
-          NewBackup;
-      end;
-    end;
 
     { Check for updates }
     case XSettings.AutoUpdates of
