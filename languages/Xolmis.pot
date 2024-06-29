@@ -9617,6 +9617,19 @@ msgctxt "tfrmcustomgrid.eaddchild.texthint"
 msgid "Quick add"
 msgstr ""
 
+#: tfrmcustomgrid.gridcolumns.columns[0].title.caption
+msgid "Visible"
+msgstr ""
+
+#: tfrmcustomgrid.gridcolumns.columns[1].title.caption
+msgid "Field"
+msgstr ""
+
+#: tfrmcustomgrid.gridcolumns.columns[2].title.caption
+msgctxt "tfrmcustomgrid.gridcolumns.columns[2].title.caption"
+msgid "Size"
+msgstr ""
+
 #: tfrmcustomgrid.lblagefilter.caption
 msgctxt "tfrmcustomgrid.lblagefilter.caption"
 msgid "Age"
@@ -10069,6 +10082,18 @@ msgctxt "tfrmcustomgrid.pmcrefresh.caption"
 msgid "Refresh"
 msgstr ""
 
+#: tfrmcustomgrid.pmgautosizecolumns.caption
+msgid "Auto adjust columns' width"
+msgstr ""
+
+#: tfrmcustomgrid.pmgdecreaserowheight.caption
+msgid "Decrease"
+msgstr ""
+
+#: tfrmcustomgrid.pmgdefaultrowheight.caption
+msgid "Default"
+msgstr ""
+
 #: tfrmcustomgrid.pmgdel.caption
 msgctxt "tfrmcustomgrid.pmgdel.caption"
 msgid "Delete"
@@ -10077,6 +10102,10 @@ msgstr ""
 #: tfrmcustomgrid.pmgedit.caption
 msgctxt "tfrmcustomgrid.pmgedit.caption"
 msgid "Edit"
+msgstr ""
+
+#: tfrmcustomgrid.pmgincreaserowheight.caption
+msgid "Increase"
 msgstr ""
 
 #: tfrmcustomgrid.pmginsert.caption
@@ -10092,6 +10121,10 @@ msgstr ""
 #: tfrmcustomgrid.pmgrefresh.caption
 msgctxt "tfrmcustomgrid.pmgrefresh.caption"
 msgid "Refresh"
+msgstr ""
+
+#: tfrmcustomgrid.pmgrowheight.caption
+msgid "Row height"
 msgstr ""
 
 #: tfrmcustomgrid.pmrdelpermanently.caption
@@ -10447,14 +10480,6 @@ msgctxt "tfrmcustomgrid.sbeditrecord.hint"
 msgid "Edit selected record"
 msgstr ""
 
-#: tfrmcustomgrid.sbeditrecord5.hint
-msgid "Move the column position down"
-msgstr ""
-
-#: tfrmcustomgrid.sbeditrecord6.hint
-msgid "Move the column position up"
-msgstr ""
-
 #: tfrmcustomgrid.sbfirstchild.hint
 msgctxt "tfrmcustomgrid.sbfirstchild.hint"
 msgid "First record"
@@ -10487,6 +10512,16 @@ msgstr ""
 
 #: tfrmcustomgrid.sbmarkall.hint
 msgid "Mark all records in the query"
+msgstr ""
+
+#: tfrmcustomgrid.sbmovecolumndown.hint
+msgctxt "tfrmcustomgrid.sbmovecolumndown.hint"
+msgid "Move the column position down"
+msgstr ""
+
+#: tfrmcustomgrid.sbmovecolumnup.hint
+msgctxt "tfrmcustomgrid.sbmovecolumnup.hint"
+msgid "Move the column position up"
 msgstr ""
 
 #: tfrmcustomgrid.sbnextchild.hint

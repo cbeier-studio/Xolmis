@@ -150,6 +150,11 @@ type
     lblRecycleModifiedDate: TDBText;
     lblRecycleName: TDBText;
     lblProjectFilter: TLabel;
+    pmgDefaultRowHeight: TMenuItem;
+    pmgIncreaseRowHeight: TMenuItem;
+    pmgRowHeight: TMenuItem;
+    pmgDecreaseRowHeight: TMenuItem;
+    pmgAutoSizeColumns: TMenuItem;
     pmcRecordHistory: TMenuItem;
     pmrRestoreRecord: TMenuItem;
     pmrDelPermanently: TMenuItem;
@@ -473,8 +478,8 @@ type
     sbRowHeightDefault: TSpeedButton;
     sbColumnWidthAutoAdjust: TSpeedButton;
     sbColumnHide: TSpeedButton;
-    sbEditRecord5: TSpeedButton;
-    sbEditRecord6: TSpeedButton;
+    sbMoveColumnDown: TSpeedButton;
+    sbMoveColumnUp: TSpeedButton;
     sbImageInfo: TSpeedButton;
     sbSaveImage: TSpeedButton;
     sbShareChild: TSpeedButton;
@@ -506,8 +511,10 @@ type
     Separator11: TShapeLineBGRA;
     Separator12: TMenuItem;
     Separator13: TMenuItem;
+    Separator14: TMenuItem;
     Separator15: TMenuItem;
     Separator16: TShapeLineBGRA;
+    Separator17: TMenuItem;
     Separator5: TShapeLineBGRA;
     Separator6: TMenuItem;
     Separator7: TShapeLineBGRA;
@@ -622,6 +629,7 @@ type
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure gridChild1DblClick(Sender: TObject);
+    procedure gridColumnsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
     procedure iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
       var AResultWidth: Integer);
     procedure pChildTag1Click(Sender: TObject);
@@ -664,6 +672,8 @@ type
     procedure sbLastChildClick(Sender: TObject);
     procedure sbLastRecordClick(Sender: TObject);
     procedure sbMarkAllClick(Sender: TObject);
+    procedure sbMoveColumnDownClick(Sender: TObject);
+    procedure sbMoveColumnUpClick(Sender: TObject);
     procedure sbNextChildClick(Sender: TObject);
     procedure sbNextRecordClick(Sender: TObject);
     procedure sbPriorChildClick(Sender: TObject);
@@ -764,6 +774,8 @@ type
     procedure ClearZooTaxaFilters;
 
     function GetChildDataSet: TDataSet;
+
+    procedure GetColumns;
 
     procedure GetFilters;
     procedure GetBandFilters;
@@ -974,6 +986,7 @@ begin
 
   try
     aGrid.BeginUpdate;
+    aGrid.Columns.Clear;
     for i := 0 to (aGrid.DataSource.DataSet.FieldCount-1) do
       if aGrid.DataSource.DataSet.Fields[i].Visible then
       begin
@@ -3167,6 +3180,7 @@ begin
   UpdateChildCount;
   if DBG.CanSetFocus then
     DBG.SetFocus;
+  GetColumns;
   SetRecycle;
   CanToggle := True;
   Application.ProcessMessages;
@@ -3557,6 +3571,25 @@ begin
     Result := nil;
   end;
 
+end;
+
+procedure TfrmCustomGrid.GetColumns;
+var
+  i: Integer;
+begin
+  gridColumns.RowCount := dsLink.DataSet.Fields.Count + 1;
+
+  for i := 0 to dsLink.DataSet.Fields.Count - 1 do
+  begin
+    gridColumns.Cells[2, i + 1] := dsLink.DataSet.Fields[i].DisplayName;
+    gridColumns.Cells[3, i + 1] := IntToStr(dsLink.DataSet.Fields[i].DisplayWidth);
+    if dsLink.DataSet.Fields[i].Visible then
+      gridColumns.Cells[1, i + 1] := '1'
+    else
+      gridColumns.Cells[1, i + 1] := '0';
+  end;
+
+  gridColumns.ColWidths[0] := 40;
 end;
 
 procedure TfrmCustomGrid.GetEggFilters;
@@ -4194,6 +4227,14 @@ procedure TfrmCustomGrid.gridChild1DblClick(Sender: TObject);
 begin
   if sbEditChild.Enabled then
     sbEditChildClick(Sender);
+end;
+
+procedure TfrmCustomGrid.gridColumnsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
+begin
+  if aCol = 1 then
+    dsLink.DataSet.Fields[aRow - 1].Visible := aState = cbChecked;
+
+  AddGridColumns(FTableType, DBG);
 end;
 
 procedure TfrmCustomGrid.iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
@@ -5507,8 +5548,10 @@ end;
 
 procedure TfrmCustomGrid.sbColumnHideClick(Sender: TObject);
 begin
-  if DBG.SelectedIndex > -1 then
-    DBG.SelectedColumn.Visible := False;
+  dsLink.DataSet.Fields[gridColumns.Row - 1].Visible := False;
+
+  GetColumns;
+  AddGridColumns(FTableType, DBG);
 end;
 
 procedure TfrmCustomGrid.sbColumnWidthAutoAdjustClick(Sender: TObject);
@@ -5866,6 +5909,36 @@ begin
     Bookmark := BM;
     CanToggle := True;
   end;
+end;
+
+procedure TfrmCustomGrid.sbMoveColumnDownClick(Sender: TObject);
+begin
+  if dsLink.DataSet.Fields[gridColumns.Row - 1].Index = dsLink.DataSet.FieldCount - 1 then
+    Exit;
+
+  dsLink.DataSet.Close;
+  dsLink.DataSet.Fields[gridColumns.Row - 1].Index := dsLink.DataSet.Fields[gridColumns.Row - 1].Index + 1;
+  dsLink.DataSet.Open;
+
+  GetColumns;
+  gridColumns.Row := gridColumns.Row + 1;
+
+  AddGridColumns(FTableType, DBG);
+end;
+
+procedure TfrmCustomGrid.sbMoveColumnUpClick(Sender: TObject);
+begin
+  if dsLink.DataSet.Fields[gridColumns.Row - 1].Index = 0 then
+    Exit;
+
+  dsLink.DataSet.Close;
+  dsLink.DataSet.Fields[gridColumns.Row - 1].Index := dsLink.DataSet.Fields[gridColumns.Row - 1].Index - 1;
+  dsLink.DataSet.Open;
+
+  GetColumns;
+  gridColumns.Row := gridColumns.Row - 1;
+
+  AddGridColumns(FTableType, DBG);
 end;
 
 procedure TfrmCustomGrid.sbNextChildClick(Sender: TObject);

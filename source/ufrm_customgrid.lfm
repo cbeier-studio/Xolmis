@@ -15,7 +15,6 @@ object frmCustomGrid: TfrmCustomGrid
   OnResize = FormResize
   OnShow = FormShow
   ParentFont = True
-  LCLVersion = '3.4.0.0'
   object pSide: TPanel
     Left = 726
     Height = 614
@@ -78,7 +77,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            348
+            344
           )
         end
       end
@@ -6841,17 +6840,47 @@ object frmCustomGrid: TfrmCustomGrid
           BorderSpacing.Top = 8
           BorderSpacing.Right = 8
           BorderSpacing.Bottom = 8
-          ColCount = 3
-          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goSmoothScroll, goFixedRowNumbering, goCellEllipsis]
+          ColCount = 4
+          Columns = <          
+            item
+              Alignment = taCenter
+              ButtonStyle = cbsCheckboxColumn
+              SizePriority = 0
+              Title.Alignment = taCenter
+              Title.Caption = 'Visible'
+              Width = 70
+            end          
+            item
+              ReadOnly = True
+              Title.Caption = 'Field'
+              Width = 214
+            end          
+            item
+              Alignment = taRightJustify
+              SizePriority = 0
+              Title.Alignment = taRightJustify
+              Title.Caption = 'Size'
+              Width = 60
+            end>
+          MouseWheelOption = mwGrid
+          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goTabs, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
           RowCount = 2
           TabOrder = 0
           TitleStyle = tsNative
+          OnCheckboxToggled = gridColumnsCheckboxToggled
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            174
-            174
+            70
+            214
+            60
+          )
+          Cells = (
+            1
+            1
+            0
+            'Visible'
           )
         end
         object pColumnsToolbar: TBCPanel
@@ -7002,7 +7031,7 @@ object frmCustomGrid: TfrmCustomGrid
             ShowHint = True
             ParentShowHint = False
           end
-          object sbEditRecord5: TSpeedButton
+          object sbMoveColumnDown: TSpeedButton
             Left = 322
             Height = 26
             Hint = 'Move the column position down'
@@ -7016,10 +7045,11 @@ object frmCustomGrid: TfrmCustomGrid
             Images = iButtons
             ImageIndex = 72
             ImageWidth = 24
+            OnClick = sbMoveColumnDownClick
             ShowHint = True
             ParentShowHint = False
           end
-          object sbEditRecord6: TSpeedButton
+          object sbMoveColumnUp: TSpeedButton
             Left = 352
             Height = 26
             Hint = 'Move the column position up'
@@ -7033,6 +7063,7 @@ object frmCustomGrid: TfrmCustomGrid
             Images = iButtons
             ImageIndex = 74
             ImageWidth = 24
+            OnClick = sbMoveColumnUpClick
             ShowHint = True
             ParentShowHint = False
           end
@@ -9267,17 +9298,17 @@ object frmCustomGrid: TfrmCustomGrid
       Left = 8
       Height = 36
       Hint = 'Columns'
-      Top = 280
+      Top = 302
       Width = 36
       AllowAllUp = True
       AutoSize = True
+      BorderSpacing.Top = 30
       DisabledImageIndex = 61
       Flat = True
       GroupIndex = 10
       Images = iButtons
       ImageIndex = 60
       ImageWidth = 32
-      Visible = False
       OnClick = sbShowRecordClick
       ShowCaption = False
       ShowHint = True
@@ -9288,7 +9319,7 @@ object frmCustomGrid: TfrmCustomGrid
       Left = 8
       Height = 36
       Hint = 'Recycle bin'
-      Top = 346
+      Top = 368
       Width = 36
       AllowAllUp = True
       AutoSize = True
@@ -9361,6 +9392,35 @@ object frmCustomGrid: TfrmCustomGrid
       ImageIndex = 4
       ShortCut = 16430
       OnClick = sbDelRecordClick
+    end
+    object Separator14: TMenuItem
+      Caption = '-'
+    end
+    object pmgRowHeight: TMenuItem
+      Caption = 'Row height'
+      object pmgDefaultRowHeight: TMenuItem
+        Caption = 'Default'
+        ImageIndex = 66
+        OnClick = sbRowHeightDefaultClick
+      end
+      object Separator17: TMenuItem
+        Caption = '-'
+      end
+      object pmgIncreaseRowHeight: TMenuItem
+        Caption = 'Increase'
+        ImageIndex = 62
+        OnClick = sbRowHeightIncreaseClick
+      end
+      object pmgDecreaseRowHeight: TMenuItem
+        Caption = 'Decrease'
+        ImageIndex = 64
+        OnClick = sbRowHeightDecreaseClick
+      end
+    end
+    object pmgAutoSizeColumns: TMenuItem
+      Caption = 'Auto adjust columns'' width'
+      ImageIndex = 68
+      OnClick = sbColumnWidthAutoAdjustClick
     end
   end
   object pmTree: TPopupMenu

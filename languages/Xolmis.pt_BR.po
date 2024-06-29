@@ -9647,6 +9647,19 @@ msgctxt "tfrmcustomgrid.eaddchild.texthint"
 msgid "Quick add"
 msgstr "Inclusão rápida"
 
+#: tfrmcustomgrid.gridcolumns.columns[0].title.caption
+msgid "Visible"
+msgstr "Visível"
+
+#: tfrmcustomgrid.gridcolumns.columns[1].title.caption
+msgid "Field"
+msgstr "Campo"
+
+#: tfrmcustomgrid.gridcolumns.columns[2].title.caption
+msgctxt "tfrmcustomgrid.gridcolumns.columns[2].title.caption"
+msgid "Size"
+msgstr "Tamanho"
+
 #: tfrmcustomgrid.lblagefilter.caption
 msgctxt "tfrmcustomgrid.lblagefilter.caption"
 msgid "Age"
@@ -10099,6 +10112,18 @@ msgctxt "tfrmcustomgrid.pmcrefresh.caption"
 msgid "Refresh"
 msgstr "Atualizar"
 
+#: tfrmcustomgrid.pmgautosizecolumns.caption
+msgid "Auto adjust columns' width"
+msgstr "Ajustar automaticamente a largura das colunas"
+
+#: tfrmcustomgrid.pmgdecreaserowheight.caption
+msgid "Decrease"
+msgstr "Diminuir"
+
+#: tfrmcustomgrid.pmgdefaultrowheight.caption
+msgid "Default"
+msgstr "Padrão"
+
 #: tfrmcustomgrid.pmgdel.caption
 msgctxt "tfrmcustomgrid.pmgdel.caption"
 msgid "Delete"
@@ -10108,6 +10133,10 @@ msgstr "Apagar"
 msgctxt "tfrmcustomgrid.pmgedit.caption"
 msgid "Edit"
 msgstr "Editar"
+
+#: tfrmcustomgrid.pmgincreaserowheight.caption
+msgid "Increase"
+msgstr "Aumentar"
 
 #: tfrmcustomgrid.pmginsert.caption
 msgctxt "tfrmcustomgrid.pmginsert.caption"
@@ -10123,6 +10152,10 @@ msgstr "Histórico do registro"
 msgctxt "tfrmcustomgrid.pmgrefresh.caption"
 msgid "Refresh"
 msgstr "Atualizar"
+
+#: tfrmcustomgrid.pmgrowheight.caption
+msgid "Row height"
+msgstr "Altura da linha"
 
 #: tfrmcustomgrid.pmrdelpermanently.caption
 msgctxt "tfrmcustomgrid.pmrdelpermanently.caption"
@@ -10477,14 +10510,6 @@ msgctxt "tfrmcustomgrid.sbeditrecord.hint"
 msgid "Edit selected record"
 msgstr "Editar o registro selecionado"
 
-#: tfrmcustomgrid.sbeditrecord5.hint
-msgid "Move the column position down"
-msgstr "Mover coluna para baixo"
-
-#: tfrmcustomgrid.sbeditrecord6.hint
-msgid "Move the column position up"
-msgstr "Mover coluna para cima"
-
 #: tfrmcustomgrid.sbfirstchild.hint
 msgctxt "tfrmcustomgrid.sbfirstchild.hint"
 msgid "First record"
@@ -10518,6 +10543,16 @@ msgstr "Último registro"
 #: tfrmcustomgrid.sbmarkall.hint
 msgid "Mark all records in the query"
 msgstr "Marcar todos registros da consulta"
+
+#: tfrmcustomgrid.sbmovecolumndown.hint
+msgctxt "tfrmcustomgrid.sbmovecolumndown.hint"
+msgid "Move the column position down"
+msgstr "Mover coluna para baixo"
+
+#: tfrmcustomgrid.sbmovecolumnup.hint
+msgctxt "tfrmcustomgrid.sbmovecolumnup.hint"
+msgid "Move the column position up"
+msgstr "Mover coluna para cima"
 
 #: tfrmcustomgrid.sbnextchild.hint
 msgctxt "tfrmcustomgrid.sbnextchild.hint"
