@@ -95,7 +95,7 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alClient
           BorderStyle = bsNone
           ClientHeight = 515
-          ClientWidth = 464
+          ClientWidth = 447
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel

@@ -22,7 +22,7 @@ interface
 
 uses
   { System }
-  Classes, SysUtils, Zipper, lazfileutils, LCLIntf,
+  Classes, SysUtils, Zipper, lazfileutils, LCLIntf, fileutil,
   { VCL }
   Forms, Controls, Dialogs,
   { Data }
@@ -41,7 +41,7 @@ uses cbs_locale, cbs_global, cbs_dialogs, udlg_progress;
 
 function NewBackup: boolean;
 var
-  dbName, bkpName, zipName: String;
+  dbName, bkpName, zipName, tmpName: String;
   fzip: TZipper;
   Bck: TSQLite3Backup;
   BckConn: TSQLite3Connection;
@@ -72,12 +72,13 @@ begin
         CreateDir(XSettings.BackupFolder);
       dbName := ExtractFileNameWithoutExt(ExtractFileName(DMM.sqlCon.DatabaseName));
       bkpName := Format('backup_%s_%s.sbk', [dbName, FormatDateTime('yyyyMMdd_HHmm', Now)]);
-      bkpName := ConcatPaths([XSettings.BackupFolder, bkpName]);
+      tmpName := ConcatPaths([TempDir, bkpName]);
+      bkpName := ConcatPaths([XSettings.BackupFolder, ChangeFileExt(bkpName, '.zip')]);
       dlgProgress.Max := 100;
       //F_Main.Taskbar.ProgressMaxValue := 100;
       //F_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
       {$IFDEF DEBUG}
-      LogDebug('START Backup: ' + ConexaoDB.Database + ' -> ' + bkpName);
+      LogDebug('START Backup: ' + ConexaoDB.Database + ' -> ' + tmpName);
       {$ENDIF}
       Application.ProcessMessages;
       BckConn := TSQLite3Connection.Create(nil);
@@ -97,17 +98,17 @@ begin
         TMethod(aBckProgress).Data := Pointer(Bck);
         dlgProgress.Text := rsCreatingBackup;
         Bck.OnBackupProgress := aBckProgress;
-        Result := Bck.Backup(BckConn, bkpName, False, 'main');
+        Result := Bck.Backup(BckConn, tmpName, False, 'main');
       finally
         Bck.Free;
         BckTrans.Free;
         BckConn.Free;
       end;
 
-      if FileExists(bkpName) then
+      if FileExists(tmpName) then
       begin
         dlgProgress.Text := rsCompressingBackup;
-        zipName := ChangeFileExt(bkpName, '.zip');
+        zipName := ChangeFileExt(tmpName, '.zip');
         {$IFDEF DEBUG}
         LogDebug('START Compressing backup: ' + ExtractFileName(zipName));
         {$ENDIF}
@@ -117,19 +118,21 @@ begin
         fzip := TZipper.Create;
         try
           // fzip.OnProgress:= @OnProgress;
-          fzip.ZipFile(zipName, bkpName);
+          fzip.ZipFile(zipName, tmpName);
         finally
           fzip.Free;
         end;
-        DeleteFile(PChar(bkpName));
+        CopyFile(zipName, bkpName);
+        DeleteFile(PChar(tmpName));
+        DeleteFile(PChar(zipName));
         {$IFDEF DEBUG}
         LogDebug('FINISH Compressing backup: ' + ExtractFileName(zipName));
         {$ENDIF}
 
-        if FileExists(zipName) then
+        if FileExists(bkpName) then
         begin
           ConexaoDB.SetLastBackup;
-          MsgDlg(rsTitleBackup, Format(rsSuccessfulBackup, [ExtractFileName(zipName)]), mtInformation)
+          MsgDlg(rsTitleBackup, Format(rsSuccessfulBackup, [ExtractFileName(bkpName)]), mtInformation)
         end
         else
           MsgDlg(rsTitleBackup, rsErrorBackupFailed, mtError);
