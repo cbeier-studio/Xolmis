@@ -1682,6 +1682,10 @@ msgstr ""
 msgid "Survey ID"
 msgstr ""
 
+#: cbs_datacolumns.rsctable
+msgid "Table"
+msgstr ""
+
 #: cbs_datacolumns.rsctaillength
 msgid "Tail length"
 msgstr ""
@@ -2521,6 +2525,10 @@ msgstr ""
 #: cbs_locale.rscloacalprotuberance
 msgctxt "cbs_locale.rscloacalprotuberance"
 msgid "cloacal protuberance"
+msgstr ""
+
+#: cbs_locale.rsclosing
+msgid "Closing..."
 msgstr ""
 
 #: cbs_locale.rscnpjincpf
@@ -3544,6 +3552,10 @@ msgctxt "cbs_locale.rsminpasswordlength"
 msgid "The password must have 8 characters or more."
 msgstr ""
 
+#: cbs_locale.rsmissingdata
+msgid "Missing data"
+msgstr ""
+
 #: cbs_locale.rsmodificationsnotsaved
 msgctxt "cbs_locale.rsmodificationsnotsaved"
 msgid "Changes not saved"
@@ -3932,6 +3944,10 @@ msgctxt "cbs_locale.rsrecordnumber"
 msgid "record %d of %d"
 msgstr ""
 
+#: cbs_locale.rsrecordok
+msgid "Record OK"
+msgstr ""
+
 #: cbs_locale.rsrecords
 msgctxt "cbs_locale.rsrecords"
 msgid "record"
@@ -4018,6 +4034,10 @@ msgstr ""
 #: cbs_locale.rsrequiredtonumber
 msgctxt "cbs_locale.rsrequiredtonumber"
 msgid "The Final number must be entered."
+msgstr ""
+
+#: cbs_locale.rsrequiredverificationstatus
+msgid "A verification status must be selected."
 msgstr ""
 
 #: cbs_locale.rsrestorebackupprompt
@@ -4799,6 +4819,26 @@ msgstr ""
 #: cbs_locale.rswasmisspelled
 msgctxt "cbs_locale.rswasmisspelled"
 msgid "was misspelled"
+msgstr ""
+
+#: cbs_locale.rswrongcoordinates
+msgid "Wrong coordinates"
+msgstr ""
+
+#: cbs_locale.rswronglocation
+msgid "Wrong location"
+msgstr ""
+
+#: cbs_locale.rswrongmeasurement
+msgid "Wrong measurement"
+msgstr ""
+
+#: cbs_locale.rswrongtaxon
+msgid "Wrong taxon"
+msgstr ""
+
+#: cbs_locale.rswrongvalues
+msgid "Wrong values"
 msgstr ""
 
 #: tbatchbands.caption
@@ -6282,30 +6322,102 @@ msgctxt "tdlgrechistory.dbghistory.columns[2].title.caption"
 msgid "Property"
 msgstr ""
 
-#: tdlgrechistory.label1.caption
-msgid "Record id:"
-msgstr ""
-
-#: tdlgrechistory.label2.caption
-msgid "Old value:"
-msgstr ""
-
-#: tdlgrechistory.label3.caption
+#: tdlgrechistory.lblnewvalue.caption
+msgctxt "tdlgrechistory.lblnewvalue.caption"
 msgid "New value:"
 msgstr ""
 
-#: tdlgrechistory.label4.caption
-msgctxt "tdlgrechistory.label4.caption"
+#: tdlgrechistory.lblnotes.caption
+msgctxt "tdlgrechistory.lblnotes.caption"
 msgid "Notes:"
 msgstr ""
 
-#: tdlgrechistory.label5.caption
+#: tdlgrechistory.lbloldvalue.caption
+msgctxt "tdlgrechistory.lbloldvalue.caption"
+msgid "Old value:"
+msgstr ""
+
+#: tdlgrechistory.lblrecordid.caption
+msgctxt "tdlgrechistory.lblrecordid.caption"
+msgid "Record id:"
+msgstr ""
+
+#: tdlgrechistory.lblusername.caption
+msgctxt "tdlgrechistory.lblusername.caption"
 msgid "User name:"
 msgstr ""
 
 #: tdlgrechistory.sbclose.caption
 msgctxt "tdlgrechistory.sbclose.caption"
 msgid "Close"
+msgstr ""
+
+#: tdlgrecverifications.caption
+msgctxt "tdlgrecverifications.caption"
+msgid "Record verifications"
+msgstr ""
+
+#: tdlgrecverifications.ckativo.caption
+msgctxt "tdlgrecverifications.ckativo.caption"
+msgid "Active"
+msgstr ""
+
+#: tdlgrecverifications.ckexportado.caption
+msgctxt "tdlgrecverifications.ckexportado.caption"
+msgid "Exported"
+msgstr ""
+
+#: tdlgrecverifications.ckmarcado.caption
+msgctxt "tdlgrecverifications.ckmarcado.caption"
+msgid "Marked"
+msgstr ""
+
+#: tdlgrecverifications.dbghistory.columns[0].title.caption
+msgctxt "tdlgrecverifications.dbghistory.columns[0].title.caption"
+msgid "Date"
+msgstr ""
+
+#: tdlgrecverifications.dbghistory.columns[1].title.caption
+msgctxt "tdlgrecverifications.dbghistory.columns[1].title.caption"
+msgid "Status"
+msgstr ""
+
+#: tdlgrecverifications.dbghistory.columns[2].title.caption
+msgctxt "tdlgrecverifications.dbghistory.columns[2].title.caption"
+msgid "Researcher"
+msgstr ""
+
+#: tdlgrecverifications.dbghistory.columns[3].title.caption
+msgctxt "tdlgrecverifications.dbghistory.columns[3].title.caption"
+msgid "Notes"
+msgstr ""
+
+#: tdlgrecverifications.lblrecordid.caption
+msgctxt "tdlgrecverifications.lblrecordid.caption"
+msgid "Record id:"
+msgstr ""
+
+#: tdlgrecverifications.pmmdelverification.caption
+msgid "Delete verification"
+msgstr ""
+
+#: tdlgrecverifications.pmmnewverification.caption
+msgctxt "tdlgrecverifications.pmmnewverification.caption"
+msgid "New verification"
+msgstr ""
+
+#: tdlgrecverifications.sbclose.caption
+msgctxt "tdlgrecverifications.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tdlgrecverifications.sbdelrecord.hint
+msgid "Delete selected verification"
+msgstr ""
+
+#: tdlgrecverifications.sbinsertrecord.hint
+msgctxt "tdlgrecverifications.sbinsertrecord.hint"
+msgid "New verification"
 msgstr ""
 
 #: tdlgvalidate.sbok.caption
@@ -7874,6 +7986,7 @@ msgid "Individual:"
 msgstr ""
 
 #: tedtnestowner.lblrole.caption
+msgctxt "tedtnestowner.lblrole.caption"
 msgid "Role: *"
 msgstr ""
 
@@ -8608,6 +8721,53 @@ msgstr ""
 
 #: tedtproject.sbsave.caption
 msgctxt "tedtproject.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtrecverification.caption
+msgid "New record verification"
+msgstr ""
+
+#: tedtrecverification.edate.buttonhint
+msgctxt "tedtrecverification.edate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tedtrecverification.edate.texthint
+msgctxt "tedtrecverification.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtrecverification.eresearcher.buttonhint
+msgid "Find researcher"
+msgstr ""
+
+#: tedtrecverification.lbldate.caption
+msgctxt "tedtrecverification.lbldate.caption"
+msgid "Date: *"
+msgstr ""
+
+#: tedtrecverification.lblnotes.caption
+msgctxt "tedtrecverification.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtrecverification.lblresearcher.caption
+msgid "Researcher: *"
+msgstr ""
+
+#: tedtrecverification.lblstatus.caption
+msgctxt "tedtrecverification.lblstatus.caption"
+msgid "Status: *"
+msgstr ""
+
+#: tedtrecverification.sbcancel.caption
+msgctxt "tedtrecverification.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtrecverification.sbsave.caption
+msgctxt "tedtrecverification.sbsave.caption"
 msgid "Save"
 msgstr ""
 
@@ -10077,6 +10237,11 @@ msgctxt "tfrmcustomgrid.pmcrecordhistory.caption"
 msgid "Record history"
 msgstr ""
 
+#: tfrmcustomgrid.pmcrecordverifications.caption
+msgctxt "tfrmcustomgrid.pmcrecordverifications.caption"
+msgid "Record verifications"
+msgstr ""
+
 #: tfrmcustomgrid.pmcrefresh.caption
 msgctxt "tfrmcustomgrid.pmcrefresh.caption"
 msgid "Refresh"
@@ -10118,6 +10283,11 @@ msgctxt "tfrmcustomgrid.pmgrecordhistory.caption"
 msgid "Record history"
 msgstr ""
 
+#: tfrmcustomgrid.pmgrecordverifications.caption
+msgctxt "tfrmcustomgrid.pmgrecordverifications.caption"
+msgid "Record verifications"
+msgstr ""
+
 #: tfrmcustomgrid.pmgrefresh.caption
 msgctxt "tfrmcustomgrid.pmgrefresh.caption"
 msgid "Refresh"
@@ -10125,6 +10295,30 @@ msgstr ""
 
 #: tfrmcustomgrid.pmgrowheight.caption
 msgid "Row height"
+msgstr ""
+
+#: tfrmcustomgrid.pmminvertmarked.caption
+msgid "Invert marked"
+msgstr ""
+
+#: tfrmcustomgrid.pmmmarkall.caption
+msgctxt "tfrmcustomgrid.pmmmarkall.caption"
+msgid "Mark all"
+msgstr ""
+
+#: tfrmcustomgrid.pmmmarkallcolumns.caption
+msgctxt "tfrmcustomgrid.pmmmarkallcolumns.caption"
+msgid "Mark all"
+msgstr ""
+
+#: tfrmcustomgrid.pmmunmarkall.caption
+msgctxt "tfrmcustomgrid.pmmunmarkall.caption"
+msgid "Unmark all"
+msgstr ""
+
+#: tfrmcustomgrid.pmmunmarkallcolumns.caption
+msgctxt "tfrmcustomgrid.pmmunmarkallcolumns.caption"
+msgid "Unmark all"
 msgstr ""
 
 #: tfrmcustomgrid.pmrdelpermanently.caption
@@ -10183,6 +10377,14 @@ msgstr ""
 #: tfrmcustomgrid.pmtrefresh.caption
 msgctxt "tfrmcustomgrid.pmtrefresh.caption"
 msgid "Refresh"
+msgstr ""
+
+#: tfrmcustomgrid.pmvaddverification.caption
+msgid "Add record verification"
+msgstr ""
+
+#: tfrmcustomgrid.pmvviewverifications.caption
+msgid "View record verifications"
 msgstr ""
 
 #: tfrmcustomgrid.rbescapedall.caption
@@ -10438,6 +10640,11 @@ msgctxt "tfrmcustomgrid.sbchildhistory.hint"
 msgid "View record history"
 msgstr ""
 
+#: tfrmcustomgrid.sbchildverifications.hint
+msgctxt "tfrmcustomgrid.sbchildverifications.hint"
+msgid "Record verifications"
+msgstr ""
+
 #: tfrmcustomgrid.sbclearfilters.hint
 msgid "Clear all quick filters"
 msgstr ""
@@ -10510,8 +10717,13 @@ msgctxt "tfrmcustomgrid.sblastrecord.hint"
 msgid "Last record"
 msgstr ""
 
-#: tfrmcustomgrid.sbmarkall.hint
-msgid "Mark all records in the query"
+#: tfrmcustomgrid.sbmarkcolumns.hint
+msgid "Mark/unmark all columns"
+msgstr ""
+
+#: tfrmcustomgrid.sbmarkrecords.hint
+msgctxt "tfrmcustomgrid.sbmarkrecords.hint"
+msgid "Mark/unmark all records in the query"
 msgstr ""
 
 #: tfrmcustomgrid.sbmovecolumndown.hint
@@ -10547,6 +10759,11 @@ msgstr ""
 #: tfrmcustomgrid.sbrecordhistory.hint
 msgctxt "tfrmcustomgrid.sbrecordhistory.hint"
 msgid "View record history"
+msgstr ""
+
+#: tfrmcustomgrid.sbrecordverifications.hint
+msgctxt "tfrmcustomgrid.sbrecordverifications.hint"
+msgid "Record verifications"
 msgstr ""
 
 #: tfrmcustomgrid.sbrefreshchild.hint
@@ -10642,10 +10859,6 @@ msgstr ""
 #: tfrmcustomgrid.sbsortrecords.hint
 msgctxt "tfrmcustomgrid.sbsortrecords.hint"
 msgid "Sort records"
-msgstr ""
-
-#: tfrmcustomgrid.sbunmarkall.hint
-msgid "Unmark all records in the query"
 msgstr ""
 
 #: tfrmcustomgrid.sbviewimage.hint

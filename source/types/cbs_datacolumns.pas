@@ -456,9 +456,11 @@ resourcestring
   rscSampleID = 'Sample ID';
   rscHabitat = 'Habitat';
   rscConservationStatus = 'Conservation status';
+  rscTable = 'Table';
 
 
   procedure TranslateRecordHistory(aDataSet: TDataSet);
+  procedure TranslateRecordVerifications(aDataSet: TDataSet);
   procedure TranslateConnections(aDataSet: TDataSet);
   procedure TranslateUsers(aDataSet: TDataSet);
   procedure TranslateMethods(aDataSet: TDataSet);
@@ -1932,6 +1934,28 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateRecordVerifications(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'verification_date':    Fields[i].DisplayLabel := rscDate;
+        'verification_status':  Fields[i].DisplayLabel := rscStatus;
+        'person_id':            Fields[i].DisplayLabel := rscPersonID;
+        'person_name':          Fields[i].DisplayLabel := rscResearcher;
+        'table_name'  :         Fields[i].DisplayLabel := rscTable;
+        'record_id':            Fields[i].DisplayLabel := rscId;
+        'notes':                Fields[i].DisplayLabel := rscNotes;
+        'verification_id':      Fields[i].DisplayLabel := rscId;
       end;
     end;
   end;

@@ -15,7 +15,6 @@ object dlgGeoEditor: TdlgGeoEditor
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -415,17 +414,17 @@ object dlgGeoEditor: TdlgGeoEditor
         Columns = <        
           item
             Title.Caption = 'Name'
-            Width = 113
+            Width = 106
             FieldName = 'coordinate_name'
           end        
           item
             Title.Caption = 'Longitude'
-            Width = 112
+            Width = 105
             FieldName = 'longitude'
           end        
           item
             Title.Caption = 'Latitude'
-            Width = 112
+            Width = 105
             FieldName = 'latitude'
           end>
         Constraints.MinHeight = 230

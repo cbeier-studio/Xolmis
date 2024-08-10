@@ -97,6 +97,7 @@ uses
     rsTitleRecreateThumbnails = 'Recreate thumbnails';
     rsTitleConnectionTest = 'Test connection';
     rsTitleLogin = 'Login';
+    rsClosing = 'Closing...';
 
     { Input messages }
     rsCoordinatesNameInput = 'Give a name to the coordinates set:';
@@ -304,6 +305,7 @@ uses
     rsCycleNotSelected = 'No item were selected in one or more columns.';
     rsUpdateSumCaptures = 'The sum of new captures, recaptures and unmarked individuals ' +
       'differs from the total number of individuals.' + LineEnding + 'Do you want to update it?';
+    rsRequiredVerificationStatus = 'A verification status must be selected.';
 
     { HTML validation messages }
     //rsForeignNotExist = 'Selected <b>%s</b> does not exist. Select a valid record.';
@@ -727,6 +729,15 @@ uses
     rsPermitEntry = 'Entry Permit';
     rsPermitTransport = 'Transport Permit';
     rsPermitOther = 'Other Permit';
+
+    { Record verifications }
+    rsRecordOK = 'Record OK';
+    rsWrongTaxon = 'Wrong taxon';
+    rsWrongLocation = 'Wrong location';
+    rsWrongCoordinates = 'Wrong coordinates';
+    rsWrongMeasurement = 'Wrong measurement';
+    rsWrongValues = 'Wrong values';
+    rsMissingData = 'Missing data';
 
     { Versions }
     rsVersionStr = 'Version %s';

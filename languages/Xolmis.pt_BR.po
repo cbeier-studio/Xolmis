@@ -1684,6 +1684,10 @@ msgstr "Amostragem"
 msgid "Survey ID"
 msgstr "Amostragem ID"
 
+#: cbs_datacolumns.rsctable
+msgid "Table"
+msgstr "Tabela"
+
 #: cbs_datacolumns.rsctaillength
 msgid "Tail length"
 msgstr "Comprimento da cauda"
@@ -2526,6 +2530,10 @@ msgstr "Verificar atualizações"
 msgctxt "cbs_locale.rscloacalprotuberance"
 msgid "cloacal protuberance"
 msgstr "protuberância cloacal"
+
+#: cbs_locale.rsclosing
+msgid "Closing..."
+msgstr "Fechando..."
 
 #: cbs_locale.rscnpjincpf
 msgctxt "cbs_locale.rscnpjincpf"
@@ -3562,6 +3570,10 @@ msgctxt "cbs_locale.rsminpasswordlength"
 msgid "The password must have 8 characters or more."
 msgstr "A senha deve ter 8 caracteres ou mais."
 
+#: cbs_locale.rsmissingdata
+msgid "Missing data"
+msgstr "Dados faltantes"
+
 #: cbs_locale.rsmodificationsnotsaved
 msgctxt "cbs_locale.rsmodificationsnotsaved"
 msgid "Changes not saved"
@@ -3954,6 +3966,10 @@ msgctxt "cbs_locale.rsrecordnumber"
 msgid "record %d of %d"
 msgstr "registro %d de %d"
 
+#: cbs_locale.rsrecordok
+msgid "Record OK"
+msgstr "Registro OK"
+
 #: cbs_locale.rsrecords
 msgctxt "cbs_locale.rsrecords"
 msgid "record"
@@ -4043,6 +4059,10 @@ msgstr "O Número final deve ser informado."
 msgctxt "cbs_locale.rsrequiredtonumber"
 msgid "The Final number must be entered."
 msgstr "O Número final deve ser informado."
+
+#: cbs_locale.rsrequiredverificationstatus
+msgid "A verification status must be selected."
+msgstr "Um status de verificação deve ser selecionado."
 
 #: cbs_locale.rsrestorebackupprompt
 msgctxt "cbs_locale.rsrestorebackupprompt"
@@ -4830,6 +4850,26 @@ msgstr "Versão %s"
 msgctxt "cbs_locale.rswasmisspelled"
 msgid "was misspelled"
 msgstr "grafia incorreta"
+
+#: cbs_locale.rswrongcoordinates
+msgid "Wrong coordinates"
+msgstr "Coordenadas erradas"
+
+#: cbs_locale.rswronglocation
+msgid "Wrong location"
+msgstr "Localização errada"
+
+#: cbs_locale.rswrongmeasurement
+msgid "Wrong measurement"
+msgstr "Medida errada"
+
+#: cbs_locale.rswrongtaxon
+msgid "Wrong taxon"
+msgstr "Táxon errado"
+
+#: cbs_locale.rswrongvalues
+msgid "Wrong values"
+msgstr "Valor errado"
 
 #: tbatchbands.caption
 msgctxt "tbatchbands.caption"
@@ -6312,24 +6352,28 @@ msgctxt "tdlgrechistory.dbghistory.columns[2].title.caption"
 msgid "Property"
 msgstr "Propriedade"
 
-#: tdlgrechistory.label1.caption
-msgid "Record id:"
-msgstr "ID do registro:"
-
-#: tdlgrechistory.label2.caption
-msgid "Old value:"
-msgstr "Valor antigo:"
-
-#: tdlgrechistory.label3.caption
+#: tdlgrechistory.lblnewvalue.caption
+msgctxt "tdlgrechistory.lblnewvalue.caption"
 msgid "New value:"
 msgstr "Valor novo:"
 
-#: tdlgrechistory.label4.caption
-msgctxt "tdlgrechistory.label4.caption"
+#: tdlgrechistory.lblnotes.caption
+msgctxt "tdlgrechistory.lblnotes.caption"
 msgid "Notes:"
 msgstr "Anotações:"
 
-#: tdlgrechistory.label5.caption
+#: tdlgrechistory.lbloldvalue.caption
+msgctxt "tdlgrechistory.lbloldvalue.caption"
+msgid "Old value:"
+msgstr "Valor antigo:"
+
+#: tdlgrechistory.lblrecordid.caption
+msgctxt "tdlgrechistory.lblrecordid.caption"
+msgid "Record id:"
+msgstr "ID do registro:"
+
+#: tdlgrechistory.lblusername.caption
+msgctxt "tdlgrechistory.lblusername.caption"
 msgid "User name:"
 msgstr "Nome de usuário:"
 
@@ -6337,6 +6381,74 @@ msgstr "Nome de usuário:"
 msgctxt "tdlgrechistory.sbclose.caption"
 msgid "Close"
 msgstr "Fechar"
+
+#: tdlgrecverifications.caption
+msgctxt "tdlgrecverifications.caption"
+msgid "Record verifications"
+msgstr "Verificações do registro"
+
+#: tdlgrecverifications.ckativo.caption
+msgctxt "tdlgrecverifications.ckativo.caption"
+msgid "Active"
+msgstr "Ativo"
+
+#: tdlgrecverifications.ckexportado.caption
+msgctxt "tdlgrecverifications.ckexportado.caption"
+msgid "Exported"
+msgstr "Exportado"
+
+#: tdlgrecverifications.ckmarcado.caption
+msgctxt "tdlgrecverifications.ckmarcado.caption"
+msgid "Marked"
+msgstr "Marcado"
+
+#: tdlgrecverifications.dbghistory.columns[0].title.caption
+msgctxt "tdlgrecverifications.dbghistory.columns[0].title.caption"
+msgid "Date"
+msgstr "Data"
+
+#: tdlgrecverifications.dbghistory.columns[1].title.caption
+msgctxt "tdlgrecverifications.dbghistory.columns[1].title.caption"
+msgid "Status"
+msgstr "Status"
+
+#: tdlgrecverifications.dbghistory.columns[2].title.caption
+msgctxt "tdlgrecverifications.dbghistory.columns[2].title.caption"
+msgid "Researcher"
+msgstr "Pesquisador"
+
+#: tdlgrecverifications.dbghistory.columns[3].title.caption
+msgctxt "tdlgrecverifications.dbghistory.columns[3].title.caption"
+msgid "Notes"
+msgstr "Anotações"
+
+#: tdlgrecverifications.lblrecordid.caption
+msgctxt "tdlgrecverifications.lblrecordid.caption"
+msgid "Record id:"
+msgstr "ID do registro:"
+
+#: tdlgrecverifications.pmmdelverification.caption
+msgid "Delete verification"
+msgstr "Apagar verificação"
+
+#: tdlgrecverifications.pmmnewverification.caption
+msgctxt "tdlgrecverifications.pmmnewverification.caption"
+msgid "New verification"
+msgstr "Nova verificação"
+
+#: tdlgrecverifications.sbclose.caption
+msgctxt "tdlgrecverifications.sbclose.caption"
+msgid "Close"
+msgstr "Fechar"
+
+#: tdlgrecverifications.sbdelrecord.hint
+msgid "Delete selected verification"
+msgstr "Apagar a verificação selecionada"
+
+#: tdlgrecverifications.sbinsertrecord.hint
+msgctxt "tdlgrecverifications.sbinsertrecord.hint"
+msgid "New verification"
+msgstr "Nova verificação"
 
 #: tdlgvalidate.sbok.caption
 msgid "OK"
@@ -7904,6 +8016,7 @@ msgid "Individual:"
 msgstr "Indivíduo:"
 
 #: tedtnestowner.lblrole.caption
+msgctxt "tedtnestowner.lblrole.caption"
 msgid "Role: *"
 msgstr "Função: *"
 
@@ -8638,6 +8751,53 @@ msgstr "Cancelar"
 
 #: tedtproject.sbsave.caption
 msgctxt "tedtproject.sbsave.caption"
+msgid "Save"
+msgstr "Salvar"
+
+#: tedtrecverification.caption
+msgid "New record verification"
+msgstr "Nova verificação do registro"
+
+#: tedtrecverification.edate.buttonhint
+msgctxt "tedtrecverification.edate.buttonhint"
+msgid "Open calendar"
+msgstr "Abrir calendário"
+
+#: tedtrecverification.edate.texthint
+msgctxt "tedtrecverification.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/YYYY"
+
+#: tedtrecverification.eresearcher.buttonhint
+msgid "Find researcher"
+msgstr "Buscar pesquisador"
+
+#: tedtrecverification.lbldate.caption
+msgctxt "tedtrecverification.lbldate.caption"
+msgid "Date: *"
+msgstr "Data: *"
+
+#: tedtrecverification.lblnotes.caption
+msgctxt "tedtrecverification.lblnotes.caption"
+msgid "Notes:"
+msgstr "Anotações:"
+
+#: tedtrecverification.lblresearcher.caption
+msgid "Researcher: *"
+msgstr "Pesquisador: *"
+
+#: tedtrecverification.lblstatus.caption
+msgctxt "tedtrecverification.lblstatus.caption"
+msgid "Status: *"
+msgstr "Status: *"
+
+#: tedtrecverification.sbcancel.caption
+msgctxt "tedtrecverification.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tedtrecverification.sbsave.caption
+msgctxt "tedtrecverification.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
@@ -10107,6 +10267,11 @@ msgctxt "tfrmcustomgrid.pmcrecordhistory.caption"
 msgid "Record history"
 msgstr "Histórico do registro"
 
+#: tfrmcustomgrid.pmcrecordverifications.caption
+msgctxt "tfrmcustomgrid.pmcrecordverifications.caption"
+msgid "Record verifications"
+msgstr "Verificações do registro"
+
 #: tfrmcustomgrid.pmcrefresh.caption
 msgctxt "tfrmcustomgrid.pmcrefresh.caption"
 msgid "Refresh"
@@ -10148,6 +10313,11 @@ msgctxt "tfrmcustomgrid.pmgrecordhistory.caption"
 msgid "Record history"
 msgstr "Histórico do registro"
 
+#: tfrmcustomgrid.pmgrecordverifications.caption
+msgctxt "tfrmcustomgrid.pmgrecordverifications.caption"
+msgid "Record verifications"
+msgstr "Verificações do registro"
+
 #: tfrmcustomgrid.pmgrefresh.caption
 msgctxt "tfrmcustomgrid.pmgrefresh.caption"
 msgid "Refresh"
@@ -10156,6 +10326,30 @@ msgstr "Atualizar"
 #: tfrmcustomgrid.pmgrowheight.caption
 msgid "Row height"
 msgstr "Altura da linha"
+
+#: tfrmcustomgrid.pmminvertmarked.caption
+msgid "Invert marked"
+msgstr "Inverter marcados"
+
+#: tfrmcustomgrid.pmmmarkall.caption
+msgctxt "tfrmcustomgrid.pmmmarkall.caption"
+msgid "Mark all"
+msgstr "Marcar todos"
+
+#: tfrmcustomgrid.pmmmarkallcolumns.caption
+msgctxt "tfrmcustomgrid.pmmmarkallcolumns.caption"
+msgid "Mark all"
+msgstr "Marcar todos"
+
+#: tfrmcustomgrid.pmmunmarkall.caption
+msgctxt "tfrmcustomgrid.pmmunmarkall.caption"
+msgid "Unmark all"
+msgstr "Desmarcar todos"
+
+#: tfrmcustomgrid.pmmunmarkallcolumns.caption
+msgctxt "tfrmcustomgrid.pmmunmarkallcolumns.caption"
+msgid "Unmark all"
+msgstr "Desmarcar todos"
 
 #: tfrmcustomgrid.pmrdelpermanently.caption
 msgctxt "tfrmcustomgrid.pmrdelpermanently.caption"
@@ -10214,6 +10408,14 @@ msgstr "Expandir todos"
 msgctxt "tfrmcustomgrid.pmtrefresh.caption"
 msgid "Refresh"
 msgstr "Atualizar"
+
+#: tfrmcustomgrid.pmvaddverification.caption
+msgid "Add record verification"
+msgstr "Adicionar verificação do registro"
+
+#: tfrmcustomgrid.pmvviewverifications.caption
+msgid "View record verifications"
+msgstr "Visualizar verificações do registro"
 
 #: tfrmcustomgrid.rbescapedall.caption
 msgctxt "tfrmcustomgrid.rbescapedall.caption"
@@ -10468,6 +10670,11 @@ msgctxt "tfrmcustomgrid.sbchildhistory.hint"
 msgid "View record history"
 msgstr "Visualizar histórico do registro"
 
+#: tfrmcustomgrid.sbchildverifications.hint
+msgctxt "tfrmcustomgrid.sbchildverifications.hint"
+msgid "Record verifications"
+msgstr "Verificações do registro"
+
 #: tfrmcustomgrid.sbclearfilters.hint
 msgid "Clear all quick filters"
 msgstr "Limpar todos filtros rápidos"
@@ -10540,9 +10747,14 @@ msgctxt "tfrmcustomgrid.sblastrecord.hint"
 msgid "Last record"
 msgstr "Último registro"
 
-#: tfrmcustomgrid.sbmarkall.hint
-msgid "Mark all records in the query"
-msgstr "Marcar todos registros da consulta"
+#: tfrmcustomgrid.sbmarkcolumns.hint
+msgid "Mark/unmark all columns"
+msgstr "Marcar/desmarcar todas colunas"
+
+#: tfrmcustomgrid.sbmarkrecords.hint
+msgctxt "tfrmcustomgrid.sbmarkrecords.hint"
+msgid "Mark/unmark all records in the query"
+msgstr "Marcar/desmarcar todos registros da consulta"
 
 #: tfrmcustomgrid.sbmovecolumndown.hint
 msgctxt "tfrmcustomgrid.sbmovecolumndown.hint"
@@ -10578,6 +10790,11 @@ msgstr "Registro anterior"
 msgctxt "tfrmcustomgrid.sbrecordhistory.hint"
 msgid "View record history"
 msgstr "Visualizar histórico do registro"
+
+#: tfrmcustomgrid.sbrecordverifications.hint
+msgctxt "tfrmcustomgrid.sbrecordverifications.hint"
+msgid "Record verifications"
+msgstr "Verificações do registro"
 
 #: tfrmcustomgrid.sbrefreshchild.hint
 msgid "Refresh related records"
@@ -10673,10 +10890,6 @@ msgstr "Sumário"
 msgctxt "tfrmcustomgrid.sbsortrecords.hint"
 msgid "Sort records"
 msgstr "Ordenar registros"
-
-#: tfrmcustomgrid.sbunmarkall.hint
-msgid "Unmark all records in the query"
-msgstr "Desmarcar todos os registros da consulta"
 
 #: tfrmcustomgrid.sbviewimage.hint
 msgctxt "tfrmcustomgrid.sbviewimage.hint"

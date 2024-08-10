@@ -119,7 +119,9 @@ type
 
   procedure AbreForm(aClasseForm: TComponentClass; aForm: TForm);
 
-  procedure ShowHistory(aTable: TTableType; aKey: Integer);
+  procedure ShowHistory(aTable, aChild: TTableType; aKey: Integer);
+  procedure ShowVerifications(aTable, aChild: TTableType; aKey: Integer);
+  function AddVerification(aTable, aChild: TTableType; aKey: Integer = 0): Boolean;
 
 var
   ActiveUser: TUser;
@@ -128,7 +130,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_validations, udm_main, udlg_rechistory;
+uses cbs_global, cbs_validations, udm_main, udlg_rechistory, udlg_recverifications, uedt_recverification;
 
 procedure PositionWindow(const aPos: TDialogPosition; aForm: TForm);
 begin
@@ -206,22 +208,60 @@ begin
   end;
 end;
 
-procedure ShowHistory(aTable: TTableType; aKey: Integer);
+procedure ShowHistory(aTable, aChild: TTableType; aKey: Integer);
 begin
   if Opening then
     Exit;
 
   Opening := True;
-  Application.CreateForm(TdlgRecHistory, dlgRecHistory);
+  dlgRecHistory := TdlgRecHistory.Create(nil);
   with dlgRecHistory do
   try
     TableType := aTable;
-    Tabela := TableNames[aTable];
-    Codigo := aKey;
+    ChildType := aChild;
+    //Tabela := TableNames[aTable];
+    Id := aKey;
     ShowModal;
   finally
     FreeAndNil(dlgRecHistory);
     Opening := False;
+  end;
+end;
+
+procedure ShowVerifications(aTable, aChild: TTableType; aKey: Integer);
+begin
+  if Opening then
+    Exit;
+
+  Opening := True;
+  dlgRecVerifications := TdlgRecVerifications.Create(nil);
+  with dlgRecVerifications do
+  try
+    TableType := aTable;
+    ChildType := aChild;
+    //Tabela := TableNames[aTable];
+    Id := aKey;
+    ShowModal;
+  finally
+    FreeAndNil(dlgRecVerifications);
+    Opening := False;
+  end;
+end;
+
+function AddVerification(aTable, aChild: TTableType; aKey: Integer): Boolean;
+begin
+  Result := False;
+
+  edtRecVerification := TedtRecVerification.Create(nil);
+  with edtRecVerification do
+  try
+    TableType := aTable;
+    ChildType := aChild;
+    //Tabela := TableNames[aTable];
+    Id := aKey;
+    Result := ShowModal = mrOk;
+  finally
+    FreeAndNil(edtRecVerification);
   end;
 end;
 

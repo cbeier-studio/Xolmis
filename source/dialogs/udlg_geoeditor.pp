@@ -74,6 +74,7 @@ type
     FDmsPoint: TDMSPoint;
     FPointStr: String;
     procedure ApplyDarkMode;
+    procedure ConvertCoordinate;
     procedure RefreshMap;
     procedure UpdateButtons;
   public
@@ -193,6 +194,8 @@ begin
 
   if PG.ActivePage = tabConvert then
   begin
+    ConvertCoordinate;
+
     if not (FDecPoint.X = 0) and not (FDecPoint.Y = 0) then
     begin
       //DMM.iMaps.GetBitmap(1, mapGeo.POIImage);
@@ -313,7 +316,7 @@ begin
   pDecimal.Border.Color := clSystemSolidNeutralFGDark;
 end;
 
-procedure TdlgGeoEditor.eLongDegEditingDone(Sender: TObject);
+procedure TdlgGeoEditor.ConvertCoordinate;
 begin
   FDmsPoint.X.Degrees := elongDeg.Value;
   FDmsPoint.X.Minutes := elongMin.Value;
@@ -335,6 +338,12 @@ begin
   pDecimal.Caption := FDecPoint.ToString;
 
   FChangeZoom := True;
+end;
+
+procedure TdlgGeoEditor.eLongDegEditingDone(Sender: TObject);
+begin
+  ConvertCoordinate;
+
   RefreshMap;
 
   UpdateButtons;

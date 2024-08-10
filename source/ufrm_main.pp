@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons,
   ActnList, ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton, DateUtils,
   DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory,
-  cbs_datatypes, Types;
+  cbs_datatypes, Types, ImgList;
 
 type
 
@@ -272,6 +272,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure iSearchGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
+      var AResultWidth: Integer);
     procedure menuTabsResize(Sender: TObject);
     procedure menuTabsTabChanged(Sender: TObject);
     procedure navTabsContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
@@ -791,6 +793,11 @@ begin
   Closing := True;
   TimerScreen.Enabled := False;
 
+  CloseAllTabs(True);
+
+  lblLoading.Caption := rsClosing;
+  pSplash.Visible := True;
+
   { Run backup }
   case XSettings.AutomaticBackup of
     0: ;
@@ -810,8 +817,6 @@ begin
         NewBackup;
     end;
   end;
-
-  CloseAllTabs(True);
 
   LogInfo('END -----------------------------------------');
   if Assigned(XSettings) then
@@ -980,6 +985,12 @@ begin
   end;
 
   //SmokeScreen.Visible := False;
+end;
+
+procedure TfrmMain.iSearchGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
+  var AResultWidth: Integer);
+begin
+  AResultWidth := AImageWidth * APPI div 96;
 end;
 
 procedure TfrmMain.menuTabsResize(Sender: TObject);

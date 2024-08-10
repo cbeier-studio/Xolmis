@@ -26,7 +26,7 @@ object dlgRecHistory: TdlgRecHistory
     ClientHeight = 35
     ClientWidth = 824
     TabOrder = 0
-    object Label1: TLabel
+    object lblRecordId: TLabel
       Left = 16
       Height = 19
       Top = 8
@@ -39,11 +39,11 @@ object dlgRecHistory: TdlgRecHistory
       ParentColor = False
       ParentFont = False
     end
-    object lblNumInterno: TDBText
+    object txtRecordId: TDBText
       Left = 77
       Height = 19
       Top = 8
-      Width = 78
+      Width = 60
       Align = alLeft
       Font.Color = 13066075
       Layout = tlCenter
@@ -113,7 +113,6 @@ object dlgRecHistory: TdlgRecHistory
       Width = 112
       Align = alRight
       Caption = 'Close'
-      Default = True
       ModalResult = 11
       TabOrder = 0
     end
@@ -173,7 +172,7 @@ object dlgRecHistory: TdlgRecHistory
     ParentBackground = False
     ParentColor = False
     TabOrder = 3
-    object Label2: TLabel
+    object lblOldValue: TLabel
       Left = 16
       Height = 15
       Top = 16
@@ -199,7 +198,7 @@ object dlgRecHistory: TdlgRecHistory
       ScrollBars = ssAutoVertical
       TabOrder = 0
     end
-    object Label3: TLabel
+    object lblNewValue: TLabel
       Left = 16
       Height = 15
       Top = 89
@@ -225,7 +224,7 @@ object dlgRecHistory: TdlgRecHistory
       ScrollBars = ssAutoVertical
       TabOrder = 1
     end
-    object Label4: TLabel
+    object lblNotes: TLabel
       Left = 16
       Height = 15
       Top = 162
@@ -251,7 +250,7 @@ object dlgRecHistory: TdlgRecHistory
       ScrollBars = ssAutoVertical
       TabOrder = 2
     end
-    object Label5: TLabel
+    object lblUsername: TLabel
       Left = 16
       Height = 15
       Top = 235
@@ -263,7 +262,7 @@ object dlgRecHistory: TdlgRecHistory
       ParentColor = False
       ParentFont = False
     end
-    object lblUsername: TDBText
+    object txtUsername: TDBText
       Left = 16
       Height = 15
       Top = 254

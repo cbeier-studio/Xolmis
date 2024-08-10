@@ -1,6 +1,6 @@
 {"version":1,"strings":[
 {"hash":252360409,"name":"tdlgrechistory.caption","sourcebytes":[72,105,115,116,111,114,121],"value":"History"},
-{"hash":109307098,"name":"tdlgrechistory.label1.caption","sourcebytes":[82,101,99,111,114,100,32,105,100,58],"value":"Record id:"},
+{"hash":109307098,"name":"tdlgrechistory.lblrecordid.caption","sourcebytes":[82,101,99,111,114,100,32,105,100,58],"value":"Record id:"},
 {"hash":75149509,"name":"tdlgrechistory.ckativo.caption","sourcebytes":[65,99,116,105,118,101],"value":"Active"},
 {"hash":87593396,"name":"tdlgrechistory.ckmarcado.caption","sourcebytes":[77,97,114,107,101,100],"value":"Marked"},
 {"hash":259432052,"name":"tdlgrechistory.ckexportado.caption","sourcebytes":[69,120,112,111,114,116,101,100],"value":"Exported"},
@@ -8,8 +8,8 @@
 {"hash":305317,"name":"tdlgrechistory.dbghistory.columns[0].title.caption","sourcebytes":[68,97,116,101],"value":"Date"},
 {"hash":75149406,"name":"tdlgrechistory.dbghistory.columns[1].title.caption","sourcebytes":[65,99,116,105,111,110],"value":"Action"},
 {"hash":157732041,"name":"tdlgrechistory.dbghistory.columns[2].title.caption","sourcebytes":[80,114,111,112,101,114,116,121],"value":"Property"},
-{"hash":130243050,"name":"tdlgrechistory.label2.caption","sourcebytes":[79,108,100,32,118,97,108,117,101,58],"value":"Old value:"},
-{"hash":130250522,"name":"tdlgrechistory.label3.caption","sourcebytes":[78,101,119,32,118,97,108,117,101,58],"value":"New value:"},
-{"hash":89566314,"name":"tdlgrechistory.label4.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
-{"hash":74566218,"name":"tdlgrechistory.label5.caption","sourcebytes":[85,115,101,114,32,110,97,109,101,58],"value":"User name:"}
+{"hash":130243050,"name":"tdlgrechistory.lbloldvalue.caption","sourcebytes":[79,108,100,32,118,97,108,117,101,58],"value":"Old value:"},
+{"hash":130250522,"name":"tdlgrechistory.lblnewvalue.caption","sourcebytes":[78,101,119,32,118,97,108,117,101,58],"value":"New value:"},
+{"hash":89566314,"name":"tdlgrechistory.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
+{"hash":74566218,"name":"tdlgrechistory.lblusername.caption","sourcebytes":[85,115,101,114,32,110,97,109,101,58],"value":"User name:"}
 ]}

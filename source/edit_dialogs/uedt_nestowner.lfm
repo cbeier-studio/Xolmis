@@ -72,6 +72,7 @@ object edtNestOwner: TedtNestOwner
         MaxLength = 0
         OnKeyDown = FormKeyDown
         OnKeyPress = cbRoleKeyPress
+        Style = csDropDownList
         TabOrder = 0
       end
     end

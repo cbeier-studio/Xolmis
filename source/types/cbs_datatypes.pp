@@ -58,6 +58,7 @@ type
   TTableType = (tbNone,
     tbUsers,
     tbRecordHistory,
+    tbRecordVerifications,
     tbGazetteer,
     tbNetStations,
     tbPermanentNets,
@@ -93,11 +94,12 @@ type
 
 const
   TableAliases: array [TTableType] of String = ('',
-    'u','rh','g','ns','pn','it','p','pj','pt','l','r','z','bt','b','bh','i','c','m',
+    'u','rh','rv','g','ns','pn','it','p','pj','pt','l','r','z','bt','b','bh','i','c','m',
     'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','aud');
   TableNames: array [TTableType] of String = ('',
     'users',
     'record_history',
+    'record_verifications',
     'gazetteer',
     'net_stations',
     'permanent_nets',
@@ -251,6 +253,8 @@ type
     FSortFields: TSortedFields;
     FDataSet: TSQLQuery;
     FRecordActive: TRecordActiveStatus;
+    FSQLWhere: TStrings;
+    FSQLOrderBy: String;
     function GetCount: Integer;
     function GetSQLString: String;
   public
@@ -267,6 +271,8 @@ type
     property Count: Integer read GetCount;
     property DataSet: TSQLQuery read FDataSet write FDataSet;
     property RecordActive: TRecordActiveStatus read FRecordActive write FRecordActive default rsActive;
+    property SQLWhere: TStrings read FSQLWhere;
+    property SQLOrderBy: String read FSQLOrderBy;
   end;
 
   { TIndividualSearch }
@@ -605,13 +611,16 @@ begin
   FQuickFilters := TSearchGroups.Create(True);
   FSortFields := TSortedFields.Create(True);
   FRecordActive := rsActive;
+  FSQLWhere := TStringList.Create;
 end;
 
 destructor TCustomSearch.Destroy;
 begin
+  FSQLWhere.Clear;
   FFields.Clear;
   FQuickFilters.Clear;
   FSortFields.Clear;
+  FSQLWhere.Free;
   FFields.Free;
   FQuickFilters.Free;
   FSortFields.Free;
@@ -755,6 +764,8 @@ begin
   Msk := MaskV1;
 
   FDataSet.SQL.Clear;
+  FSQLWhere.Clear;
+  FSQLOrderBy := EmptyStr;
 
   // Add SELECT ... FROM ... statements
   SetSelectSQL(FDataSet.SQL, FTableType, FTableAlias);
@@ -764,12 +775,14 @@ begin
   if FQuickFilters.Count > 0 then
   begin
     FDataSet.SQL.Add(AndOrWhere + '(');
+    FSQLWhere.Add(AndOrWhere + '(');
     // Iterate groups
     for i := 0 to (FQuickFilters.Count - 1) do
     begin
       if FQuickFilters[i].Fields.Count > 0 then
       begin
         FDataSet.SQL.Add('(');
+        FSQLWhere.Add('(');
 
         // Iterate group fields
         for f := 0 to (FQuickFilters[i].Fields.Count - 1) do
@@ -814,16 +827,24 @@ begin
           end;
 
           FDataSet.SQL.Add(S);
+          FSQLWhere.Add(S);
         end;
         // Close parenthesis, and AND/OR groups
         AndOrWhere := 'AND ';
         if i < (FQuickFilters.Count - 1) then
-          FDataSet.SQL.Add(') ' + AndOrWhere)
+        begin
+          FDataSet.SQL.Add(') ' + AndOrWhere);
+          FSQLWhere.Add(') ' + AndOrWhere);
+        end
         else
+        begin
           FDataSet.SQL.Add(')');
+          FSQLWhere.Add(')');
+        end;
       end;
     end;
     FDataSet.SQL.Add(')');
+    FSQLWhere.Add(')');
     AndOrWhere := 'AND ';
   end;
 
@@ -835,6 +856,7 @@ begin
       if FFields[i].Fields.Count > 0 then
       begin
         FDataSet.SQL.Add(AndOrWhere + '(');
+        FSQLWhere.Add(AndOrWhere + '(');
         // Iterate group fields
         for f := 0 to (FFields[i].Fields.Count - 1) do
         begin
@@ -878,9 +900,11 @@ begin
           end;
 
           FDataSet.SQL.Add(S);
+          FSQLWhere.Add(S);
         end;
         // Close parenthesis, and AND/OR groups
         FDataSet.SQL.Add(')');
+        FSQLWhere.Add(')');
         AndOrWhere := 'AND ';
       end;
     end;
@@ -896,9 +920,15 @@ begin
   end;
   if S <> EmptyStr then
     if FTableAlias <> EmptyStr then
-      FDataSet.SQL.Add(AndOrWhere + '(' + FTableAlias + '.active_status = ' + S + ')')
+    begin
+      FDataSet.SQL.Add(AndOrWhere + '(' + FTableAlias + '.active_status = ' + S + ')');
+      FSQLWhere.Add(AndOrWhere + '(' + FTableAlias + '.active_status = ' + S + ')');
+    end
     else
+    begin
       FDataSet.SQL.Add(AndOrWhere + '(active_status = ' + S + ')');
+      FSQLWhere.Add(AndOrWhere + '(active_status = ' + S + ')');
+    end;
 
   // Add fields in ORDER BY clause
   if FSortFields.Count > 0 then
@@ -934,6 +964,7 @@ begin
         aSort := aSort + ', ';
     end;
     FDataSet.SQL.Add('ORDER BY ' + aSort);
+    FSQLOrderBy := 'ORDER BY ' + aSort;
   end;
 
   {$IFDEF DEBUG}
@@ -1073,7 +1104,7 @@ end;
 
 procedure TDBParams.SetLastBackup;
 begin
-  DMM.sysCon.ExecuteDirect('UPDATE connections SET last_backup = strftime(''now'', ''localtime'') ' +
+  DMM.sysCon.ExecuteDirect('UPDATE connections SET last_backup = datetime(''now'', ''localtime'') ' +
     'WHERE connection_name = ' + QuotedStr(Name));
 end;
 

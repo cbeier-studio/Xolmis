@@ -43,7 +43,8 @@ uses
   { Database information and management }
   function GetTableType(aTableName: String): TTableType;
   function GetFieldDisplayName(const aTableType: TTableType; aFieldName: String): String;
-  function GetPrimaryKey(const aTableName: String): String;
+  function GetPrimaryKey(const aTableName: String): String; overload;
+  function GetPrimaryKey(const aDataSet: TDataSet): String; overload;
   function IncNumInterno(aUser: Integer): Integer;
   procedure GravaNumInterno(aUser: Integer; aNum: Integer);
   function TableIsEmpty(aTableName: String): Boolean;
@@ -347,6 +348,23 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+function GetPrimaryKey(const aDataSet: TDataSet): String;
+var
+  i: Integer;
+begin
+  Result := EmptyStr;
+
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+      if pfInKey in Fields[i].ProviderFlags then
+        Result := Fields[i].FieldName;
   end;
 end;
 

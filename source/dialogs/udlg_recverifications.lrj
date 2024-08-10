@@ -1,0 +1,16 @@
+{"version":1,"strings":[
+{"hash":249862995,"name":"tdlgrecverifications.caption","sourcebytes":[82,101,99,111,114,100,32,118,101,114,105,102,105,99,97,116,105,111,110,115],"value":"Record verifications"},
+{"hash":109307098,"name":"tdlgrecverifications.lblrecordid.caption","sourcebytes":[82,101,99,111,114,100,32,105,100,58],"value":"Record id:"},
+{"hash":75149509,"name":"tdlgrecverifications.ckativo.caption","sourcebytes":[65,99,116,105,118,101],"value":"Active"},
+{"hash":87593396,"name":"tdlgrecverifications.ckmarcado.caption","sourcebytes":[77,97,114,107,101,100],"value":"Marked"},
+{"hash":259432052,"name":"tdlgrecverifications.ckexportado.caption","sourcebytes":[69,120,112,111,114,116,101,100],"value":"Exported"},
+{"hash":105733982,"name":"tdlgrecverifications.sbdelrecord.hint","sourcebytes":[68,101,108,101,116,101,32,115,101,108,101,99,116,101,100,32,118,101,114,105,102,105,99,97,116,105,111,110],"value":"Delete selected verification"},
+{"hash":139554062,"name":"tdlgrecverifications.sbinsertrecord.hint","sourcebytes":[78,101,119,32,118,101,114,105,102,105,99,97,116,105,111,110],"value":"New verification"},
+{"hash":4863637,"name":"tdlgrecverifications.sbclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
+{"hash":305317,"name":"tdlgrecverifications.dbghistory.columns[0].title.caption","sourcebytes":[68,97,116,101],"value":"Date"},
+{"hash":95062979,"name":"tdlgrecverifications.dbghistory.columns[1].title.caption","sourcebytes":[83,116,97,116,117,115],"value":"Status"},
+{"hash":193794642,"name":"tdlgrecverifications.dbghistory.columns[2].title.caption","sourcebytes":[82,101,115,101,97,114,99,104,101,114],"value":"Researcher"},
+{"hash":5597891,"name":"tdlgrecverifications.dbghistory.columns[3].title.caption","sourcebytes":[78,111,116,101,115],"value":"Notes"},
+{"hash":139554062,"name":"tdlgrecverifications.pmmnewverification.caption","sourcebytes":[78,101,119,32,118,101,114,105,102,105,99,97,116,105,111,110],"value":"New verification"},
+{"hash":43445166,"name":"tdlgrecverifications.pmmdelverification.caption","sourcebytes":[68,101,108,101,116,101,32,118,101,114,105,102,105,99,97,116,105,111,110],"value":"Delete verification"}
+]}

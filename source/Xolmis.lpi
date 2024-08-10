@@ -164,7 +164,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="242"/>
+      <BuildNr Value="251"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1143,6 +1143,20 @@
       <Unit>
         <Filename Value="types\cbs_math.pas"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_recverifications.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgRecVerifications"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_recverification.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtRecVerification"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
     <Debugger>

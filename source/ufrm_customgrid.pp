@@ -21,10 +21,10 @@ unit ufrm_customgrid;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB,
-  DateUtils, Grids, DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character,
-  Buttons, CheckLst, DBCtrls, laz.VirtualTrees, rxswitch, atshapelinebgra, BCPanel,
-  DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids,
+  DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character, Buttons, CheckLst, DBCtrls,
+  laz.VirtualTrees, TAGraph, TASeries, TADbSource, TASources, TAGUIConnectorBGRA, rxswitch, atshapelinebgra,
+  BCPanel, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList;
 
 type
   { TStringMemoEditor }
@@ -55,6 +55,12 @@ type
     cbCaptureTypeFilter: TComboBox;
     cbCaptureStatusFilter: TComboBox;
     cbNestStageFilter: TComboBox;
+    chartSummary: TChart;
+    ChartBGRA: TChartGUIConnectorBGRA;
+    chartSummaryPieSeries1: TPieSeries;
+    dsChart: TDataSource;
+    DbChartSource1: TDbChartSource;
+    gridSummary: TDBGrid;
     dsRecycle: TDataSource;
     DBG: TDBGrid;
     dbgRecycle: TDBControlGrid;
@@ -150,6 +156,17 @@ type
     lblRecycleModifiedDate: TDBText;
     lblRecycleName: TDBText;
     lblProjectFilter: TLabel;
+    ListChartSource1: TListChartSource;
+    pmMarkColumns: TPopupMenu;
+    pmmMarkAllColumns: TMenuItem;
+    pmmUnmarkAllColumns: TMenuItem;
+    pmvAddVerification: TMenuItem;
+    pmvViewVerifications: TMenuItem;
+    pmmMarkAll: TMenuItem;
+    pmmUnmarkAll: TMenuItem;
+    pmmInvertMarked: TMenuItem;
+    pmcRecordVerifications: TMenuItem;
+    pmgRecordVerifications: TMenuItem;
     pmgDefaultRowHeight: TMenuItem;
     pmgIncreaseRowHeight: TMenuItem;
     pmgRowHeight: TMenuItem;
@@ -161,6 +178,8 @@ type
     pEggShapeFilter: TBCPanel;
     pEggTraitsFilters: TBCPanel;
     pmRecycle: TPopupMenu;
+    pmMark: TPopupMenu;
+    pmVerifications: TPopupMenu;
     pReportedFilter: TBCPanel;
     pEscapedFilter: TBCPanel;
     pNeedsReviewFilter: TBCPanel;
@@ -460,6 +479,7 @@ type
     rbWithColorBandsYes: TRadioButton;
     sbAddChild: TSpeedButton;
     sbCancelRecord: TSpeedButton;
+    sbChildHistory: TSpeedButton;
     sbClearFilters: TSpeedButton;
     sbDelChild: TSpeedButton;
     sbDelRecord: TSpeedButton;
@@ -467,8 +487,11 @@ type
     sbAddNetsBatch: TSpeedButton;
     sbEditRecord: TSpeedButton;
     sbDelPermanently: TSpeedButton;
-    sbUnmarkAll: TSpeedButton;
-    sbMarkAll: TSpeedButton;
+    sbMarkColumns: TSpeedButton;
+    sbRecordHistory: TSpeedButton;
+    sbRecordVerifications: TSpeedButton;
+    sbChildVerifications: TSpeedButton;
+    sbMarkRecords: TSpeedButton;
     sbRefreshChild: TSpeedButton;
     sbRefreshRecords: TSpeedButton;
     sbRestoreRecord: TSpeedButton;
@@ -495,8 +518,6 @@ type
     sbNextChild: TSpeedButton;
     sbPriorRecord: TSpeedButton;
     sbPriorChild: TSpeedButton;
-    sbChildHistory: TSpeedButton;
-    sbRecordHistory: TSpeedButton;
     sbSaveRecord: TSpeedButton;
     sbShowRecord: TSpeedButton;
     sbShowQuickFilters: TSpeedButton;
@@ -515,6 +536,10 @@ type
     Separator15: TMenuItem;
     Separator16: TShapeLineBGRA;
     Separator17: TMenuItem;
+    Separator18: TMenuItem;
+    Separator19: TMenuItem;
+    Separator20: TShapeLineBGRA;
+    Separator21: TMenuItem;
     Separator5: TShapeLineBGRA;
     Separator6: TMenuItem;
     Separator7: TShapeLineBGRA;
@@ -550,6 +575,7 @@ type
     gridColumns: TStringGrid;
     gridRecord: TStringGrid;
     qRecycle: TSQLQuery;
+    qChart: TSQLQuery;
     TimerUpdate: TTimer;
     titleViewRecord: TLabel;
     titleRecycle: TLabel;
@@ -651,13 +677,21 @@ type
     procedure pmcNewSpecimenClick(Sender: TObject);
     procedure pmcNewSurveyMemberClick(Sender: TObject);
     procedure pmcNewWeatherLogClick(Sender: TObject);
+    procedure pmmInvertMarkedClick(Sender: TObject);
+    procedure pmmMarkAllClick(Sender: TObject);
+    procedure pmmMarkAllColumnsClick(Sender: TObject);
+    procedure pmmUnmarkAllClick(Sender: TObject);
+    procedure pmmUnmarkAllColumnsClick(Sender: TObject);
     procedure pmtClearSelectionClick(Sender: TObject);
     procedure pmtColapseAllClick(Sender: TObject);
     procedure pmtExpandAllClick(Sender: TObject);
     procedure pmtRefreshClick(Sender: TObject);
+    procedure pmvAddVerificationClick(Sender: TObject);
+    procedure pmvViewVerificationsClick(Sender: TObject);
     procedure sbAddChildClick(Sender: TObject);
     procedure sbAddNetsBatchClick(Sender: TObject);
     procedure sbCancelRecordClick(Sender: TObject);
+    procedure sbChildVerificationsClick(Sender: TObject);
     procedure sbClearFiltersClick(Sender: TObject);
     procedure sbColumnHideClick(Sender: TObject);
     procedure sbColumnWidthAutoAdjustClick(Sender: TObject);
@@ -671,7 +705,8 @@ type
     procedure sbInsertRecordClick(Sender: TObject);
     procedure sbLastChildClick(Sender: TObject);
     procedure sbLastRecordClick(Sender: TObject);
-    procedure sbMarkAllClick(Sender: TObject);
+    procedure sbMarkColumnsClick(Sender: TObject);
+    procedure sbMarkRecordsClick(Sender: TObject);
     procedure sbMoveColumnDownClick(Sender: TObject);
     procedure sbMoveColumnUpClick(Sender: TObject);
     procedure sbNextChildClick(Sender: TObject);
@@ -680,6 +715,7 @@ type
     procedure sbPriorRecordClick(Sender: TObject);
     procedure sbRecordHistoryClick(Sender: TObject);
     procedure sbChildHistoryClick(Sender: TObject);
+    procedure sbRecordVerificationsClick(Sender: TObject);
     procedure sbRefreshChildClick(Sender: TObject);
     procedure sbRefreshRecordsClick(Sender: TObject);
     procedure sbRestoreRecordClick(Sender: TObject);
@@ -692,11 +728,9 @@ type
     procedure sbShowRecordClick(Sender: TObject);
     procedure sbSortChildsClick(Sender: TObject);
     procedure sbSortRecordsClick(Sender: TObject);
-    procedure sbUnmarkAllClick(Sender: TObject);
     procedure SetFilters(Sender: TObject);
     procedure SplitChildMoved(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
-    procedure tsfMarkedOff(Sender: TObject);
     procedure tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure tvDateFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode; var NewState: TCheckState;
       var Allowed: Boolean);
@@ -893,6 +927,8 @@ type
     function SearchTaxonRanks(aValue: String): Boolean;
     function SearchZooTaxa(aValue: String): Boolean;
 
+    procedure SummaryCountDistinct(aFieldName: String);
+
     procedure UpdateButtons(aDataSet: TDataSet);
     procedure UpdateChildBar;
     procedure UpdateChildButtons(aDataSet: TDataSet);
@@ -1042,6 +1078,8 @@ begin
   pQuickFiltersContent.Background.Color := clSolidBGTertiaryDark;
   pFiltersToolbar.Background.Color := clCardBGDefaultDark;
   pFiltersToolbar.Border.Color := clCardBGSecondaryDark;
+  pColumnsToolbar.Background.Color := clCardBGDefaultDark;
+  pColumnsToolbar.Border.Color := clCardBGSecondaryDark;
   pRecycleToolbar.Background.Color := clCardBGDefaultDark;
   pRecycleToolbar.Border.Color := clCardBGSecondaryDark;
   pRecycleWarning.Background.Color := clSystemAttentionBGDark;
@@ -1053,6 +1091,8 @@ begin
   pmGridChild.Images := iButtonsDark;
   pmTree.Images := iButtonsDark;
   pmRecycle.Images := iButtonsDark;
+  pmMark.Images := iButtonsDark;
+  pmVerifications.Images := iButtonsDark;
   pmAddChild.Images := DMM.iAddMenuDark;
 
   pEmptyQuery.Background.Color := clCardBGDefaultDark;
@@ -1095,8 +1135,8 @@ begin
 
   sbInsertRecord.Images := iButtonsDark;
   sbEditRecord.Images := iButtonsDark;
-  sbUnmarkAll.Images := iButtonsDark;
-  sbMarkAll.Images := iButtonsDark;
+  sbRecordVerifications.Images := iButtonsDark;
+  sbMarkRecords.Images := iButtonsDark;
   sbRecordHistory.Images := iButtonsDark;
   sbShareRecords.Images := iButtonsDark;
   sbSaveRecord.Images := iButtonsDark;
@@ -1112,6 +1152,7 @@ begin
   sbAddNetsBatch.Images := iButtonsDark;
   sbEditChild.Images := iButtonsDark;
   sbChildHistory.Images := iButtonsDark;
+  sbChildVerifications.Images := iButtonsDark;
   sbShareChild.Images := iButtonsDark;
   sbDelChild.Images := iButtonsDark;
   sbRefreshChild.Images := iButtonsDark;
@@ -1126,6 +1167,13 @@ begin
   sbShowDocs.Images := iButtonsDark;
   sbShowSummary.Images := iButtonsDark;
   sbShowColumns.Images := iButtonsDark;
+  sbRowHeightIncrease.Images := iButtonsDark;
+  sbRowHeightDecrease.Images := iButtonsDark;
+  sbRowHeightDefault.Images := iButtonsDark;
+  sbColumnWidthAutoAdjust.Images := iButtonsDark;
+  sbMoveColumnDown.Images := iButtonsDark;
+  sbMoveColumnUp.Images := iButtonsDark;
+  sbColumnHide.Images := iButtonsDark;
   sbShowRecycle.Images := iButtonsDark;
   sbClearFilters.Images := iButtonsDark;
   sbRestoreRecord.Images := iButtonsDark;
@@ -4231,6 +4279,9 @@ end;
 
 procedure TfrmCustomGrid.gridColumnsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
 begin
+  if not CanToggle then
+    Exit;
+
   if aCol = 1 then
     dsLink.DataSet.Fields[aRow - 1].Visible := aState = cbChecked;
 
@@ -4591,6 +4642,112 @@ begin
   UpdateChildButtons(DMS.qWeatherLogs);
 end;
 
+procedure TfrmCustomGrid.pmmInvertMarkedClick(Sender: TObject);
+var
+  BM: TBookmark;
+begin
+  CanToggle := False;
+
+  with dsLink.DataSet do
+  try
+    BM := Bookmark;
+    DisableControls;
+    First;
+    repeat
+      Edit;
+      FieldByName('marked_status').AsBoolean := not FieldByName('marked_status').AsBoolean;
+      Post;
+      Next;
+    until Eof;
+  finally
+    EnableControls;
+    Bookmark := BM;
+    CanToggle := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.pmmMarkAllClick(Sender: TObject);
+var
+  BM: TBookmark;
+begin
+  CanToggle := False;
+
+  with dsLink.DataSet do
+  try
+    BM := Bookmark;
+    DisableControls;
+    First;
+    repeat
+      Edit;
+      FieldByName('marked_status').AsBoolean := True;
+      Post;
+      Next;
+    until Eof;
+  finally
+    EnableControls;
+    Bookmark := BM;
+    CanToggle := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.pmmMarkAllColumnsClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  CanToggle := False;
+
+  try
+    for i := 0 to dsLink.DataSet.Fields.Count - 1 do
+     dsLink.DataSet.Fields[i].Visible := True;
+
+    GetColumns;
+    AddGridColumns(FTableType, DBG);
+  finally
+    CanToggle := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.pmmUnmarkAllClick(Sender: TObject);
+var
+  BM: TBookmark;
+begin
+  CanToggle := False;
+
+  with dsLink.DataSet do
+  try
+    BM := Bookmark;
+    DisableControls;
+    First;
+    repeat
+      Edit;
+      FieldByName('marked_status').AsBoolean := False;
+      Post;
+      Next;
+    until Eof;
+  finally
+    EnableControls;
+    Bookmark := BM;
+    CanToggle := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.pmmUnmarkAllColumnsClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  CanToggle := False;
+
+  try
+    for i := 0 to dsLink.DataSet.Fields.Count - 1 do
+     dsLink.DataSet.Fields[i].Visible := False;
+
+    GetColumns;
+    AddGridColumns(FTableType, DBG);
+  finally
+    CanToggle := True;
+  end;
+end;
+
 procedure TfrmCustomGrid.pmtClearSelectionClick(Sender: TObject);
 begin
   TBaseVirtualTree(pmTree.PopupComponent).ClearChecked;
@@ -4616,6 +4773,52 @@ begin
 
   if pmTree.PopupComponent = tvDateFilter then
     LoadDateTreeData(FTableType, tvDateFilter);
+end;
+
+procedure TfrmCustomGrid.pmvAddVerificationClick(Sender: TObject);
+var
+  DS: TDataSet;
+begin
+  if pmVerifications.PopupComponent = sbRecordVerifications then
+  begin
+    DS := dsLink.DataSet;
+    AddVerification(FTableType, tbNone, DS.FieldByName(GetPrimaryKey(DS)).AsInteger)
+  end
+  else
+  if pmVerifications.PopupComponent = sbChildVerifications then
+  begin
+    case nbChilds.PageIndex of
+      0: DS := dsLink1.DataSet;
+      1: DS := dsLink2.DataSet;
+      2: DS := dsLink3.DataSet;
+      3: DS := dsLink4.DataSet;
+      4: DS := dsLink5.DataSet;
+    end;
+    AddVerification(FTableType, FChildTable, DS.FieldByName(GetPrimaryKey(DS)).AsInteger);
+  end;
+end;
+
+procedure TfrmCustomGrid.pmvViewVerificationsClick(Sender: TObject);
+var
+  DS: TDataSet;
+begin
+  if pmVerifications.PopupComponent = sbRecordVerifications then
+  begin
+    DS := dsLink.DataSet;
+    ShowVerifications(FTableType, tbNone, DS.FieldByName(GetPrimaryKey(DS)).AsInteger)
+  end
+  else
+  if pmVerifications.PopupComponent = sbChildVerifications then
+  begin
+    case nbChilds.PageIndex of
+      0: DS := dsLink1.DataSet;
+      1: DS := dsLink2.DataSet;
+      2: DS := dsLink3.DataSet;
+      3: DS := dsLink4.DataSet;
+      4: DS := dsLink5.DataSet;
+    end;
+    ShowVerifications(FTableType, FChildTable, DS.FieldByName(GetPrimaryKey(DS)).AsInteger);
+  end;
 end;
 
 procedure TfrmCustomGrid.PrepareCanvasBands(var Column: TColumn; var sender: TObject);
@@ -5513,14 +5716,17 @@ begin
     Exit;
 
   Working := True;
-  if (dsLink.DataSet.Modified) and (XSettings.ConfirmCancel) then
-  begin
-    if not MsgDlg(rsDiscardChangesTitle, rsCancelEditingPrompt, mtConfirmation) then
-      Exit;
-  end;
+  try
+    if (dsLink.DataSet.Modified) and (XSettings.ConfirmCancel) then
+    begin
+      if not MsgDlg(rsDiscardChangesTitle, rsCancelEditingPrompt, mtConfirmation) then
+        Exit;
+    end;
 
-  dsLink.DataSet.Cancel;
-  Working := False;
+    dsLink.DataSet.Cancel;
+  finally
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbChildHistoryClick(Sender: TObject);
@@ -5538,7 +5744,16 @@ begin
     3: aDataSet := gridChild4.DataSource.DataSet;
     4: aDataSet := gridChild5.DataSource.DataSet;
   end;
-  ShowHistory(FChildTable, aDataSet.FieldByName(aKeyField).AsInteger);
+  ShowHistory(FTableType, FChildTable, aDataSet.FieldByName(aKeyField).AsInteger);
+end;
+
+procedure TfrmCustomGrid.sbChildVerificationsClick(Sender: TObject);
+begin
+  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
+  begin
+    pmVerifications.PopupComponent := sbChildVerifications;
+    pmVerifications.Popup(X, Y);
+  end;
 end;
 
 procedure TfrmCustomGrid.sbClearFiltersClick(Sender: TObject);
@@ -5566,71 +5781,73 @@ begin
     Exit;
 
   Working := True;
-  case FTableType of
-    //tbNone: ;
-    //tbUsers: ;
-    //tbRecordHistory: ;
-    //tbGazetteer: ;
-    tbNetStations:
-      case nbChilds.PageIndex of
-        0: DeleteRecord(tbPermanentNets, DMG.qPermanentNets);
-      end;
-    //tbPermanentNets: ;
-    //tbInstitutions: ;
-    //tbPeople: ;
-    tbProjects: ;
-    //tbProjectTeams: ;
-    //tbPermits: ;
-    //tbTaxonRanks: ;
-    //tbZooTaxa: ;
-    //tbBotanicTaxa: ;
-    //tbBands: ;
-    //tbBandHistory: ;
-    tbIndividuals:
-      case nbChilds.PageIndex of
-        0: DeleteRecord(tbCaptures, DMI.qCaptures);
-        1: DeleteRecord(tbMolts, DMI.qMolts);
-        2: DeleteRecord(tbSightings, DMI.qSightings);
-        3: DeleteRecord(tbNests, DMI.qNests);
-        4: DeleteRecord(tbSpecimens, DMI.qSpecimens);
-      end;
-    //tbCaptures: ;
-    //tbMolts: ;
-    tbNests:
-      case nbChilds.PageIndex of
-        0: DeleteRecord(tbNestOwners, DMB.qNestOwners);
-        1: DeleteRecord(tbNestRevisions, DMB.qNestRevisions);
-        2: DeleteRecord(tbEggs, DMB.qEggs);
-      end;
-    //tbNestRevisions: ;
-    //tbEggs: ;
-    //tbMethods: ;
-    tbExpeditions:
-      case nbChilds.PageIndex of
-        0: DeleteRecord(tbSurveys, DMS.qSurveys);
-      end;
-    tbSurveys:
-      case nbChilds.PageIndex of
-        0: DeleteRecord(tbSurveyTeams, DMS.qSurveyTeam);
-        1: DeleteRecord(tbNetsEffort, DMS.qNetsEffort);
-        2: DeleteRecord(tbWeatherLogs, DMS.qWeatherLogs);
-        3: DeleteRecord(tbCaptures, DMS.qCaptures);
-        4: DeleteRecord(tbSightings, DMS.qSightings);
-      end;
-    //tbSurveyTeams: ;
-    //tbNetsEffort: ;
-    tbSightings: ;
-    tbSpecimens:
-      case nbChilds.PageIndex of
-        0: DeleteRecord(tbSamplePreps, DMG.qSamplePreps);
-      end;
-    //tbSamplePreps: ;
-    //tbImages: ;
-    //tbAudioLibrary: ;
+  try
+    case FTableType of
+      //tbNone: ;
+      //tbUsers: ;
+      //tbRecordHistory: ;
+      //tbGazetteer: ;
+      tbNetStations:
+        case nbChilds.PageIndex of
+          0: DeleteRecord(tbPermanentNets, DMG.qPermanentNets);
+        end;
+      //tbPermanentNets: ;
+      //tbInstitutions: ;
+      //tbPeople: ;
+      tbProjects: ;
+      //tbProjectTeams: ;
+      //tbPermits: ;
+      //tbTaxonRanks: ;
+      //tbZooTaxa: ;
+      //tbBotanicTaxa: ;
+      //tbBands: ;
+      //tbBandHistory: ;
+      tbIndividuals:
+        case nbChilds.PageIndex of
+          0: DeleteRecord(tbCaptures, DMI.qCaptures);
+          1: DeleteRecord(tbMolts, DMI.qMolts);
+          2: DeleteRecord(tbSightings, DMI.qSightings);
+          3: DeleteRecord(tbNests, DMI.qNests);
+          4: DeleteRecord(tbSpecimens, DMI.qSpecimens);
+        end;
+      //tbCaptures: ;
+      //tbMolts: ;
+      tbNests:
+        case nbChilds.PageIndex of
+          0: DeleteRecord(tbNestOwners, DMB.qNestOwners);
+          1: DeleteRecord(tbNestRevisions, DMB.qNestRevisions);
+          2: DeleteRecord(tbEggs, DMB.qEggs);
+        end;
+      //tbNestRevisions: ;
+      //tbEggs: ;
+      //tbMethods: ;
+      tbExpeditions:
+        case nbChilds.PageIndex of
+          0: DeleteRecord(tbSurveys, DMS.qSurveys);
+        end;
+      tbSurveys:
+        case nbChilds.PageIndex of
+          0: DeleteRecord(tbSurveyTeams, DMS.qSurveyTeam);
+          1: DeleteRecord(tbNetsEffort, DMS.qNetsEffort);
+          2: DeleteRecord(tbWeatherLogs, DMS.qWeatherLogs);
+          3: DeleteRecord(tbCaptures, DMS.qCaptures);
+          4: DeleteRecord(tbSightings, DMS.qSightings);
+        end;
+      //tbSurveyTeams: ;
+      //tbNetsEffort: ;
+      tbSightings: ;
+      tbSpecimens:
+        case nbChilds.PageIndex of
+          0: DeleteRecord(tbSamplePreps, DMG.qSamplePreps);
+        end;
+      //tbSamplePreps: ;
+      //tbImages: ;
+      //tbAudioLibrary: ;
+    end;
+  finally
+    UpdateChildBar;
+    Working := False;
   end;
-
-  UpdateChildBar;
-  Working := False;
 end;
 
 procedure TfrmCustomGrid.sbDelPermanentlyClick(Sender: TObject);
@@ -5665,9 +5882,12 @@ begin
     Exit;
 
   Working := True;
-  DeleteRecord(FTableType, dsLink.DataSet);
-  UpdateButtons(dsLink.DataSet);
-  Working := False;
+  try
+    DeleteRecord(FTableType, dsLink.DataSet);
+    UpdateButtons(dsLink.DataSet);
+  finally
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbEditChildClick(Sender: TObject);
@@ -5676,71 +5896,73 @@ begin
     Exit;
 
   Working := True;
-  case FTableType of
-    //tbNone: ;
-    //tbUsers: ;
-    //tbRecordHistory: ;
-    //tbGazetteer: ;
-    tbNetStations:
-      case nbChilds.PageIndex of
-        0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('net_station_id').AsInteger);
-      end;
-    //tbPermanentNets: ;
-    //tbInstitutions: ;
-    //tbPeople: ;
-    tbProjects: ;
-    //tbProjectTeams: ;
-    //tbPermits: ;
-    //tbTaxonRanks: ;
-    //tbZooTaxa: ;
-    //tbBotanicTaxa: ;
-    //tbBands: ;
-    //tbBandHistory: ;
-    tbIndividuals:
-      case nbChilds.PageIndex of
-        0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger);
-        1: EditMolt(DMI.qMolts, dsLink.DataSet.FieldByName('individual_id').AsInteger);
-        2: EditSighting(DMI.qSightings, dsLink.DataSet.FieldByName('individual_id').AsInteger);
-        3: EditNest(DMI.qNests, False);
-        //4: EditSpecimen(DMI.qSpecimens, False);
-      end;
-    //tbCaptures: ;
-    //tbMolts: ;
-    tbNests:
-      case nbChilds.PageIndex of
-        0: EditNestOwner(DMB.qNestOwners, dsLink.DataSet.FieldByName('nest_id').AsInteger);
-        1: EditNestRevision(DMB.qNestRevisions, dsLink.DataSet.FieldByName('nest_id').AsInteger);
-        2: EditEgg(DMB.qEggs, dsLink.DataSet.FieldByName('nest_id').AsInteger);
-      end;
-    //tbNestRevisions: ;
-    //tbEggs: ;
-    //tbMethods: ;
-    tbExpeditions:
-      case nbChilds.PageIndex of
-        0: EditSurvey(DMS.qSurveys);
-      end;
-    tbSurveys:
-      case nbChilds.PageIndex of
-        0: EditSurveyMember(DMS.qSurveyTeam, dsLink.DataSet.FieldByName('survey_id').AsInteger);
-        1: EditNetEffort(DMS.qNetsEffort, dsLink.DataSet.FieldByName('survey_id').AsInteger);
-        2: EditWeatherLog(DMS.qWeatherLogs, dsLink.DataSet.FieldByName('survey_id').AsInteger);
-        3: EditCapture(DMS.qCaptures, dsLink.DataSet.FieldByName('survey_id').AsInteger);
-        4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName('survey_id').AsInteger);
-      end;
-    //tbSurveyTeams: ;
-    //tbNetsEffort: ;
-    tbSightings: ;
-    tbSpecimens:
-      case nbChilds.PageIndex of
-        0: EditSamplePrep(DMG.qSamplePreps, dsLink.DataSet.FieldByName('specimen_id').AsInteger);
-      end;
-    //tbSamplePreps: ;
-    //tbImages: ;
-    //tbAudioLibrary: ;
+  try
+    case FTableType of
+      //tbNone: ;
+      //tbUsers: ;
+      //tbRecordHistory: ;
+      //tbGazetteer: ;
+      tbNetStations:
+        case nbChilds.PageIndex of
+          0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('net_station_id').AsInteger);
+        end;
+      //tbPermanentNets: ;
+      //tbInstitutions: ;
+      //tbPeople: ;
+      tbProjects: ;
+      //tbProjectTeams: ;
+      //tbPermits: ;
+      //tbTaxonRanks: ;
+      //tbZooTaxa: ;
+      //tbBotanicTaxa: ;
+      //tbBands: ;
+      //tbBandHistory: ;
+      tbIndividuals:
+        case nbChilds.PageIndex of
+          0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger);
+          1: EditMolt(DMI.qMolts, dsLink.DataSet.FieldByName('individual_id').AsInteger);
+          2: EditSighting(DMI.qSightings, dsLink.DataSet.FieldByName('individual_id').AsInteger);
+          3: EditNest(DMI.qNests, False);
+          //4: EditSpecimen(DMI.qSpecimens, False);
+        end;
+      //tbCaptures: ;
+      //tbMolts: ;
+      tbNests:
+        case nbChilds.PageIndex of
+          0: EditNestOwner(DMB.qNestOwners, dsLink.DataSet.FieldByName('nest_id').AsInteger);
+          1: EditNestRevision(DMB.qNestRevisions, dsLink.DataSet.FieldByName('nest_id').AsInteger);
+          2: EditEgg(DMB.qEggs, dsLink.DataSet.FieldByName('nest_id').AsInteger);
+        end;
+      //tbNestRevisions: ;
+      //tbEggs: ;
+      //tbMethods: ;
+      tbExpeditions:
+        case nbChilds.PageIndex of
+          0: EditSurvey(DMS.qSurveys);
+        end;
+      tbSurveys:
+        case nbChilds.PageIndex of
+          0: EditSurveyMember(DMS.qSurveyTeam, dsLink.DataSet.FieldByName('survey_id').AsInteger);
+          1: EditNetEffort(DMS.qNetsEffort, dsLink.DataSet.FieldByName('survey_id').AsInteger);
+          2: EditWeatherLog(DMS.qWeatherLogs, dsLink.DataSet.FieldByName('survey_id').AsInteger);
+          3: EditCapture(DMS.qCaptures, dsLink.DataSet.FieldByName('survey_id').AsInteger);
+          4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName('survey_id').AsInteger);
+        end;
+      //tbSurveyTeams: ;
+      //tbNetsEffort: ;
+      tbSightings: ;
+      tbSpecimens:
+        case nbChilds.PageIndex of
+          0: EditSamplePrep(DMG.qSamplePreps, dsLink.DataSet.FieldByName('specimen_id').AsInteger);
+        end;
+      //tbSamplePreps: ;
+      //tbImages: ;
+      //tbAudioLibrary: ;
+    end;
+  finally
+    UpdateChildBar;
+    Working := False;
   end;
-
-  UpdateChildBar;
-  Working := False;
 end;
 
 procedure TfrmCustomGrid.sbEditRecordClick(Sender: TObject);
@@ -5749,42 +5971,45 @@ begin
     Exit;
 
   Working := True;
-  case FTableType of
-    //tbNone: ;
-    //tbUsers: ;
-    //tbRecordHistory: ;
-    tbGazetteer:     EditSite(dsLink.DataSet);
-    tbNetStations:   EditNetStation(dsLink.DataSet);
-    //tbPermanentNets: ;
-    tbInstitutions:  EditInstitution(dsLink.DataSet);
-    tbPeople:        EditPerson(dsLink.DataSet);
-    tbProjects:      EditProject(dsLink.DataSet);
-    //tbProjectTeams: ;
-    tbPermits:       EditPermit(dsLink.DataSet);
-    tbTaxonRanks: ;
-    //tbZooTaxa: ;
-    tbBotanicTaxa:   EditBotanicTaxon(dsLink.DataSet);
-    tbBands:         EditBand(dsLink.DataSet);
-    //tbBandHistory: ;
-    tbIndividuals:   EditIndividual(dsLink.DataSet);
-    tbCaptures:      EditCapture(dsLink.DataSet);
-    tbMolts:         EditMolt(dsLink.DataSet);
-    tbNests:         EditNest(dsLink.DataSet);
-    tbNestOwners:    EditNestOwner(dsLink.DataSet);
-    tbNestRevisions: EditNestRevision(dsLink.DataSet);
-    tbEggs:          EditEgg(dsLink.DataSet);
-    tbMethods:       EditMethod(dsLink.DataSet);
-    tbExpeditions:   EditExpedition(dsLink.DataSet);
-    tbSurveys:       EditSurvey(dsLink.DataSet);
-    //tbSurveyTeams: ;
-    //tbNetsEffort: ;
-    tbSightings:     EditSighting(dsLink.DataSet);
-    tbSpecimens:     EditSpecimen(dsLink.DataSet);
-    //tbSamplePreps: ;
-    //tbImages: ;
-    //tbAudioLibrary: ;
+  try
+    case FTableType of
+      //tbNone: ;
+      //tbUsers: ;
+      //tbRecordHistory: ;
+      tbGazetteer:     EditSite(dsLink.DataSet);
+      tbNetStations:   EditNetStation(dsLink.DataSet);
+      //tbPermanentNets: ;
+      tbInstitutions:  EditInstitution(dsLink.DataSet);
+      tbPeople:        EditPerson(dsLink.DataSet);
+      tbProjects:      EditProject(dsLink.DataSet);
+      //tbProjectTeams: ;
+      tbPermits:       EditPermit(dsLink.DataSet);
+      tbTaxonRanks: ;
+      //tbZooTaxa: ;
+      tbBotanicTaxa:   EditBotanicTaxon(dsLink.DataSet);
+      tbBands:         EditBand(dsLink.DataSet);
+      //tbBandHistory: ;
+      tbIndividuals:   EditIndividual(dsLink.DataSet);
+      tbCaptures:      EditCapture(dsLink.DataSet);
+      tbMolts:         EditMolt(dsLink.DataSet);
+      tbNests:         EditNest(dsLink.DataSet);
+      tbNestOwners:    EditNestOwner(dsLink.DataSet);
+      tbNestRevisions: EditNestRevision(dsLink.DataSet);
+      tbEggs:          EditEgg(dsLink.DataSet);
+      tbMethods:       EditMethod(dsLink.DataSet);
+      tbExpeditions:   EditExpedition(dsLink.DataSet);
+      tbSurveys:       EditSurvey(dsLink.DataSet);
+      //tbSurveyTeams: ;
+      //tbNetsEffort: ;
+      tbSightings:     EditSighting(dsLink.DataSet);
+      tbSpecimens:     EditSpecimen(dsLink.DataSet);
+      //tbSamplePreps: ;
+      //tbImages: ;
+      //tbAudioLibrary: ;
+    end;
+  finally
+    Working := False;
   end;
-  Working := False;
 end;
 
 procedure TfrmCustomGrid.sbFirstChildClick(Sender: TObject);
@@ -5795,13 +6020,15 @@ begin
     Exit;
 
   Working := True;
-  aDataSet := GetChildDataSet;
+  try
+    aDataSet := GetChildDataSet;
 
-  if Assigned(aDataSet) then
-    aDataSet.First;
-
-  UpdateChildButtons(aDataSet);
-  Working := False;
+    if Assigned(aDataSet) then
+      aDataSet.First;
+  finally
+    UpdateChildButtons(aDataSet);
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbFirstRecordClick(Sender: TObject);
@@ -5810,9 +6037,12 @@ begin
     Exit;
 
   Working := True;
-  dsLink.DataSet.First;
-  UpdateButtons(dsLink.DataSet);
-  Working := False;
+  try
+    dsLink.DataSet.First;
+    UpdateButtons(dsLink.DataSet);
+  finally
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbInsertRecordClick(Sender: TObject);
@@ -5821,42 +6051,45 @@ begin
     Exit;
 
   Working := True;
-  case FTableType of
-    //tbNone: ;
-    //tbUsers: ;
-    //tbRecordHistory: ;
-    tbGazetteer:     EditSite(dsLink.DataSet, True);
-    tbNetStations:   EditNetStation(dsLink.DataSet, True);
-    //tbPermanentNets: ;
-    tbInstitutions:  EditInstitution(dsLink.DataSet, True);
-    tbPeople:        EditPerson(dsLink.DataSet, True);
-    tbProjects:      EditProject(dsLink.DataSet, True);
-    //tbProjectTeams: ;
-    tbPermits:       EditPermit(dsLink.DataSet, 0, True);
-    tbTaxonRanks: ;
-    //tbZooTaxa: ;
-    tbBotanicTaxa:   EditBotanicTaxon(dsLink.DataSet, True);
-    tbBands:         EditBand(dsLink.DataSet, True);
-    //tbBandHistory: ;
-    tbIndividuals:   EditIndividual(dsLink.DataSet, True);
-    tbCaptures:      EditCapture(dsLink.DataSet, 0, True);
-    tbMolts:         EditMolt(dsLink.DataSet, 0, True);
-    tbNests:         EditNest(dsLink.DataSet, True);
-    tbNestOwners:    EditNestOwner(dsLink.DataSet, 0, True);
-    tbNestRevisions: EditNestRevision(dsLink.DataSet, 0, True);
-    tbEggs:          EditEgg(dsLink.DataSet, 0, True);
-    tbMethods:       EditMethod(dsLink.DataSet, True);
-    tbExpeditions:   EditExpedition(dsLink.DataSet, True);
-    tbSurveys:       EditSurvey(dsLink.DataSet, True);
-    //tbSurveyTeams: ;
-    //tbNetsEffort: ;
-    tbSightings:     EditSighting(dsLink.DataSet, 0, True);
-    tbSpecimens:     EditSpecimen(dsLink.DataSet, True);
-    //tbSamplePreps: ;
-    //tbImages: ;
-    //tbAudioLibrary: ;
+  try
+    case FTableType of
+      //tbNone: ;
+      //tbUsers: ;
+      //tbRecordHistory: ;
+      tbGazetteer:     EditSite(dsLink.DataSet, True);
+      tbNetStations:   EditNetStation(dsLink.DataSet, True);
+      //tbPermanentNets: ;
+      tbInstitutions:  EditInstitution(dsLink.DataSet, True);
+      tbPeople:        EditPerson(dsLink.DataSet, True);
+      tbProjects:      EditProject(dsLink.DataSet, True);
+      //tbProjectTeams: ;
+      tbPermits:       EditPermit(dsLink.DataSet, 0, True);
+      tbTaxonRanks: ;
+      //tbZooTaxa: ;
+      tbBotanicTaxa:   EditBotanicTaxon(dsLink.DataSet, True);
+      tbBands:         EditBand(dsLink.DataSet, True);
+      //tbBandHistory: ;
+      tbIndividuals:   EditIndividual(dsLink.DataSet, True);
+      tbCaptures:      EditCapture(dsLink.DataSet, 0, True);
+      tbMolts:         EditMolt(dsLink.DataSet, 0, True);
+      tbNests:         EditNest(dsLink.DataSet, True);
+      tbNestOwners:    EditNestOwner(dsLink.DataSet, 0, True);
+      tbNestRevisions: EditNestRevision(dsLink.DataSet, 0, True);
+      tbEggs:          EditEgg(dsLink.DataSet, 0, True);
+      tbMethods:       EditMethod(dsLink.DataSet, True);
+      tbExpeditions:   EditExpedition(dsLink.DataSet, True);
+      tbSurveys:       EditSurvey(dsLink.DataSet, True);
+      //tbSurveyTeams: ;
+      //tbNetsEffort: ;
+      tbSightings:     EditSighting(dsLink.DataSet, 0, True);
+      tbSpecimens:     EditSpecimen(dsLink.DataSet, True);
+      //tbSamplePreps: ;
+      //tbImages: ;
+      //tbAudioLibrary: ;
+    end;
+  finally
+    Working := False;
   end;
-  Working := False;
 end;
 
 procedure TfrmCustomGrid.sbLastChildClick(Sender: TObject);
@@ -5867,13 +6100,15 @@ begin
     Exit;
 
   Working := True;
-  aDataSet := GetChildDataSet;
+  try
+    aDataSet := GetChildDataSet;
 
-  if Assigned(aDataSet) then
-    aDataSet.Last;
-
-  UpdateChildButtons(aDataSet);
-  Working := False;
+    if Assigned(aDataSet) then
+      aDataSet.Last;
+  finally
+    UpdateChildButtons(aDataSet);
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbLastRecordClick(Sender: TObject);
@@ -5882,33 +6117,24 @@ begin
     Exit;
 
   Working := True;
-  dsLink.DataSet.Last;
-  UpdateButtons(dsLink.DataSet);
-  Working := False;
+  try
+    dsLink.DataSet.Last;
+    UpdateButtons(dsLink.DataSet);
+  finally
+    Working := False;
+  end;
 end;
 
-procedure TfrmCustomGrid.sbMarkAllClick(Sender: TObject);
-var
-  BM: TBookmark;
+procedure TfrmCustomGrid.sbMarkColumnsClick(Sender: TObject);
 begin
-  CanToggle := False;
+  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
+    pmMarkColumns.Popup(X, Y);
+end;
 
-  with dsLink.DataSet do
-  try
-    BM := Bookmark;
-    DisableControls;
-    First;
-    repeat
-      Edit;
-      FieldByName('marked_status').AsBoolean := True;
-      Post;
-      Next;
-    until Eof;
-  finally
-    EnableControls;
-    Bookmark := BM;
-    CanToggle := True;
-  end;
+procedure TfrmCustomGrid.sbMarkRecordsClick(Sender: TObject);
+begin
+  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
+    pmMark.Popup(X, Y);
 end;
 
 procedure TfrmCustomGrid.sbMoveColumnDownClick(Sender: TObject);
@@ -5949,13 +6175,15 @@ begin
     Exit;
 
   Working := True;
-  aDataSet := GetChildDataSet;
+  try
+    aDataSet := GetChildDataSet;
 
-  if Assigned(aDataSet) then
-    aDataSet.Next;
-
-  UpdateChildButtons(aDataSet);
-  Working := False;
+    if Assigned(aDataSet) then
+      aDataSet.Next;
+  finally
+    UpdateChildButtons(aDataSet);
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbNextRecordClick(Sender: TObject);
@@ -5964,9 +6192,12 @@ begin
     Exit;
 
   Working := True;
-  dsLink.DataSet.Next;
-  UpdateButtons(dsLink.DataSet);
-  Working := False;
+  try
+    dsLink.DataSet.Next;
+    UpdateButtons(dsLink.DataSet);
+  finally
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbPriorChildClick(Sender: TObject);
@@ -5977,13 +6208,15 @@ begin
     Exit;
 
   Working := True;
-  aDataSet := GetChildDataSet;
+  try
+    aDataSet := GetChildDataSet;
 
-  if Assigned(aDataSet) then
-    aDataSet.Prior;
-
-  UpdateChildButtons(aDataSet);
-  Working := False;
+    if Assigned(aDataSet) then
+      aDataSet.Prior;
+  finally
+    UpdateChildButtons(aDataSet);
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbPriorRecordClick(Sender: TObject);
@@ -5992,9 +6225,12 @@ begin
     Exit;
 
   Working := True;
-  dsLink.DataSet.Prior;
-  UpdateButtons(dsLink.DataSet);
-  Working := False;
+  try
+    dsLink.DataSet.Prior;
+    UpdateButtons(dsLink.DataSet);
+  finally
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbRecordHistoryClick(Sender: TObject);
@@ -6002,7 +6238,16 @@ var
   aKeyField: String;
 begin
   aKeyField := GetPrimaryKey(TableNames[FTableType]);
-  ShowHistory(FTableType, dsLink.DataSet.FieldByName(aKeyField).AsInteger);
+  ShowHistory(FTableType, tbNone, dsLink.DataSet.FieldByName(aKeyField).AsInteger);
+end;
+
+procedure TfrmCustomGrid.sbRecordVerificationsClick(Sender: TObject);
+begin
+  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
+  begin
+    pmVerifications.PopupComponent := sbRecordVerifications;
+    pmVerifications.Popup(X, Y);
+  end;
 end;
 
 procedure TfrmCustomGrid.sbRefreshChildClick(Sender: TObject);
@@ -6013,18 +6258,21 @@ begin
     Exit;
 
   Working := True;
-  case nbChilds.PageIndex of
-    0: DS := dsLink1.DataSet;
-    1: DS := dsLink2.DataSet;
-    2: DS := dsLink3.DataSet;
-    3: DS := dsLink4.DataSet;
-    4: DS := dsLink5.DataSet;
+  try
+    case nbChilds.PageIndex of
+      0: DS := dsLink1.DataSet;
+      1: DS := dsLink2.DataSet;
+      2: DS := dsLink3.DataSet;
+      3: DS := dsLink4.DataSet;
+      4: DS := dsLink5.DataSet;
+    end;
+    if not DS.Active then
+      DS.Open;
+    DS.Refresh;
+    UpdateChildButtons(DS);
+  finally
+    Working := False;
   end;
-  if not DS.Active then
-    DS.Open;
-  DS.Refresh;
-  UpdateChildButtons(DS);
-  Working := False;
 end;
 
 procedure TfrmCustomGrid.sbRefreshRecordsClick(Sender: TObject);
@@ -6033,11 +6281,14 @@ begin
     Exit;
 
   Working := True;
-  if not dsLink.DataSet.Active then
-    dsLink.DataSet.Open;
-  dsLink.DataSet.Refresh;
-  UpdateButtons(dsLink.DataSet);
-  Working := False;
+  try
+    if not dsLink.DataSet.Active then
+      dsLink.DataSet.Open;
+    dsLink.DataSet.Refresh;
+    UpdateButtons(dsLink.DataSet);
+  finally
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbRestoreRecordClick(Sender: TObject);
@@ -6046,9 +6297,12 @@ begin
     Exit;
 
   Working := True;
-  RestoreRecord(FTableType, dsLink.DataSet);
-  UpdateButtons(dsLink.DataSet);
-  Working := False;
+  try
+    RestoreRecord(FTableType, dsLink.DataSet);
+    UpdateButtons(dsLink.DataSet);
+  finally
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbRowHeightDecreaseClick(Sender: TObject);
@@ -6072,8 +6326,11 @@ begin
     Exit;
 
   Working := True;
-  dsLink.DataSet.Post;
-  Working := False;
+  try
+    dsLink.DataSet.Post;
+  finally
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbShareChildClick(Sender: TObject);
@@ -6113,30 +6370,6 @@ procedure TfrmCustomGrid.sbSortRecordsClick(Sender: TObject);
 begin
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
     pmSort.Popup(X, Y);
-end;
-
-procedure TfrmCustomGrid.sbUnmarkAllClick(Sender: TObject);
-var
-  BM: TBookmark;
-begin
-  CanToggle := False;
-
-  with dsLink.DataSet do
-  try
-    BM := Bookmark;
-    DisableControls;
-    First;
-    repeat
-      Edit;
-      FieldByName('marked_status').AsBoolean := False;
-      Post;
-      Next;
-    until Eof;
-  finally
-    EnableControls;
-    Bookmark := BM;
-    CanToggle := True;
-  end;
 end;
 
 function TfrmCustomGrid.Search(aValue: String): Boolean;
@@ -8125,6 +8358,8 @@ begin
   Caption := rsTitleBands;
   FSearch.DataSet := DMG.qBands;
   AddSortedField('full_name', sdAscending);
+
+  sbRecordVerifications.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridBotanicTaxa;
@@ -8132,6 +8367,8 @@ begin
   Caption := rsTitleBotanicTaxa;
   FSearch.DataSet := DMG.qBotany;
   AddSortedField('taxon_name', sdAscending);
+
+  sbRecordVerifications.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridCaptures;
@@ -8139,6 +8376,8 @@ begin
   Caption := rsTitleCaptures;
   FSearch.DataSet := DMG.qCaptures;
   AddSortedField('capture_date', sdDescending);
+
+  sbRecordVerifications.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -8190,6 +8429,8 @@ begin
   FSearch.DataSet := DMG.qEggs;
   AddSortedField('full_name', sdAscending);
 
+  sbRecordVerifications.Visible := True;
+
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
@@ -8209,8 +8450,10 @@ begin
   FChildTable := tbSurveys;
   dsLink1.DataSet := DMS.qSurveys;
   pmcNewSurvey.Visible := True;
+  sbRecordVerifications.Visible := True;
 
   pChildsBar.Visible := True;
+  sbChildVerifications.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -8222,6 +8465,8 @@ begin
   Caption := rsTitleGazetteer;
   FSearch.DataSet := DMG.qGazetteer;
   AddSortedField('site_name', sdAscending);
+
+  sbRecordVerifications.Visible := True;
 
   //sbShowDocs.Visible := True;
 end;
@@ -8256,8 +8501,10 @@ begin
   pmcNewSighting.Visible := True;
   pmcNewNest.Visible := True;
   pmcNewSpecimen.Visible := True;
+  sbRecordVerifications.Visible := True;
 
   pChildsBar.Visible := True;
+  sbChildVerifications.Visible := True;
   //pChild.Visible := True;
   dbgImages.DataSource := DMI.dsImages;
   lblImageTime.DataSource := dbgImages.DataSource;
@@ -8309,8 +8556,10 @@ begin
   pmcNewNestOwner.Visible := True;
   pmcNewNestRevision.Visible := True;
   pmcNewEgg.Visible := True;
+  sbRecordVerifications.Visible := True;
 
   pChildsBar.Visible := True;
+  sbChildVerifications.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -8322,6 +8571,8 @@ begin
   Caption := rsTitleNestRevisions;
   FSearch.DataSet := DMG.qNestRevisions;
   AddSortedField('full_name', sdAscending);
+
+  sbRecordVerifications.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -8340,8 +8591,10 @@ begin
   FChildTable := tbPermanentNets;
   dsLink1.DataSet := DMG.qPermanentNets;
   pmcNewPermanentNet.Visible := True;
+  sbRecordVerifications.Visible := True;
 
   pChildsBar.Visible := True;
+  sbChildVerifications.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridPeople;
@@ -8384,6 +8637,8 @@ begin
   FSearch.DataSet := DMG.qSightings;
   AddSortedField('sighting_date', sdDescending);
 
+  sbRecordVerifications.Visible := True;
+
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
@@ -8405,8 +8660,10 @@ begin
   dsLink2.DataSet := DMG.qSamplePreps;
   pmcNewCollector.Visible := True;
   pmcNewSamplePrep.Visible := True;
+  sbRecordVerifications.Visible := True;
 
   pChildsBar.Visible := True;
+  sbChildVerifications.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -8443,8 +8700,10 @@ begin
   pmcNewWeatherLog.Visible := True;
   pmcNewCapture.Visible := True;
   pmcNewSighting.Visible := True;
+  sbRecordVerifications.Visible := True;
 
   pChildsBar.Visible := True;
+  sbChildVerifications.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -8673,9 +8932,25 @@ begin
   FSidePanelFactor := pSide.Width / (ClientWidth - SplitRight.Width);
 end;
 
-procedure TfrmCustomGrid.tsfMarkedOff(Sender: TObject);
+procedure TfrmCustomGrid.SummaryCountDistinct(aFieldName: String);
 begin
-  Search(FSearchString);
+  qChart.Close;
+
+  if (aFieldName = 'taxon_name') or (aFieldName = 'locality_name') then
+  begin
+    with qChart, SQL do
+    begin
+      Clear;
+      Add('SELECT DISTINCT');
+      Add('  (SELECT z.%zname FROM %ftable AS z WHERE z.%zid = g.%gid) AS name,');
+      Add('  (SELECT count(*) FROM %atable AS t WHERE t.%tid = g.%gid) AS tally');
+      Add('FROM %atable AS g');
+      AddText(FSearch.SQLWhere.Text);
+      Add('ORDER BY tally DESC');
+    end;
+
+
+  end;
 end;
 
 procedure TfrmCustomGrid.tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -8892,10 +9167,10 @@ begin
       sbNextRecord.Enabled := False;
       sbLastRecord.Enabled := False;
       sbRecordHistory.Enabled := False;
+      sbRecordVerifications.Enabled := False;
       sbShareRecords.Enabled := False;
       sbSortRecords.Enabled := False;
-      sbMarkAll.Enabled := False;
-      sbUnmarkAll.Enabled := False;
+      sbMarkRecords.Enabled := False;
 
       sbShowQuickFilters.Enabled := False;
       sbShowImages.Enabled := False;
@@ -8919,10 +9194,10 @@ begin
       sbEditRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbDelRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbRecordHistory.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbRecordVerifications.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbShareRecords.Enabled := (aDataSet.RecordCount > 0) and (ActiveUser.AllowExport);
       sbSortRecords.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbMarkAll.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbUnmarkAll.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbMarkRecords.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
 
       sbFirstRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
       sbPriorRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
@@ -8956,10 +9231,10 @@ begin
       sbNextRecord.Enabled := False;
       sbLastRecord.Enabled := False;
       sbRecordHistory.Enabled := False;
+      sbRecordVerifications.Enabled := False;
       sbShareRecords.Enabled := False;
       sbSortRecords.Enabled := False;
-      sbMarkAll.Enabled := False;
-      sbUnmarkAll.Enabled := False;
+      sbMarkRecords.Enabled := False;
 
       sbShowQuickFilters.Enabled := False;
       sbShowImages.Enabled := False;
@@ -8985,6 +9260,7 @@ begin
   pmgEdit.Enabled := sbEditRecord.Enabled;
   pmgDel.Enabled := sbDelRecord.Enabled;
   pmgRecordHistory.Enabled := sbRecordHistory.Enabled;
+  pmgRecordVerifications.Enabled := sbRecordVerifications.Enabled;
 
   sbClearFilters.Enabled := FSearch.QuickFilters.Count > 0;
 
@@ -9025,6 +9301,7 @@ begin
       sbNextChild.Enabled := False;
       sbLastChild.Enabled := False;
       sbChildHistory.Enabled := False;
+      sbChildVerifications.Enabled := False;
       sbShareChild.Enabled := False;
       sbRefreshChild.Enabled := True;
 
@@ -9036,6 +9313,7 @@ begin
       sbEditChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbDelChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbChildHistory.Enabled := (aDataSet.RecordCount > 0);
+      sbChildVerifications.Enabled := (aDataSet.RecordCount > 0);
       sbShareChild.Enabled := (aDataSet.RecordCount > 0) and (ActiveUser.AllowExport);
       sbRefreshChild.Enabled := True;
       sbFirstChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
@@ -9055,6 +9333,7 @@ begin
       sbNextChild.Enabled := False;
       sbLastChild.Enabled := False;
       sbChildHistory.Enabled := False;
+      sbChildVerifications.Enabled := False;
       sbShareChild.Enabled := False;
       sbRefreshChild.Enabled := False;
 
@@ -9067,6 +9346,7 @@ begin
   pmcDel.Enabled := sbDelChild.Enabled;
   pmcRefresh.Enabled := sbRefreshChild.Enabled;
   pmcRecordHistory.Enabled := sbChildHistory.Enabled;
+  pmcRecordVerifications.Enabled := sbChildVerifications.Enabled;
 
   //UpdateChildCount;
 end;
