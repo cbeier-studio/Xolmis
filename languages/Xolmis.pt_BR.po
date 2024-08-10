@@ -10866,6 +10866,11 @@ msgctxt "tfrmcustomgrid.sbshowimages.hint"
 msgid "Images"
 msgstr "Imagens"
 
+#: tfrmcustomgrid.sbshowmap.hint
+msgctxt "tfrmcustomgrid.sbshowmap.hint"
+msgid "Map"
+msgstr "Mapa"
+
 #: tfrmcustomgrid.sbshowquickfilters.hint
 msgctxt "tfrmcustomgrid.sbshowquickfilters.hint"
 msgid "Quick filters"
@@ -10915,6 +10920,11 @@ msgstr "Documentos e links"
 msgctxt "tfrmcustomgrid.titleimages.caption"
 msgid "Images"
 msgstr "Imagens"
+
+#: tfrmcustomgrid.titlemap.caption
+msgctxt "tfrmcustomgrid.titlemap.caption"
+msgid "Map"
+msgstr "Mapa"
 
 #: tfrmcustomgrid.titlequickfilters.caption
 msgctxt "tfrmcustomgrid.titlequickfilters.caption"

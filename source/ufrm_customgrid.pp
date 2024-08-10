@@ -24,7 +24,8 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character, Buttons, CheckLst, DBCtrls,
   laz.VirtualTrees, TAGraph, TASeries, TADbSource, TASources, TAGUIConnectorBGRA, rxswitch, atshapelinebgra,
-  BCPanel, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList;
+  BCPanel, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, mvMapViewer, mvDE_BGRA, mvTypes, mvGpsObj,
+  mvDrawingEngine;
 
 type
   { TStringMemoEditor }
@@ -157,6 +158,9 @@ type
     lblRecycleName: TDBText;
     lblProjectFilter: TLabel;
     ListChartSource1: TListChartSource;
+    cardMap: TPage;
+    mapGeo: TMapView;
+    MvBGRADraw: TMvBGRADrawingEngine;
     pmMarkColumns: TPopupMenu;
     pmmMarkAllColumns: TMenuItem;
     pmmUnmarkAllColumns: TMenuItem;
@@ -506,6 +510,7 @@ type
     sbImageInfo: TSpeedButton;
     sbSaveImage: TSpeedButton;
     sbShareChild: TSpeedButton;
+    sbShowMap: TSpeedButton;
     sbViewImage: TSpeedButton;
     sbFirstRecord: TSpeedButton;
     sbFirstChild: TSpeedButton;
@@ -585,6 +590,7 @@ type
     titleAudios: TLabel;
     titleImages: TLabel;
     titleQuickFilters: TLabel;
+    titleMap: TLabel;
     tsTaxonomyCbro: TRxSwitch;
     tsTaxonomyClements: TRxSwitch;
     tsTaxonomyIoc: TRxSwitch;
@@ -658,6 +664,7 @@ type
     procedure gridColumnsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
     procedure iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
       var AResultWidth: Integer);
+    procedure mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
     procedure pChildTag1Click(Sender: TObject);
     procedure pChildTag1MouseEnter(Sender: TObject);
     procedure pChildTag1MouseLeave(Sender: TObject);
@@ -854,6 +861,8 @@ type
     procedure PrepareCanvasSightings(var Column: TColumn; var sender: TObject);
     procedure PrepareCanvasSpecimens(var Column: TColumn; var sender: TObject);
     procedure PrepareCanvasSurveys(var Column: TColumn; var sender: TObject);
+
+    procedure RefreshMap;
 
     procedure SetColumnsBands(var aGrid: TDBGrid);
     procedure SetColumnsBotanicTaxa(var aGrid: TDBGrid);
@@ -2286,6 +2295,9 @@ procedure TfrmCustomGrid.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
   LoadRecordRow;
 
+  if mapGeo.Active then
+    RefreshMap;
+
   UpdateChildBar;
 end;
 
@@ -3063,6 +3075,7 @@ begin
     ApplyDarkMode;
 
   FSearch := TCustomSearch.Create(FTableType);
+  mapGeo.CachePath := IncludeTrailingPathDelimiter(ConcatPaths([AppDataDir, 'map-cache']));
 
   { Resize panels }
   pSide.Visible := False;
@@ -4330,6 +4343,27 @@ begin
         DBG.Columns[i].Field.AsString;
     end;
   end;
+end;
+
+procedure TfrmCustomGrid.mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
+const
+  R = 8;
+var
+  P: TPoint;
+  ext: TSize;
+begin
+  P := TMapView(Sender).LonLatToScreen(APoint.RealPoint);
+  ADrawer.BrushColor := clRedFGDark;
+  ADrawer.PenColor := clRedBGLight;
+  ADrawer.BrushStyle := bsSolid;
+  ADrawer.PenWidth := 2;
+  ADrawer.Ellipse(P.X - R, P.Y - R, P.X + R, P.Y + R);
+  P.Y := P.Y + R;
+
+  ext := ADrawer.TextExtent(APoint.Name);
+  ADrawer.BrushColor := clWhite;
+  ADrawer.BrushStyle := bsClear;
+  ADrawer.TextOut(P.X - ext.CX div 2, P.Y + 5, APoint.Name);
 end;
 
 procedure TfrmCustomGrid.pChildTag1Click(Sender: TObject);
@@ -5690,6 +5724,48 @@ begin
     {$ELSE}
     TDBGrid(Sender).Canvas.Font.Style := [fsBold];
     {$ENDIF}
+  end;
+end;
+
+procedure TfrmCustomGrid.RefreshMap;
+var
+  poi: TGpsPoint;
+  rp: TRealPoint;
+begin
+  mapGeo.GPSItems.Clear(0);
+  mapGeo.Refresh;
+
+  case FTableType of
+    tbGazetteer,
+    tbNetStations,
+    tbCaptures,
+    tbNests,
+    tbSightings,
+    tbSpecimens:
+    begin
+      rp.Lon := dsLink.DataSet.FieldByName('longitude').AsFloat;
+      rp.Lat := dsLink.DataSet.FieldByName('latitude').AsFloat;
+    end;
+    tbSurveys:
+    begin
+      rp.Lon := dsLink.DataSet.FieldByName('start_longitude').AsFloat;
+      rp.Lat := dsLink.DataSet.FieldByName('start_latitude').AsFloat;
+    end;
+  end;
+
+  if not (rp.Lon = 0) and not (rp.Lat = 0) then
+  begin
+    poi := TGpsPoint.CreateFrom(rp);
+    mapGeo.GPSItems.Add(poi, 0);
+  end;
+
+  if (mapGeo.GPSItems.Count > 0) then
+  begin
+    mapGeo.ZoomOnArea(mapGeo.GPSItems.BoundingBox);
+    if mapGeo.Zoom > 14 then
+      mapGeo.Zoom := 14
+    else
+      mapGeo.Zoom := mapGeo.Zoom - 1;
   end;
 end;
 
@@ -8378,6 +8454,8 @@ begin
   AddSortedField('capture_date', sdDescending);
 
   sbRecordVerifications.Visible := True;
+  mapGeo.Active := True;
+  sbShowMap.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -8467,6 +8545,8 @@ begin
   AddSortedField('site_name', sdAscending);
 
   sbRecordVerifications.Visible := True;
+  mapGeo.Active := True;
+  sbShowMap.Visible := True;
 
   //sbShowDocs.Visible := True;
 end;
@@ -8560,6 +8640,8 @@ begin
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
+  mapGeo.Active := True;
+  sbShowMap.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -8595,6 +8677,8 @@ begin
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
+  mapGeo.Active := True;
+  sbShowMap.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridPeople;
@@ -8638,6 +8722,8 @@ begin
   AddSortedField('sighting_date', sdDescending);
 
   sbRecordVerifications.Visible := True;
+  mapGeo.Active := True;
+  sbShowMap.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -8664,6 +8750,8 @@ begin
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
+  mapGeo.Active := True;
+  sbShowMap.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -8704,6 +8792,8 @@ begin
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
+  mapGeo.Active := True;
+  sbShowMap.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -9178,6 +9268,7 @@ begin
       sbShowDocs.Enabled := False;
       sbShowSummary.Enabled := False;
       sbShowRecycle.Enabled := False;
+      sbShowMap.Enabled := False;
 
       sbCancelRecord.Visible := False;
       sbSaveRecord.Visible := False;
@@ -9210,6 +9301,7 @@ begin
       sbShowDocs.Enabled := True;
       sbShowSummary.Enabled := True;
       sbShowRecycle.Enabled := True;
+      sbShowMap.Enabled := True;
 
       sbRefreshRecords.Enabled := True;
 
@@ -9242,6 +9334,7 @@ begin
       sbShowDocs.Enabled := False;
       sbShowSummary.Enabled := False;
       sbShowRecycle.Enabled := False;
+      sbShowMap.Enabled := False;
 
       sbCancelRecord.Visible := True;
       sbSaveRecord.Visible := True;
