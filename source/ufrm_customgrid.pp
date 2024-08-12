@@ -863,6 +863,7 @@ type
     procedure PrepareCanvasSurveys(var Column: TColumn; var sender: TObject);
 
     procedure RefreshMap;
+    procedure RefreshMapSurvey;
 
     procedure SetColumnsBands(var aGrid: TDBGrid);
     procedure SetColumnsBotanicTaxa(var aGrid: TDBGrid);
@@ -4348,17 +4349,28 @@ end;
 procedure TfrmCustomGrid.mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
 const
   R = 8;
+  Rs = 6;
 var
   P: TPoint;
   ext: TSize;
 begin
   P := TMapView(Sender).LonLatToScreen(APoint.RealPoint);
-  ADrawer.BrushColor := clRedFGDark;
-  ADrawer.PenColor := clRedBGLight;
+  if APoint.IdOwner = 0 then
+  begin
+    ADrawer.BrushColor := clRedFGDark;
+    ADrawer.PenColor := clRedBGLight;
+    ADrawer.Ellipse(P.X - R, P.Y - R, P.X + R, P.Y + R);
+    P.Y := P.Y + R;
+  end
+  else
+  begin
+    ADrawer.BrushColor := clYellowFG4Dark;
+    ADrawer.PenColor := clYellowBGLight;
+    ADrawer.Ellipse(P.X - Rs, P.Y - Rs, P.X + Rs, P.Y + Rs);
+    P.Y := P.Y + Rs;
+  end;
   ADrawer.BrushStyle := bsSolid;
   ADrawer.PenWidth := 2;
-  ADrawer.Ellipse(P.X - R, P.Y - R, P.X + R, P.Y + R);
-  P.Y := P.Y + R;
 
   ext := ADrawer.TextExtent(APoint.Name);
   ADrawer.BrushColor := clWhite;
@@ -5733,6 +5745,7 @@ var
   rp: TRealPoint;
 begin
   mapGeo.GPSItems.Clear(0);
+  mapGeo.GPSItems.Clear(1);
   mapGeo.Refresh;
 
   case FTableType of
@@ -5750,6 +5763,7 @@ begin
     begin
       rp.Lon := dsLink.DataSet.FieldByName('start_longitude').AsFloat;
       rp.Lat := dsLink.DataSet.FieldByName('start_latitude').AsFloat;
+      RefreshMapSurvey;
     end;
   end;
 
@@ -5766,6 +5780,40 @@ begin
       mapGeo.Zoom := 14
     else
       mapGeo.Zoom := mapGeo.Zoom - 1;
+  end;
+end;
+
+procedure TfrmCustomGrid.RefreshMapSurvey;
+var
+  BM: TBookMark;
+  poi: TGpsPoint;
+  rp: TRealPoint;
+begin
+  // Mistnets
+  with dsLink2.DataSet do
+  begin
+    if not dsLink2.DataSet.Active then
+      Open;
+
+    if RecordCount > 0 then
+    try
+      BM := Bookmark;
+      DisableControls;
+      First;
+      repeat
+        rp.Lon := FieldByName('longitude').AsFloat;
+        rp.Lat := FieldByName('latitude').AsFloat;
+        if (not (rp.Lon = 0) and not (rp.Lat = 0)) then
+        begin
+          poi := TGpsPoint.CreateFrom(rp);
+          mapGeo.GPSItems.Add(poi, 1);
+        end;
+        Next;
+      until EOF;
+    finally
+      EnableControls;
+      Bookmark := BM;
+    end;
   end;
 end;
 
