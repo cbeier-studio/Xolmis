@@ -10147,6 +10147,19 @@ msgctxt "tfrmcustomgrid.lblwithrecapturesfilter.caption"
 msgid "Have recaptures"
 msgstr ""
 
+#: tfrmcustomgrid.pmccolumnsautoadjustwidth.caption
+msgctxt "tfrmcustomgrid.pmccolumnsautoadjustwidth.caption"
+msgid "Auto adjust columns' width"
+msgstr ""
+
+#: tfrmcustomgrid.pmccolumnsortasc.caption
+msgid "Sort column ascending"
+msgstr ""
+
+#: tfrmcustomgrid.pmccolumnsortdesc.caption
+msgid "Sort column descending"
+msgstr ""
+
 #: tfrmcustomgrid.pmcdel.caption
 msgctxt "tfrmcustomgrid.pmcdel.caption"
 msgid "Delete"
@@ -10155,6 +10168,10 @@ msgstr ""
 #: tfrmcustomgrid.pmcedit.caption
 msgctxt "tfrmcustomgrid.pmcedit.caption"
 msgid "Edit"
+msgstr ""
+
+#: tfrmcustomgrid.pmchidecolumn.caption
+msgid "Hide column"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewcapture.caption
@@ -10248,6 +10265,7 @@ msgid "Refresh"
 msgstr ""
 
 #: tfrmcustomgrid.pmgautosizecolumns.caption
+msgctxt "tfrmcustomgrid.pmgautosizecolumns.caption"
 msgid "Auto adjust columns' width"
 msgstr ""
 

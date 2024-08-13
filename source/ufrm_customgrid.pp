@@ -160,6 +160,10 @@ type
     ListChartSource1: TListChartSource;
     cardMap: TPage;
     mapGeo: TMapView;
+    pmcColumnsAutoAdjustWidth: TMenuItem;
+    pmcColumnSortAsc: TMenuItem;
+    pmcColumnSortDesc: TMenuItem;
+    pmcHideColumn: TMenuItem;
     MvBGRADraw: TMvBGRADrawingEngine;
     pmMarkColumns: TPopupMenu;
     pmmMarkAllColumns: TMenuItem;
@@ -184,6 +188,7 @@ type
     pmRecycle: TPopupMenu;
     pmMark: TPopupMenu;
     pmVerifications: TPopupMenu;
+    pmColumn: TPopupMenu;
     pReportedFilter: TBCPanel;
     pEscapedFilter: TBCPanel;
     pNeedsReviewFilter: TBCPanel;
@@ -545,6 +550,8 @@ type
     Separator19: TMenuItem;
     Separator20: TShapeLineBGRA;
     Separator21: TMenuItem;
+    Separator22: TMenuItem;
+    Separator23: TMenuItem;
     Separator5: TShapeLineBGRA;
     Separator6: TMenuItem;
     Separator7: TShapeLineBGRA;
@@ -597,10 +604,13 @@ type
     tvDateFilter: TLazVirtualStringTree;
     tvSiteFilter: TLazVirtualStringTree;
     tvTaxaFilter: TLazVirtualStringTree;
+    procedure DBGColEnter(Sender: TObject);
     procedure DBGColExit(Sender: TObject);
+    procedure DBGContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure DBGDblClick(Sender: TObject);
     procedure DBGEditButtonClick(Sender: TObject);
     procedure DBGEditingDone(Sender: TObject);
+    procedure DBGMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure DBGMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
       var Handled: Boolean);
     procedure DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
@@ -669,6 +679,9 @@ type
     procedure pChildTag1MouseEnter(Sender: TObject);
     procedure pChildTag1MouseLeave(Sender: TObject);
     procedure pClientResize(Sender: TObject);
+    procedure pmcColumnSortAscClick(Sender: TObject);
+    procedure pmcColumnSortDescClick(Sender: TObject);
+    procedure pmcHideColumnClick(Sender: TObject);
     procedure pmcNewCaptureClick(Sender: TObject);
     procedure pmcNewCollectorClick(Sender: TObject);
     procedure pmcNewEggClick(Sender: TObject);
@@ -1099,9 +1112,11 @@ begin
   DBG.TitleImageList := iHeadersDark;
   pmGrid.Images := iButtonsDark;
   pmGridChild.Images := iButtonsDark;
+  pmColumn.Images := iButtonsDark;
   pmTree.Images := iButtonsDark;
   pmRecycle.Images := iButtonsDark;
   pmMark.Images := iButtonsDark;
+  pmMarkColumns.Images := iButtonsDark;
   pmVerifications.Images := iButtonsDark;
   pmAddChild.Images := DMM.iAddMenuDark;
 
@@ -1846,6 +1861,12 @@ begin
   rbHasSynonymsAll.Checked := True;
 end;
 
+procedure TfrmCustomGrid.DBGColEnter(Sender: TObject);
+begin
+  //if sbEditRecord.Enabled then
+    gridColumns.Row := DBG.SelectedColumn.Field.Index + 1;
+end;
+
 procedure TfrmCustomGrid.DBGColExit(Sender: TObject);
 begin
   { #todo : Return row height to default when exit the cell }
@@ -1855,6 +1876,15 @@ begin
   TDBGrid(Sender).DefaultRowHeight := TDBGrid(Sender).DefaultRowHeight - 1;
   TDBGrid(Sender).EndUpdate;
   {$ENDIF}
+end;
+
+procedure TfrmCustomGrid.DBGContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+  if MousePos.Y < DBG.DefaultRowHeight then
+  begin
+    pmColumn.PopUp;
+    Handled := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.DBGDblClick(Sender: TObject);
@@ -2032,6 +2062,39 @@ begin
   //if TStringGrid(Sender).RowCount > TStringGrid(Sender).Row then
   //  TStringGrid(Sender).RowHeights[TStringGrid(Sender).Row] := TStringGrid(Sender).DefaultRowHeight;
   //{$ENDIF}
+end;
+
+procedure TfrmCustomGrid.DBGMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  Direction: TSortDirection;
+  ACol, ARow: Longint;
+  Column: TColumn;
+  Grid: TDBGrid;
+begin
+  Grid := TDBGrid(Sender);
+
+  { Sort records on title click }
+  if (Button = mbLeft) and (Grid.MouseCoord(X, Y).Y = 0) then
+  begin
+    Direction := sdAscending;
+
+    Grid.MouseToCell(X, Y, ACol, ARow);
+    Column := Grid.Columns[ACol - 1];
+
+    if FSearch.SortFields.Count > 0 then
+      if Column.FieldName = FSearch.SortFields[0].FieldName then
+        if FSearch.SortFields[0].Direction = sdAscending then
+          Direction := sdDescending
+        else
+          Direction := sdAscending;
+
+    FSearch.SortFields.Clear;
+    if not (pfInUpdate in Grid.DataSource.DataSet.FieldByName(Column.FieldName).ProviderFlags) then
+      AddSortedField(Column.FieldName, Direction, '', True)
+    else
+      AddSortedField(Column.FieldName, Direction);
+    Search(FSearchString);
+  end;
 end;
 
 procedure TfrmCustomGrid.DBGMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer;
@@ -2217,24 +2280,25 @@ begin
 end;
 
 procedure TfrmCustomGrid.DBGTitleClick(Column: TColumn);
-var
-  Direction: TSortDirection;
+//var
+//  Direction: TSortDirection;
 begin
-  Direction := sdAscending;
 
-  if FSearch.SortFields.Count > 0 then
-    if Column.FieldName = FSearch.SortFields[0].FieldName then
-      if FSearch.SortFields[0].Direction = sdAscending then
-        Direction := sdDescending
-      else
-        Direction := sdAscending;
-
-  FSearch.SortFields.Clear;
-  if not (pfInUpdate in DBG.DataSource.DataSet.FieldByName(Column.FieldName).ProviderFlags) then
-    AddSortedField(Column.FieldName, Direction, '', True)
-  else
-    AddSortedField(Column.FieldName, Direction);
-  Search(FSearchString);
+  //Direction := sdAscending;
+  //
+  //if FSearch.SortFields.Count > 0 then
+  //  if Column.FieldName = FSearch.SortFields[0].FieldName then
+  //    if FSearch.SortFields[0].Direction = sdAscending then
+  //      Direction := sdDescending
+  //    else
+  //      Direction := sdAscending;
+  //
+  //FSearch.SortFields.Clear;
+  //if not (pfInUpdate in DBG.DataSource.DataSet.FieldByName(Column.FieldName).ProviderFlags) then
+  //  AddSortedField(Column.FieldName, Direction, '', True)
+  //else
+  //  AddSortedField(Column.FieldName, Direction);
+  //Search(FSearchString);
 end;
 
 procedure TfrmCustomGrid.dsLink1DataChange(Sender: TObject; Field: TField);
@@ -2307,7 +2371,7 @@ begin
   if Assigned(dsLink.DataSet) then
     UpdateButtons(dsLink.DataSet);
 
-  pEmptyQuery.Visible := dsLink.DataSet.RecordCount = 0;
+  pEmptyQuery.Visible := (not Working) and (dsLink.DataSet.RecordCount = 0);
 
   UpdateChildBar;
 end;
@@ -4575,6 +4639,62 @@ begin
   pChild.Height := Round((pClient.Height - SplitChild.Height) * FChildPanelFactor);
 end;
 
+procedure TfrmCustomGrid.pmcColumnSortAscClick(Sender: TObject);
+var
+  Direction: TSortDirection;
+  ACol, ARow: Longint;
+  Column: TColumn;
+  Grid: TDBGrid;
+begin
+  Grid := DBG;
+  Grid.MouseToCell(pmColumn.PopupPoint.X, pmColumn.PopupPoint.Y, ACol, ARow);
+  Column := Grid.Columns[ACol - 1];
+
+  Direction := sdAscending;
+
+  FSearch.SortFields.Clear;
+  if not (pfInUpdate in Grid.DataSource.DataSet.FieldByName(Column.FieldName).ProviderFlags) then
+    AddSortedField(Column.FieldName, Direction, '', True)
+  else
+    AddSortedField(Column.FieldName, Direction);
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.pmcColumnSortDescClick(Sender: TObject);
+var
+  Direction: TSortDirection;
+  ACol, ARow: Longint;
+  Column: TColumn;
+  Grid: TDBGrid;
+begin
+  Grid := DBG;
+  Grid.MouseToCell(pmColumn.PopupPoint.X, pmColumn.PopupPoint.Y, ACol, ARow);
+  Column := Grid.Columns[ACol - 1];
+
+  Direction := sdDescending;
+
+  FSearch.SortFields.Clear;
+  if not (pfInUpdate in Grid.DataSource.DataSet.FieldByName(Column.FieldName).ProviderFlags) then
+    AddSortedField(Column.FieldName, Direction, '', True)
+  else
+    AddSortedField(Column.FieldName, Direction);
+  Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.pmcHideColumnClick(Sender: TObject);
+var
+  ACol, ARow: Longint;
+  Column: TColumn;
+begin
+  DBG.MouseToCell(pmColumn.PopupPoint.X, pmColumn.PopupPoint.Y, ACol, ARow);
+  Column := DBG.Columns[ACol - 1];
+
+  dsLink.DataSet.FieldByName(Column.FieldName).Visible := False;
+
+  GetColumns;
+  AddGridColumns(FTableType, DBG);
+end;
+
 procedure TfrmCustomGrid.pmcNewCaptureClick(Sender: TObject);
 begin
   case FTableType of
@@ -6510,6 +6630,7 @@ begin
   FSearch.Fields.Clear;
   FSearch.QuickFilters.Clear;
   lblRecordStatus.Caption := rsLoadingRecords;
+  DBG.BeginUpdate;
 
   case TableType of
     tbNone: ;
@@ -6543,6 +6664,7 @@ begin
     tbAudioLibrary: ;
   end;
   Working := False;
+  DBG.EndUpdate;
 
   UpdateButtons(dsLink.DataSet);
 end;

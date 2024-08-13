@@ -294,5 +294,9 @@
 {"hash":11267982,"name":"tfrmcustomgrid.pmvaddverification.caption","sourcebytes":[65,100,100,32,114,101,99,111,114,100,32,118,101,114,105,102,105,99,97,116,105,111,110],"value":"Add record verification"},
 {"hash":37234947,"name":"tfrmcustomgrid.pmvviewverifications.caption","sourcebytes":[86,105,101,119,32,114,101,99,111,114,100,32,118,101,114,105,102,105,99,97,116,105,111,110,115],"value":"View record verifications"},
 {"hash":143483676,"name":"tfrmcustomgrid.pmmmarkallcolumns.caption","sourcebytes":[77,97,114,107,32,97,108,108],"value":"Mark all"},
-{"hash":143172380,"name":"tfrmcustomgrid.pmmunmarkallcolumns.caption","sourcebytes":[85,110,109,97,114,107,32,97,108,108],"value":"Unmark all"}
+{"hash":143172380,"name":"tfrmcustomgrid.pmmunmarkallcolumns.caption","sourcebytes":[85,110,109,97,114,107,32,97,108,108],"value":"Unmark all"},
+{"hash":182593671,"name":"tfrmcustomgrid.pmccolumnsortasc.caption","sourcebytes":[83,111,114,116,32,99,111,108,117,109,110,32,97,115,99,101,110,100,105,110,103],"value":"Sort column ascending"},
+{"hash":267126759,"name":"tfrmcustomgrid.pmccolumnsortdesc.caption","sourcebytes":[83,111,114,116,32,99,111,108,117,109,110,32,100,101,115,99,101,110,100,105,110,103],"value":"Sort column descending"},
+{"hash":3980104,"name":"tfrmcustomgrid.pmccolumnsautoadjustwidth.caption","sourcebytes":[65,117,116,111,32,97,100,106,117,115,116,32,99,111,108,117,109,110,115,39,32,119,105,100,116,104],"value":"Auto adjust columns' width"},
+{"hash":116179534,"name":"tfrmcustomgrid.pmchidecolumn.caption","sourcebytes":[72,105,100,101,32,99,111,108,117,109,110],"value":"Hide column"}
 ]}

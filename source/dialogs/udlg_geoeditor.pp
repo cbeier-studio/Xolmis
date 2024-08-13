@@ -130,7 +130,7 @@ const
 var
   P: TPoint;
   ext: TSize;
-  img: TBitmap;
+  //img: TBitmap;
 begin
   // Screen coordinates of the GPS point
   P := TMapView(Sender).LonLatToScreen(APoint.RealPoint);
