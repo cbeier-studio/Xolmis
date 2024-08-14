@@ -610,6 +610,7 @@ type
     procedure DBGDblClick(Sender: TObject);
     procedure DBGEditButtonClick(Sender: TObject);
     procedure DBGEditingDone(Sender: TObject);
+    procedure DBGKeyPress(Sender: TObject; var Key: char);
     procedure DBGMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure DBGMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
       var Handled: Boolean);
@@ -800,6 +801,7 @@ type
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
       IsAnAlias: Boolean = False);
     procedure ApplyDarkMode;
+    procedure CellKeyPress(Sender: TObject; var Key: Char);
 
     procedure ChildTagClick(aTag, aCountTag: TBCPanel);
     procedure ChildTagMouseEnter(aTag, aCountTag: TBCPanel);
@@ -1413,6 +1415,296 @@ begin
 
 end;
 
+procedure TfrmCustomGrid.CellKeyPress(Sender: TObject; var Key: Char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    with (Sender as TDBGrid), SelectedColumn do
+    begin
+      if FieldName = 'taxon_name' then
+        FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+          DataSource.DataSet, 'taxon_id', 'taxon_name', True, Key);
+      if FieldName = 'nidoparasite_name' then
+        FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+          DataSource.DataSet, 'nidoparasite_id', 'nidoparasite_name', True, Key);
+
+      if FieldName = 'parent_taxon_name' then
+        FindBotanicDlg([tfAll], InplaceEditor,
+          DataSource.DataSet, 'parent_taxon_id', 'parent_taxon_name', Key);
+      if FieldName = 'valid_name' then
+        FindBotanicDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+          DataSource.DataSet, 'valid_id', 'valid_name', Key);
+      if FieldName = 'support_plant_1_name' then
+        FindBotanicDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+          DataSource.DataSet, 'support_plant_1_id', 'support_plant_1_name', Key);
+      if FieldName = 'support_plant_2_name' then
+        FindBotanicDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+          DataSource.DataSet, 'support_plant_2_id', 'support_plant_2_name', Key);
+
+      if FieldName = 'country_name' then
+        FindSiteDlg([gfCountries], InplaceEditor, DataSource.DataSet, 'country_id', 'country_name', Key);
+      if FieldName = 'state_name' then
+        FindSiteDlg([gfStates], InplaceEditor, DataSource.DataSet, 'state_id', 'state_name', Key);
+      if FieldName = 'municipality_name' then
+        FindSiteDlg([gfCities], InplaceEditor, DataSource.DataSet, 'municipality_id', 'municipality_name', Key);
+      if FieldName = 'locality_name' then
+        FindSiteDlg([gfLocalities], InplaceEditor, DataSource.DataSet, 'locality_id', 'locality_name', Key);
+      if FieldName = 'parent_site_name' then
+        FindSiteDlg([gfLocalities], InplaceEditor, DataSource.DataSet, 'parent_site_id', 'parent_site_name', Key);
+
+      if FieldName = 'institution_name' then
+        FindDlg(tbInstitutions, InplaceEditor, DataSource.DataSet, 'institution_id', 'institution_name', False, Key);
+      if FieldName = 'supplier_name' then
+        FindDlg(tbInstitutions, InplaceEditor, DataSource.DataSet, 'supplier_id', 'supplier_name', False, Key);
+
+      if FieldName = 'expedition_name' then
+        FindDlg(tbExpeditions, InplaceEditor, DataSource.DataSet, 'expedition_id', 'expedition_name', False, Key);
+
+      if FieldName = 'survey_name' then
+        FindDlg(tbSurveys, InplaceEditor, DataSource.DataSet, 'survey_id', 'survey_name', False, Key);
+
+      if FieldName = 'net_station_name' then
+        FindDlg(tbNetStations, InplaceEditor, DataSource.DataSet, 'net_station_id', 'net_station_name', False, Key);
+
+      if FieldName = 'observer_name' then
+        FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_id', 'observer_name', False, Key);
+      if FieldName = 'observer_1_name' then
+        FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_1_id', 'observer_1_name', False, Key);
+      if FieldName = 'observer_2_name' then
+        FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_2_id', 'observer_2_name', False, Key);
+      if FieldName = 'carrier_name' then
+        FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'carrier_id', 'carrier_name', False, Key);
+      if FieldName = 'bander_name' then
+        FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'bander_id', 'bander_name', False, Key);
+      if FieldName = 'annotator_name' then
+        FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'annotator_id', 'annotator_name', False, Key);
+      if FieldName = 'photographer_1_name' then
+        FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'photographer_1_id', 'photographer_1_name', False, Key);
+      if FieldName = 'photographer_2_name' then
+        FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'photographer_2_id', 'photographer_2_name', False, Key);
+
+      if FieldName = 'project_name' then
+        FindDlg(tbProjects, InplaceEditor, DataSource.DataSet, 'project_id', 'project_name', False, Key);
+
+      if FieldName = 'individual_name' then
+        FindDlg(tbIndividuals, InplaceEditor, DataSource.DataSet, 'individual_id', 'individual_name', False, Key);
+      if FieldName = 'father_name' then
+        FindDlg(tbIndividuals, InplaceEditor, DataSource.DataSet, 'father_id', 'father_name', False, Key);
+      if FieldName = 'mother_name' then
+        FindDlg(tbIndividuals, InplaceEditor, DataSource.DataSet, 'mother_id', 'mother_name', False, Key);
+
+      if FieldName = 'nest_name' then
+        FindDlg(tbNests, InplaceEditor, DataSource.DataSet, 'nest_id', 'nest_name', False, Key);
+
+      if FieldName = 'egg_name' then
+        FindDlg(tbEggs, InplaceEditor, DataSource.DataSet, 'egg_id', 'egg_name', False, Key);
+
+      if FieldName = 'band_full_name' then
+        FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_full_name', False, Key);
+      if FieldName = 'band_name' then
+        FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_name', False, Key);
+      if FieldName = 'double_band_name' then
+        FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'double_band_id', 'double_band_name', False, Key);
+      if FieldName = 'removed_band_name' then
+        FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'removed_band_id', 'removed_band_name', False, Key);
+    end;
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    with (Sender as TDBGrid), SelectedColumn do
+    begin
+      if FieldName = 'taxon_name' then
+      begin
+        DataSource.DataSet.FieldByName('taxon_id').Clear;
+        DataSource.DataSet.FieldByName('taxon_name').Clear;
+      end;
+      if FieldName = 'nidoparasite_name' then
+      begin
+        DataSource.DataSet.FieldByName('nidoparasite_id').Clear;
+        DataSource.DataSet.FieldByName('nidoparasite_name').Clear;
+      end;
+
+      if FieldName = 'parent_taxon_name' then
+      begin
+        DataSource.DataSet.FieldByName('parent_taxon_id').Clear;
+        DataSource.DataSet.FieldByName('parent_taxon_name').Clear;
+      end;
+      if FieldName = 'valid_name' then
+      begin
+        DataSource.DataSet.FieldByName('valid_id').Clear;
+        DataSource.DataSet.FieldByName('valid_name').Clear;
+      end;
+      if FieldName = 'support_plant_1_name' then
+      begin
+        DataSource.DataSet.FieldByName('support_plant_1_id').Clear;
+        DataSource.DataSet.FieldByName('support_plant_1_name').Clear;
+      end;
+      if FieldName = 'support_plant_2_name' then
+      begin
+        DataSource.DataSet.FieldByName('support_plant_2_id').Clear;
+        DataSource.DataSet.FieldByName('support_plant_2_name').Clear;
+      end;
+
+      if FieldName = 'country_name' then
+      begin
+        DataSource.DataSet.FieldByName('country_id').Clear;
+        DataSource.DataSet.FieldByName('country_name').Clear;
+      end;
+      if FieldName = 'state_name' then
+      begin
+        DataSource.DataSet.FieldByName('state_id').Clear;
+        DataSource.DataSet.FieldByName('state_name').Clear;
+      end;
+      if FieldName = 'municipality_name' then
+      begin
+        DataSource.DataSet.FieldByName('municipality_id').Clear;
+        DataSource.DataSet.FieldByName('municipality_name').Clear;
+      end;
+      if FieldName = 'locality_name' then
+      begin
+        DataSource.DataSet.FieldByName('locality_id').Clear;
+        DataSource.DataSet.FieldByName('locality_name').Clear;
+      end;
+      if FieldName = 'parent_site_name' then
+      begin
+        DataSource.DataSet.FieldByName('parent_site_id').Clear;
+        DataSource.DataSet.FieldByName('parent_site_name').Clear;
+      end;
+
+      if FieldName = 'institution_name' then
+      begin
+        DataSource.DataSet.FieldByName('institution_id').Clear;
+        DataSource.DataSet.FieldByName('institution_name').Clear;
+      end;
+      if FieldName = 'supplier_name' then
+      begin
+        DataSource.DataSet.FieldByName('supplier_id').Clear;
+        DataSource.DataSet.FieldByName('supplier_name').Clear;
+      end;
+
+      if FieldName = 'expedition_name' then
+      begin
+        DataSource.DataSet.FieldByName('expedition_id').Clear;
+        DataSource.DataSet.FieldByName('expedition_name').Clear;
+      end;
+
+      if FieldName = 'survey_name' then
+      begin
+        DataSource.DataSet.FieldByName('survey_id').Clear;
+        DataSource.DataSet.FieldByName('survey_name').Clear;
+      end;
+
+      if FieldName = 'net_station_name' then
+      begin
+        DataSource.DataSet.FieldByName('net_station_id').Clear;
+        DataSource.DataSet.FieldByName('net_station_name').Clear;
+      end;
+
+      if FieldName = 'observer_name' then
+      begin
+        DataSource.DataSet.FieldByName('observer_id').Clear;
+        DataSource.DataSet.FieldByName('observer_name').Clear;
+      end;
+      if FieldName = 'observer_1_name' then
+      begin
+        DataSource.DataSet.FieldByName('observer_1_id').Clear;
+        DataSource.DataSet.FieldByName('observer_1_name').Clear;
+      end;
+      if FieldName = 'observer_2_name' then
+      begin
+        DataSource.DataSet.FieldByName('observer_2_id').Clear;
+        DataSource.DataSet.FieldByName('observer_2_name').Clear;
+      end;
+      if FieldName = 'carrier_name' then
+      begin
+        DataSource.DataSet.FieldByName('carrier_id').Clear;
+        DataSource.DataSet.FieldByName('carrier_name').Clear;
+      end;
+      if FieldName = 'bander_name' then
+      begin
+        DataSource.DataSet.FieldByName('bander_id').Clear;
+        DataSource.DataSet.FieldByName('bander_name').Clear;
+      end;
+      if FieldName = 'annotator_name' then
+      begin
+        DataSource.DataSet.FieldByName('annotator_id').Clear;
+        DataSource.DataSet.FieldByName('annotator_name').Clear;
+      end;
+      if FieldName = 'photographer_1_name' then
+      begin
+        DataSource.DataSet.FieldByName('photographer_1_id').Clear;
+        DataSource.DataSet.FieldByName('photographer_1_name').Clear;
+      end;
+      if FieldName = 'photographer_2_name' then
+      begin
+        DataSource.DataSet.FieldByName('photographer_2_id').Clear;
+        DataSource.DataSet.FieldByName('photographer_2_name').Clear;
+      end;
+
+      if FieldName = 'project_name' then
+      begin
+        DataSource.DataSet.FieldByName('project_id').Clear;
+        DataSource.DataSet.FieldByName('project_name').Clear;
+      end;
+
+      if FieldName = 'individual_name' then
+      begin
+        DataSource.DataSet.FieldByName('individual_id').Clear;
+        DataSource.DataSet.FieldByName('individual_name').Clear;
+      end;
+      if FieldName = 'father_name' then
+      begin
+        DataSource.DataSet.FieldByName('father_id').Clear;
+        DataSource.DataSet.FieldByName('father_name').Clear;
+      end;
+      if FieldName = 'mother_name' then
+      begin
+        DataSource.DataSet.FieldByName('mother_id').Clear;
+        DataSource.DataSet.FieldByName('mother_name').Clear;
+      end;
+
+      if FieldName = 'nest_name' then
+      begin
+        DataSource.DataSet.FieldByName('nest_id').Clear;
+        DataSource.DataSet.FieldByName('nest_name').Clear;
+      end;
+
+      if FieldName = 'egg_name' then
+      begin
+        DataSource.DataSet.FieldByName('egg_id').Clear;
+        DataSource.DataSet.FieldByName('egg_name').Clear;
+      end;
+
+      if FieldName = 'band_full_name' then
+      begin
+        DataSource.DataSet.FieldByName('band_id').Clear;
+        DataSource.DataSet.FieldByName('band_full_name').Clear;
+      end;
+      if FieldName = 'band_name' then
+      begin
+        DataSource.DataSet.FieldByName('band_id').Clear;
+        DataSource.DataSet.FieldByName('band_name').Clear;
+      end;
+      if FieldName = 'double_band_name' then
+      begin
+        DataSource.DataSet.FieldByName('double_band_id').Clear;
+        DataSource.DataSet.FieldByName('double_band_name').Clear;
+      end;
+      if FieldName = 'removed_band_name' then
+      begin
+        DataSource.DataSet.FieldByName('removed_band_id').Clear;
+        DataSource.DataSet.FieldByName('removed_band_name').Clear;
+      end;
+    end;
+    Key := #0;
+  end;
+end;
+
 procedure TfrmCustomGrid.ChildTagClick(aTag, aCountTag: TBCPanel);
 begin
   if Working then
@@ -1912,10 +2204,10 @@ begin
         DataSource.DataSet, 'valid_id', 'valid_name');
     if FieldName = 'support_plant_1_name' then
       FindBotanicDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
-        DataSource.DataSet, 'suppor_plant_1_id', 'support_plant_1_name');
+        DataSource.DataSet, 'support_plant_1_id', 'support_plant_1_name');
     if FieldName = 'support_plant_2_name' then
       FindBotanicDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
-        DataSource.DataSet, 'suppor_plant_2_id', 'support_plant_2_name');
+        DataSource.DataSet, 'support_plant_2_id', 'support_plant_2_name');
 
     if FieldName = 'country_name' then
       FindSiteDlg([gfCountries], InplaceEditor, DataSource.DataSet, 'country_id', 'country_name');
@@ -2062,6 +2354,310 @@ begin
   //if TStringGrid(Sender).RowCount > TStringGrid(Sender).Row then
   //  TStringGrid(Sender).RowHeights[TStringGrid(Sender).Row] := TStringGrid(Sender).DefaultRowHeight;
   //{$ENDIF}
+end;
+
+procedure TfrmCustomGrid.DBGKeyPress(Sender: TObject; var Key: char);
+const
+  FPress: array of String = ('taxon_name', 'nidoparasite_name', 'parent_taxon_name', 'valid_name',
+    'support_plant_1_name', 'support_plant_2_name', 'country_name', 'state_name', 'municipality_name',
+    'locality_name', 'parent_site_name', 'institution_name', 'supplier_name', 'expedition_name', 'survey_name',
+    'net_station_name', 'observer_name', 'observer_1_name', 'observer_2_name', 'carrier_name', 'bander_name',
+    'annotator_name', 'photographer_1_name', 'photographer_2_name', 'project_name', 'individual_name',
+    'father_name', 'mother_name', 'nest_name', 'egg_name', 'band_full_name', 'band_name', 'double_band_name',
+    'removed_band_name');
+var
+  Grid: TDBGrid;
+begin
+  FormKeyPress(Sender, Key);
+
+  Grid := TDBGrid(Sender);
+  if (Grid.EditorMode) and (Grid.SelectedColumn.FieldName in FPress) then
+  begin
+    { Alphabetic search in numeric field }
+    if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+    begin
+      with Grid, SelectedColumn do
+      begin
+        if FieldName = 'taxon_name' then
+          FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+            DataSource.DataSet, 'taxon_id', 'taxon_name', True, Key);
+        if FieldName = 'nidoparasite_name' then
+          FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+            DataSource.DataSet, 'nidoparasite_id', 'nidoparasite_name', True, Key);
+
+        if FieldName = 'parent_taxon_name' then
+          FindBotanicDlg([tfAll], InplaceEditor,
+            DataSource.DataSet, 'parent_taxon_id', 'parent_taxon_name', Key);
+        if FieldName = 'valid_name' then
+          FindBotanicDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+            DataSource.DataSet, 'valid_id', 'valid_name', Key);
+        if FieldName = 'support_plant_1_name' then
+          FindBotanicDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+            DataSource.DataSet, 'support_plant_1_id', 'support_plant_1_name', Key);
+        if FieldName = 'support_plant_2_name' then
+          FindBotanicDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
+            DataSource.DataSet, 'support_plant_2_id', 'support_plant_2_name', Key);
+
+        if FieldName = 'country_name' then
+          FindSiteDlg([gfCountries], InplaceEditor, DataSource.DataSet, 'country_id', 'country_name', Key);
+        if FieldName = 'state_name' then
+          FindSiteDlg([gfStates], InplaceEditor, DataSource.DataSet, 'state_id', 'state_name', Key);
+        if FieldName = 'municipality_name' then
+          FindSiteDlg([gfCities], InplaceEditor, DataSource.DataSet, 'municipality_id', 'municipality_name', Key);
+        if FieldName = 'locality_name' then
+          FindSiteDlg([gfLocalities], InplaceEditor, DataSource.DataSet, 'locality_id', 'locality_name', Key);
+        if FieldName = 'parent_site_name' then
+          FindSiteDlg([gfLocalities], InplaceEditor, DataSource.DataSet, 'parent_site_id', 'parent_site_name', Key);
+
+        if FieldName = 'institution_name' then
+          FindDlg(tbInstitutions, InplaceEditor, DataSource.DataSet, 'institution_id', 'institution_name', False, Key);
+        if FieldName = 'supplier_name' then
+          FindDlg(tbInstitutions, InplaceEditor, DataSource.DataSet, 'supplier_id', 'supplier_name', False, Key);
+
+        if FieldName = 'expedition_name' then
+          FindDlg(tbExpeditions, InplaceEditor, DataSource.DataSet, 'expedition_id', 'expedition_name', False, Key);
+
+        if FieldName = 'survey_name' then
+          FindDlg(tbSurveys, InplaceEditor, DataSource.DataSet, 'survey_id', 'survey_name', False, Key);
+
+        if FieldName = 'net_station_name' then
+          FindDlg(tbNetStations, InplaceEditor, DataSource.DataSet, 'net_station_id', 'net_station_name', False, Key);
+
+        if FieldName = 'observer_name' then
+          FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_id', 'observer_name', False, Key);
+        if FieldName = 'observer_1_name' then
+          FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_1_id', 'observer_1_name', False, Key);
+        if FieldName = 'observer_2_name' then
+          FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_2_id', 'observer_2_name', False, Key);
+        if FieldName = 'carrier_name' then
+          FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'carrier_id', 'carrier_name', False, Key);
+        if FieldName = 'bander_name' then
+          FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'bander_id', 'bander_name', False, Key);
+        if FieldName = 'annotator_name' then
+          FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'annotator_id', 'annotator_name', False, Key);
+        if FieldName = 'photographer_1_name' then
+          FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'photographer_1_id', 'photographer_1_name', False, Key);
+        if FieldName = 'photographer_2_name' then
+          FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'photographer_2_id', 'photographer_2_name', False, Key);
+
+        if FieldName = 'project_name' then
+          FindDlg(tbProjects, InplaceEditor, DataSource.DataSet, 'project_id', 'project_name', False, Key);
+
+        if FieldName = 'individual_name' then
+          FindDlg(tbIndividuals, InplaceEditor, DataSource.DataSet, 'individual_id', 'individual_name', False, Key);
+        if FieldName = 'father_name' then
+          FindDlg(tbIndividuals, InplaceEditor, DataSource.DataSet, 'father_id', 'father_name', False, Key);
+        if FieldName = 'mother_name' then
+          FindDlg(tbIndividuals, InplaceEditor, DataSource.DataSet, 'mother_id', 'mother_name', False, Key);
+
+        if FieldName = 'nest_name' then
+          FindDlg(tbNests, InplaceEditor, DataSource.DataSet, 'nest_id', 'nest_name', False, Key);
+
+        if FieldName = 'egg_name' then
+          FindDlg(tbEggs, InplaceEditor, DataSource.DataSet, 'egg_id', 'egg_name', False, Key);
+
+        if FieldName = 'band_full_name' then
+          FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_full_name', False, Key);
+        if FieldName = 'band_name' then
+          FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_name', False, Key);
+        if FieldName = 'double_band_name' then
+          FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'double_band_id', 'double_band_name', False, Key);
+        if FieldName = 'removed_band_name' then
+          FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'removed_band_id', 'removed_band_name', False, Key);
+      end;
+      Key := #0;
+    end;
+    { CLEAR FIELD VALUE = Backspace }
+    if (Key = #8) then
+    begin
+      with (Sender as TDBGrid), SelectedColumn do
+      begin
+        if FieldName = 'taxon_name' then
+        begin
+          DataSource.DataSet.FieldByName('taxon_id').Clear;
+          DataSource.DataSet.FieldByName('taxon_name').Clear;
+        end;
+        if FieldName = 'nidoparasite_name' then
+        begin
+          DataSource.DataSet.FieldByName('nidoparasite_id').Clear;
+          DataSource.DataSet.FieldByName('nidoparasite_name').Clear;
+        end;
+
+        if FieldName = 'parent_taxon_name' then
+        begin
+          DataSource.DataSet.FieldByName('parent_taxon_id').Clear;
+          DataSource.DataSet.FieldByName('parent_taxon_name').Clear;
+        end;
+        if FieldName = 'valid_name' then
+        begin
+          DataSource.DataSet.FieldByName('valid_id').Clear;
+          DataSource.DataSet.FieldByName('valid_name').Clear;
+        end;
+        if FieldName = 'support_plant_1_name' then
+        begin
+          DataSource.DataSet.FieldByName('support_plant_1_id').Clear;
+          DataSource.DataSet.FieldByName('support_plant_1_name').Clear;
+        end;
+        if FieldName = 'support_plant_2_name' then
+        begin
+          DataSource.DataSet.FieldByName('support_plant_2_id').Clear;
+          DataSource.DataSet.FieldByName('support_plant_2_name').Clear;
+        end;
+
+        if FieldName = 'country_name' then
+        begin
+          DataSource.DataSet.FieldByName('country_id').Clear;
+          DataSource.DataSet.FieldByName('country_name').Clear;
+        end;
+        if FieldName = 'state_name' then
+        begin
+          DataSource.DataSet.FieldByName('state_id').Clear;
+          DataSource.DataSet.FieldByName('state_name').Clear;
+        end;
+        if FieldName = 'municipality_name' then
+        begin
+          DataSource.DataSet.FieldByName('municipality_id').Clear;
+          DataSource.DataSet.FieldByName('municipality_name').Clear;
+        end;
+        if FieldName = 'locality_name' then
+        begin
+          DataSource.DataSet.FieldByName('locality_id').Clear;
+          DataSource.DataSet.FieldByName('locality_name').Clear;
+        end;
+        if FieldName = 'parent_site_name' then
+        begin
+          DataSource.DataSet.FieldByName('parent_site_id').Clear;
+          DataSource.DataSet.FieldByName('parent_site_name').Clear;
+        end;
+
+        if FieldName = 'institution_name' then
+        begin
+          DataSource.DataSet.FieldByName('institution_id').Clear;
+          DataSource.DataSet.FieldByName('institution_name').Clear;
+        end;
+        if FieldName = 'supplier_name' then
+        begin
+          DataSource.DataSet.FieldByName('supplier_id').Clear;
+          DataSource.DataSet.FieldByName('supplier_name').Clear;
+        end;
+
+        if FieldName = 'expedition_name' then
+        begin
+          DataSource.DataSet.FieldByName('expedition_id').Clear;
+          DataSource.DataSet.FieldByName('expedition_name').Clear;
+        end;
+
+        if FieldName = 'survey_name' then
+        begin
+          DataSource.DataSet.FieldByName('survey_id').Clear;
+          DataSource.DataSet.FieldByName('survey_name').Clear;
+        end;
+
+        if FieldName = 'net_station_name' then
+        begin
+          DataSource.DataSet.FieldByName('net_station_id').Clear;
+          DataSource.DataSet.FieldByName('net_station_name').Clear;
+        end;
+
+        if FieldName = 'observer_name' then
+        begin
+          DataSource.DataSet.FieldByName('observer_id').Clear;
+          DataSource.DataSet.FieldByName('observer_name').Clear;
+        end;
+        if FieldName = 'observer_1_name' then
+        begin
+          DataSource.DataSet.FieldByName('observer_1_id').Clear;
+          DataSource.DataSet.FieldByName('observer_1_name').Clear;
+        end;
+        if FieldName = 'observer_2_name' then
+        begin
+          DataSource.DataSet.FieldByName('observer_2_id').Clear;
+          DataSource.DataSet.FieldByName('observer_2_name').Clear;
+        end;
+        if FieldName = 'carrier_name' then
+        begin
+          DataSource.DataSet.FieldByName('carrier_id').Clear;
+          DataSource.DataSet.FieldByName('carrier_name').Clear;
+        end;
+        if FieldName = 'bander_name' then
+        begin
+          DataSource.DataSet.FieldByName('bander_id').Clear;
+          DataSource.DataSet.FieldByName('bander_name').Clear;
+        end;
+        if FieldName = 'annotator_name' then
+        begin
+          DataSource.DataSet.FieldByName('annotator_id').Clear;
+          DataSource.DataSet.FieldByName('annotator_name').Clear;
+        end;
+        if FieldName = 'photographer_1_name' then
+        begin
+          DataSource.DataSet.FieldByName('photographer_1_id').Clear;
+          DataSource.DataSet.FieldByName('photographer_1_name').Clear;
+        end;
+        if FieldName = 'photographer_2_name' then
+        begin
+          DataSource.DataSet.FieldByName('photographer_2_id').Clear;
+          DataSource.DataSet.FieldByName('photographer_2_name').Clear;
+        end;
+
+        if FieldName = 'project_name' then
+        begin
+          DataSource.DataSet.FieldByName('project_id').Clear;
+          DataSource.DataSet.FieldByName('project_name').Clear;
+        end;
+
+        if FieldName = 'individual_name' then
+        begin
+          DataSource.DataSet.FieldByName('individual_id').Clear;
+          DataSource.DataSet.FieldByName('individual_name').Clear;
+        end;
+        if FieldName = 'father_name' then
+        begin
+          DataSource.DataSet.FieldByName('father_id').Clear;
+          DataSource.DataSet.FieldByName('father_name').Clear;
+        end;
+        if FieldName = 'mother_name' then
+        begin
+          DataSource.DataSet.FieldByName('mother_id').Clear;
+          DataSource.DataSet.FieldByName('mother_name').Clear;
+        end;
+
+        if FieldName = 'nest_name' then
+        begin
+          DataSource.DataSet.FieldByName('nest_id').Clear;
+          DataSource.DataSet.FieldByName('nest_name').Clear;
+        end;
+
+        if FieldName = 'egg_name' then
+        begin
+          DataSource.DataSet.FieldByName('egg_id').Clear;
+          DataSource.DataSet.FieldByName('egg_name').Clear;
+        end;
+
+        if FieldName = 'band_full_name' then
+        begin
+          DataSource.DataSet.FieldByName('band_id').Clear;
+          DataSource.DataSet.FieldByName('band_full_name').Clear;
+        end;
+        if FieldName = 'band_name' then
+        begin
+          DataSource.DataSet.FieldByName('band_id').Clear;
+          DataSource.DataSet.FieldByName('band_name').Clear;
+        end;
+        if FieldName = 'double_band_name' then
+        begin
+          DataSource.DataSet.FieldByName('double_band_id').Clear;
+          DataSource.DataSet.FieldByName('double_band_name').Clear;
+        end;
+        if FieldName = 'removed_band_name' then
+        begin
+          DataSource.DataSet.FieldByName('removed_band_id').Clear;
+          DataSource.DataSet.FieldByName('removed_band_name').Clear;
+        end;
+      end;
+      Key := #0;
+    end;
+  end;
 end;
 
 procedure TfrmCustomGrid.DBGMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);

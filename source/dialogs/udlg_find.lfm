@@ -15,6 +15,7 @@ object dlgFind: TdlgFind
   OnShow = FormShow
   PopupMode = pmAuto
   ShowInTaskBar = stNever
+  LCLVersion = '3.4.0.0'
   object pHeader: TPanel
     Left = 0
     Height = 31
@@ -177,7 +178,7 @@ object dlgFind: TdlgFind
     Columns = <    
       item
         Title.Caption = 'Name'
-        Width = 296
+        Width = 317
       end>
     DataSource = dsFind
     FixedCols = 0

@@ -9018,7 +9018,7 @@ object frmCustomGrid: TfrmCustomGrid
         OnEditButtonClick = DBGEditButtonClick
         OnEditingDone = DBGEditingDone
         OnKeyDown = FormKeyDown
-        OnKeyPress = FormKeyPress
+        OnKeyPress = DBGKeyPress
         OnMouseDown = DBGMouseDown
         OnMouseWheel = DBGMouseWheel
         OnPrepareCanvas = DBGPrepareCanvas

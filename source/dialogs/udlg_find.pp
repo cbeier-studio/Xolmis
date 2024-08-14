@@ -355,19 +355,19 @@ begin
       fvReset:
         begin
           Add('WHERE ((full_name ' + Operador + ' :VALPARAM) ');
-          Add('or (site_name ' + Operador + ' :VALPARAM) ');
-          Add('or (site_acronym ' + Operador + ' :VALPARAM)) ');
+          Add('OR (site_name ' + Operador + ' :VALPARAM) ');
+          Add('OR (site_acronym ' + Operador + ' :VALPARAM)) ');
           if not (gfAll in FSiteFilter) then
           begin
-            if PopCnt(DWord(FSiteFilter)) > 0 then
-              strOr := 'OR ';
+            //if PopCnt(DWord(FSiteFilter)) > 1 then
+            //  strOr := 'OR ';
             Add('AND (');
             for F in FSiteFilter do
             begin
               case F of
                 gfAll: ; // do nothing
                 gfCountries:
-                  strFiltro := '(site_rank = ''P'')';
+                  strFiltro := strOr + '(site_rank = ''P'')';
                 gfStates:
                   strFiltro := strOr + '(site_rank = ''E'')';
                 gfRegions:
@@ -380,6 +380,7 @@ begin
                   strFiltro := strOr + '(site_rank = ''L'')';
               end;
               Add(strFiltro);
+              strOr := 'OR ';
             end;
             Add(')');
           end;
