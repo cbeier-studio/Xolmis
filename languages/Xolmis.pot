@@ -10348,35 +10348,6 @@ msgstr ""
 msgid "Restore selected record"
 msgstr ""
 
-#: tfrmcustomgrid.pmssortalphanumeric.caption
-msgid "Alphanumeric"
-msgstr ""
-
-#: tfrmcustomgrid.pmssortascending.caption
-msgctxt "tfrmcustomgrid.pmssortascending.caption"
-msgid "Ascending"
-msgstr ""
-
-#: tfrmcustomgrid.pmssortcreationdate.caption
-msgctxt "tfrmcustomgrid.pmssortcreationdate.caption"
-msgid "Creation date"
-msgstr ""
-
-#: tfrmcustomgrid.pmssortdescending.caption
-msgctxt "tfrmcustomgrid.pmssortdescending.caption"
-msgid "Descending"
-msgstr ""
-
-#: tfrmcustomgrid.pmssortlastmodifieddate.caption
-msgctxt "tfrmcustomgrid.pmssortlastmodifieddate.caption"
-msgid "Last modified date"
-msgstr ""
-
-#: tfrmcustomgrid.pmssorttaxonomic.caption
-msgctxt "tfrmcustomgrid.pmssorttaxonomic.caption"
-msgid "Taxonomic"
-msgstr ""
-
 #: tfrmcustomgrid.pmtclearselection.caption
 msgctxt "tfrmcustomgrid.pmtclearselection.caption"
 msgid "Clear selection"

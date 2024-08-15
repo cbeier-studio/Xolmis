@@ -56,11 +56,7 @@ type
     cbCaptureTypeFilter: TComboBox;
     cbCaptureStatusFilter: TComboBox;
     cbNestStageFilter: TComboBox;
-    chartSummary: TChart;
-    ChartBGRA: TChartGUIConnectorBGRA;
-    chartSummaryPieSeries1: TPieSeries;
     dsChart: TDataSource;
-    DbChartSource1: TDbChartSource;
     gridSummary: TDBGrid;
     dsRecycle: TDataSource;
     DBG: TDBGrid;
@@ -157,7 +153,6 @@ type
     lblRecycleModifiedDate: TDBText;
     lblRecycleName: TDBText;
     lblProjectFilter: TLabel;
-    ListChartSource1: TListChartSource;
     cardMap: TPage;
     mapGeo: TMapView;
     pmcColumnsAutoAdjustWidth: TMenuItem;
@@ -228,12 +223,6 @@ type
     pmcNewSurvey: TMenuItem;
     pmcNewCollector: TMenuItem;
     pmgInsert: TMenuItem;
-    pmsSortAlphanumeric: TMenuItem;
-    pmsSortTaxonomic: TMenuItem;
-    pmsSortCreationDate: TMenuItem;
-    pmsSortLastModifiedDate: TMenuItem;
-    pmsSortAscending: TMenuItem;
-    pmsSortDescending: TMenuItem;
     pmcNewSurveyMember: TMenuItem;
     pmcNewMistnet: TMenuItem;
     pmcNewWeatherLog: TMenuItem;
@@ -328,7 +317,6 @@ type
     pChildTag2: TBCPanel;
     pChildCount4: TBCPanel;
     pChildTag4: TBCPanel;
-    pmSort: TPopupMenu;
     pInstitutionFilter: TBCPanel;
     pRecordStatus: TBCPanel;
     pChildStatus: TBCPanel;
@@ -540,7 +528,6 @@ type
     sbSortRecords: TSpeedButton;
     Separator10: TShapeLineBGRA;
     Separator11: TShapeLineBGRA;
-    Separator12: TMenuItem;
     Separator13: TMenuItem;
     Separator14: TMenuItem;
     Separator15: TMenuItem;
@@ -617,7 +604,6 @@ type
     procedure DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
       AState: TGridDrawState);
     procedure DBGSelectEditor(Sender: TObject; Column: TColumn; var Editor: TWinControl);
-    procedure DBGTitleClick(Column: TColumn);
     procedure dsLink1DataChange(Sender: TObject; Field: TField);
     procedure dsLink1StateChange(Sender: TObject);
     procedure dsLink2DataChange(Sender: TObject; Field: TField);
@@ -671,6 +657,7 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure gridChild1ContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure gridChild1DblClick(Sender: TObject);
     procedure gridColumnsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
     procedure iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
@@ -747,8 +734,6 @@ type
     procedure sbShareChildClick(Sender: TObject);
     procedure sbShareRecordsClick(Sender: TObject);
     procedure sbShowRecordClick(Sender: TObject);
-    procedure sbSortChildsClick(Sender: TObject);
-    procedure sbSortRecordsClick(Sender: TObject);
     procedure SetFilters(Sender: TObject);
     procedure SplitChildMoved(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
@@ -952,7 +937,7 @@ type
     function SearchTaxonRanks(aValue: String): Boolean;
     function SearchZooTaxa(aValue: String): Boolean;
 
-    procedure SummaryCountDistinct(aFieldName: String);
+    procedure Summary;
 
     procedure UpdateButtons(aDataSet: TDataSet);
     procedure UpdateChildBar;
@@ -995,7 +980,8 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
-  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
+  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns,
+  {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
 
 {$R *.lfm}
@@ -2157,6 +2143,9 @@ procedure TfrmCustomGrid.DBGColEnter(Sender: TObject);
 begin
   //if sbEditRecord.Enabled then
     gridColumns.Row := DBG.SelectedColumn.Field.Index + 1;
+
+  if sbShowSummary.Visible then
+    Summary;
 end;
 
 procedure TfrmCustomGrid.DBGColExit(Sender: TObject);
@@ -2172,7 +2161,7 @@ end;
 
 procedure TfrmCustomGrid.DBGContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
 begin
-  if MousePos.Y < DBG.DefaultRowHeight then
+  if MousePos.Y < TDBGrid(Sender).DefaultRowHeight then
   begin
     pmColumn.PopUp;
     Handled := True;
@@ -2684,7 +2673,8 @@ begin
         else
           Direction := sdAscending;
 
-    FSearch.SortFields.Clear;
+    if not (ssCtrl in Shift) then
+      FSearch.SortFields.Clear;
     if not (pfInUpdate in Grid.DataSource.DataSet.FieldByName(Column.FieldName).ProviderFlags) then
       AddSortedField(Column.FieldName, Direction, '', True)
     else
@@ -2873,28 +2863,6 @@ begin
       end;
   end;
 
-end;
-
-procedure TfrmCustomGrid.DBGTitleClick(Column: TColumn);
-//var
-//  Direction: TSortDirection;
-begin
-
-  //Direction := sdAscending;
-  //
-  //if FSearch.SortFields.Count > 0 then
-  //  if Column.FieldName = FSearch.SortFields[0].FieldName then
-  //    if FSearch.SortFields[0].Direction = sdAscending then
-  //      Direction := sdDescending
-  //    else
-  //      Direction := sdAscending;
-  //
-  //FSearch.SortFields.Clear;
-  //if not (pfInUpdate in DBG.DataSource.DataSet.FieldByName(Column.FieldName).ProviderFlags) then
-  //  AddSortedField(Column.FieldName, Direction, '', True)
-  //else
-  //  AddSortedField(Column.FieldName, Direction);
-  //Search(FSearchString);
 end;
 
 procedure TfrmCustomGrid.dsLink1DataChange(Sender: TObject; Field: TField);
@@ -3763,6 +3731,7 @@ begin
       (dsLink.DataSet as TSQLQuery).ReadOnly := True;
     if not (dsLink.DataSet.Active) then
       dsLink.DataSet.Open;
+    UpdateGridTitles(DBG, FSearch);
     //SetGridColumns(FTableType, DBG);
     {$IFDEF DEBUG}
     LogDebug(Format('%s: %d records', [dsLink.DataSet.Name, dsLink.DataSet.RecordCount]));
@@ -4943,6 +4912,15 @@ begin
   //  FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
   //    crEqual, False, '0'));
   //end;
+end;
+
+procedure TfrmCustomGrid.gridChild1ContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+  if MousePos.Y < TDBGrid(Sender).DefaultRowHeight then
+  begin
+    //pmColumn.PopUp;
+    Handled := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.gridChild1DblClick(Sender: TObject);
@@ -7200,18 +7178,6 @@ begin
   frmMain.UpdateMenu(frmMain.PGW.ActivePageComponent);
 end;
 
-procedure TfrmCustomGrid.sbSortChildsClick(Sender: TObject);
-begin
-  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
-    pmSort.Popup(X, Y);
-end;
-
-procedure TfrmCustomGrid.sbSortRecordsClick(Sender: TObject);
-begin
-  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
-    pmSort.Popup(X, Y);
-end;
-
 function TfrmCustomGrid.Search(aValue: String): Boolean;
 begin
   Result := False;
@@ -9199,7 +9165,8 @@ procedure TfrmCustomGrid.SetGridBands;
 begin
   Caption := rsTitleBands;
   FSearch.DataSet := DMG.qBands;
-  AddSortedField('full_name', sdAscending);
+  AddSortedField('band_size', sdAscending);
+  AddSortedField('band_number', sdAscending);
 
   sbRecordVerifications.Visible := True;
 end;
@@ -9490,6 +9457,7 @@ begin
   sbRecordVerifications.Visible := True;
   mapGeo.Active := True;
   sbShowMap.Visible := True;
+  sbShowSummary.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -9788,24 +9756,51 @@ begin
   FSidePanelFactor := pSide.Width / (ClientWidth - SplitRight.Width);
 end;
 
-procedure TfrmCustomGrid.SummaryCountDistinct(aFieldName: String);
+procedure TfrmCustomGrid.Summary;
 begin
-  qChart.Close;
-
-  if (aFieldName = 'taxon_name') or (aFieldName = 'locality_name') then
-  begin
-    with qChart, SQL do
-    begin
-      Clear;
-      Add('SELECT DISTINCT');
-      Add('  (SELECT z.%zname FROM %ftable AS z WHERE z.%zid = g.%gid) AS name,');
-      Add('  (SELECT count(*) FROM %atable AS t WHERE t.%tid = g.%gid) AS tally');
-      Add('FROM %atable AS g');
-      AddText(FSearch.SQLWhere.Text);
-      Add('ORDER BY tally DESC');
+  try
+    gridSummary.BeginUpdate;
+    case FTableType of
+      tbNone: ;
+      tbUsers: ;
+      tbRecordHistory: ;
+      tbRecordVerifications: ;
+      tbGazetteer: ;
+      tbNetStations: ;
+      tbPermanentNets: ;
+      tbInstitutions: ;
+      tbPeople: ;
+      tbProjects: ;
+      tbProjectTeams: ;
+      tbPermits: ;
+      tbTaxonRanks: ;
+      tbZooTaxa: ;
+      tbBotanicTaxa: ;
+      tbBands: ;
+      tbBandHistory: ;
+      tbIndividuals: ;
+      tbCaptures: ;
+      tbMolts: ;
+      tbNests: ;
+      tbNestOwners: ;
+      tbNestRevisions: ;
+      tbEggs: ;
+      tbMethods: ;
+      tbExpeditions: ;
+      tbSurveys: ;
+      tbSurveyTeams: ;
+      tbNetsEffort: ;
+      tbWeatherLogs: ;
+      tbSightings: SummarySightings(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbSpecimens: ;
+      tbSamplePreps: ;
+      tbSpecimenCollectors: ;
+      tbImages: ;
+      tbAudioLibrary: ;
     end;
-
-
+    gridSummary.AutoAdjustColumns;
+  finally
+    gridSummary.EndUpdate;
   end;
 end;
 
@@ -10524,6 +10519,9 @@ begin
 
   for i := 0 to aSearch.SortFields.Count - 1 do
   begin
+    if aGrid.Columns.ColumnByFieldname(aSearch.SortFields[i].FieldName) = nil then
+      Break;
+
     case aSearch.SortFields[i].Direction of
       sdAscending: aGrid.Columns.ColumnByFieldname(aSearch.SortFields[i].FieldName).Title.ImageIndex := ArrowAsc;
       sdDescending: aGrid.Columns.ColumnByFieldname(aSearch.SortFields[i].FieldName).Title.ImageIndex := ArrowDesc;

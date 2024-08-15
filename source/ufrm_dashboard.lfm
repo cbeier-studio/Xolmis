@@ -1089,7 +1089,7 @@ object frmDashboard: TfrmDashboard
     BevelOuter = bvRaised
     BevelWidth = 1
     Border.Color = 13750737
-    Border.Style = bboSolid
+    Border.Style = bboNone
     BorderBCStyle = bpsBorder
     Color = 16444392
     Constraints.MinWidth = 349

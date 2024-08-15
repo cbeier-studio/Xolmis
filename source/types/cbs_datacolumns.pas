@@ -21,7 +21,7 @@ unit cbs_datacolumns;
 interface
 
 uses
-  Classes, SysUtils, DB;
+  Classes, SysUtils, DB, SQLDB;
 
 resourcestring
   rscId = 'ID';
@@ -458,6 +458,8 @@ resourcestring
   rscConservationStatus = 'Conservation status';
   rscTable = 'Table';
 
+
+  procedure SummarySightings(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
 
   procedure TranslateRecordHistory(aDataSet: TDataSet);
   procedure TranslateRecordVerifications(aDataSet: TDataSet);
@@ -1959,6 +1961,222 @@ begin
       end;
     end;
   end;
+end;
+
+procedure SummarySightings(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+    Add('SELECT DISTINCT');
+    case aFieldName of
+      'taxon_id', 'taxon_name', 'taxon_formatted_name':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.taxon_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.taxon_id = s.taxon_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'survey_id', 'survey_name':
+      begin
+        Add('  (SELECT sv.full_name FROM surveys AS sv WHERE sv.survey_id = s.survey_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.survey_id = s.survey_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'method_id', 'method_name':
+      begin
+        Add('  (SELECT mt.method_name FROM methods AS mt WHERE mt.method_id = s.method_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.method_id = s.method_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'locality_id', 'locality_name':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = s.locality_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.locality_id = s.locality_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'observer_id', 'observer_name':
+      begin
+        Add('  (SELECT p.full_name FROM people AS p WHERE p.person_id = s.observer_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.observer_id = s.observer_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'individual_id', 'individual_name':
+      begin
+        Add('  (SELECT i.full_name FROM individuals AS i WHERE i.individual_id = s.individual_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.individual_id = s.individual_id) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'marked_status':
+      begin
+        Add('  ' + QuotedStr(rscMarkedStatus) + ' AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.marked_status = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'subject_seen':
+      begin
+        Add('  ' + QuotedStr(rscSeen) + ' AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.subject_seen = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'subject_heard':
+      begin
+        Add('  ' + QuotedStr(rscHeard) + ' AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.subject_heard = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'subject_photographed':
+      begin
+        Add('  ' + QuotedStr(rscPhotographed) + ' AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.subject_photographed = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'subject_recorded':
+      begin
+        Add('  ' + QuotedStr(rscAudioRecorded) + ' AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.subject_recorded = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'subject_captured':
+      begin
+        Add('  ' + QuotedStr(rscCaptured) + ' AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.subject_captured = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'not_surveying':
+      begin
+        Add('  ' + QuotedStr(rscOutOfSample) + ' AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.not_surveying = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'ebird_available':
+      begin
+        Add('  ' + QuotedStr(rscIsInEBird) + ' AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.ebird_available = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'exported_status':
+      begin
+        Add('  ' + QuotedStr(rscExportedStatus) + ' AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.exported_status = 1) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'breeding_status':
+      begin
+        Add('  breeding_status AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.breeding_status = s.breeding_status) AND (t.active_status = 1)) AS tally');
+      end;
+      'sighting_date':
+      begin
+        Add('  sighting_date AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.sighting_date = s.sighting_date) AND (t.active_status = 1)) AS tally');
+      end;
+      'sighting_time':
+      begin
+        Add('  sighting_time AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.sighting_time = s.sighting_time) AND (t.active_status = 1)) AS tally');
+      end;
+      'detection_type':
+      begin
+        Add('  detection_type AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.detection_type = s.detection_type) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'mackinnon_list_num':
+      begin
+        Add('  sighting_date AS date,');
+        Add('  mackinnon_list_num AS list,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.sighting_date = s.sighting_date) ');
+        Add('     AND (t.mackinnon_list_num = s.mackinnon_list_num) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'subject_distance':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.taxon_id) AS name,');
+        Add('  (SELECT avg(mn.subject_distance) FROM sightings AS mn WHERE (mn.taxon_id = s.taxon_id) AND (mn.active_status = 1)) AS tally');
+      end;
+
+      'subjects_tally':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.taxon_id) AS name,');
+        Add('  (SELECT sum(t.subjects_tally) FROM sightings AS t WHERE (t.taxon_id = s.taxon_id) AND (t.active_status = 1)) AS tally,');
+        Add('  (SELECT avg(mn.subjects_tally) FROM sightings AS mn WHERE (mn.taxon_id = s.taxon_id) AND (mn.active_status = 1)) AS mean');
+      end;
+
+      'notes':
+      begin
+        Add('  ' + QuotedStr(rscNotes) + ' AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE ((t.notes != '''') ');
+        Add('     OR (t.notes NOTNULL)) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'males_tally', 'females_tally', 'not_sexed_tally':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.taxon_id) AS name,');
+        Add('  (SELECT sum(t.males_tally) FROM sightings AS t WHERE (t.taxon_id = s.taxon_id) AND (t.active_status = 1)) AS tally,');
+        Add('  (SELECT sum(f.females_tally) FROM sightings AS f WHERE (f.taxon_id = s.taxon_id) AND (f.active_status = 1)) AS females,');
+        Add('  (SELECT sum(ns.not_sexed_tally) FROM sightings AS ns WHERE (ns.taxon_id = s.taxon_id) AND (ns.active_status = 1)) AS not_sexed');
+      end;
+      'adults_tally', 'immatures_tally', 'not_aged_tally':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.taxon_id) AS name,');
+        Add('  (SELECT sum(t.adults_tally) FROM sightings AS t WHERE (t.taxon_id = s.taxon_id) AND (t.active_status = 1)) AS tally,');
+        Add('  (SELECT sum(f.immatures_tally) FROM sightings AS f WHERE (f.taxon_id = s.taxon_id) AND (f.active_status = 1)) AS immatures,');
+        Add('  (SELECT sum(ns.not_aged_tally) FROM sightings AS ns WHERE (ns.taxon_id = s.taxon_id) AND (ns.active_status = 1)) AS not_aged');
+      end;
+      'new_captures_tally', 'recaptures_tally', 'unbanded_tally':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.taxon_id) AS name,');
+        Add('  (SELECT sum(t.new_captures_tally) FROM sightings AS t WHERE (t.taxon_id = s.taxon_id) AND (t.active_status = 1)) AS tally,');
+        Add('  (SELECT sum(f.recaptures_tally) FROM sightings AS f WHERE (f.taxon_id = s.taxon_id) AND (f.active_status = 1)) AS recaptures,');
+        Add('  (SELECT sum(ns.unbanded_tally) FROM sightings AS ns WHERE (ns.taxon_id = s.taxon_id) AND (ns.active_status = 1)) AS unbanded');
+      end;
+
+      'full_name', 'sighting_id', 'longitude', 'latitude', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated':
+      begin
+        Clear;
+      end;
+
+      'order_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.order_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.order_id = s.order_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'family_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.family_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.family_id = s.family_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'genus_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.genus_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.genus_id = s.genus_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'species_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.species_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.species_id = s.species_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'country_id':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = s.country_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.country_id = s.country_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'state_id':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = s.state_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.state_id = s.state_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'municipality_id':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = s.municipality_id) AS name,');
+        Add('  (SELECT count(*) FROM sightings AS t WHERE (t.municipality_id = s.municipality_id) AND (t.active_status = 1)) AS tally');
+      end;
+
+    end;
+
+    if SQL.Count > 0 then
+    begin
+      Add('FROM sightings AS s');
+      if aWhereText <> EmptyStr then
+        AddText(aWhereText)
+      else
+        Add('WHERE (s.active_status = 1)');
+      Add('ORDER BY tally DESC');
+
+      Open;
+    end;
+  end;
+
 end;
 
 end.

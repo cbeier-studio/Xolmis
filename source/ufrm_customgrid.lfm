@@ -6817,46 +6817,18 @@ object frmCustomGrid: TfrmCustomGrid
         end
         object gridSummary: TDBGrid
           Left = 8
-          Height = 349
+          Height = 557
           Top = 49
           Width = 448
           Align = alClient
           Color = clWindow
           Columns = <>
+          DataSource = dsChart
           Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
           TabOrder = 0
           TitleStyle = tsNative
-        end
-        object chartSummary: TChart
-          Left = 8
-          Height = 200
-          Top = 406
-          Width = 448
-          AxisList = <          
-            item
-              Grid.Visible = False
-              AxisPen.Visible = True
-              Marks.LabelBrush.Style = bsClear
-              Minors = <>
-              Title.LabelFont.Orientation = 900
-              Title.LabelBrush.Style = bsClear
-            end          
-            item
-              Grid.Visible = False
-              Alignment = calBottom
-              AxisPen.Visible = True
-              Marks.LabelBrush.Style = bsClear
-              Minors = <>
-              Title.LabelBrush.Style = bsClear
-            end>
-          Frame.Visible = False
-          GUIConnector = ChartBGRA
-          Title.Text.Strings = (
-            'TAChart'
-          )
-          Align = alBottom
-          object chartSummaryPieSeries1: TPieSeries
-          end
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object cardColumns: TPage
@@ -7681,7 +7653,7 @@ object frmCustomGrid: TfrmCustomGrid
             TabOrder = 0
             TitleImageList = iHeaders
             TitleStyle = tsNative
-            OnColExit = DBGColExit
+            OnContextPopup = gridChild1ContextPopup
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
@@ -7708,10 +7680,11 @@ object frmCustomGrid: TfrmCustomGrid
             TabOrder = 0
             TitleImageList = iHeaders
             TitleStyle = tsNative
-            OnColExit = DBGColExit
+            OnContextPopup = gridChild1ContextPopup
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
             OnKeyPress = FormKeyPress
             OnMouseWheel = DBGMouseWheel
             OnPrepareCanvas = DBGPrepareCanvas
@@ -7734,10 +7707,11 @@ object frmCustomGrid: TfrmCustomGrid
             TabOrder = 0
             TitleImageList = iHeaders
             TitleStyle = tsNative
-            OnColExit = DBGColExit
+            OnContextPopup = gridChild1ContextPopup
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
             OnKeyPress = FormKeyPress
             OnMouseWheel = DBGMouseWheel
             OnPrepareCanvas = DBGPrepareCanvas
@@ -7760,10 +7734,11 @@ object frmCustomGrid: TfrmCustomGrid
             TabOrder = 0
             TitleImageList = iHeaders
             TitleStyle = tsNative
-            OnColExit = DBGColExit
+            OnContextPopup = gridChild1ContextPopup
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
             OnKeyPress = FormKeyPress
             OnMouseWheel = DBGMouseWheel
             OnPrepareCanvas = DBGPrepareCanvas
@@ -7786,10 +7761,11 @@ object frmCustomGrid: TfrmCustomGrid
             TabOrder = 0
             TitleImageList = iHeaders
             TitleStyle = tsNative
-            OnColExit = DBGColExit
+            OnContextPopup = gridChild1ContextPopup
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
             OnKeyPress = FormKeyPress
             OnMouseWheel = DBGMouseWheel
             OnPrepareCanvas = DBGPrepareCanvas
@@ -8167,7 +8143,6 @@ object frmCustomGrid: TfrmCustomGrid
         ImageIndex = 16
         ImageWidth = 24
         Visible = False
-        OnClick = sbSortRecordsClick
         ShowCaption = False
         ShowHint = True
         ParentShowHint = False
@@ -9023,7 +8998,6 @@ object frmCustomGrid: TfrmCustomGrid
         OnMouseWheel = DBGMouseWheel
         OnPrepareCanvas = DBGPrepareCanvas
         OnSelectEditor = DBGSelectEditor
-        OnTitleClick = DBGTitleClick
       end
       object pRecordStatus: TBCPanel
         AnchorSideTop.Side = asrBottom
@@ -9725,52 +9699,6 @@ object frmCustomGrid: TfrmCustomGrid
     OnDataChange = dsLinkDataChange
     Left = 504
     Top = 88
-  end
-  object pmSort: TPopupMenu
-    Left = 200
-    Top = 88
-    object pmsSortAlphanumeric: TMenuItem
-      AutoCheck = True
-      Caption = 'Alphanumeric'
-      Checked = True
-      GroupIndex = 1
-      RadioItem = True
-    end
-    object pmsSortTaxonomic: TMenuItem
-      AutoCheck = True
-      Caption = 'Taxonomic'
-      GroupIndex = 1
-      RadioItem = True
-      Visible = False
-    end
-    object pmsSortCreationDate: TMenuItem
-      AutoCheck = True
-      Caption = 'Creation date'
-      GroupIndex = 1
-      RadioItem = True
-    end
-    object pmsSortLastModifiedDate: TMenuItem
-      AutoCheck = True
-      Caption = 'Last modified date'
-      GroupIndex = 1
-      RadioItem = True
-    end
-    object Separator12: TMenuItem
-      Caption = '-'
-    end
-    object pmsSortAscending: TMenuItem
-      AutoCheck = True
-      Caption = 'Ascending'
-      Checked = True
-      GroupIndex = 2
-      RadioItem = True
-    end
-    object pmsSortDescending: TMenuItem
-      AutoCheck = True
-      Caption = 'Descending'
-      GroupIndex = 2
-      RadioItem = True
-    end
   end
   object dsLink1: TDataSource
     OnStateChange = dsLink1StateChange
@@ -22478,15 +22406,6 @@ object frmCustomGrid: TfrmCustomGrid
       5FFF0F046B5B8F
     }
   end
-  object ChartBGRA: TChartGUIConnectorBGRA
-    Left = 631
-    Top = 526
-  end
-  object DbChartSource1: TDbChartSource
-    DataSource = dsChart
-    Left = 560
-    Top = 526
-  end
   object dsChart: TDataSource
     AutoEdit = False
     DataSet = qChart
@@ -22501,10 +22420,6 @@ object frmCustomGrid: TfrmCustomGrid
     Macros = <>
     Left = 576
     Top = 474
-  end
-  object ListChartSource1: TListChartSource
-    Left = 512
-    Top = 526
   end
   object pmMark: TPopupMenu
     Images = iButtons

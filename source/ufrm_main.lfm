@@ -499,6 +499,7 @@ object frmMain: TfrmMain
         AntialiasingMode = amOn
         Align = alLeft
         Center = True
+        ImageWidth = 16
         Images = iSearch
         Proportional = True
         Transparent = True
@@ -537,6 +538,7 @@ object frmMain: TfrmMain
         Font.Color = clBlack
         Images = iSearch
         ImageIndex = 1
+        ImageWidth = 16
         Visible = False
         OnClick = sbClearSearchClick
         ShowCaption = False
@@ -1266,6 +1268,7 @@ object frmMain: TfrmMain
         Align = alLeft
         AutoSize = True
         Center = True
+        ImageWidth = 16
         Images = bStatusBar
         Proportional = True
       end
@@ -1341,6 +1344,7 @@ object frmMain: TfrmMain
         AutoSize = True
         Center = True
         ImageIndex = 1
+        ImageWidth = 16
         Images = bStatusBar
         Proportional = True
       end
@@ -1407,6 +1411,7 @@ object frmMain: TfrmMain
         AutoSize = True
         Center = True
         ImageIndex = 2
+        ImageWidth = 16
         Images = bStatusBar
         Proportional = True
       end
