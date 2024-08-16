@@ -163,6 +163,7 @@ type
     pmMarkColumns: TPopupMenu;
     pmmMarkAllColumns: TMenuItem;
     pmmUnmarkAllColumns: TMenuItem;
+    pMsgSummary: TBCPanel;
     pmvAddVerification: TMenuItem;
     pmvViewVerifications: TMenuItem;
     pmmMarkAll: TMenuItem;
@@ -9189,6 +9190,7 @@ begin
   sbRecordVerifications.Visible := True;
   mapGeo.Active := True;
   sbShowMap.Visible := True;
+  sbShowSummary.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -9758,7 +9760,11 @@ end;
 
 procedure TfrmCustomGrid.Summary;
 begin
+  if not sbShowSummary.Down then
+    Exit;
+
   try
+    pMsgSummary.Visible := True;
     gridSummary.BeginUpdate;
     case FTableType of
       tbNone: ;
@@ -9779,7 +9785,7 @@ begin
       tbBands: ;
       tbBandHistory: ;
       tbIndividuals: ;
-      tbCaptures: ;
+      tbCaptures:           SummaryCaptures(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbMolts: ;
       tbNests: ;
       tbNestOwners: ;
@@ -9791,7 +9797,7 @@ begin
       tbSurveyTeams: ;
       tbNetsEffort: ;
       tbWeatherLogs: ;
-      tbSightings: SummarySightings(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbSightings:          SummarySightings(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbSpecimens: ;
       tbSamplePreps: ;
       tbSpecimenCollectors: ;
@@ -9801,6 +9807,7 @@ begin
     gridSummary.AutoAdjustColumns;
   finally
     gridSummary.EndUpdate;
+    pMsgSummary.Visible := False;
   end;
 end;
 

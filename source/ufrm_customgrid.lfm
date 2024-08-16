@@ -95,7 +95,7 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alClient
           BorderStyle = bsNone
           ClientHeight = 515
-          ClientWidth = 464
+          ClientWidth = 447
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel
@@ -6829,6 +6829,57 @@ object frmCustomGrid: TfrmCustomGrid
           TitleStyle = tsNative
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
+        end
+        object pMsgSummary: TBCPanel
+          AnchorSideLeft.Control = gridSummary
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = gridSummary
+          AnchorSideTop.Side = asrCenter
+          Left = 98
+          Height = 24
+          Top = 315
+          Width = 269
+          ChildSizing.LeftRightSpacing = 4
+          ChildSizing.TopBottomSpacing = 1
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13158600
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          Caption = 'Calculating summary...'
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          FontEx.PaddingLeft = 8
+          FontEx.PaddingRight = 8
+          ParentBackground = False
+          Rounding.RoundX = 4
+          Rounding.RoundY = 4
+          TabOrder = 1
+          Visible = False
         end
       end
       object cardColumns: TPage

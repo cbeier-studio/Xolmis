@@ -459,6 +459,7 @@ resourcestring
   rscTable = 'Table';
 
 
+  procedure SummaryCaptures(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummarySightings(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
 
   procedure TranslateRecordHistory(aDataSet: TDataSet);
@@ -2177,6 +2178,477 @@ begin
     end;
   end;
 
+end;
+
+procedure SummaryCaptures(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+    Add('SELECT DISTINCT');
+    case aFieldName of
+      'full_name', 'capture_id', 'longitude', 'latitude', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated', 'start_photo_number', 'end_photo_number', 'field_number':
+      begin
+        Clear;
+      end;
+
+      'taxon_id', 'taxon_name', 'taxon_formatted_name':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'survey_id', 'survey_name':
+      begin
+        Add('  (SELECT sv.full_name FROM surveys AS sv WHERE sv.survey_id = c.survey_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.survey_id = c.survey_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'net_station_id', 'net_station_name':
+      begin
+        Add('  (SELECT ns.station_name FROM net_stations AS ns WHERE ns.net_station_id = c.net_station_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.net_station_id = c.net_station_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'locality_id', 'locality_name':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = c.locality_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.locality_id = c.locality_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'bander_id', 'bander_name':
+      begin
+        Add('  (SELECT p.full_name FROM people AS p WHERE p.person_id = c.bander_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.bander_id = c.bander_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'annotator_id', 'annotator_name':
+      begin
+        Add('  (SELECT p.full_name FROM people AS p WHERE p.person_id = c.annotator_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.annotator_id = c.annotator_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'photographer_1_id', 'photographer_1_name':
+      begin
+        Add('  (SELECT p.full_name FROM people AS p WHERE p.person_id = c.photographer_1_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.photographer_1_id = c.photographer_1_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'photographer_2_id', 'photographer_2_name':
+      begin
+        Add('  (SELECT p.full_name FROM people AS p WHERE p.person_id = c.photographer_2_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.photographer_2_id = c.photographer_2_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'individual_id', 'individual_name':
+      begin
+        Add('  (SELECT i.full_name FROM individuals AS i WHERE i.individual_id = c.individual_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.individual_id = c.individual_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'project_id', 'project_name':
+      begin
+        Add('  (SELECT pj.short_title FROM projects AS pj WHERE pj.project_id = c.project_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.project_id = c.project_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'band_id', 'band_name':
+      begin
+        Add('  (SELECT b.full_name FROM bands AS b WHERE b.band_id = c.band_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.band_id = c.band_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'removed_band_id', 'removed_band_name':
+      begin
+        Add('  (SELECT b.full_name FROM bands AS b WHERE b.band_id = c.removed_band_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.removed_band_id = c.removed_band_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'net_id', 'net_number':
+      begin
+        Add('  (SELECT ef.full_name FROM nets_effort AS ef WHERE ef.net_id = c.net_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.net_id = c.net_id) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'marked_status':
+      begin
+        Add('  ' + QuotedStr(rscMarkedStatus) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.marked_status = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'exported_status':
+      begin
+        Add('  ' + QuotedStr(rscExportedStatus) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.exported_status = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'escaped':
+      begin
+        Add('  ' + QuotedStr(rscEscaped) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.escaped = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'needs_review':
+      begin
+        Add('  ' + QuotedStr(rscNeedsReview) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.needs_review = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'blood_sample':
+      begin
+        Add('  ' + QuotedStr(rscBlood) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.blood_sample = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'feather_sample':
+      begin
+        Add('  ' + QuotedStr(rscFeathers) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.feather_sample = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'claw_sample':
+      begin
+        Add('  ' + QuotedStr(rscClaw) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.claw_sample = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'feces_sample':
+      begin
+        Add('  ' + QuotedStr(rscFeces) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.feces_sample = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'parasite_sample':
+      begin
+        Add('  ' + QuotedStr(rscParasites) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.parasite_sample = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'subject_collected':
+      begin
+        Add('  ' + QuotedStr(rscCollectedWhole) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.subject_collected = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'subject_recorded':
+      begin
+        Add('  ' + QuotedStr(rscRecorded) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.subject_recorded = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'subject_photographed':
+      begin
+        Add('  ' + QuotedStr(rscPhotographed) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.subject_photographed = 1) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'capture_date':
+      begin
+        Add('  capture_date AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.capture_date = c.capture_date) AND (t.active_status = 1)) AS tally');
+      end;
+      'capture_time':
+      begin
+        Add('  capture_time AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.capture_time = c.capture_time) AND (t.active_status = 1)) AS tally');
+      end;
+      'capture_type':
+      begin
+        Add('  capture_type AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.capture_type = c.capture_type) AND (t.active_status = 1)) AS tally');
+      end;
+      'molt_limits':
+      begin
+        Add('  molt_limits AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.molt_limits = c.molt_limits) AND (t.active_status = 1)) AS tally');
+      end;
+      'skull_ossification':
+      begin
+        Add('  skull_ossification AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.skull_ossification = c.skull_ossification) AND (t.active_status = 1)) AS tally');
+      end;
+      'cycle_code':
+      begin
+        Add('  cycle_code AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.cycle_code = c.cycle_code) AND (t.active_status = 1)) AS tally');
+      end;
+      'subject_age':
+      begin
+        Add('  subject_age AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.subject_age = c.subject_age) AND (t.active_status = 1)) AS tally');
+      end;
+      'how_aged':
+      begin
+        Add('  how_aged AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.how_aged = c.how_aged) AND (t.active_status = 1)) AS tally');
+      end;
+      'subject_sex':
+      begin
+        Add('  subject_sex AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.subject_sex = c.subject_sex) AND (t.active_status = 1)) AS tally');
+      end;
+      'how_sexed':
+      begin
+        Add('  how_sexed AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.how_sexed = c.how_sexed) AND (t.active_status = 1)) AS tally');
+      end;
+      'subject_status':
+      begin
+        Add('  subject_status AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.subject_status = c.subject_status) AND (t.active_status = 1)) AS tally');
+      end;
+      'camera_name':
+      begin
+        Add('  camera_name AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.camera_name = c.camera_name) AND (t.active_status = 1)) AS tally');
+      end;
+      'right_leg_below':
+      begin
+        Add('  right_leg_below AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.right_leg_below = c.right_leg_below) AND (t.active_status = 1)) AS tally');
+      end;
+      'left_leg_below':
+      begin
+        Add('  left_leg_below AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.left_leg_below = c.left_leg_below) AND (t.active_status = 1)) AS tally');
+      end;
+      'right_leg_above':
+      begin
+        Add('  right_leg_above AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.right_leg_above = c.right_leg_above) AND (t.active_status = 1)) AS tally');
+      end;
+      'left_leg_above':
+      begin
+        Add('  left_leg_above AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.left_leg_above = c.left_leg_above) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'cloacal_protuberance':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  cloacal_protuberance AS protuberance,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.cloacal_protuberance = c.cloacal_protuberance) AND (t.active_status = 1)) AS tally');
+      end;
+      'brood_patch':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  brood_patch AS patch,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.brood_patch = c.brood_patch) AND (t.active_status = 1)) AS tally');
+      end;
+      'fat':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  fat,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.fat = c.fat) AND (t.active_status = 1)) AS tally');
+      end;
+      'body_molt':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  body_molt,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.body_molt = c.body_molt) AND (t.active_status = 1)) AS tally');
+      end;
+      'flight_feathers_molt':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  flight_feathers_molt AS ff_molt,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.flight_feathers_molt = c.flight_feathers_molt) AND (t.active_status = 1)) AS tally');
+      end;
+      'flight_feathers_wear':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  flight_feathers_wear AS ff_wear,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.flight_feathers_wear = c.flight_feathers_wear) AND (t.active_status = 1)) AS tally');
+      end;
+      'feather_mites':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  feather_mites AS ff_wear,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.feather_mites = c.feather_mites) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'right_wing_chord':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.right_wing_chord) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'first_secondary_chord':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.first_secondary_chord) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'kipps_index':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.kipps_index) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'tail_length':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.tail_length) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'tarsus_length':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.tarsus_length) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'tarsus_diameter':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.tarsus_diameter) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'weight':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.weight) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'skull_length':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.skull_length) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'exposed_culmen':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.exposed_culmen) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'culmen_length':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.culmen_length) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'nostril_bill_tip':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.nostril_bill_tip) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'bill_width':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.bill_width) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'bill_height':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.bill_height) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'total_length':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.total_length) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'central_retrix_length':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.central_retrix_length) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'external_retrix_length':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.external_retrix_length) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'halux_length_total':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.halux_length_total) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'halux_length_finger':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.halux_length_finger) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'halux_length_claw':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.halux_length_claw) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'glucose':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.glucose) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'hemoglobin':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.hemoglobin) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'hematocrit':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.hematocrit) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+
+      'philornis_larvae_tally':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.taxon_id) AS name,');
+        Add('  (SELECT avg(t.philornis_larvae_tally) FROM captures AS t WHERE (t.taxon_id = c.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+
+      'notes':
+      begin
+        Add('  ' + QuotedStr(rscNotes) + ' AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE ((t.notes != '''') ');
+        Add('     OR (t.notes NOTNULL)) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'order_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.order_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.order_id = c.order_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'family_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.family_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.family_id = c.family_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'genus_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.genus_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.genus_id = c.genus_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'species_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = c.species_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.species_id = c.species_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'country_id':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = c.country_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.country_id = c.country_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'state_id':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = c.state_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.state_id = c.state_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'municipality_id':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = c.municipality_id) AS name,');
+        Add('  (SELECT count(*) FROM captures AS t WHERE (t.municipality_id = c.municipality_id) AND (t.active_status = 1)) AS tally');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+      Add('FROM captures AS c');
+      if aWhereText <> EmptyStr then
+        AddText(aWhereText)
+      else
+        Add('WHERE (c.active_status = 1)');
+      Add('ORDER BY tally DESC');
+
+      Open;
+    end;
+  end;
 end;
 
 end.

@@ -10378,6 +10378,10 @@ msgstr "Apagar permanentemente"
 msgid "Restore selected record"
 msgstr "Restaurar registro selecionado"
 
+#: tfrmcustomgrid.pmsgsummary.caption
+msgid "Calculating summary..."
+msgstr "Calculando sumário..."
+
 #: tfrmcustomgrid.pmtclearselection.caption
 msgctxt "tfrmcustomgrid.pmtclearselection.caption"
 msgid "Clear selection"

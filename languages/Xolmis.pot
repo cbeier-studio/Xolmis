@@ -10348,6 +10348,10 @@ msgstr ""
 msgid "Restore selected record"
 msgstr ""
 
+#: tfrmcustomgrid.pmsgsummary.caption
+msgid "Calculating summary..."
+msgstr ""
+
 #: tfrmcustomgrid.pmtclearselection.caption
 msgctxt "tfrmcustomgrid.pmtclearselection.caption"
 msgid "Clear selection"
