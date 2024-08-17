@@ -460,6 +460,7 @@ resourcestring
 
 
   procedure SummaryCaptures(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryNests(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummarySightings(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
 
   procedure TranslateRecordHistory(aDataSet: TDataSet);
@@ -2644,6 +2645,278 @@ begin
         AddText(aWhereText)
       else
         Add('WHERE (c.active_status = 1)');
+      Add('ORDER BY tally DESC');
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryNests(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+    Add('SELECT DISTINCT');
+    case aFieldName of
+      'full_name', 'nest_id', 'longitude', 'latitude', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated', 'field_number':
+      begin
+        Clear;
+      end;
+
+      'taxon_id', 'taxon_name':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'locality_id', 'locality_name':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = n.locality_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.locality_id = n.locality_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'observer_id', 'observer_name':
+      begin
+        Add('  (SELECT p.full_name FROM people AS p WHERE p.person_id = n.observer_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.observer_id = n.observer_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'support_plant_1_id', 'support_plant_1_name':
+      begin
+        Add('  (SELECT bt.taxon_name FROM botanic_taxa AS bt WHERE bt.taxon_id = n.support_plant_1_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.support_plant_1_id = n.support_plant_1_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'support_plant_2_id', 'support_plant_2_name':
+      begin
+        Add('  (SELECT bt.taxon_name FROM botanic_taxa AS bt WHERE bt.taxon_id = n.support_plant_2_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.support_plant_2_id = n.support_plant_2_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'project_id', 'project_name':
+      begin
+        Add('  (SELECT pj.short_title FROM projects AS pj WHERE pj.project_id = n.project_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.project_id = n.project_id) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'marked_status':
+      begin
+        Add('  ' + QuotedStr(rscMarkedStatus) + ' AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.marked_status = 1) AND (t.active_status = 1)) AS tally');
+      end;
+      'exported_status':
+      begin
+        Add('  ' + QuotedStr(rscExportedStatus) + ' AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.exported_status = 1) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'found_date':
+      begin
+        Add('  found_date AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.found_date = n.found_date) AND (t.active_status = 1)) AS tally');
+      end;
+      'last_date':
+      begin
+        Add('  last_date AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.last_date = n.last_date) AND (t.active_status = 1)) AS tally');
+      end;
+      'nest_fate':
+      begin
+        Add('  nest_fate AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.nest_fate = n.nest_fate) AND (t.active_status = 1)) AS tally');
+      end;
+      'nest_shape':
+      begin
+        Add('  nest_shape AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.nest_shape = n.nest_shape) AND (t.active_status = 1)) AS tally');
+      end;
+      'support_type':
+      begin
+        Add('  support_type AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.support_type = n.support_type) AND (t.active_status = 1)) AS tally');
+      end;
+      'other_support':
+      begin
+        Add('  other_support AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.other_support = n.other_support) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'height_above_ground':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.height_above_ground) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'internal_max_diameter':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.internal_max_diameter) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'internal_min_diameter':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.internal_min_diameter) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'external_max_diameter':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.external_max_diameter) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'external_min_diameter':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.external_min_diameter) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'internal_height':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.internal_height) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'external_height':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.external_height) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'edge_distance':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.edge_distance) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'center_distance':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.center_distance) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'nest_cover':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.nest_cover) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'plant_max_diameter':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.plant_max_diameter) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'plant_min_diameter':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.plant_min_diameter) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'plant_height':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.plant_height) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'plant_dbh':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.plant_dbh) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'construction_days':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.construction_days) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'incubation_days':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.incubation_days) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'nestling_days':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.nestling_days) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'active_days':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.active_days) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+      'nest_productivity':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.taxon_id) AS name,');
+        Add('  (SELECT avg(t.nest_productivity) FROM nests AS t WHERE (t.taxon_id = n.taxon_id) ');
+        Add('     AND (t.active_status = 1)) AS tally');
+      end;
+
+      'notes':
+      begin
+        Add('  ' + QuotedStr(rscNotes) + ' AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE ((t.notes != '''') ');
+        Add('     OR (t.notes NOTNULL)) AND (t.active_status = 1)) AS tally');
+      end;
+      'description':
+      begin
+        Add('  ' + QuotedStr(rscDescription) + ' AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE ((t.description != '''') ');
+        Add('     OR (t.description NOTNULL)) AND (t.active_status = 1)) AS tally');
+      end;
+
+      'order_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.order_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.order_id = n.order_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'family_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.family_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.family_id = n.family_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'subfamily_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.subfamily_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.sub family_id = n.subfamily_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'genus_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.genus_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.genus_id = n.genus_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'species_id':
+      begin
+        Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = n.species_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.species_id = n.species_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'country_id':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = n.country_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.country_id = n.country_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'state_id':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = n.state_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.state_id = n.state_id) AND (t.active_status = 1)) AS tally');
+      end;
+      'municipality_id':
+      begin
+        Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = n.municipality_id) AS name,');
+        Add('  (SELECT count(*) FROM nests AS t WHERE (t.municipality_id = n.municipality_id) AND (t.active_status = 1)) AS tally');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+      Add('FROM nests AS n');
+      if aWhereText <> EmptyStr then
+        AddText(aWhereText)
+      else
+        Add('WHERE (n.active_status = 1)');
       Add('ORDER BY tally DESC');
 
       Open;
