@@ -10,7 +10,6 @@ object cfgOptions: TcfgOptions
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -1632,6 +1631,17 @@ object cfgOptions: TcfgOptions
               OnOn = tsWriteLogsOn
               OnOff = tsWriteLogsOn
             end
+            object sbClearLogFiles: TBitBtn
+              Left = 454
+              Height = 28
+              Top = 12
+              Width = 97
+              Align = alRight
+              AutoSize = True
+              Caption = 'Clear log files'
+              OnClick = sbClearLogFilesClick
+              TabOrder = 1
+            end
           end
           object pAllowUsageData: TBCPanel
             Left = 16
@@ -1678,6 +1688,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 3
+            Visible = False
             object Image14: TImage
               Left = 16
               Height = 28
@@ -1713,8 +1724,18 @@ object cfgOptions: TcfgOptions
               OnOn = tsAllowUsageDataOn
               OnOff = tsAllowUsageDataOn
             end
+            object sbClearUsageData: TBitBtn
+              Left = 438
+              Height = 28
+              Top = 12
+              Width = 113
+              Align = alRight
+              AutoSize = True
+              Caption = 'Clear usage data'
+              TabOrder = 1
+            end
           end
-          object pAllowUsageData1: TBCPanel
+          object pPrivacyTerms: TBCPanel
             Left = 16
             Height = 44
             Top = 268
@@ -1759,7 +1780,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
             TabOrder = 4
-            object lblAllowUsageData1: TLabel
+            object lblPrivacyTerms: TLabel
               Left = 16
               Height = 20
               Top = 12
@@ -1771,7 +1792,7 @@ object cfgOptions: TcfgOptions
               ParentColor = False
               ParentFont = False
             end
-            object Image17: TImage
+            object imgPrivacyTerms: TImage
               Left = 582
               Height = 20
               Top = 12

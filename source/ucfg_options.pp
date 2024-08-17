@@ -49,7 +49,7 @@ type
     Image14: TImage;
     Image15: TImage;
     Image16: TImage;
-    Image17: TImage;
+    imgPrivacyTerms: TImage;
     icoUseConditionalFormatting: TImage;
     icoShowOutliers: TImage;
     Image2: TImage;
@@ -62,7 +62,7 @@ type
     Image9: TImage;
     iIcons: TImageList;
     lblAllowUsageData: TLabel;
-    lblAllowUsageData1: TLabel;
+    lblPrivacyTerms: TLabel;
     lblAllowWriteLog: TLabel;
     lblAttachmentsPath: TLabel;
     lblAudiosPath: TLabel;
@@ -95,7 +95,7 @@ type
     pUseConditionalFormatting: TBCPanel;
     pgAppearance: TPage;
     pAllowUsageData: TBCPanel;
-    pAllowUsageData1: TBCPanel;
+    pPrivacyTerms: TBCPanel;
     pAllowWriteLog: TBCPanel;
     pBackupPath: TBCPanel;
     pCheckUpdates: TBCPanel;
@@ -127,6 +127,8 @@ type
     pStartupBackup: TBCPanel;
     pVernacularNames: TBCPanel;
     sbCheckUpdatesNow: TBitBtn;
+    sbClearLogFiles: TBitBtn;
+    sbClearUsageData: TBitBtn;
     sbClose: TButton;
     sbNewBackup: TBitBtn;
     sbRestoreBackup: TBitBtn;
@@ -158,6 +160,7 @@ type
     procedure eImagesPathChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure sbCheckUpdatesNowClick(Sender: TObject);
+    procedure sbClearLogFilesClick(Sender: TObject);
     procedure sbNewBackupClick(Sender: TObject);
     procedure sbRestoreBackupClick(Sender: TObject);
     procedure tsAllowUsageDataOn(Sender: TObject);
@@ -269,7 +272,7 @@ begin
   Image12.Images := iIconsDark;
   Image13.Images := iIconsDark;
   Image14.Images := iIconsDark;
-  Image17.Images := iIconsDark;
+  imgPrivacyTerms.Images := iIconsDark;
   Image15.Images := iIconsDark;
   Image16.Images := iIconsDark;
 
@@ -307,8 +310,8 @@ begin
   pAllowWriteLog.Border.Color := clSystemSolidNeutralFGDark;
   pAllowUsageData.Background.Color := clCardBGDefaultDark;
   pAllowUsageData.Border.Color := clSystemSolidNeutralFGDark;
-  pAllowUsageData1.Background.Color := clCardBGDefaultDark;
-  pAllowUsageData1.Border.Color := clSystemSolidNeutralFGDark;
+  pPrivacyTerms.Background.Color := clCardBGDefaultDark;
+  pPrivacyTerms.Border.Color := clSystemSolidNeutralFGDark;
   pBackupPath.Background.Color := clCardBGDefaultDark;
   pBackupPath.Border.Color := clSystemSolidNeutralFGDark;
   pStartupBackup.Background.Color := clCardBGDefaultDark;
@@ -382,6 +385,15 @@ begin
     end;
     ckrError: ;
   end;
+end;
+
+procedure TcfgOptions.sbClearLogFilesClick(Sender: TObject);
+var
+  FLog: String;
+begin
+  FLog := ConcatPaths([AppDataDir, LogFile]);
+  if FileExists(FLog) then
+    DeleteFile(FLog);
 end;
 
 procedure TcfgOptions.tsConfirmCancelOn(Sender: TObject);

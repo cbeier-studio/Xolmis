@@ -1097,6 +1097,10 @@ begin
   pRecycleWarning.Background.Color := clSystemAttentionBGDark;
   pRecycleWarning.Border.Color := clSystemAttentionFGDark;
   icoRecycleWarning.Images := iIconsDark;
+  pMsgSummary.Background.Color := clCardBGDefaultDark;
+  pMsgSummary.Border.Color := clCardBGSecondaryDark;
+  pMsgSummary.FontEx.Color := clTextPrimaryDark;
+  pMsgSummary.Color := gridSummary.Color;
 
   DBG.TitleImageList := iHeadersDark;
   pmGrid.Images := iButtonsDark;
