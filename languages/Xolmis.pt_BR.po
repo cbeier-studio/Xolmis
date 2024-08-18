@@ -5217,10 +5217,6 @@ msgstr "Opções"
 msgid "Allow Xolmis to collect anonymous usage data"
 msgstr "Permitir que o Xolmis colete dados de uso anônimos"
 
-#: tcfgoptions.lblallowusagedata1.caption
-msgid "Privacy terms"
-msgstr "Termos de privacidade"
-
 #: tcfgoptions.lblallowwritelog.caption
 msgid "Allow Xolmis to log events for technical support"
 msgstr "Permitir o Xolmis gerar arquivo de log para suporte técnico"
@@ -5264,6 +5260,11 @@ msgstr "Taxonomia preferencial"
 #: tcfgoptions.lblmanagebackups.caption
 msgid "Manage backups"
 msgstr "Gerenciar backups"
+
+#: tcfgoptions.lblprivacyterms.caption
+msgctxt "tcfgoptions.lblprivacyterms.caption"
+msgid "Privacy terms"
+msgstr "Termos de privacidade"
 
 #: tcfgoptions.lblrememberconnection.caption
 msgid "Remember connection from last session"
@@ -5333,6 +5334,14 @@ msgstr "Idioma dos nomes vernaculares"
 #: tcfgoptions.sbcheckupdatesnow.caption
 msgid "Check now"
 msgstr "Verificar agora"
+
+#: tcfgoptions.sbclearlogfiles.caption
+msgid "Clear log files"
+msgstr "Limpar arquivos de log"
+
+#: tcfgoptions.sbclearusagedata.caption
+msgid "Clear usage data"
+msgstr "Limpar dados de uso"
 
 #: tcfgoptions.sbclose.caption
 msgctxt "tcfgoptions.sbclose.caption"

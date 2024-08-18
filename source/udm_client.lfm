@@ -203,7 +203,7 @@ object DMC: TDMC
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
-      'SELECT taxon, nome_taxon, STRFTIME(''%d/%m/%Y'', data_registro) AS data_registro, ativo, tipo'
+      'SELECT taxon, nome_taxon, STRFTIME(''%d/%m/%Y'', data_registro) AS data_registro, tipo'
       'FROM get_last_lifers'
       'LIMIT 9'
       ''
@@ -253,18 +253,6 @@ object DMC: TDMC
       ReadOnly = False
       Required = False
       Size = 15
-    end
-    object qLastLifersativo: TBooleanField
-      DisplayLabel = 'Ativo'
-      FieldKind = fkData
-      FieldName = 'ativo'
-      Index = 4
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-      DisplayValues = 'True;False'
     end
   end
   object qLastSurveys: TSQLQuery

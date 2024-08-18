@@ -61,7 +61,6 @@ type
     qIndividualsMonthrecord_month: TStringField;
     qIndividualsMonthrecord_month1: TStringField;
     qLastLifers: TSQLQuery;
-    qLastLifersativo: TBooleanField;
     qLastLifersdata_registro: TStringField;
     qLastLifersnome_taxon: TStringField;
     qLastLiferstaxon: TLongintField;

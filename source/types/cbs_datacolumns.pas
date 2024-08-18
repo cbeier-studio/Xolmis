@@ -1966,6 +1966,8 @@ begin
 end;
 
 procedure SummarySightings(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+var
+  fOrder, fGroup, fCount, fTableJoin, fName: String;
 begin
   with aDataSet, SQL do
   begin
@@ -1973,9 +1975,30 @@ begin
 
     Clear;
     Add('SELECT DISTINCT');
+    //Add('SELECT z.full_name AS name, COUNT(s.taxon_id) AS tally');
+    //Add('FROM sightings AS s');
+    //Add('JOIN zoo_taxa AS z ON s.taxon_id = z.taxon_id');
+    //if aWhereText <> EmptyStr then
+    //  AddText(aWhereText)
+    //else
+    //  Add('WHERE s.active_status = 1');
+    //Add('GROUP BY name');
+    //Add('ORDER BY tally DESC;');
+
     case aFieldName of
+      'full_name', 'sighting_id', 'longitude', 'latitude', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated':
+      begin
+        Clear;
+      end;
+
       'taxon_id', 'taxon_name', 'taxon_formatted_name':
       begin
+        //fName := 'z.full_name';
+        //fOrder := 'tally';
+        //fGroup := 'name';
+        //fCount := 'taxon_id';
+        //fTableJoin := 'zoo_taxa';
         Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.taxon_id) AS name,');
         Add('  (SELECT count(*) FROM sightings AS t WHERE (t.taxon_id = s.taxon_id) AND (t.active_status = 1)) AS tally');
       end;
@@ -2122,12 +2145,6 @@ begin
         Add('  (SELECT sum(ns.unbanded_tally) FROM sightings AS ns WHERE (ns.taxon_id = s.taxon_id) AND (ns.active_status = 1)) AS unbanded');
       end;
 
-      'full_name', 'sighting_id', 'longitude', 'latitude', 'active_status', 'insert_date', 'update_date',
-      'user_inserted', 'user_updated':
-      begin
-        Clear;
-      end;
-
       'order_id':
       begin
         Add('  (SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = s.order_id) AS name,');
@@ -2163,7 +2180,6 @@ begin
         Add('  (SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = s.municipality_id) AS name,');
         Add('  (SELECT count(*) FROM sightings AS t WHERE (t.municipality_id = s.municipality_id) AND (t.active_status = 1)) AS tally');
       end;
-
     end;
 
     if SQL.Count > 0 then

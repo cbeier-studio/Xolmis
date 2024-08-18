@@ -9791,7 +9791,7 @@ begin
       tbIndividuals: ;
       tbCaptures:           SummaryCaptures(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbMolts: ;
-      tbNests: ;            SummaryNests(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbNests:              SummaryNests(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbNestOwners: ;
       tbNestRevisions: ;
       tbEggs: ;
