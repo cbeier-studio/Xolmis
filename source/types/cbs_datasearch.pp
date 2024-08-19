@@ -285,7 +285,7 @@ begin
     tbPermits:
       begin
         SetPermitsSQL(aSQL, fvNone);
-        aAlias:= EmptyStr;
+        //aAlias:= EmptyStr;
       end;
     tbGazetteer:
       begin
@@ -437,12 +437,17 @@ begin
   begin
     Clear;
     Add('SELECT sp.*,');
-    Add('(SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = sp.taxon_id) AS taxon_name,');
-    Add('(SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = sp.locality_id) AS locality_name,');
-    Add('(SELECT i.full_name FROM individuals AS i WHERE i.individual_id = sp.individual_id) AS individual_name,');
-    Add('(SELECT n.full_name FROM nests AS n WHERE n.nest_id = sp.nest_id) AS nest_name,');
-    Add('(SELECT e.full_name FROM eggs AS e WHERE e.egg_id = sp.egg_id) AS egg_name');
+    Add('  z.full_name AS taxon_name,');
+    Add('  g.site_name AS locality_name,');
+    Add('  i.full_name AS individual_name,');
+    Add('  n.full_name AS nest_name,');
+    Add('  e.full_name AS egg_name');
     Add('FROM specimens AS sp');
+    Add('LEFT JOIN zoo_taxa AS z ON sp.taxon_id = z.taxon_id');
+    Add('LEFT JOIN gazetteer AS g ON sp.locality_id = g.site_id');
+    Add('LEFT JOIN individuals AS i ON sp.individual_id = i.individual_id');
+    Add('LEFT JOIN nests AS n ON sp.nest_id = n.nest_id');
+    Add('LEFT JOIN eggs AS e ON sp.egg_id = e.egg_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -475,17 +480,25 @@ begin
   begin
     Clear;
     Add('SELECT sv.*,');
-    Add('(SELECT x.expedition_name FROM expeditions AS x WHERE x.expedition_id = sv.expedition_id) AS expedition_name,');
-    Add('(SELECT gm.site_name FROM gazetteer AS gm WHERE gm.site_id = sv.municipality_id) AS municipality_name,');
-    Add('(SELECT gs.site_name FROM gazetteer AS gs WHERE gs.site_id = sv.state_id) AS state_name,');
-    Add('(SELECT gc.site_name FROM gazetteer AS gc WHERE gc.site_id = sv.country_id) AS country_name,');
-    Add('(SELECT gl.full_name FROM gazetteer AS gl WHERE gl.site_id = sv.locality_id) AS locality_name,');
-    Add('(SELECT ns.station_name FROM net_stations AS ns WHERE ns.net_station_id = sv.net_station_id) AS net_station_name,');
-    Add('(SELECT mt.method_name FROM methods AS mt WHERE mt.method_id = sv.method_id) AS method_name,');
-    Add('(SELECT pj.project_title FROM projects AS pj WHERE pj.project_id = sv.project_id) AS project_name,');
-    Add('(SELECT cast(sum(ef.net_area) + sum(ef.open_time_total) AS real) FROM nets_effort AS ef '
-      + 'WHERE (ef.survey_id = sv.survey_id) AND (ef.active_status = 1)) AS net_effort');
+    Add('  x.expedition_name AS expedition_name,');
+    Add('  gl.full_name AS locality_name,');
+    Add('  gm.site_name AS municipality_name,');
+    Add('  gs.site_name AS state_name,');
+    Add('  gc.site_name AS country_name,');
+    Add('  ns.station_name AS net_station_name,');
+    Add('  mt.method_name AS method_name,');
+    Add('  pj.short_title AS project_name,');
+    Add('  (SELECT CAST((SUM(ef.net_area) + SUM(ef.open_time_total)) AS REAL) FROM nets_effort AS ef');
+    Add('    WHERE (ef.survey_id = sv.survey_id) AND (ef.active_status = 1)) AS net_effort');
     Add('FROM surveys AS sv');
+    Add('LEFT JOIN expeditions AS x ON sv.expedition_id = x.expedition_id');
+    Add('LEFT JOIN gazetteer AS gl ON sv.locality_id = gl.site_id');
+    Add('LEFT JOIN gazetteer AS gm ON sv.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON sv.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON sv.country_id = gc.site_id');
+    Add('LEFT JOIN net_stations AS ns ON sv.net_station_id = ns.net_station_id');
+    Add('LEFT JOIN methods AS mt ON sv.method_id = mt.method_id');
+    Add('LEFT JOIN projects AS pj ON sv.project_id = pj.project_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -520,12 +533,17 @@ begin
   begin
     Clear;
     Add('SELECT x.*,');
-    Add('(SELECT gm.site_name FROM gazetteer AS gm WHERE gm.site_id = x.municipality_id) AS municipality_name,');
-    Add('(SELECT gs.site_name FROM gazetteer AS gs WHERE gs.site_id = x.state_id) AS state_name,');
-    Add('(SELECT gc.site_name FROM gazetteer AS gc WHERE gc.site_id = x.country_id) AS country_name,');
-    Add('(SELECT gl.full_name FROM gazetteer AS gl WHERE gl.site_id = x.locality_id) AS locality_name,');
-    Add('(SELECT pj.project_title FROM projects AS pj WHERE pj.project_id = x.project_id) AS project_name');
+    Add('  gl.full_name AS locality_name,');
+    Add('  gm.site_name AS municipality_name,');
+    Add('  gs.site_name AS state_name,');
+    Add('  gc.site_name AS country_name,');
+    Add('  pj.short_title AS project_name');
     Add('FROM expeditions AS x');
+    Add('LEFT JOIN gazetteer AS gl ON x.locality_id = gl.site_id');
+    Add('LEFT JOIN gazetteer AS gm ON x.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON x.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON x.country_id = gc.site_id');
+    Add('LEFT JOIN projects AS pj ON x.project_id = pj.project_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -560,14 +578,20 @@ begin
   begin
     Clear;
     Add('SELECT s.*,');
-    Add('(SELECT z1.full_name FROM zoo_taxa AS z1 WHERE z1.taxon_id = s.taxon_id) AS taxon_name,');
-    Add('(SELECT z2.formatted_name FROM zoo_taxa AS z2 WHERE z2.taxon_id = s.taxon_id) AS taxon_formatted_name,');
-    Add('(SELECT i.full_name FROM individuals AS i WHERE i.individual_id = s.individual_id) AS individual_name,');
-    Add('(SELECT p.full_name FROM people AS p WHERE p.person_id = s.observer_id) AS observer_name,');
-    Add('(SELECT sv.full_name FROM surveys AS sv WHERE sv.survey_id = s.survey_id) AS survey_name,');
-    Add('(SELECT mt.method_name FROM methods AS mt WHERE mt.method_id = s.method_id) AS method_name,');
-    Add('(SELECT g.full_name FROM gazetteer AS g WHERE g.site_id = s.locality_id) AS locality_name');
+    Add('  z.full_name AS taxon_name,');
+    Add('  z.formatted_name AS taxon_formatted_name,');
+    Add('  i.full_name AS individual_name,');
+    Add('  p.full_name AS observer_name,');
+    Add('  sv.full_name AS survey_name,');
+    Add('  mt.method_name AS method_name,');
+    Add('  g.full_name AS locality_name');
     Add('FROM sightings AS s');
+    Add('LEFT JOIN zoo_taxa AS z ON s.taxon_id = z.taxon_id');
+    Add('LEFT JOIN individuals AS i ON s.individual_id = i.individual_id');
+    Add('LEFT JOIN people AS p ON s.observer_id = p.person_id');
+    Add('LEFT JOIN surveys AS sv ON s.survey_id = sv.survey_id');
+    Add('LEFT JOIN methods AS mt ON s.method_id = mt.method_id');
+    Add('LEFT JOIN gazetteer AS g ON s.locality_id = g.site_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -599,8 +623,11 @@ begin
   begin
     Clear;
     Add('SELECT st.*,');
-    Add('(SELECT p.full_name FROM people AS p WHERE p.person_id = st.person_id) AS person_name');
+    Add('  p.acronym AS person_acronym,');
+    Add('  p.full_name AS person_name,');
+    Add('  p.profile_color AS person_color');
     Add('FROM survey_team AS st');
+    Add('LEFT JOIN people AS p ON st.person_id = p.person_id');
     if aSurvey > 0 then
       Add('WHERE (st.active_status = 1) AND (st.survey_id = ' + IntToStr(aSurvey) + ')')
     else
@@ -632,9 +659,11 @@ begin
   begin
     Clear;
     Add('SELECT bt.*,');
-    Add('(SELECT btp.taxon_name FROM botanic_taxa AS btp WHERE btp.taxon_id = bt.parent_taxon_id) AS parent_taxon_name,');
-    Add('(SELECT btv.taxon_name FROM botanic_taxa AS btv WHERE btv.taxon_id = bt.valid_id) AS valid_name');
+    Add('  btp.taxon_name AS parent_taxon_name,');
+    Add('  btv.taxon_name AS valid_name');
     Add('FROM botanic_taxa AS bt');
+    Add('LEFT JOIN botanic_taxa AS btp ON bt.parent_taxon_id = btp.taxon_id');
+    Add('LEFT JOIN botanic_taxa AS btv ON bt.valid_id = btv.taxon_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -667,11 +696,15 @@ begin
   begin
     Clear;
     Add('SELECT g.*,');
-    Add('(SELECT gp.site_name FROM gazetteer AS gp WHERE gp.site_id = g.parent_site_id) AS parent_site_name,');
-    Add('(SELECT gm.site_name FROM gazetteer AS gm WHERE gm.site_id = g.municipality_id) AS municipality_name,');
-    Add('(SELECT gs.site_name FROM gazetteer AS gs WHERE gs.site_id = g.state_id) AS state_name,');
-    Add('(SELECT gc.site_name FROM gazetteer AS gc WHERE gc.site_id = g.country_id) AS country_name');
+    Add('   gp.site_name AS parent_site_name,');
+    Add('   gm.site_name AS municipality_name,');
+    Add('   gs.site_name AS state_name,');
+    Add('   gc.site_name AS country_name');
     Add('FROM gazetteer AS g');
+    Add('LEFT JOIN gazetteer AS gp ON g.parent_site_id = gp.site_id');
+    Add('LEFT JOIN gazetteer AS gm ON g.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON g.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON g.country_id = gc.site_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -704,11 +737,15 @@ begin
   begin
     Clear;
     Add('SELECT ns.*,');
-    Add('(SELECT gl.site_name FROM gazetteer AS gl WHERE gl.site_id = ns.locality_id) AS locality_name,');
-    Add('(SELECT gm.site_name FROM gazetteer AS gm WHERE gm.site_id = ns.municipality_id) AS municipality_name,');
-    Add('(SELECT gs.site_name FROM gazetteer AS gs WHERE gs.site_id = ns.state_id) AS state_name,');
-    Add('(SELECT gc.site_name FROM gazetteer AS gc WHERE gc.site_id = ns.country_id) AS country_name');
+    Add('  gl.site_name AS locality_name,');
+    Add('  gm.site_name AS municipality_name,');
+    Add('  gs.site_name AS state_name,');
+    Add('  gc.site_name AS country_name');
     Add('FROM net_stations AS ns');
+    Add('LEFT JOIN gazetteer AS gl ON ns.locality_id = gl.site_id');
+    Add('LEFT JOIN gazetteer AS gm ON ns.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON ns.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON ns.country_id = gc.site_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -741,10 +778,13 @@ begin
   begin
     Clear;
     Add('SELECT it.*,');
-    Add('(SELECT gm.site_name FROM gazetteer AS gm WHERE gm.site_id = it.municipality_id) AS municipality_name,');
-    Add('(SELECT gs.site_name FROM gazetteer AS gs WHERE gs.site_id = it.state_id) AS state_name,');
-    Add('(SELECT gc.site_name FROM gazetteer AS gc WHERE gc.site_id = it.country_id) AS country_name');
+    Add('   gm.site_name AS municipality_name,');
+    Add('   gs.site_name AS state_name,');
+    Add('   gc.site_name AS country_name');
     Add('FROM institutions AS it');
+    Add('LEFT JOIN gazetteer AS gm ON it.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON it.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON it.country_id = gc.site_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -777,19 +817,20 @@ begin
   begin
     Clear;
     Add('SELECT n.*,');
-    Add('(SELECT p.full_name FROM people AS p WHERE p.person_id = n.observer_id) AS observer_name,');
-    Add('(SELECT pj.project_title FROM projects AS pj WHERE pj.project_id = n.project_id) AS project_name,');
-    Add('(SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = n.locality_id) AS locality_name,');
-    Add('(SELECT z1.full_name FROM zoo_taxa AS z1 WHERE z1.taxon_id = n.taxon_id) AS taxon_name,');
-    Add('(SELECT z2.formatted_name FROM zoo_taxa AS z2 WHERE z2.taxon_id = n.taxon_id) AS taxon_formatted_name,');
-    //Add('(SELECT mi.full_name FROM individuals AS m WHERE m.individual_id = n.male_id) AS male_name,');
-    //Add('(SELECT fi.full_name FROM individuals As f WHERE f.individual_id = n.female_id) AS female_name,');
-    //Add('(SELECT h1.full_name FROM individuals AS h1 WHERE h1.individual_id = n.helper_1_id) AS helper_1_name,');
-    //Add('(SELECT h2.full_name FROM individuals AS h2 WHERE h2.individual_id = n.helper_2_id) AS helper_2_name,');
-    //Add('(SELECT h3.full_name FROM individuals AS h3 WHERE h3.individual_id = n.helper_3_id) AS helper_3_name,');
-    Add('(SELECT bt1.taxon_name FROM botanic_taxa AS bt1 WHERE bt1.taxon_id = n.support_plant_1_id) AS support_plant_1_name,');
-    Add('(SELECT bt2.taxon_name FROM botanic_taxa AS bt2 WHERE bt2.taxon_id = n.support_plant_2_id) AS support_plant_2_name');
+    Add('  p.full_name AS observer_name,');
+    Add('  pj.project_title AS project_name,');
+    Add('  g.site_name locality_name,');
+    Add('  z.full_name AS taxon_name,');
+    Add('  z.formatted_name AS taxon_formatted_name,');
+    Add('  bt1.taxon_name AS support_plant_1_name,');
+    Add('  bt2.taxon_name AS support_plant_2_name');
     Add('FROM nests AS n');
+    Add('LEFT JOIN people AS p ON n.observer_id = p.person_id');
+    Add('LEFT JOIN projects AS pj ON n.project_id = pj.project_id');
+    Add('LEFT JOIN gazetteer AS g ON n.locality_id = g.site_id');
+    Add('LEFT JOIN zoo_taxa AS z ON n.taxon_id = z.taxon_id');
+    Add('LEFT JOIN botanic_taxa AS bt1 ON n.support_plant_1_id = bt1.taxon_id');
+    Add('LEFT JOIN botanic_taxa AS bt2 ON n.support_plant_2_id = bt2.taxon_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -821,10 +862,13 @@ begin
   begin
     Clear;
     Add('SELECT nr.*,');
-    Add('(SELECT p1.acronym FROM people AS p1 WHERE p1.person_id = nr.observer_1_id) AS observer_1_name,');
-    Add('(SELECT p2.acronym FROM people AS p2 WHERE p2.person_id = nr.observer_2_id) AS observer_2_name,');
-    Add('(SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = nr.nidoparasite_id) AS nidoparasite_name');
+    Add('  p1.acronym AS observer_1_name,');
+    Add('  p2.acronym AS observer_2_name,');
+    Add('  z.full_name AS nidoparasite_name');
     Add('FROM nest_revisions AS nr');
+    Add('LEFT JOIN people AS p1 ON nr.observer_1_id = p1.person_id');
+    Add('LEFT JOIN people AS p2 ON nr.observer_2_id = p2.person_id');
+    Add('LEFT JOIN zoo_taxa AS z ON nr.nidoparasite_id = z.taxon_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -856,10 +900,13 @@ begin
   begin
     Clear;
     Add('SELECT e.*,');
-    Add('(SELECT p.acronym FROM people AS p WHERE p.person_id = e.researcher_id) AS researcher_name,');
-    Add('(SELECT i.full_name FROM individuals AS i WHERE i.individual_id = e.individual_id) AS individual_name,');
-    Add('(SELECT z.full_name FROM zoo_taxa AS z WHERE z.taxon_id = e.taxon_id) AS taxon_name');
+    Add('  p.acronym AS researcher_name,');
+    Add('  i.full_name AS individual_name,');
+    Add('  z.full_name AS taxon_name');
     Add('FROM eggs AS e');
+    Add('LEFT JOIN people AS p ON e.researcher_id = p.person_id');
+    Add('LEFT JOIN individuals AS i ON e.individual_id = i.individual_id');
+    Add('LEFT JOIN zoo_taxa AS z ON e.taxon_id = z.taxon_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -892,16 +939,24 @@ begin
   begin
     Clear;
     Add('SELECT i.*,');
-    Add('(SELECT z1.full_name FROM zoo_taxa AS z1 WHERE z1.taxon_id = i.taxon_id) AS taxon_name,');
-    Add('(SELECT z2.formatted_name FROM zoo_taxa AS z2 WHERE z2.taxon_id = i.taxon_id) AS taxon_formatted_name,');
-    Add('(SELECT n.full_name FROM nests AS n WHERE n.nest_id = i.nest_id) AS nest_name,');
-    Add('(SELECT b1.full_name FROM bands AS b1 WHERE b1.band_id = i.band_id) AS band_full_name,');
-    Add('(SELECT b2.full_name FROM bands AS b2 WHERE b2.band_id = i.double_band_id) AS double_band_name,');
-    Add('(SELECT b3.full_name FROM bands AS b3 WHERE b3.band_id = i.removed_band_id) AS removed_band_name,');
-    Add('(SELECT fi.full_name FROM individuals AS fi WHERE fi.individual_id = i.father_id) AS father_name,');
-    Add('(SELECT mi.full_name FROM individuals AS mi WHERE mi.individual_id = i.mother_id) AS mother_name,');
-    Add('(SELECT CAST(sum(c.active_status) AS INTEGER) FROM captures AS c WHERE c.individual_id = i.individual_id) AS captures_tally');
+    Add('  z.full_name AS taxon_name,');
+    Add('  z.formatted_name AS taxon_formatted_name,');
+    Add('  n.full_name AS nest_name,');
+    Add('  b1.full_name AS band_full_name,');
+    Add('  b2.full_name AS double_band_name,');
+    Add('  b3.full_name AS removed_band_name,');
+    Add('  fi.full_name AS father_name,');
+    Add('  mi.full_name AS mother_name,');
+    Add('  (SELECT CAST(SUM(c.active_status) AS INTEGER) FROM captures AS c');
+    Add('    WHERE c.individual_id = i.individual_id) AS captures_tally');
     Add('FROM individuals AS i');
+    Add('LEFT JOIN zoo_taxa AS z ON i.taxon_id = z.taxon_id');
+    Add('LEFT JOIN nests AS n ON i.nest_id = n.nest_id');
+    Add('LEFT JOIN bands AS b1 ON i.band_id = b1.band_id');
+    Add('LEFT JOIN bands AS b2 ON i.double_band_id = b2.band_id');
+    Add('LEFT JOIN bands AS b3 ON i.removed_band_id = b3.band_id');
+    Add('LEFT JOIN individuals AS fi ON i.father_id = fi.individual_id');
+    Add('LEFT JOIN individuals AS mi ON i.mother_id = mi.individual_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -934,19 +989,30 @@ begin
   begin
     Clear;
     Add('SELECT c.*,');
-    Add('(SELECT z1.full_name FROM zoo_taxa AS z1 WHERE z1.taxon_id = c.taxon_id) AS taxon_name,');
-    Add('(SELECT z2.formatted_name FROM zoo_taxa AS z2 WHERE z2.taxon_id = c.taxon_id) AS taxon_formatted_name,');
-    Add('(SELECT sv.full_name FROM surveys AS sv WHERE sv.survey_id = c.survey_id) AS survey_name,');
-    Add('(SELECT ns.station_name FROM net_stations AS ns WHERE ns.net_station_id = c.net_station_id) AS net_station_name,');
-    Add('(SELECT ef.net_number FROM nets_effort AS ef WHERE ef.net_id = c.net_id) AS net_number,');
-    Add('(SELECT g.site_name FROM gazetteer As g WHERE g.site_id = c.locality_id) AS locality_name,');
-    Add('(SELECT p1.acronym FROM people AS p1 WHERE p1.person_id = c.bander_id) AS bander_name,');
-    Add('(SELECT p2.acronym FROM people AS p2 WHERE p2.person_id = c.annotator_id) AS annotator_name,');
-    Add('(SELECT (b1.band_size||'' ''||b1.band_number) FROM bands AS b1 WHERE b1.band_id = c.band_id) AS band_name,');
-    Add('(SELECT (b2.band_size||'' ''||b2.band_number) FROM bands AS b2 WHERE b2.band_id = c.removed_band_id) AS removed_band_name,');
-    Add('(SELECT f1.acronym FROM people AS f1 WHERE f1.person_id = c.photographer_1_id) AS photographer_1_name,');
-    Add('(SELECT f2.acronym FROM people AS f2 WHERE f2.person_id = c.photographer_2_id) AS photographer_2_name');
+    Add('   z.full_name AS taxon_name,');
+    Add('   z.formatted_name AS taxon_formatted_name,');
+    Add('   sv.full_name AS survey_name,');
+    Add('   ns.station_name AS net_station_name,');
+    Add('   ef.net_number AS net_number,');
+    Add('   g.site_name AS locality_name,');
+    Add('   p1.acronym AS bander_name,');
+    Add('   p2.acronym AS annotator_name,');
+    Add('   (b1.band_size||'' ''||b1.band_number) AS band_name,');
+    Add('   (b2.band_size||'' ''||b2.band_number) AS removed_band_name,');
+    Add('   f1.acronym AS photographer_1_name,');
+    Add('   f2.acronym AS photographer_2_name');
     Add('FROM captures AS c');
+    Add('LEFT JOIN zoo_taxa AS z ON c.taxon_id = z.taxon_id');
+    Add('LEFT JOIN surveys AS sv ON c.survey_id = sv.survey_id');
+    Add('LEFT JOIN net_stations AS ns ON c.net_station_id = ns.net_station_id');
+    Add('LEFT JOIN nets_effort AS ef ON c.net_id = ef.net_id');
+    Add('LEFT JOIN gazetteer AS g ON c.locality_id = g.site_id');
+    Add('LEFT JOIN people AS p1 ON c.bander_id = p1.person_id');
+    Add('LEFT JOIN people AS p2 ON c.annotator_id = p2.person_id');
+    Add('LEFT JOIN people AS f1 ON c.photographer_1_id = f1.person_id');
+    Add('LEFT JOIN people AS f2 ON c.photographer_2_id = f2.person_id');
+    Add('LEFT JOIN bands AS b1 ON c.band_id = b1.band_id');
+    Add('LEFT JOIN bands AS b2 ON c.removed_band_id = b2.band_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -1011,11 +1077,15 @@ begin
   begin
     Clear;
     Add('SELECT p.*,');
-    Add('(SELECT gm.site_name FROM gazetteer AS gm WHERE gm.site_id = p.municipality_id) AS municipality_name,');
-    Add('(SELECT ge.site_name FROM gazetteer AS ge WHERE ge.site_id = p.state_id) AS state_name,');
-    Add('(SELECT gc.site_name FROM gazetteer AS gc WHERE gc.site_id = p.country_id) AS country_name,');
-    Add('(SELECT it.full_name FROM institutions AS it WHERE it.institution_id = p.institution_id) AS institution_name');
+    Add('  gm.site_name AS municipality_name,');
+    Add('  gs.site_name AS state_name,');
+    Add('  gc.site_name AS country_name,');
+    Add('  it.full_name AS institution_name');
     Add('FROM people AS p');
+    Add('LEFT JOIN gazetteer AS gm ON p.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON p.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON p.country_id = gc.site_id');
+    Add('LEFT JOIN institutions AS it ON p.institution_id = it.institution_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -1079,8 +1149,11 @@ begin
   begin
     Clear;
     Add('SELECT pt.*,');
-    Add('(SELECT p.full_name FROM people AS p WHERE p.person_id = pt.person_id) AS person_name');
+    Add('  p.acronym AS person_acronym,');
+    Add('  p.full_name AS person_name,');
+    Add('  p.profile_color AS person_color');
     Add('FROM project_team AS pt');
+    Add('LEFT JOIN people AS p ON pt.person_id = p.person_id');
     if aProject > 0 then
       Add('WHERE (pt.active_status = 1) AND (pt.project_id = ' + IntToStr(aProject) + ')')
     else
@@ -1111,8 +1184,9 @@ begin
   begin
     Clear;
     Add('SELECT l.*,');
-    Add('(SELECT pj.short_title FROM projects AS pj WHERE pj.project_id = l.project_id) AS project_name');
+    Add('  pj.short_title AS project_name');
     Add('FROM legal AS l');
+    Add('LEFT JOIN projects AS pj ON l.project_id = pj.project_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -1145,19 +1219,27 @@ begin
   begin
     Clear;
     Add('SELECT z.*,');
-    Add('(SELECT u.full_name FROM zoo_taxa AS u WHERE u.taxon_id = z.parent_taxon_id) AS parent_taxon_name,');
-    Add('(SELECT v.full_name FROM zoo_taxa AS v WHERE v.taxon_id = z.valid_id) AS valid_name,');
-    Add('(SELECT ui.full_name FROM zoo_taxa AS ui WHERE ui.taxon_id = z.ioc_parent_taxon_id) AS ioc_parent_name,');
-    Add('(SELECT vi.full_name FROM zoo_taxa AS vi WHERE vi.taxon_id = z.ioc_valid_id) AS ioc_valid_name,');
-    Add('(SELECT uc.full_name FROM zoo_taxa AS uc WHERE uc.taxon_id = z.cbro_parent_taxon_id) AS cbro_parent_name,');
-    Add('(SELECT vc.full_name FROM zoo_taxa AS vc WHERE vc.taxon_id = z.cbro_valid_id) AS cbro_valid_name,');
-    Add('(SELECT o.full_name FROM zoo_taxa AS o WHERE o.taxon_id = z.order_id) AS order_name,');
-    Add('(SELECT f.full_name FROM zoo_taxa AS f WHERE f.taxon_id = z.family_id) AS family_name,');
-    Add('(SELECT s.full_name FROM zoo_taxa AS s WHERE s.taxon_id = z.subfamily_id) AS subfamily_name,');
-    Add('(SELECT n.full_name FROM zoo_taxa AS n WHERE n.taxon_id = z.genus_id) AS genero_name,');
-    Add('(SELECT e.full_name FROM zoo_taxa AS e WHERE e.taxon_id = z.species_id) AS species_name,');
-    Add('(SELECT g.full_name FROM zoo_taxa AS g WHERE g.taxon_id = z.subspecies_group_id) AS subspecies_group_name');
+    Add('    u.full_name AS parent_taxon_name,');
+    Add('    v.full_name AS valid_name,');
+    Add('    ui.full_name AS ioc_parent_name,');
+    Add('    vi.full_name AS ioc_valid_name,');
+    Add('    o.full_name AS order_name,');
+    Add('    f.full_name AS family_name,');
+    Add('    s.full_name AS subfamily_name,');
+    Add('    n.full_name AS genero_name,');
+    Add('    e.full_name AS species_name,');
+    Add('    g.full_name AS subspecies_group_name');
     Add('FROM zoo_taxa AS z');
+    Add('LEFT JOIN zoo_taxa AS u ON z.parent_taxon_id = u.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS v ON z.valid_id = v.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS ui ON z.ioc_parent_taxon_id = ui.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS vi ON z.ioc_valid_id = vi.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS o ON z.order_id = o.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS f ON z.family_id = f.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS s ON z.subfamily_id = s.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS n ON z.genus_id = n.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS e ON z.species_id = e.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS g ON z.subspecies_group_id = g.taxon_id');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -1190,11 +1272,15 @@ begin
   begin
     Clear;
     Add('SELECT b.*,');
-    Add('(SELECT it.acronym FROM institutions AS it WHERE it.institution_id = b.supplier_id) AS supplier_name,');
-    Add('(SELECT p.full_name FROM people AS p WHERE p.person_id = b.carrier_id) AS carrier_name,');
-    Add('(SELECT i.formatted_name FROM individuals AS i WHERE i.individual_id = b.individual_id) AS individual_name,');
-    Add('(SELECT pj.project_title FROM projects AS pj WHERE pj.project_id = b.project_id) AS project_name');
+    Add('  it.acronym AS supplier_name,');
+    Add('  p.full_name AS carrier_name,');
+    Add('  i.full_name AS individual_name,');
+    Add('  pj.short_title AS project_name');
     Add('FROM bands AS b');
+    Add('LEFT JOIN institutions AS it ON b.supplier_id = it.institution_id');
+    Add('LEFT JOIN people AS p ON b.carrier_id = p.person_id');
+    Add('LEFT JOIN individuals AS i ON b.individual_id = i.individual_id');
+    Add('LEFT JOIN projects AS pj ON b.project_id = pj.project_id');
     case aFilter of
       fvNone:
         ; // do nothing
