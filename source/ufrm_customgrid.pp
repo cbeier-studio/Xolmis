@@ -9174,6 +9174,7 @@ begin
   AddSortedField('band_number', sdAscending);
 
   sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridBotanicTaxa;
@@ -9787,7 +9788,7 @@ begin
       tbTaxonRanks: ;
       tbZooTaxa: ;
       tbBotanicTaxa: ;
-      tbBands: ;
+      tbBands:              SummaryBands(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbBandHistory: ;
       tbIndividuals: ;
       tbCaptures:           SummaryCaptures(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);

@@ -459,6 +459,7 @@ resourcestring
   rscTable = 'Table';
 
 
+  procedure SummaryBands(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryCaptures(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryNests(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummarySightings(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
@@ -2968,6 +2969,138 @@ begin
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
         MacroByName('AFIELD').Value := 'n.' + aFieldName;
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryBands(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'full_name', 'band_id', 'band_number', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated':
+      begin
+        Clear;
+      end;
+
+      'band_size', 'band_prefix', 'band_suffix', 'band_status', 'band_type', 'band_color', 'band_source':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM bands AS b');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE b.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'b.' + aFieldName;
+      end;
+
+      'supplier_id', 'supplier_name':
+      begin
+        Add('SELECT it.full_name AS name, COUNT(*) AS tally');
+        Add('FROM bands AS b');
+        Add('JOIN institutions AS it ON b.supplier_id = it.institution_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE b.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'carrier_id', 'carrier_name':
+      begin
+        Add('SELECT p.full_name AS name, COUNT(*) AS tally');
+        Add('FROM bands AS b');
+        Add('JOIN people AS p ON b.carrier_id = p.person_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE b.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'project_id', 'project_name':
+      begin
+        Add('SELECT pj.short_title AS name, COUNT(*) AS tally');
+        Add('FROM bands AS b');
+        Add('JOIN projects AS pj ON b.project_id = pj.project_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE b.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'individual_id', 'individual_name':
+      begin
+        Add('SELECT i.full_name AS name, COUNT(*) AS tally');
+        Add('FROM bands AS b');
+        Add('JOIN individuals AS i ON b.individual_id = i.individual_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE b.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(b.marked_status) AS tally');
+        Add('FROM bands AS b');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE b.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(b.exported_status) AS tally');
+        Add('FROM bands AS b');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE b.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'band_reported':
+      begin
+        Add('SELECT ' + QuotedStr(rscReported) + ' AS name, SUM(b.band_reported) AS tally');
+        Add('FROM bands AS b');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE b.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM bands AS b');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (b.active_status = 1)');
+        Add(' AND ((b.notes != '''') OR (b.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
       end;
     end;
 
