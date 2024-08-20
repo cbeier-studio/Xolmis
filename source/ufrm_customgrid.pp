@@ -9381,6 +9381,7 @@ begin
   sbChildVerifications.Visible := True;
   mapGeo.Active := True;
   sbShowMap.Visible := True;
+  sbShowSummary.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;

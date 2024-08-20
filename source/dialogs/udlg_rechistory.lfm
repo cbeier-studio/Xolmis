@@ -331,9 +331,9 @@ object dlgRecHistory: TdlgRecHistory
     SQL.Strings = (
       'SELECT h.event_date, h.event_action, h.event_field,'
       '  h.old_value, h.new_value, h.notes, h.user_id,'
-      '  (SELECT u.user_name FROM users AS u'
-      '    WHERE u.user_id = h.user_id) AS user_name'
+      '  u.user_name AS user_name'
       'FROM record_history AS h'
+      'LEFT JOIN users AS u ON h.user_id = u.user_id'
       'WHERE h.event_table = :tabname'
       '  AND h.record_id = :cod'
       ''
