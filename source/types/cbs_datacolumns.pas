@@ -21,7 +21,7 @@ unit cbs_datacolumns;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB;
+  Classes, SysUtils, DB, SQLDB, StrUtils;
 
 resourcestring
   rscId = 'ID';
@@ -460,9 +460,22 @@ resourcestring
 
 
   procedure SummaryBands(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryBotanicTaxa(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryCaptures(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryEggs(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryExpeditions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryGazetteer(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryIndividuals(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryInstitutions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryNests(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryNestRevisions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryPeople(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryPermits(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryProjects(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummarySamplingPlots(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummarySightings(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummarySpecimens(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummarySurveys(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
 
   procedure TranslateRecordHistory(aDataSet: TDataSet);
   procedure TranslateRecordVerifications(aDataSet: TDataSet);
@@ -3100,6 +3113,1684 @@ begin
         else
           Add('WHERE (b.active_status = 1)');
         Add(' AND ((b.notes != '''') OR (b.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummarySpecimens(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'full_name', 'specimen_id', 'field_number', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated', 'longitude', 'latitude':
+      begin
+        Clear;
+      end;
+
+      'sample_type', 'collection_date':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM specimens AS sp');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sp.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'sp.' + aFieldName;
+      end;
+
+      'taxon_id', 'taxon_name':
+      begin
+        Add('SELECT z.full_name AS name, COUNT(*) AS tally');
+        Add('FROM specimens AS sp');
+        Add('JOIN zoo_taxa AS z ON sp.taxon_id = z.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sp.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'collection_day', 'collection_month', 'collection_year':
+      begin
+
+      end;
+
+      'locality_id', 'locality_name':
+      begin
+        Add('SELECT g.full_name AS name, COUNT(*) AS tally');
+        Add('FROM specimens AS sp');
+        Add('JOIN gazetteer AS g ON sp.locality_id = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sp.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'individual_id', 'individual_name':
+      begin
+        Add('SELECT i.full_name AS name, COUNT(*) AS tally');
+        Add('FROM specimens AS sp');
+        Add('JOIN individuals AS i ON sp.individual_id = i.individual_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sp.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'nest_id', 'nest_name':
+      begin
+        Add('SELECT n.full_name AS name, COUNT(*) AS tally');
+        Add('FROM specimens AS sp');
+        Add('JOIN nests AS n ON sp.nest_id = n.nest_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sp.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'egg_id', 'egg_name':
+      begin
+        Add('SELECT e.full_name AS name, COUNT(*) AS tally');
+        Add('FROM specimens AS sp');
+        Add('JOIN eggs AS e ON sp.egg_id = e.egg_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sp.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'order_id', 'family_id', 'subfamily_id', 'genus_id', 'species_id':
+      begin
+        Add('SELECT z.full_name AS name, COUNT(*) AS tally');
+        Add('FROM specimens AS sp');
+        Add('JOIN zoo_taxa AS z ON %afield = z.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sp.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'sp.' + aFieldName;
+      end;
+
+      'country_id', 'state_id', 'municipality_id':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM specimens AS sp');
+        Add('JOIN gazetteer AS g ON %afield = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sp.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'sp.' + aFieldName;
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(sp.marked_status) AS tally');
+        Add('FROM specimens AS sp');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sp.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(sp.exported_status) AS tally');
+        Add('FROM specimens AS sp');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sp.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM specimens AS sp');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (sp.active_status = 1)');
+        Add(' AND ((sp.notes != '''') OR (sp.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummarySurveys(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'full_name', 'survey_id', 'sample_id', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated', 'start_longitude', 'start_latitude', 'end_longitude', 'end_latitude',
+      'net_rounds':
+      begin
+        Clear;
+      end;
+
+      'survey_date', 'start_time', 'end_time':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM surveys AS sv');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sv.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'sv.' + aFieldName;
+      end;
+
+      'method_id', 'method_name':
+      begin
+        Add('SELECT mt.method_name AS name, COUNT(*) AS tally');
+        Add('FROM surveys AS sv');
+        Add('JOIN methods AS mt ON sv.method_id = mt.method_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sv.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'net_station_id', 'net_station_name':
+      begin
+        Add('SELECT ns.station_name AS name, COUNT(*) AS tally');
+        Add('FROM surveys AS sv');
+        Add('JOIN net_stations AS ns ON sv.net_station_id = ns.net_station_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sv.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'expedition_id', 'expedition_name':
+      begin
+        Add('SELECT x.expedition_name AS name, COUNT(*) AS tally');
+        Add('FROM surveys AS sv');
+        Add('JOIN expeditions AS x ON sv.expedition_id = x.expedition_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sv.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'locality_id', 'locality_name':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM surveys AS sv');
+        Add('JOIN gazetteer AS g ON sv.locality_id = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sv.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'project_id', 'project_name':
+      begin
+        Add('SELECT pj.short_title AS name, COUNT(*) AS tally');
+        Add('FROM surveys AS sv');
+        Add('JOIN projects AS pj ON sv.project_id = pj.project_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sv.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'country_id', 'state_id', 'municipality_id':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM surveys AS sv');
+        Add('JOIN gazetteer AS g ON %afield = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sv.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'sv.' + aFieldName;
+      end;
+      'country_name', 'state_name', 'municipality_name':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM surveys AS sv');
+        Add('JOIN gazetteer AS g ON %afield = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sv.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := ReplaceStr(aFieldName, '_name', '_id');
+      end;
+
+      'duration', 'observers_tally', 'area_total', 'distance_total', 'nets_total', 'net_effort':
+      begin
+        Add('SELECT g.site_name AS name, AVG(%afield) AS mean');
+        Add('FROM surveys AS sv');
+        Add('JOIN gazetteer AS g ON sv.locality_id = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sv.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY mean DESC');
+        MacroByName('AFIELD').Value := 'sv.' + aFieldName;
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(sv.marked_status) AS tally');
+        Add('FROM surveys AS sv');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sv.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(sv.exported_status) AS tally');
+        Add('FROM surveys AS sv');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE sv.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM surveys AS sv');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (sv.active_status = 1)');
+        Add(' AND ((sv.notes != '''') OR (sv.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+      'habitat':
+      begin
+        Add('SELECT ' + QuotedStr(rscHabitat) + ' AS name, COUNT(*) AS tally');
+        Add('FROM surveys AS sv');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (sv.active_status = 1)');
+        Add(' AND ((sv.habitat != '''') OR (sv.habitat NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryBotanicTaxa(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'taxon_name', 'taxon_id', 'formatted_name', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated', 'vernacular_name':
+      begin
+        Clear;
+      end;
+
+      'authorship':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM botanic_taxa AS bt');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE bt.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'bt.' + aFieldName;
+      end;
+
+      'rank_id', 'rank_name':
+      begin
+        Add('SELECT r.rank_name AS name, COUNT(*) AS tally');
+        Add('FROM botanic_taxa AS bt');
+        Add('JOIN taxon_ranks AS r ON bt.rank_id = r.rank_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE bt.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'parent_taxon_id', 'parent_taxon_name':
+      begin
+        Add('SELECT bt1.taxon_name AS name, COUNT(*) AS tally');
+        Add('FROM botanic_taxa AS bt');
+        Add('JOIN botanic_taxa AS bt1 ON bt.parent_taxon_id = bt1.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE bt.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'valid_id', 'valid_name':
+      begin
+        Add('SELECT bt1.taxon_name AS name, COUNT(*) AS tally');
+        Add('FROM botanic_taxa AS bt');
+        Add('JOIN botanic_taxa AS bt1 ON bt.valid_id = bt1.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE bt.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'order_id', 'family_id', 'genus_id', 'species_id':
+      begin
+        Add('SELECT bt1.taxon_name AS name, COUNT(*) AS tally');
+        Add('FROM botanic_taxa AS bt');
+        Add('JOIN botanic_taxa AS bt1 ON %afield = bt1.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE bt.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'bt.' + aFieldName;
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(bt.marked_status) AS tally');
+        Add('FROM botanic_taxa AS bt');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE bt.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(bt.exported_status) AS tally');
+        Add('FROM botanic_taxa AS bt');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE bt.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryEggs(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'full_name', 'egg_id', 'field_number', 'active_status', 'insert_date', 'update_date', 'egg_seq',
+      'user_inserted', 'user_updated':
+      begin
+        Clear;
+      end;
+
+      'egg_shape', 'eggshell_color', 'eggshell_pattern', 'eggshell_texture', 'egg_stage', 'measure_date':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM eggs AS e');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE e.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'e.' + aFieldName;
+      end;
+
+      'egg_width', 'egg_length', 'egg_mass', 'egg_volume':
+      begin
+        Add('SELECT z.full_name AS name, AVG(%afield) AS mean');
+        Add('FROM eggs AS e');
+        Add('JOIN zoo_taxa AS z ON e.taxon_id = z.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE e.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY mean DESC');
+        MacroByName('AFIELD').Value := 'e.' + aFieldName;
+      end;
+
+      'nest_id', 'nest_name':
+      begin
+        Add('SELECT n.full_name AS name, COUNT(*) AS tally');
+        Add('FROM eggs AS e');
+        Add('JOIN nests AS n ON e.nest_id = n.nest_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE e.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'taxon_id', 'taxon_name':
+      begin
+        Add('SELECT z.full_name AS name, COUNT(*) AS tally');
+        Add('FROM eggs AS e');
+        Add('JOIN zoo_taxa AS z ON e.taxon_id = z.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE e.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'individual_id', 'individual_name':
+      begin
+        Add('SELECT i.full_name AS name, COUNT(*) AS tally');
+        Add('FROM eggs AS e');
+        Add('JOIN individuals AS i ON e.individual_id = i.individual_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE e.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'researcher_id', 'researcher_name':
+      begin
+        Add('SELECT p.full_name AS name, COUNT(*) AS tally');
+        Add('FROM eggs AS e');
+        Add('JOIN people AS p ON e.researcher_id = p.person_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE e.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(e.marked_status) AS tally');
+        Add('FROM eggs AS e');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE e.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(e.exported_status) AS tally');
+        Add('FROM eggs AS e');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE e.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'egg_hatched':
+      begin
+        Add('SELECT ' + QuotedStr(rscHatched) + ' AS name, SUM(e.egg_hatched) AS tally');
+        Add('FROM eggs AS e');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE e.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM eggs AS e');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (e.active_status = 1)');
+        Add(' AND ((e.notes != '''') OR (e.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+      'description':
+      begin
+        Add('SELECT ' + QuotedStr(rscDescription) + ' AS name, COUNT(*) AS tally');
+        Add('FROM eggs AS e');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (e.active_status = 1)');
+        Add(' AND ((e.description != '''') OR (e.description NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryExpeditions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'expedition_name', 'expedition_id', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated':
+      begin
+        Clear;
+      end;
+
+      'start_date', 'end_date':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM expeditions AS x');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE x.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'x.' + aFieldName;
+      end;
+
+      'duration':
+      begin
+        Add('SELECT g.site_name AS name, AVG(%afield) AS mean');
+        Add('FROM expeditions AS x');
+        Add('JOIN gazetteer AS g ON x.locality_id = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE x.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY mean DESC');
+        MacroByName('AFIELD').Value := 'x.' + aFieldName;
+      end;
+
+      'locality_id', 'locality_name':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM expeditions AS x');
+        Add('JOIN gazetteer AS g ON x.locality_id = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE x.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'project_id', 'project_name':
+      begin
+        Add('SELECT pj.short_title AS name, COUNT(*) AS tally');
+        Add('FROM expeditions AS x');
+        Add('JOIN projects AS pj ON x.project_id = pj.project_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE x.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'country_id', 'state_id', 'municipality_id':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM expeditions AS x');
+        Add('JOIN gazetteer AS g ON %afield = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE x.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'x.' + aFieldName;
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(x.marked_status) AS tally');
+        Add('FROM expeditions AS x');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE x.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(x.exported_status) AS tally');
+        Add('FROM expeditions AS x');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE x.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'description':
+      begin
+        Add('SELECT ' + QuotedStr(rscDescription) + ' AS name, COUNT(*) AS tally');
+        Add('FROM expeditions AS x');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (x.active_status = 1)');
+        Add(' AND ((x.description != '''') OR (x.description NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryGazetteer(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'full_name', 'site_id', 'site_acronym', 'active_status', 'insert_date', 'update_date', 'altitude',
+      'user_inserted', 'user_updated', 'longitude', 'latitude', 'ebird_name':
+      begin
+        Clear;
+      end;
+
+      'site_rank', 'language':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM gazetteer AS g');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE g.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'g.' + aFieldName;
+      end;
+
+      'parent_site_id', 'parent_site_name':
+      begin
+        Add('SELECT g1.full_name AS name, COUNT(*) AS tally');
+        Add('FROM gazetteer AS g');
+        Add('JOIN gazetteer AS g1 ON g.parent_site_id = g1.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE g.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'country_id', 'state_id', 'municipality_id':
+      begin
+        Add('SELECT g1.site_name AS name, COUNT(*) AS tally');
+        Add('FROM gazetteer AS g');
+        Add('JOIN gazetteer AS g1 ON %afield = g1.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE g.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'g.' + aFieldName;
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(g.marked_status) AS tally');
+        Add('FROM gazetteer AS g');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE g.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(g.exported_status) AS tally');
+        Add('FROM gazetteer AS g');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE g.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM gazetteer AS g');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (g.active_status = 1)');
+        Add(' AND ((g.notes != '''') OR (g.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+      'description':
+      begin
+        Add('SELECT ' + QuotedStr(rscDescription) + ' AS name, COUNT(*) AS tally');
+        Add('FROM gazetteer AS g');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (g.active_status = 1)');
+        Add(' AND ((g.description != '''') OR (g.description NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryIndividuals(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'full_name', 'individual_id', 'formatted_name', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated', 'band_id', 'band_full_name', 'band_name':
+      begin
+        Clear;
+      end;
+
+      'taxon_id', 'taxon_name', 'taxon_formatted_name':
+      begin
+        Add('SELECT z.full_name AS name, COUNT(*) AS tally');
+        Add('FROM individuals AS i');
+        Add('JOIN zoo_taxa AS z ON i.taxon_id = z.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE i.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'order_id', 'family_id', 'subfamily_id', 'genus_id', 'species_id':
+      begin
+        Add('SELECT z.full_name AS name, COUNT(*) AS tally');
+        Add('FROM individuals AS i');
+        Add('JOIN zoo_taxa AS z ON %afield = z.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE i.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'i.' + aFieldName;
+      end;
+
+      'double_band_id', 'double_band_name':
+      begin
+        Add('SELECT b.full_name AS name, COUNT(*) AS tally');
+        Add('FROM individuals AS i');
+        Add('JOIN bands AS b ON i.double_band_id = b.band_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE i.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'removed_band_id', 'removed_band_name':
+      begin
+        Add('SELECT b.full_name AS name, COUNT(*) AS tally');
+        Add('FROM individuals AS i');
+        Add('JOIN bands AS b ON i.removed_band_id = b.band_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE i.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'nest_id', 'nest_name':
+      begin
+        Add('SELECT n.full_name AS name, COUNT(*) AS tally');
+        Add('FROM individuals AS i');
+        Add('JOIN nests AS n ON i.nest_id = n.nest_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE i.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'father_id', 'father_name':
+      begin
+        Add('SELECT i1.full_name AS name, COUNT(*) AS tally');
+        Add('FROM individuals AS i');
+        Add('JOIN individuals AS i1 ON i.father_id = i1.individual_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE i.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'mother_id', 'mother_name':
+      begin
+        Add('SELECT i1.full_name AS name, COUNT(*) AS tally');
+        Add('FROM individuals AS i');
+        Add('JOIN individuals AS i1 ON i.mother_id = i1.individual_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE i.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'right_leg_below', 'left_leg_below', 'right_leg_above', 'left_leg_above', 'birth_date', 'death_date',
+      'individual_sex', 'individual_age':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM individuals AS i');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE i.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'i.' + aFieldName;
+      end;
+
+      'birth_day', 'birth_month', 'birth_year':
+      begin
+
+      end;
+      'death_day', 'death_month', 'death_year':
+      begin
+
+      end;
+
+      'captures_tally':
+      begin
+        Add('SELECT z.full_name AS name, SUM(%afield) AS mean');
+        Add('FROM individuals AS i');
+        Add('JOIN zoo_taxa AS z ON i.taxon_id = z.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE i.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY mean DESC');
+        MacroByName('AFIELD').Value := aFieldName;
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(i.marked_status) AS tally');
+        Add('FROM individuals AS i');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE i.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(i.exported_status) AS tally');
+        Add('FROM individuals AS i');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE i.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM individuals AS i');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (i.active_status = 1)');
+        Add(' AND ((i.notes != '''') OR (i.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+      'recognizable_markings':
+      begin
+        Add('SELECT ' + QuotedStr(rscRecognizableMarkings) + ' AS name, COUNT(*) AS tally');
+        Add('FROM individuals AS i');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (i.active_status = 1)');
+        Add(' AND ((i.recognizable_markings != '''') OR (i.recognizable_markings NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryInstitutions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'full_name', 'institution_id', 'acronym', 'active_status', 'insert_date', 'update_date', 'email_addr',
+      'user_inserted', 'user_updated', 'address_1', 'address_2', 'manager_name', 'phone_num', 'neighborhood':
+      begin
+        Clear;
+      end;
+
+      'zip_code':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM institutions AS it');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE it.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'it.' + aFieldName;
+      end;
+
+      'country_id', 'state_id', 'municipality_id':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM institutions AS it');
+        Add('JOIN gazetteer AS g ON %afield = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE it.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'it.' + aFieldName;
+      end;
+      'country_name', 'state_name', 'municipality_name':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM institutions AS it');
+        Add('JOIN gazetteer AS g ON %afield = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE it.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := ReplaceStr(aFieldName, '_name', '_id');
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(it.marked_status) AS tally');
+        Add('FROM institutions AS it');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE it.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(it.exported_status) AS tally');
+        Add('FROM institutions AS it');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE it.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM institutions AS it');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (it.active_status = 1)');
+        Add(' AND ((it.notes != '''') OR (it.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryNestRevisions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'full_name', 'nest_revision_id', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated':
+      begin
+        Clear;
+      end;
+
+      'revision_date', 'revision_time', 'nest_status', 'nest_stage':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM nest_revisions AS nr');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE nr.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'nr.' + aFieldName;
+      end;
+
+      'nest_id', 'nest_name':
+      begin
+        Add('SELECT n.full_name AS name, COUNT(*) AS tally');
+        Add('FROM nest_revisions AS nr');
+        Add('JOIN nests AS n ON nr.nest_id = n.nest_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE nr.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'observer_1_id', 'observer_1_name':
+      begin
+        Add('SELECT p.full_name AS name, COUNT(*) AS tally');
+        Add('FROM nest_revisions AS nr');
+        Add('JOIN people AS p ON nr.observer_1_id = p.person_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE nr.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'observer_2_id', 'observer_2_name':
+      begin
+        Add('SELECT p.full_name AS name, COUNT(*) AS tally');
+        Add('FROM nest_revisions AS nr');
+        Add('JOIN people AS p ON nr.observer_2_id = p.person_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE nr.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'nidoparasite_id', 'nidoparasite_name':
+      begin
+        Add('SELECT z.full_name AS name, COUNT(*) AS tally');
+        Add('FROM nest_revisions AS nr');
+        Add('JOIN zoo_taxa AS z ON nr.nidoparasite_id = z.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE nr.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'host_eggs_tally', 'host_nestlings_tally', 'nidoparasite_eggs_tally', 'nidoparasite_nestlings_tally':
+      begin
+        Add('SELECT z.full_name AS name, AVG(%afield) AS mean');
+        Add('FROM nest_revisions AS nr');
+        Add('JOIN zoo_taxa AS z ON nr.nidoparasite_id = z.taxon_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE nr.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY mean DESC');
+        MacroByName('AFIELD').Value := 'nr.' + aFieldName;
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(nr.marked_status) AS tally');
+        Add('FROM nest_revisions AS nr');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE nr.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(nr.exported_status) AS tally');
+        Add('FROM nest_revisions AS nr');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE nr.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'have_philornis_larvae':
+      begin
+        Add('SELECT ' + QuotedStr(rscHasPhilornisLarvae) + ' AS name, SUM(nr.have_philornis_larvae) AS tally');
+        Add('FROM nest_revisions AS nr');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE nr.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM nest_revisions AS nr');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (nr.active_status = 1)');
+        Add(' AND ((nr.notes != '''') OR (nr.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryPeople(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'full_name', 'person_id', 'acronym', 'citation', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated', 'national_id_card', 'social_security_number', 'address_1', 'address_2',
+      'neighborhood', 'departament', 'job_role', 'email_addr', 'phone_1', 'phone_2', 'lattes_uri', 'orcid_uri',
+      'twitter_uri', 'instagram_uri', 'website_uri', 'profile_image', 'profile_color':
+      begin
+        Clear;
+      end;
+
+      'title_treatment', 'gender', 'birth_date', 'death_date', 'zip_code':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM people AS p');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE p.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'p.' + aFieldName;
+      end;
+
+      'country_id', 'state_id', 'municipality_id':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM people AS p');
+        Add('JOIN gazetteer AS g ON %afield = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE p.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'p.' + aFieldName;
+      end;
+      'country_name', 'state_name', 'municipality_name':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM people AS p');
+        Add('JOIN gazetteer AS g ON %afield = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE p.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := ReplaceStr(aFieldName, '_name', '_id');
+      end;
+
+      'institution_id', 'institution_name':
+      begin
+        Add('SELECT it.full_name AS name, COUNT(*) AS tally');
+        Add('FROM people AS p');
+        Add('JOIN institutions AS it ON p.institution_id = it.institution_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE p.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(p.marked_status) AS tally');
+        Add('FROM people AS p');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE p.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(p.exported_status) AS tally');
+        Add('FROM people AS p');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE p.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM people AS p');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (p.active_status = 1)');
+        Add(' AND ((p.notes != '''') OR (p.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryPermits(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'permit_name', 'permit_id', 'permit_number', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated', 'permit_filename', 'permit_file':
+      begin
+        Clear;
+      end;
+
+      'permit_type', 'dispatcher_name', 'dispatch_date', 'expire_date':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM legal AS l');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE l.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'l.' + aFieldName;
+      end;
+
+      'project_id', 'project_name':
+      begin
+        Add('SELECT pj.short_title AS name, COUNT(*) AS tally');
+        Add('FROM legal AS l');
+        Add('JOIN projects AS pj ON l.project_id = pj.project_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE l.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(l.marked_status) AS tally');
+        Add('FROM legal AS l');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE l.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(l.exported_status) AS tally');
+        Add('FROM legal AS l');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE l.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM legal AS l');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (l.active_status = 1)');
+        Add(' AND ((l.notes != '''') OR (l.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryProjects(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'project_title', 'project_id', 'short_title', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated', 'website_uri', 'email_addr', 'contact_name', 'project_abstract',
+      'project_file', 'contract_file':
+      begin
+        Clear;
+      end;
+
+      'start_date', 'end_date':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM projects AS pj');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE pj.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'pj.' + aFieldName;
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(pj.marked_status) AS tally');
+        Add('FROM projects AS pj');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE pj.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(pj.exported_status) AS tally');
+        Add('FROM projects AS pj');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE pj.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM projects AS pj');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (pj.active_status = 1)');
+        Add(' AND ((pj.notes != '''') OR (pj.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummarySamplingPlots(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'station_name', 'net_station_id', 'station_acronym', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated', 'longitude', 'latitude':
+      begin
+        Clear;
+      end;
+
+      'locality_id', 'locality_name':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM net_stations AS ns');
+        Add('JOIN gazetteer AS g ON ns.locality_id = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE ns.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'country_id', 'state_id', 'municipality_id':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM net_stations AS ns');
+        Add('JOIN gazetteer AS g ON %afield = g.site_id');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE ns.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'ns.' + aFieldName;
+      end;
+
+      'area_shape':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM net_stations AS ns');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE ns.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := 'ns.' + aFieldName;
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(ns.marked_status) AS tally');
+        Add('FROM net_stations AS ns');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE ns.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(ns.exported_status) AS tally');
+        Add('FROM net_stations AS ns');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE ns.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM net_stations AS ns');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (ns.active_status = 1)');
+        Add(' AND ((ns.notes != '''') OR (ns.notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+      'description':
+      begin
+        Add('SELECT ' + QuotedStr(rscDescription) + ' AS name, COUNT(*) AS tally');
+        Add('FROM net_stations AS ns');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE (ns.active_status = 1)');
+        Add(' AND ((ns.description != '''') OR (ns.description NOTNULL))');
         Add('ORDER BY tally DESC');
       end;
     end;

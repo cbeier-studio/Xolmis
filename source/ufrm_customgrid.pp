@@ -9184,6 +9184,7 @@ begin
   AddSortedField('taxon_name', sdAscending);
 
   sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridCaptures;
@@ -9248,6 +9249,7 @@ begin
   AddSortedField('full_name', sdAscending);
 
   sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -9269,6 +9271,7 @@ begin
   dsLink1.DataSet := DMS.qSurveys;
   pmcNewSurvey.Visible := True;
   sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
@@ -9287,6 +9290,7 @@ begin
   sbRecordVerifications.Visible := True;
   mapGeo.Active := True;
   sbShowMap.Visible := True;
+  sbShowSummary.Visible := True;
 
   //sbShowDocs.Visible := True;
 end;
@@ -9322,6 +9326,7 @@ begin
   pmcNewNest.Visible := True;
   pmcNewSpecimen.Visible := True;
   sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
@@ -9343,6 +9348,8 @@ begin
   Caption := rsTitleInstitutions;
   FSearch.DataSet := DMG.qInstitutions;
   AddSortedField('full_name', sdAscending);
+
+  sbShowSummary.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridMethods;
@@ -9377,6 +9384,7 @@ begin
   pmcNewNestRevision.Visible := True;
   pmcNewEgg.Visible := True;
   sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
@@ -9396,6 +9404,7 @@ begin
   AddSortedField('full_name', sdAscending);
 
   sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -9415,6 +9424,7 @@ begin
   dsLink1.DataSet := DMG.qPermanentNets;
   pmcNewPermanentNet.Visible := True;
   sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
@@ -9427,6 +9437,8 @@ begin
   Caption := rsTitleResearchers;
   FSearch.DataSet := DMG.qPeople;
   AddSortedField('full_name', sdAscending);
+
+  sbShowSummary.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridPermits;
@@ -9435,6 +9447,7 @@ begin
   FSearch.DataSet := DMG.qPermits;
   AddSortedField('permit_name', sdAscending);
 
+  sbShowSummary.Visible := True;
   //sbShowDocs.Visible := True;
 end;
 
@@ -9450,6 +9463,7 @@ begin
   FChildTable := tbProjectTeams;
   dsLink1.DataSet := DMG.qProjectTeam;
   pmcNewProjectMember.Visible := True;
+  sbShowSummary.Visible := True;
 
   pChildsBar.Visible := True;
 
@@ -9489,6 +9503,7 @@ begin
   pmcNewCollector.Visible := True;
   pmcNewSamplePrep.Visible := True;
   sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
@@ -9531,6 +9546,7 @@ begin
   pmcNewCapture.Visible := True;
   pmcNewSighting.Visible := True;
   sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
@@ -9777,34 +9793,34 @@ begin
       tbUsers: ;
       tbRecordHistory: ;
       tbRecordVerifications: ;
-      tbGazetteer: ;
-      tbNetStations: ;
+      tbGazetteer:          SummaryGazetteer(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbNetStations:        SummarySamplingPlots(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbPermanentNets: ;
-      tbInstitutions: ;
-      tbPeople: ;
-      tbProjects: ;
+      tbInstitutions:       SummaryInstitutions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbPeople:             SummaryPeople(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbProjects:           SummaryProjects(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbProjectTeams: ;
-      tbPermits: ;
+      tbPermits:            SummaryPermits(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbTaxonRanks: ;
       tbZooTaxa: ;
-      tbBotanicTaxa: ;
+      tbBotanicTaxa:        SummaryBotanicTaxa(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbBands:              SummaryBands(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbBandHistory: ;
-      tbIndividuals: ;
+      tbIndividuals:        SummaryIndividuals(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbCaptures:           SummaryCaptures(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbMolts: ;
       tbNests:              SummaryNests(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbNestOwners: ;
-      tbNestRevisions: ;
-      tbEggs: ;
+      tbNestRevisions:      SummaryNestRevisions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbEggs:               SummaryEggs(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbMethods: ;
-      tbExpeditions: ;
-      tbSurveys: ;
+      tbExpeditions:        SummaryExpeditions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbSurveys:            SummarySurveys(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbSurveyTeams: ;
       tbNetsEffort: ;
       tbWeatherLogs: ;
       tbSightings:          SummarySightings(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
-      tbSpecimens: ;
+      tbSpecimens:          SummarySpecimens(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbSamplePreps: ;
       tbSpecimenCollectors: ;
       tbImages: ;
