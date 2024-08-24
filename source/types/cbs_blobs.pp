@@ -39,15 +39,15 @@ const
   procedure ExcluiFoto(DataSet: TDataset; aBlobField: String);
   procedure ExportaFoto(DataSet: TDataset; aBlobField, FileName: String);
 
-  function CreateImageThumbnail(aFileName: String): TStream;
+  procedure CreateImageThumbnail(aFileName: String; aDataSet: TDataSet);
   procedure RecreateThumbnails;
 
 implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_validations, udm_main, udlg_progress,
-  fpeGlobal, fpeTags, fpeExifData, Math, {$IFDEF DEBUG}cbs_debug,{$ENDIF}
-  BGRAReadJpeg, fpwritejpeg, BGRAReadWebP, BGRAWriteWebP, BGRAThumbnail;
+  fpeGlobal, fpeTags, fpeExifData, Math, {$IFDEF DEBUG}cbs_debug,{$ENDIF} GDIPlus, GDIPlusHelpers,
+  BGRAReadJpeg, BGRAWriteJpeg, BGRAReadWebP, BGRAWriteWebP, BGRAThumbnail;
 
 { ----------------------------------------------------------------------------------------- }
 { Image (BLOB field) manipulation }
@@ -95,8 +95,6 @@ begin
   { Create image thumbnail as JPEG }
   //sthumb := TMemoryStream.Create;
   try
-    //CreateImageThumbnail(aFileName, sthumb);
-
     { Insert the image into the dataset }
     with aDataset do
     begin
@@ -118,8 +116,10 @@ begin
         FieldByName('longitude').AsFloat := long;
         FieldByName('latitude').AsFloat := lat;
       end;
-      (FieldByName(aBlobField) as TBlobField).LoadFromStream(CreateImageThumbnail(aFileName));
+      //(FieldByName(aBlobField) as TBlobField).LoadFromStream(CreateImageThumbnail(aFileName));
+      CreateImageThumbnail(aFileName, aDataSet);
       Post;
+      TSQLQuery(aDataSet).ApplyUpdates;
     end;
     Result := True;
   finally
@@ -245,14 +245,26 @@ begin
     end;
 end;
 
-function CreateImageThumbnail(aFileName: String): TStream;
+procedure CreateImageThumbnail(aFileName: String; aDataSet: TDataSet);
 var
-  bmpFactor, rotAngle: Single;
-  bmpCenter: TPointF;
+  bmpFactor: Single;
   imgExif: TImgInfo;
-  imgThumb: TBGRABitmap;
-  jpgwriter: TFPWriterJPEG;
   imgOrientation: TExifOrientation;
+  sthumb: TStream;
+  {$IFDEF MSWINDOWS}
+    imgThumb: IGPImage;
+    rotType: TGPRotateFlipType;
+    jpgThumb: TJpegImage;
+    //jpgThumb: ISkImage;    // FPC > 3.3.1
+    newWidth, newHeight: Integer;
+    destRect: TGPRectF;
+    Graph: IGPGraphics;
+  {$ELSE}
+    imgThumb: TBGRABitmap;
+    rotAngle: Single;
+    jpgThumb: TJpegImage;
+    bmpCenter: TPointF;
+  {$ENDIF}
 begin
   if not (FileExists(aFileName)) then
   begin
@@ -273,18 +285,43 @@ begin
     FreeAndNil(imgExif);
   end;
 
-  imgThumb := GetFileThumbnail(aFileName, thumbSize, thumbSize, $000000FF, False);
-  //imgThumb := TBGRABitmap.Create(aFileName);
-  Result := TMemoryStream.Create;
+  //imgThumb := GetFileThumbnail(aFileName, thumbSize, thumbSize, $000000FF, False);
+  {$IFDEF MSWINDOWS}
+    imgThumb := TGPImage.Create(aFileName);
+  {$ELSE}
+    imgThumb := TBGRABitmap.Create(aFileName);
+  {$ENDIF}
   try
     // Get the scale factor for thumbnail image using the larger side
-    //if imgThumb.Height > imgThumb.Width then
-    //  bmpFactor := thumbSize / imgThumb.Height
-    //else
-    //  bmpFactor := thumbSize / imgThumb.Width;
-    //BGRAReplace(imgThumb, imgThumb.Resample(Round(imgThumb.Width * bmpFactor), Round(imgThumb.Height * bmpFactor)));
+    if imgThumb.GetHeight > imgThumb.GetWidth then
+      bmpFactor := thumbSize / imgThumb.GetHeight
+    else
+      bmpFactor := thumbSize / imgThumb.GetWidth;
+    {$IFDEF MSWINDOWS}
+    newWidth := Round(imgThumb.GetWidth * bmpFactor);
+    newHeight := Round(imgThumb.GetHeight * bmpFactor);
+
+    {$ELSE}
+    BGRAReplace(imgThumb, imgThumb.Resample(Round(imgThumb.Width * bmpFactor), Round(imgThumb.Height * bmpFactor)));
+    {$ENDIF}
 
     { Correct image orientation }
+    {$IFDEF MSWINDOWS}
+    case imgOrientation of
+      eoUnknown:          rotType := RotateNoneFlipNone;  // Unknown - do nothing
+      eoNormal:           rotType := RotateNoneFlipNone;  // Horizontal - No rotation required
+      eoMirrorHor:        rotType := RotateNoneFlipX;     // Flip horizontal
+      eoRotate180:        rotType := Rotate180FlipNone;   // Rotate 180 CW
+      eoMirrorVert:       rotType := Rotate180FlipX;      // Rotate 180 CW and flip horizontal (Flip vertical)
+      eoMirrorHorRot270:  rotType := Rotate270FlipX;      // Rotate 270 CW and flip horizontal
+      eoRotate90:         rotType := Rotate90FlipNone;    // Rotate 90 CW
+      eoMirrorHorRot90:   rotType := Rotate90FlipX;       // Rotate 90 CW and flip horizontal
+      eoRotate270:        rotType := Rotate270FlipNone;   // Rotate 270 CW
+    end;
+    // Set image rotation, if necessary
+    if rotType <> RotateNoneFlipNone then
+      imgThumb.RotateFlip(rotType);
+    {$ELSE}
     case imgOrientation of
       eoUnknown: rotAngle := 0;            // Unknown - do nothing
       eoNormal: rotAngle := 0;             // Horizontal - No rotation required
@@ -319,23 +356,47 @@ begin
       bmpCenter.Y := (imgThumb.Height - 1) / 2;
       BGRAReplace(imgThumb, imgThumb.FilterRotate(bmpCenter, rotAngle));
     end;
-    //imgThumb.Draw(imgThumb.Canvas, 0, 0);
+    {$ENDIF}
 
     { Encode image as JPEG }
-    jpgwriter := TFPWriterJPEG.Create;
     try
-      jpgwriter.CompressionQuality := thumbQuality;
-      Result.Position := OffsetMemoryStream;
-      //jpgwriter.ImageWrite(outStream, imgThumb);
-      //imgThumb.SaveToStreamAs(aStream, ifJpeg);
-      imgThumb.SaveToStream(Result, jpgwriter);
-      Result.Position := OffsetMemoryStream;
+      sthumb := TMemoryStream.Create;
+      sthumb.Position := OffsetMemoryStream;
+      {$IFDEF MSWINDOWS}
+      jpgThumb := TJpegImage.Create;
+      jpgThumb.CompressionQuality := thumbQuality;
+      jpgThumb.SetSize(imgThumb.Width, imgThumb.Height);
+      Graph := jpgThumb.Canvas.toGPGraphics;
+      Graph.DrawImage(imgThumb, 0, 0);
+      jpgThumb.Canvas.StretchDraw(Rect(0, 0, newWidth, newHeight), jpgThumb);
+      jpgThumb.SetSize(newWidth, newHeight);
+      jpgThumb.SaveToStream(sthumb);
+      // FPC > 3.3.1
+      //jpgThumb := TSkImage.MakeFromEncodedStream(sthumb);
+      //LSurface := TSkSurface.MakeRaster(newWidth, newHeight);
+      //LSurface.Canvas.Clear(TAlphaColors.Null);
+      //LSurface.Canvas.Scale(newWidth / jpgThumb.Width, newHeight / jpgThumb.Height);
+      //LSurface.Canvas.DrawImage(jpgThumb, 0, 0, TSkSamplingOptions.High);
+      //jpgThumb := LSurface.MakeImageSnapshot;
+      //sthumb.Position := OffsetMemoryStream;
+      //jpgThumb.EncodeToStream(sthumb, TSkEncodedImageFormat.JPEG, imgQuality);
+      {$ELSE}
+      jpgThumb := TJpegImage.Create;
+      jpgThumb.CompressionQuality := thumbQuality;
+      jpgThumb.SetSize(imgThumb.Width, imgThumb.Height);
+      jpgThumb.Canvas.Draw(0, 0, imgThumb.Bitmap);
+      jpgThumb.SaveToStream(sthumb);
+      {$ENDIF}
+      sthumb.Position := OffsetMemoryStream;
+      TBlobField(aDataSet.FieldByName('image_thumbnail')).LoadFromStream(sthumb);
     finally
-      jpgwriter.Free;
+      sthumb.Free;
+      jpgThumb.Free;
     end;
   finally
+    {$IFNDEF MSWINDOWS}
     imgThumb.Free;
-    Result.Free;
+    {$ENDIF}
   end;
 end;
 
@@ -345,7 +406,7 @@ var
   sthumb: TStream;
   imgPath: String;
   imgThumb: TBGRABitmap;
-  jpgwriter: TFPWriterJPEG;
+  jpgThumb: TJpegImage;
   {$IFDEF DEBUG}
   Usage: TElapsedTimer;
   {$ENDIF}
@@ -372,7 +433,6 @@ begin
     {$ENDIF}
     if Qry.RecordCount > 0 then
     begin
-      //(FieldByName('image_thumbnail') as TBlobField).BlobType := ftGraphic;
       First;
       DMM.sqlTrans.EndTransaction;
       DMM.sqlTrans.StartTransaction;
@@ -385,24 +445,28 @@ begin
           if (FileExists(imgPath)) then
           begin
             Edit;
-            //sthumb := TMemoryStream.Create;
             try
-              //CreateImageThumbnail(imgPath, sthumb);
-              //sthumb.Position := OffsetMemoryStream;
-              imgThumb := GetFileThumbnail(imgPath, thumbSize, thumbSize, BGRAWhite, True);
-              sthumb := CreateBlobStream(FieldByName('image_thumbnail'), bmWrite);
               FieldByName('image_thumbnail').Clear;
-              jpgwriter := TFPWriterJPEG.Create;
-              jpgwriter.CompressionQuality := thumbQuality;
-              imgThumb.SaveToStream(sthumb, jpgwriter);
-              // imgThumb.SaveToStreamAs(sthumb, TBGRAImageFormat.ifJpeg);
-              //(FieldByName('image_thumbnail') as TBlobField).LoadFromStream(CreateImageThumbnail(imgPath));
-              //(FieldByName('image_thumbnail') as TBlobField).SaveToFile('D:\Temp\test_stream.jpg');
+              //imgThumb := GetFileThumbnail(imgPath, thumbSize, thumbSize, BGRAWhite, True);
+              //
+              //jpgThumb := TJpegImage.Create;
+              //jpgThumb.SetSize(imgThumb.Width, imgThumb.Height);
+              //jpgThumb.CompressionQuality := thumbQuality;
+              //jpgThumb.Canvas.Draw(0, 0, imgThumb.Bitmap);
+              //
+              //sthumb := TMemoryStream.Create;
+              //sthumb.Position := OffsetMemoryStream;
+              //jpgThumb.SaveToStream(sthumb);
+              //sthumb.Position := OffsetMemoryStream;
+              //TBlobField(FieldByName('image_thumbnail')).LoadFromStream(CreateImageThumbnail(imgPath));
+              CreateImageThumbnail(imgPath, Qry);
+
               Post;
+              ApplyUpdates;
             finally
-              jpgwriter.Free;
-              sthumb.Free;
-              imgThumb.Free;
+              //sthumb.Free;
+              //imgThumb.Free;
+              //jpgThumb.Free;
             end;
           end;
           dlgProgress.Position := Qry.RecNo;

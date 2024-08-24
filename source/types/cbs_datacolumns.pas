@@ -3406,7 +3406,7 @@ begin
           Add('WHERE sv.active_status = 1');
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := ReplaceStr(aFieldName, '_name', '_id');
+        MacroByName('AFIELD').Value := 'sv.' + ReplaceStr(aFieldName, '_name', '_id');
       end;
 
       'duration', 'observers_tally', 'area_total', 'distance_total', 'nets_total', 'net_effort':
@@ -4228,7 +4228,7 @@ begin
           Add('WHERE it.active_status = 1');
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := ReplaceStr(aFieldName, '_name', '_id');
+        MacroByName('AFIELD').Value := 'sv.' + ReplaceStr(aFieldName, '_name', '_id');
       end;
 
       'marked_status':
@@ -4475,7 +4475,7 @@ begin
           Add('WHERE p.active_status = 1');
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := ReplaceStr(aFieldName, '_name', '_id');
+        MacroByName('AFIELD').Value := 'sv.' + ReplaceStr(aFieldName, '_name', '_id');
       end;
 
       'institution_id', 'institution_name':

@@ -36,6 +36,7 @@ type
     eMunicipality: TDBEditButton;
     eState: TDBEditButton;
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     pImageToolbar: TBCPanel;
     cbTreatment: TDBComboBox;
     cbGender: TDBComboBox;
@@ -179,6 +180,8 @@ uses
 procedure TedtPerson.ApplyDarkMode;
 begin
   pImageToolbar.Background.Color := clCardBGDefaultDark;
+  sbAddImage.Images := iButtonsDark;
+  sbRemoveImage.Images := iButtonsDark;
 
   eBirthDate.Images := DMM.iEditsDark;
   eDeathDate.Images := DMM.iEditsDark;
