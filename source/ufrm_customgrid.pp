@@ -56,7 +56,9 @@ type
     cbCaptureTypeFilter: TComboBox;
     cbCaptureStatusFilter: TComboBox;
     cbNestStageFilter: TComboBox;
+    dbImg: TDBImage;
     dsChart: TDataSource;
+    dsImages: TDataSource;
     gridSummary: TDBGrid;
     dsRecycle: TDataSource;
     DBG: TDBGrid;
@@ -155,6 +157,12 @@ type
     lblProjectFilter: TLabel;
     cardMap: TPage;
     mapGeo: TMapView;
+    pmiAddImage: TMenuItem;
+    pmiImageInfo: TMenuItem;
+    pmiSaveImage: TMenuItem;
+    pmiViewImage: TMenuItem;
+    pmiDelImage: TMenuItem;
+    pmiRefreshImages: TMenuItem;
     pmcColumnsAutoAdjustWidth: TMenuItem;
     pmcColumnSortAsc: TMenuItem;
     pmcColumnSortDesc: TMenuItem;
@@ -185,6 +193,7 @@ type
     pmMark: TPopupMenu;
     pmVerifications: TPopupMenu;
     pmColumn: TPopupMenu;
+    pmImages: TPopupMenu;
     pReportedFilter: TBCPanel;
     pEscapedFilter: TBCPanel;
     pNeedsReviewFilter: TBCPanel;
@@ -430,6 +439,57 @@ type
     pTitleTaxonRanksFilter: TPanel;
     pWithColorBandsFilter: TBCPanel;
     pWithRecapturesFilter: TBCPanel;
+    qImagesactive_status: TBooleanField;
+    qImagesauthor_id: TLongintField;
+    qImagesauthor_name: TStringField;
+    qImagescapture_id: TLongintField;
+    qImagescapture_name: TStringField;
+    qImagescoordinate_precision: TStringField;
+    qImagescountry_id: TLongintField;
+    qImagesegg_id: TLongintField;
+    qImagesegg_name: TStringField;
+    qImagesexported_status: TBooleanField;
+    qImagesfamily_id: TLongintField;
+    qImagesgenus_id: TLongintField;
+    qImagesimage_date: TDateField;
+    qImagesimage_filename: TStringField;
+    qImagesimage_id: TLongintField;
+    qImagesimage_thumbnail: TBlobField;
+    qImagesimage_time: TTimeField;
+    qImagesimage_type: TStringField;
+    qImagesindividual_id: TLongintField;
+    qImagesindividual_name: TStringField;
+    qImagesinsert_date: TDateTimeField;
+    qImageslatitude: TFloatField;
+    qImageslicense_notes: TStringField;
+    qImageslicense_owner: TStringField;
+    qImageslicense_type: TStringField;
+    qImageslicense_uri: TStringField;
+    qImageslicense_year: TLongintField;
+    qImageslocality_id: TLongintField;
+    qImageslocality_name: TStringField;
+    qImageslongitude: TFloatField;
+    qImagesmarked_status: TBooleanField;
+    qImagesmunicipality_id: TLongintField;
+    qImagesnest_id: TLongintField;
+    qImagesnest_name: TStringField;
+    qImagesnest_revision_id: TLongintField;
+    qImagesorder_id: TLongintField;
+    qImagesrevision_name: TStringField;
+    qImagessighting_id: TLongintField;
+    qImagessighting_name: TStringField;
+    qImagesspecies_id: TLongintField;
+    qImagesspecimen_id: TLongintField;
+    qImagesspecimen_name: TStringField;
+    qImagesstate_id: TLongintField;
+    qImagessubtitle: TMemoField;
+    qImagessurvey_id: TLongintField;
+    qImagessurvey_name: TStringField;
+    qImagestaxon_id: TLongintField;
+    qImagestaxon_name: TStringField;
+    qImagesupdate_date: TDateTimeField;
+    qImagesuser_inserted: TLongintField;
+    qImagesuser_updated: TLongintField;
     rbReportedAll: TRadioButton;
     rbEscapedAll: TRadioButton;
     rbNeedsReviewAll: TRadioButton;
@@ -529,6 +589,7 @@ type
     sbSortRecords: TSpeedButton;
     Separator10: TShapeLineBGRA;
     Separator11: TShapeLineBGRA;
+    Separator12: TMenuItem;
     Separator13: TMenuItem;
     Separator14: TMenuItem;
     Separator15: TMenuItem;
@@ -540,6 +601,8 @@ type
     Separator21: TMenuItem;
     Separator22: TMenuItem;
     Separator23: TMenuItem;
+    Separator24: TMenuItem;
+    Separator25: TMenuItem;
     Separator5: TShapeLineBGRA;
     Separator6: TMenuItem;
     Separator7: TShapeLineBGRA;
@@ -576,6 +639,7 @@ type
     gridRecord: TStringGrid;
     qRecycle: TSQLQuery;
     qChart: TSQLQuery;
+    qImages: TSQLQuery;
     TimerUpdate: TTimer;
     titleViewRecord: TLabel;
     titleRecycle: TLabel;
@@ -605,6 +669,8 @@ type
     procedure DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
       AState: TGridDrawState);
     procedure DBGSelectEditor(Sender: TObject; Column: TColumn; var Editor: TWinControl);
+    procedure dsImagesDataChange(Sender: TObject; Field: TField);
+    procedure dsImagesStateChange(Sender: TObject);
     procedure dsLink1DataChange(Sender: TObject; Field: TField);
     procedure dsLink1StateChange(Sender: TObject);
     procedure dsLink2DataChange(Sender: TObject; Field: TField);
@@ -686,6 +752,7 @@ type
     procedure pmcNewSpecimenClick(Sender: TObject);
     procedure pmcNewSurveyMemberClick(Sender: TObject);
     procedure pmcNewWeatherLogClick(Sender: TObject);
+    procedure pmiRefreshImagesClick(Sender: TObject);
     procedure pmmInvertMarkedClick(Sender: TObject);
     procedure pmmMarkAllClick(Sender: TObject);
     procedure pmmMarkAllColumnsClick(Sender: TObject);
@@ -705,12 +772,14 @@ type
     procedure sbColumnHideClick(Sender: TObject);
     procedure sbColumnWidthAutoAdjustClick(Sender: TObject);
     procedure sbDelChildClick(Sender: TObject);
+    procedure sbDelImageClick(Sender: TObject);
     procedure sbDelPermanentlyClick(Sender: TObject);
     procedure sbDelRecordClick(Sender: TObject);
     procedure sbEditChildClick(Sender: TObject);
     procedure sbEditRecordClick(Sender: TObject);
     procedure sbFirstChildClick(Sender: TObject);
     procedure sbFirstRecordClick(Sender: TObject);
+    procedure sbImageInfoClick(Sender: TObject);
     procedure sbInsertRecordClick(Sender: TObject);
     procedure sbLastChildClick(Sender: TObject);
     procedure sbLastRecordClick(Sender: TObject);
@@ -911,6 +980,7 @@ type
     procedure SetGridSurveys;
     procedure SetGridTaxonRanks;
 
+    procedure SetImages;
     procedure SetRecycle;
     procedure SetSidePanel(aValue: Boolean);
     procedure SetSideIndex(aValue: Integer);
@@ -946,6 +1016,7 @@ type
     procedure UpdateChildCount;
     procedure UpdateChildStatus;
     procedure UpdateGridTitles(aGrid: TDBGrid; aSearch: TCustomSearch);
+    procedure UpdateImageButtons(aDataSet: TDataSet);
 
     procedure UpdateFilterPanels;
     procedure UpdateFilterPanelsBands;
@@ -1111,6 +1182,7 @@ begin
   pmMark.Images := iButtonsDark;
   pmMarkColumns.Images := iButtonsDark;
   pmVerifications.Images := iButtonsDark;
+  pmImages.Images := iButtonsDark;
   pmAddChild.Images := DMM.iAddMenuDark;
 
   pEmptyQuery.Background.Color := clCardBGDefaultDark;
@@ -2870,6 +2942,19 @@ begin
 
 end;
 
+procedure TfrmCustomGrid.dsImagesDataChange(Sender: TObject; Field: TField);
+begin
+  UpdateImageButtons(qImages);
+  {$IFDEF DEBUG}
+  LogDebug('Param: ' + qImages.Params[0].Name + ' ' + qImages.Params[0].AsString + '; Count: ' + IntToStr(qImages.RecordCount));
+  {$ENDIF}
+end;
+
+procedure TfrmCustomGrid.dsImagesStateChange(Sender: TObject);
+begin
+  UpdateImageButtons(qImages);
+end;
+
 procedure TfrmCustomGrid.dsLink1DataChange(Sender: TObject; Field: TField);
 begin
   UpdateChildCount;
@@ -3877,6 +3962,7 @@ begin
   if DBG.CanSetFocus then
     DBG.SetFocus;
   GetColumns;
+  SetImages;
   SetRecycle;
   CanToggle := True;
   Application.ProcessMessages;
@@ -4979,12 +5065,14 @@ procedure TfrmCustomGrid.LoadRecordRow;
 var
   i: Integer;
 begin
+  if Working then
+    Exit;
+
   for i := 0 to (DBG.Columns.Count - 1) do
   begin
     if DBG.Columns[i].Visible then
     begin
-      gridRecord.Cells[1, DBG.Columns.VisibleIndex(i)] :=
-        DBG.Columns[i].Field.AsString;
+      gridRecord.Cells[1, DBG.Columns.VisibleIndex(i)] := DBG.Columns[i].Field.AsString;
     end;
   end;
 end;
@@ -5385,6 +5473,14 @@ begin
   EditWeatherLog(DMS.qWeatherLogs, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
 
   UpdateChildButtons(DMS.qWeatherLogs);
+end;
+
+procedure TfrmCustomGrid.pmiRefreshImagesClick(Sender: TObject);
+begin
+  if Working then
+    Exit;
+
+  qImages.Refresh;
 end;
 
 procedure TfrmCustomGrid.pmmInvertMarkedClick(Sender: TObject);
@@ -6673,6 +6769,20 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.sbDelImageClick(Sender: TObject);
+begin
+  if Working then
+    Exit;
+
+  Working := True;
+  try
+    DeleteRecord(tbImages, qImages);
+    UpdateImageButtons(qImages);
+  finally
+    Working := False;
+  end;
+end;
+
 procedure TfrmCustomGrid.sbDelPermanentlyClick(Sender: TObject);
 var
   Qry: TSQLQuery;
@@ -6866,6 +6976,11 @@ begin
   finally
     Working := False;
   end;
+end;
+
+procedure TfrmCustomGrid.sbImageInfoClick(Sender: TObject);
+begin
+  EditImageInfo(qImages, dsLink.DataSet, FTableType);
 end;
 
 procedure TfrmCustomGrid.sbInsertRecordClick(Sender: TObject);
@@ -9198,7 +9313,7 @@ begin
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
 
-  //sbShowImages.Visible := True;
+  sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
@@ -9251,7 +9366,7 @@ begin
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
 
-  //sbShowImages.Visible := True;
+  sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
@@ -9331,14 +9446,14 @@ begin
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
   //pChild.Visible := True;
-  dbgImages.DataSource := DMI.dsImages;
-  lblImageTime.DataSource := dbgImages.DataSource;
-  lblImageDate.DataSource := dbgImages.DataSource;
-  lblImageType.DataSource := dbgImages.DataSource;
+  //dbgImages.DataSource := DMI.dsImages;
+  //lblImageTime.DataSource := dbgImages.DataSource;
+  //lblImageDate.DataSource := dbgImages.DataSource;
+  //lblImageType.DataSource := dbgImages.DataSource;
   //imgThumb.DataSource := dbgImages.DataSource;
   //imgThumb.DataField := 'image_thumbnail';
 
-  //sbShowImages.Visible := True;
+  sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
@@ -9392,7 +9507,7 @@ begin
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
 
-  //sbShowImages.Visible := True;
+  sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
@@ -9481,7 +9596,7 @@ begin
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
 
-  //sbShowImages.Visible := True;
+  sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
@@ -9510,7 +9625,7 @@ begin
   mapGeo.Active := True;
   sbShowMap.Visible := True;
 
-  //sbShowImages.Visible := True;
+  sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
@@ -9553,7 +9668,7 @@ begin
   mapGeo.Active := True;
   sbShowMap.Visible := True;
 
-  //sbShowImages.Visible := True;
+  sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
@@ -9563,6 +9678,61 @@ begin
   Caption := rsTitleTaxonRanks;
   FSearch.DataSet := DMG.qTaxonRanks;
   AddSortedField('rank_seq', sdAscending);
+end;
+
+procedure TfrmCustomGrid.SetImages;
+begin
+  with qImages, SQL do
+  begin
+    case FTableType of
+      tbNone: ;
+      tbUsers: ;
+      tbRecordHistory: ;
+      tbRecordVerifications: ;
+      tbGazetteer: ;
+      tbNetStations: ;
+      tbPermanentNets: ;
+      tbInstitutions: ;
+      tbPeople: ;
+      tbProjects: ;
+      tbProjectTeams: ;
+      tbPermits: ;
+      tbTaxonRanks: ;
+      tbZooTaxa: ;
+      tbBotanicTaxa: ;
+      tbBands: ;
+      tbBandHistory: ;
+      tbIndividuals:    Add('WHERE (img.active_status = 1) AND (img.individual_id = :individual_id)');
+      tbCaptures:       Add('WHERE (img.active_status = 1) AND (img.capture_id = :capture_id)');
+      tbMolts: ;
+      tbNests:          Add('WHERE (img.active_status = 1) AND (img.nest_id = :nest_id)');
+      tbNestOwners: ;
+      tbNestRevisions:  Add('WHERE (img.active_status = 1) AND (img.nest_revision_id = :nest_revision_id)');
+      tbEggs:           Add('WHERE (img.active_status = 1) AND (img.egg_id = :egg_id)');
+      tbMethods: ;
+      tbExpeditions: ;
+      tbSurveys:        Add('WHERE (img.active_status = 1) AND (img.survey_id = :survey_id)');
+      tbSurveyTeams: ;
+      tbNetsEffort: ;
+      tbWeatherLogs: ;
+      tbSightings:      Add('WHERE (img.active_status = 1) AND (img.sighting_id = :sighting_id)');
+      tbSpecimens:      Add('WHERE (img.active_status = 1) AND (img.specimen_id = :specimen_id)');
+      tbSamplePreps: ;
+      tbSpecimenCollectors: ;
+      tbImages: ;
+      tbAudioLibrary: ;
+    end;
+  end;
+
+  if FTableType in [tbIndividuals, tbCaptures, tbNests, tbNestRevisions, tbEggs, tbSurveys, tbSightings, tbSpecimens] then
+  begin
+    qImages.SQL.Add('ORDER BY img.image_date, img.image_time ASC');
+    qImages.DataSource := dsLink;
+    {$IFDEF DEBUG}
+    LogSQL(qImages.SQL);
+    {$ENDIF}
+    qImages.Open;
+  end;
 end;
 
 procedure TfrmCustomGrid.SetRecycle;
@@ -10556,6 +10726,49 @@ begin
       sdDescending: aGrid.Columns.ColumnByFieldname(aSearch.SortFields[i].FieldName).Title.ImageIndex := ArrowDesc;
     end;
   end;
+end;
+
+procedure TfrmCustomGrid.UpdateImageButtons(aDataSet: TDataSet);
+begin
+  if Closing then
+    Exit;
+
+  case aDataSet.State of
+    dsInactive:
+    begin
+      sbAddImage.Enabled := False;
+      sbImageInfo.Enabled := False;
+      sbDelImage.Enabled := False;
+      sbSaveImage.Enabled := False;
+      sbViewImage.Enabled := False;
+
+    end;
+    dsBrowse:
+    begin
+      sbAddImage.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbImageInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbDelImage.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbSaveImage.Enabled := (aDataSet.RecordCount > 0);
+      sbViewImage.Enabled := (aDataSet.RecordCount > 0);
+
+    end;
+    dsEdit, dsInsert:
+    begin
+      sbAddImage.Enabled := False;
+      sbImageInfo.Enabled := False;
+      sbDelImage.Enabled := False;
+      sbSaveImage.Enabled := False;
+      sbViewImage.Enabled := False;
+
+    end;
+  end;
+
+  pmiAddImage.Enabled := sbAddImage.Enabled;
+  pmiImageInfo.Enabled := sbImageInfo.Enabled;
+  pmiDelImage.Enabled := sbDelImage.Enabled;
+  pmiSaveImage.Enabled := sbSaveImage.Enabled;
+  pmiViewImage.Enabled := sbViewImage.Enabled;
+  pmiRefreshImages.Enabled := sbViewImage.Enabled;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanels;

@@ -21,7 +21,7 @@ unit cbs_editdialogs;
 interface
 
 uses
-  Classes, SysUtils, Forms, DB, System.UITypes;
+  Classes, SysUtils, Forms, DB, System.UITypes, cbs_datatypes;
 
   function EditMethod(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditSite(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
@@ -50,17 +50,19 @@ uses
   function EditSpecimen(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditCollector(aDataSet: TDataSet; aSpecimen: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditSamplePrep(aDataSet: TDataSet; aSpecimen: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditImageInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean = False): Boolean;
   function EditUser(IsNew: Boolean = False): Boolean;
   function ChangeUserPassword(IsNew: Boolean = False): Boolean;
 
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_permissions, cbs_finddialogs, cbs_datatypes,
+  cbs_locale, cbs_global, cbs_permissions, cbs_finddialogs,
   udm_main, udm_grid, udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
   uedt_survey, uedt_netstation, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
   uedt_nest, uedt_egg, uedt_molt, uedt_nestrevision, uedt_neteffort, uedt_permanentnet, uedt_sighting,
-  uedt_method, uedt_weatherlog, uedt_project, uedt_permit, uedt_specimen, uedt_sampleprep, uedt_nestowner;
+  uedt_method, uedt_weatherlog, uedt_project, uedt_permit, uedt_specimen, uedt_sampleprep, uedt_nestowner,
+  uedt_imageinfo;
 
 function EditMethod(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
@@ -1132,6 +1134,118 @@ begin
   finally
     FreeAndNil(dlgChangePassword);
   end;
+end;
+
+function EditImageInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
+var
+  CloseQueryAfter: Boolean;
+begin
+  CloseQueryAfter := False;
+  if not aDataSet.Active then
+  begin
+    aDataSet.Open;
+    CloseQueryAfter := True;
+  end;
+
+  Application.CreateForm(TedtImageInfo, edtImageInfo);
+  with edtImageInfo do
+  try
+    edtImageInfo.dsLink.DataSet := aDataSet;
+    //if aDataSet <> DMG.qSamplePreps then
+    //  pSurvey.Visible := True;
+    if IsNew then
+    begin
+      aDataSet.Insert;
+      case aMasterType of
+        //tbNone: ;
+        //tbUsers: ;
+        //tbRecordHistory: ;
+        //tbRecordVerifications: ;
+        //tbGazetteer: ;
+        //tbNetStations: ;
+        //tbPermanentNets: ;
+        //tbInstitutions: ;
+        //tbPeople: ;
+        //tbProjects: ;
+        //tbProjectTeams: ;
+        //tbPermits: ;
+        //tbTaxonRanks: ;
+        //tbZooTaxa: ;
+        //tbBotanicTaxa: ;
+        //tbBands: ;
+        //tbBandHistory: ;
+        tbIndividuals:
+        begin
+          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
+        end;
+        tbCaptures:
+        begin
+          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
+          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
+          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
+          aDataSet.FieldByName('survey_id').AsInteger := aMaster.FieldByName('survey_id').AsInteger;
+        end;
+        //tbMolts: ;
+        tbNests:
+        begin
+          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
+          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
+        end;
+        //tbNestOwners: ;
+        tbNestRevisions:
+        begin
+          aDataSet.FieldByName('nest_id').AsInteger := aMaster.FieldByName('nest_id').AsInteger;
+        end;
+        tbEggs:
+        begin
+          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
+          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
+          aDataSet.FieldByName('nest_id').AsInteger := aMaster.FieldByName('nest_id').AsInteger;
+        end;
+        //tbMethods: ;
+        //tbExpeditions: ;
+        tbSurveys:
+        begin
+          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
+        end;
+        //tbSurveyTeams: ;
+        //tbNetsEffort: ;
+        //tbWeatherLogs: ;
+        tbSightings:
+        begin
+          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
+          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
+          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
+          aDataSet.FieldByName('survey_id').AsInteger := aMaster.FieldByName('survey_id').AsInteger;
+        end;
+        tbSpecimens:
+        begin
+          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
+          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
+          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
+        end;
+        //tbSamplePreps: ;
+        //tbSpecimenCollectors: ;
+        //tbImages: ;
+        //tbAudioLibrary: ;
+      end;
+      EditSourceStr := rsInsertedByForm;
+    end else
+    begin
+      aDataSet.Edit;
+      EditSourceStr := rsEditedByForm;
+    end;
+    Result := ShowModal = mrOk;
+    if Result then
+      aDataSet.Post
+    else
+      aDataSet.Cancel;
+  finally
+    FreeAndNil(edtImageInfo);
+  end;
+
+  if CloseQueryAfter then
+    aDataSet.Close;
 end;
 
 end.

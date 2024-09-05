@@ -137,6 +137,7 @@ object edtImageInfo: TedtImageInfo
           ButtonWidth = 24
           ImageIndex = 0
           Images = DMM.iEdits
+          DataField = 'locality_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLocalityButtonClick
@@ -187,6 +188,7 @@ object edtImageInfo: TedtImageInfo
           ButtonWidth = 24
           ImageIndex = 0
           Images = DMM.iEdits
+          DataField = 'author_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eAuthorButtonClick
@@ -579,6 +581,7 @@ object edtImageInfo: TedtImageInfo
           ButtonWidth = 24
           ImageIndex = 0
           Images = DMM.iEdits
+          DataField = 'individual_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eIndividualButtonClick
@@ -630,7 +633,7 @@ object edtImageInfo: TedtImageInfo
           ButtonWidth = 24
           ImageIndex = 0
           Images = DMM.iEdits
-          DataField = 'taxon_name'
+          DataField = 'capture_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eCaptureButtonClick
@@ -682,7 +685,7 @@ object edtImageInfo: TedtImageInfo
           ButtonWidth = 24
           ImageIndex = 0
           Images = DMM.iEdits
-          DataField = 'taxon_name'
+          DataField = 'survey_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSurveyButtonClick
@@ -734,7 +737,7 @@ object edtImageInfo: TedtImageInfo
           ButtonWidth = 24
           ImageIndex = 0
           Images = DMM.iEdits
-          DataField = 'taxon_name'
+          DataField = 'sighting_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSightingButtonClick
@@ -838,7 +841,7 @@ object edtImageInfo: TedtImageInfo
           ButtonWidth = 24
           ImageIndex = 0
           Images = DMM.iEdits
-          DataField = 'taxon_name'
+          DataField = 'specimen_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSpecimenButtonClick
@@ -890,7 +893,7 @@ object edtImageInfo: TedtImageInfo
           ButtonWidth = 24
           ImageIndex = 0
           Images = DMM.iEdits
-          DataField = 'taxon_name'
+          DataField = 'egg_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eEggButtonClick
@@ -942,7 +945,7 @@ object edtImageInfo: TedtImageInfo
           ButtonWidth = 24
           ImageIndex = 0
           Images = DMM.iEdits
-          DataField = 'taxon_name'
+          DataField = 'revision_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eNestRevisionButtonClick
@@ -994,7 +997,7 @@ object edtImageInfo: TedtImageInfo
           ButtonWidth = 24
           ImageIndex = 0
           Images = DMM.iEdits
-          DataField = 'taxon_name'
+          DataField = 'nest_name'
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eNestButtonClick
@@ -1005,7 +1008,7 @@ object edtImageInfo: TedtImageInfo
     end
   end
   object dsLink: TDataSource
-    DataSet = DMG.qImages
+    DataSet = frmCustomGrid.qImages
     OnDataChange = dsLinkDataChange
     Left = 352
     Top = 26

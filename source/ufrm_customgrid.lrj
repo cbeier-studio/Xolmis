@@ -293,5 +293,11 @@
 {"hash":182593671,"name":"tfrmcustomgrid.pmccolumnsortasc.caption","sourcebytes":[83,111,114,116,32,99,111,108,117,109,110,32,97,115,99,101,110,100,105,110,103],"value":"Sort column ascending"},
 {"hash":267126759,"name":"tfrmcustomgrid.pmccolumnsortdesc.caption","sourcebytes":[83,111,114,116,32,99,111,108,117,109,110,32,100,101,115,99,101,110,100,105,110,103],"value":"Sort column descending"},
 {"hash":3980104,"name":"tfrmcustomgrid.pmccolumnsautoadjustwidth.caption","sourcebytes":[65,117,116,111,32,97,100,106,117,115,116,32,99,111,108,117,109,110,115,39,32,119,105,100,116,104],"value":"Auto adjust columns' width"},
-{"hash":116179534,"name":"tfrmcustomgrid.pmchidecolumn.caption","sourcebytes":[72,105,100,101,32,99,111,108,117,109,110],"value":"Hide column"}
+{"hash":116179534,"name":"tfrmcustomgrid.pmchidecolumn.caption","sourcebytes":[72,105,100,101,32,99,111,108,117,109,110],"value":"Hide column"},
+{"hash":117905497,"name":"tfrmcustomgrid.pmiaddimage.caption","sourcebytes":[65,100,100,32,105,109,97,103,101,40,115,41],"value":"Add image(s)"},
+{"hash":47864271,"name":"tfrmcustomgrid.pmiimageinfo.caption","sourcebytes":[86,105,101,119,47,101,100,105,116,32,105,109,97,103,101,32,105,110,102,111],"value":"View/edit image info"},
+{"hash":158070805,"name":"tfrmcustomgrid.pmiviewimage.caption","sourcebytes":[86,105,101,119,32,105,109,97,103,101],"value":"View image"},
+{"hash":266270,"name":"tfrmcustomgrid.pmisaveimage.caption","sourcebytes":[83,97,118,101,32,105,109,97,103,101,32,97,115,46,46,46],"value":"Save image as..."},
+{"hash":63183733,"name":"tfrmcustomgrid.pmidelimage.caption","sourcebytes":[68,101,108,101,116,101,32,105,109,97,103,101],"value":"Delete image"},
+{"hash":222015971,"name":"tfrmcustomgrid.pmirefreshimages.caption","sourcebytes":[82,101,102,114,101,115,104,32,105,109,97,103,101,115],"value":"Refresh images"}
 ]}

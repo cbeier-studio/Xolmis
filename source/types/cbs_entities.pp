@@ -574,8 +574,9 @@ begin
     DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT p.*,');
-    Add('(SELECT i.full_name FROM institutions AS i WHERE i.institution_id = p.institution_id) AS institution_name');
+    Add(' i.full_name AS institution_name');
     Add('FROM people AS p');
+    Add('LEFT JOIN institutions AS i ON p.institution_id = i.institution_id');
     Add('WHERE p.person_id = :cod');
     ParamByName('COD').AsInteger := aKey;
     Open;

@@ -46,8 +46,14 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_validations, udm_main, udlg_progress,
-  fpeGlobal, fpeTags, fpeExifData, Math, {$IFDEF DEBUG}cbs_debug,{$ENDIF} GDIPlus, GDIPlusHelpers,
-  BGRAReadJpeg, BGRAWriteJpeg, BGRAReadWebP, BGRAWriteWebP, BGRAThumbnail;
+  fpeGlobal, fpeTags, fpeExifData, Math,
+  {$IFDEF DEBUG}
+  cbs_debug,
+  {$ENDIF}
+  {$IFDEF MSWINDOWS}
+  GDIPlus, GDIPlusHelpers,
+  {$ENDIF}
+  BGRAReadJpeg, BGRAWriteJpeg, BGRAThumbnail;
 
 { ----------------------------------------------------------------------------------------- }
 { Image (BLOB field) manipulation }

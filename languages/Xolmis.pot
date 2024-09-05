@@ -10324,6 +10324,33 @@ msgstr ""
 msgid "Row height"
 msgstr ""
 
+#: tfrmcustomgrid.pmiaddimage.caption
+msgid "Add image(s)"
+msgstr ""
+
+#: tfrmcustomgrid.pmidelimage.caption
+msgctxt "tfrmcustomgrid.pmidelimage.caption"
+msgid "Delete image"
+msgstr ""
+
+#: tfrmcustomgrid.pmiimageinfo.caption
+msgid "View/edit image info"
+msgstr ""
+
+#: tfrmcustomgrid.pmirefreshimages.caption
+msgid "Refresh images"
+msgstr ""
+
+#: tfrmcustomgrid.pmisaveimage.caption
+msgctxt "tfrmcustomgrid.pmisaveimage.caption"
+msgid "Save image as..."
+msgstr ""
+
+#: tfrmcustomgrid.pmiviewimage.caption
+msgctxt "tfrmcustomgrid.pmiviewimage.caption"
+msgid "View image"
+msgstr ""
+
 #: tfrmcustomgrid.pmminvertmarked.caption
 msgid "Invert marked"
 msgstr ""
