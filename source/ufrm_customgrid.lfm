@@ -6576,10 +6576,11 @@ object frmCustomGrid: TfrmCustomGrid
             TabOrder = 0
             Visible = False
             object lblImageDate: TDBText
-              Left = 330
+              Left = 333
               Height = 15
               Top = 10
               Width = 70
+              Alignment = taRightJustify
               DataField = 'image_date'
               DataSource = dsImages
               ParentColor = False
@@ -6587,20 +6588,24 @@ object frmCustomGrid: TfrmCustomGrid
             object lblImageTime: TDBText
               Left = 330
               Height = 15
-              Top = 40
+              Top = 32
               Width = 73
+              Alignment = taRightJustify
               DataField = 'image_time'
               DataSource = dsImages
               ParentColor = False
             end
             object lblImageType: TDBText
-              Left = 330
-              Height = 15
-              Top = 80
-              Width = 71
+              Left = 247
+              Height = 56
+              Top = 64
+              Width = 156
+              Alignment = taRightJustify
+              AutoSize = False
               DataField = 'image_type'
               DataSource = dsImages
               ParentColor = False
+              WordWrap = True
             end
             object dbImg: TDBImage
               Left = 8
@@ -6612,6 +6617,18 @@ object frmCustomGrid: TfrmCustomGrid
               DataField = 'image_thumbnail'
               DataSource = dsImages
               Proportional = True
+            end
+            object lblImageID: TDBText
+              Left = 346
+              Height = 15
+              Top = 136
+              Width = 57
+              Alignment = taRightJustify
+              DataField = 'image_id'
+              DataSource = dsImages
+              Font.Color = clMedGray
+              ParentColor = False
+              ParentFont = False
             end
           end
         end

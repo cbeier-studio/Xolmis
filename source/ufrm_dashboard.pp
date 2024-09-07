@@ -811,14 +811,18 @@ begin
 
     { Total of species }
     Clear;
-    Add('WITH species (taxon_id) AS (');
-    Add('SELECT DISTINCT i.taxon_id FROM individuals AS i WHERE (i.active_status = 1) UNION');
-    Add('SELECT DISTINCT c.taxon_id FROM captures AS c WHERE (c.active_status = 1) UNION');
-    Add('SELECT DISTINCT s.taxon_id FROM sightings AS s WHERE (s.active_status = 1) UNION');
-    Add('SELECT DISTINCT n.taxon_id FROM nests AS n WHERE (n.active_status = 1) UNION');
-    Add('SELECT DISTINCT a.taxon_id FROM specimens AS a WHERE (a.active_status = 1)');
-    Add(')');
-    Add('SELECT count(*) AS count_species FROM species');
+    Add('SELECT COUNT(DISTINCT taxon_id) AS count_species');
+    Add('FROM (');
+    Add(' SELECT taxon_id FROM individuals');
+    Add(' UNION');
+    Add(' SELECT taxon_id FROM captures');
+    Add(' UNION');
+    Add(' SELECT taxon_id FROM sightings');
+    Add(' UNION');
+    Add(' SELECT taxon_id FROM nests');
+    Add(' UNION');
+    Add(' SELECT taxon_id FROM specimens');
+    Add(') AS combined_taxon_ids');
     Open;
     lblTotalSpecies.Caption := FieldByName('count_species').AsString;
     Close;

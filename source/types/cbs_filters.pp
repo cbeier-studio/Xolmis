@@ -131,7 +131,7 @@ begin
     case aTable of
       tbNone:
         begin
-          Add('SELECT DISTINCT i.taxon_id, i.species_id, i.family_id, i.order_id,');
+          Add('SELECT i.taxon_id, i.species_id, i.family_id, i.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -143,7 +143,7 @@ begin
           Add('JOIN TaxaDetails AS t ON i.taxon_id = t.taxon_id');
           Add('WHERE (i.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT c.taxon_id, c.species_id, c.family_id, c.order_id,');
+          Add('SELECT c.taxon_id, c.species_id, c.family_id, c.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -155,7 +155,7 @@ begin
           Add('JOIN TaxaDetails AS t ON c.taxon_id = t.taxon_id');
           Add('WHERE (c.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT ac.taxon_id, ac.species_id, ac.family_id, ac.order_id,');
+          Add('SELECT ac.taxon_id, ac.species_id, ac.family_id, ac.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -167,7 +167,7 @@ begin
           Add('JOIN TaxaDetails AS t ON ac.taxon_id = t.taxon_id');
           Add('WHERE (ac.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT n.taxon_id, n.species_id, n.family_id, n.order_id,');
+          Add('SELECT n.taxon_id, n.species_id, n.family_id, n.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -179,7 +179,7 @@ begin
           Add('JOIN TaxaDetails AS t ON n.taxon_id = t.taxon_id');
           Add('WHERE (n.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT e.taxon_id, e.species_id, e.family_id, e.order_id,');
+          Add('SELECT e.taxon_id, e.species_id, e.family_id, e.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -191,7 +191,7 @@ begin
           Add('JOIN TaxaDetails AS t ON e.taxon_id = t.taxon_id');
           Add('WHERE (e.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT sp.taxon_id, sp.species_id, sp.family_id, sp.order_id,');
+          Add('SELECT sp.taxon_id, sp.species_id, sp.family_id, sp.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -205,7 +205,7 @@ begin
         end;
       tbIndividuals:
         begin
-          Add('SELECT DISTINCT i.taxon_id, i.species_id, i.family_id, i.order_id,');
+          Add('SELECT i.taxon_id, i.species_id, i.family_id, i.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -219,7 +219,7 @@ begin
         end;
       tbCaptures:
         begin
-          Add('SELECT DISTINCT c.taxon_id, c.species_id, c.family_id, c.order_id,');
+          Add('SELECT c.taxon_id, c.species_id, c.family_id, c.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -233,7 +233,7 @@ begin
         end;
       tbSightings:
         begin
-          Add('SELECT DISTINCT ac.taxon_id, ac.species_id, ac.family_id, ac.order_id,');
+          Add('SELECT ac.taxon_id, ac.species_id, ac.family_id, ac.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -247,7 +247,7 @@ begin
         end;
       tbNests:
         begin
-          Add('SELECT DISTINCT n.taxon_id, n.species_id, n.family_id, n.order_id,');
+          Add('SELECT n.taxon_id, n.species_id, n.family_id, n.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -261,7 +261,7 @@ begin
         end;
       tbEggs:
         begin
-          Add('SELECT DISTINCT e.taxon_id, e.species_id, e.family_id, e.order_id,');
+          Add('SELECT e.taxon_id, e.species_id, e.family_id, e.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -275,7 +275,7 @@ begin
         end;
       tbSpecimens:
         begin
-          Add('SELECT DISTINCT sp.taxon_id, sp.species_id, sp.family_id, sp.order_id,');
+          Add('SELECT sp.taxon_id, sp.species_id, sp.family_id, sp.order_id,');
           Add('  s.full_name AS species_name,');
           Add('  f.full_name AS family_name,');
           Add('  o.full_name AS order_name,');
@@ -293,6 +293,7 @@ begin
       Exit;
     end;
 
+    Add('GROUP BY order_id, family_id, species_id');
     Add('ORDER BY sort_num ASC');
     {$IFDEF DEBUG}
     LogSQL(SQL);
@@ -392,7 +393,7 @@ end;
 
 procedure LoadSpecimenDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', sp.collection_date) AS ano,');
   aSQL.Add('strftime(''%m'', sp.collection_date) AS mes,');
   aSQL.Add('strftime(''%d'', sp.collection_date) AS dia');
@@ -401,12 +402,12 @@ end;
 
 procedure LoadNestDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', n.found_date) AS ano,');
   aSQL.Add('strftime(''%m'', n.found_date) AS mes,');
   aSQL.Add('strftime(''%d'', n.found_date) AS dia');
   aSQL.Add('FROM nests AS n WHERE (n.active_status = 1) UNION');
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', n.last_date) AS ano,');
   aSQL.Add('strftime(''%m'', n.last_date) AS mes,');
   aSQL.Add('strftime(''%d'', n.last_date) AS dia');
@@ -415,7 +416,7 @@ end;
 
 procedure LoadNestRevisionDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', nr.revision_date) AS ano,');
   aSQL.Add('strftime(''%m'', nr.revision_date) AS mes,');
   aSQL.Add('strftime(''%d'', nr.revision_date) AS dia');
@@ -424,7 +425,7 @@ end;
 
 procedure LoadEggDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', e.measure_date) AS ano,');
   aSQL.Add('strftime(''%m'', e.measure_date) AS mes,');
   aSQL.Add('strftime(''%d'', e.measure_date) AS dia');
@@ -433,7 +434,7 @@ end;
 
 procedure LoadSightingDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', s.sighting_date) AS ano,');
   aSQL.Add('strftime(''%m'', s.sighting_date) AS mes,');
   aSQL.Add('strftime(''%d'', s.sighting_date) AS dia');
@@ -442,7 +443,7 @@ end;
 
 procedure LoadCaptureDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', c.capture_date) AS ano,');
   aSQL.Add('strftime(''%m'', c.capture_date) AS mes,');
   aSQL.Add('strftime(''%d'', c.capture_date) AS dia');
@@ -451,12 +452,12 @@ end;
 
 procedure LoadExpeditionDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', x.start_date) AS ano,');
   aSQL.Add('strftime(''%m'', x.start_date) AS mes,');
   aSQL.Add('strftime(''%d'', x.start_date) AS dia');
   aSQL.Add('FROM expeditions AS x WHERE (x.active_status = 1) UNION');
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', x.end_date) AS ano,');
   aSQL.Add('strftime(''%m'', x.end_date) AS mes,');
   aSQL.Add('strftime(''%d'', x.end_date) AS dia');
@@ -465,7 +466,7 @@ end;
 
 procedure LoadSurveyDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', sv.survey_date) AS ano,');
   aSQL.Add('strftime(''%m'', sv.survey_date) AS mes,');
   aSQL.Add('strftime(''%d'', sv.survey_date) AS dia');
@@ -474,27 +475,27 @@ end;
 
 procedure LoadBandDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', b.order_date) as ANO,');
   aSQL.Add('strftime(''%m'', b.order_date) as MES,');
   aSQL.Add('strftime(''%d'', b.order_date) as DIA');
   aSQL.Add('FROM bands AS b WHERE (b.active_status = 1) UNION');
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', b.receipt_date) as ANO,');
   aSQL.Add('strftime(''%m'', b.receipt_date) as MES,');
   aSQL.Add('strftime(''%d'', b.receipt_date) as DIA');
   aSQL.Add('FROM bands AS b WHERE (b.active_status = 1) UNION');
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', b.use_date) as ANO,');
   aSQL.Add('strftime(''%m'', b.use_date) as MES,');
   aSQL.Add('strftime(''%d'', b.use_date) as DIA');
   aSQL.Add('FROM bands AS b WHERE (b.active_status = 1) UNION');
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', b.discharge_date) as ANO,');
   aSQL.Add('strftime(''%m'', b.discharge_date) as MES,');
   aSQL.Add('strftime(''%d'', b.discharge_date) as DIA');
   aSQL.Add('FROM bands AS b WHERE (b.active_status = 1) UNION');
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', b.report_date) as ANO,');
   aSQL.Add('strftime(''%m'', b.report_date) as MES,');
   aSQL.Add('strftime(''%d'', b.report_date) as DIA');
@@ -503,22 +504,22 @@ end;
 
 procedure LoadIndividualDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('i.birth_year AS ano,');
   aSQL.Add('i.birth_month AS mes,');
   aSQL.Add('i.birth_day AS dia');
   aSQL.Add('FROM individuals AS i WHERE (i.active_status = 1) UNION');
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', i.banding_date) AS ano,');
   aSQL.Add('strftime(''%m'', i.banding_date) AS mes,');
   aSQL.Add('strftime(''%d'', i.banding_date) AS dia');
   aSQL.Add('FROM individuals AS i WHERE (i.active_status = 1) UNION');
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', i.band_change_date) AS ano,');
   aSQL.Add('strftime(''%m'', i.band_change_date) AS mes,');
   aSQL.Add('strftime(''%d'', i.band_change_date) AS dia');
   aSQL.Add('FROM individuals AS i WHERE (i.active_status = 1) UNION');
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('i.death_year AS ano,');
   aSQL.Add('i.death_month AS mes,');
   aSQL.Add('i.death_day AS dia');
@@ -527,12 +528,12 @@ end;
 
 procedure LoadProjectDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', pj.start_date) AS ano,');
   aSQL.Add('strftime(''%m'', pj.start_date) AS mes,');
   aSQL.Add('strftime(''%d'', pj.start_date) AS dia');
   aSQL.Add('FROM projects AS pj WHERE (pj.active_status = 1) UNION');
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', pj.end_date) AS ano,');
   aSQL.Add('strftime(''%m'', pj.end_date) AS mes,');
   aSQL.Add('strftime(''%d'', pj.end_date) AS dia');
@@ -541,12 +542,12 @@ end;
 
 procedure LoadPermitDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', l.dispatch_date) AS ano,');
   aSQL.Add('strftime(''%m'', l.dispatch_date) AS mes,');
   aSQL.Add('strftime(''%d'', l.dispatch_date) AS dia');
   aSQL.Add('FROM legal AS l WHERE (l.active_status = 1) UNION');
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', l.expire_date) AS ano,');
   aSQL.Add('strftime(''%m'', l.expire_date) AS mes,');
   aSQL.Add('strftime(''%d'', l.expire_date) AS dia');
@@ -555,7 +556,7 @@ end;
 
 procedure LoadPeopleDateTree(aSQL: TStrings);
 begin
-  aSQL.Add('SELECT DISTINCT ');
+  aSQL.Add('SELECT ');
   aSQL.Add('strftime(''%Y'', p.birth_date) AS ano,');
   aSQL.Add('strftime(''%m'', p.birth_date) AS mes,');
   aSQL.Add('strftime(''%d'', p.birth_date) AS dia');
@@ -786,7 +787,7 @@ begin
     case aTable of
       tbNone:
         begin
-          Add('SELECT DISTINCT e.locality_id, e.municipality_id, e.state_id, e.country_id,');
+          Add('SELECT e.locality_id, e.municipality_id, e.state_id, e.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -796,7 +797,7 @@ begin
           Add('JOIN SiteDetails AS p ON e.country_id = p.site_id');
           Add('WHERE (e.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT n.locality_id, n.municipality_id, n.state_id, n.country_id,');
+          Add('SELECT n.locality_id, n.municipality_id, n.state_id, n.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -806,7 +807,7 @@ begin
           Add('JOIN SiteDetails AS p ON n.country_id = p.site_id');
           Add('WHERE (n.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT ac.locality_id, ac.municipality_id, ac.state_id, ac.country_id,');
+          Add('SELECT ac.locality_id, ac.municipality_id, ac.state_id, ac.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -816,7 +817,7 @@ begin
           Add('JOIN SiteDetails AS p ON ac.country_id = p.site_id');
           Add('WHERE (ac.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT c.locality_id, c.municipality_id, c.state_id, c.country_id,');
+          Add('SELECT c.locality_id, c.municipality_id, c.state_id, c.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -826,7 +827,7 @@ begin
           Add('JOIN SiteDetails AS p ON c.country_id = p.site_id');
           Add('WHERE (c.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT xp.locality_id, xp.municipality_id, xp.state_id, xp.country_id,');
+          Add('SELECT xp.locality_id, xp.municipality_id, xp.state_id, xp.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -836,7 +837,7 @@ begin
           Add('JOIN SiteDetails AS p ON xp.country_id = p.site_id');
           Add('WHERE (xp.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT a.locality_id, a.municipality_id, a.state_id, a.country_id,');
+          Add('SELECT a.locality_id, a.municipality_id, a.state_id, a.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -846,7 +847,7 @@ begin
           Add('JOIN SiteDetails AS p ON a.country_id = p.site_id');
           Add('WHERE (a.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT i.municipality_id, i.state_id, i.country_id,');
+          Add('SELECT i.municipality_id, i.state_id, i.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -856,7 +857,7 @@ begin
           Add('JOIN SiteDetails AS p ON i.country_id = p.site_id');
           Add('WHERE (i.active_status = 1)');
           Add('UNION');
-          Add('SELECT DISTINCT r.municipality_id, r.state_id, r.country_id,');
+          Add('SELECT r.municipality_id, r.state_id, r.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -868,7 +869,7 @@ begin
         end;
       tbNests:
         begin
-          Add('SELECT DISTINCT n.locality_id, n.municipality_id, n.state_id, n.country_id,');
+          Add('SELECT n.locality_id, n.municipality_id, n.state_id, n.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -880,7 +881,7 @@ begin
         end;
       tbInstitutions:
         begin
-          Add('SELECT DISTINCT i.municipality_id, i.state_id, i.country_id,');
+          Add('SELECT i.municipality_id, i.state_id, i.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -892,7 +893,7 @@ begin
         end;
       tbPeople:
         begin
-          Add('SELECT DISTINCT r.municipality_id, r.state_id, r.country_id,');
+          Add('SELECT r.municipality_id, r.state_id, r.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -904,7 +905,7 @@ begin
         end;
       tbExpeditions:
         begin
-          Add('SELECT DISTINCT xp.locality_id, xp.municipality_id, xp.state_id, xp.country_id,');
+          Add('SELECT xp.locality_id, xp.municipality_id, xp.state_id, xp.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -916,7 +917,7 @@ begin
         end;
       tbSurveys:
         begin
-          Add('SELECT DISTINCT a.locality_id, a.municipality_id, a.state_id, a.country_id,');
+          Add('SELECT a.locality_id, a.municipality_id, a.state_id, a.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -928,7 +929,7 @@ begin
         end;
       tbSightings:
         begin
-          Add('SELECT DISTINCT ac.locality_id, ac.municipality_id, ac.state_id, ac.country_id,');
+          Add('SELECT ac.locality_id, ac.municipality_id, ac.state_id, ac.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -940,7 +941,7 @@ begin
         end;
       tbSpecimens:
         begin
-          Add('SELECT DISTINCT e.locality_id, e.municipality_id, e.state_id, e.country_id,');
+          Add('SELECT e.locality_id, e.municipality_id, e.state_id, e.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -952,7 +953,7 @@ begin
         end;
       tbCaptures:
         begin
-          Add('SELECT DISTINCT c.locality_id, c.municipality_id, c.state_id, c.country_id,');
+          Add('SELECT c.locality_id, c.municipality_id, c.state_id, c.country_id,');
           Add('   m.site_name AS municipality_name,');
           Add('   s.site_name AS state_name,');
           Add('   p.site_name AS country_name');
@@ -968,6 +969,7 @@ begin
       Exit;
     end;
 
+    SQL.Add('GROUP BY country_id, state_id, municipality_id');
     SQL.Add('ORDER BY country_name ASC, state_name ASC, municipality_name ASC');
     {$IFDEF DEBUG}
     LogDebug(SQL.Text);

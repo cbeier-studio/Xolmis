@@ -609,10 +609,13 @@ begin
   try
     SQL.Clear;
 
-    SQL.Add('SELECT DISTINCT t.rank_id,');
-    SQL.Add('(SELECT l.rank_name FROM taxon_ranks AS l WHERE l.rank_id = t.rank_id) AS rank_name,');
-    SQL.Add('(SELECT n.rank_seq FROM taxon_ranks AS n WHERE n.rank_id = t.rank_id) AS sort_num');
-    SQL.Add('FROM zoo_taxa AS t WHERE (t.rank_id > 0) AND (t.active_status = 1)');
+    SQL.Add('SELECT t.rank_id,');
+    SQL.Add('   r.rank_name AS rank_name,');
+    SQL.Add('   r.rank_seq AS sort_num');
+    SQL.Add('FROM zoo_taxa AS t');
+    SQL.Add('LEFT JOIN taxon_ranks AS r ON t.rank_id = r.rank_id');
+    SQL.Add('WHERE (t.rank_id > 0) AND (t.active_status = 1)');
+    SQL.Add('GROUP BY t.rank_id');
     SQL.Add('ORDER BY sort_num ASC');
 
     Open;

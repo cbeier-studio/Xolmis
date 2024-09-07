@@ -1021,9 +1021,10 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
     Clear;
-    Add('SELECT DISTINCT camera_name');
+    Add('SELECT camera_name');
     Add('FROM captures');
     Add('WHERE (active_status = 1)');
+    Add('GROUP BY camera_name');
     //GravaLogSQL(SQL);
     Open;
     First;

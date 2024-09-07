@@ -73,6 +73,7 @@ type
     iHeadersDark: TImageList;
     iIcons: TImageList;
     iIconsDark: TImageList;
+    lblImageID: TDBText;
     lblReportedFilter: TLabel;
     lblEscapedFilter: TLabel;
     lblNeedsReviewFilter: TLabel;
