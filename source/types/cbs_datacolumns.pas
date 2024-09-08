@@ -2214,7 +2214,7 @@ begin
 
       'mackinnon_list_num':
       begin
-        Add('SELECT s.sighting_date AS date, s.mackinnon_list AS list, COUNT(*) AS tally');
+        Add('SELECT s.sighting_date AS date, s.mackinnon_list_num AS list, COUNT(*) AS tally');
         Add('FROM sightings AS s');
         if aWhereText <> EmptyStr then
           AddText(aWhereText)

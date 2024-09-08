@@ -42,10 +42,12 @@ const
   procedure CreateImageThumbnail(aFileName: String; aDataSet: TDataSet);
   procedure RecreateThumbnails;
 
+  procedure ViewImage(aDataSet: TDataSet);
+
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_validations, udm_main, udlg_progress,
+  cbs_locale, cbs_global, cbs_dialogs, cbs_validations, udm_main, udlg_progress, ufrm_imageviewer,
   fpeGlobal, fpeTags, fpeExifData, Math,
   {$IFDEF DEBUG}
   cbs_debug,
@@ -331,12 +333,17 @@ begin
     case imgOrientation of
       eoUnknown: rotAngle := 0;            // Unknown - do nothing
       eoNormal: rotAngle := 0;             // Horizontal - No rotation required
-      eoMirrorHor:
+      eoMirrorHor:                         // Flip horizontal
         begin
           imgThumb.HorizontalFlip;
-          rotAngle := 0;                   // Flip horizontal
+          rotAngle := 0;
         end;
-      eoRotate180: rotAngle := 180;        // Rotate 180 CW
+      eoRotate180:                         // Rotate 180 CW
+        begin
+          rotAngle := 180;
+          imgThumb.HorizontalFlip;
+          imgThumb.VerticalFlip;
+        end;
       eoMirrorVert:                        // Rotate 180 CW and flip horizontal (Flip vertical)
         begin
           imgThumb.VerticalFlip;
@@ -346,22 +353,32 @@ begin
         begin
           imgThumb.HorizontalFlip;
           rotAngle := 270;
+          BGRAReplace(imgThumb, imgThumb.RotateCCW);
         end;
-      eoRotate90: rotAngle := 90;          // Rotate 90 CW
+      eoRotate90:                          // Rotate 90 CW
+        begin
+          rotAngle := 90;
+          BGRAReplace(imgThumb, imgThumb.RotateCW);
+        end;
       eoMirrorHorRot90:                    // Rotate 90 CW and flip horizontal
         begin
           imgThumb.HorizontalFlip;
           rotAngle := 90;
+          BGRAReplace(imgThumb, imgThumb.RotateCW);
         end;
-      eoRotate270: rotAngle := 270;        // Rotate 270 CW
+      eoRotate270:                         // Rotate 270 CW
+        begin
+          rotAngle := 270;
+          BGRAReplace(imgThumb, imgThumb.RotateCCW);
+        end;
     end;
     // Set image rotation, if necessary
-    if rotAngle <> 0 then
-    begin
-      bmpCenter.X := (imgThumb.Width - 1) / 2;
-      bmpCenter.Y := (imgThumb.Height - 1) / 2;
-      BGRAReplace(imgThumb, imgThumb.FilterRotate(bmpCenter, rotAngle));
-    end;
+    //if rotAngle <> 0 then
+    //begin
+    //  bmpCenter.X := (imgThumb.Width - 1) / 2;
+    //  bmpCenter.Y := (imgThumb.Height - 1) / 2;
+    //  BGRAReplace(imgThumb, imgThumb.FilterRotate(bmpCenter, rotAngle));
+    //end;
     {$ENDIF}
 
     { Encode image as JPEG }
@@ -517,6 +534,18 @@ begin
     FreeAndNil(Qry);
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
+  end;
+end;
+
+procedure ViewImage(aDataSet: TDataSet);
+begin
+  frmImageViewer := TfrmImageViewer.Create(nil);
+  with frmImageViewer do
+  try
+    dsLink.DataSet := aDataSet;
+    ShowModal;
+  finally
+    FreeAndNil(frmImageViewer);
   end;
 end;
 

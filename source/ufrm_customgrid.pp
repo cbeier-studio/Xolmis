@@ -663,6 +663,7 @@ type
     procedure DBGDblClick(Sender: TObject);
     procedure DBGEditButtonClick(Sender: TObject);
     procedure DBGEditingDone(Sender: TObject);
+    procedure dbgImagesDblClick(Sender: TObject);
     procedure DBGKeyPress(Sender: TObject; var Key: char);
     procedure DBGMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure DBGMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
@@ -805,6 +806,7 @@ type
     procedure sbShareChildClick(Sender: TObject);
     procedure sbShareRecordsClick(Sender: TObject);
     procedure sbShowRecordClick(Sender: TObject);
+    procedure sbViewImageClick(Sender: TObject);
     procedure SetFilters(Sender: TObject);
     procedure SplitChildMoved(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
@@ -1053,7 +1055,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
-  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns,
+  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
 
@@ -2421,6 +2423,12 @@ begin
   //if TStringGrid(Sender).RowCount > TStringGrid(Sender).Row then
   //  TStringGrid(Sender).RowHeights[TStringGrid(Sender).Row] := TStringGrid(Sender).DefaultRowHeight;
   //{$ENDIF}
+end;
+
+procedure TfrmCustomGrid.dbgImagesDblClick(Sender: TObject);
+begin
+  if sbViewImage.Enabled then
+    sbViewImageClick(nil);
 end;
 
 procedure TfrmCustomGrid.DBGKeyPress(Sender: TObject; var Key: char);
@@ -7297,6 +7305,11 @@ begin
     cpSide.PageIndex := (Sender as TSpeedButton).Tag;
 
   frmMain.UpdateMenu(frmMain.PGW.ActivePageComponent);
+end;
+
+procedure TfrmCustomGrid.sbViewImageClick(Sender: TObject);
+begin
+  ViewImage(qImages);
 end;
 
 function TfrmCustomGrid.Search(aValue: String): Boolean;

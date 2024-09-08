@@ -11200,6 +11200,33 @@ msgctxt "tfrmgeoconverter.sbsavefile.caption"
 msgid "Save"
 msgstr ""
 
+#: tfrmimageviewer.caption
+msgid "Image viewer"
+msgstr ""
+
+#: tfrmimageviewer.lblsize.caption
+msgid "0 × 0 px"
+msgstr ""
+
+#: tfrmimageviewer.lblzoom.caption
+msgctxt "tfrmimageviewer.lblzoom.caption"
+msgid "100%"
+msgstr ""
+
+#: tfrmimageviewer.sbcopyimage.caption
+msgctxt "tfrmimageviewer.sbcopyimage.caption"
+msgid "Copy"
+msgstr ""
+
+#: tfrmimageviewer.sbopen.caption
+msgctxt "tfrmimageviewer.sbopen.caption"
+msgid "Edit"
+msgstr ""
+
+#: tfrmimageviewer.sbsaveas.caption
+msgid "Save as..."
+msgstr ""
+
 #: tfrmmain.actabout.caption
 msgctxt "tfrmmain.actabout.caption"
 msgid "About"

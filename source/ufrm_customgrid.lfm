@@ -6554,6 +6554,7 @@ object frmCustomGrid: TfrmCustomGrid
           PopupMenu = pmImages
           Scrollbars = ssVertical
           TabOrder = 0
+          OnDblClick = dbgImagesDblClick
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
           ColWidths = (
@@ -6624,6 +6625,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 136
               Width = 57
               Alignment = taRightJustify
+              Anchors = [akTop, akRight]
               DataField = 'image_id'
               DataSource = dsImages
               Font.Color = clMedGray
@@ -6774,6 +6776,7 @@ object frmCustomGrid: TfrmCustomGrid
             Images = iButtons
             ImageIndex = 52
             ImageWidth = 24
+            OnClick = sbViewImageClick
             ShowHint = True
             ParentShowHint = False
           end

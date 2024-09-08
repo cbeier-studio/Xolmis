@@ -129,7 +129,7 @@ uses
   { Other forms }
   ufrm_customgrid, ufrm_dashboard, ufrm_geoconverter, ufrm_maintenance, udm_breeding, uedt_method, udm_sampling,
   uedt_weatherlog, uedt_project, uedt_permit, uedt_sampleprep, uedt_specimen, uedt_nestowner, udlg_firstconfig,
-  udlg_export, cbs_datacolumns, cbs_math, udlg_recverifications, uedt_recverification;
+  udlg_export, cbs_datacolumns, cbs_math, udlg_recverifications, uedt_recverification, ufrm_imageviewer;
 
 {$R *.res}
 

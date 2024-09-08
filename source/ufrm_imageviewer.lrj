@@ -1,0 +1,8 @@
+{"version":1,"strings":[
+{"hash":46969010,"name":"tfrmimageviewer.caption","sourcebytes":[73,109,97,103,101,32,118,105,101,119,101,114],"value":"Image viewer"},
+{"hash":310020,"name":"tfrmimageviewer.sbopen.caption","sourcebytes":[69,100,105,116],"value":"Edit"},
+{"hash":124639694,"name":"tfrmimageviewer.sbsaveas.caption","sourcebytes":[83,97,118,101,32,97,115,46,46,46],"value":"Save as..."},
+{"hash":304761,"name":"tfrmimageviewer.sbcopyimage.caption","sourcebytes":[67,111,112,121],"value":"Copy"},
+{"hash":213797,"name":"tfrmimageviewer.lblzoom.caption","sourcebytes":[49,48,48,37],"value":"100%"},
+{"hash":210965944,"name":"tfrmimageviewer.lblsize.caption","sourcebytes":[48,32,195,151,32,48,32,112,120],"value":"0 \u00D7 0 px"}
+]}

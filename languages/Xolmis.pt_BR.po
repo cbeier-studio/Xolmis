@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: cbs_datacolumns.rsc1stsecondarychord
 msgid "1st secondary chord"
@@ -11241,6 +11241,33 @@ msgstr "Colar"
 msgctxt "tfrmgeoconverter.sbsavefile.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tfrmimageviewer.caption
+msgid "Image viewer"
+msgstr "Visualizador de imagens"
+
+#: tfrmimageviewer.lblsize.caption
+msgid "0 × 0 px"
+msgstr ""
+
+#: tfrmimageviewer.lblzoom.caption
+msgctxt "tfrmimageviewer.lblzoom.caption"
+msgid "100%"
+msgstr ""
+
+#: tfrmimageviewer.sbcopyimage.caption
+msgctxt "tfrmimageviewer.sbcopyimage.caption"
+msgid "Copy"
+msgstr "Copiar"
+
+#: tfrmimageviewer.sbopen.caption
+msgctxt "tfrmimageviewer.sbopen.caption"
+msgid "Edit"
+msgstr "Editar"
+
+#: tfrmimageviewer.sbsaveas.caption
+msgid "Save as..."
+msgstr "Salvar como..."
 
 #: tfrmmain.actabout.caption
 msgctxt "tfrmmain.actabout.caption"
