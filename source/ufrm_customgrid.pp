@@ -1164,6 +1164,8 @@ begin
   pQuickFiltersContent.Background.Color := clSolidBGTertiaryDark;
   pFiltersToolbar.Background.Color := clCardBGDefaultDark;
   pFiltersToolbar.Border.Color := clCardBGSecondaryDark;
+  pImagesToolbar.Background.Color := clCardBGDefaultDark;
+  pImagesToolbar.Border.Color := clCardBGSecondaryDark;
   pColumnsToolbar.Background.Color := clCardBGDefaultDark;
   pColumnsToolbar.Border.Color := clCardBGSecondaryDark;
   pRecycleToolbar.Background.Color := clCardBGDefaultDark;
@@ -1256,6 +1258,11 @@ begin
   sbShowRecord.Images := iButtonsDark;
   sbShowQuickFilters.Images := iButtonsDark;
   sbShowImages.Images := iButtonsDark;
+  sbAddImage.Images := iButtonsDark;
+  sbImageInfo.Images := iButtonsDark;
+  sbSaveImage.Images := iButtonsDark;
+  sbViewImage.Images := iButtonsDark;
+  sbDelImage.Images := iButtonsDark;
   sbShowAudio.Images := iButtonsDark;
   sbShowDocs.Images := iButtonsDark;
   sbShowSummary.Images := iButtonsDark;
@@ -1266,6 +1273,7 @@ begin
   sbColumnWidthAutoAdjust.Images := iButtonsDark;
   sbMoveColumnDown.Images := iButtonsDark;
   sbMoveColumnUp.Images := iButtonsDark;
+  sbMarkColumns.Images := iButtonsDark;
   sbColumnHide.Images := iButtonsDark;
   sbShowRecycle.Images := iButtonsDark;
   sbClearFilters.Images := iButtonsDark;

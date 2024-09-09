@@ -11,7 +11,6 @@ object frmDashboard: TfrmDashboard
   OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMenu = pmDashboard
-  LCLVersion = '3.4.0.0'
   object sBox: TScrollBox
     Left = 0
     Height = 478
@@ -134,8 +133,150 @@ object frmDashboard: TfrmDashboard
           ParentFont = False
         end
       end
-      object pCharts: TBCPanel
+      object pChartSpecies: TBCPanel
         Left = 403
+        Height = 240
+        Top = 16
+        Width = 371
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 8
+        ChildSizing.VerticalSpacing = 8
+        Background.Color = clWhite
+        Background.Gradient1.StartColor = clWhite
+        Background.Gradient1.EndColor = clBlack
+        Background.Gradient1.GradientType = gtLinear
+        Background.Gradient1.Point1XPercent = 0
+        Background.Gradient1.Point1YPercent = 0
+        Background.Gradient1.Point2XPercent = 0
+        Background.Gradient1.Point2YPercent = 100
+        Background.Gradient2.StartColor = clWhite
+        Background.Gradient2.EndColor = clBlack
+        Background.Gradient2.GradientType = gtLinear
+        Background.Gradient2.Point1XPercent = 0
+        Background.Gradient2.Point1YPercent = 0
+        Background.Gradient2.Point2XPercent = 0
+        Background.Gradient2.Point2YPercent = 100
+        Background.Gradient1EndPercent = 35
+        Background.Style = bbsColor
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BevelWidth = 1
+        Border.Color = 13750737
+        Border.Style = bboSolid
+        BorderBCStyle = bpsBorder
+        Constraints.MaxHeight = 320
+        Constraints.MinHeight = 240
+        Constraints.MinWidth = 371
+        FontEx.Color = clDefault
+        FontEx.FontQuality = fqSystemClearType
+        FontEx.Shadow = False
+        FontEx.ShadowRadius = 5
+        FontEx.ShadowOffsetX = 5
+        FontEx.ShadowOffsetY = 5
+        FontEx.Style = []
+        ParentBackground = False
+        Rounding.RoundX = 8
+        Rounding.RoundY = 8
+        TabOrder = 3
+        object chartSpecies: TChart
+          Left = 16
+          Height = 196
+          Top = 36
+          Width = 339
+          AxisList = <          
+            item
+              Grid.Color = 13750737
+              Intervals.Options = [aipUseCount, aipUseMinLength, aipUseNiceSteps, aipInteger]
+              TickInnerLength = 2
+              AxisPen.Visible = True
+              Marks.LabelBrush.Style = bsClear
+              Minors = <>
+              Title.LabelFont.Color = 13066075
+              Title.LabelFont.Orientation = 900
+              Title.Visible = True
+              Title.Caption = 'nr. of species'
+              Title.LabelBrush.Style = bsClear
+            end          
+            item
+              Grid.Visible = False
+              Intervals.Count = 12
+              Intervals.MinLength = 12
+              Intervals.Options = [aipUseCount]
+              TickLength = 0
+              Alignment = calBottom
+              AxisPen.Visible = True
+              Marks.Distance = 2
+              Marks.LabelFont.Orientation = 400
+              Marks.Format = '%2:s'
+              Marks.LabelBrush.Style = bsClear
+              Marks.RotationCenter = rcRight
+              Marks.Source = lcsIndividualsMonth
+              Marks.Style = smsLabel
+              Minors = <              
+                item
+                  Grid.Visible = False
+                  Intervals.Count = 1
+                  Intervals.MinLength = 1
+                  Intervals.Options = [aipUseCount, aipUseMinLength]
+                  TickInnerLength = 2
+                  TickLength = 6
+                  Marks.LabelBrush.Style = bsClear
+                end>
+              Title.LabelFont.Color = 13066075
+              Title.Visible = True
+              Title.Caption = 'month'
+              Title.LabelBrush.Style = bsClear
+            end>
+          BackColor = clWhite
+          Frame.Style = psClear
+          GUIConnector = ChartBGRA
+          Legend.BackgroundBrush.Color = 16448250
+          Legend.Frame.Visible = False
+          Margins.Left = 16
+          Margins.Right = 16
+          Margins.Bottom = 0
+          MarginsExternal.Left = 0
+          MarginsExternal.Top = 0
+          MarginsExternal.Right = 0
+          MarginsExternal.Bottom = 0
+          Title.Font.Color = 13066075
+          Title.Text.Strings = (
+            'Species recorded'
+          )
+          Align = alClient
+          Color = clWhite
+          object barSpeciesMonth: TBarSeries
+            Title = 'Species'
+            BarBrush.Color = 13066075
+            BarPen.Style = psClear
+            BarWidthPercent = 65
+            Marks.Distance = 8
+            Marks.LabelFont.Color = 13066075
+            Marks.Format = '%0:.9g'
+            Marks.Frame.Visible = False
+            Marks.LabelBrush.Style = bsClear
+            Marks.LinkPen.Visible = False
+            Marks.Style = smsValue
+            Source = lcsSpeciesMonth
+          end
+        end
+        object lblTitleChartSpecies: TLabel
+          Left = 16
+          Height = 20
+          Top = 8
+          Width = 339
+          Align = alTop
+          Alignment = taRightJustify
+          Caption = 'Species recorded in the last 12 months'
+          Color = 16448250
+          Font.Color = 13066075
+          Font.Height = -15
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+      object pChartIndividuals: TBCPanel
+        Left = 790
         Height = 240
         Top = 16
         Width = 371
@@ -277,9 +418,9 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pMapSurveys: TBCPanel
-        Left = 790
+        Left = 16
         Height = 240
-        Top = 16
+        Top = 272
         Width = 371
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
@@ -349,148 +490,6 @@ object frmDashboard: TfrmDashboard
           MapProvider = 'OpenStreetMap Mapnik'
           POIImagesWidth = 20
           UseThreads = True
-        end
-      end
-      object pCharts1: TBCPanel
-        Left = 16
-        Height = 240
-        Top = 272
-        Width = 371
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.TopBottomSpacing = 8
-        ChildSizing.VerticalSpacing = 8
-        Background.Color = clWhite
-        Background.Gradient1.StartColor = clWhite
-        Background.Gradient1.EndColor = clBlack
-        Background.Gradient1.GradientType = gtLinear
-        Background.Gradient1.Point1XPercent = 0
-        Background.Gradient1.Point1YPercent = 0
-        Background.Gradient1.Point2XPercent = 0
-        Background.Gradient1.Point2YPercent = 100
-        Background.Gradient2.StartColor = clWhite
-        Background.Gradient2.EndColor = clBlack
-        Background.Gradient2.GradientType = gtLinear
-        Background.Gradient2.Point1XPercent = 0
-        Background.Gradient2.Point1YPercent = 0
-        Background.Gradient2.Point2XPercent = 0
-        Background.Gradient2.Point2YPercent = 100
-        Background.Gradient1EndPercent = 35
-        Background.Style = bbsColor
-        BevelInner = bvNone
-        BevelOuter = bvNone
-        BevelWidth = 1
-        Border.Color = 13750737
-        Border.Style = bboSolid
-        BorderBCStyle = bpsBorder
-        Constraints.MaxHeight = 320
-        Constraints.MinHeight = 240
-        Constraints.MinWidth = 371
-        FontEx.Color = clDefault
-        FontEx.FontQuality = fqSystemClearType
-        FontEx.Shadow = False
-        FontEx.ShadowRadius = 5
-        FontEx.ShadowOffsetX = 5
-        FontEx.ShadowOffsetY = 5
-        FontEx.Style = []
-        ParentBackground = False
-        Rounding.RoundX = 8
-        Rounding.RoundY = 8
-        TabOrder = 3
-        object chartSpecies: TChart
-          Left = 16
-          Height = 196
-          Top = 36
-          Width = 339
-          AxisList = <          
-            item
-              Grid.Color = 13750737
-              Intervals.Options = [aipUseCount, aipUseMinLength, aipUseNiceSteps, aipInteger]
-              TickInnerLength = 2
-              AxisPen.Visible = True
-              Marks.LabelBrush.Style = bsClear
-              Minors = <>
-              Title.LabelFont.Color = 13066075
-              Title.LabelFont.Orientation = 900
-              Title.Visible = True
-              Title.Caption = 'nr. of species'
-              Title.LabelBrush.Style = bsClear
-            end          
-            item
-              Grid.Visible = False
-              Intervals.Count = 12
-              Intervals.MinLength = 12
-              Intervals.Options = [aipUseCount]
-              TickLength = 0
-              Alignment = calBottom
-              AxisPen.Visible = True
-              Marks.Distance = 2
-              Marks.LabelFont.Orientation = 400
-              Marks.Format = '%2:s'
-              Marks.LabelBrush.Style = bsClear
-              Marks.RotationCenter = rcRight
-              Marks.Source = lcsIndividualsMonth
-              Marks.Style = smsLabel
-              Minors = <              
-                item
-                  Grid.Visible = False
-                  Intervals.Count = 1
-                  Intervals.MinLength = 1
-                  Intervals.Options = [aipUseCount, aipUseMinLength]
-                  TickInnerLength = 2
-                  TickLength = 6
-                  Marks.LabelBrush.Style = bsClear
-                end>
-              Title.LabelFont.Color = 13066075
-              Title.Visible = True
-              Title.Caption = 'month'
-              Title.LabelBrush.Style = bsClear
-            end>
-          BackColor = clWhite
-          Frame.Style = psClear
-          GUIConnector = ChartBGRA
-          Legend.BackgroundBrush.Color = 16448250
-          Legend.Frame.Visible = False
-          Margins.Left = 16
-          Margins.Right = 16
-          Margins.Bottom = 0
-          MarginsExternal.Left = 0
-          MarginsExternal.Top = 0
-          MarginsExternal.Right = 0
-          MarginsExternal.Bottom = 0
-          Title.Font.Color = 13066075
-          Title.Text.Strings = (
-            'Species recorded'
-          )
-          Align = alClient
-          Color = clWhite
-          object barSpeciesMonth: TBarSeries
-            Title = 'Species'
-            BarBrush.Color = 13066075
-            BarPen.Style = psClear
-            BarWidthPercent = 65
-            Marks.Distance = 8
-            Marks.LabelFont.Color = 13066075
-            Marks.Format = '%0:.9g'
-            Marks.Frame.Visible = False
-            Marks.LabelBrush.Style = bsClear
-            Marks.LinkPen.Visible = False
-            Marks.Style = smsValue
-            Source = lcsSpeciesMonth
-          end
-        end
-        object lblTitleChartSpecies: TLabel
-          Left = 16
-          Height = 20
-          Top = 8
-          Width = 339
-          Align = alTop
-          Alignment = taRightJustify
-          Caption = 'Species recorded in the last 12 months'
-          Color = 16448250
-          Font.Color = 13066075
-          Font.Height = -15
-          ParentColor = False
-          ParentFont = False
         end
       end
     end

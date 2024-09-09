@@ -6582,6 +6582,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 10
               Width = 70
               Alignment = taRightJustify
+              Anchors = [akTop, akRight]
               DataField = 'image_date'
               DataSource = dsImages
               ParentColor = False
@@ -6592,6 +6593,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 32
               Width = 73
               Alignment = taRightJustify
+              Anchors = [akTop, akRight]
               DataField = 'image_time'
               DataSource = dsImages
               ParentColor = False
@@ -6961,7 +6963,7 @@ object frmCustomGrid: TfrmCustomGrid
             item
               ReadOnly = True
               Title.Caption = 'Field'
-              Width = 218
+              Width = 214
             end          
             item
               Alignment = taRightJustify
@@ -6981,7 +6983,7 @@ object frmCustomGrid: TfrmCustomGrid
           ColWidths = (
             100
             70
-            218
+            214
             60
           )
           Cells = (
@@ -23579,6 +23581,7 @@ object frmCustomGrid: TfrmCustomGrid
     object pmiViewImage: TMenuItem
       Caption = 'View image'
       ImageIndex = 52
+      OnClick = sbViewImageClick
     end
     object pmiSaveImage: TMenuItem
       Caption = 'Save image as...'

@@ -11218,13 +11218,61 @@ msgctxt "tfrmimageviewer.sbcopyimage.caption"
 msgid "Copy"
 msgstr ""
 
-#: tfrmimageviewer.sbopen.caption
-msgctxt "tfrmimageviewer.sbopen.caption"
-msgid "Edit"
+#: tfrmimageviewer.sbcopyimage.hint
+msgid "Copy image to clipboard"
+msgstr ""
+
+#: tfrmimageviewer.sbfliphorizontal.hint
+msgid "Flip horizontally"
+msgstr ""
+
+#: tfrmimageviewer.sbflipvertical.hint
+msgid "Flip vertically"
+msgstr ""
+
+#: tfrmimageviewer.sbimageinfo.hint
+msgctxt "tfrmimageviewer.sbimageinfo.hint"
+msgid "Image info"
+msgstr ""
+
+#: tfrmimageviewer.sbopen.hint
+msgid "Open with default editor"
+msgstr ""
+
+#: tfrmimageviewer.sbrotateleft.hint
+msgid "Rotate left"
+msgstr ""
+
+#: tfrmimageviewer.sbrotateright.hint
+msgid "Rotate right"
 msgstr ""
 
 #: tfrmimageviewer.sbsaveas.caption
 msgid "Save as..."
+msgstr ""
+
+#: tfrmimageviewer.sbsaveas.hint
+msgid "Save an image copy"
+msgstr ""
+
+#: tfrmimageviewer.sbzoom100.hint
+msgid "Zoom to actual size"
+msgstr ""
+
+#: tfrmimageviewer.sbzoomadjust.hint
+msgid "Zoom image to fit"
+msgstr ""
+
+#: tfrmimageviewer.sbzoomin.hint
+msgid "Zoom in"
+msgstr ""
+
+#: tfrmimageviewer.sbzoomout.hint
+msgid "Zoom out"
+msgstr ""
+
+#: tfrmimageviewer.tbzoom.hint
+msgid "Zoom"
 msgstr ""
 
 #: tfrmmain.actabout.caption

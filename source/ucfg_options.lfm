@@ -742,8 +742,10 @@ object cfgOptions: TcfgOptions
               Width = 237
               Align = alRight
               Caption = 'Xolmis need to be restarted to apply changes'
+              Font.Color = 13066075
               Layout = tlCenter
               ParentColor = False
+              ParentFont = False
               Visible = False
             end
           end

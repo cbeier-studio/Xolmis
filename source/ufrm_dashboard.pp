@@ -61,8 +61,8 @@ type
     pBandsBalance: TBCPanel;
     pBandsContent: TBCPanel;
     pBirthdays: TBCPanel;
-    pCharts: TBCPanel;
-    pCharts1: TBCPanel;
+    pChartIndividuals: TBCPanel;
+    pChartSpecies: TBCPanel;
     pLifers: TBCPanel;
     pMapSurveys: TBCPanel;
     pNumbers: TBCPanel;
@@ -403,14 +403,14 @@ begin
   pTotalSamplings.Border.Color := clSystemSolidNeutralFGDark;
   pLifers.Background.Color := clCardBGDefaultDark;
   pLifers.Border.Color := clSystemSolidNeutralFGDark;
-  pCharts.Background.Color := clCardBGDefaultDark;
-  pCharts.Border.Color := clSystemSolidNeutralFGDark;
+  pChartIndividuals.Background.Color := clCardBGDefaultDark;
+  pChartIndividuals.Border.Color := clSystemSolidNeutralFGDark;
   chartIndividuals.Color := clCardBGDefaultDark;
   chartIndividuals.BackColor := clCardBGDefaultDark;
   chartIndividuals.LeftAxis.Marks.LabelFont.Color := clTextPrimaryDark;
   chartIndividuals.BottomAxis.Marks.LabelFont.Color := clTextPrimaryDark;
-  pCharts1.Background.Color := clCardBGDefaultDark;
-  pCharts1.Border.Color := clSystemSolidNeutralFGDark;
+  pChartSpecies.Background.Color := clCardBGDefaultDark;
+  pChartSpecies.Border.Color := clSystemSolidNeutralFGDark;
   chartSpecies.Color := clCardBGDefaultDark;
   chartSpecies.BackColor := clCardBGDefaultDark;
   chartSpecies.LeftAxis.Marks.LabelFont.Color := clTextPrimaryDark;
@@ -473,10 +473,10 @@ end;
 
 procedure TfrmDashboard.pFlowChangeBounds(Sender: TObject);
 begin
-  if sBox.Width < ((pCharts.Constraints.MinWidth * 2) + (pFlow.ChildSizing.HorizontalSpacing * 3)) then
+  if sBox.Width < ((pChartIndividuals.Constraints.MinWidth * 2) + (pFlow.ChildSizing.HorizontalSpacing * 3)) then
     pFlow.ChildSizing.ControlsPerLine := 1
   else
-  if sBox.Width < ((pCharts.Constraints.MinWidth * 3) + (pFlow.ChildSizing.HorizontalSpacing * 4)) then
+  if sBox.Width < ((pChartIndividuals.Constraints.MinWidth * 3) + (pFlow.ChildSizing.HorizontalSpacing * 4)) then
     pFlow.ChildSizing.ControlsPerLine := 2
   else
     pFlow.ChildSizing.ControlsPerLine := 3;
@@ -550,10 +550,10 @@ end;
 
 procedure TfrmDashboard.pNumbersResize(Sender: TObject);
 begin
-  if sBox.Width < ((pCharts.Constraints.MinWidth * 2) + (pFlow.ChildSizing.HorizontalSpacing * 2)) then
+  if sBox.Width < ((pChartIndividuals.Constraints.MinWidth * 2) + (pFlow.ChildSizing.HorizontalSpacing * 2)) then
     pNumbers.ChildSizing.ControlsPerLine := 2
   else
-  if sBox.Width < ((pCharts.Constraints.MinWidth * 3) + (pFlow.ChildSizing.HorizontalSpacing * 3)) then
+  if sBox.Width < ((pChartIndividuals.Constraints.MinWidth * 3) + (pFlow.ChildSizing.HorizontalSpacing * 3)) then
     pNumbers.ChildSizing.ControlsPerLine := 4
   else
     pNumbers.ChildSizing.ControlsPerLine := 6;
@@ -669,23 +669,28 @@ begin
     begin
       chartIndividuals.Refresh;
       lcsIndividualsMonth.Clear;
-      for i := 1 to 12 do
-      begin
-        if Locate('record_month', FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)), []) then
-          lcsIndividualsMonth.Add(
-            i,
-            FieldByName('quantity').AsFloat,
-            FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
-        else
-          lcsIndividualsMonth.Add(
-            i,
-            0,
-            FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
+      lcsIndividualsMonth.BeginUpdate;
+      try
+        for i := 1 to 12 do
+        begin
+          if Locate('record_month', FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)), []) then
+            lcsIndividualsMonth.Add(
+              i,
+              FieldByName('quantity').AsFloat,
+              FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
+          else
+            lcsIndividualsMonth.Add(
+              i,
+              0,
+              FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
+        end;
+        pChartIndividuals.Visible := True;
+      finally
+        lcsIndividualsMonth.EndUpdate;
       end;
-      pCharts.Visible := True;
     end;
     //else
-    //  pCharts.Visible := False;
+    //  pChartIndividuals.Visible := False;
   end;
 
   with DMC.qSpeciesMonth do
@@ -698,23 +703,28 @@ begin
     begin
       chartSpecies.Refresh;
       lcsSpeciesMonth.Clear;
-      for i := 1 to 12 do
-      begin
-        if Locate('record_month', FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)), []) then
-          lcsIndividualsMonth.Add(
-            i,
-            FieldByName('quantity').AsFloat,
-            FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
-        else
-          lcsIndividualsMonth.Add(
-            i,
-            0,
-            FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
+      lcsSpeciesMonth.BeginUpdate;
+      try
+        for i := 1 to 12 do
+        begin
+          if Locate('record_month', FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)), []) then
+            lcsIndividualsMonth.Add(
+              i,
+              FieldByName('quantity').AsFloat,
+              FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
+          else
+            lcsIndividualsMonth.Add(
+              i,
+              0,
+              FormatDateTime('yyyy-mm', IncMonth(InitialMonth, i - 1)))
+        end;
+        pChartSpecies.Visible := True;
+      finally
+        lcsSpeciesMonth.EndUpdate;
       end;
-      pCharts1.Visible := True;
     end;
     //else
-    //  pCharts1.Visible := False;
+    //  pChartSpecies.Visible := False;
   end;
 end;
 

@@ -17,6 +17,7 @@ type
     btnNext: TBCButton;
     dsLink: TDataSource;
     iButtons: TImageList;
+    iButtonsDark: TImageList;
     imgView: TImage;
     lblZoom: TLabel;
     lblSize: TLabel;
@@ -57,6 +58,7 @@ type
     FOriginal, FZoomed: TBGRABitmap;
     FOrigWidth, FOrigHeight: Integer;
     FZoomWidth, FZoomHeight: Integer;
+    procedure ApplyDarkMode;
     procedure LoadImage;
     procedure UpdateZoom;
   public
@@ -68,11 +70,29 @@ var
 
 implementation
 
-uses Clipbrd, cbs_global;
+uses Clipbrd, cbs_global, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TfrmImageViewer }
+
+procedure TfrmImageViewer.ApplyDarkMode;
+begin
+  sbOpen.Images := iButtonsDark;
+  sbRotateLeft.Images := iButtonsDark;
+  sbRotateRight.Images := iButtonsDark;
+  sbFlipHorizontal.Images := iButtonsDark;
+  sbFlipVertical.Images := iButtonsDark;
+  sbCopyImage.Images := iButtonsDark;
+  sbSaveAs.Images := iButtonsDark;
+  btnPrior.Images := iButtonsDark;
+  btnNext.Images := iButtonsDark;
+  sbImageInfo.Images := iButtonsDark;
+  sbZoomAdjust.Images := iButtonsDark;
+  sbZoom100.Images := iButtonsDark;
+  sbZoomOut.Images := iButtonsDark;
+  sbZoomIn.Images := iButtonsDark;
+end;
 
 procedure TfrmImageViewer.btnNextClick(Sender: TObject);
 begin
@@ -110,6 +130,9 @@ end;
 
 procedure TfrmImageViewer.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   LoadImage;
   tbZoom.Position := (scrollView.Height * 100) div FOrigHeight;
 end;
