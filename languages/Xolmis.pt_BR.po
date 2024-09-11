@@ -704,6 +704,10 @@ msgstr "Hematócrito"
 msgid "Hemoglobin"
 msgstr "Hemoglobina"
 
+#: cbs_datacolumns.rschostegg
+msgid "Host egg"
+msgstr "Ovo do hospedeiro"
+
 #: cbs_datacolumns.rschowwasaged
 msgctxt "cbs_datacolumns.rschowwasaged"
 msgid "How was aged"
@@ -10920,11 +10924,6 @@ msgctxt "tfrmcustomgrid.sbshowsummary.hint"
 msgid "Summary"
 msgstr "Sumário"
 
-#: tfrmcustomgrid.sbsortrecords.hint
-msgctxt "tfrmcustomgrid.sbsortrecords.hint"
-msgid "Sort records"
-msgstr "Ordenar registros"
-
 #: tfrmcustomgrid.sbviewimage.hint
 msgctxt "tfrmcustomgrid.sbviewimage.hint"
 msgid "View image"
@@ -11245,15 +11244,6 @@ msgstr "Salvar"
 #: tfrmimageviewer.caption
 msgid "Image viewer"
 msgstr "Visualizador de imagens"
-
-#: tfrmimageviewer.lblsize.caption
-msgid "0 × 0 px"
-msgstr ""
-
-#: tfrmimageviewer.lblzoom.caption
-msgctxt "tfrmimageviewer.lblzoom.caption"
-msgid "100%"
-msgstr ""
 
 #: tfrmimageviewer.sbcopyimage.caption
 msgctxt "tfrmimageviewer.sbcopyimage.caption"

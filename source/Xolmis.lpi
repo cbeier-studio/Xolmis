@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="134">
+      <ExcludedIdentifiers Count="136">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -158,13 +158,15 @@
         <Item132 Value="tbatchneteffort.eclosetime3.texthint"/>
         <Item133 Value="tbatchneteffort.eopentime4.texthint"/>
         <Item134 Value="tbatchneteffort.eclosetime4.texthint"/>
+        <Item135 Value="tfrmimageviewer.lblzoom.caption"/>
+        <Item136 Value="tfrmimageviewer.lblsize.caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="279"/>
+      <BuildNr Value="281"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -424,6 +426,15 @@
       <FormatVersion Value="2"/>
     </RunParams>
     <RequiredPackages>
+      <Item>
+        <PackageName Value="lr_pdfexport"/>
+      </Item>
+      <Item>
+        <PackageName Value="lr_DialogDesign"/>
+      </Item>
+      <Item>
+        <PackageName Value="lazreport"/>
+      </Item>
       <Item>
         <PackageName Value="LazGDIPlus"/>
       </Item>

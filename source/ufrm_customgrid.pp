@@ -587,7 +587,6 @@ type
     sbShowColumns: TSpeedButton;
     sbShowRecycle: TSpeedButton;
     sbShowSummary: TSpeedButton;
-    sbSortRecords: TSpeedButton;
     Separator10: TShapeLineBGRA;
     Separator11: TShapeLineBGRA;
     Separator12: TMenuItem;
@@ -1236,7 +1235,6 @@ begin
   sbShareRecords.Images := iButtonsDark;
   sbSaveRecord.Images := iButtonsDark;
   sbCancelRecord.Images := iButtonsDark;
-  sbSortRecords.Images := iButtonsDark;
   sbDelRecord.Images := iButtonsDark;
   sbRefreshRecords.Images := iButtonsDark;
   sbFirstRecord.Images := iButtonsDark;
@@ -1265,6 +1263,7 @@ begin
   sbDelImage.Images := iButtonsDark;
   sbShowAudio.Images := iButtonsDark;
   sbShowDocs.Images := iButtonsDark;
+  sbShowMap.Images := iButtonsDark;
   sbShowSummary.Images := iButtonsDark;
   sbShowColumns.Images := iButtonsDark;
   sbRowHeightIncrease.Images := iButtonsDark;
@@ -10241,7 +10240,6 @@ begin
       sbRecordHistory.Enabled := False;
       sbRecordVerifications.Enabled := False;
       sbShareRecords.Enabled := False;
-      sbSortRecords.Enabled := False;
       sbMarkRecords.Enabled := False;
 
       sbShowQuickFilters.Enabled := False;
@@ -10269,7 +10267,6 @@ begin
       sbRecordHistory.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbRecordVerifications.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbShareRecords.Enabled := (aDataSet.RecordCount > 0) and (ActiveUser.AllowExport);
-      sbSortRecords.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbMarkRecords.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
 
       sbFirstRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
@@ -10307,7 +10304,6 @@ begin
       sbRecordHistory.Enabled := False;
       sbRecordVerifications.Enabled := False;
       sbShareRecords.Enabled := False;
-      sbSortRecords.Enabled := False;
       sbMarkRecords.Enabled := False;
 
       sbShowQuickFilters.Enabled := False;

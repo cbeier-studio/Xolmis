@@ -378,6 +378,7 @@ resourcestring
   rscVolume = 'Volume';
   rscStage = 'Stage';
   rscHatched = 'Hatched';
+  rscHostEgg = 'Host egg';
   rscResearcherID = 'Researcher ID';
   rscResearcher = 'Researcher';
   rscCollectionDate = 'Collection date';

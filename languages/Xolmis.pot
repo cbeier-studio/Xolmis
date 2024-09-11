@@ -702,6 +702,10 @@ msgstr ""
 msgid "Hemoglobin"
 msgstr ""
 
+#: cbs_datacolumns.rschostegg
+msgid "Host egg"
+msgstr ""
+
 #: cbs_datacolumns.rschowwasaged
 msgctxt "cbs_datacolumns.rschowwasaged"
 msgid "How was aged"
@@ -10890,11 +10894,6 @@ msgctxt "tfrmcustomgrid.sbshowsummary.hint"
 msgid "Summary"
 msgstr ""
 
-#: tfrmcustomgrid.sbsortrecords.hint
-msgctxt "tfrmcustomgrid.sbsortrecords.hint"
-msgid "Sort records"
-msgstr ""
-
 #: tfrmcustomgrid.sbviewimage.hint
 msgctxt "tfrmcustomgrid.sbviewimage.hint"
 msgid "View image"
@@ -11202,15 +11201,6 @@ msgstr ""
 
 #: tfrmimageviewer.caption
 msgid "Image viewer"
-msgstr ""
-
-#: tfrmimageviewer.lblsize.caption
-msgid "0 × 0 px"
-msgstr ""
-
-#: tfrmimageviewer.lblzoom.caption
-msgctxt "tfrmimageviewer.lblzoom.caption"
-msgid "100%"
 msgstr ""
 
 #: tfrmimageviewer.sbcopyimage.caption

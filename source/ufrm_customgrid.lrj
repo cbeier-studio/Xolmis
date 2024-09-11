@@ -213,7 +213,6 @@
 {"hash":66655927,"name":"tfrmcustomgrid.sbcancelrecord.hint","sourcebytes":[67,97,110,99,101,108,32,101,100,105,116,105,110,103],"value":"Cancel editing"},
 {"hash":77089212,"name":"tfrmcustomgrid.sbcancelrecord.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
 {"hash":126806548,"name":"tfrmcustomgrid.sbinsertrecord.hint","sourcebytes":[78,101,119,32,114,101,99,111,114,100],"value":"New record"},
-{"hash":220266179,"name":"tfrmcustomgrid.sbsortrecords.hint","sourcebytes":[83,111,114,116,32,114,101,99,111,114,100,115],"value":"Sort records"},
 {"hash":131136003,"name":"tfrmcustomgrid.sbsharerecords.hint","sourcebytes":[69,120,112,111,114,116,32,114,101,99,111,114,100,115],"value":"Export records"},
 {"hash":1551385,"name":"tfrmcustomgrid.sbmarkrecords.hint","sourcebytes":[77,97,114,107,47,117,110,109,97,114,107,32,97,108,108,32,114,101,99,111,114,100,115,32,105,110,32,116,104,101,32,113,117,101,114,121],"value":"Mark/unmark all records in the query"},
 {"hash":142330963,"name":"tfrmcustomgrid.lblchildtag1.caption","sourcebytes":[67,97,112,116,117,114,101,115],"value":"Captures"},
