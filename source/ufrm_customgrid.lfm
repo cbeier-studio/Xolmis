@@ -9554,8 +9554,8 @@ object frmCustomGrid: TfrmCustomGrid
   object TimerUpdate: TTimer
     Enabled = False
     Interval = 500
-    Left = 576
-    Top = 88
+    Left = 296
+    Top = 64
   end
   object pmGrid: TPopupMenu
     Images = iButtons
@@ -22479,8 +22479,8 @@ object frmCustomGrid: TfrmCustomGrid
   object dsChart: TDataSource
     AutoEdit = False
     DataSet = qChart
-    Left = 638
-    Top = 474
+    Left = 648
+    Top = 512
   end
   object qChart: TSQLQuery
     FieldDefs = <>
@@ -22489,8 +22489,8 @@ object frmCustomGrid: TfrmCustomGrid
     Params = <>
     Macros = <>
     MacroCheck = True
-    Left = 576
-    Top = 474
+    Left = 648
+    Top = 440
   end
   object pmMark: TPopupMenu
     Images = iButtons
@@ -22546,8 +22546,8 @@ object frmCustomGrid: TfrmCustomGrid
     end
   end
   object MvBGRADraw: TMvBGRADrawingEngine
-    Left = 648
-    Top = 88
+    Left = 376
+    Top = 64
   end
   object pmColumn: TPopupMenu
     Images = iButtons
@@ -23054,8 +23054,8 @@ object frmCustomGrid: TfrmCustomGrid
     )
     Params = <>
     Macros = <>
-    Left = 712
-    Top = 143
+    Left = 648
+    Top = 88
     object qImagesimage_id: TLongintField
       FieldKind = fkData
       FieldName = 'image_id'

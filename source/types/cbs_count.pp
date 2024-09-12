@@ -288,20 +288,26 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
-    Add('SELECT i.active_status AS ativo, i.marked_status AS marcado, i.*,');
-    Add('(SELECT t.full_name FROM zoo_taxa AS t WHERE t.taxon_id = i.taxon_id) AS taxon_name,');
-    Add('(SELECT h.formatted_name FROM zoo_taxa AS h WHERE h.taxon_id = i.taxon_id) AS taxon_formatted_name,');
-    Add('(SELECT n.full_name FROM nests AS n WHERE n.nest_id = i.nest_id) AS nest_name,');
-    Add('(SELECT a.full_name FROM bands AS a WHERE a.band_id = i.band_id) AS band_full_name,');
-    Add('(SELECT d.full_name FROM bands AS d WHERE d.band_id = i.double_band_id) AS double_band_name,');
-    Add('(SELECT r.full_name FROM bands AS r WHERE r.band_id = i.removed_band_id) AS removed_band_name,');
-    Add('(SELECT p.full_name FROM individuals AS p WHERE p.individual_id = i.father_id) AS father_name,');
-    Add('(SELECT m.full_name FROM individuals AS m WHERE m.individual_id = i.mother_id) AS mother_name,');
-    // Add('(SELECT count(c.reg_num_interno) FROM XOL_MORFOMETRIA c WHERE (c.IND_CODIGO = i.reg_num_interno) and (c.active_status = 1)) as QUANT_CAPTURAS');
-    Add('(SELECT sum(c.active_status) FROM captures AS c WHERE c.individual_id = i.individual_id) AS captures_tally');
+    Add('WITH lista AS (');
+    Add(' SELECT i.active_status AS ativo, i.marked_status AS marcado, i.*,');
+    Add('  z.full_name AS taxon_name,');
+    Add('  z.formatted_name AS taxon_formatted_name,');
+    Add('  n.full_name AS nest_name,');
+    Add('  b1.full_name AS band_full_name,');
+    Add('  b2.full_name AS double_band_name,');
+    Add('  b3.full_name AS removed_band_name,');
+    Add('  fi.full_name AS father_name,');
+    Add('  mi.full_name AS mother_name,');
+    Add('  (SELECT CAST(SUM(c.active_status) AS INTEGER) FROM captures AS c');
+    Add('    WHERE c.individual_id = i.individual_id) AS captures_tally');
     Add('FROM individuals AS i');
+    Add('LEFT JOIN zoo_taxa AS z ON i.taxon_id = z.taxon_id');
+    Add('LEFT JOIN nests AS n ON i.nest_id = n.nest_id');
+    Add('LEFT JOIN bands AS b1 ON i.band_id = b1.band_id');
+    Add('LEFT JOIN bands AS b2 ON i.double_band_id = b2.band_id');
+    Add('LEFT JOIN bands AS b3 ON i.removed_band_id = b3.band_id');
+    Add('LEFT JOIN individuals AS fi ON i.father_id = fi.individual_id');
+    Add('LEFT JOIN individuals AS mi ON i.mother_id = mi.individual_id');
     // Add(')');
   end;
 end;
@@ -311,15 +317,19 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
-    Add('SELECT s.active_status AS ativo, s.marked_status AS marcado, s.*,');
-    Add('(SELECT t.full_name FROM zoo_taxa AS t WHERE t.taxon_id = s.taxon_id) AS taxon_name,');
-    Add('(SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = s.locality_id) AS locality_name,');
-    Add('(SELECT i.full_name FROM individuals AS i WHERE i.individual_id = s.individual_id) AS individual_name,');
-    Add('(SELECT n.full_name FROM nests AS n WHERE n.nest_id = s.nest_id) AS nest_name,');
-    Add('(SELECT o.full_name FROM eggs AS o WHERE o.egg_id = s.egg_id) AS egg_name');
-    Add('FROM specimens AS s');
+    Add('WITH lista AS (');
+    Add('SELECT sp.active_status AS ativo, sp.marked_status AS marcado, sp.*,');
+    Add('  z.full_name AS taxon_name,');
+    Add('  g.site_name AS locality_name,');
+    Add('  i.full_name AS individual_name,');
+    Add('  n.full_name AS nest_name,');
+    Add('  e.full_name AS egg_name');
+    Add('FROM specimens AS sp');
+    Add('LEFT JOIN zoo_taxa AS z ON sp.taxon_id = z.taxon_id');
+    Add('LEFT JOIN gazetteer AS g ON sp.locality_id = g.site_id');
+    Add('LEFT JOIN individuals AS i ON sp.individual_id = i.individual_id');
+    Add('LEFT JOIN nests AS n ON sp.nest_id = n.nest_id');
+    Add('LEFT JOIN eggs AS e ON sp.egg_id = e.egg_id');
     // Add(')');
   end;
 end;
@@ -329,19 +339,27 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
-    Add('SELECT a.active_status AS ativo, a.marked_status AS marcado, a.*,');
-    Add('(SELECT m.site_name FROM gazetteer AS m WHERE m.site_id = a.municipality_id) AS municipality_name,');
-    Add('(SELECT e.site_name FROM gazetteer AS e WHERE e.site_id = a.state_id) AS state_name,');
-    Add('(SELECT p.site_name FROM gazetteer AS p WHERE p.site_id = a.country_id) AS country_name,');
-    Add('(SELECT l.full_name FROM gazetteer AS l WHERE l.site_id = a.locality_id) AS locality_name,');
-    Add('(SELECT s.station_name FROM net_stations AS s WHERE s.net_station_id = a.net_station_id) AS net_station_name,');
-    Add('(SELECT t.method_name FROM methods AS t WHERE t.method_id = a.method_id) AS method_name,');
-    Add('(SELECT j.project_title FROM projects AS j WHERE j.project_id = a.project_id) AS project_name,');
-    Add('(SELECT cast(sum(net.net_area) + sum(net.open_time_total) AS real) FROM nets_effort AS net '
-      + 'WHERE (net.survey_id = a.survey_id) AND (net.active_status = 1)) AS net_effort');
-    Add('FROM surveys AS a');
+    Add('WITH lista AS (');
+    Add('SELECT sv.active_status AS ativo, sv.marked_status AS marcado, sv.*,');
+    Add('  x.expedition_name AS expedition_name,');
+    Add('  gl.full_name AS locality_name,');
+    Add('  gm.site_name AS municipality_name,');
+    Add('  gs.site_name AS state_name,');
+    Add('  gc.site_name AS country_name,');
+    Add('  ns.station_name AS net_station_name,');
+    Add('  mt.method_name AS method_name,');
+    Add('  pj.short_title AS project_name,');
+    Add('  (SELECT CAST((SUM(ef.net_area) + SUM(ef.open_time_total)) AS REAL) FROM nets_effort AS ef');
+    Add('    WHERE (ef.survey_id = sv.survey_id) AND (ef.active_status = 1)) AS net_effort');
+    Add('FROM surveys AS sv');
+    Add('LEFT JOIN expeditions AS x ON sv.expedition_id = x.expedition_id');
+    Add('LEFT JOIN gazetteer AS gl ON sv.locality_id = gl.site_id');
+    Add('LEFT JOIN gazetteer AS gm ON sv.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON sv.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON sv.country_id = gc.site_id');
+    Add('LEFT JOIN net_stations AS ns ON sv.net_station_id = ns.net_station_id');
+    Add('LEFT JOIN methods AS mt ON sv.method_id = mt.method_id');
+    Add('LEFT JOIN projects AS pj ON sv.project_id = pj.project_id');
     // Add(')');
   end;
 end;
@@ -351,15 +369,19 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
-    Add('SELECT active_status AS ativo, marked_status AS marcado, *');
-//    Add('(SELECT m.site_name FROM gazetteer AS m WHERE m.site_id = a.municipality_id) AS municipality_name,');
-//    Add('(SELECT e.site_name FROM gazetteer AS e WHERE e.site_id = a.state_id) AS state_name,');
-//    Add('(SELECT p.site_name FROM gazetteer AS p WHERE p.site_id = a.country_id) AS country_name,');
-//    Add('(SELECT l.full_name FROM gazetteer AS l WHERE l.site_id = a.locality_id) AS locality_name,');
-//    Add('(SELECT j.project_title FROM projects AS j WHERE j.project_id = a.project_id) AS project_name,');
-    Add('FROM expeditions');
+    Add('WITH lista AS (');
+    Add('SELECT x.active_status AS ativo, x.marked_status AS marcado, x.*');
+    Add('  gl.full_name AS locality_name,');
+    Add('  gm.site_name AS municipality_name,');
+    Add('  gs.site_name AS state_name,');
+    Add('  gc.site_name AS country_name,');
+    Add('  pj.short_title AS project_name');
+    Add('FROM expeditions AS x');
+    Add('LEFT JOIN gazetteer AS gl ON x.locality_id = gl.site_id');
+    Add('LEFT JOIN gazetteer AS gm ON x.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON x.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON x.country_id = gc.site_id');
+    Add('LEFT JOIN projects AS pj ON x.project_id = pj.project_id');
     // Add(')');
   end;
 end;
@@ -369,17 +391,22 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
-    Add('SELECT c.active_status AS ativo, c.marked_status AS marcado, c.*,');
-    Add('(SELECT t.full_name FROM zoo_taxa AS t WHERE t.taxon_id = c.taxon_id) AS taxon_name,');
-    Add('(SELECT h.formatted_name FROM zoo_taxa AS h WHERE h.taxon_id = c.taxon_id) AS taxon_html_name,');
-    Add('(SELECT i.full_name FROM individuals AS i WHERE i.individual_id = c.individual_id) AS individual_name,');
-    Add('(SELECT p.full_name FROM people AS p WHERE p.person_id = c.observer_id) AS observer_name,');
-    Add('(SELECT a.full_name FROM surveys AS a WHERE a.survey_id = c.survey_id) AS survey_name,');
-    Add('(SELECT m.method_name FROM methods AS m WHERE m.method_id = c.method_id) AS method_name,');
-    Add('(SELECT g.full_name FROM gazetteer AS g WHERE g.site_id = c.locality_id) AS locality_name');
-    Add('FROM sightings AS c');
+    Add('WITH lista AS (');
+    Add('SELECT s.active_status AS ativo, s.marked_status AS marcado, s.*,');
+    Add('  z.full_name AS taxon_name,');
+    Add('  z.formatted_name AS taxon_formatted_name,');
+    Add('  i.full_name AS individual_name,');
+    Add('  p.full_name AS observer_name,');
+    Add('  sv.full_name AS survey_name,');
+    Add('  mt.method_name AS method_name,');
+    Add('  g.full_name AS locality_name');
+    Add('FROM sightings AS s');
+    Add('LEFT JOIN zoo_taxa AS z ON s.taxon_id = z.taxon_id');
+    Add('LEFT JOIN individuals AS i ON s.individual_id = i.individual_id');
+    Add('LEFT JOIN people AS p ON s.observer_id = p.person_id');
+    Add('LEFT JOIN surveys AS sv ON s.survey_id = sv.survey_id');
+    Add('LEFT JOIN methods AS mt ON s.method_id = mt.method_id');
+    Add('LEFT JOIN gazetteer AS g ON s.locality_id = g.site_id');
     // Add(')');
   end;
 end;
@@ -389,12 +416,13 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
-    Add('SELECT b.active_status AS ativo, b.marked_status AS marcado, b.*,');
-    Add('(SELECT s.taxon_name FROM botanic_taxa AS s WHERE s.taxon_id = b.parent_taxon_id) AS parent_name,');
-    Add('(SELECT v.taxon_name FROM botanic_taxa AS v WHERE v.taxon_id = b.valid_id) AS valid_name');
-    Add('FROM botanic_taxa AS b');
+    Add('WITH lista AS (');
+    Add('SELECT bt.active_status AS ativo, bt.marked_status AS marcado, bt.*,');
+    Add('  btp.taxon_name AS parent_taxon_name,');
+    Add('  btv.taxon_name AS valid_name');
+    Add('FROM botanic_taxa AS bt');
+    Add('LEFT JOIN botanic_taxa AS btp ON bt.parent_taxon_id = btp.taxon_id');
+    Add('LEFT JOIN botanic_taxa AS btv ON bt.valid_id = btv.taxon_id');
     // Add(')');
   end;
 end;
@@ -404,14 +432,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
+    Add('WITH lista AS (');
     Add('SELECT g.active_status AS ativo, g.marked_status AS marcado, g.*,');
-    Add('(SELECT s.site_name FROM gazetteer AS s WHERE s.site_id = g.parent_site_id) AS parent_site_name,');
-    Add('(SELECT m.site_name FROM gazetteer AS m WHERE m.site_id = g.municipality_id) AS municipality_name,');
-    Add('(SELECT e.site_name FROM gazetteer AS e WHERE e.site_id = g.state_id) AS state_name,');
-    Add('(SELECT p.site_name FROM gazetteer AS p WHERE p.site_id = g.country_id) AS country_name');
+    Add('   gp.site_name AS parent_site_name,');
+    Add('   gm.site_name AS municipality_name,');
+    Add('   gs.site_name AS state_name,');
+    Add('   gc.site_name AS country_name');
     Add('FROM gazetteer AS g');
+    Add('LEFT JOIN gazetteer AS gp ON g.parent_site_id = gp.site_id');
+    Add('LEFT JOIN gazetteer AS gm ON g.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON g.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON g.country_id = gc.site_id');
     // Add(')');
   end;
 end;
@@ -421,14 +452,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
-    Add('SELECT n.active_status AS ativo, n.marked_status AS marcado, n.*,');
-    Add('(SELECT l.site_name FROM gazetteer AS l WHERE l.site_id = n.locality_id) AS locality_name,');
-    Add('(SELECT m.site_name FROM gazetteer AS m WHERE m.site_id = n.municipality_id) AS municipality_name,');
-    Add('(SELECT e.site_name FROM gazetteer AS e WHERE e.site_id = n.state_id) AS state_name,');
-    Add('(SELECT p.site_name FROM gazetteer AS p WHERE p.site_id = n.country_id) AS country_name');
-    Add('FROM net_stations AS n');
+    Add('WITH lista AS (');
+    Add('SELECT ns.active_status AS ativo, ns.marked_status AS marcado, ns.*,');
+    Add('  gl.site_name AS locality_name,');
+    Add('  gm.site_name AS municipality_name,');
+    Add('  gs.site_name AS state_name,');
+    Add('  gc.site_name AS country_name');
+    Add('FROM net_stations AS ns');
+    Add('LEFT JOIN gazetteer AS gl ON ns.locality_id = gl.site_id');
+    Add('LEFT JOIN gazetteer AS gm ON ns.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON ns.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON ns.country_id = gc.site_id');
     // Add(')');
   end;
 end;
@@ -438,13 +472,15 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
-    Add('SELECT i.active_status AS ativo, i.marked_status AS marcado, i.*,');
-    Add('(SELECT m.site_name FROM gazetteer AS m WHERE m.site_id = i.municipality_id) AS municipality_name,');
-    Add('(SELECT e.site_name FROM gazetteer AS e WHERE e.site_id = i.state_id) AS state_name,');
-    Add('(SELECT c.site_name FROM gazetteer AS c WHERE c.site_id = i.country_id) AS country_name');
-    Add('FROM institutions AS i');
+    Add('WITH lista AS (');
+    Add('SELECT it.active_status AS ativo, it.marked_status AS marcado, it.*,');
+    Add('   gm.site_name AS municipality_name,');
+    Add('   gs.site_name AS state_name,');
+    Add('   gc.site_name AS country_name');
+    Add('FROM institutions AS it');
+    Add('LEFT JOIN gazetteer AS gm ON it.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON it.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON it.country_id = gc.site_id');
     // Add(')');
   end;
 end;
@@ -454,22 +490,22 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
+    Add('WITH lista AS (');
     Add('SELECT n.active_status AS ativo, n.marked_status AS marcado, n.*,');
-    Add('(SELECT p.full_name FROM people AS p WHERE p.person_id = n.observer_id) AS observer_name,');
-    Add('(SELECT j.project_title FROM projects AS j WHERE j.project_id = n.project_id) AS project_name,');
-    Add('(SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = n.locality_id) AS locality_name,');
-    Add('(SELECT t.full_name FROM zoo_taxa AS t WHERE t.taxon_id = n.taxon_id) AS taxon_name,');
-    Add('(SELECT t.formatted_name FROM zoo_taxa AS t WHERE t.taxon_id = n.taxon_id) AS taxon_html_name,');
-    Add('(SELECT m.full_name FROM individuals AS m WHERE m.individual_id = n.male_id) AS male_name,');
-    Add('(SELECT f.full_name FROM individuals AS f WHERE f.individual_id = n.female_id) AS female_name,');
-    Add('(SELECT h1.full_name FROM individuals AS h1 WHERE h1.individual_id = n.helper_1_id) AS helper_1_name,');
-    Add('(SELECT h2.full_name FROM individuals AS h2 WHERE h2.individual_id = n.helper_2_id) AS helper_2_name,');
-    Add('(SELECT h3.full_name FROM individuals AS h3 WHERE h3.individual_id = n.helper_3_id) AS helper_3_name,');
-    Add('(SELECT b.taxon_name FROM botanic_taxa AS b WHERE b.taxon_id = n.support_plant_1_id) AS support_plant_1_name,');
-    Add('(SELECT b2.taxon_name FROM botanic_taxa AS b2 WHERE b2.taxon_id = n.support_plant_2_id) AS support_plant_2_name');
+    Add('  p.full_name AS observer_name,');
+    Add('  pj.project_title AS project_name,');
+    Add('  g.site_name locality_name,');
+    Add('  z.full_name AS taxon_name,');
+    Add('  z.formatted_name AS taxon_formatted_name,');
+    Add('  bt1.taxon_name AS support_plant_1_name,');
+    Add('  bt2.taxon_name AS support_plant_2_name');
     Add('FROM nests AS n');
+    Add('LEFT JOIN people AS p ON n.observer_id = p.person_id');
+    Add('LEFT JOIN projects AS pj ON n.project_id = pj.project_id');
+    Add('LEFT JOIN gazetteer AS g ON n.locality_id = g.site_id');
+    Add('LEFT JOIN zoo_taxa AS z ON n.taxon_id = z.taxon_id');
+    Add('LEFT JOIN botanic_taxa AS bt1 ON n.support_plant_1_id = bt1.taxon_id');
+    Add('LEFT JOIN botanic_taxa AS bt2 ON n.support_plant_2_id = bt2.taxon_id');
     // Add(')');
   end;
 end;
@@ -479,22 +515,32 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
-    Add('SELECT m.active_status AS ativo, m.marked_status AS marcado, m.*,');
-    Add('(SELECT t.full_name FROM zoo_taxa AS t WHERE t.taxon_id = m.taxon_id) AS taxon_name,');
-    Add('(SELECT h.formatted_name FROM zoo_taxa AS h WHERE h.taxon_id = m.taxon_id) AS taxon_formatted_name,');
-    Add('(SELECT s.full_name FROM surveys AS s WHERE s.survey_id = m.survey_id) AS survey_name,');
-    Add('(SELECT ns.station_name FROM net_stations AS ns WHERE ns.net_station_id = m.net_station_id) AS net_station_name,');
-    Add('(SELECT n.net_number FROM nets_effort AS n WHERE n.net_id = m.net_id) AS net_num,');
-    Add('(SELECT g.site_name FROM gazetteer AS g WHERE g.site_id = m.locality_id) AS locality_name,');
-    Add('(SELECT b.acronym FROM people AS b WHERE b.person_id = m.bander_id) AS bander_name,');
-    Add('(SELECT w.acronym FROM people AS w WHERE w.person_id = m.annotator_id) AS annotator_name,');
-    Add('(SELECT a.band_size||'' ''||a.band_number FROM bands AS a WHERE a.band_id = m.band_id) AS band_name,');
-    Add('(SELECT r.band_size||'' ''||r.band_number FROM bands AS r WHERE r.band_id = m.removed_band_id) AS removed_band_name,');
-    Add('(SELECT f.acronym FROM people AS f WHERE f.person_id = m.photographer_1_id) AS photographer_1_name,');
-    Add('(SELECT f2.acronym FROM people AS f2 WHERE f2.person_id = m.photographer_2_id) AS photographer_2_name');
-    Add('FROM captures AS m');
+    Add('WITH lista AS (');
+    Add('SELECT c.active_status AS ativo, c.marked_status AS marcado, c.*,');
+    Add('   z.full_name AS taxon_name,');
+    Add('   z.formatted_name AS taxon_formatted_name,');
+    Add('   sv.full_name AS survey_name,');
+    Add('   ns.station_name AS net_station_name,');
+    Add('   ef.net_number AS net_number,');
+    Add('   g.site_name AS locality_name,');
+    Add('   p1.acronym AS bander_name,');
+    Add('   p2.acronym AS annotator_name,');
+    Add('   (b1.band_size||'' ''||b1.band_number) AS band_name,');
+    Add('   (b2.band_size||'' ''||b2.band_number) AS removed_band_name,');
+    Add('   f1.acronym AS photographer_1_name,');
+    Add('   f2.acronym AS photographer_2_name');
+    Add('FROM captures AS c');
+    Add('LEFT JOIN zoo_taxa AS z ON c.taxon_id = z.taxon_id');
+    Add('LEFT JOIN surveys AS sv ON c.survey_id = sv.survey_id');
+    Add('LEFT JOIN net_stations AS ns ON c.net_station_id = ns.net_station_id');
+    Add('LEFT JOIN nets_effort AS ef ON c.net_id = ef.net_id');
+    Add('LEFT JOIN gazetteer AS g ON c.locality_id = g.site_id');
+    Add('LEFT JOIN people AS p1 ON c.bander_id = p1.person_id');
+    Add('LEFT JOIN people AS p2 ON c.annotator_id = p2.person_id');
+    Add('LEFT JOIN people AS f1 ON c.photographer_1_id = f1.person_id');
+    Add('LEFT JOIN people AS f2 ON c.photographer_2_id = f2.person_id');
+    Add('LEFT JOIN bands AS b1 ON c.band_id = b1.band_id');
+    Add('LEFT JOIN bands AS b2 ON c.removed_band_id = b2.band_id');
     // Add(')');
   end;
 end;
@@ -504,14 +550,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
+    Add('WITH lista AS (');
     Add('SELECT p.active_status AS ativo, p.marked_status AS marcado, p.*,');
-    Add('(SELECT m.site_name FROM gazetteer AS m WHERE m.site_id = p.municipality_id) AS municipality_name,');
-    Add('(SELECT e.site_name FROM gazetteer AS e WHERE e.site_id = p.state_id) AS state_name,');
-    Add('(SELECT c.site_name FROM gazetteer AS c WHERE c.site_id = p.country_id) AS country_name,');
-    Add('(SELECT i.full_name FROM institutions AS i WHERE i.institution_id = p.institution_id) AS institution_name');
+    Add('  gm.site_name AS municipality_name,');
+    Add('  gs.site_name AS state_name,');
+    Add('  gc.site_name AS country_name,');
+    Add('  it.full_name AS institution_name');
     Add('FROM people AS p');
+    Add('LEFT JOIN gazetteer AS gm ON p.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON p.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON p.country_id = gc.site_id');
+    Add('LEFT JOIN institutions AS it ON p.institution_id = it.institution_id');
     // Add(')');
   end;
 end;
@@ -521,8 +570,7 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
+    Add('WITH lista AS (');
     Add('SELECT active_status AS ativo, marked_status AS marcado, *');
     Add('FROM projects');
     // Add(')');
@@ -534,22 +582,29 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
-    Add('SELECT t.active_status AS ativo, t.marked_status AS marcado, t.*,');
-    Add('(SELECT u.full_name FROM zoo_taxa AS u WHERE u.taxon_id = t.parent_taxon_id) AS parent_taxon_name,');
-    Add('(SELECT v.full_name FROM zoo_taxa AS v WHERE v.taxon_id = t.valid_id) AS valid_name,');
-    Add('(SELECT ui.full_name FROM zoo_taxa AS ui WHERE ui.taxon_id = t.ioc_parent_taxon_id) AS ioc_parent_name,');
-    Add('(SELECT vi.full_name FROM zoo_taxa AS vi WHERE vi.taxon_id = t.ioc_valid_id) AS ioc_valid_name,');
-    Add('(SELECT uc.full_name FROM zoo_taxa AS uc WHERE uc.taxon_id = t.cbro_parent_taxon_id) AS cbro_parent_name,');
-    Add('(SELECT vc.full_name FROM zoo_taxa AS vc WHERE vc.taxon_id = t.cbro_valid_id) AS cbro_valid_name,');
-    Add('(SELECT o.full_name FROM zoo_taxa AS o WHERE o.taxon_id = t.order_id) AS order_name,');
-    Add('(SELECT f.full_name FROM zoo_taxa AS f WHERE f.taxon_id = t.family_id) AS family_name,');
-    Add('(SELECT s.full_name FROM zoo_taxa AS s WHERE s.taxon_id = t.subfamily_id) AS subfamily_name,');
-    Add('(SELECT n.full_name FROM zoo_taxa AS n WHERE n.taxon_id = t.genus_id) AS genero_name,');
-    Add('(SELECT e.full_name FROM zoo_taxa AS e WHERE e.taxon_id = t.species_id) AS species_name,');
-    Add('(SELECT g.full_name FROM zoo_taxa AS g WHERE g.taxon_id = t.subspecies_group_id) AS subspecies_group_name');
-    Add('FROM zoo_taxa AS t');
+    Add('WITH lista AS (');
+    Add('SELECT z.active_status AS ativo, z.marked_status AS marcado, z.*,');
+    Add('    u.full_name AS parent_taxon_name,');
+    Add('    v.full_name AS valid_name,');
+    Add('    ui.full_name AS ioc_parent_name,');
+    Add('    vi.full_name AS ioc_valid_name,');
+    Add('    o.full_name AS order_name,');
+    Add('    f.full_name AS family_name,');
+    Add('    s.full_name AS subfamily_name,');
+    Add('    n.full_name AS genero_name,');
+    Add('    e.full_name AS species_name,');
+    Add('    g.full_name AS subspecies_group_name');
+    Add('FROM zoo_taxa AS z');
+    Add('LEFT JOIN zoo_taxa AS u ON z.parent_taxon_id = u.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS v ON z.valid_id = v.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS ui ON z.ioc_parent_taxon_id = ui.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS vi ON z.ioc_valid_id = vi.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS o ON z.order_id = o.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS f ON z.family_id = f.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS s ON z.subfamily_id = s.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS n ON z.genus_id = n.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS e ON z.species_id = e.taxon_id');
+    Add('LEFT JOIN zoo_taxa AS g ON z.subspecies_group_id = g.taxon_id');
     // Add(')');
   end;
 end;
@@ -559,16 +614,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
-    Add('SELECT a.active_status AS ativo, a.marked_status AS marcado, a.*,');
-    Add('(SELECT f.acronym FROM institutions AS f WHERE f.institution_id = a.supplier_id) AS supplier_name,');
-    Add('(SELECT s.full_name FROM people AS s WHERE s.person_id = a.requester_id) AS requester_name,');
-    Add('(SELECT p.full_name FROM people AS p WHERE p.person_id = a.carrier_id) AS carrier_name,');
-    Add('(SELECT r.full_name FROM people AS r WHERE r.person_id = a.sender_id) AS sender_name,');
-    Add('(SELECT i.formatted_name FROM individuals AS i WHERE i.individual_id = a.individual_id) AS individual_name,');
-    Add('(SELECT l.project_title FROM projects AS l WHERE l.project_id = a.project_id) AS project_name');
-    Add('FROM bands AS a');
+    Add('WITH lista AS (');
+    Add('SELECT b.active_status AS ativo, b.marked_status AS marcado, b.*,');
+    Add('  it.acronym AS supplier_name,');
+    Add('  p.full_name AS carrier_name,');
+    Add('  i.full_name AS individual_name,');
+    Add('  pj.short_title AS project_name');
+    Add('FROM bands AS b');
+    Add('LEFT JOIN institutions AS it ON b.supplier_id = it.institution_id');
+    Add('LEFT JOIN people AS p ON b.carrier_id = p.person_id');
+    Add('LEFT JOIN individuals AS i ON b.individual_id = i.individual_id');
+    Add('LEFT JOIN projects AS pj ON b.project_id = pj.project_id');
     // Add(')');
   end;
 end;
@@ -578,8 +634,7 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('WITH');
-    Add('lista AS (');
+    Add('WITH lista AS (');
     Add('SELECT active_status AS ativo, marked_status AS marcado, *');
     Add('FROM users');
     // Add(')');

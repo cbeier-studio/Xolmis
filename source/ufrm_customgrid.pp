@@ -10249,6 +10249,7 @@ begin
       sbShowSummary.Enabled := False;
       sbShowRecycle.Enabled := False;
       sbShowMap.Enabled := False;
+      sbShowColumns.Enabled := False;
 
       sbCancelRecord.Visible := False;
       sbSaveRecord.Visible := False;
@@ -10281,6 +10282,7 @@ begin
       sbShowSummary.Enabled := True;
       sbShowRecycle.Enabled := True;
       sbShowMap.Enabled := True;
+      sbShowColumns.Enabled := True;
 
       sbRefreshRecords.Enabled := True;
 
@@ -10313,6 +10315,7 @@ begin
       sbShowSummary.Enabled := False;
       sbShowRecycle.Enabled := False;
       sbShowMap.Enabled := False;
+      sbShowColumns.Enabled := False;
 
       sbCancelRecord.Visible := True;
       sbSaveRecord.Visible := True;
