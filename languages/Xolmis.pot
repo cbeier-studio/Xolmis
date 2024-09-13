@@ -10345,11 +10345,6 @@ msgstr ""
 msgid "Refresh images"
 msgstr ""
 
-#: tfrmcustomgrid.pmisaveimage.caption
-msgctxt "tfrmcustomgrid.pmisaveimage.caption"
-msgid "Save image as..."
-msgstr ""
-
 #: tfrmcustomgrid.pmiviewimage.caption
 msgctxt "tfrmcustomgrid.pmiviewimage.caption"
 msgid "View image"
@@ -10823,11 +10818,6 @@ msgstr ""
 
 #: tfrmcustomgrid.sbrowheightincrease.hint
 msgid "Increase the row height"
-msgstr ""
-
-#: tfrmcustomgrid.sbsaveimage.hint
-msgctxt "tfrmcustomgrid.sbsaveimage.hint"
-msgid "Save image as..."
 msgstr ""
 
 #: tfrmcustomgrid.sbsaverecord.caption

@@ -10375,11 +10375,6 @@ msgstr "Ver/editar info da imagem"
 msgid "Refresh images"
 msgstr "Atualizar imagens"
 
-#: tfrmcustomgrid.pmisaveimage.caption
-msgctxt "tfrmcustomgrid.pmisaveimage.caption"
-msgid "Save image as..."
-msgstr "Salvar imagem como..."
-
 #: tfrmcustomgrid.pmiviewimage.caption
 msgctxt "tfrmcustomgrid.pmiviewimage.caption"
 msgid "View image"
@@ -10854,11 +10849,6 @@ msgstr "Aplicar a altura de linha padrão"
 #: tfrmcustomgrid.sbrowheightincrease.hint
 msgid "Increase the row height"
 msgstr "Aumentar altura da linha"
-
-#: tfrmcustomgrid.sbsaveimage.hint
-msgctxt "tfrmcustomgrid.sbsaveimage.hint"
-msgid "Save image as..."
-msgstr "Salvar imagem como..."
 
 #: tfrmcustomgrid.sbsaverecord.caption
 msgctxt "tfrmcustomgrid.sbsaverecord.caption"
@@ -11831,3 +11821,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

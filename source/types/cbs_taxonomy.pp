@@ -688,8 +688,8 @@ begin
         dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
             [AnsiLowerCase(rsCaptionOrder)]);
         Clear;
-        Add('UPDATE zoo_taxa');
-        Add('SET order_id = taxon_id');
+        Add('UPDATE zoo_taxa SET');
+        Add('  order_id = taxon_id');
         Add('WHERE zoo_taxa.rank_id = :rank_id');
         ParamByName('RANK_ID').AsInteger := iOrder;
         ExecSQL;
@@ -699,10 +699,11 @@ begin
         dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
             [AnsiLowerCase(rsCaptionFamily)]);
         Clear;
-        Add('UPDATE zoo_taxa');
-        Add('SET family_id = zoo_taxa.taxon_id, order_id = parent.order_id');
+        Add('UPDATE zoo_taxa SET');
+        Add('  family_id = zoo_taxa.taxon_id,');
+        Add('  order_id = parent.order_id');
         Add('FROM (SELECT taxon_id, order_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
         ParamByName('RANK_ID').AsInteger := iFamily;
         ExecSQL;
         Application.ProcessMessages;
@@ -711,10 +712,12 @@ begin
         dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
             [AnsiLowerCase(rsCaptionSubfamily)]);
         Clear;
-        Add('UPDATE zoo_taxa');
-        Add('SET subfamily_id = zoo_taxa.taxon_id, family_id = parent.family_id, order_id = parent.order_id');
+        Add('UPDATE zoo_taxa SET');
+        Add('  subfamily_id = zoo_taxa.taxon_id,');
+        Add('  family_id = parent.family_id,');
+        Add('  order_id = parent.order_id');
         Add('FROM (SELECT taxon_id, order_id, family_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
         ParamByName('RANK_ID').AsInteger := iSubfamily;
         ExecSQL;
         Application.ProcessMessages;
@@ -723,11 +726,13 @@ begin
         dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
             [AnsiLowerCase(rsCaptionGenus)]);
         Clear;
-        Add('UPDATE zoo_taxa');
-        Add('SET genus_id = zoo_taxa.taxon_id, subfamily_id = parent.subfamily_id, ');
-        Add('family_id = parent.family_id, order_id = parent.order_id');
+        Add('UPDATE zoo_taxa SET');
+        Add('  genus_id = zoo_taxa.taxon_id,');
+        Add('  subfamily_id = parent.subfamily_id,');
+        Add('  family_id = parent.family_id,');
+        Add('  order_id = parent.order_id');
         Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
         ParamByName('RANK_ID').AsInteger := iGenus;
         ExecSQL;
         Application.ProcessMessages;
@@ -736,11 +741,14 @@ begin
         dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
             [AnsiLowerCase(rsCaptionSpecies)]);
         Clear;
-        Add('UPDATE zoo_taxa');
-        Add('SET species_id = zoo_taxa.taxon_id, genus_id = parent.genus_id, ');
-        Add('subfamily_id = parent.subfamily_id, family_id = parent.family_id, order_id = parent.order_id');
+        Add('UPDATE zoo_taxa SET');
+        Add('  species_id = zoo_taxa.taxon_id,');
+        Add('  genus_id = parent.genus_id,');
+        Add('  subfamily_id = parent.subfamily_id,');
+        Add('  family_id = parent.family_id,');
+        Add('  order_id = parent.order_id');
         Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id, genus_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
         ParamByName('RANK_ID').AsInteger := iSpecies;
         ExecSQL;
         Application.ProcessMessages;
@@ -749,11 +757,15 @@ begin
         dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
             [AnsiLowerCase(rsCaptionSspGroup)]);
         Clear;
-        Add('UPDATE zoo_taxa');
-        Add('SET subspecies_group_id = zoo_taxa.taxon_id, species_id = parent.species_id, genus_id = parent.genus_id, ');
-        Add('subfamily_id = parent.subfamily_id, family_id = parent.family_id, order_id = parent.order_id');
+        Add('UPDATE zoo_taxa SET');
+        Add('  subspecies_group_id = zoo_taxa.taxon_id,');
+        Add('  species_id = parent.species_id,');
+        Add('  genus_id = parent.genus_id,');
+        Add('  subfamily_id = parent.subfamily_id,');
+        Add('  family_id = parent.family_id,');
+        Add('  order_id = parent.order_id');
         Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
         ParamByName('RANK_ID').AsInteger := iMonoGroup;
         ExecSQL;
         Application.ProcessMessages;
@@ -765,22 +777,27 @@ begin
         dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
             [AnsiLowerCase(rsCaptionSubspecificTaxa)]);
         Clear;
-        Add('UPDATE zoo_taxa');
-        Add('SET subspecies_group_id = parent.subspecies_group_id, species_id = parent.species_id, ' +
-          'genus_id = parent.genus_id, subfamily_id = parent.subfamily_id, family_id = parent.family_id, ' +
-          'order_id = parent.order_id');
+        Add('UPDATE zoo_taxa SET');
+        Add('  subspecies_group_id = parent.subspecies_group_id,');
+        Add('  species_id = parent.species_id,');
+        Add('  genus_id = parent.genus_id,');
+        Add('  subfamily_id = parent.subfamily_id,');
+        Add('  family_id = parent.family_id,');
+        Add('  order_id = parent.order_id');
         Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id, genus_id, species_id, ' +
           'subspecies_group_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
         ParamByName('RANK_ID').AsInteger := iSubspecies;
         ExecSQL;
         Application.ProcessMessages;
 
         { Update taxon hierarchy in other tables }
         Clear;
-        Add('UPDATE %table_id');
-        Add('SET species_id = parent.species_id, genus_id = parent.genus_id, ');
-        Add('family_id = parent.family_id, order_id = parent.order_id');
+        Add('UPDATE %table_id SET');
+        Add('  species_id = parent.species_id,');
+        Add('  genus_id = parent.genus_id,');
+        Add('  family_id = parent.family_id,');
+        Add('  order_id = parent.order_id');
         Add('FROM (SELECT taxon_id, order_id, family_id, genus_id, species_id FROM zoo_taxa) AS parent');
         Add('WHERE (%table_id.taxon_id = parent.taxon_id)');
         { Update Individuals }

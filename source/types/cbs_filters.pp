@@ -69,7 +69,6 @@ type
   procedure LoadCaptureDateTree(aSQL: TStrings);
   procedure LoadExpeditionDateTree(aSQL: TStrings);
   procedure LoadSurveyDateTree(aSQL: TStrings);
-  procedure LoadBandDateTree(aSQL: TStrings);
   procedure LoadIndividualDateTree(aSQL: TStrings);
   procedure LoadProjectDateTree(aSQL: TStrings);
   procedure LoadPermitDateTree(aSQL: TStrings);
@@ -473,35 +472,6 @@ begin
   aSQL.Add('FROM surveys AS sv WHERE (sv.active_status = 1)');
 end;
 
-procedure LoadBandDateTree(aSQL: TStrings);
-begin
-  aSQL.Add('SELECT ');
-  aSQL.Add('strftime(''%Y'', b.order_date) as ANO,');
-  aSQL.Add('strftime(''%m'', b.order_date) as MES,');
-  aSQL.Add('strftime(''%d'', b.order_date) as DIA');
-  aSQL.Add('FROM bands AS b WHERE (b.active_status = 1) UNION');
-  aSQL.Add('SELECT ');
-  aSQL.Add('strftime(''%Y'', b.receipt_date) as ANO,');
-  aSQL.Add('strftime(''%m'', b.receipt_date) as MES,');
-  aSQL.Add('strftime(''%d'', b.receipt_date) as DIA');
-  aSQL.Add('FROM bands AS b WHERE (b.active_status = 1) UNION');
-  aSQL.Add('SELECT ');
-  aSQL.Add('strftime(''%Y'', b.use_date) as ANO,');
-  aSQL.Add('strftime(''%m'', b.use_date) as MES,');
-  aSQL.Add('strftime(''%d'', b.use_date) as DIA');
-  aSQL.Add('FROM bands AS b WHERE (b.active_status = 1) UNION');
-  aSQL.Add('SELECT ');
-  aSQL.Add('strftime(''%Y'', b.discharge_date) as ANO,');
-  aSQL.Add('strftime(''%m'', b.discharge_date) as MES,');
-  aSQL.Add('strftime(''%d'', b.discharge_date) as DIA');
-  aSQL.Add('FROM bands AS b WHERE (b.active_status = 1) UNION');
-  aSQL.Add('SELECT ');
-  aSQL.Add('strftime(''%Y'', b.report_date) as ANO,');
-  aSQL.Add('strftime(''%m'', b.report_date) as MES,');
-  aSQL.Add('strftime(''%d'', b.report_date) as DIA');
-  aSQL.Add('FROM bands AS b WHERE (b.active_status = 1)');
-end;
-
 procedure LoadIndividualDateTree(aSQL: TStrings);
 begin
   aSQL.Add('SELECT ');
@@ -602,8 +572,6 @@ begin
           Q.Add('UNION');
           LoadSurveyDateTree(Q);
           Q.Add('UNION');
-          LoadBandDateTree(Q);
-          Q.Add('UNION');
           LoadIndividualDateTree(Q);
           Q.Add('UNION');
           LoadProjectDateTree(Q);
@@ -626,7 +594,7 @@ begin
       tbSightings:     LoadSightingDateTree(Q);
       tbSpecimens:     LoadSpecimenDateTree(Q);
       tbSamplePreps: ;
-      tbBands:         LoadBandDateTree(Q);
+      tbBands: ;
       tbIndividuals:   LoadIndividualDateTree(Q);
       tbCaptures:      LoadCaptureDateTree(Q);
       tbMolts: ;

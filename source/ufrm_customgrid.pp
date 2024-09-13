@@ -160,7 +160,6 @@ type
     mapGeo: TMapView;
     pmiAddImage: TMenuItem;
     pmiImageInfo: TMenuItem;
-    pmiSaveImage: TMenuItem;
     pmiViewImage: TMenuItem;
     pmiDelImage: TMenuItem;
     pmiRefreshImages: TMenuItem;
@@ -563,7 +562,6 @@ type
     sbMoveColumnDown: TSpeedButton;
     sbMoveColumnUp: TSpeedButton;
     sbImageInfo: TSpeedButton;
-    sbSaveImage: TSpeedButton;
     sbShareChild: TSpeedButton;
     sbShowMap: TSpeedButton;
     sbViewImage: TSpeedButton;
@@ -766,6 +764,7 @@ type
     procedure pmvAddVerificationClick(Sender: TObject);
     procedure pmvViewVerificationsClick(Sender: TObject);
     procedure sbAddChildClick(Sender: TObject);
+    procedure sbAddImageClick(Sender: TObject);
     procedure sbAddNetsBatchClick(Sender: TObject);
     procedure sbCancelRecordClick(Sender: TObject);
     procedure sbChildVerificationsClick(Sender: TObject);
@@ -1054,7 +1053,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
-  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs,
+  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, udlg_progress,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
 
@@ -1258,7 +1257,6 @@ begin
   sbShowImages.Images := iButtonsDark;
   sbAddImage.Images := iButtonsDark;
   sbImageInfo.Images := iButtonsDark;
-  sbSaveImage.Images := iButtonsDark;
   sbViewImage.Images := iButtonsDark;
   sbDelImage.Images := iButtonsDark;
   sbShowAudio.Images := iButtonsDark;
@@ -6634,6 +6632,54 @@ begin
     pmAddChild.Popup(X, Y);
 end;
 
+procedure TfrmCustomGrid.sbAddImageClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  DMM.OpenImgs.InitialDir := XSettings.ImagesFolder;
+  if DMM.OpenImgs.Execute then
+  begin
+    dlgProgress := TdlgProgress.Create(nil);
+    try
+      dlgProgress.Show;
+      dlgProgress.Title := rsImportImagesTitle;
+      dlgProgress.Text := rsProgressPreparing;
+      dlgProgress.Max := DMM.OpenImgs.Files.Count;
+      Parar := False;
+      Application.ProcessMessages;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlCon.StartTransaction;
+      try
+        for i := 0 to DMM.OpenImgs.Files.Count - 1 do
+        begin
+          dlgProgress.Text := Format(rsProgressImportImages, [i + 1, DMM.OpenImgs.Files.Count]);
+
+          AddImage(qImages, tbImages, 'image_filename', 'image_thumbnail', DMM.OpenImgs.Files[i]);
+
+          dlgProgress.Position := i + 1;
+          Application.ProcessMessages;
+          if Parar then
+            Break;
+        end;
+        if Parar then
+          DMM.sqlTrans.RollbackRetaining
+        else
+          DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
+      dlgProgress.Text := rsProgressFinishing;
+      dlgProgress.Position := DMM.OpenImgs.Files.Count;
+      Application.ProcessMessages;
+      Parar := False;
+    finally
+      dlgProgress.Close;
+      FreeAndNil(dlgProgress);
+    end;
+  end;
+end;
+
 procedure TfrmCustomGrid.sbAddNetsBatchClick(Sender: TObject);
 begin
   batchNetEffort := TbatchNetEffort.Create(nil);
@@ -10760,7 +10806,6 @@ begin
       sbAddImage.Enabled := False;
       sbImageInfo.Enabled := False;
       sbDelImage.Enabled := False;
-      sbSaveImage.Enabled := False;
       sbViewImage.Enabled := False;
 
     end;
@@ -10769,7 +10814,6 @@ begin
       sbAddImage.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbImageInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbDelImage.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbSaveImage.Enabled := (aDataSet.RecordCount > 0);
       sbViewImage.Enabled := (aDataSet.RecordCount > 0);
 
     end;
@@ -10778,7 +10822,6 @@ begin
       sbAddImage.Enabled := False;
       sbImageInfo.Enabled := False;
       sbDelImage.Enabled := False;
-      sbSaveImage.Enabled := False;
       sbViewImage.Enabled := False;
 
     end;
@@ -10787,7 +10830,6 @@ begin
   pmiAddImage.Enabled := sbAddImage.Enabled;
   pmiImageInfo.Enabled := sbImageInfo.Enabled;
   pmiDelImage.Enabled := sbDelImage.Enabled;
-  pmiSaveImage.Enabled := sbSaveImage.Enabled;
   pmiViewImage.Enabled := sbViewImage.Enabled;
   pmiRefreshImages.Enabled := sbViewImage.Enabled;
 end;

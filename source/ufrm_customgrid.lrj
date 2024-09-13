@@ -169,7 +169,6 @@
 {"hash":84114883,"name":"tfrmcustomgrid.titleimages.caption","sourcebytes":[73,109,97,103,101,115],"value":"Images"},
 {"hash":244950383,"name":"tfrmcustomgrid.sbimageinfo.hint","sourcebytes":[86,105,101,119,32,97,110,100,32,101,100,105,116,32,105,109,97,103,101,32,105,110,102,111],"value":"View and edit image info"},
 {"hash":108032117,"name":"tfrmcustomgrid.sbaddimage.hint","sourcebytes":[65,100,100,32,105,109,97,103,101],"value":"Add image"},
-{"hash":266270,"name":"tfrmcustomgrid.sbsaveimage.hint","sourcebytes":[83,97,118,101,32,105,109,97,103,101,32,97,115,46,46,46],"value":"Save image as..."},
 {"hash":158070805,"name":"tfrmcustomgrid.sbviewimage.hint","sourcebytes":[86,105,101,119,32,105,109,97,103,101],"value":"View image"},
 {"hash":63183733,"name":"tfrmcustomgrid.sbdelimage.hint","sourcebytes":[68,101,108,101,116,101,32,105,109,97,103,101],"value":"Delete image"},
 {"hash":110757075,"name":"tfrmcustomgrid.titleaudios.caption","sourcebytes":[65,117,100,105,111,32,114,101,99,111,114,100,105,110,103,115],"value":"Audio recordings"},
@@ -296,7 +295,6 @@
 {"hash":117905497,"name":"tfrmcustomgrid.pmiaddimage.caption","sourcebytes":[65,100,100,32,105,109,97,103,101,40,115,41],"value":"Add image(s)"},
 {"hash":47864271,"name":"tfrmcustomgrid.pmiimageinfo.caption","sourcebytes":[86,105,101,119,47,101,100,105,116,32,105,109,97,103,101,32,105,110,102,111],"value":"View/edit image info"},
 {"hash":158070805,"name":"tfrmcustomgrid.pmiviewimage.caption","sourcebytes":[86,105,101,119,32,105,109,97,103,101],"value":"View image"},
-{"hash":266270,"name":"tfrmcustomgrid.pmisaveimage.caption","sourcebytes":[83,97,118,101,32,105,109,97,103,101,32,97,115,46,46,46],"value":"Save image as..."},
 {"hash":63183733,"name":"tfrmcustomgrid.pmidelimage.caption","sourcebytes":[68,101,108,101,116,101,32,105,109,97,103,101],"value":"Delete image"},
 {"hash":222015971,"name":"tfrmcustomgrid.pmirefreshimages.caption","sourcebytes":[82,101,102,114,101,115,104,32,105,109,97,103,101,115],"value":"Refresh images"}
 ]}
