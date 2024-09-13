@@ -12,7 +12,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Version Minor="1"/>
+    <Version Minor="2"/>
     <Files>
       <Item>
         <Filename Value="dbeditbutton.pp"/>
@@ -23,6 +23,16 @@
         <Filename Value="tdicardpanel.pp"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="TDICardPanel"/>
+      </Item>
+      <Item>
+        <Filename Value="dbimagegallery.pp"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="dbimagegallery"/>
+      </Item>
+      <Item>
+        <Filename Value="toggleswitch.pp"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ToggleSwitch"/>
       </Item>
     </Files>
     <RequiredPkgs>
