@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, ComCtrls, StdCtrls, BCButton,
-  LazFileUtils, BGRABitmap, BGRABitmapTypes;
+  LCLIntf, LazFileUtils, BGRABitmap, BGRABitmapTypes, Types;
 
 type
 
@@ -46,12 +46,15 @@ type
     procedure sbCopyImageClick(Sender: TObject);
     procedure sbFlipHorizontalClick(Sender: TObject);
     procedure sbFlipVerticalClick(Sender: TObject);
+    procedure sbOpenClick(Sender: TObject);
     procedure sbRotateLeftClick(Sender: TObject);
     procedure sbRotateRightClick(Sender: TObject);
     procedure sbZoom100Click(Sender: TObject);
     procedure sbZoomAdjustClick(Sender: TObject);
     procedure sbZoomInClick(Sender: TObject);
     procedure sbZoomOutClick(Sender: TObject);
+    procedure scrollViewMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+      var Handled: Boolean);
     procedure tbZoomChange(Sender: TObject);
   private
     FImage: TBitmap;
@@ -70,7 +73,7 @@ var
 
 implementation
 
-uses Clipbrd, cbs_global, uDarkStyleParams;
+uses Clipbrd, cbs_global, uDarkStyleParams, FPImage, FPCanvas, FPImgCanv;
 
 {$R *.lfm}
 
@@ -176,6 +179,15 @@ begin
   UpdateZoom;
 end;
 
+procedure TfrmImageViewer.sbOpenClick(Sender: TObject);
+var
+  FPath: String;
+begin
+  FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName('image_filename').AsString, XSettings.ImagesFolder);
+
+  OpenDocument(FPath);
+end;
+
 procedure TfrmImageViewer.sbRotateLeftClick(Sender: TObject);
 begin
   BGRAReplace(FOriginal, FOriginal.RotateCCW);
@@ -222,6 +234,17 @@ begin
       tbZoom.Position := tbZoom.Position - 100
     else
       tbZoom.Position := tbZoom.Position - 10;
+end;
+
+procedure TfrmImageViewer.scrollViewMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+  if WheelDelta > 0 then
+    sbZoomInClick(Sender)
+  else
+    sbZoomOutClick(Sender);
+
+  Handled := True;
 end;
 
 procedure TfrmImageViewer.tbZoomChange(Sender: TObject);

@@ -21,11 +21,11 @@ unit cbs_autoupdate;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, fphttpclient, openssl, opensslsockets, fpjson, LazFileUtils, lclintf,
+  Classes, SysUtils, Dialogs, fphttpclient, openssl, opensslsockets, fpjson, jsonparser, LazFileUtils, lclintf,
   fileinfo, winpeimagereader, elfreader, machoreader;
 
 const
-  CheckUpdateURL: String  = 'http://github.com/cbeier-studio/Xolmis/releases/latest/download/versions.json';
+  CheckUpdateURL: String  = 'http://api.github.com/repos/cbeier-studio/Xolmis/releases/latest';
   UpdateURL: String       = 'http://github.com/cbeier-studio/Xolmis/releases/latest';
 
 type
@@ -66,7 +66,7 @@ begin
   NV := TStringList.Create;
   CV := TStringList.Create;
   try
-    ExtractStrings(['.'], [' '], PAnsiChar(NewVersion), NV);
+    ExtractStrings(['.'], [' '], PAnsiChar(StringReplace(NewVersion, 'v', '', [])), NV);
     ExtractStrings(['.'], [' '], PAnsiChar(CurrentVersion), CV);
     if NV.Count > CV.Count then
       while CV.Count < NV.Count do
@@ -105,48 +105,40 @@ end;
 function CheckUpdates: TCheckUpdateResponse;
 var
   Client: TFPHTTPClient;
-  Response: TStrings;
-  Obj: TJSONObject;
+  Response: TStringStream;
+  Data: TJSONData;
   Versao: String;
   Atual: String;
-  TempFile: String;
 begin
   Result := ckrNone;
 
   { SSL initialization has to be done by hand here }
   //InitSSLInterface;
-  TempFile := ConcatPaths([TempDir, 'versions.json']);
-  if FileExists(TempFile) then
-    DeleteFile(TempFile);
 
   Client := TFPHttpClient.Create(nil);
+  Response := TStringStream.Create('');
   try
     { Allow redirections }
     //Client.AllowRedirect := true;
     try
-      Client.Get(CheckUpdateURL, TempFile);
-      if FileExists(TempFile) then
-      begin
-        Response := TStringList.Create;
-        Response.LoadFromFile(TempFile);
-        Obj := GetJSON(Response.Text) as TJSONObject;
-        Versao := Obj.Get('release');
-        Atual := GetBuildInfoAsString;
-        if CompareVersion(Versao, Atual) > 0 then
-          Result := ckrNewVersion
-        else
-          Result := ckrUpdated;
-        Obj.Free;
-        Response.Free;
-      end
+      Client.Get(CheckUpdateURL, Response);
+      Data := GetJSON(Response.DataString);
+      Versao := Data.FindPath('tag_name').AsString;
+      Atual := GetBuildInfoAsString;
+      if CompareVersion(Versao, Atual) > 0 then
+        Result := ckrNewVersion
       else
-        LogError('File not found: ' + CheckUpdateURL);
+        Result := ckrUpdated;
     except
-      Result := ckrError;
-      MsgDlg(rsCheckUpdates, rsErrorCheckingUpdates, mtError);
+      on E: Exception do
+      begin
+        Result := ckrError;
+        MsgDlg(rsCheckUpdates, rsErrorCheckingUpdates + LineEnding + E.Message, mtError);
+      end;
     end;
   finally
     Client.Free;
+    Response.Free;
   end;
 end;
 

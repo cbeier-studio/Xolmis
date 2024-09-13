@@ -38,7 +38,7 @@ object frmImageViewer: TfrmImageViewer
       Images = iButtons
       ImageIndex = 14
       ImageWidth = 20
-      Visible = False
+      OnClick = sbOpenClick
     end
     object sbRotateLeft: TSpeedButton
       Left = 48
@@ -273,6 +273,7 @@ object frmImageViewer: TfrmImageViewer
     ClientHeight = 472
     ClientWidth = 805
     TabOrder = 2
+    OnMouseWheel = scrollViewMouseWheel
     object imgView: TImage
       Left = 0
       Height = 90
