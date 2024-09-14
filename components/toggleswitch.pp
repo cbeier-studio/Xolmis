@@ -110,6 +110,9 @@ begin
   Canvas.Brush.Style := bsSolid;
   Canvas.Pen.Style := psClear;
 
+  // Ativar antialiasing
+  Canvas.AntialiasingMode := amOn;
+
   // Draw background of toggle switch
   if FChecked then
     Canvas.Brush.Color := FColorOn

@@ -23,7 +23,7 @@ interface
 
 uses
   { System }
-  Classes, Types, SysUtils, Math, LazUTF8, StrUtils, RegExpr,
+  Classes, Types, SysUtils, Math, LazUTF8, StrUtils, RegExpr, XMLRead, XMLWrite, DOM, Zipper, Generics.Collections,
   { VCL }
   Forms, Controls, ExtCtrls, laz.VirtualTrees, mvMapViewer,
   { Data }
@@ -86,6 +86,18 @@ type
     function ToString(WithZone: Boolean = False; aSeparator: TSeparator = spNone): String;
   end;
 
+  { TMapPointObject }
+
+  TMapPointObject = class
+  private
+    FData: TMapPoint;
+  public
+    constructor Create(aX, aY: Extended; aName: String = '');
+    property Data: TMapPoint read FData write FData;
+  end;
+
+  TMapPointList = specialize TObjectList<TMapPointObject>;
+
 type
   TSiteRank = (srCountry, srState, srRegion, srMunicipality, srDistrict, srLocality);
   TGazetteerFilter = (gfAll, gfCountries, gfStates, gfRegions, gfCities, gfDistricts, gfLocalities);
@@ -147,8 +159,10 @@ type
   function AxisDMSToDec(aCoord: TDMS; aAxis: TMapAxis): Extended; overload;
 
   { Maps and KML }
-  procedure SaveToKML(MapPoints: array of TMapPoint; aFile: String);
-  procedure ViewMapPoint(aMapPoint: TMapPoint; aZoom: Integer; aMap: TMapView); overload;
+  procedure AddKMLPoint(Doc: TXMLDocument; RootNode: TDOMNode; aMapPoint: TMapPoint);
+  procedure SavePointsToKML(MapPoints: TMapPointList; aFileName: String; Compressed: Boolean = False);
+  procedure LoadKMLPoints(const aFileName: String);
+  procedure ViewMapPoint(aMapPoint: TMapPoint; aZoom: Integer; aMap: TMapView);
 
   { Dialogs }
   function GeoEditorDlg(aDMS: String; aAxis: TMapAxis; aControl: TControl;
@@ -513,39 +527,154 @@ begin
   {$ENDIF}
 end;
 
-procedure SaveToKML(MapPoints: array of TMapPoint; aFile: String);
+procedure AddKMLPoint(Doc: TXMLDocument; RootNode: TDOMNode; aMapPoint: TMapPoint);
 var
-  Kml, Coords: TStrings;
+  PlacemarkNode, nameNode, PointNode, CoordNode: TDOMNode;
+begin
+  // Create node <Placemark>
+  PlacemarkNode := Doc.CreateElement('Placemark');
+  RootNode.AppendChild(PlacemarkNode);
+  // Create node <name> within <Placemark>
+  nameNode := Doc.CreateElement('name');
+  nameNode.TextContent := aMapPoint.Name;
+  PlacemarkNode.AppendChild(nameNode);
+
+  // Create node <Point> within <Placemark>
+  PointNode := Doc.CreateElement('Point');
+  PlacemarkNode.AppendChild(PointNode);
+
+  // Create node <coordinates> within <Point>
+  CoordNode := Doc.CreateElement('coordinates');
+  CoordNode.TextContent := aMapPoint.ToString(spComma);
+  PointNode.AppendChild(CoordNode);
+end;
+
+procedure SavePointsToKML(MapPoints: TMapPointList; aFileName: String; Compressed: Boolean);
+var
+  Doc: TXMLDocument;
+  RootNode, nameNode: TDOMNode;
+  Zip: TZipper;
   i: Integer;
 begin
-  Coords := TStringList.Create;
-  Kml := TStringList.Create;
-  with Kml do
-  begin
-    Add('<?xml version="1.0" encoding="UTF-8"?>');
-    Add('<kml xmlns="http://www.opengis.net/kml/2.2">');
-    Add('<Document>');
-    Add('  <name>Xolmis</name>');
-    for i := 0 to Length(MapPoints) - 1 do
+  // Create a new XML document
+  Doc := TXMLDocument.Create;
+  try
+    // Create the root node <kml>
+    RootNode := Doc.CreateElement('kml');
+    TDOMElement(RootNode).SetAttribute('xmlns', 'http://www.opengis.net/kml/2.2');
+    Doc.AppendChild(RootNode);
+    RootNode := Doc.DocumentElement;
+    // Create node <name> within the root node
+    nameNode := Doc.CreateElement('name');
+    nameNode.TextContent := 'Xolmis';
+    RootNode.AppendChild(nameNode);
+
+    // Add multiple points
+    for i := 0 to (MapPoints.Count - 1) do
     begin
-      Add('  <Placemark>');
-      Add('    <name>' + MapPoints[i].Name + '</name>');
-      // Add('    <description>'+''+'</description>');
-      Add('    <Point>');
-      Add('      <coordinates>' + MapPoints[i].ToString + '</coordinates>');
-      Add('    </Point>');
-      Add('  </Placemark>');
-      Coords.Add(MapPoints[i].ToString);
+      AddKMLPoint(Doc, RootNode, MapPoints[i].Data);
     end;
-    Add('</Document>');
-    Add('</kml>');
-    SaveToFile(aFile);
-    Free;
+
+    // Save the XML document to file
+    WriteXMLFile(Doc, aFileName);
+    {$IFDEF DEBUG}
+    LogDebug('Exported KML file: ' + aFileName);
+    {$ENDIF}
+  finally
+    Doc.Free;
   end;
-  {$IFDEF DEBUG}
-  LogDebug('Exported KML file: ' + aFile);
-  {$ENDIF}
-  Coords.Free;
+
+  if Compressed then
+  begin
+    // Compress the KML file to a KMZ
+    Zip := TZipper.Create;
+    try
+      Zip.FileName := ChangeFileExt(aFileName, '.kmz');
+      Zip.Entries.AddFileEntry(aFileName);
+      Zip.ZipAllFiles;
+    finally
+      Zip.Free;
+      DeleteFile(aFileName); // Remove the KML file
+    end;
+  end;
+end;
+
+procedure LoadKMLPoints(const aFileName: String);
+var
+  Doc: TXMLDocument;
+  PlacemarkNode, nameNode, PointNode, CoordNode: TDOMNode;
+  PlacemarkList, nameList, PointList: TDOMNodeList;
+  Unzip: TUnZipper;
+  aKMLFile: String;
+  i: Integer;
+  Zipped: Boolean;
+  CoordList: TStringList;
+begin
+  Zipped := False;
+  if ExtractFileExt(aFileName) = '.kmz' then
+  begin
+    Zipped := True;
+    // Decompress KMZ file
+    Unzip := TUnZipper.Create;
+    try
+      Unzip.FileName := aFileName;
+      Unzip.OutputPath := TempDir;
+      Unzip.Examine;
+      aKMLFile := ConcatPaths([TempDir, Unzip.Entries[0].ArchiveFileName]); // Assuming that the first file is the KML
+      Unzip.UnZipAllFiles;
+    finally
+      Unzip.Free;
+    end;
+  end
+  else
+    aKMLFile := aFileName;
+
+  // Load a KML file
+  ReadXMLFile(Doc, aKMLFile);
+  DMM.tabGeoBank.DisableControls;
+  try
+    // Find all <Placemark> nodes
+    PlacemarkList := Doc.GetElementsByTagName('Placemark');
+    for i := 0 to PlacemarkList.Count - 1 do
+    begin
+      PlacemarkNode := PlacemarkList[i];
+      // Find the node <name> within <Placemark>
+      nameNode := PlacemarkNode.FindNode('name');
+      // Find the node <Point> within <Placemark>
+      PointNode := PlacemarkNode.FindNode('Point');
+      if Assigned(PointNode) then
+      begin
+        //PointNode := PointList[0];
+        // Find the node <coordinates> within <Point>
+        CoordNode := PointNode.FindNode('coordinates');
+        if Assigned(CoordNode) then
+        begin
+          // Add record to the GeoBank table
+          DMM.tabGeoBank.Append;
+          if Assigned(nameNode) then
+            DMM.tabGeoBank.FieldByName('coordinate_name').AsString := nameNode.TextContent;
+          CoordList := TStringList.Create;
+          try
+            CoordList.CommaText := CoordNode.TextContent;
+            DMM.tabGeoBank.FieldByName('longitude').AsFloat := StrToFloat(StringReplace(CoordList[0], '.', FormatSettings.DecimalSeparator, []));
+            DMM.tabGeoBank.FieldByName('latitude').AsFloat := StrToFloat(StringReplace(CoordList[1], '.', FormatSettings.DecimalSeparator, []));
+            if CoordList.Count = 3 then
+              DMM.tabGeoBank.FieldByName('altitude').AsFloat := StrToFloat(StringReplace(CoordList[2], '.', FormatSettings.DecimalSeparator, []));
+          finally
+            CoordList.Free;
+          end;
+          DMM.tabGeoBank.Post;
+        end;
+      end;
+    end;
+  finally
+    DMM.tabGeoBank.EnableControls;
+    Doc.Free;
+  end;
+
+  // Delete the extracted KML file
+  if Zipped then
+    DeleteFile(aKMLFile);
 end;
 
 procedure ViewMapPoint(aMapPoint: TMapPoint; aZoom: Integer; aMap: TMapView);
@@ -828,6 +957,16 @@ begin
     Result := Format('%d %s%s %s%s %s',[Zone, Band, sep, sX, sep, sY])
   else
     Result := Format('%s%s %s', [sX, sep, sY]);
+end;
+
+{ TMapPointObject }
+
+constructor TMapPointObject.Create(aX, aY: Extended; aName: String);
+begin
+  inherited Create;
+  FData.X := aX;
+  FData.Y := aY;
+  FData.Name := aName;
 end;
 
 { TDMSPoint }
