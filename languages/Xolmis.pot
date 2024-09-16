@@ -4456,14 +4456,17 @@ msgid "Synonym"
 msgstr ""
 
 #: cbs_locale.rstabbreeding
+msgctxt "cbs_locale.rstabbreeding"
 msgid "Breeding"
 msgstr ""
 
 #: cbs_locale.rstabentities
+msgctxt "cbs_locale.rstabentities"
 msgid "Entities"
 msgstr ""
 
 #: cbs_locale.rstabgeo
+msgctxt "cbs_locale.rstabgeo"
 msgid "Geo"
 msgstr ""
 
@@ -4483,10 +4486,12 @@ msgid "Media"
 msgstr ""
 
 #: cbs_locale.rstabsampling
+msgctxt "cbs_locale.rstabsampling"
 msgid "Sampling"
 msgstr ""
 
 #: cbs_locale.rstabtaxonomy
+msgctxt "cbs_locale.rstabtaxonomy"
 msgid "Taxonomy"
 msgstr ""
 
@@ -11326,7 +11331,8 @@ msgid "New"
 msgstr ""
 
 #: tfrmmain.actinsertrecord.hint
-msgid "Novo registro"
+msgctxt "tfrmmain.actinsertrecord.hint"
+msgid "New record"
 msgstr ""
 
 #: tfrmmain.actlogoff.caption
@@ -11504,6 +11510,56 @@ msgctxt "tfrmmain.lblloading.caption"
 msgid "Welcome"
 msgstr ""
 
+#: tfrmmain.menuitem1.caption
+msgctxt "tfrmmain.menuitem1.caption"
+msgid "File"
+msgstr ""
+
+#: tfrmmain.menuitem10.caption
+msgctxt "tfrmmain.menuitem10.caption"
+msgid "Help"
+msgstr ""
+
+#: tfrmmain.menuitem2.caption
+msgctxt "tfrmmain.menuitem2.caption"
+msgid "Sampling"
+msgstr ""
+
+#: tfrmmain.menuitem3.caption
+msgctxt "tfrmmain.menuitem3.caption"
+msgid "Individuals"
+msgstr ""
+
+#: tfrmmain.menuitem38.caption
+msgctxt "tfrmmain.menuitem38.caption"
+msgid "Media"
+msgstr ""
+
+#: tfrmmain.menuitem4.caption
+msgctxt "tfrmmain.menuitem4.caption"
+msgid "Breeding"
+msgstr ""
+
+#: tfrmmain.menuitem45.caption
+msgctxt "tfrmmain.menuitem45.caption"
+msgid "Import"
+msgstr ""
+
+#: tfrmmain.menuitem5.caption
+msgctxt "tfrmmain.menuitem5.caption"
+msgid "Entities"
+msgstr ""
+
+#: tfrmmain.menuitem6.caption
+msgctxt "tfrmmain.menuitem6.caption"
+msgid "Geo"
+msgstr ""
+
+#: tfrmmain.menuitem9.caption
+msgctxt "tfrmmain.menuitem9.caption"
+msgid "Taxonomy"
+msgstr ""
+
 #: tfrmmain.pmanewband.caption
 msgctxt "tfrmmain.pmanewband.caption"
 msgid "New band"
@@ -11601,19 +11657,9 @@ msgctxt "tfrmmain.sbclearsearch.hint"
 msgid "Clear search"
 msgstr ""
 
-#: tfrmmain.sbfilemenu.caption
-msgctxt "tfrmmain.sbfilemenu.caption"
-msgid "File"
-msgstr ""
-
 #: tfrmmain.sbhome.hint
 msgctxt "tfrmmain.sbhome.hint"
 msgid "Home"
-msgstr ""
-
-#: tfrmmain.sbinsertrecord.hint
-msgctxt "tfrmmain.sbinsertrecord.hint"
-msgid "New record"
 msgstr ""
 
 #: tfrmmaintenance.caption

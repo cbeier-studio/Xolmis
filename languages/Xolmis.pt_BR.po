@@ -4484,14 +4484,17 @@ msgid "Synonym"
 msgstr "Sinônimo"
 
 #: cbs_locale.rstabbreeding
+msgctxt "cbs_locale.rstabbreeding"
 msgid "Breeding"
 msgstr "Reprodução"
 
 #: cbs_locale.rstabentities
+msgctxt "cbs_locale.rstabentities"
 msgid "Entities"
 msgstr "Entidades"
 
 #: cbs_locale.rstabgeo
+msgctxt "cbs_locale.rstabgeo"
 msgid "Geo"
 msgstr "Geo"
 
@@ -4511,10 +4514,12 @@ msgid "Media"
 msgstr "Mídias"
 
 #: cbs_locale.rstabsampling
+msgctxt "cbs_locale.rstabsampling"
 msgid "Sampling"
 msgstr "Amostragem"
 
 #: cbs_locale.rstabtaxonomy
+msgctxt "cbs_locale.rstabtaxonomy"
 msgid "Taxonomy"
 msgstr "Taxonomia"
 
@@ -11367,7 +11372,8 @@ msgid "New"
 msgstr "Novo"
 
 #: tfrmmain.actinsertrecord.hint
-msgid "Novo registro"
+msgctxt "tfrmmain.actinsertrecord.hint"
+msgid "New record"
 msgstr "Novo registro"
 
 #: tfrmmain.actlogoff.caption
@@ -11545,6 +11551,56 @@ msgctxt "tfrmmain.lblloading.caption"
 msgid "Welcome"
 msgstr "Bem-vindo(a)"
 
+#: tfrmmain.menuitem1.caption
+msgctxt "tfrmmain.menuitem1.caption"
+msgid "File"
+msgstr "Arquivo"
+
+#: tfrmmain.menuitem10.caption
+msgctxt "tfrmmain.menuitem10.caption"
+msgid "Help"
+msgstr "Ajuda"
+
+#: tfrmmain.menuitem2.caption
+msgctxt "tfrmmain.menuitem2.caption"
+msgid "Sampling"
+msgstr "Amostragem"
+
+#: tfrmmain.menuitem3.caption
+msgctxt "tfrmmain.menuitem3.caption"
+msgid "Individuals"
+msgstr "Indivíduos"
+
+#: tfrmmain.menuitem38.caption
+msgctxt "tfrmmain.menuitem38.caption"
+msgid "Media"
+msgstr "Mídias"
+
+#: tfrmmain.menuitem4.caption
+msgctxt "tfrmmain.menuitem4.caption"
+msgid "Breeding"
+msgstr "Reprodução"
+
+#: tfrmmain.menuitem45.caption
+msgctxt "tfrmmain.menuitem45.caption"
+msgid "Import"
+msgstr "Importar"
+
+#: tfrmmain.menuitem5.caption
+msgctxt "tfrmmain.menuitem5.caption"
+msgid "Entities"
+msgstr "Entidades"
+
+#: tfrmmain.menuitem6.caption
+msgctxt "tfrmmain.menuitem6.caption"
+msgid "Geo"
+msgstr "Geo"
+
+#: tfrmmain.menuitem9.caption
+msgctxt "tfrmmain.menuitem9.caption"
+msgid "Taxonomy"
+msgstr "Taxonomia"
+
 #: tfrmmain.pmanewband.caption
 msgctxt "tfrmmain.pmanewband.caption"
 msgid "New band"
@@ -11642,20 +11698,10 @@ msgctxt "tfrmmain.sbclearsearch.hint"
 msgid "Clear search"
 msgstr "Limpar busca"
 
-#: tfrmmain.sbfilemenu.caption
-msgctxt "tfrmmain.sbfilemenu.caption"
-msgid "File"
-msgstr "Arquivo"
-
 #: tfrmmain.sbhome.hint
 msgctxt "tfrmmain.sbhome.hint"
 msgid "Home"
 msgstr "Início"
-
-#: tfrmmain.sbinsertrecord.hint
-msgctxt "tfrmmain.sbinsertrecord.hint"
-msgid "New record"
-msgstr "Novo registro"
 
 #: tfrmmaintenance.caption
 msgctxt "tfrmmaintenance.caption"
@@ -11821,4 +11867,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

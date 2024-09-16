@@ -1,10 +1,8 @@
 {"version":1,"strings":[
 {"hash":100021251,"name":"tfrmmain.caption","sourcebytes":[88,111,108,109,105,115],"value":"Xolmis"},
-{"hash":315429,"name":"tfrmmain.sbfilemenu.caption","sourcebytes":[70,105,108,101],"value":"File"},
-{"hash":325173,"name":"tfrmmain.sbhome.hint","sourcebytes":[72,111,109,101],"value":"Home"},
-{"hash":126806548,"name":"tfrmmain.sbinsertrecord.hint","sourcebytes":[78,101,119,32,114,101,99,111,114,100],"value":"New record"},
 {"hash":94079128,"name":"tfrmmain.esearch.texthint","sourcebytes":[83,101,97,114,99,104],"value":"Search"},
 {"hash":54079704,"name":"tfrmmain.sbclearsearch.hint","sourcebytes":[67,108,101,97,114,32,115,101,97,114,99,104],"value":"Clear search"},
+{"hash":325173,"name":"tfrmmain.sbhome.hint","sourcebytes":[72,111,109,101],"value":"Home"},
 {"hash":230860389,"name":"tfrmmain.lblloading.caption","sourcebytes":[87,101,108,99,111,109,101],"value":"Welcome"},
 {"hash":189142243,"name":"tfrmmain.actopenexpeditions.caption","sourcebytes":[69,120,112,101,100,105,116,105,111,110,115],"value":"Expeditions"},
 {"hash":180997459,"name":"tfrmmain.actopensurveys.caption","sourcebytes":[83,117,114,118,101,121,115],"value":"Surveys"},
@@ -12,7 +10,7 @@
 {"hash":4752563,"name":"tfrmmain.actopenbands.caption","sourcebytes":[66,97,110,100,115],"value":"Bands"},
 {"hash":157867608,"name":"tfrmmain.actnewbands.caption","sourcebytes":[78,101,119,32,98,97,116,99,104],"value":"New batch"},
 {"hash":21703,"name":"tfrmmain.actinsertrecord.caption","sourcebytes":[78,101,119],"value":"New"},
-{"hash":248364127,"name":"tfrmmain.actinsertrecord.hint","sourcebytes":[78,111,118,111,32,114,101,103,105,115,116,114,111],"value":"Novo registro"},
+{"hash":126806548,"name":"tfrmmain.actinsertrecord.hint","sourcebytes":[78,101,119,32,114,101,99,111,114,100],"value":"New record"},
 {"hash":147924259,"name":"tfrmmain.actopenresearchers.caption","sourcebytes":[82,101,115,101,97,114,99,104,101,114,115],"value":"Researchers"},
 {"hash":248475475,"name":"tfrmmain.actopeninstitutions.caption","sourcebytes":[73,110,115,116,105,116,117,116,105,111,110,115],"value":"Institutions"},
 {"hash":157335491,"name":"tfrmmain.actopenprojects.caption","sourcebytes":[80,114,111,106,101,99,116,115],"value":"Projects"},
@@ -74,5 +72,15 @@
 {"hash":132301524,"name":"tfrmmain.pmanewproject.caption","sourcebytes":[78,101,119,32,112,114,111,106,101,99,116],"value":"New project"},
 {"hash":124379284,"name":"tfrmmain.pmanewpermit.caption","sourcebytes":[78,101,119,32,112,101,114,109,105,116],"value":"New permit"},
 {"hash":187935885,"name":"tfrmmain.pmanewtoponym.caption","sourcebytes":[78,101,119,32,116,111,112,111,110,121,109],"value":"New toponym"},
-{"hash":81075838,"name":"tfrmmain.pmanewnetstation.caption","sourcebytes":[78,101,119,32,109,105,115,116,110,101,116,32,115,116,97,116,105,111,110],"value":"New mistnet station"}
+{"hash":81075838,"name":"tfrmmain.pmanewnetstation.caption","sourcebytes":[78,101,119,32,109,105,115,116,110,101,116,32,115,116,97,116,105,111,110],"value":"New mistnet station"},
+{"hash":315429,"name":"tfrmmain.menuitem1.caption","sourcebytes":[70,105,108,101],"value":"File"},
+{"hash":84178580,"name":"tfrmmain.menuitem45.caption","sourcebytes":[73,109,112,111,114,116],"value":"Import"},
+{"hash":138882007,"name":"tfrmmain.menuitem2.caption","sourcebytes":[83,97,109,112,108,105,110,103],"value":"Sampling"},
+{"hash":212598067,"name":"tfrmmain.menuitem3.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,115],"value":"Individuals"},
+{"hash":146517207,"name":"tfrmmain.menuitem4.caption","sourcebytes":[66,114,101,101,100,105,110,103],"value":"Breeding"},
+{"hash":95464195,"name":"tfrmmain.menuitem5.caption","sourcebytes":[69,110,116,105,116,105,101,115],"value":"Entities"},
+{"hash":19903,"name":"tfrmmain.menuitem6.caption","sourcebytes":[71,101,111],"value":"Geo"},
+{"hash":150360553,"name":"tfrmmain.menuitem9.caption","sourcebytes":[84,97,120,111,110,111,109,121],"value":"Taxonomy"},
+{"hash":5487345,"name":"tfrmmain.menuitem38.caption","sourcebytes":[77,101,100,105,97],"value":"Media"},
+{"hash":322608,"name":"tfrmmain.menuitem10.caption","sourcebytes":[72,101,108,112],"value":"Help"}
 ]}
