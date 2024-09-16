@@ -279,7 +279,8 @@ object frmImageViewer: TfrmImageViewer
       Height = 90
       Top = 0
       Width = 90
-      AutoSize = True
+      Proportional = True
+      Stretch = True
       Transparent = True
     end
     object btnPrior: TBCButton

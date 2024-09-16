@@ -61,6 +61,7 @@ type
     FOriginal, FZoomed: TBGRABitmap;
     FOrigWidth, FOrigHeight: Integer;
     FZoomWidth, FZoomHeight: Integer;
+    FNeedRedraw: Boolean;
     procedure ApplyDarkMode;
     procedure LoadImage;
     procedure UpdateZoom;
@@ -122,6 +123,7 @@ begin
   FImage := TBitmap.Create;
   FOriginal := TBGRABitmap.Create;
   FZoomed := TBGRABitmap.Create;
+  FNeedRedraw := False;
 end;
 
 procedure TfrmImageViewer.FormDestroy(Sender: TObject);
@@ -153,6 +155,8 @@ begin
   FOrigHeight := FOriginal.Height;
   lblSize.Caption := Format('%d × %d px', [FOrigWidth, FOrigHeight]);
 
+  FNeedRedraw := True;
+
   UpdateZoom;
 end;
 
@@ -169,6 +173,7 @@ procedure TfrmImageViewer.sbFlipHorizontalClick(Sender: TObject);
 begin
   FOriginal.HorizontalFlip;
 
+  FNeedRedraw := True;
   UpdateZoom;
 end;
 
@@ -176,6 +181,7 @@ procedure TfrmImageViewer.sbFlipVerticalClick(Sender: TObject);
 begin
   FOriginal.VerticalFlip;
 
+  FNeedRedraw := True;
   UpdateZoom;
 end;
 
@@ -195,6 +201,7 @@ begin
   FOrigHeight := FOriginal.Height;
   lblSize.Caption := Format('%d × %d px', [FOrigWidth, FOrigHeight]);
 
+  FNeedRedraw := True;
   UpdateZoom;
 end;
 
@@ -205,6 +212,7 @@ begin
   FOrigHeight := FOriginal.Height;
   lblSize.Caption := Format('%d × %d px', [FOrigWidth, FOrigHeight]);
 
+  FNeedRedraw := True;
   UpdateZoom;
 end;
 
@@ -259,11 +267,30 @@ begin
   FZoomWidth := Round(FOrigWidth * (tbZoom.Position / 100));
   FZoomHeight := Round(FOrigHeight * (tbZoom.Position / 100));
 
-  BGRAReplace(FZoomed, FOriginal.Resample(FZoomWidth, FZoomHeight));
-  imgView.Picture.Clear;
-  imgView.Picture.Bitmap.Width := FZoomWidth;
-  imgView.Picture.Bitmap.Height := FZoomHeight;
-  FZoomed.Draw(imgView.Picture.Bitmap.Canvas, 0, 0);
+  //BGRAReplace(FZoomed, FOriginal.Resample(FZoomWidth, FZoomHeight));
+  if FNeedRedraw then
+  begin
+    imgView.Picture.Clear;
+    //imgView.Picture.Bitmap.Width := FZoomWidth;
+    //imgView.Picture.Bitmap.Height := FZoomHeight;
+    imgView.Picture.Bitmap.Width := FOrigWidth;
+    imgView.Picture.Bitmap.Height := FOrigHeight;
+    //FZoomed.Draw(imgView.Picture.Bitmap.Canvas, 0, 0);
+    FOriginal.Draw(imgView.Picture.Bitmap.Canvas, 0, 0);
+    FNeedRedraw := False;
+  end;
+  //imgView.Stretch := True;
+  //imgView.Proportional := True;
+  imgView.Width := Round(imgView.Picture.Width * (tbZoom.Position / 100));
+  imgView.Height := Round(imgView.Picture.Height * (tbZoom.Position / 100));
+  if imgView.Width > scrollView.ClientWidth then
+    imgView.Left := 0
+  else
+    imgView.Left := (scrollView.ClientWidth - imgView.Width) div 2;
+  if imgView.Height > scrollView.ClientHeight then
+    imgView.Top := 0
+  else
+  imgView.Top := (scrollView.ClientHeight - imgView.Height) div 2;
 end;
 
 end.
