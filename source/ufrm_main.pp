@@ -46,6 +46,7 @@ type
     actImport: TAction;
     actImportNests: TAction;
     actImportWizard: TAction;
+    actImportCoordinates: TAction;
     actMaintenance: TAction;
     actOpenBandHistory: TAction;
     actOpenTaxonRanks: TAction;
@@ -89,60 +90,61 @@ type
     iMenu: TImageList;
     iPopup: TImageList;
     iSearchDark: TImageList;
-    MenuItem1: TMenuItem;
-    MenuItem10: TMenuItem;
-    MenuItem11: TMenuItem;
-    MenuItem12: TMenuItem;
-    MenuItem13: TMenuItem;
-    MenuItem14: TMenuItem;
-    MenuItem15: TMenuItem;
-    MenuItem16: TMenuItem;
-    MenuItem17: TMenuItem;
-    MenuItem18: TMenuItem;
-    MenuItem19: TMenuItem;
-    MenuItem2: TMenuItem;
-    MenuItem20: TMenuItem;
-    MenuItem21: TMenuItem;
-    MenuItem22: TMenuItem;
-    MenuItem23: TMenuItem;
-    MenuItem24: TMenuItem;
-    MenuItem25: TMenuItem;
-    MenuItem26: TMenuItem;
-    MenuItem27: TMenuItem;
-    MenuItem28: TMenuItem;
-    MenuItem29: TMenuItem;
-    MenuItem3: TMenuItem;
-    MenuItem30: TMenuItem;
-    MenuItem31: TMenuItem;
-    MenuItem32: TMenuItem;
-    MenuItem33: TMenuItem;
-    MenuItem34: TMenuItem;
-    MenuItem35: TMenuItem;
-    MenuItem36: TMenuItem;
-    MenuItem37: TMenuItem;
-    MenuItem38: TMenuItem;
-    MenuItem39: TMenuItem;
-    MenuItem4: TMenuItem;
-    MenuItem40: TMenuItem;
-    MenuItem41: TMenuItem;
-    MenuItem42: TMenuItem;
-    MenuItem43: TMenuItem;
-    MenuItem44: TMenuItem;
-    MenuItem45: TMenuItem;
-    MenuItem46: TMenuItem;
-    MenuItem47: TMenuItem;
-    MenuItem48: TMenuItem;
-    MenuItem49: TMenuItem;
-    MenuItem5: TMenuItem;
-    MenuItem50: TMenuItem;
-    MenuItem51: TMenuItem;
-    MenuItem52: TMenuItem;
-    MenuItem53: TMenuItem;
-    MenuItem54: TMenuItem;
-    MenuItem55: TMenuItem;
-    MenuItem56: TMenuItem;
-    MenuItem6: TMenuItem;
-    MenuItem9: TMenuItem;
+    mmfImportCoordinates: TMenuItem;
+    mmFile: TMenuItem;
+    mmHelp: TMenuItem;
+    mmsExpeditions: TMenuItem;
+    mmsSurveys: TMenuItem;
+    mmsSightings: TMenuItem;
+    mmsMethods: TMenuItem;
+    mmsSpecimens: TMenuItem;
+    mmiBands: TMenuItem;
+    mmiNewBandsBatch: TMenuItem;
+    mmiBandsHistory: TMenuItem;
+    mmiBandsBalance: TMenuItem;
+    mmSampling: TMenuItem;
+    mmiIndividuals: TMenuItem;
+    mmiCaptures: TMenuItem;
+    mmiMolts: TMenuItem;
+    mmbNests: TMenuItem;
+    mmbNestRevisions: TMenuItem;
+    mmbEggs: TMenuItem;
+    mmeInstitutions: TMenuItem;
+    mmeResearchers: TMenuItem;
+    mmeProjects: TMenuItem;
+    mmePermits: TMenuItem;
+    mmIndividuals: TMenuItem;
+    mmgGazetteer: TMenuItem;
+    mmgSamplingPlots: TMenuItem;
+    mmgCoordinatesConverter: TMenuItem;
+    mmtTaxa: TMenuItem;
+    mmtBotanicTaxa: TMenuItem;
+    mmhHelp: TMenuItem;
+    mmhFeedback: TMenuItem;
+    mmhAbout: TMenuItem;
+    mmMedia: TMenuItem;
+    mmmImageGallery: TMenuItem;
+    mmBreeding: TMenuItem;
+    mmmAudioLibrary: TMenuItem;
+    mmmAttachments: TMenuItem;
+    mmfConnectDB: TMenuItem;
+    mmfManageConnections: TMenuItem;
+    mmfExport: TMenuItem;
+    mmfImport: TMenuItem;
+    mmfImportEbird: TMenuItem;
+    mmfImportCaptures: TMenuItem;
+    mmfImportNests: TMenuItem;
+    mmfImportWizard: TMenuItem;
+    mmEntities: TMenuItem;
+    mmfPrint: TMenuItem;
+    mmfSettings: TMenuItem;
+    mmfMaintenance: TMenuItem;
+    mmfCheckUpdates: TMenuItem;
+    mmfManageUsers: TMenuItem;
+    mmfLogoff: TMenuItem;
+    mmfExit: TMenuItem;
+    mmGeo: TMenuItem;
+    mmTaxonomy: TMenuItem;
     mMenu: TMainMenu;
     navTabs: TATTabs;
     sbClearSearch: TColorSpeedButton;
@@ -192,6 +194,7 @@ type
     pLeftTabs: TPanel;
     sbHome: TSpeedButton;
     sbInsertRecord: TSpeedButton;
+    Separator1: TMenuItem;
     Separator11: TMenuItem;
     Separator12: TMenuItem;
     Separator13: TMenuItem;
@@ -227,6 +230,7 @@ type
     procedure actExitExecute(Sender: TObject);
     procedure actGiveFeedbackExecute(Sender: TObject);
     procedure actImportCapturesExecute(Sender: TObject);
+    procedure actImportCoordinatesExecute(Sender: TObject);
     procedure actImportEbirdExecute(Sender: TObject);
     procedure actImportNestsExecute(Sender: TObject);
     procedure actInsertRecordExecute(Sender: TObject);
@@ -340,7 +344,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions, cbs_backup,
-  cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
+  cbs_gis, cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_client, udm_sampling, udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
@@ -426,6 +430,22 @@ begin
     ShowModal;
   finally
     FreeAndNil(dlgImportCaptures);
+  end;
+end;
+
+procedure TfrmMain.actImportCoordinatesExecute(Sender: TObject);
+var
+  Ext: String;
+begin
+  DMM.OpenKmlDlg.Title := rsTitleImportFile;
+  if DMM.OpenKmlDlg.Execute then
+  begin
+    Ext := ExtractFileExt(DMM.OpenKmlDlg.FileName);
+    case Ext of
+      '.kml', '.kmz': LoadKMLPoints(DMM.OpenKmlDlg.FileName);
+      '.csv', '.txt': ;
+      '.gpx': ;
+    end;
   end;
 end;
 

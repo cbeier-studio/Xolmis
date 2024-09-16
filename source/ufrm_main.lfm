@@ -2,10 +2,10 @@ object frmMain: TfrmMain
   Left = -8
   Height = 1100
   Top = -8
-  Width = 1940
+  Width = 1972
   Caption = 'Xolmis'
   ClientHeight = 1061
-  ClientWidth = 1924
+  ClientWidth = 1972
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
@@ -19,17 +19,17 @@ object frmMain: TfrmMain
     Left = 0
     Height = 986
     Top = 49
-    Width = 1924
+    Width = 1972
     Align = alClient
     BevelOuter = bvNone
     ClientHeight = 986
-    ClientWidth = 1924
+    ClientWidth = 1972
     TabOrder = 0
     object PGW: TTDICardPanel
       Left = 0
       Height = 986
       Top = 0
-      Width = 1924
+      Width = 1972
       Align = alClient
       TabOrder = 0
       TDIActions.CloseTab.Caption = 'Close Tab'
@@ -50,11 +50,11 @@ object frmMain: TfrmMain
     Left = 0
     Height = 49
     Top = 0
-    Width = 1924
+    Width = 1972
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 49
-    ClientWidth = 1924
+    ClientWidth = 1972
     Color = 15263976
     ParentBackground = False
     ParentColor = False
@@ -87,7 +87,7 @@ object frmMain: TfrmMain
     end
     object pSearch: TBCPanel
       AnchorSideLeft.Side = asrCenter
-      Left = 1727
+      Left = 1775
       Height = 29
       Top = 10
       Width = 181
@@ -234,13 +234,14 @@ object frmMain: TfrmMain
       Left = 96
       Height = 49
       Top = 0
-      Width = 1615
+      Width = 1663
       Align = alClient
       ParentColor = False
       PopupMenu = pmTabs
       Tabs = <>
       OnContextPopup = navTabsContextPopup
       DoubleBuffered = True
+      TabIndex = -1
       ColorBg = 15263976
       ColorSeparator = 8945535
       ColorTabActive = 16250871
@@ -304,7 +305,7 @@ object frmMain: TfrmMain
     Left = 0
     Height = 26
     Top = 1035
-    Width = 1924
+    Width = 1972
     Align = alBottom
     AutoSize = True
     Background.Color = clBtnFace
@@ -546,7 +547,7 @@ object frmMain: TfrmMain
       Left = 117
       Height = 26
       Top = 0
-      Width = 1417
+      Width = 1465
       Align = alClient
       Background.Color = clBtnFace
       Background.Gradient1.StartColor = clWhite
@@ -590,7 +591,7 @@ object frmMain: TfrmMain
       TabOrder = 3
     end
     object sbarProgress: TBCPanel
-      Left = 1534
+      Left = 1582
       Height = 26
       Top = 0
       Width = 390
@@ -975,6 +976,11 @@ object frmMain: TfrmMain
       Caption = 'Nests data'
       OnExecute = actImportNestsExecute
       Visible = False
+    end
+    object actImportCoordinates: TAction
+      Category = 'Import'
+      Caption = 'Geographical coordinates'
+      OnExecute = actImportCoordinatesExecute
     end
     object actImportWizard: TAction
       Category = 'Import'
@@ -8591,221 +8597,227 @@ object frmMain: TfrmMain
     Images = iMenu
     Left = 57
     Top = 125
-    object MenuItem1: TMenuItem
+    object mmFile: TMenuItem
       Caption = 'File'
-      object MenuItem42: TMenuItem
+      object mmfConnectDB: TMenuItem
         Action = actDBConnect
       end
-      object MenuItem43: TMenuItem
+      object mmfManageConnections: TMenuItem
         Action = actDBSettings
       end
       object Separator24: TMenuItem
         Caption = '-'
       end
-      object MenuItem44: TMenuItem
+      object mmfExport: TMenuItem
         Action = actExport
       end
-      object MenuItem45: TMenuItem
+      object mmfImport: TMenuItem
         Caption = 'Import'
         ImageIndex = 36
-        object MenuItem46: TMenuItem
+        object mmfImportEbird: TMenuItem
           Action = actImportEbird
         end
         object Separator25: TMenuItem
           Caption = '-'
         end
-        object MenuItem47: TMenuItem
+        object mmfImportCaptures: TMenuItem
           Action = actImportCaptures
         end
-        object MenuItem48: TMenuItem
+        object mmfImportNests: TMenuItem
           Action = actImportNests
         end
         object Separator26: TMenuItem
           Caption = '-'
         end
-        object MenuItem49: TMenuItem
+        object mmfImportCoordinates: TMenuItem
+          Action = actImportCoordinates
+        end
+        object Separator1: TMenuItem
+          Caption = '-'
+        end
+        object mmfImportWizard: TMenuItem
           Action = actImportWizard
         end
       end
       object Separator27: TMenuItem
         Caption = '-'
       end
-      object MenuItem50: TMenuItem
+      object mmfPrint: TMenuItem
         Action = actPrint
       end
       object Separator28: TMenuItem
         Caption = '-'
       end
-      object MenuItem51: TMenuItem
+      object mmfSettings: TMenuItem
         Action = actSettings
       end
-      object MenuItem52: TMenuItem
+      object mmfMaintenance: TMenuItem
         Action = actMaintenance
       end
       object Separator29: TMenuItem
         Caption = '-'
       end
-      object MenuItem53: TMenuItem
+      object mmfCheckUpdates: TMenuItem
         Action = actCheckUpdates
       end
       object Separator30: TMenuItem
         Caption = '-'
       end
-      object MenuItem54: TMenuItem
+      object mmfManageUsers: TMenuItem
         Action = actManageUsers
       end
-      object MenuItem55: TMenuItem
+      object mmfLogoff: TMenuItem
         Action = actLogoff
       end
       object Separator31: TMenuItem
         Caption = '-'
       end
-      object MenuItem56: TMenuItem
+      object mmfExit: TMenuItem
         Action = actExit
       end
     end
-    object MenuItem2: TMenuItem
+    object mmSampling: TMenuItem
       Caption = 'Sampling'
-      object MenuItem11: TMenuItem
+      object mmsExpeditions: TMenuItem
         Action = actOpenExpeditions
       end
-      object MenuItem12: TMenuItem
+      object mmsSurveys: TMenuItem
         Action = actOpenSurveys
       end
       object Separator8: TMenuItem
         Caption = '-'
       end
-      object MenuItem13: TMenuItem
+      object mmsSightings: TMenuItem
         Action = actOpenSightings
       end
       object Separator9: TMenuItem
         Caption = '-'
       end
-      object MenuItem14: TMenuItem
+      object mmsMethods: TMenuItem
         Action = actOpenMethods
       end
       object Separator16: TMenuItem
         Caption = '-'
       end
-      object MenuItem15: TMenuItem
+      object mmsSpecimens: TMenuItem
         Action = actOpenSpecimens
       end
     end
-    object MenuItem3: TMenuItem
+    object mmIndividuals: TMenuItem
       Caption = 'Individuals'
-      object MenuItem16: TMenuItem
+      object mmiBands: TMenuItem
         Action = actOpenBands
       end
-      object MenuItem17: TMenuItem
+      object mmiNewBandsBatch: TMenuItem
         Action = actNewBands
       end
-      object MenuItem18: TMenuItem
+      object mmiBandsHistory: TMenuItem
         Action = actOpenBandHistory
       end
-      object MenuItem19: TMenuItem
+      object mmiBandsBalance: TMenuItem
         Action = actViewBandsBalance
       end
       object Separator17: TMenuItem
         Caption = '-'
       end
-      object MenuItem20: TMenuItem
+      object mmiIndividuals: TMenuItem
         Action = actOpenIndividuals
       end
       object Separator18: TMenuItem
         Caption = '-'
       end
-      object MenuItem21: TMenuItem
+      object mmiCaptures: TMenuItem
         Action = actOpenCaptures
       end
-      object MenuItem22: TMenuItem
+      object mmiMolts: TMenuItem
         Action = actOpenMolts
       end
     end
-    object MenuItem4: TMenuItem
+    object mmBreeding: TMenuItem
       Caption = 'Breeding'
-      object MenuItem23: TMenuItem
+      object mmbNests: TMenuItem
         Action = actOpenNests
       end
-      object MenuItem24: TMenuItem
+      object mmbNestRevisions: TMenuItem
         Action = actOpenNestRevisions
       end
-      object MenuItem25: TMenuItem
+      object mmbEggs: TMenuItem
         Action = actOpenEggs
       end
     end
-    object MenuItem5: TMenuItem
+    object mmEntities: TMenuItem
       Caption = 'Entities'
-      object MenuItem26: TMenuItem
+      object mmeInstitutions: TMenuItem
         Action = actOpenInstitutions
       end
-      object MenuItem27: TMenuItem
+      object mmeResearchers: TMenuItem
         Action = actOpenResearchers
       end
       object Separator19: TMenuItem
         Caption = '-'
       end
-      object MenuItem28: TMenuItem
+      object mmeProjects: TMenuItem
         Action = actOpenProjects
       end
-      object MenuItem29: TMenuItem
+      object mmePermits: TMenuItem
         Action = actOpenPermits
       end
     end
-    object MenuItem6: TMenuItem
+    object mmGeo: TMenuItem
       Caption = 'Geo'
-      object MenuItem30: TMenuItem
+      object mmgGazetteer: TMenuItem
         Action = actOpenGazetteer
       end
-      object MenuItem31: TMenuItem
+      object mmgSamplingPlots: TMenuItem
         Action = actOpenNetStations
       end
       object Separator20: TMenuItem
         Caption = '-'
       end
-      object MenuItem32: TMenuItem
+      object mmgCoordinatesConverter: TMenuItem
         Action = actCoordinatesConverter
       end
     end
-    object MenuItem9: TMenuItem
+    object mmTaxonomy: TMenuItem
       Caption = 'Taxonomy'
-      object MenuItem33: TMenuItem
+      object mmtTaxa: TMenuItem
         Action = actOpenTaxa
       end
       object Separator21: TMenuItem
         Caption = '-'
       end
-      object MenuItem34: TMenuItem
+      object mmtBotanicTaxa: TMenuItem
         Action = actOpenBotany
       end
     end
-    object MenuItem38: TMenuItem
+    object mmMedia: TMenuItem
       Caption = 'Media'
       Visible = False
-      object MenuItem39: TMenuItem
+      object mmmImageGallery: TMenuItem
         Action = actOpenImagesList
       end
-      object MenuItem40: TMenuItem
+      object mmmAudioLibrary: TMenuItem
         Action = actOpenRecordingsList
       end
-      object MenuItem41: TMenuItem
+      object mmmAttachments: TMenuItem
         Action = actOpenDocumentsList
       end
     end
-    object MenuItem10: TMenuItem
+    object mmHelp: TMenuItem
       Caption = 'Help'
-      object MenuItem35: TMenuItem
+      object mmhHelp: TMenuItem
         Action = actOpenManual
       end
       object Separator22: TMenuItem
         Caption = '-'
       end
-      object MenuItem36: TMenuItem
+      object mmhFeedback: TMenuItem
         Action = actGiveFeedback
       end
       object Separator23: TMenuItem
         Caption = '-'
       end
-      object MenuItem37: TMenuItem
+      object mmhAbout: TMenuItem
         Action = actAbout
       end
     end

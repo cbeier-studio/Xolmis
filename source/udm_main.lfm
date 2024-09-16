@@ -36,8 +36,8 @@ object DMM: TDMM
     DefaultExt = '.csv'
     Filter = 'Texto CSV (.csv)|*.csv;*.txt|Todos os arquivos|*.*'
     Options = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
-    Left = 436
-    Top = 183
+    Left = 434
+    Top = 173
   end
   object scriptNewUserDB: TSQLScript
     DataBase = sqlCon
@@ -13217,5 +13217,12 @@ object DMM: TDMM
       Required = False
       Precision = 2
     end
+  end
+  object OpenKmlDlg: TOpenDialog
+    DefaultExt = '.kml'
+    Filter = 'Keyhole Markup Language (.kml)|*.kml;*.kmz|Comma Separated Values (.csv)|*.csv;*.txt|All files|*.*'
+    Options = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
+    Left = 504
+    Top = 173
   end
 end

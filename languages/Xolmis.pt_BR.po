@@ -11353,6 +11353,10 @@ msgctxt "tfrmmain.actimportcaptures.caption"
 msgid "Banding data"
 msgstr "Dados de anilhamento"
 
+#: tfrmmain.actimportcoordinates.caption
+msgid "Geographical coordinates"
+msgstr "Coordenadas geográficas"
+
 #: tfrmmain.actimportebird.caption
 msgid "eBird records"
 msgstr "Registros do eBird"
@@ -11551,53 +11555,53 @@ msgctxt "tfrmmain.lblloading.caption"
 msgid "Welcome"
 msgstr "Bem-vindo(a)"
 
-#: tfrmmain.menuitem1.caption
-msgctxt "tfrmmain.menuitem1.caption"
-msgid "File"
-msgstr "Arquivo"
-
-#: tfrmmain.menuitem10.caption
-msgctxt "tfrmmain.menuitem10.caption"
-msgid "Help"
-msgstr "Ajuda"
-
-#: tfrmmain.menuitem2.caption
-msgctxt "tfrmmain.menuitem2.caption"
-msgid "Sampling"
-msgstr "Amostragem"
-
-#: tfrmmain.menuitem3.caption
-msgctxt "tfrmmain.menuitem3.caption"
-msgid "Individuals"
-msgstr "Indivíduos"
-
-#: tfrmmain.menuitem38.caption
-msgctxt "tfrmmain.menuitem38.caption"
-msgid "Media"
-msgstr "Mídias"
-
-#: tfrmmain.menuitem4.caption
-msgctxt "tfrmmain.menuitem4.caption"
+#: tfrmmain.mmbreeding.caption
+msgctxt "tfrmmain.mmbreeding.caption"
 msgid "Breeding"
 msgstr "Reprodução"
 
-#: tfrmmain.menuitem45.caption
-msgctxt "tfrmmain.menuitem45.caption"
-msgid "Import"
-msgstr "Importar"
-
-#: tfrmmain.menuitem5.caption
-msgctxt "tfrmmain.menuitem5.caption"
+#: tfrmmain.mmentities.caption
+msgctxt "tfrmmain.mmentities.caption"
 msgid "Entities"
 msgstr "Entidades"
 
-#: tfrmmain.menuitem6.caption
-msgctxt "tfrmmain.menuitem6.caption"
+#: tfrmmain.mmfile.caption
+msgctxt "tfrmmain.mmfile.caption"
+msgid "File"
+msgstr "Arquivo"
+
+#: tfrmmain.mmfimport.caption
+msgctxt "tfrmmain.mmfimport.caption"
+msgid "Import"
+msgstr "Importar"
+
+#: tfrmmain.mmgeo.caption
+msgctxt "tfrmmain.mmgeo.caption"
 msgid "Geo"
 msgstr "Geo"
 
-#: tfrmmain.menuitem9.caption
-msgctxt "tfrmmain.menuitem9.caption"
+#: tfrmmain.mmhelp.caption
+msgctxt "tfrmmain.mmhelp.caption"
+msgid "Help"
+msgstr "Ajuda"
+
+#: tfrmmain.mmindividuals.caption
+msgctxt "tfrmmain.mmindividuals.caption"
+msgid "Individuals"
+msgstr "Indivíduos"
+
+#: tfrmmain.mmmedia.caption
+msgctxt "tfrmmain.mmmedia.caption"
+msgid "Media"
+msgstr "Mídias"
+
+#: tfrmmain.mmsampling.caption
+msgctxt "tfrmmain.mmsampling.caption"
+msgid "Sampling"
+msgstr "Amostragem"
+
+#: tfrmmain.mmtaxonomy.caption
+msgctxt "tfrmmain.mmtaxonomy.caption"
 msgid "Taxonomy"
 msgstr "Taxonomia"
 
