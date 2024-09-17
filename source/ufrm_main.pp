@@ -443,8 +443,9 @@ begin
     Ext := ExtractFileExt(DMM.OpenKmlDlg.FileName);
     case Ext of
       '.kml', '.kmz': LoadKMLPoints(DMM.OpenKmlDlg.FileName);
-      '.csv', '.txt': ;
-      '.gpx': ;
+      '.csv', '.txt': LoadCSVPoints(DMM.OpenKmlDlg.FileName);
+      '.gpx':         LoadGPXPoints(DMM.OpenKmlDlg.FileName);
+      '.geojson':     LoadGeoJSONPoints(DMM.OpenKmlDlg.FileName);
     end;
   end;
 end;

@@ -13220,7 +13220,7 @@ object DMM: TDMM
   end
   object OpenKmlDlg: TOpenDialog
     DefaultExt = '.kml'
-    Filter = 'Keyhole Markup Language (.kml)|*.kml;*.kmz|Comma Separated Values (.csv)|*.csv;*.txt|All files|*.*'
+    Filter = 'Keyhole Markup Language (.kml)|*.kml;*.kmz|GPS eXchange Format (.gpx)|*.gpx|Comma Separated Values (.csv)|*.csv;*.txt|GeoJSON (.geojson)|*.geojson|All files|*.*'
     Options = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
     Left = 504
     Top = 173

@@ -24,6 +24,7 @@ interface
 uses
   { System }
   Classes, Types, SysUtils, Math, LazUTF8, StrUtils, RegExpr, XMLRead, XMLWrite, DOM, Zipper, Generics.Collections,
+  fpjson, jsonparser, CSVDocument,
   { VCL }
   Forms, Controls, ExtCtrls, laz.VirtualTrees, mvMapViewer,
   { Data }
@@ -161,7 +162,15 @@ type
   { Maps and KML }
   procedure AddKMLPoint(Doc: TXMLDocument; RootNode: TDOMNode; aMapPoint: TMapPoint);
   procedure SavePointsToKML(MapPoints: TMapPointList; aFileName: String; Compressed: Boolean = False);
+  procedure SavePointsToGPX(MapPoints: TMapPointList; aFileName: String);
+  procedure SavePointsToCSV(MapPoints: TMapPointList; aFileName: String);
+  procedure SavePointsToGeoJSON(MapPoints: TMapPointList; aFileName: String);
+  procedure WriteStringToGeoJSON(const FileName, Data: string);
   procedure LoadKMLPoints(const aFileName: String);
+  procedure LoadGPXPoints(const aFileName: string);
+  procedure LoadCSVPoints(const aFileName: string);
+  procedure LoadGeoJSONPoints(const aFileName: string);
+  function ReadGeoJSONToString(const FileName: string): string;
   procedure ViewMapPoint(aMapPoint: TMapPoint; aZoom: Integer; aMap: TMapView);
 
   { Dialogs }
@@ -599,6 +608,113 @@ begin
   end;
 end;
 
+procedure SavePointsToGPX(MapPoints: TMapPointList; aFileName: String);
+var
+  Doc: TXMLDocument;
+  RootNode, NameNode, WptNode: TDOMNode;
+  i: Integer;
+begin
+  Doc := TXMLDocument.Create;
+  try
+    RootNode := Doc.CreateElement('gpx');
+    TDOMElement(RootNode).SetAttribute('version', '1.1');
+    TDOMElement(RootNode).SetAttribute('creator', 'Xolmis');
+    Doc.AppendChild(RootNode);
+
+    for i := 0 to (MapPoints.Count - 1) do
+    begin
+      WptNode := Doc.CreateElement('wpt');
+      TDOMElement(WptNode).SetAttribute('lat', FloatToStr(MapPoints[i].Data.Y));
+      TDOMElement(WptNode).SetAttribute('lon', FloatToStr(MapPoints[i].Data.X));
+
+      NameNode := Doc.CreateElement('name');
+      NameNode.TextContent := MapPoints[i].Data.Name;
+      WptNode.AppendChild(NameNode);
+
+      RootNode.AppendChild(WptNode);
+    end;
+
+    WriteXMLFile(Doc, aFileName);
+  finally
+    Doc.Free;
+  end;
+end;
+
+procedure SavePointsToCSV(MapPoints: TMapPointList; aFileName: String);
+var
+  CSV: TCSVDocument;
+  i: Integer;
+begin
+  CSV := TCSVDocument.Create;
+  try
+    CSV.Delimiter := StrSeparators[spSemicolon];
+    CSV.AddRow('Name'); // Header
+    CSV.AddCell(0, 'Longitude');
+    CSV.AddCell(0, 'Latitude');
+    for i := 0 to (MapPoints.Count - 1) do
+    begin
+      CSV.AddRow(MapPoints[i].Data.Name);
+      CSV.AddCell(i + 1, FloatToStr(MapPoints[i].Data.X));
+      CSV.AddCell(i + 1, FloatToStr(MapPoints[i].Data.Y));
+    end;
+    CSV.SaveToFile(aFileName);
+  finally
+    CSV.Free;
+  end;
+end;
+
+procedure SavePointsToGeoJSON(MapPoints: TMapPointList; aFileName: String);
+var
+  JSONObject, Geometry, Properties, Feature: TJSONObject;
+  Features: TJSONArray;
+  JSONData: TJSONData;
+  i: Integer;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('type', 'FeatureCollection');
+    Features := TJSONArray.Create;
+    JSONObject.Add('features', Features);
+
+    for i := 0 to (MapPoints.Count - 1) do
+    begin
+      Feature := TJSONObject.Create;
+      Feature.Add('type', 'Feature');
+
+      Geometry := TJSONObject.Create;
+      Geometry.Add('type', 'Point');
+      Geometry.Add('coordinates', TJSONArray.Create([MapPoints[i].Data.X, MapPoints[i].Data.Y]));
+      Feature.Add('geometry', Geometry);
+
+      Properties := TJSONObject.Create;
+      Properties.Add('name', MapPoints[i].Data.Name);
+      Feature.Add('properties', Properties);
+
+      Features.Add(Feature);
+    end;
+
+    JSONData := JSONObject;
+    WriteStringToGeoJSON(aFileName, JSONData.AsJSON);
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+procedure WriteStringToGeoJSON(const FileName, Data: string);
+var
+  FileStream: TFileStream;
+  StringStream: TStringStream;
+begin
+  FileStream := TFileStream.Create(FileName, fmCreate);
+  StringStream := TStringStream.Create(Data);
+  try
+    StringStream.SaveToStream(FileStream);
+  finally
+    FileStream.Free;
+    StringStream.Free;
+  end;
+end;
+
 procedure LoadKMLPoints(const aFileName: String);
 var
   Doc: TXMLDocument;
@@ -675,6 +791,105 @@ begin
   // Delete the extracted KML file
   if Zipped then
     DeleteFile(aKMLFile);
+end;
+
+procedure LoadGPXPoints(const aFileName: string);
+var
+  Doc: TXMLDocument;
+  RootNode, Node: TDOMNode;
+  i: Integer;
+begin
+  ReadXMLFile(Doc, aFileName);
+  DMM.tabGeoBank.DisableControls;
+  try
+    RootNode := Doc.DocumentElement;
+    Node := RootNode.FirstChild;
+    while Assigned(Node) do
+    begin
+      if Node.NodeName = 'wpt' then
+      begin
+        DMM.tabGeoBank.Append;
+        DMM.tabGeoBank.FieldByName('latitude').AsFloat := StrToFloat(Node.Attributes.GetNamedItem('lat').NodeValue);
+        DMM.tabGeoBank.FieldByName('longitude').AsFloat := StrToFloat(Node.Attributes.GetNamedItem('lon').NodeValue);
+        DMM.tabGeoBank.FieldByName('coordinate_name').AsString := Node.FindNode('name').TextContent;
+        DMM.tabGeoBank.Post;
+      end;
+      Node := Node.NextSibling;
+    end;
+  finally
+    DMM.tabGeoBank.EnableControls;
+    Doc.Free;
+  end;
+end;
+
+procedure LoadCSVPoints(const aFileName: string);
+var
+  CSV: TCSVDocument;
+  i: Integer;
+begin
+  CSV := TCSVDocument.Create;
+  DMM.tabGeoBank.DisableControls;
+  try
+    CSV.LoadFromFile(aFileName);
+    for i := 1 to CSV.RowCount - 1 do
+    begin
+      DMM.tabGeoBank.Append;
+      DMM.tabGeoBank.FieldByName('coordinate_name').AsString := CSV.Cells[0, i];
+      DMM.tabGeoBank.FieldByName('longitude').AsFloat := StrToFloat(CSV.Cells[1, i]);
+      DMM.tabGeoBank.FieldByName('latitude').AsFloat := StrToFloat(CSV.Cells[2, i]);
+      DMM.tabGeoBank.Post;
+    end;
+  finally
+    DMM.tabGeoBank.EnableControls;
+    CSV.Free;
+  end;
+end;
+
+procedure LoadGeoJSONPoints(const aFileName: string);
+var
+  JSONData: TJSONData;
+  JSONObject: TJSONObject;
+  JSONArray: TJSONArray;
+  Coordinates: TJSONArray;
+  i: Integer;
+begin
+  JSONData := GetJSON(ReadGeoJSONToString(aFileName));
+  DMM.tabGeoBank.DisableControls;
+  try
+    JSONObject := TJSONObject(JSONData);
+    JSONArray := JSONObject.Arrays['features'];
+    for i := 0 to JSONArray.Count - 1 do
+    begin
+      if JSONArray.Objects[i].Objects['geometry'].Get('type', '') = 'Point' then
+      begin
+        DMM.tabGeoBank.Append;
+        Coordinates := JSONArray.Objects[i].Objects['geometry'].Arrays['coordinates'];
+        DMM.tabGeoBank.FieldByName('longitude').AsFloat := Coordinates.Floats[0];
+        DMM.tabGeoBank.FieldByName('latitude').AsFloat := Coordinates.Floats[1];
+        DMM.tabGeoBank.FieldByName('coordinate_name').AsString := JSONArray.Objects[i].Objects['properties'].Get('name', '');
+        DMM.tabGeoBank.Post;
+      end;
+    end;
+  finally
+    DMM.tabGeoBank.EnableControls;
+    JSONData.Free;
+  end;
+end;
+
+function ReadGeoJSONToString(const FileName: string): string;
+var
+  FileStream: TFileStream;
+  StringStream: TStringStream;
+begin
+  FileStream := TFileStream.Create(FileName, fmOpenRead);
+  StringStream := TStringStream.Create('');
+  try
+    StringStream.CopyFrom(FileStream, FileStream.Size);
+    Result := StringStream.DataString;
+  finally
+    FileStream.Free;
+    StringStream.Free;
+  end;
 end;
 
 procedure ViewMapPoint(aMapPoint: TMapPoint; aZoom: Integer; aMap: TMapView);
