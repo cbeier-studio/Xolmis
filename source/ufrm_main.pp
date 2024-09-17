@@ -90,6 +90,7 @@ type
     iMenu: TImageList;
     iPopup: TImageList;
     iSearchDark: TImageList;
+    mmhCheckUpdates: TMenuItem;
     mmfImportCoordinates: TMenuItem;
     mmFile: TMenuItem;
     mmHelp: TMenuItem;
@@ -139,7 +140,6 @@ type
     mmfPrint: TMenuItem;
     mmfSettings: TMenuItem;
     mmfMaintenance: TMenuItem;
-    mmfCheckUpdates: TMenuItem;
     mmfManageUsers: TMenuItem;
     mmfLogoff: TMenuItem;
     mmfExit: TMenuItem;
@@ -204,6 +204,7 @@ type
     Separator17: TMenuItem;
     Separator18: TMenuItem;
     Separator19: TMenuItem;
+    Separator2: TMenuItem;
     Separator20: TMenuItem;
     Separator21: TMenuItem;
     Separator22: TMenuItem;
@@ -214,7 +215,6 @@ type
     Separator27: TMenuItem;
     Separator28: TMenuItem;
     Separator29: TMenuItem;
-    Separator30: TMenuItem;
     Separator31: TMenuItem;
     Separator8: TMenuItem;
     Separator9: TMenuItem;

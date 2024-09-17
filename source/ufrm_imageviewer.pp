@@ -1,3 +1,19 @@
+{ Xolmis Image Viewer form
+
+  Copyright (C) 2024 Christian Beier <hello@christianbeier.studio>
+
+  This source is free software; you can redistribute it and/or modify it under the terms of the GNU General
+  Public License as published by the Free Software Foundation; either version 3 of the License, or (at your
+  option) any later version.
+
+  This code is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  details.
+
+  You should have received a copy of the GNU General Public License along with this program.  If not,
+  see <https://www.gnu.org/licenses/>.
+}
+
 unit ufrm_imageviewer;
 
 {$mode ObjFPC}{$H+}
@@ -6,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, ComCtrls, StdCtrls, BCButton,
-  LCLIntf, LazFileUtils, BGRABitmap, BGRABitmapTypes, Types;
+  LCLIntf, ExtDlgs, LazFileUtils, BGRABitmap, BGRABitmapTypes, Types;
 
 type
 
@@ -23,6 +39,7 @@ type
     lblSize: TLabel;
     pToolbar: TPanel;
     pStatusBar: TPanel;
+    SaveDlg: TSavePictureDialog;
     sbCopyImage: TSpeedButton;
     sbZoom100: TSpeedButton;
     scrollView: TScrollBox;
@@ -49,6 +66,7 @@ type
     procedure sbOpenClick(Sender: TObject);
     procedure sbRotateLeftClick(Sender: TObject);
     procedure sbRotateRightClick(Sender: TObject);
+    procedure sbSaveAsClick(Sender: TObject);
     procedure sbZoom100Click(Sender: TObject);
     procedure sbZoomAdjustClick(Sender: TObject);
     procedure sbZoomInClick(Sender: TObject);
@@ -214,6 +232,13 @@ begin
 
   FNeedRedraw := True;
   UpdateZoom;
+end;
+
+procedure TfrmImageViewer.sbSaveAsClick(Sender: TObject);
+begin
+  SaveDlg.InitialDir := XSettings.LastPathUsed;
+  if SaveDlg.Execute then
+    FOriginal.SaveToFile(SaveDlg.FileName);
 end;
 
 procedure TfrmImageViewer.sbZoom100Click(Sender: TObject);

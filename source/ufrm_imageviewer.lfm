@@ -113,7 +113,7 @@ object frmImageViewer: TfrmImageViewer
       Images = iButtons
       ImageIndex = 18
       ImageWidth = 20
-      Visible = False
+      OnClick = sbSaveAsClick
     end
     object sbCopyImage: TSpeedButton
       Left = 642
@@ -2198,5 +2198,10 @@ object frmImageViewer: TfrmImageViewer
       7FF785C42FE5C0EF1F027B99CBF34716D0EC00CFC3069C53C1F10C88FEF331A0
       0514EFDFAF1EC3670EFC7DFAE95E973F52F97FF4ADEBA7
     }
+  end
+  object SaveDlg: TSavePictureDialog
+    DefaultExt = '.jpg'
+    Left = 577
+    Top = 155
   end
 end
