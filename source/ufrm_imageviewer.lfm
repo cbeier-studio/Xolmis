@@ -3,6 +3,7 @@ object frmImageViewer: TfrmImageViewer
   Height = 537
   Top = 250
   Width = 805
+  BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Image viewer'
   ClientHeight = 537
   ClientWidth = 805
@@ -102,26 +103,29 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbFlipVerticalClick
     end
     object sbSaveAs: TSpeedButton
-      Left = 714
+      Left = 722
       Height = 24
       Hint = 'Save an image copy'
       Top = 4
-      Width = 83
+      Width = 75
       Align = alRight
+      AutoSize = True
       Caption = 'Save as...'
       DisabledImageIndex = 19
+      Flat = True
       Images = iButtons
       ImageIndex = 18
       ImageWidth = 20
       OnClick = sbSaveAsClick
     end
     object sbCopyImage: TSpeedButton
-      Left = 642
+      Left = 658
       Height = 24
       Hint = 'Copy image to clipboard'
       Top = 4
-      Width = 64
+      Width = 56
       Align = alRight
+      AutoSize = True
       BorderSpacing.Right = 8
       Caption = 'Copy'
       DisabledImageIndex = 25

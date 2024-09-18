@@ -10869,6 +10869,10 @@ msgctxt "tfrmcustomgrid.sbsharechild.hint"
 msgid "Export records"
 msgstr "Exportar registros"
 
+#: tfrmcustomgrid.sbsharemappoints.hint
+msgid "Export map points"
+msgstr "Exportar pontos"
+
 #: tfrmcustomgrid.sbsharerecords.hint
 msgctxt "tfrmcustomgrid.sbsharerecords.hint"
 msgid "Export records"

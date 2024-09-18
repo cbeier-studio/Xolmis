@@ -33,6 +33,7 @@ uses
   function NewBackup: boolean;
   function RestoreBackup(aFilename: String): boolean;
   procedure OnBkpProgress(Sender: TObject; Remaining, PageCount: integer);
+  procedure ZipperProgress(Sender: TObject; const Pct: Double);
   procedure RunStartupBackup;
 
 implementation
@@ -117,7 +118,7 @@ begin
         //F_Main.Taskbar.ProgressMaxValue := 100;
         fzip := TZipper.Create;
         try
-          // fzip.OnProgress:= @OnProgress;
+          //fzip.OnProgress := @ZipperProgress;
           fzip.ZipFile(zipName, tmpName);
         finally
           fzip.Free;
@@ -201,8 +202,8 @@ begin
           //F_Main.Taskbar.ProgressMaxValue := 100;
           fzip := TUnZipper.Create;
           try
+            //fzip.OnProgress := @ZipperProgress;
             fzip.OutputPath := TempDir;
-            // fzip.OnProgress:= OnProgress;
             fzip.Unzip(aFilename);
           finally
             fzip.Free;
@@ -286,6 +287,15 @@ begin
     end;
 
     NewBackup;
+  end;
+end;
+
+procedure ZipperProgress(Sender: TObject; const Pct: Double);
+begin
+  if Assigned(dlgProgress) then
+  begin
+    dlgProgress.Position := Round(Pct);
+    Application.ProcessMessages;
   end;
 end;
 

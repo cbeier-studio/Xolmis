@@ -96,7 +96,7 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alClient
           BorderStyle = bsNone
           ClientHeight = 515
-          ClientWidth = 464
+          ClientWidth = 447
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel
@@ -7472,8 +7472,8 @@ object frmCustomGrid: TfrmCustomGrid
         end
         object mapGeo: TMapView
           Left = 8
-          Height = 557
-          Top = 49
+          Height = 507
+          Top = 99
           Width = 448
           Align = alClient
           CachePath = 'map-cache'
@@ -7485,6 +7485,72 @@ object frmCustomGrid: TfrmCustomGrid
           POIImagesWidth = 20
           UseThreads = True
           OnDrawGpsPoint = mapGeoDrawGpsPoint
+        end
+        object pMapToolbar: TBCPanel
+          Left = 8
+          Height = 42
+          Top = 49
+          Width = 448
+          Align = alTop
+          BorderSpacing.Left = 8
+          BorderSpacing.Top = 8
+          BorderSpacing.Right = 8
+          BorderSpacing.Bottom = 8
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 8
+          Background.Color = 15987699
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 0
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = False
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          TabOrder = 1
+          object sbShareMapPoints: TSpeedButton
+            Left = 16
+            Height = 26
+            Hint = 'Export map points'
+            Top = 8
+            Width = 28
+            Align = alLeft
+            AutoSize = True
+            BorderSpacing.Left = 10
+            BorderSpacing.Right = 10
+            DisabledImageIndex = 13
+            Flat = True
+            Images = iButtons
+            ImageIndex = 12
+            ImageWidth = 24
+            OnClick = sbShareMapPointsClick
+            ShowHint = True
+            ParentShowHint = False
+          end
         end
       end
     end

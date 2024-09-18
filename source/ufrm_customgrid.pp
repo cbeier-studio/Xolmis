@@ -158,6 +158,7 @@ type
     lblProjectFilter: TLabel;
     cardMap: TPage;
     mapGeo: TMapView;
+    pMapToolbar: TBCPanel;
     pmiAddImage: TMenuItem;
     pmiImageInfo: TMenuItem;
     pmiViewImage: TMenuItem;
@@ -539,6 +540,7 @@ type
     sbCancelRecord: TSpeedButton;
     sbChildHistory: TSpeedButton;
     sbClearFilters: TSpeedButton;
+    sbShareMapPoints: TSpeedButton;
     sbDelChild: TSpeedButton;
     sbDelRecord: TSpeedButton;
     sbEditChild: TSpeedButton;
@@ -802,6 +804,7 @@ type
     procedure sbRowHeightIncreaseClick(Sender: TObject);
     procedure sbSaveRecordClick(Sender: TObject);
     procedure sbShareChildClick(Sender: TObject);
+    procedure sbShareMapPointsClick(Sender: TObject);
     procedure sbShareRecordsClick(Sender: TObject);
     procedure sbShowRecordClick(Sender: TObject);
     procedure sbViewImageClick(Sender: TObject);
@@ -1164,6 +1167,8 @@ begin
   pFiltersToolbar.Border.Color := clCardBGSecondaryDark;
   pImagesToolbar.Background.Color := clCardBGDefaultDark;
   pImagesToolbar.Border.Color := clCardBGSecondaryDark;
+  pMapToolbar.Background.Color := clCardBGDefaultDark;
+  pMapToolbar.Border.Color := clCardBGSecondaryDark;
   pColumnsToolbar.Background.Color := clCardBGDefaultDark;
   pColumnsToolbar.Border.Color := clCardBGSecondaryDark;
   pRecycleToolbar.Background.Color := clCardBGDefaultDark;
@@ -1262,6 +1267,7 @@ begin
   sbShowAudio.Images := iButtonsDark;
   sbShowDocs.Images := iButtonsDark;
   sbShowMap.Images := iButtonsDark;
+  sbShareMapPoints.Images := iButtonsDark;
   sbShowSummary.Images := iButtonsDark;
   sbShowColumns.Images := iButtonsDark;
   sbRowHeightIncrease.Images := iButtonsDark;
@@ -7341,6 +7347,33 @@ begin
     2: ExportDlg(dsLink3.DataSet);
     3: ExportDlg(dsLink4.DataSet);
     4: ExportDlg(dsLink5.DataSet);
+  end;
+end;
+
+procedure TfrmCustomGrid.sbShareMapPointsClick(Sender: TObject);
+var
+  aFilename: String;
+  Pts: TMapPointList;
+begin
+  DMM.SaveKmlDlg.InitialDir := XSettings.LastPathUsed;
+  if DMM.SaveKmlDlg.Execute then
+  begin
+    aFilename := DMM.SaveKmlDlg.FileName;
+    Pts := TMapPointList.Create;
+    try
+      { #todo 1 : DB to MapPointList to export }
+      DBToMapPoints(FTableType, dsLink.DataSet, True, Pts);
+
+      case ExtractFileExt(aFilename) of
+        '.kml':     SavePointsToKML(Pts, aFilename);
+        '.kmz':     SavePointsToKML(Pts, aFilename, True);
+        '.gpx':     SavePointsToGPX(Pts, aFilename);
+        '.csv':     SavePointsToCSV(Pts, aFilename);
+        '.geojson': SavePointsToGeoJSON(Pts, aFilename);
+      end;
+    finally
+      Pts.Free;
+    end;
   end;
 end;
 

@@ -13225,4 +13225,10 @@ object DMM: TDMM
     Left = 504
     Top = 173
   end
+  object SaveKmlDlg: TSaveDialog
+    DefaultExt = '.kml'
+    Filter = 'Keyhole Markup Language (.kml)|*.kml|Compressed KML (.kmz)|*.kmz|GPS eXchange Format (.gpx)|*.gpx|Comma Separated Values (.csv)|*.csv|GeoJSON (.geojson)|*.geojson|All files|*.*'
+    Left = 504
+    Top = 223
+  end
 end

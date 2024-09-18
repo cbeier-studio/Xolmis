@@ -47,6 +47,7 @@ type
     iTreesDark: TImageList;
     OpenKmlDlg: TOpenDialog;
     qsConnlast_backup: TDateTimeField;
+    SaveKmlDlg: TSaveDialog;
     tabGeoBank: TMemDataset;
     qsConnconnection_id: TLongintField;
     qsConnconnection_name: TStringField;

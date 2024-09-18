@@ -165,12 +165,13 @@ type
   procedure SavePointsToGPX(MapPoints: TMapPointList; aFileName: String);
   procedure SavePointsToCSV(MapPoints: TMapPointList; aFileName: String);
   procedure SavePointsToGeoJSON(MapPoints: TMapPointList; aFileName: String);
-  procedure WriteStringToGeoJSON(const FileName, Data: string);
+  procedure WriteStringToGeoJSON(const FileName, Data: String);
   procedure LoadKMLPoints(const aFileName: String);
-  procedure LoadGPXPoints(const aFileName: string);
-  procedure LoadCSVPoints(const aFileName: string);
-  procedure LoadGeoJSONPoints(const aFileName: string);
-  function ReadGeoJSONToString(const FileName: string): string;
+  procedure LoadGPXPoints(const aFileName: String);
+  procedure LoadCSVPoints(const aFileName: String);
+  procedure LoadGeoJSONPoints(const aFileName: String);
+  function ReadGeoJSONToString(const FileName: String): String;
+  procedure DBToMapPoints(const aTableType: TTableType; aDataSet: TDataSet; ClearList: Boolean; var aMapPointList: TMapPointList);
   procedure ViewMapPoint(aMapPoint: TMapPoint; aZoom: Integer; aMap: TMapView);
 
   { Dialogs }
@@ -561,7 +562,7 @@ end;
 procedure SavePointsToKML(MapPoints: TMapPointList; aFileName: String; Compressed: Boolean);
 var
   Doc: TXMLDocument;
-  RootNode, nameNode: TDOMNode;
+  RootNode, DocNode, nameNode: TDOMNode;
   Zip: TZipper;
   i: Integer;
 begin
@@ -573,15 +574,18 @@ begin
     TDOMElement(RootNode).SetAttribute('xmlns', 'http://www.opengis.net/kml/2.2');
     Doc.AppendChild(RootNode);
     RootNode := Doc.DocumentElement;
-    // Create node <name> within the root node
+    // Create node <Document> within the root node
+    DocNode := Doc.CreateElement('Document');
+    RootNode.AppendChild(DocNode);
+    // Create node <name> within <Document>
     nameNode := Doc.CreateElement('name');
     nameNode.TextContent := 'Xolmis';
-    RootNode.AppendChild(nameNode);
+    DocNode.AppendChild(nameNode);
 
     // Add multiple points
     for i := 0 to (MapPoints.Count - 1) do
     begin
-      AddKMLPoint(Doc, RootNode, MapPoints[i].Data);
+      AddKMLPoint(Doc, DocNode, MapPoints[i].Data);
     end;
 
     // Save the XML document to file
@@ -889,6 +893,56 @@ begin
   finally
     FileStream.Free;
     StringStream.Free;
+  end;
+end;
+
+procedure DBToMapPoints(const aTableType: TTableType; aDataSet: TDataSet; ClearList: Boolean; var aMapPointList: TMapPointList);
+var
+  mapObj: TMapPointObject;
+  nameField, longField, latField: String;
+  BM: TBookmark;
+begin
+  if aTableType = tbSurveys then
+  begin
+    longField := 'start_longitude';
+    latField := 'start_latitude';
+  end
+  else
+  begin
+    longField := 'longitude';
+    latField := 'latitude';
+  end;
+
+  if aTableType = tbGazetteer then
+    nameField := 'site_name'
+  else
+  if aTableType = tbNetStations then
+    nameField := 'station_name'
+  else
+    nameField := 'full_name';
+
+  BM := aDataSet.Bookmark;
+  aDataSet.DisableControls;
+  try
+    if ClearList then
+      aMapPointList.Clear;
+
+    aDataSet.First;
+    while not aDataSet.EOF do
+    begin
+      if (aDataSet.FieldByName(longField).AsFloat <> 0) and (aDataSet.FieldByName(latField).AsFloat <> 0) then
+      begin
+        mapObj := TMapPointObject.Create(aDataSet.FieldByName(longField).AsFloat,
+                                         aDataSet.FieldByName(latField).AsFloat,
+                                         aDataSet.FieldByName(nameField).AsString);
+        aMapPointList.Add(mapObj);
+      end;
+
+      aDataSet.Next;
+    end;
+  finally
+    aDataSet.EnableControls;
+    aDataSet.Bookmark := BM;
   end;
 end;
 
