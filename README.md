@@ -7,7 +7,8 @@ A free, open source, multi-platform ornithological data manager, built using Laz
 
 Xolmis is an ornithological data management system intended for researchers and birdwatchers. It was designed to aggregate separated data files (_e.g._ CSV files and Excel spreadsheets), which may end up being lost over time. In addition to the objective of aggregating different types of data collected in research and observations, it also aims to facilitate the curation, crossing and sharing of data, while increasing its consistency and security.
 
-![Xolmis screenshot](https://github.com/cbeier-studio/Xolmis/assets/109050697/bab3f797-63db-4739-ac43-7c4cbc935cf3)
+![Xolmis screenshot](https://github.com/user-attachments/assets/8079e3ce-4cd2-40e8-aac6-54616410eb65)
+
 
 :dove: _Xolmis_ is a genus of Neotropical passerines. Today it is represented by two species: [_Xolmis irupero_](https://www.wikiaves.com.br/wiki/noivinha) and [_Xolmis velatus_](https://www.wikiaves.com.br/wiki/noivinha-branca).
 
@@ -30,7 +31,13 @@ Here is a list of the main features:
 - [x] Import eBird records (CSV file).
 - [x] Import banding journals (CSV file).
 - [x] Import captures (CSV file).
+- [ ] Import nests (CSV file).
+- [x] Import and export geographical coordinates from/to file (CSV, KML, GPX, and GeoJSON formats).
+- [x] Export data to file (CSV, JSON, ODS, XLSX, and XML formats).
+- [x] Show geographical coordinates on a map.
+- [x] Column summaries.
 - [ ] Attachment of images, audio recording, documents and links to the field records.
+- [ ] Print and export data to PDF.
 
 See the [Milestones](https://github.com/cbeier-studio/Xolmis/milestones) for more information on planned features.
 
