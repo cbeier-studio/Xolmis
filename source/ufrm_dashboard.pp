@@ -137,7 +137,10 @@ var
 
 implementation
 
-uses cbs_global, cbs_themes, udm_main, udm_client, ufrm_main, uDarkStyleParams;
+uses
+  cbs_global, cbs_themes, udm_main, udm_client, ufrm_main, uthread_dashboard,
+  {$IFDEF DEBUG}cbs_debug,{$ENDIF}
+  uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -151,12 +154,9 @@ begin
   B := TBCPanel.Create(pBandsContent);
   with B do
   begin
-    //Top := B.Parent.Height;
-    //Height := 44;
-    Width := 60;
-    //Align := alTop;
     Constraints.MinHeight := 60;
     Constraints.MinWidth := 60;
+    Width := 60;
     ChildSizing.LeftRightSpacing := 8;
     ChildSizing.TopBottomSpacing := 8;
     Caption := aBandSize;
@@ -189,26 +189,18 @@ begin
   Q := TLabel.Create(B);
   with Q do
   begin
-    Align := alBottom;
     Caption := IntToStr(aBandQuantity);
     Alignment := taRightJustify;
-    //BorderBCStyle := bpsBorder;
     BorderSpacing.Right := 8;
-    //FontEx.Style := [fsBold];
-    //Rounding.RoundX := 8;
-    //Rounding.RoundY := 8;
-    //Rounding.RoundOptions := [rrBottomLeftSquare, rrTopLeftSquare];
     if aBandQuantity = 0 then
     begin
-      //Background.Color := clSystemCriticalFGLight;
       Font.Color := clSystemCriticalBGLight;
     end
     else
     begin
-      //Background.Color := clSystemCautionFGLight;
       Font.Color := clSystemCautionBGLight;
     end;
-    //Q.ParentBackground := True;
+    Align := alBottom;
     Q.Parent := B;
   end;
 end;
@@ -278,24 +270,24 @@ end;
 
 procedure TfrmDashboard.AddLifer(aType, aName, aDate: String);
 var
-  B: TBCPanel;
+  B: TPanel;
   N, D: TLabel;
   I: TImage;
 begin
-  B := TBCPanel.Create(pLifers);
+  B := TPanel.Create(pLifers);
   with B do
   begin
     Top := lblTitleLifers.Top + lblTitleLifers.Height + 2;
     Height := 24;
     Align := alTop;
     Caption := EmptyStr;
-    BorderBCStyle := bpsBorder;
-    Rounding.RoundX := 0;
-    Rounding.RoundY := 0;
+    BevelOuter := bvNone;
+    //Rounding.RoundX := 0;
+    //Rounding.RoundY := 0;
     if IsDarkModeEnabled then
-      Background.Color := clCardBGDefaultDark
+      Color := clCardBGDefaultDark
     else
-      Background.Color := clCardBGDefaultLight;
+      Color := clCardBGDefaultLight;
     ChildSizing.HorizontalSpacing := 8;
     //BorderSpacing.Bottom := 2;
     //Border.Style := TBCBorderStyle.bboSolid;
@@ -484,6 +476,10 @@ begin
 end;
 
 procedure TfrmDashboard.pmRefreshClick(Sender: TObject);
+{$IFDEF DEBUG}
+var
+  Usage: TElapsedTimer;
+{$ENDIF}
 begin
   if Working then
     Exit;
@@ -493,37 +489,56 @@ begin
   pLoading.Visible := True;
   Application.ProcessMessages;
 
+  {$IFDEF DEBUG}
+  Usage := TElapsedTimer.Create(Format('Show %s', [Caption]), 'loading numbers');
+  {$ENDIF}
   RefreshNumbers;
   Application.ProcessMessages;
 
+  {$IFDEF DEBUG}
+  Usage.AddPart('loading charts');
+  {$ENDIF}
   RefreshChart;
   Application.ProcessMessages;
 
+  {$IFDEF DEBUG}
+  Usage.AddPart('loading survey map');
+  {$ENDIF}
   RefreshMap;
   Application.ProcessMessages;
 
-  if DMC.qExpiredPermits.Active then
-    DMC.qExpiredPermits.Refresh
-  else
-    DMC.qExpiredPermits.Open;
-  RefreshPermits;
-  Application.ProcessMessages;
-
-  if DMC.qBirthdays.Active then
-    DMC.qBirthdays.Refresh
-  else
-    DMC.qBirthdays.Open;
-  RefreshBirthday;
-  Application.ProcessMessages;
-
-  if DMC.qLastLifers.Active then
-    DMC.qLastLifers.Refresh
-  else
-    DMC.qLastLifers.Open;
+  {$IFDEF DEBUG}
+  Usage.AddPart('loading last lifers');
+  {$ENDIF}
   RefreshLifers;
   Application.ProcessMessages;
 
-  RefreshBandBalance;
+  pNotificationCenter.BeginUpdate;
+  try
+    {$IFDEF DEBUG}
+    Usage.AddPart('loading expired permits');
+    {$ENDIF}
+    RefreshPermits;
+    Application.ProcessMessages;
+
+    {$IFDEF DEBUG}
+    Usage.AddPart('loading next birthdays');
+    {$ENDIF}
+    RefreshBirthday;
+    Application.ProcessMessages;
+
+    {$IFDEF DEBUG}
+    Usage.AddPart('loading bands running out');
+    {$ENDIF}
+    RefreshBandBalance;
+    {$IFDEF DEBUG}
+    Usage.StopTimer;
+    FreeAndNil(Usage);
+    {$ENDIF}
+
+  finally
+    pNotificationCenter.EndUpdate;
+  end;
 
   pLoading.Visible := False;
   Application.ProcessMessages;
@@ -579,77 +594,107 @@ end;
 procedure TfrmDashboard.RefreshBandBalance;
 var
   i: Integer;
-  Qry: TSQLQuery;
+  //Qry: TSQLQuery;
+  {$IFDEF DEBUG}
+  Usage: TElapsedTimer;
+  {$ENDIF}
 begin
+  {$IFDEF DEBUG}
+  Usage := TElapsedTimer.Create('Load bands', 'cleaning');
+  {$ENDIF}
   pBandsBalance.Visible := False;
   pBandsBalance.AutoSize := True;
+  pBandsContent.BeginUpdate;
   for i := (pBandsContent.ComponentCount - 1) downto 0 do
     if pBandsContent.Components[i] is TBCPanel then
       pBandsContent.Components[i].Free;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Clear;
-    Add('SELECT band_size, saldo, media_dia, media_expedicao');
-    Add('FROM get_bands_running_out');
-    Add('ORDER BY saldo ASC');
-    Open;
+  {$IFDEF DEBUG}
+  Usage.AddPart('opening query');
+  {$ENDIF}
+  THomeLoaderThread.Create(pBandsContent).Start;
 
-    if Qry.RecordCount = 0 then
-      Exit;
+  //Qry := TSQLQuery.Create(nil);
+  //with Qry, SQL do
+  //try
+  //  Database := DMM.sqlCon;
+  //  Transaction := DMM.sqlTrans;
+  //  UniDirectional := True;
+  //  Clear;
+  //  Add('SELECT band_size, saldo');
+  //  Add('FROM get_bands_running_out');
+  //  Open;
+  //
+  //  if Qry.RecordCount = 0 then
+  //    Exit;
 
-    First;
-    repeat
-      AddBandBalance(FieldByName('band_size').AsString, FieldByName('saldo').AsInteger);
-      Next;
-    until EOF;
+    {$IFDEF DEBUG}
+    Usage.AddPart('painting bands');
+    {$ENDIF}
+    //First;
+    //while not EOF do
+    //begin
+    //  AddBandBalance(FieldByName('band_size').AsString, FieldByName('saldo').AsInteger);
+    //  Next;
+    //end;
 
-  finally
-    Close;
-    FreeAndNil(Qry);
-  end;
+  //finally
+  //  Close;
+  //  FreeAndNil(Qry);
+  //  pBandsContent.EndUpdate;
+  //end;
 
-  pBandsContent.AutoSize := True;
+  //pBandsContent.AutoSize := True;
   pBandsBalance.AutoSize := True;
   pBandsBalance.Visible := True;
   pBandsBalance.Top := pLoading.Top + pLoading.Height + 1;
+  {$IFDEF DEBUG}
+  Usage.StopTimer;
+  FreeAndNil(Usage);
+  {$ENDIF}
 end;
 
 procedure TfrmDashboard.RefreshBirthday;
 var
   i: Integer;
+  Qry: TSQLQuery;
 begin
-  with pBirthdays do
-  begin
-    Visible := False;
-    AutoSize := False;
-    for i := (ComponentCount - 1) downto 0 do
-      if Components[i] is TBCPanel then
-        Components[i].Free;
+  pBirthdays.BeginUpdate;
+  pBirthdays.Visible := False;
+  pBirthdays.AutoSize := False;
+  for i := (pBirthdays.ComponentCount - 1) downto 0 do
+    if pBirthdays.Components[i] is TBCPanel then
+      pBirthdays.Components[i].Free;
 
-    if DMC.qBirthdays.RecordCount = 0 then
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('SELECT full_name, aniver');
+    Add('FROM get_next_birthdays');
+    Add('LIMIT 6');
+    Open;
+
+    if Qry.RecordCount = 0 then
       Exit;
 
-    with DMC.qBirthdays do
+    Last;
+    pBirthdays.AutoSize := True;
+    while not BOF do
     begin
-      Last;
-      AutoSize := True;
-      repeat
-        AddBirthday(FieldByName('full_name').AsString, FieldByName('aniver').AsString);
-        Prior;
-      until BOF;
+      AddBirthday(FieldByName('full_name').AsString, FieldByName('aniver').AsString);
+      Prior;
     end;
 
-    //AutoSize := False;
-    //AutoSize := False;
-    //Height := (lblTitleBirthdays.Height + lblTitleBirthdays.BorderSpacing.Bottom) +
-    //  (ChildSizing.TopBottomSpacing * 2) + (ChildSizing.VerticalSpacing * (ComponentCount - 2)) +
-    //  (24 * (ComponentCount - 2));
-    Visible := True;
+    pBirthdays.Visible := True;
     //AutoSize := True;
-    Top := pLoading.Top + pLoading.Height + 1;
+    pBirthdays.Top := pLoading.Top + pLoading.Height + 1;
+  finally
+    Close;
+    FreeAndNil(Qry);
+    pBirthdays.EndUpdate;
   end;
 end;
 
@@ -731,30 +776,41 @@ end;
 procedure TfrmDashboard.RefreshLifers;
 var
   i: Integer;
+  Qry: TSQLQuery;
 begin
-  with pLifers do
-  begin
-    Visible := False;
-    AutoSize := False;
-    for i := (ComponentCount - 1) downto 0 do
-      if Components[i] is TBCPanel then
-        Components[i].Free;
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Clear;
+    Add('SELECT taxon, nome_taxon, STRFTIME(''%d/%m/%Y'', data_registro) AS data_registro, tipo');
+    Add('FROM get_last_lifers');
+    Add('LIMIT 9');
+    Open;
 
-    if DMC.qLastLifers.RecordCount = 0 then
+    pLifers.BeginUpdate;
+    pLifers.Visible := False;
+    pLifers.AutoSize := False;
+    for i := (pLifers.ComponentCount - 1) downto 0 do
+      if pLifers.Components[i] is TPanel then
+        pLifers.Components[i].Free;
+
+    if Qry.RecordCount = 0 then
       Exit;
 
-    with DMC.qLastLifers do
-    begin
-      Last;
-      AutoSize := True;
-      repeat
-        AddLifer(FieldByName('tipo').AsString, FieldByName('nome_taxon').AsString, FieldByName('data_registro').AsString);
-        Prior;
-      until BOF;
-    end;
+    Last;
+    pLifers.AutoSize := True;
+    repeat
+      AddLifer(FieldByName('tipo').AsString, FieldByName('nome_taxon').AsString, FieldByName('data_registro').AsString);
+      Prior;
+    until BOF;
 
-    Visible := True;
+    pLifers.Visible := True;
     //Top := pLoading.Top + pLoading.Height + 1;
+  finally
+    Close;
+    FreeAndNil(Qry);
+    pLifers.EndUpdate;
   end;
 end;
 
@@ -764,7 +820,8 @@ var
   rp: TRealPoint;
 begin
   with DMC.qLastSurveys do
-  begin
+  try
+    pMapSurveys.BeginUpdate;
     if DMC.qLastSurveys.Active then
       Refresh
     else
@@ -801,6 +858,8 @@ begin
     //else
     //  mapSurveys.Visible := False;
     Close;
+  finally
+    pMapSurveys.EndUpdate;
   end;
 end;
 
@@ -866,36 +925,44 @@ end;
 procedure TfrmDashboard.RefreshPermits;
 var
   i: Integer;
+  Qry: TSQLQuery;
 begin
-  with pPermitsExpiring do
-  begin
-    Visible := False;
-    AutoSize := False;
-    for i := (ComponentCount - 1) downto 0 do
-      if Components[i] is TBCPanel then
-        Components[i].Free;
+  pPermitsExpiring.BeginUpdate;
+  pPermitsExpiring.Visible := False;
+  pPermitsExpiring.AutoSize := False;
+  for i := (pPermitsExpiring.ComponentCount - 1) downto 0 do
+    if pPermitsExpiring.Components[i] is TBCPanel then
+      pPermitsExpiring.Components[i].Free;
 
-    if DMC.qExpiredPermits.RecordCount = 0 then
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('SELECT expire_date, permit_name');
+    Add('FROM get_expired_permits');
+    Add('LIMIT 7');
+    Open;
+
+    if Qry.RecordCount = 0 then
       Exit;
 
-    with DMC.qExpiredPermits do
+    Last;
+    pPermitsExpiring.AutoSize := True;
+    while not BOF do
     begin
-      Last;
-      AutoSize := True;
-      repeat
-        AddPermit(FieldByName('permit_name').AsString, FieldByName('expire_date').AsString);
-        Prior;
-      until BOF;
+      AddPermit(FieldByName('permit_name').AsString, FieldByName('expire_date').AsString);
+      Prior;
     end;
 
-    //AutoSize := False;
-    //AutoSize := False;
-    //Height := (lblTitleBirthdays.Height + lblTitleBirthdays.BorderSpacing.Bottom) +
-    //  (ChildSizing.TopBottomSpacing * 2) + (ChildSizing.VerticalSpacing * (ComponentCount - 2)) +
-    //  (24 * (ComponentCount - 2));
-    Visible := True;
+    pPermitsExpiring.Visible := True;
     //AutoSize := True;
-    Top := pLoading.Top + pLoading.Height + 1;
+    pPermitsExpiring.Top := pLoading.Top + pLoading.Height + 1;
+  finally
+    Close;
+    FreeAndNil(Qry);
+    pPermitsExpiring.EndUpdate;
   end;
 end;
 
@@ -925,6 +992,9 @@ end;
 
 procedure TfrmDashboard.TimerReloadTimer(Sender: TObject);
 begin
+  if Working then
+    Exit;
+
   if DMM.sqlCon.Connected and DMC.WaitingConnection then
     pmRefreshClick(nil);
 end;

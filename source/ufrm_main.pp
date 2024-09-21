@@ -816,13 +816,13 @@ begin
   Finalizado := XSettings.AppTerminatedOk;
 
   { Delete temporary files }
-  if FileExists(ConcatPaths([TempDir, 'xolmis_setup.exe'])) then
-  begin
-    DeleteFile(ConcatPaths([TempDir, 'xolmis_setup.exe']));
-    LogInfo('Xolmis updated to the newest version ' + GetBuildInfoAsString);
+  //if FileExists(ConcatPaths([TempDir, 'xolmis_setup.exe'])) then
+  //begin
+  //  DeleteFile(ConcatPaths([TempDir, 'xolmis_setup.exe']));
+  //  LogInfo('Xolmis updated to the newest version ' + GetBuildInfoAsString);
     //MsgDlg(Format(rsSuccessfulUpdate, [NomeApp]),
     //  Format(rsUpdatedNewVersion, [GetBuildInfoAsString]), mtInformation);
-  end;
+  //end;
   Application.ProcessMessages;
 end;
 

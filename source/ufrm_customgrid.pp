@@ -3969,9 +3969,12 @@ begin
   //  LogDebug(Format('%s: %d records', [dbgImages.DataSource.DataSet.Name, dbgImages.DataSource.DataSet.RecordCount]));
   //  {$ENDIF}
   //end;
-  Application.ProcessMessages;
+  //Application.ProcessMessages;
 
   { Load side panels }
+  {$IFDEF DEBUG}
+  Usage.AddPart('load side panels');
+  {$ENDIF}
   //navTabs.OptScalePercents := Round(navTabs.OptScalePercents * navTabs.ScaleFactor);
   LoadRecordColumns;
   LoadRecordRow;

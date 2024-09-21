@@ -115,7 +115,6 @@ object DMC: TDMC
     SQL.Strings = (
       'SELECT band_size, saldo, media_dia, media_expedicao'
       'FROM get_bands_running_out'
-      'ORDER BY saldo ASC'
       ''
     )
     Params = <>
