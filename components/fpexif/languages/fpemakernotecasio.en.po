@@ -1,0 +1,133 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2\n"
+
+#: fpemakernotecasio.rscasioafmode2lkup
+msgid "0:Off,1:Spot,2:Multi,3:Face detection,4:Tracking,5:Intelligent"
+msgstr "0:Off,1:Spot,2:Multi,3:Face detection,4:Tracking,5:Intelligent"
+
+#: fpemakernotecasio.rscasioafpointlkup
+msgid "1:Center,2:Upper Left,3:Upper Right,4:Near Left/Right of Center,5:Far Left/Right of Center,6:Far Left/Right of Center/Bottom,7:Top Near-left,8:Near Upper/Left,9:Top Near-right,10:Top Left,11:Top Center,12:Top Right,13:Center Left,14:Center Right,15:Bottom Left,16:Bottom Center,17:Bottom Right"
+msgstr "1:Center,2:Upper Left,3:Upper Right,4:Near Left/Right of Center,5:Far Left/Right of Center,6:Far Left/Right of Center/Bottom,7:Top Near-left,8:Near Upper/Left,9:Top Near-right,10:Top Left,11:Top Center,12:Top Right,13:Center Left,14:Center Right,15:Bottom Left,16:Bottom Center,17:Bottom Right"
+
+#: fpemakernotecasio.rscasioartmode2lkup
+msgid "0:Normal,8:Silent movie,39:HDR,45:Premium auto,47:Painting,49:Crayon drawing,51:Panorama,52:Art HDR,62:High Speed night shot,64:Monochrome,67:Toy camera,68:Pop art,69:Light tone"
+msgstr "0:Normal,8:Silent movie,39:HDR,45:Premium auto,47:Painting,49:Crayon drawing,51:Panorama,52:Art HDR,62:High Speed night shot,64:Monochrome,67:Toy camera,68:Pop art,69:Light tone"
+
+#: fpemakernotecasio.rscasioautoiso2lkup
+msgid "1:On,2:Off,7:On (high sensitivity),8:On (anti-shake),10:High Speed"
+msgstr "1:On,2:Off,7:On (high sensitivity),8:On (anti-shake),10:High Speed"
+
+#: fpemakernotecasio.rscasiocolorfilter2lkup
+msgid "0:Off,1:Blue,3:Green,4:Yellow,5:Red,6:Purple,7:Pink"
+msgstr "0:Off,1:Blue,3:Green,4:Yellow,5:Red,6:Purple,7:Pink"
+
+#: fpemakernotecasio.rscasiocolorfilterlkup
+msgid "1:Off,2:Black & White,3:Sepia,4:Red,5:Green,6:Blue,7:Yellow,8:Pink,9:Purple"
+msgstr "1:Off,2:Black & White,3:Sepia,4:Red,5:Green,6:Blue,7:Yellow,8:Pink,9:Purple"
+
+#: fpemakernotecasio.rscasiocolormode2lkup
+msgid "0:Off,2:Black & White,3:Sepia"
+msgstr "0:Off,2:Black & White,3:Sepia"
+
+#: fpemakernotecasio.rscasiodigitalzoomlkup
+msgid "$10000:Off,$10001:2x Digital zoom,$20000:2x digital zoom,$40000:4x digital zoom"
+msgstr "$10000:Off,$10001:2x Digital zoom,$20000:2x digital zoom,$40000:4x digital zoom"
+
+#: fpemakernotecasio.rscasiodrivemode2lkup
+msgid "0:Single shot,1:Continuous shooting,2:Continuous (2 fps),3:Continuous (3 fps),4:Continuous (4 fps),5:Continuous (5 fps),6:Continuous (6 fps),7:Continuous (7 fps),10:Continuous (10 fps),12:Continuous (12 fps),15:Continuous (15 fps),20:Continuous (20 fps),30:Continuous (30 fps),40:Continuous (40 fps),60:Continuous (60 fps),240:Auto-N"
+msgstr "0:Single shot,1:Continuous shooting,2:Continuous (2 fps),3:Continuous (3 fps),4:Continuous (4 fps),5:Continuous (5 fps),6:Continuous (6 fps),7:Continuous (7 fps),10:Continuous (10 fps),12:Continuous (12 fps),15:Continuous (15 fps),20:Continuous (20 fps),30:Continuous (30 fps),40:Continuous (40 fps),60:Continuous (60 fps),240:Auto-N"
+
+#: fpemakernotecasio.rscasioenhancement2lkup
+msgid "0:Off,1:Scenery,3:Green,5:Underwater,9:Flesh tones"
+msgstr "0:Off,1:Scenery,3:Green,5:Underwater,9:Flesh tones"
+
+#: fpemakernotecasio.rscasioenhancementlkup
+msgid "1:Off,2:Red,3:Green,4:Blue,5:Flesh Tones"
+msgstr "1:Off,2:Red,3:Green,4:Blue,5:Flesh Tones"
+
+#: fpemakernotecasio.rscasioflashintensitylkup_19
+msgid "1:Normal,2:Weak,3:Strong"
+msgstr "1:Normal,2:Weak,3:Strong"
+
+#: fpemakernotecasio.rscasioflashintensitylkup_5
+msgid "11:Weak,13:Normal,15:Strong"
+msgstr "11:Weak,13:Normal,15:Strong"
+
+#: fpemakernotecasio.rscasioflashmodelkup
+msgid "1:Auto,2:On,3:Off,4:Red-eye reduction"
+msgstr "1:Auto,2:On,3:Off,4:Red-eye reduction"
+
+#: fpemakernotecasio.rscasiofocusingmodelkup
+msgid "2:Macro,3:Auto focus,4:Manual focus,5:Infinity"
+msgstr "2:Macro,3:Auto focus,4:Manual focus,5:Infinity"
+
+#: fpemakernotecasio.rscasiofocusmode2lkup
+msgid "0:Normal,1:Macro"
+msgstr "0:Normal,1:Macro"
+
+#: fpemakernotecasio.rscasioimagesize2lkup
+msgid "0:640 x 480,4:1600 x 1200,5:2048 x 1536,20:2288 x 1712,21:2592 x 1944,22:2304 x 1728,36:3008 x 2008"
+msgstr "0:640 x 480,4:1600 x 1200,5:2048 x 1536,20:2288 x 1712,21:2592 x 1944,22:2304 x 1728,36:3008 x 2008"
+
+#: fpemakernotecasio.rscasioimagestabilization2lkup
+msgid "0:Off,1:On,2:Best shot,3:Movie anti-shake"
+msgstr "0:Off,1:On,2:Best shot,3:Movie anti-shake"
+
+#: fpemakernotecasio.rscasioisospeed2lkup
+msgid "3 = 50,4:64,6:100,9:200"
+msgstr "3 = 50,4:64,6:100,9:200"
+
+#: fpemakernotecasio.rscasiolightingmode2lkup
+msgid "0:Off,1:High dynamic range,5:Shadow enhance low,6:Shadow enhance high"
+msgstr "0:Off,1:High dynamic range,5:Shadow enhance low,6:Shadow enhance high"
+
+#: fpemakernotecasio.rscasioportraitrefiner2lkup
+msgid "0:Off,1:+1,2:+2"
+msgstr "0:Off,1:+1,2:+2"
+
+#: fpemakernotecasio.rscasiorecordingmodelkup
+msgid "1:Single shutter,2:Panorama,3:Night scene,4:Portrait,5:Landscape"
+msgstr "1:Single shutter,2:Panorama,3:Night scene,4:Portrait,5:Landscape"
+
+#: fpemakernotecasio.rscasiorecordmode2lkup
+msgid "2:Program AE,3:Shutter priority,4:Aperture priority,5:Manual,6:Best shot,17:Movie,19:Movie (19),20:YouTube Movie"
+msgstr "2:Program AE,3:Shutter priority,4:Aperture priority,5:Manual,6:Best shot,17:Movie,19:Movie (19),20:YouTube Movie"
+
+#: fpemakernotecasio.rscasioreleasemode2lkup
+msgid "1:Normal,3:AE Bracketing,11:WB Bracketing,13 = Contrast Bracketing,19:High Speed Burst"
+msgstr "1:Normal,3:AE Bracketing,11:WB Bracketing,13 = Contrast Bracketing,19:High Speed Burst"
+
+#: fpemakernotecasio.rscasiosharpness2lkup
+msgid "0:Soft,1:Normal,2:Hard"
+msgstr "0:Soft,1:Normal,2:Hard"
+
+#: fpemakernotecasio.rscasiospecialeffectsetting2lkup
+msgid "0:Off,1:Makeup,2:Mist removal,3:Vivid landscape,16:Art shot"
+msgstr "0:Off,1:Makeup,2:Mist removal,3:Vivid landscape,16:Art shot"
+
+#: fpemakernotecasio.rscasiovideoquality2lkup
+msgid "1:Standard,3:HD (720p),4:Full HD (1080p),5:Low"
+msgstr "1:Standard,3:HD (720p),4:Full HD (1080p),5:Low"
+
+#: fpemakernotecasio.rscasiowhitebalance22lkup
+msgid "0:Manual,1:Daylight,2:Cloudy,3:Shade,4:Flash?,6:Fluorescent,9:Tungsten?,10:Tungsten,12:Flash"
+msgstr "0:Manual,1:Daylight,2:Cloudy,3:Shade,4:Flash?,6:Fluorescent,9:Tungsten?,10:Tungsten,12:Flash"
+
+#: fpemakernotecasio.rscasiowhitebalance2lkup
+msgid "0:Auto,1:Daylight,2:Shade,3:Tungsten,4:Fluorescent,5:Manual"
+msgstr "0:Auto,1:Daylight,2:Shade,3:Tungsten,4:Fluorescent,5:Manual"
+
+#: fpemakernotecasio.rscasiowhitebalancelkup
+msgid "1:Auto,2:Tungsten,3:Daylight,4:Fluorescent,5:Shade,129:Manual"
+msgstr "1:Auto,2:Tungsten,3:Daylight,4:Fluorescent,5:Shade,129:Manual"
+

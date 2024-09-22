@@ -1,0 +1,983 @@
+object MainForm: TMainForm
+  Left = 430
+  Height = 714
+  Top = 141
+  Width = 926
+  Caption = 'Metadata viewer'
+  ClientHeight = 714
+  ClientWidth = 926
+  ShowHint = True
+  LCLVersion = '3.99.0.0'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  object ShellPanel: TPanel
+    Left = 0
+    Height = 691
+    Top = 0
+    Width = 274
+    Align = alLeft
+    BevelOuter = bvNone
+    ClientHeight = 691
+    ClientWidth = 274
+    TabOrder = 0
+    object ShellTreeView: TShellTreeView
+      Left = 0
+      Height = 269
+      Hint = 'Navigate to the folder with your images.'
+      Top = 0
+      Width = 274
+      Align = alTop
+      FileSortType = fstFoldersFirst
+      HideSelection = False
+      ReadOnly = True
+      TabOrder = 0
+      Options = [tvoAutoItemHeight, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+      ObjectTypes = [otFolders]
+      ShellListView = ShellListView
+      OnGetImageIndex = ShellTreeViewGetImageIndex
+      OnSelectionChanged = ShellTreeViewSelectionChanged
+    end
+    object Splitter1: TSplitter
+      Cursor = crVSplit
+      Left = 0
+      Height = 5
+      Top = 269
+      Width = 274
+      Align = alTop
+      ResizeAnchor = akTop
+    end
+    object ShellListView: TShellListView
+      Left = 0
+      Height = 250
+      Hint = 'Select the image for which you want to see the metadata'
+      Top = 274
+      Width = 274
+      Align = alClient
+      Color = clDefault
+      HideSelection = False
+      Mask = '*.jpg;*.jpeg;*.jpe;*.tiff;*.tif'
+      ReadOnly = True
+      SortColumn = 0
+      TabOrder = 2
+      ObjectTypes = [otNonFolders]
+      ShellTreeView = ShellTreeView
+      OnSelectItem = ShellListViewSelectItem
+    end
+    object PreviewImage: TImage
+      Left = 0
+      Height = 144
+      Hint = 'Thumbnail image embedded in the image file'
+      Top = 547
+      Width = 274
+      Align = alBottom
+      Center = True
+      Proportional = True
+      Stretch = True
+    end
+    object Panel4: TPanel
+      Left = 0
+      Height = 23
+      Top = 524
+      Width = 274
+      Align = alBottom
+      AutoSize = True
+      BevelOuter = bvNone
+      ClientHeight = 23
+      ClientWidth = 274
+      TabOrder = 3
+      object Label1: TLabel
+        AnchorSideLeft.Control = Panel4
+        AnchorSideTop.Control = Panel4
+        AnchorSideTop.Side = asrCenter
+        Left = 8
+        Height = 15
+        Top = 4
+        Width = 93
+        BorderSpacing.Left = 8
+        BorderSpacing.Top = 4
+        BorderSpacing.Bottom = 4
+        Caption = 'Thumbnail image'
+      end
+    end
+  end
+  object Splitter2: TSplitter
+    Left = 274
+    Height = 691
+    Top = 0
+    Width = 5
+  end
+  object Panel2: TPanel
+    Left = 279
+    Height = 691
+    Top = 0
+    Width = 647
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 691
+    ClientWidth = 647
+    TabOrder = 2
+    object Panel3: TPanel
+      Left = 0
+      Height = 23
+      Top = 0
+      Width = 647
+      Align = alTop
+      AutoSize = True
+      BevelOuter = bvNone
+      BorderWidth = 4
+      ClientHeight = 23
+      ClientWidth = 647
+      TabOrder = 0
+      object FilenameInfo: TLabel
+        Left = 4
+        Height = 15
+        Top = 4
+        Width = 24
+        Caption = 'File: '
+      end
+    end
+    object PageControl: TPageControl
+      Left = 0
+      Height = 539
+      Top = 23
+      Width = 647
+      ActivePage = PgXMP
+      Align = alClient
+      TabIndex = 1
+      TabOrder = 1
+      OnChange = PageControlChange
+      object PgMetadata: TTabSheet
+        Caption = 'EXIF, IPTC'
+        ClientHeight = 511
+        ClientWidth = 639
+        object TagListView: TListView
+          Left = 0
+          Height = 491
+          Top = 0
+          Width = 639
+          Align = alClient
+          AutoSort = False
+          Columns = <          
+            item
+              Caption = 'Group'
+              Width = 120
+            end          
+            item
+              Caption = 'Tag ID'
+              Width = 60
+            end          
+            item
+              Caption = 'Property'
+              Width = 220
+            end          
+            item
+              AutoSize = True
+              Caption = 'Value'
+              Width = 44
+            end>
+          HideSelection = False
+          ReadOnly = True
+          RowSelect = True
+          SortColumn = 0
+          SortType = stText
+          TabOrder = 0
+          ViewStyle = vsReport
+          OnCompare = TagListViewCompare
+          OnSelectItem = TagListViewSelectItem
+        end
+        object Panel1: TPanel
+          Left = 0
+          Height = 20
+          Top = 491
+          Width = 639
+          Align = alBottom
+          AutoSize = True
+          BevelOuter = bvNone
+          ClientHeight = 20
+          ClientWidth = 639
+          TabOrder = 1
+          object CbDecodeMakerNotes: TCheckBox
+            AnchorSideLeft.Control = Panel1
+            AnchorSideTop.Control = Panel1
+            AnchorSideTop.Side = asrCenter
+            Left = 0
+            Height = 19
+            Hint = 'Try to decode information in the MakerNote tag if possible'
+            Top = 1
+            Width = 125
+            Caption = 'Decode MakerNotes'
+            Checked = True
+            State = cbChecked
+            TabOrder = 0
+          end
+          object CbShowTagIDs: TCheckBox
+            AnchorSideLeft.Control = CbDecodeMakerNotes
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = CbDecodeMakerNotes
+            AnchorSideTop.Side = asrCenter
+            Left = 133
+            Height = 19
+            Hint = 'Show the numerical ID of every tag'
+            Top = 1
+            Width = 86
+            BorderSpacing.Left = 8
+            Caption = 'Show tag IDs'
+            Checked = True
+            State = cbChecked
+            TabOrder = 1
+            OnChange = CbShowTagIDsChange
+          end
+          object CbShowParentTagID: TCheckBox
+            AnchorSideLeft.Control = CbShowTagIDs
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = CbDecodeMakerNotes
+            AnchorSideTop.Side = asrCenter
+            Left = 227
+            Height = 19
+            Hint = 'Show the ID of the parent tag.'#13#10'List will be updated when the next file is loaded.'
+            Top = 1
+            Width = 92
+            BorderSpacing.Left = 8
+            Caption = 'with parent ID'
+            TabOrder = 2
+          end
+        end
+      end
+      object PgXMP: TTabSheet
+        Caption = 'XMP'
+        ClientHeight = 511
+        ClientWidth = 639
+        inline XMPSynEdit: TSynEdit
+          Left = 0
+          Height = 206
+          Top = 280
+          Width = 639
+          Align = alClient
+          Font.Height = -13
+          Font.Name = 'Courier New'
+          Font.Pitch = fpFixed
+          Font.Quality = fqNonAntialiased
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 0
+          Gutter.Width = 57
+          Gutter.MouseActions = <>
+          RightGutter.Width = 0
+          RightGutter.MouseActions = <>
+          Highlighter = SynXMLSyn
+          Keystrokes = <          
+            item
+              Command = ecUp
+              ShortCut = 38
+            end          
+            item
+              Command = ecSelUp
+              ShortCut = 8230
+            end          
+            item
+              Command = ecScrollUp
+              ShortCut = 16422
+            end          
+            item
+              Command = ecDown
+              ShortCut = 40
+            end          
+            item
+              Command = ecSelDown
+              ShortCut = 8232
+            end          
+            item
+              Command = ecScrollDown
+              ShortCut = 16424
+            end          
+            item
+              Command = ecLeft
+              ShortCut = 37
+            end          
+            item
+              Command = ecSelLeft
+              ShortCut = 8229
+            end          
+            item
+              Command = ecWordLeft
+              ShortCut = 16421
+            end          
+            item
+              Command = ecSelWordLeft
+              ShortCut = 24613
+            end          
+            item
+              Command = ecRight
+              ShortCut = 39
+            end          
+            item
+              Command = ecSelRight
+              ShortCut = 8231
+            end          
+            item
+              Command = ecWordRight
+              ShortCut = 16423
+            end          
+            item
+              Command = ecSelWordRight
+              ShortCut = 24615
+            end          
+            item
+              Command = ecPageDown
+              ShortCut = 34
+            end          
+            item
+              Command = ecSelPageDown
+              ShortCut = 8226
+            end          
+            item
+              Command = ecPageBottom
+              ShortCut = 16418
+            end          
+            item
+              Command = ecSelPageBottom
+              ShortCut = 24610
+            end          
+            item
+              Command = ecPageUp
+              ShortCut = 33
+            end          
+            item
+              Command = ecSelPageUp
+              ShortCut = 8225
+            end          
+            item
+              Command = ecPageTop
+              ShortCut = 16417
+            end          
+            item
+              Command = ecSelPageTop
+              ShortCut = 24609
+            end          
+            item
+              Command = ecLineStart
+              ShortCut = 36
+            end          
+            item
+              Command = ecSelLineStart
+              ShortCut = 8228
+            end          
+            item
+              Command = ecEditorTop
+              ShortCut = 16420
+            end          
+            item
+              Command = ecSelEditorTop
+              ShortCut = 24612
+            end          
+            item
+              Command = ecLineEnd
+              ShortCut = 35
+            end          
+            item
+              Command = ecSelLineEnd
+              ShortCut = 8227
+            end          
+            item
+              Command = ecEditorBottom
+              ShortCut = 16419
+            end          
+            item
+              Command = ecSelEditorBottom
+              ShortCut = 24611
+            end          
+            item
+              Command = ecToggleMode
+              ShortCut = 45
+            end          
+            item
+              Command = ecCopy
+              ShortCut = 16429
+            end          
+            item
+              Command = ecPaste
+              ShortCut = 8237
+            end          
+            item
+              Command = ecDeleteChar
+              ShortCut = 46
+            end          
+            item
+              Command = ecCut
+              ShortCut = 8238
+            end          
+            item
+              Command = ecDeleteLastChar
+              ShortCut = 8
+            end          
+            item
+              Command = ecDeleteLastChar
+              ShortCut = 8200
+            end          
+            item
+              Command = ecDeleteLastWord
+              ShortCut = 16392
+            end          
+            item
+              Command = ecUndo
+              ShortCut = 32776
+            end          
+            item
+              Command = ecRedo
+              ShortCut = 40968
+            end          
+            item
+              Command = ecLineBreak
+              ShortCut = 13
+            end          
+            item
+              Command = ecSelectAll
+              ShortCut = 16449
+            end          
+            item
+              Command = ecCopy
+              ShortCut = 16451
+            end          
+            item
+              Command = ecBlockIndent
+              ShortCut = 24649
+            end          
+            item
+              Command = ecLineBreak
+              ShortCut = 16461
+            end          
+            item
+              Command = ecInsertLine
+              ShortCut = 16462
+            end          
+            item
+              Command = ecDeleteWord
+              ShortCut = 16468
+            end          
+            item
+              Command = ecBlockUnindent
+              ShortCut = 24661
+            end          
+            item
+              Command = ecPaste
+              ShortCut = 16470
+            end          
+            item
+              Command = ecCut
+              ShortCut = 16472
+            end          
+            item
+              Command = ecDeleteLine
+              ShortCut = 16473
+            end          
+            item
+              Command = ecDeleteEOL
+              ShortCut = 24665
+            end          
+            item
+              Command = ecUndo
+              ShortCut = 16474
+            end          
+            item
+              Command = ecRedo
+              ShortCut = 24666
+            end          
+            item
+              Command = ecGotoMarker0
+              ShortCut = 16432
+            end          
+            item
+              Command = ecGotoMarker1
+              ShortCut = 16433
+            end          
+            item
+              Command = ecGotoMarker2
+              ShortCut = 16434
+            end          
+            item
+              Command = ecGotoMarker3
+              ShortCut = 16435
+            end          
+            item
+              Command = ecGotoMarker4
+              ShortCut = 16436
+            end          
+            item
+              Command = ecGotoMarker5
+              ShortCut = 16437
+            end          
+            item
+              Command = ecGotoMarker6
+              ShortCut = 16438
+            end          
+            item
+              Command = ecGotoMarker7
+              ShortCut = 16439
+            end          
+            item
+              Command = ecGotoMarker8
+              ShortCut = 16440
+            end          
+            item
+              Command = ecGotoMarker9
+              ShortCut = 16441
+            end          
+            item
+              Command = ecSetMarker0
+              ShortCut = 24624
+            end          
+            item
+              Command = ecSetMarker1
+              ShortCut = 24625
+            end          
+            item
+              Command = ecSetMarker2
+              ShortCut = 24626
+            end          
+            item
+              Command = ecSetMarker3
+              ShortCut = 24627
+            end          
+            item
+              Command = ecSetMarker4
+              ShortCut = 24628
+            end          
+            item
+              Command = ecSetMarker5
+              ShortCut = 24629
+            end          
+            item
+              Command = ecSetMarker6
+              ShortCut = 24630
+            end          
+            item
+              Command = ecSetMarker7
+              ShortCut = 24631
+            end          
+            item
+              Command = ecSetMarker8
+              ShortCut = 24632
+            end          
+            item
+              Command = ecSetMarker9
+              ShortCut = 24633
+            end          
+            item
+              Command = EcFoldLevel1
+              ShortCut = 41009
+            end          
+            item
+              Command = EcFoldLevel2
+              ShortCut = 41010
+            end          
+            item
+              Command = EcFoldLevel3
+              ShortCut = 41011
+            end          
+            item
+              Command = EcFoldLevel4
+              ShortCut = 41012
+            end          
+            item
+              Command = EcFoldLevel5
+              ShortCut = 41013
+            end          
+            item
+              Command = EcFoldLevel6
+              ShortCut = 41014
+            end          
+            item
+              Command = EcFoldLevel7
+              ShortCut = 41015
+            end          
+            item
+              Command = EcFoldLevel8
+              ShortCut = 41016
+            end          
+            item
+              Command = EcFoldLevel9
+              ShortCut = 41017
+            end          
+            item
+              Command = EcFoldLevel0
+              ShortCut = 41008
+            end          
+            item
+              Command = EcFoldCurrent
+              ShortCut = 41005
+            end          
+            item
+              Command = EcUnFoldCurrent
+              ShortCut = 41003
+            end          
+            item
+              Command = EcToggleMarkupWord
+              ShortCut = 32845
+            end          
+            item
+              Command = ecNormalSelect
+              ShortCut = 24654
+            end          
+            item
+              Command = ecColumnSelect
+              ShortCut = 24643
+            end          
+            item
+              Command = ecLineSelect
+              ShortCut = 24652
+            end          
+            item
+              Command = ecTab
+              ShortCut = 9
+            end          
+            item
+              Command = ecShiftTab
+              ShortCut = 8201
+            end          
+            item
+              Command = ecMatchBracket
+              ShortCut = 24642
+            end          
+            item
+              Command = ecColSelUp
+              ShortCut = 40998
+            end          
+            item
+              Command = ecColSelDown
+              ShortCut = 41000
+            end          
+            item
+              Command = ecColSelLeft
+              ShortCut = 40997
+            end          
+            item
+              Command = ecColSelRight
+              ShortCut = 40999
+            end          
+            item
+              Command = ecColSelPageDown
+              ShortCut = 40994
+            end          
+            item
+              Command = ecColSelPageBottom
+              ShortCut = 57378
+            end          
+            item
+              Command = ecColSelPageUp
+              ShortCut = 40993
+            end          
+            item
+              Command = ecColSelPageTop
+              ShortCut = 57377
+            end          
+            item
+              Command = ecColSelLineStart
+              ShortCut = 40996
+            end          
+            item
+              Command = ecColSelLineEnd
+              ShortCut = 40995
+            end          
+            item
+              Command = ecColSelEditorTop
+              ShortCut = 57380
+            end          
+            item
+              Command = ecColSelEditorBottom
+              ShortCut = 57379
+            end>
+          MouseActions = <>
+          MouseTextActions = <>
+          MouseSelActions = <>
+          Lines.Strings = (
+            'XMPSynEdit'
+          )
+          VisibleSpecialChars = [vscSpace, vscTabAtLast]
+          SelectedColor.BackPriority = 50
+          SelectedColor.ForePriority = 50
+          SelectedColor.FramePriority = 50
+          SelectedColor.BoldPriority = 50
+          SelectedColor.ItalicPriority = 50
+          SelectedColor.UnderlinePriority = 50
+          SelectedColor.StrikeOutPriority = 50
+          BracketHighlightStyle = sbhsBoth
+          BracketMatchColor.Background = clNone
+          BracketMatchColor.Foreground = clNone
+          BracketMatchColor.Style = [fsBold]
+          FoldedCodeColor.Background = clNone
+          FoldedCodeColor.Foreground = clGray
+          FoldedCodeColor.FrameColor = clGray
+          MouseLinkColor.Background = clNone
+          MouseLinkColor.Foreground = clBlue
+          LineHighlightColor.Background = clNone
+          LineHighlightColor.Foreground = clNone
+          inline SynLeftGutterPartList1: TSynGutterPartList
+            object SynGutterMarks1: TSynGutterMarks
+              Width = 24
+              MouseActions = <>
+            end
+            object SynGutterLineNumber1: TSynGutterLineNumber
+              Width = 17
+              MouseActions = <>
+              MarkupInfo.Background = clBtnFace
+              MarkupInfo.Foreground = clNone
+              DigitCount = 2
+              ShowOnlyLineNumbersMultiplesOf = 1
+              ZeroStart = False
+              LeadingZeros = False
+            end
+            object SynGutterChanges1: TSynGutterChanges
+              Width = 4
+              MouseActions = <>
+              ModifiedColor = 59900
+              SavedColor = clGreen
+            end
+            object SynGutterSeparator1: TSynGutterSeparator
+              Width = 2
+              MouseActions = <>
+              MarkupInfo.Background = clWhite
+              MarkupInfo.Foreground = clGray
+            end
+            object SynGutterCodeFolding1: TSynGutterCodeFolding
+              MouseActions = <>
+              MarkupInfo.Background = clNone
+              MarkupInfo.Foreground = clGray
+              MouseActionsExpanded = <>
+              MouseActionsCollapsed = <>
+            end
+          end
+        end
+        object XMPListView: TListView
+          Left = 0
+          Height = 275
+          Top = 0
+          Width = 639
+          Align = alTop
+          AutoWidthLastColumn = True
+          Columns = <          
+            item
+              Caption = 'Description'
+              Width = 200
+            end          
+            item
+              Caption = 'Value'
+              Width = 435
+            end>
+          ReadOnly = True
+          TabOrder = 1
+          ViewStyle = vsReport
+        end
+        object Splitter4: TSplitter
+          Cursor = crVSplit
+          Left = 0
+          Height = 5
+          Top = 275
+          Width = 639
+          Align = alTop
+          ResizeAnchor = akTop
+        end
+        object Panel5: TPanel
+          Left = 0
+          Height = 25
+          Top = 486
+          Width = 639
+          Align = alBottom
+          AutoSize = True
+          BevelOuter = bvNone
+          ClientHeight = 25
+          ClientWidth = 639
+          TabOrder = 3
+          object btnApplyChangesXMP: TButton
+            AnchorSideLeft.Control = cbProcessXMP
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = Panel5
+            Left = 149
+            Height = 25
+            Top = 0
+            Width = 104
+            AutoSize = True
+            BorderSpacing.Left = 16
+            Caption = 'Apply changes'
+            TabOrder = 0
+            OnClick = btnApplyChangesXMPClick
+          end
+          object btnSaveXMP: TButton
+            AnchorSideLeft.Control = btnApplyChangesXMP
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = Panel5
+            Left = 257
+            Height = 25
+            Top = 0
+            Width = 50
+            AutoSize = True
+            BorderSpacing.Left = 4
+            Caption = 'Save'
+            TabOrder = 1
+            OnClick = btnSaveXMPClick
+          end
+          object cbProcessXMP: TCheckBox
+            AnchorSideLeft.Control = Panel5
+            AnchorSideTop.Control = Panel5
+            AnchorSideTop.Side = asrCenter
+            Left = 8
+            Height = 19
+            Top = 3
+            Width = 125
+            BorderSpacing.Left = 8
+            Caption = 'Load && display XMP'
+            Checked = True
+            State = cbChecked
+            TabOrder = 2
+          end
+        end
+      end
+      object PgImage: TTabSheet
+        Caption = 'Image'
+        ClientHeight = 511
+        ClientWidth = 639
+        object Image: TImage
+          Left = 0
+          Height = 511
+          Top = 0
+          Width = 639
+          Align = alClient
+          Center = True
+          Proportional = True
+          Stretch = True
+          StretchOutEnabled = False
+        end
+      end
+    end
+    object Messages: TMemo
+      Left = 4
+      Height = 90
+      Top = 567
+      Width = 639
+      Align = alBottom
+      BorderSpacing.Left = 4
+      BorderSpacing.Right = 4
+      TabOrder = 2
+    end
+    object Splitter3: TSplitter
+      Cursor = crVSplit
+      Left = 0
+      Height = 5
+      Top = 562
+      Width = 647
+      Align = alBottom
+      ResizeAnchor = akBottom
+    end
+    object DateTimePanel: TPanel
+      Left = 0
+      Height = 34
+      Top = 657
+      Width = 647
+      Align = alBottom
+      AutoSize = True
+      BevelOuter = bvNone
+      ClientHeight = 34
+      ClientWidth = 647
+      TabOrder = 4
+      object LblChangeDate: TLabel
+        AnchorSideLeft.Control = DateTimePanel
+        AnchorSideTop.Control = EdChangeDate
+        AnchorSideTop.Side = asrCenter
+        Left = 4
+        Height = 15
+        Top = 10
+        Width = 135
+        BorderSpacing.Left = 4
+        Caption = 'Change EXIF date/time to'
+      end
+      object EdChangeDate: TEdit
+        AnchorSideLeft.Control = LblChangeDate
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = DateTimePanel
+        AnchorSideTop.Side = asrCenter
+        Left = 144
+        Height = 23
+        Hint = 'New date to be assigned to the selected image'
+        Top = 6
+        Width = 152
+        BorderSpacing.Left = 5
+        BorderSpacing.Bottom = 4
+        TabOrder = 0
+      end
+      object BtnChangeDate: TButton
+        AnchorSideLeft.Control = EdChangeDate
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = EdChangeDate
+        AnchorSideTop.Side = asrCenter
+        Left = 304
+        Height = 25
+        Hint = 'Replaces the image date.'
+        Top = 5
+        Width = 67
+        AutoSize = True
+        BorderSpacing.Left = 8
+        BorderSpacing.Bottom = 4
+        Caption = 'Execute'
+        TabOrder = 1
+        OnClick = BtnChangeDateClick
+      end
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 691
+    Width = 926
+    Panels = <    
+      item
+        Width = 150
+      end    
+      item
+        Width = 150
+      end    
+      item
+        Width = 250
+      end    
+      item
+        Width = 150
+      end    
+      item
+        Width = 100
+      end>
+    SimplePanel = False
+  end
+  object ImageList: TImageList
+    Left = 89
+    Top = 118
+    Bitmap = {
+      4C7A0300000010000000100000009E0200000000000078DAEDD6DD4F52611CC0
+      712EBAE80FE81FE81FE8A69BAE9A372D7BD1B5B979916B6B8A446B85DA666CCE
+      CD772D9962A69989180A0A238929948C7CD9508CE1128F0738BC132442CA8B66
+      4672CE13CF71C7BC28E141B76E7CB6EFF68C9D0F637BCEEF1C58ACFDB5DA5F52
+      1ED2774C843E0A354796BEC635C4E6B00EAD99BABCB3B1A5D12815F7826CDA5E
+      556F41C3F825C18D8B499FE167B67E2F684AADF4155F663CD6779B47463090AD
+      A7366C8090DCAF67BCFBED93512AEEC9DEA70B681A558C5FD30BE7512C6CC3D0
+      6F627CCC34E240F58965A58FF1DBF8C406AADF217489F4199CF9D45E70FE97CF
+      B08BEAD367B067ED2DB984BFBAC321C32B00D5C3337048B835FEF19AD754CC83
+      EED37DD134CBDDD207621257805CF2282A254E49F90069EE0341651588EB9BE9
+      E07E67AE1DACABF974700F3F83D791980C50DE197AEF1EE1CA186F12DC049FBB
+      8BE8E0DED2530CCC1D857470BFD4798B36946F16801F9B079E10973EA7BF3787
+      1C43EC978B4FAFB108F1DD17F077A0C4D8E32E5C545A6815DF6BFB13BB16DE57
+      D97AE768E500E5D202A6945DBDEB92554C2EB45CADC894A1E5CA7542FA48179E
+      ED06074D7781A0AE13C4AD531923E4D501D778AD3D977B0FE679D7E83BF5A7FE
+      381E1FE434D9A43C632E41CBFACFEB24E63FB9AA0471633F5DCCD09BC445650B
+      99667FB13DFF02E3C3733D20E1B720651BAB361EF67F5BC9AD6FFFF4D8201737
+      B6E6E7313E62D182C8B2E6A0904909C226F991CF1F97BAC10D7DE0431B88621A
+      F4F7DF94F03DF4FEC926905CB3207BA7AA61187A8FBA0ED992513720C61E0BA0
+      F74DB622FB1D8F81B40D571541FF75BA1BD9AF1B25DFCD82827384F4E19BF0FC
+      20B2F76A9F45E0F9DBA53CEDB6631AD9BB54F5F4FF2FEB306F25B5E940F60E05
+      1FDF9F1F363F97D9C744ECB29398DFDF7A8BC172
+    }
+  end
+  object SynXMLSyn: TSynXMLSyn
+    DefaultFilter = 'XML Document (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
+    Enabled = False
+    WantBracesParsed = False
+    Left = 480
+    Top = 145
+  end
+end

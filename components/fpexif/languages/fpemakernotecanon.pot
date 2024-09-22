@@ -1,0 +1,95 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: fpemakernotecanon.rscanonaelkup
+msgid "0:Normal AE,1:Exposure compensation,2:AE lock,3:AE lock + Exposure compensation,4:No AE"
+msgstr ""
+
+#: fpemakernotecanon.rscanonaflkup
+msgid "$2005:Manual AF point selection,$3000:None (MF),$3001:Auto AF point selection,$3002:Right,$3003:Center,$3004:Left,$4001:Auto AF point selection,$4006:Face Detect"
+msgstr ""
+
+#: fpemakernotecanon.rscanonautorotlkup
+msgid "0:None,1:Rotate 90 CW,2:Rotate 180,3:Rotate 270 CW"
+msgstr ""
+
+#: fpemakernotecanon.rscanonbiaslkup
+msgid "65472:-2 EV,65484:-1.67 EV,65488:-1.50 EV,65492:-1.33 EV,65504:-1 EV,65516:-0.67 EV,65520:-0.50 EV,65524:-0.33 EV,0:0 EV,12:0.33 EV,16:0.50 EV,20:0.67 EV,32:1 EV,44:1.33 EV,48:1.50 EV,52:1.67 EV,64:2 EV"
+msgstr ""
+
+#: fpemakernotecanon.rscanoncamtypelkup
+msgid "248:EOS High-end,250:Compact,252:EOS Mid-range,255:DV Camera"
+msgstr ""
+
+#: fpemakernotecanon.rscanoneasylkup
+msgid "0:Full Auto,1:Manual,2:Landscape,3:Fast Shutter,4:Slow Shutter,5:Night,6:Gray scale,7:Sepia,8:Portrait,9:Sports,10:Macro,11:Black & White,12:Pan Focus,13:Vivid,14:Neutral,15:Flash off,16:Long shutter,17:Super macro,18:Foliage,19:Indoor,20:Fireworks,21:Beach,22:Underwater,23:Snow,24:Kids & Pets,25:Night snapshot,26:Digital macro,27:My colors,28:Movie snap,29:Super macro 2,30:Color accent,31:Color swap,32:Aquarium,33:ISO3200,34:ISO6400,35:Creative light effect,36:Easy,37:Quick shot,38:Creative auto,39:Zoom blur,40:Low light,41:Nostalgic,42:Super vivid,43:Poster effect,44:Face self-timer,45:Smile,46:Wink self-timer,47:Fisheye effect,48:Miniature effect,49:High-speed burst,50:Best image selection,51:High dynamic range,52:Handheld night scene,53:Movie digest,54:Live view control,55:Discreet,56:Blur reduction,57:Monochrome,58:Toy camera effect,59:Scene intelligent auto,60:High-speed burst HQ,61:Smooth skin,62:Soft focus,257:Spotlight,258:Night 2,259:Night+,260:Super night,261:Sunset,263:Night scene,264:Surface,265:Low light 2"
+msgstr ""
+
+#: fpemakernotecanon.rscanonexposelkup
+msgid "0:Easy shooting,1:Program AE,2:Shutter speed priority AE,3:Aperture priority AE,4:Manual,5:Depth-of-field AE,6:M-Dep,7:Bulb"
+msgstr ""
+
+#: fpemakernotecanon.rscanonflashactlkup
+msgid "0:Did not fire,1:Fired"
+msgstr ""
+
+#: fpemakernotecanon.rscanonflashlkup
+msgid "0:Not fired,1:Auto,2:On,3:Red-eye,4:Slow sync,5:Auto+red-eye,6:On+red eye,16:External flash"
+msgstr ""
+
+#: fpemakernotecanon.rscanonfocaltypelkup
+msgid "1:Fixed,2:Zoom"
+msgstr ""
+
+#: fpemakernotecanon.rscanonfoctypelkup
+msgid "0:Manual,1:Auto,3:Close-up (macro),8:Locked (pan mode)"
+msgstr ""
+
+#: fpemakernotecanon.rscanonfocuslkup
+msgid "0:One-Shot AF,1:AI Servo AF,2:AI Focus AF,3:Manual focus,4:Single,5:Continuous,6:Manual focus,16:Pan focus,256:AF+MF,512:Movie snap focus,519:Movie servo AF"
+msgstr ""
+
+#: fpemakernotecanon.rscanongenlkup
+msgid "65535:Low,0:Normal,1:High"
+msgstr ""
+
+#: fpemakernotecanon.rscanonisolkup
+msgid "0:Not used,15:auto,16:50,17:100,18:200,19:400"
+msgstr ""
+
+#: fpemakernotecanon.rscanonmacrolkup
+msgid "1:Macro,2:Normal"
+msgstr ""
+
+#: fpemakernotecanon.rscanonmeterlkup
+msgid "0:Default,1:Spot,2:Average,3:Evaluative,4:Partial,5:Center-weighted average"
+msgstr ""
+
+#: fpemakernotecanon.rscanonpandirlkup
+msgid "0:Left to right,1:Right to left,2:Bottom to top,3:Top to bottom,4:2x2 Matrix (clockwise)"
+msgstr ""
+
+#: fpemakernotecanon.rscanonqualitylkup
+msgid "65535:n/a,1:Economy,2:Normal,3:Fine,4:RAW,5:Superfine,130:Normal Movie,131:Movie (2)"
+msgstr ""
+
+#: fpemakernotecanon.rscanonreclkup
+msgid "1:JPEG,2:CRW+THM,3:AVI+THM,4:TIF,5:TIF+JPEG,6:CR2,7:CR2+JPEG,9:MOV,10:MP4"
+msgstr ""
+
+#: fpemakernotecanon.rscanonsizelkup
+msgid "65535:n/a,0:Large,1:Medium,2:Small,4:5 MPixel,5:2 MPixel,6:1.5 MPixel,8:Postcard,9:Widescreen,10:Medium widescreen,14:Small 1,15:Small 2,16:Small 3,128:640x480 movie,129:Medium movie,130:Small movie,137:128x720 movie,142:1920x1080 movie"
+msgstr ""
+
+#: fpemakernotecanon.rscanonsloshuttlkup
+msgid "65535:n/a,0:Off,1:Night scene,2:On,3:None"
+msgstr ""
+
+#: fpemakernotecanon.rscanonwhiteballkup
+msgid "0:Auto,1:Daylight,2:Cloudy,3:Tungsten,4:Flourescent,5:Flash,6:Custom,7:Black & white,8:Shade,9:Manual temperature (Kelvin),14:Daylight fluorescent,17:Under water"
+msgstr ""
+
+#: fpemakernotecanon.rscanonzoomlkup
+msgid "0:None,1:2x,2:4x,3:Other"
+msgstr ""
+

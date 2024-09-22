@@ -450,7 +450,7 @@ begin
   //DMC.qBirthdays.Close;
   //DMC.qLastLifers.Close;
   //DMC.qBandsRunningOut.Close;
-  DMC.qLastSurveys.Close;
+  //DMC.qLastSurveys.Close;
   //DMC.qExpiredPermits.Close;
 
   if Assigned(FBandsLoader) then

@@ -1,0 +1,15 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: fpemakernotesanyo.rssanyomacrolkup
+msgid "0:Normal,1:Macro,2:View,3:Manual"
+msgstr ""
+
+#: fpemakernotesanyo.rssanyoqualitylkup
+msgid "0:Normal/Very Low,1:Normal/Low,2:Normal/Medium Low,3:Normal/Medium,4:Normal/Medium High,5:Normal/High,6:Normal/Very High,7:Normal/Super High,256:Fine/Very Low,257:Fine/Low,258:Fine/Medium Low,259:Fine/Medium,260:Fine/Medium High,261:Fine/High,262:Fine/Very High,263:Fine/Super High,512:Super Fine/Very Low,513:Super Fine/Low,514:Super Fine/Medium Low,515:Super Fine/Medium,516:Super Fine/Medium High,517:Super Fine/High,518:Super Fine/Very High,519:Super Fine/Super High"
+msgstr ""
+
+#: fpemakernotesanyo.rssanyospecialmode
+msgid "Special mode"
+msgstr ""
+

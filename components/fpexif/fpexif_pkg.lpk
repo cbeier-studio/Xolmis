@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <Name Value="fpexif_pkg"/>
+    <Author Value="Werner Pamler"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <SearchPaths>
+        <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)-$(LCLWidgetType)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="Library for displaying and editing of meta data (EXIF, IPTC) in images."/>
+    <License Value="LGPL with linking exception (like Lazarus)"/>
+    <Version Minor="1"/>
+    <Files Count="22">
+      <Item1>
+        <Filename Value="fpeglobal.pas"/>
+        <UnitName Value="fpeGlobal"/>
+      </Item1>
+      <Item2>
+        <Filename Value="fpetags.pas"/>
+        <UnitName Value="fpeTags"/>
+      </Item2>
+      <Item3>
+        <Filename Value="fpeutils.pas"/>
+        <UnitName Value="fpeUtils"/>
+      </Item3>
+      <Item4>
+        <Filename Value="fpexif.inc"/>
+        <Type Value="Include"/>
+      </Item4>
+      <Item5>
+        <Filename Value="fpemetadata.pas"/>
+        <UnitName Value="fpeMetadata"/>
+      </Item5>
+      <Item6>
+        <Filename Value="fpeexifreadwrite.pas"/>
+        <UnitName Value="fpeExifReadWrite"/>
+      </Item6>
+      <Item7>
+        <Filename Value="fpeiptcreadwrite.pas"/>
+        <UnitName Value="fpeIptcReadWrite"/>
+      </Item7>
+      <Item8>
+        <Filename Value="fpexif_fpc.inc"/>
+        <Type Value="Include"/>
+      </Item8>
+      <Item9>
+        <Filename Value="fpeexifdata.pas"/>
+        <UnitName Value="fpeExifData"/>
+      </Item9>
+      <Item10>
+        <Filename Value="fpeiptcdata.pas"/>
+        <UnitName Value="fpeIptcData"/>
+      </Item10>
+      <Item11>
+        <Filename Value="fpestrconsts.pas"/>
+        <UnitName Value="fpeStrConsts"/>
+      </Item11>
+      <Item12>
+        <Filename Value="fpemakernote.pas"/>
+        <UnitName Value="fpeMakerNote"/>
+      </Item12>
+      <Item13>
+        <Filename Value="fpemakernotenikon.pas"/>
+        <UnitName Value="fpeMakerNoteNikon"/>
+      </Item13>
+      <Item14>
+        <Filename Value="fpemakernoteminolta.pas"/>
+        <UnitName Value="fpeMakerNoteMinolta"/>
+      </Item14>
+      <Item15>
+        <Filename Value="fpemakernoteolympus.pas"/>
+        <UnitName Value="fpeMakerNoteOlympus"/>
+      </Item15>
+      <Item16>
+        <Filename Value="fpemakernoteepson.pas"/>
+        <UnitName Value="fpeMakerNoteEpson"/>
+      </Item16>
+      <Item17>
+        <Filename Value="fpemakernotefuji.pas"/>
+        <UnitName Value="fpeMakerNoteFuji"/>
+      </Item17>
+      <Item18>
+        <Filename Value="fpemakernotesanyo.pas"/>
+        <UnitName Value="fpeMakerNoteSanyo"/>
+      </Item18>
+      <Item19>
+        <Filename Value="fpemakernotecasio.pas"/>
+        <UnitName Value="fpeMakerNoteCasio"/>
+      </Item19>
+      <Item20>
+        <Filename Value="fpemakernotecanon.pas"/>
+        <UnitName Value="fpeMakerNoteCanon"/>
+      </Item20>
+      <Item21>
+        <Filename Value="fpexmpdata.pas"/>
+        <UnitName Value="fpeXMPData"/>
+      </Item21>
+      <Item22>
+        <Filename Value="fpexmpreadwrite.pas"/>
+        <UnitName Value="fpeXMPReadWrite"/>
+      </Item22>
+    </Files>
+    <CompatibilityMode Value="True"/>
+    <i18n>
+      <EnableI18N Value="True"/>
+      <OutDir Value="languages"/>
+    </i18n>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="LazUtils"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

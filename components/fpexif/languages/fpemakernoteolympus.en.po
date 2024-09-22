@@ -1,0 +1,405 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2\n"
+
+#: fpemakernoteolympus.rsolympusaelock
+msgid "Auto-exposure lock"
+msgstr "Auto-exposure lock"
+
+#: fpemakernoteolympus.rsolympusafareas
+msgid "AF areas"
+msgstr "AF areas"
+
+#: fpemakernoteolympus.rsolympusaffinetune
+msgid "AF fine tune"
+msgstr "AF fine tune"
+
+#: fpemakernoteolympus.rsolympusaffinetuneadj
+msgid "AF fine tune adj"
+msgstr "AF fine tune adj"
+
+#: fpemakernoteolympus.rsolympusafpointselected
+msgid "AF point selected"
+msgstr "AF point selected"
+
+#: fpemakernoteolympus.rsolympusafsearch
+msgid "AF search"
+msgstr "AF search"
+
+#: fpemakernoteolympus.rsolympusafsearchlkup
+msgid "0:Not ready,1:Ready"
+msgstr "0:Not ready,1:Ready"
+
+#: fpemakernoteolympus.rsolympusartfilter
+msgid "Art filter"
+msgstr "Art filter"
+
+#: fpemakernoteolympus.rsolympusartfiltereffect
+msgid "ArtFilterEffect"
+msgstr "ArtFilterEffect"
+
+#: fpemakernoteolympus.rsolympusartfiltereffect0lkup
+msgid "0:Off,1:Soft Focus,2:Pop Art,3:Pale & Light Color,4:Light Tone,5:Pin Hole,6:Grainy Film,9:Diorama,10:Cross Process,$c:Fish Eye,$d:Drawing,$e:Gentle Sepia,$f:Pale & Light Color II,$10:Pop Art II,$11:Pin Hole II,$12:Pin Hole III,$13:Grainy Film II,$14:Dramatic Tone,$15:Punk,$16:Soft Focus 2,$17:Sparkle,$18: Watercolor,$19:Key Line,$1a:Key Line II,$1b:Miniature,$1c:Reflection,$1d:Fragmented,$1f:Cross Process II,$20:Dramatic Tone II,$21:Watercolor I,$22:Watercolor II,$23:Diorama II,$24:Vintage,$25:Vintage II,$26:Vintage III,$27:Partial Color,$28:Partial Color II,$29:Partial Color III"
+msgstr "0:Off,1:Soft Focus,2:Pop Art,3:Pale & Light Color,4:Light Tone,5:Pin Hole,6:Grainy Film,9:Diorama,10:Cross Process,$c:Fish Eye,$d:Drawing,$e:Gentle Sepia,$f:Pale & Light Color II,$10:Pop Art II,$11:Pin Hole II,$12:Pin Hole III,$13:Grainy Film II,$14:Dramatic Tone,$15:Punk,$16:Soft Focus 2,$17:Sparkle,$18: Watercolor,$19:Key Line,$1a:Key Line II,$1b:Miniature,$1c:Reflection,$1d:Fragmented,$1f:Cross Process II,$20:Dramatic Tone II,$21:Watercolor I,$22:Watercolor II,$23:Diorama II,$24:Vintage,$25:Vintage II,$26:Vintage III,$27:Partial Color,$28:Partial Color II,$29:Partial Color III"
+
+#: fpemakernoteolympus.rsolympusartfiltereffect4lkup
+msgid "$0000:No Effect,$8010:Star Light,$8020:Pin Hole,$8030:Frame,$8040:Soft Focus,$8050:White Edge,$8060 = B&W,$8080:Blur Top and Bottom,$8081:Blur Left and Right"
+msgstr "$0000:No Effect,$8010:Star Light,$8020:Pin Hole,$8030:Frame,$8040:Soft Focus,$8050:White Edge,$8060 = B&W,$8080:Blur Top and Bottom,$8081:Blur Left and Right"
+
+#: fpemakernoteolympus.rsolympusartfiltereffect6lkup
+msgid "0:No color filter,1:Yellow color filter,2:Orange color filter,3:Red color rilter,4:Green color filter"
+msgstr "0:No color filter,1:Yellow color filter,2:Orange color filter,3:Red color rilter,4:Green color filter"
+
+#: fpemakernoteolympus.rsolympusartfilterlkup
+msgctxt "fpemakernoteolympus.rsolympusartfilterlkup"
+msgid "0:Off,1:Soft Focus,2:Pop Art,3:Pale & Light Color,4:Light Tone,5:Pin Hole,6:Grainy Film,9:Diorama,10:Cross Process,12:Fish Eye,13:Drawing,14:Gentle Sepia,15:Pale & Light Color II,16:Pop Art II,17:Pin Hole II,18:Pin Hole III,19:Grainy Film II,20:Dramatic Tone,21:Punk,22:Soft Focus 2,23:Sparkle,24:Watercolor,25:Key Line,26:Key Line II,27:Miniature,28:Reflection,29:Fragmented,31:Cross Process II,32:Dramatic Tone II,33:Watercolor I,34:Watercolor II,35:Diorama II,36:Vintage,37:Vintage II,38:Vintage III,39:Partial Color,40:Partial Color II,41:Partial Color III|"
+msgstr "0:Off,1:Soft Focus,2:Pop Art,3:Pale & Light Color,4:Light Tone,5:Pin Hole,6:Grainy Film,9:Diorama,10:Cross Process,12:Fish Eye,13:Drawing,14:Gentle Sepia,15:Pale & Light Color II,16:Pop Art II,17:Pin Hole II,18:Pin Hole III,19:Grainy Film II,20:Dramatic Tone,21:Punk,22:Soft Focus 2,23:Sparkle,24:Watercolor,25:Key Line,26:Key Line II,27:Miniature,28:Reflection,29:Fragmented,31:Cross Process II,32:Dramatic Tone II,33:Watercolor I,34:Watercolor II,35:Diorama II,36:Vintage,37:Vintage II,38:Vintage III,39:Partial Color,40:Partial Color II,41:Partial Color III|"
+
+#: fpemakernoteolympus.rsolympusccdscanmodelkup
+msgid "0:Interlaced,1:Progressive"
+msgstr "0:Interlaced,1:Progressive"
+
+#: fpemakernoteolympus.rsolympuscolorcreatoreffect
+msgid "Color creator effect"
+msgstr "Color creator effect"
+
+#: fpemakernoteolympus.rsolympuscolorprofilesettings
+msgid "Color profile settings"
+msgstr "Color profile settings"
+
+#: fpemakernoteolympus.rsolympuscolorspace
+msgid "Color space"
+msgstr "Color space"
+
+#: fpemakernoteolympus.rsolympuscolorspacelkup
+msgid "0:sRGB,1:Adobe RGB,2:Pro Photo RGB"
+msgstr "0:sRGB,1:Adobe RGB,2:Pro Photo RGB"
+
+#: fpemakernoteolympus.rsolympuscompressionfactor
+msgid "Compression factor"
+msgstr "Compression factor"
+
+#: fpemakernoteolympus.rsolympuscontrastlkup
+msgid "0:High,1:Normal,2:Low"
+msgstr "0:High,1:Normal,2:Low"
+
+#: fpemakernoteolympus.rsolympuscontrastsetting
+msgid "Contrast setting (value, min, max)"
+msgstr "Contrast setting (value, min, max)"
+
+#: fpemakernoteolympus.rsolympuscustomsaturation
+msgid "Custom saturation"
+msgstr "Custom saturation"
+
+#: fpemakernoteolympus.rsolympusdistortioncorrection
+msgid "Distortion correction"
+msgstr "Distortion correction"
+
+#: fpemakernoteolympus.rsolympusdrivemode
+msgid "Drive mode"
+msgstr "Drive mode"
+
+#: fpemakernoteolympus.rsolympusexposuremode
+msgid "Exposure mode"
+msgstr "Exposure mode"
+
+#: fpemakernoteolympus.rsolympusexposuremodelkup
+msgid "1:Manual,2:Program,3:Aperture-priority AE,4:Shutter speed priority AE,5:Program-shift"
+msgstr "1:Manual,2:Program,3:Aperture-priority AE,4:Shutter speed priority AE,5:Program-shift"
+
+#: fpemakernoteolympus.rsolympusexposureshift
+msgid "Exposure shift"
+msgstr "Exposure shift"
+
+#: fpemakernoteolympus.rsolympusextendedwbdetect
+msgid "Extended WB detect"
+msgstr "Extended WB detect"
+
+#: fpemakernoteolympus.rsolympusfilmgraineffect
+msgid "Film grain effect"
+msgstr "Film grain effect"
+
+#: fpemakernoteolympus.rsolympusfilmgraineffectlkup
+msgid "0:Off,1:Low,2:Medium,3:High"
+msgstr "0:Off,1:Low,2:Medium,3:High"
+
+#: fpemakernoteolympus.rsolympusflashcontrolmode
+msgid "Flash control mode"
+msgstr "Flash control mode"
+
+#: fpemakernoteolympus.rsolympusflashcontrolmodelkup
+msgid "0:Off,3:TTL,4:Auto,5:Manual|"
+msgstr "0:Off,3:TTL,4:Auto,5:Manual|"
+
+#: fpemakernoteolympus.rsolympusflashdevlkup
+msgid "0:None,1:Internal,4:External,5:Internal + External"
+msgstr "0:None,1:Internal,4:External,5:Internal + External"
+
+#: fpemakernoteolympus.rsolympusflashexposurecomp
+msgid "Flash exposure comp"
+msgstr "Flash exposure comp"
+
+#: fpemakernoteolympus.rsolympusflashintensity
+msgid "Flash intensity"
+msgstr "Flash intensity"
+
+#: fpemakernoteolympus.rsolympusflashmode
+msgid "Flash mode"
+msgstr "Flash mode"
+
+#: fpemakernoteolympus.rsolympusflashmodelkup
+msgid "2:On,3:Off"
+msgstr "2:On,3:Off"
+
+#: fpemakernoteolympus.rsolympusflashmodellkup
+msgid "0:None,1:FL-20,2:FL-50,3:RF-11,4:TF-22,5:FL-36,6:FL-50R,7:FL-36R,9:FL-14,11:FL-600R"
+msgstr "0:None,1:FL-20,2:FL-50,3:RF-11,4:TF-22,5:FL-36,6:FL-50R,7:FL-36R,9:FL-14,11:FL-600R"
+
+#: fpemakernoteolympus.rsolympusflashremotecontrol
+msgid "Flash remote control"
+msgstr "Flash remote control"
+
+#: fpemakernoteolympus.rsolympusflashremotecontrollkup
+msgid "0:Off,1:Channel 1 Low,2:Channel 2 Low,3:Channel 3 Low,4:Channel 4 Low,9:Channel 1 Mid,$A:Channel 2 Mid,$B:Channel 3 Mid,$C:Channel 4 Mid,$11:Channel 1 High,$12:Channel 2 High,$13:Channel 3 High,$14:Channel 4 High"
+msgstr "0:Off,1:Channel 1 Low,2:Channel 2 Low,3:Channel 3 Low,4:Channel 4 Low,9:Channel 1 Mid,$A:Channel 2 Mid,$B:Channel 3 Mid,$C:Channel 4 Mid,$11:Channel 1 High,$12:Channel 2 High,$13:Channel 3 High,$14:Channel 4 High"
+
+#: fpemakernoteolympus.rsolympusflashtypelkup
+msgid "0:None,2:Simple E-System,3:E-System"
+msgstr "0:None,2:Simple E-System,3:E-System"
+
+#: fpemakernoteolympus.rsolympusfocusmode
+msgid "Focus mode"
+msgstr "Focus mode"
+
+#: fpemakernoteolympus.rsolympusfocusmodelkup
+msgid "0:Single AF,1:Sequential shooting AF,2:Continuous AF,3:Multi AF,4:Face detect,10:MF|0:(none),1:S-AF,2:C-AF,16:MF,32:Face detect,64:Imager AF,128:Live View Magnification Frame,256:AF sensor"
+msgstr "0:Single AF,1:Sequential shooting AF,2:Continuous AF,3:Multi AF,4:Face detect,10:MF|0:(none),1:S-AF,2:C-AF,16:MF,32:Face detect,64:Imager AF,128:Live View Magnification Frame,256:AF sensor"
+
+#: fpemakernoteolympus.rsolympusfocusprocess
+msgid "Focus process"
+msgstr "Focus process"
+
+#: fpemakernoteolympus.rsolympusfocusprocesslkup0
+msgid "0:AF not used,1:AF used"
+msgstr "0:AF not used,1:AF used"
+
+#: fpemakernoteolympus.rsolympusgradation
+msgid "Gradation"
+msgstr "Gradation"
+
+#: fpemakernoteolympus.rsolympusgradationlkup
+msgid "0:Low-key,1:Normal,2:n/a,3:High-key|0:user-selected,1:auto-override"
+msgstr "0:Low-key,1:Normal,2:n/a,3:High-key|0:user-selected,1:auto-override"
+
+#: fpemakernoteolympus.rsolympusimagequality
+msgid "Image quality"
+msgstr "Image quality"
+
+#: fpemakernoteolympus.rsolympusimagequalitylkup
+msgid "1:SQ,2:HQ,3:SHQ,4:RAW,5:SQ (5)"
+msgstr "1:SQ,2:HQ,3:SHQ,4:RAW,5:SQ (5)"
+
+#: fpemakernoteolympus.rsolympusimagestabilization
+msgid "Image stabilization"
+msgstr "Image stabilization"
+
+#: fpemakernoteolympus.rsolympusimagestabilizationlkup
+msgid "0:Off,1:On (Mode 1),2:On (Mode 2),3:On (Mode 3),4:On (Mode 4)"
+msgstr "0:Off,1:On (Mode 1),2:On (Mode 2),3:On (Mode 3),4:On (Mode 4)"
+
+#: fpemakernoteolympus.rsolympusjpegquallkup
+msgid "1:SQ,2:HQ,3:SHQ,4:Raw"
+msgstr "1:SQ,2:HQ,3:SHQ,4:Raw"
+
+#: fpemakernoteolympus.rsolympusmacrolkup
+msgctxt "fpemakernoteolympus.rsolympusmacrolkup"
+msgid "0:Off,1:On,2:Super Macro"
+msgstr "0:Off,1:On,2:Super Macro"
+
+#: fpemakernoteolympus.rsolympusmacromode
+msgid "Macro mode"
+msgstr "Macro mode"
+
+#: fpemakernoteolympus.rsolympusmacromodelkup
+msgctxt "fpemakernoteolympus.rsolympusmacromodelkup"
+msgid "0:Off,1:On,2:Super Macro"
+msgstr "0:Off,1:On,2:Super Macro"
+
+#: fpemakernoteolympus.rsolympusmagicfilter
+msgid "Magic filter"
+msgstr "Magic filter"
+
+#: fpemakernoteolympus.rsolympusmagicfilterlkup
+msgctxt "fpemakernoteolympus.rsolympusmagicfilterlkup"
+msgid "0:Off,1:Soft Focus,2:Pop Art,3:Pale & Light Color,4:Light Tone,5:Pin Hole,6:Grainy Film,9:Diorama,10:Cross Process,12:Fish Eye,13:Drawing,14:Gentle Sepia,15:Pale & Light Color II,16:Pop Art II,17:Pin Hole II,18:Pin Hole III,19:Grainy Film II,20:Dramatic Tone,21:Punk,22:Soft Focus 2,23:Sparkle,24:Watercolor,25:Key Line,26:Key Line II,27:Miniature,28:Reflection,29:Fragmented,31:Cross Process II,32:Dramatic Tone II,33:Watercolor I,34:Watercolor II,35:Diorama II,36:Vintage,37:Vintage II,38:Vintage III,39:Partial Color,40:Partial Color II,41:Partial Color III|"
+msgstr "0:Off,1:Soft Focus,2:Pop Art,3:Pale & Light Color,4:Light Tone,5:Pin Hole,6:Grainy Film,9:Diorama,10:Cross Process,12:Fish Eye,13:Drawing,14:Gentle Sepia,15:Pale & Light Color II,16:Pop Art II,17:Pin Hole II,18:Pin Hole III,19:Grainy Film II,20:Dramatic Tone,21:Punk,22:Soft Focus 2,23:Sparkle,24:Watercolor,25:Key Line,26:Key Line II,27:Miniature,28:Reflection,29:Fragmented,31:Cross Process II,32:Dramatic Tone II,33:Watercolor I,34:Watercolor II,35:Diorama II,36:Vintage,37:Vintage II,38:Vintage III,39:Partial Color,40:Partial Color II,41:Partial Color III|"
+
+#: fpemakernoteolympus.rsolympusmanometerpressure
+msgid "Manometer pressure"
+msgstr "Manometer pressure"
+
+#: fpemakernoteolympus.rsolympusmanometerreading
+msgid "Manometer reading"
+msgstr "Manometer reading"
+
+#: fpemakernoteolympus.rsolympusmanualflashstrength
+msgid "Manual flash strength"
+msgstr "Manual flash strength"
+
+#: fpemakernoteolympus.rsolympusmeteringmodelkup
+msgid "2:Center-weighted average,3:Spot,5:ESP,261:Pattern+AF,515:Spot+Highlight control,1027:Spot+Shadow control"
+msgstr "2:Center-weighted average,3:Spot,5:ESP,261:Pattern+AF,515:Spot+Highlight control,1027:Spot+Shadow control"
+
+#: fpemakernoteolympus.rsolympusmodifiedsaturation
+msgid "Modified saturation"
+msgstr "Modified saturation"
+
+#: fpemakernoteolympus.rsolympusmodifiedsaturationlkup
+msgid "0:Off,1:CM1 (Red Enhance),2:CM2 (Green Enhance),3:CM3 (Blue Enhance),4:CM4 (Skin Tones)"
+msgstr "0:Off,1:CM1 (Red Enhance),2:CM2 (Green Enhance),3:CM3 (Blue Enhance),4:CM4 (Skin Tones)"
+
+#: fpemakernoteolympus.rsolympusmonochromecolor
+msgid "Monochrome color"
+msgstr "Monochrome color"
+
+#: fpemakernoteolympus.rsolympusmonochromecolorlkup
+msgid "0:(none),1:Normal,2:Sepia,3:Blue,4:Purple,5:Green"
+msgstr "0:(none),1:Normal,2:Sepia,3:Blue,4:Purple,5:Green"
+
+#: fpemakernoteolympus.rsolympusmonochromeprofilesettings
+msgid "Monochrome profile settings"
+msgstr "Monochrome profile settings"
+
+#: fpemakernoteolympus.rsolympusmonochromeprofilesettingslkup
+msgid "0:No filter,1:Yellow filter,2:Orange filter,3:Red filter,4:Magenta filter,5:Blue filter,6:Cyan filter,7:Green filter,8:Yellow-green filter|"
+msgstr "0:No filter,1:Yellow filter,2:Orange filter,3:Red filter,4:Magenta filter,5:Blue filter,6:Cyan filter,7:Green filter,8:Yellow-green filter|"
+
+#: fpemakernoteolympus.rsolympusmonochromevignetting
+msgid "Monochrome vignetting"
+msgstr "Monochrome vignetting"
+
+#: fpemakernoteolympus.rsolympusnoisefilter
+msgid "Noise filter"
+msgstr "Noise filter"
+
+#: fpemakernoteolympus.rsolympusnoisereduction
+msgid "Noise reduction"
+msgstr "Noise reduction"
+
+#: fpemakernoteolympus.rsolympuspanoramamode
+msgid "Panorama mode"
+msgstr "Panorama mode"
+
+#: fpemakernoteolympus.rsolympuspicturemode
+msgid "Picture mode"
+msgstr "Picture mode"
+
+#: fpemakernoteolympus.rsolympuspicturemodebwfilter
+msgid "Picture mode BW filter"
+msgstr "Picture mode BW filter"
+
+#: fpemakernoteolympus.rsolympuspicturemodebwfilterlkup
+msgid "0:n/a,1:Neutral,2:Yellow,3:Orange,4:Red,5:Green"
+msgstr "0:n/a,1:Neutral,2:Yellow,3:Orange,4:Red,5:Green"
+
+#: fpemakernoteolympus.rsolympuspicturemodecontrast
+msgid "Picture mode contrast (value, min, max)"
+msgstr "Picture mode contrast (value, min, max)"
+
+#: fpemakernoteolympus.rsolympuspicturemodeeffect
+msgid "Picture mode effect"
+msgstr "Picture mode effect"
+
+#: fpemakernoteolympus.rsolympuspicturemodehue
+msgid "Picture mode hue"
+msgstr "Picture mode hue"
+
+#: fpemakernoteolympus.rsolympuspicturemodelkup
+msgid "1:Vivid,2:Natural,3:Muted,4:Portrait,5:i-Enhance,6:e-Portrait,7:Color Creator,9:Color Profile 1,10:Color Profile 2,11:Color Profile 3,12:Monochrome Profile 1,13:Monochrome Profile 2,14:Monochrome Profile 3,256:Monotone,512:Sepia|"
+msgstr "1:Vivid,2:Natural,3:Muted,4:Portrait,5:i-Enhance,6:e-Portrait,7:Color Creator,9:Color Profile 1,10:Color Profile 2,11:Color Profile 3,12:Monochrome Profile 1,13:Monochrome Profile 2,14:Monochrome Profile 3,256:Monotone,512:Sepia|"
+
+#: fpemakernoteolympus.rsolympuspicturemodesaturation
+msgid "Picture mode saturation (value, min, max)"
+msgstr "Picture mode saturation (value, min, max)"
+
+#: fpemakernoteolympus.rsolympuspicturemodesharpness
+msgid "Picture mode sharpness (value, min, max)"
+msgstr "Picture mode sharpness (value, min, max)"
+
+#: fpemakernoteolympus.rsolympuspicturemodetone
+msgid "Picture mode tone"
+msgstr "Picture mode tone"
+
+#: fpemakernoteolympus.rsolympuspicturemodetonelkup
+msgid "0:n/a,1:Neutral,2:Sepia,3:Blue,4:Purple,5:Green"
+msgstr "0:n/a,1:Neutral,2:Sepia,3:Blue,4:Purple,5:Green"
+
+#: fpemakernoteolympus.rsolympuspreviewimglength
+msgid "Preview image length"
+msgstr "Preview image length"
+
+#: fpemakernoteolympus.rsolympuspreviewimgstart
+msgid "Preview image start"
+msgstr "Preview image start"
+
+#: fpemakernoteolympus.rsolympuspreviewimgvalid
+msgid "Preview image valid"
+msgstr "Preview image valid"
+
+#: fpemakernoteolympus.rsolympusscenemode
+msgid "Scene mode"
+msgstr "Scene mode"
+
+#: fpemakernoteolympus.rsolympusscenemodelkup
+msgid "0:Normal,1:Standard,2:Auto,3:Intelligent Auto,4:Portrait,5:Landscape+Portrait,6:Landscape,7:Night Scene,8:Night+Portrait9:Sport,10:Self Portrait,11:Indoor,12:Beach & Snow,13:Beach,14:Snow,15:Self Portrait+Self Timer,16:Sunset,17:Cuisine,18:Documents,19:Candle,20:Fireworks,21:Available Light,22:Vivid,23:Underwater Wide1,24:Underwater Macro,25:Museum,26:Behind Glass,27:Auction,28:Shoot & Select1,29:Shoot & Select2,30:Underwater Wide2,31:Digital Image Stabilization,32:Face Portrait,33:Pet,34:Smile Shot,35:Quick Shutter,43:Hand-held Starlight,100:Panorama,101:Magic Filter,103:HDR"
+msgstr "0:Normal,1:Standard,2:Auto,3:Intelligent Auto,4:Portrait,5:Landscape+Portrait,6:Landscape,7:Night Scene,8:Night+Portrait9:Sport,10:Self Portrait,11:Indoor,12:Beach & Snow,13:Beach,14:Snow,15:Self Portrait+Self Timer,16:Sunset,17:Cuisine,18:Documents,19:Candle,20:Fireworks,21:Available Light,22:Vivid,23:Underwater Wide1,24:Underwater Macro,25:Museum,26:Behind Glass,27:Auction,28:Shoot & Select1,29:Shoot & Select2,30:Underwater Wide2,31:Digital Image Stabilization,32:Face Portrait,33:Pet,34:Smile Shot,35:Quick Shutter,43:Hand-held Starlight,100:Panorama,101:Magic Filter,103:HDR"
+
+#: fpemakernoteolympus.rsolympusscenemodelkup2
+msgid "0:Standard,6:Auto,7:Sport,8:Portrait,9:Landscape+Portrait,10:Landscape,11:Night Scene,12:Self Portrait,13:Panorama,14:2 in 1,15:Movie,16:Landscape+Portrait,17:Night+Portrait,18:Indoor,19:Fireworks,20:Sunset,21:Beauty Skin,22:Macro,23:Super Macro,24:Food,25:Documents,26:Museum,27:Shoot & Select,28:Beach & Snow,29:Self Protrait+Timer,30:Candle,31:Available Light,32:Behind Glass,33:My Mode,34:Pet.35:Underwater Wide1,36:Underwater Macro,37:Shoot & Select1,38:Shoot & Select2,39:High Key,40:Digital Image Stabilization,41:Auction,42:Beach,43:Snow,44:Underwater Wide2,45:Low Key,46:Children,47:Vivid,48:Nature Macro,49:Underwater Snapshot,50:Shooting Guide,54:Face Portrait,57:Bulb,59:Smile Shot,60:Quick Shutter,63:Slow Shutter,64:Bird Watching,65:Multiple Exposure,66:e-Portrait,67:Soft Background Shot,142:Hand-held Starlight,154:HDR"
+msgstr "0:Standard,6:Auto,7:Sport,8:Portrait,9:Landscape+Portrait,10:Landscape,11:Night Scene,12:Self Portrait,13:Panorama,14:2 in 1,15:Movie,16:Landscape+Portrait,17:Night+Portrait,18:Indoor,19:Fireworks,20:Sunset,21:Beauty Skin,22:Macro,23:Super Macro,24:Food,25:Documents,26:Museum,27:Shoot & Select,28:Beach & Snow,29:Self Protrait+Timer,30:Candle,31:Available Light,32:Behind Glass,33:My Mode,34:Pet.35:Underwater Wide1,36:Underwater Macro,37:Shoot & Select1,38:Shoot & Select2,39:High Key,40:Digital Image Stabilization,41:Auction,42:Beach,43:Snow,44:Underwater Wide2,45:Low Key,46:Children,47:Vivid,48:Nature Macro,49:Underwater Snapshot,50:Shooting Guide,54:Face Portrait,57:Bulb,59:Smile Shot,60:Quick Shutter,63:Slow Shutter,64:Bird Watching,65:Multiple Exposure,66:e-Portrait,67:Soft Background Shot,142:Hand-held Starlight,154:HDR"
+
+#: fpemakernoteolympus.rsolympusshadingcompression
+msgid "Shading compression"
+msgstr "Shading compression"
+
+#: fpemakernoteolympus.rsolympussharpnesslkup
+msgid "0:Normal,1:Hard,2:Soft"
+msgstr "0:Normal,1:Hard,2:Soft"
+
+#: fpemakernoteolympus.rsolympussharpnesssetting
+msgid "Sharpness setting (value, min, max)"
+msgstr "Sharpness setting (value, min, max)"
+
+#: fpemakernoteolympus.rsolympusstackedimage
+msgid "Stacked image"
+msgstr "Stacked image"
+
+#: fpemakernoteolympus.rsolympustonelevel
+msgid "Tone level"
+msgstr "Tone level"
+
+#: fpemakernoteolympus.rsolympuswhitebalance
+msgid "White balance"
+msgstr "White balance"
+
+#: fpemakernoteolympus.rsolympuswhitebalance2lkup
+msgid "0:Auto,1:Auto (Keep Warm Color Off),16:7500K (Fine Weather with Shade),17:6000K (Cloudy),18:5300K (Fine Weather),20:3000K (Tungsten light),21:3600K (Tungsten light-like),22:Auto Setup,23:5500K (Flash),33:6600K (Daylight fluorescent),34:4500K (Neutral white fluorescent),35:4000K (Cool white fluorescent),36:White Fluorescent,48:3600K (Tungsten light-like),67:Underwater,256:One Touch WB 1,257:One Touch WB 2,258:One Touch WB 3,259:One Touch WB 4,512:Custom WB 1,513:Custom WB 2,514:Custom WB 3,515:Custom WB 4"
+msgstr "0:Auto,1:Auto (Keep Warm Color Off),16:7500K (Fine Weather with Shade),17:6000K (Cloudy),18:5300K (Fine Weather),20:3000K (Tungsten light),21:3600K (Tungsten light-like),22:Auto Setup,23:5500K (Flash),33:6600K (Daylight fluorescent),34:4500K (Neutral white fluorescent),35:4000K (Cool white fluorescent),36:White Fluorescent,48:3600K (Tungsten light-like),67:Underwater,256:One Touch WB 1,257:One Touch WB 2,258:One Touch WB 3,259:One Touch WB 4,512:Custom WB 1,513:Custom WB 2,514:Custom WB 3,515:Custom WB 4"
+
+#: fpemakernoteolympus.rsolympuswhitebalancebracket
+msgid "White balance bracket"
+msgstr "White balance bracket"
+
+#: fpemakernoteolympus.rsolympuswhitebalancetemperature
+msgid "White balance temperature"
+msgstr "White balance temperature"
+

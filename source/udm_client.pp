@@ -28,20 +28,14 @@ type
   { TDMC }
 
   TDMC = class(TDataModule)
-    dsIndividualsMonth: TDataSource;
     dsBandsBalance: TDataSource;
-    dsBandsRunningOut: TDataSource;
+    dsIndividualsMonth: TDataSource;
     dsSpeciesMonth: TDataSource;
-    dsLastLifers: TDataSource;
-    dsLastSurveys: TDataSource;
-    dsBirthdays: TDataSource;
-    dsExpiredPermits: TDataSource;
     qBandsBalance: TSQLQuery;
     qBandsBalanceband_size: TStringField;
     qBandsBalancemaximo_dia: TLongintField;
     qBandsBalancemedia_dia: TFloatField;
     qBandsBalancesaldo: TLongintField;
-    qBandsRunningOut: TSQLQuery;
     qBandsRunningOutband_size: TStringField;
     qBandsRunningOutmedia_dia: TFloatField;
     qBandsRunningOutmedia_expedicao: TFloatField;
@@ -60,14 +54,10 @@ type
     qIndividualsMonthquantity1: TLongintField;
     qIndividualsMonthrecord_month: TStringField;
     qIndividualsMonthrecord_month1: TStringField;
-    qLastLifers: TSQLQuery;
     qLastLifersdata_registro: TStringField;
     qLastLifersnome_taxon: TStringField;
     qLastLiferstaxon: TLongintField;
     qLastLiferstipo: TStringField;
-    qLastSurveys: TSQLQuery;
-    qBirthdays: TSQLQuery;
-    qExpiredPermits: TSQLQuery;
     qLastSurveyslocality_name: TStringField;
     qLastSurveysmethod_name: TStringField;
     qLastSurveysstart_latitude: TFloatField;

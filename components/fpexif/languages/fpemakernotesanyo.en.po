@@ -1,0 +1,25 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2\n"
+
+#: fpemakernotesanyo.rssanyomacrolkup
+msgid "0:Normal,1:Macro,2:View,3:Manual"
+msgstr "0:Normal,1:Macro,2:View,3:Manual"
+
+#: fpemakernotesanyo.rssanyoqualitylkup
+msgid "0:Normal/Very Low,1:Normal/Low,2:Normal/Medium Low,3:Normal/Medium,4:Normal/Medium High,5:Normal/High,6:Normal/Very High,7:Normal/Super High,256:Fine/Very Low,257:Fine/Low,258:Fine/Medium Low,259:Fine/Medium,260:Fine/Medium High,261:Fine/High,262:Fine/Very High,263:Fine/Super High,512:Super Fine/Very Low,513:Super Fine/Low,514:Super Fine/Medium Low,515:Super Fine/Medium,516:Super Fine/Medium High,517:Super Fine/High,518:Super Fine/Very High,519:Super Fine/Super High"
+msgstr "0:Normal/Very Low,1:Normal/Low,2:Normal/Medium Low,3:Normal/Medium,4:Normal/Medium High,5:Normal/High,6:Normal/Very High7:Normal/Super High,256:Fine/Very Low,257:Fine/Low,258:Fine/Medium Low,259:Fine/Medium,260:Fine/Medium High,261:Fine/High,262:Fine/Very High,263:Fine/Super High,512:Super Fine/Very Low,513:Super Fine/Low,514:Super Fine/Medium Low,515:Super Fine/Medium,516:Super Fine/Medium High,517:Super Fine/High,518:Super Fine/Very High,519:Super Fine/Super High"
+
+#: fpemakernotesanyo.rssanyospecialmode
+msgid "Special mode"
+msgstr "Special mode"
+

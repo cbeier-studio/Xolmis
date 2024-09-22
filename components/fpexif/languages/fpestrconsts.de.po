@@ -1,0 +1,1213 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2\n"
+
+#: fpestrconsts.rsacceleration
+msgid "Acceleration"
+msgstr "Beschleunigung"
+
+#: fpestrconsts.rsactionadvised
+msgid "Action advised"
+msgstr ""
+
+#: fpestrconsts.rsaperturevalue
+msgid "Aperture value"
+msgstr "Blendenwert"
+
+#: fpestrconsts.rsartist
+msgid "Artist"
+msgstr "Künstler"
+
+#: fpestrconsts.rsautomanual
+msgid "0:Auto,1:Manual"
+msgstr "0:Auto,1:Manuell"
+
+#: fpestrconsts.rsbitspersample
+msgid "Bits per sample"
+msgstr ""
+
+#: fpestrconsts.rsbrightnessvalue
+msgid "Brightness value"
+msgstr "Helligkeitswert"
+
+#: fpestrconsts.rsbyline
+msgid "ByLine"
+msgstr ""
+
+#: fpestrconsts.rsbylinetitle
+msgid "ByLine title"
+msgstr ""
+
+#: fpestrconsts.rscameraelevationangle
+msgid "Camera elevation angle"
+msgstr ""
+
+#: fpestrconsts.rscannotsavetounknownfileformat
+msgid "The metadata structure cannot be saved because the file format of the receiving file is not known or not supported."
+msgstr "Die Metadaten-Struktur kann nicht gespeichert werden, weil das Format der Zieldatei nicht bekannt ist oder nicht unterstützt wird."
+
+#: fpestrconsts.rscategory
+msgid "Category"
+msgstr "Kategorie"
+
+#: fpestrconsts.rscellheight
+msgid "Cell height"
+msgstr "Zellhöhe"
+
+#: fpestrconsts.rscellwidth
+msgid "Cell width"
+msgstr "Zellbreite"
+
+#: fpestrconsts.rscfapattern
+msgid "CFA pattern"
+msgstr ""
+
+#: fpestrconsts.rscity
+msgid "City"
+msgstr "Stadt"
+
+#: fpestrconsts.rscodedcharset
+msgid "Coded character set"
+msgstr "Kodierter Zeichensatz"
+
+#: fpestrconsts.rscolorspace
+msgid "Color space"
+msgstr "Farbraum"
+
+#: fpestrconsts.rscolorspacelkup
+msgid "0:sBW,1:sRGB,2:Adobe RGB,65533:Wide Gamut RGB,65534:ICC Profile,65535:Uncalibrated"
+msgstr ""
+
+#: fpestrconsts.rscomponentsconfig
+msgid "Components configuration"
+msgstr "Komponentenkonfiguration"
+
+#: fpestrconsts.rscompressedbitsperpixel
+msgid "Compressed bits per pixel"
+msgstr ""
+
+#: fpestrconsts.rscompression
+msgid "Compression"
+msgstr "Kompression"
+
+#: fpestrconsts.rscompressionlkup
+msgid "1:Uncompressed,2:CCITT 1D,3:T4/Group 3 Fax,4:T6/Group 4 Fax,5:LZW,6:JPEG (old-style),7:JPEG,8:Adobe Deflate,9:JBIG B&W,10:JBIG Color,99:JPEG,262:Kodak 262,32766:Next,32767:Sony ARW Compressed,32769:Packed RAW,32770:Samsung SRW Compressed,32771:CCIRLEW,32772:Samsung SRW Compressed 2,32773:PackBits,32809:Thunderscan,32867:Kodak KDC Compressed,32895:IT8CTPAD,32896:IT8LW,32897:IT8MP,32898:IT8BL,32908:PixarFilm,32909:PixarLog,32946:Deflate,32947:DCS,34661:JBIG,34676:SGILog,34677:SGILog24,34712:JPEG 2000,34713:Nikon NEF Compressed,34715:JBIG2 TIFF FX,34718:Microsoft Document Imaging (MDI) Binary Level Codec,34719:Microsoft Document Imaging (MDI) Progressive Transform Codec,34720:Microsoft Document Imaging (MDI) Vector,34892:Lossy JPEG,65000:Kodak DCR Compressed,65535:Pentax PEF Compressed"
+msgstr ""
+
+#: fpestrconsts.rscontact
+msgid "Contact"
+msgstr "Kontakt"
+
+#: fpestrconsts.rscontentloccode
+msgid "Content location code"
+msgstr ""
+
+#: fpestrconsts.rscontentlocname
+msgid "Content location name"
+msgstr ""
+
+#: fpestrconsts.rscontrast
+msgid "Contrast"
+msgstr "Kontrast"
+
+#: fpestrconsts.rscopyright
+msgid "Copyright"
+msgstr "Copyright"
+
+#: fpestrconsts.rscustomrendered
+msgid "Custom rendered"
+msgstr ""
+
+#: fpestrconsts.rscustomrenderedlkup
+msgid "0:Normal,1:Custom"
+msgstr ""
+
+#: fpestrconsts.rsdatecreated
+msgid "Date created"
+msgstr "Erzeugungsdatum"
+
+#: fpestrconsts.rsdatetime
+msgid "Date/time"
+msgstr "Datum/Uhrzeit"
+
+#: fpestrconsts.rsdatetimedigitized
+msgid "Date/time digitized"
+msgstr "Datum/Uhrzeit der digitalen Erfassung"
+
+#: fpestrconsts.rsdatetimeoriginal
+msgid "Date/time original"
+msgstr "Original-Datum/Uhrzeit"
+
+#: fpestrconsts.rsdevicesettingdescription
+msgid "Device setting description"
+msgstr ""
+
+#: fpestrconsts.rsdigitalzoom
+msgid "Digital zoom"
+msgstr "Digitalzoom"
+
+#: fpestrconsts.rsdigitalzoomratio
+msgid "Digital zoom ratio"
+msgstr "Digitalzoom-Verhältnis"
+
+#: fpestrconsts.rsdigitizedate
+msgid "Digital creation date"
+msgstr ""
+
+#: fpestrconsts.rsdigitizetime
+msgid "Digital creation time"
+msgstr ""
+
+#: fpestrconsts.rsdocumentname
+msgid "Document name"
+msgstr "Dokument-Name"
+
+#: fpestrconsts.rseconomynormalfine
+msgctxt "fpestrconsts.rseconomynormalfine"
+msgid "0:Economy,1:Normal,2:Fine"
+msgstr ""
+
+#: fpestrconsts.rseconomynormalfine1
+msgctxt "fpestrconsts.rseconomynormalfine1"
+msgid "1:Economy,2:Normal,3:Fine"
+msgstr ""
+
+#: fpestrconsts.rseditorialupdate
+msgid "Editorial update"
+msgstr ""
+
+#: fpestrconsts.rseditstatus
+msgid "Edit status"
+msgstr "Bearbeitungsstatus"
+
+#: fpestrconsts.rsexifimageheight
+msgid "EXIF image height"
+msgstr "EXIF Bildhöhe"
+
+#: fpestrconsts.rsexifimagewidth
+msgid "EXIF image width"
+msgstr "EXIF Bildbreite"
+
+#: fpestrconsts.rsexifoffset
+msgid "EXIF offset"
+msgstr "EXIF-Offset"
+
+#: fpestrconsts.rsexifversion
+msgid "EXIF version"
+msgstr "EXIF-Version"
+
+#: fpestrconsts.rsexpiredate
+msgid "Expiration date"
+msgstr "Ablaufdatum"
+
+#: fpestrconsts.rsexpiretime
+msgid "Expiration time"
+msgstr "Ablaufzeit"
+
+#: fpestrconsts.rsexposurebiasvalue
+msgid "Exposure bias value"
+msgstr "Belichtungskorrektur"
+
+#: fpestrconsts.rsexposureindex
+msgid "Exposure index"
+msgstr "Belichtungsindex"
+
+#: fpestrconsts.rsexposuremode
+msgid "Exposure mode"
+msgstr "Belichtungsmodus"
+
+#: fpestrconsts.rsexposuremodelkup
+msgid "0:Auto,1:Manual,2:Auto bracket"
+msgstr "0:Auto,1:Manuell,2:Automatische Belichtugnsreihe"
+
+#: fpestrconsts.rsexposureprogram
+msgid "Exposure program"
+msgstr "Belichtungsprogramm"
+
+#: fpestrconsts.rsexposureprogramlkup
+msgid "0:Not defined,1:Manual,2:Program AE,3:Aperture-priority AE,4:Shutter speed priority AE,5:Creative (slow speed),6:Action (high speed),7:Portrait,8:Landscape;9:Bulb"
+msgstr ""
+
+#: fpestrconsts.rsexposuretime
+msgid "Exposure time"
+msgstr "Belichtungszeit"
+
+#: fpestrconsts.rsextensiblemetadataplatform
+msgid "Extensible metadata platform"
+msgstr ""
+
+#: fpestrconsts.rsfilenotfounderror
+#, object-pascal-format
+msgid "File \"%s\" not found."
+msgstr "Datei \"%s\" nicht gefunden."
+
+#: fpestrconsts.rsfilesource
+msgid "File source"
+msgstr "Dateiquelle"
+
+#: fpestrconsts.rsfilesourcelkup
+msgid "0:Unknown,1:Film scanner,2:Reflection print scanner,3:Digital camera"
+msgstr "0:Unbekannt,1:Durchlichtscanner,2:Auflichtscanner,3:Digitalkamera"
+
+#: fpestrconsts.rsfillorder
+msgid "Fill order"
+msgstr ""
+
+#: fpestrconsts.rsfillorderlkup
+msgid "1:Normal,2:Reversed"
+msgstr "1:Normal,2:Umgekehrt"
+
+#: fpestrconsts.rsfixtureid
+msgid "Fixture ID"
+msgstr ""
+
+#: fpestrconsts.rsflash
+msgid "Flash"
+msgstr "Blitz"
+
+#: fpestrconsts.rsflashenergy
+msgid "Flash energy"
+msgstr "Blitz-Energie"
+
+#: fpestrconsts.rsflashlkup
+msgid "0:No flash,1:Fired,5:Fired; return not detected,7:Fired; return detected,8:On; did not fire,9:On; fired,13:On; return not detected,15:On; return detected,16:Off; did not fire,20:Off; did not fire, return not detected,24:Auto; did not fire,25:Auto; fired;29:Auto; fired; return not detected,31:Auto; fired; return detected,32:No flash function,48:Off, no flash function,65:Fired; red-eye reduction,69:Fired; red-eye reduction; return not detected,71:Fired; red-eye reduction; return detected,73:On; red-eye reduction,77:On; red-eye reduction, return not detected,79:On, red-eye reduction, return detected,80:Off; red-eye reduction,88:Auto; did not fire; red-eye reduction,89:Auto; fired; red-eye reduction,93:Auto; fired; red-eye reduction; return not detected,95:Auto; fired; red-eye reduction, return detected"
+msgstr ""
+
+#: fpestrconsts.rsflashpixversion
+msgid "FlashPix version"
+msgstr "FlashPix-Version"
+
+#: fpestrconsts.rsfnumber
+msgid "F number"
+msgstr "Blendenzahl"
+
+#: fpestrconsts.rsfocallength
+msgid "Focal length"
+msgstr "Brennweite"
+
+#: fpestrconsts.rsfocallengthin35mm
+msgid "Focal length in 35 mm film"
+msgstr "Kleinbild-Brennweite"
+
+#: fpestrconsts.rsfocalplaneresunit
+msgid "Focal plane resolution unit"
+msgstr ""
+
+#: fpestrconsts.rsfocalplaneresunitlkup
+msgid "1:None,2:inches,3:cm,4:mm,5:um"
+msgstr "1:Nichts,2:Zoll,3:cm,4:mm,5:µm"
+
+#: fpestrconsts.rsfocalplanexres
+msgid "Focal plane x resolution"
+msgstr ""
+
+#: fpestrconsts.rsfocalplaneyres
+msgid "Focal plane y resolution"
+msgstr ""
+
+#: fpestrconsts.rsgaincontrol
+msgid "Gain control"
+msgstr "Verstärkungsregelung"
+
+#: fpestrconsts.rsgaincontrollkup
+msgid "0:None,1:Low gain up,2:High gain up,3:Low gain down,4:High gain down"
+msgstr ""
+
+#: fpestrconsts.rsgamma
+msgid "Gamma"
+msgstr "Gamma"
+
+#: fpestrconsts.rsgpsaltitude
+msgid "GPS altitude"
+msgstr "GPS-Höhe"
+
+#: fpestrconsts.rsgpsaltituderef
+msgid "GPS altitude reference"
+msgstr "GPS-Höhenbezug"
+
+#: fpestrconsts.rsgpsaltitudereflkup
+msgid "0: Above sea level,1:Below sea level"
+msgstr "0:Über Meereshöhe,1:Unter Meereshöhe"
+
+#: fpestrconsts.rsgpsareainformation
+msgid "Area information"
+msgstr "Flächeninformation"
+
+#: fpestrconsts.rsgpsdatedifferential
+msgid "GPS date differential"
+msgstr "GPS-Datumsdifferenz"
+
+#: fpestrconsts.rsgpsdatedifferentiallkup
+msgid "0:No correction,1:Differential corrected"
+msgstr ""
+
+#: fpestrconsts.rsgpsdatestamp
+msgid "GPS date stamp"
+msgstr "GPS-Datum"
+
+#: fpestrconsts.rsgpsdestbearing
+msgid "GPS destination bearing"
+msgstr ""
+
+#: fpestrconsts.rsgpsdestbearingref
+msgid "GPS destination bearing reference"
+msgstr ""
+
+#: fpestrconsts.rsgpsdestdistance
+msgid "GPS destination distance"
+msgstr ""
+
+#: fpestrconsts.rsgpsdestdistanceref
+msgid "GPS destination distance reference"
+msgstr ""
+
+#: fpestrconsts.rsgpsdestlatitude
+msgid "GPS destination latitude"
+msgstr ""
+
+#: fpestrconsts.rsgpsdestlatituderef
+msgid "GPS destination latitude reference"
+msgstr ""
+
+#: fpestrconsts.rsgpsdestlongitude
+msgid "GPS destination longitude"
+msgstr ""
+
+#: fpestrconsts.rsgpsdestlongituderef
+msgid "GPS destination longitude reference"
+msgstr ""
+
+#: fpestrconsts.rsgpsdistancereflkup
+msgid "K:Kilometers,M:Miles,N:Nautical miles"
+msgstr "K:Kilometer,M:Meilen,N:nautische Meilen"
+
+#: fpestrconsts.rsgpsdop
+msgid "GPS DOP"
+msgstr ""
+
+#: fpestrconsts.rsgpshpositioningerror
+msgid "GPS H positioning error"
+msgstr ""
+
+#: fpestrconsts.rsgpsimagedirection
+msgid "GPS image direction"
+msgstr ""
+
+#: fpestrconsts.rsgpsimagedirectionref
+msgid "GPS image direction reference"
+msgstr ""
+
+#: fpestrconsts.rsgpsinfo
+msgid "GPS info"
+msgstr "GPS-Info"
+
+#: fpestrconsts.rsgpslatitude
+msgid "GPS latitude"
+msgstr "GPS-Breite"
+
+#: fpestrconsts.rsgpslatituderef
+msgid "GPS latitude reference"
+msgstr "GPS-Breitenreferenz"
+
+#: fpestrconsts.rsgpslatitudereflkup
+msgid "N:North,S:South"
+msgstr "N:Nord,S:Süd"
+
+#: fpestrconsts.rsgpslongitude
+msgid "GPS longitude"
+msgstr "GPS-Länge"
+
+#: fpestrconsts.rsgpslongituderef
+msgid "GPS longitude reference"
+msgstr "GPS-Längenreferenz"
+
+#: fpestrconsts.rsgpslongitudereflkup
+msgid "E:East,W:West"
+msgstr "E:Ost,2:West"
+
+#: fpestrconsts.rsgpsmapdatum
+msgid "GPS map datum"
+msgstr ""
+
+#: fpestrconsts.rsgpsmeasuremode
+msgid "GPS measurement mode"
+msgstr "GPS-Messmodus"
+
+#: fpestrconsts.rsgpsmeasuremodelkup
+msgid "2:2-Dimensional Measurement,3:3-Dimensional Measurement"
+msgstr "2:2-dimensionale Messung,3:3-dimensionale Messung"
+
+#: fpestrconsts.rsgpsprocessingmode
+msgid "GPS processing mode"
+msgstr "GPS-Bearbeitungsmodus"
+
+#: fpestrconsts.rsgpssatellites
+msgid "GPS satellites"
+msgstr "GPS-Satelliten"
+
+#: fpestrconsts.rsgpsspeed
+msgid "GPS speed"
+msgstr "GPS-Geschwindigkeit"
+
+#: fpestrconsts.rsgpsspeedref
+msgid "GPS speed reference"
+msgstr ""
+
+#: fpestrconsts.rsgpsspeedreflkup
+msgid "K:km/h,M:mph,N:knots"
+msgstr "K:cm/h,M:Meilen,N:Knoten"
+
+#: fpestrconsts.rsgpsstatus
+msgid "GPS status"
+msgstr "GPS-Stsatus"
+
+#: fpestrconsts.rsgpstimestamp
+msgid "GPS time stamp"
+msgstr "GPS-Zeitstempel"
+
+#: fpestrconsts.rsgpstrack
+msgid "GPS track"
+msgstr ""
+
+#: fpestrconsts.rsgpstrackref
+msgid "GPS track reference"
+msgstr ""
+
+#: fpestrconsts.rsgpstrackreflkup
+msgid "M:Magnetic north,T:True north"
+msgstr "M:Magnetischer Nordpol,T:Wahrer Nordpol"
+
+#: fpestrconsts.rsgpsversionid
+msgid "GPS version ID"
+msgstr "GPS-Versionskennung"
+
+#: fpestrconsts.rshalftonehints
+msgid "Half-tone hints"
+msgstr ""
+
+#: fpestrconsts.rshostcomputer
+msgid "Host computer"
+msgstr ""
+
+#: fpestrconsts.rshumidity
+msgid "Humidity"
+msgstr "Feuchte"
+
+#: fpestrconsts.rsimagedatafilenotexisting
+#, object-pascal-format
+msgid "File \"%s\" providing the image data does not exist."
+msgstr "Datei \"%s\", die die Bilddaten zur Verfügung stellen sollte, existiert nicht."
+
+#: fpestrconsts.rsimagedatafilenotspecified
+msgid "The metadata structure is not linked to an image. Specify the name of the file providing the image data."
+msgstr "Die Metadatenstruktur ist nicht mit einem Bild verbunden. Geben Sie den Namen der Datei an, die die Bilddaten zur Verfügung stellt."
+
+#: fpestrconsts.rsimagedescr
+msgid "Image description"
+msgstr "Bildbeschreibung"
+
+#: fpestrconsts.rsimageformatnotsupported
+msgid "Image format not supported."
+msgstr "Bildformat nicht unterstützt."
+
+#: fpestrconsts.rsimageheight
+msgid "Image height"
+msgstr "Bildhöhe"
+
+#: fpestrconsts.rsimagehistory
+msgid "Image history"
+msgstr "Bildhistorie"
+
+#: fpestrconsts.rsimagenumber
+msgid "Image number"
+msgstr "Bildnummer"
+
+#: fpestrconsts.rsimageresourcenametoolong
+#, object-pascal-format
+msgid "Image resource name \"%s\" too long."
+msgstr ""
+
+#: fpestrconsts.rsimageuniqueid
+msgid "Unique image ID"
+msgstr "Eindeutige Bildkennung"
+
+#: fpestrconsts.rsimagewidth
+msgid "Image width"
+msgstr "Bildbreite"
+
+#: fpestrconsts.rsimgcaption
+msgid "Image caption"
+msgstr "Bildtitel"
+
+#: fpestrconsts.rsimgcaptionwriter
+msgid "Image caption writer"
+msgstr "Autor des Bildtitels"
+
+#: fpestrconsts.rsimgcredit
+msgid "Image credit"
+msgstr ""
+
+#: fpestrconsts.rsimgheadline
+msgid "Image headline"
+msgstr ""
+
+#: fpestrconsts.rsimgtype
+msgid "Image type"
+msgstr "Bildtyp"
+
+#: fpestrconsts.rsincompletejpegsegmentheader
+msgid "Defective JPEG structure: Incomplete segment header"
+msgstr "Defekte JPEG-Struktur: Unvollständiger Segment-Header"
+
+#: fpestrconsts.rsincorrectfilestructure
+msgid "Incorrect file structure"
+msgstr "Falsche Dateistruktur"
+
+#: fpestrconsts.rsincorrecttagtype
+#, object-pascal-format, fuzzy, badformat
+msgid "Incorrect tag type %d: Index=%d, TagID=$%.04x, File:\"%s\""
+msgstr "Falscher Tag-Typ %d: Index=%d, TagID=$%.94x, Datei: \"%s\""
+
+#: fpestrconsts.rsinkset
+msgid "Ink set"
+msgstr ""
+
+#: fpestrconsts.rsinksetlkup
+msgid "1:CMYK,2:Not CMYK"
+msgstr "1:CMYK,2:Nicht CMYK"
+
+#: fpestrconsts.rsinteropindex
+msgid "Interoperabiliy index"
+msgstr ""
+
+#: fpestrconsts.rsinteropoffset
+msgid "Interoperability offset"
+msgstr ""
+
+#: fpestrconsts.rsinteropversion
+msgid "Interoperability version"
+msgstr ""
+
+#: fpestrconsts.rsiptcdataexpected
+msgid "IPTC data expected, but not found."
+msgstr "IPTC-Daten erwartet, aber nicht gefunden."
+
+#: fpestrconsts.rsiptcextendeddatasizenotsupported
+#, object-pascal-format
+msgid "Data size %d not supported for an IPTC extended dataset."
+msgstr "Datengröße %d wird für einen erweiterten IPTC Datensatz nicht unterstützt."
+
+#: fpestrconsts.rsiptcnaa
+msgid "IPTC/NAA"
+msgstr "IPTC/NAA"
+
+#: fpestrconsts.rsiptcorientationlkup
+msgid "P:Portrait,L:Landscape,S:Square"
+msgstr "P:Hochformat,L:Querformat,S:Quadratisch"
+
+#: fpestrconsts.rsiso
+msgid "ISO"
+msgstr "ISO"
+
+#: fpestrconsts.rsisospeed
+msgid "ISO speed"
+msgstr "ISO-Wert"
+
+#: fpestrconsts.rsisospeedlatitudeyyy
+msgid "ISO latitude yyy"
+msgstr ""
+
+#: fpestrconsts.rsisospeedlatitudezzz
+msgid "ISO speed latitude zzz"
+msgstr ""
+
+#: fpestrconsts.rsjpegcompresseddatawriting
+msgid "Writing error of compressed data."
+msgstr "Fehler beim Schreiben der komprimierten Daten."
+
+#: fpestrconsts.rsjpegreadwriteerrorinsegment
+#, object-pascal-format
+msgid "Read/write error in segment $FF%.2x"
+msgstr "Lese-/Schreibfehler in Segment $FF%.2x"
+
+#: fpestrconsts.rsjpegsegmentmarkerexpected
+msgid "Defective JPEG structure: Segment marker ($FF) expected."
+msgstr "Defekte JPEG-Struktur: Segment-Marker ($FF) erwartet."
+
+#: fpestrconsts.rskeywords
+msgid "Keywords"
+msgstr "Schlüsselwörter"
+
+#: fpestrconsts.rslangid
+msgid "Language ID"
+msgstr "Sprach-Kennnummer"
+
+#: fpestrconsts.rslensinfo
+msgid "Lens info"
+msgstr "Objektiv-Info"
+
+#: fpestrconsts.rslensmake
+msgid "Lens make"
+msgstr "Objektivhersteller"
+
+#: fpestrconsts.rslensmodel
+msgid "Lens model"
+msgstr "Objektivmodell"
+
+#: fpestrconsts.rslensserialnumber
+msgid "Lens serial number"
+msgstr "Objektiv-Seriennummer"
+
+#: fpestrconsts.rslightsource
+msgid "Light source"
+msgstr "Lichtquelle"
+
+#: fpestrconsts.rslightsourcelkup
+msgid "0:Unknown,1:Daylight,2:Fluorescent,3:Tungsten (incandescent),4:Flash,9:Fine weather,10:Cloudy,11:Shade,12:Daylight fluorescent,13:Day white fluorescent,14:Cool white fluorescent,15:White fluorescent,16:Warm white fluorescent,17:Standard light A, 18:Standard light B,19:Standard light C,20:D55,21:D65,22:D74,23:D50,24:ISO Studio tungsten,255:Other"
+msgstr ""
+
+#: fpestrconsts.rslocationcode
+msgid "Country/primary location code"
+msgstr "Land / primärer Ortscode"
+
+#: fpestrconsts.rslocationname
+msgid "Country/primary location name"
+msgstr "Land / primärer Ortsname"
+
+#: fpestrconsts.rslownormalhigh
+msgid "0:Low,1:Normal,2:High"
+msgstr "0:Niedrig,1:Normal,2:Hoch"
+
+#: fpestrconsts.rsmacro
+msgid "Macro"
+msgstr "Makro"
+
+#: fpestrconsts.rsmake
+msgid "Make"
+msgstr "Hersteller"
+
+#: fpestrconsts.rsmakernote
+msgid "Maker note"
+msgstr "Hersteller-Notiz"
+
+#: fpestrconsts.rsmaxaperturevalue
+msgid "Max aperture value"
+msgstr "Maximaler Blendenwert"
+
+#: fpestrconsts.rsmaxsamplevalue
+msgid "Max sample value"
+msgstr "Maximaler Abtastwert"
+
+#: fpestrconsts.rsmeteringmode
+msgid "Metering mode"
+msgstr "Belichtungsmess-Modus"
+
+#: fpestrconsts.rsmeteringmodelkup
+msgid "0:Unknown,1:Average,2:Center-weighted average,3:Spot,4:Multi-spot,5:Multi-segment,6:Partial,255:Other"
+msgstr ""
+
+#: fpestrconsts.rsminsamplevalue
+msgid "Min sample value"
+msgstr "Minimaler Abtastwert"
+
+#: fpestrconsts.rsmodel
+msgid "Model"
+msgstr "Modell"
+
+#: fpestrconsts.rsmorethumbnailtagsthanexpected
+msgid "More thumbnail tags than expected."
+msgstr "Mehr Vorschaubild-Tags als erwartet."
+
+#: fpestrconsts.rsnormallowhigh
+msgctxt "fpestrconsts.rsnormallowhigh"
+msgid "0:Normal,1:Low,2:High"
+msgstr "0:Normal,1:Niedrig,2:Hoch"
+
+#: fpestrconsts.rsnormalsofthard
+msgctxt "fpestrconsts.rsnormalsofthard"
+msgid "0:Normal,1:Soft,2:Hard"
+msgstr "0:Normal,1:Weich,2:Hart"
+
+#: fpestrconsts.rsnovalidiptcfile
+msgid "No valid IPTC file"
+msgstr "Ungültige IPTC-Datei"
+
+#: fpestrconsts.rsnovalidiptcsignature
+msgid "No valid IPTC signature"
+msgstr "Ungültige IPTC-Signatur"
+
+#: fpestrconsts.rsnoyes
+msgctxt "fpestrconsts.rsnoyes"
+msgid "0:No,1:Yes"
+msgstr "0:Nein,1:Ja"
+
+#: fpestrconsts.rsobjectattr
+msgid "Object attribute reference"
+msgstr ""
+
+#: fpestrconsts.rsobjectcycle
+msgid "Object cycle"
+msgstr "Objekt-Zyklus"
+
+#: fpestrconsts.rsobjectcyclelkup
+msgid "a:morning,p:evening,b:both"
+msgstr ""
+
+#: fpestrconsts.rsobjectname
+msgid "Object name"
+msgstr "Objekt-Name"
+
+#: fpestrconsts.rsobjecttype
+msgid "Object type reference"
+msgstr ""
+
+#: fpestrconsts.rsoffon
+msgctxt "fpestrconsts.rsoffon"
+msgid "0:Off,1:On"
+msgstr "0:Aus,1:Ein"
+
+#: fpestrconsts.rsoffsettime
+msgid "Time zone for date/time"
+msgstr "Zeitzone für Datum/Uhrzeit"
+
+#: fpestrconsts.rsoffsettimedigitized
+msgid "Time zone for date/time digitized"
+msgstr "Zeitzone für Datum/Uhrzeit der Digitalisierung"
+
+#: fpestrconsts.rsoffsettimeoriginal
+msgid "Time zone for date/time original"
+msgstr "Zeitzone für Original-Datum/Uhrzeit"
+
+#: fpestrconsts.rsorientation
+msgid "Orientation"
+msgstr "Ausrichtung"
+
+#: fpestrconsts.rsorientationlkup
+msgid "1:Horizontal (normal),2:Mirror horizontal,3:Rotate 180,4:Mirror vertical,5:Mirror horizontal and rotate 270 CW,6:Rotate 90 CW,7:Mirror horizontal and rotate 90 CW,8:Rotate 270 CW"
+msgstr ""
+
+#: fpestrconsts.rsoriginatingprog
+msgid "Originating program"
+msgstr "Ursprungsprogramm"
+
+#: fpestrconsts.rsownername
+msgid "Owner name"
+msgstr "Name des Besitzers"
+
+#: fpestrconsts.rspagename
+msgid "Page name"
+msgstr "Seitenname"
+
+#: fpestrconsts.rspagenumber
+msgid "Page number"
+msgstr "Seitennummer"
+
+#: fpestrconsts.rsphotometricint
+msgid "Photometric interpretation"
+msgstr ""
+
+#: fpestrconsts.rsphotometricintlkup
+msgid "0:White is zero,1:Black is zero,2:RGB,3:RGB palette,4:Transparency mask,5:CMYK,6:YCbCr,8:CIELab,9:ICCLab,10:ITULab,32803:Color filter array,32844:Pixar LogL,32845:Pixar LogLuv,34892:Linear Raw"
+msgstr ""
+
+#: fpestrconsts.rsplanarconfiguration
+msgid "Planar configuration"
+msgstr ""
+
+#: fpestrconsts.rsplanarconfigurationlkup
+msgid "1:Chunky,2:Planar"
+msgstr ""
+
+#: fpestrconsts.rspredictor
+msgid "Predictor"
+msgstr ""
+
+#: fpestrconsts.rspredictorlkup
+msgid "1:None,2:Horizontal differencing"
+msgstr ""
+
+#: fpestrconsts.rspressure
+msgid "Pressure"
+msgstr "Druck"
+
+#: fpestrconsts.rsprimarychromaticities
+msgid "Primary chromaticities"
+msgstr ""
+
+#: fpestrconsts.rsprogversion
+msgid "Program version"
+msgstr "Programm-Version"
+
+#: fpestrconsts.rsquality
+msgid "Quality"
+msgstr "Qualität"
+
+#: fpestrconsts.rsrangecheckerror
+msgid "Range check error."
+msgstr ""
+
+#: fpestrconsts.rsrating
+msgid "Rating"
+msgstr "Bewertung"
+
+#: fpestrconsts.rsratingpercent
+msgid "Rating (%)"
+msgstr "Bewertung (%)"
+
+#: fpestrconsts.rsreadincompleteifdrecord
+#, object-pascal-format
+msgid "Read incomplete IFD record at stream position %d."
+msgstr "Unvollständiger IFD-Datensatz an Stream-Position %d."
+
+#: fpestrconsts.rsrecexpindex
+msgid "Recommended exposure index"
+msgstr "Empfohlener Belichtungsindex"
+
+#: fpestrconsts.rsrecordversion
+msgid "Record version"
+msgstr "Datensatzversion"
+
+#: fpestrconsts.rsrefblackwhite
+msgid "Reference black & white"
+msgstr ""
+
+#: fpestrconsts.rsrefdate
+msgid "Reference date"
+msgstr "Referenzdatum"
+
+#: fpestrconsts.rsrefnumber
+msgid "Reference number"
+msgstr "Referenznummer"
+
+#: fpestrconsts.rsrefservice
+msgid "Reference service"
+msgstr ""
+
+#: fpestrconsts.rsrelatedimagefileformat
+msgid "Related image file format"
+msgstr ""
+
+#: fpestrconsts.rsrelatedimageheight
+msgid "Related image height"
+msgstr ""
+
+#: fpestrconsts.rsrelatedimagewidth
+msgid "Related image width"
+msgstr ""
+
+#: fpestrconsts.rsrelatedsoundfile
+msgid "Related sound file"
+msgstr ""
+
+#: fpestrconsts.rsreleasedate
+msgid "Release date"
+msgstr "Freigabe-Datum"
+
+#: fpestrconsts.rsreleasetime
+msgid "Release time"
+msgstr "Freigabe-Uhrzeit"
+
+#: fpestrconsts.rsresolutionunit
+msgid "Resolution unit"
+msgstr "Auflösungseinheit"
+
+#: fpestrconsts.rsresolutionunitlkup
+msgid "1:None,2:inches,3:cm"
+msgstr "1:Nichts,2:Zoll,3:cm"
+
+#: fpestrconsts.rsrowsperstrip
+msgid "Rows per strip"
+msgstr ""
+
+#: fpestrconsts.rssamplesperpixel
+msgid "Samples per pixel"
+msgstr ""
+
+#: fpestrconsts.rssaturation
+msgid "Saturation"
+msgstr "Sättigung"
+
+#: fpestrconsts.rsscenecapturetype
+msgid "Scene capture type"
+msgstr ""
+
+#: fpestrconsts.rsscenecapturetypelkup
+msgid "0:Standard,1:Landscape,2:Portrait,3:Night"
+msgstr "0:Standard,1:Landschaft,2:Porträt,3:Nachaufnahme"
+
+#: fpestrconsts.rsscenetype
+msgid "Scene type"
+msgstr "Motiv-Typ"
+
+#: fpestrconsts.rsscenetypelkup
+msgid "0:Unknown,1:Directly photographed"
+msgstr "0:Unbekannt,1:Direkt fotografiert"
+
+#: fpestrconsts.rssecurityclassification
+msgid "Security classification"
+msgstr "Sicherheitsklassifizierung"
+
+#: fpestrconsts.rsselftimermode
+msgid "Self-timer mode"
+msgstr "Selbstauslöser-Modus"
+
+#: fpestrconsts.rsseminfo
+msgid "SEM info"
+msgstr ""
+
+#: fpestrconsts.rssensingmethod
+msgid "Sensing method"
+msgstr ""
+
+#: fpestrconsts.rssensingmethodlkup
+msgid "1:Not defined,2:One-chip color area,3:Two-chip color area,4:Three-chip color area,5:Color sequential area,7:Trilinear,8:Color sequential linear"
+msgstr ""
+
+#: fpestrconsts.rssensitivitytype
+msgid "Sensitivity type"
+msgstr ""
+
+#: fpestrconsts.rssensitivitytypelkup
+msgid "0:Unknown,1:Standard Output Sensitivity2:Recommended exposure index,3:ISO speed,4:Standard output sensitivity and recommended exposure index,5:Standard output sensitivity and ISO Speed,6:Recommended exposure index and ISO speed,7:Standard output sensitivity, recommended exposure index and ISO speed"
+msgstr ""
+
+#: fpestrconsts.rsserialnumber
+msgid "Serial number"
+msgstr "Seriennummer"
+
+#: fpestrconsts.rssharpness
+msgid "Sharpness"
+msgstr "Schärfe"
+
+#: fpestrconsts.rsshutterspeedvalue
+msgid "Shutter speed value"
+msgstr "Verschlusszeit"
+
+#: fpestrconsts.rssinglecontinuous
+msgctxt "fpestrconsts.rssinglecontinuous"
+msgid "0:Single,1:Continuous"
+msgstr "0:Einzeln,1:Ständig"
+
+#: fpestrconsts.rssoftware
+msgid "Software"
+msgstr "Software"
+
+#: fpestrconsts.rssource
+msgid "Source"
+msgstr "Quelle"
+
+#: fpestrconsts.rsspatialfrequresponse
+msgid "Spatial frequency response"
+msgstr ""
+
+#: fpestrconsts.rsspecialinstruct
+msgid "Special instructions"
+msgstr "Spezielle Anweisungen"
+
+#: fpestrconsts.rsspectralsensitivity
+msgid "Spectral sensitivity"
+msgstr ""
+
+#: fpestrconsts.rsstate
+msgid "Province/State"
+msgstr "Provinz/Staat"
+
+#: fpestrconsts.rsstdoutputsens
+msgid "Standard output sensitivity"
+msgstr ""
+
+#: fpestrconsts.rsstripbytecounts
+msgid "Strip byte counts"
+msgstr ""
+
+#: fpestrconsts.rsstripoffsets
+msgid "Strip offsets"
+msgstr ""
+
+#: fpestrconsts.rssubfile
+msgid "Subfile"
+msgstr "Unterdatei"
+
+#: fpestrconsts.rssubfiletypelkup
+msgid "0:Full-resolution image,1:Reduced-resolution image,2:Single page of multi-page image,3:Single page of multi-page reduced-resolution image,4:Transparency mask,5:Transparency mask of reduced-resolution image,6:Transparency mask of multi-page image,7:Transparency mask of reduced-resolution multi-page image"
+msgstr ""
+
+#: fpestrconsts.rssubjectarea
+msgid "Subject area"
+msgstr "Objektfläche"
+
+#: fpestrconsts.rssubjectdistance
+msgid "Subject distance"
+msgstr "Objektabstand"
+
+#: fpestrconsts.rssubjectdistancerange
+msgid "Subject distance range"
+msgstr ""
+
+#: fpestrconsts.rssubjectdistancerangelkup
+msgid "0:Unknown,1:Macro,2:Close,3:Distant"
+msgstr "0:Unbekannt,1:Makro,2:Nah,3:Fern"
+
+#: fpestrconsts.rssubjectlocation
+msgid "Subject location"
+msgstr "Objekt-Ort"
+
+#: fpestrconsts.rssubjectref
+msgid "Subject reference"
+msgstr ""
+
+#: fpestrconsts.rssublocation
+msgid "Sublocation"
+msgstr ""
+
+#: fpestrconsts.rssubsectime
+msgid "Fractional seconds of date/time"
+msgstr ""
+
+#: fpestrconsts.rssubsectimedigitized
+msgid "Fractional seconds of date/time digitized"
+msgstr ""
+
+#: fpestrconsts.rssubsectimeoriginal
+msgid "Fractional seconds of date/time original"
+msgstr ""
+
+#: fpestrconsts.rssuppcategory
+msgid "Supplemental category"
+msgstr "Zusatzkategorie"
+
+#: fpestrconsts.rstagtypenotsupported
+#, object-pascal-format
+msgid "Tag \"%s\" has an unsupported type."
+msgstr "Der Typ von Tag \"%s\" wird nicht unterstützt."
+
+#: fpestrconsts.rstargetprinter
+msgid "Target printer"
+msgstr ""
+
+#: fpestrconsts.rstemperature
+msgid "Temperature"
+msgstr "Temperatur"
+
+#: fpestrconsts.rsthresholding
+msgid "Thresholding"
+msgstr ""
+
+#: fpestrconsts.rsthresholdinglkup
+msgid "1:No dithering or halftoning,2:Ordered dither or halftone,3:Randomized dither"
+msgstr ""
+
+#: fpestrconsts.rsthumbnailheight
+msgid "Thumbnail height"
+msgstr "Vorschaubild-Höhe"
+
+#: fpestrconsts.rsthumbnailoffset
+msgid "Thumbnail offset"
+msgstr "Vorschaubild-Offset"
+
+#: fpestrconsts.rsthumbnailsize
+msgid "Thumbnail size"
+msgstr "Vorschaubild-Größe"
+
+#: fpestrconsts.rsthumbnailwidth
+msgid "Thumbnail width"
+msgstr "Vorschaubild-Breite"
+
+#: fpestrconsts.rstilelength
+msgid "Tile length"
+msgstr ""
+
+#: fpestrconsts.rstilewidth
+msgid "Tile width"
+msgstr ""
+
+#: fpestrconsts.rstimecreated
+msgid "Time created"
+msgstr ""
+
+#: fpestrconsts.rstimezoneoffset
+msgid "Time zone offset"
+msgstr "Zeitzonenoffset"
+
+#: fpestrconsts.rstransferfunction
+msgid "Transfer function"
+msgstr "Übertragungsfunktion"
+
+#: fpestrconsts.rstransmissionref
+msgid "Original transmission reference"
+msgstr ""
+
+#: fpestrconsts.rsunknownimageformat
+msgid "Unknown image format."
+msgstr "Unbekanntes Bildformat."
+
+#: fpestrconsts.rsurgency
+msgid "Urgency"
+msgstr "Dringlichkeit"
+
+#: fpestrconsts.rsurgencylkup
+msgid "0:reserved,1:most urgent,5:normal,8:least urgent,9:reserved"
+msgstr ""
+
+#: fpestrconsts.rsusercomment
+msgid "User comment"
+msgstr "Benutzerkommentar"
+
+#: fpestrconsts.rswaterdepth
+msgid "Water depth"
+msgstr "Wassertiefe"
+
+#: fpestrconsts.rswhitebalance
+msgid "White balance"
+msgstr "Weißabgleich"
+
+#: fpestrconsts.rswhitepoint
+msgid "White point"
+msgstr "Weißpunkt"
+
+#: fpestrconsts.rswritingnotimplemented
+#, object-pascal-format
+msgid "Writing of %s files not yet implemented."
+msgstr ""
+
+#: fpestrconsts.rsxposition
+msgid "X position"
+msgstr "X-Position"
+
+#: fpestrconsts.rsxresolution
+msgid "X resolution"
+msgstr "X-Auflösung"
+
+#: fpestrconsts.rsycbcrcoefficients
+msgid "YCbCr coefficients"
+msgstr ""
+
+#: fpestrconsts.rsycbcrpositioning
+msgid "YCbCr positioning"
+msgstr ""
+
+#: fpestrconsts.rsycbcrposlkup
+msgid "1:Centered,2:Co-sited"
+msgstr ""
+
+#: fpestrconsts.rsycbcrsubsampling
+msgid "YCbCr subsampling"
+msgstr ""
+
+#: fpestrconsts.rsyposition
+msgid "Y position"
+msgstr "Y-Position"
+
+#: fpestrconsts.rsyresolution
+msgid "Y resolution"
+msgstr "Y-Auflösung"
+

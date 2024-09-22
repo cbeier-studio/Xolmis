@@ -1,0 +1,9 @@
+This file lists the origin of the used images:
+
+no_metadata.jpg .... created by fpc code
+with_exif.jpg ...... created by fpc code, with EXIF (little endian)
+with_exif.tif ...... dto.
+with_iptc.jpg ...... created by fpc code, with IPTC
+with iptc.tif ...... dto.
+ExThBE_Nokia.jpg ... author's own picture taken by a Nokia smartphone
+                     with EXIF (big-endian), with thumbnail image

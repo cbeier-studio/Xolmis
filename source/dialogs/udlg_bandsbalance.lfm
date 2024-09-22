@@ -11,6 +11,7 @@ object dlgBandsBalance: TdlgBandsBalance
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.4.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 38
@@ -79,7 +80,6 @@ object dlgBandsBalance: TdlgBandsBalance
         Width = 80
         FieldName = 'maximo_dia'
       end>
-    DataSource = DMC.dsBandsBalance
     FixedCols = 0
     Options = [dgTitles, dgColumnResize, dgRowLines, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgDisableDelete, dgDisableInsert, dgThumbTracking]
     PopupMenu = pmGrid
@@ -174,7 +174,6 @@ object dlgBandsBalance: TdlgBandsBalance
     Top = 324
   end
   object CSVExporter1: TCSVExporter
-    Dataset = DMC.qBandsBalance
     ExportFields = <>
     FromCurrent = False
     RestorePosition = False

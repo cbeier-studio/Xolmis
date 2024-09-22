@@ -40,4 +40,5 @@ data/
 Output/
 *.json
 *.ini
+components/fpexif/lib/
 

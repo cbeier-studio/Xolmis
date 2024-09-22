@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="fpExifTests"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <Icon Value="0"/>
+    </General>
+    <BuildModes Count="1">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
+    </RunParams>
+    <RequiredPackages Count="3">
+      <Item1>
+        <PackageName Value="fpcunittestrunner"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+      </Item3>
+    </RequiredPackages>
+    <Units Count="18">
+      <Unit0>
+        <Filename Value="fpExifTests.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\..\fpeexifdata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fpeExifData"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\..\fpeexifreadwrite.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fpeExifReadWrite"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\fpeglobal.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fpeGlobal"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\fpeiptcdata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fpeIptcData"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\fpeiptcreadwrite.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fpeIptcReadWrite"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\fpemakernote.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\fpemetadata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fpeMetadata"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\..\fpestrconsts.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fpeStrConsts"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\..\fpetags.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fpeTags"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\..\fpeutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fpeUtils"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\..\fpexif.inc"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\..\fpexif_fpc.inc"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="common\fetexifbe.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fetExifBE"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="common\fetexifle.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fetExifLE"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="common\fetiptc.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fetIptc"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="common\fetutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fetUtils"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="common\fettestutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fetTestUtils"/>
+      </Unit17>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="fpExifTests"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir);..\.."/>
+      <OtherUnitFiles Value="..\..;common"/>
+      <UnitOutputDirectory Value="output\ppu\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf2Set"/>
+      </Debugging>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="5">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+      <Item4>
+        <Name Value="EAssertionFailedError"/>
+      </Item4>
+      <Item5>
+        <Name Value="EConvertError"/>
+      </Item5>
+    </Exceptions>
+  </Debugging>
+</CONFIG>
