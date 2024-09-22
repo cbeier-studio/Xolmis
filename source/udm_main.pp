@@ -75,6 +75,8 @@ type
     tabGeoBankcoordinate_name: TStringField;
     tabGeoBanklatitude: TFloatField;
     tabGeoBanklongitude: TFloatField;
+    vIcons: TImageList;
+    vIconsDark: TImageList;
     XMLExport: TSimpleXMLExporter;
     sqlCon: TSQLConnector;
     sysCon: TSQLConnector;
