@@ -980,6 +980,7 @@ type
     procedure GetTaxonRankFilters;
     procedure GetZooTaxaFilters;
 
+    procedure LoadColumns;
     procedure LoadRecordColumns;
     procedure LoadRecordRow;
 
@@ -1004,6 +1005,8 @@ type
 
     procedure RefreshMap;
     procedure RefreshMapSurvey;
+
+    procedure SaveColumns;
 
     procedure SetColumnsBands(var aGrid: TDBGrid);
     procedure SetColumnsBotanicTaxa(var aGrid: TDBGrid);
@@ -1176,6 +1179,7 @@ begin
   try
     aGrid.BeginUpdate;
     aGrid.Columns.Clear;
+
     for i := 0 to (aGrid.DataSource.DataSet.FieldCount-1) do
       if aGrid.DataSource.DataSet.Fields[i].Visible then
       begin
@@ -1189,7 +1193,6 @@ begin
     //aGrid.Columns.LinkFields;
     aGrid.EndUpdate;
   end;
-
 end;
 
 procedure TfrmCustomGrid.AddSortedField(aFieldName: String; aDirection: TSortDirection;
@@ -3757,6 +3760,8 @@ begin
   TimerUpdate.Enabled := False;
   //TimerFind.Enabled := False;
 
+  SaveColumns;
+
   if qRecycle.Active then
     qRecycle.Close;
 
@@ -3903,6 +3908,7 @@ begin
     {$IFDEF DEBUG}
     Usage.AddPart('load master grid columns');
     {$ENDIF}
+    LoadColumns;
     AddGridColumns(FTableType, DBG);
     if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
       (dsLink.DataSet as TSQLQuery).ReadOnly := True;
@@ -5125,6 +5131,28 @@ procedure TfrmCustomGrid.iHeadersGetWidthForPPI(Sender: TCustomImageList; AImage
   var AResultWidth: Integer);
 begin
   AResultWidth := AImageWidth * APPI div 96;
+end;
+
+procedure TfrmCustomGrid.LoadColumns;
+var
+  ColsFile: String;
+  i, f: Integer;
+begin
+  ColsFile := ConcatPaths([AppDataDir, TableNames[FTableType] + '_columns.xml']);
+  if not FileExists(ColsFile) then
+    Exit;
+
+  gridColumns.LoadFromFile(ColsFile);
+  for i := 1 to gridColumns.RowCount - 1 do
+  begin
+    for f := 0 to dsLink.DataSet.Fields.Count - 1 do
+      if dsLink.DataSet.Fields[f].DisplayName = gridColumns.Cells[2, i] then
+        Break;
+
+    dsLink.DataSet.Fields[f].Visible := gridColumns.Cells[1, i] = '1';
+    if f <> i - 1 then
+      dsLink.DataSet.Fields[f].Index := i - 1;
+  end;
 end;
 
 procedure TfrmCustomGrid.LoadRecordColumns;
@@ -6712,6 +6740,14 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.SaveColumns;
+var
+  ColsFile: String;
+begin
+  ColsFile := ConcatPaths([AppDataDir, TableNames[FTableType] + '_columns.xml']);
+  gridColumns.SaveToFile(ColsFile);
+end;
+
 procedure TfrmCustomGrid.sbAddChildClick(Sender: TObject);
 begin
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
@@ -7224,12 +7260,15 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbMoveColumnDownClick(Sender: TObject);
+var
+  r: Integer;
 begin
-  if dsLink.DataSet.Fields[gridColumns.Row - 1].Index = dsLink.DataSet.FieldCount - 1 then
+  r := gridColumns.Row - 1;
+  if dsLink.DataSet.Fields[r].Index = dsLink.DataSet.FieldCount - 1 then
     Exit;
 
   dsLink.DataSet.Close;
-  dsLink.DataSet.Fields[gridColumns.Row - 1].Index := dsLink.DataSet.Fields[gridColumns.Row - 1].Index + 1;
+  dsLink.DataSet.Fields[r].Index := dsLink.DataSet.Fields[r].Index + 1;
   dsLink.DataSet.Open;
 
   GetColumns;
@@ -7239,12 +7278,15 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbMoveColumnUpClick(Sender: TObject);
+var
+  r: Integer;
 begin
-  if dsLink.DataSet.Fields[gridColumns.Row - 1].Index = 0 then
+  r := gridColumns.Row - 1;
+  if dsLink.DataSet.Fields[r].Index = 0 then
     Exit;
 
   dsLink.DataSet.Close;
-  dsLink.DataSet.Fields[gridColumns.Row - 1].Index := dsLink.DataSet.Fields[gridColumns.Row - 1].Index - 1;
+  dsLink.DataSet.Fields[r].Index := dsLink.DataSet.Fields[r].Index - 1;
   dsLink.DataSet.Open;
 
   GetColumns;
