@@ -31,6 +31,7 @@ type
   TdlgBandsBalance = class(TForm)
     CSVExporter1: TCSVExporter;
     dbgSaldo: TDBGrid;
+    dsBandsBalance: TDataSource;
     iPopup: TImageList;
     iPopupDark: TImageList;
     lineBottom: TShapeLineBGRA;
@@ -39,6 +40,11 @@ type
     pmgSavesAs: TMenuItem;
     pBottom: TPanel;
     pmGrid: TPopupMenu;
+    qBandsBalance: TSQLQuery;
+    qBandsBalanceband_size: TStringField;
+    qBandsBalancemaximo_dia: TLongintField;
+    qBandsBalancemedia_dia: TFloatField;
+    qBandsBalancesaldo: TLongintField;
     SaveDlg: TSaveDialog;
     sbClose: TButton;
     Separator1: TMenuItem;
@@ -73,7 +79,7 @@ begin
   TimerLoad.Enabled := False;
   pMsg.Visible := True;
 
-  with TSQLQuery.Create(DMM.sqlCon) do
+  with TSQLQuery.Create(nil) do
   try
     Database := DMM.sqlCon;
     SQL.Add('SELECT media_dias_expedicao FROM get_average_expedition_duration');
@@ -84,10 +90,10 @@ begin
     Free;
   end;
 
-  if DMC.qBandsBalance.Active then
-    DMC.qBandsBalance.Refresh
+  if qBandsBalance.Active then
+    qBandsBalance.Refresh
   else
-    DMC.qBandsBalance.Open;
+    qBandsBalance.Open;
 
   pMsg.Visible := False;
 end;
@@ -96,7 +102,7 @@ procedure TdlgBandsBalance.FormDestroy(Sender: TObject);
 begin
   TimerLoad.Enabled := False;
 
-  DMC.qBandsBalance.Close;
+  qBandsBalance.Close;
 end;
 
 procedure TdlgBandsBalance.ApplyDarkMode;
@@ -119,7 +125,7 @@ begin
   //if Column.FieldName = 'saldo' then
   //begin
     vSaldo := dbgSaldo.Columns[1].Field.AsInteger;
-    BandAvgPerDay := Round(DMC.qBandsBalance.FieldByName('media_dia').AsFloat * MediaDiasExpedicao);
+    BandAvgPerDay := Round(qBandsBalance.FieldByName('media_dia').AsFloat * MediaDiasExpedicao);
     if vSaldo < BandAvgPerDay then
     begin
       with (Sender as TDBGrid) do

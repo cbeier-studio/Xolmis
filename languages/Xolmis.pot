@@ -12022,9 +12022,16 @@ msgstr ""
 msgid "Print preview"
 msgstr ""
 
-#: tfrmprintpreview.lblzoom.caption
-msgctxt "tfrmprintpreview.lblzoom.caption"
-msgid "100%"
+#: tfrmprintpreview.sbfirstpage.hint
+msgid "First page"
+msgstr ""
+
+#: tfrmprintpreview.sblastpage.hint
+msgid "Last page"
+msgstr ""
+
+#: tfrmprintpreview.sbnextpage.hint
+msgid "Next page"
 msgstr ""
 
 #: tfrmprintpreview.sbprint.caption
@@ -12035,6 +12042,10 @@ msgstr ""
 #: tfrmprintpreview.sbprintsettings.caption
 msgctxt "tfrmprintpreview.sbprintsettings.caption"
 msgid "Printer settings"
+msgstr ""
+
+#: tfrmprintpreview.sbpriorpage.hint
+msgid "Previous page"
 msgstr ""
 
 #: tfrmprintpreview.sbsavepdf.caption

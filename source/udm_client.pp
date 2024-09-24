@@ -28,10 +28,8 @@ type
   { TDMC }
 
   TDMC = class(TDataModule)
-    dsBandsBalance: TDataSource;
     dsIndividualsMonth: TDataSource;
     dsSpeciesMonth: TDataSource;
-    qBandsBalance: TSQLQuery;
     qBandsBalanceband_size: TStringField;
     qBandsBalancemaximo_dia: TLongintField;
     qBandsBalancemedia_dia: TFloatField;

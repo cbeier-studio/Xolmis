@@ -11,7 +11,6 @@ object dlgBandsBalance: TdlgBandsBalance
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 38
@@ -80,6 +79,7 @@ object dlgBandsBalance: TdlgBandsBalance
         Width = 80
         FieldName = 'maximo_dia'
       end>
+    DataSource = dsBandsBalance
     FixedCols = 0
     Options = [dgTitles, dgColumnResize, dgRowLines, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgDisableDelete, dgDisableInsert, dgThumbTracking]
     PopupMenu = pmGrid
@@ -304,5 +304,92 @@ object dlgBandsBalance: TdlgBandsBalance
       9E71741F927E3BABE89FE6CC64469FAF7F66A347DC3FA04A79761BB5CE6651EC
       986F3B8D3B3FFE1CBF01E679D0BF
     }
+  end
+  object dsBandsBalance: TDataSource
+    AutoEdit = False
+    DataSet = qBandsBalance
+    Left = 208
+    Top = 96
+  end
+  object qBandsBalance: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'band_size'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'saldo'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'media_dia'
+        DataType = ftFloat
+        Precision = 15
+      end    
+      item
+        Name = 'maximo_dia'
+        DataType = ftInteger
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT band_size, saldo, media_dia, maximo_dia'
+      'FROM get_bands_leftover'
+      ''
+    )
+    Params = <>
+    Macros = <>
+    Left = 88
+    Top = 96
+    object qBandsBalanceband_size: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Tamanho'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'band_size'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qBandsBalancesaldo: TLongintField
+      DisplayLabel = 'Saldo'
+      FieldKind = fkInternalCalc
+      FieldName = 'saldo'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0'
+    end
+    object qBandsBalancemedia_dia: TFloatField
+      DisplayLabel = 'Média/dia'
+      FieldKind = fkInternalCalc
+      FieldName = 'media_dia'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.0'
+    end
+    object qBandsBalancemaximo_dia: TLongintField
+      DisplayLabel = 'Máx./dia'
+      FieldKind = fkInternalCalc
+      FieldName = 'maximo_dia'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0'
+    end
   end
 end

@@ -20,7 +20,7 @@ OutputBaseFilename=xolmis-{#MyAppVersion}-win64
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
-VersionInfoVersion=0.1.0.186
+VersionInfoVersion=0.1.0.299
 VersionInfoCopyright=Christian Beier
 VersionInfoProductName=Xolmis
 MinVersion=0,10.0
@@ -43,6 +43,7 @@ Source: "{#MyAppSource}\Xolmis.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppSource}\sqlite3.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "languages\Xolmis.pt_BR.mo"; DestDir: "{app}\languages"
 Source: "resources\XolmisDB_template.sqlite3"; DestDir: "{localappdata}\{#MyAppName}"
+Source: "reports\*.lrf"; DestDir: "{app}\reports"
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -53,6 +54,7 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 
 [Dirs]
 Name: "{app}\languages"; Flags: uninsalwaysuninstall
+Name: "{app}\reports"; Flags: uninsalwaysuninstall
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{localappdata}\{#MyAppName}"

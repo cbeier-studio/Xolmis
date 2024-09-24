@@ -28,8 +28,12 @@ type
     pStatusBar: TPanel;
     pToolbar: TPanel;
     SaveDlg: TSaveDialog;
+    sbFirstPage: TSpeedButton;
+    sbLastPage: TSpeedButton;
+    sbNextPage: TSpeedButton;
     sbPrintSettings: TSpeedButton;
     sbPrint: TSpeedButton;
+    sbPriorPage: TSpeedButton;
     sbSavePDF: TSpeedButton;
     sbZoom100: TSpeedButton;
     sbZoomAdjust: TSpeedButton;
@@ -42,8 +46,12 @@ type
     procedure ReportBeginDoc;
     procedure ReportEndDoc;
     procedure ReportProgress(n: Integer);
+    procedure sbFirstPageClick(Sender: TObject);
+    procedure sbLastPageClick(Sender: TObject);
+    procedure sbNextPageClick(Sender: TObject);
     procedure sbPrintSettingsClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
+    procedure sbPriorPageClick(Sender: TObject);
     procedure sbSavePDFClick(Sender: TObject);
     procedure sbZoom100Click(Sender: TObject);
     procedure sbZoomAdjustClick(Sender: TObject);
@@ -57,6 +65,7 @@ type
     procedure SetDataSource(AValue: TDataSource);
     procedure SetReportName(AValue: String);
     procedure ApplyDarkMode;
+    procedure UpdateButtons;
   public
     property DataSource: TDataSource read FDataSource write SetDataSource;
     property ReportName: String read FReportName write SetReportName;
@@ -79,6 +88,10 @@ begin
   sbPrint.Images := iButtonsDark;
   sbPrintSettings.Images := iButtonsDark;
   sbSavePDF.Images := iButtonsDark;
+  sbFirstPage.Images := iButtonsDark;
+  sbPriorPage.Images := iButtonsDark;
+  sbNextPage.Images := iButtonsDark;
+  sbLastPage.Images := iButtonsDark;
   sbZoomAdjustWidth.Images := iButtonsDark;
   sbZoomAdjust.Images := iButtonsDark;
   sbZoom100.Images := iButtonsDark;
@@ -97,13 +110,16 @@ begin
     Report.LoadFromFile(FReportName);
     Report.PrepareReport;
     Report.ShowPreparedReport;
-    frPreview.PageWidth;
+
+    sbZoomAdjustWidthClick(nil);
   end;
 end;
 
 procedure TfrmPrintPreview.frPreviewScrollPage(Sender: TObject);
 begin
   lblPage.Caption := Format('%d of %d', [frPreview.Page, frPreview.AllPages]);
+
+  UpdateButtons;
 end;
 
 procedure TfrmPrintPreview.ReportBeginDoc;
@@ -122,9 +138,37 @@ begin
   PBar.Position := n;
 end;
 
+procedure TfrmPrintPreview.sbFirstPageClick(Sender: TObject);
+begin
+  frPreview.First;
+
+  UpdateButtons;
+end;
+
+procedure TfrmPrintPreview.sbLastPageClick(Sender: TObject);
+begin
+  frPreview.Last;
+
+  UpdateButtons;
+end;
+
+procedure TfrmPrintPreview.sbNextPageClick(Sender: TObject);
+begin
+  frPreview.Next;
+
+  UpdateButtons;
+end;
+
 procedure TfrmPrintPreview.sbPrintSettingsClick(Sender: TObject);
 begin
   PrinterSetupDlg.Execute;
+end;
+
+procedure TfrmPrintPreview.sbPriorPageClick(Sender: TObject);
+begin
+  frPreview.Prev;
+
+  UpdateButtons;
 end;
 
 procedure TfrmPrintPreview.sbPrintClick(Sender: TObject);
@@ -179,17 +223,19 @@ end;
 
 procedure TfrmPrintPreview.sbZoom100Click(Sender: TObject);
 begin
-  frPreview.Zoom := 100;
+  tbZoom.Position := 100;
 end;
 
 procedure TfrmPrintPreview.sbZoomAdjustClick(Sender: TObject);
 begin
   frPreview.OnePage;
+  tbZoom.Position := Round(frPreview.Zoom);
 end;
 
 procedure TfrmPrintPreview.sbZoomAdjustWidthClick(Sender: TObject);
 begin
   frPreview.PageWidth;
+  tbZoom.Position := Round(frPreview.Zoom);
 end;
 
 procedure TfrmPrintPreview.sbZoomInClick(Sender: TObject);
@@ -227,6 +273,26 @@ procedure TfrmPrintPreview.tbZoomChange(Sender: TObject);
 begin
   lblZoom.Caption := IntToStr(tbZoom.Position) + '%';
   frPreview.Zoom := tbZoom.Position;
+
+  UpdateButtons;
+end;
+
+procedure TfrmPrintPreview.UpdateButtons;
+begin
+  sbPrint.Enabled := frPreview.AllPages > 0;
+  sbSavePDF.Enabled := frPreview.AllPages > 0;
+
+  sbFirstPage.Enabled := frPreview.Page > 1;
+  sbPriorPage.Enabled := frPreview.Page > 1;
+  sbNextPage.Enabled := frPreview.Page < frPreview.AllPages;
+  sbLastPage.Enabled := frPreview.Page < frPreview.AllPages;
+
+  sbZoomAdjustWidth.Enabled := frPreview.AllPages > 0;
+  sbZoomAdjust.Enabled := frPreview.AllPages > 0;
+  sbZoom100.Enabled := frPreview.AllPages > 0;
+  sbZoomOut.Enabled := (frPreview.AllPages > 0) or (tbZoom.Position > tbZoom.Min);
+  sbZoomIn.Enabled := (frPreview.AllPages > 0) or (tbZoom.Position < tbZoom.Max);
+  tbZoom.Enabled := frPreview.AllPages > 0;
 end;
 
 end.

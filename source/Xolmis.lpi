@@ -160,7 +160,7 @@
         <Item134 Value="tbatchneteffort.eclosetime4.texthint"/>
         <Item135 Value="tfrmimageviewer.lblzoom.caption"/>
         <Item136 Value="tfrmimageviewer.lblsize.caption"/>
-        <Item137 Value="tfrmprintpreview.lblsize.caption"/>
+        <Item137 Value="tfrmprintpreview.lblzoom.caption"/>
         <Item138 Value="tfrmprintpreview.lblpage.caption"/>
       </ExcludedIdentifiers>
     </i18n>
@@ -168,7 +168,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="300"/>
+      <BuildNr Value="303"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>

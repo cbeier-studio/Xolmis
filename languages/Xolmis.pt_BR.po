@@ -12063,9 +12063,17 @@ msgstr "Revisar"
 msgid "Print preview"
 msgstr "Visualização de impressão"
 
-#: tfrmprintpreview.lblzoom.caption
-msgid "100%"
-msgstr ""
+#: tfrmprintpreview.sbfirstpage.hint
+msgid "First page"
+msgstr "Primeira página"
+
+#: tfrmprintpreview.sblastpage.hint
+msgid "Last page"
+msgstr "Última página"
+
+#: tfrmprintpreview.sbnextpage.hint
+msgid "Next page"
+msgstr "Página seguinte"
 
 #: tfrmprintpreview.sbprint.caption
 msgctxt "tfrmprintpreview.sbprint.caption"
@@ -12076,6 +12084,10 @@ msgstr "Imprimir"
 msgctxt "tfrmprintpreview.sbprintsettings.caption"
 msgid "Printer settings"
 msgstr "Opções da impressora"
+
+#: tfrmprintpreview.sbpriorpage.hint
+msgid "Previous page"
+msgstr "Página anterior"
 
 #: tfrmprintpreview.sbsavepdf.caption
 msgctxt "tfrmprintpreview.sbsavepdf.caption"
@@ -12194,3 +12206,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+
