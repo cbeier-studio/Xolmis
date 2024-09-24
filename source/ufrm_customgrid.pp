@@ -23,9 +23,9 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character, Buttons, CheckLst, DBCtrls,
-  laz.VirtualTrees, TAGraph, TASeries, TADbSource, TASources, TAGUIConnectorBGRA, rxswitch, atshapelinebgra,
-  BCPanel, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, mvMapViewer, mvDE_BGRA, mvTypes, mvGpsObj,
-  mvDrawingEngine;
+  laz.VirtualTrees, TAGraph, TASeries, TADbSource, TASources, LR_PGrid, TAGUIConnectorBGRA, rxswitch,
+  atshapelinebgra, BCPanel, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, mvMapViewer, mvDE_BGRA,
+  mvTypes, mvGpsObj, mvDrawingEngine;
 
 type
   { TStringMemoEditor }
@@ -59,6 +59,8 @@ type
     dbImg: TDBImage;
     dsChart: TDataSource;
     dsImages: TDataSource;
+    pmPrintNestsByTaxon: TMenuItem;
+    PrintGrid: TFrPrintGrid;
     gridSummary: TDBGrid;
     dsRecycle: TDataSource;
     DBG: TDBGrid;
@@ -158,6 +160,64 @@ type
     lblProjectFilter: TLabel;
     cardMap: TPage;
     mapGeo: TMapView;
+    pmPrintGrid: TMenuItem;
+    pmPrintSightings: TMenuItem;
+    pmPrintSightingsBySurvey: TMenuItem;
+    pmPrintSightingsByLocality: TMenuItem;
+    pmPrintSightingsByProject: TMenuItem;
+    pmPrintSightingsByTaxon: TMenuItem;
+    pmPrintSpecimens: TMenuItem;
+    pmPrintSpecimensByProject: TMenuItem;
+    pmPrintSpecimensByLocality: TMenuItem;
+    pmPrintSpecimensByTaxon: TMenuItem;
+    pmPrintSpecimensByYear: TMenuItem;
+    pmPrintMethods: TMenuItem;
+    pmPrintBands: TMenuItem;
+    pmPrintBandsByCarrier: TMenuItem;
+    pmPrintBandsByProject: TMenuItem;
+    pmPrintBandsByStatus: TMenuItem;
+    pmPrintBandsBalance: TMenuItem;
+    pmPrintIndividuals: TMenuItem;
+    pmPrintIndividualsByTaxon: TMenuItem;
+    pmPrintIndividualsByParents: TMenuItem;
+    pmPrintCaptures: TMenuItem;
+    pmPrintCapturesByProject: TMenuItem;
+    pmPrintExpeditionsByLocality: TMenuItem;
+    pmPrintCapturesByDate: TMenuItem;
+    pmPrintCapturesByLocality: TMenuItem;
+    pmPrintCapturesByTaxon: TMenuItem;
+    pmPrintColoredBands: TMenuItem;
+    pmPrintNests: TMenuItem;
+    pmPrintNestsByProject: TMenuItem;
+    pmPrintNestsByLocality: TMenuItem;
+    pmPrintNestsByPeriod: TMenuItem;
+    pmPrintEggs: TMenuItem;
+    pmPrintEggsByNest: TMenuItem;
+    pmPrintExpeditionsByProject: TMenuItem;
+    pmPrintEggsByLocality: TMenuItem;
+    pmPrintEggsByTaxon: TMenuItem;
+    pmPrintInstitutions: TMenuItem;
+    pmPrintResearchers: TMenuItem;
+    pmPrintProjects: TMenuItem;
+    pmPrintPermits: TMenuItem;
+    pmPrintPermitsByProject: TMenuItem;
+    pmPrintPermitsByExpiration: TMenuItem;
+    pmPrintGazetteer: TMenuItem;
+    pmPrintGazetteerHierarchical: TMenuItem;
+    pmPrintExpeditions: TMenuItem;
+    pmPrintSamplingPlots: TMenuItem;
+    pmPrintSamplingPlotsByLocality: TMenuItem;
+    pmPrintBotanicTaxa: TMenuItem;
+    pmPrintBotanicTaxaRecorded: TMenuItem;
+    pmPrintBotanicTaxaHierarchical: TMenuItem;
+    pmPrintTaxa: TMenuItem;
+    pmPrintTaxaHierarchical: TMenuItem;
+    pmPrintTaxaRecorded: TMenuItem;
+    pmPrintTaxaRecordedByLocality: TMenuItem;
+    pmPrintSurveysByExpedition: TMenuItem;
+    pmPrintSurveys: TMenuItem;
+    pmPrintSurveysByLocality: TMenuItem;
+    pmPrintSurveysByProject: TMenuItem;
     pMapToolbar: TBCPanel;
     pmiAddImage: TMenuItem;
     pmiImageInfo: TMenuItem;
@@ -195,6 +255,7 @@ type
     pmVerifications: TPopupMenu;
     pmColumn: TPopupMenu;
     pmImages: TPopupMenu;
+    pmPrint: TPopupMenu;
     pReportedFilter: TBCPanel;
     pEscapedFilter: TBCPanel;
     pNeedsReviewFilter: TBCPanel;
@@ -565,6 +626,7 @@ type
     sbMoveColumnUp: TSpeedButton;
     sbImageInfo: TSpeedButton;
     sbShareChild: TSpeedButton;
+    sbPrint: TSpeedButton;
     sbShowMap: TSpeedButton;
     sbViewImage: TSpeedButton;
     sbFirstRecord: TSpeedButton;
@@ -603,6 +665,7 @@ type
     Separator23: TMenuItem;
     Separator24: TMenuItem;
     Separator25: TMenuItem;
+    SeparatorPrint: TMenuItem;
     Separator5: TShapeLineBGRA;
     Separator6: TMenuItem;
     Separator7: TShapeLineBGRA;
@@ -759,6 +822,8 @@ type
     procedure pmmMarkAllColumnsClick(Sender: TObject);
     procedure pmmUnmarkAllClick(Sender: TObject);
     procedure pmmUnmarkAllColumnsClick(Sender: TObject);
+    procedure pmPrintGridClick(Sender: TObject);
+    procedure pmPrintMethodsClick(Sender: TObject);
     procedure pmtClearSelectionClick(Sender: TObject);
     procedure pmtColapseAllClick(Sender: TObject);
     procedure pmtExpandAllClick(Sender: TObject);
@@ -791,6 +856,7 @@ type
     procedure sbMoveColumnUpClick(Sender: TObject);
     procedure sbNextChildClick(Sender: TObject);
     procedure sbNextRecordClick(Sender: TObject);
+    procedure sbPrintClick(Sender: TObject);
     procedure sbPriorChildClick(Sender: TObject);
     procedure sbPriorRecordClick(Sender: TObject);
     procedure sbRecordHistoryClick(Sender: TObject);
@@ -1056,7 +1122,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
-  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, udlg_progress,
+  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print, udlg_progress,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
 
@@ -1237,6 +1303,7 @@ begin
   sbMarkRecords.Images := iButtonsDark;
   sbRecordHistory.Images := iButtonsDark;
   sbShareRecords.Images := iButtonsDark;
+  sbPrint.Images := iButtonsDark;
   sbSaveRecord.Images := iButtonsDark;
   sbCancelRecord.Images := iButtonsDark;
   sbDelRecord.Images := iButtonsDark;
@@ -5612,6 +5679,16 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.pmPrintGridClick(Sender: TObject);
+begin
+  PrintGrid.PreviewReport;
+end;
+
+procedure TfrmCustomGrid.pmPrintMethodsClick(Sender: TObject);
+begin
+  PrintPreview(dsLink, 'rep_methods.lrf');
+end;
+
 procedure TfrmCustomGrid.pmtClearSelectionClick(Sender: TObject);
 begin
   TBaseVirtualTree(pmTree.PopupComponent).ClearChecked;
@@ -7209,6 +7286,12 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.sbPrintClick(Sender: TObject);
+begin
+  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
+    pmPrint.Popup(X, Y);
+end;
+
 procedure TfrmCustomGrid.sbPriorChildClick(Sender: TObject);
 var
   aDataSet: TDataSet;
@@ -7364,7 +7447,6 @@ begin
     aFilename := DMM.SaveKmlDlg.FileName;
     Pts := TMapPointList.Create;
     try
-      { #todo 1 : DB to MapPointList to export }
       DBToMapPoints(FTableType, dsLink.DataSet, True, Pts);
 
       case ExtractFileExt(aFilename) of
@@ -9391,6 +9473,12 @@ begin
   AddSortedField('band_size', sdAscending);
   AddSortedField('band_number', sdAscending);
 
+  pmPrintBands.Visible := True;
+  pmPrintBandsByCarrier.Visible := True;
+  pmPrintBandsByProject.Visible := True;
+  pmPrintBandsByStatus.Visible := True;
+  pmPrintBandsBalance.Visible := True;
+
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
 end;
@@ -9403,6 +9491,10 @@ begin
 
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
+
+  pmPrintBotanicTaxa.Visible := True;
+  pmPrintBotanicTaxaHierarchical.Visible := True;
+  pmPrintBotanicTaxaRecorded.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridCaptures;
@@ -9415,10 +9507,16 @@ begin
   mapGeo.Active := True;
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
-
   sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
+
+  pmPrintCaptures.Visible := True;
+  pmPrintCapturesByDate.Visible := True;
+  pmPrintCapturesByProject.Visible := True;
+  pmPrintCapturesByLocality.Visible := True;
+  pmPrintCapturesByTaxon.Visible := True;
+  pmPrintColoredBands.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridColumns(aTable: TTableType; aGrid: TDBGrid);
@@ -9468,10 +9566,14 @@ begin
 
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
-
   sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
+
+  pmPrintEggs.Visible := True;
+  pmPrintEggsByNest.Visible := True;
+  pmPrintEggsByLocality.Visible := True;
+  pmPrintEggsByTaxon.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridExpeditions;
@@ -9491,6 +9593,10 @@ begin
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
 
+  pmPrintExpeditions.Visible := True;
+  pmPrintExpeditionsByLocality.Visible := True;
+  pmPrintExpeditionsByProject.Visible := True;
+
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
 
@@ -9509,8 +9615,10 @@ begin
   mapGeo.Active := True;
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
-
   //sbShowDocs.Visible := True;
+
+  pmPrintGazetteer.Visible := True;
+  pmPrintGazetteerHierarchical.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridIndividuals;
@@ -9546,6 +9654,11 @@ begin
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
 
+  pmPrintIndividuals.Visible := True;
+  pmPrintIndividualsByTaxon.Visible := True;
+  pmPrintIndividualsByParents.Visible := True;
+  pmPrintColoredBands.Visible := True;
+
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
   //pChild.Visible := True;
@@ -9568,6 +9681,8 @@ begin
   AddSortedField('full_name', sdAscending);
 
   sbShowSummary.Visible := True;
+
+  pmPrintInstitutions.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridMethods;
@@ -9575,6 +9690,8 @@ begin
   Caption := rsTitleMethods;
   FSearch.DataSet := DMG.qMethods;
   AddSortedField('method_name', sdAscending);
+
+  pmPrintMethods.Visible := True;
 
   //sbShowDocs.Visible := True;
 end;
@@ -9602,7 +9719,12 @@ begin
   pmcNewNestRevision.Visible := True;
   pmcNewEgg.Visible := True;
   sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
+
+  pmPrintNests.Visible := True;
+  pmPrintNestsByPeriod.Visible := True;
+  pmPrintNestsByProject.Visible := True;
+  pmPrintNestsByLocality.Visible := True;
+  pmPrintNestsByTaxon.Visible := True;
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
@@ -9644,6 +9766,9 @@ begin
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
 
+  pmPrintSamplingPlots.Visible := True;
+  pmPrintSamplingPlotsByLocality.Visible := True;
+
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
   mapGeo.Active := True;
@@ -9657,6 +9782,8 @@ begin
   AddSortedField('full_name', sdAscending);
 
   sbShowSummary.Visible := True;
+
+  pmPrintResearchers.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridPermits;
@@ -9667,6 +9794,10 @@ begin
 
   sbShowSummary.Visible := True;
   //sbShowDocs.Visible := True;
+
+  pmPrintPermits.Visible := True;
+  pmPrintPermitsByExpiration.Visible := True;
+  pmPrintPermitsByProject.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridProjects;
@@ -9683,6 +9814,8 @@ begin
   pmcNewProjectMember.Visible := True;
   sbShowSummary.Visible := True;
 
+  pmPrintProjects.Visible := True;
+
   pChildsBar.Visible := True;
 
   //sbShowDocs.Visible := True;
@@ -9698,6 +9831,12 @@ begin
   mapGeo.Active := True;
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
+
+  pmPrintSightings.Visible := True;
+  pmPrintSightingsBySurvey.Visible := True;
+  pmPrintSightingsByProject.Visible := True;
+  pmPrintSightingsByLocality.Visible := True;
+  pmPrintSightingsByTaxon.Visible := True;
 
   sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
@@ -9722,6 +9861,12 @@ begin
   pmcNewSamplePrep.Visible := True;
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
+
+  pmPrintSpecimens.Visible := True;
+  pmPrintSpecimensByYear.Visible := True;
+  pmPrintSpecimensByProject.Visible := True;
+  pmPrintSpecimensByLocality.Visible := True;
+  pmPrintSpecimensByTaxon.Visible := True;
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
@@ -9765,6 +9910,11 @@ begin
   pmcNewSighting.Visible := True;
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
+
+  pmPrintSurveys.Visible := True;
+  pmPrintSurveysByExpedition.Visible := True;
+  pmPrintSurveysByLocality.Visible := True;
+  pmPrintSurveysByProject.Visible := True;
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
@@ -10322,6 +10472,7 @@ begin
       sbRecordHistory.Enabled := False;
       sbRecordVerifications.Enabled := False;
       sbShareRecords.Enabled := False;
+      sbPrint.Enabled := False;
       sbMarkRecords.Enabled := False;
 
       sbShowQuickFilters.Enabled := False;
@@ -10350,6 +10501,7 @@ begin
       sbRecordHistory.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbRecordVerifications.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
       sbShareRecords.Enabled := (aDataSet.RecordCount > 0) and (ActiveUser.AllowExport);
+      sbPrint.Enabled := (aDataSet.RecordCount > 0) and (ActiveUser.AllowPrint);
       sbMarkRecords.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
 
       sbFirstRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
@@ -10388,6 +10540,7 @@ begin
       sbRecordHistory.Enabled := False;
       sbRecordVerifications.Enabled := False;
       sbShareRecords.Enabled := False;
+      sbPrint.Enabled := False;
       sbMarkRecords.Enabled := False;
 
       sbShowQuickFilters.Enabled := False;

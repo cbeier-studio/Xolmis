@@ -659,6 +659,7 @@ begin
   sbarUser.Border.Color := clSolidBGSecondaryDark;
   sbarTaxonomy.Border.Color := clSolidBGSecondaryDark;
   sbarStatus.Border.Color := clSolidBGSecondaryDark;
+  sbarStatus.FontEx.Color := clTextPrimaryDark;
   sbarProgress.Border.Color := clSolidBGSecondaryDark;
 
   pSearch.Background.Color := clCardBGDefaultDark;

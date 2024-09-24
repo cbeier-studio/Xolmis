@@ -1,0 +1,14 @@
+{"version":1,"strings":[
+{"hash":1874407,"name":"tfrmprintpreview.caption","sourcebytes":[80,114,105,110,116,32,112,114,101,118,105,101,119],"value":"Print preview"},
+{"hash":5738580,"name":"tfrmprintpreview.sbprint.caption","sourcebytes":[80,114,105,110,116],"value":"Print"},
+{"hash":147280150,"name":"tfrmprintpreview.sbsavepdf.caption","sourcebytes":[83,97,118,101,32,80,68,70],"value":"Save PDF"},
+{"hash":152296051,"name":"tfrmprintpreview.sbprintsettings.caption","sourcebytes":[80,114,105,110,116,101,114,32,115,101,116,116,105,110,103,115],"value":"Printer settings"},
+{"hash":398941,"name":"tfrmprintpreview.tbzoom.hint","sourcebytes":[90,111,111,109],"value":"Zoom"},
+{"hash":23459486,"name":"tfrmprintpreview.sbzoomin.hint","sourcebytes":[90,111,111,109,32,105,110],"value":"Zoom in"},
+{"hash":106918100,"name":"tfrmprintpreview.sbzoomout.hint","sourcebytes":[90,111,111,109,32,111,117,116],"value":"Zoom out"},
+{"hash":148965412,"name":"tfrmprintpreview.sbzoomadjust.hint","sourcebytes":[90,111,111,109,32,112,97,103,101,32,116,111,32,102,105,116],"value":"Zoom page to fit"},
+{"hash":132504933,"name":"tfrmprintpreview.sbzoom100.hint","sourcebytes":[90,111,111,109,32,116,111,32,97,99,116,117,97,108,32,115,105,122,101],"value":"Zoom to actual size"},
+{"hash":213797,"name":"tfrmprintpreview.lblzoom.caption","sourcebytes":[49,48,48,37],"value":"100%"},
+{"hash":245166984,"name":"tfrmprintpreview.sbzoomadjustwidth.hint","sourcebytes":[90,111,111,109,32,112,97,103,101,32,116,111,32,102,105,116,32,119,105,100,116,104],"value":"Zoom page to fit width"},
+{"hash":52910128,"name":"tfrmprintpreview.lblpage.caption","sourcebytes":[48,32,111,102,32,48],"value":"0 of 0"}
+]}

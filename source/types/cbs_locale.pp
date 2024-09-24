@@ -133,6 +133,7 @@ uses
     rsErrorDatabaseCreation = 'The database file was not created.';
     rsErrorUpdatingAdminPassword = 'An error occurred while updating the Admin password.';
     rsErrorCheckingUpdates = 'An error occurred while checking for updates.';
+    rsErrorReportNotFound = 'Report template not found: %s';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';

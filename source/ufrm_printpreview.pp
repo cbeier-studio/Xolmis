@@ -1,0 +1,233 @@
+unit ufrm_printpreview;
+
+{$mode ObjFPC}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons,
+  LR_Class, LR_View, LR_DBSet, LR_ChBox, Printers, PrintersDlgs, lrPDFExport, lr_e_fclpdf;
+
+type
+
+  { TfrmPrintPreview }
+
+  TfrmPrintPreview = class(TForm)
+    frCheckBoxObj: TfrCheckBoxObject;
+    frDataSet: TfrDBDataSet;
+    frPreview: TfrPreview;
+    Report: TfrReport;
+    iButtons: TImageList;
+    iButtonsDark: TImageList;
+    lblPage: TLabel;
+    lblZoom: TLabel;
+    lrPDFExport: TlrPDFExport;
+    PrintDlg: TPrintDialog;
+    PrinterSetupDlg: TPrinterSetupDialog;
+    PBar: TProgressBar;
+    pStatusBar: TPanel;
+    pToolbar: TPanel;
+    SaveDlg: TSaveDialog;
+    sbPrintSettings: TSpeedButton;
+    sbPrint: TSpeedButton;
+    sbSavePDF: TSpeedButton;
+    sbZoom100: TSpeedButton;
+    sbZoomAdjust: TSpeedButton;
+    sbZoomAdjustWidth: TSpeedButton;
+    sbZoomIn: TSpeedButton;
+    sbZoomOut: TSpeedButton;
+    tbZoom: TTrackBar;
+    procedure FormShow(Sender: TObject);
+    procedure frPreviewScrollPage(Sender: TObject);
+    procedure ReportBeginDoc;
+    procedure ReportEndDoc;
+    procedure ReportProgress(n: Integer);
+    procedure sbPrintSettingsClick(Sender: TObject);
+    procedure sbPrintClick(Sender: TObject);
+    procedure sbSavePDFClick(Sender: TObject);
+    procedure sbZoom100Click(Sender: TObject);
+    procedure sbZoomAdjustClick(Sender: TObject);
+    procedure sbZoomAdjustWidthClick(Sender: TObject);
+    procedure sbZoomInClick(Sender: TObject);
+    procedure sbZoomOutClick(Sender: TObject);
+    procedure tbZoomChange(Sender: TObject);
+  private
+    FDataSource: TDataSource;
+    FReportName: String;
+    procedure SetDataSource(AValue: TDataSource);
+    procedure SetReportName(AValue: String);
+    procedure ApplyDarkMode;
+  public
+    property DataSource: TDataSource read FDataSource write SetDataSource;
+    property ReportName: String read FReportName write SetReportName;
+  end;
+
+var
+  frmPrintPreview: TfrmPrintPreview;
+
+implementation
+
+uses
+  cbs_locale, cbs_global, cbs_dialogs, uDarkStyleParams;
+
+{$R *.lfm}
+
+{ TfrmPrintPreview }
+
+procedure TfrmPrintPreview.ApplyDarkMode;
+begin
+  sbPrint.Images := iButtonsDark;
+  sbPrintSettings.Images := iButtonsDark;
+  sbSavePDF.Images := iButtonsDark;
+  sbZoomAdjustWidth.Images := iButtonsDark;
+  sbZoomAdjust.Images := iButtonsDark;
+  sbZoom100.Images := iButtonsDark;
+  sbZoomOut.Images := iButtonsDark;
+  sbZoomIn.Images := iButtonsDark;
+end;
+
+procedure TfrmPrintPreview.FormShow(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
+  if FReportName <> EmptyStr then
+  begin
+    Report.DoublePass := True;
+    Report.LoadFromFile(FReportName);
+    Report.PrepareReport;
+    Report.ShowPreparedReport;
+    frPreview.PageWidth;
+  end;
+end;
+
+procedure TfrmPrintPreview.frPreviewScrollPage(Sender: TObject);
+begin
+  lblPage.Caption := Format('%d of %d', [frPreview.Page, frPreview.AllPages]);
+end;
+
+procedure TfrmPrintPreview.ReportBeginDoc;
+begin
+  PBar.Max := Report.Pages.Count;
+  PBar.Visible := True;
+end;
+
+procedure TfrmPrintPreview.ReportEndDoc;
+begin
+  PBar.Visible := False;
+end;
+
+procedure TfrmPrintPreview.ReportProgress(n: Integer);
+begin
+  PBar.Position := n;
+end;
+
+procedure TfrmPrintPreview.sbPrintSettingsClick(Sender: TObject);
+begin
+  PrinterSetupDlg.Execute;
+end;
+
+procedure TfrmPrintPreview.sbPrintClick(Sender: TObject);
+var
+  nPages: String;
+  nPrinter: Integer;
+begin
+  nPages := EmptyStr;
+  nPrinter := Printer.PrinterIndex;
+  Report.DoublePass := True;
+
+  if not Report.PrepareReport then
+    Exit;
+
+  PrintDlg.Copies := 1;
+  PrintDlg.Collate := True; // ordened copies
+  PrintDlg.FromPage := 1; // start page
+  PrintDlg.ToPage := Report.EMFPages.Count; // last page
+  PrintDlg.MaxPage := Report.EMFPages.Count; // maximum allowed number of pages
+  if PrintDlg.Execute then
+  begin
+    if (Printer.PrinterIndex <> nPrinter ) or // verify if selected printer has changed
+        Report.CanRebuild or // ... only makes sense if we can reformat the report
+        Report.ChangePrinter(nPrinter, Printer.PrinterIndex) then //... then change printer
+      Report.PrepareReport //... and reformat for new printer
+    else
+      Exit; // we couldn't honour the printer change
+
+    if PrintDlg.PrintRange = prPageNums then // user made page range selection
+    begin
+      nPages := IntToStr(PrintDlg.FromPage) + '-' + IntToStr(PrintDlg.ToPage);
+    end;
+
+    Report.PrintPreparedReport(nPages, PrintDlg.Copies);
+  end;
+end;
+
+procedure TfrmPrintPreview.sbSavePDFClick(Sender: TObject);
+begin
+  if SaveDlg.Execute then
+  begin
+    Report.DoublePass := True;
+    if Report.PrepareReport then
+    begin
+      Report.ExportFilename := SaveDlg.FileName;
+      Report.ExportTo(TlrPdfExportFilter, SaveDlg.FileName);
+      { #todo : Open PDF after export }
+
+    end;
+  end;
+end;
+
+procedure TfrmPrintPreview.sbZoom100Click(Sender: TObject);
+begin
+  frPreview.Zoom := 100;
+end;
+
+procedure TfrmPrintPreview.sbZoomAdjustClick(Sender: TObject);
+begin
+  frPreview.OnePage;
+end;
+
+procedure TfrmPrintPreview.sbZoomAdjustWidthClick(Sender: TObject);
+begin
+  frPreview.PageWidth;
+end;
+
+procedure TfrmPrintPreview.sbZoomInClick(Sender: TObject);
+begin
+  if tbZoom.Position < tbZoom.Max then
+    if tbZoom.Position >= 100 then
+      tbZoom.Position := tbZoom.Position + 50
+    else
+      tbZoom.Position := tbZoom.Position + 10;
+end;
+
+procedure TfrmPrintPreview.sbZoomOutClick(Sender: TObject);
+begin
+  if tbZoom.Position > tbZoom.Min then
+    if tbZoom.Position > 100 then
+      tbZoom.Position := tbZoom.Position - 50
+    else
+      tbZoom.Position := tbZoom.Position - 10;
+end;
+
+procedure TfrmPrintPreview.SetDataSource(AValue: TDataSource);
+begin
+  FDataSource := AValue;
+  frDataSet.DataSource := FDataSource;
+end;
+
+procedure TfrmPrintPreview.SetReportName(AValue: String);
+begin
+  FReportName := ConcatPaths([InstallDir, 'reports\', AValue]);
+  if not FileExists(FReportName) then
+    MsgDlg(rsTitleError, Format(rsErrorReportNotFound, [AValue]), mtError);
+end;
+
+procedure TfrmPrintPreview.tbZoomChange(Sender: TObject);
+begin
+  lblZoom.Caption := IntToStr(tbZoom.Position) + '%';
+  frPreview.Zoom := tbZoom.Position;
+end;
+
+end.
+

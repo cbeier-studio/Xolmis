@@ -974,6 +974,7 @@ object frmMain: TfrmMain
       Category = 'Import'
       Caption = 'Nests data'
       OnExecute = actImportNestsExecute
+      Visible = False
     end
     object actImportCoordinates: TAction
       Category = 'Import'

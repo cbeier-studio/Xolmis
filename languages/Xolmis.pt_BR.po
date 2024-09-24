@@ -3020,6 +3020,11 @@ msgctxt "cbs_locale.rserrormontadata"
 msgid "Error in year digits (%d). Send this issue to the Support."
 msgstr "Erro nos dígitos do ano (%d). Comunique o problema ao Suporte."
 
+#: cbs_locale.rserrorreportnotfound
+#, object-pascal-format
+msgid "Report template not found: %s"
+msgstr "Modelo de relatório não encontrado: %s"
+
 #: cbs_locale.rserrorrestorefailed
 msgctxt "cbs_locale.rserrorrestorefailed"
 msgid "Backup restore failed."
@@ -10409,6 +10414,261 @@ msgctxt "tfrmcustomgrid.pmmunmarkallcolumns.caption"
 msgid "Unmark all"
 msgstr "Desmarcar todos"
 
+#: tfrmcustomgrid.pmprintbands.caption
+msgctxt "tfrmcustomgrid.pmprintbands.caption"
+msgid "Bands"
+msgstr "Anilhas"
+
+#: tfrmcustomgrid.pmprintbandsbalance.caption
+msgctxt "tfrmcustomgrid.pmprintbandsbalance.caption"
+msgid "Bands balance"
+msgstr "Saldo de anilhas"
+
+#: tfrmcustomgrid.pmprintbandsbycarrier.caption
+msgid "Bands by carrier"
+msgstr "Anilhas por portador"
+
+#: tfrmcustomgrid.pmprintbandsbyproject.caption
+msgid "Bands by project"
+msgstr "Anilhas por projeto"
+
+#: tfrmcustomgrid.pmprintbandsbystatus.caption
+msgid "Bands by status"
+msgstr "Anilhas por status"
+
+#: tfrmcustomgrid.pmprintbotanictaxa.caption
+msgctxt "tfrmcustomgrid.pmprintbotanictaxa.caption"
+msgid "Botanic taxa"
+msgstr "Táxons botânicos"
+
+#: tfrmcustomgrid.pmprintbotanictaxahierarchical.caption
+msgid "Botanic taxa (hierarchical)"
+msgstr "Táxons botânicos (hierárquico)"
+
+#: tfrmcustomgrid.pmprintbotanictaxarecorded.caption
+msgid "Botanic taxa recorded"
+msgstr "Táxons botânicos registrados"
+
+#: tfrmcustomgrid.pmprintcaptures.caption
+msgctxt "tfrmcustomgrid.pmprintcaptures.caption"
+msgid "Captures"
+msgstr "Capturas"
+
+#: tfrmcustomgrid.pmprintcapturesbydate.caption
+msgid "Captures by date"
+msgstr "Capturas por data"
+
+#: tfrmcustomgrid.pmprintcapturesbylocality.caption
+msgid "Captures by locality"
+msgstr "Capturas por localidade"
+
+#: tfrmcustomgrid.pmprintcapturesbyproject.caption
+msgid "Captures by project"
+msgstr "Capturas por projeto"
+
+#: tfrmcustomgrid.pmprintcapturesbytaxon.caption
+msgid "Captures by taxon"
+msgstr "Capturas por táxon"
+
+#: tfrmcustomgrid.pmprintcoloredbands.caption
+msgid "Colored bands combinations"
+msgstr "Combinações de anilhas coloridas"
+
+#: tfrmcustomgrid.pmprinteggs.caption
+msgctxt "tfrmcustomgrid.pmprinteggs.caption"
+msgid "Eggs"
+msgstr "Ovos"
+
+#: tfrmcustomgrid.pmprinteggsbylocality.caption
+msgid "Eggs by locality"
+msgstr "Ovos por localidade"
+
+#: tfrmcustomgrid.pmprinteggsbynest.caption
+msgid "Eggs by nest"
+msgstr "Ovos por ninho"
+
+#: tfrmcustomgrid.pmprinteggsbytaxon.caption
+msgid "Eggs by taxon"
+msgstr "Ovos por táxon"
+
+#: tfrmcustomgrid.pmprintexpeditions.caption
+msgctxt "tfrmcustomgrid.pmprintexpeditions.caption"
+msgid "Expeditions"
+msgstr "Expedições"
+
+#: tfrmcustomgrid.pmprintexpeditionsbylocality.caption
+msgid "Expeditions by locality"
+msgstr "Expedições por localidade"
+
+#: tfrmcustomgrid.pmprintexpeditionsbyproject.caption
+msgid "Expeditions by project"
+msgstr "Expedições por projeto"
+
+#: tfrmcustomgrid.pmprintgazetteer.caption
+msgctxt "tfrmcustomgrid.pmprintgazetteer.caption"
+msgid "Gazetteer"
+msgstr "Gazetteer"
+
+#: tfrmcustomgrid.pmprintgazetteerhierarchical.caption
+msgid "Gazetteer (hierarchical)"
+msgstr "Gazetteer (hierárquico)"
+
+#: tfrmcustomgrid.pmprintgrid.caption
+msgid "Print grid"
+msgstr "Imprimir grade"
+
+#: tfrmcustomgrid.pmprintindividuals.caption
+msgctxt "tfrmcustomgrid.pmprintindividuals.caption"
+msgid "Individuals"
+msgstr "Indivíduos"
+
+#: tfrmcustomgrid.pmprintindividualsbyparents.caption
+msgid "Individuals by parents"
+msgstr "Indivíduos pelos pais"
+
+#: tfrmcustomgrid.pmprintindividualsbytaxon.caption
+msgid "Individuals by taxon"
+msgstr "Indivíduos por táxon"
+
+#: tfrmcustomgrid.pmprintinstitutions.caption
+msgctxt "tfrmcustomgrid.pmprintinstitutions.caption"
+msgid "Institutions"
+msgstr "Instituições"
+
+#: tfrmcustomgrid.pmprintmethods.caption
+msgctxt "tfrmcustomgrid.pmprintmethods.caption"
+msgid "Methods"
+msgstr "Métodos"
+
+#: tfrmcustomgrid.pmprintnests.caption
+msgctxt "tfrmcustomgrid.pmprintnests.caption"
+msgid "Nests"
+msgstr "Ninhos"
+
+#: tfrmcustomgrid.pmprintnestsbylocality.caption
+msgid "Nests by locality"
+msgstr "Ninhos por localidade"
+
+#: tfrmcustomgrid.pmprintnestsbyperiod.caption
+msgid "Nests by period"
+msgstr "Ninhos por período"
+
+#: tfrmcustomgrid.pmprintnestsbyproject.caption
+msgid "Nests by project"
+msgstr "Ninhos por projeto"
+
+#: tfrmcustomgrid.pmprintnestsbytaxon.caption
+msgid "Nests by taxon"
+msgstr "Ninhos por táxon"
+
+#: tfrmcustomgrid.pmprintpermits.caption
+msgctxt "tfrmcustomgrid.pmprintpermits.caption"
+msgid "Permits"
+msgstr "Licenças"
+
+#: tfrmcustomgrid.pmprintpermitsbyexpiration.caption
+msgid "Permits by date of expiration"
+msgstr "Licenças por data de vencimento"
+
+#: tfrmcustomgrid.pmprintpermitsbyproject.caption
+msgid "Permits by project"
+msgstr "Licenças por projeto"
+
+#: tfrmcustomgrid.pmprintprojects.caption
+msgctxt "tfrmcustomgrid.pmprintprojects.caption"
+msgid "Projects"
+msgstr "Projetos"
+
+#: tfrmcustomgrid.pmprintresearchers.caption
+msgctxt "tfrmcustomgrid.pmprintresearchers.caption"
+msgid "Researchers"
+msgstr "Pesquisadores"
+
+#: tfrmcustomgrid.pmprintsamplingplots.caption
+msgctxt "tfrmcustomgrid.pmprintsamplingplots.caption"
+msgid "Sampling plots"
+msgstr "Parcelas amostrais"
+
+#: tfrmcustomgrid.pmprintsamplingplotsbylocality.caption
+msgid "Sampling plots by locality"
+msgstr "Parcelas amostrais por localidade"
+
+#: tfrmcustomgrid.pmprintsightings.caption
+msgctxt "tfrmcustomgrid.pmprintsightings.caption"
+msgid "Sightings"
+msgstr "Observações"
+
+#: tfrmcustomgrid.pmprintsightingsbylocality.caption
+msgid "Sightings by locality"
+msgstr "Observações por localidade"
+
+#: tfrmcustomgrid.pmprintsightingsbyproject.caption
+msgid "Sightings by project"
+msgstr "Observações por projeto"
+
+#: tfrmcustomgrid.pmprintsightingsbysurvey.caption
+msgid "Sightings by survey"
+msgstr "Observações por amostragem"
+
+#: tfrmcustomgrid.pmprintsightingsbytaxon.caption
+msgid "Sightings by taxon"
+msgstr "Observações por táxon"
+
+#: tfrmcustomgrid.pmprintspecimens.caption
+msgctxt "tfrmcustomgrid.pmprintspecimens.caption"
+msgid "Specimens"
+msgstr "Espécimes"
+
+#: tfrmcustomgrid.pmprintspecimensbylocality.caption
+msgid "Specimens by locality"
+msgstr "Espécimes por localidade"
+
+#: tfrmcustomgrid.pmprintspecimensbyproject.caption
+msgid "Specimens by project"
+msgstr "Espécimes por projeto"
+
+#: tfrmcustomgrid.pmprintspecimensbytaxon.caption
+msgid "Specimens by taxon"
+msgstr "Espécimes por táxon"
+
+#: tfrmcustomgrid.pmprintspecimensbyyear.caption
+msgid "Specimens by year"
+msgstr "Espécimes por ano"
+
+#: tfrmcustomgrid.pmprintsurveys.caption
+msgctxt "tfrmcustomgrid.pmprintsurveys.caption"
+msgid "Surveys"
+msgstr "Amostragens"
+
+#: tfrmcustomgrid.pmprintsurveysbyexpedition.caption
+msgid "Surveys by expedition"
+msgstr "Amostragens por expedição"
+
+#: tfrmcustomgrid.pmprintsurveysbylocality.caption
+msgid "Surveys by locality"
+msgstr "Amostragens por localidade"
+
+#: tfrmcustomgrid.pmprintsurveysbyproject.caption
+msgid "Surveys by project"
+msgstr "Amostragens por projeto"
+
+#: tfrmcustomgrid.pmprinttaxa.caption
+msgctxt "tfrmcustomgrid.pmprinttaxa.caption"
+msgid "Taxa"
+msgstr "Táxons"
+
+#: tfrmcustomgrid.pmprinttaxahierarchical.caption
+msgid "Taxa (hierarchical)"
+msgstr "Táxons (hierárquico)"
+
+#: tfrmcustomgrid.pmprinttaxarecorded.caption
+msgid "Taxa recorded"
+msgstr "Táxons registrados"
+
+#: tfrmcustomgrid.pmprinttaxarecordedbylocality.caption
+msgid "Taxa recorded by locality"
+msgstr "Táxons registrados por localidade"
+
 #: tfrmcustomgrid.pmrdelpermanently.caption
 msgctxt "tfrmcustomgrid.pmrdelpermanently.caption"
 msgid "Delete permanently"
@@ -10808,6 +11068,10 @@ msgstr "Registro seguinte"
 msgctxt "tfrmcustomgrid.sbnextrecord.hint"
 msgid "Next record"
 msgstr "Registro seguinte"
+
+#: tfrmcustomgrid.sbprint.hint
+msgid "Print records"
+msgstr "Imprimir registros"
 
 #: tfrmcustomgrid.sbpriorchild.hint
 msgctxt "tfrmcustomgrid.sbpriorchild.hint"
@@ -11286,6 +11550,7 @@ msgid "Save an image copy"
 msgstr "Salvar uma cópia da imagem"
 
 #: tfrmimageviewer.sbzoom100.hint
+msgctxt "tfrmimageviewer.sbzoom100.hint"
 msgid "Zoom to actual size"
 msgstr "Zoom para tamanho real"
 
@@ -11294,14 +11559,17 @@ msgid "Zoom image to fit"
 msgstr "Zoom para encaixar imagem"
 
 #: tfrmimageviewer.sbzoomin.hint
+msgctxt "tfrmimageviewer.sbzoomin.hint"
 msgid "Zoom in"
 msgstr "Ampliar"
 
 #: tfrmimageviewer.sbzoomout.hint
+msgctxt "tfrmimageviewer.sbzoomout.hint"
 msgid "Zoom out"
 msgstr "Diminuir"
 
 #: tfrmimageviewer.tbzoom.hint
+msgctxt "tfrmimageviewer.tbzoom.hint"
 msgid "Zoom"
 msgstr "Zoom"
 
@@ -11790,6 +12058,57 @@ msgstr "Verificar"
 #: tfrmmaintenance.sbrewritetaxasequence.caption
 msgid "Review"
 msgstr "Revisar"
+
+#: tfrmprintpreview.caption
+msgid "Print preview"
+msgstr "Visualização de impressão"
+
+#: tfrmprintpreview.lblzoom.caption
+msgid "100%"
+msgstr ""
+
+#: tfrmprintpreview.sbprint.caption
+msgctxt "tfrmprintpreview.sbprint.caption"
+msgid "Print"
+msgstr "Imprimir"
+
+#: tfrmprintpreview.sbprintsettings.caption
+msgctxt "tfrmprintpreview.sbprintsettings.caption"
+msgid "Printer settings"
+msgstr "Opções da impressora"
+
+#: tfrmprintpreview.sbsavepdf.caption
+msgctxt "tfrmprintpreview.sbsavepdf.caption"
+msgid "Save PDF"
+msgstr "Salvar PDF"
+
+#: tfrmprintpreview.sbzoom100.hint
+msgctxt "tfrmprintpreview.sbzoom100.hint"
+msgid "Zoom to actual size"
+msgstr "Zoom para tamanho real"
+
+#: tfrmprintpreview.sbzoomadjust.hint
+msgid "Zoom page to fit"
+msgstr "Ajustar zoom da página"
+
+#: tfrmprintpreview.sbzoomadjustwidth.hint
+msgid "Zoom page to fit width"
+msgstr "Ajustar zoom à largura da página"
+
+#: tfrmprintpreview.sbzoomin.hint
+msgctxt "tfrmprintpreview.sbzoomin.hint"
+msgid "Zoom in"
+msgstr "Ampliar"
+
+#: tfrmprintpreview.sbzoomout.hint
+msgctxt "tfrmprintpreview.sbzoomout.hint"
+msgid "Zoom out"
+msgstr "Diminuir"
+
+#: tfrmprintpreview.tbzoom.hint
+msgctxt "tfrmprintpreview.tbzoom.hint"
+msgid "Zoom"
+msgstr "Zoom"
 
 #: tlstbreedingstatus.caption
 msgid "Breeding and behavior code"
