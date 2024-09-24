@@ -5275,6 +5275,10 @@ msgstr "Taxonomia preferencial"
 msgid "Manage backups"
 msgstr "Gerenciar backups"
 
+#: tcfgoptions.lblopenafterexport.caption
+msgid "Open files after export"
+msgstr ""
+
 #: tcfgoptions.lblprivacyterms.caption
 msgctxt "tcfgoptions.lblprivacyterms.caption"
 msgid "Privacy terms"

@@ -181,6 +181,7 @@ object frmPrintPreview: TfrmPrintPreview
       Width = 24
       Align = alRight
       AutoSize = True
+      BorderSpacing.Left = 16
       BorderSpacing.Right = 8
       DisabledImageIndex = 21
       Flat = True
@@ -204,8 +205,8 @@ object frmPrintPreview: TfrmPrintPreview
       Left = 157
       Height = 20
       Top = 8
-      Width = 227
-      Align = alLeft
+      Width = 392
+      Align = alClient
       BorderSpacing.Top = 8
       BorderSpacing.Bottom = 8
       TabOrder = 1

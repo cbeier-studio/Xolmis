@@ -5,7 +5,7 @@ unit ufrm_printpreview;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons,
+  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons, LCLIntf,
   LR_Class, LR_View, LR_DBSet, LR_ChBox, Printers, PrintersDlgs, lrPDFExport, lr_e_fclpdf;
 
 type
@@ -215,8 +215,9 @@ begin
     begin
       Report.ExportFilename := SaveDlg.FileName;
       Report.ExportTo(TlrPdfExportFilter, SaveDlg.FileName);
-      { #todo : Open PDF after export }
 
+      if XSettings.OpenFileAfterExport then
+        OpenDocument(SaveDlg.FileName);
     end;
   end;
 end;

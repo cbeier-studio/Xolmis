@@ -112,6 +112,7 @@ type
     FShowSynonyms: Boolean;
     { Media }
     FImagesFolder, FAudiosFolder, FDocumentsFolder: String;
+    FOpenAfterExport: Boolean;
     { Security }
     FRememberUser, FRememberConnection: Boolean;
     FLastUser, FLastConnection: String;
@@ -164,6 +165,7 @@ type
     property ImagesFolder: String read FImagesFolder write SetImagesFolder;
     property AudiosFolder: String read FAudiosFolder write SetAudiosFolder;
     property DocumentsFolder: String read FDocumentsFolder write SetDocumentsFolder;
+    property OpenFileAfterExport: Boolean read FOpenAfterExport write FOpenAfterExport;
     { Security }
     property RememberUser: Boolean read FRememberUser write FRememberUser;
     property LastUser: String read FLastUser write FLastUser;
@@ -677,6 +679,7 @@ begin
   FImagesFolder := Ini.GetValue('/MEDIA/ImagesFolder', ConcatPaths([InstallDir, 'images']));
   FAudiosFolder := Ini.GetValue('/MEDIA/AudiosFolder', ConcatPaths([InstallDir, 'sounds']));
   FDocumentsFolder := Ini.GetValue('/MEDIA/DocumentsFolder', ConcatPaths([InstallDir, 'attachments']));
+  FOpenAfterExport := Ini.GetValue('/MEDIA/OpenAfterExport', True);
   { Security }
   FRememberUser := Ini.GetValue('/SECURITY/RememberUser', False);
   FRememberConnection := Ini.GetValue('/SECURITY/RememberConnection', True);
@@ -723,6 +726,7 @@ begin
   Ini.SetValue('/MEDIA/ImagesFolder', FImagesFolder);
   Ini.SetValue('/MEDIA/AudiosFolder', FAudiosFolder);
   Ini.SetValue('/MEDIA/DocumentsFolder', FDocumentsFolder);
+  Ini.SetValue('/MEDIA/OpenAfterExport', FOpenAfterExport);
   { Security }
   Ini.SetValue('/SECURITY/RememberUser', FRememberUser);
   Ini.SetValue('/SECURITY/RememberConnection', FRememberConnection);

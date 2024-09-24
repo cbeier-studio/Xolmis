@@ -49,6 +49,7 @@ type
     Image14: TImage;
     Image15: TImage;
     Image16: TImage;
+    icoOpenAfterExport: TImage;
     imgPrivacyTerms: TImage;
     icoUseConditionalFormatting: TImage;
     icoShowOutliers: TImage;
@@ -62,6 +63,7 @@ type
     Image9: TImage;
     iIcons: TImageList;
     lblAllowUsageData: TLabel;
+    lblOpenAfterExport: TLabel;
     lblPrivacyTerms: TLabel;
     lblAllowWriteLog: TLabel;
     lblAttachmentsPath: TLabel;
@@ -90,6 +92,7 @@ type
     lblTitleSecurity: TLabel;
     lblVernacularNames: TLabel;
     nbPages: TNotebook;
+    pOpenAfterExport: TBCPanel;
     pShowOutliers: TBCPanel;
     pContentAppearance: TPanel;
     pUseConditionalFormatting: TBCPanel;
@@ -138,6 +141,7 @@ type
     scrollMedia: TScrollBox;
     scrollSecurity: TScrollBox;
     scrollBackup: TScrollBox;
+    tsOpenAfterExport: TRxSwitch;
     tsShowOutliers: TRxSwitch;
     tsUseConditionalFormatting: TRxSwitch;
     tvMenu: TTreeView;
@@ -164,6 +168,7 @@ type
     procedure sbNewBackupClick(Sender: TObject);
     procedure sbRestoreBackupClick(Sender: TObject);
     procedure tsAllowUsageDataOn(Sender: TObject);
+    procedure tsOpenAfterExportOn(Sender: TObject);
     procedure tsShowOutliersOn(Sender: TObject);
     procedure tsUseConditionalFormattingOn(Sender: TObject);
     procedure tsWriteLogsOn(Sender: TObject);
@@ -275,6 +280,7 @@ begin
   imgPrivacyTerms.Images := iIconsDark;
   Image15.Images := iIconsDark;
   Image16.Images := iIconsDark;
+  icoOpenAfterExport.Images := iIconsDark;
 
   pEnterAsTab.Background.Color := clCardBGDefaultDark;
   pEnterAsTab.Border.Color := clSystemSolidNeutralFGDark;
@@ -302,6 +308,8 @@ begin
   pAudiosPath.Border.Color := clSystemSolidNeutralFGDark;
   pAttachmentsPath.Background.Color := clCardBGDefaultDark;
   pAttachmentsPath.Border.Color := clSystemSolidNeutralFGDark;
+  pOpenAfterExport.Background.Color := clCardBGDefaultDark;
+  pOpenAfterExport.Border.Color := clSystemSolidNeutralFGDark;
   pRememberConnection.Background.Color := clCardBGDefaultDark;
   pRememberConnection.Border.Color := clSystemSolidNeutralFGDark;
   pRememberUser.Background.Color := clCardBGDefaultDark;
@@ -324,6 +332,7 @@ begin
   tsUseConditionalFormatting.Color := pConfirmCancel.Background.Color;
   tsShowOutliers.Color := pConfirmCancel.Background.Color;
   tsShowSynonyms.Color := pConfirmCancel.Background.Color;
+  tsOpenAfterExport.Color := pConfirmCancel.Background.Color;
   tsRememberConnection.Color := pConfirmCancel.Background.Color;
   tsRememberUser.Color := pConfirmCancel.Background.Color;
   tsWriteLogs.Color := pConfirmCancel.Background.Color;
@@ -404,6 +413,11 @@ end;
 procedure TcfgOptions.tsEnterAsTabOn(Sender: TObject);
 begin
   XSettings.UseEnterAsTab := tsEnterAsTab.StateOn = sw_on;
+end;
+
+procedure TcfgOptions.tsOpenAfterExportOn(Sender: TObject);
+begin
+  XSettings.OpenFileAfterExport := tsOpenAfterExport.StateOn = sw_on;
 end;
 
 procedure TcfgOptions.tsRememberConnectionOn(Sender: TObject);

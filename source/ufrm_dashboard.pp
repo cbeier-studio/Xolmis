@@ -537,31 +537,31 @@ begin
   Working := True;
 
   pLoading.Visible := True;
-  Application.ProcessMessages;
+  //Application.ProcessMessages;
 
   {$IFDEF DEBUG}
   Usage := TElapsedTimer.Create(Format('Show %s', [Caption]), 'loading numbers');
   {$ENDIF}
   RefreshNumbers;
-  Application.ProcessMessages;
+  //Application.ProcessMessages;
 
   {$IFDEF DEBUG}
   Usage.AddPart('loading charts');
   {$ENDIF}
   RefreshChart;
-  Application.ProcessMessages;
+  //Application.ProcessMessages;
 
   {$IFDEF DEBUG}
   Usage.AddPart('loading survey map');
   {$ENDIF}
   RefreshMap;
-  Application.ProcessMessages;
+  //Application.ProcessMessages;
 
   {$IFDEF DEBUG}
   Usage.AddPart('loading last lifers');
   {$ENDIF}
   RefreshLifers;
-  Application.ProcessMessages;
+  //Application.ProcessMessages;
 
   pNotificationCenter.BeginUpdate;
   try
@@ -569,13 +569,13 @@ begin
     Usage.AddPart('loading expired permits');
     {$ENDIF}
     RefreshPermits;
-    Application.ProcessMessages;
+    //Application.ProcessMessages;
 
     {$IFDEF DEBUG}
     Usage.AddPart('loading next birthdays');
     {$ENDIF}
     RefreshBirthday;
-    Application.ProcessMessages;
+    //Application.ProcessMessages;
 
     {$IFDEF DEBUG}
     Usage.AddPart('loading bands running out');
