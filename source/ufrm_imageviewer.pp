@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, ComCtrls, StdCtrls, BCButton,
-  LCLIntf, ExtDlgs, LazFileUtils, BGRABitmap, BGRABitmapTypes, Types;
+  LCLIntf, ExtDlgs, Menus, LazFileUtils, BGRABitmap, BGRABitmapTypes, Types;
 
 type
 
@@ -37,6 +37,14 @@ type
     imgView: TImage;
     lblZoom: TLabel;
     lblSize: TLabel;
+    pmCopy: TMenuItem;
+    pmSaveAs: TMenuItem;
+    pmOpenExternal: TMenuItem;
+    pmRotateLeft: TMenuItem;
+    pmRotateRight: TMenuItem;
+    pmFlipHorizontal: TMenuItem;
+    pmFlipVertical: TMenuItem;
+    pmImage: TPopupMenu;
     pToolbar: TPanel;
     pStatusBar: TPanel;
     SaveDlg: TSavePictureDialog;
@@ -53,6 +61,8 @@ type
     sbSaveAs: TSpeedButton;
     sbZoomIn: TSpeedButton;
     sbZoomOut: TSpeedButton;
+    Separator1: TMenuItem;
+    Separator2: TMenuItem;
     tbZoom: TTrackBar;
     procedure btnNextClick(Sender: TObject);
     procedure btnPriorClick(Sender: TObject);
@@ -114,6 +124,8 @@ begin
   sbZoom100.Images := iButtonsDark;
   sbZoomOut.Images := iButtonsDark;
   sbZoomIn.Images := iButtonsDark;
+
+  pmImage.Images := iButtonsDark;
 end;
 
 procedure TfrmImageViewer.btnNextClick(Sender: TObject);

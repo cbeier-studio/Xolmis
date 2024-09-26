@@ -1254,6 +1254,7 @@ begin
   pmGrid.Images := iButtonsDark;
   pmGridChild.Images := iButtonsDark;
   pmColumn.Images := iButtonsDark;
+  pmPrint.Images := iButtonsDark;
   pmTree.Images := iButtonsDark;
   pmRecycle.Images := iButtonsDark;
   pmMark.Images := iButtonsDark;

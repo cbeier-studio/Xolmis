@@ -16,5 +16,12 @@
 {"hash":18052484,"name":"tfrmimageviewer.sbzoomadjust.hint","sourcebytes":[90,111,111,109,32,105,109,97,103,101,32,116,111,32,102,105,116],"value":"Zoom image to fit"},
 {"hash":132504933,"name":"tfrmimageviewer.sbzoom100.hint","sourcebytes":[90,111,111,109,32,116,111,32,97,99,116,117,97,108,32,115,105,122,101],"value":"Zoom to actual size"},
 {"hash":213797,"name":"tfrmimageviewer.lblzoom.caption","sourcebytes":[49,48,48,37],"value":"100%"},
-{"hash":210965944,"name":"tfrmimageviewer.lblsize.caption","sourcebytes":[48,32,195,151,32,48,32,112,120],"value":"0 \u00D7 0 px"}
+{"hash":210965944,"name":"tfrmimageviewer.lblsize.caption","sourcebytes":[48,32,195,151,32,48,32,112,120],"value":"0 \u00D7 0 px"},
+{"hash":191664549,"name":"tfrmimageviewer.pmcopy.caption","sourcebytes":[67,111,112,121,32,105,109,97,103,101],"value":"Copy image"},
+{"hash":266270,"name":"tfrmimageviewer.pmsaveas.caption","sourcebytes":[83,97,118,101,32,105,109,97,103,101,32,97,115,46,46,46],"value":"Save image as..."},
+{"hash":180768370,"name":"tfrmimageviewer.pmopenexternal.caption","sourcebytes":[79,112,101,110,32,105,110,32,101,120,116,101,114,110,97,108,32,101,100,105,116,111,114],"value":"Open in external editor"},
+{"hash":123372068,"name":"tfrmimageviewer.pmrotateleft.caption","sourcebytes":[82,111,116,97,116,101,32,105,109,97,103,101,32,108,101,102,116],"value":"Rotate image left"},
+{"hash":92430980,"name":"tfrmimageviewer.pmrotateright.caption","sourcebytes":[82,111,116,97,116,101,32,105,109,97,103,101,32,114,105,103,104,116],"value":"Rotate image right"},
+{"hash":107134297,"name":"tfrmimageviewer.pmfliphorizontal.caption","sourcebytes":[70,108,105,112,32,105,109,97,103,101,32,104,111,114,105,122,111,110,116,97,108,108,121],"value":"Flip image horizontally"},
+{"hash":128483817,"name":"tfrmimageviewer.pmflipvertical.caption","sourcebytes":[70,108,105,112,32,105,109,97,103,101,32,118,101,114,116,105,99,97,108,108,121],"value":"Flip image vertically"}
 ]}
