@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn, Buttons, ComCtrls,
-  atshapelinebgra, BCPanel, rxswitch;
+  ToggleSwitch, atshapelinebgra, BCPanel;
 
 type
 
@@ -141,17 +141,17 @@ type
     scrollMedia: TScrollBox;
     scrollSecurity: TScrollBox;
     scrollBackup: TScrollBox;
-    tsOpenAfterExport: TRxSwitch;
-    tsShowOutliers: TRxSwitch;
-    tsUseConditionalFormatting: TRxSwitch;
+    tsRememberConnection: TToggleSwitch;
+    tsRememberUser: TToggleSwitch;
+    tsWriteLogs: TToggleSwitch;
+    tsAllowUsageData: TToggleSwitch;
+    tsOpenAfterExport: TToggleSwitch;
+    tsShowSynonyms: TToggleSwitch;
+    tsShowOutliers: TToggleSwitch;
+    tsUseConditionalFormatting: TToggleSwitch;
+    tsEnterAsTab: TToggleSwitch;
+    tsConfirmCancel: TToggleSwitch;
     tvMenu: TTreeView;
-    tsAllowUsageData: TRxSwitch;
-    tsConfirmCancel: TRxSwitch;
-    tsEnterAsTab: TRxSwitch;
-    tsRememberConnection: TRxSwitch;
-    tsRememberUser: TRxSwitch;
-    tsShowSynonyms: TRxSwitch;
-    tsWriteLogs: TRxSwitch;
     procedure cbCheckUpdatesChange(Sender: TObject);
     procedure cbClearDeletedChange(Sender: TObject);
     procedure cbMainTaxonomyChange(Sender: TObject);
@@ -167,16 +167,16 @@ type
     procedure sbClearLogFilesClick(Sender: TObject);
     procedure sbNewBackupClick(Sender: TObject);
     procedure sbRestoreBackupClick(Sender: TObject);
-    procedure tsAllowUsageDataOn(Sender: TObject);
-    procedure tsOpenAfterExportOn(Sender: TObject);
-    procedure tsShowOutliersOn(Sender: TObject);
-    procedure tsUseConditionalFormattingOn(Sender: TObject);
-    procedure tsWriteLogsOn(Sender: TObject);
-    procedure tsConfirmCancelOn(Sender: TObject);
-    procedure tsEnterAsTabOn(Sender: TObject);
-    procedure tsRememberConnectionOn(Sender: TObject);
-    procedure tsRememberUserOn(Sender: TObject);
-    procedure tsShowSynonymsOn(Sender: TObject);
+    procedure tsAllowUsageDataChange(Sender: TObject);
+    procedure tsConfirmCancelChange(Sender: TObject);
+    procedure tsEnterAsTabChange(Sender: TObject);
+    procedure tsOpenAfterExportChange(Sender: TObject);
+    procedure tsRememberConnectionChange(Sender: TObject);
+    procedure tsRememberUserChange(Sender: TObject);
+    procedure tsShowOutliersChange(Sender: TObject);
+    procedure tsShowSynonymsChange(Sender: TObject);
+    procedure tsUseConditionalFormattingChange(Sender: TObject);
+    procedure tsWriteLogsChange(Sender: TObject);
     procedure tvMenuSelectionChanged(Sender: TObject);
   private
     procedure ApplyDarkMode;
@@ -198,19 +198,14 @@ uses
 
 { TcfgOptions }
 
-procedure TcfgOptions.tsWriteLogsOn(Sender: TObject);
-begin
-  XSettings.AllowWriteLogs := tsWriteLogs.StateOn = sw_on;
-end;
-
 procedure TcfgOptions.tvMenuSelectionChanged(Sender: TObject);
 begin
   nbPages.PageIndex := tvMenu.Selected.Index;
 end;
 
-procedure TcfgOptions.tsAllowUsageDataOn(Sender: TObject);
+procedure TcfgOptions.tsConfirmCancelChange(Sender: TObject);
 begin
-  XSettings.AllowSendUsageData := tsAllowUsageData.StateOn = sw_on;
+  XSettings.ConfirmCancel := tsConfirmCancel.Checked;
 end;
 
 procedure TcfgOptions.sbRestoreBackupClick(Sender: TObject);
@@ -222,6 +217,11 @@ begin
   OpenDlg.InitialDir:= XSettings.BackupFolder;
   if OpenDlg.Execute then
     RestoreBackup(OpenDlg.FileName);
+end;
+
+procedure TcfgOptions.tsAllowUsageDataChange(Sender: TObject);
+begin
+  XSettings.AllowSendUsageData := tsAllowUsageData.Checked;
 end;
 
 procedure TcfgOptions.sbNewBackupClick(Sender: TObject);
@@ -405,88 +405,73 @@ begin
     DeleteFile(FLog);
 end;
 
-procedure TcfgOptions.tsConfirmCancelOn(Sender: TObject);
+procedure TcfgOptions.tsEnterAsTabChange(Sender: TObject);
 begin
-  XSettings.ConfirmCancel := tsConfirmCancel.StateOn = sw_on;
+  XSettings.UseEnterAsTab := tsEnterAsTab.Checked;
 end;
 
-procedure TcfgOptions.tsEnterAsTabOn(Sender: TObject);
+procedure TcfgOptions.tsOpenAfterExportChange(Sender: TObject);
 begin
-  XSettings.UseEnterAsTab := tsEnterAsTab.StateOn = sw_on;
+  XSettings.OpenFileAfterExport := tsOpenAfterExport.Checked;
 end;
 
-procedure TcfgOptions.tsOpenAfterExportOn(Sender: TObject);
+procedure TcfgOptions.tsRememberConnectionChange(Sender: TObject);
 begin
-  XSettings.OpenFileAfterExport := tsOpenAfterExport.StateOn = sw_on;
-end;
-
-procedure TcfgOptions.tsRememberConnectionOn(Sender: TObject);
-begin
-  XSettings.RememberConnection := tsRememberConnection.StateOn = sw_on;
-  if tsRememberConnection.StateOn = sw_on then
+  XSettings.RememberConnection := tsRememberConnection.Checked;
+  if tsRememberConnection.Checked then
     XSettings.LastConnection := ConexaoDB.Name
   else
     XSettings.Delete('SECURITY', 'LastConnection');
 end;
 
-procedure TcfgOptions.tsRememberUserOn(Sender: TObject);
+procedure TcfgOptions.tsRememberUserChange(Sender: TObject);
 begin
-  XSettings.RememberUser := tsRememberUser.StateOn = sw_on;
-  if tsRememberUser.StateOn = sw_on then
+  XSettings.RememberUser := tsRememberUser.Checked;
+  if tsRememberUser.Checked then
     XSettings.LastUser := ActiveUser.UserName
   else
     XSettings.Delete('SECURITY', 'LastUser');
 end;
 
-procedure TcfgOptions.tsShowOutliersOn(Sender: TObject);
+procedure TcfgOptions.tsShowOutliersChange(Sender: TObject);
 begin
-  XSettings.ShowOutliersOnGrid := tsShowOutliers.StateOn = sw_on;
+  XSettings.ShowOutliersOnGrid := tsShowOutliers.Checked;
 end;
 
-procedure TcfgOptions.tsShowSynonymsOn(Sender: TObject);
+procedure TcfgOptions.tsShowSynonymsChange(Sender: TObject);
 begin
-  XSettings.ShowSynonyms := tsShowSynonyms.StateOn = sw_on;
+  XSettings.ShowSynonyms := tsShowSynonyms.Checked;
 end;
 
-procedure TcfgOptions.tsUseConditionalFormattingOn(Sender: TObject);
+procedure TcfgOptions.tsUseConditionalFormattingChange(Sender: TObject);
 begin
-  XSettings.UseConditionalFormatting := tsUseConditionalFormatting.StateOn = sw_on;
+  XSettings.UseConditionalFormatting := tsUseConditionalFormatting.Checked;
 
-  lblShowOutliers.Enabled := tsUseConditionalFormatting.StateOn = sw_on;
-  tsShowOutliers.Enabled := tsUseConditionalFormatting.StateOn = sw_on;
+  lblShowOutliers.Enabled := tsUseConditionalFormatting.Checked;
+  tsShowOutliers.Enabled := tsUseConditionalFormatting.Checked;
+end;
+
+procedure TcfgOptions.tsWriteLogsChange(Sender: TObject);
+begin
+  XSettings.AllowWriteLogs := tsWriteLogs.Checked;
 end;
 
 procedure TcfgOptions.LoadConfig;
 begin
   { GENERAL PARAMETERS AND INTERFACE }
-  if XSettings.ConfirmCancel then
-    tsConfirmCancel.StateOn := sw_on
-  else
-    tsConfirmCancel.StateOn := sw_off;
+  tsConfirmCancel.Checked := XSettings.ConfirmCancel;
   cbClearDeleted.ItemIndex := XSettings.ClearDeletedPeriod;
-  if XSettings.UseEnterAsTab then
-    tsEnterAsTab.StateOn := sw_on
-  else
-    tsEnterAsTab.StateOn := sw_off;
+  tsEnterAsTab.Checked := XSettings.UseEnterAsTab;
 
   { APPEARANCE }
   cbSelectedTheme.ItemIndex := XSettings.SelectedTheme;
-  if XSettings.UseConditionalFormatting then
-    tsUseConditionalFormatting.StateOn := sw_on
-  else
-    tsUseConditionalFormatting.StateOn := sw_off;
-  if XSettings.ShowOutliersOnGrid then
-    tsShowOutliers.StateOn := sw_on
-  else
-    tsShowOutliers.StateOn := sw_off;
+  tsUseConditionalFormatting.Checked := XSettings.UseConditionalFormatting;
+  tsShowOutliers.Checked := XSettings.ShowOutliersOnGrid;
 
   { COLLECTION }
   cbVernacularNames.ItemIndex := XSettings.VernacularNamesLanguage;
   cbMainTaxonomy.ItemIndex := XSettings.Taxonomy;
-  if XSettings.ShowSynonyms then
-    tsShowSynonyms.StateOn := sw_on
-  else
-    tsShowSynonyms.StateOn := sw_off;
+  tsShowSynonyms.Checked := XSettings.ShowSynonyms;
 
   { MEDIA }
   eImagesPath.Text := XSettings.ImagesFolder;
@@ -494,25 +479,13 @@ begin
   eAttachmentsPath.Text := XSettings.DocumentsFolder;
 
   { SECURITY }
-  if XSettings.RememberUser then
-    tsRememberUser.StateOn := sw_on
-  else
-    tsRememberUser.StateOn := sw_off;
-  if XSettings.RememberConnection then
-    tsRememberConnection.StateOn := sw_on
-  else
-    tsRememberConnection.StateOn := sw_off;
+  tsRememberUser.Checked := XSettings.RememberUser;
+  tsRememberConnection.Checked := XSettings.RememberConnection;
   cbCheckUpdates.ItemIndex := XSettings.AutoUpdates;
 
   { PRIVACY }
-  if XSettings.AllowWriteLogs then
-    tsWriteLogs.StateOn := sw_on
-  else
-    tsWriteLogs.StateOn := sw_off;
-  if XSettings.AllowSendUsageData then
-    tsAllowUsageData.StateOn := sw_on
-  else
-    tsAllowUsageData.StateOn := sw_off;
+  tsWriteLogs.Checked := XSettings.AllowWriteLogs;
+  tsAllowUsageData.Checked := XSettings.AllowSendUsageData;
 
   { BACKUP AND RESTORE }
   eBackupPath.Text := XSettings.BackupFolder;

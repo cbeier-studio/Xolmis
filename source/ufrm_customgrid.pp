@@ -23,9 +23,9 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character, Buttons, CheckLst, DBCtrls,
-  laz.VirtualTrees, TAGraph, TASeries, TADbSource, TASources, LR_PGrid, TAGUIConnectorBGRA, rxswitch,
-  atshapelinebgra, BCPanel, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, mvMapViewer, mvDE_BGRA,
-  mvTypes, mvGpsObj, mvDrawingEngine;
+  laz.VirtualTrees, TAGraph, TASeries, TADbSource, TASources, LR_PGrid, TAGUIConnectorBGRA,
+  atshapelinebgra, BCPanel, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, ToggleSwitch,
+  mvMapViewer, mvDE_BGRA, mvTypes, mvGpsObj, mvDrawingEngine;
 
 type
   { TStringMemoEditor }
@@ -713,9 +713,9 @@ type
     titleImages: TLabel;
     titleQuickFilters: TLabel;
     titleMap: TLabel;
-    tsTaxonomyCbro: TRxSwitch;
-    tsTaxonomyClements: TRxSwitch;
-    tsTaxonomyIoc: TRxSwitch;
+    tsTaxonomyClements: TToggleSwitch;
+    tsTaxonomyIoc: TToggleSwitch;
+    tsTaxonomyCbro: TToggleSwitch;
     tvDateFilter: TLazVirtualStringTree;
     tvSiteFilter: TLazVirtualStringTree;
     tvTaxaFilter: TLazVirtualStringTree;
@@ -2291,9 +2291,9 @@ begin
   lblCountTaxonRanksFilter.Caption := rsNoneSelected;
   clbTaxonRanksFilter.CheckAll(cbUnchecked, False);
 
-  tsTaxonomyClements.StateOn := sw_off;
-  tsTaxonomyIoc.StateOn := sw_off;
-  tsTaxonomyCbro.StateOn := sw_off;
+  tsTaxonomyClements.Checked := False;
+  tsTaxonomyIoc.Checked := False;
+  tsTaxonomyCbro.Checked := False;
 
   rbExtinctAll.Checked := True;
 
@@ -5043,19 +5043,19 @@ begin
   //if RanksFilter <> EmptyStr then
   //  aList.Add(RanksFilter);
 
-  if tsTaxonomyClements.StateOn = sw_on then
+  if tsTaxonomyClements.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('clements_taxonomy', 'Clements/eBird', sdtBoolean,
       crEqual, False, '1'));
   end;
-  if tsTaxonomyIoc.StateOn = sw_on then
+  if tsTaxonomyIoc.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('ioc_taxonomy', 'IOC', sdtBoolean,
       crEqual, False, '1'));
   end;
-  if tsTaxonomyCbro.StateOn = sw_on then
+  if tsTaxonomyCbro.Checked then
   begin
     sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
     FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('cbro_taxonomy', 'CBRO', sdtBoolean,

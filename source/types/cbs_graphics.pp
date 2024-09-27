@@ -21,7 +21,7 @@ unit cbs_graphics;
 interface
 
 uses
-  Classes, SysUtils, Graphics, Controls, StdCtrls, ExtCtrls, ImgList, DB, RxDBGrid, EditBtn, DateUtils,
+  Classes, SysUtils, Graphics, Controls, StdCtrls, ExtCtrls, ImgList, DB, EditBtn, DateUtils,
   StrUtils, LCLIntf, LCLType, cbs_datatypes;
 
   { Modify the graphic interface elements }
@@ -31,8 +31,8 @@ uses
   procedure LoadGlyph(aImgLst: TCustomImageList; aIndex: Integer; aGlyph: TBitmap);
   procedure LoadIcone(aImgLst: TCustomImageList; aIndex: Integer; aIcon: TIcon);
   procedure LoadEditButton(aButtonedEdit: TEditButton; aIndex: Integer);
-  procedure UpdateHeaderCheck(aDataset: TDataset; aTabela: TTableType; aModifier: TRecordStatus;
-    aWhere: TStrings; aColumn: TRxColumn);
+  //procedure UpdateHeaderCheck(aDataset: TDataset; aTabela: TTableType; aModifier: TRecordStatus;
+  //  aWhere: TStrings; aColumn: TRxColumn);
   procedure TogglePassView(aEdit: TEditButton);
 
   function TryExifStringToDateTime(const S: string; var aDateTime: TDateTime): Boolean;
@@ -123,40 +123,40 @@ begin
   aButtonedEdit.ImageIndex := aIndex;
 end;
 
-procedure UpdateHeaderCheck(aDataset: TDataset; aTabela: TTableType; aModifier: TRecordStatus;
-  aWhere: TStrings; aColumn: TRxColumn);
-var
-  nMark: Integer;
-begin
-  { DataSet is empty }
-  if (aDataset.RecordCount = 0) then
-  begin
-    aColumn.Title.ImageIndex := 6;
-    //aColumn.Title.Hint := rs_HintHeaderAllUnmarked;
-    Exit;
-  end;
-
-  nMark := MarkedCount(aTabela, aModifier, aWhere);
-
-  { All unmarked }
-  if nMark = 0 then
-  begin
-    aColumn.Title.ImageIndex := 6;
-    //aColumn.Title.Hint := rs_HintHeaderAllUnmarked;
-  end else
-  { Some marked }
-  if (nMark > 0) and (nMark < aDataset.RecordCount) then
-  begin
-    aColumn.Title.ImageIndex := 7;
-    //aColumn.Title.Hint := Format(rs_HintHeaderSomeMarked, [nMark, aDataSet.RecordCount]);
-  end else
-  { All marked }
-  if nMark = aDataset.RecordCount then
-  begin
-    aColumn.Title.ImageIndex := 8;
-    //aColumn.Title.Hint := Format(rs_HintHeaderAllMarked, [nMark]);
-  end;
-end;
+//procedure UpdateHeaderCheck(aDataset: TDataset; aTabela: TTableType; aModifier: TRecordStatus;
+//  aWhere: TStrings; aColumn: TRxColumn);
+//var
+//  nMark: Integer;
+//begin
+//  { DataSet is empty }
+//  if (aDataset.RecordCount = 0) then
+//  begin
+//    aColumn.Title.ImageIndex := 6;
+//    //aColumn.Title.Hint := rs_HintHeaderAllUnmarked;
+//    Exit;
+//  end;
+//
+//  nMark := MarkedCount(aTabela, aModifier, aWhere);
+//
+//  { All unmarked }
+//  if nMark = 0 then
+//  begin
+//    aColumn.Title.ImageIndex := 6;
+//    //aColumn.Title.Hint := rs_HintHeaderAllUnmarked;
+//  end else
+//  { Some marked }
+//  if (nMark > 0) and (nMark < aDataset.RecordCount) then
+//  begin
+//    aColumn.Title.ImageIndex := 7;
+//    //aColumn.Title.Hint := Format(rs_HintHeaderSomeMarked, [nMark, aDataSet.RecordCount]);
+//  end else
+//  { All marked }
+//  if nMark = aDataset.RecordCount then
+//  begin
+//    aColumn.Title.ImageIndex := 8;
+//    //aColumn.Title.Hint := Format(rs_HintHeaderAllMarked, [nMark]);
+//  end;
+//end;
 
 procedure TogglePassView(aEdit: TEditButton);
 begin

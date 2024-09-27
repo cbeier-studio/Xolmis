@@ -21,8 +21,8 @@ unit ucfg_delimiters;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, atshapelinebgra, BCPanel,
-  rxswitch;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, ToggleSwitch, atshapelinebgra,
+  BCPanel;
 
 type
 
@@ -47,8 +47,8 @@ type
     pBottom: TPanel;
     sbCancel: TButton;
     sbOK: TButton;
-    tsHaveHeader: TRxSwitch;
-    tsQuotedAsText: TRxSwitch;
+    tsQuotedAsText: TToggleSwitch;
+    tsHaveHeader: TToggleSwitch;
     procedure cbDelimiterSelect(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -119,10 +119,7 @@ begin
     ApplyDarkMode;
 
   { #todo : Get the values from config }
-  if FQuotes then
-    tsQuotedAsText.StateOn := sw_on
-  else
-    tsQuotedAsText.StateOn := sw_off;
+  tsQuotedAsText.Checked := FQuotes;
 
   case FDelimiter of
     ';': cbDelimiter.ItemIndex := 0;
@@ -134,10 +131,7 @@ begin
     eOther.Text := FDelimiter;
   end;
 
-  if FHeader then
-    tsHaveHeader.StateOn := sw_on
-  else
-    tsHaveHeader.StateOn := sw_off;
+  tsHaveHeader.Checked := FHeader;
 
   case FDecimal of
     ',': cbDecimalSeparator.ItemIndex := 0;
@@ -156,7 +150,7 @@ begin
   { #todo : Validate values }
 
   { Double quoted values as text }
-  QuotedAsText := tsQuotedAsText.StateOn = sw_on;
+  QuotedAsText := tsQuotedAsText.Checked;
   { Delimiter }
   cOther := #0;
   if (cbDelimiter.ItemIndex = 3) and (Length(Trim(eOther.Text)) > 0) then
@@ -176,7 +170,7 @@ begin
     1: DecimalSeparator := '.';  { period/point }
   end;
   { Have a header line with column names }
-  HaveHeader := tsHaveHeader.StateOn = sw_on;
+  HaveHeader := tsHaveHeader.Checked;
 
   ModalResult := mrOK;
 end;
@@ -184,10 +178,7 @@ end;
 procedure TcfgDelimiters.SetQuotedAsText(aValue: Boolean);
 begin
   FQuotes := aValue;
-  if FQuotes then
-    tsQuotedAsText.StateOn := sw_on
-  else
-    tsQuotedAsText.StateOn := sw_off;
+  tsQuotedAsText.Checked := FQuotes;
 end;
 
 procedure TcfgDelimiters.SetDelimiter(aValue: Char);
@@ -216,10 +207,7 @@ end;
 procedure TcfgDelimiters.SetHaveHeader(aValue: Boolean);
 begin
   FHeader := aValue;
-  if FHeader then
-    tsHaveHeader.StateOn := sw_on
-  else
-    tsHaveHeader.StateOn := sw_off;
+  tsHaveHeader.Checked := FHeader;
 end;
 
 end.

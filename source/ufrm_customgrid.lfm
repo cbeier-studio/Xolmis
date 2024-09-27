@@ -95,20 +95,20 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alClient
           BorderStyle = bsNone
           ClientHeight = 515
-          ClientWidth = 464
+          ClientWidth = 447
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel
             Left = 0
             Height = 15
-            Top = 4914
+            Top = 4890
             Width = 447
             Align = alTop
             Shape = bsSpacer
           end
           object pQuickFiltersContent: TBCPanel
             Left = 0
-            Height = 4914
+            Height = 4890
             Top = 0
             Width = 447
             Align = alTop
@@ -872,7 +872,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pFatFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 4648
+              Top = 4624
               Width = 429
               Align = alTop
               AutoSize = True
@@ -1497,7 +1497,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pExtinctFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 4192
+              Top = 4168
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 16
@@ -1705,7 +1705,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSexingFilters: TBCPanel
               Left = 9
               Height = 188
-              Top = 4705
+              Top = 4681
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2097,7 +2097,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSynonymFilters: TBCPanel
               Left = 9
               Height = 88
-              Top = 4094
+              Top = 4070
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2345,7 +2345,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pMoltingFilters: TBCPanel
               Left = 9
               Height = 235
-              Top = 4403
+              Top = 4379
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2824,7 +2824,7 @@ object frmCustomGrid: TfrmCustomGrid
             end
             object pTaxonomiesFilters: TBCPanel
               Left = 9
-              Height = 156
+              Height = 132
               Top = 3928
               Width = 429
               Align = alTop
@@ -2867,7 +2867,7 @@ object frmCustomGrid: TfrmCustomGrid
               Visible = False
               object pTaxonomyClementsFilter: TBCPanel
                 Left = 0
-                Height = 52
+                Height = 44
                 Top = 0
                 Width = 429
                 Align = alTop
@@ -2911,7 +2911,7 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 0
                 object icoTaxonomiesFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 20
                   Top = 12
                   Width = 30
                   Align = alLeft
@@ -2921,7 +2921,7 @@ object frmCustomGrid: TfrmCustomGrid
                 end
                 object lblClementsFilter: TLabel
                   Left = 54
-                  Height = 28
+                  Height = 20
                   Top = 12
                   Width = 82
                   Align = alLeft
@@ -2929,27 +2929,28 @@ object frmCustomGrid: TfrmCustomGrid
                   Layout = tlCenter
                   ParentColor = False
                 end
-                object tsTaxonomyClements: TRxSwitch
-                  Left = 351
-                  Height = 28
-                  Top = 12
-                  Width = 62
-                  Align = alRight
+                object tsTaxonomyClements: TToggleSwitch
+                  AnchorSideTop.Control = pTaxonomyClementsFilter
+                  AnchorSideTop.Side = asrCenter
+                  AnchorSideRight.Control = pTaxonomyClementsFilter
+                  AnchorSideRight.Side = asrBottom
+                  Left = 363
+                  Height = 25
+                  Top = 10
+                  Width = 50
+                  OnColor = 13066075
+                  OffColor = clSilver
+                  OnChange = SetFilters
+                  Anchors = [akTop, akRight]
                   Color = 16448250
-                  ParentColor = False
-                  TabOrder = 0
-                  TextPosition = tpLeft
-                  Style = swsHorizontal
-                  OnKeyDown = FormKeyDown
-                  OnKeyPress = FormKeyPress
-                  OnOn = SetFilters
-                  OnOff = SetFilters
+                  Constraints.MaxHeight = 25
+                  Constraints.MaxWidth = 50
                 end
               end
               object pTaxonomyIocFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 52
+                Height = 44
+                Top = 44
                 Width = 429
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
@@ -2992,7 +2993,7 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 1
                 object icoTaxonomyIocFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 20
                   Top = 12
                   Width = 30
                   Align = alLeft
@@ -3000,7 +3001,7 @@ object frmCustomGrid: TfrmCustomGrid
                 end
                 object lblTaxonomyIocFilter: TLabel
                   Left = 54
-                  Height = 28
+                  Height = 20
                   Top = 12
                   Width = 20
                   Align = alLeft
@@ -3008,27 +3009,28 @@ object frmCustomGrid: TfrmCustomGrid
                   Layout = tlCenter
                   ParentColor = False
                 end
-                object tsTaxonomyIoc: TRxSwitch
-                  Left = 351
-                  Height = 28
-                  Top = 12
-                  Width = 62
-                  Align = alRight
+                object tsTaxonomyIoc: TToggleSwitch
+                  AnchorSideTop.Control = pTaxonomyIocFilter
+                  AnchorSideTop.Side = asrCenter
+                  AnchorSideRight.Control = pTaxonomyIocFilter
+                  AnchorSideRight.Side = asrBottom
+                  Left = 363
+                  Height = 25
+                  Top = 10
+                  Width = 50
+                  OnColor = 13066075
+                  OffColor = clSilver
+                  OnChange = SetFilters
+                  Anchors = [akTop, akRight]
                   Color = 16448250
-                  ParentColor = False
-                  TabOrder = 0
-                  TextPosition = tpLeft
-                  Style = swsHorizontal
-                  OnKeyDown = FormKeyDown
-                  OnKeyPress = FormKeyPress
-                  OnOn = SetFilters
-                  OnOff = SetFilters
+                  Constraints.MaxHeight = 25
+                  Constraints.MaxWidth = 50
                 end
               end
               object pTaxonomyCbroFilter: TBCPanel
                 Left = 0
-                Height = 52
-                Top = 104
+                Height = 44
+                Top = 88
                 Width = 429
                 Align = alTop
                 ChildSizing.LeftRightSpacing = 16
@@ -3071,7 +3073,7 @@ object frmCustomGrid: TfrmCustomGrid
                 TabOrder = 2
                 object icoTaxonomyCbroFilter: TImage
                   Left = 16
-                  Height = 28
+                  Height = 20
                   Top = 12
                   Width = 30
                   Align = alLeft
@@ -3079,7 +3081,7 @@ object frmCustomGrid: TfrmCustomGrid
                 end
                 object lblTaxonomyCbroFilter: TLabel
                   Left = 54
-                  Height = 28
+                  Height = 20
                   Top = 12
                   Width = 31
                   Align = alLeft
@@ -3087,21 +3089,22 @@ object frmCustomGrid: TfrmCustomGrid
                   Layout = tlCenter
                   ParentColor = False
                 end
-                object tsTaxonomyCbro: TRxSwitch
-                  Left = 351
-                  Height = 28
-                  Top = 12
-                  Width = 62
-                  Align = alRight
+                object tsTaxonomyCbro: TToggleSwitch
+                  AnchorSideTop.Control = pTaxonomyCbroFilter
+                  AnchorSideTop.Side = asrCenter
+                  AnchorSideRight.Control = pTaxonomyCbroFilter
+                  AnchorSideRight.Side = asrBottom
+                  Left = 363
+                  Height = 25
+                  Top = 10
+                  Width = 50
+                  OnColor = 13066075
+                  OffColor = clSilver
+                  OnChange = SetFilters
+                  Anchors = [akTop, akRight]
                   Color = 16448250
-                  ParentColor = False
-                  TabOrder = 0
-                  TextPosition = tpLeft
-                  Style = swsHorizontal
-                  OnKeyDown = FormKeyDown
-                  OnKeyPress = FormKeyPress
-                  OnOn = SetFilters
-                  OnOff = SetFilters
+                  Constraints.MaxHeight = 25
+                  Constraints.MaxWidth = 50
                 end
               end
             end
@@ -3319,7 +3322,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pAgingFilters: TBCPanel
               Left = 9
               Height = 141
-              Top = 4252
+              Top = 4228
               Width = 429
               Align = alTop
               AutoSize = True

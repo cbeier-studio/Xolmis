@@ -65,7 +65,7 @@ object cfgOptions: TcfgOptions
         Top = 0
         Width = 657
         HorzScrollBar.Page = 375
-        VertScrollBar.Page = 292
+        VertScrollBar.Page = 282
         Align = alClient
         BorderStyle = bsNone
         ClientHeight = 422
@@ -74,7 +74,7 @@ object cfgOptions: TcfgOptions
         TabOrder = 0
         object pContentGeneral: TPanel
           Left = 0
-          Height = 292
+          Height = 282
           Top = 0
           Width = 657
           Align = alTop
@@ -82,7 +82,7 @@ object cfgOptions: TcfgOptions
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
-          ClientHeight = 292
+          ClientHeight = 282
           ClientWidth = 657
           ParentBackground = False
           TabOrder = 0
@@ -102,7 +102,7 @@ object cfgOptions: TcfgOptions
           end
           object pEnterAsTab: TBCPanel
             Left = 16
-            Height = 52
+            Height = 47
             Top = 52
             Width = 625
             Align = alTop
@@ -133,7 +133,6 @@ object cfgOptions: TcfgOptions
             Border.Color = 13750737
             Border.Style = bboSolid
             BorderBCStyle = bpsBorder
-            Constraints.MinHeight = 52
             FontEx.Color = clDefault
             FontEx.FontQuality = fqSystemClearType
             FontEx.Shadow = False
@@ -147,7 +146,7 @@ object cfgOptions: TcfgOptions
             TabOrder = 0
             object Image4: TImage
               Left = 16
-              Height = 28
+              Height = 23
               Top = 12
               Width = 27
               Align = alLeft
@@ -158,7 +157,7 @@ object cfgOptions: TcfgOptions
             end
             object lblEnterAsTab: TLabel
               Left = 51
-              Height = 28
+              Height = 23
               Top = 12
               Width = 276
               Align = alLeft
@@ -166,25 +165,28 @@ object cfgOptions: TcfgOptions
               Layout = tlCenter
               ParentColor = False
             end
-            object tsEnterAsTab: TRxSwitch
+            object tsEnterAsTab: TToggleSwitch
+              AnchorSideTop.Control = pEnterAsTab
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pEnterAsTab
+              AnchorSideRight.Side = asrBottom
               Left = 559
-              Height = 28
-              Top = 12
+              Height = 25
+              Top = 11
               Width = 50
-              Align = alRight
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsEnterAsTabChange
+              Anchors = [akTop, akRight]
               Color = 16448250
-              ParentColor = False
-              TabOrder = 0
-              TextPosition = tpLeft
-              Style = swsHorizontal
-              OnOn = tsEnterAsTabOn
-              OnOff = tsEnterAsTabOn
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
             end
           end
           object pConfirmCancel: TBCPanel
             Left = 16
-            Height = 52
-            Top = 112
+            Height = 47
+            Top = 107
             Width = 625
             Align = alTop
             BorderSpacing.Bottom = 8
@@ -214,7 +216,6 @@ object cfgOptions: TcfgOptions
             Border.Color = 13750737
             Border.Style = bboSolid
             BorderBCStyle = bpsBorder
-            Constraints.MinHeight = 52
             FontEx.Color = clDefault
             FontEx.FontQuality = fqSystemClearType
             FontEx.Shadow = False
@@ -228,7 +229,7 @@ object cfgOptions: TcfgOptions
             TabOrder = 1
             object Image1: TImage
               Left = 16
-              Height = 28
+              Height = 23
               Top = 12
               Width = 27
               Align = alLeft
@@ -239,7 +240,7 @@ object cfgOptions: TcfgOptions
             end
             object lblConfirmCancel: TLabel
               Left = 51
-              Height = 28
+              Height = 23
               Top = 12
               Width = 191
               Align = alLeft
@@ -247,25 +248,28 @@ object cfgOptions: TcfgOptions
               Layout = tlCenter
               ParentColor = False
             end
-            object tsConfirmCancel: TRxSwitch
+            object tsConfirmCancel: TToggleSwitch
+              AnchorSideTop.Control = pConfirmCancel
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pConfirmCancel
+              AnchorSideRight.Side = asrBottom
               Left = 559
-              Height = 28
-              Top = 12
+              Height = 25
+              Top = 11
               Width = 50
-              Align = alRight
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsConfirmCancelChange
+              Anchors = [akTop, akRight]
               Color = 16448250
-              ParentColor = False
-              TabOrder = 0
-              TextPosition = tpLeft
-              Style = swsHorizontal
-              OnOn = tsConfirmCancelOn
-              OnOff = tsConfirmCancelOn
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
             end
           end
           object pClearDeleted: TBCPanel
             Left = 16
             Height = 47
-            Top = 172
+            Top = 162
             Width = 625
             Align = alTop
             AutoSize = True
@@ -351,7 +355,7 @@ object cfgOptions: TcfgOptions
           object pCheckUpdates: TBCPanel
             Left = 16
             Height = 49
-            Top = 227
+            Top = 217
             Width = 625
             Align = alTop
             AutoSize = True
@@ -454,7 +458,7 @@ object cfgOptions: TcfgOptions
         Top = 0
         Width = 657
         HorzScrollBar.Page = 474
-        VertScrollBar.Page = 227
+        VertScrollBar.Page = 217
         Align = alClient
         BorderStyle = bsNone
         ClientHeight = 422
@@ -463,7 +467,7 @@ object cfgOptions: TcfgOptions
         TabOrder = 0
         object pContentAppearance: TPanel
           Left = 0
-          Height = 227
+          Height = 217
           Top = 0
           Width = 657
           Align = alTop
@@ -471,7 +475,7 @@ object cfgOptions: TcfgOptions
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
-          ClientHeight = 227
+          ClientHeight = 217
           ClientWidth = 657
           ParentBackground = False
           TabOrder = 0
@@ -491,7 +495,7 @@ object cfgOptions: TcfgOptions
           end
           object pUseConditionalFormatting: TBCPanel
             Left = 16
-            Height = 52
+            Height = 47
             Top = 107
             Width = 625
             Align = alTop
@@ -521,7 +525,6 @@ object cfgOptions: TcfgOptions
             Border.Color = 13750737
             Border.Style = bboSolid
             BorderBCStyle = bpsBorder
-            Constraints.MinHeight = 52
             FontEx.Color = clDefault
             FontEx.FontQuality = fqSystemClearType
             FontEx.Shadow = False
@@ -536,7 +539,7 @@ object cfgOptions: TcfgOptions
             TabOrder = 0
             object icoUseConditionalFormatting: TImage
               Left = 16
-              Height = 28
+              Height = 23
               Top = 12
               Width = 27
               Align = alLeft
@@ -547,7 +550,7 @@ object cfgOptions: TcfgOptions
             end
             object lblUseConditionalFormatting: TLabel
               Left = 51
-              Height = 28
+              Height = 23
               Top = 12
               Width = 184
               Align = alLeft
@@ -555,25 +558,28 @@ object cfgOptions: TcfgOptions
               Layout = tlCenter
               ParentColor = False
             end
-            object tsUseConditionalFormatting: TRxSwitch
+            object tsUseConditionalFormatting: TToggleSwitch
+              AnchorSideTop.Control = pUseConditionalFormatting
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pUseConditionalFormatting
+              AnchorSideRight.Side = asrBottom
               Left = 559
-              Height = 28
-              Top = 12
+              Height = 25
+              Top = 11
               Width = 50
-              Align = alRight
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsUseConditionalFormattingChange
+              Anchors = [akTop, akRight]
               Color = 16448250
-              ParentColor = False
-              TabOrder = 0
-              TextPosition = tpLeft
-              Style = swsHorizontal
-              OnOn = tsUseConditionalFormattingOn
-              OnOff = tsUseConditionalFormattingOn
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
             end
           end
           object pShowOutliers: TBCPanel
             Left = 16
-            Height = 52
-            Top = 159
+            Height = 47
+            Top = 154
             Width = 625
             Align = alTop
             BorderSpacing.Bottom = 8
@@ -603,7 +609,6 @@ object cfgOptions: TcfgOptions
             Border.Color = 13750737
             Border.Style = bboSolid
             BorderBCStyle = bpsBorder
-            Constraints.MinHeight = 52
             FontEx.Color = clDefault
             FontEx.FontQuality = fqSystemClearType
             FontEx.Shadow = False
@@ -618,7 +623,7 @@ object cfgOptions: TcfgOptions
             TabOrder = 1
             object icoShowOutliers: TImage
               Left = 16
-              Height = 28
+              Height = 23
               Top = 12
               Width = 27
               Align = alLeft
@@ -629,7 +634,7 @@ object cfgOptions: TcfgOptions
             end
             object lblShowOutliers: TLabel
               Left = 51
-              Height = 28
+              Height = 23
               Top = 12
               Width = 208
               Align = alLeft
@@ -637,19 +642,22 @@ object cfgOptions: TcfgOptions
               Layout = tlCenter
               ParentColor = False
             end
-            object tsShowOutliers: TRxSwitch
+            object tsShowOutliers: TToggleSwitch
+              AnchorSideTop.Control = pShowOutliers
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pShowOutliers
+              AnchorSideRight.Side = asrBottom
               Left = 559
-              Height = 28
-              Top = 12
+              Height = 25
+              Top = 11
               Width = 50
-              Align = alRight
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsShowOutliersChange
+              Anchors = [akTop, akRight]
               Color = 16448250
-              ParentColor = False
-              TabOrder = 0
-              TextPosition = tpLeft
-              Style = swsHorizontal
-              OnOn = tsShowOutliersOn
-              OnOff = tsShowOutliersOn
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
             end
           end
           object pSelectedTheme: TBCPanel
@@ -760,7 +768,7 @@ object cfgOptions: TcfgOptions
         Top = 0
         Width = 657
         HorzScrollBar.Page = 272
-        VertScrollBar.Page = 214
+        VertScrollBar.Page = 209
         Align = alClient
         BorderStyle = bsNone
         ClientHeight = 422
@@ -769,7 +777,7 @@ object cfgOptions: TcfgOptions
         TabOrder = 0
         object pContentCollection: TPanel
           Left = 0
-          Height = 214
+          Height = 209
           Top = 0
           Width = 657
           Align = alTop
@@ -777,7 +785,7 @@ object cfgOptions: TcfgOptions
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
-          ClientHeight = 214
+          ClientHeight = 209
           ClientWidth = 657
           ParentBackground = False
           TabOrder = 0
@@ -966,7 +974,7 @@ object cfgOptions: TcfgOptions
           end
           object pShowSynonyms: TBCPanel
             Left = 16
-            Height = 52
+            Height = 47
             Top = 146
             Width = 625
             Align = alTop
@@ -997,7 +1005,6 @@ object cfgOptions: TcfgOptions
             Border.Color = 13750737
             Border.Style = bboSolid
             BorderBCStyle = bpsBorder
-            Constraints.MinHeight = 52
             FontEx.Color = clDefault
             FontEx.FontQuality = fqSystemClearType
             FontEx.Shadow = False
@@ -1012,7 +1019,7 @@ object cfgOptions: TcfgOptions
             TabOrder = 2
             object Image6: TImage
               Left = 16
-              Height = 28
+              Height = 23
               Top = 12
               Width = 27
               Align = alLeft
@@ -1023,7 +1030,7 @@ object cfgOptions: TcfgOptions
             end
             object lblShowSynonyms: TLabel
               Left = 51
-              Height = 28
+              Height = 23
               Top = 12
               Width = 173
               Align = alLeft
@@ -1031,19 +1038,22 @@ object cfgOptions: TcfgOptions
               Layout = tlCenter
               ParentColor = False
             end
-            object tsShowSynonyms: TRxSwitch
+            object tsShowSynonyms: TToggleSwitch
+              AnchorSideTop.Control = pShowSynonyms
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pShowSynonyms
+              AnchorSideRight.Side = asrBottom
               Left = 559
-              Height = 28
-              Top = 12
+              Height = 25
+              Top = 11
               Width = 50
-              Align = alRight
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsShowSynonymsChange
+              Anchors = [akTop, akRight]
               Color = 16448250
-              ParentColor = False
-              TabOrder = 0
-              TextPosition = tpLeft
-              Style = swsHorizontal
-              OnOn = tsShowSynonymsOn
-              OnOff = tsShowSynonymsOn
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
             end
           end
         end
@@ -1056,7 +1066,7 @@ object cfgOptions: TcfgOptions
         Top = 0
         Width = 657
         HorzScrollBar.Page = 481
-        VertScrollBar.Page = 277
+        VertScrollBar.Page = 272
         Align = alClient
         BorderStyle = bsNone
         ClientHeight = 422
@@ -1065,7 +1075,7 @@ object cfgOptions: TcfgOptions
         TabOrder = 0
         object pContentMedia: TPanel
           Left = 0
-          Height = 277
+          Height = 272
           Top = 0
           Width = 657
           Align = alTop
@@ -1073,7 +1083,7 @@ object cfgOptions: TcfgOptions
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
-          ClientHeight = 277
+          ClientHeight = 272
           ClientWidth = 657
           ParentBackground = False
           TabOrder = 0
@@ -1347,7 +1357,7 @@ object cfgOptions: TcfgOptions
           end
           object pOpenAfterExport: TBCPanel
             Left = 16
-            Height = 52
+            Height = 47
             Top = 209
             Width = 625
             Align = alTop
@@ -1378,7 +1388,6 @@ object cfgOptions: TcfgOptions
             Border.Color = 13750737
             Border.Style = bboSolid
             BorderBCStyle = bpsBorder
-            Constraints.MinHeight = 52
             FontEx.Color = clDefault
             FontEx.FontQuality = fqSystemClearType
             FontEx.Shadow = False
@@ -1392,7 +1401,7 @@ object cfgOptions: TcfgOptions
             TabOrder = 3
             object icoOpenAfterExport: TImage
               Left = 16
-              Height = 28
+              Height = 23
               Top = 12
               Width = 27
               Align = alLeft
@@ -1403,7 +1412,7 @@ object cfgOptions: TcfgOptions
             end
             object lblOpenAfterExport: TLabel
               Left = 51
-              Height = 28
+              Height = 23
               Top = 12
               Width = 116
               Align = alLeft
@@ -1411,19 +1420,22 @@ object cfgOptions: TcfgOptions
               Layout = tlCenter
               ParentColor = False
             end
-            object tsOpenAfterExport: TRxSwitch
+            object tsOpenAfterExport: TToggleSwitch
+              AnchorSideTop.Control = pOpenAfterExport
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pOpenAfterExport
+              AnchorSideRight.Side = asrBottom
               Left = 559
-              Height = 28
-              Top = 12
+              Height = 25
+              Top = 11
               Width = 50
-              Align = alRight
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsOpenAfterExportChange
+              Anchors = [akTop, akRight]
               Color = 16448250
-              ParentColor = False
-              TabOrder = 0
-              TextPosition = tpLeft
-              Style = swsHorizontal
-              OnOn = tsOpenAfterExportOn
-              OnOff = tsOpenAfterExportOn
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
             end
           end
         end
@@ -1436,7 +1448,7 @@ object cfgOptions: TcfgOptions
         Top = 0
         Width = 657
         HorzScrollBar.Page = 352
-        VertScrollBar.Page = 328
+        VertScrollBar.Page = 308
         Align = alClient
         BorderStyle = bsNone
         ClientHeight = 422
@@ -1445,7 +1457,7 @@ object cfgOptions: TcfgOptions
         TabOrder = 0
         object pContentSecurity: TPanel
           Left = 0
-          Height = 328
+          Height = 308
           Top = 0
           Width = 657
           Align = alTop
@@ -1453,7 +1465,7 @@ object cfgOptions: TcfgOptions
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 16
-          ClientHeight = 328
+          ClientHeight = 308
           ClientWidth = 657
           ParentBackground = False
           TabOrder = 0
@@ -1474,7 +1486,7 @@ object cfgOptions: TcfgOptions
           end
           object pRememberConnection: TBCPanel
             Left = 16
-            Height = 52
+            Height = 47
             Top = 52
             Width = 625
             Align = alTop
@@ -1504,7 +1516,6 @@ object cfgOptions: TcfgOptions
             Border.Color = 13750737
             Border.Style = bboSolid
             BorderBCStyle = bpsBorder
-            Constraints.MinHeight = 52
             FontEx.Color = clDefault
             FontEx.FontQuality = fqSystemClearType
             FontEx.Shadow = False
@@ -1519,7 +1530,7 @@ object cfgOptions: TcfgOptions
             TabOrder = 0
             object Image11: TImage
               Left = 16
-              Height = 28
+              Height = 23
               Top = 12
               Width = 27
               Align = alLeft
@@ -1530,7 +1541,7 @@ object cfgOptions: TcfgOptions
             end
             object lblRememberConnection: TLabel
               Left = 51
-              Height = 28
+              Height = 23
               Top = 12
               Width = 212
               Align = alLeft
@@ -1538,25 +1549,28 @@ object cfgOptions: TcfgOptions
               Layout = tlCenter
               ParentColor = False
             end
-            object tsRememberConnection: TRxSwitch
+            object tsRememberConnection: TToggleSwitch
+              AnchorSideTop.Control = pRememberConnection
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pRememberConnection
+              AnchorSideRight.Side = asrBottom
               Left = 559
-              Height = 28
-              Top = 12
+              Height = 25
+              Top = 11
               Width = 50
-              Align = alRight
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsRememberConnectionChange
+              Anchors = [akTop, akRight]
               Color = 16448250
-              ParentColor = False
-              TabOrder = 0
-              TextPosition = tpLeft
-              Style = swsHorizontal
-              OnOn = tsRememberConnectionOn
-              OnOff = tsRememberConnectionOn
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
             end
           end
           object pRememberUser: TBCPanel
             Left = 16
-            Height = 52
-            Top = 104
+            Height = 47
+            Top = 99
             Width = 625
             Align = alTop
             BorderSpacing.Bottom = 8
@@ -1586,7 +1600,6 @@ object cfgOptions: TcfgOptions
             Border.Color = 13750737
             Border.Style = bboSolid
             BorderBCStyle = bpsBorder
-            Constraints.MinHeight = 52
             FontEx.Color = clDefault
             FontEx.FontQuality = fqSystemClearType
             FontEx.Shadow = False
@@ -1601,7 +1614,7 @@ object cfgOptions: TcfgOptions
             TabOrder = 1
             object Image12: TImage
               Left = 16
-              Height = 28
+              Height = 23
               Top = 12
               Width = 27
               Align = alLeft
@@ -1612,7 +1625,7 @@ object cfgOptions: TcfgOptions
             end
             object lblRememberUser: TLabel
               Left = 51
-              Height = 28
+              Height = 23
               Top = 12
               Width = 174
               Align = alLeft
@@ -1620,25 +1633,28 @@ object cfgOptions: TcfgOptions
               Layout = tlCenter
               ParentColor = False
             end
-            object tsRememberUser: TRxSwitch
+            object tsRememberUser: TToggleSwitch
+              AnchorSideTop.Control = pRememberUser
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pRememberUser
+              AnchorSideRight.Side = asrBottom
               Left = 559
-              Height = 28
-              Top = 12
+              Height = 25
+              Top = 11
               Width = 50
-              Align = alRight
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsRememberUserChange
+              Anchors = [akTop, akRight]
               Color = 16448250
-              ParentColor = False
-              TabOrder = 0
-              TextPosition = tpLeft
-              Style = swsHorizontal
-              OnOn = tsRememberUserOn
-              OnOff = tsRememberUserOn
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
             end
           end
           object pAllowWriteLog: TBCPanel
             Left = 16
-            Height = 52
-            Top = 164
+            Height = 47
+            Top = 154
             Width = 625
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
@@ -1667,7 +1683,6 @@ object cfgOptions: TcfgOptions
             Border.Color = 13750737
             Border.Style = bboSolid
             BorderBCStyle = bpsBorder
-            Constraints.MinHeight = 52
             FontEx.Color = clDefault
             FontEx.FontQuality = fqSystemClearType
             FontEx.Shadow = False
@@ -1682,7 +1697,7 @@ object cfgOptions: TcfgOptions
             TabOrder = 2
             object Image13: TImage
               Left = 16
-              Height = 28
+              Height = 23
               Top = 12
               Width = 27
               Align = alLeft
@@ -1693,7 +1708,7 @@ object cfgOptions: TcfgOptions
             end
             object lblAllowWriteLog: TLabel
               Left = 51
-              Height = 28
+              Height = 23
               Top = 12
               Width = 253
               Align = alLeft
@@ -1701,36 +1716,42 @@ object cfgOptions: TcfgOptions
               Layout = tlCenter
               ParentColor = False
             end
-            object tsWriteLogs: TRxSwitch
-              Left = 559
-              Height = 28
-              Top = 12
-              Width = 50
-              Align = alRight
-              Color = 16448250
-              ParentColor = False
-              TabOrder = 0
-              TextPosition = tpLeft
-              Style = swsHorizontal
-              OnOn = tsWriteLogsOn
-              OnOff = tsWriteLogsOn
-            end
             object sbClearLogFiles: TBitBtn
+              AnchorSideTop.Control = pAllowWriteLog
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = tsWriteLogs
               Left = 454
-              Height = 28
-              Top = 12
+              Height = 25
+              Top = 11
               Width = 97
-              Align = alRight
+              Anchors = [akTop, akRight]
               AutoSize = True
               Caption = 'Clear log files'
               OnClick = sbClearLogFilesClick
-              TabOrder = 1
+              TabOrder = 0
+            end
+            object tsWriteLogs: TToggleSwitch
+              AnchorSideTop.Control = pAllowWriteLog
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pAllowWriteLog
+              AnchorSideRight.Side = asrBottom
+              Left = 559
+              Height = 25
+              Top = 11
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsWriteLogsChange
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
             end
           end
           object pAllowUsageData: TBCPanel
             Left = 16
-            Height = 52
-            Top = 216
+            Height = 47
+            Top = 201
             Width = 625
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
@@ -1759,7 +1780,6 @@ object cfgOptions: TcfgOptions
             Border.Color = 13750737
             Border.Style = bboSolid
             BorderBCStyle = bpsBorder
-            Constraints.MinHeight = 52
             FontEx.Color = clDefault
             FontEx.FontQuality = fqSystemClearType
             FontEx.Shadow = False
@@ -1775,7 +1795,7 @@ object cfgOptions: TcfgOptions
             Visible = False
             object Image14: TImage
               Left = 16
-              Height = 28
+              Height = 23
               Top = 12
               Width = 27
               Align = alLeft
@@ -1786,7 +1806,7 @@ object cfgOptions: TcfgOptions
             end
             object lblAllowUsageData: TLabel
               Left = 51
-              Height = 28
+              Height = 23
               Top = 12
               Width = 247
               Align = alLeft
@@ -1794,35 +1814,41 @@ object cfgOptions: TcfgOptions
               Layout = tlCenter
               ParentColor = False
             end
-            object tsAllowUsageData: TRxSwitch
-              Left = 559
-              Height = 28
-              Top = 12
-              Width = 50
-              Align = alRight
-              Color = 16448250
-              ParentColor = False
-              TabOrder = 0
-              TextPosition = tpLeft
-              Style = swsHorizontal
-              OnOn = tsAllowUsageDataOn
-              OnOff = tsAllowUsageDataOn
-            end
             object sbClearUsageData: TBitBtn
+              AnchorSideTop.Control = pAllowUsageData
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = tsAllowUsageData
               Left = 438
-              Height = 28
-              Top = 12
+              Height = 25
+              Top = 11
               Width = 113
-              Align = alRight
+              Anchors = [akTop, akRight]
               AutoSize = True
               Caption = 'Clear usage data'
-              TabOrder = 1
+              TabOrder = 0
+            end
+            object tsAllowUsageData: TToggleSwitch
+              AnchorSideTop.Control = pAllowUsageData
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pAllowUsageData
+              AnchorSideRight.Side = asrBottom
+              Left = 559
+              Height = 25
+              Top = 11
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsAllowUsageDataChange
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
             end
           end
           object pPrivacyTerms: TBCPanel
             Left = 16
             Height = 44
-            Top = 268
+            Top = 248
             Width = 625
             Align = alTop
             AutoSize = True

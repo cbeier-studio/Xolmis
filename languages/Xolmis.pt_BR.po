@@ -5277,7 +5277,7 @@ msgstr "Gerenciar backups"
 
 #: tcfgoptions.lblopenafterexport.caption
 msgid "Open files after export"
-msgstr ""
+msgstr "Abrir arquivos após exportar"
 
 #: tcfgoptions.lblprivacyterms.caption
 msgctxt "tcfgoptions.lblprivacyterms.caption"
@@ -11512,6 +11512,34 @@ msgstr "Salvar"
 msgid "Image viewer"
 msgstr "Visualizador de imagens"
 
+#: tfrmimageviewer.pmcopy.caption
+msgid "Copy image"
+msgstr "Copiar imagem"
+
+#: tfrmimageviewer.pmfliphorizontal.caption
+msgid "Flip image horizontally"
+msgstr "Inverter imagem horizontalmente"
+
+#: tfrmimageviewer.pmflipvertical.caption
+msgid "Flip image vertically"
+msgstr "Inverter imagem verticalmente"
+
+#: tfrmimageviewer.pmopenexternal.caption
+msgid "Open in external editor"
+msgstr "Abrir no editor externo"
+
+#: tfrmimageviewer.pmrotateleft.caption
+msgid "Rotate image left"
+msgstr "Girar imagem para esquerda"
+
+#: tfrmimageviewer.pmrotateright.caption
+msgid "Rotate image right"
+msgstr "Girar imagem para direita"
+
+#: tfrmimageviewer.pmsaveas.caption
+msgid "Save image as..."
+msgstr "Salvar imagem como..."
+
 #: tfrmimageviewer.sbcopyimage.caption
 msgctxt "tfrmimageviewer.sbcopyimage.caption"
 msgid "Copy"
@@ -12210,4 +12238,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

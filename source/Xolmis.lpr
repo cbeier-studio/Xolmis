@@ -29,7 +29,6 @@ uses
   Forms,
   sdflaz,
   tachartlazaruspkg, lazdbexport, memdslaz, printer4lazarus, tachartbgra,
-  rxnew,
   virtualdbgrid_package,
   FrameViewer09,
   uDarkStyleParams, uMetaDarkStyle, uDarkStyleSchemes,

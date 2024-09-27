@@ -11470,6 +11470,34 @@ msgstr ""
 msgid "Image viewer"
 msgstr ""
 
+#: tfrmimageviewer.pmcopy.caption
+msgid "Copy image"
+msgstr ""
+
+#: tfrmimageviewer.pmfliphorizontal.caption
+msgid "Flip image horizontally"
+msgstr ""
+
+#: tfrmimageviewer.pmflipvertical.caption
+msgid "Flip image vertically"
+msgstr ""
+
+#: tfrmimageviewer.pmopenexternal.caption
+msgid "Open in external editor"
+msgstr ""
+
+#: tfrmimageviewer.pmrotateleft.caption
+msgid "Rotate image left"
+msgstr ""
+
+#: tfrmimageviewer.pmrotateright.caption
+msgid "Rotate image right"
+msgstr ""
+
+#: tfrmimageviewer.pmsaveas.caption
+msgid "Save image as..."
+msgstr ""
+
 #: tfrmimageviewer.sbcopyimage.caption
 msgctxt "tfrmimageviewer.sbcopyimage.caption"
 msgid "Copy"
