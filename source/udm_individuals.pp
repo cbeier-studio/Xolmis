@@ -29,7 +29,6 @@ type
 
   TDMI = class(TDataModule)
     dsCaptures: TDataSource;
-    dsImages: TDataSource;
     dsMolts: TDataSource;
     dsNests: TDataSource;
     dsSightings: TDataSource;
@@ -130,7 +129,6 @@ type
     qCapturesuser_inserted: TLongintField;
     qCapturesuser_updated: TLongintField;
     qCapturesweight: TFloatField;
-    qImages: TSQLQuery;
     qImagesactive_status: TBooleanField;
     qImagesauthor_id: TLongintField;
     qImagesauthor_name: TStringField;

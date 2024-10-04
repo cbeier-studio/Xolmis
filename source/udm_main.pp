@@ -132,6 +132,7 @@ type
     procedure qUsersBeforePost(DataSet: TDataSet);
     procedure qUsersuser_rankGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qUsersuser_rankSetText(Sender: TField; const aText: string);
+    procedure sqlConAfterDisconnect(Sender: TObject);
     procedure sqlConBeforeConnect(Sender: TObject);
     procedure sysConBeforeConnect(Sender: TObject);
     procedure UniqueInstance1OtherInstance(Sender: TObject; ParamCount: Integer;
@@ -139,9 +140,10 @@ type
   private
     UID: TGUID;
     OldUser: TUser;
+    FWaitingConnection: Boolean;
     procedure OpenSystemDatabase;
   public
-
+    property WaitingConnection: Boolean read FWaitingConnection write FWaitingConnection;
   end;
 
 var
@@ -159,6 +161,7 @@ procedure TDMM.DataModuleCreate(Sender: TObject);
 var
   logFull: Boolean;
 begin
+  FWaitingConnection := False;
   sysCon.DatabaseName := EmptyStr;
   sqlCon.DatabaseName := EmptyStr;
 
@@ -177,6 +180,7 @@ begin
   if logFull then
     LogWarning('Log file reached the max size');
 
+  { #todo : Select database library based on the RDBMS }
   { >> SQLite3 library}
   sqliteLibLoader.ConnectionType := 'SQLite3';
   {$IFDEF MSWINDOWS}
@@ -355,6 +359,11 @@ begin
   else
   if aText = rsGuestUser then
     Sender.AsString := 'V';
+end;
+
+procedure TDMM.sqlConAfterDisconnect(Sender: TObject);
+begin
+  FWaitingConnection := True;
 end;
 
 procedure TDMM.sqlConBeforeConnect(Sender: TObject);

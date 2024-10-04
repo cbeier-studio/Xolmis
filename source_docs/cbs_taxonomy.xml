@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_taxonomy"><element name="GetRankType"><short>Get the rank type from the taxon ranks table</short>
+      </element><element name="FormattedBirdName"><short>Format scientific names based on taxon rank using HTML tags</short>
+      </element><element name="LoadTaxaRanks"><short>Load taxon ranks to a list</short>
+      </element><element name="RewriteTaxonHierarchy"><short>Rewrite the taxon hierarchy in all tables</short>
+      </element><element name="SplitTaxon"><short>Split a subspecies to a species of their own</short>
+      </element><element name="LumpTaxon"><short>Lump a species as subspecies of another species</short>
+      </element><element name="MoveToSpecies"><short>Move subspecies between species</short>
+      </element><element name="MoveToGenus"><short>Move species between genera</short>
+      </element><element name="MoveToFamily"><short>Move genera between families</short>
+      </element><element name="MoveToOrder"><short>Move families between orders</short>
+      </element><element name="UpdateScientificName"><short>Update scientific name of a taxon</short>
+      </element><element name="UpdateEnglishName"><short>Update english name of a taxon</short>
+      </element><element name="UpdatePortuguesName"><short>Update portuguese name of a taxon</short>
+      </element><element name="UpdateOutrosPortugues"><short>Update other portuguese names of a taxon</short>
+      </element><element name="UpdateSpanishName"><short>Update spanish name of a taxon</short>
+      </element><element name="UpdateAuthorship"><short>Update the authorship of a taxon</short>
+      </element><element name="UpdateDistribution"><short>Update the geographical distribution of a taxon</short>
+      </element><element name="UpdateExtinction"><short>Update the extinction status of a taxon</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

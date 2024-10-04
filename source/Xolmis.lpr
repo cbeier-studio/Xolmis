@@ -69,7 +69,6 @@ uses
   {$ENDIF}
   { Main form and Data modules }
   udm_main,
-  udm_client,
   udm_lookup,
   udm_grid,
   udm_individuals,

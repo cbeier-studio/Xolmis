@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_editdialogs"><element name="ChangeUserPassword"><short>Show dialog to change user password</short>
+      </element><element name="EditUser"><short>Show dialog to edit user</short>
+      </element><element name="EditMethod"><short>Show dialog to edit method</short>
+      </element><element name="EditSite"><short>Show dialog to edit site</short>
+      </element><element name="EditNetStation"><short>Show dialog to edit sampling plot</short>
+      </element><element name="EditPermanentNet"><short>Show dialog to edit permanent net</short>
+      </element><element name="EditInstitution"><short>Show dialog to edit institution</short>
+      </element><element name="EditPerson"><short>Show dialog to edit researcher</short>
+      </element><element name="EditProject"><short>Show dialog to edit project</short>
+      </element><element name="EditProjectMember"><short>Show dialog to edit project member</short>
+      </element><element name="EditPermit"><short>Show dialog to edit permit</short>
+      </element><element name="EditBotanicTaxon"><short>Show dialog to edit botanic taxon</short>
+      </element><element name="EditBand"><short>Show dialog to edit band</short>
+      </element><element name="EditIndividual"><short>Show dialog to edit individual</short>
+      </element><element name="EditCapture"><short>Show dialog to edit capture</short>
+      </element><element name="EditMolt"><short>Show dialog to edit molt</short>
+      </element><element name="EditNest"><short>Show dialog to edit nest</short>
+      </element><element name="EditNestOwner"><short>Show dialog to edit nest owner</short>
+      </element><element name="EditNestRevision"><short>Show dialog to edit nest revision</short>
+      </element><element name="EditEgg"><short>Show dialog to edit egg</short>
+      </element><element name="EditExpedition"><short>Show dialog to edit expedition</short>
+      </element><element name="EditSurvey"><short>Show dialog to edit survey</short>
+      </element><element name="EditSurveyMember"><short>Show dialog to edit survey member</short>
+      </element><element name="EditNetEffort"><short>Show dialog to edit net effort</short>
+      </element><element name="EditWeatherLog"><short>Show dialog to edit weather log</short>
+      </element><element name="EditSighting"><short>Show dialog to edit sighting</short>
+      </element><element name="EditSpecimen"><short>Show dialog to edit specimen</short>
+      </element><element name="EditCollector"><short>Show dialog to edit collector</short>
+      </element><element name="EditSamplePrep"><short>Show dialog to edit sample preparation</short>
+      </element><element name="EditImageInfo"><short>Show dialog to edit image info</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

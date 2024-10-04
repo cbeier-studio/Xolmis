@@ -46,6 +46,7 @@ type
   { TfrmCustomGrid }
 
   TfrmCustomGrid = class(TForm)
+    sbSaveRecord: TBitBtn;
     cbEggShapeFilter: TComboBox;
     cbEggPatternFilter: TComboBox;
     cbEggTextureFilter: TComboBox;
@@ -56,9 +57,18 @@ type
     cbCaptureTypeFilter: TComboBox;
     cbCaptureStatusFilter: TComboBox;
     cbNestStageFilter: TComboBox;
+    dsAudios: TDataSource;
+    gridAudios: TDBGrid;
     dbImg: TDBImage;
     dsChart: TDataSource;
     dsImages: TDataSource;
+    pAudiosToolbar: TBCPanel;
+    pmaAddAudio: TMenuItem;
+    pmaDelAudio: TMenuItem;
+    pmaAudioInfo: TMenuItem;
+    pmAudios: TPopupMenu;
+    pmaRefreshAudios: TMenuItem;
+    pmaPlayAudio: TMenuItem;
     pmPrintNestsByTaxon: TMenuItem;
     PrintGrid: TFrPrintGrid;
     gridSummary: TDBGrid;
@@ -174,7 +184,7 @@ type
     pmPrintMethods: TMenuItem;
     pmPrintBands: TMenuItem;
     pmPrintBandsByCarrier: TMenuItem;
-    pmPrintBandsByProject: TMenuItem;
+    pmPrintBandsWithHistory: TMenuItem;
     pmPrintBandsByStatus: TMenuItem;
     pmPrintBandsBalance: TMenuItem;
     pmPrintIndividuals: TMenuItem;
@@ -501,6 +511,57 @@ type
     pTitleTaxonRanksFilter: TPanel;
     pWithColorBandsFilter: TBCPanel;
     pWithRecapturesFilter: TBCPanel;
+    qAudiosactive_status: TBooleanField;
+    qAudiosaudio_file: TBlobField;
+    qAudiosaudio_id: TLongintField;
+    qAudiosaudio_type: TStringField;
+    qAudioscloud_cover: TLongintField;
+    qAudiosdistance: TFloatField;
+    qAudiosexported_status: TBooleanField;
+    qAudiosfamily_id: TLongintField;
+    qAudiosfilter_model: TStringField;
+    qAudiosfull_name: TStringField;
+    qAudiosgenus_id: TLongintField;
+    qAudioshabitat: TStringField;
+    qAudiosindividual_id: TLongintField;
+    qAudiosindividual_name: TStringField;
+    qAudiosinsert_date: TDateTimeField;
+    qAudioslatitude: TFloatField;
+    qAudioslicense_notes: TStringField;
+    qAudioslicense_owner: TStringField;
+    qAudioslicense_type: TStringField;
+    qAudioslicense_uri: TStringField;
+    qAudioslicense_year: TLongintField;
+    qAudioslocality_id: TLongintField;
+    qAudioslocality_name: TStringField;
+    qAudioslongitude: TFloatField;
+    qAudiosmarked_status: TBooleanField;
+    qAudiosmic_model: TStringField;
+    qAudiosnotes: TMemoField;
+    qAudiosorder_id: TLongintField;
+    qAudiosplayback_used: TBooleanField;
+    qAudiosprecipitation: TStringField;
+    qAudiosrecorder_id: TLongintField;
+    qAudiosrecorder_model: TStringField;
+    qAudiosrecorder_name: TStringField;
+    qAudiosrecording_context: TStringField;
+    qAudiosrecording_date: TDateField;
+    qAudiosrecording_time: TTimeField;
+    qAudiosrelative_humidity: TLongintField;
+    qAudiossighting_id: TLongintField;
+    qAudiossighting_name: TStringField;
+    qAudiosspecies_id: TLongintField;
+    qAudiosspecimen_id: TLongintField;
+    qAudiosspecimen_name: TStringField;
+    qAudiossubjects_tally: TLongintField;
+    qAudiossubtitle: TMemoField;
+    qAudiostaxon_id: TLongintField;
+    qAudiostaxon_name: TStringField;
+    qAudiostemperature: TFloatField;
+    qAudiosupdate_date: TDateTimeField;
+    qAudiosuser_inserted: TLongintField;
+    qAudiosuser_updated: TLongintField;
+    qAudioswind_speed: TLongintField;
     qImagesactive_status: TBooleanField;
     qImagesauthor_id: TLongintField;
     qImagesauthor_name: TStringField;
@@ -598,9 +659,12 @@ type
     rbOutOfSampleYes: TRadioButton;
     rbWithColorBandsYes: TRadioButton;
     sbAddChild: TSpeedButton;
-    sbCancelRecord: TSpeedButton;
+    sbAddAudio: TSpeedButton;
     sbChildHistory: TSpeedButton;
     sbClearFilters: TSpeedButton;
+    sbDelAudio: TSpeedButton;
+    sbAudioInfo: TSpeedButton;
+    sbCancelRecord: TBitBtn;
     sbShareMapPoints: TSpeedButton;
     sbDelChild: TSpeedButton;
     sbDelRecord: TSpeedButton;
@@ -640,7 +704,6 @@ type
     sbNextChild: TSpeedButton;
     sbPriorRecord: TSpeedButton;
     sbPriorChild: TSpeedButton;
-    sbSaveRecord: TSpeedButton;
     sbShowRecord: TSpeedButton;
     sbShowQuickFilters: TSpeedButton;
     sbShowImages: TSpeedButton;
@@ -649,6 +712,7 @@ type
     sbShowColumns: TSpeedButton;
     sbShowRecycle: TSpeedButton;
     sbShowSummary: TSpeedButton;
+    sbPlayAudio: TSpeedButton;
     Separator10: TShapeLineBGRA;
     Separator11: TShapeLineBGRA;
     Separator12: TMenuItem;
@@ -665,6 +729,10 @@ type
     Separator23: TMenuItem;
     Separator24: TMenuItem;
     Separator25: TMenuItem;
+    Separator26: TShapeLineBGRA;
+    Separator27: TMenuItem;
+    Separator28: TMenuItem;
+    Separator29: TMenuItem;
     SeparatorPrint: TMenuItem;
     Separator5: TShapeLineBGRA;
     Separator6: TMenuItem;
@@ -703,6 +771,7 @@ type
     qRecycle: TSQLQuery;
     qChart: TSQLQuery;
     qImages: TSQLQuery;
+    qAudios: TSQLQuery;
     TimerUpdate: TTimer;
     titleViewRecord: TLabel;
     titleRecycle: TLabel;
@@ -733,6 +802,8 @@ type
     procedure DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
       AState: TGridDrawState);
     procedure DBGSelectEditor(Sender: TObject; Column: TColumn; var Editor: TWinControl);
+    procedure dsAudiosDataChange(Sender: TObject; Field: TField);
+    procedure dsAudiosStateChange(Sender: TObject);
     procedure dsImagesDataChange(Sender: TObject; Field: TField);
     procedure dsImagesStateChange(Sender: TObject);
     procedure dsLink1DataChange(Sender: TObject; Field: TField);
@@ -798,6 +869,7 @@ type
     procedure pChildTag1MouseEnter(Sender: TObject);
     procedure pChildTag1MouseLeave(Sender: TObject);
     procedure pClientResize(Sender: TObject);
+    procedure pmaRefreshAudiosClick(Sender: TObject);
     procedure pmcColumnSortAscClick(Sender: TObject);
     procedure pmcColumnSortDescClick(Sender: TObject);
     procedure pmcHideColumnClick(Sender: TObject);
@@ -822,14 +894,22 @@ type
     procedure pmmMarkAllColumnsClick(Sender: TObject);
     procedure pmmUnmarkAllClick(Sender: TObject);
     procedure pmmUnmarkAllColumnsClick(Sender: TObject);
+    procedure pmPrintBandsByCarrierClick(Sender: TObject);
+    procedure pmPrintBandsByStatusClick(Sender: TObject);
+    procedure pmPrintBandsClick(Sender: TObject);
+    procedure pmPrintBandsWithHistoryClick(Sender: TObject);
     procedure pmPrintGridClick(Sender: TObject);
     procedure pmPrintMethodsClick(Sender: TObject);
+    procedure pmPrintPermitsClick(Sender: TObject);
+    procedure pmPrintProjectsClick(Sender: TObject);
     procedure pmtClearSelectionClick(Sender: TObject);
     procedure pmtColapseAllClick(Sender: TObject);
     procedure pmtExpandAllClick(Sender: TObject);
     procedure pmtRefreshClick(Sender: TObject);
     procedure pmvAddVerificationClick(Sender: TObject);
     procedure pmvViewVerificationsClick(Sender: TObject);
+    procedure qAudiosBeforePost(DataSet: TDataSet);
+    procedure qImagesBeforePost(DataSet: TDataSet);
     procedure sbAddChildClick(Sender: TObject);
     procedure sbAddImageClick(Sender: TObject);
     procedure sbAddNetsBatchClick(Sender: TObject);
@@ -1008,6 +1088,7 @@ type
 
     procedure SaveColumns;
 
+    procedure SetGridColumns(aTable: TTableType; aGrid: TDBGrid);
     procedure SetColumnsBands(var aGrid: TDBGrid);
     procedure SetColumnsBotanicTaxa(var aGrid: TDBGrid);
     procedure SetColumnsCaptures(var aGrid: TDBGrid);
@@ -1035,7 +1116,6 @@ type
     procedure SetGridBands;
     procedure SetGridBotanicTaxa;
     procedure SetGridCaptures;
-    procedure SetGridColumns(aTable: TTableType; aGrid: TDBGrid);
     procedure SetGridEggs;
     procedure SetGridGazetteer;
     procedure SetGridIndividuals;
@@ -1053,6 +1133,7 @@ type
     procedure SetGridSurveys;
     procedure SetGridTaxonRanks;
 
+    procedure SetAudios;
     procedure SetImages;
     procedure SetRecycle;
     procedure SetSidePanel(aValue: Boolean);
@@ -1090,6 +1171,7 @@ type
     procedure UpdateChildStatus;
     procedure UpdateGridTitles(aGrid: TDBGrid; aSearch: TCustomSearch);
     procedure UpdateImageButtons(aDataSet: TDataSet);
+    procedure UpdateAudioButtons(aDataSet: TDataSet);
 
     procedure UpdateFilterPanels;
     procedure UpdateFilterPanelsBands;
@@ -1198,9 +1280,20 @@ end;
 procedure TfrmCustomGrid.AddSortedField(aFieldName: String; aDirection: TSortDirection;
   aCollation: String = ''; IsAnAlias: Boolean = False);
 var
-  p: Integer;
+  p, idx: Integer;
 begin
-  p := FSearch.SortFields.Add(TSortedField.Create);
+  p := -1;
+
+  for idx := 0 to (FSearch.SortFields.Count - 1) do
+    if aFieldName = FSearch.SortFields[idx].FieldName then
+    begin
+      p := idx;
+      Break;
+    end;
+
+  if p < 0 then
+    p := FSearch.SortFields.Add(TSortedField.Create);
+
   FSearch.SortFields[p].FieldName := aFieldName;
   if Assigned(FSearch.DataSet) then
     case FSearch.DataSet.FieldByName(aFieldName).DataType of
@@ -1236,6 +1329,8 @@ begin
   pFiltersToolbar.Border.Color := clCardBGSecondaryDark;
   pImagesToolbar.Background.Color := clCardBGDefaultDark;
   pImagesToolbar.Border.Color := clCardBGSecondaryDark;
+  pAudiosToolbar.Background.Color := clCardBGDefaultDark;
+  pAudiosToolbar.Border.Color := clCardBGSecondaryDark;
   pMapToolbar.Background.Color := clCardBGDefaultDark;
   pMapToolbar.Border.Color := clCardBGSecondaryDark;
   pColumnsToolbar.Background.Color := clCardBGDefaultDark;
@@ -1336,6 +1431,10 @@ begin
   sbViewImage.Images := iButtonsDark;
   sbDelImage.Images := iButtonsDark;
   sbShowAudio.Images := iButtonsDark;
+  sbAddAudio.Images := iButtonsDark;
+  sbAudioInfo.Images := iButtonsDark;
+  sbPlayAudio.Images := iButtonsDark;
+  sbDelAudio.Images := iButtonsDark;
   sbShowDocs.Images := iButtonsDark;
   sbShowMap.Images := iButtonsDark;
   sbShareMapPoints.Images := iButtonsDark;
@@ -2823,8 +2922,10 @@ var
   ACol, ARow: Longint;
   Column: TColumn;
   Grid: TDBGrid;
+  idx: Integer;
 begin
   Grid := TDBGrid(Sender);
+  idx := -1;
 
   { Sort records on title click }
   if (Button = mbLeft) and (Grid.MouseCoord(X, Y).Y = 0) then
@@ -2835,11 +2936,19 @@ begin
     Column := Grid.Columns[ACol - 1];
 
     if FSearch.SortFields.Count > 0 then
-      if Column.FieldName = FSearch.SortFields[0].FieldName then
-        if FSearch.SortFields[0].Direction = sdAscending then
-          Direction := sdDescending
-        else
-          Direction := sdAscending;
+    begin
+      for idx := 0 to (FSearch.SortFields.Count - 1) do
+      begin
+        if Column.FieldName = FSearch.SortFields[idx].FieldName then
+        begin
+          if FSearch.SortFields[idx].Direction = sdAscending then
+            Direction := sdDescending
+          else
+            Direction := sdAscending;
+          Break;
+        end;
+      end;
+    end;
 
     if not (ssCtrl in Shift) then
       FSearch.SortFields.Clear;
@@ -3031,6 +3140,19 @@ begin
       end;
   end;
 
+end;
+
+procedure TfrmCustomGrid.dsAudiosDataChange(Sender: TObject; Field: TField);
+begin
+  UpdateAudioButtons(qAudios);
+  {$IFDEF DEBUG}
+  LogDebug('Param: ' + qAudios.Params[0].Name + ' ' + qAudios.Params[0].AsString + '; Count: ' + IntToStr(qAudios.RecordCount));
+  {$ENDIF}
+end;
+
+procedure TfrmCustomGrid.dsAudiosStateChange(Sender: TObject);
+begin
+  UpdateAudioButtons(qAudios);
 end;
 
 procedure TfrmCustomGrid.dsImagesDataChange(Sender: TObject; Field: TField);
@@ -4060,6 +4182,7 @@ begin
     DBG.SetFocus;
   GetColumns;
   SetImages;
+  SetAudios;
   SetRecycle;
   CanToggle := True;
   Application.ProcessMessages;
@@ -5425,6 +5548,14 @@ begin
   pChild.Height := Round((pClient.Height - SplitChild.Height) * FChildPanelFactor);
 end;
 
+procedure TfrmCustomGrid.pmaRefreshAudiosClick(Sender: TObject);
+begin
+  if Working then
+    Exit;
+
+  qAudios.Refresh;
+end;
+
 procedure TfrmCustomGrid.pmcColumnSortAscClick(Sender: TObject);
 var
   Direction: TSortDirection;
@@ -5708,6 +5839,26 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.pmPrintBandsByCarrierClick(Sender: TObject);
+begin
+  PrintPreview('rep_bands_by_carrier.lrf', dsLink);
+end;
+
+procedure TfrmCustomGrid.pmPrintBandsByStatusClick(Sender: TObject);
+begin
+  PrintPreview('rep_bands_by_status.lrf', dsLink);
+end;
+
+procedure TfrmCustomGrid.pmPrintBandsClick(Sender: TObject);
+begin
+  PrintPreview('rep_bands.lrf', dsLink);
+end;
+
+procedure TfrmCustomGrid.pmPrintBandsWithHistoryClick(Sender: TObject);
+begin
+  PrintPreview('rep_bands_history.lrf', dsLink, DMG.dsBandHistory);
+end;
+
 procedure TfrmCustomGrid.pmPrintGridClick(Sender: TObject);
 begin
   PrintGrid.PreviewReport;
@@ -5715,7 +5866,17 @@ end;
 
 procedure TfrmCustomGrid.pmPrintMethodsClick(Sender: TObject);
 begin
-  PrintPreview(dsLink, 'rep_methods.lrf');
+  PrintPreview('rep_methods.lrf', dsLink);
+end;
+
+procedure TfrmCustomGrid.pmPrintPermitsClick(Sender: TObject);
+begin
+  PrintPreview('rep_permits.lrf', dsLink);
+end;
+
+procedure TfrmCustomGrid.pmPrintProjectsClick(Sender: TObject);
+begin
+  PrintPreview('rep_projects.lrf', dsLink);
 end;
 
 procedure TfrmCustomGrid.pmtClearSelectionClick(Sender: TObject);
@@ -5736,11 +5897,11 @@ end;
 procedure TfrmCustomGrid.pmtRefreshClick(Sender: TObject);
 begin
   if pmTree.PopupComponent = tvTaxaFilter then
-    LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-
+    LoadTaxaTreeData(FTableType, tvTaxaFilter, 0)
+  else
   if pmTree.PopupComponent = tvSiteFilter then
-    LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-
+    LoadSiteTreeData(FTableType, tvSiteFilter, 4)
+  else
   if pmTree.PopupComponent = tvDateFilter then
     LoadDateTreeData(FTableType, tvDateFilter);
 end;
@@ -6105,7 +6266,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6121,7 +6282,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6137,7 +6298,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6153,7 +6314,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6169,7 +6330,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6185,7 +6346,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6201,7 +6362,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6217,7 +6378,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6233,7 +6394,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6249,7 +6410,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6265,7 +6426,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6281,7 +6442,7 @@ begin
     begin
       aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name',
                     TDBGrid(Sender).Columns.ColumnByFieldname('taxon_name').Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat) then
+      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
         if IsDarkModeEnabled then
           TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
@@ -6661,6 +6822,30 @@ begin
     TDBGrid(Sender).Canvas.Font.Style := [fsBold];
     {$ENDIF}
   end;
+end;
+
+procedure TfrmCustomGrid.qAudiosBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+
+  //if not DataSet.FieldByName('locality_id').IsNull then
+  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+end;
+
+procedure TfrmCustomGrid.qImagesBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('taxon_id').IsNull then
+    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TfrmCustomGrid.RefreshMap;
@@ -8901,6 +9086,61 @@ begin
   Result := FSearch.RunSearch > 0;
 end;
 
+procedure TfrmCustomGrid.SetAudios;
+begin
+  with qImages, SQL do
+  begin
+    case FTableType of
+      tbNone: ;
+      //tbUsers: ;
+      //tbRecordHistory: ;
+      //tbRecordVerifications: ;
+      //tbGazetteer: ;
+      //tbNetStations: ;
+      //tbPermanentNets: ;
+      //tbInstitutions: ;
+      //tbPeople: ;
+      //tbProjects: ;
+      //tbProjectTeams: ;
+      //tbPermits: ;
+      //tbTaxonRanks: ;
+      //tbZooTaxa: ;
+      //tbBotanicTaxa: ;
+      //tbBands: ;
+      //tbBandHistory: ;
+      tbIndividuals:    Add('WHERE (snd.active_status = 1) AND (snd.individual_id = :individual_id)');
+      //tbCaptures: ;
+      //tbMolts: ;
+      //tbNests: ;
+      //tbNestOwners: ;
+      //tbNestRevisions: ;
+      //tbEggs: ;
+      //tbMethods: ;
+      //tbExpeditions: ;
+      //tbSurveys: ;
+      //tbSurveyTeams: ;
+      //tbNetsEffort: ;
+      //tbWeatherLogs: ;
+      tbSightings:      Add('WHERE (snd.active_status = 1) AND (snd.sighting_id = :sighting_id)');
+      tbSpecimens:      Add('WHERE (snd.active_status = 1) AND (snd.specimen_id = :specimen_id)');
+      //tbSamplePreps: ;
+      //tbSpecimenCollectors: ;
+      //tbImages: ;
+      //tbAudioLibrary: ;
+    end;
+  end;
+
+  if FTableType in [tbIndividuals, tbSightings, tbSpecimens] then
+  begin
+    qAudios.SQL.Add('ORDER BY snd.recording_date, snd.recording_time ASC');
+    qAudios.DataSource := dsLink;
+    {$IFDEF DEBUG}
+    LogSQL(qAudios.SQL);
+    {$ENDIF}
+    qAudios.Open;
+  end;
+end;
+
 procedure TfrmCustomGrid.SetColumnsBands(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
@@ -9518,7 +9758,7 @@ begin
 
   pmPrintBands.Visible := True;
   pmPrintBandsByCarrier.Visible := True;
-  pmPrintBandsByProject.Visible := True;
+  pmPrintBandsWithHistory.Visible := True;
   pmPrintBandsByStatus.Visible := True;
   pmPrintBandsBalance.Visible := True;
 
@@ -9551,7 +9791,6 @@ begin
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
   sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 
   pmPrintCaptures.Visible := True;
@@ -9610,7 +9849,6 @@ begin
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
   sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 
   pmPrintEggs.Visible := True;
@@ -9704,16 +9942,9 @@ begin
 
   pChildsBar.Visible := True;
   sbChildVerifications.Visible := True;
-  //pChild.Visible := True;
-  //dbgImages.DataSource := DMI.dsImages;
-  //lblImageTime.DataSource := dbgImages.DataSource;
-  //lblImageDate.DataSource := dbgImages.DataSource;
-  //lblImageType.DataSource := dbgImages.DataSource;
-  //imgThumb.DataSource := dbgImages.DataSource;
-  //imgThumb.DataField := 'image_thumbnail';
 
   sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
+  sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
 
@@ -9776,7 +10007,6 @@ begin
   sbShowSummary.Visible := True;
 
   sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
 
@@ -9882,7 +10112,7 @@ begin
   pmPrintSightingsByTaxon.Visible := True;
 
   sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
+  sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
 
@@ -9917,7 +10147,7 @@ begin
   sbShowMap.Visible := True;
 
   sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
+  sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
 
@@ -9965,7 +10195,6 @@ begin
   sbShowMap.Visible := True;
 
   sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
 end;
 
@@ -9982,41 +10211,41 @@ begin
   begin
     case FTableType of
       tbNone: ;
-      tbUsers: ;
-      tbRecordHistory: ;
-      tbRecordVerifications: ;
-      tbGazetteer: ;
-      tbNetStations: ;
-      tbPermanentNets: ;
-      tbInstitutions: ;
-      tbPeople: ;
-      tbProjects: ;
-      tbProjectTeams: ;
-      tbPermits: ;
-      tbTaxonRanks: ;
-      tbZooTaxa: ;
-      tbBotanicTaxa: ;
-      tbBands: ;
-      tbBandHistory: ;
+      //tbUsers: ;
+      //tbRecordHistory: ;
+      //tbRecordVerifications: ;
+      //tbGazetteer: ;
+      //tbNetStations: ;
+      //tbPermanentNets: ;
+      //tbInstitutions: ;
+      //tbPeople: ;
+      //tbProjects: ;
+      //tbProjectTeams: ;
+      //tbPermits: ;
+      //tbTaxonRanks: ;
+      //tbZooTaxa: ;
+      //tbBotanicTaxa: ;
+      //tbBands: ;
+      //tbBandHistory: ;
       tbIndividuals:    Add('WHERE (img.active_status = 1) AND (img.individual_id = :individual_id)');
       tbCaptures:       Add('WHERE (img.active_status = 1) AND (img.capture_id = :capture_id)');
-      tbMolts: ;
+      //tbMolts: ;
       tbNests:          Add('WHERE (img.active_status = 1) AND (img.nest_id = :nest_id)');
-      tbNestOwners: ;
+      //tbNestOwners: ;
       tbNestRevisions:  Add('WHERE (img.active_status = 1) AND (img.nest_revision_id = :nest_revision_id)');
       tbEggs:           Add('WHERE (img.active_status = 1) AND (img.egg_id = :egg_id)');
-      tbMethods: ;
-      tbExpeditions: ;
+      //tbMethods: ;
+      //tbExpeditions: ;
       tbSurveys:        Add('WHERE (img.active_status = 1) AND (img.survey_id = :survey_id)');
-      tbSurveyTeams: ;
-      tbNetsEffort: ;
-      tbWeatherLogs: ;
+      //tbSurveyTeams: ;
+      //tbNetsEffort: ;
+      //tbWeatherLogs: ;
       tbSightings:      Add('WHERE (img.active_status = 1) AND (img.sighting_id = :sighting_id)');
       tbSpecimens:      Add('WHERE (img.active_status = 1) AND (img.specimen_id = :specimen_id)');
-      tbSamplePreps: ;
-      tbSpecimenCollectors: ;
-      tbImages: ;
-      tbAudioLibrary: ;
+      //tbSamplePreps: ;
+      //tbSpecimenCollectors: ;
+      //tbImages: ;
+      //tbAudioLibrary: ;
     end;
   end;
 
@@ -10498,6 +10727,45 @@ begin
   Level := Sender.GetNodeLevel(Node);
   if Level > 1 then
     TargetCanvas.Font.Style := Font.Style + [fsItalic];
+end;
+
+procedure TfrmCustomGrid.UpdateAudioButtons(aDataSet: TDataSet);
+begin
+  if Closing then
+    Exit;
+
+  case aDataSet.State of
+    dsInactive:
+    begin
+      sbAddAudio.Enabled := False;
+      sbAudioInfo.Enabled := False;
+      sbDelAudio.Enabled := False;
+      sbPlayAudio.Enabled := False;
+
+    end;
+    dsBrowse:
+    begin
+      sbAddAudio.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbAudioInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbDelAudio.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbPlayAudio.Enabled := (aDataSet.RecordCount > 0);
+
+    end;
+    dsEdit, dsInsert:
+    begin
+      sbAddAudio.Enabled := False;
+      sbAudioInfo.Enabled := False;
+      sbDelAudio.Enabled := False;
+      sbPlayAudio.Enabled := False;
+
+    end;
+  end;
+
+  pmaAddAudio.Enabled := sbAddAudio.Enabled;
+  pmaAudioInfo.Enabled := sbAudioInfo.Enabled;
+  pmaDelAudio.Enabled := sbDelAudio.Enabled;
+  pmaPlayAudio.Enabled := sbPlayAudio.Enabled;
+  pmaRefreshAudios.Enabled := sbAddAudio.Enabled;
 end;
 
 procedure TfrmCustomGrid.UpdateButtons(aDataSet: TDataSet);

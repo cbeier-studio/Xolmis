@@ -22,6 +22,14 @@
       </element><element name="EpithetIsEmpty"><short>Check if the epithet of a name is empty or not.</short>
       </element><element name="CoordenadaIsOk"><short>Check if a geographic coordinate is valid or not.</short>
       </element><short>Library with validation functions for various types and values.</short>
+    <element name="FieldValuesDiff"><short>Check and return a delimited string if a field value had been modified</short>
+      </element><element name="KeyExists"><short>Check if a key value exists in a table</short>
+      </element><element name="RequiredIsEmpty"><short>Check if a required field is empty</short>
+      </element><element name="RecordExists"><short>Check if a value exists in a table</short>
+      </element><element name="RecordDuplicated"><short>Check if a value is duplicated in a table</short>
+      </element><element name="IsRecordActive"><short>Check if a record is active</short>
+      </element><element name="IsCoordinateOk"><short>Check if a geographical coordinate is correct</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

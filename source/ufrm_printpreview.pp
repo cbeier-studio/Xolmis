@@ -5,17 +5,21 @@ unit ufrm_printpreview;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons, LCLIntf,
-  LR_Class, LR_View, LR_DBSet, LR_ChBox, Printers, PrintersDlgs, lrPDFExport, lr_e_fclpdf;
+  Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons,
+  LCLIntf, LR_Class, LR_View, LR_DBSet, LR_ChBox, Printers, PrintersDlgs, lrPDFExport, lr_e_fclpdf;
 
 type
 
   { TfrmPrintPreview }
 
   TfrmPrintPreview = class(TForm)
+    dsPrint: TDataSource;
+    dsPrintDetail: TDataSource;
     frCheckBoxObj: TfrCheckBoxObject;
     frDataSet: TfrDBDataSet;
+    frDetails: TfrDBDataSet;
     frPreview: TfrPreview;
+    qPrintDetail: TSQLQuery;
     Report: TfrReport;
     iButtons: TImageList;
     iButtonsDark: TImageList;
@@ -40,6 +44,7 @@ type
     sbZoomAdjustWidth: TSpeedButton;
     sbZoomIn: TSpeedButton;
     sbZoomOut: TSpeedButton;
+    qPrint: TSQLQuery;
     tbZoom: TTrackBar;
     procedure FormShow(Sender: TObject);
     procedure frPreviewScrollPage(Sender: TObject);
@@ -60,14 +65,16 @@ type
     procedure sbZoomOutClick(Sender: TObject);
     procedure tbZoomChange(Sender: TObject);
   private
-    FDataSource: TDataSource;
+    FDataSource, FDetailSource: TDataSource;
     FReportName: String;
     procedure SetDataSource(AValue: TDataSource);
+    procedure SetDetailSource(AValue: TDataSource);
     procedure SetReportName(AValue: String);
     procedure ApplyDarkMode;
     procedure UpdateButtons;
   public
     property DataSource: TDataSource read FDataSource write SetDataSource;
+    property DetailSource: TDataSource read FDetailSource write SetDetailSource;
     property ReportName: String read FReportName write SetReportName;
   end;
 
@@ -108,6 +115,7 @@ begin
   begin
     Report.DoublePass := True;
     Report.LoadFromFile(FReportName);
+
     Report.PrepareReport;
     Report.ShowPreparedReport;
 
@@ -260,7 +268,32 @@ end;
 procedure TfrmPrintPreview.SetDataSource(AValue: TDataSource);
 begin
   FDataSource := AValue;
+  //qPrint.SQL.Text := TSQLQuery(FDataSource.DataSet).SQL.Text;
+
+  if FReportName = ConcatPaths([InstallDir, 'reports\rep_bands_by_status.lrf']) then
+  begin
+    FDataSource.DataSet.Close;
+    if Pos('ORDER BY', TSQLQuery(FDataSource.DataSet).SQL.Text) > 0 then
+    begin
+      //sOrder := TSQLQuery(FDataSource.DataSet).SQL[TSQLQuery(FDataSource.DataSet).SQL.Count - 1];
+      TSQLQuery(FDataSource.DataSet).SQL.Delete(TSQLQuery(FDataSource.DataSet).SQL.Count - 1);
+    end;
+    TSQLQuery(FDataSource.DataSet).SQL.Add('ORDER BY b.band_status ASC, b.band_size ASC, b.band_number ASC');
+    {$IFDEF DEBUG}
+    LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
+    {$ENDIF}
+    FDataSource.DataSet.Open;
+  end;
+
   frDataSet.DataSource := FDataSource;
+end;
+
+procedure TfrmPrintPreview.SetDetailSource(AValue: TDataSource);
+begin
+  FDetailSource := AValue;
+  //if Assigned(FDetailSource) then
+  //  qPrintDetail.SQL.Text := TSQLQuery(FDetailSource.DataSet).SQL.Text;
+  frDetails.DataSource := FDetailSource;
 end;
 
 procedure TfrmPrintPreview.SetReportName(AValue: String);

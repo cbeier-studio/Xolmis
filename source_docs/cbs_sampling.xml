@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_sampling"><element name="AuthorListToString"><short>Convert a list of TAuthor to a delimited string</short>
+      </element><element name="StringToAuthorList"><short>Convert a delimited string to a TAuthor list</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

@@ -73,6 +73,14 @@
       </element><element name="UpdateIndividual"><short>Update the banding date of an individual.</short>
       </element><element name="ChangeIndividualBand"><short>Change the band of an individual.</short>
       </element>
+    <element name="CreateUserDatabase"><short>Create new user database</short>
+      </element><element name="GetTableType"><short>Get the table type using a table name</short>
+      </element><element name="GetPrimaryKey"><short>Get the primary key from a dataset</short>
+      </element><element name="OptimizeDB"><short>Run cleanup and optimization on database</short>
+      </element><element name="CheckDB"><short>Check the database integrity</short>
+      </element><element name="ClearDeleted"><short>Delete permanently the inactive records older than a number of days</short>
+      </element><element name="GetLastInsertedKey"><short>Get the last inserted key</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

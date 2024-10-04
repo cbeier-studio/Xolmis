@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_getvalue"><element name="GetKey"><short>Get the key value of a table based on another field value</short>
+      </element><element name="GetName"><short>Get a name value from a table based on a key value</short>
+      </element><element name="GetLatLong"><short>Get the geographical coordinate of a table based on a key value</short>
+      </element><element name="GetRankFromSite"><short>Get the rank/type from a location in gazetteer</short>
+      </element><element name="GetRankFromTaxon"><short>Get the rank key value from a taxon key value</short>
+      </element><element name="GetRank"><short>Get the taxon rank based on a taxon rank key</short>
+      </element><element name="GetTaxonHierarchy"><short>Fill the taxon hierarchy of a record</short>
+      </element><element name="GetBotanicHierarchy"><short>Fill the botanic taxon hierarchy of a record</short>
+      </element><element name="GetSiteHierarchy"><short>Fill the site hierarchy of a record</short>
+      </element><element name="FillComboBox"><short>Fill a combo box item list with values from a table</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

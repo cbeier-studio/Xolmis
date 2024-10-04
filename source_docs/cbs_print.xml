@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_print"><element name="PrintPreview"><short>Show the print preview window for a report file</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

@@ -16,6 +16,34 @@
       </element><element name="TfrmCustomGrid.SetSearchString"><short>Sets the SearchString property</short>
       </element><element name="TfrmCustomGrid.SearchString"><short>String containing a typed search value</short>
       </element>
+    <element name="TfrmCustomGrid.ApplyDarkMode"><short>Apply the dark mode to the UI</short>
+      </element><element name="TfrmCustomGrid.CellKeyPress"><short>Capture the key press event within specific column cells</short>
+      </element><element name="TfrmCustomGrid.ChildTagClick"><short>Behavior of child tags click event</short>
+      </element><element name="TfrmCustomGrid.ChildTagMouseEnter"><short>Behavior of child tags when mouse enter event</short>
+      </element><element name="TfrmCustomGrid.ChildTagMouseLeave"><short>Behavior of child tags when mouse leave event</short>
+      </element><element name="TfrmCustomGrid.GetChildDataSet"><short>Get the current child dataset</short>
+      </element><element name="TfrmCustomGrid.GetColumns"><short>Fill the columns grid on side panel with the dataset fields</short>
+      </element><element name="TfrmCustomGrid.LoadColumns"><short>Load the columns' saved settings</short>
+      </element><element name="TfrmCustomGrid.RefreshMap"><short>Update the map with the current record coordinates</short>
+      </element><element name="TfrmCustomGrid.RefreshMapSurvey"><short>Update the map with the coordinates of mistnets of the current survey record</short>
+      </element><element name="TfrmCustomGrid.SaveColumns"><short>Save columns' settings</short>
+      </element><element name="TfrmCustomGrid.SetAudios"><short>Set the dataset and grid of audio recordings side panel</short>
+      </element><element name="TfrmCustomGrid.SetImages"><short>Set the dataset and grid of the images side panel</short>
+      </element><element name="TfrmCustomGrid.SetRecycle"><short>Set the dataset and grid of the recycle bin side panel</short>
+      </element><element name="TfrmCustomGrid.Summary"><short>Set the dataset of the summary side panel</short>
+      </element><element name="TfrmCustomGrid.UpdateButtons"><short>Update the state of the main buttons</short>
+      </element><element name="TfrmCustomGrid.UpdateChildBar"><short>Update the child bar state</short>
+      </element><element name="TfrmCustomGrid.UpdateChildButtons"><short>Update the child buttons state</short>
+      </element><element name="TfrmCustomGrid.UpdateChildCount"><short>Update the child records counter</short>
+      </element><element name="TfrmCustomGrid.UpdateChildStatus"><short>Update the child status bar</short>
+      </element><element name="TfrmCustomGrid.UpdateGridTitles"><short>Update the grid columns titles</short>
+      </element><element name="TfrmCustomGrid.UpdateImageButtons"><short>Update the images side panel buttons</short>
+      </element><element name="TfrmCustomGrid.UpdateAudioButtons"><short>Update the audio recordings side panel buttons</short>
+      </element><element name="TfrmCustomGrid.TableType"><short>Table type of the master datasource</short>
+      </element><element name="TfrmCustomGrid.ShowSidePanel"><short>Update the visibility of the side panel</short>
+      </element><element name="TfrmCustomGrid.SidePanelIndex"><short>Change the side panel page index</short>
+      </element><element name="TfrmCustomGrid.CanToggle"><short>Variable that indicates if the filters can change</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

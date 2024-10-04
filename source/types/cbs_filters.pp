@@ -61,6 +61,7 @@ type
 
   { Load lists and trees }
   procedure LoadTaxaTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
+
   procedure LoadSpecimenDateTree(aSQL: TStrings);
   procedure LoadNestDateTree(aSQL: TStrings);
   procedure LoadNestRevisionDateTree(aSQL: TStrings);
@@ -74,6 +75,7 @@ type
   procedure LoadPermitDateTree(aSQL: TStrings);
   procedure LoadPeopleDateTree(aSQL: TStrings);
   procedure LoadDateTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
+
   procedure LoadSiteTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
 
   { Filter auxiliary functions }

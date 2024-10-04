@@ -11,6 +11,7 @@ object dlgBandsBalance: TdlgBandsBalance
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.6.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 38

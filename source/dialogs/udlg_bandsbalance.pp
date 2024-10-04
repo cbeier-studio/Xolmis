@@ -68,7 +68,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_themes, udm_main, udm_client, uDarkStyleParams;
+uses cbs_global, cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_import"><element name="TEbirdDownloadFormat"><short>eBird Download Format record</short>
+      </element><element name="ImportEbirdData"><short>Import data from a CSV file in eBird Download Format</short>
+      </element><element name="ImportBandingDataV1"><short>Import banding data from a CSV file</short>
+      </element><element name="ImportBandingJournalV1"><short>Import banding journal data from a CSV file</short>
+      </element><element name="ImportBandingEffortV1"><short>Import banding effort data from a CSV file</short>
+      </element><element name="ImportNestDataV1"><short>Import nest data from a CSV file</short>
+      </element><element name="ImportNestRevisionsV1"><short>Import nest revisions data from a CSV file</short>
+      </element><element name="ImportEggDataV1"><short>Import eggs data from a CSV file</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

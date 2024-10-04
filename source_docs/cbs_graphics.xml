@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_graphics"><element name="MakeRounded"><short>Give a control rounded corners</short>
+      </element><element name="RoundPanels"><short>Give rounded corners to all panels within a parent control</short>
+      </element><element name="PaintColorBand"><short>Paint a shape and a label with a bird ring color code</short>
+      </element><element name="LoadGlyph"><short>Load a glyph from an image list</short>
+      </element><element name="LoadIcone"><short>Load a icon from an image list</short>
+      </element><element name="LoadEditButton"><short>Load a image to an edit button from an image list</short>
+      </element><element name="TogglePassView"><short>Toggle the button image to show/hide password</short>
+      </element><element name="TryExifStringToDateTime"><short>Try to convert an exif string to date/time</short>
+      </element><element name="GenerateRandomColor"><short>Generate a random color</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

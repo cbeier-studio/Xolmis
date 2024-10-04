@@ -151,7 +151,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_themes, udm_main, udm_client, ufrm_main,
+  cbs_global, cbs_themes, udm_main, ufrm_main,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF}
   uDarkStyleParams;
 
@@ -698,15 +698,26 @@ procedure TfrmDashboard.RefreshChart;
 var
   InitialMonth: TDate;
   i: Integer;
+  Qry: TSQLQuery;
 begin
   InitialMonth := IncMonth(Today, -12);
-  with DMC.qIndividualsMonth do
-  begin
-    if DMC.qIndividualsMonth.Active then
-      Refresh
-    else
-      Open;
-    if DMC.qIndividualsMonth.RecordCount > 0 then
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('WITH MonthlyCaptures AS (');
+    Add('   SELECT STRFTIME(''%Y-%m'', capture_date) AS record_month, COUNT(capture_id) AS quantity');
+    Add('   FROM captures');
+    Add('   WHERE capture_date > DATE(''now'', ''-12 months'')');
+    Add('   GROUP BY record_month )');
+    Add('SELECT ROW_NUMBER() OVER (ORDER BY record_month) AS id, record_month, quantity');
+    Add('FROM MonthlyCaptures');
+    Add('ORDER BY record_month ASC');
+    Open;
+
+    if RecordCount > 0 then
     begin
       chartIndividuals.Refresh;
       lcsIndividualsMonth.Clear;
@@ -732,15 +743,27 @@ begin
     end;
     //else
     //  pChartIndividuals.Visible := False;
-  end;
+    Close;
 
-  with DMC.qSpeciesMonth do
-  begin
-    if DMC.qSpeciesMonth.Active then
-      Refresh
-    else
-      Open;
-    if DMC.qIndividualsMonth.RecordCount > 0 then
+    Clear;
+    Add('WITH CombinedData AS (');
+    Add('   SELECT STRFTIME(''%Y-%m'', t.capture_date) AS record_month, t.taxon_id AS taxon');
+    Add('   FROM captures AS t');
+    Add('   WHERE t.active_status = 1');
+    Add('   UNION ALL');
+    Add('   SELECT STRFTIME(''%Y-%m'', s.sighting_date) AS record_month, s.taxon_id AS taxon');
+    Add('   FROM sightings AS s');
+    Add('   WHERE s.active_status = 1 ),');
+    Add('MonthlyCounts AS (');
+    Add('   SELECT record_month, COUNT(DISTINCT taxon) AS quantity');
+    Add('   FROM CombinedData');
+    Add('   GROUP BY record_month )');
+    Add('SELECT ROW_NUMBER() OVER (ORDER BY record_month) AS id, record_month, quantity');
+    Add('FROM MonthlyCounts');
+    Add('WHERE record_month > STRFTIME(''%Y-%m'', ''now'', ''-12 months'')');
+    Add('ORDER BY record_month ASC');
+    Open;
+    if RecordCount > 0 then
     begin
       chartSpecies.Refresh;
       lcsSpeciesMonth.Clear;
@@ -766,6 +789,9 @@ begin
     end;
     //else
     //  pChartSpecies.Visible := False;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -1021,11 +1047,14 @@ end;
 
 procedure TfrmDashboard.TimerReloadTimer(Sender: TObject);
 begin
-  if Working then
+  if Working or Closing then
     Exit;
 
-  if DMM.sqlCon.Connected and DMC.WaitingConnection then
-    pmRefreshClick(nil);
+  //if DMM.sqlCon.Connected and DMM.WaitingConnection then
+  //begin
+  //  DMM.WaitingConnection := False;
+  //  pmRefreshClick(nil);
+  //end;
 end;
 
 end.

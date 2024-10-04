@@ -1728,6 +1728,7 @@ msgid "Temperature (°C)"
 msgstr ""
 
 #: cbs_datacolumns.rsctime
+msgctxt "cbs_datacolumns.rsctime"
 msgid "Time"
 msgstr ""
 
@@ -3755,6 +3756,10 @@ msgctxt "cbs_locale.rsnotfullname"
 msgid "not fullname"
 msgstr ""
 
+#: cbs_locale.rsnothingtoprint
+msgid "There are no records to print!"
+msgstr ""
+
 #: cbs_locale.rsnothumbnails
 msgctxt "cbs_locale.rsnothumbnails"
 msgid "There are no images to recreate the thumbnails!"
@@ -3862,6 +3867,11 @@ msgstr ""
 #: cbs_locale.rspreparingrestore
 msgctxt "cbs_locale.rspreparingrestore"
 msgid "Preparing backup restore..."
+msgstr ""
+
+#: cbs_locale.rsprintrecordstitle
+msgctxt "cbs_locale.rsprintrecordstitle"
+msgid "Print records"
 msgstr ""
 
 #: cbs_locale.rsprogressexporting
@@ -9804,6 +9814,20 @@ msgctxt "tfrmcustomgrid.eaddchild.texthint"
 msgid "Quick add"
 msgstr ""
 
+#: tfrmcustomgrid.gridaudios.columns[0].title.caption
+msgctxt "tfrmcustomgrid.gridaudios.columns[0].title.caption"
+msgid "Date"
+msgstr ""
+
+#: tfrmcustomgrid.gridaudios.columns[1].title.caption
+msgctxt "tfrmcustomgrid.gridaudios.columns[1].title.caption"
+msgid "Time"
+msgstr ""
+
+#: tfrmcustomgrid.gridaudios.columns[2].title.caption
+msgid "Fullname"
+msgstr ""
+
 #: tfrmcustomgrid.gridcolumns.columns[0].title.caption
 msgid "Visible"
 msgstr ""
@@ -10174,6 +10198,26 @@ msgctxt "tfrmcustomgrid.lblwithrecapturesfilter.caption"
 msgid "Have recaptures"
 msgstr ""
 
+#: tfrmcustomgrid.pmaaddaudio.caption
+msgid "Add audio recording(s)"
+msgstr ""
+
+#: tfrmcustomgrid.pmaaudioinfo.caption
+msgid "View/edit recording info"
+msgstr ""
+
+#: tfrmcustomgrid.pmadelaudio.caption
+msgid "Delete audio recording"
+msgstr ""
+
+#: tfrmcustomgrid.pmaplayaudio.caption
+msgid "Play selected audio"
+msgstr ""
+
+#: tfrmcustomgrid.pmarefreshaudios.caption
+msgid "Refresh audio recordings"
+msgstr ""
+
 #: tfrmcustomgrid.pmccolumnsautoadjustwidth.caption
 msgctxt "tfrmcustomgrid.pmccolumnsautoadjustwidth.caption"
 msgid "Auto adjust columns' width"
@@ -10402,12 +10446,12 @@ msgstr ""
 msgid "Bands by carrier"
 msgstr ""
 
-#: tfrmcustomgrid.pmprintbandsbyproject.caption
-msgid "Bands by project"
-msgstr ""
-
 #: tfrmcustomgrid.pmprintbandsbystatus.caption
 msgid "Bands by status"
+msgstr ""
+
+#: tfrmcustomgrid.pmprintbandswithhistory.caption
+msgid "Bands with history"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintbotanictaxa.caption
@@ -10909,6 +10953,10 @@ msgctxt "tfrmcustomgrid.rbwithrecapturesyes.caption"
 msgid "Yes"
 msgstr ""
 
+#: tfrmcustomgrid.sbaddaudio.hint
+msgid "Add audio recording"
+msgstr ""
+
 #: tfrmcustomgrid.sbaddchild.hint
 msgctxt "tfrmcustomgrid.sbaddchild.hint"
 msgid "New related record"
@@ -10921,6 +10969,10 @@ msgstr ""
 
 #: tfrmcustomgrid.sbaddnetsbatch.hint
 msgid "New batch of mistnets"
+msgstr ""
+
+#: tfrmcustomgrid.sbaudioinfo.hint
+msgid "View and edit audio info"
 msgstr ""
 
 #: tfrmcustomgrid.sbcancelrecord.caption
@@ -10952,6 +11004,10 @@ msgstr ""
 
 #: tfrmcustomgrid.sbcolumnwidthautoadjust.hint
 msgid "Autoadjust the columns width"
+msgstr ""
+
+#: tfrmcustomgrid.sbdelaudio.hint
+msgid "Delete audio"
 msgstr ""
 
 #: tfrmcustomgrid.sbdelchild.hint
@@ -11043,7 +11099,12 @@ msgctxt "tfrmcustomgrid.sbnextrecord.hint"
 msgid "Next record"
 msgstr ""
 
+#: tfrmcustomgrid.sbplayaudio.hint
+msgid "Play/stop audio"
+msgstr ""
+
 #: tfrmcustomgrid.sbprint.hint
+msgctxt "tfrmcustomgrid.sbprint.hint"
 msgid "Print records"
 msgstr ""
 
@@ -11407,6 +11468,11 @@ msgctxt "tfrmgeoconverter.pmfpaste.caption"
 msgid "Paste"
 msgstr ""
 
+#: tfrmgeoconverter.pmfswapvalues.caption
+msgctxt "tfrmgeoconverter.pmfswapvalues.caption"
+msgid "Swap values"
+msgstr ""
+
 #: tfrmgeoconverter.pmtaddtogeobank.caption
 msgid "Add to Coordinates Editor"
 msgstr ""
@@ -11464,6 +11530,11 @@ msgstr ""
 #: tfrmgeoconverter.sbsavefile.caption
 msgctxt "tfrmgeoconverter.sbsavefile.caption"
 msgid "Save"
+msgstr ""
+
+#: tfrmgeoconverter.sbswapvalues.caption
+msgctxt "tfrmgeoconverter.sbswapvalues.caption"
+msgid "Swap values"
 msgstr ""
 
 #: tfrmimageviewer.caption

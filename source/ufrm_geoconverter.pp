@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, ComCtrls,
-  Menus, SynEdit, BCPanel, SynEditTypes, SynEditMarks, SynHighlighterAny, StrUtils, LConvEncoding,
+  Menus, SynEdit, BCPanel, SynEditTypes, SynEditMarks, StrUtils, LConvEncoding,
   RegExpr;
 
 type
@@ -43,6 +43,7 @@ type
     lblLineCol: TLabel;
     lblUTMHemisphere: TLabel;
     lblUTMZone: TLabel;
+    pmfSwapValues: TMenuItem;
     Panel2: TPanel;
     pConvertFromToolbar: TBCPanel;
     imgSBar: TImageList;
@@ -77,13 +78,14 @@ type
     sbCopy: TSpeedButton;
     sbOpenFile: TSpeedButton;
     sbPaste: TSpeedButton;
+    sbSwapValues: TSpeedButton;
     sbSaveFile: TSpeedButton;
     seConverted: TSynEdit;
     seConvertFrom: TSynEdit;
     Separator1: TMenuItem;
     Separator2: TMenuItem;
+    Separator3: TMenuItem;
     SplitSynEdit: TSplitter;
-    SynGeo: TSynAnySyn;
     procedure cbConvertToChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -95,6 +97,7 @@ type
     procedure sbOpenFileClick(Sender: TObject);
     procedure sbPasteClick(Sender: TObject);
     procedure sbSaveFileClick(Sender: TObject);
+    procedure sbSwapValuesClick(Sender: TObject);
     procedure seConvertFromChange(Sender: TObject);
     procedure seConvertFromClick(Sender: TObject);
     procedure seConvertFromKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -103,7 +106,7 @@ type
   private
     procedure AddMark(aLine: Integer);
     procedure ApplyDarkMode;
-    procedure FormatCoordinates;
+    function FormatCoordinates(aText: String): String;
     procedure UpdateButtons;
     procedure UpdateCurrentCaretPos;
   public
@@ -167,6 +170,7 @@ begin
     S := Trim(L[i]);
     if S <> EmptyStr then
     begin
+      { #todo : Convert coordinate to decimal format }
       MP.FromString(S);
       with DMM.tabGeoBank do
       begin
@@ -253,7 +257,7 @@ begin
     PBar.Visible := True;
     //frm_Main.Taskbar.ProgressValue := 0;
     //frm_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
-    FormatCoordinates;
+    seConvertFrom.Lines.Text := FormatCoordinates(seConvertFrom.Lines.Text);
     seConverted.Lines.Clear;
     seConverted.Marks.ClearLine(1);
 
@@ -357,7 +361,7 @@ begin
   if OpenDlg.Execute then
   begin
     seConvertFrom.Lines.LoadFromFile(OpenDlg.FileName);
-    FormatCoordinates;
+    seConvertFrom.Lines.Text := FormatCoordinates(seConvertFrom.Lines.Text);
   end;
 end;
 
@@ -371,6 +375,33 @@ begin
   if SaveDlg.Execute then
   begin
     seConverted.Lines.SaveToFile(SaveDlg.FileName);
+  end;
+end;
+
+procedure TfrmGeoConverter.sbSwapValuesClick(Sender: TObject);
+var
+  i, StartLine, EndLine: Integer;
+  s1, s2: String;
+begin
+  if seConvertFrom.SelAvail then
+  begin
+    StartLine := seConvertFrom.BlockBegin.Y - 1;
+    EndLine := seConvertFrom.BlockEnd.Y - 1;
+  end
+  else
+  begin
+    StartLine := 0;
+    EndLine := seConvertFrom.Lines.Count - 1;
+  end;
+
+  for i := StartLine to EndLine do
+  begin
+    if Trim(seConvertFrom.Lines[i]) <> EmptyStr then
+    begin
+      s1 := ExtractDelimited(1, seConvertFrom.Lines[i], [';']);
+      s2 := ExtractDelimited(2, seConvertFrom.Lines[i], [';']);
+      seConvertFrom.Lines[i] := s2 + ';' + s1;
+    end;
   end;
 end;
 
@@ -393,7 +424,7 @@ end;
 procedure TfrmGeoConverter.seConvertFromPaste(Sender: TObject; var AText: String;
   var AMode: TSynSelectionMode; ALogStartPos: TPoint; var AnAction: TSynCopyPasteAction);
 begin
-  FormatCoordinates;
+  AText := FormatCoordinates(AText);
   UpdateCurrentCaretPos;
 end;
 
@@ -459,14 +490,15 @@ begin
   sbAddToGeoEditor.Images := iButtonsDark;
 end;
 
-procedure TfrmGeoConverter.FormatCoordinates;
+function TfrmGeoConverter.FormatCoordinates(aText: String): String;
 var
   p: Extended;
   X: String;
   pcaret: TPoint;
   aFrom: TMapCoordinateType;
 begin
-  if Trim(seConvertFrom.Text) = EmptyStr then
+  Result := EmptyStr;
+  if Trim(aText) = EmptyStr then
     Exit;
 
   aFrom := mcDecimal;
@@ -474,14 +506,17 @@ begin
   pcaret := seConvertFrom.CaretXY;
 
   // replace <Tab> separator
-  seConvertFrom.Text := ReplaceRegExpr('\t+', seConvertFrom.Text, '; ');
+  aText := ReplaceRegExpr('\t+', aText, '; ');
+  // replace separator to Semicolon
+  if Pos('.', aText) > 0 then
+    aText := StringReplace(aText, ',', ';', [rfReplaceAll, rfIgnoreCase]);
   // replace DecimalSeparator if it is a Comma
   if FormatSettings.DecimalSeparator = ',' then
-    seConvertFrom.Text := StringReplace(seConvertFrom.Text, '.', ',', [rfReplaceAll, rfIgnoreCase]);
+    aText := StringReplace(aText, '.', ',', [rfReplaceAll, rfIgnoreCase]);
   // replace double spaces
-  seConvertFrom.Text := ReplaceRegExpr('\h+', seConvertFrom.Text, ' ');
+  aText := ReplaceRegExpr('\h+', aText, ' ');
 
-  X := Trim(ExtractDelimited(1, seConvertFrom.Lines[0], [';']));
+  X := Trim(ExtractDelimited(1, aText, [';']));
   if WordCount(X, DmsSymbols + [' ']) > 2 then
     aFrom := mcDMS
   else
@@ -496,7 +531,7 @@ begin
       end;
     mcDMS:
       begin
-        seConvertFrom.Text := RemoveSymbolsDMS(seConvertFrom.Text);
+        aText := RemoveSymbolsDMS(aText);
         cbConvertFrom.ItemIndex := 1;
         cbConvertTo.ItemIndex := 0;
       end;
@@ -507,6 +542,7 @@ begin
       end;
   end;
 
+  Result := aText;
   seConvertFrom.CaretXY := pcaret;
   UpdateButtons;
   UpdateCurrentCaretPos;
@@ -515,12 +551,14 @@ end;
 procedure TfrmGeoConverter.UpdateButtons;
 begin
   sbConvert.Enabled := Trim(seConvertFrom.Lines.Text) <> EmptyStr;
+  sbSwapValues.Enabled := Trim(seConvertFrom.Lines.Text) <> EmptyStr;
   sbClear.Enabled := (Trim(seConvertFrom.Lines.Text) <> EmptyStr) or
     (Trim(seConverted.Lines.Text) <> EmptyStr);
   sbSaveFile.Enabled := Trim(seConverted.Lines.Text) <> EmptyStr;
   sbCopy.Enabled := Trim(seConverted.Lines.Text) <> EmptyStr;
   sbAddToGeoEditor.Enabled := Trim(seConverted.Lines.Text) <> EmptyStr;
 
+  pmfSwapValues.Enabled := sbSwapValues.Enabled;
   pmfClear.Enabled := sbClear.Enabled;
   pmtSaveFile.Enabled := sbSaveFile.Enabled;
   pmtCopy.Enabled := sbCopy.Enabled;

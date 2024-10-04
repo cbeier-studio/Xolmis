@@ -244,6 +244,10 @@ uses
       'Do you really want to discard it?';
     rsModificationsNotSaved = 'Changes not saved';
 
+    { Print messages }
+    rsPrintRecordsTitle = 'Print records';
+    rsNothingToPrint = 'There are no records to print!';
+
     { Coordinates messages }
     rsCoordinatesAvailableToUse = 'Coordinates are available at the Coordinates Editor.';
     rsSelectCoordinatesTypes = 'Select the origin and destination coordinate types.';

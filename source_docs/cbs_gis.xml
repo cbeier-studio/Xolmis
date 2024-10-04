@@ -13,6 +13,20 @@
       </element><element name="ViewMapPoint"><short>Show a point in the map.</short>
       </element><element name="LoadSiteTree"><short>Load a list of countries, states and municipalities in a tree.</short>
       </element>
+    <element name="AddKMLPoint"><short>Adds a point to a KML document</short>
+      </element><element name="SavePointsToKML"><short>Export coordinate points to a KML file</short>
+      </element><element name="SavePointsToGPX"><short>Export coordinate points to a GPX file</short>
+      </element><element name="SavePointsToCSV"><short>Export coordinate points to a CSV file</short>
+      </element><element name="SavePointsToGeoJSON"><short>Export coordinate points to a GeoJSON file</short>
+      </element><element name="WriteStringToGeoJSON"><short>Write a string stream to a GeoJSON stream</short>
+      </element><element name="LoadKMLPoints"><short>Import coordinate points from a KML file to a memory table</short>
+      </element><element name="LoadGPXPoints"><short>Import coordinate points from a GPX file to a memory table</short>
+      </element><element name="LoadCSVPoints"><short>Import coordinate points from a CSV file to a memory table</short>
+      </element><element name="LoadGeoJSONPoints"><short>Import coordinate points from a GeoJSON file to a memory table</short>
+      </element><element name="ReadGeoJSONToString"><short>Load a GeoJSON stream to a string stream</short>
+      </element><element name="DBToMapPoints"><short>Load coordinates from a dataset to a map points list</short>
+      </element><element name="GeoEditorDlg"><short>Open the geo editor dialog</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

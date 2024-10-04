@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_datasearch"><element name="GetModifier"><short>Get the search modifier from a search hashtag</short>
+      </element><element name="SetSelectSQL"><short>Set initial SQL query code for a table</short>
+      </element><element name="SetMethodsSQL"><short>Set initial SQL query code for methods</short>
+      </element><element name="SetSpecimensSQL"><short>Set initial SQL query code for specimens</short>
+      </element><element name="SetSurveysSQL"><short>Set initial SQL query code for surveys</short>
+      </element><element name="SetExpeditionsSQL"><short>Set initial SQL query code for expeditions</short>
+      </element><element name="SetSightingsSQL"><short>Set initial SQL query code for sightings</short>
+      </element><element name="SetSurveyTeamSQL"><short>Set initial SQL query code for survey members</short>
+      </element><element name="SetBotanicTaxaSQL"><short>Set initial SQL query code for botanic taxa</short>
+      </element><element name="SetGazetteerSQL"><short>Set initial SQL query code for gazetteer</short>
+      </element><element name="SetNetStationsSQL"><short>Set initial SQL query code for sampling plots</short>
+      </element><element name="SetInstitutionsSQL"><short>Set initial SQL query code for institutions</short>
+      </element><element name="SetNestsSQL"><short>Set initial SQL query code for nests</short>
+      </element><element name="SetNestRevisionsSQL"><short>Set initial SQL query code for nest revisions</short>
+      </element><element name="SetEggsSQL"><short>Set initial SQL query code for eggs</short>
+      </element><element name="SetIndividualsSQL"><short>Set initial SQL query code for individuals</short>
+      </element><element name="SetCapturesSQL"><short>Set initial SQL query code for captures</short>
+      </element><element name="SetTaxonRanksSQL"><short>Set initial SQL query code for taxon ranks</short>
+      </element><element name="SetPeopleSQL"><short>Set initial SQL query code for researchers</short>
+      </element><element name="SetProjectsSQL"><short>Set initial SQL query code for projects</short>
+      </element><element name="SetProjectTeamSQL"><short>Set initial SQL query code for project members</short>
+      </element><element name="SetPermitsSQL"><short>Set initial SQL query code for permits</short>
+      </element><element name="SetZooTaxaSQL"><short>Set initial SQL query code for taxa</short>
+      </element><element name="SetBandsSQL"><short>Set initial SQL query code for bands</short>
+      </element><element name="SetUsersSQL"><short>Set initial SQL query code for users</short>
+      </element><element name="SetReportsSQL"><short>Set initial SQL query code for reports</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

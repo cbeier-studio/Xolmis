@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_conversions"><element name="TrimList"><short>Trim a list and return it as a string</short>
+      </element><element name="TextToBool"><short>Convert string to boolean</short>
+      </element><element name="BoolToText"><short>Convert boolean to string</short>
+      </element><element name="WildcardWords"><short>Format string to query each part in diferent words</short>
+      </element><element name="WildcardSyllables"><short>Format string to query each part in the same word</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

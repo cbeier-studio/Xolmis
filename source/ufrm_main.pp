@@ -345,7 +345,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions, cbs_backup,
   cbs_gis, cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
-  udm_main, udm_lookup, udm_grid, udm_client, udm_sampling, udm_individuals, udm_breeding,
+  udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
   ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance;
@@ -898,8 +898,8 @@ begin
     CarregaPref;
 
     { Load the start page }
-    if not Assigned(DMC) then
-      DMC := TDMC.Create(Application);
+    //if not Assigned(DMC) then
+    //  DMC := TDMC.Create(Application);
     OpenTab(Sender, frmDashboard, TfrmDashboard, rsHome, True);
     Application.ProcessMessages;
 

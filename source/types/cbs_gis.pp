@@ -1324,7 +1324,7 @@ end;
 function TDMS.ToString(WithSymbols: Boolean): String;
 begin
   if WithSymbols then
-    Result := Format('%d'#176' %2.2d'' %s" %s',[Degrees, Minutes, FormatFloat('00.00', Seconds), Hemisphere])
+    Result := Format('%d° %2.2d'' %s" %s',[Degrees, Minutes, FormatFloat('00.00', Seconds), Hemisphere])
   else
     Result := Format('%d %2.2d %s %s',[Degrees, Minutes, FormatFloat('00.00', Seconds), Hemisphere]);
 end;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_math"><element name="Median"><short>Calculate the median of a array of extended values</short>
+      </element><element name="MedianQuartiles"><short>Calculate the median quartiles of a array of float values</short>
+      </element><element name="Zscore"><short>Calculate the z-score for measurements of a taxon</short>
+      </element><element name="ModifiedZScore"><short>Calculate the modified z-score for measurements of a taxon</short>
+      </element><element name="IsOutlier"><short>Return if the value is an outlier based on median quartiles</short>
+      </element><element name="IsOutlierZscore"><short>Return if a value is an outlier based on modified z-score</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

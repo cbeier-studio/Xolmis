@@ -11,7 +11,9 @@ uses
   function MedianQuartiles(Values: TDoubleDynArray; out Quartile1, Quartile3: Extended): Extended;
 
   function Zscore(aTaxon: Integer; aField: String; aValue: Extended): Extended;
-  function IsOutlier(aTaxon: Integer; aField: String; aValue: Extended): Boolean;
+  function ModifiedZScore(aTaxon: Integer; aField: String; aValue: Extended): Extended;
+  function IsOutlier(aTaxon: Integer; aField: String; aValue: Extended; Factor: Double = 1.5): Boolean;
+  function IsOutlierZscore(aTaxon: Integer; aField: String; aValue: Extended): Boolean;
 
 implementation
 
@@ -61,7 +63,7 @@ begin
   Result := z;
 end;
 
-function IsOutlier(aTaxon: Integer; aField: String; aValue: Extended): Boolean;
+function IsOutlier(aTaxon: Integer; aField: String; aValue: Extended; Factor: Double): Boolean;
 var
   Qry: TSQLQuery;
   x: array of Extended;
@@ -91,13 +93,16 @@ begin
         x[i] := FieldByName(aField).AsFloat;
         Next;
       end;
+      //Sort(x);
 
-      M := MedianQuartiles(x, Q1, Q3);
+      //M := MedianQuartiles(x, Q1, Q3);
+      Q1 := x[Length(x) div 4];
+      Q3 := x[3 * Length(x) div 4];
       IQR := Q3 - Q1;
-      ol1 := Q1 - (1.5 * IQR);
-      ol3 := Q3 + (1.5 * IQR);
+      ol1 := Q1 - (Factor * IQR);
+      ol3 := Q3 + (Factor * IQR);
 
-      Result := (aValue <= ol1) or (aValue >= ol3);
+      Result := (aValue < ol1) or (aValue > ol3);
     end;
     Close;
   finally
@@ -108,24 +113,18 @@ end;
 function Median(Values: array of Extended): Extended;
 var
   n, i: Integer;
+  Middle: Integer;
 begin
   Result := 0;
 
-  n := High(Values);
-  if n > 1 then
-  begin
-    if Odd(n) then
-      i := (n + 1) div 2
-    else
-      i := n div 2;
-  end
+  // Calcular a mediana
+  Middle := Length(Values) div 2;
+  if Length(Values) mod 2 = 0 then
+    // Se o número de valores for par, a mediana é a média dos dois valores do meio
+    Result := (Values[Middle - 1] + Values[Middle]) / 2
   else
-    i := n;
-
-  if Odd(n) then
-    Result := Values[i - 1]
-  else
-    Result := (Values[i - 1] + Values[i]) / 2;
+    // Se o número de valores for ímpar, a mediana é o valor do meio
+    Result := Values[Middle];
 end;
 
 function MedianQuartiles(Values: TDoubleDynArray; out Quartile1, Quartile3: Extended): Extended;
@@ -179,6 +178,64 @@ begin
   Quartile3 := Q3;
   Result := M;
 
+end;
+
+function ModifiedZScore(aTaxon: Integer; aField: String; aValue: Extended): Extended;
+var
+  Med, MAD, Sum: Extended;
+  i: Integer;
+  ColumnValues, Differences: array of Extended;
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    MacroCheck := True;
+    Add('SELECT %measurement FROM captures');
+    Add('WHERE (taxon_id = :ataxon)');
+    Add('AND ((%measurement != 0) OR (%measurement NOTNULL))');
+    Add('ORDER BY %measurement ASC');
+    MacroByName('MEASUREMENT').AsString := aField;
+    ParamByName('ATAXON').AsInteger := aTaxon;
+    Open;
+    { #todo : Method to convert a data column in array. }
+    SetLength(ColumnValues, RecordCount);
+    First;
+    for i := Low(ColumnValues) to High(ColumnValues) do
+    begin
+      ColumnValues[i] := FieldByName(aField).AsFloat;
+      Next;
+    end;
+
+    // Calcular a mediana
+    Med := Median(ColumnValues);
+
+    // Calcular as diferenças absolutas em relação à mediana
+    SetLength(Differences, Length(ColumnValues));
+    for i := 0 to High(ColumnValues) do
+      Differences[i] := Abs(ColumnValues[i] - Med);
+
+    // Calcular a MAD (mediana das diferenças absolutas)
+    MAD := Median(Differences);
+
+    // Calcular o Z-Score modificado
+    if MAD = 0 then
+      Result := 0
+    else
+      Result := 0.6745 * (aValue - Med) / MAD;
+
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function IsOutlierZscore(aTaxon: Integer; aField: String; aValue: Extended): Boolean;
+const
+  Threshold = 3.5; // Limite comum para Z-Score modificado
+begin
+  Result := Abs(ModifiedZScore(aTaxon, aField, aValue)) > Threshold;
 end;
 
 end.

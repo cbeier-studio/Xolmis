@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_datacolumns"><element name="SummaryBands"><short>Set summary for bands fields</short>
+      </element><element name="SummaryBotanicTaxa"><short>Set summary for botanic taxa fields</short>
+      </element><element name="SummaryCaptures"><short>Set summary for captures fields</short>
+      </element><element name="SummaryEggs"><short>Set summary for eggs fields</short>
+      </element><element name="SummaryExpeditions"><short>Set summary for expeditions fields</short>
+      </element><element name="SummaryGazetteer"><short>Set summary for gazetteer fields</short>
+      </element><element name="SummaryIndividuals"><short>Set summary for individuals fields</short>
+      </element><element name="SummaryInstitutions"><short>Set summary for institutions fields</short>
+      </element><element name="SummaryNests"><short>Set summary for nests fields</short>
+      </element><element name="SummaryNestRevisions"><short>Set summary for nest revisions fields</short>
+      </element><element name="SummaryPeople"><short>Set summary for researchers fields</short>
+      </element><element name="SummaryPermits"><short>Set summary for permits fields</short>
+      </element><element name="SummaryProjects"><short>Set summary for projects fields</short>
+      </element><element name="SummarySamplingPlots"><short>Set summary for sampling plots fields</short>
+      </element><element name="SummarySightings"><short>Set summary for sightings fields</short>
+      </element><element name="SummarySpecimens"><short>Set summary for specimens fields</short>
+      </element><element name="SummarySurveys"><short>Set summary for surveys fields</short>
+      </element><element name="TranslateRecordHistory"><short>Translate field display names for record history</short>
+      </element><element name="TranslateRecordVerifications"><short>Translate field display names for record verifications</short>
+      </element><element name="TranslateConnections"><short>Translate field display names for connections</short>
+      </element><element name="TranslateUsers"><short>Translate field display names for users</short>
+      </element><element name="TranslateMethods"><short>Translate field display names for methods</short>
+      </element><element name="TranslateTaxonRanks"><short>Translate field display names for taxon ranks</short>
+      </element><element name="TranslateBotanicTaxa"><short>Translate field display names for botanic taxa</short>
+      </element><element name="TranslateZooTaxa"><short>Translate field display names for taxa</short>
+      </element><element name="TranslateInstitutions"><short>Translate field display names for institutions</short>
+      </element><element name="TranslatePeople"><short>Translate field display names for researchers</short>
+      </element><element name="TranslateProjects"><short>Translate field display names for projects</short>
+      </element><element name="TranslateProjectTeams"><short>Translate field display names for project members</short>
+      </element><element name="TranslatePermits"><short>Translate field display names for permits</short>
+      </element><element name="TranslateGazetteer"><short>Translate field display names for gazetteer</short>
+      </element><element name="TranslateSamplingPlots"><short>Translate field display names for sampling plots</short>
+      </element><element name="TranslatePermanentNets"><short>Translate field display names for permanent nets</short>
+      </element><element name="TranslateExpeditions"><short>Translate field display names for expeditions</short>
+      </element><element name="TranslateSurveys"><short>Translate field display names for surveys</short>
+      </element><element name="TranslateSurveyTeams"><short>Translate field display names for survey members</short>
+      </element><element name="TranslateWeatherLogs"><short>Translate field display names for weather logs</short>
+      </element><element name="TranslateNetsEffort"><short>Translate field display names for nets effort</short>
+      </element><element name="TranslateSightings"><short>Translate field display names for sightings</short>
+      </element><element name="TranslateBands"><short>Translate field display names for bands</short>
+      </element><element name="TranslateBandHistory"><short>Translate field display names for band history</short>
+      </element><element name="TranslateIndividuals"><short>Translate field display names for individuals</short>
+      </element><element name="TranslateCaptures"><short>Translate field display names for captures</short>
+      </element><element name="TranslateMolts"><short>Translate field display names for molts</short>
+      </element><element name="TranslateNests"><short>Translate field display names for nests</short>
+      </element><element name="TranslateNestOwners"><short>Translate field display names for nest owners</short>
+      </element><element name="TranslateNestRevisions"><short>Translate field display names for nest revisions</short>
+      </element><element name="TranslateEggs"><short>Translate field display names for eggs</short>
+      </element><element name="TranslateSpecimens"><short>Translate field display names for specimens</short>
+      </element><element name="TranslateSpecimenCollectors"><short>Translate field display names for specimen collectors</short>
+      </element><element name="TranslateSamplePreps"><short>Translate field display names for sample preparations</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

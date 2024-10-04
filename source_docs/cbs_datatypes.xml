@@ -31,6 +31,9 @@
       </element><element name="TTableFields"><short>List of table fields</short>
       </element><element name="TTableInfo"><short>Table parameters</short>
       </element>
+    <element name="SearchTypeByName"><short>Get type for a data type name</short>
+      </element><element name="CampoByName"><short>Get type of field type name</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

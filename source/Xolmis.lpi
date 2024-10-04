@@ -168,7 +168,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="306"/>
+      <BuildNr Value="308"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -593,13 +593,6 @@
         <ComponentName Value="cfgUsers"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="udm_client.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="DMC"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
       </Unit>
       <Unit>
         <Filename Value="ufrm_geoconverter.pp"/>

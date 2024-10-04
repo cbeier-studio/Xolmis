@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="ufrm_printpreview"><element name="TfrmPrintPreview.ApplyDarkMode"><short>Apply dark mode to the UI</short>
+      </element><element name="TfrmPrintPreview.UpdateButtons"><short>Update the status of the buttons</short>
+      </element><element name="TfrmPrintPreview.ReportName"><short>Report file name</short>
+      </element><element name="TfrmPrintPreview.DataSource"><short>Data source for the report</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

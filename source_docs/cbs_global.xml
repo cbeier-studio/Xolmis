@@ -33,6 +33,11 @@
       </element>
     <element name="CheckLogsFull"><short>Check if the logs size reached the limit.</short>
       </element>
+    <element name="XSettings"><short>Current Xolmis settings</short>
+      </element><element name="Opening"><short>It is <b>True</b> if Xolmis or a window is opening</short>
+      </element><element name="Working"><short>It is <b>True</b> if some process is running</short>
+      </element><element name="FirstConfig"><short>Run the first configuration dialog</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

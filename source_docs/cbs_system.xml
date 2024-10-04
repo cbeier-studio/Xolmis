@@ -10,6 +10,16 @@
       </element><element name="TPartialDate.RomanMonth"><short>If <var>True</var> (default), displays the month in roman numerals, or zero for blank.</short>
       </element><element name="TDialogPosition"><short>Type to store position and size.</short>
       </element>
+    <element name="MesRomano"><short>Array with the months in roman numbers</short>
+      </element><element name="AbreForm"><short>Open a form using ShowModal</short>
+      </element><element name="ShowHistory"><short>Show the record history dialog</short>
+      </element><element name="ShowVerifications"><short>Show the record verifications dialog</short>
+      </element><element name="AddVerification"><short>Show the dialog to add/edit a record verification</short>
+      </element><element name="ActiveUser"><short>Current logged user</short>
+      </element><element name="ActiveQuery"><short>Current active dataset</short>
+      </element><element name="ActiveTaxonomy"><short>Current active taxonomy</short>
+      </element><element name="TUser"><short>User record object</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

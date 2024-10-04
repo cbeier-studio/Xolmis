@@ -1971,6 +1971,7 @@ object DMM: TDMM
   object sqlCon: TSQLConnector
     Connected = False
     LoginPrompt = False
+    AfterDisconnect = sqlConAfterDisconnect
     BeforeConnect = sqlConBeforeConnect
     DatabaseName = 'F:\Xolmis\resources\XolmisDB_template.sqlite3'
     KeepConnection = True

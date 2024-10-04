@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_filters"><element name="LoadTaxaTreeData"><short>Load taxa of a table in a virtual tree</short>
+      </element><element name="LoadSiteTreeData"><short>Load sites of a table in a virtual tree</short>
+      </element><element name="LoadDateTreeData"><short>Load dates of a table in a virtual tree</short>
+      </element><element name="LoadSpecimenDateTree"><short>Set SQL script to return specimens dates</short>
+      </element><element name="LoadNestDateTree"><short>Set SQL script to return nests dates</short>
+      </element><element name="LoadNestRevisionDateTree"><short>Set SQL script to return nest revisions dates</short>
+      </element><element name="LoadEggDateTree"><short>Set SQL script to return eggs dates</short>
+      </element><element name="LoadSightingDateTree"><short>Set SQL script to return sightings dates</short>
+      </element><element name="LoadCaptureDateTree"><short>Set SQL script to return captures dates</short>
+      </element><element name="LoadExpeditionDateTree"><short>Set SQL script to return expeditions dates</short>
+      </element><element name="LoadSurveyDateTree"><short>Set SQL script to return surveys dates</short>
+      </element><element name="LoadIndividualDateTree"><short>Set SQL script to return individuals dates</short>
+      </element><element name="LoadProjectDateTree"><short>Set SQL script to return projects dates</short>
+      </element><element name="LoadPermitDateTree"><short>Set SQL script to return permits dates</short>
+      </element><element name="LoadPeopleDateTree"><short>Set SQL script to return researchers dates</short>
+      </element><element name="FilterSurveyDates"><short>Add surveys date to a quick filter group</short>
+      </element><element name="FilterExpeditionDates"><short>Add expeditions date to a quick filter group</short>
+      </element><element name="FilterSpecimenDates"><short>Add specimens date to a quick filter group</short>
+      </element><element name="FilterNestDates"><short>Add nests date to a quick filter group</short>
+      </element><element name="FilterSightingDates"><short>Add sightings date to a quick filter group</short>
+      </element><element name="FilterCaptureDates"><short>Add captures date to a quick filter group</short>
+      </element><element name="FilterBandDates"><short>Add bands date to a quick filter group</short>
+      </element><element name="FilterIndividualDates"><short>Add individuals date to a quick filter group</short>
+      </element><element name="FilterProjectDates"><short>Add projects date to a quick filter group</short>
+      </element><element name="FilterPeopleDates"><short>Add researchers date to a quick filter group</short>
+      </element><element name="TaxonFilterToSearch"><short>Add quick filter for taxa selected on a virtual tree</short>
+      </element><element name="SiteFilterToSearch"><short>Add quick filter for sites selected on a virtual tree</short>
+      </element><element name="DateFilterToSearch"><short>Add quick filter for dates selected on a virtual tree</short>
+      </element><element name="PersonFilterToSearch"><short>Add quick filter for a person selected</short>
+      </element><element name="TaxonFilterToString"><short>Add SQL filter for taxa selected on a virtual tree</short>
+      </element><element name="SiteFilterToString"><short>Add SQL filter for sites selected on a virtual tree</short>
+      </element><element name="DateFilterToString"><short>Add SQL filter for dates selected on a virtual tree</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

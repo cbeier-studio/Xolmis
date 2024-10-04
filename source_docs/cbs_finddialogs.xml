@@ -2,6 +2,13 @@
 <fpdoc-descriptions><package name="Xolmis"><module name="cbs_finddialogs"><short>Find dialogs library</short><descr><p>Functions to display dialogs to find and select records.</p><ul><li>FindDlg </li><li>FindTaxonDlg </li><li>FindTaxonKey </li><li>FindTaxonName </li><li>FindBotanicDlg </li><li>FindSiteDlg </li>
         </ul>
       </descr>
+    <element name="FindDlg"><short>Show the find dialog</short>
+      </element><element name="FindTaxonDlg"><short>Show the find taxon dialog</short>
+      </element><element name="FindBotanicDlg"><short>Show the find botanic taxon dialog</short>
+      </element><element name="FindSiteDlg"><short>Show the find dialog with gazetteer filters</short>
+      </element><element name="FindTaxonKey"><short>Show the find taxon dialog and return a key value to a variable</short>
+      </element><element name="FindTaxonName"><short>Show the find taxon dialog and return the name value to a variable</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

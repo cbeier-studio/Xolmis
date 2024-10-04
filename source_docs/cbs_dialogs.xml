@@ -6,6 +6,20 @@
       <seealso>TMsgDlgType
 </seealso>
       </element>
+    <element name="ProgressDlg"><short>Wrapper for TTaskDialog progress</short>
+      </element><element name="ValidateDlg"><short>Show dialog with validation results</short>
+      </element><element name="ExportDlg"><short>Show dialog to export data</short>
+      </element><element name="FindPlantminerDlg"><short>Show results of a Plantminer search</short>
+      </element><element name="AddAuthorship"><short>Add authorship to a list</short>
+      </element><element name="EditAuthorship"><short>Edit authorship from a list</short>
+      </element><element name="EditColorBands"><short>Show dialog to edit colored bands</short>
+      </element><element name="CalendarDlg"><short>Show calendar dialog</short>
+      </element><element name="MoltLimitsDialog"><short>Show molt limits dialog</short>
+      </element><element name="HowAgedDialog"><short>Show how aged/sexed dialog</short>
+      </element><element name="MoltCycleDialog"><short>Show molt cycle dialog</short>
+      </element><element name="DetectionDialog"><short>Show type of detection dialog</short>
+      </element><element name="BreedingDialog"><short>Show bredding and behavior dialog</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

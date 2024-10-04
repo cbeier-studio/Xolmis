@@ -29,7 +29,6 @@ type
 
   TDMS = class(TDataModule)
     dsCaptures: TDataSource;
-    dsImages: TDataSource;
     dsNetsEffort: TDataSource;
     dsSightings: TDataSource;
     dsSurveys: TDataSource;
@@ -133,7 +132,6 @@ type
     qCapturesuser_inserted: TLongintField;
     qCapturesuser_updated: TLongintField;
     qCapturesweight: TFloatField;
-    qImages: TSQLQuery;
     qImagesactive_status: TBooleanField;
     qImagesauthor_id: TLongintField;
     qImagesauthor_name: TStringField;
