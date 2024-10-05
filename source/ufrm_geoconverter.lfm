@@ -1139,6 +1139,7 @@ object frmGeoConverter: TfrmGeoConverter
       object sbSwapValues: TSpeedButton
         Left = 162
         Height = 28
+        Hint = 'Swap longitude and latitude values'
         Top = 9
         Width = 96
         Align = alLeft
@@ -1151,6 +1152,8 @@ object frmGeoConverter: TfrmGeoConverter
         ImageIndex = 14
         ImageWidth = 24
         OnClick = sbSwapValuesClick
+        ShowHint = True
+        ParentShowHint = False
       end
     end
   end

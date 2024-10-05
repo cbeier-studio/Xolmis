@@ -95,6 +95,7 @@ uses
     rsTitleAutoUpdate = 'Autoupdate';
     rsTitleTaxonHierarchy = 'Taxa hierarchy';
     rsTitleRecreateThumbnails = 'Recreate thumbnails';
+    rsTitlePrintPreview = 'Print preview';
     rsTitleConnectionTest = 'Test connection';
     rsTitleLogin = 'Login';
     rsClosing = 'Closing...';
@@ -150,6 +151,7 @@ uses
     rsProgressImportBandingEffort = 'Importing banding effort...';
     rsProgressImportCaptures = 'Importing captures...';
     rsFinishedImporting = 'Finished importing!';
+    rsProgressGeneratingReport = 'Generating report...';
 
     { Success messages }
     rsSuccessfulUpdate = '%s was updated successfully!';

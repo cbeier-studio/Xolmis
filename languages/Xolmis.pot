@@ -3885,6 +3885,10 @@ msgctxt "cbs_locale.rsprogressfinishing"
 msgid "Finishing..."
 msgstr ""
 
+#: cbs_locale.rsprogressgeneratingreport
+msgid "Generating report..."
+msgstr ""
+
 #: cbs_locale.rsprogressimportbandingeffort
 msgid "Importing banding effort..."
 msgstr ""
@@ -4675,6 +4679,11 @@ msgstr ""
 #: cbs_locale.rstitlepermits
 msgctxt "cbs_locale.rstitlepermits"
 msgid "Permits"
+msgstr ""
+
+#: cbs_locale.rstitleprintpreview
+msgctxt "cbs_locale.rstitleprintpreview"
+msgid "Print preview"
 msgstr ""
 
 #: cbs_locale.rstitleprojects
@@ -11537,6 +11546,10 @@ msgctxt "tfrmgeoconverter.sbswapvalues.caption"
 msgid "Swap values"
 msgstr ""
 
+#: tfrmgeoconverter.sbswapvalues.hint
+msgid "Swap longitude and latitude values"
+msgstr ""
+
 #: tfrmimageviewer.caption
 msgid "Image viewer"
 msgstr ""
@@ -12122,6 +12135,7 @@ msgid "Review"
 msgstr ""
 
 #: tfrmprintpreview.caption
+msgctxt "tfrmprintpreview.caption"
 msgid "Print preview"
 msgstr ""
 

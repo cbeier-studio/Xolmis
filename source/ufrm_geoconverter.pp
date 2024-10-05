@@ -23,6 +23,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, ComCtrls,
   Menus, SynEdit, BCPanel, SynEditTypes, SynEditMarks, StrUtils, LConvEncoding,
+  //ucsvhighlighter,
   RegExpr;
 
 type
@@ -104,6 +105,7 @@ type
     procedure seConvertFromPaste(Sender: TObject; var AText: String; var AMode: TSynSelectionMode;
       ALogStartPos: TPoint; var AnAction: TSynCopyPasteAction);
   private
+    //CSVHighlighter: TCSVHighlighter;
     procedure AddMark(aLine: Integer);
     procedure ApplyDarkMode;
     function FormatCoordinates(aText: String): String;
@@ -129,6 +131,10 @@ begin
   cbConvertFrom.ItemIndex := 0;
   cbConvertTo.ItemIndex := 1;
   UpdateButtons;
+
+  //CSVHighlighter := TCSVHighlighter.Create(Self);
+  //seConvertFrom.Highlighter := CSVHighlighter;
+  //seConverted.Highlighter := CSVHighlighter;
 end;
 
 procedure TfrmGeoConverter.FormResize(Sender: TObject);
@@ -556,7 +562,7 @@ begin
     (Trim(seConverted.Lines.Text) <> EmptyStr);
   sbSaveFile.Enabled := Trim(seConverted.Lines.Text) <> EmptyStr;
   sbCopy.Enabled := Trim(seConverted.Lines.Text) <> EmptyStr;
-  sbAddToGeoEditor.Enabled := Trim(seConverted.Lines.Text) <> EmptyStr;
+  sbAddToGeoEditor.Enabled := (cbConvertTo.ItemIndex = 0) and (Trim(seConverted.Lines.Text) <> EmptyStr);
 
   pmfSwapValues.Enabled := sbSwapValues.Enabled;
   pmfClear.Enabled := sbClear.Enabled;

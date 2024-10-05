@@ -13,13 +13,10 @@ type
   { TfrmPrintPreview }
 
   TfrmPrintPreview = class(TForm)
-    dsPrint: TDataSource;
-    dsPrintDetail: TDataSource;
     frCheckBoxObj: TfrCheckBoxObject;
     frDataSet: TfrDBDataSet;
     frDetails: TfrDBDataSet;
     frPreview: TfrPreview;
-    qPrintDetail: TSQLQuery;
     Report: TfrReport;
     iButtons: TImageList;
     iButtonsDark: TImageList;
@@ -44,7 +41,6 @@ type
     sbZoomAdjustWidth: TSpeedButton;
     sbZoomIn: TSpeedButton;
     sbZoomOut: TSpeedButton;
-    qPrint: TSQLQuery;
     tbZoom: TTrackBar;
     procedure FormShow(Sender: TObject);
     procedure frPreviewScrollPage(Sender: TObject);
@@ -84,7 +80,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_dialogs, udlg_progress, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -132,18 +128,34 @@ end;
 
 procedure TfrmPrintPreview.ReportBeginDoc;
 begin
-  PBar.Max := Report.Pages.Count;
-  PBar.Visible := True;
+  //if not Visible then
+  begin
+    dlgProgress := TdlgProgress.Create(nil);
+    dlgProgress.AllowCancel := False;
+    dlgProgress.Max := Report.Pages.Count;
+    dlgProgress.Title := rsTitlePrintPreview;
+    dlgProgress.Text := rsProgressGeneratingReport;
+    dlgProgress.Show;
+  end;
+  //PBar.Max := Report.Pages.Count;
+  //PBar.Visible := True;
 end;
 
 procedure TfrmPrintPreview.ReportEndDoc;
 begin
-  PBar.Visible := False;
+  if Assigned(dlgProgress) then
+  begin
+    dlgProgress.Close;
+    FreeAndNil(dlgProgress);
+  end;
+  //PBar.Visible := False;
 end;
 
 procedure TfrmPrintPreview.ReportProgress(n: Integer);
 begin
-  PBar.Position := n;
+  if Assigned(dlgProgress) then
+    dlgProgress.Position := n;
+  //PBar.Position := n;
 end;
 
 procedure TfrmPrintPreview.sbFirstPageClick(Sender: TObject);
@@ -274,11 +286,20 @@ begin
   begin
     FDataSource.DataSet.Close;
     if Pos('ORDER BY', TSQLQuery(FDataSource.DataSet).SQL.Text) > 0 then
-    begin
-      //sOrder := TSQLQuery(FDataSource.DataSet).SQL[TSQLQuery(FDataSource.DataSet).SQL.Count - 1];
       TSQLQuery(FDataSource.DataSet).SQL.Delete(TSQLQuery(FDataSource.DataSet).SQL.Count - 1);
-    end;
     TSQLQuery(FDataSource.DataSet).SQL.Add('ORDER BY b.band_status ASC, b.band_size ASC, b.band_number ASC');
+    {$IFDEF DEBUG}
+    LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
+    {$ENDIF}
+    FDataSource.DataSet.Open;
+  end
+  else
+  if FReportName = ConcatPaths([InstallDir, 'reports\rep_bands_by_carrier.lrf']) then
+  begin
+    FDataSource.DataSet.Close;
+    if Pos('ORDER BY', TSQLQuery(FDataSource.DataSet).SQL.Text) > 0 then
+      TSQLQuery(FDataSource.DataSet).SQL.Delete(TSQLQuery(FDataSource.DataSet).SQL.Count - 1);
+    TSQLQuery(FDataSource.DataSet).SQL.Add('ORDER BY carrier_name ASC, b.band_size ASC, b.band_number ASC');
     {$IFDEF DEBUG}
     LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
     {$ENDIF}

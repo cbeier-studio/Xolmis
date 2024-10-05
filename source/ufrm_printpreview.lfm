@@ -1605,7 +1605,7 @@ object frmPrintPreview: TfrmPrintPreview
     Preview = frPreview
     PreviewButtons = [pbZoom, pbSave, pbPrint, pbFind, pbExit, pbSettings, pbPageSetup]
     DataType = dtDataSet
-    Title = 'Bands'
+    Title = 'Projects'
     OnBeginDoc = ReportBeginDoc
     OnEndDoc = ReportEndDoc
     OnProgress = ReportProgress
@@ -1621,7 +1621,6 @@ object frmPrintPreview: TfrmPrintPreview
     Top = 256
   end
   object frDataSet: TfrDBDataSet
-    DataSet = qPrint
     Left = 429
     Top = 166
   end
@@ -1641,39 +1640,7 @@ object frmPrintPreview: TfrmPrintPreview
     Top = 160
   end
   object frDetails: TfrDBDataSet
-    DataSet = qPrintDetail
     Left = 429
     Top = 233
-  end
-  object qPrint: TSQLQuery
-    FieldDefs = <>
-    Database = DMM.sqlCon
-    Transaction = DMM.sqlTrans
-    Params = <>
-    Macros = <>
-    Left = 428
-    Top = 88
-  end
-  object dsPrint: TDataSource
-    AutoEdit = False
-    DataSet = qPrint
-    Left = 363
-    Top = 88
-  end
-  object qPrintDetail: TSQLQuery
-    FieldDefs = <>
-    Database = DMM.sqlCon
-    Transaction = DMM.sqlTrans
-    Params = <>
-    Macros = <>
-    DataSource = dsPrint
-    Left = 428
-    Top = 320
-  end
-  object dsPrintDetail: TDataSource
-    AutoEdit = False
-    DataSet = qPrintDetail
-    Left = 363
-    Top = 320
   end
 end

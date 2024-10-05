@@ -3905,6 +3905,10 @@ msgctxt "cbs_locale.rsprogressfinishing"
 msgid "Finishing..."
 msgstr "Finalizando..."
 
+#: cbs_locale.rsprogressgeneratingreport
+msgid "Generating report..."
+msgstr "Gerando relatório..."
+
 #: cbs_locale.rsprogressimportbandingeffort
 msgid "Importing banding effort..."
 msgstr "Importando esforços de anilhamento..."
@@ -4704,6 +4708,11 @@ msgstr "Redes permanentes"
 msgctxt "cbs_locale.rstitlepermits"
 msgid "Permits"
 msgstr "Licenças"
+
+#: cbs_locale.rstitleprintpreview
+msgctxt "cbs_locale.rstitleprintpreview"
+msgid "Print preview"
+msgstr "Visualização de impressão"
 
 #: cbs_locale.rstitleprojects
 msgctxt "cbs_locale.rstitleprojects"
@@ -10482,7 +10491,7 @@ msgstr "Anilhas por status"
 
 #: tfrmcustomgrid.pmprintbandswithhistory.caption
 msgid "Bands with history"
-msgstr ""
+msgstr "Anilhas com histórico"
 
 #: tfrmcustomgrid.pmprintbotanictaxa.caption
 msgctxt "tfrmcustomgrid.pmprintbotanictaxa.caption"
@@ -11513,7 +11522,7 @@ msgstr "Colar"
 #: tfrmgeoconverter.pmfswapvalues.caption
 msgctxt "tfrmgeoconverter.pmfswapvalues.caption"
 msgid "Swap values"
-msgstr ""
+msgstr "Inverter valores"
 
 #: tfrmgeoconverter.pmtaddtogeobank.caption
 msgid "Add to Coordinates Editor"
@@ -11577,7 +11586,11 @@ msgstr "Salvar"
 #: tfrmgeoconverter.sbswapvalues.caption
 msgctxt "tfrmgeoconverter.sbswapvalues.caption"
 msgid "Swap values"
-msgstr ""
+msgstr "Inverter valores"
+
+#: tfrmgeoconverter.sbswapvalues.hint
+msgid "Swap longitude and latitude values"
+msgstr "Inverter valores de longitude e latitude"
 
 #: tfrmimageviewer.caption
 msgid "Image viewer"
@@ -12163,6 +12176,7 @@ msgid "Review"
 msgstr "Revisar"
 
 #: tfrmprintpreview.caption
+msgctxt "tfrmprintpreview.caption"
 msgid "Print preview"
 msgstr "Visualização de impressão"
 
@@ -12309,4 +12323,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-
