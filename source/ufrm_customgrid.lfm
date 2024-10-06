@@ -24499,8 +24499,8 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pmPrintResearchers: TMenuItem
       Caption = 'Researchers'
-      Enabled = False
       Visible = False
+      OnClick = pmPrintResearchersClick
     end
     object pmPrintProjects: TMenuItem
       Caption = 'Projects'

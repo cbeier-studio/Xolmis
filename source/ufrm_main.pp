@@ -137,7 +137,6 @@ type
     mmfImportNests: TMenuItem;
     mmfImportWizard: TMenuItem;
     mmEntities: TMenuItem;
-    mmfPrint: TMenuItem;
     mmfSettings: TMenuItem;
     mmfMaintenance: TMenuItem;
     mmfManageUsers: TMenuItem;
@@ -213,7 +212,6 @@ type
     Separator25: TMenuItem;
     Separator26: TMenuItem;
     Separator27: TMenuItem;
-    Separator28: TMenuItem;
     Separator29: TMenuItem;
     Separator31: TMenuItem;
     Separator8: TMenuItem;

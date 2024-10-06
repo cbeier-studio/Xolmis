@@ -902,6 +902,7 @@ type
     procedure pmPrintMethodsClick(Sender: TObject);
     procedure pmPrintPermitsClick(Sender: TObject);
     procedure pmPrintProjectsClick(Sender: TObject);
+    procedure pmPrintResearchersClick(Sender: TObject);
     procedure pmtClearSelectionClick(Sender: TObject);
     procedure pmtColapseAllClick(Sender: TObject);
     procedure pmtExpandAllClick(Sender: TObject);
@@ -5877,6 +5878,11 @@ end;
 procedure TfrmCustomGrid.pmPrintProjectsClick(Sender: TObject);
 begin
   PrintPreview('rep_projects.lrf', dsLink);
+end;
+
+procedure TfrmCustomGrid.pmPrintResearchersClick(Sender: TObject);
+begin
+  PrintPreview('rep_people.lrf', dsLink);
 end;
 
 procedure TfrmCustomGrid.pmtClearSelectionClick(Sender: TObject);

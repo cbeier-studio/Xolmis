@@ -4,8 +4,8 @@ object frmMain: TfrmMain
   Top = -8
   Width = 1940
   Caption = 'Xolmis'
-  ClientHeight = 1100
-  ClientWidth = 1940
+  ClientHeight = 1061
+  ClientWidth = 1924
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
@@ -14,7 +14,6 @@ object frmMain: TfrmMain
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  LCLVersion = '3.6.0.0'
   WindowState = wsMaximized
   object pLeftTabs: TPanel
     Left = 0
@@ -8534,12 +8533,6 @@ object frmMain: TfrmMain
         end
       end
       object Separator27: TMenuItem
-        Caption = '-'
-      end
-      object mmfPrint: TMenuItem
-        Action = actPrint
-      end
-      object Separator28: TMenuItem
         Caption = '-'
       end
       object mmfSettings: TMenuItem
