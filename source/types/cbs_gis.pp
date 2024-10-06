@@ -165,7 +165,6 @@ type
   procedure SavePointsToGPX(MapPoints: TMapPointList; aFileName: String);
   procedure SavePointsToCSV(MapPoints: TMapPointList; aFileName: String);
   procedure SavePointsToGeoJSON(MapPoints: TMapPointList; aFileName: String);
-  procedure WriteStringToGeoJSON(const FileName, Data: String);
   procedure LoadKMLPoints(const aFileName: String);
   procedure LoadGPXPoints(const aFileName: String);
   procedure LoadCSVPoints(const aFileName: String);
@@ -628,8 +627,8 @@ begin
     for i := 0 to (MapPoints.Count - 1) do
     begin
       WptNode := Doc.CreateElement('wpt');
-      TDOMElement(WptNode).SetAttribute('lat', FloatToStr(MapPoints[i].Data.Y));
-      TDOMElement(WptNode).SetAttribute('lon', FloatToStr(MapPoints[i].Data.X));
+      TDOMElement(WptNode).SetAttribute('lat', StringReplace(FloatToStr(MapPoints[i].Data.Y), FormatSettings.DecimalSeparator, '.', []));
+      TDOMElement(WptNode).SetAttribute('lon', StringReplace(FloatToStr(MapPoints[i].Data.X), FormatSettings.DecimalSeparator, '.', []));
 
       NameNode := Doc.CreateElement('name');
       NameNode.TextContent := MapPoints[i].Data.Name;
@@ -671,8 +670,28 @@ procedure SavePointsToGeoJSON(MapPoints: TMapPointList; aFileName: String);
 var
   JSONObject, Geometry, Properties, Feature: TJSONObject;
   Features: TJSONArray;
-  JSONData: TJSONData;
+  JSONString: TStringStream;
+  JSONPretty: String;
   i: Integer;
+
+  function PrettyPrintJSON(const JSONStr: string): string;
+  var
+    Parser: TJSONParser;
+    JSONData: TJSONData;
+  begin
+    Parser := TJSONParser.Create(JSONStr);
+    try
+      JSONData := Parser.Parse;
+      try
+        Result := JSONData.FormatJSON([], 2); // Indentation with 2 spaces
+      finally
+        JSONData.Free;
+      end;
+    finally
+      Parser.Free;
+    end;
+  end;
+
 begin
   JSONObject := TJSONObject.Create;
   try
@@ -697,25 +716,18 @@ begin
       Features.Add(Feature);
     end;
 
-    JSONData := JSONObject;
-    WriteStringToGeoJSON(aFileName, JSONData.AsJSON);
+    // Formatar o JSON manualmente
+    JSONPretty := PrettyPrintJSON(JSONObject.AsJSON);
+
+    // Save GeoJSON to file using TStringStream
+    JSONString := TStringStream.Create(JSONPretty);
+    try
+      JSONString.SaveToFile(aFileName);
+    finally
+      JSONString.Free;
+    end;
   finally
     JSONObject.Free;
-  end;
-end;
-
-procedure WriteStringToGeoJSON(const FileName, Data: string);
-var
-  FileStream: TFileStream;
-  StringStream: TStringStream;
-begin
-  FileStream := TFileStream.Create(FileName, fmCreate);
-  StringStream := TStringStream.Create(Data);
-  try
-    StringStream.SaveToStream(FileStream);
-  finally
-    FileStream.Free;
-    StringStream.Free;
   end;
 end;
 
@@ -813,8 +825,8 @@ begin
       if Node.NodeName = 'wpt' then
       begin
         DMM.tabGeoBank.Append;
-        DMM.tabGeoBank.FieldByName('latitude').AsFloat := StrToFloat(Node.Attributes.GetNamedItem('lat').NodeValue);
-        DMM.tabGeoBank.FieldByName('longitude').AsFloat := StrToFloat(Node.Attributes.GetNamedItem('lon').NodeValue);
+        DMM.tabGeoBank.FieldByName('latitude').AsFloat := StrToFloat(StringReplace(Node.Attributes.GetNamedItem('lat').NodeValue, '.', FormatSettings.DecimalSeparator, []);
+        DMM.tabGeoBank.FieldByName('longitude').AsFloat := StrToFloat(StringReplace(Node.Attributes.GetNamedItem('lon').NodeValue, '.', FormatSettings.DecimalSeparator, []);
         DMM.tabGeoBank.FieldByName('coordinate_name').AsString := Node.FindNode('name').TextContent;
         DMM.tabGeoBank.Post;
       end;
