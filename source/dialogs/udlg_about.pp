@@ -58,6 +58,7 @@ type
     pBottom: TPanel;
     procedure FormShow(Sender: TObject);
     procedure linkLicenseClick(Sender: TObject);
+    procedure linkPrivacyClick(Sender: TObject);
     procedure linkThirdPartyClick(Sender: TObject);
     procedure sbCopyClick(Sender: TObject);
   private
@@ -111,6 +112,11 @@ end;
 procedure TdlgAbout.linkLicenseClick(Sender: TObject);
 begin
   OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/LICENSE');
+end;
+
+procedure TdlgAbout.linkPrivacyClick(Sender: TObject);
+begin
+  OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/PRIVACY.md');
 end;
 
 procedure TdlgAbout.linkThirdPartyClick(Sender: TObject);

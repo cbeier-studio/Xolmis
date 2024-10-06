@@ -95,6 +95,7 @@ object dlgAbout: TdlgAbout
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
+      OnClick = linkPrivacyClick
       ColorLinkNormal = 13066075
       ColorLinkMouseover = 9520964
     end

@@ -10,7 +10,7 @@ object cfgOptions: TcfgOptions
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
+  LCLVersion = '3.6.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -1890,6 +1890,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
             TabOrder = 4
+            OnClick = lblPrivacyTermsClick
             object lblPrivacyTerms: TLabel
               Left = 16
               Height = 20
@@ -1901,6 +1902,7 @@ object cfgOptions: TcfgOptions
               Layout = tlCenter
               ParentColor = False
               ParentFont = False
+              OnClick = lblPrivacyTermsClick
             end
             object imgPrivacyTerms: TImage
               Left = 582
@@ -1911,6 +1913,7 @@ object cfgOptions: TcfgOptions
               Center = True
               ImageIndex = 10
               Images = iIcons
+              OnClick = lblPrivacyTermsClick
               Proportional = True
             end
           end

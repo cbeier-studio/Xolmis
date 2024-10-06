@@ -21,7 +21,7 @@ unit ucfg_options;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn, Buttons, ComCtrls,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn, Buttons, ComCtrls, lclintf,
   ToggleSwitch, atshapelinebgra, BCPanel;
 
 type
@@ -163,6 +163,7 @@ type
     procedure eBackupPathChange(Sender: TObject);
     procedure eImagesPathChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure lblPrivacyTermsClick(Sender: TObject);
     procedure sbCheckUpdatesNowClick(Sender: TObject);
     procedure sbClearLogFilesClick(Sender: TObject);
     procedure sbNewBackupClick(Sender: TObject);
@@ -379,6 +380,11 @@ begin
   pManageBackups.Enabled := not (ActiveUser.IsVisitor);
 
   LoadConfig;
+end;
+
+procedure TcfgOptions.lblPrivacyTermsClick(Sender: TObject);
+begin
+  OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/PRIVACY.md');
 end;
 
 procedure TcfgOptions.sbCheckUpdatesNowClick(Sender: TObject);
