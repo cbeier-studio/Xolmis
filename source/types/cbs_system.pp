@@ -116,6 +116,7 @@ type
   {$IFDEF MSWINDOWS}
   procedure SetRoundedCorners(const TheHandle: HWND; const CornerType: TRoundedWindowCornerType);
   {$ENDIF}
+  function IsControlInVisibleArea(Control: TControl): Boolean;
 
   procedure AbreForm(aClasseForm: TComponentClass; aForm: TForm);
 
@@ -263,6 +264,21 @@ begin
   finally
     FreeAndNil(edtRecVerification);
   end;
+end;
+
+function IsControlInVisibleArea(Control: TControl): Boolean;
+var
+  ParentRect, ControlRect: TRect;
+begin
+  // Get the parent control rect
+  ParentRect := Control.Parent.ClientRect;
+  // Get the child control rect
+  ControlRect := Control.BoundsRect;
+  // Convert the child coordinates to the parent control coordinates system
+  //ControlRect.TopLeft := Control.Parent.ScreenToClient(Control.ClientToScreen(ControlRect.TopLeft));
+  //ControlRect.BottomRight := Control.Parent.ScreenToClient(Control.ClientToScreen(ControlRect.BottomRight));
+  // Check if the child control if within the visible are of the parent control
+  Result := ParentRect.IntersectsWith(ControlRect);
 end;
 
 { TUser }

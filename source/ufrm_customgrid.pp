@@ -899,6 +899,7 @@ type
     procedure pmPrintBandsClick(Sender: TObject);
     procedure pmPrintBandsWithHistoryClick(Sender: TObject);
     procedure pmPrintGridClick(Sender: TObject);
+    procedure pmPrintInstitutionsClick(Sender: TObject);
     procedure pmPrintMethodsClick(Sender: TObject);
     procedure pmPrintPermitsClick(Sender: TObject);
     procedure pmPrintProjectsClick(Sender: TObject);
@@ -5863,6 +5864,11 @@ end;
 procedure TfrmCustomGrid.pmPrintGridClick(Sender: TObject);
 begin
   PrintGrid.PreviewReport;
+end;
+
+procedure TfrmCustomGrid.pmPrintInstitutionsClick(Sender: TObject);
+begin
+  PrintPreview('rep_institutions.lrf', dsLink);
 end;
 
 procedure TfrmCustomGrid.pmPrintMethodsClick(Sender: TObject);

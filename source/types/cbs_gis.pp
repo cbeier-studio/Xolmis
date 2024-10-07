@@ -825,8 +825,8 @@ begin
       if Node.NodeName = 'wpt' then
       begin
         DMM.tabGeoBank.Append;
-        DMM.tabGeoBank.FieldByName('latitude').AsFloat := StrToFloat(StringReplace(Node.Attributes.GetNamedItem('lat').NodeValue, '.', FormatSettings.DecimalSeparator, []);
-        DMM.tabGeoBank.FieldByName('longitude').AsFloat := StrToFloat(StringReplace(Node.Attributes.GetNamedItem('lon').NodeValue, '.', FormatSettings.DecimalSeparator, []);
+        DMM.tabGeoBank.FieldByName('latitude').AsFloat := StrToFloat(StringReplace(Node.Attributes.GetNamedItem('lat').NodeValue, '.', FormatSettings.DecimalSeparator, []));
+        DMM.tabGeoBank.FieldByName('longitude').AsFloat := StrToFloat(StringReplace(Node.Attributes.GetNamedItem('lon').NodeValue, '.', FormatSettings.DecimalSeparator, []));
         DMM.tabGeoBank.FieldByName('coordinate_name').AsString := Node.FindNode('name').TextContent;
         DMM.tabGeoBank.Post;
       end;
