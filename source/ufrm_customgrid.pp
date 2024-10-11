@@ -48,6 +48,8 @@ type
   TfrmCustomGrid = class(TForm)
     dsDocs: TDataSource;
     gridDocs: TDBGrid;
+    MenuItem1: TMenuItem;
+    MenuItem2: TMenuItem;
     pmAddLink: TMenuItem;
     pmAddDocument: TMenuItem;
     pDocsToolbar: TBCPanel;

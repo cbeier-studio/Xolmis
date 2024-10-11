@@ -6550,16 +6550,6 @@ msgstr ""
 msgid "Playback was used"
 msgstr ""
 
-#: tedtaudioinfo.erecordingdate.texthint
-msgctxt "tedtaudioinfo.erecordingdate.texthint"
-msgid "DD/MM/YYYY"
-msgstr ""
-
-#: tedtaudioinfo.erecordingtime.texthint
-msgctxt "tedtaudioinfo.erecordingtime.texthint"
-msgid "HH:MM"
-msgstr ""
-
 #: tedtaudioinfo.lblaudiofile.caption
 msgid "Recording file: *"
 msgstr ""
@@ -7277,16 +7267,6 @@ msgstr ""
 msgid "Document info"
 msgstr ""
 
-#: tedtdocumentinfo.edocumentdate.texthint
-msgctxt "tedtdocumentinfo.edocumentdate.texthint"
-msgid "DD/MM/YYYY"
-msgstr ""
-
-#: tedtdocumentinfo.edocumenttime.texthint
-msgctxt "tedtdocumentinfo.edocumenttime.texthint"
-msgid "HH:MM"
-msgstr ""
-
 #: tedtdocumentinfo.lbldocumentdate.caption
 msgid "Document date: *"
 msgstr ""
@@ -7510,16 +7490,6 @@ msgstr ""
 #: tedtexpedition.sbsave.caption
 msgctxt "tedtexpedition.sbsave.caption"
 msgid "Save"
-msgstr ""
-
-#: tedtimageinfo.eimagedate.texthint
-msgctxt "tedtimageinfo.eimagedate.texthint"
-msgid "DD/MM/YYYY"
-msgstr ""
-
-#: tedtimageinfo.eimagetime.texthint
-msgctxt "tedtimageinfo.eimagetime.texthint"
-msgid "HH:MM"
 msgstr ""
 
 #: tedtimageinfo.lblauthor.caption
@@ -10507,78 +10477,90 @@ msgctxt "tfrmcustomgrid.lblwithrecapturesfilter.caption"
 msgid "Have recaptures"
 msgstr ""
 
+#: tfrmcustomgrid.menuitem1.caption
+msgctxt "tfrmcustomgrid.menuitem1.caption"
+msgid "&Documents"
+msgstr ""
+
+#: tfrmcustomgrid.menuitem2.caption
+msgid "&Link"
+msgstr ""
+
 #: tfrmcustomgrid.pmaaddaudio.caption
-msgid "Add audio recording(s)"
+msgid "Add &new audio recording(s)"
 msgstr ""
 
 #: tfrmcustomgrid.pmaaudioinfo.caption
-msgid "View/edit recording info"
+msgctxt "tfrmcustomgrid.pmaaudioinfo.caption"
+msgid "View/&edit info"
 msgstr ""
 
 #: tfrmcustomgrid.pmadddocument.caption
 msgctxt "tfrmcustomgrid.pmadddocument.caption"
-msgid "Add documents"
+msgid "Add &documents"
 msgstr ""
 
 #: tfrmcustomgrid.pmaddlink.caption
-msgid "Add link"
+msgid "Add &link"
 msgstr ""
 
 #: tfrmcustomgrid.pmadelaudio.caption
-msgid "Delete audio recording"
+msgctxt "tfrmcustomgrid.pmadelaudio.caption"
+msgid "&Delete"
 msgstr ""
 
 #: tfrmcustomgrid.pmaplayaudio.caption
-msgid "Play selected audio"
+msgid "&Play selected audio"
 msgstr ""
 
 #: tfrmcustomgrid.pmarefreshaudios.caption
-msgid "Refresh audio recordings"
+msgctxt "tfrmcustomgrid.pmarefreshaudios.caption"
+msgid "&Refresh"
 msgstr ""
 
 #: tfrmcustomgrid.pmccolumnsautoadjustwidth.caption
 msgctxt "tfrmcustomgrid.pmccolumnsautoadjustwidth.caption"
-msgid "Auto adjust columns' width"
+msgid "Auto adjust columns' &width"
 msgstr ""
 
 #: tfrmcustomgrid.pmccolumnsortasc.caption
-msgid "Sort column ascending"
+msgid "Sort column &ascending"
 msgstr ""
 
 #: tfrmcustomgrid.pmccolumnsortdesc.caption
-msgid "Sort column descending"
+msgid "Sort column &descending"
 msgstr ""
 
 #: tfrmcustomgrid.pmcdel.caption
 msgctxt "tfrmcustomgrid.pmcdel.caption"
-msgid "Delete"
+msgid "&Delete"
 msgstr ""
 
 #: tfrmcustomgrid.pmcedit.caption
 msgctxt "tfrmcustomgrid.pmcedit.caption"
-msgid "Edit"
+msgid "&Edit"
 msgstr ""
 
 #: tfrmcustomgrid.pmchidecolumn.caption
-msgid "Hide column"
+msgid "&Hide column"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewcapture.caption
 msgctxt "tfrmcustomgrid.pmcnewcapture.caption"
-msgid "New capture"
+msgid "New &capture"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewcollector.caption
-msgid "New collector"
+msgid "New co&llector"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewegg.caption
 msgctxt "tfrmcustomgrid.pmcnewegg.caption"
-msgid "New egg"
+msgid "New &egg"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewmistnet.caption
-msgid "New mistnet"
+msgid "New &mistnet"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewmolt.caption
@@ -10588,17 +10570,17 @@ msgstr ""
 
 #: tfrmcustomgrid.pmcnewnest.caption
 msgctxt "tfrmcustomgrid.pmcnewnest.caption"
-msgid "New nest"
+msgid "New &nest"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewnestowner.caption
 msgctxt "tfrmcustomgrid.pmcnewnestowner.caption"
-msgid "New nest owner"
+msgid "New nest &owner"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewnestrevision.caption
 msgctxt "tfrmcustomgrid.pmcnewnestrevision.caption"
-msgid "New nest revision"
+msgid "New nest re&vision"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewpermanentnet.caption
@@ -10617,17 +10599,17 @@ msgstr ""
 
 #: tfrmcustomgrid.pmcnewsighting.caption
 msgctxt "tfrmcustomgrid.pmcnewsighting.caption"
-msgid "New sighting"
+msgid "New &sighting"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewspecimen.caption
 msgctxt "tfrmcustomgrid.pmcnewspecimen.caption"
-msgid "New specimen"
+msgid "New spec&imen"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewsurvey.caption
 msgctxt "tfrmcustomgrid.pmcnewsurvey.caption"
-msgid "New survey"
+msgid "New s&urvey"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewsurveymember.caption
@@ -10635,141 +10617,145 @@ msgid "New survey member"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewweatherlog.caption
-msgid "New weather log"
+msgid "New &weather log"
 msgstr ""
 
 #: tfrmcustomgrid.pmcrecordhistory.caption
 msgctxt "tfrmcustomgrid.pmcrecordhistory.caption"
-msgid "Record history"
+msgid "Record &history"
 msgstr ""
 
 #: tfrmcustomgrid.pmcrecordverifications.caption
 msgctxt "tfrmcustomgrid.pmcrecordverifications.caption"
-msgid "Record verifications"
+msgid "Record &verifications"
 msgstr ""
 
 #: tfrmcustomgrid.pmcrefresh.caption
 msgctxt "tfrmcustomgrid.pmcrefresh.caption"
-msgid "Refresh"
+msgid "&Refresh"
 msgstr ""
 
 #: tfrmcustomgrid.pmdadddoc.caption
 msgctxt "tfrmcustomgrid.pmdadddoc.caption"
-msgid "Add document/link"
+msgid "Add &new"
 msgstr ""
 
 #: tfrmcustomgrid.pmddeldoc.caption
 msgctxt "tfrmcustomgrid.pmddeldoc.caption"
-msgid "Delete document/link"
+msgid "&Delete"
 msgstr ""
 
 #: tfrmcustomgrid.pmddocinfo.caption
-msgid "View/edit document/link info"
+msgctxt "tfrmcustomgrid.pmddocinfo.caption"
+msgid "View/&edit info"
 msgstr ""
 
 #: tfrmcustomgrid.pmdopendoc.caption
-msgid "Open document/link"
+msgid "&Open document/link"
 msgstr ""
 
 #: tfrmcustomgrid.pmdrefreshdocs.caption
-msgid "Refresh documents and links"
+msgctxt "tfrmcustomgrid.pmdrefreshdocs.caption"
+msgid "&Refresh"
 msgstr ""
 
 #: tfrmcustomgrid.pmgautosizecolumns.caption
 msgctxt "tfrmcustomgrid.pmgautosizecolumns.caption"
-msgid "Auto adjust columns' width"
+msgid "Auto adjust columns' &width"
 msgstr ""
 
 #: tfrmcustomgrid.pmgdecreaserowheight.caption
-msgid "Decrease"
+msgid "De&crease"
 msgstr ""
 
 #: tfrmcustomgrid.pmgdefaultrowheight.caption
-msgid "Default"
+msgid "De&fault"
 msgstr ""
 
 #: tfrmcustomgrid.pmgdel.caption
 msgctxt "tfrmcustomgrid.pmgdel.caption"
-msgid "Delete"
+msgid "&Delete"
 msgstr ""
 
 #: tfrmcustomgrid.pmgedit.caption
 msgctxt "tfrmcustomgrid.pmgedit.caption"
-msgid "Edit"
+msgid "&Edit"
 msgstr ""
 
 #: tfrmcustomgrid.pmgincreaserowheight.caption
-msgid "Increase"
+msgid "&Increase"
 msgstr ""
 
 #: tfrmcustomgrid.pmginsert.caption
 msgctxt "tfrmcustomgrid.pmginsert.caption"
-msgid "New record"
+msgid "&New record"
 msgstr ""
 
 #: tfrmcustomgrid.pmgrecordhistory.caption
 msgctxt "tfrmcustomgrid.pmgrecordhistory.caption"
-msgid "Record history"
+msgid "Record &history"
 msgstr ""
 
 #: tfrmcustomgrid.pmgrecordverifications.caption
 msgctxt "tfrmcustomgrid.pmgrecordverifications.caption"
-msgid "Record verifications"
+msgid "Record &verifications"
 msgstr ""
 
 #: tfrmcustomgrid.pmgrefresh.caption
 msgctxt "tfrmcustomgrid.pmgrefresh.caption"
-msgid "Refresh"
+msgid "&Refresh"
 msgstr ""
 
 #: tfrmcustomgrid.pmgrowheight.caption
-msgid "Row height"
+msgid "R&ow height"
 msgstr ""
 
 #: tfrmcustomgrid.pmiaddimage.caption
-msgid "Add image(s)"
+msgid "Add &new image(s)"
 msgstr ""
 
 #: tfrmcustomgrid.pmidelimage.caption
 msgctxt "tfrmcustomgrid.pmidelimage.caption"
-msgid "Delete image"
+msgid "&Delete"
 msgstr ""
 
 #: tfrmcustomgrid.pmiimageinfo.caption
-msgid "View/edit image info"
+msgctxt "tfrmcustomgrid.pmiimageinfo.caption"
+msgid "View/&edit info"
 msgstr ""
 
 #: tfrmcustomgrid.pmirefreshimages.caption
-msgid "Refresh images"
+msgctxt "tfrmcustomgrid.pmirefreshimages.caption"
+msgid "&Refresh"
 msgstr ""
 
 #: tfrmcustomgrid.pmiviewimage.caption
 msgctxt "tfrmcustomgrid.pmiviewimage.caption"
-msgid "View image"
+msgid "&View image"
 msgstr ""
 
 #: tfrmcustomgrid.pmminvertmarked.caption
-msgid "Invert marked"
+msgid "&Invert marked"
 msgstr ""
 
 #: tfrmcustomgrid.pmmmarkall.caption
 msgctxt "tfrmcustomgrid.pmmmarkall.caption"
-msgid "Mark all"
+msgid "&Mark all"
 msgstr ""
 
 #: tfrmcustomgrid.pmmmarkallcolumns.caption
 msgctxt "tfrmcustomgrid.pmmmarkallcolumns.caption"
-msgid "Mark all"
+msgid "&Mark all"
 msgstr ""
 
 #: tfrmcustomgrid.pmmunmarkall.caption
 msgctxt "tfrmcustomgrid.pmmunmarkall.caption"
-msgid "Unmark all"
+msgid "&Unmark all"
 msgstr ""
 
 #: tfrmcustomgrid.pmmunmarkallcolumns.caption
 msgctxt "tfrmcustomgrid.pmmunmarkallcolumns.caption"
-msgid "Unmark all"
+msgid "&Unmark all"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintbands.caption
@@ -11029,11 +11015,11 @@ msgstr ""
 
 #: tfrmcustomgrid.pmrdelpermanently.caption
 msgctxt "tfrmcustomgrid.pmrdelpermanently.caption"
-msgid "Delete permanently"
+msgid "&Delete permanently"
 msgstr ""
 
 #: tfrmcustomgrid.pmrrestorerecord.caption
-msgid "Restore selected record"
+msgid "&Restore selected record"
 msgstr ""
 
 #: tfrmcustomgrid.pmsgsummary.caption
@@ -11042,30 +11028,30 @@ msgstr ""
 
 #: tfrmcustomgrid.pmtclearselection.caption
 msgctxt "tfrmcustomgrid.pmtclearselection.caption"
-msgid "Clear selection"
+msgid "&Clear selection"
 msgstr ""
 
 #: tfrmcustomgrid.pmtcolapseall.caption
 msgctxt "tfrmcustomgrid.pmtcolapseall.caption"
-msgid "Colapse all"
+msgid "Co&lapse all"
 msgstr ""
 
 #: tfrmcustomgrid.pmtexpandall.caption
 msgctxt "tfrmcustomgrid.pmtexpandall.caption"
-msgid "Expand all"
+msgid "E&xpand all"
 msgstr ""
 
 #: tfrmcustomgrid.pmtrefresh.caption
 msgctxt "tfrmcustomgrid.pmtrefresh.caption"
-msgid "Refresh"
+msgid "&Refresh"
 msgstr ""
 
 #: tfrmcustomgrid.pmvaddverification.caption
-msgid "Add record verification"
+msgid "&Add record verification"
 msgstr ""
 
 #: tfrmcustomgrid.pmvviewverifications.caption
-msgid "View record verifications"
+msgid "&View record verifications"
 msgstr ""
 
 #: tfrmcustomgrid.rbescapedall.caption
@@ -11999,71 +11985,71 @@ msgstr ""
 
 #: tfrmmain.actabout.caption
 msgctxt "tfrmmain.actabout.caption"
-msgid "About"
+msgid "&About"
 msgstr ""
 
 #: tfrmmain.actcheckupdates.caption
 msgctxt "tfrmmain.actcheckupdates.caption"
-msgid "Check updates"
+msgid "Check &updates"
 msgstr ""
 
 #: tfrmmain.actcoordinatesconverter.caption
 msgctxt "tfrmmain.actcoordinatesconverter.caption"
-msgid "Converter"
+msgid "&Converter"
 msgstr ""
 
 #: tfrmmain.actcoordinateseditor.caption
-msgid "Editor"
+msgid "&Editor"
 msgstr ""
 
 #: tfrmmain.actdbconnect.caption
-msgid "Connect to database"
+msgid "&Connect to database"
 msgstr ""
 
 #: tfrmmain.actdbsettings.caption
 msgctxt "tfrmmain.actdbsettings.caption"
-msgid "Manage connections"
+msgid "&Manage connections"
 msgstr ""
 
 #: tfrmmain.actexit.caption
 msgctxt "tfrmmain.actexit.caption"
-msgid "Exit"
+msgid "E&xit"
 msgstr ""
 
 #: tfrmmain.actexport.caption
 msgctxt "tfrmmain.actexport.caption"
-msgid "Export"
+msgid "&Export"
 msgstr ""
 
 #: tfrmmain.actgivefeedback.caption
-msgid "Feedback"
+msgid "&Feedback"
 msgstr ""
 
 #: tfrmmain.actimport.caption
 msgctxt "tfrmmain.actimport.caption"
-msgid "Import"
+msgid "&Import"
 msgstr ""
 
 #: tfrmmain.actimportcaptures.caption
 msgctxt "tfrmmain.actimportcaptures.caption"
-msgid "Banding data"
+msgid "&Banding data"
 msgstr ""
 
 #: tfrmmain.actimportcoordinates.caption
-msgid "Geographical coordinates"
+msgid "&Geographical coordinates"
 msgstr ""
 
 #: tfrmmain.actimportebird.caption
-msgid "eBird records"
+msgid "&eBird records"
 msgstr ""
 
 #: tfrmmain.actimportnests.caption
 msgctxt "tfrmmain.actimportnests.caption"
-msgid "Nests data"
+msgid "&Nests data"
 msgstr ""
 
 #: tfrmmain.actimportwizard.caption
-msgid "Import wizard"
+msgid "Import &wizard"
 msgstr ""
 
 #: tfrmmain.actinsertrecord.caption
@@ -12082,46 +12068,46 @@ msgstr ""
 
 #: tfrmmain.actmaintenance.caption
 msgctxt "tfrmmain.actmaintenance.caption"
-msgid "Maintenance"
+msgid "Main&tenance"
 msgstr ""
 
 #: tfrmmain.actmanageusers.caption
 msgctxt "tfrmmain.actmanageusers.caption"
-msgid "Manage users"
+msgid "Manage &users"
 msgstr ""
 
 #: tfrmmain.actnewbands.caption
-msgid "New batch"
+msgid "&New batch"
 msgstr ""
 
 #: tfrmmain.actopenbandhistory.caption
 msgctxt "tfrmmain.actopenbandhistory.caption"
-msgid "History"
+msgid "&History"
 msgstr ""
 
 #: tfrmmain.actopenbands.caption
 msgctxt "tfrmmain.actopenbands.caption"
-msgid "Bands"
+msgid "&Bands"
 msgstr ""
 
 #: tfrmmain.actopenbotany.caption
 msgctxt "tfrmmain.actopenbotany.caption"
-msgid "Botanic taxa"
+msgid "&Botanic taxa"
 msgstr ""
 
 #: tfrmmain.actopencaptures.caption
 msgctxt "tfrmmain.actopencaptures.caption"
-msgid "Captures"
+msgid "&Captures"
 msgstr ""
 
 #: tfrmmain.actopendocumentslist.caption
 msgctxt "tfrmmain.actopendocumentslist.caption"
-msgid "Attachments"
+msgid "&Documents"
 msgstr ""
 
 #: tfrmmain.actopeneggs.caption
 msgctxt "tfrmmain.actopeneggs.caption"
-msgid "Eggs"
+msgid "&Eggs"
 msgstr ""
 
 #: tfrmmain.actopenexpeditions.caption
@@ -12131,21 +12117,21 @@ msgstr ""
 
 #: tfrmmain.actopengazetteer.caption
 msgctxt "tfrmmain.actopengazetteer.caption"
-msgid "Gazetteer"
+msgid "&Gazetteer"
 msgstr ""
 
 #: tfrmmain.actopenimageslist.caption
-msgid "Image gallery"
+msgid "&Image gallery"
 msgstr ""
 
 #: tfrmmain.actopenindividuals.caption
 msgctxt "tfrmmain.actopenindividuals.caption"
-msgid "Individuals"
+msgid "&Individuals"
 msgstr ""
 
 #: tfrmmain.actopeninstitutions.caption
 msgctxt "tfrmmain.actopeninstitutions.caption"
-msgid "Institutions"
+msgid "&Institutions"
 msgstr ""
 
 #: tfrmmain.actopenliterature.caption
@@ -12154,7 +12140,7 @@ msgstr ""
 
 #: tfrmmain.actopenmanual.caption
 msgctxt "tfrmmain.actopenmanual.caption"
-msgid "Help"
+msgid "&Documentation"
 msgstr ""
 
 #: tfrmmain.actopenmethods.caption
@@ -12164,41 +12150,41 @@ msgstr ""
 
 #: tfrmmain.actopenmolts.caption
 msgctxt "tfrmmain.actopenmolts.caption"
-msgid "Molts"
+msgid "&Molts"
 msgstr ""
 
 #: tfrmmain.actopennestrevisions.caption
 msgctxt "tfrmmain.actopennestrevisions.caption"
-msgid "Nest revisions"
+msgid "Nest &revisions"
 msgstr ""
 
 #: tfrmmain.actopennests.caption
 msgctxt "tfrmmain.actopennests.caption"
-msgid "Nests"
+msgid "&Nests"
 msgstr ""
 
 #: tfrmmain.actopennetstations.caption
 msgctxt "tfrmmain.actopennetstations.caption"
-msgid "Sampling plots"
+msgid "&Sampling plots"
 msgstr ""
 
 #: tfrmmain.actopenpermits.caption
 msgctxt "tfrmmain.actopenpermits.caption"
-msgid "Permits"
+msgid "&Permits"
 msgstr ""
 
 #: tfrmmain.actopenprojects.caption
 msgctxt "tfrmmain.actopenprojects.caption"
-msgid "Projects"
+msgid "Pro&jects"
 msgstr ""
 
 #: tfrmmain.actopenrecordingslist.caption
-msgid "Audio library"
+msgid "&Audio library"
 msgstr ""
 
 #: tfrmmain.actopenresearchers.caption
 msgctxt "tfrmmain.actopenresearchers.caption"
-msgid "Researchers"
+msgid "&Researchers"
 msgstr ""
 
 #: tfrmmain.actopensightings.caption
@@ -12218,12 +12204,12 @@ msgstr ""
 
 #: tfrmmain.actopentaxa.caption
 msgctxt "tfrmmain.actopentaxa.caption"
-msgid "Taxa"
+msgid "&Taxa"
 msgstr ""
 
 #: tfrmmain.actopentaxonranks.caption
 msgctxt "tfrmmain.actopentaxonranks.caption"
-msgid "Taxonomic ranks"
+msgid "Taxonomic &ranks"
 msgstr ""
 
 #: tfrmmain.actprint.caption
@@ -12233,12 +12219,12 @@ msgstr ""
 
 #: tfrmmain.actsettings.caption
 msgctxt "tfrmmain.actsettings.caption"
-msgid "Settings"
+msgid "&Settings"
 msgstr ""
 
 #: tfrmmain.actviewbandsbalance.caption
 msgctxt "tfrmmain.actviewbandsbalance.caption"
-msgid "Balance"
+msgid "Ba&lance"
 msgstr ""
 
 #: tfrmmain.esearch.texthint
@@ -12253,17 +12239,17 @@ msgstr ""
 
 #: tfrmmain.mmbreeding.caption
 msgctxt "tfrmmain.mmbreeding.caption"
-msgid "Breeding"
+msgid "&Breeding"
 msgstr ""
 
 #: tfrmmain.mmentities.caption
 msgctxt "tfrmmain.mmentities.caption"
-msgid "Entities"
+msgid "&Entities"
 msgstr ""
 
 #: tfrmmain.mmfile.caption
 msgctxt "tfrmmain.mmfile.caption"
-msgid "File"
+msgid "&File"
 msgstr ""
 
 #: tfrmmain.mmfimport.caption
@@ -12273,32 +12259,32 @@ msgstr ""
 
 #: tfrmmain.mmgeo.caption
 msgctxt "tfrmmain.mmgeo.caption"
-msgid "Geo"
+msgid "&Geo"
 msgstr ""
 
 #: tfrmmain.mmhelp.caption
 msgctxt "tfrmmain.mmhelp.caption"
-msgid "Help"
+msgid "&Help"
 msgstr ""
 
 #: tfrmmain.mmindividuals.caption
 msgctxt "tfrmmain.mmindividuals.caption"
-msgid "Individuals"
+msgid "&Individuals"
 msgstr ""
 
 #: tfrmmain.mmmedia.caption
 msgctxt "tfrmmain.mmmedia.caption"
-msgid "Media"
+msgid "&Media"
 msgstr ""
 
 #: tfrmmain.mmsampling.caption
 msgctxt "tfrmmain.mmsampling.caption"
-msgid "Sampling"
+msgid "&Sampling"
 msgstr ""
 
 #: tfrmmain.mmtaxonomy.caption
 msgctxt "tfrmmain.mmtaxonomy.caption"
-msgid "Taxonomy"
+msgid "&Taxonomy"
 msgstr ""
 
 #: tfrmmain.pmanewband.caption
@@ -12382,15 +12368,15 @@ msgid "New toponym"
 msgstr ""
 
 #: tfrmmain.pmtcloseallothertabs.caption
-msgid "Close all other tabs"
+msgid "Close all &other tabs"
 msgstr ""
 
 #: tfrmmain.pmtclosealltabs.caption
-msgid "Close all tabs"
+msgid "Close &all tabs"
 msgstr ""
 
 #: tfrmmain.pmtclosetab.caption
-msgid "Close tab"
+msgid "&Close tab"
 msgstr ""
 
 #: tfrmmain.sbclearsearch.hint

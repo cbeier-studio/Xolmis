@@ -6964,7 +6964,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'Fullname'
-              Width = 255
+              Width = 276
               FieldName = 'full_name'
             end>
           DataSource = dsAudios
@@ -7144,7 +7144,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'File path'
-              Width = 365
+              Width = 386
               FieldName = 'document_path'
             end>
           DataSource = dsDocs
@@ -9962,13 +9962,13 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 48
     Top = 120
     object pmgInsert: TMenuItem
-      Caption = 'New record'
+      Caption = '&New record'
       ImageIndex = 0
       ShortCut = 16462
       OnClick = sbInsertRecordClick
     end
     object pmgEdit: TMenuItem
-      Caption = 'Edit'
+      Caption = '&Edit'
       ImageIndex = 2
       ShortCut = 16453
       OnClick = sbEditRecordClick
@@ -9977,7 +9977,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmgRefresh: TMenuItem
-      Caption = 'Refresh'
+      Caption = '&Refresh'
       ImageIndex = 18
       ShortCut = 116
       OnClick = sbRefreshRecordsClick
@@ -9986,11 +9986,11 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmgRecordVerifications: TMenuItem
-      Caption = 'Record verifications'
+      Caption = 'Record &verifications'
       ImageIndex = 85
     end
     object pmgRecordHistory: TMenuItem
-      Caption = 'Record history'
+      Caption = 'Record &history'
       ImageIndex = 10
       OnClick = sbRecordHistoryClick
     end
@@ -9998,7 +9998,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmgDel: TMenuItem
-      Caption = 'Delete'
+      Caption = '&Delete'
       ImageIndex = 4
       ShortCut = 16430
       OnClick = sbDelRecordClick
@@ -10007,9 +10007,9 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmgRowHeight: TMenuItem
-      Caption = 'Row height'
+      Caption = 'R&ow height'
       object pmgDefaultRowHeight: TMenuItem
-        Caption = 'Default'
+        Caption = 'De&fault'
         ImageIndex = 66
         OnClick = sbRowHeightDefaultClick
       end
@@ -10017,18 +10017,20 @@ object frmCustomGrid: TfrmCustomGrid
         Caption = '-'
       end
       object pmgIncreaseRowHeight: TMenuItem
-        Caption = 'Increase'
+        Caption = '&Increase'
         ImageIndex = 62
+        ShortCut = 16571
         OnClick = sbRowHeightIncreaseClick
       end
       object pmgDecreaseRowHeight: TMenuItem
-        Caption = 'Decrease'
+        Caption = 'De&crease'
         ImageIndex = 64
+        ShortCut = 16573
         OnClick = sbRowHeightDecreaseClick
       end
     end
     object pmgAutoSizeColumns: TMenuItem
-      Caption = 'Auto adjust columns'' width'
+      Caption = 'Auto adjust columns'' &width'
       ImageIndex = 68
       OnClick = sbColumnWidthAutoAdjustClick
     end
@@ -10038,12 +10040,12 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 200
     Top = 232
     object pmtExpandAll: TMenuItem
-      Caption = 'Expand all'
+      Caption = 'E&xpand all'
       ImageIndex = 78
       OnClick = pmtExpandAllClick
     end
     object pmtColapseAll: TMenuItem
-      Caption = 'Colapse all'
+      Caption = 'Co&lapse all'
       ImageIndex = 79
       OnClick = pmtColapseAllClick
     end
@@ -10051,7 +10053,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmtRefresh: TMenuItem
-      Caption = 'Refresh'
+      Caption = '&Refresh'
       ImageIndex = 18
       OnClick = pmtRefreshClick
     end
@@ -10059,7 +10061,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmtClearSelection: TMenuItem
-      Caption = 'Clear selection'
+      Caption = '&Clear selection'
       ImageIndex = 80
       OnClick = pmtClearSelectionClick
     end
@@ -10069,19 +10071,19 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 48
     Top = 232
     object pmcNewCapture: TMenuItem
-      Caption = 'New capture'
+      Caption = 'New &capture'
       ImageIndex = 9
       Visible = False
       OnClick = pmcNewCaptureClick
     end
     object pmcNewEgg: TMenuItem
-      Caption = 'New egg'
+      Caption = 'New &egg'
       ImageIndex = 17
       Visible = False
       OnClick = pmcNewEggClick
     end
     object pmcNewMistnet: TMenuItem
-      Caption = 'New mistnet'
+      Caption = 'New &mistnet'
       ImageIndex = 10
       Visible = False
       OnClick = pmcNewMistnetClick
@@ -10093,19 +10095,19 @@ object frmCustomGrid: TfrmCustomGrid
       OnClick = pmcNewMoltClick
     end
     object pmcNewNest: TMenuItem
-      Caption = 'New nest'
+      Caption = 'New &nest'
       ImageIndex = 16
       Visible = False
       OnClick = pmcNewNestClick
     end
     object pmcNewNestOwner: TMenuItem
-      Caption = 'New nest owner'
+      Caption = 'New nest &owner'
       ImageIndex = 0
       Visible = False
       OnClick = pmcNewNestOwnerClick
     end
     object pmcNewNestRevision: TMenuItem
-      Caption = 'New nest revision'
+      Caption = 'New nest re&vision'
       ImageIndex = 7
       Visible = False
       OnClick = pmcNewNestRevisionClick
@@ -10123,7 +10125,7 @@ object frmCustomGrid: TfrmCustomGrid
       OnClick = pmcNewProjectMemberClick
     end
     object pmcNewCollector: TMenuItem
-      Caption = 'New collector'
+      Caption = 'New co&llector'
       ImageIndex = 13
       Visible = False
       OnClick = pmcNewCollectorClick
@@ -10135,19 +10137,19 @@ object frmCustomGrid: TfrmCustomGrid
       OnClick = pmcNewSamplePrepClick
     end
     object pmcNewSighting: TMenuItem
-      Caption = 'New sighting'
+      Caption = 'New &sighting'
       ImageIndex = 5
       Visible = False
       OnClick = pmcNewSightingClick
     end
     object pmcNewSpecimen: TMenuItem
-      Caption = 'New specimen'
+      Caption = 'New spec&imen'
       ImageIndex = 2
       Visible = False
       OnClick = pmcNewSpecimenClick
     end
     object pmcNewSurvey: TMenuItem
-      Caption = 'New survey'
+      Caption = 'New s&urvey'
       ImageIndex = 6
       Visible = False
     end
@@ -10158,7 +10160,7 @@ object frmCustomGrid: TfrmCustomGrid
       OnClick = pmcNewSurveyMemberClick
     end
     object pmcNewWeatherLog: TMenuItem
-      Caption = 'New weather log'
+      Caption = 'New &weather log'
       ImageIndex = 18
       Visible = False
       OnClick = pmcNewWeatherLogClick
@@ -10283,7 +10285,7 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 56
     Top = 456
     object pmcEdit: TMenuItem
-      Caption = 'Edit'
+      Caption = '&Edit'
       ImageIndex = 2
       OnClick = sbEditChildClick
     end
@@ -10291,7 +10293,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmcRefresh: TMenuItem
-      Caption = 'Refresh'
+      Caption = '&Refresh'
       ImageIndex = 18
       OnClick = sbRefreshChildClick
     end
@@ -10299,11 +10301,11 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmcRecordVerifications: TMenuItem
-      Caption = 'Record verifications'
+      Caption = 'Record &verifications'
       ImageIndex = 85
     end
     object pmcRecordHistory: TMenuItem
-      Caption = 'Record history'
+      Caption = 'Record &history'
       ImageIndex = 10
       OnClick = sbChildHistoryClick
     end
@@ -10311,7 +10313,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmcDel: TMenuItem
-      Caption = 'Delete'
+      Caption = '&Delete'
       ImageIndex = 4
       OnClick = sbDelChildClick
     end
@@ -10358,7 +10360,7 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 129
     Top = 232
     object pmrRestoreRecord: TMenuItem
-      Caption = 'Restore selected record'
+      Caption = '&Restore selected record'
       ImageIndex = 34
       OnClick = sbRestoreRecordClick
     end
@@ -10366,7 +10368,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmrDelPermanently: TMenuItem
-      Caption = 'Delete permanently'
+      Caption = '&Delete permanently'
       ImageIndex = 36
       OnClick = sbDelPermanentlyClick
     end
@@ -23487,17 +23489,17 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 129
     Top = 179
     object pmmMarkAll: TMenuItem
-      Caption = 'Mark all'
+      Caption = '&Mark all'
       ImageIndex = 83
       OnClick = pmmMarkAllClick
     end
     object pmmInvertMarked: TMenuItem
-      Caption = 'Invert marked'
+      Caption = '&Invert marked'
       ImageIndex = 87
       OnClick = pmmInvertMarkedClick
     end
     object pmmUnmarkAll: TMenuItem
-      Caption = 'Unmark all'
+      Caption = '&Unmark all'
       ImageIndex = 81
       OnClick = pmmUnmarkAllClick
     end
@@ -23507,7 +23509,7 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 48
     Top = 179
     object pmvAddVerification: TMenuItem
-      Caption = 'Add record verification'
+      Caption = '&Add record verification'
       ImageIndex = 0
       OnClick = pmvAddVerificationClick
     end
@@ -23515,7 +23517,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmvViewVerifications: TMenuItem
-      Caption = 'View record verifications'
+      Caption = '&View record verifications'
       ImageIndex = 85
       OnClick = pmvViewVerificationsClick
     end
@@ -23525,12 +23527,12 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 200
     Top = 179
     object pmmMarkAllColumns: TMenuItem
-      Caption = 'Mark all'
+      Caption = '&Mark all'
       ImageIndex = 83
       OnClick = pmmMarkAllColumnsClick
     end
     object pmmUnmarkAllColumns: TMenuItem
-      Caption = 'Unmark all'
+      Caption = '&Unmark all'
       ImageIndex = 81
       OnClick = pmmUnmarkAllColumnsClick
     end
@@ -23544,12 +23546,12 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 129
     Top = 120
     object pmcColumnSortAsc: TMenuItem
-      Caption = 'Sort column ascending'
+      Caption = 'Sort column &ascending'
       ImageIndex = 91
       OnClick = pmcColumnSortAscClick
     end
     object pmcColumnSortDesc: TMenuItem
-      Caption = 'Sort column descending'
+      Caption = 'Sort column &descending'
       ImageIndex = 92
       OnClick = pmcColumnSortDescClick
     end
@@ -23557,7 +23559,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmcColumnsAutoAdjustWidth: TMenuItem
-      Caption = 'Auto adjust columns'' width'
+      Caption = 'Auto adjust columns'' &width'
       ImageIndex = 68
       OnClick = sbColumnWidthAutoAdjustClick
     end
@@ -23565,7 +23567,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmcHideColumn: TMenuItem
-      Caption = 'Hide column'
+      Caption = '&Hide column'
       ImageIndex = 70
       OnClick = pmcHideColumnClick
     end
@@ -24538,7 +24540,7 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 200
     Top = 120
     object pmiAddImage: TMenuItem
-      Caption = 'Add image(s)'
+      Caption = 'Add &new image(s)'
       ImageIndex = 0
       OnClick = sbAddImageClick
     end
@@ -24546,12 +24548,12 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmiImageInfo: TMenuItem
-      Caption = 'View/edit image info'
+      Caption = 'View/&edit info'
       ImageIndex = 2
       OnClick = sbImageInfoClick
     end
     object pmiViewImage: TMenuItem
-      Caption = 'View image'
+      Caption = '&View image'
       ImageIndex = 52
       OnClick = sbViewImageClick
     end
@@ -24559,7 +24561,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmiDelImage: TMenuItem
-      Caption = 'Delete image'
+      Caption = '&Delete'
       ImageIndex = 4
       OnClick = sbDelImageClick
     end
@@ -24567,7 +24569,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmiRefreshImages: TMenuItem
-      Caption = 'Refresh images'
+      Caption = '&Refresh'
       ImageIndex = 18
       OnClick = pmiRefreshImagesClick
     end
@@ -24890,32 +24892,32 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 129
     Top = 64
     object pmaAddAudio: TMenuItem
-      Caption = 'Add audio recording(s)'
+      Caption = 'Add &new audio recording(s)'
       ImageIndex = 0
     end
     object Separator27: TMenuItem
       Caption = '-'
     end
     object pmaAudioInfo: TMenuItem
-      Caption = 'View/edit recording info'
+      Caption = 'View/&edit info'
       ImageIndex = 2
     end
     object pmaPlayAudio: TMenuItem
-      Caption = 'Play selected audio'
+      Caption = '&Play selected audio'
       ImageIndex = 96
     end
     object Separator28: TMenuItem
       Caption = '-'
     end
     object pmaDelAudio: TMenuItem
-      Caption = 'Delete audio recording'
+      Caption = '&Delete'
       ImageIndex = 4
     end
     object Separator29: TMenuItem
       Caption = '-'
     end
     object pmaRefreshAudios: TMenuItem
-      Caption = 'Refresh audio recordings'
+      Caption = '&Refresh'
       ImageIndex = 18
       OnClick = pmaRefreshAudiosClick
     end
@@ -26481,32 +26483,43 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 48
     Top = 64
     object pmdAddDoc: TMenuItem
-      Caption = 'Add document/link'
+      Caption = 'Add &new'
       ImageIndex = 0
+      object MenuItem1: TMenuItem
+        Caption = '&Documents'
+        OnClick = pmAddDocumentClick
+      end
+      object MenuItem2: TMenuItem
+        Caption = '&Link'
+        OnClick = pmAddLinkClick
+      end
     end
     object Separator31: TMenuItem
       Caption = '-'
     end
     object pmdDocInfo: TMenuItem
-      Caption = 'View/edit document/link info'
+      Caption = 'View/&edit info'
       ImageIndex = 2
+      OnClick = sbDocInfoClick
     end
     object pmdOpenDoc: TMenuItem
-      Caption = 'Open document/link'
+      Caption = '&Open document/link'
       ImageIndex = 100
+      OnClick = sbOpenDocClick
     end
     object Separator32: TMenuItem
       Caption = '-'
     end
     object pmdDelDoc: TMenuItem
-      Caption = 'Delete document/link'
+      Caption = '&Delete'
       ImageIndex = 4
+      OnClick = sbDelDocClick
     end
     object Separator33: TMenuItem
       Caption = '-'
     end
     object pmdRefreshDocs: TMenuItem
-      Caption = 'Refresh documents and links'
+      Caption = '&Refresh'
       ImageIndex = 18
       OnClick = pmdRefreshDocsClick
     end
@@ -26516,11 +26529,11 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 574
     Top = 440
     object pmAddDocument: TMenuItem
-      Caption = 'Add documents'
+      Caption = 'Add &documents'
       OnClick = pmAddDocumentClick
     end
     object pmAddLink: TMenuItem
-      Caption = 'Add link'
+      Caption = 'Add &link'
       OnClick = pmAddLinkClick
     end
   end

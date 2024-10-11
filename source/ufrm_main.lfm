@@ -711,13 +711,13 @@ object frmMain: TfrmMain
     end
     object actOpenBands: TAction
       Category = 'Individuals'
-      Caption = 'Bands'
+      Caption = '&Bands'
       ImageIndex = 7
       OnExecute = actOpenBandsExecute
     end
     object actNewBands: TAction
       Category = 'Individuals'
-      Caption = 'New batch'
+      Caption = '&New batch'
       ImageIndex = 8
       OnExecute = actNewBandsExecute
     end
@@ -730,49 +730,49 @@ object frmMain: TfrmMain
     end
     object actOpenResearchers: TAction
       Category = 'Entities'
-      Caption = 'Researchers'
+      Caption = '&Researchers'
       ImageIndex = 18
       OnExecute = actOpenResearchersExecute
     end
     object actOpenInstitutions: TAction
       Category = 'Entities'
-      Caption = 'Institutions'
+      Caption = '&Institutions'
       ImageIndex = 17
       OnExecute = actOpenInstitutionsExecute
     end
     object actOpenProjects: TAction
       Category = 'Entities'
-      Caption = 'Projects'
+      Caption = 'Pro&jects'
       ImageIndex = 19
       OnExecute = actOpenProjectsExecute
     end
     object actOpenPermits: TAction
       Category = 'Entities'
-      Caption = 'Permits'
+      Caption = '&Permits'
       ImageIndex = 20
       OnExecute = actOpenPermitsExecute
     end
     object actOpenGazetteer: TAction
       Category = 'Geo'
-      Caption = 'Gazetteer'
+      Caption = '&Gazetteer'
       ImageIndex = 21
       OnExecute = actOpenGazetteerExecute
     end
     object actOpenNetStations: TAction
       Category = 'Geo'
-      Caption = 'Sampling plots'
+      Caption = '&Sampling plots'
       ImageIndex = 22
       OnExecute = actOpenNetStationsExecute
     end
     object actOpenTaxa: TAction
       Category = 'Taxonomy'
-      Caption = 'Taxa'
+      Caption = '&Taxa'
       Enabled = False
       ImageIndex = 25
     end
     object actOpenBotany: TAction
       Category = 'Taxonomy'
-      Caption = 'Botanic taxa'
+      Caption = '&Botanic taxa'
       ImageIndex = 26
       OnExecute = actOpenBotanyExecute
     end
@@ -784,65 +784,65 @@ object frmMain: TfrmMain
     end
     object actOpenManual: TAction
       Category = 'Help'
-      Caption = 'Help'
+      Caption = '&Documentation'
       ImageIndex = 30
       OnExecute = actOpenManualExecute
     end
     object actAbout: TAction
       Category = 'Help'
-      Caption = 'About'
+      Caption = '&About'
       ImageIndex = 32
       OnExecute = actAboutExecute
     end
     object actGiveFeedback: TAction
       Category = 'Help'
-      Caption = 'Feedback'
+      Caption = '&Feedback'
       ImageIndex = 31
       OnExecute = actGiveFeedbackExecute
     end
     object actCoordinatesEditor: TAction
       Category = 'Geo'
-      Caption = 'Editor'
+      Caption = '&Editor'
       Enabled = False
       ImageIndex = 23
       Visible = False
     end
     object actCoordinatesConverter: TAction
       Category = 'Geo'
-      Caption = 'Converter'
+      Caption = '&Converter'
       ImageIndex = 24
       OnExecute = actCoordinatesConverterExecute
     end
     object actOpenImagesList: TAction
       Category = 'Media'
-      Caption = 'Image gallery'
+      Caption = '&Image gallery'
       ImageIndex = 27
     end
     object actOpenRecordingsList: TAction
       Category = 'Media'
-      Caption = 'Audio library'
+      Caption = '&Audio library'
       ImageIndex = 28
     end
     object actOpenDocumentsList: TAction
       Category = 'Media'
-      Caption = 'Attachments'
+      Caption = '&Documents'
       ImageIndex = 29
     end
     object actOpenNests: TAction
       Category = 'Breeding'
-      Caption = 'Nests'
+      Caption = '&Nests'
       ImageIndex = 14
       OnExecute = actOpenNestsExecute
     end
     object actOpenNestRevisions: TAction
       Category = 'Breeding'
-      Caption = 'Nest revisions'
+      Caption = 'Nest &revisions'
       ImageIndex = 15
       OnExecute = actOpenNestRevisionsExecute
     end
     object actOpenEggs: TAction
       Category = 'Breeding'
-      Caption = 'Eggs'
+      Caption = '&Eggs'
       ImageIndex = 16
       OnExecute = actOpenEggsExecute
     end
@@ -861,37 +861,37 @@ object frmMain: TfrmMain
     end
     object actDBConnect: TAction
       Category = 'File'
-      Caption = 'Connect to database'
+      Caption = '&Connect to database'
       ImageIndex = 33
       OnExecute = actDBConnectExecute
       ShortCut = 49231
     end
     object actDBSettings: TAction
       Category = 'File'
-      Caption = 'Manage connections'
+      Caption = '&Manage connections'
       ImageIndex = 34
       OnExecute = actDBSettingsExecute
     end
     object actExport: TAction
       Category = 'File'
-      Caption = 'Export'
+      Caption = '&Export'
       ImageIndex = 35
     end
     object actOpenTaxonRanks: TAction
       Category = 'Taxonomy'
-      Caption = 'Taxonomic ranks'
+      Caption = 'Taxonomic &ranks'
       ImageIndex = 105
       Visible = False
     end
     object actImport: TAction
       Category = 'File'
-      Caption = 'Import'
+      Caption = '&Import'
       DisableIfNoHandler = False
       ImageIndex = 36
     end
     object actImportEbird: TAction
       Category = 'Import'
-      Caption = 'eBird records'
+      Caption = '&eBird records'
       OnExecute = actImportEbirdExecute
     end
     object actPrint: TAction
@@ -901,56 +901,56 @@ object frmMain: TfrmMain
     end
     object actSettings: TAction
       Category = 'File'
-      Caption = 'Settings'
+      Caption = '&Settings'
       ImageIndex = 38
       OnExecute = actSettingsExecute
       ShortCut = 49235
     end
     object actOpenBandHistory: TAction
       Category = 'Individuals'
-      Caption = 'History'
+      Caption = '&History'
       ImageIndex = 9
       OnExecute = actOpenBandHistoryExecute
     end
     object actViewBandsBalance: TAction
       Category = 'Individuals'
-      Caption = 'Balance'
+      Caption = 'Ba&lance'
       ImageIndex = 10
       OnExecute = actViewBandsBalanceExecute
     end
     object actOpenIndividuals: TAction
       Category = 'Individuals'
-      Caption = 'Individuals'
+      Caption = '&Individuals'
       ImageIndex = 11
       OnExecute = actOpenIndividualsExecute
     end
     object actOpenCaptures: TAction
       Category = 'Individuals'
-      Caption = 'Captures'
+      Caption = '&Captures'
       ImageIndex = 12
       OnExecute = actOpenCapturesExecute
     end
     object actOpenMolts: TAction
       Category = 'Individuals'
-      Caption = 'Molts'
+      Caption = '&Molts'
       Enabled = False
       ImageIndex = 13
     end
     object actMaintenance: TAction
       Category = 'File'
-      Caption = 'Maintenance'
+      Caption = 'Main&tenance'
       ImageIndex = 39
       OnExecute = actMaintenanceExecute
     end
     object actCheckUpdates: TAction
       Category = 'Help'
-      Caption = 'Check updates'
+      Caption = 'Check &updates'
       ImageIndex = 40
       OnExecute = actCheckUpdatesExecute
     end
     object actManageUsers: TAction
       Category = 'File'
-      Caption = 'Manage users'
+      Caption = 'Manage &users'
       ImageIndex = 41
       OnExecute = actManageUsersExecute
     end
@@ -962,28 +962,28 @@ object frmMain: TfrmMain
     end
     object actExit: TAction
       Category = 'File'
-      Caption = 'Exit'
+      Caption = 'E&xit'
       OnExecute = actExitExecute
     end
     object actImportCaptures: TAction
       Category = 'Import'
-      Caption = 'Banding data'
+      Caption = '&Banding data'
       OnExecute = actImportCapturesExecute
     end
     object actImportNests: TAction
       Category = 'Import'
-      Caption = 'Nests data'
+      Caption = '&Nests data'
       OnExecute = actImportNestsExecute
       Visible = False
     end
     object actImportCoordinates: TAction
       Category = 'Import'
-      Caption = 'Geographical coordinates'
+      Caption = '&Geographical coordinates'
       OnExecute = actImportCoordinatesExecute
     end
     object actImportWizard: TAction
       Category = 'Import'
-      Caption = 'Import wizard'
+      Caption = 'Import &wizard'
     end
   end
   object bStatusBar: TImageList
@@ -1105,16 +1105,16 @@ object frmMain: TfrmMain
     Left = 56
     Top = 272
     object pmtCloseTab: TMenuItem
-      Caption = 'Close tab'
+      Caption = '&Close tab'
       ImageIndex = 11
       OnClick = pmtCloseTabClick
     end
     object pmtCloseAllOtherTabs: TMenuItem
-      Caption = 'Close all other tabs'
+      Caption = 'Close all &other tabs'
       OnClick = pmtCloseAllOtherTabsClick
     end
     object pmtCloseAllTabs: TMenuItem
-      Caption = 'Close all tabs'
+      Caption = 'Close &all tabs'
       ImageIndex = 10
       OnClick = pmtCloseAllTabsClick
     end
@@ -8491,7 +8491,7 @@ object frmMain: TfrmMain
     Left = 57
     Top = 125
     object mmFile: TMenuItem
-      Caption = 'File'
+      Caption = '&File'
       object mmfConnectDB: TMenuItem
         Action = actDBConnect
       end
@@ -8558,7 +8558,7 @@ object frmMain: TfrmMain
       end
     end
     object mmSampling: TMenuItem
-      Caption = 'Sampling'
+      Caption = '&Sampling'
       object mmsExpeditions: TMenuItem
         Action = actOpenExpeditions
       end
@@ -8585,7 +8585,7 @@ object frmMain: TfrmMain
       end
     end
     object mmIndividuals: TMenuItem
-      Caption = 'Individuals'
+      Caption = '&Individuals'
       object mmiBands: TMenuItem
         Action = actOpenBands
       end
@@ -8615,7 +8615,7 @@ object frmMain: TfrmMain
       end
     end
     object mmBreeding: TMenuItem
-      Caption = 'Breeding'
+      Caption = '&Breeding'
       object mmbNests: TMenuItem
         Action = actOpenNests
       end
@@ -8627,7 +8627,7 @@ object frmMain: TfrmMain
       end
     end
     object mmEntities: TMenuItem
-      Caption = 'Entities'
+      Caption = '&Entities'
       object mmeInstitutions: TMenuItem
         Action = actOpenInstitutions
       end
@@ -8645,7 +8645,7 @@ object frmMain: TfrmMain
       end
     end
     object mmGeo: TMenuItem
-      Caption = 'Geo'
+      Caption = '&Geo'
       object mmgGazetteer: TMenuItem
         Action = actOpenGazetteer
       end
@@ -8660,7 +8660,7 @@ object frmMain: TfrmMain
       end
     end
     object mmTaxonomy: TMenuItem
-      Caption = 'Taxonomy'
+      Caption = '&Taxonomy'
       object mmtTaxa: TMenuItem
         Action = actOpenTaxa
       end
@@ -8672,7 +8672,7 @@ object frmMain: TfrmMain
       end
     end
     object mmMedia: TMenuItem
-      Caption = 'Media'
+      Caption = '&Media'
       Visible = False
       object mmmImageGallery: TMenuItem
         Action = actOpenImagesList
@@ -8685,7 +8685,7 @@ object frmMain: TfrmMain
       end
     end
     object mmHelp: TMenuItem
-      Caption = 'Help'
+      Caption = '&Help'
       object mmhHelp: TMenuItem
         Action = actOpenManual
       end
