@@ -4,6 +4,7 @@ object edtImageInfo: TedtImageInfo
   Top = 33
   Width = 416
   AutoSize = True
+  BorderIcons = [biSystemMenu]
   Caption = 'Image info'
   ClientHeight = 681
   ClientWidth = 416
@@ -92,7 +93,7 @@ object edtImageInfo: TedtImageInfo
       ClientHeight = 872
       ClientWidth = 399
       TabOrder = 0
-      object pSupplier: TPanel
+      object pLocality: TPanel
         Left = 0
         Height = 45
         Top = 303
@@ -109,8 +110,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 0
-        object lblSupplier: TLabel
+        TabOrder = 5
+        object lblLocality: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -141,10 +142,11 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLocalityButtonClick
+          OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eLocalityDBEditKeyPress
         end
       end
-      object pRequester: TPanel
+      object pAuthor: TPanel
         Left = 0
         Height = 45
         Top = 110
@@ -161,7 +163,7 @@ object edtImageInfo: TedtImageInfo
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 1
-        object lblRequester: TLabel
+        object lblAuthor: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -192,10 +194,11 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eAuthorButtonClick
+          OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eAuthorDBEditKeyPress
         end
       end
-      object pNotes1: TPanel
+      object pSubtitle: TPanel
         Left = 0
         Height = 94
         Top = 16
@@ -210,8 +213,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 94
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 2
-        object lblNotes1: TLabel
+        TabOrder = 0
+        object lblSubtitle: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -238,7 +241,7 @@ object edtImageInfo: TedtImageInfo
           TabOrder = 0
         end
       end
-      object pPrefixSuffix1: TPanel
+      object pDateTime: TPanel
         Left = 0
         Height = 45
         Top = 155
@@ -254,8 +257,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 3
-        object lblBandPrefix1: TLabel
+        TabOrder = 2
+        object lblImageDate: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -266,7 +269,7 @@ object edtImageInfo: TedtImageInfo
           ParentColor = False
           ParentFont = False
         end
-        object lblBandSuffix1: TLabel
+        object lblImageTime: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -298,6 +301,8 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eImageDateButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eImageTimeKeyPress
         end
         object eImageTime: TDBEdit
           Left = 208
@@ -310,9 +315,11 @@ object edtImageInfo: TedtImageInfo
           MaxLength = 0
           TabOrder = 1
           TextHint = 'HH:MM'
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eImageTimeKeyPress
         end
       end
-      object pStatus1: TPanel
+      object pImageType: TPanel
         Left = 0
         Height = 45
         Top = 200
@@ -328,8 +335,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 4
-        object lblBandStatus1: TLabel
+        TabOrder = 3
+        object lblImageType: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -352,11 +359,13 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           ItemHeight = 15
           MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eImageTimeKeyPress
           Style = csDropDownList
           TabOrder = 0
         end
       end
-      object pStatus2: TPanel
+      object pCoordinatesPrecision: TPanel
         Left = 0
         Height = 45
         Top = 348
@@ -372,8 +381,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 5
-        object lblBandStatus2: TLabel
+        TabOrder = 6
+        object lblCoordinatesPrecision: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -396,11 +405,13 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           ItemHeight = 15
           MaxLength = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eImageTimeKeyPress
           Style = csDropDownList
           TabOrder = 0
         end
       end
-      object pSizeNumber1: TPanel
+      object pLongitudeLatitude: TPanel
         Left = 0
         Height = 45
         Top = 393
@@ -416,8 +427,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 6
-        object lblBandSize1: TLabel
+        TabOrder = 7
+        object lblLongitude: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -428,7 +439,7 @@ object edtImageInfo: TedtImageInfo
           ParentColor = False
           ParentFont = False
         end
-        object lblBandNumber1: TLabel
+        object lblLatitude: TLabel
           Left = 208
           Height = 15
           Top = 3
@@ -460,6 +471,7 @@ object edtImageInfo: TedtImageInfo
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
           OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eImageTimeKeyPress
         end
         object eLatitude: TDBEditButton
           Left = 208
@@ -482,9 +494,10 @@ object edtImageInfo: TedtImageInfo
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
           OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eImageTimeKeyPress
         end
       end
-      object pSender1: TPanel
+      object pTaxon: TPanel
         Left = 0
         Height = 45
         Top = 451
@@ -501,8 +514,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 7
-        object lblSender1: TLabel
+        TabOrder = 8
+        object lblTaxon: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -537,7 +550,7 @@ object edtImageInfo: TedtImageInfo
           OnDBEditKeyPress = eTaxonDBEditKeyPress
         end
       end
-      object pProject: TPanel
+      object pIndividual: TPanel
         Left = 0
         Height = 45
         Top = 496
@@ -553,8 +566,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 8
-        object lblProject: TLabel
+        TabOrder = 9
+        object lblIndividual: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -589,7 +602,7 @@ object edtImageInfo: TedtImageInfo
           OnDBEditKeyPress = eIndividualDBEditKeyPress
         end
       end
-      object pProject1: TPanel
+      object pCapture: TPanel
         Left = 0
         Height = 45
         Top = 541
@@ -605,8 +618,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 9
-        object lblProject1: TLabel
+        TabOrder = 10
+        object lblCapture: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -641,7 +654,7 @@ object edtImageInfo: TedtImageInfo
           OnDBEditKeyPress = eCaptureDBEditKeyPress
         end
       end
-      object pProject2: TPanel
+      object pSurvey: TPanel
         Left = 0
         Height = 45
         Top = 586
@@ -657,8 +670,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 10
-        object lblProject2: TLabel
+        TabOrder = 11
+        object lblSurvey: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -693,7 +706,7 @@ object edtImageInfo: TedtImageInfo
           OnDBEditKeyPress = eSurveyDBEditKeyPress
         end
       end
-      object pProject3: TPanel
+      object pSighting: TPanel
         Left = 0
         Height = 45
         Top = 631
@@ -709,8 +722,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 11
-        object lblProject3: TLabel
+        TabOrder = 12
+        object lblSighting: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -745,7 +758,7 @@ object edtImageInfo: TedtImageInfo
           OnDBEditKeyPress = eSightingDBEditKeyPress
         end
       end
-      object pProject4: TPanel
+      object pImageFilename: TPanel
         Left = 0
         Height = 45
         Top = 245
@@ -761,8 +774,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 12
-        object lblProject4: TLabel
+        TabOrder = 4
+        object lblImageFilename: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -795,9 +808,10 @@ object edtImageInfo: TedtImageInfo
           CharCase = ecNormal
           OnButtonClick = eImageFilenameButtonClick
           OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eImageTimeKeyPress
         end
       end
-      object pProject5: TPanel
+      object pSpecimen: TPanel
         Left = 0
         Height = 45
         Top = 811
@@ -813,8 +827,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 13
-        object lblProject5: TLabel
+        TabOrder = 16
+        object lblSpecimen: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -849,7 +863,7 @@ object edtImageInfo: TedtImageInfo
           OnDBEditKeyPress = eSpecimenDBEditKeyPress
         end
       end
-      object pProject6: TPanel
+      object pEgg: TPanel
         Left = 0
         Height = 45
         Top = 766
@@ -865,8 +879,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 14
-        object lblProject6: TLabel
+        TabOrder = 15
+        object lblEgg: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -901,7 +915,7 @@ object edtImageInfo: TedtImageInfo
           OnDBEditKeyPress = eEggDBEditKeyPress
         end
       end
-      object pProject7: TPanel
+      object pNestRevision: TPanel
         Left = 0
         Height = 45
         Top = 721
@@ -917,8 +931,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 15
-        object lblProject7: TLabel
+        TabOrder = 14
+        object lblNestRevision: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -953,7 +967,7 @@ object edtImageInfo: TedtImageInfo
           OnDBEditKeyPress = eNestRevisionDBEditKeyPress
         end
       end
-      object pProject8: TPanel
+      object pNest: TPanel
         Left = 0
         Height = 45
         Top = 676
@@ -969,8 +983,8 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 16
-        object lblProject8: TLabel
+        TabOrder = 13
+        object lblNest: TLabel
           Left = 16
           Height = 15
           Top = 3

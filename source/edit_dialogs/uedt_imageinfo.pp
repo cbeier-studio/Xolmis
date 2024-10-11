@@ -48,46 +48,46 @@ type
     eNestRevision: TDBEditButton;
     eEgg: TDBEditButton;
     eSpecimen: TDBEditButton;
-    lblBandNumber1: TLabel;
-    lblBandPrefix1: TLabel;
-    lblBandSize1: TLabel;
-    lblBandStatus1: TLabel;
-    lblBandStatus2: TLabel;
-    lblBandSuffix1: TLabel;
-    lblNotes1: TLabel;
-    lblProject: TLabel;
-    lblProject1: TLabel;
-    lblProject2: TLabel;
-    lblProject3: TLabel;
-    lblProject4: TLabel;
-    lblProject5: TLabel;
-    lblProject6: TLabel;
-    lblProject7: TLabel;
-    lblProject8: TLabel;
-    lblRequester: TLabel;
-    lblSender1: TLabel;
-    lblSupplier: TLabel;
+    lblLatitude: TLabel;
+    lblImageDate: TLabel;
+    lblLongitude: TLabel;
+    lblImageType: TLabel;
+    lblCoordinatesPrecision: TLabel;
+    lblImageTime: TLabel;
+    lblSubtitle: TLabel;
+    lblIndividual: TLabel;
+    lblCapture: TLabel;
+    lblSurvey: TLabel;
+    lblSighting: TLabel;
+    lblImageFilename: TLabel;
+    lblSpecimen: TLabel;
+    lblEgg: TLabel;
+    lblNestRevision: TLabel;
+    lblNest: TLabel;
+    lblAuthor: TLabel;
+    lblTaxon: TLabel;
+    lblLocality: TLabel;
     lineBottom: TShapeLineBGRA;
     mSubtitle: TDBMemo;
     pBottom: TPanel;
     pClient: TPanel;
-    pNotes1: TPanel;
-    pPrefixSuffix1: TPanel;
-    pProject: TPanel;
-    pProject1: TPanel;
-    pProject2: TPanel;
-    pProject3: TPanel;
-    pProject4: TPanel;
-    pProject5: TPanel;
-    pProject6: TPanel;
-    pProject7: TPanel;
-    pProject8: TPanel;
-    pRequester: TPanel;
-    pSender1: TPanel;
-    pSizeNumber1: TPanel;
-    pStatus1: TPanel;
-    pStatus2: TPanel;
-    pSupplier: TPanel;
+    pSubtitle: TPanel;
+    pDateTime: TPanel;
+    pIndividual: TPanel;
+    pCapture: TPanel;
+    pSurvey: TPanel;
+    pSighting: TPanel;
+    pImageFilename: TPanel;
+    pSpecimen: TPanel;
+    pEgg: TPanel;
+    pNestRevision: TPanel;
+    pNest: TPanel;
+    pAuthor: TPanel;
+    pTaxon: TPanel;
+    pLongitudeLatitude: TPanel;
+    pImageType: TPanel;
+    pCoordinatesPrecision: TPanel;
+    pLocality: TPanel;
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
@@ -100,6 +100,7 @@ type
     procedure eEggDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eImageDateButtonClick(Sender: TObject);
     procedure eImageFilenameButtonClick(Sender: TObject);
+    procedure eImageTimeKeyPress(Sender: TObject; var Key: char);
     procedure eIndividualButtonClick(Sender: TObject);
     procedure eIndividualDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eLocalityButtonClick(Sender: TObject);
@@ -267,6 +268,18 @@ begin
   DMM.OpenImgs.InitialDir := XSettings.LastPathUsed;
   if DMM.OpenImgs.Execute then
     dsLink.DataSet.FieldByName('image_filename').AsString := DMM.OpenImgs.FileName;
+end;
+
+procedure TedtImageInfo.eImageTimeKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
 end;
 
 procedure TedtImageInfo.eIndividualButtonClick(Sender: TObject);

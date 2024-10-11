@@ -46,6 +46,52 @@ type
   { TfrmCustomGrid }
 
   TfrmCustomGrid = class(TForm)
+    dsDocs: TDataSource;
+    gridDocs: TDBGrid;
+    pmAddLink: TMenuItem;
+    pmAddDocument: TMenuItem;
+    pDocsToolbar: TBCPanel;
+    pmdAddDoc: TMenuItem;
+    pmdDocInfo: TMenuItem;
+    pmdDelDoc: TMenuItem;
+    pmdOpenDoc: TMenuItem;
+    pmdRefreshDocs: TMenuItem;
+    pmDocs: TPopupMenu;
+    pmAddDocs: TPopupMenu;
+    qDocsactive_status: TBooleanField;
+    qDocscapture_id: TLongintField;
+    qDocsdocument_date: TDateField;
+    qDocsdocument_id: TLongintField;
+    qDocsdocument_name: TStringField;
+    qDocsdocument_path: TStringField;
+    qDocsdocument_time: TTimeField;
+    qDocsdocument_type: TStringField;
+    qDocsexpedition_id: TLongintField;
+    qDocsexported_status: TBooleanField;
+    qDocsindividual_id: TLongintField;
+    qDocsinsert_date: TDateTimeField;
+    qDocslicense_notes: TStringField;
+    qDocslicense_owner: TStringField;
+    qDocslicense_type: TStringField;
+    qDocslicense_uri: TStringField;
+    qDocslicense_year: TLongintField;
+    qDocsmarked_status: TBooleanField;
+    qDocsmethod_id: TLongintField;
+    qDocsnest_id: TLongintField;
+    qDocsnet_station_id: TLongintField;
+    qDocspermit_id: TLongintField;
+    qDocsperson_id: TLongintField;
+    qDocsproject_id: TLongintField;
+    qDocssighting_id: TLongintField;
+    qDocsspecimen_id: TLongintField;
+    qDocssurvey_id: TLongintField;
+    qDocsupdate_date: TDateTimeField;
+    qDocsuser_inserted: TLongintField;
+    qDocsuser_updated: TLongintField;
+    sbAddDoc: TSpeedButton;
+    sbDocInfo: TSpeedButton;
+    sbDelDoc: TSpeedButton;
+    sbOpenDoc: TSpeedButton;
     sbSaveRecord: TBitBtn;
     cbEggShapeFilter: TComboBox;
     cbEggPatternFilter: TComboBox;
@@ -733,6 +779,10 @@ type
     Separator27: TMenuItem;
     Separator28: TMenuItem;
     Separator29: TMenuItem;
+    Separator30: TShapeLineBGRA;
+    Separator31: TMenuItem;
+    Separator32: TMenuItem;
+    Separator33: TMenuItem;
     SeparatorPrint: TMenuItem;
     Separator5: TShapeLineBGRA;
     Separator6: TMenuItem;
@@ -772,6 +822,7 @@ type
     qChart: TSQLQuery;
     qImages: TSQLQuery;
     qAudios: TSQLQuery;
+    qDocs: TSQLQuery;
     TimerUpdate: TTimer;
     titleViewRecord: TLabel;
     titleRecycle: TLabel;
@@ -804,6 +855,8 @@ type
     procedure DBGSelectEditor(Sender: TObject; Column: TColumn; var Editor: TWinControl);
     procedure dsAudiosDataChange(Sender: TObject; Field: TField);
     procedure dsAudiosStateChange(Sender: TObject);
+    procedure dsDocsDataChange(Sender: TObject; Field: TField);
+    procedure dsDocsStateChange(Sender: TObject);
     procedure dsImagesDataChange(Sender: TObject; Field: TField);
     procedure dsImagesStateChange(Sender: TObject);
     procedure dsLink1DataChange(Sender: TObject; Field: TField);
@@ -869,6 +922,8 @@ type
     procedure pChildTag1MouseEnter(Sender: TObject);
     procedure pChildTag1MouseLeave(Sender: TObject);
     procedure pClientResize(Sender: TObject);
+    procedure pmAddDocumentClick(Sender: TObject);
+    procedure pmAddLinkClick(Sender: TObject);
     procedure pmaRefreshAudiosClick(Sender: TObject);
     procedure pmcColumnSortAscClick(Sender: TObject);
     procedure pmcColumnSortDescClick(Sender: TObject);
@@ -888,6 +943,7 @@ type
     procedure pmcNewSpecimenClick(Sender: TObject);
     procedure pmcNewSurveyMemberClick(Sender: TObject);
     procedure pmcNewWeatherLogClick(Sender: TObject);
+    procedure pmdRefreshDocsClick(Sender: TObject);
     procedure pmiRefreshImagesClick(Sender: TObject);
     procedure pmmInvertMarkedClick(Sender: TObject);
     procedure pmmMarkAllClick(Sender: TObject);
@@ -910,20 +966,35 @@ type
     procedure pmtRefreshClick(Sender: TObject);
     procedure pmvAddVerificationClick(Sender: TObject);
     procedure pmvViewVerificationsClick(Sender: TObject);
+    procedure qAudiosaudio_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qAudiosaudio_typeSetText(Sender: TField; const aText: string);
     procedure qAudiosBeforePost(DataSet: TDataSet);
+    procedure qAudiosrecording_contextGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qAudiosrecording_contextSetText(Sender: TField; const aText: string);
+    procedure qDocsBeforePost(DataSet: TDataSet);
+    procedure qDocsdocument_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qDocsdocument_typeSetText(Sender: TField; const aText: string);
     procedure qImagesBeforePost(DataSet: TDataSet);
+    procedure qImagesimage_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qImagesimage_typeSetText(Sender: TField; const aText: string);
+    procedure sbAddAudioClick(Sender: TObject);
     procedure sbAddChildClick(Sender: TObject);
+    procedure sbAddDocClick(Sender: TObject);
     procedure sbAddImageClick(Sender: TObject);
     procedure sbAddNetsBatchClick(Sender: TObject);
+    procedure sbAudioInfoClick(Sender: TObject);
     procedure sbCancelRecordClick(Sender: TObject);
     procedure sbChildVerificationsClick(Sender: TObject);
     procedure sbClearFiltersClick(Sender: TObject);
     procedure sbColumnHideClick(Sender: TObject);
     procedure sbColumnWidthAutoAdjustClick(Sender: TObject);
+    procedure sbDelAudioClick(Sender: TObject);
     procedure sbDelChildClick(Sender: TObject);
+    procedure sbDelDocClick(Sender: TObject);
     procedure sbDelImageClick(Sender: TObject);
     procedure sbDelPermanentlyClick(Sender: TObject);
     procedure sbDelRecordClick(Sender: TObject);
+    procedure sbDocInfoClick(Sender: TObject);
     procedure sbEditChildClick(Sender: TObject);
     procedure sbEditRecordClick(Sender: TObject);
     procedure sbFirstChildClick(Sender: TObject);
@@ -938,6 +1009,7 @@ type
     procedure sbMoveColumnUpClick(Sender: TObject);
     procedure sbNextChildClick(Sender: TObject);
     procedure sbNextRecordClick(Sender: TObject);
+    procedure sbOpenDocClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
     procedure sbPriorChildClick(Sender: TObject);
     procedure sbPriorRecordClick(Sender: TObject);
@@ -1004,6 +1076,7 @@ type
     FChildPanelFactor: Double;
     cellMemo: TMemo;
 
+    procedure AddAudio(aDataSet: TDataSet; aFileName: String);
     procedure AddGridColumns(aTable: TTableType; aGrid: TDBGrid);
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
       IsAnAlias: Boolean = False);
@@ -1136,6 +1209,7 @@ type
     procedure SetGridTaxonRanks;
 
     procedure SetAudios;
+    procedure SetDocs;
     procedure SetImages;
     procedure SetRecycle;
     procedure SetSidePanel(aValue: Boolean);
@@ -1174,6 +1248,7 @@ type
     procedure UpdateGridTitles(aGrid: TDBGrid; aSearch: TCustomSearch);
     procedure UpdateImageButtons(aDataSet: TDataSet);
     procedure UpdateAudioButtons(aDataSet: TDataSet);
+    procedure UpdateDocButtons(aDataSet: TDataSet);
 
     procedure UpdateFilterPanels;
     procedure UpdateFilterPanelsBands;
@@ -1209,7 +1284,8 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
-  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print, udlg_progress,
+  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print,
+  cbs_validations, udlg_progress,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
 
@@ -1251,6 +1327,48 @@ begin
 end;
 
 { TfrmCustomGrid }
+
+procedure TfrmCustomGrid.AddAudio(aDataSet: TDataSet; aFileName: String);
+var
+  relPath: String;
+  SearchRec: TSearchRec;
+  CreationDate: TDateTime;
+begin
+  if not (FileExists(aFileName)) then
+  begin
+    //LogError(Format(rsImageNotFound, [aFileName]));
+    Exit;
+  end;
+
+  if FindFirst(aFileName, faAnyFile, SearchRec) = 0 then
+  try
+    CreationDate := FileDateToDateTime(SearchRec.Time);
+  finally
+    FindClose(SearchRec);
+  end;
+
+  relPath := ExtractRelativePath(XSettings.AudiosFolder, aFileName);
+
+  with aDataset do
+  begin
+    // Check if the image is in the dataset
+    if not RecordExists(tbAudioLibrary, 'audio_file', relPath) then
+    begin
+      Append;
+      FieldByName('audio_file').AsString := relPath;
+    end
+    else
+    begin
+      Locate('audio_file', relPath, []);
+      Edit;
+    end;
+    FieldByName('recording_date').AsDateTime := CreationDate;
+    FieldByName('recording_time').AsDateTime := CreationDate;
+
+    Post;
+    TSQLQuery(aDataSet).ApplyUpdates;
+  end;
+end;
 
 procedure TfrmCustomGrid.AddGridColumns(aTable: TTableType; aGrid: TDBGrid);
 var
@@ -1333,6 +1451,8 @@ begin
   pImagesToolbar.Border.Color := clCardBGSecondaryDark;
   pAudiosToolbar.Background.Color := clCardBGDefaultDark;
   pAudiosToolbar.Border.Color := clCardBGSecondaryDark;
+  pDocsToolbar.Background.Color := clCardBGDefaultDark;
+  pDocsToolbar.Border.Color := clCardBGSecondaryDark;
   pMapToolbar.Background.Color := clCardBGDefaultDark;
   pMapToolbar.Border.Color := clCardBGSecondaryDark;
   pColumnsToolbar.Background.Color := clCardBGDefaultDark;
@@ -1358,6 +1478,8 @@ begin
   pmMarkColumns.Images := iButtonsDark;
   pmVerifications.Images := iButtonsDark;
   pmImages.Images := iButtonsDark;
+  pmAudios.Images := iButtonsDark;
+  pmDocs.Images := iButtonsDark;
   pmAddChild.Images := DMM.iAddMenuDark;
 
   pEmptyQuery.Background.Color := clCardBGDefaultDark;
@@ -1438,6 +1560,10 @@ begin
   sbPlayAudio.Images := iButtonsDark;
   sbDelAudio.Images := iButtonsDark;
   sbShowDocs.Images := iButtonsDark;
+  sbAddDoc.Images := iButtonsDark;
+  sbDocInfo.Images := iButtonsDark;
+  sbOpenDoc.Images := iButtonsDark;
+  sbDelDoc.Images := iButtonsDark;
   sbShowMap.Images := iButtonsDark;
   sbShareMapPoints.Images := iButtonsDark;
   sbShowSummary.Images := iButtonsDark;
@@ -3157,6 +3283,19 @@ begin
   UpdateAudioButtons(qAudios);
 end;
 
+procedure TfrmCustomGrid.dsDocsDataChange(Sender: TObject; Field: TField);
+begin
+  UpdateDocButtons(qDocs);
+  {$IFDEF DEBUG}
+  LogDebug('Param: ' + qDocs.Params[0].Name + ' ' + qDocs.Params[0].AsString + '; Count: ' + IntToStr(qDocs.RecordCount));
+  {$ENDIF}
+end;
+
+procedure TfrmCustomGrid.dsDocsStateChange(Sender: TObject);
+begin
+  UpdateDocButtons(qDocs);
+end;
+
 procedure TfrmCustomGrid.dsImagesDataChange(Sender: TObject; Field: TField);
 begin
   UpdateImageButtons(qImages);
@@ -4185,6 +4324,7 @@ begin
   GetColumns;
   SetImages;
   SetAudios;
+  SetDocs;
   SetRecycle;
   CanToggle := True;
   Application.ProcessMessages;
@@ -5550,6 +5690,60 @@ begin
   pChild.Height := Round((pClient.Height - SplitChild.Height) * FChildPanelFactor);
 end;
 
+procedure TfrmCustomGrid.pmAddDocumentClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  DMM.OpenDocs.InitialDir := XSettings.DocumentsFolder;
+  if DMM.OpenDocs.Execute then
+  begin
+    dlgProgress := TdlgProgress.Create(nil);
+    try
+      dlgProgress.Show;
+      dlgProgress.Title := rsImportDocsTitle;
+      dlgProgress.Text := rsProgressPreparing;
+      dlgProgress.Max := DMM.OpenDocs.Files.Count;
+      Parar := False;
+      Application.ProcessMessages;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlCon.StartTransaction;
+      try
+        for i := 0 to DMM.OpenDocs.Files.Count - 1 do
+        begin
+          dlgProgress.Text := Format(rsProgressImportDocs, [i + 1, DMM.OpenDocs.Files.Count]);
+
+          { #todo : AddDocument method }
+          //AddImage(qImages, tbImages, 'image_filename', 'image_thumbnail', DMM.OpenDocs.Files[i]);
+
+          dlgProgress.Position := i + 1;
+          Application.ProcessMessages;
+          if Parar then
+            Break;
+        end;
+        if Parar then
+          DMM.sqlTrans.RollbackRetaining
+        else
+          DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
+      dlgProgress.Text := rsProgressFinishing;
+      dlgProgress.Position := DMM.OpenDocs.Files.Count;
+      Application.ProcessMessages;
+      Parar := False;
+    finally
+      dlgProgress.Close;
+      FreeAndNil(dlgProgress);
+    end;
+  end;
+end;
+
+procedure TfrmCustomGrid.pmAddLinkClick(Sender: TObject);
+begin
+  EditDocInfo(qDocs, dsLink.DataSet, FTableType, True);
+end;
+
 procedure TfrmCustomGrid.pmaRefreshAudiosClick(Sender: TObject);
 begin
   if Working then
@@ -5725,6 +5919,14 @@ begin
   EditWeatherLog(DMS.qWeatherLogs, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
 
   UpdateChildButtons(DMS.qWeatherLogs);
+end;
+
+procedure TfrmCustomGrid.pmdRefreshDocsClick(Sender: TObject);
+begin
+  if Working then
+    Exit;
+
+  qDocs.Refresh;
 end;
 
 procedure TfrmCustomGrid.pmiRefreshImagesClick(Sender: TObject);
@@ -6836,6 +7038,16 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.qAudiosaudio_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  { #todo : Audio types GetText }
+end;
+
+procedure TfrmCustomGrid.qAudiosaudio_typeSetText(Sender: TField; const aText: string);
+begin
+  { #todo : Audio types SetText }
+end;
+
 procedure TfrmCustomGrid.qAudiosBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
@@ -6848,6 +7060,73 @@ begin
   //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
+procedure TfrmCustomGrid.qAudiosrecording_contextGetText(Sender: TField; var aText: string; DisplayText: Boolean
+  );
+begin
+  { #todo : Recording contexts GetText }
+end;
+
+procedure TfrmCustomGrid.qAudiosrecording_contextSetText(Sender: TField; const aText: string);
+begin
+  { #todo : Recording contexts SetText }
+end;
+
+procedure TfrmCustomGrid.qDocsBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+end;
+
+procedure TfrmCustomGrid.qDocsdocument_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  case Sender.AsString of
+    'url': aText := rsDocUrl;
+    'doc': aText := rsDocDocument;
+    'spr': aText := rsDocSpreadsheet;
+    'prs': aText := rsDocPresentation;
+    'pdf': aText := rsDocPdf;
+    'img': aText := rsDocImage;
+    'aud': aText := rsDocAudio;
+    'cod': aText := rsDocCode;
+    'db':  aText := rsDocDatabase;
+    'oth': aText := rsDocOther;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TfrmCustomGrid.qDocsdocument_typeSetText(Sender: TField; const aText: string);
+begin
+  if aText = rsDocUrl then
+    Sender.AsString := 'url'
+  else
+  if aText = rsDocDocument then
+    Sender.AsString := 'doc'
+  else
+  if aText = rsDocSpreadsheet then
+    Sender.AsString := 'spr'
+  else
+  if aText = rsDocPresentation then
+    Sender.AsString := 'prs'
+  else
+  if aText = rsDocPdf then
+    Sender.AsString := 'pdf'
+  else
+  if aText = rsDocImage then
+    Sender.AsString := 'img'
+  else
+  if aText = rsDocAudio then
+    Sender.AsString := 'aud'
+  else
+  if aText = rsDocCode then
+    Sender.AsString := 'cod'
+  else
+  if aText = rsDocDatabase then
+    Sender.AsString := 'db'
+  else
+  if aText = rsDocOther then
+    Sender.AsString := 'oth';
+end;
+
 procedure TfrmCustomGrid.qImagesBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
@@ -6858,6 +7137,16 @@ begin
 
   if not DataSet.FieldByName('locality_id').IsNull then
     GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+end;
+
+procedure TfrmCustomGrid.qImagesimage_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  { #todo : Image types GetText }
+end;
+
+procedure TfrmCustomGrid.qImagesimage_typeSetText(Sender: TField; const aText: string);
+begin
+  { #todo : Image types SetText }
 end;
 
 procedure TfrmCustomGrid.RefreshMap;
@@ -6946,10 +7235,64 @@ begin
   gridColumns.SaveToFile(ColsFile);
 end;
 
+procedure TfrmCustomGrid.sbAddAudioClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  DMM.OpenAudios.InitialDir := XSettings.AudiosFolder;
+  if DMM.OpenAudios.Execute then
+  begin
+    dlgProgress := TdlgProgress.Create(nil);
+    try
+      dlgProgress.Show;
+      dlgProgress.Title := rsImportAudiosTitle;
+      dlgProgress.Text := rsProgressPreparing;
+      dlgProgress.Max := DMM.OpenAudios.Files.Count;
+      Parar := False;
+      Application.ProcessMessages;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlCon.StartTransaction;
+      try
+        for i := 0 to DMM.OpenAudios.Files.Count - 1 do
+        begin
+          dlgProgress.Text := Format(rsProgressImportAudios, [i + 1, DMM.OpenAudios.Files.Count]);
+
+          AddAudio(qAudios, DMM.OpenAudios.Files[i]);
+
+          dlgProgress.Position := i + 1;
+          Application.ProcessMessages;
+          if Parar then
+            Break;
+        end;
+        if Parar then
+          DMM.sqlTrans.RollbackRetaining
+        else
+          DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
+      dlgProgress.Text := rsProgressFinishing;
+      dlgProgress.Position := DMM.OpenAudios.Files.Count;
+      Application.ProcessMessages;
+      Parar := False;
+    finally
+      dlgProgress.Close;
+      FreeAndNil(dlgProgress);
+    end;
+  end;
+end;
+
 procedure TfrmCustomGrid.sbAddChildClick(Sender: TObject);
 begin
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
     pmAddChild.Popup(X, Y);
+end;
+
+procedure TfrmCustomGrid.sbAddDocClick(Sender: TObject);
+begin
+  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
+    pmAddDocs.Popup(X, Y);
 end;
 
 procedure TfrmCustomGrid.sbAddImageClick(Sender: TObject);
@@ -7009,6 +7352,11 @@ begin
   finally
     FreeAndNil(batchNetEffort);
   end;
+end;
+
+procedure TfrmCustomGrid.sbAudioInfoClick(Sender: TObject);
+begin
+  EditAudioInfo(qAudios, dsLink.DataSet, FTableType);
 end;
 
 procedure TfrmCustomGrid.sbCancelRecordClick(Sender: TObject);
@@ -7074,6 +7422,20 @@ procedure TfrmCustomGrid.sbColumnWidthAutoAdjustClick(Sender: TObject);
 begin
   if DBG.SelectedIndex > -1 then
     DBG.AutoAdjustColumns;
+end;
+
+procedure TfrmCustomGrid.sbDelAudioClick(Sender: TObject);
+begin
+  if Working then
+    Exit;
+
+  Working := True;
+  try
+    DeleteRecord(tbAudioLibrary, qAudios);
+    UpdateAudioButtons(qAudios);
+  finally
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbDelChildClick(Sender: TObject);
@@ -7151,6 +7513,20 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.sbDelDocClick(Sender: TObject);
+begin
+  if Working then
+    Exit;
+
+  Working := True;
+  try
+    DeleteRecord(tbDocuments, qDocs);
+    UpdateDocButtons(qDocs);
+  finally
+    Working := False;
+  end;
+end;
+
 procedure TfrmCustomGrid.sbDelImageClick(Sender: TObject);
 begin
   if Working then
@@ -7203,6 +7579,11 @@ begin
   finally
     Working := False;
   end;
+end;
+
+procedure TfrmCustomGrid.sbDocInfoClick(Sender: TObject);
+begin
+  EditDocInfo(qDocs, dsLink.DataSet, FTableType);
 end;
 
 procedure TfrmCustomGrid.sbEditChildClick(Sender: TObject);
@@ -7524,6 +7905,14 @@ begin
   finally
     Working := False;
   end;
+end;
+
+procedure TfrmCustomGrid.sbOpenDocClick(Sender: TObject);
+begin
+  if qDocs.FieldByName('document_type').AsString = 'url' then
+    OpenUrl(qDocs.FieldByName('document_path').AsString)
+  else
+    OpenDocument(qDocs.FieldByName('document_path').AsString);
 end;
 
 procedure TfrmCustomGrid.sbPrintClick(Sender: TObject);
@@ -9100,7 +9489,7 @@ end;
 
 procedure TfrmCustomGrid.SetAudios;
 begin
-  with qImages, SQL do
+  with qAudios, SQL do
   begin
     case FTableType of
       tbNone: ;
@@ -9721,6 +10110,62 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.SetDocs;
+begin
+  with qDocs, SQL do
+  begin
+    case FTableType of
+      tbNone: ;
+      //tbUsers: ;
+      //tbRecordHistory: ;
+      //tbRecordVerifications: ;
+      //tbGazetteer: ;
+      tbNetStations:    Add('WHERE (active_status = 1) AND (net_station_id = :net_station_id)');
+      //tbPermanentNets: ;
+      //tbInstitutions: ;
+      tbPeople:         Add('WHERE (active_status = 1) AND (person_id = :person_id)');
+      tbProjects:       Add('WHERE (active_status = 1) AND (project_id = :project_id)');
+      //tbProjectTeams: ;
+      tbPermits:        Add('WHERE (active_status = 1) AND (permit_id = :permit_id)');
+      //tbTaxonRanks: ;
+      //tbZooTaxa: ;
+      //tbBotanicTaxa: ;
+      //tbBands: ;
+      //tbBandHistory: ;
+      tbIndividuals:    Add('WHERE (active_status = 1) AND (individual_id = :individual_id)');
+      tbCaptures:       Add('WHERE (active_status = 1) AND (capture_id = :capture_id)');
+      //tbMolts: ;
+      tbNests:          Add('WHERE (active_status = 1) AND (nest_id = :nest_id)');
+      //tbNestOwners: ;
+      //tbNestRevisions: ;
+      //tbEggs: ;
+      tbMethods:        Add('WHERE (active_status = 1) AND (method_id = :method_id)');
+      tbExpeditions:    Add('WHERE (active_status = 1) AND (expedition_id = :expedition_id)');
+      tbSurveys:        Add('WHERE (active_status = 1) AND (survey_id = :survey_id)');
+      //tbSurveyTeams: ;
+      //tbNetsEffort: ;
+      //tbWeatherLogs: ;
+      tbSightings:      Add('WHERE (active_status = 1) AND (sighting_id = :sighting_id)');
+      tbSpecimens:      Add('WHERE (active_status = 1) AND (specimen_id = :specimen_id)');
+      //tbSamplePreps: ;
+      //tbSpecimenCollectors: ;
+      //tbImages: ;
+      //tbAudioLibrary: ;
+    end;
+  end;
+
+  if FTableType in [tbIndividuals, tbSightings, tbSpecimens, tbNetStations, tbPeople, tbProjects, tbPermits,
+    tbCaptures, tbNests, tbMethods, tbExpeditions, tbSurveys] then
+  begin
+    qDocs.SQL.Add('ORDER BY document_date, document_time ASC');
+    qDocs.DataSource := dsLink;
+    {$IFDEF DEBUG}
+    LogSQL(qDocs.SQL);
+    {$ENDIF}
+    qDocs.Open;
+  end;
+end;
+
 procedure TfrmCustomGrid.SetFilters(Sender: TObject);
 begin
   if not CanToggle then
@@ -9803,7 +10248,7 @@ begin
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
   sbShowImages.Visible := True;
-  //sbShowDocs.Visible := True;
+  sbShowDocs.Visible := True;
 
   pmPrintCaptures.Visible := True;
   pmPrintCapturesByDate.Visible := True;
@@ -9895,7 +10340,7 @@ begin
 
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridGazetteer;
@@ -9957,7 +10402,7 @@ begin
 
   sbShowImages.Visible := True;
   sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridInstitutions;
@@ -9979,7 +10424,7 @@ begin
 
   pmPrintMethods.Visible := True;
 
-  //sbShowDocs.Visible := True;
+  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridNests;
@@ -10019,7 +10464,7 @@ begin
   sbShowSummary.Visible := True;
 
   sbShowImages.Visible := True;
-  //sbShowDocs.Visible := True;
+  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridNestRevisions;
@@ -10058,6 +10503,7 @@ begin
   sbChildVerifications.Visible := True;
   mapGeo.Active := True;
   sbShowMap.Visible := True;
+  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridPeople;
@@ -10067,6 +10513,7 @@ begin
   AddSortedField('full_name', sdAscending);
 
   sbShowSummary.Visible := True;
+  sbShowDocs.Visible := True;
 
   pmPrintResearchers.Visible := True;
 end;
@@ -10078,7 +10525,7 @@ begin
   AddSortedField('permit_name', sdAscending);
 
   sbShowSummary.Visible := True;
-  //sbShowDocs.Visible := True;
+  sbShowDocs.Visible := True;
 
   pmPrintPermits.Visible := True;
   pmPrintPermitsByExpiration.Visible := True;
@@ -10103,7 +10550,7 @@ begin
 
   pChildsBar.Visible := True;
 
-  //sbShowDocs.Visible := True;
+  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridSightings;
@@ -10125,7 +10572,7 @@ begin
 
   sbShowImages.Visible := True;
   sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridSpecimens;
@@ -10160,7 +10607,7 @@ begin
 
   sbShowImages.Visible := True;
   sbShowAudio.Visible := True;
-  //sbShowDocs.Visible := True;
+  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridSurveys;
@@ -10207,7 +10654,7 @@ begin
   sbShowMap.Visible := True;
 
   sbShowImages.Visible := True;
-  //sbShowDocs.Visible := True;
+  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridTaxonRanks;
@@ -11277,6 +11724,45 @@ begin
     lblChildStatus.Caption := Format(rsRecordsFound, [DS.DataSet.RecordCount, rsRecordsPlural])
   else
     lblChildStatus.Caption := rsNoRecordsFound;
+end;
+
+procedure TfrmCustomGrid.UpdateDocButtons(aDataSet: TDataSet);
+begin
+  if Closing then
+    Exit;
+
+  case aDataSet.State of
+    dsInactive:
+    begin
+      sbAddDoc.Enabled := False;
+      sbDocInfo.Enabled := False;
+      sbDelDoc.Enabled := False;
+      sbOpenDoc.Enabled := False;
+
+    end;
+    dsBrowse:
+    begin
+      sbAddDoc.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbDocInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbDelDoc.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbOpenDoc.Enabled := (aDataSet.RecordCount > 0);
+
+    end;
+    dsEdit, dsInsert:
+    begin
+      sbAddDoc.Enabled := False;
+      sbDocInfo.Enabled := False;
+      sbDelDoc.Enabled := False;
+      sbOpenDoc.Enabled := False;
+
+    end;
+  end;
+
+  pmdAddDoc.Enabled := sbAddDoc.Enabled;
+  pmdDocInfo.Enabled := sbDocInfo.Enabled;
+  pmdDelDoc.Enabled := sbDelDoc.Enabled;
+  pmdOpenDoc.Enabled := sbOpenDoc.Enabled;
+  pmdRefreshDocs.Enabled := sbAddDoc.Enabled;
 end;
 
 procedure TfrmCustomGrid.UpdateGridTitles(aGrid: TDBGrid; aSearch: TCustomSearch);

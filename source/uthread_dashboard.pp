@@ -103,12 +103,12 @@ uses
 
 constructor TNumbersLoaderThread.Create(aSpecies, aIndividuals, aNests, aSamplings: TLabel);
 begin
-  inherited Create(True); // Cria a thread suspensa
+  inherited Create(True);
   FSpecies := aSpecies;
   FIndividuals := aIndividuals;
   FNests := aNests;
   FSamplings := aSamplings;
-  FreeOnTerminate := True; // Libera a thread automaticamente quando terminar
+  FreeOnTerminate := True;
 end;
 
 procedure TNumbersLoaderThread.Execute;
@@ -199,9 +199,9 @@ end;
 
 constructor TBandsLoaderThread.Create(APanel: TBCPanel);
 begin
-  inherited Create(True); // Cria a thread suspensa
+  inherited Create(True); // Create the thread suspended
   FPanel := APanel;
-  FreeOnTerminate := True; // Libera a thread automaticamente quando terminar
+  FreeOnTerminate := True; // Free the thread automatically on terminate
 end;
 
 procedure TBandsLoaderThread.Execute;
@@ -214,7 +214,7 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    UniDirectional := True;
+    //UniDirectional := True;
     Clear;
     Add('SELECT band_size, saldo');
     Add('FROM get_bands_running_out');
@@ -305,9 +305,9 @@ end;
 
 constructor TBirthdaysLoaderThread.Create(APanel: TBCPanel);
 begin
-  inherited Create(True); // Cria a thread suspensa
+  inherited Create(True);
   FPanel := APanel;
-  FreeOnTerminate := True; // Libera a thread automaticamente quando terminar
+  FreeOnTerminate := True;
 end;
 
 procedure TBirthdaysLoaderThread.Execute;
@@ -396,9 +396,9 @@ end;
 
 constructor TLifersLoaderThread.Create(APanel: TBCPanel);
 begin
-  inherited Create(True); // Cria a thread suspensa
+  inherited Create(True);
   FPanel := APanel;
-  FreeOnTerminate := True; // Libera a thread automaticamente quando terminar
+  FreeOnTerminate := True;
 end;
 
 procedure TLifersLoaderThread.Execute;
@@ -512,9 +512,9 @@ end;
 
 constructor TPermitsLoaderThread.Create(APanel: TBCPanel);
 begin
-  inherited Create(True); // Cria a thread suspensa
+  inherited Create(True);
   FPanel := APanel;
-  FreeOnTerminate := True; // Libera a thread automaticamente quando terminar
+  FreeOnTerminate := True;
 end;
 
 procedure TPermitsLoaderThread.Execute;
@@ -597,9 +597,9 @@ end;
 
 constructor TSurveysLoaderThread.Create(AMap: TMapView);
 begin
-  inherited Create(True); // Cria a thread suspensa
+  inherited Create(True);
   FMap := AMap;
-  FreeOnTerminate := True; // Libera a thread automaticamente quando terminar
+  FreeOnTerminate := True;
 end;
 
 procedure TSurveysLoaderThread.Execute;

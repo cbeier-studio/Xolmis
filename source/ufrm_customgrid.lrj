@@ -180,6 +180,12 @@
 {"hash":372789,"name":"tfrmcustomgrid.gridaudios.columns[1].title.caption","sourcebytes":[84,105,109,101],"value":"Time"},
 {"hash":204686565,"name":"tfrmcustomgrid.gridaudios.columns[2].title.caption","sourcebytes":[70,117,108,108,110,97,109,101],"value":"Fullname"},
 {"hash":144531811,"name":"tfrmcustomgrid.titledocs.caption","sourcebytes":[68,111,99,117,109,101,110,116,115,32,97,110,100,32,108,105,110,107,115],"value":"Documents and links"},
+{"hash":26533887,"name":"tfrmcustomgrid.sbdocinfo.hint","sourcebytes":[86,105,101,119,32,97,110,100,32,101,100,105,116,32,100,111,99,117,109,101,110,116,47,108,105,110,107,32,105,110,102,111],"value":"View and edit document/link info"},
+{"hash":243862443,"name":"tfrmcustomgrid.sbadddoc.hint","sourcebytes":[65,100,100,32,100,111,99,117,109,101,110,116,47,108,105,110,107],"value":"Add document/link"},
+{"hash":221673360,"name":"tfrmcustomgrid.sbopendoc.hint","sourcebytes":[79,112,101,110,32,100,111,99,117,109,101,110,116,47,108,105,110,107,32,105,110,32,116,104,101,32,100,101,102,97,117,108,116,32,97,112,112],"value":"Open document/link in the default app"},
+{"hash":35918027,"name":"tfrmcustomgrid.sbdeldoc.hint","sourcebytes":[68,101,108,101,116,101,32,100,111,99,117,109,101,110,116,47,108,105,110,107],"value":"Delete document/link"},
+{"hash":376933,"name":"tfrmcustomgrid.griddocs.columns[0].title.caption","sourcebytes":[84,121,112,101],"value":"Type"},
+{"hash":41362856,"name":"tfrmcustomgrid.griddocs.columns[1].title.caption","sourcebytes":[70,105,108,101,32,112,97,116,104],"value":"File path"},
 {"hash":180631753,"name":"tfrmcustomgrid.titlesummary.caption","sourcebytes":[83,117,109,109,97,114,121],"value":"Summary"},
 {"hash":232266734,"name":"tfrmcustomgrid.pmsgsummary.caption","sourcebytes":[67,97,108,99,117,108,97,116,105,110,103,32,115,117,109,109,97,114,121,46,46,46],"value":"Calculating summary..."},
 {"hash":174310419,"name":"tfrmcustomgrid.titlecolumns.caption","sourcebytes":[67,111,108,117,109,110,115],"value":"Columns"},
@@ -369,5 +375,12 @@
 {"hash":24110079,"name":"tfrmcustomgrid.pmaaudioinfo.caption","sourcebytes":[86,105,101,119,47,101,100,105,116,32,114,101,99,111,114,100,105,110,103,32,105,110,102,111],"value":"View/edit recording info"},
 {"hash":191604623,"name":"tfrmcustomgrid.pmaplayaudio.caption","sourcebytes":[80,108,97,121,32,115,101,108,101,99,116,101,100,32,97,117,100,105,111],"value":"Play selected audio"},
 {"hash":660599,"name":"tfrmcustomgrid.pmadelaudio.caption","sourcebytes":[68,101,108,101,116,101,32,97,117,100,105,111,32,114,101,99,111,114,100,105,110,103],"value":"Delete audio recording"},
-{"hash":45104611,"name":"tfrmcustomgrid.pmarefreshaudios.caption","sourcebytes":[82,101,102,114,101,115,104,32,97,117,100,105,111,32,114,101,99,111,114,100,105,110,103,115],"value":"Refresh audio recordings"}
+{"hash":45104611,"name":"tfrmcustomgrid.pmarefreshaudios.caption","sourcebytes":[82,101,102,114,101,115,104,32,97,117,100,105,111,32,114,101,99,111,114,100,105,110,103,115],"value":"Refresh audio recordings"},
+{"hash":243862443,"name":"tfrmcustomgrid.pmdadddoc.caption","sourcebytes":[65,100,100,32,100,111,99,117,109,101,110,116,47,108,105,110,107],"value":"Add document/link"},
+{"hash":59274175,"name":"tfrmcustomgrid.pmddocinfo.caption","sourcebytes":[86,105,101,119,47,101,100,105,116,32,100,111,99,117,109,101,110,116,47,108,105,110,107,32,105,110,102,111],"value":"View/edit document/link info"},
+{"hash":90877339,"name":"tfrmcustomgrid.pmdopendoc.caption","sourcebytes":[79,112,101,110,32,100,111,99,117,109,101,110,116,47,108,105,110,107],"value":"Open document/link"},
+{"hash":35918027,"name":"tfrmcustomgrid.pmddeldoc.caption","sourcebytes":[68,101,108,101,116,101,32,100,111,99,117,109,101,110,116,47,108,105,110,107],"value":"Delete document/link"},
+{"hash":185672723,"name":"tfrmcustomgrid.pmdrefreshdocs.caption","sourcebytes":[82,101,102,114,101,115,104,32,100,111,99,117,109,101,110,116,115,32,97,110,100,32,108,105,110,107,115],"value":"Refresh documents and links"},
+{"hash":220589731,"name":"tfrmcustomgrid.pmadddocument.caption","sourcebytes":[65,100,100,32,100,111,99,117,109,101,110,116,115],"value":"Add documents"},
+{"hash":174533691,"name":"tfrmcustomgrid.pmaddlink.caption","sourcebytes":[65,100,100,32,108,105,110,107],"value":"Add link"}
 ]}

@@ -139,6 +139,8 @@ uses
     { Progress messages }
     rsProgressPreparing = 'Preparing...';
     rsProgressImportImages = 'Processing %d of %d images...';
+    rsProgressImportAudios = 'Processing %d of %d audio files...';
+    rsProgressImportDocs = 'Processing %d of %d documents...';
     rsProgressExporting = 'Exporting data: %d%%';
     rsProgressUnpreparing = 'Unpreparing...';
     rsProgressStarting = 'Starting...';
@@ -215,6 +217,8 @@ uses
 
     { Importation messages }
     rsImportImagesTitle = 'Import images';
+    rsImportAudiosTitle = 'Import audio files';
+    rsImportDocsTitle = 'Import documents';
     rsImportCanceled = 'Import canceled!';
     rsImportCanceledByUser = 'Import canceled by the user.';
     rsBatchCanceledByUser = 'Operation was canceled by user.';
@@ -745,6 +749,18 @@ uses
     rsWrongMeasurement = 'Wrong measurement';
     rsWrongValues = 'Wrong values';
     rsMissingData = 'Missing data';
+
+    { Documents }
+    rsDocDocument = 'Document';
+    rsDocSpreadsheet = 'Spreadsheet';
+    rsDocPresentation = 'Presentation';
+    rsDocPdf = 'PDF document';
+    rsDocUrl = 'URL';
+    rsDocDatabase = 'Database';
+    rsDocImage = 'Image';
+    rsDocAudio = 'Audio file';
+    rsDocCode = 'Source code';
+    rsDocOther = 'Other';
 
     { Versions }
     rsVersionStr = 'Version %s';

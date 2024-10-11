@@ -17186,8 +17186,8 @@ object DMG: TDMG
     Left = 776
     Top = 351
   end
-  object dsAttachments: TDataSource
-    DataSet = qAttachments
+  object dsDocuments: TDataSource
+    DataSet = qDocuments
     Left = 776
     Top = 410
   end
@@ -17805,7 +17805,7 @@ object DMG: TDMG
       BlobType = ftTypedBinary
     end
   end
-  object qAttachments: TSQLQuery
+  object qDocuments: TSQLQuery
     PacketRecords = -1
     FieldDefs = <>
     Database = DMM.sqlCon

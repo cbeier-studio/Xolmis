@@ -37,14 +37,18 @@ type
     iBandTypesDark: TImageList;
     iCheckboxDark: TImageList;
     iEditsDark: TImageList;
+    iFilesDark: TImageList;
     iLogos: TImageList;
     iBandTypes: TImageList;
     iEdits: TImageList;
     iAddMenu: TImageList;
+    iFiles: TImageList;
     iMaps: TImageList;
     iTrees: TImageList;
     iCheckbox: TImageList;
     iTreesDark: TImageList;
+    OpenAudios: TOpenDialog;
+    OpenDocs: TOpenDialog;
     OpenKmlDlg: TOpenDialog;
     qsConnlast_backup: TDateTimeField;
     SaveKmlDlg: TSaveDialog;

@@ -2771,6 +2771,47 @@ msgstr "\"S - canto\",\"C - chamado\",\"V - visto\",\"W - bater de asas\",\"D - 
 msgid "Discard changes"
 msgstr "Descartar modificações"
 
+#: cbs_locale.rsdocaudio
+msgid "Audio file"
+msgstr "Arquivo de áudio"
+
+#: cbs_locale.rsdoccode
+msgid "Source code"
+msgstr "Código fonte"
+
+#: cbs_locale.rsdocdatabase
+msgid "Database"
+msgstr "Banco de dados"
+
+#: cbs_locale.rsdocdocument
+msgid "Document"
+msgstr "Documento"
+
+#: cbs_locale.rsdocimage
+msgid "Image"
+msgstr "Imagem"
+
+#: cbs_locale.rsdocother
+msgctxt "cbs_locale.rsdocother"
+msgid "Other"
+msgstr "Outro"
+
+#: cbs_locale.rsdocpdf
+msgid "PDF document"
+msgstr "Documento PDF"
+
+#: cbs_locale.rsdocpresentation
+msgid "Presentation"
+msgstr "Apresentação"
+
+#: cbs_locale.rsdocspreadsheet
+msgid "Spreadsheet"
+msgstr "Planilha"
+
+#: cbs_locale.rsdocurl
+msgid "URL"
+msgstr "URL"
+
 #: cbs_locale.rsectoparasite
 msgctxt "cbs_locale.rsectoparasite"
 msgid "Ectoparasite"
@@ -3345,6 +3386,10 @@ msgctxt "cbs_locale.rsimagenotsupported"
 msgid "Image type not supported: %s"
 msgstr "Formato de imagem não suportado: %s"
 
+#: cbs_locale.rsimportaudiostitle
+msgid "Import audio files"
+msgstr "Importar arquivos de áudio"
+
 #: cbs_locale.rsimportcanceled
 msgid "Import canceled!"
 msgstr "Importação cancelada!"
@@ -3353,6 +3398,10 @@ msgstr "Importação cancelada!"
 msgctxt "cbs_locale.rsimportcanceledbyuser"
 msgid "Import canceled by the user."
 msgstr "Importação cancelada pelo usuário."
+
+#: cbs_locale.rsimportdocstitle
+msgid "Import documents"
+msgstr "Importar documentos"
 
 #: cbs_locale.rsimportimagestitle
 msgctxt "cbs_locale.rsimportimagestitle"
@@ -3909,6 +3958,11 @@ msgstr "Finalizando..."
 msgid "Generating report..."
 msgstr "Gerando relatório..."
 
+#: cbs_locale.rsprogressimportaudios
+#, object-pascal-format
+msgid "Processing %d of %d audio files..."
+msgstr "Processando %d de %d arquivos de áudio..."
+
 #: cbs_locale.rsprogressimportbandingeffort
 msgid "Importing banding effort..."
 msgstr "Importando esforços de anilhamento..."
@@ -3920,6 +3974,11 @@ msgstr "Importando diários de anilhamento..."
 #: cbs_locale.rsprogressimportcaptures
 msgid "Importing captures..."
 msgstr "Importando capturas..."
+
+#: cbs_locale.rsprogressimportdocs
+#, object-pascal-format
+msgid "Processing %d of %d documents..."
+msgstr "Processando %d de %d documentos..."
 
 #: cbs_locale.rsprogressimportimages
 #, object-pascal-format
@@ -6500,9 +6559,160 @@ msgstr "Nova verificação"
 msgid "OK"
 msgstr "OK"
 
+#: tdmm.openaudios.title
+msgid "Add audio recordings"
+msgstr "Adicionar gravações de áudio"
+
+#: tdmm.opendocs.title
+msgctxt "tdmm.opendocs.title"
+msgid "Add documents"
+msgstr "Adicionar documentos"
+
 #: tdmm.openimgs.title
-msgid "Adicionar imagens"
+msgid "Add images"
 msgstr "Adicionar imagens"
+
+#: tedtaudioinfo.caption
+msgid "Audio recording info"
+msgstr "Info da gravação de áudio"
+
+#: tedtaudioinfo.ckplaybackused.caption
+msgid "Playback was used"
+msgstr "Playback foi usado"
+
+#: tedtaudioinfo.erecordingdate.texthint
+msgctxt "tedtaudioinfo.erecordingdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/YYYY"
+
+#: tedtaudioinfo.erecordingtime.texthint
+msgctxt "tedtaudioinfo.erecordingtime.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
+#: tedtaudioinfo.lblaudiofile.caption
+msgid "Recording file: *"
+msgstr "Arquivo da gravação: *"
+
+#: tedtaudioinfo.lblaudiotype.caption
+msgid "Recording type:"
+msgstr "Tipo da gravação:"
+
+#: tedtaudioinfo.lblauthor.caption
+msgctxt "tedtaudioinfo.lblauthor.caption"
+msgid "Author:"
+msgstr "Autor:"
+
+#: tedtaudioinfo.lblcloudcover.caption
+msgctxt "tedtaudioinfo.lblcloudcover.caption"
+msgid "Cloud cover (%):"
+msgstr "Cobertura de nuvens (%):"
+
+#: tedtaudioinfo.lbldistance.caption
+msgctxt "tedtaudioinfo.lbldistance.caption"
+msgid "Distance (m):"
+msgstr "Distância (m):"
+
+#: tedtaudioinfo.lblfiltermodel.caption
+msgid "Filter model:"
+msgstr "Modelo do filtro:"
+
+#: tedtaudioinfo.lblhabitat.caption
+msgid "Habitat:"
+msgstr "Habitat:"
+
+#: tedtaudioinfo.lblindividual.caption
+msgctxt "tedtaudioinfo.lblindividual.caption"
+msgid "Individual:"
+msgstr "Indivíduo:"
+
+#: tedtaudioinfo.lbllatitude.caption
+msgctxt "tedtaudioinfo.lbllatitude.caption"
+msgid "Latitude:"
+msgstr "Latitude:"
+
+#: tedtaudioinfo.lbllocality.caption
+msgctxt "tedtaudioinfo.lbllocality.caption"
+msgid "Locality:"
+msgstr "Localidade:"
+
+#: tedtaudioinfo.lbllongitude.caption
+msgctxt "tedtaudioinfo.lbllongitude.caption"
+msgid "Longitude:"
+msgstr "Longitude:"
+
+#: tedtaudioinfo.lblmicmodel.caption
+msgid "Microphone model:"
+msgstr "Modelo do microfone:"
+
+#: tedtaudioinfo.lblnotes1.caption
+msgctxt "tedtaudioinfo.lblnotes1.caption"
+msgid "Subtitle:"
+msgstr "Legenda:"
+
+#: tedtaudioinfo.lblprecipitation.caption
+msgctxt "tedtaudioinfo.lblprecipitation.caption"
+msgid "Precipitation:"
+msgstr "Precipitação:"
+
+#: tedtaudioinfo.lblrecordermodel.caption
+msgid "Recorder model:"
+msgstr "Modelo do gravador:"
+
+#: tedtaudioinfo.lblrecordingcontext.caption
+msgid "Context of the recording:"
+msgstr "Contexto da gravação:"
+
+#: tedtaudioinfo.lblrecordingdate.caption
+msgid "Recording date: *"
+msgstr "Data da gravação: *"
+
+#: tedtaudioinfo.lblrecordingtime.caption
+msgid "Recording time:"
+msgstr "Hora da gravação:"
+
+#: tedtaudioinfo.lblrelativehumidity.caption
+msgctxt "tedtaudioinfo.lblrelativehumidity.caption"
+msgid "Relative humidity (%):"
+msgstr "Umidade relativa (%):"
+
+#: tedtaudioinfo.lblsighting.caption
+msgctxt "tedtaudioinfo.lblsighting.caption"
+msgid "Sighting:"
+msgstr "Observação:"
+
+#: tedtaudioinfo.lblspecimen.caption
+msgctxt "tedtaudioinfo.lblspecimen.caption"
+msgid "Specimen:"
+msgstr "Espécime:"
+
+#: tedtaudioinfo.lblsubjectstally.caption
+msgid "# individuals:"
+msgstr "# indivíduos:"
+
+#: tedtaudioinfo.lbltaxon.caption
+msgctxt "tedtaudioinfo.lbltaxon.caption"
+msgid "Taxon:"
+msgstr "Táxon:"
+
+#: tedtaudioinfo.lbltemperature.caption
+msgctxt "tedtaudioinfo.lbltemperature.caption"
+msgid "Temperature (°C):"
+msgstr "Temperatura (°C):"
+
+#: tedtaudioinfo.lblwindspeed.caption
+msgid "Wind speed (bft):"
+msgstr "Velocidade do vento (bft):"
+
+#: tedtaudioinfo.sbcancel.caption
+msgctxt "tedtaudioinfo.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tedtaudioinfo.sbsave.caption
+msgctxt "tedtaudioinfo.sbsave.caption"
+msgid "Save"
+msgstr "Salvar"
 
 #: tedtbands.ckreported.caption
 msgctxt "tedtbands.ckreported.caption"
@@ -7093,6 +7303,70 @@ msgctxt "tedtdatabase.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtdocumentinfo.caption
+msgid "Document info"
+msgstr "Info do documento"
+
+#: tedtdocumentinfo.edocumentdate.texthint
+msgctxt "tedtdocumentinfo.edocumentdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/YYYY"
+
+#: tedtdocumentinfo.edocumenttime.texthint
+msgctxt "tedtdocumentinfo.edocumenttime.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
+#: tedtdocumentinfo.lbldocumentdate.caption
+msgid "Document date: *"
+msgstr "Data do documento: *"
+
+#: tedtdocumentinfo.lbldocumentpath.caption
+msgid "Document file/URL: *"
+msgstr "Arquivo do documento/URL: *"
+
+#: tedtdocumentinfo.lbldocumenttime.caption
+msgid "Document time:"
+msgstr "Hora do documento:"
+
+#: tedtdocumentinfo.lbldocumenttitle.caption
+msgid "Document title:"
+msgstr "Título do documento:"
+
+#: tedtdocumentinfo.lbldocumenttype.caption
+msgid "Document type:"
+msgstr "Tipo de documento:"
+
+#: tedtdocumentinfo.lbllicensenotes.caption
+msgid "License notes:"
+msgstr "Notas da licença:"
+
+#: tedtdocumentinfo.lbllicenseowner.caption
+msgid "License owner:"
+msgstr "Detentor da licença:"
+
+#: tedtdocumentinfo.lbllicensetype.caption
+msgid "License type:"
+msgstr "Tipo de licença:"
+
+#: tedtdocumentinfo.lbllicenseuri.caption
+msgid "License URL:"
+msgstr "URL da licença:"
+
+#: tedtdocumentinfo.lbllicenseyear.caption
+msgid "License year:"
+msgstr "Ano da licença:"
+
+#: tedtdocumentinfo.sbcancel.caption
+msgctxt "tedtdocumentinfo.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tedtdocumentinfo.sbsave.caption
+msgctxt "tedtdocumentinfo.sbsave.caption"
+msgid "Save"
+msgstr "Salvar"
+
 #: tedtegg.ckhatched.caption
 msgctxt "tedtegg.ckhatched.caption"
 msgid "Hatched"
@@ -7278,89 +7552,100 @@ msgctxt "tedtimageinfo.eimagetime.texthint"
 msgid "HH:MM"
 msgstr "HH:MM"
 
-#: tedtimageinfo.lblbandnumber1.caption
-msgctxt "tedtimageinfo.lblbandnumber1.caption"
-msgid "Latitude:"
-msgstr "Latitude:"
-
-#: tedtimageinfo.lblbandprefix1.caption
-msgid "Image date: *"
-msgstr "Data da imagem: *"
-
-#: tedtimageinfo.lblbandsize1.caption
-msgctxt "tedtimageinfo.lblbandsize1.caption"
-msgid "Longitude:"
-msgstr "Longitude:"
-
-#: tedtimageinfo.lblbandstatus1.caption
-msgid "Image type:"
-msgstr "Tipo da imagem:"
-
-#: tedtimageinfo.lblbandstatus2.caption
-msgid "Coordinates precision:"
-msgstr "Precisão da coordenada:"
-
-#: tedtimageinfo.lblbandsuffix1.caption
-msgid "Image time:"
-msgstr "Hora da imagem:"
-
-#: tedtimageinfo.lblnotes1.caption
-msgid "Subtitle:"
-msgstr "Legenda:"
-
-#: tedtimageinfo.lblproject.caption
-msgctxt "tedtimageinfo.lblproject.caption"
-msgid "Individual:"
-msgstr "Indivíduo:"
-
-#: tedtimageinfo.lblproject1.caption
-msgid "Capture:"
-msgstr "Captura:"
-
-#: tedtimageinfo.lblproject2.caption
-msgctxt "tedtimageinfo.lblproject2.caption"
-msgid "Survey:"
-msgstr "Amostragem:"
-
-#: tedtimageinfo.lblproject3.caption
-msgid "Sighting:"
-msgstr "Observação:"
-
-#: tedtimageinfo.lblproject4.caption
-msgid "Image file: *"
-msgstr "Arquivo da imagem: *"
-
-#: tedtimageinfo.lblproject5.caption
-msgid "Specimen:"
-msgstr "Espécime:"
-
-#: tedtimageinfo.lblproject6.caption
-msgctxt "tedtimageinfo.lblproject6.caption"
-msgid "Egg:"
-msgstr "Ovo:"
-
-#: tedtimageinfo.lblproject7.caption
-msgid "Nest revision:"
-msgstr "Revisão de ninho:"
-
-#: tedtimageinfo.lblproject8.caption
-msgctxt "tedtimageinfo.lblproject8.caption"
-msgid "Nest:"
-msgstr "Ninho:"
-
-#: tedtimageinfo.lblrequester.caption
+#: tedtimageinfo.lblauthor.caption
+msgctxt "tedtimageinfo.lblauthor.caption"
 msgid "Author:"
 msgstr "Autor:"
 
-#: tedtimageinfo.lblsender1.caption
-msgctxt "tedtimageinfo.lblsender1.caption"
-msgid "Taxon:"
-msgstr "Táxon:"
+#: tedtimageinfo.lblcapture.caption
+msgctxt "tedtimageinfo.lblcapture.caption"
+msgid "Capture:"
+msgstr "Captura:"
 
-#: tedtimageinfo.lblsupplier.caption
-msgctxt "tedtimageinfo.lblsupplier.caption"
+#: tedtimageinfo.lblcoordinatesprecision.caption
+msgctxt "tedtimageinfo.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
+
+#: tedtimageinfo.lblegg.caption
+msgctxt "tedtimageinfo.lblegg.caption"
+msgid "Egg:"
+msgstr "Ovo:"
+
+#: tedtimageinfo.lblimagedate.caption
+msgctxt "tedtimageinfo.lblimagedate.caption"
+msgid "Image date: *"
+msgstr "Data da imagem: *"
+
+#: tedtimageinfo.lblimagefilename.caption
+msgctxt "tedtimageinfo.lblimagefilename.caption"
+msgid "Image file: *"
+msgstr "Arquivo da imagem: *"
+
+#: tedtimageinfo.lblimagetime.caption
+msgctxt "tedtimageinfo.lblimagetime.caption"
+msgid "Image time:"
+msgstr "Hora da imagem:"
+
+#: tedtimageinfo.lblimagetype.caption
+msgctxt "tedtimageinfo.lblimagetype.caption"
+msgid "Image type:"
+msgstr "Tipo da imagem:"
+
+#: tedtimageinfo.lblindividual.caption
+msgctxt "tedtimageinfo.lblindividual.caption"
+msgid "Individual:"
+msgstr "Indivíduo:"
+
+#: tedtimageinfo.lbllatitude.caption
+msgctxt "tedtimageinfo.lbllatitude.caption"
+msgid "Latitude:"
+msgstr "Latitude:"
+
+#: tedtimageinfo.lbllocality.caption
+msgctxt "tedtimageinfo.lbllocality.caption"
 msgid "Locality:"
 msgstr "Localidade:"
+
+#: tedtimageinfo.lbllongitude.caption
+msgctxt "tedtimageinfo.lbllongitude.caption"
+msgid "Longitude:"
+msgstr "Longitude:"
+
+#: tedtimageinfo.lblnest.caption
+msgctxt "tedtimageinfo.lblnest.caption"
+msgid "Nest:"
+msgstr "Ninho:"
+
+#: tedtimageinfo.lblnestrevision.caption
+msgctxt "tedtimageinfo.lblnestrevision.caption"
+msgid "Nest revision:"
+msgstr "Revisão de ninho:"
+
+#: tedtimageinfo.lblsighting.caption
+msgctxt "tedtimageinfo.lblsighting.caption"
+msgid "Sighting:"
+msgstr "Observação:"
+
+#: tedtimageinfo.lblspecimen.caption
+msgctxt "tedtimageinfo.lblspecimen.caption"
+msgid "Specimen:"
+msgstr "Espécime:"
+
+#: tedtimageinfo.lblsubtitle.caption
+msgctxt "tedtimageinfo.lblsubtitle.caption"
+msgid "Subtitle:"
+msgstr "Legenda:"
+
+#: tedtimageinfo.lblsurvey.caption
+msgctxt "tedtimageinfo.lblsurvey.caption"
+msgid "Survey:"
+msgstr "Amostragem:"
+
+#: tedtimageinfo.lbltaxon.caption
+msgctxt "tedtimageinfo.lbltaxon.caption"
+msgid "Taxon:"
+msgstr "Táxon:"
 
 #: tedtimageinfo.sbcancel.caption
 msgctxt "tedtimageinfo.sbcancel.caption"
@@ -9542,6 +9827,7 @@ msgid "Atmospheric pressure (mPa):"
 msgstr "Pressão atmosférica (mPa):"
 
 #: tedtweatherlog.lblcloudcover.caption
+msgctxt "tedtweatherlog.lblcloudcover.caption"
 msgid "Cloud cover (%):"
 msgstr "Cobertura de nuvens (%):"
 
@@ -9551,6 +9837,7 @@ msgid "Notes:"
 msgstr "Anotações:"
 
 #: tedtweatherlog.lblprecipitation.caption
+msgctxt "tedtweatherlog.lblprecipitation.caption"
 msgid "Precipitation:"
 msgstr "Precipitação:"
 
@@ -9559,6 +9846,7 @@ msgid "Accumulated rainfall (mm):"
 msgstr "Chuva acumulada (mm):"
 
 #: tedtweatherlog.lblrelativehumidity.caption
+msgctxt "tedtweatherlog.lblrelativehumidity.caption"
 msgid "Relative humidity (%):"
 msgstr "Umidade relativa (%):"
 
@@ -9577,6 +9865,7 @@ msgid "Time:"
 msgstr "Hora:"
 
 #: tedtweatherlog.lbltemperature.caption
+msgctxt "tedtweatherlog.lbltemperature.caption"
 msgid "Temperature (°C):"
 msgstr "Temperatura (°C):"
 
@@ -9864,6 +10153,7 @@ msgid "Time"
 msgstr "Hora"
 
 #: tfrmcustomgrid.gridaudios.columns[2].title.caption
+msgctxt "tfrmcustomgrid.gridaudios.columns[2].title.caption"
 msgid "Fullname"
 msgstr "Nome completo"
 
@@ -9879,6 +10169,16 @@ msgstr "Campo"
 msgctxt "tfrmcustomgrid.gridcolumns.columns[2].title.caption"
 msgid "Size"
 msgstr "Tamanho"
+
+#: tfrmcustomgrid.griddocs.columns[0].title.caption
+msgctxt "tfrmcustomgrid.griddocs.columns[0].title.caption"
+msgid "Type"
+msgstr "Tipo"
+
+#: tfrmcustomgrid.griddocs.columns[1].title.caption
+msgctxt "tfrmcustomgrid.griddocs.columns[1].title.caption"
+msgid "File path"
+msgstr "Caminho do arquivo"
 
 #: tfrmcustomgrid.lblagefilter.caption
 msgctxt "tfrmcustomgrid.lblagefilter.caption"
@@ -10245,6 +10545,15 @@ msgstr "Adicionar gravação(ões) de áudio"
 msgid "View/edit recording info"
 msgstr "Visualizar/editar info da gravação"
 
+#: tfrmcustomgrid.pmadddocument.caption
+msgctxt "tfrmcustomgrid.pmadddocument.caption"
+msgid "Add documents"
+msgstr "Adicionar documentos"
+
+#: tfrmcustomgrid.pmaddlink.caption
+msgid "Add link"
+msgstr "Adicionar link"
+
 #: tfrmcustomgrid.pmadelaudio.caption
 msgid "Delete audio recording"
 msgstr "Apagar gravação de áudio"
@@ -10373,6 +10682,28 @@ msgstr "Verificações do registro"
 msgctxt "tfrmcustomgrid.pmcrefresh.caption"
 msgid "Refresh"
 msgstr "Atualizar"
+
+#: tfrmcustomgrid.pmdadddoc.caption
+msgctxt "tfrmcustomgrid.pmdadddoc.caption"
+msgid "Add document/link"
+msgstr "Adicionar documento/link"
+
+#: tfrmcustomgrid.pmddeldoc.caption
+msgctxt "tfrmcustomgrid.pmddeldoc.caption"
+msgid "Delete document/link"
+msgstr "Apagar documento/link"
+
+#: tfrmcustomgrid.pmddocinfo.caption
+msgid "View/edit document/link info"
+msgstr "Ver/editar info do documento/link"
+
+#: tfrmcustomgrid.pmdopendoc.caption
+msgid "Open document/link"
+msgstr "Abrir documento/link"
+
+#: tfrmcustomgrid.pmdrefreshdocs.caption
+msgid "Refresh documents and links"
+msgstr "Atualizar documentos e links"
 
 #: tfrmcustomgrid.pmgautosizecolumns.caption
 msgctxt "tfrmcustomgrid.pmgautosizecolumns.caption"
@@ -11001,6 +11332,11 @@ msgctxt "tfrmcustomgrid.sbaddchild.hint"
 msgid "New related record"
 msgstr "Novo registro relacionado"
 
+#: tfrmcustomgrid.sbadddoc.hint
+msgctxt "tfrmcustomgrid.sbadddoc.hint"
+msgid "Add document/link"
+msgstr "Adicionar documento/link"
+
 #: tfrmcustomgrid.sbaddimage.hint
 msgctxt "tfrmcustomgrid.sbaddimage.hint"
 msgid "Add image"
@@ -11054,6 +11390,11 @@ msgctxt "tfrmcustomgrid.sbdelchild.hint"
 msgid "Delete selected record"
 msgstr "Apagar o registro selecionado"
 
+#: tfrmcustomgrid.sbdeldoc.hint
+msgctxt "tfrmcustomgrid.sbdeldoc.hint"
+msgid "Delete document/link"
+msgstr "Apagar documento/link"
+
 #: tfrmcustomgrid.sbdelimage.hint
 msgctxt "tfrmcustomgrid.sbdelimage.hint"
 msgid "Delete image"
@@ -11068,6 +11409,10 @@ msgstr "Apagar permanentemente"
 msgctxt "tfrmcustomgrid.sbdelrecord.hint"
 msgid "Delete selected record"
 msgstr "Apagar o registro selecionado"
+
+#: tfrmcustomgrid.sbdocinfo.hint
+msgid "View and edit document/link info"
+msgstr "Ver e editar info do documento/link"
 
 #: tfrmcustomgrid.sbeditchild.hint
 msgctxt "tfrmcustomgrid.sbeditchild.hint"
@@ -11137,6 +11482,10 @@ msgstr "Registro seguinte"
 msgctxt "tfrmcustomgrid.sbnextrecord.hint"
 msgid "Next record"
 msgstr "Registro seguinte"
+
+#: tfrmcustomgrid.sbopendoc.hint
+msgid "Open document/link in the default app"
+msgstr "Abrir documento/link no aplicativo padrão"
 
 #: tfrmcustomgrid.sbplayaudio.hint
 msgid "Play/stop audio"

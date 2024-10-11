@@ -90,12 +90,13 @@ type
     tbSamplePreps,
     tbSpecimenCollectors,
     tbImages,
-    tbAudioLibrary);
+    tbAudioLibrary,
+    tbDocuments);
 
 const
   TableAliases: array [TTableType] of String = ('',
     'u','rh','rv','g','ns','pn','it','p','pj','pt','l','r','z','bt','b','bh','i','c','m',
-    'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','aud');
+    'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','snd','doc');
   TableNames: array [TTableType] of String = ('',
     'users',
     'record_history',
@@ -131,7 +132,8 @@ const
     'sample_preps',
     'specimen_collectors',
     'images',
-    'audio_library');
+    'audio_library',
+    'documents');
 
 type
   TCriteriaType = (crNone,

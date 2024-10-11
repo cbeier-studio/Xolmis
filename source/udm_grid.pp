@@ -54,7 +54,7 @@ type
     dsSynonymTaxa: TDataSource;
     dsChildTaxa: TDataSource;
     dsAudio: TDataSource;
-    dsAttachments: TDataSource;
+    dsDocuments: TDataSource;
     dsMolts: TDataSource;
     dsImages: TDataSource;
     dsExpeditions: TDataSource;
@@ -1047,7 +1047,7 @@ type
     qSynonymTaxa: TSQLQuery;
     qChildTaxa: TSQLQuery;
     qAudio: TSQLQuery;
-    qAttachments: TSQLQuery;
+    qDocuments: TSQLQuery;
     qTaxaactive_status: TBooleanField;
     qTaxaauthorship: TStringField;
     qTaxacbro_taxonomy: TBooleanField;
