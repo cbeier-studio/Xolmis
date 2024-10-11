@@ -14,5 +14,17 @@
 {"hash":174307141,"name":"tfrmprintpreview.sbfirstpage.hint","sourcebytes":[70,105,114,115,116,32,112,97,103,101],"value":"First page"},
 {"hash":198948837,"name":"tfrmprintpreview.sbpriorpage.hint","sourcebytes":[80,114,101,118,105,111,117,115,32,112,97,103,101],"value":"Previous page"},
 {"hash":258421525,"name":"tfrmprintpreview.sbnextpage.hint","sourcebytes":[78,101,120,116,32,112,97,103,101],"value":"Next page"},
-{"hash":174536021,"name":"tfrmprintpreview.sblastpage.hint","sourcebytes":[76,97,115,116,32,112,97,103,101],"value":"Last page"}
+{"hash":174536021,"name":"tfrmprintpreview.sblastpage.hint","sourcebytes":[76,97,115,116,32,112,97,103,101],"value":"Last page"},
+{"hash":134797558,"name":"tfrmprintpreview.pmsavepdf.caption","sourcebytes":[83,97,118,101,32,116,111,32,80,68,70],"value":"Save to PDF"},
+{"hash":5738580,"name":"tfrmprintpreview.pmprint.caption","sourcebytes":[80,114,105,110,116],"value":"Print"},
+{"hash":174307141,"name":"tfrmprintpreview.pmfirstpage.caption","sourcebytes":[70,105,114,115,116,32,112,97,103,101],"value":"First page"},
+{"hash":198948837,"name":"tfrmprintpreview.pmpriorpage.caption","sourcebytes":[80,114,101,118,105,111,117,115,32,112,97,103,101],"value":"Previous page"},
+{"hash":258421525,"name":"tfrmprintpreview.pmnextpage.caption","sourcebytes":[78,101,120,116,32,112,97,103,101],"value":"Next page"},
+{"hash":174536021,"name":"tfrmprintpreview.pmlastpage.caption","sourcebytes":[76,97,115,116,32,112,97,103,101],"value":"Last page"},
+{"hash":398941,"name":"tfrmprintpreview.pmzoom.caption","sourcebytes":[90,111,111,109],"value":"Zoom"},
+{"hash":125344888,"name":"tfrmprintpreview.pmzoompagewidth.caption","sourcebytes":[80,97,103,101,32,119,105,100,116,104],"value":"Page width"},
+{"hash":6775557,"name":"tfrmprintpreview.pmzoompagefit.caption","sourcebytes":[70,105,116,32,112,97,103,101],"value":"Fit page"},
+{"hash":127945909,"name":"tfrmprintpreview.pmzoomactualsize.caption","sourcebytes":[65,99,116,117,97,108,32,115,105,122,101],"value":"Actual size"},
+{"hash":155099021,"name":"tfrmprintpreview.pmzoomin.caption","sourcebytes":[73,110,99,114,101,97,115,101,32,122,111,111,109],"value":"Increase zoom"},
+{"hash":63872925,"name":"tfrmprintpreview.pmzoomout.caption","sourcebytes":[68,101,99,114,101,97,115,101,32,122,111,111,109],"value":"Decrease zoom"}
 ]}

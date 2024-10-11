@@ -298,6 +298,7 @@ object frmPrintPreview: TfrmPrintPreview
     Width = 883
     Align = alClient
     BevelOuter = bvNone
+    PopupMenu = pmReport
     TabOrder = 2
     ScrollBars = ssBoth
     OnScrollPage = frPreviewScrollPage
@@ -1642,5 +1643,77 @@ object frmPrintPreview: TfrmPrintPreview
   object frDetails: TfrDBDataSet
     Left = 429
     Top = 233
+  end
+  object pmReport: TPopupMenu
+    Images = iButtons
+    Left = 361
+    Top = 327
+    object pmSavePdf: TMenuItem
+      Caption = 'Save to PDF'
+      ImageIndex = 18
+      OnClick = sbSavePDFClick
+    end
+    object pmPrint: TMenuItem
+      Caption = 'Print'
+      ImageIndex = 14
+      OnClick = sbPrintClick
+    end
+    object Separator1: TMenuItem
+      Caption = '-'
+    end
+    object pmFirstPage: TMenuItem
+      Caption = 'First page'
+      ImageIndex = 22
+      OnClick = sbFirstPageClick
+    end
+    object pmPriorPage: TMenuItem
+      Caption = 'Previous page'
+      ImageIndex = 10
+      OnClick = sbPriorPageClick
+    end
+    object pmNextPage: TMenuItem
+      Caption = 'Next page'
+      ImageIndex = 8
+      OnClick = sbNextPageClick
+    end
+    object pmLastPage: TMenuItem
+      Caption = 'Last page'
+      ImageIndex = 24
+      OnClick = sbLastPageClick
+    end
+    object Separator2: TMenuItem
+      Caption = '-'
+    end
+    object pmZoom: TMenuItem
+      Caption = 'Zoom'
+      object pmZoomPageWidth: TMenuItem
+        Caption = 'Page width'
+        ImageIndex = 20
+        OnClick = sbZoomAdjustWidthClick
+      end
+      object pmZoomPageFit: TMenuItem
+        Caption = 'Fit page'
+        ImageIndex = 0
+        OnClick = sbZoomAdjustClick
+      end
+      object pmZoomActualSize: TMenuItem
+        Caption = 'Actual size'
+        ImageIndex = 12
+        OnClick = sbZoom100Click
+      end
+      object Separator3: TMenuItem
+        Caption = '-'
+      end
+      object pmZoomIn: TMenuItem
+        Caption = 'Increase zoom'
+        ImageIndex = 4
+        OnClick = sbZoomInClick
+      end
+      object pmZoomOut: TMenuItem
+        Caption = 'Decrease zoom'
+        ImageIndex = 2
+        OnClick = sbZoomOutClick
+      end
+    end
   end
 end

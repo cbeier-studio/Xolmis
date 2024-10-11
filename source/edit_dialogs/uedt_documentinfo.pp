@@ -70,7 +70,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -143,6 +143,18 @@ procedure TedtDocumentInfo.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  cbDocumentType.Items.Clear;
+  cbDocumentType.Items.Add(rsDocUrl);
+  cbDocumentType.Items.Add(rsDocDocument);
+  cbDocumentType.Items.Add(rsDocSpreadsheet);
+  cbDocumentType.Items.Add(rsDocPresentation);
+  cbDocumentType.Items.Add(rsDocPdf);
+  cbDocumentType.Items.Add(rsDocCode);
+  cbDocumentType.Items.Add(rsDocImage);
+  cbDocumentType.Items.Add(rsDocAudio);
+  cbDocumentType.Items.Add(rsDocDatabase);
+  cbDocumentType.Items.Add(rsDocOther);
 end;
 
 function TedtDocumentInfo.IsRequiredFilled: Boolean;

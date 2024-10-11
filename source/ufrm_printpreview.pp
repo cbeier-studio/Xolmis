@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons,
-  LCLIntf, LR_Class, LR_View, LR_DBSet, LR_ChBox, Printers, PrintersDlgs, lrPDFExport, lr_e_fclpdf;
+  LCLIntf, LR_Class, LR_View, LR_DBSet, LR_ChBox, Printers, Menus, PrintersDlgs, lrPDFExport, lr_e_fclpdf;
 
 type
 
@@ -17,6 +17,19 @@ type
     frDataSet: TfrDBDataSet;
     frDetails: TfrDBDataSet;
     frPreview: TfrPreview;
+    pmSavePdf: TMenuItem;
+    pmZoomActualSize: TMenuItem;
+    pmZoomIn: TMenuItem;
+    pmZoomOut: TMenuItem;
+    pmPrint: TMenuItem;
+    pmFirstPage: TMenuItem;
+    pmPriorPage: TMenuItem;
+    pmNextPage: TMenuItem;
+    pmLastPage: TMenuItem;
+    pmZoom: TMenuItem;
+    pmZoomPageWidth: TMenuItem;
+    pmZoomPageFit: TMenuItem;
+    pmReport: TPopupMenu;
     Report: TfrReport;
     iButtons: TImageList;
     iButtonsDark: TImageList;
@@ -41,6 +54,9 @@ type
     sbZoomAdjustWidth: TSpeedButton;
     sbZoomIn: TSpeedButton;
     sbZoomOut: TSpeedButton;
+    Separator1: TMenuItem;
+    Separator2: TMenuItem;
+    Separator3: TMenuItem;
     tbZoom: TTrackBar;
     procedure FormShow(Sender: TObject);
     procedure frPreviewScrollPage(Sender: TObject);
@@ -100,6 +116,8 @@ begin
   sbZoom100.Images := iButtonsDark;
   sbZoomOut.Images := iButtonsDark;
   sbZoomIn.Images := iButtonsDark;
+
+  pmReport.Images := iButtonsDark;
 end;
 
 procedure TfrmPrintPreview.FormShow(Sender: TObject);
@@ -348,6 +366,18 @@ begin
   sbZoomOut.Enabled := (frPreview.AllPages > 0) or (tbZoom.Position > tbZoom.Min);
   sbZoomIn.Enabled := (frPreview.AllPages > 0) or (tbZoom.Position < tbZoom.Max);
   tbZoom.Enabled := frPreview.AllPages > 0;
+
+  pmPrint.Enabled := sbPrint.Enabled;
+  pmSavePdf.Enabled := sbSavePDF.Enabled;
+  pmFirstPage.Enabled := sbFirstPage.Enabled;
+  pmPriorPage.Enabled := sbPriorPage.Enabled;
+  pmNextPage.Enabled := sbNextPage.Enabled;
+  pmLastPage.Enabled := sbLastPage.Enabled;
+  pmZoomPageWidth.Enabled := sbZoomAdjustWidth.Enabled;
+  pmZoomPageFit.Enabled := sbZoomAdjust.Enabled;
+  pmZoomActualSize.Enabled := sbZoom100.Enabled;
+  pmZoomIn.Enabled := sbZoomIn.Enabled;
+  pmZoomOut.Enabled := sbZoomOut.Enabled;
 end;
 
 end.

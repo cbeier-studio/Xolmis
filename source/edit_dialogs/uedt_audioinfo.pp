@@ -127,7 +127,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -387,6 +387,13 @@ procedure TedtAudioInfo.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  cbPrecipitation.Items.Clear;
+  cbPrecipitation.Items.Add(rsPrecipitationNone);
+  cbPrecipitation.Items.Add(rsPrecipitationFog);
+  cbPrecipitation.Items.Add(rsPrecipitationMist);
+  cbPrecipitation.Items.Add(rsPrecipitationDrizzle);
+  cbPrecipitation.Items.Add(rsPrecipitationRain);
 end;
 
 function TedtAudioInfo.IsRequiredFilled: Boolean;

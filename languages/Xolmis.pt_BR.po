@@ -12515,15 +12515,72 @@ msgctxt "tfrmprintpreview.caption"
 msgid "Print preview"
 msgstr "Visualização de impressão"
 
+#: tfrmprintpreview.pmfirstpage.caption
+msgctxt "tfrmprintpreview.pmfirstpage.caption"
+msgid "First page"
+msgstr "Primeira página"
+
+#: tfrmprintpreview.pmlastpage.caption
+msgctxt "tfrmprintpreview.pmlastpage.caption"
+msgid "Last page"
+msgstr "Última página"
+
+#: tfrmprintpreview.pmnextpage.caption
+msgctxt "tfrmprintpreview.pmnextpage.caption"
+msgid "Next page"
+msgstr "Página seguinte"
+
+#: tfrmprintpreview.pmprint.caption
+msgctxt "tfrmprintpreview.pmprint.caption"
+msgid "Print"
+msgstr "Imprimir"
+
+#: tfrmprintpreview.pmpriorpage.caption
+msgctxt "tfrmprintpreview.pmpriorpage.caption"
+msgid "Previous page"
+msgstr "Página anterior"
+
+#: tfrmprintpreview.pmsavepdf.caption
+msgid "Save to PDF"
+msgstr "Salvar PDF"
+
+#: tfrmprintpreview.pmzoom.caption
+msgctxt "tfrmprintpreview.pmzoom.caption"
+msgid "Zoom"
+msgstr "Zoom"
+
+#: tfrmprintpreview.pmzoomactualsize.caption
+msgid "Actual size"
+msgstr "Tamanho real"
+
+#: tfrmprintpreview.pmzoomin.caption
+msgid "Increase zoom"
+msgstr "Aumentar zoom"
+
+#: tfrmprintpreview.pmzoomout.caption
+msgid "Decrease zoom"
+msgstr "Diminuir zoom"
+
+#: tfrmprintpreview.pmzoompagefit.caption
+msgid "Fit page"
+msgstr "Ajustar à página"
+
+#: tfrmprintpreview.pmzoompagewidth.caption
+msgid "Page width"
+msgstr "Ajustar à largura"
+
 #: tfrmprintpreview.sbfirstpage.hint
+msgctxt "tfrmprintpreview.sbfirstpage.hint"
 msgid "First page"
 msgstr "Primeira página"
 
 #: tfrmprintpreview.sblastpage.hint
+msgctxt "tfrmprintpreview.sblastpage.hint"
 msgid "Last page"
 msgstr "Última página"
 
 #: tfrmprintpreview.sbnextpage.hint
+msgctxt "tfrmprintpreview.sbnextpage.hint"
 msgid "Next page"
 msgstr "Página seguinte"
 
@@ -12538,6 +12595,7 @@ msgid "Printer settings"
 msgstr "Opções da impressora"
 
 #: tfrmprintpreview.sbpriorpage.hint
+msgctxt "tfrmprintpreview.sbpriorpage.hint"
 msgid "Previous page"
 msgstr "Página anterior"
 

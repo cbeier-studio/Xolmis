@@ -914,9 +914,11 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure gridAudiosDblClick(Sender: TObject);
     procedure gridChild1ContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure gridChild1DblClick(Sender: TObject);
     procedure gridColumnsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
+    procedure gridDocsDblClick(Sender: TObject);
     procedure iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
       var AResultWidth: Integer);
     procedure mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
@@ -971,6 +973,8 @@ type
     procedure qAudiosaudio_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qAudiosaudio_typeSetText(Sender: TField; const aText: string);
     procedure qAudiosBeforePost(DataSet: TDataSet);
+    procedure qAudiosprecipitationGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qAudiosprecipitationSetText(Sender: TField; const aText: string);
     procedure qAudiosrecording_contextGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qAudiosrecording_contextSetText(Sender: TField; const aText: string);
     procedure qDocsBeforePost(DataSet: TDataSet);
@@ -1012,6 +1016,7 @@ type
     procedure sbNextChildClick(Sender: TObject);
     procedure sbNextRecordClick(Sender: TObject);
     procedure sbOpenDocClick(Sender: TObject);
+    procedure sbPlayAudioClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
     procedure sbPriorChildClick(Sender: TObject);
     procedure sbPriorRecordClick(Sender: TObject);
@@ -5369,6 +5374,12 @@ begin
   //end;
 end;
 
+procedure TfrmCustomGrid.gridAudiosDblClick(Sender: TObject);
+begin
+  if sbPlayAudio.Enabled then
+    sbPlayAudioClick(nil);
+end;
+
 procedure TfrmCustomGrid.gridChild1ContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
 begin
   if MousePos.Y < TDBGrid(Sender).DefaultRowHeight then
@@ -5393,6 +5404,12 @@ begin
     dsLink.DataSet.Fields[aRow - 1].Visible := aState = cbChecked;
 
   AddGridColumns(FTableType, DBG);
+end;
+
+procedure TfrmCustomGrid.gridDocsDblClick(Sender: TObject);
+begin
+  if sbOpenDoc.Enabled then
+    sbOpenDocClick(nil);
 end;
 
 procedure TfrmCustomGrid.iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
@@ -7062,6 +7079,37 @@ begin
   //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
+procedure TfrmCustomGrid.qAudiosprecipitationGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  case Sender.AsString of
+    'N': aText := rsPrecipitationNone;
+    'F': aText := rsPrecipitationFog;
+    'M': aText := rsPrecipitationMist;
+    'D': aText := rsPrecipitationDrizzle;
+    'R': aText := rsPrecipitationRain;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TfrmCustomGrid.qAudiosprecipitationSetText(Sender: TField; const aText: string);
+begin
+  if aText = rsPrecipitationNone then
+    Sender.AsString := 'N'
+  else
+  if aText = rsPrecipitationFog then
+    Sender.AsString := 'F'
+  else
+  if aText = rsPrecipitationMist then
+    Sender.AsString := 'M'
+  else
+  if aText = rsPrecipitationDrizzle then
+    Sender.AsString := 'D'
+  else
+  if aText = rsPrecipitationRain then
+    Sender.AsString := 'R';
+end;
+
 procedure TfrmCustomGrid.qAudiosrecording_contextGetText(Sender: TField; var aText: string; DisplayText: Boolean
   );
 begin
@@ -7915,6 +7963,12 @@ begin
     OpenUrl(qDocs.FieldByName('document_path').AsString)
   else
     OpenDocument(qDocs.FieldByName('document_path').AsString);
+end;
+
+procedure TfrmCustomGrid.sbPlayAudioClick(Sender: TObject);
+begin
+  // Temporary solution
+  OpenDocument(qAudios.FieldByName('audio_file').AsString);
 end;
 
 procedure TfrmCustomGrid.sbPrintClick(Sender: TObject);

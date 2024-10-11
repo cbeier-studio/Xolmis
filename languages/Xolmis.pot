@@ -12474,15 +12474,72 @@ msgctxt "tfrmprintpreview.caption"
 msgid "Print preview"
 msgstr ""
 
+#: tfrmprintpreview.pmfirstpage.caption
+msgctxt "tfrmprintpreview.pmfirstpage.caption"
+msgid "First page"
+msgstr ""
+
+#: tfrmprintpreview.pmlastpage.caption
+msgctxt "tfrmprintpreview.pmlastpage.caption"
+msgid "Last page"
+msgstr ""
+
+#: tfrmprintpreview.pmnextpage.caption
+msgctxt "tfrmprintpreview.pmnextpage.caption"
+msgid "Next page"
+msgstr ""
+
+#: tfrmprintpreview.pmprint.caption
+msgctxt "tfrmprintpreview.pmprint.caption"
+msgid "Print"
+msgstr ""
+
+#: tfrmprintpreview.pmpriorpage.caption
+msgctxt "tfrmprintpreview.pmpriorpage.caption"
+msgid "Previous page"
+msgstr ""
+
+#: tfrmprintpreview.pmsavepdf.caption
+msgid "Save to PDF"
+msgstr ""
+
+#: tfrmprintpreview.pmzoom.caption
+msgctxt "tfrmprintpreview.pmzoom.caption"
+msgid "Zoom"
+msgstr ""
+
+#: tfrmprintpreview.pmzoomactualsize.caption
+msgid "Actual size"
+msgstr ""
+
+#: tfrmprintpreview.pmzoomin.caption
+msgid "Increase zoom"
+msgstr ""
+
+#: tfrmprintpreview.pmzoomout.caption
+msgid "Decrease zoom"
+msgstr ""
+
+#: tfrmprintpreview.pmzoompagefit.caption
+msgid "Fit page"
+msgstr ""
+
+#: tfrmprintpreview.pmzoompagewidth.caption
+msgid "Page width"
+msgstr ""
+
 #: tfrmprintpreview.sbfirstpage.hint
+msgctxt "tfrmprintpreview.sbfirstpage.hint"
 msgid "First page"
 msgstr ""
 
 #: tfrmprintpreview.sblastpage.hint
+msgctxt "tfrmprintpreview.sblastpage.hint"
 msgid "Last page"
 msgstr ""
 
 #: tfrmprintpreview.sbnextpage.hint
+msgctxt "tfrmprintpreview.sbnextpage.hint"
 msgid "Next page"
 msgstr ""
 
@@ -12497,6 +12554,7 @@ msgid "Printer settings"
 msgstr ""
 
 #: tfrmprintpreview.sbpriorpage.hint
+msgctxt "tfrmprintpreview.sbpriorpage.hint"
 msgid "Previous page"
 msgstr ""
 

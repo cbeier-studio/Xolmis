@@ -6915,6 +6915,7 @@ object frmCustomGrid: TfrmCustomGrid
             Images = iButtons
             ImageIndex = 96
             ImageWidth = 24
+            OnClick = sbPlayAudioClick
             ShowHint = True
             ParentShowHint = False
           end
@@ -6964,7 +6965,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'Fullname'
-              Width = 276
+              Width = 255
               FieldName = 'full_name'
             end>
           DataSource = dsAudios
@@ -6972,6 +6973,9 @@ object frmCustomGrid: TfrmCustomGrid
           Scrollbars = ssVertical
           TabOrder = 1
           TitleStyle = tsNative
+          OnDblClick = gridAudiosDblClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object cardDocs: TPage
@@ -7144,7 +7148,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'File path'
-              Width = 386
+              Width = 365
               FieldName = 'document_path'
             end>
           DataSource = dsDocs
@@ -7152,6 +7156,9 @@ object frmCustomGrid: TfrmCustomGrid
           Scrollbars = ssVertical
           TabOrder = 1
           TitleStyle = tsNative
+          OnDblClick = gridDocsDblClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object cardSummary: TPage
@@ -7280,7 +7287,7 @@ object frmCustomGrid: TfrmCustomGrid
             item
               ReadOnly = True
               Title.Caption = 'Field'
-              Width = 218
+              Width = 214
             end          
             item
               Alignment = taRightJustify
@@ -7300,7 +7307,7 @@ object frmCustomGrid: TfrmCustomGrid
           ColWidths = (
             100
             70
-            218
+            214
             60
           )
           Cells = (
@@ -9954,7 +9961,7 @@ object frmCustomGrid: TfrmCustomGrid
   object TimerUpdate: TTimer
     Enabled = False
     Interval = 500
-    Left = 296
+    Left = 288
     Top = 64
   end
   object pmGrid: TPopupMenu
@@ -23538,7 +23545,7 @@ object frmCustomGrid: TfrmCustomGrid
     end
   end
   object MvBGRADraw: TMvBGRADrawingEngine
-    Left = 296
+    Left = 288
     Top = 120
   end
   object pmColumn: TPopupMenu
@@ -25640,6 +25647,8 @@ object frmCustomGrid: TfrmCustomGrid
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qAudiosprecipitationGetText
+      OnSetText = qAudiosprecipitationSetText
       Size = 1
     end
     object qAudiosrelative_humidity: TLongintField

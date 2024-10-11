@@ -13,6 +13,7 @@ object edtDocumentInfo: TedtDocumentInfo
   OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '3.6.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
