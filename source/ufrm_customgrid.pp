@@ -60,6 +60,9 @@ type
     pmdRefreshDocs: TMenuItem;
     pmDocs: TPopupMenu;
     pmAddDocs: TPopupMenu;
+    qAudioscountry_id: TLongintField;
+    qAudiosmunicipality_id: TLongintField;
+    qAudiosstate_id: TLongintField;
     qDocsactive_status: TBooleanField;
     qDocscapture_id: TLongintField;
     qDocsdocument_date: TDateField;
@@ -919,6 +922,8 @@ type
     procedure gridChild1DblClick(Sender: TObject);
     procedure gridColumnsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
     procedure gridDocsDblClick(Sender: TObject);
+    procedure gridDocsDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+      State: TGridDrawState);
     procedure iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
       var AResultWidth: Integer);
     procedure mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
@@ -5412,6 +5417,63 @@ begin
     sbOpenDocClick(nil);
 end;
 
+procedure TfrmCustomGrid.gridDocsDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer;
+  Column: TColumn; State: TGridDrawState);
+var
+  ImgList: TImageList;
+  ImgIndex: Integer;
+  ImgRect: TRect;
+  ScaleFactor: Single;
+  TargetWidth, TargetHeight: Int64;
+begin
+  // Verificar se a célula precisa desenhar uma imagem
+  if Column.FieldName = 'document_type' then
+  begin
+    // Obter o índice da imagem do valor da célula
+    case Column.Field.AsString of
+      'url': ImgIndex := 0;
+      'doc': ImgIndex := 4;
+      'spr': ImgIndex := 3;
+      'prs': ImgIndex := 5;
+      'pdf': ImgIndex := 2;
+      'img': ImgIndex := 7;
+      'aud': ImgIndex := 8;
+      'cod': ImgIndex := 6;
+      'db':  ImgIndex := 9;
+      'oth': ImgIndex := 1;
+    end;
+
+    if IsDarkModeEnabled then
+      ImgList := DMM.iFilesDark
+    else
+      ImgList := DMM.iFiles;
+
+    if (ImgIndex >= 0) and (ImgIndex < ImgList.Count) then
+    begin
+      // Calc scale factor for the screen DPI
+      ScaleFactor := Screen.PixelsPerInch / 96; // 96 DPI is the default
+
+      // Calc scaled dimensions, keeping proportion
+      TargetWidth := Round((Rect.Width - 4) * ScaleFactor); // 2 pixels of margin on both sides
+      TargetHeight := Round((Rect.Height - 4) * ScaleFactor); // 2 pixels of margin on both sides
+
+      // Center image within the cell
+      ImgRect.Left := Rect.Left + (Rect.Width - TargetWidth) div 2;
+      ImgRect.Top := Rect.Top + (Rect.Height - TargetHeight) div 2;
+      ImgRect.Right := ImgRect.Left + TargetWidth;
+      ImgRect.Bottom := ImgRect.Top + TargetHeight;
+
+      // Draw image in the cell
+      ImgList.DrawForPPI(gridDocs.Canvas, ImgRect.Left, ImgRect.Top, ImgIndex, 16, Screen.PixelsPerInch, ScaleFactor);
+    end;
+  end
+  else
+  begin
+    // Draw cell normally
+    gridDocs.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+  end;
+end;
+
 procedure TfrmCustomGrid.iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
   var AResultWidth: Integer);
 begin
@@ -7076,8 +7138,8 @@ begin
   if not DataSet.FieldByName('taxon_id').IsNull then
     GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
 
-  //if not DataSet.FieldByName('locality_id').IsNull then
-  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TfrmCustomGrid.qAudiosprecipitationGetText(Sender: TField; var aText: string; DisplayText: Boolean);
