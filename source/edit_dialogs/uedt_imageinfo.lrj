@@ -22,5 +22,10 @@
 {"hash":195060346,"name":"tedtimageinfo.lblspecimen.caption","sourcebytes":[83,112,101,99,105,109,101,110,58],"value":"Specimen:"},
 {"hash":310698,"name":"tedtimageinfo.lblegg.caption","sourcebytes":[69,103,103,58],"value":"Egg:"},
 {"hash":28285338,"name":"tedtimageinfo.lblnestrevision.caption","sourcebytes":[78,101,115,116,32,114,101,118,105,115,105,111,110,58],"value":"Nest revision:"},
-{"hash":5556858,"name":"tedtimageinfo.lblnest.caption","sourcebytes":[78,101,115,116,58],"value":"Nest:"}
+{"hash":5556858,"name":"tedtimageinfo.lblnest.caption","sourcebytes":[78,101,115,116,58],"value":"Nest:"},
+{"hash":92521290,"name":"tedtimageinfo.lbllicensetype.caption","sourcebytes":[76,105,99,101,110,115,101,32,116,121,112,101,58],"value":"License type:"},
+{"hash":92700058,"name":"tedtimageinfo.lbllicenseyear.caption","sourcebytes":[76,105,99,101,110,115,101,32,121,101,97,114,58],"value":"License year:"},
+{"hash":183635978,"name":"tedtimageinfo.lbllicenseowner.caption","sourcebytes":[76,105,99,101,110,115,101,32,111,119,110,101,114,58],"value":"License owner:"},
+{"hash":183169082,"name":"tedtimageinfo.lbllicensenotes.caption","sourcebytes":[76,105,99,101,110,115,101,32,110,111,116,101,115,58],"value":"License notes:"},
+{"hash":207239850,"name":"tedtimageinfo.lbllicenseuri.caption","sourcebytes":[76,105,99,101,110,115,101,32,85,82,76,58],"value":"License URL:"}
 ]}

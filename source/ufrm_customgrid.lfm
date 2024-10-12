@@ -6965,7 +6965,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'Fullname'
-              Width = 255
+              Width = 276
               FieldName = 'full_name'
             end>
           DataSource = dsAudios
@@ -7148,7 +7148,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'File path'
-              Width = 365
+              Width = 386
               FieldName = 'document_path'
             end>
           DataSource = dsDocs
@@ -7287,7 +7287,7 @@ object frmCustomGrid: TfrmCustomGrid
             item
               ReadOnly = True
               Title.Caption = 'Field'
-              Width = 214
+              Width = 218
             end          
             item
               Alignment = taRightJustify
@@ -7307,7 +7307,7 @@ object frmCustomGrid: TfrmCustomGrid
           ColWidths = (
             100
             70
-            214
+            218
             60
           )
           Cells = (
@@ -24584,6 +24584,8 @@ object frmCustomGrid: TfrmCustomGrid
   object PrintGrid: TFrPrintGrid
     DBGrid = DBG
     Orientation = poLandscape
+    Font.Color = clBlack
+    TitleFont.Color = clBlack
     Caption = 'Grid'
     PrinterIndex = -1
     ShowCaption = True

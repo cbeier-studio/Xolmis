@@ -14,8 +14,13 @@ type
 
   TedtAudioInfo = class(TForm)
     cbAudioType: TDBComboBox;
+    cbLicenseType: TDBComboBox;
     ckPlaybackUsed: TDBCheckBox;
     cbPrecipitation: TDBComboBox;
+    eLicenseNotes: TDBEdit;
+    eLicenseOwner: TDBEdit;
+    eLicenseUri: TDBEdit;
+    eLicenseYear: TDBEdit;
     eSubjectsTally: TDBEdit;
     eDistance: TDBEdit;
     eTemperature: TDBEdit;
@@ -42,6 +47,11 @@ type
     lblHabitat: TLabel;
     lblLatitude: TLabel;
     lblDistance: TLabel;
+    lblLicenseNotes: TLabel;
+    lblLicenseOwner: TLabel;
+    lblLicenseType: TLabel;
+    lblLicenseUri: TLabel;
+    lblLicenseYear: TLabel;
     lblPlaybackUsed: TLabel;
     lblWindSpeed: TLabel;
     lblCloudCover: TLabel;
@@ -70,6 +80,10 @@ type
     pBottom: TPanel;
     pClient: TPanel;
     pHabitat: TPanel;
+    pLicenseNotes: TPanel;
+    pLicenseOwner: TPanel;
+    pLicenseTypeYear: TPanel;
+    pLicenseUri: TPanel;
     pSubjectsTallyDistance: TPanel;
     pHumidityPlayback: TPanel;
     pPrecipitationWindSpeed: TPanel;

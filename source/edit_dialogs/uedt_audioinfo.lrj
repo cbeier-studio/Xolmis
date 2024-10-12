@@ -29,5 +29,10 @@
 {"hash":6998794,"name":"tedtaudioinfo.lbltemperature.caption","sourcebytes":[84,101,109,112,101,114,97,116,117,114,101,32,40,194,176,67,41,58],"value":"Temperature (\u00B0C):"},
 {"hash":119595626,"name":"tedtaudioinfo.lblcloudcover.caption","sourcebytes":[67,108,111,117,100,32,99,111,118,101,114,32,40,37,41,58],"value":"Cloud cover (%):"},
 {"hash":82666554,"name":"tedtaudioinfo.lblrecordingcontext.caption","sourcebytes":[67,111,110,116,101,120,116,32,111,102,32,116,104,101,32,114,101,99,111,114,100,105,110,103,58],"value":"Context of the recording:"},
-{"hash":126921882,"name":"tedtaudioinfo.lblhabitat.caption","sourcebytes":[72,97,98,105,116,97,116,58],"value":"Habitat:"}
+{"hash":126921882,"name":"tedtaudioinfo.lblhabitat.caption","sourcebytes":[72,97,98,105,116,97,116,58],"value":"Habitat:"},
+{"hash":92521290,"name":"tedtaudioinfo.lbllicensetype.caption","sourcebytes":[76,105,99,101,110,115,101,32,116,121,112,101,58],"value":"License type:"},
+{"hash":92700058,"name":"tedtaudioinfo.lbllicenseyear.caption","sourcebytes":[76,105,99,101,110,115,101,32,121,101,97,114,58],"value":"License year:"},
+{"hash":183635978,"name":"tedtaudioinfo.lbllicenseowner.caption","sourcebytes":[76,105,99,101,110,115,101,32,111,119,110,101,114,58],"value":"License owner:"},
+{"hash":183169082,"name":"tedtaudioinfo.lbllicensenotes.caption","sourcebytes":[76,105,99,101,110,115,101,32,110,111,116,101,115,58],"value":"License notes:"},
+{"hash":207239850,"name":"tedtaudioinfo.lbllicenseuri.caption","sourcebytes":[76,105,99,101,110,115,101,32,85,82,76,58],"value":"License URL:"}
 ]}

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, DB, SQLDB, fpcsvexport, atshapelinebgra,
-  BCPanel, Grids, DBGrids, Menus, StdCtrls;
+  BCPanel, Grids, DBGrids, Menus, StdCtrls, LR_PGrid;
 
 type
 
@@ -32,9 +32,11 @@ type
     CSVExporter1: TCSVExporter;
     dbgSaldo: TDBGrid;
     dsBandsBalance: TDataSource;
+    FrPrintGrid1: TFrPrintGrid;
     iPopup: TImageList;
     iPopupDark: TImageList;
     lineBottom: TShapeLineBGRA;
+    pmgPrint: TMenuItem;
     pMsg: TBCPanel;
     pmgRefresh: TMenuItem;
     pmgSavesAs: TMenuItem;
@@ -48,11 +50,13 @@ type
     SaveDlg: TSaveDialog;
     sbClose: TButton;
     Separator1: TMenuItem;
+    Separator2: TMenuItem;
     TimerLoad: TTimer;
     procedure dbgSaldoPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
       AState: TGridDrawState);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure pmgPrintClick(Sender: TObject);
     procedure pmgRefreshClick(Sender: TObject);
     procedure pmgSavesAsClick(Sender: TObject);
     procedure TimerLoadTimer(Sender: TObject);
@@ -167,6 +171,12 @@ begin
     ApplyDarkMode;
 
   TimerLoad.Enabled := True;
+end;
+
+procedure TdlgBandsBalance.pmgPrintClick(Sender: TObject);
+begin
+  frPrintGrid1.Caption := Caption;
+  frPrintGrid1.PreviewReport;
 end;
 
 procedure TdlgBandsBalance.pmgRefreshClick(Sender: TObject);

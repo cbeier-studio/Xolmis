@@ -25,7 +25,7 @@ uses
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character, Buttons, CheckLst, DBCtrls,
   laz.VirtualTrees, TAGraph, TASeries, TADbSource, TASources, LR_PGrid, TAGUIConnectorBGRA,
   atshapelinebgra, BCPanel, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, ToggleSwitch,
-  mvMapViewer, mvDE_BGRA, mvTypes, mvGpsObj, mvDrawingEngine;
+  mvMapViewer, mvDE_BGRA, mvTypes, mvGpsObj, mvDrawingEngine, LR_Class;
 
 type
   { TStringMemoEditor }
@@ -6084,6 +6084,7 @@ end;
 
 procedure TfrmCustomGrid.pmPrintGridClick(Sender: TObject);
 begin
+  PrintGrid.Caption := Caption;
   PrintGrid.PreviewReport;
 end;
 

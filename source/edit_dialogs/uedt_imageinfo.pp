@@ -31,11 +31,16 @@ type
   TedtImageInfo = class(TForm)
     cbBandStatus1: TDBComboBox;
     cbBandStatus2: TDBComboBox;
+    cbLicenseType: TDBComboBox;
     dsLink: TDataSource;
     eImageDate: TDBEditButton;
     eImageTime: TDBEdit;
     eImageFilename: TDBEditButton;
     eLatitude: TDBEditButton;
+    eLicenseNotes: TDBEdit;
+    eLicenseOwner: TDBEdit;
+    eLicenseUri: TDBEdit;
+    eLicenseYear: TDBEdit;
     eLongitude: TDBEditButton;
     eTaxon: TDBEditButton;
     eAuthor: TDBEditButton;
@@ -50,6 +55,11 @@ type
     eSpecimen: TDBEditButton;
     lblLatitude: TLabel;
     lblImageDate: TLabel;
+    lblLicenseNotes: TLabel;
+    lblLicenseOwner: TLabel;
+    lblLicenseType: TLabel;
+    lblLicenseUri: TLabel;
+    lblLicenseYear: TLabel;
     lblLongitude: TLabel;
     lblImageType: TLabel;
     lblCoordinatesPrecision: TLabel;
@@ -71,6 +81,10 @@ type
     mSubtitle: TDBMemo;
     pBottom: TPanel;
     pClient: TPanel;
+    pLicenseNotes: TPanel;
+    pLicenseOwner: TPanel;
+    pLicenseTypeYear: TPanel;
+    pLicenseUri: TPanel;
     pSubtitle: TPanel;
     pDateTime: TPanel;
     pIndividual: TPanel;

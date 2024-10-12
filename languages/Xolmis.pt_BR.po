@@ -5734,6 +5734,11 @@ msgstr "Méd./dia"
 msgid "Max./day"
 msgstr "Máx./dia"
 
+#: tdlgbandsbalance.pmgprint.caption
+msgctxt "tdlgbandsbalance.pmgprint.caption"
+msgid "Print"
+msgstr "Imprimir"
+
 #: tdlgbandsbalance.pmgrefresh.caption
 msgctxt "tdlgbandsbalance.pmgrefresh.caption"
 msgid "Refresh"
@@ -6621,6 +6626,31 @@ msgctxt "tedtaudioinfo.lbllatitude.caption"
 msgid "Latitude:"
 msgstr "Latitude:"
 
+#: tedtaudioinfo.lbllicensenotes.caption
+msgctxt "tedtaudioinfo.lbllicensenotes.caption"
+msgid "License notes:"
+msgstr "Notas da licença:"
+
+#: tedtaudioinfo.lbllicenseowner.caption
+msgctxt "tedtaudioinfo.lbllicenseowner.caption"
+msgid "License owner:"
+msgstr "Detentor da licença:"
+
+#: tedtaudioinfo.lbllicensetype.caption
+msgctxt "tedtaudioinfo.lbllicensetype.caption"
+msgid "License type:"
+msgstr "Tipo de licença:"
+
+#: tedtaudioinfo.lbllicenseuri.caption
+msgctxt "tedtaudioinfo.lbllicenseuri.caption"
+msgid "License URL:"
+msgstr "URL da licença:"
+
+#: tedtaudioinfo.lbllicenseyear.caption
+msgctxt "tedtaudioinfo.lbllicenseyear.caption"
+msgid "License year:"
+msgstr "Ano da licença:"
+
 #: tedtaudioinfo.lbllocality.caption
 msgctxt "tedtaudioinfo.lbllocality.caption"
 msgid "Locality:"
@@ -7318,22 +7348,27 @@ msgid "Document type:"
 msgstr "Tipo de documento:"
 
 #: tedtdocumentinfo.lbllicensenotes.caption
+msgctxt "tedtdocumentinfo.lbllicensenotes.caption"
 msgid "License notes:"
 msgstr "Notas da licença:"
 
 #: tedtdocumentinfo.lbllicenseowner.caption
+msgctxt "tedtdocumentinfo.lbllicenseowner.caption"
 msgid "License owner:"
 msgstr "Detentor da licença:"
 
 #: tedtdocumentinfo.lbllicensetype.caption
+msgctxt "tedtdocumentinfo.lbllicensetype.caption"
 msgid "License type:"
 msgstr "Tipo de licença:"
 
 #: tedtdocumentinfo.lbllicenseuri.caption
+msgctxt "tedtdocumentinfo.lbllicenseuri.caption"
 msgid "License URL:"
 msgstr "URL da licença:"
 
 #: tedtdocumentinfo.lbllicenseyear.caption
+msgctxt "tedtdocumentinfo.lbllicenseyear.caption"
 msgid "License year:"
 msgstr "Ano da licença:"
 
@@ -7571,6 +7606,31 @@ msgstr "Indivíduo:"
 msgctxt "tedtimageinfo.lbllatitude.caption"
 msgid "Latitude:"
 msgstr "Latitude:"
+
+#: tedtimageinfo.lbllicensenotes.caption
+msgctxt "tedtimageinfo.lbllicensenotes.caption"
+msgid "License notes:"
+msgstr "Notas da licença:"
+
+#: tedtimageinfo.lbllicenseowner.caption
+msgctxt "tedtimageinfo.lbllicenseowner.caption"
+msgid "License owner:"
+msgstr "Detentor da licença:"
+
+#: tedtimageinfo.lbllicensetype.caption
+msgctxt "tedtimageinfo.lbllicensetype.caption"
+msgid "License type:"
+msgstr "Tipo de licença:"
+
+#: tedtimageinfo.lbllicenseuri.caption
+msgctxt "tedtimageinfo.lbllicenseuri.caption"
+msgid "License URL:"
+msgstr "URL da licença:"
+
+#: tedtimageinfo.lbllicenseyear.caption
+msgctxt "tedtimageinfo.lbllicenseyear.caption"
+msgid "License year:"
+msgstr "Ano da licença:"
 
 #: tedtimageinfo.lbllocality.caption
 msgctxt "tedtimageinfo.lbllocality.caption"
@@ -11959,6 +12019,11 @@ msgstr "Girar imagem para direita"
 msgid "Save image as..."
 msgstr "Salvar imagem como..."
 
+#: tfrmimageviewer.sbclose.caption
+msgctxt "tfrmimageviewer.sbclose.caption"
+msgid "Close"
+msgstr "Fechar"
+
 #: tfrmimageviewer.sbcopyimage.caption
 msgctxt "tfrmimageviewer.sbcopyimage.caption"
 msgid "Copy"
@@ -12568,6 +12633,11 @@ msgstr "Ajustar à página"
 #: tfrmprintpreview.pmzoompagewidth.caption
 msgid "Page width"
 msgstr "Ajustar à largura"
+
+#: tfrmprintpreview.sbclose.caption
+msgctxt "tfrmprintpreview.sbclose.caption"
+msgid "Close"
+msgstr "Fechar"
 
 #: tfrmprintpreview.sbfirstpage.hint
 msgctxt "tfrmprintpreview.sbfirstpage.hint"

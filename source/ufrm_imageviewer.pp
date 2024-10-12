@@ -48,6 +48,7 @@ type
     pToolbar: TPanel;
     pStatusBar: TPanel;
     SaveDlg: TSavePictureDialog;
+    sbClose: TSpeedButton;
     sbCopyImage: TSpeedButton;
     sbZoom100: TSpeedButton;
     scrollView: TScrollBox;
@@ -70,6 +71,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure sbCloseClick(Sender: TObject);
     procedure sbCopyImageClick(Sender: TObject);
     procedure sbFlipHorizontalClick(Sender: TObject);
     procedure sbFlipVerticalClick(Sender: TObject);
@@ -124,6 +126,7 @@ begin
   sbZoom100.Images := iButtonsDark;
   sbZoomOut.Images := iButtonsDark;
   sbZoomIn.Images := iButtonsDark;
+  sbClose.Images := iButtonsDark;
 
   pmImage.Images := iButtonsDark;
 end;
@@ -188,6 +191,11 @@ begin
   FNeedRedraw := True;
 
   UpdateZoom;
+end;
+
+procedure TfrmImageViewer.sbCloseClick(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure TfrmImageViewer.sbCopyImageClick(Sender: TObject);

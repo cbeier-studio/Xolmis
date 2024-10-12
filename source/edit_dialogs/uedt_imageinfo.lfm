@@ -83,14 +83,14 @@ object edtImageInfo: TedtImageInfo
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 872
+      Height = 1065
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 872
+      ClientHeight = 1065
       ClientWidth = 399
       TabOrder = 0
       object pLocality: TPanel
@@ -1017,6 +1017,196 @@ object edtImageInfo: TedtImageInfo
           OnButtonClick = eNestButtonClick
           OnDBEditKeyDown = FormKeyDown
           OnDBEditKeyPress = eNestDBEditKeyPress
+        end
+      end
+      object pLicenseTypeYear: TPanel
+        Left = 0
+        Height = 45
+        Top = 869
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Top = 13
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 17
+        object lblLicenseType: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'License type:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblLicenseYear: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'License year:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbLicenseType: TDBComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 176
+          Constraints.MinWidth = 176
+          DataField = 'license_type'
+          DataSource = dsLink
+          ItemHeight = 15
+          MaxLength = 0
+          OnKeyDown = FormKeyDown
+          Style = csDropDownList
+          TabOrder = 0
+        end
+        object eLicenseYear: TDBEdit
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
+          DataField = 'license_year'
+          DataSource = dsLink
+          Constraints.MinWidth = 176
+          MaxLength = 0
+          TabOrder = 1
+          OnKeyDown = FormKeyDown
+        end
+      end
+      object pLicenseOwner: TPanel
+        Left = 0
+        Height = 45
+        Top = 914
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 18
+        object lblLicenseOwner: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
+          Caption = 'License owner:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eLicenseOwner: TDBEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 365
+          DataField = 'license_owner'
+          DataSource = dsLink
+          Constraints.MinWidth = 365
+          MaxLength = 0
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+        end
+      end
+      object pLicenseNotes: TPanel
+        Left = 0
+        Height = 45
+        Top = 959
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 19
+        object lblLicenseNotes: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
+          Caption = 'License notes:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eLicenseNotes: TDBEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 365
+          DataField = 'license_notes'
+          DataSource = dsLink
+          Constraints.MinWidth = 365
+          MaxLength = 0
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+        end
+      end
+      object pLicenseUri: TPanel
+        Left = 0
+        Height = 45
+        Top = 1004
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 20
+        object lblLicenseUri: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
+          Caption = 'License URL:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eLicenseUri: TDBEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 365
+          DataField = 'license_uri'
+          DataSource = dsLink
+          Constraints.MinWidth = 365
+          MaxLength = 0
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
         end
       end
     end

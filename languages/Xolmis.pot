@@ -5704,6 +5704,11 @@ msgstr ""
 msgid "Max./day"
 msgstr ""
 
+#: tdlgbandsbalance.pmgprint.caption
+msgctxt "tdlgbandsbalance.pmgprint.caption"
+msgid "Print"
+msgstr ""
+
 #: tdlgbandsbalance.pmgrefresh.caption
 msgctxt "tdlgbandsbalance.pmgrefresh.caption"
 msgid "Refresh"
@@ -6591,6 +6596,31 @@ msgctxt "tedtaudioinfo.lbllatitude.caption"
 msgid "Latitude:"
 msgstr ""
 
+#: tedtaudioinfo.lbllicensenotes.caption
+msgctxt "tedtaudioinfo.lbllicensenotes.caption"
+msgid "License notes:"
+msgstr ""
+
+#: tedtaudioinfo.lbllicenseowner.caption
+msgctxt "tedtaudioinfo.lbllicenseowner.caption"
+msgid "License owner:"
+msgstr ""
+
+#: tedtaudioinfo.lbllicensetype.caption
+msgctxt "tedtaudioinfo.lbllicensetype.caption"
+msgid "License type:"
+msgstr ""
+
+#: tedtaudioinfo.lbllicenseuri.caption
+msgctxt "tedtaudioinfo.lbllicenseuri.caption"
+msgid "License URL:"
+msgstr ""
+
+#: tedtaudioinfo.lbllicenseyear.caption
+msgctxt "tedtaudioinfo.lbllicenseyear.caption"
+msgid "License year:"
+msgstr ""
+
 #: tedtaudioinfo.lbllocality.caption
 msgctxt "tedtaudioinfo.lbllocality.caption"
 msgid "Locality:"
@@ -7288,22 +7318,27 @@ msgid "Document type:"
 msgstr ""
 
 #: tedtdocumentinfo.lbllicensenotes.caption
+msgctxt "tedtdocumentinfo.lbllicensenotes.caption"
 msgid "License notes:"
 msgstr ""
 
 #: tedtdocumentinfo.lbllicenseowner.caption
+msgctxt "tedtdocumentinfo.lbllicenseowner.caption"
 msgid "License owner:"
 msgstr ""
 
 #: tedtdocumentinfo.lbllicensetype.caption
+msgctxt "tedtdocumentinfo.lbllicensetype.caption"
 msgid "License type:"
 msgstr ""
 
 #: tedtdocumentinfo.lbllicenseuri.caption
+msgctxt "tedtdocumentinfo.lbllicenseuri.caption"
 msgid "License URL:"
 msgstr ""
 
 #: tedtdocumentinfo.lbllicenseyear.caption
+msgctxt "tedtdocumentinfo.lbllicenseyear.caption"
 msgid "License year:"
 msgstr ""
 
@@ -7540,6 +7575,31 @@ msgstr ""
 #: tedtimageinfo.lbllatitude.caption
 msgctxt "tedtimageinfo.lbllatitude.caption"
 msgid "Latitude:"
+msgstr ""
+
+#: tedtimageinfo.lbllicensenotes.caption
+msgctxt "tedtimageinfo.lbllicensenotes.caption"
+msgid "License notes:"
+msgstr ""
+
+#: tedtimageinfo.lbllicenseowner.caption
+msgctxt "tedtimageinfo.lbllicenseowner.caption"
+msgid "License owner:"
+msgstr ""
+
+#: tedtimageinfo.lbllicensetype.caption
+msgctxt "tedtimageinfo.lbllicensetype.caption"
+msgid "License type:"
+msgstr ""
+
+#: tedtimageinfo.lbllicenseuri.caption
+msgctxt "tedtimageinfo.lbllicenseuri.caption"
+msgid "License URL:"
+msgstr ""
+
+#: tedtimageinfo.lbllicenseyear.caption
+msgctxt "tedtimageinfo.lbllicenseyear.caption"
+msgid "License year:"
 msgstr ""
 
 #: tedtimageinfo.lbllocality.caption
@@ -11917,6 +11977,11 @@ msgstr ""
 msgid "Save image as..."
 msgstr ""
 
+#: tfrmimageviewer.sbclose.caption
+msgctxt "tfrmimageviewer.sbclose.caption"
+msgid "Close"
+msgstr ""
+
 #: tfrmimageviewer.sbcopyimage.caption
 msgctxt "tfrmimageviewer.sbcopyimage.caption"
 msgid "Copy"
@@ -12526,6 +12591,11 @@ msgstr ""
 
 #: tfrmprintpreview.pmzoompagewidth.caption
 msgid "Page width"
+msgstr ""
+
+#: tfrmprintpreview.sbclose.caption
+msgctxt "tfrmprintpreview.sbclose.caption"
+msgid "Close"
 msgstr ""
 
 #: tfrmprintpreview.sbfirstpage.hint

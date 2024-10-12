@@ -49,6 +49,7 @@ type
     sbPrint: TSpeedButton;
     sbPriorPage: TSpeedButton;
     sbSavePDF: TSpeedButton;
+    sbClose: TSpeedButton;
     sbZoom100: TSpeedButton;
     sbZoomAdjust: TSpeedButton;
     sbZoomAdjustWidth: TSpeedButton;
@@ -63,6 +64,7 @@ type
     procedure ReportBeginDoc;
     procedure ReportEndDoc;
     procedure ReportProgress(n: Integer);
+    procedure sbCloseClick(Sender: TObject);
     procedure sbFirstPageClick(Sender: TObject);
     procedure sbLastPageClick(Sender: TObject);
     procedure sbNextPageClick(Sender: TObject);
@@ -116,6 +118,7 @@ begin
   sbZoom100.Images := iButtonsDark;
   sbZoomOut.Images := iButtonsDark;
   sbZoomIn.Images := iButtonsDark;
+  sbClose.Images := iButtonsDark;
 
   pmReport.Images := iButtonsDark;
 end;
@@ -174,6 +177,11 @@ begin
   if Assigned(dlgProgress) then
     dlgProgress.Position := n;
   //PBar.Position := n;
+end;
+
+procedure TfrmPrintPreview.sbCloseClick(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure TfrmPrintPreview.sbFirstPageClick(Sender: TObject);

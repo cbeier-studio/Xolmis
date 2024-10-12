@@ -9,6 +9,7 @@
 {"hash":124639694,"name":"tfrmimageviewer.sbsaveas.caption","sourcebytes":[83,97,118,101,32,97,115,46,46,46],"value":"Save as..."},
 {"hash":17902708,"name":"tfrmimageviewer.sbcopyimage.hint","sourcebytes":[67,111,112,121,32,105,109,97,103,101,32,116,111,32,99,108,105,112,98,111,97,114,100],"value":"Copy image to clipboard"},
 {"hash":304761,"name":"tfrmimageviewer.sbcopyimage.caption","sourcebytes":[67,111,112,121],"value":"Copy"},
+{"hash":4863637,"name":"tfrmimageviewer.sbclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
 {"hash":225707967,"name":"tfrmimageviewer.sbimageinfo.hint","sourcebytes":[73,109,97,103,101,32,105,110,102,111],"value":"Image info"},
 {"hash":398941,"name":"tfrmimageviewer.tbzoom.hint","sourcebytes":[90,111,111,109],"value":"Zoom"},
 {"hash":23459486,"name":"tfrmimageviewer.sbzoomin.hint","sourcebytes":[90,111,111,109,32,105,110],"value":"Zoom in"},

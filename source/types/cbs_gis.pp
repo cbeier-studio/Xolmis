@@ -716,7 +716,7 @@ begin
       Features.Add(Feature);
     end;
 
-    // Formatar o JSON manualmente
+    // Format JSON
     JSONPretty := PrettyPrintJSON(JSONObject.AsJSON);
 
     // Save GeoJSON to file using TStringStream
