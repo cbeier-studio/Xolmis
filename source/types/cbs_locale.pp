@@ -760,6 +760,7 @@ uses
     rsDocImage = 'Image';
     rsDocAudio = 'Audio file';
     rsDocCode = 'Source code';
+    rsDocGis = 'GIS file';
     rsDocOther = 'Other';
 
     { Versions }

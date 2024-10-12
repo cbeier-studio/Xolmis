@@ -2787,6 +2787,10 @@ msgstr "Banco de dados"
 msgid "Document"
 msgstr "Documento"
 
+#: cbs_locale.rsdocgis
+msgid "GIS file"
+msgstr "Arquivo GIS"
+
 #: cbs_locale.rsdocimage
 msgid "Image"
 msgstr "Imagem"

@@ -154,6 +154,7 @@ begin
   cbDocumentType.Items.Add(rsDocImage);
   cbDocumentType.Items.Add(rsDocAudio);
   cbDocumentType.Items.Add(rsDocDatabase);
+  cbDocumentType.Items.Add(rsDocGis);
   cbDocumentType.Items.Add(rsDocOther);
 end;
 

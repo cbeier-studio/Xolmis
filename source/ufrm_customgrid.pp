@@ -23,9 +23,9 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character, Buttons, CheckLst, DBCtrls,
-  laz.VirtualTrees, TAGraph, TASeries, TADbSource, TASources, LR_PGrid, TAGUIConnectorBGRA,
-  atshapelinebgra, BCPanel, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, ToggleSwitch,
-  mvMapViewer, mvDE_BGRA, mvTypes, mvGpsObj, mvDrawingEngine, LR_Class;
+  laz.VirtualTrees, TAGraph, TASeries, TADbSource, TASources, LR_PGrid, TAGUIConnectorBGRA, atshapelinebgra,
+  BCPanel, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, ToggleSwitch, DragDropFile, mvMapViewer,
+  mvDE_BGRA, mvTypes, mvGpsObj, mvDrawingEngine, LR_Class, DropTarget;
 
 type
   { TStringMemoEditor }
@@ -46,6 +46,9 @@ type
   { TfrmCustomGrid }
 
   TfrmCustomGrid = class(TForm)
+    DropAudios: TDropFileTarget;
+    DropDocs: TDropFileTarget;
+    DropImages: TDropFileTarget;
     dsDocs: TDataSource;
     gridDocs: TDBGrid;
     MenuItem1: TMenuItem;
@@ -858,6 +861,9 @@ type
     procedure DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
       AState: TGridDrawState);
     procedure DBGSelectEditor(Sender: TObject; Column: TColumn; var Editor: TWinControl);
+    procedure DropAudiosDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint; var Effect: Longint);
+    procedure DropDocsDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint; var Effect: Longint);
+    procedure DropImagesDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint; var Effect: Longint);
     procedure dsAudiosDataChange(Sender: TObject; Field: TField);
     procedure dsAudiosStateChange(Sender: TObject);
     procedure dsDocsDataChange(Sender: TObject; Field: TField);
@@ -1089,6 +1095,7 @@ type
     cellMemo: TMemo;
 
     procedure AddAudio(aDataSet: TDataSet; aFileName: String);
+    procedure AddDocument(aDataSet: TDataSet; aFileName: String);
     procedure AddGridColumns(aTable: TTableType; aGrid: TDBGrid);
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
       IsAnAlias: Boolean = False);
@@ -1376,6 +1383,48 @@ begin
     end;
     FieldByName('recording_date').AsDateTime := CreationDate;
     FieldByName('recording_time').AsDateTime := CreationDate;
+
+    Post;
+    TSQLQuery(aDataSet).ApplyUpdates;
+  end;
+end;
+
+procedure TfrmCustomGrid.AddDocument(aDataSet: TDataSet; aFileName: String);
+var
+  relPath: String;
+  SearchRec: TSearchRec;
+  CreationDate: TDateTime;
+begin
+  if not (FileExists(aFileName)) then
+  begin
+    //LogError(Format(rsImageNotFound, [aFileName]));
+    Exit;
+  end;
+
+  if FindFirst(aFileName, faAnyFile, SearchRec) = 0 then
+  try
+    CreationDate := FileDateToDateTime(SearchRec.Time);
+  finally
+    FindClose(SearchRec);
+  end;
+
+  relPath := ExtractRelativePath(XSettings.DocumentsFolder, aFileName);
+
+  with aDataset do
+  begin
+    // Check if the image is in the dataset
+    if not RecordExists(tbDocuments, 'document_path', relPath) then
+    begin
+      Append;
+      FieldByName('document_path').AsString := relPath;
+    end
+    else
+    begin
+      Locate('document_path', relPath, []);
+      Edit;
+    end;
+    FieldByName('document_date').AsDateTime := CreationDate;
+    FieldByName('document_time').AsDateTime := CreationDate;
 
     Post;
     TSQLQuery(aDataSet).ApplyUpdates;
@@ -3280,6 +3329,153 @@ begin
       end;
   end;
 
+end;
+
+procedure TfrmCustomGrid.DropAudiosDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint;
+  var Effect: Longint);
+var
+  i: Integer;
+begin
+  dlgProgress := TdlgProgress.Create(nil);
+  try
+    dlgProgress.Show;
+    dlgProgress.Title := rsImportAudiosTitle;
+    dlgProgress.Text := rsProgressPreparing;
+    dlgProgress.Max := DropAudios.Files.Count;
+    Parar := False;
+    Application.ProcessMessages;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlCon.StartTransaction;
+    try
+      for i := 0 to DropAudios.Files.Count - 1 do
+      begin
+        dlgProgress.Text := Format(rsProgressImportAudios, [i + 1, DropAudios.Files.Count]);
+
+        AddAudio(qAudios, DropAudios.Files[i]);
+
+        dlgProgress.Position := i + 1;
+        Application.ProcessMessages;
+        if Parar then
+          Break;
+      end;
+      if Parar then
+        DMM.sqlTrans.RollbackRetaining
+      else
+        DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+    dlgProgress.Text := rsProgressFinishing;
+    dlgProgress.Position := DropAudios.Files.Count;
+    Application.ProcessMessages;
+    Parar := False;
+  finally
+    dlgProgress.Close;
+    FreeAndNil(dlgProgress);
+  end;
+
+  // Reject drop if it is a move operation
+  //if (Effect = DROPEFFECT_MOVE) then
+  //  Effect := DROPEFFECT_NONE;
+end;
+
+procedure TfrmCustomGrid.DropDocsDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint;
+  var Effect: Longint);
+var
+  i: Integer;
+begin
+  dlgProgress := TdlgProgress.Create(nil);
+  try
+    dlgProgress.Show;
+    dlgProgress.Title := rsImportDocsTitle;
+    dlgProgress.Text := rsProgressPreparing;
+    dlgProgress.Max := DropDocs.Files.Count;
+    Parar := False;
+    Application.ProcessMessages;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlCon.StartTransaction;
+    try
+      for i := 0 to DropDocs.Files.Count - 1 do
+      begin
+        dlgProgress.Text := Format(rsProgressImportDocs, [i + 1, DropDocs.Files.Count]);
+
+        AddDocument(qDocs, DropDocs.Files[i]);
+
+        dlgProgress.Position := i + 1;
+        Application.ProcessMessages;
+        if Parar then
+          Break;
+      end;
+      if Parar then
+        DMM.sqlTrans.RollbackRetaining
+      else
+        DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+    dlgProgress.Text := rsProgressFinishing;
+    dlgProgress.Position := DropDocs.Files.Count;
+    Application.ProcessMessages;
+    Parar := False;
+  finally
+    dlgProgress.Close;
+    FreeAndNil(dlgProgress);
+  end;
+
+  // Reject drop if it is a move operation
+  //if (Effect = DROPEFFECT_MOVE) then
+  //  Effect := DROPEFFECT_NONE;
+end;
+
+procedure TfrmCustomGrid.DropImagesDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint;
+  var Effect: Longint);
+var
+  i: Integer;
+begin
+  dlgProgress := TdlgProgress.Create(nil);
+  try
+    dlgProgress.Show;
+    dlgProgress.Title := rsImportImagesTitle;
+    dlgProgress.Text := rsProgressPreparing;
+    dlgProgress.Max := DropImages.Files.Count;
+    Parar := False;
+    Application.ProcessMessages;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlCon.StartTransaction;
+    try
+      for i := 0 to DropImages.Files.Count - 1 do
+      begin
+        dlgProgress.Text := Format(rsProgressImportImages, [i + 1, DropImages.Files.Count]);
+
+        AddImage(qImages, tbImages, 'image_filename', 'image_thumbnail', DropImages.Files[i]);
+
+        dlgProgress.Position := i + 1;
+        Application.ProcessMessages;
+        if Parar then
+          Break;
+      end;
+      if Parar then
+        DMM.sqlTrans.RollbackRetaining
+      else
+        DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+    dlgProgress.Text := rsProgressFinishing;
+    dlgProgress.Position := DropImages.Files.Count;
+    Application.ProcessMessages;
+    Parar := False;
+  finally
+    dlgProgress.Close;
+    FreeAndNil(dlgProgress);
+  end;
+
+  // Reject drop if it is a move operation
+  //if (Effect = DROPEFFECT_MOVE) then
+  //  Effect := DROPEFFECT_NONE;
 end;
 
 procedure TfrmCustomGrid.dsAudiosDataChange(Sender: TObject; Field: TField);
@@ -5426,10 +5622,11 @@ var
   ScaleFactor: Single;
   TargetWidth, TargetHeight: Int64;
 begin
-  // Verificar se a célula precisa desenhar uma imagem
+  ImgIndex := -1;
+
   if Column.FieldName = 'document_type' then
   begin
-    // Obter o índice da imagem do valor da célula
+    // Get image index from cell value
     case Column.Field.AsString of
       'url': ImgIndex := 0;
       'doc': ImgIndex := 4;
@@ -5440,6 +5637,7 @@ begin
       'aud': ImgIndex := 8;
       'cod': ImgIndex := 6;
       'db':  ImgIndex := 9;
+      'gis': ImgIndex := 10;
       'oth': ImgIndex := 1;
     end;
 
@@ -5793,8 +5991,7 @@ begin
         begin
           dlgProgress.Text := Format(rsProgressImportDocs, [i + 1, DMM.OpenDocs.Files.Count]);
 
-          { #todo : AddDocument method }
-          //AddImage(qImages, tbImages, 'image_filename', 'image_thumbnail', DMM.OpenDocs.Files[i]);
+          AddDocument(qDocs, DMM.OpenDocs.Files[i]);
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
@@ -7201,6 +7398,7 @@ begin
     'aud': aText := rsDocAudio;
     'cod': aText := rsDocCode;
     'db':  aText := rsDocDatabase;
+    'gis': aText := rsDocGis;
     'oth': aText := rsDocOther;
   end;
 
@@ -7235,6 +7433,9 @@ begin
   else
   if aText = rsDocDatabase then
     Sender.AsString := 'db'
+  else
+  if aText = rsDocGis then
+    Sender.AsString := 'gis'
   else
   if aText = rsDocOther then
     Sender.AsString := 'oth';
