@@ -759,6 +759,7 @@ uses
     rsDocDatabase = 'Database';
     rsDocImage = 'Image';
     rsDocAudio = 'Audio file';
+    rsDocVideo = 'Video';
     rsDocCode = 'Source code';
     rsDocGis = 'GIS file';
     rsDocOther = 'Other';

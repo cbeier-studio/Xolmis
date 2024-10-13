@@ -240,7 +240,6 @@ type
     pmPrintBandsByCarrier: TMenuItem;
     pmPrintBandsWithHistory: TMenuItem;
     pmPrintBandsByStatus: TMenuItem;
-    pmPrintBandsBalance: TMenuItem;
     pmPrintIndividuals: TMenuItem;
     pmPrintIndividualsByTaxon: TMenuItem;
     pmPrintIndividualsByParents: TMenuItem;
@@ -5635,6 +5634,7 @@ begin
       'pdf': ImgIndex := 2;
       'img': ImgIndex := 7;
       'aud': ImgIndex := 8;
+      'vid': ImgIndex := 11;
       'cod': ImgIndex := 6;
       'db':  ImgIndex := 9;
       'gis': ImgIndex := 10;
@@ -7396,6 +7396,7 @@ begin
     'pdf': aText := rsDocPdf;
     'img': aText := rsDocImage;
     'aud': aText := rsDocAudio;
+    'vid': aText := rsDocVideo;
     'cod': aText := rsDocCode;
     'db':  aText := rsDocDatabase;
     'gis': aText := rsDocGis;
@@ -7427,6 +7428,9 @@ begin
   else
   if aText = rsDocAudio then
     Sender.AsString := 'aud'
+  else
+  if aText = rsDocVideo then
+    Sender.AsString := 'vid'
   else
   if aText = rsDocCode then
     Sender.AsString := 'cod'
@@ -10537,7 +10541,6 @@ begin
   pmPrintBandsByCarrier.Visible := True;
   pmPrintBandsWithHistory.Visible := True;
   pmPrintBandsByStatus.Visible := True;
-  pmPrintBandsBalance.Visible := True;
 
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;

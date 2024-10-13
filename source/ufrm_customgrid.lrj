@@ -335,7 +335,6 @@
 {"hash":47946978,"name":"tfrmcustomgrid.pmprintbandsbycarrier.caption","sourcebytes":[66,97,110,100,115,32,98,121,32,99,97,114,114,105,101,114],"value":"Bands by carrier"},
 {"hash":52407027,"name":"tfrmcustomgrid.pmprintbandsbystatus.caption","sourcebytes":[66,97,110,100,115,32,98,121,32,115,116,97,116,117,115],"value":"Bands by status"},
 {"hash":241325993,"name":"tfrmcustomgrid.pmprintbandswithhistory.caption","sourcebytes":[66,97,110,100,115,32,119,105,116,104,32,104,105,115,116,111,114,121],"value":"Bands with history"},
-{"hash":17224117,"name":"tfrmcustomgrid.pmprintbandsbalance.caption","sourcebytes":[66,97,110,100,115,32,98,97,108,97,110,99,101],"value":"Bands balance"},
 {"hash":212598067,"name":"tfrmcustomgrid.pmprintindividuals.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,115],"value":"Individuals"},
 {"hash":78189438,"name":"tfrmcustomgrid.pmprintindividualsbytaxon.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,115,32,98,121,32,116,97,120,111,110],"value":"Individuals by taxon"},
 {"hash":85238035,"name":"tfrmcustomgrid.pmprintindividualsbyparents.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,115,32,98,121,32,112,97,114,101,110,116,115],"value":"Individuals by parents"},

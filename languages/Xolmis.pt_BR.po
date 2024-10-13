@@ -2816,6 +2816,10 @@ msgstr "Planilha"
 msgid "URL"
 msgstr "URL"
 
+#: cbs_locale.rsdocvideo
+msgid "Video"
+msgstr "Vídeo"
+
 #: cbs_locale.rsectoparasite
 msgctxt "cbs_locale.rsectoparasite"
 msgid "Ectoparasite"
@@ -6184,6 +6188,85 @@ msgstr "Converter"
 #: tdlggeoeditor.tabimported.caption
 msgid "Imported"
 msgstr "Importadas"
+
+#: tdlgimport.btnoptions.caption
+msgctxt "tdlgimport.btnoptions.caption"
+msgid "Options"
+msgstr "Opções"
+
+#: tdlgimport.caption
+msgid "Import wizard"
+msgstr "Assistente de importação"
+
+#: tdlgimport.esourcefile.buttonhint
+msgctxt "tdlgimport.esourcefile.buttonhint"
+msgid "Select file"
+msgstr "Selecionar arquivo"
+
+#: tdlgimport.gridfields.columns[0].title.caption
+msgid "Target field"
+msgstr "Campo destino"
+
+#: tdlgimport.gridfields.columns[1].title.caption
+msgid "Search table"
+msgstr "Tabela de busca"
+
+#: tdlgimport.lblconfirminstruction.caption
+msgid "Check if the data sampled is correct."
+msgstr "Verifique se os dados amostrados estão corretos."
+
+#: tdlgimport.lblfieldsinstruction.caption
+msgid "Set the fields correspondence from source file to the target table. "
+msgstr "Defina as correspondências dos campos do arquivo de origem para a tabela destino."
+
+#: tdlgimport.lblprogressinstruction.caption
+msgid "Please wait, while importing the data."
+msgstr "Por favor, espere enquanto os dados são importados."
+
+#: tdlgimport.lblsourcefile.caption
+msgid "Source file: *"
+msgstr "Arquivo de origem: *"
+
+#: tdlgimport.lblsourceinstruction.caption
+msgid "Select a target table and a source file to import."
+msgstr "Selecione uma tabela destino e um arquivo de origem para importar."
+
+#: tdlgimport.lbltarget.caption
+msgid "Target table: *"
+msgstr "Tabela destino: *"
+
+#: tdlgimport.lbltitleconfirm.caption
+msgctxt "tdlgimport.lbltitleconfirm.caption"
+msgid "Confirmation"
+msgstr "Confirmação"
+
+#: tdlgimport.lbltitlefields.caption
+msgid "Fields"
+msgstr "Campos"
+
+#: tdlgimport.lbltitleprogress.caption
+msgid "Importing"
+msgstr "Importando"
+
+#: tdlgimport.lbltitlesource.caption
+msgid "Source and target "
+msgstr "Origem e destino"
+
+#: tdlgimport.opendlg.title
+msgid "Select source file"
+msgstr "Selecionar arquivo de origem"
+
+#: tdlgimport.sbcancel.caption
+msgid "&Cancel"
+msgstr "&Cancelar"
+
+#: tdlgimport.sbnext.caption
+msgid "&Next"
+msgstr "&Seguinte"
+
+#: tdlgimport.sbprior.caption
+msgid "&Previous"
+msgstr "&Anterior"
 
 #: tdlgimportcaptures.caption
 msgctxt "tdlgimportcaptures.caption"
@@ -10856,11 +10939,6 @@ msgstr "&Desmarcar todos"
 msgctxt "tfrmcustomgrid.pmprintbands.caption"
 msgid "Bands"
 msgstr "Anilhas"
-
-#: tfrmcustomgrid.pmprintbandsbalance.caption
-msgctxt "tfrmcustomgrid.pmprintbandsbalance.caption"
-msgid "Bands balance"
-msgstr "Saldo de anilhas"
 
 #: tfrmcustomgrid.pmprintbandsbycarrier.caption
 msgid "Bands by carrier"

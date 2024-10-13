@@ -2810,6 +2810,10 @@ msgstr ""
 msgid "URL"
 msgstr ""
 
+#: cbs_locale.rsdocvideo
+msgid "Video"
+msgstr ""
+
 #: cbs_locale.rsectoparasite
 msgctxt "cbs_locale.rsectoparasite"
 msgid "Ectoparasite"
@@ -6153,6 +6157,85 @@ msgstr ""
 
 #: tdlggeoeditor.tabimported.caption
 msgid "Imported"
+msgstr ""
+
+#: tdlgimport.btnoptions.caption
+msgctxt "tdlgimport.btnoptions.caption"
+msgid "Options"
+msgstr ""
+
+#: tdlgimport.caption
+msgid "Import wizard"
+msgstr ""
+
+#: tdlgimport.esourcefile.buttonhint
+msgctxt "tdlgimport.esourcefile.buttonhint"
+msgid "Select file"
+msgstr ""
+
+#: tdlgimport.gridfields.columns[0].title.caption
+msgid "Target field"
+msgstr ""
+
+#: tdlgimport.gridfields.columns[1].title.caption
+msgid "Search table"
+msgstr ""
+
+#: tdlgimport.lblconfirminstruction.caption
+msgid "Check if the data sampled is correct."
+msgstr ""
+
+#: tdlgimport.lblfieldsinstruction.caption
+msgid "Set the fields correspondence from source file to the target table. "
+msgstr ""
+
+#: tdlgimport.lblprogressinstruction.caption
+msgid "Please wait, while importing the data."
+msgstr ""
+
+#: tdlgimport.lblsourcefile.caption
+msgid "Source file: *"
+msgstr ""
+
+#: tdlgimport.lblsourceinstruction.caption
+msgid "Select a target table and a source file to import."
+msgstr ""
+
+#: tdlgimport.lbltarget.caption
+msgid "Target table: *"
+msgstr ""
+
+#: tdlgimport.lbltitleconfirm.caption
+msgctxt "tdlgimport.lbltitleconfirm.caption"
+msgid "Confirmation"
+msgstr ""
+
+#: tdlgimport.lbltitlefields.caption
+msgid "Fields"
+msgstr ""
+
+#: tdlgimport.lbltitleprogress.caption
+msgid "Importing"
+msgstr ""
+
+#: tdlgimport.lbltitlesource.caption
+msgid "Source and target "
+msgstr ""
+
+#: tdlgimport.opendlg.title
+msgid "Select source file"
+msgstr ""
+
+#: tdlgimport.sbcancel.caption
+msgid "&Cancel"
+msgstr ""
+
+#: tdlgimport.sbnext.caption
+msgid "&Next"
+msgstr ""
+
+#: tdlgimport.sbprior.caption
+msgid "&Previous"
 msgstr ""
 
 #: tdlgimportcaptures.caption
@@ -10825,11 +10908,6 @@ msgstr ""
 #: tfrmcustomgrid.pmprintbands.caption
 msgctxt "tfrmcustomgrid.pmprintbands.caption"
 msgid "Bands"
-msgstr ""
-
-#: tfrmcustomgrid.pmprintbandsbalance.caption
-msgctxt "tfrmcustomgrid.pmprintbandsbalance.caption"
-msgid "Bands balance"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintbandsbycarrier.caption

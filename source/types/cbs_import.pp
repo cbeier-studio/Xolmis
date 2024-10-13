@@ -25,7 +25,7 @@ uses
   { System }
   SysUtils, Classes, Forms, Dialogs, StrUtils, ComCtrls,
   { Data }
-  DB, SQLDB, SdfData;
+  DB, SQLDB, SdfData, fpjson, jsonparser, fpjsondataset;
 
 const
   EbirdSchema: String = 'Submission ID,Common Name,Scientific Name,Taxonomic Order,' +
@@ -61,6 +61,8 @@ const
   EggSchema: String = 'nest;date;egg_num;length;width;mass;shape;color;photos;notes';
 
 type
+  TImportFileType = (iftCSV, iftTSV, iftExcel, iftExcelOOXML, iftOpenDocument, iftJSON, iftDBF, iftXML,
+                      iftKML, iftGPX, iftGeoJSON);
 
   { TEbirdDownloadFormat }
 
@@ -331,11 +333,6 @@ begin
       repeat
         dlgProgress.Text := Format(rsProgressRecords,[CSV.RecNo, CSV.RecordCount]);
         Reg.Clear;
-        // FS:= TFormatSettings.Create;
-        // FS.ShortDateFormat:= 'yyyy-mm-dd';
-        // FS.ShortTimeFormat:= 'hh:nn am/pm';
-        // FS.DateSeparator:= '-';
-        // FS.DecimalSeparator:= '.';
 
         { Loading field values into TEbirdDownloadFormat }
         { 0 = Submission ID }

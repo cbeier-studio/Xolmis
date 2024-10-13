@@ -435,6 +435,12 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="DBFLaz"/>
+      </Item>
+      <Item>
+        <PackageName Value="laz_fpspreadsheet_dataset"/>
+      </Item>
+      <Item>
         <PackageName Value="DragDropLazarus"/>
       </Item>
       <Item>
@@ -1206,6 +1212,13 @@
         <Filename Value="edit_dialogs\uedt_documentinfo.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtDocumentInfo"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_import.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgImport"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
