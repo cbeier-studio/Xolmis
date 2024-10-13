@@ -38,12 +38,14 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
-[Files]
 Source: "{#MyAppSource}\Xolmis.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppSource}\sqlite3.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "languages\Xolmis.pt_BR.mo"; DestDir: "{app}\languages"
 Source: "resources\XolmisDB_template.sqlite3"; DestDir: "{localappdata}\{#MyAppName}"
 Source: "reports\*.lrf"; DestDir: "{app}\reports"
+Source: "resources\FiraCode-Regular.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraCode-Bold.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraCode-SemiBold.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code SemiBold"; Flags: onlyifdoesntexist uninsneveruninstall
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
