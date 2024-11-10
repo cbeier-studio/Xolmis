@@ -3758,6 +3758,19 @@ msgstr ""
 msgid "Casual Observation"
 msgstr ""
 
+#: cbs_locale.rsmobileeggexists
+#, object-pascal-format
+msgid "Egg already recorded: %s"
+msgstr ""
+
+#: cbs_locale.rsmobileimportingegg
+msgid "Importing eggs..."
+msgstr ""
+
+#: cbs_locale.rsmobileimportingrevision
+msgid "Importing nest revisions..."
+msgstr ""
+
 #: cbs_locale.rsmobileimportingspecies
 msgid "Importing species list..."
 msgstr ""
@@ -3774,6 +3787,11 @@ msgstr ""
 msgid "Mackinnon List"
 msgstr ""
 
+#: cbs_locale.rsmobilenestcreated
+#, object-pascal-format
+msgid "Nest created: %d"
+msgstr ""
+
 #: cbs_locale.rsmobilepointcount
 msgid "Point Count"
 msgstr ""
@@ -3784,6 +3802,11 @@ msgstr ""
 
 #: cbs_locale.rsmobilequalitativetimed
 msgid "Timed Qualitative List"
+msgstr ""
+
+#: cbs_locale.rsmobilerevisionexists
+#, object-pascal-format
+msgid "Nest revision already recorded: %s"
 msgstr ""
 
 #: cbs_locale.rsmobilespeciesexists
@@ -3797,7 +3820,7 @@ msgid "Survey created: %d"
 msgstr ""
 
 #: cbs_locale.rsmobiletransectioncount
-msgid "Tansection Count"
+msgid "Transection Count"
 msgstr ""
 
 #: cbs_locale.rsmobilevegetationexists
@@ -6762,14 +6785,6 @@ msgstr ""
 
 #: tdlgimportxmobile.sbsavelog.caption
 msgid "Save log"
-msgstr ""
-
-#: tdlgimportxmobile.txtdatatype.caption
-msgid "Inventory/List, Nest, Specimens (0)"
-msgstr ""
-
-#: tdlgimportxmobile.txtlisttype.caption
-msgid "List type"
 msgstr ""
 
 #: tdlglogin.epassword.buttonhint
@@ -10261,16 +10276,6 @@ msgstr ""
 #: tedtvegetation.elongitude.buttonhint
 msgctxt "tedtvegetation.elongitude.buttonhint"
 msgid "Edit coordinates in DMS format"
-msgstr ""
-
-#: tedtvegetation.esampledate.texthint
-msgctxt "tedtvegetation.esampledate.texthint"
-msgid "DD/MM/YYYY"
-msgstr ""
-
-#: tedtvegetation.esampletime.texthint
-msgctxt "tedtvegetation.esampletime.texthint"
-msgid "HH:MM"
 msgstr ""
 
 #: tedtvegetation.lblcloudcover.caption

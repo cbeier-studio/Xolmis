@@ -3776,6 +3776,19 @@ msgstr "Anilhamento"
 msgid "Casual Observation"
 msgstr "Observação casual"
 
+#: cbs_locale.rsmobileeggexists
+#, object-pascal-format
+msgid "Egg already recorded: %s"
+msgstr "Ovo já registrado: %s"
+
+#: cbs_locale.rsmobileimportingegg
+msgid "Importing eggs..."
+msgstr "Importando ovos..."
+
+#: cbs_locale.rsmobileimportingrevision
+msgid "Importing nest revisions..."
+msgstr "Importando revisões de ninho..."
+
 #: cbs_locale.rsmobileimportingspecies
 msgid "Importing species list..."
 msgstr "Importando lista de espécies..."
@@ -3792,6 +3805,11 @@ msgstr "Importando dados do tempo..."
 msgid "Mackinnon List"
 msgstr "Lista de Mackinnon"
 
+#: cbs_locale.rsmobilenestcreated
+#, object-pascal-format
+msgid "Nest created: %d"
+msgstr "Ninho criado: %d"
+
 #: cbs_locale.rsmobilepointcount
 msgid "Point Count"
 msgstr "Ponto de contagem"
@@ -3804,6 +3822,11 @@ msgstr "Lista qualitativa livre"
 msgid "Timed Qualitative List"
 msgstr "Lista qualitativa temporizada"
 
+#: cbs_locale.rsmobilerevisionexists
+#, object-pascal-format
+msgid "Nest revision already recorded: %s"
+msgstr "Revisão de ninho já registrada: %s"
+
 #: cbs_locale.rsmobilespeciesexists
 #, object-pascal-format
 msgid "Species %s already recorded!"
@@ -3815,7 +3838,7 @@ msgid "Survey created: %d"
 msgstr "Amostragem criada: %d"
 
 #: cbs_locale.rsmobiletransectioncount
-msgid "Tansection Count"
+msgid "Transection Count"
 msgstr "Contagem em transecção"
 
 #: cbs_locale.rsmobilevegetationexists
@@ -6793,14 +6816,6 @@ msgstr "Tentar novamente"
 #: tdlgimportxmobile.sbsavelog.caption
 msgid "Save log"
 msgstr "Salvar log"
-
-#: tdlgimportxmobile.txtdatatype.caption
-msgid "Inventory/List, Nest, Specimens (0)"
-msgstr ""
-
-#: tdlgimportxmobile.txtlisttype.caption
-msgid "List type"
-msgstr ""
 
 #: tdlglogin.epassword.buttonhint
 msgctxt "tdlglogin.epassword.buttonhint"
@@ -10292,18 +10307,6 @@ msgstr "Editar coordenadas em formato GMS"
 msgctxt "tedtvegetation.elongitude.buttonhint"
 msgid "Edit coordinates in DMS format"
 msgstr "Editar coordenadas em formato GMS"
-
-#: tedtvegetation.esampledate.texthint
-#, fuzzy
-msgctxt "tedtvegetation.esampledate.texthint"
-msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
-
-#: tedtvegetation.esampletime.texthint
-#, fuzzy
-msgctxt "tedtvegetation.esampletime.texthint"
-msgid "HH:MM"
-msgstr "HH:MM"
 
 #: tedtvegetation.lblcloudcover.caption
 msgctxt "tedtvegetation.lblcloudcover.caption"

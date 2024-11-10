@@ -791,7 +791,7 @@ uses
     rsMobileQualitativeFree = 'Free Qualitative List';
     rsMobileQualitativeTimed = 'Timed Qualitative List';
     rsMobileMackinnonList = 'Mackinnon List';
-    rsMobileTransectionCount = 'Tansection Count';
+    rsMobileTransectionCount = 'Transection Count';
     rsMobilePointCount = 'Point Count';
     rsMobileBanding = 'Banding';
     rsMobileCasual = 'Casual Observation';
@@ -802,6 +802,11 @@ uses
     rsMobileSpeciesExists = 'Species %s already recorded!';
     rsMobileVegetationExists = 'Vegetation already recorded: %s';
     rsMobileWeatherExists = 'Weather already recorded: %s';
+    rsMobileNestCreated = 'Nest created: %d';
+    rsMobileImportingRevision = 'Importing nest revisions...';
+    rsMobileImportingEgg = 'Importing eggs...';
+    rsMobileRevisionExists = 'Nest revision already recorded: %s';
+    rsMobileEggExists = 'Egg already recorded: %s';
 
     rsDistributionNone = 'None';
     rsDistributionRare = 'Rare';

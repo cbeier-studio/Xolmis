@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, DBCtrls, Buttons, DateUtils,
   StdCtrls, EditBtn, DBEditButton, atshapelinebgra, BCPanel, DB, SQLDB, Character, fpjson, jsonparser,
-  cbs_gis, cbs_import, cbs_sampling;
+  cbs_gis, cbs_import, cbs_sampling, cbs_breeding;
 
 type
 
@@ -89,10 +89,13 @@ type
     FContentType: TMobileContentType;
     FInventoryType: TMobileInventoryType;
     FSurvey: TSurvey;
+    FNest: TNest;
     JSON: TFileStream;
     JSONData: TJSONData;
     JSONObject, SpeciesObject, PoiObject, VegetationObject, WeatherObject: TJSONObject;
+    RevisionObject, EggObject: TJSONObject;
     SpeciesArray, PoisArray, VegetationArray, WeatherArray: TJSONArray;
+    RevisionArray, EggArray: TJSONArray;
     procedure ApplyDarkMode;
     function AddSurvey: Integer;
     function AddNest: Integer;
@@ -117,7 +120,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
-  cbs_birds, uDarkStyleParams, udm_grid, udm_sampling, uedt_survey;
+  cbs_birds, cbs_fullnames, uDarkStyleParams, udm_grid, udm_sampling, uedt_survey;
 
 {$R *.lfm}
 
@@ -381,8 +384,71 @@ begin
 end;
 
 procedure TdlgImportXMobile.ImportEggList;
+var
+  AItem: TEgg;
+  aDate, aTime: TDateTime;
+  aFieldNumber, aShape: String;
+  s, p, j: Integer;
 begin
-  { #todo : ImportEggList - Import from Xolmis mobile }
+  if Parar then
+    Exit;
+
+  mProgress.Lines.Add(rsMobileImportingEgg);
+  EggArray := JSONObject.Arrays['eggsList'];
+  p := 0;
+  PBar.Position := p;
+  PBar.Max := EggArray.Count;
+  AItem := TEgg.Create();
+  try
+    for j := 0 to EggArray.Count - 1 do
+    begin
+      Inc(p);
+      AItem.Clear;
+
+      EggObject := EggArray.Objects[j];
+      aDate := StrToDate(EggObject.Get('sampleTime', ''));
+      aFieldNumber := EggObject.Get('fieldNumber', '');
+      s := EggObject.Get('eggShape', 0);
+      case s of
+        0: aShape := 'S';
+        1: aShape := 'E';
+        2: aShape := 'O';
+        3: aShape := 'P';
+        4: aShape := 'C';
+        5: aShape := 'B';
+        6: aShape := 'Y';
+        7: aShape := 'L';
+      end;
+
+      if AItem.Find(FNestKey, aFieldNumber, DateToStr(aDate), FObserverKey) then
+      begin
+        mProgress.Lines.Add(Format(rsMobileEggExists, [EggObject.Get('fieldNumber', '')]));
+      end
+      else
+      begin
+        AItem.NestId := FNestKey;
+        AItem.MeasureDate := aDate;
+        AItem.FieldNumber := EggObject.Get('fieldNumber', '');
+        AItem.TaxonId := GetKey('zoo_taxa', 'taxon_id', 'full_name', EggObject.Get('speciesName', ''));
+        AItem.EggShape := aShape;
+        AItem.Width := EggObject.Get('width', 0.0);
+        AItem.Length := EggObject.Get('length', 0.0);
+        AItem.Mass := EggObject.Get('mass', 0.0);
+        AItem.ResearcherId := FObserverKey;
+
+        AItem.Insert;
+      end;
+
+      PBar.Position := p;
+      Application.ProcessMessages;
+
+      if Parar then
+        Break;
+    end;
+
+  finally
+    FreeAndNil(AItem);
+  end;
 end;
 
 procedure TdlgImportXMobile.ImportInventory;
@@ -411,12 +477,102 @@ end;
 
 procedure TdlgImportXMobile.ImportNest;
 begin
-  { #todo : ImportNest - Import from Xolmis mobile }
+  nbPages.PageIndex := 1;
+
+  ImportRevisionList;
+  ImportEggList;
+
+  if Parar then
+  begin
+    lblTitleImportFinished.Caption := rsImportCanceled;
+    lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+    icoImportFinished.ImageIndex := 1;
+  end
+  else
+  begin
+    lblTitleImportFinished.Caption := rsFinishedImporting;
+    lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+    icoImportFinished.ImageIndex := 0;
+  end;
+  sbCancel.Caption := rsCaptionClose;
+  nbPages.PageIndex := 2;
 end;
 
 procedure TdlgImportXMobile.ImportRevisionList;
+var
+  AItem: TNestRevision;
+  aDate, aTime: TDateTime;
+  aStatus, aStage: String;
+  a, s, p, j: Integer;
 begin
-  { #todo : ImportRevisionList - Import from Xolmis mobile }
+  if Parar then
+    Exit;
+
+  mProgress.Lines.Add(rsMobileImportingRevision);
+  RevisionArray := JSONObject.Arrays['revisionsList'];
+  p := 0;
+  PBar.Position := p;
+  PBar.Max := RevisionArray.Count;
+  AItem := TNestRevision.Create();
+  try
+    for j := 0 to RevisionArray.Count - 1 do
+    begin
+      Inc(p);
+      AItem.Clear;
+
+      RevisionObject := RevisionArray.Objects[j];
+      aDate := StrToDate(RevisionObject.Get('sampleTime', ''));
+      aTime := StrToTime(RevisionObject.Get('sampleTime', ''));
+      a := RevisionObject.Get('nestStatus', 0);
+      case a of
+        0: aStatus := 'U';
+        1: aStatus := 'A';
+        2: aStatus := 'I';
+      end;
+      s := RevisionObject.Get('nestStage', 0);
+      case s of
+        0: aStage := 'U';
+        1: aStage := 'C';
+        2: aStage := 'L';
+        3: aStage := 'I';
+        4: aStage := 'H';
+        5: aStage := 'N';
+        6: aStage := 'X';
+      end;
+
+      if AItem.Find(FNestKey, DateToStr(aDate), TimeToStr(aTime), FObserverKey) then
+      begin
+        mProgress.Lines.Add(Format(rsMobileRevisionExists, [RevisionObject.Get('sampleTime', '')]));
+      end
+      else
+      begin
+        AItem.NestId := FNestKey;
+        AItem.RevisionDate := aDate;
+        AItem.RevisionTime := aTime;
+        AItem.NestStatus := aStatus;
+        AItem.NestStage := aStage;
+        AItem.HostEggsTally := RevisionObject.Get('eggsHost', 0);
+        AItem.HostNestlingsTally := RevisionObject.Get('nestlingsHost', 0);
+        AItem.NidoparasiteEggsTally := RevisionObject.Get('eggsParasite', 0);
+        AItem.NidoparasiteNestlingsTally := RevisionObject.Get('nestlingsParasite', 0);
+        AItem.HavePhilornisLarvae := RevisionObject.Get('hasPhilornisLarvae', 0) = 1;
+        AItem.Notes := RevisionObject.Get('notes', '');
+        AItem.Observer1Id := FObserverKey;
+        AItem.FullName := GetNestRevisionFullName(aDate, FNestKey, aStage, aStatus);
+
+        AItem.Insert;
+      end;
+
+      PBar.Position := p;
+      Application.ProcessMessages;
+
+      if Parar then
+        Break;
+    end;
+
+  finally
+    FreeAndNil(AItem);
+  end;
 end;
 
 procedure TdlgImportXMobile.ImportSpeciesList;
@@ -513,8 +669,8 @@ begin
       AItem.Clear;
 
       VegetationObject := VegetationArray.Objects[j];
-      aDate := StrToDate(WeatherObject.Get('sampleTime', ''));
-      aTime := StrToTime(WeatherObject.Get('sampleTime', ''));
+      aDate := StrToDate(VegetationObject.Get('sampleTime', ''));
+      aTime := StrToTime(VegetationObject.Get('sampleTime', ''));
       aLongitude := VegetationObject.Get('longitude', 0.0);
       aLatitude := VegetationObject.Get('latitude', 0.0);
 

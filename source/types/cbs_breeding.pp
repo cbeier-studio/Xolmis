@@ -144,10 +144,10 @@ type
   end;
 
 type
-  TEggShape = (esSpherical, esElliptical, esOval, esPiriform);
+  TEggShape = (esUnknown, esSpherical, esElliptical, esOval, esPiriform, esConical, esBiconical, esCylindrical, esLongitudinal);
 
 const
-  EggShapes: array [TEggShape] of Char = ('S', 'E', 'O', 'P');
+  EggShapes: array [TEggShape] of Char = ('U', 'S', 'E', 'O', 'P', 'C', 'B', 'Y', 'L');
 
 type
 
@@ -188,6 +188,7 @@ type
     function Diff(aOld: TEgg; var aList: TStrings): Boolean;
     procedure Insert;
     procedure Update;
+    function Find(aNest: Integer; aFieldNumber, aDate: String; aObserver: Integer): Boolean;
   published
     property FieldNumber: String read FFieldNumber write FFieldNumber;
     property EggSeq: Integer read FEggSeq write FEggSeq;
@@ -254,6 +255,7 @@ type
     function Diff(aOld: TNestRevision; var aList: TStrings): Boolean;
     procedure Insert;
     procedure Update;
+    function Find(aNest: Integer; aDate, aTime: String; aObserver: Integer): Boolean;
   published
     property NestId: Integer read FNestId write FNestId;
     property FullName: String read FFullName write FFullName;
@@ -499,6 +501,40 @@ begin
     aList.Add(R);
 
   Result := aList.Count > 0;
+end;
+
+function TNestRevision.Find(aNest: Integer; aDate, aTime: String; aObserver: Integer): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Result := False;
+
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('SELECT nest_revision_id FROM nest_revisions');
+    Add('WHERE (nest_id = :anest)');
+    Add('AND (date(sample_date) = date(:adate))');
+    Add('AND (time(sample_time) = time(:atime))');
+    Add('AND (observer_1_id = :aobserver)');
+    ParamByName('ANEST').AsInteger := aNest;
+    ParamByName('AOBSERVER').AsInteger := aObserver;
+    ParamByName('ADATE').AsString := aDate;
+    ParamByName('ATIME').AsString := aTime;
+
+    Open;
+    Result := RecordCount > 0;
+    if Result = True then
+    begin
+      GetData(FieldByName('nest_revision_id').AsInteger);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 { TEgg }
@@ -787,6 +823,40 @@ begin
     aList.Add(R);
 
   Result := aList.Count > 0;
+end;
+
+function TEgg.Find(aNest: Integer; aFieldNumber, aDate: String; aObserver: Integer): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Result := False;
+
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('SELECT egg_id FROM eggs');
+    Add('WHERE (nest_id = :anest)');
+    Add('AND (date(measure_date) = date(:adate))');
+    Add('AND (field_number = :afieldnumber)');
+    Add('AND (researcher_id = :aobserver)');
+    ParamByName('ANEST').AsInteger := aNest;
+    ParamByName('AOBSERVER').AsInteger := aObserver;
+    ParamByName('ADATE').AsString := aDate;
+    ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
+
+    Open;
+    Result := RecordCount > 0;
+    if Result = True then
+    begin
+      GetData(FieldByName('egg_id').AsInteger);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 { TNest }
