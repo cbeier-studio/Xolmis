@@ -46,6 +46,10 @@ Source: "reports\*.lrf"; DestDir: "{app}\reports"
 Source: "resources\FiraCode-Regular.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "resources\FiraCode-Bold.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "resources\FiraCode-SemiBold.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code SemiBold"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraSans-Regular.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraSans-Bold.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraSans-Italic.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraSans-BoldItalic.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
