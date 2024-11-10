@@ -624,7 +624,7 @@ type
     procedure Insert;
     procedure Update;
     function Diff(aOld: TSighting; var aList: TStrings): Boolean;
-    function Find(aSurvey, aTaxon: Integer): Boolean;
+    function Find(aSurvey, aTaxon, aObserver: Integer): Boolean;
   published
     property SurveyId: Integer read FSurveyId write FSurveyId;
     property SightingDate: TDate read FSightingDate write FSightingDate;
@@ -1119,7 +1119,7 @@ begin
   Result := aList.Count > 0;
 end;
 
-function TSighting.Find(aSurvey, aTaxon: Integer): Boolean;
+function TSighting.Find(aSurvey, aTaxon, aObserver: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
@@ -1131,8 +1131,12 @@ begin
     Add('SELECT sighting_id FROM sightings');
     Add('WHERE (survey_id = :asurvey)');
     Add('AND (taxon_id = :ataxon)');
+    if aObserver > 0 then
+      Add('AND (observer_id = :aobserver)');
     ParamByName('ASURVEY').AsInteger := aSurvey;
     ParamByName('ATAXON').AsInteger := aTaxon;
+    if aObserver > 0 then
+      ParamByName('AOBSERVER').AsInteger := aObserver;
     //  Add('and (time(AMO_HORA_INICIAL,''localtime'') =
     //    time('+QuotedStr(TimeToStr(Reg.RecordTime))+',''localtime''))');
 //    GravaLogSQL(SQL);

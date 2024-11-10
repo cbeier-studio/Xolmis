@@ -1,25 +1,25 @@
 object edtSpecimen: TedtSpecimen
   Left = 373
-  Height = 629
+  Height = 635
   Top = 34
   Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New specimen'
-  ClientHeight = 629
+  ClientHeight = 635
   ClientWidth = 400
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 586
+    Top = 592
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -29,7 +29,7 @@ object edtSpecimen: TedtSpecimen
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 588
+    Top = 594
     Width = 400
     Align = alTop
     AutoSize = True
@@ -37,10 +37,8 @@ object edtSpecimen: TedtSpecimen
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -53,7 +51,7 @@ object edtSpecimen: TedtSpecimen
       Top = 8
       Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -64,41 +62,41 @@ object edtSpecimen: TedtSpecimen
       Top = 8
       Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 586
+    Height = 592
     Top = 0
     Width = 400
     HorzScrollBar.Page = 400
-    VertScrollBar.Page = 586
+    VertScrollBar.Page = 592
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 586
+    ClientHeight = 592
     ClientWidth = 400
     Constraints.MinWidth = 176
     TabOrder = 1
     object pContent: TPanel
       Left = 0
-      Height = 586
+      Height = 592
       Top = 0
       Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 586
+      ClientHeight = 592
       ClientWidth = 400
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
-        Height = 124
-        Top = 446
+        Height = 112
+        Top = 464
         Width = 400
         Align = alTop
         AutoSize = True
@@ -109,7 +107,7 @@ object edtSpecimen: TedtSpecimen
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 124
+        ClientHeight = 112
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 9
@@ -134,10 +132,10 @@ object edtSpecimen: TedtSpecimen
           Constraints.MinWidth = 365
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pFieldNumber: TPanel
@@ -233,15 +231,15 @@ object edtSpecimen: TedtSpecimen
             'Regurgite'
           )
           MaxLength = 0
+          TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
-          TabOrder = 0
         end
       end
       object pIndividual: TPanel
         Left = 0
-        Height = 45
-        Top = 298
+        Height = 48
+        Top = 307
         Width = 400
         Align = alTop
         AutoSize = True
@@ -251,7 +249,7 @@ object edtSpecimen: TedtSpecimen
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 6
@@ -268,12 +266,12 @@ object edtSpecimen: TedtSpecimen
         end
         object eIndividual: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -385,8 +383,8 @@ object edtSpecimen: TedtSpecimen
       end
       object pTaxon: TPanel
         Left = 0
-        Height = 45
-        Top = 240
+        Height = 48
+        Top = 246
         Width = 400
         Align = alTop
         AutoSize = True
@@ -395,7 +393,7 @@ object edtSpecimen: TedtSpecimen
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 5
@@ -412,12 +410,12 @@ object edtSpecimen: TedtSpecimen
         end
         object eTaxon: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -440,8 +438,8 @@ object edtSpecimen: TedtSpecimen
       end
       object pNest: TPanel
         Left = 0
-        Height = 45
-        Top = 343
+        Height = 48
+        Top = 355
         Width = 400
         Align = alTop
         AutoSize = True
@@ -450,7 +448,7 @@ object edtSpecimen: TedtSpecimen
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 7
@@ -467,12 +465,12 @@ object edtSpecimen: TedtSpecimen
         end
         object eNest: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -495,8 +493,8 @@ object edtSpecimen: TedtSpecimen
       end
       object pEgg: TPanel
         Left = 0
-        Height = 45
-        Top = 388
+        Height = 48
+        Top = 403
         Width = 400
         Align = alTop
         AutoSize = True
@@ -505,7 +503,7 @@ object edtSpecimen: TedtSpecimen
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 8
@@ -522,12 +520,12 @@ object edtSpecimen: TedtSpecimen
         end
         object eEgg: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -550,7 +548,7 @@ object edtSpecimen: TedtSpecimen
       end
       object pLocality: TPanel
         Left = 0
-        Height = 45
+        Height = 48
         Top = 150
         Width = 400
         Align = alTop
@@ -560,7 +558,7 @@ object edtSpecimen: TedtSpecimen
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 3
@@ -577,12 +575,12 @@ object edtSpecimen: TedtSpecimen
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -605,8 +603,8 @@ object edtSpecimen: TedtSpecimen
       end
       object pStatus4: TPanel
         Left = 0
-        Height = 45
-        Top = 195
+        Height = 48
+        Top = 198
         Width = 400
         Align = alTop
         AutoSize = True
@@ -616,7 +614,7 @@ object edtSpecimen: TedtSpecimen
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
@@ -644,12 +642,12 @@ object edtSpecimen: TedtSpecimen
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -671,12 +669,12 @@ object edtSpecimen: TedtSpecimen
         end
         object eLatitude: TDBEditButton
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176

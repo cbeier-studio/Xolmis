@@ -1,24 +1,23 @@
 object edtDocumentInfo: TedtDocumentInfo
   Left = 361
-  Height = 448
+  Height = 454
   Top = 250
-  Width = 416
+  Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'Document info'
-  ClientHeight = 448
-  ClientWidth = 416
+  ClientHeight = 454
+  ClientWidth = 400
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
-  LCLVersion = '3.6.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 405
-    Width = 416
+    Top = 411
+    Width = 400
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -27,76 +26,74 @@ object edtDocumentInfo: TedtDocumentInfo
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 407
-    Width = 416
+    Top = 413
+    Width = 400
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 416
+    ClientWidth = 400
     TabOrder = 0
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 188
+      Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 212
+      Left = 204
       Height = 25
       Top = 8
-      Width = 188
+      Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 405
+    Height = 411
     Top = 0
-    Width = 416
+    Width = 400
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 405
+    VertScrollBar.Page = 411
     Align = alTop
     BorderStyle = bsNone
-    ClientHeight = 405
-    ClientWidth = 416
+    ClientHeight = 411
+    ClientWidth = 400
     Constraints.MinWidth = 176
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 405
+      Height = 411
       Top = 0
-      Width = 416
+      Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 405
-      ClientWidth = 416
+      ClientHeight = 411
+      ClientWidth = 400
       TabOrder = 0
       object pDateTime: TPanel
         Left = 0
-        Height = 45
+        Height = 48
         Top = 106
-        Width = 416
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -105,8 +102,8 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
-        ClientWidth = 416
+        ClientHeight = 48
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 2
         object lblDocumentDate: TLabel
@@ -133,12 +130,12 @@ object edtDocumentInfo: TedtDocumentInfo
         end
         object eDocumentDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -157,7 +154,7 @@ object edtDocumentInfo: TedtDocumentInfo
         end
         object eDocumentTime: TDBEdit
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           DataField = 'document_time'
@@ -174,7 +171,7 @@ object edtDocumentInfo: TedtDocumentInfo
         Left = 0
         Height = 45
         Top = 16
-        Width = 416
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -184,7 +181,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 416
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 0
         object lblDocumentType: TLabel
@@ -218,17 +215,17 @@ object edtDocumentInfo: TedtDocumentInfo
             'Other'
           )
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbDocumentTypeKeyPress
           Style = csDropDownList
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbDocumentTypeKeyPress
         end
       end
       object pDocumentPath: TPanel
         Left = 0
-        Height = 45
-        Top = 151
-        Width = 416
+        Height = 48
+        Top = 154
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -237,8 +234,8 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 416
+        ClientHeight = 48
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 3
         object lblDocumentPath: TLabel
@@ -254,12 +251,12 @@ object edtDocumentInfo: TedtDocumentInfo
         end
         object eDocumentPath: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -281,7 +278,7 @@ object edtDocumentInfo: TedtDocumentInfo
         Left = 0
         Height = 45
         Top = 61
-        Width = 416
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -291,7 +288,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 416
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 1
         object lblDocumentTitle: TLabel
@@ -322,8 +319,8 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseOwner: TPanel
         Left = 0
         Height = 45
-        Top = 254
-        Width = 416
+        Top = 260
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -333,7 +330,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 416
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 5
         object lblLicenseOwner: TLabel
@@ -364,8 +361,8 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseNotes: TPanel
         Left = 0
         Height = 45
-        Top = 299
-        Width = 416
+        Top = 305
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -375,7 +372,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 416
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 6
         object lblLicenseNotes: TLabel
@@ -406,8 +403,8 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseTypeYear: TPanel
         Left = 0
         Height = 45
-        Top = 209
-        Width = 416
+        Top = 215
+        Width = 400
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -418,7 +415,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 416
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
         object lblLicenseType: TLabel
@@ -453,10 +450,10 @@ object edtDocumentInfo: TedtDocumentInfo
           DataSource = dsLink
           ItemHeight = 15
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbDocumentTypeKeyPress
           Style = csDropDownList
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbDocumentTypeKeyPress
         end
         object eLicenseYear: TDBEdit
           Left = 208
@@ -475,8 +472,8 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseUri: TPanel
         Left = 0
         Height = 45
-        Top = 344
-        Width = 416
+        Top = 350
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -486,7 +483,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 416
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 7
         object lblLicenseUri: TLabel

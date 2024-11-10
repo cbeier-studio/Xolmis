@@ -1,24 +1,23 @@
 object edtWeatherLog: TedtWeatherLog
   Left = 373
-  Height = 466
+  Height = 465
   Top = 34
   Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New weather log entry'
-  ClientHeight = 466
+  ClientHeight = 465
   ClientWidth = 400
   Font.Height = -12
-  OnClose = FormClose
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 423
+    Top = 422
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -28,7 +27,7 @@ object edtWeatherLog: TedtWeatherLog
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 425
+    Top = 424
     Width = 400
     Align = alTop
     AutoSize = True
@@ -36,10 +35,8 @@ object edtWeatherLog: TedtWeatherLog
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -51,7 +48,7 @@ object edtWeatherLog: TedtWeatherLog
       Top = 8
       Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 179
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -64,7 +61,7 @@ object edtWeatherLog: TedtWeatherLog
       Top = 8
       Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 179
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
@@ -73,44 +70,45 @@ object edtWeatherLog: TedtWeatherLog
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 423
+    Height = 422
     Top = 0
     Width = 400
     HorzScrollBar.Page = 400
-    VertScrollBar.Page = 423
+    VertScrollBar.Page = 422
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 423
+    ClientHeight = 422
     ClientWidth = 400
     Constraints.MinWidth = 176
     TabOrder = 1
     object pContent: TPanel
       Left = 0
-      Height = 423
+      Height = 422
       Top = 0
       Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 8
-      ClientHeight = 423
+      ClientHeight = 422
       ClientWidth = 400
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
-        Height = 124
-        Top = 291
+        Height = 112
+        Top = 294
         Width = 400
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
+        BorderSpacing.Bottom = 16
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 124
+        ClientHeight = 112
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 6
@@ -135,15 +133,15 @@ object edtWeatherLog: TedtWeatherLog
           Constraints.MinWidth = 365
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pSampleDateTime: TPanel
         Left = 0
-        Height = 45
+        Height = 48
         Top = 8
         Width = 400
         Align = alTop
@@ -152,9 +150,11 @@ object edtWeatherLog: TedtWeatherLog
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 0
@@ -182,12 +182,12 @@ object edtWeatherLog: TedtWeatherLog
         end
         object eSampleDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -208,7 +208,7 @@ object edtWeatherLog: TedtWeatherLog
         end
         object eSampleTime: TDBEdit
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           DataField = 'sample_time'
@@ -224,7 +224,7 @@ object edtWeatherLog: TedtWeatherLog
       object pWindSpeed: TPanel
         Left = 0
         Height = 45
-        Top = 188
+        Top = 191
         Width = 400
         Align = alTop
         AutoSize = True
@@ -232,6 +232,8 @@ object edtWeatherLog: TedtWeatherLog
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -290,7 +292,7 @@ object edtWeatherLog: TedtWeatherLog
       object pPrecipitationRainfall: TPanel
         Left = 0
         Height = 45
-        Top = 143
+        Top = 146
         Width = 400
         Align = alTop
         AutoSize = True
@@ -298,6 +300,8 @@ object edtWeatherLog: TedtWeatherLog
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -343,10 +347,10 @@ object edtWeatherLog: TedtWeatherLog
             'Rain'
           )
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eSampleTimeKeyPress
           Style = csDropDownList
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eSampleTimeKeyPress
         end
         object eRainfall: TDBEdit
           Left = 208
@@ -365,7 +369,7 @@ object edtWeatherLog: TedtWeatherLog
       object pSampleMoment: TPanel
         Left = 0
         Height = 45
-        Top = 53
+        Top = 56
         Width = 400
         Align = alTop
         AutoSize = True
@@ -405,16 +409,16 @@ object edtWeatherLog: TedtWeatherLog
             'End'
           )
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eSampleTimeKeyPress
           Style = csDropDownList
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eSampleTimeKeyPress
         end
       end
       object pCloudCoverTemperature: TPanel
         Left = 0
         Height = 45
-        Top = 98
+        Top = 101
         Width = 400
         Align = alTop
         AutoSize = True
@@ -422,6 +426,8 @@ object edtWeatherLog: TedtWeatherLog
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -480,7 +486,7 @@ object edtWeatherLog: TedtWeatherLog
       object pHumidityPressure: TPanel
         Left = 0
         Height = 45
-        Top = 233
+        Top = 236
         Width = 400
         Align = alTop
         AutoSize = True
@@ -488,6 +494,8 @@ object edtWeatherLog: TedtWeatherLog
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45

@@ -1,25 +1,25 @@
 object edtSamplePrep: TedtSamplePrep
   Left = 373
-  Height = 438
+  Height = 432
   Top = 34
-  Width = 400
+  Width = 397
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New sample preparation'
-  ClientHeight = 438
-  ClientWidth = 400
+  ClientHeight = 432
+  ClientWidth = 397
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 395
-    Width = 400
+    Top = 389
+    Width = 397
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -28,30 +28,28 @@ object edtSamplePrep: TedtSamplePrep
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 397
-    Width = 400
+    Top = 391
+    Width = 397
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 400
+    ClientWidth = 397
     TabOrder = 0
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 180
+      Width = 178
       Caption = 'Save'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -59,12 +57,12 @@ object edtSamplePrep: TedtSamplePrep
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 204
+      Left = 202
       Height = 25
       Top = 8
-      Width = 180
+      Width = 179
       Caption = 'Cancel'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
@@ -73,37 +71,37 @@ object edtSamplePrep: TedtSamplePrep
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 395
+    Height = 389
     Top = 0
-    Width = 400
+    Width = 397
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 395
+    VertScrollBar.Page = 389
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 395
-    ClientWidth = 400
+    ClientHeight = 389
+    ClientWidth = 397
     Constraints.MinWidth = 176
     TabOrder = 1
     object pContent: TPanel
       Left = 0
-      Height = 395
+      Height = 389
       Top = 0
-      Width = 400
+      Width = 397
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 395
-      ClientWidth = 400
+      ClientHeight = 389
+      ClientWidth = 397
       ParentBackground = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
-        Height = 125
-        Top = 254
-        Width = 400
+        Height = 113
+        Top = 260
+        Width = 397
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -112,15 +110,15 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 125
-        ClientWidth = 400
+        ClientHeight = 113
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 5
         object lblNotes: TLabel
           Left = 16
           Height = 16
           Top = 3
-          Width = 368
+          Width = 365
           Align = alTop
           AutoSize = False
           BorderSpacing.Top = 3
@@ -133,22 +131,22 @@ object edtSamplePrep: TedtSamplePrep
           Left = 16
           Height = 90
           Top = 23
-          Width = 368
+          Width = 365
           Align = alTop
           Constraints.MinWidth = 365
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyPress = FormKeyPress
-          OnKeyUp = FormKeyDown
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyPress = FormKeyPress
+          OnKeyUp = FormKeyDown
         end
       end
       object pAccessionNumber: TPanel
         Left = 0
         Height = 45
         Top = 16
-        Width = 400
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -157,7 +155,7 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 0
         object lblAccessionNumber: TLabel
@@ -189,7 +187,7 @@ object edtSamplePrep: TedtSamplePrep
         Left = 0
         Height = 45
         Top = 106
-        Width = 400
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -198,7 +196,7 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 2
         object lblSampleType: TLabel
@@ -246,16 +244,16 @@ object edtSamplePrep: TedtSamplePrep
             'Stomach'
           )
           MaxLength = 0
+          TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eAccessionNumberKeyPress
-          TabOrder = 0
         end
       end
       object pAccessionSeq: TPanel
         Left = 0
         Height = 45
         Top = 61
-        Width = 400
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -264,7 +262,7 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 1
         object lblAccessionSeq: TLabel
@@ -294,9 +292,9 @@ object edtSamplePrep: TedtSamplePrep
       end
       object pPreparer: TPanel
         Left = 0
-        Height = 45
-        Top = 196
-        Width = 400
+        Height = 48
+        Top = 199
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -304,8 +302,8 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 400
+        ClientHeight = 48
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 4
         object lblPreparer: TLabel
@@ -321,12 +319,12 @@ object edtSamplePrep: TedtSamplePrep
         end
         object ePreparer: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -345,9 +343,9 @@ object edtSamplePrep: TedtSamplePrep
       end
       object pPreparationDate: TPanel
         Left = 0
-        Height = 45
+        Height = 48
         Top = 151
-        Width = 400
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -355,8 +353,8 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 400
+        ClientHeight = 48
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 3
         object lblPreparationDate: TLabel
@@ -372,12 +370,12 @@ object edtSamplePrep: TedtSamplePrep
         end
         object ePreparationDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176

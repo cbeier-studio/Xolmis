@@ -1,24 +1,24 @@
 object edtMethod: TedtMethod
   Left = 373
-  Height = 377
+  Height = 365
   Top = 34
   Width = 404
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New method'
-  ClientHeight = 377
+  ClientHeight = 365
   ClientWidth = 404
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 334
+    Top = 322
     Width = 404
     Align = alTop
     LineColor = 9276813
@@ -28,7 +28,7 @@ object edtMethod: TedtMethod
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 336
+    Top = 324
     Width = 404
     Align = alTop
     AutoSize = True
@@ -36,10 +36,8 @@ object edtMethod: TedtMethod
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -51,7 +49,7 @@ object edtMethod: TedtMethod
       Top = 8
       Width = 182
       Caption = 'Save'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -64,7 +62,7 @@ object edtMethod: TedtMethod
       Top = 8
       Width = 182
       Caption = 'Cancel'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
@@ -73,28 +71,28 @@ object edtMethod: TedtMethod
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 334
+    Height = 322
     Top = 0
     Width = 404
     HorzScrollBar.Page = 404
-    VertScrollBar.Page = 334
+    VertScrollBar.Page = 322
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 334
+    ClientHeight = 322
     ClientWidth = 404
     Constraints.MinWidth = 220
     TabOrder = 1
     object pContent: TPanel
       Left = 0
-      Height = 334
+      Height = 322
       Top = 0
       Width = 404
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 334
+      ClientHeight = 322
       ClientWidth = 404
       TabOrder = 0
       object pName: TPanel
@@ -225,7 +223,7 @@ object edtMethod: TedtMethod
       end
       object pDescription: TPanel
         Left = 0
-        Height = 148
+        Height = 136
         Top = 170
         Width = 404
         Align = alTop
@@ -236,7 +234,7 @@ object edtMethod: TedtMethod
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 148
+        ClientHeight = 136
         ClientWidth = 404
         ParentBackground = False
         TabOrder = 3
@@ -260,10 +258,10 @@ object edtMethod: TedtMethod
           Align = alTop
           DataField = 'description'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
     end

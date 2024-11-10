@@ -1,25 +1,24 @@
 object edtPermit: TedtPermit
   Left = 373
-  Height = 464
+  Height = 458
   Top = 34
   Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New permit'
-  ClientHeight = 464
+  ClientHeight = 458
   ClientWidth = 400
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 421
+    Top = 415
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -29,7 +28,7 @@ object edtPermit: TedtPermit
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 423
+    Top = 417
     Width = 400
     Align = alTop
     AutoSize = True
@@ -37,10 +36,8 @@ object edtPermit: TedtPermit
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -52,7 +49,7 @@ object edtPermit: TedtPermit
       Top = 8
       Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -63,42 +60,42 @@ object edtPermit: TedtPermit
       Top = 8
       Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 421
+    Height = 415
     Top = 0
     Width = 400
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 421
+    VertScrollBar.Page = 415
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 421
+    ClientHeight = 415
     ClientWidth = 400
     Constraints.MinWidth = 176
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 421
+      Height = 415
       Top = 0
       Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 421
+      ClientHeight = 415
       ClientWidth = 400
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
-        Height = 124
-        Top = 281
+        Height = 112
+        Top = 287
         Width = 400
         Align = alTop
         AutoSize = True
@@ -108,7 +105,7 @@ object edtPermit: TedtPermit
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 124
+        ClientHeight = 112
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
@@ -133,16 +130,16 @@ object edtPermit: TedtPermit
           Constraints.MinWidth = 365
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pName: TPanel
         Left = 0
         Height = 45
-        Top = 88
+        Top = 91
         Width = 400
         Align = alTop
         AutoSize = True
@@ -184,7 +181,7 @@ object edtPermit: TedtPermit
       object pDispatcher: TPanel
         Left = 0
         Height = 45
-        Top = 178
+        Top = 181
         Width = 400
         Align = alTop
         AutoSize = True
@@ -225,8 +222,8 @@ object edtPermit: TedtPermit
       end
       object pDispatchExpireDate: TPanel
         Left = 0
-        Height = 45
-        Top = 223
+        Height = 48
+        Top = 226
         Width = 400
         Align = alTop
         AutoSize = True
@@ -236,7 +233,7 @@ object edtPermit: TedtPermit
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 3
@@ -264,12 +261,12 @@ object edtPermit: TedtPermit
         end
         object eDispatchDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -291,12 +288,12 @@ object edtPermit: TedtPermit
         end
         object eExpireDate: TDBEditButton
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -320,7 +317,7 @@ object edtPermit: TedtPermit
       object pPermitNumberType: TPanel
         Left = 0
         Height = 45
-        Top = 133
+        Top = 136
         Width = 400
         Align = alTop
         AutoSize = True
@@ -379,15 +376,15 @@ object edtPermit: TedtPermit
           DataSource = dsLink
           ItemHeight = 15
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eNameKeyPress
           Style = csDropDownList
           TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNameKeyPress
         end
       end
       object pProject: TBCPanel
         Left = 13
-        Height = 59
+        Height = 62
         Top = 16
         Width = 374
         Align = alTop
@@ -446,13 +443,13 @@ object edtPermit: TedtPermit
         end
         object eProject: TDBEditButton
           Left = 17
-          Height = 23
+          Height = 26
           Top = 27
           Width = 340
           Align = alTop
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 340
           Color = 16448250
           Constraints.MaxHeight = 28

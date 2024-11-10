@@ -9,10 +9,10 @@ object dlgCalendar: TdlgCalendar
   Caption = 'Select date'
   ClientHeight = 238
   ClientWidth = 392
+  PopupMode = pmAuto
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -24,8 +24,8 @@ object dlgCalendar: TdlgCalendar
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -35,23 +35,23 @@ object dlgCalendar: TdlgCalendar
       Left = 16
       Height = 25
       Top = 8
-      Width = 174
+      Width = 176
       AutoSize = True
       Caption = 'Apply'
       Font.Name = 'Segoe UI Semibold'
-      OnClick = sbOKClick
       ParentFont = False
       TabOrder = 0
+      OnClick = sbOKClick
     end
     object sbCancel: TBitBtn
-      Left = 198
+      Left = 200
       Height = 25
       Top = 8
-      Width = 178
+      Width = 176
       AutoSize = True
       Caption = 'Cancel'
-      OnClick = sbCancelClick
       TabOrder = 1
+      OnClick = sbCancelClick
     end
   end
   object lineBottom: TShapeLineBGRA
@@ -161,7 +161,7 @@ object dlgCalendar: TdlgCalendar
         Height = 28
         Hint = 'Add to date'
         Top = 9
-        Width = 59
+        Width = 58
         Down = True
         GroupIndex = 1
         Images = iCalendar
@@ -170,11 +170,11 @@ object dlgCalendar: TdlgCalendar
         ParentShowHint = False
       end
       object rbSubtract: TSpeedButton
-        Left = 72
+        Left = 71
         Height = 28
         Hint = 'Subtract from date'
         Top = 9
-        Width = 58
+        Width = 59
         GroupIndex = 1
         Images = iCalendar
         ImageIndex = 1
@@ -246,8 +246,8 @@ object dlgCalendar: TdlgCalendar
         Width = 50
         Align = alClient
         MaxValue = 99999
-        OnChange = eYearsChange
         TabOrder = 0
+        OnChange = eYearsChange
       end
     end
     object pMonths: TBCPanel

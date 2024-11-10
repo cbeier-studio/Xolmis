@@ -10,12 +10,12 @@ object dlgLogin: TdlgLogin
   ClientHeight = 359
   ClientWidth = 280
   Font.Height = -12
-  OnClose = FormClose
-  OnCreate = FormCreate
-  OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
   ShowInTaskBar = stAlways
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
   object pBottom: TPanel
     Left = 0
     Height = 43
@@ -27,8 +27,8 @@ object dlgLogin: TdlgLogin
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 43
@@ -123,14 +123,14 @@ object dlgLogin: TdlgLogin
       ImageIndex = 0
       MaxLength = 0
       NumGlyphs = 1
-      OnButtonClick = ePasswordButtonClick
-      OnKeyDown = eUsernameKeyDown
-      OnKeyPress = eUsernameKeyPress
       ParentShowHint = False
       PasswordChar = '*'
       ShowHint = True
       Spacing = 0
       TabOrder = 1
+      OnButtonClick = ePasswordButtonClick
+      OnKeyDown = eUsernameKeyDown
+      OnKeyPress = eUsernameKeyPress
     end
     object lblLogin: TLabel
       Left = 16

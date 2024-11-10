@@ -9,11 +9,11 @@ object batchBands: TbatchBands
   ClientHeight = 475
   ClientWidth = 400
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -25,8 +25,8 @@ object batchBands: TbatchBands
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -38,7 +38,7 @@ object batchBands: TbatchBands
       Top = 8
       Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -51,7 +51,7 @@ object batchBands: TbatchBands
       Top = 8
       Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
@@ -100,8 +100,6 @@ object batchBands: TbatchBands
         Width = 176
         BorderSpacing.Top = 3
         Caption = 'Size:'
-        Font.Color = 6579300
-        ParentColor = False
         ParentFont = False
       end
       object lblBandType: TLabel
@@ -111,8 +109,6 @@ object batchBands: TbatchBands
         Width = 176
         BorderSpacing.Top = 3
         Caption = 'Type:'
-        Font.Color = 6579300
-        ParentColor = False
         ParentFont = False
       end
       object cbBandSize: TComboBox
@@ -198,8 +194,6 @@ object batchBands: TbatchBands
         Width = 176
         BorderSpacing.Top = 3
         Caption = 'Start number:'
-        Font.Color = 6579300
-        ParentColor = False
         ParentFont = False
       end
       object lblEndNumber: TLabel
@@ -209,8 +203,6 @@ object batchBands: TbatchBands
         Width = 176
         BorderSpacing.Top = 3
         Caption = 'Final number:'
-        Font.Color = 6579300
-        ParentColor = False
         ParentFont = False
       end
       object eStartNumber: TSpinEdit
@@ -221,11 +213,11 @@ object batchBands: TbatchBands
         Constraints.MinWidth = 176
         MaxValue = 999999
         MinValue = 1
+        TabOrder = 0
+        Value = 1
         OnChange = cbBandSizeChange
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
-        TabOrder = 0
-        Value = 1
       end
       object eEndNumber: TSpinEdit
         Left = 208
@@ -235,11 +227,11 @@ object batchBands: TbatchBands
         Constraints.MinWidth = 176
         MaxValue = 999999
         MinValue = 1
+        TabOrder = 1
+        Value = 1
         OnChange = cbBandSizeChange
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
-        TabOrder = 1
-        Value = 1
       end
     end
     object pProject: TPanel
@@ -265,8 +257,6 @@ object batchBands: TbatchBands
         Width = 40
         BorderSpacing.Top = 3
         Caption = 'Project:'
-        Font.Color = 6579300
-        ParentColor = False
         ParentFont = False
       end
       object eProject: TEditButton
@@ -280,14 +270,14 @@ object batchBands: TbatchBands
         ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
-        OnButtonClick = eProjectButtonClick
-        OnKeyDown = FormKeyDown
-        OnKeyPress = cbBandSizeKeyPress
         ParentShowHint = False
         PasswordChar = #0
         ShowHint = True
         Spacing = 0
         TabOrder = 0
+        OnButtonClick = eProjectButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
       end
     end
     object pSourceOrderNumber: TPanel
@@ -314,8 +304,6 @@ object batchBands: TbatchBands
         Width = 176
         BorderSpacing.Top = 3
         Caption = 'Source:'
-        Font.Color = 6579300
-        ParentColor = False
         ParentFont = False
       end
       object lblOrderNumber: TLabel
@@ -325,8 +313,6 @@ object batchBands: TbatchBands
         Width = 176
         BorderSpacing.Top = 3
         Caption = 'Order number:'
-        Font.Color = 6579300
-        ParentColor = False
         ParentFont = False
       end
       object cbBandSource: TComboBox
@@ -384,7 +370,7 @@ object batchBands: TbatchBands
         Width = 176
         BorderSpacing.Top = 3
         Caption = 'Order date:'
-        ParentColor = False
+        ParentFont = False
       end
       object lblReceiptDate: TLabel
         Left = 208
@@ -393,8 +379,6 @@ object batchBands: TbatchBands
         Width = 176
         BorderSpacing.Top = 3
         Caption = 'Receipt date:'
-        Font.Color = 6579300
-        ParentColor = False
         ParentFont = False
       end
       object eOrderDate: TDateEdit
@@ -411,13 +395,13 @@ object batchBands: TbatchBands
         Images = DMM.iEdits
         ImageIndex = 1
         MaxLength = 0
-        OnKeyDown = FormKeyDown
-        OnKeyPress = cbBandSizeKeyPress
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
         Spacing = 0
         TextHint = 'DD/MM/YYYY'
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
       end
       object eReceiptDate: TDateEdit
         Left = 208
@@ -433,13 +417,13 @@ object batchBands: TbatchBands
         Images = DMM.iEdits
         ImageIndex = 1
         MaxLength = 0
-        OnKeyDown = FormKeyDown
-        OnKeyPress = cbBandSizeKeyPress
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
         Spacing = 0
         TextHint = 'DD/MM/YYYY'
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
       end
     end
     object pSupplier: TPanel
@@ -465,7 +449,7 @@ object batchBands: TbatchBands
         Width = 46
         BorderSpacing.Top = 3
         Caption = 'Supplier:'
-        ParentColor = False
+        ParentFont = False
       end
       object eSupplier: TEditButton
         Left = 16
@@ -478,14 +462,14 @@ object batchBands: TbatchBands
         ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
-        OnButtonClick = eSupplierButtonClick
-        OnKeyDown = FormKeyDown
-        OnKeyPress = cbBandSizeKeyPress
         ParentShowHint = False
         PasswordChar = #0
         ShowHint = True
         Spacing = 0
         TabOrder = 0
+        OnButtonClick = eSupplierButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
       end
     end
     object pRequester: TPanel
@@ -511,7 +495,7 @@ object batchBands: TbatchBands
         Width = 55
         BorderSpacing.Top = 3
         Caption = 'Requester:'
-        ParentColor = False
+        ParentFont = False
       end
       object eRequester: TEditButton
         Left = 16
@@ -524,14 +508,14 @@ object batchBands: TbatchBands
         ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
-        OnButtonClick = eRequesterButtonClick
-        OnKeyDown = FormKeyDown
-        OnKeyPress = cbBandSizeKeyPress
         ParentShowHint = False
         PasswordChar = #0
         ShowHint = True
         Spacing = 0
         TabOrder = 0
+        OnButtonClick = eRequesterButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
       end
     end
     object pCarrier: TPanel
@@ -557,7 +541,7 @@ object batchBands: TbatchBands
         Width = 38
         BorderSpacing.Top = 3
         Caption = 'Carrier:'
-        ParentColor = False
+        ParentFont = False
       end
       object eCarrier: TEditButton
         Left = 16
@@ -570,14 +554,14 @@ object batchBands: TbatchBands
         ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
-        OnButtonClick = eCarrierButtonClick
-        OnKeyDown = FormKeyDown
-        OnKeyPress = cbBandSizeKeyPress
         ParentShowHint = False
         PasswordChar = #0
         ShowHint = True
         Spacing = 0
         TabOrder = 0
+        OnButtonClick = eCarrierButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
       end
     end
     object pSender: TPanel
@@ -605,7 +589,7 @@ object batchBands: TbatchBands
         BorderSpacing.Top = 3
         Caption = 'Sender:'
         FocusControl = eSender
-        ParentColor = False
+        ParentFont = False
       end
       object eSender: TEditButton
         Left = 16
@@ -618,14 +602,14 @@ object batchBands: TbatchBands
         ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
-        OnButtonClick = eSenderButtonClick
-        OnKeyDown = FormKeyDown
-        OnKeyPress = cbBandSizeKeyPress
         ParentShowHint = False
         PasswordChar = #0
         ShowHint = True
         Spacing = 0
         TabOrder = 0
+        OnButtonClick = eSenderButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbBandSizeKeyPress
       end
     end
   end

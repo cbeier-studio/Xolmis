@@ -458,6 +458,15 @@ resourcestring
   rscHabitat = 'Habitat';
   rscConservationStatus = 'Conservation status';
   rscTable = 'Table';
+  rscProportionOfHerbs = '% of herbs';
+  rscHerbsDistribution = 'Herbs distribution';
+  rscAvgHeightOfHerbs = 'Avg. height of herbs';
+  rscProportionOfShrubs = '% of shrubs';
+  rscShrubsDistribution = 'Shrubs distribution';
+  rscAvgHeightOfShrubs = 'Avg. height of shrubs';
+  rscProportionOfTrees = '% of trees';
+  rscTreesDistribution = 'Trees distribution';
+  rscAvgHeightOfTrees = 'Avg. height of trees';
 
 
   procedure SummaryBands(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
@@ -512,6 +521,7 @@ resourcestring
   procedure TranslateSpecimens(aDataSet: TDataSet);
   procedure TranslateSpecimenCollectors(aDataSet: TDataSet);
   procedure TranslateSamplePreps(aDataSet: TDataSet);
+  procedure TranslateVegetation(aDataSet: TDataSet);
 
 implementation
 
@@ -1178,6 +1188,8 @@ begin
         'sample_date':            Fields[i].DisplayLabel := rscDate;
         'sample_time':            Fields[i].DisplayLabel := rscTime;
         'sample_moment':          Fields[i].DisplayLabel := rscMoment;
+        'observer_id':            Fields[i].DisplayLabel := rscObserverID;
+        'observer_name':          Fields[i].DisplayLabel := rscObserver;
         'cloud_cover':            Fields[i].DisplayLabel := rscCloudCover;
         'precipitation':          Fields[i].DisplayLabel := rscPrecipitation;
         'rainfall':               Fields[i].DisplayLabel := rscRainfallMm;
@@ -1975,6 +1987,45 @@ begin
         'record_id':            Fields[i].DisplayLabel := rscId;
         'notes':                Fields[i].DisplayLabel := rscNotes;
         'verification_id':      Fields[i].DisplayLabel := rscId;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateVegetation(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'survey_id':              Fields[i].DisplayLabel := rscSurveyID;
+        'sample_date':            Fields[i].DisplayLabel := rscDate;
+        'sample_time':            Fields[i].DisplayLabel := rscTime;
+        'longitude':              Fields[i].DisplayLabel := rscLongitude;
+        'latitude':               Fields[i].DisplayLabel := rscLatitude;
+        'observer_id':            Fields[i].DisplayLabel := rscObserverID;
+        'observer_name':          Fields[i].DisplayLabel := rscObserver;
+        'herbs_proportion':       Fields[i].DisplayLabel := rscProportionOfHerbs;
+        'herbs_distribution':     Fields[i].DisplayLabel := rscHerbsDistribution;
+        'herbs_avg_height':       Fields[i].DisplayLabel := rscAvgHeightOfHerbs;
+        'shrubs_proportion':      Fields[i].DisplayLabel := rscProportionOfShrubs;
+        'shrubs_distribution':    Fields[i].DisplayLabel := rscShrubsDistribution;
+        'shrubs_avg_height':      Fields[i].DisplayLabel := rscAvgHeightOfShrubs;
+        'trees_proportion':       Fields[i].DisplayLabel := rscProportionOfTrees;
+        'trees_distribution':     Fields[i].DisplayLabel := rscTreesDistribution;
+        'trees_avg_height':       Fields[i].DisplayLabel := rscAvgHeightOfTrees;
+        'notes':                  Fields[i].DisplayLabel := rscNotes;
+        'vegetation_id':          Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
       end;
     end;
   end;
@@ -4803,6 +4854,7 @@ begin
     end;
   end;
 end;
+
 
 end.
 

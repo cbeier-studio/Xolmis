@@ -1,23 +1,23 @@
 object edtPermanentNet: TedtPermanentNet
   Left = 352
-  Height = 336
+  Height = 327
   Top = 33
   Width = 488
   AutoSize = True
   Caption = 'New permanent mistnet'
-  ClientHeight = 336
+  ClientHeight = 327
   ClientWidth = 488
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 293
+    Top = 284
     Width = 488
     Align = alTop
     LineColor = 9276813
@@ -27,7 +27,7 @@ object edtPermanentNet: TedtPermanentNet
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 295
+    Top = 286
     Width = 488
     Align = alTop
     AutoSize = True
@@ -35,10 +35,8 @@ object edtPermanentNet: TedtPermanentNet
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -50,7 +48,7 @@ object edtPermanentNet: TedtPermanentNet
       Top = 8
       Width = 224
       Caption = 'Save'
-      Constraints.MinWidth = 224
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -61,27 +59,27 @@ object edtPermanentNet: TedtPermanentNet
       Top = 8
       Width = 224
       Caption = 'Cancel'
-      Constraints.MinWidth = 224
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
   end
   object pClient: TPanel
     Left = 0
-    Height = 293
+    Height = 284
     Top = 0
     Width = 488
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 293
+    ClientHeight = 284
     ClientWidth = 488
     TabOrder = 1
     object pNotes: TPanel
       Left = 0
-      Height = 153
-      Top = 124
+      Height = 141
+      Top = 127
       Width = 488
       Align = alTop
       AutoSize = True
@@ -91,7 +89,7 @@ object edtPermanentNet: TedtPermanentNet
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 153
+      ClientHeight = 141
       ClientWidth = 488
       ParentBackground = False
       TabOrder = 0
@@ -117,10 +115,10 @@ object edtPermanentNet: TedtPermanentNet
         Constraints.MinWidth = 456
         DataField = 'notes'
         DataSource = dsLink
-        OnKeyDown = FormKeyDown
-        OnKeyPress = FormKeyPress
         ScrollBars = ssAutoVertical
         TabOrder = 0
+        OnKeyDown = FormKeyDown
+        OnKeyPress = FormKeyPress
       end
     end
     object pNetNumber: TPanel
@@ -167,7 +165,7 @@ object edtPermanentNet: TedtPermanentNet
     end
     object pLongitudeLatitude: TPanel
       Left = 0
-      Height = 46
+      Height = 49
       Top = 62
       Width = 488
       Align = alTop
@@ -178,7 +176,7 @@ object edtPermanentNet: TedtPermanentNet
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
-      ClientHeight = 46
+      ClientHeight = 49
       ClientWidth = 488
       ParentBackground = False
       TabOrder = 2
@@ -206,12 +204,12 @@ object edtPermanentNet: TedtPermanentNet
       end
       object eLongitude: TDBEditButton
         Left = 16
-        Height = 23
+        Height = 26
         Top = 23
         Width = 220
         AutoSize = True
         BevelOuter = bvNone
-        ClientHeight = 23
+        ClientHeight = 26
         ClientWidth = 220
         Constraints.MaxHeight = 28
         Constraints.MinWidth = 220
@@ -232,12 +230,12 @@ object edtPermanentNet: TedtPermanentNet
       end
       object eLatitude: TDBEditButton
         Left = 252
-        Height = 23
+        Height = 26
         Top = 23
         Width = 220
         AutoSize = True
         BevelOuter = bvNone
-        ClientHeight = 23
+        ClientHeight = 26
         ClientWidth = 220
         Constraints.MaxHeight = 28
         Constraints.MinWidth = 220

@@ -110,7 +110,6 @@ type
     procedure eNetStationDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
     procedure eProjectDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -341,11 +340,6 @@ begin
     SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtSurvey.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtSurvey.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

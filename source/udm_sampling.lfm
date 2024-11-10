@@ -4210,6 +4210,11 @@ object DMS: TDMS
         Size = 1
       end    
       item
+        Name = 'observer_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
         Name = 'cloud_cover'
         DataType = ftInteger
         Precision = -1
@@ -4289,6 +4294,12 @@ object DMS: TDMS
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'observer_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
       end>
     AfterCancel = qWeatherLogsAfterCancel
     AfterPost = qWeatherLogsAfterPost
@@ -4297,9 +4308,11 @@ object DMS: TDMS
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
-      'SELECT * FROM weather_logs'
-      'WHERE (survey_id = :survey_id)'
-      'AND (active_status = 1)'
+      'SELECT wl.*, p.acronym AS observer_name'
+      'FROM weather_logs AS wl'
+      'LEFT JOIN people AS p ON wl.observer_id = p.person_id'
+      'WHERE (wl.survey_id = :survey_id)'
+      'AND (wl.active_status = 1)'
     )
     Options = [sqoAutoApplyUpdates]
     Params = <    
@@ -4368,11 +4381,33 @@ object DMS: TDMS
       OnSetText = qWeatherLogssample_momentSetText
       Size = 1
     end
+    object qWeatherLogsobserver_id: TLongintField
+      DisplayLabel = 'Observer ID'
+      FieldKind = fkData
+      FieldName = 'observer_id'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qWeatherLogsobserver_name: TStringField
+      DisplayLabel = 'Observer'
+      FieldKind = fkData
+      FieldName = 'observer_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
     object qWeatherLogscloud_cover: TLongintField
       DisplayLabel = 'Cloud cover (%)'
       FieldKind = fkData
       FieldName = 'cloud_cover'
-      Index = 5
+      Index = 7
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4383,7 +4418,7 @@ object DMS: TDMS
       DisplayLabel = 'Precipitation'
       FieldKind = fkData
       FieldName = 'precipitation'
-      Index = 6
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4396,7 +4431,7 @@ object DMS: TDMS
       DisplayLabel = 'Rainfall (mm)'
       FieldKind = fkData
       FieldName = 'rainfall'
-      Index = 7
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4406,7 +4441,7 @@ object DMS: TDMS
       DisplayLabel = 'Temperature (°C)'
       FieldKind = fkData
       FieldName = 'temperature'
-      Index = 8
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4419,7 +4454,7 @@ object DMS: TDMS
       DisplayLabel = 'Wind (Bft)'
       FieldKind = fkData
       FieldName = 'wind_speed_bft'
-      Index = 9
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4430,7 +4465,7 @@ object DMS: TDMS
       DisplayLabel = 'Wind speed (km/h)'
       FieldKind = fkData
       FieldName = 'wind_speed_kmh'
-      Index = 10
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4441,7 +4476,7 @@ object DMS: TDMS
       DisplayLabel = 'Relative humidity (%)'
       FieldKind = fkData
       FieldName = 'relative_humidity'
-      Index = 11
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4453,7 +4488,7 @@ object DMS: TDMS
       DisplayLabel = 'Atmospheric pressure (hPa)'
       FieldKind = fkData
       FieldName = 'atmospheric_pressure'
-      Index = 12
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4465,7 +4500,7 @@ object DMS: TDMS
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 13
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4477,7 +4512,7 @@ object DMS: TDMS
       DisplayLabel = 'Weather log (ID)'
       FieldKind = fkData
       FieldName = 'weather_id'
-      Index = 14
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -4488,7 +4523,7 @@ object DMS: TDMS
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 15
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4499,7 +4534,7 @@ object DMS: TDMS
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 16
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4510,7 +4545,7 @@ object DMS: TDMS
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 17
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4521,7 +4556,7 @@ object DMS: TDMS
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 18
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4532,7 +4567,7 @@ object DMS: TDMS
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 19
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4544,7 +4579,7 @@ object DMS: TDMS
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 20
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5517,5 +5552,434 @@ object DMS: TDMS
     DataSet = qSurveys
     Left = 504
     Top = 173
+  end
+  object qVegetation: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'vegetation_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'survey_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sample_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'sample_time'
+        DataType = ftTime
+        Precision = -1
+      end    
+      item
+        Name = 'longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'observer_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'herbs_proportion'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'herbs_distribution'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'herbs_avg_height'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'shrubs_proportion'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'shrubs_distribution'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'shrubs_avg_height'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'trees_proportion'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'trees_distribution'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'trees_avg_height'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'observer_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end>
+    AfterCancel = qVegetationAfterCancel
+    AfterPost = qVegetationAfterPost
+    BeforeEdit = qVegetationBeforeEdit
+    BeforePost = qVegetationBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT veg.*, p.acronym AS observer_name'
+      'FROM vegetation AS veg'
+      'LEFT JOIN people AS p ON veg.observer_id = p.person_id'
+      'WHERE (veg.survey_id = :survey_id)'
+      'AND (veg.active_status = 1)'
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'survey_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = DMG.dsSurveys
+    Left = 84
+    Top = 408
+    object qVegetationmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qVegetationsample_date: TDateField
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'sample_date'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qVegetationsample_time: TTimeField
+      DisplayLabel = 'Time'
+      FieldKind = fkData
+      FieldName = 'sample_time'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qVegetationlongitude: TFloatField
+      DisplayLabel = 'Longitude'
+      FieldKind = fkData
+      FieldName = 'longitude'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qVegetationlatitude: TFloatField
+      DisplayLabel = 'Latitude'
+      FieldKind = fkData
+      FieldName = 'latitude'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qVegetationobserver_id: TLongintField
+      DisplayLabel = 'Observer ID'
+      FieldKind = fkData
+      FieldName = 'observer_id'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qVegetationobserver_name: TStringField
+      DisplayLabel = 'Observer'
+      FieldKind = fkData
+      FieldName = 'observer_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qVegetationherbs_proportion: TLongintField
+      DisplayLabel = '% of herbs'
+      FieldKind = fkData
+      FieldName = 'herbs_proportion'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qVegetationherbs_distribution: TLongintField
+      DisplayLabel = 'Herbs distribution'
+      FieldKind = fkData
+      FieldName = 'herbs_distribution'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qVegetationherbs_distributionGetText
+      OnSetText = qVegetationherbs_distributionSetText
+    end
+    object qVegetationherbs_avg_height: TLongintField
+      DisplayLabel = 'Avg. height of herbs'
+      FieldKind = fkData
+      FieldName = 'herbs_avg_height'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qVegetationshrubs_proportion: TLongintField
+      DisplayLabel = '% of shrubs'
+      FieldKind = fkData
+      FieldName = 'shrubs_proportion'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qVegetationshrubs_distribution: TLongintField
+      DisplayLabel = 'Shrubs distribution'
+      FieldKind = fkData
+      FieldName = 'shrubs_distribution'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qVegetationshrubs_avg_height: TLongintField
+      DisplayLabel = 'Avg. height of shrubs'
+      FieldKind = fkData
+      FieldName = 'shrubs_avg_height'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qVegetationtrees_proportion: TLongintField
+      DisplayLabel = '% of trees'
+      FieldKind = fkData
+      FieldName = 'trees_proportion'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qVegetationtrees_distribution: TLongintField
+      DisplayLabel = 'Trees distribution'
+      FieldKind = fkData
+      FieldName = 'trees_distribution'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qVegetationtrees_avg_height: TLongintField
+      DisplayLabel = 'Avg. height of trees'
+      FieldKind = fkData
+      FieldName = 'trees_avg_height'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qVegetationnotes: TMemoField
+      DisplayLabel = 'Notes'
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qVegetationvegetation_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'vegetation_id'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qVegetationsurvey_id: TLongintField
+      DisplayLabel = 'Survey ID'
+      FieldKind = fkData
+      FieldName = 'survey_id'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qVegetationuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qVegetationuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qVegetationinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qVegetationupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qVegetationexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qVegetationactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsVegetation: TDataSource
+    DataSet = qVegetation
+    Left = 214
+    Top = 408
   end
 end

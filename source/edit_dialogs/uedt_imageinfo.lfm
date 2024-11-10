@@ -9,12 +9,12 @@ object edtImageInfo: TedtImageInfo
   ClientHeight = 681
   ClientWidth = 416
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -36,10 +36,8 @@ object edtImageInfo: TedtImageInfo
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -51,7 +49,7 @@ object edtImageInfo: TedtImageInfo
       Top = 8
       Width = 188
       Caption = 'Save'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -62,7 +60,7 @@ object edtImageInfo: TedtImageInfo
       Top = 8
       Width = 188
       Caption = 'Cancel'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
@@ -83,20 +81,21 @@ object edtImageInfo: TedtImageInfo
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 1065
+      Height = 1111
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
+      BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1065
+      ClientHeight = 1111
       ClientWidth = 399
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
-        Height = 45
-        Top = 303
+        Height = 48
+        Top = 300
         Width = 399
         Align = alTop
         AutoSize = True
@@ -107,7 +106,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
@@ -124,12 +123,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -148,8 +147,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pAuthor: TPanel
         Left = 0
-        Height = 45
-        Top = 110
+        Height = 48
+        Top = 98
         Width = 399
         Align = alTop
         AutoSize = True
@@ -159,7 +158,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 1
@@ -176,12 +175,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eAuthor: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -200,7 +199,7 @@ object edtImageInfo: TedtImageInfo
       end
       object pSubtitle: TPanel
         Left = 0
-        Height = 94
+        Height = 82
         Top = 16
         Width = 399
         Align = alTop
@@ -210,7 +209,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 94
+        ClientHeight = 82
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
@@ -235,16 +234,16 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 365
           DataField = 'subtitle'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pDateTime: TPanel
         Left = 0
-        Height = 45
-        Top = 155
+        Height = 48
+        Top = 146
         Width = 399
         Align = alTop
         AutoSize = True
@@ -254,7 +253,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
@@ -282,12 +281,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eImageDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -306,7 +305,7 @@ object edtImageInfo: TedtImageInfo
         end
         object eImageTime: TDBEdit
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           DataField = 'image_time'
@@ -322,7 +321,7 @@ object edtImageInfo: TedtImageInfo
       object pImageType: TPanel
         Left = 0
         Height = 45
-        Top = 200
+        Top = 194
         Width = 399
         Align = alTop
         AutoSize = True
@@ -359,10 +358,10 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           ItemHeight = 15
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eImageTimeKeyPress
           Style = csDropDownList
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eImageTimeKeyPress
         end
       end
       object pCoordinatesPrecision: TPanel
@@ -405,15 +404,15 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           ItemHeight = 15
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eImageTimeKeyPress
           Style = csDropDownList
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eImageTimeKeyPress
         end
       end
       object pLongitudeLatitude: TPanel
         Left = 0
-        Height = 45
+        Height = 48
         Top = 393
         Width = 399
         Align = alTop
@@ -424,7 +423,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 7
@@ -452,12 +451,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -475,12 +474,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eLatitude: TDBEditButton
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -499,8 +498,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pTaxon: TPanel
         Left = 0
-        Height = 45
-        Top = 451
+        Height = 48
+        Top = 454
         Width = 399
         Align = alTop
         AutoSize = True
@@ -511,7 +510,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 8
@@ -528,12 +527,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eTaxon: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -552,8 +551,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pIndividual: TPanel
         Left = 0
-        Height = 45
-        Top = 496
+        Height = 48
+        Top = 502
         Width = 399
         Align = alTop
         AutoSize = True
@@ -563,7 +562,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 9
@@ -580,12 +579,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eIndividual: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -604,8 +603,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pCapture: TPanel
         Left = 0
-        Height = 45
-        Top = 541
+        Height = 48
+        Top = 550
         Width = 399
         Align = alTop
         AutoSize = True
@@ -615,7 +614,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 10
@@ -632,12 +631,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eCapture: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -656,8 +655,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pSurvey: TPanel
         Left = 0
-        Height = 45
-        Top = 586
+        Height = 48
+        Top = 598
         Width = 399
         Align = alTop
         AutoSize = True
@@ -667,7 +666,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 11
@@ -684,12 +683,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eSurvey: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -708,8 +707,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pSighting: TPanel
         Left = 0
-        Height = 45
-        Top = 631
+        Height = 48
+        Top = 646
         Width = 399
         Align = alTop
         AutoSize = True
@@ -719,7 +718,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 12
@@ -736,12 +735,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eSighting: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -760,8 +759,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pImageFilename: TPanel
         Left = 0
-        Height = 45
-        Top = 245
+        Height = 48
+        Top = 239
         Width = 399
         Align = alTop
         AutoSize = True
@@ -771,7 +770,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
@@ -788,12 +787,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eImageFilename: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -813,8 +812,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pSpecimen: TPanel
         Left = 0
-        Height = 45
-        Top = 811
+        Height = 48
+        Top = 838
         Width = 399
         Align = alTop
         AutoSize = True
@@ -824,7 +823,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 16
@@ -841,12 +840,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eSpecimen: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -865,8 +864,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pEgg: TPanel
         Left = 0
-        Height = 45
-        Top = 766
+        Height = 48
+        Top = 790
         Width = 399
         Align = alTop
         AutoSize = True
@@ -876,7 +875,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 15
@@ -893,12 +892,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eEgg: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -917,8 +916,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pNestRevision: TPanel
         Left = 0
-        Height = 45
-        Top = 721
+        Height = 48
+        Top = 742
         Width = 399
         Align = alTop
         AutoSize = True
@@ -928,7 +927,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 14
@@ -945,12 +944,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eNestRevision: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -969,8 +968,8 @@ object edtImageInfo: TedtImageInfo
       end
       object pNest: TPanel
         Left = 0
-        Height = 45
-        Top = 676
+        Height = 48
+        Top = 694
         Width = 399
         Align = alTop
         AutoSize = True
@@ -980,7 +979,7 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 13
@@ -997,12 +996,12 @@ object edtImageInfo: TedtImageInfo
         end
         object eNest: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -1022,7 +1021,7 @@ object edtImageInfo: TedtImageInfo
       object pLicenseTypeYear: TPanel
         Left = 0
         Height = 45
-        Top = 869
+        Top = 899
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1069,9 +1068,9 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           ItemHeight = 15
           MaxLength = 0
-          OnKeyDown = FormKeyDown
           Style = csDropDownList
           TabOrder = 0
+          OnKeyDown = FormKeyDown
         end
         object eLicenseYear: TDBEdit
           Left = 208
@@ -1089,7 +1088,7 @@ object edtImageInfo: TedtImageInfo
       object pLicenseOwner: TPanel
         Left = 0
         Height = 45
-        Top = 914
+        Top = 944
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1130,7 +1129,7 @@ object edtImageInfo: TedtImageInfo
       object pLicenseNotes: TPanel
         Left = 0
         Height = 45
-        Top = 959
+        Top = 989
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1171,7 +1170,7 @@ object edtImageInfo: TedtImageInfo
       object pLicenseUri: TPanel
         Left = 0
         Height = 45
-        Top = 1004
+        Top = 1034
         Width = 399
         Align = alTop
         AutoSize = True

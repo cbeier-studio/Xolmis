@@ -10,7 +10,6 @@ object lstMoltLimits: TlstMoltLimits
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  LCLVersion = '3.2.0.0'
   object cklLimits: TCheckListBox
     Left = 8
     Height = 308
@@ -54,10 +53,8 @@ object lstMoltLimits: TlstMoltLimits
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -67,22 +64,22 @@ object lstMoltLimits: TlstMoltLimits
       Left = 16
       Height = 25
       Top = 8
-      Width = 156
+      Width = 158
       Caption = 'Apply'
       Default = True
       Font.Name = 'Segoe UI Semibold'
-      OnClick = sbOKClick
       ParentFont = False
       TabOrder = 0
+      OnClick = sbOKClick
     end
     object sbCancel: TBitBtn
-      Left = 180
+      Left = 182
       Height = 25
       Top = 8
-      Width = 160
+      Width = 158
       Caption = 'Cancel'
-      OnClick = sbCancelClick
       TabOrder = 1
+      OnClick = sbCancelClick
     end
   end
   object lineBottom: TShapeLineBGRA

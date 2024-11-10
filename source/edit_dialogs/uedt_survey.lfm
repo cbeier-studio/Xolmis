@@ -8,13 +8,11 @@ object edtSurvey: TedtSurvey
   ClientHeight = 691
   ClientWidth = 416
   Font.Height = -12
-  OnClose = FormClose
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -36,10 +34,8 @@ object edtSurvey: TedtSurvey
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -51,7 +47,7 @@ object edtSurvey: TedtSurvey
       Top = 8
       Width = 188
       Caption = 'Save'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -62,7 +58,7 @@ object edtSurvey: TedtSurvey
       Top = 8
       Width = 188
       Caption = 'Cancel'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
@@ -83,20 +79,21 @@ object edtSurvey: TedtSurvey
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 966
+      Height = 970
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
+      BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 966
+      ClientHeight = 970
       ClientWidth = 399
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
-        Height = 45
-        Top = 223
+        Height = 48
+        Top = 232
         Width = 399
         Align = alTop
         AutoSize = True
@@ -106,7 +103,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 3
@@ -123,12 +120,12 @@ object edtSurvey: TedtSurvey
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -152,7 +149,7 @@ object edtSurvey: TedtSurvey
       object pStartEndDate: TPanel
         Left = 0
         Height = 45
-        Top = 133
+        Top = 139
         Width = 399
         Align = alTop
         AutoSize = True
@@ -219,8 +216,8 @@ object edtSurvey: TedtSurvey
       end
       object pNetStation: TPanel
         Left = 0
-        Height = 45
-        Top = 268
+        Height = 48
+        Top = 280
         Width = 399
         Align = alTop
         AutoSize = True
@@ -230,7 +227,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
@@ -247,12 +244,12 @@ object edtSurvey: TedtSurvey
         end
         object eNetStation: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -275,7 +272,7 @@ object edtSurvey: TedtSurvey
       end
       object pNotes: TPanel
         Left = 0
-        Height = 124
+        Height = 112
         Top = 826
         Width = 399
         Align = alTop
@@ -287,7 +284,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 124
+        ClientHeight = 112
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 13
@@ -312,16 +309,16 @@ object edtSurvey: TedtSurvey
           Constraints.MinWidth = 368
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pProject: TPanel
         Left = 0
-        Height = 45
-        Top = 313
+        Height = 48
+        Top = 328
         Width = 399
         Align = alTop
         AutoSize = True
@@ -331,7 +328,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
@@ -348,12 +345,12 @@ object edtSurvey: TedtSurvey
         end
         object eProject: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -376,8 +373,8 @@ object edtSurvey: TedtSurvey
       end
       object pMethod: TPanel
         Left = 0
-        Height = 45
-        Top = 178
+        Height = 48
+        Top = 184
         Width = 399
         Align = alTop
         AutoSize = True
@@ -387,7 +384,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
@@ -404,12 +401,12 @@ object edtSurvey: TedtSurvey
         end
         object eMethod: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -431,8 +428,8 @@ object edtSurvey: TedtSurvey
       end
       object pDateDuration: TPanel
         Left = 0
-        Height = 45
-        Top = 88
+        Height = 48
+        Top = 91
         Width = 399
         Align = alTop
         AutoSize = True
@@ -442,7 +439,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
@@ -470,12 +467,12 @@ object edtSurvey: TedtSurvey
         end
         object eDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -497,7 +494,7 @@ object edtSurvey: TedtSurvey
         end
         object eDuration: TDBEdit
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           DataField = 'duration'
@@ -511,8 +508,8 @@ object edtSurvey: TedtSurvey
       end
       object pStartCoordinate: TPanel
         Left = 0
-        Height = 45
-        Top = 358
+        Height = 48
+        Top = 376
         Width = 399
         Align = alTop
         AutoSize = True
@@ -522,7 +519,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 6
@@ -550,12 +547,12 @@ object edtSurvey: TedtSurvey
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -576,12 +573,12 @@ object edtSurvey: TedtSurvey
         end
         object eLatitude: TDBEditButton
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -603,8 +600,8 @@ object edtSurvey: TedtSurvey
       end
       object pEndCoordinate: TPanel
         Left = 0
-        Height = 45
-        Top = 403
+        Height = 48
+        Top = 424
         Width = 399
         Align = alTop
         AutoSize = True
@@ -614,7 +611,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 7
@@ -642,12 +639,12 @@ object edtSurvey: TedtSurvey
         end
         object eEndLongitude: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -668,12 +665,12 @@ object edtSurvey: TedtSurvey
         end
         object eEndLatitude: TDBEditButton
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -696,7 +693,7 @@ object edtSurvey: TedtSurvey
       object pAreaDistance: TPanel
         Left = 0
         Height = 45
-        Top = 506
+        Top = 530
         Width = 399
         Align = alTop
         AutoSize = True
@@ -762,7 +759,7 @@ object edtSurvey: TedtSurvey
       object pNetsTotalEffort: TPanel
         Left = 0
         Height = 45
-        Top = 551
+        Top = 575
         Width = 399
         Align = alTop
         AutoSize = True
@@ -826,7 +823,7 @@ object edtSurvey: TedtSurvey
       object pObserversSampleId: TPanel
         Left = 0
         Height = 45
-        Top = 461
+        Top = 485
         Width = 399
         Align = alTop
         AutoSize = True
@@ -892,8 +889,8 @@ object edtSurvey: TedtSurvey
       end
       object pHabitat: TPanel
         Left = 0
-        Height = 92
-        Top = 609
+        Height = 80
+        Top = 633
         Width = 399
         Align = alTop
         AutoSize = True
@@ -904,7 +901,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 92
+        ClientHeight = 80
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 11
@@ -929,16 +926,16 @@ object edtSurvey: TedtSurvey
           Constraints.MinWidth = 368
           DataField = 'habitat'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pNetRounds: TPanel
         Left = 0
-        Height = 99
-        Top = 714
+        Height = 87
+        Top = 726
         Width = 399
         Align = alTop
         AutoSize = True
@@ -949,7 +946,7 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 99
+        ClientHeight = 87
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 12
@@ -974,15 +971,15 @@ object edtSurvey: TedtSurvey
           Constraints.MinWidth = 368
           DataField = 'net_rounds'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pExpedition: TBCPanel
         Left = 13
-        Height = 59
+        Height = 62
         Top = 16
         Width = 373
         Align = alTop
@@ -1041,13 +1038,13 @@ object edtSurvey: TedtSurvey
         end
         object eExpedition: TDBEditButton
           Left = 17
-          Height = 23
+          Height = 26
           Top = 27
           Width = 339
           Align = alTop
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 339
           Color = 16448250
           Constraints.MaxHeight = 28

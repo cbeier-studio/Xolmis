@@ -9,12 +9,12 @@ object edtUser: TedtUser
   ClientHeight = 348
   ClientWidth = 400
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -26,10 +26,8 @@ object edtUser: TedtUser
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -41,7 +39,7 @@ object edtUser: TedtUser
       Top = 8
       Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnKeyDown = FormKeyDown
@@ -53,7 +51,7 @@ object edtUser: TedtUser
       Top = 8
       Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
@@ -209,10 +207,10 @@ object edtUser: TedtUser
           'Visitante'
         )
         MaxLength = 0
-        OnKeyDown = FormKeyDown
-        OnKeyPress = eUsernameKeyPress
         Style = csDropDownList
         TabOrder = 0
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eUsernameKeyPress
       end
     end
     object pPermissions: TPanel

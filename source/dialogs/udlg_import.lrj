@@ -3,6 +3,7 @@
 {"hash":177752476,"name":"tdlgimport.sbcancel.caption","sourcebytes":[38,67,97,110,99,101,108],"value":"&Cancel"},
 {"hash":2837748,"name":"tdlgimport.sbnext.caption","sourcebytes":[38,78,101,120,116],"value":"&Next"},
 {"hash":147647923,"name":"tdlgimport.sbprior.caption","sourcebytes":[38,80,114,101,118,105,111,117,115],"value":"&Previous"},
+{"hash":2812976,"name":"tdlgimport.btnhelp.caption","sourcebytes":[38,72,101,108,112],"value":"&Help"},
 {"hash":139088512,"name":"tdlgimport.lbltitlesource.caption","sourcebytes":[83,111,117,114,99,101,32,97,110,100,32,116,97,114,103,101,116,32],"value":"Source and target "},
 {"hash":258912522,"name":"tdlgimport.lbltarget.caption","sourcebytes":[84,97,114,103,101,116,32,116,97,98,108,101,58,32,42],"value":"Target table: *"},
 {"hash":172629738,"name":"tdlgimport.lblsourcefile.caption","sourcebytes":[83,111,117,114,99,101,32,102,105,108,101,58,32,42],"value":"Source file: *"},
@@ -11,11 +12,14 @@
 {"hash":108725763,"name":"tdlgimport.btnoptions.caption","sourcebytes":[79,112,116,105,111,110,115],"value":"Options"},
 {"hash":80724659,"name":"tdlgimport.lbltitlefields.caption","sourcebytes":[70,105,101,108,100,115],"value":"Fields"},
 {"hash":126335168,"name":"tdlgimport.lblfieldsinstruction.caption","sourcebytes":[83,101,116,32,116,104,101,32,102,105,101,108,100,115,32,99,111,114,114,101,115,112,111,110,100,101,110,99,101,32,102,114,111,109,32,115,111,117,114,99,101,32,102,105,108,101,32,116,111,32,116,104,101,32,116,97,114,103,101,116,32,116,97,98,108,101,46,32],"value":"Set the fields correspondence from source file to the target table. "},
-{"hash":63207396,"name":"tdlgimport.gridfields.columns[0].title.caption","sourcebytes":[84,97,114,103,101,116,32,102,105,101,108,100],"value":"Target field"},
-{"hash":266465717,"name":"tdlgimport.gridfields.columns[1].title.caption","sourcebytes":[83,101,97,114,99,104,32,116,97,98,108,101],"value":"Search table"},
+{"hash":84178580,"name":"tdlgimport.gridfields.columns[0].title.caption","sourcebytes":[73,109,112,111,114,116],"value":"Import"},
+{"hash":63207396,"name":"tdlgimport.gridfields.columns[1].title.caption","sourcebytes":[84,97,114,103,101,116,32,102,105,101,108,100],"value":"Target field"},
+{"hash":266465717,"name":"tdlgimport.gridfields.columns[2].title.caption","sourcebytes":[83,101,97,114,99,104,32,116,97,98,108,101],"value":"Search table"},
 {"hash":228516702,"name":"tdlgimport.lbltitleconfirm.caption","sourcebytes":[67,111,110,102,105,114,109,97,116,105,111,110],"value":"Confirmation"},
 {"hash":153742974,"name":"tdlgimport.lblconfirminstruction.caption","sourcebytes":[67,104,101,99,107,32,105,102,32,116,104,101,32,100,97,116,97,32,115,97,109,112,108,101,100,32,105,115,32,99,111,114,114,101,99,116,46],"value":"Check if the data sampled is correct."},
 {"hash":124387335,"name":"tdlgimport.lbltitleprogress.caption","sourcebytes":[73,109,112,111,114,116,105,110,103],"value":"Importing"},
 {"hash":89932398,"name":"tdlgimport.lblprogressinstruction.caption","sourcebytes":[80,108,101,97,115,101,32,119,97,105,116,44,32,119,104,105,108,101,32,105,109,112,111,114,116,105,110,103,32,116,104,101,32,100,97,116,97,46],"value":"Please wait, while importing the data."},
-{"hash":177244421,"name":"tdlgimport.opendlg.title","sourcebytes":[83,101,108,101,99,116,32,115,111,117,114,99,101,32,102,105,108,101],"value":"Select source file"}
+{"hash":177244421,"name":"tdlgimport.opendlg.title","sourcebytes":[83,101,108,101,99,116,32,115,111,117,114,99,101,32,102,105,108,101],"value":"Select source file"},
+{"hash":217088739,"name":"tdlgimport.pmfselectall.caption","sourcebytes":[83,101,108,101,99,116,32,97,108,108,32,102,105,101,108,100,115],"value":"Select all fields"},
+{"hash":106988195,"name":"tdlgimport.pmfdeselectall.caption","sourcebytes":[68,101,115,101,108,101,99,116,32,97,108,108,32,102,105,101,108,100,115],"value":"Deselect all fields"}
 ]}

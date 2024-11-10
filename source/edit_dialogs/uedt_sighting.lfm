@@ -9,13 +9,12 @@ object edtSighting: TedtSighting
   ClientHeight = 706
   ClientWidth = 416
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
-  LCLVersion = '3.2.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -37,10 +36,8 @@ object edtSighting: TedtSighting
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -53,7 +50,7 @@ object edtSighting: TedtSighting
       Top = 8
       Width = 188
       Caption = 'Save'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -64,7 +61,7 @@ object edtSighting: TedtSighting
       Top = 8
       Width = 188
       Caption = 'Cancel'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
@@ -85,20 +82,21 @@ object edtSighting: TedtSighting
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1310
+      Height = 1341
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
+      BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1310
+      ClientHeight = 1341
       ClientWidth = 399
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
-        Height = 125
-        Top = 1169
+        Height = 113
+        Top = 1196
         Width = 399
         Align = alTop
         AutoSize = True
@@ -109,7 +107,7 @@ object edtSighting: TedtSighting
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 125
+        ClientHeight = 113
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 16
@@ -135,16 +133,16 @@ object edtSighting: TedtSighting
           Constraints.MinWidth = 365
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pLongitudeLatitude: TPanel
         Left = 0
-        Height = 45
-        Top = 223
+        Height = 48
+        Top = 235
         Width = 399
         Align = alTop
         AutoSize = True
@@ -154,7 +152,7 @@ object edtSighting: TedtSighting
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
@@ -182,12 +180,12 @@ object edtSighting: TedtSighting
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -208,12 +206,12 @@ object edtSighting: TedtSighting
         end
         object eLatitude: TDBEditButton
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -235,8 +233,8 @@ object edtSighting: TedtSighting
       end
       object pDateTime: TPanel
         Left = 0
-        Height = 45
-        Top = 268
+        Height = 48
+        Top = 283
         Width = 399
         Align = alTop
         AutoSize = True
@@ -246,7 +244,7 @@ object edtSighting: TedtSighting
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
@@ -274,12 +272,12 @@ object edtSighting: TedtSighting
         end
         object eDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -301,7 +299,7 @@ object edtSighting: TedtSighting
         end
         object eTime: TDBEdit
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           DataField = 'sighting_time'
@@ -317,7 +315,7 @@ object edtSighting: TedtSighting
       object pQuantityDistance: TPanel
         Left = 0
         Height = 45
-        Top = 416
+        Top = 440
         Width = 399
         Align = alTop
         AutoSize = True
@@ -383,7 +381,7 @@ object edtSighting: TedtSighting
       object pMackinnonListNumber: TPanel
         Left = 0
         Height = 45
-        Top = 506
+        Top = 533
         Width = 399
         Align = alTop
         AutoSize = True
@@ -424,8 +422,8 @@ object edtSighting: TedtSighting
       end
       object pDetectionBreeding: TPanel
         Left = 0
-        Height = 45
-        Top = 461
+        Height = 48
+        Top = 485
         Width = 399
         Align = alTop
         AutoSize = True
@@ -435,7 +433,7 @@ object edtSighting: TedtSighting
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 9
@@ -463,12 +461,12 @@ object edtSighting: TedtSighting
         end
         object eDetectionType: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -489,12 +487,12 @@ object edtSighting: TedtSighting
         end
         object eBreedingStatus: TDBEditButton
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -517,7 +515,7 @@ object edtSighting: TedtSighting
       object pCapturesRecapturesUnbanded: TPanel
         Left = 0
         Height = 137
-        Top = 664
+        Top = 691
         Width = 399
         Align = alTop
         AutoSize = True
@@ -607,8 +605,8 @@ object edtSighting: TedtSighting
       end
       object pLocality: TPanel
         Left = 0
-        Height = 45
-        Top = 178
+        Height = 48
+        Top = 187
         Width = 399
         Align = alTop
         AutoSize = True
@@ -618,7 +616,7 @@ object edtSighting: TedtSighting
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 3
@@ -635,12 +633,12 @@ object edtSighting: TedtSighting
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -662,8 +660,8 @@ object edtSighting: TedtSighting
       end
       object pObserver: TPanel
         Left = 0
-        Height = 45
-        Top = 88
+        Height = 48
+        Top = 91
         Width = 399
         Align = alTop
         AutoSize = True
@@ -673,7 +671,7 @@ object edtSighting: TedtSighting
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 1
@@ -690,12 +688,12 @@ object edtSighting: TedtSighting
         end
         object eObserver: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -717,8 +715,8 @@ object edtSighting: TedtSighting
       end
       object pMethod: TPanel
         Left = 0
-        Height = 45
-        Top = 133
+        Height = 48
+        Top = 139
         Width = 399
         Align = alTop
         AutoSize = True
@@ -728,7 +726,7 @@ object edtSighting: TedtSighting
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
@@ -745,12 +743,12 @@ object edtSighting: TedtSighting
         end
         object eMethod: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -772,8 +770,8 @@ object edtSighting: TedtSighting
       end
       object pTaxon: TPanel
         Left = 0
-        Height = 45
-        Top = 326
+        Height = 48
+        Top = 344
         Width = 399
         Align = alTop
         AutoSize = True
@@ -784,7 +782,7 @@ object edtSighting: TedtSighting
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 6
@@ -801,12 +799,12 @@ object edtSighting: TedtSighting
         end
         object eTaxon: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -828,8 +826,8 @@ object edtSighting: TedtSighting
       end
       object pIndividual: TPanel
         Left = 0
-        Height = 45
-        Top = 371
+        Height = 48
+        Top = 392
         Width = 399
         Align = alTop
         AutoSize = True
@@ -839,7 +837,7 @@ object edtSighting: TedtSighting
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 7
@@ -856,12 +854,12 @@ object edtSighting: TedtSighting
         end
         object eIndividual: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -884,7 +882,7 @@ object edtSighting: TedtSighting
       object pHowWasRecorded: TPanel
         Left = 0
         Height = 87
-        Top = 564
+        Top = 591
         Width = 399
         Align = alTop
         AutoSize = True
@@ -991,7 +989,7 @@ object edtSighting: TedtSighting
       object pMalesFemalesNotSexed: TPanel
         Left = 0
         Height = 137
-        Top = 814
+        Top = 841
         Width = 399
         Align = alTop
         BorderSpacing.Top = 13
@@ -1081,7 +1079,7 @@ object edtSighting: TedtSighting
       object pAdultsImmaturesNotAged: TPanel
         Left = 0
         Height = 137
-        Top = 964
+        Top = 991
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1172,7 +1170,7 @@ object edtSighting: TedtSighting
       object pInEbirdNotSurveying: TPanel
         Left = 0
         Height = 42
-        Top = 1114
+        Top = 1141
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1217,7 +1215,7 @@ object edtSighting: TedtSighting
       end
       object pSurvey: TBCPanel
         Left = 13
-        Height = 59
+        Height = 62
         Top = 16
         Width = 373
         Align = alTop
@@ -1276,13 +1274,13 @@ object edtSighting: TedtSighting
         end
         object eSurvey: TDBEditButton
           Left = 17
-          Height = 23
+          Height = 26
           Top = 27
           Width = 339
           Align = alTop
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 339
           Color = 16448250
           Constraints.MaxHeight = 28

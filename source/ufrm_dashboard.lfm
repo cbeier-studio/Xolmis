@@ -7,10 +7,10 @@ object frmDashboard: TfrmDashboard
   ClientHeight = 478
   ClientWidth = 1504
   Constraints.MinWidth = 731
+  PopupMenu = pmDashboard
   OnClose = FormClose
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PopupMenu = pmDashboard
   object sBox: TScrollBox
     Left = 0
     Height = 478
@@ -41,9 +41,9 @@ object frmDashboard: TfrmDashboard
       ChildSizing.TopBottomSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 16
-      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeHorizontal = crsSameSize
       ChildSizing.EnlargeVertical = crsHomogenousChildResize
-      ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsSameSize
       ChildSizing.ShrinkVertical = crsHomogenousChildResize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 3
@@ -505,9 +505,9 @@ object frmDashboard: TfrmDashboard
       BorderSpacing.Right = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 16
-      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeHorizontal = crsSameSize
       ChildSizing.EnlargeVertical = crsHomogenousChildResize
-      ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsSameSize
       ChildSizing.ShrinkVertical = crsHomogenousChildResize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 6
@@ -635,7 +635,7 @@ object frmDashboard: TfrmDashboard
         Left = 188
         Height = 93
         Top = 1
-        Width = 171
+        Width = 170
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = clWhite
@@ -718,7 +718,7 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pTotalNests: TBCPanel
-        Left = 375
+        Left = 374
         Height = 93
         Top = 1
         Width = 171
@@ -804,7 +804,7 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pTotalSamplings: TBCPanel
-        Left = 562
+        Left = 561
         Height = 93
         Top = 1
         Width = 171
@@ -890,10 +890,10 @@ object frmDashboard: TfrmDashboard
         end
       end
       object pNewSighting: TBCPanel
-        Left = 749
+        Left = 748
         Height = 93
         Top = 1
-        Width = 171
+        Width = 170
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = clBtnFace
@@ -958,7 +958,7 @@ object frmDashboard: TfrmDashboard
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = pNewSighting
           AnchorSideBottom.Side = asrBottom
-          Left = 122
+          Left = 121
           Height = 38
           Top = 46
           Width = 40
@@ -967,18 +967,18 @@ object frmDashboard: TfrmDashboard
           ImageIndex = 5
           ImageWidth = 24
           Images = DMM.iAddMenu
+          Proportional = True
+          Transparent = True
           OnClick = pNewSightingClick
           OnMouseEnter = pNewSightingMouseEnter
           OnMouseLeave = pNewSightingMouseLeave
-          Proportional = True
-          Transparent = True
         end
       end
       object pShortcutConverter: TBCPanel
-        Left = 936
+        Left = 934
         Height = 93
         Top = 1
-        Width = 169
+        Width = 171
         ChildSizing.LeftRightSpacing = 8
         ChildSizing.TopBottomSpacing = 8
         Background.Color = clBtnFace
@@ -1043,7 +1043,7 @@ object frmDashboard: TfrmDashboard
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = pShortcutConverter
           AnchorSideBottom.Side = asrBottom
-          Left = 120
+          Left = 122
           Height = 38
           Top = 46
           Width = 40
@@ -1052,11 +1052,11 @@ object frmDashboard: TfrmDashboard
           ImageIndex = 20
           ImageWidth = 24
           Images = DMM.iAddMenu
+          Proportional = True
+          Transparent = True
           OnClick = pShortcutConverterClick
           OnMouseEnter = pShortcutConverterMouseEnter
           OnMouseLeave = pShortcutConverterMouseLeave
-          Proportional = True
-          Transparent = True
         end
       end
     end
@@ -1227,7 +1227,7 @@ object frmDashboard: TfrmDashboard
           Left = 1
           Height = 23
           Top = 1
-          Width = 139
+          Width = 138
           StateClicked.Background.Color = 11776947
           StateClicked.Background.Gradient1.StartColor = 8404992
           StateClicked.Background.Gradient1.EndColor = 4194304
@@ -1328,10 +1328,10 @@ object frmDashboard: TfrmDashboard
           MemoryUsage = bmuMedium
         end
         object sbUpdateNow: TBCButton
-          Left = 148
+          Left = 147
           Height = 23
           Top = 1
-          Width = 138
+          Width = 139
           StateClicked.Background.Color = 14259089
           StateClicked.Background.Gradient1.StartColor = 8404992
           StateClicked.Background.Gradient1.EndColor = 4194304
@@ -1539,7 +1539,7 @@ object frmDashboard: TfrmDashboard
       Top = 210
       Width = 347
       HorzScrollBar.Page = 172
-      VertScrollBar.Page = 244
+      VertScrollBar.Page = 267
       Align = alClient
       BorderSpacing.Left = 2
       BorderSpacing.Right = 1
@@ -1548,7 +1548,7 @@ object frmDashboard: TfrmDashboard
       ChildSizing.TopBottomSpacing = 16
       ChildSizing.VerticalSpacing = 8
       ClientHeight = 267
-      ClientWidth = 347
+      ClientWidth = 330
       Constraints.MinWidth = 347
       ParentBackground = False
       TabOrder = 3
@@ -1556,7 +1556,7 @@ object frmDashboard: TfrmDashboard
         Left = 16
         Height = 62
         Top = 16
-        Width = 315
+        Width = 298
         Align = alTop
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
@@ -1601,7 +1601,7 @@ object frmDashboard: TfrmDashboard
           Left = 17
           Height = 20
           Top = 9
-          Width = 281
+          Width = 264
           Align = alTop
           BorderSpacing.Bottom = 6
           Caption = 'Bands balance'
@@ -1616,7 +1616,7 @@ object frmDashboard: TfrmDashboard
           Left = 17
           Height = 50
           Top = 35
-          Width = 281
+          Width = 264
           Align = alTop
           ChildSizing.HorizontalSpacing = 8
           ChildSizing.VerticalSpacing = 8
@@ -1662,7 +1662,7 @@ object frmDashboard: TfrmDashboard
         Left = 16
         Height = 50
         Top = 86
-        Width = 315
+        Width = 298
         Align = alTop
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
@@ -1706,7 +1706,7 @@ object frmDashboard: TfrmDashboard
           Left = 17
           Height = 20
           Top = 9
-          Width = 281
+          Width = 264
           Align = alTop
           Caption = 'Permits expiring'
           Color = 16448250
@@ -1720,7 +1720,7 @@ object frmDashboard: TfrmDashboard
         Left = 16
         Height = 50
         Top = 202
-        Width = 315
+        Width = 298
         Align = alTop
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
@@ -1764,7 +1764,7 @@ object frmDashboard: TfrmDashboard
           Left = 17
           Height = 20
           Top = 9
-          Width = 281
+          Width = 264
           Align = alTop
           BorderSpacing.Bottom = 6
           Caption = 'Next birthdays'
@@ -1779,7 +1779,7 @@ object frmDashboard: TfrmDashboard
         Left = 16
         Height = 50
         Top = 144
-        Width = 315
+        Width = 298
         Align = alTop
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
@@ -1823,7 +1823,7 @@ object frmDashboard: TfrmDashboard
           Left = 17
           Height = 20
           Top = 9
-          Width = 281
+          Width = 264
           Align = alTop
           Caption = 'Check nests'
           Color = 16448250
@@ -2065,5 +2065,12 @@ object frmDashboard: TfrmDashboard
   object MvBGRADraw: TMvBGRADrawingEngine
     Left = 848
     Top = 262
+  end
+  object TimerDelay: TTimer
+    Enabled = False
+    Interval = 15000
+    OnTimer = TimerDelayTimer
+    Left = 378
+    Top = 72
   end
 end

@@ -172,6 +172,7 @@ type
     FSampleDate: TDate;
     FSampleMoment: String;
     FSampleTime: TTime;
+    FObserverId: Integer;
     FTemperature: Double;
     FWindSpeedBft: Integer;
     FWindSpeedKmH: Double;
@@ -181,12 +182,14 @@ type
     procedure GetData(aKey: Integer); overload;
     procedure GetData(aDataSet: TDataSet); overload;
     procedure Insert;
+    function Find(aSurvey: Integer; aDate, aTime: String; aObserver: Integer): Boolean;
     function Diff(aOld: TWeatherLog; var aList: TStrings): Boolean;
   published
     property SurveyId: Integer read FSurveyId write FSurveyId;
     property SampleDate: TDate read FSampleDate write FSampleDate;
     property SampleTime: TTime read FSampleTime write FSampleTime;
     property SampleMoment: String read FSampleMoment write FSampleMoment;
+    property ObserverId: Integer read FObserverId write FObserverId;
     property CloudCover: Integer read FCloudCover write FCloudCover;
     property Precipitation: String read FPrecipitation write FPrecipitation;
     property Rainfall: Integer read FRainfall write FRainfall;
@@ -280,6 +283,54 @@ type
     property NetMesh: String read FNetMesh write FNetMesh;
     property Notes: String read FNotes write FNotes;
   end;
+
+  { TVegetation }
+
+  TVegetation = class(TXolmisRecord)
+  protected
+    FSurveyId: Integer;
+    FSampleDate: TDate;
+    FSampleTime: TTime;
+    FNotes: String;
+    FLongitude: Extended;
+    FLatitude: Extended;
+    FObserverId: Integer;
+    FHerbsProportion: Integer;
+    FHerbsDistribution: Integer;
+    FHerbsAvgHeight: Integer;
+    FShrubsProportion: Integer;
+    FShrubsDistribution: Integer;
+    FShrubsAvgHeight: Integer;
+    FTreesProportion: Integer;
+    FTreesDistribution: Integer;
+    FTreesAvgHeight: Integer;
+  public
+    constructor Create(aValue: Integer = 0);
+    procedure Clear; override;
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
+    procedure Insert;
+    function Find(aSurvey: Integer; aDate, aTime: String; aLongitude, aLatitude: Extended; aObserver: Integer): Boolean;
+    function Diff(aOld: TVegetation; var aList: TStrings): Boolean;
+  published
+    property SurveyId: Integer read FSurveyId write FSurveyId;
+    property SampleDate: TDate read FSampleDate write FSampleDate;
+    property SampleTime: TTime read FSampleTime write FSampleTime;
+    property Longitude: Extended read FLongitude write FLongitude;
+    property Latitude: Extended read FLatitude write FLatitude;
+    property ObserverId: Integer read FObserverId write FObserverId;
+    property HerbsProportion: Integer read FHerbsProportion write FHerbsProportion;
+    property HerbsDistribution: Integer read FHerbsDistribution write FHerbsDistribution;
+    property HerbsAvgHeight: Integer read FHerbsAvgHeight write FHerbsAvgHeight;
+    property ShrubsProportion: Integer read FShrubsProportion write FShrubsProportion;
+    property ShrubsDistribution: Integer read FShrubsDistribution write FShrubsDistribution;
+    property ShrubsAvgHeight: Integer read FShrubsAvgHeight write FShrubsAvgHeight;
+    property TreesProportion: Integer read FTreesProportion write FTreesProportion;
+    property TreesDistribution: Integer read FTreesDistribution write FTreesDistribution;
+    property TreesAvgHeight: Integer read FTreesAvgHeight write FTreesAvgHeight;
+    property Notes: String read FNotes write FNotes;
+  end;
+
 
 type
 
@@ -1261,6 +1312,230 @@ begin
   Result := aList.Count > 0;
 end;
 
+{ TVegetation }
+
+constructor TVegetation.Create(aValue: Integer);
+begin
+  if aValue > 0 then
+    GetData(aValue)
+  else
+    Clear;
+end;
+
+procedure TVegetation.Clear;
+begin
+  inherited Clear;
+  FSurveyId := 0;
+  FSampleDate := StrToDate('30/12/1500');
+  FSampleTime := StrToTime('00:00:00');
+  FNotes := EmptyStr;
+  FLongitude := 0.0;
+  FLatitude := 0.0;
+  FObserverId := 0;
+  FHerbsProportion := 0;
+  FHerbsDistribution := 0;
+  FHerbsAvgHeight := 0;
+  FShrubsProportion := 0;
+  FShrubsDistribution := 0;
+  FShrubsAvgHeight := 0;
+  FTreesProportion := 0;
+  FTreesDistribution := 0;
+  FTreesAvgHeight := 0;
+end;
+
+function TVegetation.Diff(aOld: TVegetation; var aList: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+
+  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscTime, aOld.SampleTime, FSampleTime, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscProportionOfHerbs, aOld.HerbsProportion, FHerbsProportion, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscHerbsDistribution, aOld.HerbsDistribution, FHerbsDistribution, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscAvgHeightOfHerbs, aOld.HerbsAvgHeight, FHerbsAvgHeight, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscProportionOfShrubs, aOld.ShrubsProportion, FShrubsProportion, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscShrubsDistribution, aOld.ShrubsDistribution, FShrubsDistribution, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscAvgHeightOfShrubs, aOld.ShrubsAvgHeight, FShrubsAvgHeight, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscProportionOfTrees, aOld.TreesProportion, FTreesProportion, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscTreesDistribution, aOld.TreesDistribution, FTreesDistribution, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscAvgHeightOfTrees, aOld.TreesAvgHeight, FTreesAvgHeight, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    aList.Add(R);
+
+  Result := aList.Count > 0;
+end;
+
+function TVegetation.Find(aSurvey: Integer; aDate, aTime: String; aLongitude, aLatitude: Extended; aObserver: Integer): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Result := False;
+
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('SELECT vegetation_id FROM vegetation');
+    Add('WHERE (survey_id = :asurvey)');
+    Add('AND (date(sample_date) = date(:adate))');
+    Add('AND (time(sample_time) = time(:atime))');
+    Add('AND (longitude = :alongitude)');
+    Add('AND (latitude = :alatitude)');
+    Add('AND (observer_id = :aobserver)');
+    ParamByName('ASURVEY').AsInteger := aSurvey;
+    ParamByName('AOBSERVER').AsInteger := aObserver;
+    ParamByName('ADATE').AsString := aDate;
+    ParamByName('ATIME').AsString := aTime;
+    ParamByName('ALONGITUDE').AsFloat := aLongitude;
+    ParamByName('ALATITUDE').AsFloat := aLatitude;
+
+    Open;
+    Result := RecordCount > 0;
+    if Result = True then
+    begin
+      GetData(FieldByName('vegetation_id').AsInteger);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TVegetation.GetData(aKey: Integer);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT * FROM vegetation');
+    Add('WHERE vegetation_id = :cod');
+    ParamByName('COD').AsInteger := aKey;
+    Open;
+    if RecordCount > 0 then
+      GetData(Qry);
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TVegetation.GetData(aDataSet: TDataSet);
+begin
+  if not aDataset.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('vegetation_id').AsInteger;
+    FSurveyId := FieldByName('survey_id').AsInteger;
+    FSampleDate := FieldByName('sample_date').AsDateTime;
+    FSampleTime := FieldByName('sample_time').AsDateTime;
+    FNotes := FieldByName('notes').AsString;
+    FLongitude := FieldByName('longitude').AsFloat;
+    FLatitude := FieldByName('latitude').AsFloat;
+    FObserverId := FieldByName('observer_id').AsInteger;
+    FHerbsProportion := FieldByName('herbs_proportion').AsInteger;
+    FHerbsDistribution := FieldByName('herbs_distribution').AsInteger;
+    FHerbsAvgHeight := FieldByName('herbs_avg_height').AsInteger;
+    FShrubsProportion := FieldByName('shrubs_proportion').AsInteger;
+    FShrubsDistribution := FieldByName('shrubs_distribution').AsInteger;
+    FShrubsAvgHeight := FieldByName('shrubs_avg_height').AsInteger;
+    FTreesProportion := FieldByName('trees_proportion').AsInteger;
+    FTreesDistribution := FieldByName('trees_distribution').AsInteger;
+    FTreesAvgHeight := FieldByName('trees_avg_height').AsInteger;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TVegetation.Insert;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO vegetation (survey_id, sample_date, sample_time, longitude, latitude, observer_id, ' +
+      'herbs_proportion, herbs_distribution, herbs_avg_height, ' +
+      'shrubs_proportion, shrubs_distribution, shrubs_avg_height, ' +
+      'trees_proportion, trees_distribution, trees_avg_height, ' +
+      'notes, user_inserted, insert_date) ');
+    Add('VALUES (:asurvey, date(:adate), time(:atime), :alongitude, :alatitude, :aobserver, ' +
+      ':herbsproportion, :herbsdistribution, :herbsavgheight, ' +
+      ':shrubsproportion, :shrubsdistribution, :shrubsavgheight, ' +
+      ':treesproportion, :treesdistribution, :treesavgheight, :anote, ' +
+      ':auser, datetime(''now'',''localtime''));');
+    ParamByName('ADATE').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
+    ParamByName('ATIME').AsString := TimeToStr(FSampleTime);
+    ParamByName('ASURVEY').AsInteger := FSurveyId;
+    if FLongitude <> 0 then
+      ParamByName('ALONGITUDE').AsFloat := FLongitude
+    else
+      ParamByName('ALONGITUDE').Clear;
+    if FLatitude <> 0 then
+      ParamByName('ALATITUDE').AsFloat := FLatitude
+    else
+      ParamByName('ALATITUDE').Clear;
+    ParamByName('AOBSERVER').AsInteger := FObserverId;
+    ParamByName('ANOTE').AsString := FNotes;
+
+    ParamByName('HERBSPROPORTION').AsInteger := FHerbsProportion;
+    ParamByName('HERBSDISTRIBUTION').AsInteger := FHerbsDistribution;
+    ParamByName('HERBSAVGHEIGHT').AsInteger := FHerbsAvgHeight;
+    ParamByName('SHRUBSPROPORTION').AsInteger := FShrubsProportion;
+    ParamByName('SHRUBSDISTRIBUTION').AsInteger := FShrubsDistribution;
+    ParamByName('SHRUBSAVGHEIGHT').AsInteger := FShrubsAvgHeight;
+    ParamByName('TREESPROPORTION').AsInteger := FTreesProportion;
+    ParamByName('TREESDISTRIBUTION').AsInteger := FTreesDistribution;
+    ParamByName('TREESAVGHEIGHT').AsInteger := FTreesAvgHeight;
+
+    ParamByName('AUSER').AsInteger := FUserInserted;
+//    GravaLogSQL(SQL);
+    ExecSQL;
+
+    // Get the autoincrement key inserted
+    Clear;
+    Add('SELECT DISTINCT last_insert_rowid() FROM vegetation');
+    Open;
+    FId := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 { TSurveyMember }
 
 constructor TSurveyMember.Create(aValue: Integer);
@@ -1628,6 +1903,7 @@ begin
   FSampleDate := StrToDate('30/12/1500');
   FSampleMoment := EmptyStr;
   FSampleTime := StrToTime('00:00:00');
+  FObserverId := 0;
   FTemperature := 0;
   FWindSpeedBft := 0;
   FWindSpeedKmH := 0;
@@ -1656,6 +1932,8 @@ begin
     aList.Add(R);
   if FieldValuesDiff(rscMoment, aOld.SampleMoment, FSampleMoment, R) then
     aList.Add(R);
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
+    aList.Add(R);
   if FieldValuesDiff(rscTemperatureC, aOld.Temperature, FTemperature, R) then
     aList.Add(R);
   if FieldValuesDiff(rscWindBft, aOld.WindSpeedBft, FWindSpeedBft, R) then
@@ -1666,6 +1944,40 @@ begin
     aList.Add(R);
 
   Result := aList.Count > 0;
+end;
+
+function TWeatherLog.Find(aSurvey: Integer; aDate, aTime: String; aObserver: Integer): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Result := False;
+
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('SELECT weather_id FROM weather_logs');
+    Add('WHERE (survey_id = :asurvey)');
+    Add('AND (date(sample_date) = date(:adate))');
+    Add('AND (time(sample_time) = time(:atime))');
+    Add('AND (observer_id = :aobserver)');
+    ParamByName('ASURVEY').AsInteger := aSurvey;
+    ParamByName('AOBSERVER').AsInteger := aObserver;
+    ParamByName('ADATE').AsString := aDate;
+    ParamByName('ATIME').AsString := aTime;
+
+    Open;
+    Result := RecordCount > 0;
+    if Result = True then
+    begin
+      GetData(FieldByName('vegetation_id').AsInteger);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 procedure TWeatherLog.GetData(aKey: Integer);
@@ -1708,6 +2020,7 @@ begin
     FSampleMoment := FieldByName('sample_moment').AsString;
     FSampleTime := FieldByName('sample_time').AsDateTime;
     FTemperature := FieldByName('temperature').AsFloat;
+    FObserverId := FieldByName('observer_id').AsInteger;
     FWindSpeedBft := FieldByName('wind_speed_bft').AsInteger;
     FWindSpeedKmH := FieldByName('wind_speed_kmh').AsFloat;
   end;
@@ -1723,16 +2036,17 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
     Clear;
-    Add('INSERT INTO weather_logs (survey_id, sample_date, sample_time, sample_moment, ' +
+    Add('INSERT INTO weather_logs (survey_id, sample_date, sample_time, sample_moment, observer_id, ' +
       'cloud_cover, precipitation, rainfall, temperature, wind_speed_bft, wind_speed_kmh, ' +
       'relative_humidity, atmospheric_pressure, notes, ' +
       'user_inserted, insert_date) ');
-    Add('VALUES (:asurvey, date(:adate), time(:atime), :amoment, :acloudcover, ' +
+    Add('VALUES (:asurvey, date(:adate), time(:atime), :amoment, :aobserver, :acloudcover, ' +
       ':aprecipitation, :arainfall, :atemperature, :awindbft, :awindkmh, :ahumidity, :apressure, :anote, ' +
       ':auser, datetime(''now'',''localtime''));');
     ParamByName('ADATE').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
     ParamByName('ATIME').AsString := TimeToStr(FSampleTime);
     ParamByName('AMOMENT').AsString := FSampleMoment;
+    ParamByName('AOBSERVER').AsInteger := FObserverId;
     ParamByName('ASURVEY').AsInteger := FSurveyId;
     ParamByName('ACLOUDCOVER').AsInteger := FCloudCover;
     ParamByName('APRECIPITATION').AsString := FPrecipitation;

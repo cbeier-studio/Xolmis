@@ -7,12 +7,12 @@ object edtMolt: TedtMolt
   ClientHeight = 504
   ClientWidth = 425
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -33,10 +33,8 @@ object edtMolt: TedtMolt
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 40
@@ -44,22 +42,22 @@ object edtMolt: TedtMolt
     TabOrder = 0
     object sbSave: TButton
       Left = 16
-      Height = 24
+      Height = 25
       Top = 8
-      Width = 193
+      Width = 192
       Caption = 'Save'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 217
-      Height = 24
+      Left = 216
+      Height = 25
       Top = 8
-      Width = 192
+      Width = 193
       Caption = 'Cancel'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
@@ -79,20 +77,20 @@ object edtMolt: TedtMolt
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 1183
+      Height = 1189
       Top = 0
       Width = 408
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1183
+      ClientHeight = 1189
       ClientWidth = 408
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 114
-        Top = 1053
+        Top = 1059
         Width = 408
         Align = alTop
         BorderSpacing.Top = 13
@@ -128,25 +126,26 @@ object edtMolt: TedtMolt
           Constraints.MinWidth = 374
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pDateTime: TPanel
         Left = 0
-        Height = 46
+        Height = 48
         Top = 16
         Width = 408
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
+        ClientHeight = 48
         ClientWidth = 408
         ParentBackground = False
         TabOrder = 0
@@ -176,11 +175,11 @@ object edtMolt: TedtMolt
         end
         object eDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 179
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 179
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 179
@@ -202,7 +201,7 @@ object edtMolt: TedtMolt
         end
         object eCaptureTime: TDBEdit
           Left = 211
-          Height = 23
+          Height = 26
           Top = 22
           Width = 179
           DataField = 'sample_time'
@@ -218,7 +217,7 @@ object edtMolt: TedtMolt
       object pPrimaries: TPanel
         Left = 0
         Height = 91
-        Top = 191
+        Top = 197
         Width = 408
         Align = alTop
         AutoSize = True
@@ -485,17 +484,18 @@ object edtMolt: TedtMolt
       end
       object pSurvey: TPanel
         Left = 0
-        Height = 46
-        Top = 108
+        Height = 48
+        Top = 112
         Width = 408
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 48
         ClientWidth = 408
         ParentBackground = False
         TabOrder = 2
@@ -513,13 +513,12 @@ object edtMolt: TedtMolt
         end
         object eSurvey: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 374
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 374
-          Constraints.MaxHeight = 28
           Constraints.MinWidth = 374
           ParentBackground = False
           ParentShowHint = False
@@ -539,17 +538,18 @@ object edtMolt: TedtMolt
       end
       object pBander: TPanel
         Left = 0
-        Height = 46
-        Top = 62
+        Height = 48
+        Top = 64
         Width = 408
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 48
         ClientWidth = 408
         ParentBackground = False
         TabOrder = 1
@@ -567,13 +567,12 @@ object edtMolt: TedtMolt
         end
         object eBander: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 374
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 374
-          Constraints.MaxHeight = 28
           Constraints.MinWidth = 374
           ParentBackground = False
           ParentShowHint = False
@@ -594,7 +593,7 @@ object edtMolt: TedtMolt
       object pTitlePrimaries: TPanel
         Left = 0
         Height = 24
-        Top = 167
+        Top = 173
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -621,7 +620,7 @@ object edtMolt: TedtMolt
       object pTitleSecondaries: TPanel
         Left = 0
         Height = 24
-        Top = 295
+        Top = 301
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -648,7 +647,7 @@ object edtMolt: TedtMolt
       object pTitleRectrices: TPanel
         Left = 0
         Height = 24
-        Top = 423
+        Top = 429
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -675,7 +674,7 @@ object edtMolt: TedtMolt
       object pTitleAlula: TPanel
         Left = 0
         Height = 24
-        Top = 679
+        Top = 685
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -702,7 +701,7 @@ object edtMolt: TedtMolt
       object pTitlePrimaryCoverts: TPanel
         Left = 0
         Height = 24
-        Top = 551
+        Top = 557
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -729,7 +728,7 @@ object edtMolt: TedtMolt
       object pTitleGreatCoverts: TPanel
         Left = 0
         Height = 24
-        Top = 761
+        Top = 767
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -756,7 +755,7 @@ object edtMolt: TedtMolt
       object pTitleOtherCoverts: TPanel
         Left = 0
         Height = 24
-        Top = 889
+        Top = 895
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -783,7 +782,7 @@ object edtMolt: TedtMolt
       object pTitleGrowthBars: TPanel
         Left = 0
         Height = 24
-        Top = 971
+        Top = 977
         Width = 408
         Align = alTop
         Alignment = taLeftJustify
@@ -810,7 +809,7 @@ object edtMolt: TedtMolt
       object pRectrices: TPanel
         Left = 0
         Height = 91
-        Top = 447
+        Top = 453
         Width = 408
         Align = alTop
         AutoSize = True
@@ -1026,7 +1025,7 @@ object edtMolt: TedtMolt
       object pSecondaries: TPanel
         Left = 0
         Height = 91
-        Top = 319
+        Top = 325
         Width = 408
         Align = alTop
         AutoSize = True
@@ -1281,7 +1280,7 @@ object edtMolt: TedtMolt
       object pPrimaryCoverts: TPanel
         Left = 0
         Height = 91
-        Top = 575
+        Top = 581
         Width = 408
         Align = alTop
         AutoSize = True
@@ -1536,7 +1535,7 @@ object edtMolt: TedtMolt
       object pAlula: TPanel
         Left = 0
         Height = 45
-        Top = 703
+        Top = 709
         Width = 408
         Align = alTop
         AutoSize = True
@@ -1629,7 +1628,7 @@ object edtMolt: TedtMolt
       object pGreatCoverts: TPanel
         Left = 0
         Height = 91
-        Top = 785
+        Top = 791
         Width = 408
         Align = alTop
         AutoSize = True
@@ -1897,7 +1896,7 @@ object edtMolt: TedtMolt
       object pOtherCoverts: TPanel
         Left = 0
         Height = 45
-        Top = 913
+        Top = 919
         Width = 408
         Align = alTop
         AutoSize = True
@@ -2014,7 +2013,7 @@ object edtMolt: TedtMolt
       object pGrowthBars: TPanel
         Left = 0
         Height = 45
-        Top = 995
+        Top = 1001
         Width = 408
         Align = alTop
         BevelOuter = bvNone

@@ -8,9 +8,9 @@ object dlgPlantminer: TdlgPlantminer
   Caption = 'Checking botanic taxon'
   ClientHeight = 432
   ClientWidth = 612
+  PopupMode = pmAuto
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
   object VL: TValueListEditor
     Left = 0
     Height = 391
@@ -42,32 +42,35 @@ object dlgPlantminer: TdlgPlantminer
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 612
     TabOrder = 1
     object sbSave: TBitBtn
-      Left = 16
+      Left = 348
       Height = 25
       Top = 8
-      Width = 286
+      Width = 120
+      Align = alRight
+      AutoSize = True
       Caption = 'Apply'
-      Constraints.MinWidth = 281
-      OnClick = sbSaveClick
+      Constraints.MinWidth = 120
       TabOrder = 0
+      OnClick = sbSaveClick
     end
     object sbCancel: TBitBtn
-      Left = 310
+      Left = 476
       Height = 25
       Top = 8
-      Width = 286
+      Width = 120
+      Align = alRight
+      AutoSize = True
       Caption = 'Cancel'
-      Constraints.MinWidth = 281
-      OnClick = sbCancelClick
+      Constraints.MinWidth = 120
       TabOrder = 1
+      OnClick = sbCancelClick
     end
   end
 end

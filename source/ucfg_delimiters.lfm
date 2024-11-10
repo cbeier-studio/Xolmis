@@ -9,11 +9,10 @@ object cfgDelimiters: TcfgDelimiters
   ClientHeight = 353
   ClientWidth = 416
   Constraints.MinWidth = 416
-  OnKeyPress = FormKeyPress
-  OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
   object pBottom: TPanel
     Left = 0
     Height = 43
@@ -25,8 +24,8 @@ object cfgDelimiters: TcfgDelimiters
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 43

@@ -2,26 +2,25 @@ object edtCapture: TedtCapture
   Left = 352
   Height = 643
   Top = 33
-  Width = 796
+  Width = 792
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New capture'
   ClientHeight = 643
-  ClientWidth = 796
+  ClientWidth = 792
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
     Top = 600
-    Width = 796
+    Width = 792
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -31,40 +30,42 @@ object edtCapture: TedtCapture
     Left = 0
     Height = 41
     Top = 602
-    Width = 796
+    Width = 792
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 796
+    ClientWidth = 792
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      Left = 528
       Height = 25
       Top = 8
-      Width = 378
+      Width = 120
+      Align = alRight
+      AutoSize = True
       Caption = 'Salvar'
-      Constraints.MinWidth = 378
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 402
+      Left = 656
       Height = 25
       Top = 8
-      Width = 378
+      Width = 120
+      Align = alRight
+      AutoSize = True
       Caption = 'Cancelar'
-      Constraints.MinWidth = 378
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
@@ -73,42 +74,45 @@ object edtCapture: TedtCapture
     Left = 0
     Height = 600
     Top = 0
-    Width = 796
+    Width = 792
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 600
     Align = alTop
     BorderStyle = bsNone
     ClientHeight = 600
-    ClientWidth = 779
+    ClientWidth = 775
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1041
+      Height = 1080
       Top = 0
-      Width = 779
+      Width = 775
       Align = alTop
       AutoSize = True
+      BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1041
-      ClientWidth = 779
+      ClientHeight = 1080
+      ClientWidth = 775
       TabOrder = 0
       object pAgeEscapedStatus: TPanel
         Left = 0
         Height = 46
-        Top = 285
-        Width = 779
+        Top = 299
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
         ClientHeight = 46
-        ClientWidth = 779
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 6
         object lblAge: TLabel
@@ -147,7 +151,7 @@ object edtCapture: TedtCapture
           Left = 586
           Height = 15
           Top = 4
-          Width = 1
+          Width = 173
           BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
@@ -166,9 +170,9 @@ object edtCapture: TedtCapture
             ''
           )
           MaxLength = 0
+          TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbAgeKeyPress
-          TabOrder = 0
         end
         object ckEscaped: TDBCheckBox
           Left = 206
@@ -194,16 +198,16 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           ItemHeight = 15
           MaxLength = 0
+          TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = cbStatusKeyPress
-          TabOrder = 2
         end
       end
       object pSamples: TPanel
         Left = 0
         Height = 42
-        Top = 840
-        Width = 779
+        Top = 860
+        Width = 775
         Align = alTop
         AutoSize = True
         BorderSpacing.Bottom = 5
@@ -211,10 +215,12 @@ object edtCapture: TedtCapture
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
         ClientHeight = 42
-        ClientWidth = 779
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 17
         object ckBloodSample: TDBCheckBox
@@ -332,19 +338,21 @@ object edtCapture: TedtCapture
       end
       object pDateTimeBander: TPanel
         Left = 0
-        Height = 46
-        Top = 100
-        Width = 779
+        Height = 49
+        Top = 103
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 46
-        ClientWidth = 779
+        ClientHeight = 49
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 2
         object lblCaptureDate: TLabel
@@ -393,12 +401,12 @@ object edtCapture: TedtCapture
         end
         object eCaptureDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -422,7 +430,7 @@ object edtCapture: TedtCapture
         end
         object eCaptureTime: TDBEdit
           Left = 206
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           DataField = 'capture_time'
@@ -436,12 +444,12 @@ object edtCapture: TedtCapture
         end
         object eBander: TDBEditButton
           Left = 396
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -464,12 +472,12 @@ object edtCapture: TedtCapture
         end
         object eAnnotator: TDBEditButton
           Left = 586
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -492,19 +500,21 @@ object edtCapture: TedtCapture
       end
       object pSurveyLocality: TPanel
         Left = 0
-        Height = 46
+        Height = 49
         Top = 54
-        Width = 779
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 46
-        ClientWidth = 779
+        ClientHeight = 49
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 1
         object lblSurvey: TLabel
@@ -531,12 +541,12 @@ object edtCapture: TedtCapture
         end
         object eSurvey: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 364
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 364
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 364
@@ -560,12 +570,12 @@ object edtCapture: TedtCapture
         end
         object eLocality: TDBEditButton
           Left = 396
-          Height = 23
+          Height = 26
           Top = 23
           Width = 364
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 364
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 364
@@ -589,19 +599,21 @@ object edtCapture: TedtCapture
       end
       object pColorBands: TPanel
         Left = 0
-        Height = 47
-        Top = 238
-        Width = 779
+        Height = 49
+        Top = 250
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 47
-        ClientWidth = 779
+        ClientHeight = 49
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 5
         object lblRightLegBelow: TLabel
@@ -648,12 +660,12 @@ object edtCapture: TedtCapture
         end
         object eRightTarsus: TDBEditButton
           Left = 16
-          Height = 24
+          Height = 26
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -735,12 +747,12 @@ object edtCapture: TedtCapture
         end
         object eLeftTarsus: TDBEditButton
           Left = 396
-          Height = 24
+          Height = 26
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 24
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -823,19 +835,21 @@ object edtCapture: TedtCapture
       end
       object pTaxonBand: TPanel
         Left = 0
-        Height = 46
-        Top = 192
-        Width = 779
+        Height = 49
+        Top = 201
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 3
-        ClientHeight = 46
-        ClientWidth = 779
+        ClientHeight = 49
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 4
         object lblTaxon: TLabel
@@ -873,12 +887,12 @@ object edtCapture: TedtCapture
         end
         object eTaxon: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 364
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 364
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 364
@@ -901,12 +915,12 @@ object edtCapture: TedtCapture
         end
         object eBand: TDBEditButton
           Left = 396
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -929,12 +943,12 @@ object edtCapture: TedtCapture
         end
         object eRemovedBand: TDBEditButton
           Left = 586
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -959,8 +973,8 @@ object edtCapture: TedtCapture
       object pNotes: TPanel
         Left = 0
         Height = 79
-        Top = 707
-        Width = 779
+        Top = 727
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -969,7 +983,7 @@ object edtCapture: TedtCapture
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 79
-        ClientWidth = 779
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 15
         object lblNotes: TLabel
@@ -992,27 +1006,29 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 744
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pPhotographersCamera: TPanel
         Left = 0
-        Height = 46
-        Top = 887
-        Width = 779
+        Height = 49
+        Top = 907
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 46
-        ClientWidth = 779
+        ClientHeight = 49
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 18
         object lblPhotographer1: TLabel
@@ -1052,7 +1068,7 @@ object edtCapture: TedtCapture
           Left = 586
           Height = 15
           Top = 4
-          Width = 1
+          Width = 173
           BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
@@ -1060,11 +1076,11 @@ object edtCapture: TedtCapture
         end
         object ePhotographer1: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -1087,11 +1103,11 @@ object edtCapture: TedtCapture
         end
         object ePhotographer2: TDBEditButton
           Left = 206
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -1122,16 +1138,16 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           ItemHeight = 15
           MaxLength = 0
+          TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
-          TabOrder = 2
         end
       end
       object pTitleCapture: TPanel
         Left = 0
         Height = 38
         Top = 16
-        Width = 779
+        Width = 775
         Align = alTop
         Alignment = taLeftJustify
         AutoSize = True
@@ -1139,7 +1155,7 @@ object edtCapture: TedtCapture
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ClientHeight = 38
-        ClientWidth = 779
+        ClientWidth = 775
         Font.Color = 13066075
         Font.Height = -20
         ParentBackground = False
@@ -1162,8 +1178,8 @@ object edtCapture: TedtCapture
       object pTitleMetrics: TPanel
         Left = 0
         Height = 38
-        Top = 347
-        Width = 779
+        Top = 361
+        Width = 775
         Align = alTop
         Alignment = taLeftJustify
         AutoSize = True
@@ -1171,7 +1187,7 @@ object edtCapture: TedtCapture
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ClientHeight = 38
-        ClientWidth = 779
+        ClientWidth = 775
         Font.Color = 13066075
         Font.Height = -20
         ParentBackground = False
@@ -1191,8 +1207,8 @@ object edtCapture: TedtCapture
       object pTitleCollection: TPanel
         Left = 0
         Height = 38
-        Top = 802
-        Width = 779
+        Top = 822
+        Width = 775
         Align = alTop
         Alignment = taLeftJustify
         AutoSize = True
@@ -1200,7 +1216,7 @@ object edtCapture: TedtCapture
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ClientHeight = 38
-        ClientWidth = 779
+        ClientWidth = 775
         Font.Color = 13066075
         Font.Height = -20
         ParentBackground = False
@@ -1219,19 +1235,21 @@ object edtCapture: TedtCapture
       end
       object pTypeNetLongLat: TPanel
         Left = 0
-        Height = 46
-        Top = 146
-        Width = 779
+        Height = 49
+        Top = 152
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 46
-        ClientWidth = 779
+        ClientHeight = 49
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 3
         object lblCaptureType: TLabel
@@ -1288,19 +1306,19 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           ItemHeight = 15
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbCaptureTypeKeyPress
           Style = csDropDownList
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbCaptureTypeKeyPress
         end
         object eNet: TDBEditButton
           Left = 206
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -1324,12 +1342,12 @@ object edtCapture: TedtCapture
         end
         object eLongitude: TDBEditButton
           Left = 396
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -1353,12 +1371,12 @@ object edtCapture: TedtCapture
         end
         object eLatitude: TDBEditButton
           Left = 586
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -1384,18 +1402,20 @@ object edtCapture: TedtCapture
       object pMetrics1: TPanel
         Left = 0
         Height = 46
-        Top = 385
-        Width = 779
+        Top = 399
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
         ClientHeight = 46
-        ClientWidth = 779
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 8
         object lblCloacalProtuberance: TLabel
@@ -1459,9 +1479,9 @@ object edtCapture: TedtCapture
             'L'
           )
           MaxLength = 0
+          TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
-          TabOrder = 0
         end
         object cbBroodPatch: TDBComboBox
           Left = 206
@@ -1480,9 +1500,9 @@ object edtCapture: TedtCapture
             'O'
           )
           MaxLength = 0
+          TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
-          TabOrder = 1
         end
         object cbFat: TDBComboBox
           Left = 396
@@ -1504,9 +1524,9 @@ object edtCapture: TedtCapture
             'V'
           )
           MaxLength = 0
+          TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
-          TabOrder = 2
         end
         object cbBodyMolt: TDBComboBox
           Left = 586
@@ -1527,26 +1547,28 @@ object edtCapture: TedtCapture
             'F'
           )
           MaxLength = 0
+          TabOrder = 3
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
-          TabOrder = 3
         end
       end
       object pMetrics2: TPanel
         Left = 0
         Height = 46
-        Top = 431
-        Width = 779
+        Top = 445
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
         ClientHeight = 46
-        ClientWidth = 779
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 9
         object lblFlightFeatherMolt: TLabel
@@ -1608,9 +1630,9 @@ object edtCapture: TedtCapture
             'A'
           )
           MaxLength = 0
+          TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
-          TabOrder = 0
         end
         object cbFlightFeatherWear: TDBComboBox
           Left = 206
@@ -1630,9 +1652,9 @@ object edtCapture: TedtCapture
             'X'
           )
           MaxLength = 0
+          TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
-          TabOrder = 1
         end
         object eRightWingChord: TDBEdit
           Left = 396
@@ -1664,18 +1686,20 @@ object edtCapture: TedtCapture
       object pMetrics3: TPanel
         Left = 0
         Height = 46
-        Top = 477
-        Width = 779
+        Top = 491
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
         ClientHeight = 46
-        ClientWidth = 779
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 10
         object lblTailLength: TLabel
@@ -1778,18 +1802,20 @@ object edtCapture: TedtCapture
       object pMetrics5: TPanel
         Left = 0
         Height = 46
-        Top = 569
-        Width = 779
+        Top = 583
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
         ClientHeight = 46
-        ClientWidth = 779
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 12
         object lblBillHeight: TLabel
@@ -1892,18 +1918,20 @@ object edtCapture: TedtCapture
       object pMetrics4: TPanel
         Left = 0
         Height = 46
-        Top = 523
-        Width = 779
+        Top = 537
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
         ClientHeight = 46
-        ClientWidth = 779
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 11
         object Label44: TLabel
@@ -2005,19 +2033,21 @@ object edtCapture: TedtCapture
       end
       object pKippMoltLimitsSkull: TPanel
         Left = 0
-        Height = 46
-        Top = 615
-        Width = 779
+        Height = 49
+        Top = 629
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 46
-        ClientWidth = 779
+        ClientHeight = 49
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 13
         object lblKippsIndex: TLabel
@@ -2057,7 +2087,7 @@ object edtCapture: TedtCapture
           Left = 586
           Height = 15
           Top = 4
-          Width = 1
+          Width = 173
           BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
@@ -2065,7 +2095,7 @@ object edtCapture: TedtCapture
         end
         object eKippsIndex: TDBEdit
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           DataField = 'kipps_index'
@@ -2080,11 +2110,11 @@ object edtCapture: TedtCapture
         end
         object eMoltLimits: TDBEditButton
           Left = 206
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -2124,26 +2154,28 @@ object edtCapture: TedtCapture
             'F'
           )
           MaxLength = 0
+          TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
-          TabOrder = 2
         end
       end
       object pCycleSex: TPanel
         Left = 0
-        Height = 46
-        Top = 661
-        Width = 779
+        Height = 49
+        Top = 678
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 46
-        ClientWidth = 779
+        ClientHeight = 49
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 14
         object lblCycleCode: TLabel
@@ -2192,11 +2224,11 @@ object edtCapture: TedtCapture
         end
         object eCycleCode: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -2219,11 +2251,11 @@ object edtCapture: TedtCapture
         end
         object eHowAged: TDBEditButton
           Left = 206
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -2259,17 +2291,17 @@ object edtCapture: TedtCapture
             'Indeterminado'
           )
           MaxLength = 0
+          TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
-          TabOrder = 2
         end
         object eHowSexed: TDBEditButton
           Left = 586
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
@@ -2294,18 +2326,20 @@ object edtCapture: TedtCapture
       object pPhotosFieldNumber: TPanel
         Left = 0
         Height = 46
-        Top = 933
-        Width = 779
+        Top = 956
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
         ClientHeight = 46
-        ClientWidth = 779
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 19
         object lblStartPhoto: TLabel
@@ -2406,18 +2440,20 @@ object edtCapture: TedtCapture
       object pHemoglobinGlucose: TPanel
         Left = 0
         Height = 46
-        Top = 979
-        Width = 779
+        Top = 1002
+        Width = 775
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
         ClientHeight = 46
-        ClientWidth = 779
+        ClientWidth = 775
         ParentBackground = False
         TabOrder = 20
         object lblHemoglobin: TLabel
@@ -2457,7 +2493,7 @@ object edtCapture: TedtCapture
           Left = 586
           Height = 15
           Top = 4
-          Width = 1
+          Width = 173
           BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False

@@ -8,14 +8,14 @@ object edtBands: TedtBands
   Caption = 'New band'
   ClientHeight = 630
   ClientWidth = 488
+  ParentFont = True
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  ParentFont = True
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -27,8 +27,8 @@ object edtBands: TedtBands
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -40,7 +40,7 @@ object edtBands: TedtBands
       Top = 8
       Width = 224
       Caption = 'Save'
-      Constraints.MinWidth = 224
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -53,7 +53,7 @@ object edtBands: TedtBands
       Top = 8
       Width = 224
       Caption = 'Cancel'
-      Constraints.MinWidth = 224
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
@@ -76,7 +76,7 @@ object edtBands: TedtBands
     Top = 0
     Width = 488
     HorzScrollBar.Page = 488
-    VertScrollBar.Page = 583
+    VertScrollBar.Page = 580
     Align = alTop
     BorderStyle = bsNone
     ClientHeight = 587
@@ -87,21 +87,21 @@ object edtBands: TedtBands
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 583
+      Height = 580
       Top = 0
       Width = 488
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 583
+      ClientHeight = 580
       ClientWidth = 488
       Constraints.MinHeight = 560
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
-        Height = 148
-        Top = 419
+        Height = 136
+        Top = 428
         Width = 488
         Align = alTop
         AutoSize = True
@@ -112,7 +112,7 @@ object edtBands: TedtBands
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 148
+        ClientHeight = 136
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 8
@@ -137,10 +137,10 @@ object edtBands: TedtBands
           Constraints.MinWidth = 456
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pSizeNumber: TPanel
@@ -154,6 +154,8 @@ object edtBands: TedtBands
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 46
@@ -214,10 +216,10 @@ object edtBands: TedtBands
             'Z'
           )
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbBandSizeKeyPress
           Style = csDropDownList
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbBandSizeKeyPress
         end
         object eBandNumber: TDBEdit
           Left = 252
@@ -244,6 +246,8 @@ object edtBands: TedtBands
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 46
@@ -310,6 +314,8 @@ object edtBands: TedtBands
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 49
@@ -362,11 +368,11 @@ object edtBands: TedtBands
             'Other'
           )
           MaxLength = 0
+          Style = csOwnerDrawFixed
+          TabOrder = 0
           OnDrawItem = cbBandTypeDrawItem
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
-          Style = csOwnerDrawFixed
-          TabOrder = 0
         end
         object cbBandColor: TDBComboBox
           Left = 252
@@ -398,11 +404,11 @@ object edtBands: TedtBands
             'other'
           )
           MaxLength = 0
+          Style = csOwnerDrawFixed
+          TabOrder = 1
           OnDrawItem = cbBandColorDrawItem
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
-          Style = csOwnerDrawFixed
-          TabOrder = 1
         end
       end
       object pStatus: TPanel
@@ -464,10 +470,10 @@ object edtBands: TedtBands
             'Lost'
           )
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbBandSizeKeyPress
           Style = csDropDownList
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbBandSizeKeyPress
         end
         object ckReported: TDBCheckBox
           Left = 252
@@ -531,15 +537,15 @@ object edtBands: TedtBands
             'Found in the field (loose)'
           )
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbBandSizeKeyPress
           Style = csDropDownList
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbBandSizeKeyPress
         end
       end
       object pSupplier: TPanel
         Left = 0
-        Height = 46
+        Height = 49
         Top = 265
         Width = 488
         Align = alTop
@@ -550,7 +556,7 @@ object edtBands: TedtBands
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 49
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 5
@@ -567,11 +573,11 @@ object edtBands: TedtBands
         end
         object eSupplier: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 456
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 456
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
@@ -595,8 +601,8 @@ object edtBands: TedtBands
       end
       object pCarrier: TPanel
         Left = 0
-        Height = 46
-        Top = 311
+        Height = 49
+        Top = 314
         Width = 488
         Align = alTop
         AutoSize = True
@@ -606,7 +612,7 @@ object edtBands: TedtBands
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 49
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 6
@@ -623,11 +629,11 @@ object edtBands: TedtBands
         end
         object eCarrier: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 456
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 456
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
@@ -651,8 +657,8 @@ object edtBands: TedtBands
       end
       object pProject: TPanel
         Left = 0
-        Height = 46
-        Top = 357
+        Height = 49
+        Top = 363
         Width = 488
         Align = alTop
         AutoSize = True
@@ -662,7 +668,7 @@ object edtBands: TedtBands
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
+        ClientHeight = 49
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 7
@@ -679,11 +685,11 @@ object edtBands: TedtBands
         end
         object eProject: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 456
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 456
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456

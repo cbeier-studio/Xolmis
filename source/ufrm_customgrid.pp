@@ -50,9 +50,18 @@ type
     DropDocs: TDropFileTarget;
     DropImages: TDropFileTarget;
     dsDocs: TDataSource;
+    dsLink6: TDataSource;
+    gridChild6: TDBGrid;
     gridDocs: TDBGrid;
+    lblChildCount6: TLabel;
+    lblChildTag6: TLabel;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
+    pmcNewVegetation: TMenuItem;
+    pgChild6: TPage;
+    pChildCount6: TBCPanel;
+    pChildTag6: TBCPanel;
+    pmPrintSightingsByObserver: TMenuItem;
     pmAddLink: TMenuItem;
     pmAddDocument: TMenuItem;
     pDocsToolbar: TBCPanel;
@@ -879,6 +888,8 @@ type
     procedure dsLink4StateChange(Sender: TObject);
     procedure dsLink5DataChange(Sender: TObject; Field: TField);
     procedure dsLink5StateChange(Sender: TObject);
+    procedure dsLink6DataChange(Sender: TObject; Field: TField);
+    procedure dsLink6StateChange(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure dsLinkStateChange(Sender: TObject);
     procedure dsRecycleStateChange(Sender: TObject);
@@ -956,6 +967,7 @@ type
     procedure pmcNewSightingClick(Sender: TObject);
     procedure pmcNewSpecimenClick(Sender: TObject);
     procedure pmcNewSurveyMemberClick(Sender: TObject);
+    procedure pmcNewVegetationClick(Sender: TObject);
     procedure pmcNewWeatherLogClick(Sender: TObject);
     procedure pmdRefreshDocsClick(Sender: TObject);
     procedure pmiRefreshImagesClick(Sender: TObject);
@@ -1203,6 +1215,7 @@ type
     procedure SetColumnsSpecimens(var aGrid: TDBGrid);
     procedure SetColumnsSurveys(var aGrid: TDBGrid);
     procedure SetColumnsTaxonRanks(var aGrid: TDBGrid);
+    procedure SetColumnsVegetation(var aGrid: TDBGrid);
     procedure SetColumnsWeatherLogs(var aGrid: TDBGrid);
 
     procedure SetGridAndChild;
@@ -2153,6 +2166,7 @@ begin
     pChildTag3.Border.Color := clSolidBGTertiaryDark;
     pChildTag4.Border.Color := clSolidBGTertiaryDark;
     pChildTag5.Border.Color := clSolidBGTertiaryDark;
+    pChildTag6.Border.Color := clSolidBGTertiaryDark;
   end
   else
   begin
@@ -2161,12 +2175,14 @@ begin
     pChildTag3.Border.Color := $00D1D1D1;
     pChildTag4.Border.Color := $00D1D1D1;
     pChildTag5.Border.Color := $00D1D1D1;
+    pChildTag6.Border.Color := $00D1D1D1;
   end;
   pChildTag1.Border.Width := 1;
   pChildTag2.Border.Width := 1;
   pChildTag3.Border.Width := 1;
   pChildTag4.Border.Width := 1;
   pChildTag5.Border.Width := 1;
+  pChildTag6.Border.Width := 1;
 
   if IsDarkModeEnabled then
     aTag.Background.Color := clVioletBG1Dark
@@ -3571,6 +3587,17 @@ begin
     UpdateChildButtons(dsLink5.DataSet);
 end;
 
+procedure TfrmCustomGrid.dsLink6DataChange(Sender: TObject; Field: TField);
+begin
+  UpdateChildCount;
+end;
+
+procedure TfrmCustomGrid.dsLink6StateChange(Sender: TObject);
+begin
+  if Assigned(dsLink6.DataSet) and (nbChilds.PageIndex = 5) then
+    UpdateChildButtons(dsLink6.DataSet);
+end;
+
 procedure TfrmCustomGrid.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
   LoadRecordRow;
@@ -4888,6 +4915,7 @@ begin
         2: Result := dsLink3.DataSet;
         3: Result := dsLink4.DataSet;
         4: Result := dsLink5.DataSet;
+        5: Result := dsLink6.DataSet;
       end;
     tbSightings: ;
     tbSpecimens:
@@ -6190,6 +6218,13 @@ begin
   EditSurveyMember(DMS.qSurveyTeam, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
 
   UpdateChildButtons(DMS.qSurveyTeam);
+end;
+
+procedure TfrmCustomGrid.pmcNewVegetationClick(Sender: TObject);
+begin
+  EditVegetation(DMS.qVegetation, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
+
+  UpdateChildButtons(DMS.qVegetation);
 end;
 
 procedure TfrmCustomGrid.pmcNewWeatherLogClick(Sender: TObject);
@@ -10416,6 +10451,31 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.SetColumnsVegetation(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionNone);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionRare);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionFewSparse);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionOnePatch);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionOnePatchFewSparse);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionManySparse);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionOnePatchManySparse);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionFewPatches);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionFewPatchesSparse);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionManyPatches);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionManyPatchesSparse);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionEvenHighDensity);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionContinuousFewGaps);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionContinuousDense);
+    ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionContinuousDenseEdge);
+
+    ColumnByFieldname('shrubs_distribution').PickList.Assign(ColumnByFieldname('herbs_distribution').PickList);
+    ColumnByFieldname('trees_distribution').PickList.Assign(ColumnByFieldname('herbs_distribution').PickList);
+  end;
+end;
+
 procedure TfrmCustomGrid.SetColumnsWeatherLogs(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
@@ -10889,6 +10949,7 @@ begin
 
   pmPrintSightings.Visible := True;
   pmPrintSightingsBySurvey.Visible := True;
+  pmPrintSightingsByObserver.Visible := True;
   pmPrintSightingsByProject.Visible := True;
   pmPrintSightingsByLocality.Visible := True;
   pmPrintSightingsByTaxon.Visible := True;
@@ -10944,11 +11005,13 @@ begin
   lblChildTag3.Caption := rsTitleWeather;
   lblChildTag4.Caption := rsTitleCaptures;
   lblChildTag5.Caption := rsTitleSightings;
+  lblChildTag6.Caption := rsTitleVegetation;
   pChildTag1.Visible := True;
   pChildTag2.Visible := True;
   pChildTag3.Visible := True;
   pChildTag4.Visible := True;
   pChildTag5.Visible := True;
+  pChildTag6.Visible := True;
   nbChilds.PageIndex := 0;
   if not Assigned(DMS) then
     DMS := TDMS.Create(nil);
@@ -10958,11 +11021,13 @@ begin
   dsLink3.DataSet := DMS.qWeatherLogs;
   dsLink4.DataSet := DMS.qCaptures;
   dsLink5.DataSet := DMS.qSightings;
+  dsLink6.DataSet := DMS.qVegetation;
   pmcNewSurveyMember.Visible := True;
   pmcNewMistnet.Visible := True;
   pmcNewWeatherLog.Visible := True;
   pmcNewCapture.Visible := True;
   pmcNewSighting.Visible := True;
+  pmcNewVegetation.Visible := True;
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
 

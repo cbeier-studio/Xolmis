@@ -6,13 +6,14 @@ interface
 
 uses
   Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet, memds, dbf, csvdataset, DB, Forms, Controls,
-  Graphics, Dialogs, ExtCtrls, StdCtrls, Grids, Buttons, EditBtn, ComCtrls, fpsDataset, atshapelinebgra;
+  Graphics, Dialogs, ExtCtrls, StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset, atshapelinebgra;
 
 type
 
   { TdlgImport }
 
   TdlgImport = class(TForm)
+    btnHelp: TBitBtn;
     btnOptions: TBitBtn;
     cbTarget: TComboBox;
     dsDbf: TDbf;
@@ -32,6 +33,8 @@ type
     lblTitleSource: TLabel;
     lineBottom: TShapeLineBGRA;
     dsMem: TMemDataset;
+    pmfSelectAll: TMenuItem;
+    pmfDeselectAll: TMenuItem;
     mProgress: TMemo;
     nbPages: TNotebook;
     OpenDlg: TOpenDialog;
@@ -45,6 +48,7 @@ type
     pgFields: TPage;
     pgSource: TPage;
     PBar: TProgressBar;
+    pmFields: TPopupMenu;
     pSourceOptions: TPanel;
     pTitleProgress: TPanel;
     pTitleFields: TPanel;
@@ -185,10 +189,13 @@ procedure TdlgImport.LoadFields;
 var
   i: Integer;
 begin
-  gridFields.ColWidths[0] := 35;
+  if not FDataSet.Active then
+    FDataSet.Open;
+
+  gridFields.ColWidths[0] := 40;
   gridFields.RowCount := 2; // Clear rows
   gridFields.RowCount := FDataSet.FieldCount + 1;
-  gridFields.Cells[1, 0] := 'Source field';
+  //gridFields.Cells[1, 0] := 'Source field';
   // Target field picklist
   // Search table picklist
   for i := 0 to FDataSet.FieldCount - 1 do

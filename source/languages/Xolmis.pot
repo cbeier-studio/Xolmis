@@ -1,0 +1,4495 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: cbs_datacolumns.rsc1stsecondarychord
+msgid "1st secondary chord"
+msgstr ""
+
+#: cbs_datacolumns.rscabstract
+msgid "Abstract"
+msgstr ""
+
+#: cbs_datacolumns.rscaccessionnr
+msgid "Accession nr."
+msgstr ""
+
+#: cbs_datacolumns.rscaccesslevel
+msgid "Access level"
+msgstr ""
+
+#: cbs_datacolumns.rscacronym
+msgid "Acronym"
+msgstr ""
+
+#: cbs_datacolumns.rscaction
+msgid "Action"
+msgstr ""
+
+#: cbs_datacolumns.rscactivedays
+msgid "Active-days"
+msgstr ""
+
+#: cbs_datacolumns.rscactivestatus
+msgctxt "cbs_datacolumns.rscactivestatus"
+msgid "Active"
+msgstr ""
+
+#: cbs_datacolumns.rscaddress1
+msgid "Address 1"
+msgstr ""
+
+#: cbs_datacolumns.rscaddress2
+msgid "Address 2"
+msgstr ""
+
+#: cbs_datacolumns.rscadults
+msgid "# adults"
+msgstr ""
+
+#: cbs_datacolumns.rscage
+msgid "Age"
+msgstr ""
+
+#: cbs_datacolumns.rscal1
+msgid "Al1"
+msgstr ""
+
+#: cbs_datacolumns.rscal2
+msgid "Al2"
+msgstr ""
+
+#: cbs_datacolumns.rscal3
+msgid "Al3"
+msgstr ""
+
+#: cbs_datacolumns.rscaltitude
+msgid "Altitude"
+msgstr ""
+
+#: cbs_datacolumns.rscannotator
+msgid "Annotator"
+msgstr ""
+
+#: cbs_datacolumns.rscannotatorid
+msgid "Annotator ID"
+msgstr ""
+
+#: cbs_datacolumns.rscareaha
+msgid "Area (ha)"
+msgstr ""
+
+#: cbs_datacolumns.rscareashape
+msgid "Area shape"
+msgstr ""
+
+#: cbs_datacolumns.rscatmosphericpressureh
+msgid "Atmospheric pressure (hPa)"
+msgstr ""
+
+#: cbs_datacolumns.rscaudiorecorded
+msgctxt "cbs_datacolumns.rscaudiorecorded"
+msgid "Audio recorded"
+msgstr ""
+
+#: cbs_datacolumns.rscauthorship
+msgctxt "cbs_datacolumns.rscauthorship"
+msgid "Authorship"
+msgstr ""
+
+#: cbs_datacolumns.rscband
+msgctxt "cbs_datacolumns.rscband"
+msgid "Band"
+msgstr ""
+
+#: cbs_datacolumns.rscbandchangedate
+msgid "Band change date"
+msgstr ""
+
+#: cbs_datacolumns.rscbander
+msgid "Bander"
+msgstr ""
+
+#: cbs_datacolumns.rscbanderid
+msgid "Bander ID"
+msgstr ""
+
+#: cbs_datacolumns.rscbandid
+msgid "Band ID"
+msgstr ""
+
+#: cbs_datacolumns.rscbandingdate
+msgctxt "cbs_datacolumns.rscbandingdate"
+msgid "Banding date"
+msgstr ""
+
+#: cbs_datacolumns.rscbillheight
+msgid "Bill height"
+msgstr ""
+
+#: cbs_datacolumns.rscbillwidth
+msgid "Bill width"
+msgstr ""
+
+#: cbs_datacolumns.rscbirthdate
+msgctxt "cbs_datacolumns.rscbirthdate"
+msgid "Birth date"
+msgstr ""
+
+#: cbs_datacolumns.rscbirthday
+msgid "Birth day"
+msgstr ""
+
+#: cbs_datacolumns.rscbirthmonth
+msgid "Birth month"
+msgstr ""
+
+#: cbs_datacolumns.rscbirthyear
+msgid "Birth year"
+msgstr ""
+
+#: cbs_datacolumns.rscblood
+msgctxt "cbs_datacolumns.rscblood"
+msgid "Blood"
+msgstr ""
+
+#: cbs_datacolumns.rscbodymolt
+msgid "Body molt"
+msgstr ""
+
+#: cbs_datacolumns.rscbotanicalcode
+msgid "ICBN"
+msgstr ""
+
+#: cbs_datacolumns.rscbreedingcode
+msgid "Breeding code"
+msgstr ""
+
+#: cbs_datacolumns.rscbroodpatch
+msgid "Brood patch"
+msgstr ""
+
+#: cbs_datacolumns.rscbuildingdays
+msgid "Building (days)"
+msgstr ""
+
+#: cbs_datacolumns.rsccamera
+msgid "Camera"
+msgstr ""
+
+#: cbs_datacolumns.rsccaptured
+msgctxt "cbs_datacolumns.rsccaptured"
+msgid "Captured"
+msgstr ""
+
+#: cbs_datacolumns.rsccaptureid
+msgid "Capture ID"
+msgstr ""
+
+#: cbs_datacolumns.rsccaptures
+msgid "# captures"
+msgstr ""
+
+#: cbs_datacolumns.rsccarrier
+msgid "Carrier"
+msgstr ""
+
+#: cbs_datacolumns.rsccarrierid
+msgid "Carrier ID"
+msgstr ""
+
+#: cbs_datacolumns.rsccbro
+msgid "CBRO"
+msgstr ""
+
+#: cbs_datacolumns.rsccc
+msgid "CC"
+msgstr ""
+
+#: cbs_datacolumns.rsccentralretrixlength
+msgid "Central retrix length"
+msgstr ""
+
+#: cbs_datacolumns.rsccitation
+msgid "Citation"
+msgstr ""
+
+#: cbs_datacolumns.rscclaw
+msgctxt "cbs_datacolumns.rscclaw"
+msgid "Claw"
+msgstr ""
+
+#: cbs_datacolumns.rscclements
+msgid "Clements"
+msgstr ""
+
+#: cbs_datacolumns.rsccloacalprotuberance
+msgid "Cloacal protuberance"
+msgstr ""
+
+#: cbs_datacolumns.rscclosetime1
+msgid "Close time 1"
+msgstr ""
+
+#: cbs_datacolumns.rscclosetime2
+msgid "Close time 2"
+msgstr ""
+
+#: cbs_datacolumns.rscclosetime3
+msgid "Close time 3"
+msgstr ""
+
+#: cbs_datacolumns.rscclosetime4
+msgid "Close time 4"
+msgstr ""
+
+#: cbs_datacolumns.rsccloudcover
+msgid "Cloud cover (%)"
+msgstr ""
+
+#: cbs_datacolumns.rsccollectedwhole
+msgid "Collected (whole)"
+msgstr ""
+
+#: cbs_datacolumns.rsccollectiondate
+msgctxt "cbs_datacolumns.rsccollectiondate"
+msgid "Collection date"
+msgstr ""
+
+#: cbs_datacolumns.rsccollectionday
+msgid "Collection day"
+msgstr ""
+
+#: cbs_datacolumns.rsccollectionmonth
+msgid "Collection month"
+msgstr ""
+
+#: cbs_datacolumns.rsccollectionyear
+msgid "Collection year"
+msgstr ""
+
+#: cbs_datacolumns.rsccollector
+msgid "Collector"
+msgstr ""
+
+#: cbs_datacolumns.rsccolor
+msgid "Color"
+msgstr ""
+
+#: cbs_datacolumns.rscconnectionname
+msgid "Connection name"
+msgstr ""
+
+#: cbs_datacolumns.rscconservationstatus
+msgid "Conservation status"
+msgstr ""
+
+#: cbs_datacolumns.rsccontactperson
+msgid "Contact person"
+msgstr ""
+
+#: cbs_datacolumns.rsccontractfile
+msgid "Contract file"
+msgstr ""
+
+#: cbs_datacolumns.rsccountry
+msgctxt "cbs_datacolumns.rsccountry"
+msgid "Country"
+msgstr ""
+
+#: cbs_datacolumns.rsccountryid
+msgid "Country ID"
+msgstr ""
+
+#: cbs_datacolumns.rsccover
+msgid "Cover (%)"
+msgstr ""
+
+#: cbs_datacolumns.rsccpf
+msgid "CPF"
+msgstr ""
+
+#: cbs_datacolumns.rscdatabasename
+msgid "Database file"
+msgstr ""
+
+#: cbs_datacolumns.rscdatabasetype
+msgid "Database type"
+msgstr ""
+
+#: cbs_datacolumns.rscdate
+msgctxt "cbs_datacolumns.rscdate"
+msgid "Date"
+msgstr ""
+
+#: cbs_datacolumns.rscdeathdate
+msgctxt "cbs_datacolumns.rscdeathdate"
+msgid "Death date"
+msgstr ""
+
+#: cbs_datacolumns.rscdeathday
+msgid "Death day"
+msgstr ""
+
+#: cbs_datacolumns.rscdeathmonth
+msgid "Death month"
+msgstr ""
+
+#: cbs_datacolumns.rscdeathyear
+msgid "Death year"
+msgstr ""
+
+#: cbs_datacolumns.rscdepartment
+msgid "Department"
+msgstr ""
+
+#: cbs_datacolumns.rscdescription
+msgid "Description"
+msgstr ""
+
+#: cbs_datacolumns.rscdetectiontype
+msgid "Detection type"
+msgstr ""
+
+#: cbs_datacolumns.rscdispatchdate
+msgctxt "cbs_datacolumns.rscdispatchdate"
+msgid "Dispatch date"
+msgstr ""
+
+#: cbs_datacolumns.rscdispatcher
+msgid "Dispatcher"
+msgstr ""
+
+#: cbs_datacolumns.rscdistancekm
+msgid "Distance (km)"
+msgstr ""
+
+#: cbs_datacolumns.rscdistancem
+msgid "Distance (m)"
+msgstr ""
+
+#: cbs_datacolumns.rscdistribution
+msgid "Distribution"
+msgstr ""
+
+#: cbs_datacolumns.rscdoubleband
+msgctxt "cbs_datacolumns.rscdoubleband"
+msgid "Double band"
+msgstr ""
+
+#: cbs_datacolumns.rscdoublebandid
+msgid "Double band ID"
+msgstr ""
+
+#: cbs_datacolumns.rscduplicatenr
+msgid "Duplicate nr."
+msgstr ""
+
+#: cbs_datacolumns.rscdurationdays
+msgid "Duration (days)"
+msgstr ""
+
+#: cbs_datacolumns.rscdurationmin
+msgid "Duration (min)"
+msgstr ""
+
+#: cbs_datacolumns.rscebirdcode
+msgid "eBird code"
+msgstr ""
+
+#: cbs_datacolumns.rscebirdname
+msgid "eBird name"
+msgstr ""
+
+#: cbs_datacolumns.rscegg
+msgctxt "cbs_datacolumns.rscegg"
+msgid "Egg"
+msgstr ""
+
+#: cbs_datacolumns.rsceggid
+msgid "Egg ID"
+msgstr ""
+
+#: cbs_datacolumns.rsceggnumber
+msgid "Egg number"
+msgstr ""
+
+#: cbs_datacolumns.rsceggshape
+msgid "Egg shape"
+msgstr ""
+
+#: cbs_datacolumns.rsceggshellcolor
+msgid "Eggshell color"
+msgstr ""
+
+#: cbs_datacolumns.rsceggshellpattern
+msgid "Eggshell pattern"
+msgstr ""
+
+#: cbs_datacolumns.rsceggshelltexture
+msgid "Eggshell texture"
+msgstr ""
+
+#: cbs_datacolumns.rsceggshost
+msgid "# eggs (host)"
+msgstr ""
+
+#: cbs_datacolumns.rsceggsnidoparasite
+msgid "# eggs (nidoparasite)"
+msgstr ""
+
+#: cbs_datacolumns.rscemail
+msgid "E-mail"
+msgstr ""
+
+#: cbs_datacolumns.rscenddate
+msgctxt "cbs_datacolumns.rscenddate"
+msgid "End date"
+msgstr ""
+
+#: cbs_datacolumns.rscendlatitude
+msgid "End latitude"
+msgstr ""
+
+#: cbs_datacolumns.rscendlongitude
+msgid "End longitude"
+msgstr ""
+
+#: cbs_datacolumns.rscendtime
+msgid "End time"
+msgstr ""
+
+#: cbs_datacolumns.rscenglishname
+msgid "English name"
+msgstr ""
+
+#: cbs_datacolumns.rscescaped
+msgid "Escaped"
+msgstr ""
+
+#: cbs_datacolumns.rscexpedition
+msgctxt "cbs_datacolumns.rscexpedition"
+msgid "Expedition"
+msgstr ""
+
+#: cbs_datacolumns.rscexpeditionid
+msgid "Expedition ID"
+msgstr ""
+
+#: cbs_datacolumns.rscexpiredate
+msgctxt "cbs_datacolumns.rscexpiredate"
+msgid "Expire date"
+msgstr ""
+
+#: cbs_datacolumns.rscexportdata
+msgctxt "cbs_datacolumns.rscexportdata"
+msgid "Export data"
+msgstr ""
+
+#: cbs_datacolumns.rscexportedstatus
+msgid "Exported"
+msgstr ""
+
+#: cbs_datacolumns.rscexposedculmen
+msgid "Exposed culmen"
+msgstr ""
+
+#: cbs_datacolumns.rscexternalheight
+msgid "External height"
+msgstr ""
+
+#: cbs_datacolumns.rscexternalretrixlength
+msgid "External retrix length"
+msgstr ""
+
+#: cbs_datacolumns.rscextinct
+msgid "Extinct"
+msgstr ""
+
+#: cbs_datacolumns.rscextinctionyear
+msgid "Extinction year"
+msgstr ""
+
+#: cbs_datacolumns.rscfamilyid
+msgid "Family ID"
+msgstr ""
+
+#: cbs_datacolumns.rscfat
+msgid "Fat"
+msgstr ""
+
+#: cbs_datacolumns.rscfather
+msgctxt "cbs_datacolumns.rscfather"
+msgid "Father"
+msgstr ""
+
+#: cbs_datacolumns.rscfatherid
+msgid "Father ID"
+msgstr ""
+
+#: cbs_datacolumns.rscfeathermites
+msgid "Feather mites"
+msgstr ""
+
+#: cbs_datacolumns.rscfeathers
+msgctxt "cbs_datacolumns.rscfeathers"
+msgid "Feathers"
+msgstr ""
+
+#: cbs_datacolumns.rscfeces
+msgctxt "cbs_datacolumns.rscfeces"
+msgid "Feces"
+msgstr ""
+
+#: cbs_datacolumns.rscfemales
+msgid "# females"
+msgstr ""
+
+#: cbs_datacolumns.rscfieldnumber
+msgid "Field number"
+msgstr ""
+
+#: cbs_datacolumns.rscfile
+msgid "File"
+msgstr ""
+
+#: cbs_datacolumns.rscfilename
+msgid "File name"
+msgstr ""
+
+#: cbs_datacolumns.rscfinalphotonr
+msgid "Final photo nr."
+msgstr ""
+
+#: cbs_datacolumns.rscflightfeathersmolt
+msgid "Flight feathers molt"
+msgstr ""
+
+#: cbs_datacolumns.rscflightfeatherswear
+msgid "Flight feathers wear"
+msgstr ""
+
+#: cbs_datacolumns.rscfounddate
+msgid "Found date"
+msgstr ""
+
+#: cbs_datacolumns.rscfullname
+msgid "Full name"
+msgstr ""
+
+#: cbs_datacolumns.rscgc1
+msgid "GC1"
+msgstr ""
+
+#: cbs_datacolumns.rscgc10
+msgid "GC10"
+msgstr ""
+
+#: cbs_datacolumns.rscgc2
+msgid "GC2"
+msgstr ""
+
+#: cbs_datacolumns.rscgc3
+msgid "GC3"
+msgstr ""
+
+#: cbs_datacolumns.rscgc4
+msgid "GC4"
+msgstr ""
+
+#: cbs_datacolumns.rscgc5
+msgid "GC5"
+msgstr ""
+
+#: cbs_datacolumns.rscgc6
+msgid "GC6"
+msgstr ""
+
+#: cbs_datacolumns.rscgc7
+msgid "GC7"
+msgstr ""
+
+#: cbs_datacolumns.rscgc8
+msgid "GC8"
+msgstr ""
+
+#: cbs_datacolumns.rscgc9
+msgid "GC9"
+msgstr ""
+
+#: cbs_datacolumns.rscgender
+msgid "Gender"
+msgstr ""
+
+#: cbs_datacolumns.rscgenusepithet
+msgid "Genus epithet"
+msgstr ""
+
+#: cbs_datacolumns.rscgenusid
+msgid "Genus ID"
+msgstr ""
+
+#: cbs_datacolumns.rscglucose
+msgid "Glucose"
+msgstr ""
+
+#: cbs_datacolumns.rscgrowthbarwidth
+msgid "Growth bar width"
+msgstr ""
+
+#: cbs_datacolumns.rschabitat
+msgid "Habitat"
+msgstr ""
+
+#: cbs_datacolumns.rschaluxlengthclaw
+msgid "Halux length (claw)"
+msgstr ""
+
+#: cbs_datacolumns.rschaluxlengthfinger
+msgid "Halux length (finger)"
+msgstr ""
+
+#: cbs_datacolumns.rschaluxlengthtotal
+msgid "Halux length (total)"
+msgstr ""
+
+#: cbs_datacolumns.rschasphilornislarvae
+msgid "Has Philornis larvae"
+msgstr ""
+
+#: cbs_datacolumns.rschatched
+msgid "Hatched"
+msgstr ""
+
+#: cbs_datacolumns.rscheard
+msgctxt "cbs_datacolumns.rscheard"
+msgid "Heard"
+msgstr ""
+
+#: cbs_datacolumns.rscheightaboveground
+msgid "Height above ground"
+msgstr ""
+
+#: cbs_datacolumns.rschematocrit
+msgid "Hematocrit"
+msgstr ""
+
+#: cbs_datacolumns.rschemoglobin
+msgid "Hemoglobin"
+msgstr ""
+
+#: cbs_datacolumns.rschostegg
+msgid "Host egg"
+msgstr ""
+
+#: cbs_datacolumns.rschowwasaged
+msgid "How was aged"
+msgstr ""
+
+#: cbs_datacolumns.rschowwassexed
+msgid "How was sexed"
+msgstr ""
+
+#: cbs_datacolumns.rscid
+msgid "ID"
+msgstr ""
+
+#: cbs_datacolumns.rscimmatures
+msgid "# immatures"
+msgstr ""
+
+#: cbs_datacolumns.rscimportdata
+msgid "Import data"
+msgstr ""
+
+#: cbs_datacolumns.rscincertaesedis
+msgid "Incertae sedis"
+msgstr ""
+
+#: cbs_datacolumns.rscincubationdays
+msgid "Incubation (days)"
+msgstr ""
+
+#: cbs_datacolumns.rscindividual
+msgctxt "cbs_datacolumns.rscindividual"
+msgid "Individual"
+msgstr ""
+
+#: cbs_datacolumns.rscindividualid
+msgid "Individual ID"
+msgstr ""
+
+#: cbs_datacolumns.rscindividuals
+msgid "# individuals"
+msgstr ""
+
+#: cbs_datacolumns.rscinfrarank
+msgid "Infra rank"
+msgstr ""
+
+#: cbs_datacolumns.rscinfraspecific
+msgid "Infraspecific"
+msgstr ""
+
+#: cbs_datacolumns.rscinitialphotonr
+msgid "Initial photo nr."
+msgstr ""
+
+#: cbs_datacolumns.rscinsertdate
+msgid "Creation date"
+msgstr ""
+
+#: cbs_datacolumns.rscinstagram
+msgid "Instagram"
+msgstr ""
+
+#: cbs_datacolumns.rscinstitution
+msgctxt "cbs_datacolumns.rscinstitution"
+msgid "Institution"
+msgstr ""
+
+#: cbs_datacolumns.rscinstitutionid
+msgid "Institution ID"
+msgstr ""
+
+#: cbs_datacolumns.rscinternalheight
+msgid "Internal height"
+msgstr ""
+
+#: cbs_datacolumns.rscioc
+msgid "IOC"
+msgstr ""
+
+#: cbs_datacolumns.rscisinebird
+msgid "Is in eBird"
+msgstr ""
+
+#: cbs_datacolumns.rsckippsdistance
+msgid "Kipp's distance"
+msgstr ""
+
+#: cbs_datacolumns.rsclanguage
+msgid "Language"
+msgstr ""
+
+#: cbs_datacolumns.rsclastdateactive
+msgctxt "cbs_datacolumns.rsclastdateactive"
+msgid "Last date active"
+msgstr ""
+
+#: cbs_datacolumns.rsclatitude
+msgctxt "cbs_datacolumns.rsclatitude"
+msgid "Latitude"
+msgstr ""
+
+#: cbs_datacolumns.rsclattes
+msgid "Lattes"
+msgstr ""
+
+#: cbs_datacolumns.rsclc
+msgid "LC"
+msgstr ""
+
+#: cbs_datacolumns.rsclefttarsus
+msgid "Left tarsus"
+msgstr ""
+
+#: cbs_datacolumns.rsclefttibia
+msgid "Left tibia"
+msgstr ""
+
+#: cbs_datacolumns.rsclength
+msgid "Length"
+msgstr ""
+
+#: cbs_datacolumns.rsclocality
+msgctxt "cbs_datacolumns.rsclocality"
+msgid "Locality"
+msgstr ""
+
+#: cbs_datacolumns.rsclocalityid
+msgid "Locality ID"
+msgstr ""
+
+#: cbs_datacolumns.rsclongitude
+msgctxt "cbs_datacolumns.rsclongitude"
+msgid "Longitude"
+msgstr ""
+
+#: cbs_datacolumns.rscmackinnonlist
+msgid "Mackinnon list"
+msgstr ""
+
+#: cbs_datacolumns.rscmainrank
+msgid "Main rank"
+msgstr ""
+
+#: cbs_datacolumns.rscmales
+msgid "# males"
+msgstr ""
+
+#: cbs_datacolumns.rscmanagecollection
+msgid "Manage collection"
+msgstr ""
+
+#: cbs_datacolumns.rscmanager
+msgid "Manager"
+msgstr ""
+
+#: cbs_datacolumns.rscmarkedstatus
+msgid "Marked"
+msgstr ""
+
+#: cbs_datacolumns.rscmass
+msgid "Mass"
+msgstr ""
+
+#: cbs_datacolumns.rscmaxexternaldiameter
+msgid "Greater external diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscmaxinternaldiameter
+msgid "Greater internal diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscmaxplantdiameter
+msgid "Greater plant diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscmc
+msgid "MC"
+msgstr ""
+
+#: cbs_datacolumns.rscmethod
+msgctxt "cbs_datacolumns.rscmethod"
+msgid "Method"
+msgstr ""
+
+#: cbs_datacolumns.rscmethodid
+msgid "Method ID"
+msgstr ""
+
+#: cbs_datacolumns.rscminexternaldiameter
+msgid "Lesser external diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscmininternaldiameter
+msgid "Lesser internal diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscminplantdiameter
+msgid "Lesser plant diameter"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetaream
+msgid "Mistnet area (m²)"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetefforthm
+msgid "Mistnet effort (h•m²)"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetheightm
+msgid "Mistnet height (m)"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetid
+msgid "Mistnet ID"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetlengthm
+msgid "Mistnet length (m)"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetmesh
+msgid "Mistnet mesh"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetnr
+msgid "Mistnet nr."
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetrounds
+msgid "Mistnet rounds"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnets
+msgid "# mistnets"
+msgstr ""
+
+#: cbs_datacolumns.rscmistnetstationid
+msgid "Mistnet station ID"
+msgstr ""
+
+#: cbs_datacolumns.rscmobilephone
+msgid "Mobile phone"
+msgstr ""
+
+#: cbs_datacolumns.rscmoltcycle
+msgid "Molt cycle"
+msgstr ""
+
+#: cbs_datacolumns.rscmoltlimits
+msgid "Molt limits"
+msgstr ""
+
+#: cbs_datacolumns.rscmoment
+msgid "Moment"
+msgstr ""
+
+#: cbs_datacolumns.rscmother
+msgctxt "cbs_datacolumns.rscmother"
+msgid "Mother"
+msgstr ""
+
+#: cbs_datacolumns.rscmotherid
+msgid "Mother ID"
+msgstr ""
+
+#: cbs_datacolumns.rscmunicipality
+msgctxt "cbs_datacolumns.rscmunicipality"
+msgid "Municipality"
+msgstr ""
+
+#: cbs_datacolumns.rscmunicipalityid
+msgid "Municipality ID"
+msgstr ""
+
+#: cbs_datacolumns.rscname
+msgctxt "cbs_datacolumns.rscname"
+msgid "Name"
+msgstr ""
+
+#: cbs_datacolumns.rscneedsreview
+msgid "Needs review"
+msgstr ""
+
+#: cbs_datacolumns.rscneighborhood
+msgid "Neighborhood"
+msgstr ""
+
+#: cbs_datacolumns.rscnest
+msgctxt "cbs_datacolumns.rscnest"
+msgid "Nest"
+msgstr ""
+
+#: cbs_datacolumns.rscnestfate
+msgid "Nest fate"
+msgstr ""
+
+#: cbs_datacolumns.rscnestid
+msgid "Nest ID"
+msgstr ""
+
+#: cbs_datacolumns.rscnestlingdays
+msgid "Nestling (days)"
+msgstr ""
+
+#: cbs_datacolumns.rscnestlingshost
+msgid "# nestlings (host)"
+msgstr ""
+
+#: cbs_datacolumns.rscnestlingsnidoparasite
+msgid "# nestlings (nidoparasite)"
+msgstr ""
+
+#: cbs_datacolumns.rscnestproductivity
+msgid "Nest productivity"
+msgstr ""
+
+#: cbs_datacolumns.rscneststage
+msgid "Nest stage"
+msgstr ""
+
+#: cbs_datacolumns.rscnewcaptures
+msgid "# new captures"
+msgstr ""
+
+#: cbs_datacolumns.rscnewvalue
+msgid "New value"
+msgstr ""
+
+#: cbs_datacolumns.rscnidoparasite
+msgid "Nidoparasite"
+msgstr ""
+
+#: cbs_datacolumns.rscnidoparasiteid
+msgid "Nidoparasite ID"
+msgstr ""
+
+#: cbs_datacolumns.rscnostriltobilltip
+msgid "Nostril to bill tip"
+msgstr ""
+
+#: cbs_datacolumns.rscnotaged
+msgid "# not aged"
+msgstr ""
+
+#: cbs_datacolumns.rscnotes
+msgid "Notes"
+msgstr ""
+
+#: cbs_datacolumns.rscnotsexed
+msgid "# not sexed"
+msgstr ""
+
+#: cbs_datacolumns.rscnumber
+msgid "Number"
+msgstr ""
+
+#: cbs_datacolumns.rscobserver
+msgctxt "cbs_datacolumns.rscobserver"
+msgid "Observer"
+msgstr ""
+
+#: cbs_datacolumns.rscobserver1
+msgid "Observer 1"
+msgstr ""
+
+#: cbs_datacolumns.rscobserver1id
+msgid "Observer 1 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscobserver2
+msgid "Observer 2"
+msgstr ""
+
+#: cbs_datacolumns.rscobserver2id
+msgid "Observer 2 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscobserverid
+msgid "Observer ID"
+msgstr ""
+
+#: cbs_datacolumns.rscobservers
+msgid "# observers"
+msgstr ""
+
+#: cbs_datacolumns.rscoldvalue
+msgid "Old value"
+msgstr ""
+
+#: cbs_datacolumns.rscopentime1
+msgid "Open time 1"
+msgstr ""
+
+#: cbs_datacolumns.rscopentime2
+msgid "Open time 2"
+msgstr ""
+
+#: cbs_datacolumns.rscopentime3
+msgid "Open time 3"
+msgstr ""
+
+#: cbs_datacolumns.rscopentime4
+msgid "Open time 4"
+msgstr ""
+
+#: cbs_datacolumns.rscorcid
+msgid "Orcid"
+msgstr ""
+
+#: cbs_datacolumns.rscorderid
+msgid "Order ID"
+msgstr ""
+
+#: cbs_datacolumns.rscordernr
+msgid "Order nr."
+msgstr ""
+
+#: cbs_datacolumns.rscotherportuguesenames
+msgid "Other portuguese names"
+msgstr ""
+
+#: cbs_datacolumns.rscothersupport
+msgid "Other support"
+msgstr ""
+
+#: cbs_datacolumns.rscoutofsample
+msgid "Out of sample"
+msgstr ""
+
+#: cbs_datacolumns.rscp1
+msgid "P1"
+msgstr ""
+
+#: cbs_datacolumns.rscp10
+msgid "P10"
+msgstr ""
+
+#: cbs_datacolumns.rscp2
+msgid "P2"
+msgstr ""
+
+#: cbs_datacolumns.rscp3
+msgid "P3"
+msgstr ""
+
+#: cbs_datacolumns.rscp4
+msgid "P4"
+msgstr ""
+
+#: cbs_datacolumns.rscp5
+msgid "P5"
+msgstr ""
+
+#: cbs_datacolumns.rscp6
+msgid "P6"
+msgstr ""
+
+#: cbs_datacolumns.rscp7
+msgid "P7"
+msgstr ""
+
+#: cbs_datacolumns.rscp8
+msgid "P8"
+msgstr ""
+
+#: cbs_datacolumns.rscp9
+msgid "P9"
+msgstr ""
+
+#: cbs_datacolumns.rscparasites
+msgctxt "cbs_datacolumns.rscparasites"
+msgid "Parasites"
+msgstr ""
+
+#: cbs_datacolumns.rscparentsite
+msgid "Parent site"
+msgstr ""
+
+#: cbs_datacolumns.rscparentsiteid
+msgid "Parent site ID"
+msgstr ""
+
+#: cbs_datacolumns.rscparenttaxon
+msgid "Parent taxon"
+msgstr ""
+
+#: cbs_datacolumns.rscparenttaxonid
+msgid "Parent taxon ID"
+msgstr ""
+
+#: cbs_datacolumns.rscpassword
+msgid "Password"
+msgstr ""
+
+#: cbs_datacolumns.rscpc1
+msgid "PC1"
+msgstr ""
+
+#: cbs_datacolumns.rscpc2
+msgid "PC2"
+msgstr ""
+
+#: cbs_datacolumns.rscpc3
+msgid "PC3"
+msgstr ""
+
+#: cbs_datacolumns.rscpc4
+msgid "PC4"
+msgstr ""
+
+#: cbs_datacolumns.rscpc5
+msgid "PC5"
+msgstr ""
+
+#: cbs_datacolumns.rscpc6
+msgid "PC6"
+msgstr ""
+
+#: cbs_datacolumns.rscpc7
+msgid "PC7"
+msgstr ""
+
+#: cbs_datacolumns.rscpc8
+msgid "PC8"
+msgstr ""
+
+#: cbs_datacolumns.rscpc9
+msgid "PC9"
+msgstr ""
+
+#: cbs_datacolumns.rscpermanentnet
+msgid "Permanent net"
+msgstr ""
+
+#: cbs_datacolumns.rscpermanentnetid
+msgid "Permanent net ID"
+msgstr ""
+
+#: cbs_datacolumns.rscperson
+msgid "Person"
+msgstr ""
+
+#: cbs_datacolumns.rscpersonid
+msgid "Person ID"
+msgstr ""
+
+#: cbs_datacolumns.rscphone
+msgid "Phone"
+msgstr ""
+
+#: cbs_datacolumns.rscphotographed
+msgctxt "cbs_datacolumns.rscphotographed"
+msgid "Photographed"
+msgstr ""
+
+#: cbs_datacolumns.rscphotographer1
+msgid "Photographer 1"
+msgstr ""
+
+#: cbs_datacolumns.rscphotographer1id
+msgid "Photographer 1 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscphotographer2
+msgid "Photographer 2"
+msgstr ""
+
+#: cbs_datacolumns.rscphotographer2id
+msgid "Photographer 2 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscplantcenterdistance
+msgid "Plant center distance"
+msgstr ""
+
+#: cbs_datacolumns.rscplantdbh
+msgid "Plant DBH"
+msgstr ""
+
+#: cbs_datacolumns.rscplantedgedistance
+msgid "Plant edge distance"
+msgstr ""
+
+#: cbs_datacolumns.rscplantheight
+msgid "Plant height"
+msgstr ""
+
+#: cbs_datacolumns.rscport
+msgid "Port"
+msgstr ""
+
+#: cbs_datacolumns.rscportuguesename
+msgid "Portuguese name"
+msgstr ""
+
+#: cbs_datacolumns.rscprecipitation
+msgid "Precipitation"
+msgstr ""
+
+#: cbs_datacolumns.rscprefix
+msgid "Prefix"
+msgstr ""
+
+#: cbs_datacolumns.rscpreparationdate
+msgctxt "cbs_datacolumns.rscpreparationdate"
+msgid "Preparation date"
+msgstr ""
+
+#: cbs_datacolumns.rscpreparer
+msgid "Preparer"
+msgstr ""
+
+#: cbs_datacolumns.rscpreparerid
+msgid "Preparer ID"
+msgstr ""
+
+#: cbs_datacolumns.rscprintreports
+msgid "Print reports"
+msgstr ""
+
+#: cbs_datacolumns.rscprofilecolor
+msgid "Profile color"
+msgstr ""
+
+#: cbs_datacolumns.rscprofileimage
+msgid "Profile image"
+msgstr ""
+
+#: cbs_datacolumns.rscproject
+msgctxt "cbs_datacolumns.rscproject"
+msgid "Project"
+msgstr ""
+
+#: cbs_datacolumns.rscprojectfile
+msgid "Project file"
+msgstr ""
+
+#: cbs_datacolumns.rscprojectid
+msgid "Project ID"
+msgstr ""
+
+#: cbs_datacolumns.rscproperty
+msgid "Property"
+msgstr ""
+
+#: cbs_datacolumns.rscquantphilornislarvae
+msgid "# Philornis larvae"
+msgstr ""
+
+#: cbs_datacolumns.rscquickcode
+msgid "Quick code"
+msgstr ""
+
+#: cbs_datacolumns.rscr1
+msgid "R1"
+msgstr ""
+
+#: cbs_datacolumns.rscr2
+msgid "R2"
+msgstr ""
+
+#: cbs_datacolumns.rscr3
+msgid "R3"
+msgstr ""
+
+#: cbs_datacolumns.rscr4
+msgid "R4"
+msgstr ""
+
+#: cbs_datacolumns.rscr5
+msgid "R5"
+msgstr ""
+
+#: cbs_datacolumns.rscr6
+msgid "R6"
+msgstr ""
+
+#: cbs_datacolumns.rscrainfallmm
+msgid "Rainfall (mm)"
+msgstr ""
+
+#: cbs_datacolumns.rscrecaptures
+msgid "# recaptures"
+msgstr ""
+
+#: cbs_datacolumns.rscrecognizablemarkings
+msgid "Recognizable markings"
+msgstr ""
+
+#: cbs_datacolumns.rscrecorded
+msgid "Recorded"
+msgstr ""
+
+#: cbs_datacolumns.rscrelativehumidity
+msgid "Relative humidity (%)"
+msgstr ""
+
+#: cbs_datacolumns.rscremovedband
+msgctxt "cbs_datacolumns.rscremovedband"
+msgid "Removed band"
+msgstr ""
+
+#: cbs_datacolumns.rscremovedbandid
+msgid "Removed band ID"
+msgstr ""
+
+#: cbs_datacolumns.rscreported
+msgid "Reported"
+msgstr ""
+
+#: cbs_datacolumns.rscrequester
+msgid "Requester"
+msgstr ""
+
+#: cbs_datacolumns.rscrequesterid
+msgid "Requester ID"
+msgstr ""
+
+#: cbs_datacolumns.rscresearcher
+msgctxt "cbs_datacolumns.rscresearcher"
+msgid "Researcher"
+msgstr ""
+
+#: cbs_datacolumns.rscresearcherid
+msgid "Researcher ID"
+msgstr ""
+
+#: cbs_datacolumns.rscrg
+msgid "RG"
+msgstr ""
+
+#: cbs_datacolumns.rscrighttarsus
+msgid "Right tarsus"
+msgstr ""
+
+#: cbs_datacolumns.rscrighttibia
+msgid "Right tibia"
+msgstr ""
+
+#: cbs_datacolumns.rscrightwingchord
+msgid "Right wing chord"
+msgstr ""
+
+#: cbs_datacolumns.rscrole
+msgid "Role"
+msgstr ""
+
+#: cbs_datacolumns.rscs1
+msgid "S1"
+msgstr ""
+
+#: cbs_datacolumns.rscs2
+msgid "S2"
+msgstr ""
+
+#: cbs_datacolumns.rscs3
+msgid "S3"
+msgstr ""
+
+#: cbs_datacolumns.rscs4
+msgid "S4"
+msgstr ""
+
+#: cbs_datacolumns.rscs5
+msgid "S5"
+msgstr ""
+
+#: cbs_datacolumns.rscs6
+msgid "S6"
+msgstr ""
+
+#: cbs_datacolumns.rscs7
+msgid "S7"
+msgstr ""
+
+#: cbs_datacolumns.rscs8
+msgid "S8"
+msgstr ""
+
+#: cbs_datacolumns.rscs9
+msgid "S9"
+msgstr ""
+
+#: cbs_datacolumns.rscsampleid
+msgid "Sample ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsamplingplot
+msgctxt "cbs_datacolumns.rscsamplingplot"
+msgid "Sampling plot"
+msgstr ""
+
+#: cbs_datacolumns.rscsamplingplotid
+msgid "Sampling plot ID"
+msgstr ""
+
+#: cbs_datacolumns.rscscientificname
+msgid "Scientific name"
+msgstr ""
+
+#: cbs_datacolumns.rscseen
+msgctxt "cbs_datacolumns.rscseen"
+msgid "Seen"
+msgstr ""
+
+#: cbs_datacolumns.rscsender
+msgid "Sender"
+msgstr ""
+
+#: cbs_datacolumns.rscsenderid
+msgid "Sender ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsequence
+msgid "Sequence"
+msgstr ""
+
+#: cbs_datacolumns.rscserver
+msgid "Server"
+msgstr ""
+
+#: cbs_datacolumns.rscsex
+msgid "Sex"
+msgstr ""
+
+#: cbs_datacolumns.rscshape
+msgid "Shape"
+msgstr ""
+
+#: cbs_datacolumns.rscshorttitle
+msgid "Short title"
+msgstr ""
+
+#: cbs_datacolumns.rscsitename
+msgid "Site name"
+msgstr ""
+
+#: cbs_datacolumns.rscsize
+msgid "Size"
+msgstr ""
+
+#: cbs_datacolumns.rscskulllength
+msgid "Skull length"
+msgstr ""
+
+#: cbs_datacolumns.rscskullossification
+msgid "Skull ossification"
+msgstr ""
+
+#: cbs_datacolumns.rscsource
+msgid "Source"
+msgstr ""
+
+#: cbs_datacolumns.rscspanishname
+msgid "Spanish name"
+msgstr ""
+
+#: cbs_datacolumns.rscspeciesepithet
+msgid "Species epithet"
+msgstr ""
+
+#: cbs_datacolumns.rscspeciesid
+msgid "Species ID"
+msgstr ""
+
+#: cbs_datacolumns.rscspecimenid
+msgid "Specimen ID"
+msgstr ""
+
+#: cbs_datacolumns.rscstage
+msgid "Stage"
+msgstr ""
+
+#: cbs_datacolumns.rscstartdate
+msgctxt "cbs_datacolumns.rscstartdate"
+msgid "Start date"
+msgstr ""
+
+#: cbs_datacolumns.rscstarttime
+msgid "Start time"
+msgstr ""
+
+#: cbs_datacolumns.rscstate
+msgctxt "cbs_datacolumns.rscstate"
+msgid "State"
+msgstr ""
+
+#: cbs_datacolumns.rscstateid
+msgid "State ID"
+msgstr ""
+
+#: cbs_datacolumns.rscstatus
+msgid "Status"
+msgstr ""
+
+#: cbs_datacolumns.rscsubfamilyid
+msgid "Subfamily ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsubrank
+msgid "Sub rank"
+msgstr ""
+
+#: cbs_datacolumns.rscsubspeciesepithet
+msgid "Subspecies epithet"
+msgstr ""
+
+#: cbs_datacolumns.rscsubspeciesgroup
+msgid "Subspecies group"
+msgstr ""
+
+#: cbs_datacolumns.rscsubspeciesgroupid
+msgid "Subspecies group ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsuffix
+msgid "Suffix"
+msgstr ""
+
+#: cbs_datacolumns.rscsupplier
+msgctxt "cbs_datacolumns.rscsupplier"
+msgid "Supplier"
+msgstr ""
+
+#: cbs_datacolumns.rscsupplierid
+msgid "Supplier ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsupportplant1
+msgid "Support plant 1"
+msgstr ""
+
+#: cbs_datacolumns.rscsupportplant1id
+msgid "Support plant 1 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsupportplant2
+msgid "Support plant 2"
+msgstr ""
+
+#: cbs_datacolumns.rscsupportplant2id
+msgid "Support plant 2 ID"
+msgstr ""
+
+#: cbs_datacolumns.rscsupporttype
+msgid "Support type"
+msgstr ""
+
+#: cbs_datacolumns.rscsurvey
+msgctxt "cbs_datacolumns.rscsurvey"
+msgid "Survey"
+msgstr ""
+
+#: cbs_datacolumns.rscsurveyid
+msgid "Survey ID"
+msgstr ""
+
+#: cbs_datacolumns.rsctable
+msgid "Table"
+msgstr ""
+
+#: cbs_datacolumns.rsctaillength
+msgid "Tail length"
+msgstr ""
+
+#: cbs_datacolumns.rsctarsusdiameter
+msgid "Tarsus diameter"
+msgstr ""
+
+#: cbs_datacolumns.rsctarsuslength
+msgid "Tarsus length"
+msgstr ""
+
+#: cbs_datacolumns.rsctaxon
+msgctxt "cbs_datacolumns.rsctaxon"
+msgid "Taxon"
+msgstr ""
+
+#: cbs_datacolumns.rsctaxonid
+msgid "Taxon ID"
+msgstr ""
+
+#: cbs_datacolumns.rsctaxonomicrank
+msgid "Taxonomic rank"
+msgstr ""
+
+#: cbs_datacolumns.rsctaxonomicrankid
+msgid "Taxonomic rank ID"
+msgstr ""
+
+#: cbs_datacolumns.rsctaxonomicsequence
+msgid "Taxonomic sequence"
+msgstr ""
+
+#: cbs_datacolumns.rsctemperaturec
+msgid "Temperature (°C)"
+msgstr ""
+
+#: cbs_datacolumns.rsctime
+msgid "Time"
+msgstr ""
+
+#: cbs_datacolumns.rsctitle
+msgid "Title"
+msgstr ""
+
+#: cbs_datacolumns.rsctotalculmen
+msgid "Total culmen"
+msgstr ""
+
+#: cbs_datacolumns.rsctotallength
+msgid "Total length"
+msgstr ""
+
+#: cbs_datacolumns.rsctotaltimeopenedh
+msgid "Total time opened (h)"
+msgstr ""
+
+#: cbs_datacolumns.rsctreatment
+msgid "Treatment"
+msgstr ""
+
+#: cbs_datacolumns.rsctype
+msgid "Type"
+msgstr ""
+
+#: cbs_datacolumns.rscunbanded
+msgid "# unbanded"
+msgstr ""
+
+#: cbs_datacolumns.rscupdatedate
+msgid "Last modified date"
+msgstr ""
+
+#: cbs_datacolumns.rscuserid
+msgid "User ID"
+msgstr ""
+
+#: cbs_datacolumns.rscuserinserted
+msgid "Created by"
+msgstr ""
+
+#: cbs_datacolumns.rscusername
+msgid "Username"
+msgstr ""
+
+#: cbs_datacolumns.rscuserupdated
+msgid "Last modified by"
+msgstr ""
+
+#: cbs_datacolumns.rscuuid
+msgid "UUID"
+msgstr ""
+
+#: cbs_datacolumns.rscvalidname
+msgid "Valid name"
+msgstr ""
+
+#: cbs_datacolumns.rscvalidnameid
+msgid "Valid name ID"
+msgstr ""
+
+#: cbs_datacolumns.rscvernacularnames
+msgid "Vernacular name(s)"
+msgstr ""
+
+#: cbs_datacolumns.rscvisitor
+msgid "Visitor"
+msgstr ""
+
+#: cbs_datacolumns.rscvolume
+msgid "Volume"
+msgstr ""
+
+#: cbs_datacolumns.rscwebsite
+msgid "Website"
+msgstr ""
+
+#: cbs_datacolumns.rscweight
+msgid "Weight"
+msgstr ""
+
+#: cbs_datacolumns.rscwidth
+msgid "Width"
+msgstr ""
+
+#: cbs_datacolumns.rscwindbft
+msgid "Wind (Bft)"
+msgstr ""
+
+#: cbs_datacolumns.rscwindkmh
+msgid "Wind (km/h)"
+msgstr ""
+
+#: cbs_datacolumns.rscxtwitter
+msgid "X (Twitter)"
+msgstr ""
+
+#: cbs_datacolumns.rsczipcode
+msgid "Zip code"
+msgstr ""
+
+#: cbs_datacolumns.rsczoologicalcode
+msgid "ICZN"
+msgstr ""
+
+#: cbs_locale.rsaccepted
+msgid "Accepted"
+msgstr ""
+
+#: cbs_locale.rsacceptedidentifier
+msgid "Accepted identifier"
+msgstr ""
+
+#: cbs_locale.rsactioncannotbeundone
+msgid "This action cannot be undone."
+msgstr ""
+
+#: cbs_locale.rsactioncreated
+msgid "Created"
+msgstr ""
+
+#: cbs_locale.rsactiondeleted
+msgid "Deleted"
+msgstr ""
+
+#: cbs_locale.rsactionedited
+msgid "Edited"
+msgstr ""
+
+#: cbs_locale.rsactionrestored
+msgid "Restored"
+msgstr ""
+
+#: cbs_locale.rsactiverecordduplicated
+#, object-pascal-format
+msgid "A record with the same %s value already exists (%s)."
+msgstr ""
+
+#: cbs_locale.rsadminuser
+msgid "Administrator"
+msgstr ""
+
+#: cbs_locale.rsageadult
+msgid "Adult"
+msgstr ""
+
+#: cbs_locale.rsagefifthyear
+msgid "Fifth year"
+msgstr ""
+
+#: cbs_locale.rsagefirstyear
+msgid "First year"
+msgstr ""
+
+#: cbs_locale.rsagefledgling
+msgid "Fledgling"
+msgstr ""
+
+#: cbs_locale.rsagefourthyear
+msgid "Fourth year"
+msgstr ""
+
+#: cbs_locale.rsageimmature
+msgid "Immature"
+msgstr ""
+
+#: cbs_locale.rsagenestling
+msgctxt "cbs_locale.rsagenestling"
+msgid "Nestling"
+msgstr ""
+
+#: cbs_locale.rsagesecondyear
+msgid "Second year"
+msgstr ""
+
+#: cbs_locale.rsagethirdyear
+msgid "Third year"
+msgstr ""
+
+#: cbs_locale.rsageunknown
+msgctxt "cbs_locale.rsageunknown"
+msgid "Unknown"
+msgstr ""
+
+#: cbs_locale.rsapproximatedcoordinate
+msgid "Approximated"
+msgstr ""
+
+#: cbs_locale.rsaudiorecorded
+msgctxt "cbs_locale.rsaudiorecorded"
+msgid "Audio recorded"
+msgstr ""
+
+#: cbs_locale.rsauthorship
+msgctxt "cbs_locale.rsauthorship"
+msgid "Authorship"
+msgstr ""
+
+#: cbs_locale.rsbandacquiredfromsupplier
+msgid "Acquired from supplier"
+msgstr ""
+
+#: cbs_locale.rsbandavailable
+msgid "Available"
+msgstr ""
+
+#: cbs_locale.rsbandbroken
+msgid "Broken"
+msgstr ""
+
+#: cbs_locale.rsbandclosed
+msgid "Closed"
+msgstr ""
+
+#: cbs_locale.rsbandcolorlist
+msgid "\"yellow\",\"orange\",\"red\",\"carmine\",\"pink\",\"violet\",\"pale blue\",\"blue\",\"green\",\"lime green\",\"umber\",\"white\",\"gray\",\"black\",\"other\""
+msgstr ""
+
+#: cbs_locale.rsbanddeadbirdbandedbyothers
+msgid "Dead bird banded by others"
+msgstr ""
+
+#: cbs_locale.rsbandeventdischarge
+msgid "Discharge"
+msgstr ""
+
+#: cbs_locale.rsbandeventorder
+msgctxt "cbs_locale.rsbandeventorder"
+msgid "Order"
+msgstr ""
+
+#: cbs_locale.rsbandeventreceive
+msgid "Receive"
+msgstr ""
+
+#: cbs_locale.rsbandeventreport
+msgid "Report"
+msgstr ""
+
+#: cbs_locale.rsbandeventretrieve
+msgid "Retrieve"
+msgstr ""
+
+#: cbs_locale.rsbandeventtransfer
+msgid "Transfer"
+msgstr ""
+
+#: cbs_locale.rsbandeventtypelist
+msgid "Order,Receive,Transfer,Retrieve,Report,Use,Discharge"
+msgstr ""
+
+#: cbs_locale.rsbandeventuse
+msgid "Use"
+msgstr ""
+
+#: cbs_locale.rsbandflag
+msgid "Flag"
+msgstr ""
+
+#: cbs_locale.rsbandfoundloose
+msgid "Found in the field (loose)"
+msgstr ""
+
+#: cbs_locale.rsbandlivingbirdbandedbyothers
+msgid "Bird banded by others (alive)"
+msgstr ""
+
+#: cbs_locale.rsbandlockon
+msgid "Lock on"
+msgstr ""
+
+#: cbs_locale.rsbandlost
+msgctxt "cbs_locale.rsbandlost"
+msgid "Lost"
+msgstr ""
+
+#: cbs_locale.rsbandneck
+msgid "Neck collar"
+msgstr ""
+
+#: cbs_locale.rsbandopen
+msgid "Butt-end"
+msgstr ""
+
+#: cbs_locale.rsbandother
+msgctxt "cbs_locale.rsbandother"
+msgid "Other"
+msgstr ""
+
+#: cbs_locale.rsbandremoved
+msgid "Removed"
+msgstr ""
+
+#: cbs_locale.rsbandrivet
+msgid "Rivet"
+msgstr ""
+
+#: cbs_locale.rsbandstatuslist
+msgid "Available,Used,Removed,Transfered,Broken,Lost"
+msgstr ""
+
+#: cbs_locale.rsbandtransferbetweenbanders
+msgid "Transfer between banders"
+msgstr ""
+
+#: cbs_locale.rsbandtransfered
+msgid "Transfered"
+msgstr ""
+
+#: cbs_locale.rsbandtriangular
+msgid "Triangular"
+msgstr ""
+
+#: cbs_locale.rsbandtypelist
+msgid "\"Butt-end\",\"Flag\",\"Neck collar\",\"Wing tag\",\"Triangular\",\"Lock on\",\"Rivet\",\"Closed\",\"Other\""
+msgstr ""
+
+#: cbs_locale.rsbandused
+msgid "Used"
+msgstr ""
+
+#: cbs_locale.rsbandwingtag
+msgid "Wing tag"
+msgstr ""
+
+#: cbs_locale.rsbatchcanceledbyuser
+msgid "Operation was canceled by user."
+msgstr ""
+
+#: cbs_locale.rsbirdegg
+msgctxt "cbs_locale.rsbirdegg"
+msgid "Egg"
+msgstr ""
+
+#: cbs_locale.rsbirdflock
+msgid "Flock"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandback
+msgid "Bird in hand - back"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandbelly
+msgid "Bird in hand - belly"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandfeet
+msgid "Bird in hand - feet/bands"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandflank
+msgid "Bird in hand - flank"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandhead
+msgid "Bird in hand - head"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandtail
+msgid "Bird in hand - tail spread"
+msgstr ""
+
+#: cbs_locale.rsbirdinhandwing
+msgid "Bird in hand - wing spread"
+msgstr ""
+
+#: cbs_locale.rsbirdnest
+msgctxt "cbs_locale.rsbirdnest"
+msgid "Nest"
+msgstr ""
+
+#: cbs_locale.rsbirdnestling
+msgctxt "cbs_locale.rsbirdnestling"
+msgid "Nestling"
+msgstr ""
+
+#: cbs_locale.rsbodymolt
+msgid "body molt"
+msgstr ""
+
+#: cbs_locale.rsbreedingcodes
+msgid "\"Confirmed\",\"NY - Nest with Young\",\"NE - Nest with Eggs\",\"FS - carrying Fecal Sac\",\"FY - Feeding Young\",\"CF - Carrying Food\",\"FL - recently Fledged young\",\"ON - Occupied Nest\",\"UN - Used Nest\",\"DD - Distraction Display,\"Confirmed/Probable\",\"NB - Nest Building\",\"CN - Carrying Nesting material\",\"Probable\",\"PE - Physiological Evidence\",\"B - wren/woodpecker nest Building\",\"A - Agitated behavior\",\"N - visiting probable Nest site\",\"C - Courtship, display or copulation\",\"T - Territorial defense\",\"P - Pair in suitable habitat\",\"M - Multiple singing birds (7+)\",\"S7 - Singing bird present 7+ days\",\"Possible\",\"S - Singing bird\",\"H - in appropriate Habitat\",\"Observed\",\"F - Flyover\""
+msgstr ""
+
+#: cbs_locale.rsbroodpatch
+msgid "brood patch"
+msgstr ""
+
+#: cbs_locale.rscanceleditingprompt
+msgid ""
+"There are unsaved changes.\n"
+"Do you really want to discard it?"
+msgstr ""
+
+#: cbs_locale.rscantdeleterecord
+msgid "This record cannot be deleted, because it is linked to other records."
+msgstr ""
+
+#: cbs_locale.rscantdeleteuser
+#, object-pascal-format
+msgid "User %s should not be deleted, because it could compromise the Xolmis functioning!"
+msgstr ""
+
+#: cbs_locale.rscaptionall
+msgid "All"
+msgstr ""
+
+#: cbs_locale.rscaptionaudiolibrary
+msgid "Audio recordings"
+msgstr ""
+
+#: cbs_locale.rscaptionband
+msgctxt "cbs_locale.rscaptionband"
+msgid "Band"
+msgstr ""
+
+#: cbs_locale.rscaptioncapture
+msgid "Capture"
+msgstr ""
+
+#: cbs_locale.rscaptioncountry
+msgctxt "cbs_locale.rscaptioncountry"
+msgid "Country"
+msgstr ""
+
+#: cbs_locale.rscaptiondate
+msgctxt "cbs_locale.rscaptiondate"
+msgid "Date"
+msgstr ""
+
+#: cbs_locale.rscaptiondistrict
+msgid "District"
+msgstr ""
+
+#: cbs_locale.rscaptiondoubleband
+msgctxt "cbs_locale.rscaptiondoubleband"
+msgid "Double band"
+msgstr ""
+
+#: cbs_locale.rscaptionegg
+msgctxt "cbs_locale.rscaptionegg"
+msgid "Egg"
+msgstr ""
+
+#: cbs_locale.rscaptionexpedition
+msgctxt "cbs_locale.rscaptionexpedition"
+msgid "Expedition"
+msgstr ""
+
+#: cbs_locale.rscaptionexpeditions
+msgid "Expeditions"
+msgstr ""
+
+#: cbs_locale.rscaptionfamily
+msgid "Family"
+msgstr ""
+
+#: cbs_locale.rscaptionfather
+msgctxt "cbs_locale.rscaptionfather"
+msgid "Father"
+msgstr ""
+
+#: cbs_locale.rscaptionfind
+msgid "Find"
+msgstr ""
+
+#: cbs_locale.rscaptionfinish
+msgid "Finish"
+msgstr ""
+
+#: cbs_locale.rscaptiongenus
+msgid "Genus"
+msgstr ""
+
+#: cbs_locale.rscaptionhigh
+msgid "High"
+msgstr ""
+
+#: cbs_locale.rscaptionimages
+msgid "Images"
+msgstr ""
+
+#: cbs_locale.rscaptionindividual
+msgctxt "cbs_locale.rscaptionindividual"
+msgid "Individual"
+msgstr ""
+
+#: cbs_locale.rscaptioninstitution
+msgctxt "cbs_locale.rscaptioninstitution"
+msgid "Institution"
+msgstr ""
+
+#: cbs_locale.rscaptionlocality
+msgctxt "cbs_locale.rscaptionlocality"
+msgid "Locality"
+msgstr ""
+
+#: cbs_locale.rscaptionlow
+msgid "Low"
+msgstr ""
+
+#: cbs_locale.rscaptionmedium
+msgid "Medium"
+msgstr ""
+
+#: cbs_locale.rscaptionmethod
+msgctxt "cbs_locale.rscaptionmethod"
+msgid "Method"
+msgstr ""
+
+#: cbs_locale.rscaptionmistnet
+msgid "Mistnet"
+msgstr ""
+
+#: cbs_locale.rscaptionmolt
+msgid "Molt"
+msgstr ""
+
+#: cbs_locale.rscaptionmother
+msgctxt "cbs_locale.rscaptionmother"
+msgid "Mother"
+msgstr ""
+
+#: cbs_locale.rscaptionmunicipality
+msgctxt "cbs_locale.rscaptionmunicipality"
+msgid "Municipality"
+msgstr ""
+
+#: cbs_locale.rscaptionname
+msgctxt "cbs_locale.rscaptionname"
+msgid "Name"
+msgstr ""
+
+#: cbs_locale.rscaptionnest
+msgctxt "cbs_locale.rscaptionnest"
+msgid "Nest"
+msgstr ""
+
+#: cbs_locale.rscaptionnestowner
+msgid "Nest owner"
+msgstr ""
+
+#: cbs_locale.rscaptionnestrevision
+msgid "Nest revision"
+msgstr ""
+
+#: cbs_locale.rscaptionnext
+msgid "Next"
+msgstr ""
+
+#: cbs_locale.rscaptionno
+msgid "No"
+msgstr ""
+
+#: cbs_locale.rscaptionnone
+msgctxt "cbs_locale.rscaptionnone"
+msgid "None"
+msgstr ""
+
+#: cbs_locale.rscaptionobserver
+msgctxt "cbs_locale.rscaptionobserver"
+msgid "Observer"
+msgstr ""
+
+#: cbs_locale.rscaptionorder
+msgctxt "cbs_locale.rscaptionorder"
+msgid "Order"
+msgstr ""
+
+#: cbs_locale.rscaptionparentsite
+msgid "Parent toponym"
+msgstr ""
+
+#: cbs_locale.rscaptionpermanentnet
+msgid "Permanent mistnet"
+msgstr ""
+
+#: cbs_locale.rscaptionpermit
+msgid "Permit"
+msgstr ""
+
+#: cbs_locale.rscaptionperson
+msgctxt "cbs_locale.rscaptionperson"
+msgid "Researcher"
+msgstr ""
+
+#: cbs_locale.rscaptionproject
+msgctxt "cbs_locale.rscaptionproject"
+msgid "Project"
+msgstr ""
+
+#: cbs_locale.rscaptionrank
+msgid "Rank"
+msgstr ""
+
+#: cbs_locale.rscaptionregion
+msgid "Region"
+msgstr ""
+
+#: cbs_locale.rscaptionremovedband
+msgctxt "cbs_locale.rscaptionremovedband"
+msgid "Removed band"
+msgstr ""
+
+#: cbs_locale.rscaptionsamplingplot
+msgctxt "cbs_locale.rscaptionsamplingplot"
+msgid "Sampling plot"
+msgstr ""
+
+#: cbs_locale.rscaptionsighting
+msgid "Sighting"
+msgstr ""
+
+#: cbs_locale.rscaptionspecies
+msgid "Species"
+msgstr ""
+
+#: cbs_locale.rscaptionsspgroup
+msgid "Subspecific group"
+msgstr ""
+
+#: cbs_locale.rscaptionstate
+msgctxt "cbs_locale.rscaptionstate"
+msgid "State"
+msgstr ""
+
+#: cbs_locale.rscaptionsubfamily
+msgid "Subfamily"
+msgstr ""
+
+#: cbs_locale.rscaptionsubspecifictaxa
+msgid "Subspecific taxa"
+msgstr ""
+
+#: cbs_locale.rscaptionsupplier
+msgctxt "cbs_locale.rscaptionsupplier"
+msgid "Supplier"
+msgstr ""
+
+#: cbs_locale.rscaptionsurvey
+msgctxt "cbs_locale.rscaptionsurvey"
+msgid "Survey"
+msgstr ""
+
+#: cbs_locale.rscaptiontaxon
+msgctxt "cbs_locale.rscaptiontaxon"
+msgid "Taxon"
+msgstr ""
+
+#: cbs_locale.rscaptiontoponym
+msgid "Toponym"
+msgstr ""
+
+#: cbs_locale.rscaptionuser
+msgid "User"
+msgstr ""
+
+#: cbs_locale.rscaptionversion
+msgid "Version"
+msgstr ""
+
+#: cbs_locale.rscaptionweatherlogentry
+msgid "Weather log entry"
+msgstr ""
+
+#: cbs_locale.rscaptionyes
+msgid "Yes"
+msgstr ""
+
+#: cbs_locale.rscapturechangeband
+msgid "Change band"
+msgstr ""
+
+#: cbs_locale.rscaptured
+msgctxt "cbs_locale.rscaptured"
+msgid "Captured"
+msgstr ""
+
+#: cbs_locale.rscapturenew
+msgid "New capture"
+msgstr ""
+
+#: cbs_locale.rscapturerecapture
+msgid "Recapture"
+msgstr ""
+
+#: cbs_locale.rscapturesameday
+msgid "Same day"
+msgstr ""
+
+#: cbs_locale.rscapturetypelist
+msgid "\"New capture\",\"Recapture\",\"Same day\",\"Change band\",\"Unbanded\""
+msgstr ""
+
+#: cbs_locale.rscaptureunbanded
+msgid "Unbanded"
+msgstr ""
+
+#: cbs_locale.rscheckuncheckall
+msgid "Mark/unmark all records"
+msgstr ""
+
+#: cbs_locale.rscheckupdates
+msgid "Check updates"
+msgstr ""
+
+#: cbs_locale.rscloacalprotuberance
+msgid "cloacal protuberance"
+msgstr ""
+
+#: cbs_locale.rsclosing
+msgid "Closing..."
+msgstr ""
+
+#: cbs_locale.rscnpjincpf
+msgid "A CNPJ number was entered in the CPF field."
+msgstr ""
+
+#: cbs_locale.rscnpjtooshort
+msgid "CNPJ number must have 14 digits."
+msgstr ""
+
+#: cbs_locale.rscolorbandsrightleft
+#, object-pascal-format
+msgid "r %s / l %s"
+msgstr ""
+
+#: cbs_locale.rscompressingbackup
+msgid "Compressing backup..."
+msgstr ""
+
+#: cbs_locale.rsconfidencelevel
+msgid "Confidence level"
+msgstr ""
+
+#: cbs_locale.rsconfirmpassword
+msgid "Confirm password"
+msgstr ""
+
+#: cbs_locale.rsconfirmpassworderror
+msgid "Incorrect password confirmation. Try to retype it."
+msgstr ""
+
+#: cbs_locale.rscoordinatesavailabletouse
+msgid "Coordinates are available at the Coordinates Editor."
+msgstr ""
+
+#: cbs_locale.rscoordinatesnameinput
+msgid "Give a name to the coordinates set:"
+msgstr ""
+
+#: cbs_locale.rscpfincnpj
+msgid "A CPF number was entered in the CNPJ field."
+msgstr ""
+
+#: cbs_locale.rscpftooshort
+msgid "CPF number must have 11 digits."
+msgstr ""
+
+#: cbs_locale.rscreatedatabaseprompt
+msgid "Database file not found. Do you want to create it?"
+msgstr ""
+
+#: cbs_locale.rscreatingbackup
+msgid "Creating backup..."
+msgstr ""
+
+#: cbs_locale.rscyclenotselected
+msgid "No item were selected in one or more columns."
+msgstr ""
+
+#: cbs_locale.rsdatebanding
+msgctxt "cbs_locale.rsdatebanding"
+msgid "Banding date"
+msgstr ""
+
+#: cbs_locale.rsdatebirth
+msgctxt "cbs_locale.rsdatebirth"
+msgid "Birth date"
+msgstr ""
+
+#: cbs_locale.rsdatecapture
+msgid "capture date"
+msgstr ""
+
+#: cbs_locale.rsdatecollection
+msgctxt "cbs_locale.rsdatecollection"
+msgid "Collection date"
+msgstr ""
+
+#: cbs_locale.rsdatedeath
+msgctxt "cbs_locale.rsdatedeath"
+msgid "Death date"
+msgstr ""
+
+#: cbs_locale.rsdatedischarge
+msgid "Discharge date"
+msgstr ""
+
+#: cbs_locale.rsdatedispatch
+msgctxt "cbs_locale.rsdatedispatch"
+msgid "Dispatch date"
+msgstr ""
+
+#: cbs_locale.rsdateend
+msgctxt "cbs_locale.rsdateend"
+msgid "End date"
+msgstr ""
+
+#: cbs_locale.rsdateexpiration
+msgid "Expiration date"
+msgstr ""
+
+#: cbs_locale.rsdateexpire
+msgctxt "cbs_locale.rsdateexpire"
+msgid "Expire date"
+msgstr ""
+
+#: cbs_locale.rsdatefound
+msgid "Date found"
+msgstr ""
+
+#: cbs_locale.rsdateimage
+msgid "Image date"
+msgstr ""
+
+#: cbs_locale.rsdateissue
+msgid "Issue date"
+msgstr ""
+
+#: cbs_locale.rsdatelast
+msgctxt "cbs_locale.rsdatelast"
+msgid "Last date active"
+msgstr ""
+
+#: cbs_locale.rsdatemeasured
+msgid "Measurement date"
+msgstr ""
+
+#: cbs_locale.rsdatenestrevision
+msgid "Nest revision date"
+msgstr ""
+
+#: cbs_locale.rsdatepreparation
+msgctxt "cbs_locale.rsdatepreparation"
+msgid "Preparation date"
+msgstr ""
+
+#: cbs_locale.rsdatereceipt
+msgid "Receipt date"
+msgstr ""
+
+#: cbs_locale.rsdatereport
+msgid "Report date"
+msgstr ""
+
+#: cbs_locale.rsdatesighting
+msgid "Sighting date"
+msgstr ""
+
+#: cbs_locale.rsdatestart
+msgctxt "cbs_locale.rsdatestart"
+msgid "Start date"
+msgstr ""
+
+#: cbs_locale.rsdatesurvey
+msgid "Survey date"
+msgstr ""
+
+#: cbs_locale.rsdatetoday
+msgid "today"
+msgstr ""
+
+#: cbs_locale.rsdeadbird
+msgid "Dead bird"
+msgstr ""
+
+#: cbs_locale.rsdecompressingbackup
+msgid "Decompressing backup..."
+msgstr ""
+
+#: cbs_locale.rsdeleteconnectionprompt
+msgid "Do you really want to delete this connection?"
+msgstr ""
+
+#: cbs_locale.rsdeleteconnectiontitle
+msgid "Delete connection"
+msgstr ""
+
+#: cbs_locale.rsdeleteimageprompt
+msgid ""
+"Dow you really want to delete this record?\n"
+"This action cannot be undone."
+msgstr ""
+
+#: cbs_locale.rsdeleterecordfooter
+msgid "Deleted record stay in recycle bin for the time period defined in Settings before being permanently deleted."
+msgstr ""
+
+#: cbs_locale.rsdeleterecordprompt
+msgid "Do you really want to delete this record?"
+msgstr ""
+
+#: cbs_locale.rsdeleterecordtitle
+msgid "Delete record"
+msgstr ""
+
+#: cbs_locale.rsdetectiontypes
+msgid "\"S - song\",\"C - call\",\"V - seen\",\"W - wing flapping\",\"D - drumming\",\"F - flying\""
+msgstr ""
+
+#: cbs_locale.rsdiscardchangestitle
+msgid "Discard changes"
+msgstr ""
+
+#: cbs_locale.rsdocaudio
+msgid "Audio file"
+msgstr ""
+
+#: cbs_locale.rsdoccode
+msgid "Source code"
+msgstr ""
+
+#: cbs_locale.rsdocdatabase
+msgid "Database"
+msgstr ""
+
+#: cbs_locale.rsdocdocument
+msgid "Document"
+msgstr ""
+
+#: cbs_locale.rsdocgis
+msgid "GIS file"
+msgstr ""
+
+#: cbs_locale.rsdocimage
+msgid "Image"
+msgstr ""
+
+#: cbs_locale.rsdocother
+msgctxt "cbs_locale.rsdocother"
+msgid "Other"
+msgstr ""
+
+#: cbs_locale.rsdocpdf
+msgid "PDF document"
+msgstr ""
+
+#: cbs_locale.rsdocpresentation
+msgid "Presentation"
+msgstr ""
+
+#: cbs_locale.rsdocspreadsheet
+msgid "Spreadsheet"
+msgstr ""
+
+#: cbs_locale.rsdocurl
+msgid "URL"
+msgstr ""
+
+#: cbs_locale.rsdocvideo
+msgid "Video"
+msgstr ""
+
+#: cbs_locale.rsectoparasite
+msgid "Ectoparasite"
+msgstr ""
+
+#: cbs_locale.rseditedbybatch
+msgid "Edited by batch"
+msgstr ""
+
+#: cbs_locale.rseditedbyform
+msgid "Edited by form"
+msgstr ""
+
+#: cbs_locale.rseditedbygrid
+msgid "Edited by grid"
+msgstr ""
+
+#: cbs_locale.rseditedbyimport
+msgid "Edited by import"
+msgstr ""
+
+#: cbs_locale.rseggbiconical
+msgid "Biconical"
+msgstr ""
+
+#: cbs_locale.rseggblotches
+msgid "Blotches"
+msgstr ""
+
+#: cbs_locale.rseggblotchessquiggles
+msgid "Blotches and squiggles"
+msgstr ""
+
+#: cbs_locale.rseggchalky
+msgid "Chalky"
+msgstr ""
+
+#: cbs_locale.rseggconical
+msgid "Conical"
+msgstr ""
+
+#: cbs_locale.rseggcylindrical
+msgid "Cylindrical"
+msgstr ""
+
+#: cbs_locale.rseggelliptical
+msgid "Elliptical"
+msgstr ""
+
+#: cbs_locale.rseggglossy
+msgid "Glossy"
+msgstr ""
+
+#: cbs_locale.rsegglongitudinal
+msgid "Longitudinal"
+msgstr ""
+
+#: cbs_locale.rseggoval
+msgid "Oval"
+msgstr ""
+
+#: cbs_locale.rseggpitted
+msgid "Pitted"
+msgstr ""
+
+#: cbs_locale.rseggpyriform
+msgid "Pyriform"
+msgstr ""
+
+#: cbs_locale.rseggscrawls
+msgid "Scrawls"
+msgstr ""
+
+#: cbs_locale.rseggshiny
+msgid "Shiny"
+msgstr ""
+
+#: cbs_locale.rseggspherical
+msgid "Spherical"
+msgstr ""
+
+#: cbs_locale.rseggspots
+msgid "Spots"
+msgstr ""
+
+#: cbs_locale.rseggspotssquiggles
+msgid "Spots and squiggles"
+msgstr ""
+
+#: cbs_locale.rseggsquiggles
+msgid "Squiggles"
+msgstr ""
+
+#: cbs_locale.rseggstreaks
+msgid "Streaks"
+msgstr ""
+
+#: cbs_locale.rseggunknown
+msgctxt "cbs_locale.rseggunknown"
+msgid "Unknown"
+msgstr ""
+
+#: cbs_locale.rsenvironment
+msgid "Environment"
+msgstr ""
+
+#: cbs_locale.rsepithetonlyininfrasp
+msgid "The Infraspecific epithet must be filled when an Infraspecific category was selected."
+msgstr ""
+
+#: cbs_locale.rserrorbackupfailed
+msgid "Backup file creation failed."
+msgstr ""
+
+#: cbs_locale.rserrorbackupnotfound
+#, object-pascal-format
+msgid "Backup file not found: %s"
+msgstr ""
+
+#: cbs_locale.rserrorcheckingupdates
+msgid "An error occurred while checking for updates."
+msgstr ""
+
+#: cbs_locale.rserrorconnectingdatabase
+msgid ""
+"Unable to connect to database.\n"
+"Check if the connection settings and the database path are correct."
+msgstr ""
+
+#: cbs_locale.rserrorconnectionnotfound
+#, object-pascal-format
+msgid "Connection '%s' not found."
+msgstr ""
+
+#: cbs_locale.rserrorcreatefolder
+msgid "Not able to create folder:"
+msgstr ""
+
+#: cbs_locale.rserrorcreatingsystemdatabase
+msgid "Unable to create the system database."
+msgstr ""
+
+#: cbs_locale.rserrorcsvindexnotfound
+msgid "Field index of CSV record not exists!"
+msgstr ""
+
+#: cbs_locale.rserrordatabasecorrupted
+msgid ""
+"The database file is corrupted.\n"
+"Restoring a database backup is recommended."
+msgstr ""
+
+#: cbs_locale.rserrordatabasecreation
+msgid "The database file was not created."
+msgstr ""
+
+#: cbs_locale.rserrordatabasenotfound
+#, object-pascal-format
+msgid ""
+"Database file not found:\n"
+"%s"
+msgstr ""
+
+#: cbs_locale.rserrordatabasesweep
+msgid "Error running database Sweep and Analyze"
+msgstr ""
+
+#: cbs_locale.rserroremptyfieldname
+msgid "Error loading field info: the field name is blank."
+msgstr ""
+
+#: cbs_locale.rserrorexporting
+#, object-pascal-format
+msgid ""
+"An error occurred exporting:\n"
+"%s"
+msgstr ""
+
+#: cbs_locale.rserrorfilenotfound
+#, object-pascal-format
+msgid "File %s not found."
+msgstr ""
+
+#: cbs_locale.rserrorfound
+#, object-pascal-format
+msgid "<p><b>%d error</b> found! Please fix it before proceeding.</p>"
+msgstr ""
+
+#: cbs_locale.rserrorgeneratingmap
+msgid "Error generating map."
+msgstr ""
+
+#: cbs_locale.rserrorhelpnotfound
+#, object-pascal-format
+msgid ""
+"Check if the help files are in the folder:\n"
+"%s"
+msgstr ""
+
+#: cbs_locale.rserrorimporting
+#, object-pascal-format
+msgid ""
+"An error occurred importing:\n"
+"%s"
+msgstr ""
+
+#: cbs_locale.rserrorinvaliddate
+msgid "Invalid date. Check if it was typed correctly."
+msgstr ""
+
+#: cbs_locale.rserrormontadata
+#, object-pascal-format
+msgid "Error in year digits (%d). Send this issue to the Support."
+msgstr ""
+
+#: cbs_locale.rserrorreportnotfound
+#, object-pascal-format
+msgid "Report template not found: %s"
+msgstr ""
+
+#: cbs_locale.rserrorrestorefailed
+msgid "Backup restore failed."
+msgstr ""
+
+#: cbs_locale.rserrorrewritinghierarchy
+msgid "Error rewriting the hierarchy. All rewriting changes were discarded."
+msgstr ""
+
+#: cbs_locale.rserrorsfound
+#, object-pascal-format
+msgid "<p><b>%d errors</b> found! Please fix it before proceeding.</p>"
+msgstr ""
+
+#: cbs_locale.rserrortablenotfound
+#, object-pascal-format
+msgid "Table '%s' not found."
+msgstr ""
+
+#: cbs_locale.rserrortitlehelpnotfound
+msgid "Help files not found!"
+msgstr ""
+
+#: cbs_locale.rserrorupdatingadminpassword
+msgid "An error occurred while updating the Admin password."
+msgstr ""
+
+#: cbs_locale.rsexactcoordinate
+msgid "Exact"
+msgstr ""
+
+#: cbs_locale.rsexportcanceled
+msgid "Export canceled!"
+msgstr ""
+
+#: cbs_locale.rsexportcanceledbyuser
+msgid "Export canceled by the user."
+msgstr ""
+
+#: cbs_locale.rsexportdatatitle
+msgctxt "cbs_locale.rsexportdatatitle"
+msgid "Export data"
+msgstr ""
+
+#: cbs_locale.rsexportempty
+msgid "No records found! Export canceled."
+msgstr ""
+
+#: cbs_locale.rsexportfieldsnotfound
+msgid "No fields selected to export!"
+msgstr ""
+
+#: cbs_locale.rsexportfinished
+#, object-pascal-format
+msgid "Export to %s: Finished!"
+msgstr ""
+
+#: cbs_locale.rsfeather
+msgid "Feather"
+msgstr ""
+
+#: cbs_locale.rsfeces
+msgctxt "cbs_locale.rsfeces"
+msgid "Feces"
+msgstr ""
+
+#: cbs_locale.rsfieldwork
+msgid "Fieldwork"
+msgstr ""
+
+#: cbs_locale.rsfilterand
+msgid "and "
+msgstr ""
+
+#: cbs_locale.rsfilterbetween
+msgid "between"
+msgstr ""
+
+#: cbs_locale.rsfilterequal
+msgid "equal to"
+msgstr ""
+
+#: cbs_locale.rsfilterlessthan
+msgid "lesser than or equal to"
+msgstr ""
+
+#: cbs_locale.rsfilterlike
+msgid "contains"
+msgstr ""
+
+#: cbs_locale.rsfiltermorethan
+msgid "greater than or equal to"
+msgstr ""
+
+#: cbs_locale.rsfilternotequal
+msgid "not equal to"
+msgstr ""
+
+#: cbs_locale.rsfilternotnull
+msgid "not empty"
+msgstr ""
+
+#: cbs_locale.rsfilternull
+msgid "empty"
+msgstr ""
+
+#: cbs_locale.rsfilteror
+msgid "or "
+msgstr ""
+
+#: cbs_locale.rsfilterstartlike
+msgid "start with"
+msgstr ""
+
+#: cbs_locale.rsfinishedimporting
+msgid "Finished importing!"
+msgstr ""
+
+#: cbs_locale.rsflightmolt
+msgid "flight feathers molt"
+msgstr ""
+
+#: cbs_locale.rsflightwear
+msgid "flight feathers wear"
+msgstr ""
+
+#: cbs_locale.rsfood
+msgid "Food"
+msgstr ""
+
+#: cbs_locale.rsfootprint
+msgid "Footprint"
+msgstr ""
+
+#: cbs_locale.rsforeignnotexist
+#, object-pascal-format
+msgid "Selected %s does not exist. Select a valid record."
+msgstr ""
+
+#: cbs_locale.rsfound
+msgctxt "cbs_locale.rsfound"
+msgid "found"
+msgstr ""
+
+#: cbs_locale.rsfoundfiles
+#, object-pascal-format
+msgid "Files found: %d"
+msgstr ""
+
+#: cbs_locale.rsfoundplural
+msgctxt "cbs_locale.rsfoundplural"
+msgid "found"
+msgstr ""
+
+#: cbs_locale.rsfreebirdagonistic
+msgid "Free bird - agonistic behavior"
+msgstr ""
+
+#: cbs_locale.rsfreebirdbuildingnest
+msgid "Free bird - building nest"
+msgstr ""
+
+#: cbs_locale.rsfreebirdcopulating
+msgid "Free bird - copulating"
+msgstr ""
+
+#: cbs_locale.rsfreebirddisplaying
+msgid "Free bird - displaying"
+msgstr ""
+
+#: cbs_locale.rsfreebirdflying
+msgid "Free bird - flying"
+msgstr ""
+
+#: cbs_locale.rsfreebirdforraging
+msgid "Free bird - forraging/feeding"
+msgstr ""
+
+#: cbs_locale.rsfreebirdincubating
+msgid "Free bird - in nest"
+msgstr ""
+
+#: cbs_locale.rsfreebirdstanding
+msgid "Free bird - perched"
+msgstr ""
+
+#: cbs_locale.rsfreebirdswimming
+msgid "Free bird - swimming"
+msgstr ""
+
+#: cbs_locale.rsfreebirdvocalizing
+msgid "Free bird - vocalizing"
+msgstr ""
+
+#: cbs_locale.rsfromnumberlessthanzero
+msgid "The start number must be greater than zero."
+msgstr ""
+
+#: cbs_locale.rsfuturedate
+#, object-pascal-format
+msgid "%s must be after %s (%s)."
+msgstr ""
+
+#: cbs_locale.rsfuturedatefromtoday
+msgid "The date must be today or earlier."
+msgstr ""
+
+#: cbs_locale.rsfuturepartialdate
+#, object-pascal-format
+msgid "%s must be before or equal to %s (%s)."
+msgstr ""
+
+#: cbs_locale.rsgenderlist
+msgid "he/him,she/her,they/them"
+msgstr ""
+
+#: cbs_locale.rsguestuser
+msgid "Guest"
+msgstr ""
+
+#: cbs_locale.rsheard
+msgctxt "cbs_locale.rsheard"
+msgid "Heard"
+msgstr ""
+
+#: cbs_locale.rshintaddexistingsurvey
+msgid "Add existing survey"
+msgstr ""
+
+#: cbs_locale.rshintcheckuncheckall
+msgid "Mark/unmark all"
+msgstr ""
+
+#: cbs_locale.rshintheaderallmarked
+#, object-pascal-format
+msgid "All %d records marked"
+msgstr ""
+
+#: cbs_locale.rshintheaderallunmarked
+msgid "No marked records"
+msgstr ""
+
+#: cbs_locale.rshintheadersomemarked
+#, object-pascal-format
+msgid "%d of %d records marked"
+msgstr ""
+
+#: cbs_locale.rshome
+msgid "Home"
+msgstr ""
+
+#: cbs_locale.rshowagedsexedlist
+msgid "\"Physical differences\",\"B - Brood patch\",\"C - Cloacal protuberance\",\"@ - egg in oviduct\",\"E - Eye color\",\"I - mouth/bill color or striations on bill (in hummingbirds)\",\"G - Gape\",\"$ - feet or legs\",\"S - Skull ossification\",\"Q - measurements (details in notes)\",\"Y - symmetrical flight feather molt\",\"Plumage characters\",\"K - definitive basic plumage\",\"A - definitve Alternate plumage\",\"F - Formative plumage (applies to first alternate plumage as well)\",\"J - Juvenal plumage\",\"M - Molt limits\",\"P - Plumage (only for sexual dimorphism)\",\"L - plumage color patch Length or extent (details in notes)\",\"Feather characters\",\"W - feather Wear\",\"V - feather shape\",\"R - Prejuvenal (first prebasic) molt\",\"= - fault bar alignment\",\"# - growth bar alignment\",\"Undetermined or remaining\",\"O - Other (such as behavior/copulation; put in notes)\",\"U - Undetermined after examination\",\"X - age or sex determination not attempted\",\"Z - less precise age (< 95%) but high certainty\""
+msgstr ""
+
+#: cbs_locale.rsidentifier
+msgid "Identifier"
+msgstr ""
+
+#: cbs_locale.rsimagenotfound
+#, object-pascal-format
+msgid "Image not found: %s"
+msgstr ""
+
+#: cbs_locale.rsimagenotsupported
+#, object-pascal-format
+msgid "Image type not supported: %s"
+msgstr ""
+
+#: cbs_locale.rsimportaudiostitle
+msgid "Import audio files"
+msgstr ""
+
+#: cbs_locale.rsimportcanceled
+msgid "Import canceled!"
+msgstr ""
+
+#: cbs_locale.rsimportcanceledbyuser
+msgid "Import canceled by the user."
+msgstr ""
+
+#: cbs_locale.rsimportdocstitle
+msgid "Import documents"
+msgstr ""
+
+#: cbs_locale.rsimportimagestitle
+msgid "Import images"
+msgstr ""
+
+#: cbs_locale.rsinactiverecordduplicated
+#, object-pascal-format
+msgid "An inactive record with the same %s value already exists (%s)."
+msgstr ""
+
+#: cbs_locale.rsincorrectpassword
+msgid "Incorrect password."
+msgstr ""
+
+#: cbs_locale.rsinformutmzone
+msgid "Inform the origin UTM Zone and the Hemisphere."
+msgstr ""
+
+#: cbs_locale.rsinfraepithet
+msgid "Infraspecific epithet"
+msgstr ""
+
+#: cbs_locale.rsinfrarank
+msgid "Infraspecific rank"
+msgstr ""
+
+#: cbs_locale.rsinsertedbybatch
+msgid "Inserted by batch"
+msgstr ""
+
+#: cbs_locale.rsinsertedbydrop
+msgid "Inserted by drag and drop"
+msgstr ""
+
+#: cbs_locale.rsinsertedbyform
+msgid "Inserted by form"
+msgstr ""
+
+#: cbs_locale.rsinsertedbygrid
+msgid "Inserted by grid"
+msgstr ""
+
+#: cbs_locale.rsinsertedbyimport
+msgid "Inserted by import"
+msgstr ""
+
+#: cbs_locale.rsinvalidcpf
+msgid "The CPF number entered is invalid."
+msgstr ""
+
+#: cbs_locale.rsinvaliddate
+#, object-pascal-format
+msgctxt "cbs_locale.rsinvaliddate"
+msgid "The %s is not a valid date."
+msgstr ""
+
+#: cbs_locale.rsinvaliddaterange
+#, object-pascal-format
+msgid "The %s must be later than the %s."
+msgstr ""
+
+#: cbs_locale.rsinvalidemail
+#, object-pascal-format
+msgid "The address %s is not a valid e-mail."
+msgstr ""
+
+#: cbs_locale.rsinvalidlatitude
+msgid "The Latitude entered is not a valid decimal number."
+msgstr ""
+
+#: cbs_locale.rsinvalidlogin
+msgid "User not found."
+msgstr ""
+
+#: cbs_locale.rsinvalidlongitude
+msgid "The Longitude entered is not a valid decimal number."
+msgstr ""
+
+#: cbs_locale.rsinvalidpartialdate
+#, object-pascal-format
+msgctxt "cbs_locale.rsinvalidpartialdate"
+msgid "The %s is not a valid date."
+msgstr ""
+
+#: cbs_locale.rsinvalidtimerange
+msgid "The end time must be later than the start time."
+msgstr ""
+
+#: cbs_locale.rsisuptodate
+msgid "You are running the most recent version!"
+msgstr ""
+
+#: cbs_locale.rslabelfile
+msgid "Database file: *"
+msgstr ""
+
+#: cbs_locale.rslabelname
+msgid "Database name: *"
+msgstr ""
+
+#: cbs_locale.rslatitude
+msgctxt "cbs_locale.rslatitude"
+msgid "Latitude"
+msgstr ""
+
+#: cbs_locale.rslatitudecaption
+#, object-pascal-format
+msgid "Latitude: <font color=\"$00C75F5B\">%s</font>"
+msgstr ""
+
+#: cbs_locale.rsleftleg
+#, object-pascal-format
+msgid "l%s"
+msgstr ""
+
+#: cbs_locale.rsleftlegempty
+msgid "l-"
+msgstr ""
+
+#: cbs_locale.rslibreofficeerror
+#, object-pascal-format
+msgid "Error running LibreOffice: %d"
+msgstr ""
+
+#: cbs_locale.rslibreofficeerrorwrongext
+#, object-pascal-format
+msgid "File extension not supported: %s"
+msgstr ""
+
+#: cbs_locale.rslibreofficenotfound
+msgid "LibreOffice not found!"
+msgstr ""
+
+#: cbs_locale.rsline
+#, object-pascal-format
+msgid "Line: %d"
+msgstr ""
+
+#: cbs_locale.rslistcheckednone
+msgid "No list items were checked!"
+msgstr ""
+
+#: cbs_locale.rsloading
+msgid "Loading"
+msgstr ""
+
+#: cbs_locale.rsloadingcsvfile
+msgid "Loading CSV file..."
+msgstr ""
+
+#: cbs_locale.rsloadingform
+#, object-pascal-format
+msgid "Loading %s..."
+msgstr ""
+
+#: cbs_locale.rsloadingrecords
+msgid "Loading records..."
+msgstr ""
+
+#: cbs_locale.rsloginbutton
+msgid "Sign in"
+msgstr ""
+
+#: cbs_locale.rslongitude
+msgctxt "cbs_locale.rslongitude"
+msgid "Longitude"
+msgstr ""
+
+#: cbs_locale.rslongitudecaption
+#, object-pascal-format
+msgid "Longitude: <font color=\"$00C75F5B\">%s</font>"
+msgstr ""
+
+#: cbs_locale.rsmarked
+msgctxt "cbs_locale.rsmarked"
+msgid "marked"
+msgstr ""
+
+#: cbs_locale.rsmarkedplural
+msgctxt "cbs_locale.rsmarkedplural"
+msgid "marked"
+msgstr ""
+
+#: cbs_locale.rsmaxcollectorsreached
+#, object-pascal-format
+msgid "The maximum number of authors (%d) was reached!"
+msgstr ""
+
+#: cbs_locale.rsminpasswordlength
+msgid "The password must have 8 characters or more."
+msgstr ""
+
+#: cbs_locale.rsmissingdata
+msgid "Missing data"
+msgstr ""
+
+#: cbs_locale.rsmodificationsnotsaved
+msgid "Changes not saved"
+msgstr ""
+
+#: cbs_locale.rsmoltcycles
+msgid "\"U - Unknown molt cycle\",\"D - Definitive molt cycle\",\"F - First molt cycle\",\"S - Second molt cycle\",\"T - Third molt cycle\",\"4 - Fourth molt cycle\",\"5 - Fifth molt cycle\""
+msgstr ""
+
+#: cbs_locale.rsmoltings
+msgid "\"C - not molting (Cycle)\",\"P - molting (Pre)\",\"A - After a given plumage\""
+msgstr ""
+
+#: cbs_locale.rsmoltlimitslist
+msgid "\"N - No molt limits found after examination\",\"U - Molt limits are Undetermined after examination\",\"P - Primary flight feathers\",\"S - Secondary flight feathers\",\"D - primary coverts\",\"G - Greater coverts\",\"V - primaries Vs. greater coverts\",\"R - Rectrices\",\"L - Lesser coverts\",\"M - Median coverts\",\"B - Body plumage\",\"C - Carpal covert vs. alula covert/lesser alula\",\"A - Alula covert vs. lesser alula\",\"Y - It has limits but is not determined where\""
+msgstr ""
+
+#: cbs_locale.rsmomentend
+msgid "End"
+msgstr ""
+
+#: cbs_locale.rsmomentmiddle
+msgid "Middle"
+msgstr ""
+
+#: cbs_locale.rsmomentstart
+msgid "Start"
+msgstr ""
+
+#: cbs_locale.rsmoreselected
+#, object-pascal-format
+msgctxt "cbs_locale.rsmoreselected"
+msgid "%d selected"
+msgstr ""
+
+#: cbs_locale.rsmoreselectedfemale
+#, object-pascal-format
+msgctxt "cbs_locale.rsmoreselectedfemale"
+msgid "%d selected"
+msgstr ""
+
+#: cbs_locale.rsnamenotfound
+msgid "not found"
+msgstr ""
+
+#: cbs_locale.rsnestactive
+msgctxt "cbs_locale.rsnestactive"
+msgid "Active"
+msgstr ""
+
+#: cbs_locale.rsnestbuilding
+msgid "Building"
+msgstr ""
+
+#: cbs_locale.rsnestfemale
+msgid "Breeding female"
+msgstr ""
+
+#: cbs_locale.rsnesthatching
+msgid "Hatching"
+msgstr ""
+
+#: cbs_locale.rsnesthelper
+msgid "Helper"
+msgstr ""
+
+#: cbs_locale.rsnestinactive
+msgid "Inactive"
+msgstr ""
+
+#: cbs_locale.rsnestincubating
+msgid "Incubating"
+msgstr ""
+
+#: cbs_locale.rsnestlaying
+msgid "Laying"
+msgstr ""
+
+#: cbs_locale.rsnestlost
+msgctxt "cbs_locale.rsnestlost"
+msgid "Lost"
+msgstr ""
+
+#: cbs_locale.rsnestmale
+msgid "Breeding male"
+msgstr ""
+
+#: cbs_locale.rsnestnestling
+msgctxt "cbs_locale.rsnestnestling"
+msgid "Nestling"
+msgstr ""
+
+#: cbs_locale.rsnestoffspring
+msgid "Offspring"
+msgstr ""
+
+#: cbs_locale.rsnestownersrolelist
+msgid "\"Breeding male\",\"Breeding female\",\"Helper\",\"Offspring\",\"Unknown\""
+msgstr ""
+
+#: cbs_locale.rsnestshapeburrow
+msgid "Burrow"
+msgstr ""
+
+#: cbs_locale.rsnestshapecavity
+msgid "Cavity"
+msgstr ""
+
+#: cbs_locale.rsnestshapecup
+msgid "Cup"
+msgstr ""
+
+#: cbs_locale.rsnestshapemound
+msgid "Mound"
+msgstr ""
+
+#: cbs_locale.rsnestshapependent
+msgid "Pendent"
+msgstr ""
+
+#: cbs_locale.rsnestshapeplate
+msgid "Plate"
+msgstr ""
+
+#: cbs_locale.rsnestshapeplatform
+msgid "Platform"
+msgstr ""
+
+#: cbs_locale.rsnestshapescrape
+msgid "Scrape"
+msgstr ""
+
+#: cbs_locale.rsnestshapesphere
+msgid "Sphere"
+msgstr ""
+
+#: cbs_locale.rsnestsuccess
+msgid "Success"
+msgstr ""
+
+#: cbs_locale.rsnestunknown
+msgctxt "cbs_locale.rsnestunknown"
+msgid "Unknown"
+msgstr ""
+
+#: cbs_locale.rsnewpassword
+msgid "New password"
+msgstr ""
+
+#: cbs_locale.rsnewupdateavailable
+#, object-pascal-format
+msgid ""
+"A new version of %s is available!\n"
+"Do you want to download it now?"
+msgstr ""
+
+#: cbs_locale.rsnoneselected
+msgctxt "cbs_locale.rsnoneselected"
+msgid "none selected"
+msgstr ""
+
+#: cbs_locale.rsnoneselectedfemale
+msgctxt "cbs_locale.rsnoneselectedfemale"
+msgid "none selected"
+msgstr ""
+
+#: cbs_locale.rsnorecordsfound
+msgid "No records found!"
+msgstr ""
+
+#: cbs_locale.rsnotestr
+msgid "Note"
+msgstr ""
+
+#: cbs_locale.rsnotfullname
+msgid "not fullname"
+msgstr ""
+
+#: cbs_locale.rsnothingtoprint
+msgid "There are no records to print!"
+msgstr ""
+
+#: cbs_locale.rsnothumbnails
+msgid "There are no images to recreate the thumbnails!"
+msgstr ""
+
+#: cbs_locale.rsnouserfound
+msgid "no user found"
+msgstr ""
+
+#: cbs_locale.rsoneselected
+#, object-pascal-format
+msgctxt "cbs_locale.rsoneselected"
+msgid "%d selected"
+msgstr ""
+
+#: cbs_locale.rsoneselectedfemale
+#, object-pascal-format
+msgctxt "cbs_locale.rsoneselectedfemale"
+msgid "%d selected"
+msgstr ""
+
+#: cbs_locale.rsoriginalsearch
+msgid "Original search"
+msgstr ""
+
+#: cbs_locale.rspartialdateempty
+#, object-pascal-format
+msgid "At least the year of %s must be entered."
+msgstr ""
+
+#: cbs_locale.rspermitbanding
+msgid "Banding Permit"
+msgstr ""
+
+#: cbs_locale.rspermitcollection
+msgid "Collection Permit"
+msgstr ""
+
+#: cbs_locale.rspermitentry
+msgid "Entry Permit"
+msgstr ""
+
+#: cbs_locale.rspermitother
+msgid "Other Permit"
+msgstr ""
+
+#: cbs_locale.rspermitresearch
+msgid "Research Permit"
+msgstr ""
+
+#: cbs_locale.rspermittransport
+msgid "Transport Permit"
+msgstr ""
+
+#: cbs_locale.rsphotographed
+msgctxt "cbs_locale.rsphotographed"
+msgid "Photographed"
+msgstr ""
+
+#: cbs_locale.rsplantminergenusspeciesonly
+msgid "Plantminer query works only for Genera and Species."
+msgstr ""
+
+#: cbs_locale.rsplumages
+msgid "\"U - Unknown plumage\",\"J - Juvenal plumage\",\"S - Supplemental plumage\",\"F - Formative plumage\",\"B - Basic plumage\",\"A - Alternate plumage\""
+msgstr ""
+
+#: cbs_locale.rspostbeforecloseprompt
+msgid "There are unsaved changes. Do you want to save it?"
+msgstr ""
+
+#: cbs_locale.rsprecipitationdrizzle
+msgid "Drizzle"
+msgstr ""
+
+#: cbs_locale.rsprecipitationfog
+msgid "Fog"
+msgstr ""
+
+#: cbs_locale.rsprecipitationmist
+msgid "Mist"
+msgstr ""
+
+#: cbs_locale.rsprecipitationnone
+msgctxt "cbs_locale.rsprecipitationnone"
+msgid "None"
+msgstr ""
+
+#: cbs_locale.rsprecipitationrain
+msgid "Rain"
+msgstr ""
+
+#: cbs_locale.rspreparingbackup
+msgid "Preparing backup..."
+msgstr ""
+
+#: cbs_locale.rspreparingrestore
+msgid "Preparing backup restore..."
+msgstr ""
+
+#: cbs_locale.rsprintrecordstitle
+msgid "Print records"
+msgstr ""
+
+#: cbs_locale.rsprogressexporting
+#, object-pascal-format
+msgid "Exporting data: %d%%"
+msgstr ""
+
+#: cbs_locale.rsprogressfinishing
+msgid "Finishing..."
+msgstr ""
+
+#: cbs_locale.rsprogressgeneratingreport
+msgid "Generating report..."
+msgstr ""
+
+#: cbs_locale.rsprogressimportaudios
+#, object-pascal-format
+msgid "Processing %d of %d audio files..."
+msgstr ""
+
+#: cbs_locale.rsprogressimportbandingeffort
+msgid "Importing banding effort..."
+msgstr ""
+
+#: cbs_locale.rsprogressimportbandingjournal
+msgid "Importing banding journals..."
+msgstr ""
+
+#: cbs_locale.rsprogressimportcaptures
+msgid "Importing captures..."
+msgstr ""
+
+#: cbs_locale.rsprogressimportdocs
+#, object-pascal-format
+msgid "Processing %d of %d documents..."
+msgstr ""
+
+#: cbs_locale.rsprogressimportimages
+#, object-pascal-format
+msgid "Processing %d of %d images..."
+msgstr ""
+
+#: cbs_locale.rsprogressloadingcsvfile
+#, object-pascal-format
+msgid "Loading CSV file... %d%%"
+msgstr ""
+
+#: cbs_locale.rsprogressnewbandsbatch
+msgid "Inserting new bands..."
+msgstr ""
+
+#: cbs_locale.rsprogresspreparing
+msgid "Preparing..."
+msgstr ""
+
+#: cbs_locale.rsprogressrecords
+#, object-pascal-format
+msgid "Processing %d of %d records..."
+msgstr ""
+
+#: cbs_locale.rsprogressrewritinghierarchy
+#, object-pascal-format
+msgid "Rewriting %s..."
+msgstr ""
+
+#: cbs_locale.rsprogressstarting
+msgid "Starting..."
+msgstr ""
+
+#: cbs_locale.rsprogressunpreparing
+msgid "Unpreparing..."
+msgstr ""
+
+#: cbs_locale.rspromptbackupnow
+msgid ""
+"The automatic backup will run now and it could take several minutes.\n"
+"Do you want to continue with backup?"
+msgstr ""
+
+#: cbs_locale.rsqualifieronlyingenus
+msgid "The sp. qualifier can only be used with genera rank."
+msgstr ""
+
+#: cbs_locale.rsrecnoempty
+msgid "record 0 of 0"
+msgstr ""
+
+#: cbs_locale.rsrecordnumber
+#, object-pascal-format
+msgid "record %d of %d"
+msgstr ""
+
+#: cbs_locale.rsrecordok
+msgid "Record OK"
+msgstr ""
+
+#: cbs_locale.rsrecords
+msgid "record"
+msgstr ""
+
+#: cbs_locale.rsrecordsfound
+#, object-pascal-format
+msgid "%d %s found"
+msgstr ""
+
+#: cbs_locale.rsrecordsplural
+msgid "records"
+msgstr ""
+
+#: cbs_locale.rsrecreatethumbnailsprompt
+msgid ""
+"Do you really want to recreate all image thumbnails?\n"
+"Once completed, this operation cannot be undone."
+msgstr ""
+
+#: cbs_locale.rsrecycleautodeleteinfo
+#, object-pascal-format
+msgid "The records that stayed more than %d days in the recycle bin will be deleted automaticaly."
+msgstr ""
+
+#: cbs_locale.rsrecycledeletepermanentlyprompt
+msgid "Do you really want to delete permanently ALL records in this recycle bin list?"
+msgstr ""
+
+#: cbs_locale.rsrecycledeletetitle
+msgid "Delete permanently"
+msgstr ""
+
+#: cbs_locale.rsreferencecoordinate
+msgid "Reference coordinate"
+msgstr ""
+
+#: cbs_locale.rsreplacedsynonym
+msgid "replaced synonym"
+msgstr ""
+
+#: cbs_locale.rsrequiredbandsize
+msgid "A band size must be selected."
+msgstr ""
+
+#: cbs_locale.rsrequiredbandtype
+msgid "A band type must be selected."
+msgstr ""
+
+#: cbs_locale.rsrequiredclosetime1
+msgid "The Close time 1 must be entered."
+msgstr ""
+
+#: cbs_locale.rsrequiredfield
+#, object-pascal-format
+msgid "Field %s must be filled."
+msgstr ""
+
+#: cbs_locale.rsrequiredfromnetnumber
+msgid "The Start number must be entered."
+msgstr ""
+
+#: cbs_locale.rsrequiredopentime1
+msgid "The Open time 1 must be entered."
+msgstr ""
+
+#: cbs_locale.rsrequiredtonetnumber
+msgctxt "cbs_locale.rsrequiredtonetnumber"
+msgid "The Final number must be entered."
+msgstr ""
+
+#: cbs_locale.rsrequiredtonumber
+msgctxt "cbs_locale.rsrequiredtonumber"
+msgid "The Final number must be entered."
+msgstr ""
+
+#: cbs_locale.rsrequiredverificationstatus
+msgid "A verification status must be selected."
+msgstr ""
+
+#: cbs_locale.rsrestorebackupprompt
+msgid ""
+"Do you really want to restore this backup?\n"
+"This operation will overwrite the database and records may be lost."
+msgstr ""
+
+#: cbs_locale.rsrestorerecordprompt
+msgid "Do you really want to restore this record?"
+msgstr ""
+
+#: cbs_locale.rsrestorerecordtitle
+msgid "Restore record"
+msgstr ""
+
+#: cbs_locale.rsrestoringbackup
+msgid "Restoring backup..."
+msgstr ""
+
+#: cbs_locale.rsrewritefullnamesprompt
+msgid ""
+"Do you really want to rewrite all individuals' full names?\n"
+"Once completed, this operation cannot be undone."
+msgstr ""
+
+#: cbs_locale.rsrightleg
+#, object-pascal-format
+msgid "r%s"
+msgstr ""
+
+#: cbs_locale.rsrightlegempty
+msgid "r-"
+msgstr ""
+
+#: cbs_locale.rsrunningstartupbackup
+msgid "Creating startup backup..."
+msgstr ""
+
+#: cbs_locale.rssamecoordinateformat
+msgid "Select a destination coordinate type that is different from the origin type."
+msgstr ""
+
+#: cbs_locale.rssampleblooddry
+msgid "Blood (dry)"
+msgstr ""
+
+#: cbs_locale.rssamplebloodsmear
+msgid "Blood (smear)"
+msgstr ""
+
+#: cbs_locale.rssamplebloodwet
+msgid "Blood (wet)"
+msgstr ""
+
+#: cbs_locale.rssampleegg
+msgctxt "cbs_locale.rssampleegg"
+msgid "Egg"
+msgstr ""
+
+#: cbs_locale.rssampleeyes
+msgid "Eyes"
+msgstr ""
+
+#: cbs_locale.rssamplefeathers
+msgctxt "cbs_locale.rssamplefeathers"
+msgid "Feathers"
+msgstr ""
+
+#: cbs_locale.rssamplegeneticsequence
+msgid "Genetic sequencing"
+msgstr ""
+
+#: cbs_locale.rssamplegonads
+msgid "Gonads"
+msgstr ""
+
+#: cbs_locale.rssamplemicrobialculture
+msgid "Microbial culture"
+msgstr ""
+
+#: cbs_locale.rssamplenest
+msgctxt "cbs_locale.rssamplenest"
+msgid "Nest"
+msgstr ""
+
+#: cbs_locale.rssampleopenedwing
+msgid "Wing open"
+msgstr ""
+
+#: cbs_locale.rssampleparasites
+msgctxt "cbs_locale.rssampleparasites"
+msgid "Parasites"
+msgstr ""
+
+#: cbs_locale.rssamplesexing
+msgid "Sexing"
+msgstr ""
+
+#: cbs_locale.rssampleskeletonpartial
+msgid "Skeleton (partial)"
+msgstr ""
+
+#: cbs_locale.rssampleskeletonwhole
+msgid "Skeleton (whole)"
+msgstr ""
+
+#: cbs_locale.rssampleskinmounted
+msgid "Skin (mounted)"
+msgstr ""
+
+#: cbs_locale.rssampleskinshmoo
+msgid "Skin (shmoo)"
+msgstr ""
+
+#: cbs_locale.rssampleskinstandard
+msgid "Skin (standard)"
+msgstr ""
+
+#: cbs_locale.rssamplestomach
+msgid "Stomach"
+msgstr ""
+
+#: cbs_locale.rssamplesyrinx
+msgid "Syrinx"
+msgstr ""
+
+#: cbs_locale.rssampletissues
+msgctxt "cbs_locale.rssampletissues"
+msgid "Tissues"
+msgstr ""
+
+#: cbs_locale.rssampletongue
+msgid "Tongue"
+msgstr ""
+
+#: cbs_locale.rsseen
+msgctxt "cbs_locale.rsseen"
+msgid "Seen"
+msgstr ""
+
+#: cbs_locale.rsselectcoordinatestypes
+msgid "Select the origin and destination coordinate types."
+msgstr ""
+
+#: cbs_locale.rssexfemale
+msgid "Female"
+msgstr ""
+
+#: cbs_locale.rssexmale
+msgid "Male"
+msgstr ""
+
+#: cbs_locale.rssexunknown
+msgctxt "cbs_locale.rssexunknown"
+msgid "Unknown"
+msgstr ""
+
+#: cbs_locale.rsskullossification
+msgid "skull ossification"
+msgstr ""
+
+#: cbs_locale.rssourcereference
+msgid "Reference source"
+msgstr ""
+
+#: cbs_locale.rsspecimenblood
+msgctxt "cbs_locale.rsspecimenblood"
+msgid "Blood"
+msgstr ""
+
+#: cbs_locale.rsspecimenbones
+msgid "Bones"
+msgstr ""
+
+#: cbs_locale.rsspecimencarcasspartial
+msgid "Partial carcass"
+msgstr ""
+
+#: cbs_locale.rsspecimencarcasswhole
+msgid "Whole carcass"
+msgstr ""
+
+#: cbs_locale.rsspecimenclaw
+msgctxt "cbs_locale.rsspecimenclaw"
+msgid "Claw"
+msgstr ""
+
+#: cbs_locale.rsspecimenegg
+msgctxt "cbs_locale.rsspecimenegg"
+msgid "Egg"
+msgstr ""
+
+#: cbs_locale.rsspecimenfeathers
+msgctxt "cbs_locale.rsspecimenfeathers"
+msgid "Feathers"
+msgstr ""
+
+#: cbs_locale.rsspecimenfeces
+msgctxt "cbs_locale.rsspecimenfeces"
+msgid "Feces"
+msgstr ""
+
+#: cbs_locale.rsspecimennest
+msgctxt "cbs_locale.rsspecimennest"
+msgid "Nest"
+msgstr ""
+
+#: cbs_locale.rsspecimenparasites
+msgctxt "cbs_locale.rsspecimenparasites"
+msgid "Parasites"
+msgstr ""
+
+#: cbs_locale.rsspecimenregurgite
+msgid "Regurgite"
+msgstr ""
+
+#: cbs_locale.rsspecimenswab
+msgid "Swab"
+msgstr ""
+
+#: cbs_locale.rsspecimentissues
+msgctxt "cbs_locale.rsspecimentissues"
+msgid "Tissues"
+msgstr ""
+
+#: cbs_locale.rsstandarduser
+msgid "Standard"
+msgstr ""
+
+#: cbs_locale.rsstatusdead
+msgid "D - dead"
+msgstr ""
+
+#: cbs_locale.rsstatusinjured
+msgid "I - injured"
+msgstr ""
+
+#: cbs_locale.rsstatusnormal
+msgid "N - normal"
+msgstr ""
+
+#: cbs_locale.rsstatusstressed
+msgid "X - stressed (not flying)"
+msgstr ""
+
+#: cbs_locale.rsstatuswingsprain
+msgid "W - wing sprain"
+msgstr ""
+
+#: cbs_locale.rssubcutaneousfat
+msgid "subcutaneous fat"
+msgstr ""
+
+#: cbs_locale.rssuccessfulbackup
+#, object-pascal-format
+msgid "Backup file created successfully: %s"
+msgstr ""
+
+#: cbs_locale.rssuccessfulconnectiontest
+msgid "Connection to database was successful!"
+msgstr ""
+
+#: cbs_locale.rssuccessfuldatabasecreation
+msgid "The database file was created successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulimport
+msgid "The selected file(s) were sucessfully imported."
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportbandingeffort
+msgid "Banding effort imported successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportbandingjournal
+msgid "Banding journals imported successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportcaptures
+msgid "Captures file imported successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportcoordinates
+msgid "Coordinates imported successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulimportebird
+msgid "eBird file imported successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulnewbatch
+msgid "New batch inserted successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulrecreatethumbnails
+msgid "Image thumbnails recreated successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulrestore
+#, object-pascal-format
+msgid "Backup restored successfully: %s"
+msgstr ""
+
+#: cbs_locale.rssuccessfulupdate
+#, object-pascal-format
+msgid "%s was updated successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfulupdateadminpassword
+msgid "The Admin password was updated successfully!"
+msgstr ""
+
+#: cbs_locale.rssupportanthropic
+msgid "Anthropic"
+msgstr ""
+
+#: cbs_locale.rssupportbranchfork
+msgid "Branch/fork"
+msgstr ""
+
+#: cbs_locale.rssupportground
+msgid "Ground"
+msgstr ""
+
+#: cbs_locale.rssupportherbbush
+msgid "Herb/bush"
+msgstr ""
+
+#: cbs_locale.rssupportleaves
+msgid "Leaves"
+msgstr ""
+
+#: cbs_locale.rssupportledge
+msgid "Ledge"
+msgstr ""
+
+#: cbs_locale.rssupportnestbox
+msgid "Nest box"
+msgstr ""
+
+#: cbs_locale.rssupportother
+msgctxt "cbs_locale.rssupportother"
+msgid "Other"
+msgstr ""
+
+#: cbs_locale.rssupportravine
+msgid "Ravine"
+msgstr ""
+
+#: cbs_locale.rssupportrockcliff
+msgid "Rock/Cliff"
+msgstr ""
+
+#: cbs_locale.rssynonym
+msgid "Synonym"
+msgstr ""
+
+#: cbs_locale.rstabbreeding
+msgid "Breeding"
+msgstr ""
+
+#: cbs_locale.rstabentities
+msgid "Entities"
+msgstr ""
+
+#: cbs_locale.rstabgeo
+msgid "Geo"
+msgstr ""
+
+#: cbs_locale.rstabhelp
+msgid "Help"
+msgstr ""
+
+#: cbs_locale.rstabindividuals
+msgctxt "cbs_locale.rstabindividuals"
+msgid "Individuals"
+msgstr ""
+
+#: cbs_locale.rstabmedia
+msgid "Media"
+msgstr ""
+
+#: cbs_locale.rstabsampling
+msgid "Sampling"
+msgstr ""
+
+#: cbs_locale.rstabtaxonomy
+msgid "Taxonomy"
+msgstr ""
+
+#: cbs_locale.rsteam
+msgctxt "cbs_locale.rsteam"
+msgid "Team"
+msgstr ""
+
+#: cbs_locale.rstitleadminpassword
+msgid "Admin password"
+msgstr ""
+
+#: cbs_locale.rstitleautoupdate
+msgid "Autoupdate"
+msgstr ""
+
+#: cbs_locale.rstitlebackup
+msgid "Backup"
+msgstr ""
+
+#: cbs_locale.rstitlebands
+msgid "Bands"
+msgstr ""
+
+#: cbs_locale.rstitlebotanictaxa
+msgid "Botanic taxa"
+msgstr ""
+
+#: cbs_locale.rstitlecaptures
+msgid "Captures"
+msgstr ""
+
+#: cbs_locale.rstitlecaution
+msgid "Caution!"
+msgstr ""
+
+#: cbs_locale.rstitlecollectors
+msgid "Collectors"
+msgstr ""
+
+#: cbs_locale.rstitleconfirmation
+msgid "Confirmation"
+msgstr ""
+
+#: cbs_locale.rstitleconnectiontest
+msgid "Test connection"
+msgstr ""
+
+#: cbs_locale.rstitlecoordinateconverter
+msgid "Coordinates converter"
+msgstr ""
+
+#: cbs_locale.rstitlecreatedatabase
+msgid "Create database"
+msgstr ""
+
+#: cbs_locale.rstitleediting
+#, object-pascal-format
+msgid "Editing %s"
+msgstr ""
+
+#: cbs_locale.rstitleeggs
+msgid "Eggs"
+msgstr ""
+
+#: cbs_locale.rstitleerror
+msgid "Error"
+msgstr ""
+
+#: cbs_locale.rstitlegazetteer
+msgid "Gazetteer"
+msgstr ""
+
+#: cbs_locale.rstitlehistory
+msgid "History"
+msgstr ""
+
+#: cbs_locale.rstitleimportcoordinates
+msgid "Import coordinates"
+msgstr ""
+
+#: cbs_locale.rstitleimportfile
+msgid "Import file"
+msgstr ""
+
+#: cbs_locale.rstitleindividuals
+msgctxt "cbs_locale.rstitleindividuals"
+msgid "Individuals"
+msgstr ""
+
+#: cbs_locale.rstitleinformation
+msgid "Information"
+msgstr ""
+
+#: cbs_locale.rstitleinstitutions
+msgid "Institutions"
+msgstr ""
+
+#: cbs_locale.rstitlelogin
+msgid "Login"
+msgstr ""
+
+#: cbs_locale.rstitlemethods
+msgid "Methods"
+msgstr ""
+
+#: cbs_locale.rstitlemolts
+msgid "Molts"
+msgstr ""
+
+#: cbs_locale.rstitlenestowners
+msgid "Owners"
+msgstr ""
+
+#: cbs_locale.rstitlenestrevisions
+msgid "Revisions"
+msgstr ""
+
+#: cbs_locale.rstitlenests
+msgid "Nests"
+msgstr ""
+
+#: cbs_locale.rstitlenetseffort
+msgid "Nets"
+msgstr ""
+
+#: cbs_locale.rstitlenew
+#, object-pascal-format
+msgid "New %s"
+msgstr ""
+
+#: cbs_locale.rstitlenewbandsbatch
+msgid "New batch of bands"
+msgstr ""
+
+#: cbs_locale.rstitlepermanentnets
+msgid "Permanent nets"
+msgstr ""
+
+#: cbs_locale.rstitlepermits
+msgid "Permits"
+msgstr ""
+
+#: cbs_locale.rstitleprintpreview
+msgid "Print preview"
+msgstr ""
+
+#: cbs_locale.rstitleprojects
+msgid "Projects"
+msgstr ""
+
+#: cbs_locale.rstitlerecreatethumbnails
+msgid "Recreate thumbnails"
+msgstr ""
+
+#: cbs_locale.rstitleresearchers
+msgid "Researchers"
+msgstr ""
+
+#: cbs_locale.rstitlerestore
+msgid "Restore backup"
+msgstr ""
+
+#: cbs_locale.rstitlerewritefullnames
+msgid "Rewrite full names"
+msgstr ""
+
+#: cbs_locale.rstitlesamplepreps
+msgid "Preparations"
+msgstr ""
+
+#: cbs_locale.rstitlesamplingplots
+msgid "Sampling plots"
+msgstr ""
+
+#: cbs_locale.rstitleselectdatabasefile
+msgid "Select database"
+msgstr ""
+
+#: cbs_locale.rstitlesightings
+msgid "Sightings"
+msgstr ""
+
+#: cbs_locale.rstitlespecimens
+msgid "Specimens"
+msgstr ""
+
+#: cbs_locale.rstitlesurveys
+msgid "Surveys"
+msgstr ""
+
+#: cbs_locale.rstitletaxonhierarchy
+msgid "Taxa hierarchy"
+msgstr ""
+
+#: cbs_locale.rstitletaxonranks
+msgid "Taxonomic ranks"
+msgstr ""
+
+#: cbs_locale.rstitleteam
+msgctxt "cbs_locale.rstitleteam"
+msgid "Team"
+msgstr ""
+
+#: cbs_locale.rstitleusers
+msgid "Users"
+msgstr ""
+
+#: cbs_locale.rstitleweather
+msgid "Weather"
+msgstr ""
+
+#: cbs_locale.rstitlezootaxa
+msgid "Taxa"
+msgstr ""
+
+#: cbs_locale.rstonumberlessthanfromnumber
+msgid "The final number must be greater than the start number."
+msgstr ""
+
+#: cbs_locale.rstonumberlessthanzero
+msgid "The final number must be greater than zero."
+msgstr ""
+
+#: cbs_locale.rstotalmarked
+#, object-pascal-format
+msgid "%d of %d %s"
+msgstr ""
+
+#: cbs_locale.rstotalrecords
+#, object-pascal-format
+msgid "%s %d of %d %s"
+msgstr ""
+
+#: cbs_locale.rstotalresearchers
+#, object-pascal-format
+msgid "%d researcher(s)"
+msgstr ""
+
+#: cbs_locale.rstreatmentlist
+msgid "Mr.,Sir,Mrs.,Miss,Ms.,Madam,B./BS.,M./MSc.,Dr./PhD."
+msgstr ""
+
+#: cbs_locale.rsunresolved
+msgid "Unresolved"
+msgstr ""
+
+#: cbs_locale.rsupdatednewversion
+#, object-pascal-format
+msgid "New version: %s"
+msgstr ""
+
+#: cbs_locale.rsupdatesumcaptures
+msgid ""
+"The sum of new captures, recaptures and unmarked individuals differs from the total number of individuals.\n"
+"Do you want to update it?"
+msgstr ""
+
+#: cbs_locale.rsusernumberandtotal
+#, object-pascal-format
+msgid "user %d of %d"
+msgstr ""
+
+#: cbs_locale.rsvaluenotinrange
+#, object-pascal-format
+msgid "The value of %s must be between %d and %d."
+msgstr ""
+
+#: cbs_locale.rsvaluenotinset
+#, object-pascal-format
+msgid "The value of %s must be one of the following: %s."
+msgstr ""
+
+#: cbs_locale.rsversionplusstr
+#, object-pascal-format
+msgid "Version %s (%s)"
+msgstr ""
+
+#: cbs_locale.rsversionstr
+#, object-pascal-format
+msgid "Version %s"
+msgstr ""
+
+#: cbs_locale.rswasmisspelled
+msgid "was misspelled"
+msgstr ""
+
+#: cbs_locale.rswrongcoordinates
+msgid "Wrong coordinates"
+msgstr ""
+
+#: cbs_locale.rswronglocation
+msgid "Wrong location"
+msgstr ""
+
+#: cbs_locale.rswrongmeasurement
+msgid "Wrong measurement"
+msgstr ""
+
+#: cbs_locale.rswrongtaxon
+msgid "Wrong taxon"
+msgstr ""
+
+#: cbs_locale.rswrongvalues
+msgid "Wrong values"
+msgstr ""
+

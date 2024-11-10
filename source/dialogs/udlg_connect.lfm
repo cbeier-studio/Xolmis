@@ -9,11 +9,11 @@ object dlgConnect: TdlgConnect
   ClientHeight = 482
   ClientWidth = 280
   Font.Height = -12
-  OnClose = FormClose
-  OnShow = FormShow
   PopupMode = pmExplicit
   PopupParent = frmMain.Owner
   Position = poScreenCenter
+  OnClose = FormClose
+  OnShow = FormShow
   object pClient: TPanel
     Left = 0
     Height = 437
@@ -69,14 +69,14 @@ object dlgConnect: TdlgConnect
       ImageIndex = 0
       MaxLength = 0
       NumGlyphs = 1
-      OnButtonClick = ePasswordButtonClick
-      OnKeyDown = eUsernameKeyDown
-      OnKeyPress = eUsernameKeyPress
       ParentShowHint = False
       PasswordChar = '*'
       ShowHint = True
       Spacing = 0
       TabOrder = 2
+      OnButtonClick = ePasswordButtonClick
+      OnKeyDown = eUsernameKeyDown
+      OnKeyPress = eUsernameKeyPress
     end
     object lblLogin: TLabel
       Left = 16
@@ -172,8 +172,8 @@ object dlgConnect: TdlgConnect
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 43

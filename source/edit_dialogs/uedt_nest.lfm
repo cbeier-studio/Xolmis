@@ -8,13 +8,13 @@ object edtNest: TedtNest
   ClientHeight = 643
   ClientWidth = 416
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -36,10 +36,8 @@ object edtNest: TedtNest
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -51,7 +49,7 @@ object edtNest: TedtNest
       Top = 8
       Width = 188
       Caption = 'Save'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -62,7 +60,7 @@ object edtNest: TedtNest
       Top = 8
       Width = 188
       Caption = 'Cancel'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
@@ -83,20 +81,21 @@ object edtNest: TedtNest
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1271
+      Height = 1287
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
+      BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1271
+      ClientHeight = 1287
       ClientWidth = 399
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
-        Height = 45
-        Top = 241
+        Height = 48
+        Top = 253
         Width = 399
         Align = alTop
         AutoSize = True
@@ -106,7 +105,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
@@ -123,12 +122,12 @@ object edtNest: TedtNest
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -152,7 +151,7 @@ object edtNest: TedtNest
       object pFieldNumberFate: TPanel
         Left = 0
         Height = 45
-        Top = 61
+        Top = 64
         Width = 399
         Align = alTop
         AutoSize = True
@@ -216,15 +215,15 @@ object edtNest: TedtNest
             'Unknown'
           )
           MaxLength = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eFieldNumberKeyPress
           Style = csDropDownList
           TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eFieldNumberKeyPress
         end
       end
       object pTaxon: TPanel
         Left = 0
-        Height = 45
+        Height = 48
         Top = 16
         Width = 399
         Align = alTop
@@ -235,7 +234,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
@@ -252,12 +251,12 @@ object edtNest: TedtNest
         end
         object eTaxon: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -280,8 +279,8 @@ object edtNest: TedtNest
       end
       object pNotes: TPanel
         Left = 0
-        Height = 124
-        Top = 1131
+        Height = 112
+        Top = 1143
         Width = 399
         Align = alTop
         AutoSize = True
@@ -291,7 +290,7 @@ object edtNest: TedtNest
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 124
+        ClientHeight = 112
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 22
@@ -316,16 +315,16 @@ object edtNest: TedtNest
           Constraints.MinWidth = 368
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pProject: TPanel
         Left = 0
-        Height = 45
-        Top = 151
+        Height = 48
+        Top = 157
         Width = 399
         Align = alTop
         AutoSize = True
@@ -335,7 +334,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 3
@@ -352,12 +351,12 @@ object edtNest: TedtNest
         end
         object eProject: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -380,8 +379,8 @@ object edtNest: TedtNest
       end
       object pObserver: TPanel
         Left = 0
-        Height = 45
-        Top = 196
+        Height = 48
+        Top = 205
         Width = 399
         Align = alTop
         AutoSize = True
@@ -391,7 +390,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
@@ -408,12 +407,12 @@ object edtNest: TedtNest
         end
         object eObserver: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -436,8 +435,8 @@ object edtNest: TedtNest
       end
       object pDateFoundLast: TPanel
         Left = 0
-        Height = 45
-        Top = 106
+        Height = 48
+        Top = 109
         Width = 399
         Align = alTop
         AutoSize = True
@@ -447,7 +446,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
@@ -475,12 +474,12 @@ object edtNest: TedtNest
         end
         object eFoundDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -504,12 +503,12 @@ object edtNest: TedtNest
         end
         object eLastDate: TDBEditButton
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -534,8 +533,8 @@ object edtNest: TedtNest
       end
       object pLongLat: TPanel
         Left = 0
-        Height = 45
-        Top = 286
+        Height = 48
+        Top = 301
         Width = 399
         Align = alTop
         AutoSize = True
@@ -545,7 +544,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 6
@@ -573,12 +572,12 @@ object edtNest: TedtNest
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -601,12 +600,12 @@ object edtNest: TedtNest
         end
         object eLatitude: TDBEditButton
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -631,7 +630,7 @@ object edtNest: TedtNest
       object pTypeHeight: TPanel
         Left = 0
         Height = 45
-        Top = 507
+        Top = 513
         Width = 399
         Align = alTop
         AutoSize = True
@@ -690,11 +689,11 @@ object edtNest: TedtNest
             'Other'
           )
           MaxLength = 0
+          Style = csDropDownList
+          TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
           OnSelect = cbSupportTypeSelect
-          Style = csDropDownList
-          TabOrder = 0
         end
         object eHeightAboveGround: TDBEdit
           Left = 208
@@ -713,7 +712,7 @@ object edtNest: TedtNest
       object pPlantHeightDbh: TPanel
         Left = 0
         Height = 45
-        Top = 687
+        Top = 699
         Width = 399
         Align = alTop
         AutoSize = True
@@ -779,7 +778,7 @@ object edtNest: TedtNest
       object pPlantDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 732
+        Top = 744
         Width = 399
         Align = alTop
         AutoSize = True
@@ -845,7 +844,7 @@ object edtNest: TedtNest
       object pProductivity: TPanel
         Left = 0
         Height = 45
-        Top = 449
+        Top = 455
         Width = 399
         Align = alTop
         AutoSize = True
@@ -916,17 +915,17 @@ object edtNest: TedtNest
             'Cavity'
           )
           MaxLength = 0
+          Style = csDropDownList
+          TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
           OnSelect = cbSupportTypeSelect
-          Style = csDropDownList
-          TabOrder = 1
         end
       end
       object pDescription: TPanel
         Left = 0
-        Height = 92
-        Top = 344
+        Height = 80
+        Top = 362
         Width = 399
         Align = alTop
         AutoSize = True
@@ -936,7 +935,7 @@ object edtNest: TedtNest
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 92
+        ClientHeight = 80
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 7
@@ -961,16 +960,16 @@ object edtNest: TedtNest
           Constraints.MinWidth = 365
           DataField = 'description'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pSupportPlant1: TPanel
         Left = 0
-        Height = 45
-        Top = 552
+        Height = 48
+        Top = 558
         Width = 399
         Align = alTop
         AutoSize = True
@@ -980,7 +979,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 10
@@ -997,12 +996,12 @@ object edtNest: TedtNest
         end
         object eSupportPlant1: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -1026,7 +1025,7 @@ object edtNest: TedtNest
       object pOtherSupport: TPanel
         Left = 0
         Height = 45
-        Top = 642
+        Top = 654
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1068,8 +1067,8 @@ object edtNest: TedtNest
       end
       object pSupportPlant2: TPanel
         Left = 0
-        Height = 45
-        Top = 597
+        Height = 48
+        Top = 606
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1079,7 +1078,7 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 11
@@ -1096,12 +1095,12 @@ object edtNest: TedtNest
         end
         object eSupportPlant2: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -1125,7 +1124,7 @@ object edtNest: TedtNest
       object pConstructionIncubationDays: TPanel
         Left = 0
         Height = 45
-        Top = 790
+        Top = 802
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1192,7 +1191,7 @@ object edtNest: TedtNest
       object pNestlingActiveDays: TPanel
         Left = 0
         Height = 45
-        Top = 835
+        Top = 847
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1258,7 +1257,7 @@ object edtNest: TedtNest
       object pInternalDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 893
+        Top = 905
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1325,7 +1324,7 @@ object edtNest: TedtNest
       object pEdgeCenterDistance: TPanel
         Left = 0
         Height = 45
-        Top = 1028
+        Top = 1040
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1391,7 +1390,7 @@ object edtNest: TedtNest
       object pInternalExternalHeight: TPanel
         Left = 0
         Height = 45
-        Top = 983
+        Top = 995
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1457,7 +1456,7 @@ object edtNest: TedtNest
       object pNestCover: TPanel
         Left = 0
         Height = 45
-        Top = 1073
+        Top = 1085
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1499,7 +1498,7 @@ object edtNest: TedtNest
       object pExternalDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 938
+        Top = 950
         Width = 399
         Align = alTop
         AutoSize = True

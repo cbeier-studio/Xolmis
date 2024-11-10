@@ -108,6 +108,18 @@ msgctxt "cbs_datacolumns.rscauthorship"
 msgid "Authorship"
 msgstr ""
 
+#: cbs_datacolumns.rscavgheightofherbs
+msgid "Avg. height of herbs"
+msgstr ""
+
+#: cbs_datacolumns.rscavgheightofshrubs
+msgid "Avg. height of shrubs"
+msgstr ""
+
+#: cbs_datacolumns.rscavgheightoftrees
+msgid "Avg. height of trees"
+msgstr ""
+
 #: cbs_datacolumns.rscband
 msgctxt "cbs_datacolumns.rscband"
 msgid "Band"
@@ -700,6 +712,10 @@ msgstr ""
 
 #: cbs_datacolumns.rschemoglobin
 msgid "Hemoglobin"
+msgstr ""
+
+#: cbs_datacolumns.rscherbsdistribution
+msgid "Herbs distribution"
 msgstr ""
 
 #: cbs_datacolumns.rschostegg
@@ -1366,6 +1382,18 @@ msgctxt "cbs_datacolumns.rscproperty"
 msgid "Property"
 msgstr ""
 
+#: cbs_datacolumns.rscproportionofherbs
+msgid "% of herbs"
+msgstr ""
+
+#: cbs_datacolumns.rscproportionofshrubs
+msgid "% of shrubs"
+msgstr ""
+
+#: cbs_datacolumns.rscproportionoftrees
+msgid "% of trees"
+msgstr ""
+
 #: cbs_datacolumns.rscquantphilornislarvae
 msgid "# Philornis larvae"
 msgstr ""
@@ -1558,6 +1586,10 @@ msgstr ""
 msgid "Short title"
 msgstr ""
 
+#: cbs_datacolumns.rscshrubsdistribution
+msgid "Shrubs distribution"
+msgstr ""
+
 #: cbs_datacolumns.rscsitename
 msgid "Site name"
 msgstr ""
@@ -1577,6 +1609,7 @@ msgid "Skull ossification"
 msgstr ""
 
 #: cbs_datacolumns.rscsource
+msgctxt "cbs_datacolumns.rscsource"
 msgid "Source"
 msgstr ""
 
@@ -1750,6 +1783,10 @@ msgstr ""
 
 #: cbs_datacolumns.rsctreatment
 msgid "Treatment"
+msgstr ""
+
+#: cbs_datacolumns.rsctreesdistribution
+msgid "Trees distribution"
 msgstr ""
 
 #: cbs_datacolumns.rsctype
@@ -2207,8 +2244,18 @@ msgctxt "cbs_locale.rscaptionband"
 msgid "Band"
 msgstr ""
 
+#: cbs_locale.rscaptioncancel
+msgctxt "cbs_locale.rscaptioncancel"
+msgid "Cancel"
+msgstr ""
+
 #: cbs_locale.rscaptioncapture
 msgid "Capture"
+msgstr ""
+
+#: cbs_locale.rscaptionclose
+msgctxt "cbs_locale.rscaptionclose"
+msgid "Close"
 msgstr ""
 
 #: cbs_locale.rscaptioncountry
@@ -2466,6 +2513,11 @@ msgstr ""
 
 #: cbs_locale.rscaptionuser
 msgid "User"
+msgstr ""
+
+#: cbs_locale.rscaptionvegetation
+msgctxt "cbs_locale.rscaptionvegetation"
+msgid "Vegetation sample"
 msgstr ""
 
 #: cbs_locale.rscaptionversion
@@ -2765,6 +2817,67 @@ msgstr ""
 msgid "Discard changes"
 msgstr ""
 
+#: cbs_locale.rsdistributioncontinuousdense
+msgid "Continuous and dense cover"
+msgstr ""
+
+#: cbs_locale.rsdistributioncontinuousdenseedge
+msgid "Continuous and dense cover with clear edge with other stratum"
+msgstr ""
+
+#: cbs_locale.rsdistributioncontinuousfewgaps
+msgid "Continuous cover with some gaps in evaluated stratum"
+msgstr ""
+
+#: cbs_locale.rsdistributionevenhighdensity
+msgid "Evenly distributed isolated individuals in high density"
+msgstr ""
+
+#: cbs_locale.rsdistributionfewpatches
+msgid "Few patches"
+msgstr ""
+
+#: cbs_locale.rsdistributionfewpatchessparse
+msgid "Few patches and isolated individuals"
+msgstr ""
+
+#: cbs_locale.rsdistributionfewsparse
+msgid "Few sparse individuals"
+msgstr ""
+
+#: cbs_locale.rsdistributionmanypatches
+msgid "Many patches evenly distributed"
+msgstr ""
+
+#: cbs_locale.rsdistributionmanypatchessparse
+msgid "Many patches evenly distributed with sparse individuals"
+msgstr ""
+
+#: cbs_locale.rsdistributionmanysparse
+msgid "Many sparse individuals"
+msgstr ""
+
+#: cbs_locale.rsdistributionnone
+msgctxt "cbs_locale.rsdistributionnone"
+msgid "None"
+msgstr ""
+
+#: cbs_locale.rsdistributiononepatch
+msgid "Only one patch"
+msgstr ""
+
+#: cbs_locale.rsdistributiononepatchfewsparse
+msgid "Only one patch and some isolated individuals"
+msgstr ""
+
+#: cbs_locale.rsdistributiononepatchmanysparse
+msgid "Only one patch and many isolated individuals"
+msgstr ""
+
+#: cbs_locale.rsdistributionrare
+msgid "Rare"
+msgstr ""
+
 #: cbs_locale.rsdocaudio
 msgid "Audio file"
 msgstr ""
@@ -3050,6 +3163,11 @@ msgstr ""
 #, object-pascal-format
 msgctxt "cbs_locale.rserrormontadata"
 msgid "Error in year digits (%d). Send this issue to the Support."
+msgstr ""
+
+#: cbs_locale.rserrorreadingjsonfile
+#, object-pascal-format
+msgid "Error reading the JSON file: %s"
 msgstr ""
 
 #: cbs_locale.rserrorreportnotfound
@@ -3398,6 +3516,11 @@ msgctxt "cbs_locale.rsimportimagestitle"
 msgid "Import images"
 msgstr ""
 
+#: cbs_locale.rsimportingfile
+#, object-pascal-format
+msgid "Importing file %s"
+msgstr ""
+
 #: cbs_locale.rsinactiverecordduplicated
 #, object-pascal-format
 msgctxt "cbs_locale.rsinactiverecordduplicated"
@@ -3577,6 +3700,10 @@ msgctxt "cbs_locale.rsloadingform"
 msgid "Loading %s..."
 msgstr ""
 
+#: cbs_locale.rsloadingjsonfile
+msgid "Loading JSON file..."
+msgstr ""
+
 #: cbs_locale.rsloadingrecords
 msgctxt "cbs_locale.rsloadingrecords"
 msgid "Loading records..."
@@ -3621,6 +3748,66 @@ msgstr ""
 
 #: cbs_locale.rsmissingdata
 msgid "Missing data"
+msgstr ""
+
+#: cbs_locale.rsmobilebanding
+msgid "Banding"
+msgstr ""
+
+#: cbs_locale.rsmobilecasual
+msgid "Casual Observation"
+msgstr ""
+
+#: cbs_locale.rsmobileimportingspecies
+msgid "Importing species list..."
+msgstr ""
+
+#: cbs_locale.rsmobileimportingvegetation
+msgid "Importing vegetation data..."
+msgstr ""
+
+#: cbs_locale.rsmobileimportingweather
+msgid "Importing weather data..."
+msgstr ""
+
+#: cbs_locale.rsmobilemackinnonlist
+msgid "Mackinnon List"
+msgstr ""
+
+#: cbs_locale.rsmobilepointcount
+msgid "Point Count"
+msgstr ""
+
+#: cbs_locale.rsmobilequalitativefree
+msgid "Free Qualitative List"
+msgstr ""
+
+#: cbs_locale.rsmobilequalitativetimed
+msgid "Timed Qualitative List"
+msgstr ""
+
+#: cbs_locale.rsmobilespeciesexists
+#, object-pascal-format
+msgid "Species %s already recorded!"
+msgstr ""
+
+#: cbs_locale.rsmobilesurveycreated
+#, object-pascal-format
+msgid "Survey created: %d"
+msgstr ""
+
+#: cbs_locale.rsmobiletransectioncount
+msgid "Tansection Count"
+msgstr ""
+
+#: cbs_locale.rsmobilevegetationexists
+#, object-pascal-format
+msgid "Vegetation already recorded: %s"
+msgstr ""
+
+#: cbs_locale.rsmobileweatherexists
+#, object-pascal-format
+msgid "Weather already recorded: %s"
 msgstr ""
 
 #: cbs_locale.rsmodificationsnotsaved
@@ -4825,6 +5012,11 @@ msgstr ""
 #: cbs_locale.rstitleusers
 msgctxt "cbs_locale.rstitleusers"
 msgid "Users"
+msgstr ""
+
+#: cbs_locale.rstitlevegetation
+msgctxt "cbs_locale.rstitlevegetation"
+msgid "Vegetation sample"
 msgstr ""
 
 #: cbs_locale.rstitleweather
@@ -6159,6 +6351,11 @@ msgstr ""
 msgid "Imported"
 msgstr ""
 
+#: tdlgimport.btnhelp.caption
+msgctxt "tdlgimport.btnhelp.caption"
+msgid "&Help"
+msgstr ""
+
 #: tdlgimport.btnoptions.caption
 msgctxt "tdlgimport.btnoptions.caption"
 msgid "Options"
@@ -6174,10 +6371,17 @@ msgid "Select file"
 msgstr ""
 
 #: tdlgimport.gridfields.columns[0].title.caption
-msgid "Target field"
+msgctxt "tdlgimport.gridfields.columns[0].title.caption"
+msgid "Import"
 msgstr ""
 
 #: tdlgimport.gridfields.columns[1].title.caption
+msgctxt "tdlgimport.gridfields.columns[1].title.caption"
+msgid "Target field"
+msgstr ""
+
+#: tdlgimport.gridfields.columns[2].title.caption
+msgctxt "tdlgimport.gridfields.columns[2].title.caption"
 msgid "Search table"
 msgstr ""
 
@@ -6194,6 +6398,7 @@ msgid "Please wait, while importing the data."
 msgstr ""
 
 #: tdlgimport.lblsourcefile.caption
+msgctxt "tdlgimport.lblsourcefile.caption"
 msgid "Source file: *"
 msgstr ""
 
@@ -6215,6 +6420,7 @@ msgid "Fields"
 msgstr ""
 
 #: tdlgimport.lbltitleprogress.caption
+msgctxt "tdlgimport.lbltitleprogress.caption"
 msgid "Importing"
 msgstr ""
 
@@ -6223,18 +6429,30 @@ msgid "Source and target "
 msgstr ""
 
 #: tdlgimport.opendlg.title
+msgctxt "tdlgimport.opendlg.title"
 msgid "Select source file"
 msgstr ""
 
+#: tdlgimport.pmfdeselectall.caption
+msgid "Deselect all fields"
+msgstr ""
+
+#: tdlgimport.pmfselectall.caption
+msgid "Select all fields"
+msgstr ""
+
 #: tdlgimport.sbcancel.caption
+msgctxt "tdlgimport.sbcancel.caption"
 msgid "&Cancel"
 msgstr ""
 
 #: tdlgimport.sbnext.caption
+msgctxt "tdlgimport.sbnext.caption"
 msgid "&Next"
 msgstr ""
 
 #: tdlgimport.sbprior.caption
+msgctxt "tdlgimport.sbprior.caption"
 msgid "&Previous"
 msgstr ""
 
@@ -6434,6 +6652,124 @@ msgstr ""
 #: tdlgimportnests.sbrun.caption
 msgctxt "tdlgimportnests.sbrun.caption"
 msgid "Import"
+msgstr ""
+
+#: tdlgimportxmobile.btncreatenest.caption
+msgid "Create new nest"
+msgstr ""
+
+#: tdlgimportxmobile.btncreatesurvey.caption
+msgid "Create new survey"
+msgstr ""
+
+#: tdlgimportxmobile.btnhelp.caption
+msgctxt "tdlgimportxmobile.btnhelp.caption"
+msgid "&Help"
+msgstr ""
+
+#: tdlgimportxmobile.caption
+msgid "Import from Xolmis Mobile"
+msgstr ""
+
+#: tdlgimportxmobile.esourcefile.buttonhint
+msgctxt "tdlgimportxmobile.esourcefile.buttonhint"
+msgid "Select file"
+msgstr ""
+
+#: tdlgimportxmobile.lbldatatype.caption
+msgid "Type of data:"
+msgstr ""
+
+#: tdlgimportxmobile.lbllisttype.caption
+msgid "Type of list:"
+msgstr ""
+
+#: tdlgimportxmobile.lblmackinnonlistnumber.caption
+msgctxt "tdlgimportxmobile.lblmackinnonlistnumber.caption"
+msgid "Mackinnon list number:"
+msgstr ""
+
+#: tdlgimportxmobile.lblnest.caption
+msgid "Nest (if already exists):"
+msgstr ""
+
+#: tdlgimportxmobile.lblobserver.caption
+msgctxt "tdlgimportxmobile.lblobserver.caption"
+msgid "Observer: *"
+msgstr ""
+
+#: tdlgimportxmobile.lblprogressinstruction.caption
+msgid "Please wait while importing the data. "
+msgstr ""
+
+#: tdlgimportxmobile.lblsourcefile.caption
+msgctxt "tdlgimportxmobile.lblsourcefile.caption"
+msgid "Source file: *"
+msgstr ""
+
+#: tdlgimportxmobile.lblsourceinstruction.caption
+msgid "Select a source file to import. Fields with asterisk are required."
+msgstr ""
+
+#: tdlgimportxmobile.lblsubtitleimportfinished.caption
+msgctxt "tdlgimportxmobile.lblsubtitleimportfinished.caption"
+msgid "The selected file(s) were sucessfully imported."
+msgstr ""
+
+#: tdlgimportxmobile.lblsurvey.caption
+msgctxt "tdlgimportxmobile.lblsurvey.caption"
+msgid "Survey (if already exists):"
+msgstr ""
+
+#: tdlgimportxmobile.lbltitleimportfinished.caption
+msgctxt "tdlgimportxmobile.lbltitleimportfinished.caption"
+msgid "Finished importing!"
+msgstr ""
+
+#: tdlgimportxmobile.lbltitleprogress.caption
+msgctxt "tdlgimportxmobile.lbltitleprogress.caption"
+msgid "Importing"
+msgstr ""
+
+#: tdlgimportxmobile.lbltitlesource.caption
+msgctxt "tdlgimportxmobile.lbltitlesource.caption"
+msgid "Source"
+msgstr ""
+
+#: tdlgimportxmobile.opendlg.title
+msgctxt "tdlgimportxmobile.opendlg.title"
+msgid "Select source file"
+msgstr ""
+
+#: tdlgimportxmobile.savedlg.title
+msgid "Save log as"
+msgstr ""
+
+#: tdlgimportxmobile.sbcancel.caption
+msgctxt "tdlgimportxmobile.sbcancel.caption"
+msgid "&Cancel"
+msgstr ""
+
+#: tdlgimportxmobile.sbnext.caption
+msgctxt "tdlgimportxmobile.sbnext.caption"
+msgid "&Next"
+msgstr ""
+
+#: tdlgimportxmobile.sbretry.caption
+msgctxt "tdlgimportxmobile.sbretry.caption"
+msgid "Try again"
+msgstr ""
+
+#: tdlgimportxmobile.sbsavelog.caption
+msgid "Save log"
+msgstr ""
+
+#: tdlgimportxmobile.txtdatatype.caption
+msgid "Inventory/List, Nest, Specimens (0)"
+msgstr ""
+
+#: tdlgimportxmobile.txtlisttype.caption
+msgid "List type"
 msgstr ""
 
 #: tdlglogin.epassword.buttonhint
@@ -9712,6 +10048,7 @@ msgid "HH:MM"
 msgstr ""
 
 #: tedtsurvey.eexpedition.buttonhint
+msgctxt "tedtsurvey.eexpedition.buttonhint"
 msgid "Find expedition"
 msgstr ""
 
@@ -9750,30 +10087,37 @@ msgid "HH:MM"
 msgstr ""
 
 #: tedtsurvey.lblarea.caption
+msgctxt "tedtsurvey.lblarea.caption"
 msgid "Area (ha):"
 msgstr ""
 
 #: tedtsurvey.lbldistance.caption
+msgctxt "tedtsurvey.lbldistance.caption"
 msgid "Distance (km):"
 msgstr ""
 
 #: tedtsurvey.lblduration.caption
+msgctxt "tedtsurvey.lblduration.caption"
 msgid "Duration (minutes):"
 msgstr ""
 
 #: tedtsurvey.lblendlatitude.caption
+msgctxt "tedtsurvey.lblendlatitude.caption"
 msgid "End latitude:"
 msgstr ""
 
 #: tedtsurvey.lblendlongitude.caption
+msgctxt "tedtsurvey.lblendlongitude.caption"
 msgid "End longitude:"
 msgstr ""
 
 #: tedtsurvey.lblendtime.caption
+msgctxt "tedtsurvey.lblendtime.caption"
 msgid "Ending time:"
 msgstr ""
 
 #: tedtsurvey.lblexpedition.caption
+msgctxt "tedtsurvey.lblexpedition.caption"
 msgid "Expedition:"
 msgstr ""
 
@@ -9813,6 +10157,7 @@ msgid "Notes:"
 msgstr ""
 
 #: tedtsurvey.lblobserverstally.caption
+msgctxt "tedtsurvey.lblobserverstally.caption"
 msgid "Number of observers:"
 msgstr ""
 
@@ -9822,18 +10167,22 @@ msgid "Project:"
 msgstr ""
 
 #: tedtsurvey.lblsampleid.caption
+msgctxt "tedtsurvey.lblsampleid.caption"
 msgid "Sample identifier:"
 msgstr ""
 
 #: tedtsurvey.lblstartlatitude.caption
+msgctxt "tedtsurvey.lblstartlatitude.caption"
 msgid "Latitude (initial):"
 msgstr ""
 
 #: tedtsurvey.lblstartlongitude.caption
+msgctxt "tedtsurvey.lblstartlongitude.caption"
 msgid "Longitude (initial):"
 msgstr ""
 
 #: tedtsurvey.lblstarttime.caption
+msgctxt "tedtsurvey.lblstarttime.caption"
 msgid "Starting time:"
 msgstr ""
 
@@ -9896,6 +10245,123 @@ msgstr ""
 
 #: tedtuser.sbsave.caption
 msgctxt "tedtuser.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtvegetation.caption
+msgctxt "tedtvegetation.caption"
+msgid "New vegetation sample"
+msgstr ""
+
+#: tedtvegetation.elatitude.buttonhint
+msgctxt "tedtvegetation.elatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtvegetation.elongitude.buttonhint
+msgctxt "tedtvegetation.elongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtvegetation.esampledate.texthint
+msgctxt "tedtvegetation.esampledate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtvegetation.esampletime.texthint
+msgctxt "tedtvegetation.esampletime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtvegetation.lblcloudcover.caption
+msgctxt "tedtvegetation.lblcloudcover.caption"
+msgid "Proportion (%):"
+msgstr ""
+
+#: tedtvegetation.lblcloudcover1.caption
+msgctxt "tedtvegetation.lblcloudcover1.caption"
+msgid "Proportion (%):"
+msgstr ""
+
+#: tedtvegetation.lblcloudcover2.caption
+msgctxt "tedtvegetation.lblcloudcover2.caption"
+msgid "Proportion (%):"
+msgstr ""
+
+#: tedtvegetation.lbllatitude.caption
+msgctxt "tedtvegetation.lbllatitude.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtvegetation.lbllongitude.caption
+msgctxt "tedtvegetation.lbllongitude.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtvegetation.lblnotes.caption
+msgctxt "tedtvegetation.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtvegetation.lblsampledate.caption
+msgctxt "tedtvegetation.lblsampledate.caption"
+msgid "Date: *"
+msgstr ""
+
+#: tedtvegetation.lblsamplemoment.caption
+msgctxt "tedtvegetation.lblsamplemoment.caption"
+msgid "Distribution:"
+msgstr ""
+
+#: tedtvegetation.lblsamplemoment1.caption
+msgctxt "tedtvegetation.lblsamplemoment1.caption"
+msgid "Distribution:"
+msgstr ""
+
+#: tedtvegetation.lblsamplemoment2.caption
+msgctxt "tedtvegetation.lblsamplemoment2.caption"
+msgid "Distribution:"
+msgstr ""
+
+#: tedtvegetation.lblsampletime.caption
+msgctxt "tedtvegetation.lblsampletime.caption"
+msgid "Time:"
+msgstr ""
+
+#: tedtvegetation.lbltemperature.caption
+msgctxt "tedtvegetation.lbltemperature.caption"
+msgid "Average height (cm):"
+msgstr ""
+
+#: tedtvegetation.lbltemperature1.caption
+msgctxt "tedtvegetation.lbltemperature1.caption"
+msgid "Average height (cm):"
+msgstr ""
+
+#: tedtvegetation.lbltemperature2.caption
+msgctxt "tedtvegetation.lbltemperature2.caption"
+msgid "Average height (cm):"
+msgstr ""
+
+#: tedtvegetation.lbltitleherbs.caption
+msgid "Herbs"
+msgstr ""
+
+#: tedtvegetation.lbltitleshrubs.caption
+msgid "Shrubs"
+msgstr ""
+
+#: tedtvegetation.lbltitletrees.caption
+msgid "Trees"
+msgstr ""
+
+#: tedtvegetation.sbcancel.caption
+msgctxt "tedtvegetation.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtvegetation.sbsave.caption
+msgctxt "tedtvegetation.sbsave.caption"
 msgid "Save"
 msgstr ""
 
@@ -10311,31 +10777,6 @@ msgstr ""
 #: tfrmcustomgrid.lblchildstatus.caption
 msgctxt "tfrmcustomgrid.lblchildstatus.caption"
 msgid "Loading records..."
-msgstr ""
-
-#: tfrmcustomgrid.lblchildtag1.caption
-msgctxt "tfrmcustomgrid.lblchildtag1.caption"
-msgid "Captures"
-msgstr ""
-
-#: tfrmcustomgrid.lblchildtag2.caption
-msgctxt "tfrmcustomgrid.lblchildtag2.caption"
-msgid "Molts"
-msgstr ""
-
-#: tfrmcustomgrid.lblchildtag3.caption
-msgctxt "tfrmcustomgrid.lblchildtag3.caption"
-msgid "Sightings"
-msgstr ""
-
-#: tfrmcustomgrid.lblchildtag4.caption
-msgctxt "tfrmcustomgrid.lblchildtag4.caption"
-msgid "Nests"
-msgstr ""
-
-#: tfrmcustomgrid.lblchildtag5.caption
-msgctxt "tfrmcustomgrid.lblchildtag5.caption"
-msgid "Specimens"
 msgstr ""
 
 #: tfrmcustomgrid.lblclementsfilter.caption
@@ -10763,6 +11204,11 @@ msgstr ""
 msgid "New survey member"
 msgstr ""
 
+#: tfrmcustomgrid.pmcnewvegetation.caption
+msgctxt "tfrmcustomgrid.pmcnewvegetation.caption"
+msgid "New vegetation sample"
+msgstr ""
+
 #: tfrmcustomgrid.pmcnewweatherlog.caption
 msgid "New &weather log"
 msgstr ""
@@ -11086,6 +11532,10 @@ msgstr ""
 
 #: tfrmcustomgrid.pmprintsightingsbylocality.caption
 msgid "Sightings by locality"
+msgstr ""
+
+#: tfrmcustomgrid.pmprintsightingsbyobserver.caption
+msgid "Sightings by observer"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsightingsbyproject.caption
@@ -12197,6 +12647,10 @@ msgstr ""
 
 #: tfrmmain.actimportwizard.caption
 msgid "Import &wizard"
+msgstr ""
+
+#: tfrmmain.actimportxolmismobile.caption
+msgid "Xolmis mobile"
 msgstr ""
 
 #: tfrmmain.actinsertrecord.caption

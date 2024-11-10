@@ -47,6 +47,7 @@ type
     actImportNests: TAction;
     actImportWizard: TAction;
     actImportCoordinates: TAction;
+    actImportXolmisMobile: TAction;
     actMaintenance: TAction;
     actOpenBandHistory: TAction;
     actOpenTaxonRanks: TAction;
@@ -90,6 +91,7 @@ type
     iMenu: TImageList;
     iPopup: TImageList;
     iSearchDark: TImageList;
+    mmfImportXolmisMobile: TMenuItem;
     mmhCheckUpdates: TMenuItem;
     mmfImportCoordinates: TMenuItem;
     mmFile: TMenuItem;
@@ -213,6 +215,7 @@ type
     Separator26: TMenuItem;
     Separator27: TMenuItem;
     Separator29: TMenuItem;
+    Separator3: TMenuItem;
     Separator31: TMenuItem;
     Separator8: TMenuItem;
     Separator9: TMenuItem;
@@ -231,6 +234,7 @@ type
     procedure actImportCoordinatesExecute(Sender: TObject);
     procedure actImportEbirdExecute(Sender: TObject);
     procedure actImportNestsExecute(Sender: TObject);
+    procedure actImportXolmisMobileExecute(Sender: TObject);
     procedure actInsertRecordExecute(Sender: TObject);
     procedure actLogoffExecute(Sender: TObject);
     procedure actMaintenanceExecute(Sender: TObject);
@@ -346,6 +350,7 @@ uses
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
+  udlg_importxmobile,
   ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance;
 
 {$R *.lfm}
@@ -465,6 +470,17 @@ begin
     ShowModal;
   finally
     FreeAndNil(dlgImportNests);
+  end;
+end;
+
+procedure TfrmMain.actImportXolmisMobileExecute(Sender: TObject);
+begin
+  dlgImportXMobile := TdlgImportXMobile.Create(nil);
+  with dlgImportXMobile do
+  try
+    ShowModal;
+  finally
+    FreeAndNil(dlgImportXMobile);
   end;
 end;
 

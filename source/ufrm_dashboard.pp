@@ -79,6 +79,7 @@ type
     pShortcutConverter: TBCPanel;
     sbUpdateNow: TBCButton;
     scrollNotifications: TScrollBox;
+    TimerDelay:TTimer;
     TimerReload: TTimer;
     txtAppUpdate: TLabel;
     lblTitleAppUpdate: TLabel;
@@ -114,6 +115,7 @@ type
     procedure pShortcutConverterMouseLeave(Sender: TObject);
     procedure sBoxResize(Sender: TObject);
     procedure sbUpdateLaterClick(Sender: TObject);
+    procedure TimerDelayTimer(Sender:TObject);
     procedure TimerLoadTimer(Sender: TObject);
     procedure TimerReloadTimer(Sender: TObject);
   private
@@ -436,6 +438,7 @@ end;
 
 procedure TfrmDashboard.BandsLoaderTerminated(Sender: TObject);
 begin
+  pBandsBalance.Visible := True;
   FreeAndNil(FBandsLoader);
 end;
 
@@ -578,10 +581,11 @@ begin
     {$ENDIF}
     RefreshBirthday;
 
-    {$IFDEF DEBUG}
-    Usage.AddPart('loading bands running out');
-    {$ENDIF}
-    RefreshBandBalance;
+    TimerDelay.Enabled := True;
+    //{$IFDEF DEBUG}
+    //Usage.AddPart('loading bands running out');
+    //{$ENDIF}
+    //RefreshBandBalance;
     {$IFDEF DEBUG}
     Usage.StopTimer;
     FreeAndNil(Usage);
@@ -662,7 +666,7 @@ begin
     FBandsLoader.Start;
 
     pBandsBalance.AutoSize := True;
-    pBandsBalance.Visible := True;
+    //pBandsBalance.Visible := True;
     pBandsBalance.Top := pLoading.Top + pLoading.Height + 1;
   finally
     pBandsContent.EndUpdate;
@@ -1033,6 +1037,13 @@ end;
 procedure TfrmDashboard.SurveysLoaderTerminated(Sender: TObject);
 begin
   FreeAndNil(FSurveysLoader);
+end;
+
+procedure TfrmDashboard.TimerDelayTimer(Sender:TObject);
+begin
+  TimerDelay.Enabled := False;
+
+  RefreshBandBalance;
 end;
 
 procedure TfrmDashboard.TimerLoadTimer(Sender: TObject);

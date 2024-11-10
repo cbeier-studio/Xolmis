@@ -1,28 +1,28 @@
 object edtRecVerification: TedtRecVerification
   Left = 361
-  Height = 367
+  Height = 355
   Top = 250
   Width = 400
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'New record verification'
-  ClientHeight = 367
+  ClientHeight = 355
   ClientWidth = 400
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object pContent: TPanel
     Left = 0
-    Height = 324
+    Height = 312
     Top = 0
     Width = 400
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 324
+    ClientHeight = 312
     ClientWidth = 400
     TabOrder = 0
     object pStatus: TPanel
@@ -115,17 +115,17 @@ object edtRecVerification: TedtRecVerification
         ImageIndex = 0
         MaxLength = 0
         NumGlyphs = 1
-        OnButtonClick = eResearcherButtonClick
-        OnKeyDown = FormKeyDown
-        OnKeyPress = eResearcherKeyPress
         PasswordChar = #0
         Spacing = 0
         TabOrder = 0
+        OnButtonClick = eResearcherButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eResearcherKeyPress
       end
     end
     object pNotes: TPanel
       Left = 0
-      Height = 125
+      Height = 113
       Top = 183
       Width = 400
       Align = alTop
@@ -137,7 +137,7 @@ object edtRecVerification: TedtRecVerification
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 125
+      ClientHeight = 113
       ClientWidth = 400
       ParentBackground = False
       TabOrder = 3
@@ -207,18 +207,18 @@ object edtRecVerification: TedtRecVerification
         Images = DMM.iEdits
         ImageIndex = 1
         MaxLength = 0
-        OnKeyDown = FormKeyDown
-        OnKeyPress = eDateKeyPress
         TabOrder = 0
         Spacing = 0
         TextHint = 'DD/MM/YYYY'
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eDateKeyPress
       end
     end
   end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 324
+    Top = 312
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -228,7 +228,7 @@ object edtRecVerification: TedtRecVerification
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 326
+    Top = 314
     Width = 400
     Align = alTop
     AutoSize = True
@@ -236,10 +236,8 @@ object edtRecVerification: TedtRecVerification
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -251,7 +249,7 @@ object edtRecVerification: TedtRecVerification
       Top = 8
       Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       TabOrder = 0
       OnClick = sbSaveClick
     end
@@ -261,7 +259,7 @@ object edtRecVerification: TedtRecVerification
       Top = 8
       Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end

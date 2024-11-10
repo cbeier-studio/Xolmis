@@ -34,6 +34,7 @@ type
     dsSurveys: TDataSource;
     dsSurveyTeam: TDataSource;
     dsWeatherLogs: TDataSource;
+    dsVegetation: TDataSource;
     qCaptures: TSQLQuery;
     qCapturesactive_status: TBooleanField;
     qCapturesannotator_id: TLongintField;
@@ -367,7 +368,33 @@ type
     qSurveyTeamuser_inserted: TLongintField;
     qSurveyTeamuser_updated: TLongintField;
     qSurveyTeamvisitor: TBooleanField;
+    qVegetationactive_status: TBooleanField;
+    qVegetationexported_status: TBooleanField;
+    qVegetationherbs_avg_height: TLongintField;
+    qVegetationherbs_distribution: TLongintField;
+    qVegetationherbs_proportion: TLongintField;
+    qVegetationinsert_date: TDateTimeField;
+    qVegetationlatitude: TFloatField;
+    qVegetationlongitude: TFloatField;
+    qVegetationmarked_status: TBooleanField;
+    qVegetationnotes: TMemoField;
+    qVegetationobserver_id: TLongintField;
+    qVegetationobserver_name: TStringField;
+    qVegetationsample_date: TDateField;
+    qVegetationsample_time: TTimeField;
+    qVegetationshrubs_avg_height: TLongintField;
+    qVegetationshrubs_distribution: TLongintField;
+    qVegetationshrubs_proportion: TLongintField;
+    qVegetationsurvey_id: TLongintField;
+    qVegetationtrees_avg_height: TLongintField;
+    qVegetationtrees_distribution: TLongintField;
+    qVegetationtrees_proportion: TLongintField;
+    qVegetationupdate_date: TDateTimeField;
+    qVegetationuser_inserted: TLongintField;
+    qVegetationuser_updated: TLongintField;
+    qVegetationvegetation_id: TLongintField;
     qWeatherLogs: TSQLQuery;
+    qVegetation: TSQLQuery;
     qWeatherLogsactive_status: TBooleanField;
     qWeatherLogsatmospheric_pressure: TFloatField;
     qWeatherLogscloud_cover: TLongintField;
@@ -375,6 +402,8 @@ type
     qWeatherLogsinsert_date: TDateTimeField;
     qWeatherLogsmarked_status: TBooleanField;
     qWeatherLogsnotes: TMemoField;
+    qWeatherLogsobserver_id: TLongintField;
+    qWeatherLogsobserver_name: TStringField;
     qWeatherLogsprecipitation: TStringField;
     qWeatherLogsrainfall: TLongintField;
     qWeatherLogsrelative_humidity: TFloatField;
@@ -426,6 +455,14 @@ type
     procedure qSurveyTeamAfterPost(DataSet: TDataSet);
     procedure qSurveyTeamBeforeEdit(DataSet: TDataSet);
     procedure qSurveyTeamBeforePost(DataSet: TDataSet);
+    procedure qVegetationAfterCancel(DataSet: TDataSet);
+    procedure qVegetationAfterPost(DataSet: TDataSet);
+    procedure qVegetationBeforeEdit(DataSet: TDataSet);
+    procedure qVegetationBeforePost(DataSet: TDataSet);
+    procedure qVegetationherbs_distributionGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qVegetationherbs_distributionSetText(Sender: TField;
+      const aText: string);
     procedure qWeatherLogsAfterCancel(DataSet: TDataSet);
     procedure qWeatherLogsAfterPost(DataSet: TDataSet);
     procedure qWeatherLogsBeforeEdit(DataSet: TDataSet);
@@ -440,6 +477,7 @@ type
     OldCapture: TCapture;
     OldSighting: TSighting;
     OldWeatherLog: TWeatherLog;
+    OldVegetation: TVegetation;
   public
 
   end;
@@ -462,6 +500,7 @@ begin
   TranslateSurveyTeams(qSurveyTeam);
   TranslateNetsEffort(qNetsEffort);
   TranslateWeatherLogs(qWeatherLogs);
+  TranslateVegetation(qVegetation);
 end;
 
 procedure TDMS.qCapturesAfterCancel(DataSet: TDataSet);
@@ -1095,6 +1134,132 @@ end;
 procedure TDMS.qSurveyTeamBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+end;
+
+procedure TDMS.qVegetationAfterCancel(DataSet: TDataSet);
+begin
+  if Assigned(OldVegetation) then
+    FreeAndNil(OldVegetation);
+end;
+
+procedure TDMS.qVegetationAfterPost(DataSet: TDataSet);
+var
+  NewVegetation: TVegetation;
+  lstDiff: TStrings;
+  D: String;
+begin
+  { Save changes to the record history }
+  if Assigned(OldVegetation) then
+  begin
+    NewVegetation := TVegetation.Create;
+    NewVegetation.GetData(DataSet);
+    lstDiff := TStringList.Create;
+    try
+      if NewVegetation.Diff(OldVegetation, lstDiff) then
+      begin
+        for D in lstDiff do
+          WriteRecHistory(tbVegetation, haEdited, OldVegetation.Id,
+            ExtractDelimited(1, D, [';']),
+            ExtractDelimited(2, D, [';']),
+            ExtractDelimited(3, D, [';']), EditSourceStr);
+      end;
+    finally
+      FreeAndNil(NewVegetation);
+      FreeAndNil(OldVegetation);
+      FreeAndNil(lstDiff);
+    end;
+  end
+  else
+    WriteRecHistory(tbVegetation, haCreated, 0, '', '', '', rsInsertedByForm);
+end;
+
+procedure TDMS.qVegetationBeforeEdit(DataSet: TDataSet);
+begin
+  OldVegetation := TVegetation.Create(DataSet.FieldByName('vegetation_id').AsInteger);
+end;
+
+procedure TDMS.qVegetationBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+end;
+
+procedure TDMS.qVegetationherbs_distributionGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.IsNull then
+    Exit;
+
+  case Sender.AsInteger of
+    0: aText := rsDistributionNone;
+    1: aText := rsDistributionRare;
+    2: aText := rsDistributionFewSparse;
+    3: aText := rsDistributionOnePatch;
+    4: aText := rsDistributionOnePatchFewSparse;
+    5: aText := rsDistributionManySparse;
+    6: aText := rsDistributionOnePatchManySparse;
+    7: aText := rsDistributionFewPatches;
+    8: aText := rsDistributionFewPatchesSparse;
+    9: aText := rsDistributionManyPatches;
+   10: aText := rsDistributionManyPatchesSparse;
+   11: aText := rsDistributionEvenHighDensity;
+   12: aText := rsDistributionContinuousFewGaps;
+   13: aText := rsDistributionContinuousDense;
+   14: aText := rsDistributionContinuousDenseEdge;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMS.qVegetationherbs_distributionSetText(Sender: TField;
+  const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsDistributionNone then
+    Sender.AsInteger := 0
+  else
+  if aText = rsDistributionRare then
+    Sender.AsInteger := 1
+  else
+  if aText = rsDistributionFewSparse then
+    Sender.AsInteger := 2
+  else
+  if aText = rsDistributionOnePatch then
+    Sender.AsInteger := 3
+  else
+  if aText = rsDistributionOnePatchFewSparse then
+    Sender.AsInteger := 4
+  else
+  if aText = rsDistributionManySparse then
+    Sender.AsInteger := 5
+  else
+  if aText = rsDistributionOnePatchManySparse then
+    Sender.AsInteger := 6
+  else
+  if aText = rsDistributionFewPatches then
+    Sender.AsInteger := 7
+  else
+  if aText = rsDistributionFewPatchesSparse then
+    Sender.AsInteger := 8
+  else
+  if aText = rsDistributionManyPatches then
+    Sender.AsInteger := 9
+  else
+  if aText = rsDistributionManyPatchesSparse then
+    Sender.AsInteger := 10
+  else
+  if aText = rsDistributionEvenHighDensity then
+    Sender.AsInteger := 11
+  else
+  if aText = rsDistributionContinuousFewGaps then
+    Sender.AsInteger := 12
+  else
+  if aText = rsDistributionContinuousDense then
+    Sender.AsInteger := 13
+  else
+  if aText = rsDistributionContinuousDenseEdge then
+    Sender.AsInteger := 14;
 end;
 
 procedure TDMS.qWeatherLogsAfterCancel(DataSet: TDataSet);

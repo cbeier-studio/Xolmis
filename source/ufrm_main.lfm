@@ -9,12 +9,12 @@ object frmMain: TfrmMain
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
+  WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  WindowState = wsMaximized
   object pLeftTabs: TPanel
     Left = 0
     Height = 986
@@ -67,10 +67,10 @@ object frmMain: TfrmMain
       TabOrder = 0
     end
     object sbInsertRecord: TSpeedButton
-      Left = 60
+      Left = 66
       Height = 36
       Top = 9
-      Width = 36
+      Width = 42
       Action = actInsertRecord
       Align = alLeft
       AutoSize = True
@@ -80,10 +80,10 @@ object frmMain: TfrmMain
       Images = iMenu
       ImageIndex = 1
       ImageWidth = 32
-      OnClick = actInsertRecordExecute
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = actInsertRecordExecute
     end
     object pSearch: TBCPanel
       AnchorSideLeft.Side = asrCenter
@@ -186,11 +186,11 @@ object frmMain: TfrmMain
         ImageIndex = 1
         ImageWidth = 16
         Visible = False
-        OnClick = sbClearSearchClick
         ShowCaption = False
         ShowHint = True
         ParentFont = False
         ParentShowHint = False
+        OnClick = sbClearSearchClick
         TextAutoSize = True
         Toggle = False
         Pressed = False
@@ -214,7 +214,7 @@ object frmMain: TfrmMain
       Height = 36
       Hint = 'Home'
       Top = 9
-      Width = 36
+      Width = 42
       Align = alLeft
       AutoSize = True
       BorderSpacing.Left = 16
@@ -225,16 +225,16 @@ object frmMain: TfrmMain
       Images = iMenu
       ImageIndex = 0
       ImageWidth = 32
-      OnClick = sbHomeClick
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbHomeClick
     end
     object navTabs: TATTabs
-      Left = 96
+      Left = 108
       Height = 49
       Top = 0
-      Width = 1615
+      Width = 1603
       Align = alClient
       ParentColor = False
       PopupMenu = pmTabs
@@ -244,9 +244,9 @@ object frmMain: TfrmMain
       TabIndex = -1
       ColorBg = 15263976
       ColorSeparator = 8945535
-      ColorTabActive = 16250871
+      ColorTabActive = 15263976
       ColorTabPassive = 16250871
-      ColorTabOver = 14079702
+      ColorTabOver = 15263976
       ColorActiveMark = 16226706
       ColorFont = 9276813
       ColorFontModified = 9787178
@@ -281,9 +281,10 @@ object frmMain: TfrmMain
       OptShowPlusTab = False
       OptShowPinnedText = ' '
       OptShowEntireColor = True
-      OptShowActiveMarkInverted = False
       OptActiveFontStyle = [fsBold]
-      OptHotFontStyle = [fsBold]
+      OptActiveFontStyleUsed = True
+      OptHotFontStyle = []
+      OptHotFontStyleUsed = True
       OptMouseMiddleClickClose = True
       OptMouseDragEnabled = False
       OptMouseDragOutEnabled = False
@@ -863,8 +864,8 @@ object frmMain: TfrmMain
       Category = 'File'
       Caption = '&Connect to database'
       ImageIndex = 33
-      OnExecute = actDBConnectExecute
       ShortCut = 49231
+      OnExecute = actDBConnectExecute
     end
     object actDBSettings: TAction
       Category = 'File'
@@ -889,11 +890,6 @@ object frmMain: TfrmMain
       DisableIfNoHandler = False
       ImageIndex = 36
     end
-    object actImportEbird: TAction
-      Category = 'Import'
-      Caption = '&eBird records'
-      OnExecute = actImportEbirdExecute
-    end
     object actPrint: TAction
       Category = 'File'
       Caption = 'Print'
@@ -903,8 +899,8 @@ object frmMain: TfrmMain
       Category = 'File'
       Caption = '&Settings'
       ImageIndex = 38
-      OnExecute = actSettingsExecute
       ShortCut = 49235
+      OnExecute = actSettingsExecute
     end
     object actOpenBandHistory: TAction
       Category = 'Individuals'
@@ -965,6 +961,16 @@ object frmMain: TfrmMain
       Caption = 'E&xit'
       OnExecute = actExitExecute
     end
+    object actImportXolmisMobile: TAction
+      Category = 'Import'
+      Caption = 'Xolmis mobile'
+      OnExecute = actImportXolmisMobileExecute
+    end
+    object actImportEbird: TAction
+      Category = 'Import'
+      Caption = '&eBird records'
+      OnExecute = actImportEbirdExecute
+    end
     object actImportCaptures: TAction
       Category = 'Import'
       Caption = '&Banding data'
@@ -973,8 +979,8 @@ object frmMain: TfrmMain
     object actImportNests: TAction
       Category = 'Import'
       Caption = '&Nests data'
-      OnExecute = actImportNestsExecute
       Visible = False
+      OnExecute = actImportNestsExecute
     end
     object actImportCoordinates: TAction
       Category = 'Import'
@@ -8507,6 +8513,12 @@ object frmMain: TfrmMain
       object mmfImport: TMenuItem
         Caption = 'Import'
         ImageIndex = 36
+        object mmfImportXolmisMobile: TMenuItem
+          Action = actImportXolmisMobile
+        end
+        object Separator3: TMenuItem
+          Caption = '-'
+        end
         object mmfImportEbird: TMenuItem
           Action = actImportEbird
         end

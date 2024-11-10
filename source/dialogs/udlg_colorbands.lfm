@@ -9,11 +9,11 @@ object dlgColorBands: TdlgColorBands
   Caption = 'Auxiliary bands'
   ClientHeight = 213
   ClientWidth = 324
+  PopupMode = pmAuto
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -25,8 +25,8 @@ object dlgColorBands: TdlgColorBands
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -42,9 +42,9 @@ object dlgColorBands: TdlgColorBands
       Caption = 'Apply'
       Constraints.MinWidth = 142
       Font.Name = 'Segoe UI Semibold'
-      OnClick = sbOKClick
       ParentFont = False
       TabOrder = 0
+      OnClick = sbOKClick
     end
     object sbCancel: TBitBtn
       Left = 166
@@ -54,8 +54,8 @@ object dlgColorBands: TdlgColorBands
       AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 142
-      OnClick = sbCancelClick
       TabOrder = 1
+      OnClick = sbCancelClick
     end
   end
   object pBands: TPanel
@@ -69,10 +69,10 @@ object dlgColorBands: TdlgColorBands
     ChildSizing.LeftRightSpacing = 8
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.VerticalSpacing = 1
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.EnlargeVertical = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
+    ChildSizing.ShrinkVertical = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
     ClientHeight = 170
@@ -216,7 +216,7 @@ object dlgColorBands: TdlgColorBands
     object Band3: TBCPanel
       Tag = 2
       Left = 8
-      Height = 38
+      Height = 37
       Top = 86
       Width = 108
       BorderSpacing.Left = 8
@@ -264,7 +264,7 @@ object dlgColorBands: TdlgColorBands
       OnMouseLeave = Band1MouseLeave
       object sbDelBand3: TSpeedButton
         Left = 73
-        Height = 28
+        Height = 27
         Hint = 'Remove band color'
         Top = 5
         Width = 26
@@ -283,8 +283,8 @@ object dlgColorBands: TdlgColorBands
     object Band4: TBCPanel
       Tag = 3
       Left = 8
-      Height = 37
-      Top = 125
+      Height = 38
+      Top = 124
       Width = 108
       BorderSpacing.Left = 8
       ChildSizing.LeftRightSpacing = 8
@@ -331,7 +331,7 @@ object dlgColorBands: TdlgColorBands
       OnMouseLeave = Band1MouseLeave
       object sbDelBand4: TSpeedButton
         Left = 73
-        Height = 27
+        Height = 28
         Hint = 'Remove band color'
         Top = 5
         Width = 26
@@ -416,10 +416,10 @@ object dlgColorBands: TdlgColorBands
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 4
     ChildSizing.VerticalSpacing = 4
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.EnlargeVertical = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
+    ChildSizing.ShrinkVertical = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 4
     Background.Color = clBtnFace

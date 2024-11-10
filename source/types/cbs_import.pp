@@ -23,7 +23,7 @@ interface
 
 uses
   { System }
-  SysUtils, Classes, Forms, Dialogs, StrUtils, ComCtrls,
+  SysUtils, Classes, Forms, Dialogs, StrUtils, ComCtrls, DateUtils,
   { Data }
   DB, SQLDB, SdfData, fpjson, jsonparser, fpjsondataset;
 
@@ -63,6 +63,9 @@ const
 type
   TImportFileType = (iftCSV, iftTSV, iftExcel, iftExcelOOXML, iftOpenDocument, iftJSON, iftDBF, iftXML,
                       iftKML, iftGPX, iftGeoJSON);
+  TMobileContentType = (mctEmpty, mctInventory, mctNest, mctSpecimens);
+  TMobileInventoryType = (invQualitativeFree, invQualitativeTimed, invMackinnonList, invTransectionCount,
+                          invPointCount, invBanding, invCasual);
 
   { TEbirdDownloadFormat }
 
@@ -283,11 +286,12 @@ type
   procedure ImportNestRevisionsV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
   procedure ImportEggDataV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
 
+
 implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_datatypes, cbs_data, cbs_taxonomy, cbs_birds, cbs_sampling, cbs_gis,
-  cbs_breeding, cbs_system, cbs_getvalue, cbs_fullnames, udm_main, udlg_progress;
+  cbs_breeding, cbs_system, cbs_getvalue, cbs_fullnames, udm_main, udlg_progress, uedt_survey;
 
 procedure ImportEbirdData(aCSVFile: String);
 var
@@ -423,7 +427,7 @@ begin
           end;
 
           { Check if the record already exists }
-          if Sight.Find(Survey.Id, Taxon.Id) = False then
+          if Sight.Find(Survey.Id, Taxon.Id, 0) = False then
           begin
             { Insert record if it does not exist }
             Sight.SurveyId := Survey.Id;

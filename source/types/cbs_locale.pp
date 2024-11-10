@@ -70,6 +70,7 @@ uses
     rsTitleCollectors = 'Collectors';
     rsTitleSamplePreps = 'Preparations';
     rsTitleWeather = 'Weather';
+    rsTitleVegetation = 'Vegetation sample';
     rsTitleImportCoordinates = 'Import coordinates';
     rsTabSampling = 'Sampling';
     rsTabIndividuals = 'Individuals';
@@ -131,6 +132,7 @@ uses
     rsErrorRewritingHierarchy = 'Error rewriting the hierarchy. All rewriting changes were discarded.';
     rsErrorEmptyFieldName = 'Error loading field info: the field name is blank.';
     rsErrorCSVIndexNotFound = 'Field index of CSV record not exists!';
+    rsErrorReadingJSONFile = 'Error reading the JSON file: %s';
     rsErrorDatabaseCreation = 'The database file was not created.';
     rsErrorUpdatingAdminPassword = 'An error occurred while updating the Admin password.';
     rsErrorCheckingUpdates = 'An error occurred while checking for updates.';
@@ -222,10 +224,12 @@ uses
     rsImportCanceled = 'Import canceled!';
     rsImportCanceledByUser = 'Import canceled by the user.';
     rsBatchCanceledByUser = 'Operation was canceled by user.';
+    rsImportingFile = 'Importing file %s';
 
     { Loading messages }
     rsLoadingForm = 'Loading %s...';
     rsLoadingCSVFile = 'Loading CSV file...';
+    rsLoadingJSONFile = 'Loading JSON file...';
 
     { Backup messages }
     rsPromptBackupNow = 'The automatic backup will run now and it could take several minutes.' + LineEnding +
@@ -783,9 +787,43 @@ uses
     rsCaptionYes = 'Yes';
     rsCaptionNo = 'No';
 
+    { Xolmis Mobile captions }
+    rsMobileQualitativeFree = 'Free Qualitative List';
+    rsMobileQualitativeTimed = 'Timed Qualitative List';
+    rsMobileMackinnonList = 'Mackinnon List';
+    rsMobileTransectionCount = 'Tansection Count';
+    rsMobilePointCount = 'Point Count';
+    rsMobileBanding = 'Banding';
+    rsMobileCasual = 'Casual Observation';
+    rsMobileSurveyCreated = 'Survey created: %d';
+    rsMobileImportingSpecies = 'Importing species list...';
+    rsMobileImportingVegetation = 'Importing vegetation data...';
+    rsMobileImportingWeather = 'Importing weather data...';
+    rsMobileSpeciesExists = 'Species %s already recorded!';
+    rsMobileVegetationExists = 'Vegetation already recorded: %s';
+    rsMobileWeatherExists = 'Weather already recorded: %s';
+
+    rsDistributionNone = 'None';
+    rsDistributionRare = 'Rare';
+    rsDistributionFewSparse = 'Few sparse individuals';
+    rsDistributionOnePatch = 'Only one patch';
+    rsDistributionOnePatchFewSparse = 'Only one patch and some isolated individuals';
+    rsDistributionManySparse = 'Many sparse individuals';
+    rsDistributionOnePatchManySparse = 'Only one patch and many isolated individuals';
+    rsDistributionFewPatches = 'Few patches';
+    rsDistributionFewPatchesSparse = 'Few patches and isolated individuals';
+    rsDistributionManyPatches = 'Many patches evenly distributed';
+    rsDistributionManyPatchesSparse = 'Many patches evenly distributed with sparse individuals';
+    rsDistributionEvenHighDensity = 'Evenly distributed isolated individuals in high density';
+    rsDistributionContinuousFewGaps = 'Continuous cover with some gaps in evaluated stratum';
+    rsDistributionContinuousDense = 'Continuous and dense cover';
+    rsDistributionContinuousDenseEdge = 'Continuous and dense cover with clear edge with other stratum';
+
     { Varied captions }
     rsLabelName = 'Database name: *';
     rsLabelFile = 'Database file: *';
+    rsCaptionClose = 'Close';
+    rsCaptionCancel = 'Cancel';
     rsCaptionSpecies = 'Species';
     rsCaptionGenus = 'Genus';
     rsCaptionSubfamily = 'Subfamily';
@@ -836,6 +874,7 @@ uses
     rsCaptionUser = 'User';
     rsCaptionWeatherLogEntry = 'Weather log entry';
     rsCaptionParentSite = 'Parent toponym';
+    rsCaptionVegetation = 'Vegetation sample';
 
 implementation
 

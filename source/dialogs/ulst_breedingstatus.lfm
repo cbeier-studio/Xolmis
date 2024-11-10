@@ -9,11 +9,11 @@ object lstBreedingStatus: TlstBreedingStatus
   Caption = 'Breeding and behavior code'
   ClientHeight = 710
   ClientWidth = 334
+  PopupMode = pmAuto
+  Position = poOwnerFormCenter
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poOwnerFormCenter
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -25,10 +25,8 @@ object lstBreedingStatus: TlstBreedingStatus
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -39,23 +37,23 @@ object lstBreedingStatus: TlstBreedingStatus
       Left = 16
       Height = 25
       Top = 8
-      Width = 145
+      Width = 147
       Caption = 'Apply'
       Font.Name = 'Segoe UI Semibold'
-      OnClick = sbOKClick
-      OnKeyPress = FormKeyPress
       ParentFont = False
       TabOrder = 0
+      OnClick = sbOKClick
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TBitBtn
-      Left = 169
+      Left = 171
       Height = 25
       Top = 8
-      Width = 149
+      Width = 147
       Caption = 'Cancel'
+      TabOrder = 1
       OnClick = sbCancelClick
       OnKeyPress = FormKeyPress
-      TabOrder = 1
     end
   end
   object cklBreed: TCheckListBox

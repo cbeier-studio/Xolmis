@@ -2,23 +2,23 @@ object edtInstitution: TedtInstitution
   Left = 352
   Height = 689
   Top = 33
-  Width = 510
+  Width = 504
   AutoSize = True
   Caption = 'New institution'
   ClientHeight = 689
-  ClientWidth = 510
+  ClientWidth = 504
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
     Top = 646
-    Width = 510
+    Width = 504
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -28,40 +28,38 @@ object edtInstitution: TedtInstitution
     Left = 0
     Height = 41
     Top = 648
-    Width = 510
+    Width = 504
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 510
+    ClientWidth = 504
     TabOrder = 0
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 235
+      Width = 232
       Caption = 'Save'
-      Constraints.MinWidth = 235
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 259
+      Left = 256
       Height = 25
       Top = 8
-      Width = 235
+      Width = 232
       Caption = 'Cancel'
-      Constraints.MinWidth = 235
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
@@ -70,43 +68,46 @@ object edtInstitution: TedtInstitution
     Left = 0
     Height = 646
     Top = 0
-    Width = 510
+    Width = 504
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 646
     Align = alTop
     BorderStyle = bsNone
     ClientHeight = 646
-    ClientWidth = 493
+    ClientWidth = 487
     Constraints.MinWidth = 220
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 780
+      Height = 793
       Top = 0
-      Width = 493
+      Width = 487
       Align = alTop
       AutoSize = True
+      BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 780
-      ClientWidth = 493
+      ClientHeight = 793
+      ClientWidth = 487
       TabOrder = 0
       object pMunicipality: TPanel
         Left = 0
-        Height = 46
+        Height = 49
         Top = 308
-        Width = 493
+        Width = 487
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
-        ClientWidth = 493
+        ClientHeight = 49
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 0
         object lblMunicipality: TLabel
@@ -122,12 +123,12 @@ object edtInstitution: TedtInstitution
         end
         object eMunicipality: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 456
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 456
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
@@ -151,17 +152,19 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 16
-        Width = 493
+        Width = 487
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 493
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 1
         object lblFullname: TLabel
@@ -193,7 +196,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 62
-        Width = 493
+        Width = 487
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -203,7 +206,7 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 493
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 2
         object lblAcronym: TLabel
@@ -235,16 +238,19 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 216
-        Width = 493
+        Width = 487
         Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 493
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 3
         object lblComplement: TLabel
@@ -276,17 +282,19 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 170
-        Width = 493
+        Width = 487
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 493
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 4
         object lblAddress: TLabel
@@ -317,8 +325,8 @@ object edtInstitution: TedtInstitution
       object pPhone: TPanel
         Left = 0
         Height = 46
-        Top = 554
-        Width = 493
+        Top = 563
+        Width = 487
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -328,7 +336,7 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 493
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 5
         object lblPhone: TLabel
@@ -360,7 +368,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 124
-        Width = 493
+        Width = 487
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 16
@@ -371,7 +379,7 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 493
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 6
         object lblPostalCode: TLabel
@@ -401,9 +409,9 @@ object edtInstitution: TedtInstitution
       end
       object pNotes: TPanel
         Left = 0
-        Height = 148
-        Top = 616
-        Width = 493
+        Height = 136
+        Top = 625
+        Width = 487
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 16
@@ -412,15 +420,15 @@ object edtInstitution: TedtInstitution
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 148
-        ClientWidth = 493
+        ClientHeight = 136
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 7
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 461
+          Width = 455
           Align = alTop
           BorderSpacing.Top = 4
           Caption = 'Notes:'
@@ -432,32 +440,34 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 113
           Top = 23
-          Width = 461
+          Width = 456
           Align = alTop
           Constraints.MinWidth = 456
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pNeighborhood: TPanel
         Left = 0
         Height = 46
         Top = 262
-        Width = 493
+        Width = 487
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 493
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 8
         object lblNeighborhood: TLabel
@@ -487,19 +497,21 @@ object edtInstitution: TedtInstitution
       end
       object pState: TPanel
         Left = 0
-        Height = 46
-        Top = 354
-        Width = 493
+        Height = 49
+        Top = 357
+        Width = 487
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
-        ClientWidth = 493
+        ClientHeight = 49
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 9
         object lblState: TLabel
@@ -515,12 +527,12 @@ object edtInstitution: TedtInstitution
         end
         object eState: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 456
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 456
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
@@ -542,19 +554,21 @@ object edtInstitution: TedtInstitution
       end
       object pCountry: TPanel
         Left = 0
-        Height = 46
-        Top = 400
-        Width = 493
+        Height = 49
+        Top = 406
+        Width = 487
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 46
-        ClientWidth = 493
+        ClientHeight = 49
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 10
         object lblCountry: TLabel
@@ -570,12 +584,12 @@ object edtInstitution: TedtInstitution
         end
         object eCountry: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 23
           Width = 456
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 456
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
@@ -598,8 +612,8 @@ object edtInstitution: TedtInstitution
       object pManagerName: TPanel
         Left = 0
         Height = 46
-        Top = 462
-        Width = 493
+        Top = 471
+        Width = 487
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 16
@@ -607,10 +621,12 @@ object edtInstitution: TedtInstitution
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 493
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 11
         object lblManagerName: TLabel
@@ -641,18 +657,20 @@ object edtInstitution: TedtInstitution
       object pEmail: TPanel
         Left = 0
         Height = 46
-        Top = 508
-        Width = 493
+        Top = 517
+        Width = 487
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 493
+        ClientWidth = 487
         ParentBackground = False
         TabOrder = 12
         object lblEmail: TLabel

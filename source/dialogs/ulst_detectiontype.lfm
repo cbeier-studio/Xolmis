@@ -9,12 +9,11 @@ object lstDetectionType: TlstDetectionType
   Caption = 'Detection type'
   ClientHeight = 246
   ClientWidth = 246
+  PopupMode = pmAuto
+  Position = poOwnerFormCenter
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poOwnerFormCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -26,10 +25,8 @@ object lstDetectionType: TlstDetectionType
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -39,21 +36,21 @@ object lstDetectionType: TlstDetectionType
       Left = 16
       Height = 25
       Top = 8
-      Width = 101
+      Width = 103
       Caption = 'Apply'
       Font.Name = 'Segoe UI Semibold'
-      OnClick = sbOKClick
       ParentFont = False
       TabOrder = 0
+      OnClick = sbOKClick
     end
     object sbCancel: TBitBtn
-      Left = 125
+      Left = 127
       Height = 25
       Top = 8
-      Width = 105
+      Width = 103
       Caption = 'Cancel'
-      OnClick = sbCancelClick
       TabOrder = 1
+      OnClick = sbCancelClick
     end
   end
   object cklDetect: TCheckListBox

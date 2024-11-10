@@ -214,10 +214,65 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    //UniDirectional := True;
+    ParseSQL := False;
+    AutoCalcFields := False;
+    UniDirectional := True;
+
     Clear;
     Add('SELECT band_size, saldo');
     Add('FROM get_bands_running_out');
+
+    //Add('WITH grupos AS (');
+    //Add('SELECT date(capture_date) AS capture_date, ');
+    //Add('    date(capture_date, ''-'' || DENSE_RANK() OVER (ORDER BY date(capture_date)) || '' days'') AS grp');
+    //Add('FROM captures');
+    //Add('WHERE active_status = 1');
+    //Add('GROUP BY capture_date),');
+    //
+    //Add('consecutivo AS (');
+    //Add('SELECT COUNT(capture_date) AS consecutive_dates,');
+    //Add('    MIN(capture_date) AS min_date,');
+    //Add('    MAX(capture_date) AS max_date');
+    //Add('FROM grupos');
+    //Add('GROUP BY grp),');
+    //
+    //Add('expedicao AS (');
+    //Add('SELECT AVG(consecutive_dates) AS media_dias_expedicao');
+    //Add('FROM consecutivo),');
+    //
+    //Add('UsedBands AS (');
+    //Add('SELECT bands.band_size AS tamanho,');
+    //Add('    COUNT(captures.band_id) AS conta');
+    //Add('FROM captures');
+    //Add('JOIN bands ON captures.band_id = bands.band_id');
+    //Add('WHERE captures.capture_type = ''N'' AND captures.active_status = 1');
+    //Add('GROUP BY tamanho, capture_date),');
+    //
+    //Add('DailyAverage AS (');
+    //Add('SELECT ub.tamanho,');
+    //Add('    AVG(ub.conta) AS daily_use');
+    //Add('FROM UsedBands AS ub');
+    //Add('GROUP BY ub.tamanho),');
+    //
+    //Add('AvailableBands AS (');
+    //Add('SELECT b.band_size,');
+    //Add('    COUNT(b2.band_number) AS remaining_bands');
+    //Add('FROM bands AS b');
+    //Add('LEFT JOIN bands AS b2 ON b.band_size = b2.band_size AND b2.band_status = ''D''');
+    //Add('GROUP BY b.band_size)');
+    //
+    //Add('SELECT b1.band_size,');
+    //Add('   IFNULL(ab.remaining_bands, 0) AS saldo,');
+    //Add('   da.daily_use AS media_dia,');
+    //Add('   (da.daily_use * e.media_dias_expedicao) AS media_expedicao');
+    //Add('FROM bands AS b1');
+    //Add('JOIN expedicao AS e');
+    //Add('LEFT JOIN AvailableBands AS ab ON b1.band_size = ab.band_size');
+    //Add('LEFT JOIN DailyAverage AS da ON b1.band_size = da.tamanho');
+    //Add('WHERE saldo < media_expedicao');
+    //Add('GROUP BY b1.band_size');
+    //Add('ORDER BY saldo ASC');
+
     Open;
 
     if Qry.RecordCount = 0 then

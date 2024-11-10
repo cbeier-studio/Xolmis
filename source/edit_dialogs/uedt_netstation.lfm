@@ -1,23 +1,23 @@
 object edtNetStation: TedtNetStation
   Left = 352
-  Height = 493
+  Height = 475
   Top = 33
   Width = 400
   AutoSize = True
   Caption = 'New mistnet station'
-  ClientHeight = 493
+  ClientHeight = 475
   ClientWidth = 400
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 450
+    Top = 432
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -27,7 +27,7 @@ object edtNetStation: TedtNetStation
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 452
+    Top = 434
     Width = 400
     Align = alTop
     AutoSize = True
@@ -35,10 +35,8 @@ object edtNetStation: TedtNetStation
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
@@ -50,7 +48,7 @@ object edtNetStation: TedtNetStation
       Top = 8
       Width = 180
       Caption = 'Save'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
@@ -61,41 +59,41 @@ object edtNetStation: TedtNetStation
       Top = 8
       Width = 180
       Caption = 'Cancel'
-      Constraints.MinWidth = 180
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 450
+    Height = 432
     Top = 0
     Width = 400
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 450
+    VertScrollBar.Page = 432
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 450
+    ClientHeight = 432
     ClientWidth = 400
     Constraints.MinWidth = 176
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 450
+      Height = 432
       Top = 0
       Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 450
+      ClientHeight = 432
       ClientWidth = 400
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
-        Height = 45
+        Height = 48
         Top = 106
         Width = 400
         Align = alTop
@@ -106,7 +104,7 @@ object edtNetStation: TedtNetStation
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 0
@@ -123,12 +121,12 @@ object edtNetStation: TedtNetStation
         end
         object eLocality: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 368
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
@@ -150,8 +148,8 @@ object edtNetStation: TedtNetStation
       end
       object pNotes: TPanel
         Left = 0
-        Height = 124
-        Top = 310
+        Height = 112
+        Top = 304
         Width = 400
         Align = alTop
         AutoSize = True
@@ -162,7 +160,7 @@ object edtNetStation: TedtNetStation
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 124
+        ClientHeight = 112
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 1
@@ -186,10 +184,10 @@ object edtNetStation: TedtNetStation
           Align = alTop
           Constraints.MinWidth = 365
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pName: TPanel
@@ -278,8 +276,8 @@ object edtNetStation: TedtNetStation
       end
       object pLongitudeLatitude: TPanel
         Left = 0
-        Height = 45
-        Top = 151
+        Height = 48
+        Top = 154
         Width = 400
         Align = alTop
         AutoSize = True
@@ -289,7 +287,7 @@ object edtNetStation: TedtNetStation
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
@@ -317,12 +315,12 @@ object edtNetStation: TedtNetStation
         end
         object eLongitude: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -343,12 +341,12 @@ object edtNetStation: TedtNetStation
         end
         object eLatitude: TDBEditButton
           Left = 208
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -370,8 +368,8 @@ object edtNetStation: TedtNetStation
       end
       object pDescription: TPanel
         Left = 0
-        Height = 93
-        Top = 209
+        Height = 81
+        Top = 215
         Width = 400
         Align = alTop
         AutoSize = True
@@ -381,7 +379,7 @@ object edtNetStation: TedtNetStation
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 93
+        ClientHeight = 81
         ClientWidth = 400
         ParentBackground = False
         TabOrder = 5
@@ -406,10 +404,10 @@ object edtNetStation: TedtNetStation
           Align = alTop
           Constraints.MinWidth = 365
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
     end

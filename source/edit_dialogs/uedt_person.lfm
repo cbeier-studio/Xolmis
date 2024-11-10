@@ -2,23 +2,23 @@ object edtPerson: TedtPerson
   Left = 352
   Height = 700
   Top = 33
-  Width = 416
+  Width = 413
   AutoSize = True
   Caption = 'New researcher'
   ClientHeight = 700
-  ClientWidth = 416
+  ClientWidth = 413
   Font.Height = -12
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
     Top = 657
-    Width = 416
+    Width = 413
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -28,40 +28,38 @@ object edtPerson: TedtPerson
     Left = 0
     Height = 41
     Top = 659
-    Width = 416
+    Width = 413
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 416
+    ClientWidth = 413
     TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 188
+      Width = 186
       Caption = 'Save'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 212
+      Left = 210
       Height = 25
       Top = 8
-      Width = 188
+      Width = 187
       Caption = 'Cancel'
-      Constraints.MinWidth = 188
+      Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
     end
@@ -70,34 +68,35 @@ object edtPerson: TedtPerson
     Left = 0
     Height = 657
     Top = 0
-    Width = 416
+    Width = 413
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 657
     Align = alTop
     BorderStyle = bsNone
     ClientHeight = 657
-    ClientWidth = 399
+    ClientWidth = 396
     Constraints.MinWidth = 176
     ParentShowHint = False
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 1539
+      Height = 1561
       Top = 0
-      Width = 399
+      Width = 396
       Align = alTop
       AutoSize = True
+      BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1539
-      ClientWidth = 399
+      ClientHeight = 1561
+      ClientWidth = 396
       TabOrder = 0
       object pMunicipality: TPanel
         Left = 0
-        Height = 45
-        Top = 865
-        Width = 399
+        Height = 48
+        Top = 871
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -106,8 +105,8 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 399
+        ClientHeight = 48
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 17
         object lblMunicipality: TLabel
@@ -123,12 +122,12 @@ object edtPerson: TedtPerson
         end
         object eMunicipality: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -152,7 +151,7 @@ object edtPerson: TedtPerson
         Left = 0
         Height = 45
         Top = 119
-        Width = 399
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -162,7 +161,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 1
         object lblFullname: TLabel
@@ -194,7 +193,7 @@ object edtPerson: TedtPerson
         Left = 0
         Height = 45
         Top = 209
-        Width = 399
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -204,7 +203,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 3
         object lblAcronym: TLabel
@@ -235,8 +234,8 @@ object edtPerson: TedtPerson
       object pAddress2: TPanel
         Left = 0
         Height = 45
-        Top = 775
-        Width = 399
+        Top = 781
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -246,7 +245,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 15
         object lblAddress2: TLabel
@@ -277,8 +276,8 @@ object edtPerson: TedtPerson
       object pAddress1: TPanel
         Left = 0
         Height = 45
-        Top = 730
-        Width = 399
+        Top = 736
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -288,7 +287,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 14
         object lblAddress1: TLabel
@@ -319,8 +318,8 @@ object edtPerson: TedtPerson
       object pLattes: TPanel
         Left = 0
         Height = 45
-        Top = 1161
-        Width = 399
+        Top = 1179
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -331,7 +330,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 23
         object lblLattes: TLabel
@@ -362,8 +361,8 @@ object edtPerson: TedtPerson
       object pZipCode: TPanel
         Left = 0
         Height = 45
-        Top = 685
-        Width = 399
+        Top = 691
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -374,7 +373,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 13
         object lblZipCode: TLabel
@@ -404,9 +403,9 @@ object edtPerson: TedtPerson
       end
       object pNotes: TPanel
         Left = 0
-        Height = 124
-        Top = 1399
-        Width = 399
+        Height = 112
+        Top = 1417
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -415,15 +414,15 @@ object edtPerson: TedtPerson
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 124
-        ClientWidth = 399
+        ClientHeight = 112
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 28
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -435,22 +434,22 @@ object edtPerson: TedtPerson
           Left = 16
           Height = 90
           Top = 22
-          Width = 367
+          Width = 365
           Align = alTop
           Constraints.MinWidth = 365
           DataField = 'notes'
           DataSource = dsLink
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
         end
       end
       object pNeighborhood: TPanel
         Left = 0
         Height = 45
-        Top = 820
-        Width = 399
+        Top = 826
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -460,7 +459,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 16
         object lblNeighborhood: TLabel
@@ -490,9 +489,9 @@ object edtPerson: TedtPerson
       end
       object pState: TPanel
         Left = 0
-        Height = 45
-        Top = 910
-        Width = 399
+        Height = 48
+        Top = 919
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -501,8 +500,8 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 399
+        ClientHeight = 48
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 18
         object lblState: TLabel
@@ -518,12 +517,12 @@ object edtPerson: TedtPerson
         end
         object eState: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -545,9 +544,9 @@ object edtPerson: TedtPerson
       end
       object pCountry: TPanel
         Left = 0
-        Height = 45
-        Top = 955
-        Width = 399
+        Height = 48
+        Top = 967
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -556,8 +555,8 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 399
+        ClientHeight = 48
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 19
         object lblCountry: TLabel
@@ -573,12 +572,12 @@ object edtPerson: TedtPerson
         end
         object eCountry: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -601,8 +600,8 @@ object edtPerson: TedtPerson
       object pDepartment: TPanel
         Left = 0
         Height = 45
-        Top = 1058
-        Width = 399
+        Top = 1076
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -612,7 +611,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 21
         object lblDepartment: TLabel
@@ -643,8 +642,8 @@ object edtPerson: TedtPerson
       object pJobRole: TPanel
         Left = 0
         Height = 45
-        Top = 1103
-        Width = 399
+        Top = 1121
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -654,7 +653,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 22
         object lblJobRole: TLabel
@@ -686,7 +685,7 @@ object edtPerson: TedtPerson
         Left = 0
         Height = 45
         Top = 164
-        Width = 399
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -696,7 +695,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 2
         object lblCitation: TLabel
@@ -726,9 +725,9 @@ object edtPerson: TedtPerson
       end
       object pBirthDate: TPanel
         Left = 0
-        Height = 45
+        Height = 48
         Top = 344
-        Width = 399
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -737,8 +736,8 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 399
+        ClientHeight = 48
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 6
         object lblBirthDate: TLabel
@@ -754,12 +753,12 @@ object edtPerson: TedtPerson
         end
         object eBirthDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -784,8 +783,8 @@ object edtPerson: TedtPerson
       object pNationalIDCard: TPanel
         Left = 0
         Height = 45
-        Top = 434
-        Width = 399
+        Top = 440
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -795,7 +794,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 8
         object lblRG: TLabel
@@ -826,8 +825,8 @@ object edtPerson: TedtPerson
       object pCPF: TPanel
         Left = 0
         Height = 45
-        Top = 479
-        Width = 399
+        Top = 485
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -837,7 +836,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 9
         object lblCPF: TLabel
@@ -868,8 +867,8 @@ object edtPerson: TedtPerson
       object pPhone1: TPanel
         Left = 0
         Height = 45
-        Top = 582
-        Width = 399
+        Top = 588
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -879,7 +878,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 11
         object lblPhone1: TLabel
@@ -910,8 +909,8 @@ object edtPerson: TedtPerson
       object pPhone2: TPanel
         Left = 0
         Height = 45
-        Top = 627
-        Width = 399
+        Top = 633
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -921,7 +920,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 12
         object lblPhone2: TLabel
@@ -952,8 +951,8 @@ object edtPerson: TedtPerson
       object pEmail: TPanel
         Left = 0
         Height = 45
-        Top = 537
-        Width = 399
+        Top = 543
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -964,7 +963,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 10
         object lblEmail: TLabel
@@ -994,9 +993,9 @@ object edtPerson: TedtPerson
       end
       object pInstitution: TPanel
         Left = 0
-        Height = 45
-        Top = 1013
-        Width = 399
+        Height = 48
+        Top = 1028
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -1006,8 +1005,8 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 399
+        ClientHeight = 48
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 20
         object lblInstitution: TLabel
@@ -1023,12 +1022,12 @@ object edtPerson: TedtPerson
         end
         object eInstitution: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 365
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
@@ -1051,8 +1050,8 @@ object edtPerson: TedtPerson
       object pOrcid: TPanel
         Left = 0
         Height = 45
-        Top = 1206
-        Width = 399
+        Top = 1224
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1062,7 +1061,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 24
         object lblOrcid: TLabel
@@ -1093,8 +1092,8 @@ object edtPerson: TedtPerson
       object pTwitter: TPanel
         Left = 0
         Height = 45
-        Top = 1251
-        Width = 399
+        Top = 1269
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1104,7 +1103,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 25
         object lblTwitter: TLabel
@@ -1135,8 +1134,8 @@ object edtPerson: TedtPerson
       object pInstagram: TPanel
         Left = 0
         Height = 45
-        Top = 1296
-        Width = 399
+        Top = 1314
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1146,7 +1145,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 26
         object lblInstagram: TLabel
@@ -1177,8 +1176,8 @@ object edtPerson: TedtPerson
       object pWebsite: TPanel
         Left = 0
         Height = 45
-        Top = 1341
-        Width = 399
+        Top = 1359
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1188,7 +1187,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 27
         object lblWebsite: TLabel
@@ -1220,7 +1219,7 @@ object edtPerson: TedtPerson
         Left = 0
         Height = 90
         Top = 16
-        Width = 399
+        Width = 396
         Align = alTop
         BorderSpacing.Bottom = 13
         BevelOuter = bvNone
@@ -1228,7 +1227,7 @@ object edtPerson: TedtPerson
         ChildSizing.HorizontalSpacing = 1
         ChildSizing.VerticalSpacing = 4
         ClientHeight = 90
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 0
         object imgProfile: TDBImage
@@ -1240,8 +1239,8 @@ object edtPerson: TedtPerson
           AntialiasingMode = amOn
           DataField = 'profile_image'
           DataSource = dsLink
-          PopupMenu = pmImage
           Proportional = True
+          PopupMenu = pmImage
         end
         object pImageToolbar: TBCPanel
           Left = 107
@@ -1297,9 +1296,9 @@ object edtPerson: TedtPerson
             Flat = True
             Images = iButtons
             ImageIndex = 0
-            OnClick = sbAddImageClick
             ShowHint = True
             ParentShowHint = False
+            OnClick = sbAddImageClick
           end
           object sbRemoveImage: TSpeedButton
             Left = 9
@@ -1312,17 +1311,17 @@ object edtPerson: TedtPerson
             Images = iButtons
             ImageIndex = 1
             Visible = False
-            OnClick = sbRemoveImageClick
             ShowHint = True
             ParentShowHint = False
+            OnClick = sbRemoveImageClick
           end
         end
       end
       object pDeathDate: TPanel
         Left = 0
-        Height = 45
-        Top = 389
-        Width = 399
+        Height = 48
+        Top = 392
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1331,8 +1330,8 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 399
+        ClientHeight = 48
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 7
         object lblDeathDate: TLabel
@@ -1348,12 +1347,12 @@ object edtPerson: TedtPerson
         end
         object eDeathDate: TDBEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 176
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 23
+          ClientHeight = 26
           ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
@@ -1379,7 +1378,7 @@ object edtPerson: TedtPerson
         Left = 0
         Height = 45
         Top = 254
-        Width = 399
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1389,7 +1388,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 4
         object lblTreatment: TLabel
@@ -1424,16 +1423,16 @@ object edtPerson: TedtPerson
             'Dr./PhD.'
           )
           MaxLength = 0
+          TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
-          TabOrder = 0
         end
       end
       object pGender: TPanel
         Left = 0
         Height = 45
         Top = 299
-        Width = 399
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1443,7 +1442,7 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 5
         object lblGender: TLabel
@@ -1472,9 +1471,9 @@ object edtPerson: TedtPerson
             'they/them'
           )
           MaxLength = 0
+          TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
-          TabOrder = 0
         end
       end
     end
