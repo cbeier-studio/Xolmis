@@ -104,6 +104,7 @@ uses
     { Input messages }
     rsCoordinatesNameInput = 'Give a name to the coordinates set:';
     rsCreateDatabasePrompt = 'Database file not found. Do you want to create it?';
+    rsDropFilesHere = 'Drop files here';
 
     { Error messages }
     rsErrorFound = '<p><b>%d error</b> found! Please fix it before proceeding.</p>';

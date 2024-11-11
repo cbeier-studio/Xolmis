@@ -2933,6 +2933,10 @@ msgstr "URL"
 msgid "Video"
 msgstr "Vídeo"
 
+#: cbs_locale.rsdropfileshere
+msgid "Drop files here"
+msgstr "Solte os arquivos aqui"
+
 #: cbs_locale.rsectoparasite
 msgctxt "cbs_locale.rsectoparasite"
 msgid "Ectoparasite"
@@ -6427,10 +6431,19 @@ msgstr "Opções"
 msgid "Import wizard"
 msgstr "Assistente de importação"
 
+#: tdlgimport.cbtarget.texthint
+msgid "Select a table..."
+msgstr "Selecione uma tabela..."
+
 #: tdlgimport.esourcefile.buttonhint
 msgctxt "tdlgimport.esourcefile.buttonhint"
 msgid "Select file"
 msgstr "Selecionar arquivo"
+
+#: tdlgimport.esourcefile.texthint
+msgctxt "tdlgimport.esourcefile.texthint"
+msgid "Select a file..."
+msgstr "Selecione um arquivo..."
 
 #: tdlgimport.gridfields.columns[0].title.caption
 msgctxt "tdlgimport.gridfields.columns[0].title.caption"
@@ -6446,6 +6459,10 @@ msgstr "Campo destino"
 msgctxt "tdlgimport.gridfields.columns[2].title.caption"
 msgid "Search table"
 msgstr "Tabela de busca"
+
+#: tdlgimport.gridfields.columns[3].title.caption
+msgid "Default value"
+msgstr "Valor padrão"
 
 #: tdlgimport.lblconfirminstruction.caption
 msgid "Check if the data sampled is correct."
@@ -6733,10 +6750,23 @@ msgstr "A&juda"
 msgid "Import from Xolmis Mobile"
 msgstr "Importar do Xolmis Mobile"
 
+#: tdlgimportxmobile.enest.texthint
+msgid "Select a nest, if it already exists"
+msgstr "Selecione um ninho, se já existir"
+
 #: tdlgimportxmobile.esourcefile.buttonhint
 msgctxt "tdlgimportxmobile.esourcefile.buttonhint"
 msgid "Select file"
 msgstr "Selecionar arquivo"
+
+#: tdlgimportxmobile.esourcefile.texthint
+msgctxt "tdlgimportxmobile.esourcefile.texthint"
+msgid "Select a file..."
+msgstr "Selecione um arquivo..."
+
+#: tdlgimportxmobile.esurvey.texthint
+msgid "Select a survey, if it already exists"
+msgstr "Selecione uma amostragem, se já existir"
 
 #: tdlgimportxmobile.lbldatatype.caption
 msgid "Type of data:"
@@ -6752,8 +6782,9 @@ msgid "Mackinnon list number:"
 msgstr "Nº da lista de Mackinnon:"
 
 #: tdlgimportxmobile.lblnest.caption
-msgid "Nest (if already exists):"
-msgstr "Ninho (se já existir):"
+msgctxt "tdlgimportxmobile.lblnest.caption"
+msgid "Nest:"
+msgstr "Ninho:"
 
 #: tdlgimportxmobile.lblobserver.caption
 msgctxt "tdlgimportxmobile.lblobserver.caption"
@@ -6780,8 +6811,8 @@ msgstr "O(s) arquivo(s) selecionado(s) foi/foram importado(s) com sucesso."
 
 #: tdlgimportxmobile.lblsurvey.caption
 msgctxt "tdlgimportxmobile.lblsurvey.caption"
-msgid "Survey (if already exists):"
-msgstr "Amostragem (se já existir):"
+msgid "Survey:"
+msgstr "Amostragem:"
 
 #: tdlgimportxmobile.lbltitleimportfinished.caption
 msgctxt "tdlgimportxmobile.lbltitleimportfinished.caption"

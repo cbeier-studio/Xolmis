@@ -25,6 +25,8 @@ uses
   StrUtils, LCLIntf, LCLType, cbs_datatypes;
 
   { Modify the graphic interface elements }
+  procedure DrawDragDropOverlay(aControl: TCustomControl);
+  procedure RemoveDragDropOverlay(aControl: TCustomControl);
   procedure MakeRounded(Control: TWinControl);
   procedure RoundPanels(aParentControl: TWinControl);
   procedure PaintColorBand(aColor: String; aShape: TShape; aLabel: TLabel);
@@ -43,7 +45,7 @@ uses
 implementation
 
 uses
-  cbs_themes, cbs_birds, cbs_count;
+  cbs_themes, cbs_locale, cbs_birds, cbs_count;
 
 procedure MakeRounded(Control: TWinControl);
 var
@@ -199,6 +201,41 @@ begin
   Green := (Green + GetGValue(ColorToRGB(Mix))) div 2;
   Blue := (Blue + GetBValue(ColorToRGB(Mix))) div 2;
   Result := RGB(Red, Green, Blue);
+end;
+
+procedure DrawDragDropOverlay(aControl: TCustomControl);
+var
+  OverlayRect: TRect;
+  HCenter, VCenter, WText, HText: Integer;
+begin
+  OverlayRect := aControl.ClientRect;
+  with aControl.Canvas do
+  begin
+    SetBkMode(aControl.Canvas.Handle, TRANSPARENT);
+    Brush.Style := bsSolid;
+    Brush.Color := clVioletBrand1Light;
+    FillRect(OverlayRect);
+
+    Pen.Color := clVioletFGLight;
+    Pen.Style := psDash;
+    Pen.Width := 3;
+    FrameRect(OverlayRect);
+
+    Brush.Style := bsClear;
+    Font.Color := clVioletFGLight;
+    Font.Size := 12;
+    Font.Style := [fsBold];
+    WText := TextWidth(rsDropFilesHere);
+    HText := TextHeight(rsDropFilesHere);
+    HCenter := (OverlayRect.Width div 2) - (WText div 2);
+    VCenter := (OverlayRect.Height div 2) - (HText div 2);
+    TextOut(HCenter, VCenter, rsDropFilesHere);
+  end;
+end;
+
+procedure RemoveDragDropOverlay(aControl: TCustomControl);
+begin
+  aControl.Invalidate;
 end;
 
 end.

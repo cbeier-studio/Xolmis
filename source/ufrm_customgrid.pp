@@ -1103,6 +1103,7 @@ type
     CanToggle: Boolean;
     FSidePanelFactor: Double;
     FChildPanelFactor: Double;
+    FDragging: Boolean;
     cellMemo: TMemo;
 
     procedure AddAudio(aDataSet: TDataSet; aFileName: String);
@@ -1316,7 +1317,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
   cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print,
-  cbs_validations, udlg_progress,
+  cbs_validations, cbs_graphics, udlg_progress,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
 
@@ -3348,6 +3349,8 @@ end;
 
 procedure TfrmCustomGrid.DropAudiosDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint;
   var Effect: Longint);
+const
+  SupportedAudios: array of String = ('.wav','.mp3','.aac','.flac');
 var
   i: Integer;
 begin
@@ -3366,7 +3369,8 @@ begin
       begin
         dlgProgress.Text := Format(rsProgressImportAudios, [i + 1, DropAudios.Files.Count]);
 
-        AddAudio(qAudios, DropAudios.Files[i]);
+        if (ExtractFileExt(DropAudios.Files[i]) in SupportedAudios) then
+          AddAudio(qAudios, DropAudios.Files[i]);
 
         dlgProgress.Position := i + 1;
         Application.ProcessMessages;
@@ -3446,6 +3450,8 @@ end;
 
 procedure TfrmCustomGrid.DropImagesDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint;
   var Effect: Longint);
+const
+  SupportedImages: array of String = ('.png','.xpm','.bmp','.jpeg','.jpg','.jpe','.jfif','.tif','.tiff','.pbm','.pgm','.ppm');
 var
   i: Integer;
 begin
@@ -3464,7 +3470,8 @@ begin
       begin
         dlgProgress.Text := Format(rsProgressImportImages, [i + 1, DropImages.Files.Count]);
 
-        AddImage(qImages, tbImages, 'image_filename', 'image_thumbnail', DropImages.Files[i]);
+        if (ExtractFileExt(DropImages.Files[i]) in SupportedImages) then
+          AddImage(qImages, tbImages, 'image_filename', 'image_thumbnail', DropImages.Files[i]);
 
         dlgProgress.Position := i + 1;
         Application.ProcessMessages;

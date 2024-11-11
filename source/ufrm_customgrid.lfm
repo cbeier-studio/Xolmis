@@ -7,7 +7,6 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1243
   ParentFont = True
-  LCLVersion = '4.0.0.1'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -78,7 +77,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            348
+            344
           )
         end
       end
@@ -6853,11 +6852,11 @@ object frmCustomGrid: TfrmCustomGrid
           Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
           TabOrder = 0
           object sbAudioInfo: TSpeedButton
-            Left = 54
+            Left = 60
             Height = 26
             Hint = 'View and edit audio info'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alLeft
             AutoSize = True
             BorderSpacing.Right = 10
@@ -6876,7 +6875,7 @@ object frmCustomGrid: TfrmCustomGrid
             Height = 26
             Hint = 'Add audio recording'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alLeft
             AutoSize = True
             BorderSpacing.Right = 10
@@ -6890,7 +6889,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbAddAudioClick
           end
           object Separator26: TShapeLineBGRA
-            Left = 92
+            Left = 104
             Height = 26
             Top = 8
             Width = 4
@@ -6901,11 +6900,11 @@ object frmCustomGrid: TfrmCustomGrid
             LineWidth = 1
           end
           object sbPlayAudio: TSpeedButton
-            Left = 106
+            Left = 118
             Height = 26
             Hint = 'Play/stop audio'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alLeft
             AutoSize = True
             BorderSpacing.Left = 10
@@ -6921,11 +6920,11 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbPlayAudioClick
           end
           object sbDelAudio: TSpeedButton
-            Left = 404
+            Left = 398
             Height = 26
             Hint = 'Delete audio'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alRight
             AutoSize = True
             BorderSpacing.Right = 10
@@ -6966,7 +6965,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'Fullname'
-              Width = 276
+              Width = 255
               FieldName = 'full_name'
             end>
           DataSource = dsAudios
@@ -7042,11 +7041,11 @@ object frmCustomGrid: TfrmCustomGrid
           Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
           TabOrder = 0
           object sbDocInfo: TSpeedButton
-            Left = 54
+            Left = 60
             Height = 26
             Hint = 'View and edit document/link info'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alLeft
             AutoSize = True
             BorderSpacing.Right = 10
@@ -7065,7 +7064,7 @@ object frmCustomGrid: TfrmCustomGrid
             Height = 26
             Hint = 'Add document/link'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alLeft
             AutoSize = True
             BorderSpacing.Right = 10
@@ -7079,7 +7078,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbAddDocClick
           end
           object Separator30: TShapeLineBGRA
-            Left = 92
+            Left = 104
             Height = 26
             Top = 8
             Width = 4
@@ -7090,11 +7089,11 @@ object frmCustomGrid: TfrmCustomGrid
             LineWidth = 1
           end
           object sbOpenDoc: TSpeedButton
-            Left = 106
+            Left = 118
             Height = 26
             Hint = 'Open document/link in the default app'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alLeft
             AutoSize = True
             BorderSpacing.Left = 10
@@ -7110,11 +7109,11 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbOpenDocClick
           end
           object sbDelDoc: TSpeedButton
-            Left = 404
+            Left = 398
             Height = 26
             Hint = 'Delete document/link'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alRight
             AutoSize = True
             BorderSpacing.Right = 10
@@ -7149,7 +7148,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'File path'
-              Width = 386
+              Width = 365
               FieldName = 'document_path'
             end>
           DataSource = dsDocs
@@ -7289,7 +7288,7 @@ object frmCustomGrid: TfrmCustomGrid
             item
               ReadOnly = True
               Title.Caption = 'Field'
-              Width = 218
+              Width = 214
             end          
             item
               Alignment = taRightJustify
@@ -7309,7 +7308,7 @@ object frmCustomGrid: TfrmCustomGrid
           ColWidths = (
             100
             70
-            218
+            214
             60
           )
           Cells = (
@@ -7365,11 +7364,11 @@ object frmCustomGrid: TfrmCustomGrid
           Rounding.RoundY = 8
           TabOrder = 1
           object sbRowHeightDecrease: TSpeedButton
-            Left = 54
+            Left = 60
             Height = 26
             Hint = 'Decrease the row height'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alLeft
             AutoSize = True
             BorderSpacing.Right = 10
@@ -7387,7 +7386,7 @@ object frmCustomGrid: TfrmCustomGrid
             Height = 26
             Hint = 'Increase the row height'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alLeft
             AutoSize = True
             BorderSpacing.Right = 10
@@ -7401,7 +7400,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbRowHeightIncreaseClick
           end
           object Separator9: TShapeLineBGRA
-            Left = 130
+            Left = 148
             Height = 26
             Top = 8
             Width = 4
@@ -7412,11 +7411,11 @@ object frmCustomGrid: TfrmCustomGrid
             LineWidth = 1
           end
           object sbRowHeightDefault: TSpeedButton
-            Left = 92
+            Left = 104
             Height = 26
             Hint = 'Set the default row height'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alLeft
             AutoSize = True
             BorderSpacing.Right = 10
@@ -7430,11 +7429,11 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbRowHeightDefaultClick
           end
           object sbColumnWidthAutoAdjust: TSpeedButton
-            Left = 144
+            Left = 162
             Height = 26
             Hint = 'Autoadjust the columns width'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alLeft
             AutoSize = True
             BorderSpacing.Left = 10
@@ -7449,11 +7448,11 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbColumnWidthAutoAdjustClick
           end
           object sbColumnHide: TSpeedButton
-            Left = 404
+            Left = 398
             Height = 26
             Hint = 'Hide the selected column'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alRight
             AutoSize = True
             BorderSpacing.Left = 10
@@ -7468,11 +7467,11 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbColumnHideClick
           end
           object sbMoveColumnDown: TSpeedButton
-            Left = 270
+            Left = 246
             Height = 26
             Hint = 'Move the column position down'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alRight
             AutoSize = True
             BorderSpacing.Right = 2
@@ -7486,11 +7485,11 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbMoveColumnDownClick
           end
           object sbMoveColumnUp: TSpeedButton
-            Left = 300
+            Left = 282
             Height = 26
             Hint = 'Move the column position up'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alRight
             AutoSize = True
             BorderSpacing.Right = 10
@@ -7504,7 +7503,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbMoveColumnUpClick
           end
           object Separator11: TShapeLineBGRA
-            Left = 390
+            Left = 384
             Height = 26
             Top = 8
             Width = 4
@@ -7515,11 +7514,11 @@ object frmCustomGrid: TfrmCustomGrid
             LineWidth = 1
           end
           object sbMarkColumns: TSpeedButton
-            Left = 352
+            Left = 340
             Height = 26
             Hint = 'Mark/unmark all columns'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alRight
             AutoSize = True
             BorderSpacing.Left = 10
@@ -7535,7 +7534,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbMarkColumnsClick
           end
           object Separator20: TShapeLineBGRA
-            Left = 338
+            Left = 326
             Height = 26
             Top = 8
             Width = 4
@@ -7879,7 +7878,7 @@ object frmCustomGrid: TfrmCustomGrid
             Height = 26
             Hint = 'Export map points'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alLeft
             AutoSize = True
             BorderSpacing.Left = 10
@@ -10369,14 +10368,14 @@ object frmCustomGrid: TfrmCustomGrid
   object dsLink4: TDataSource
     OnStateChange = dsLink4StateChange
     OnDataChange = dsLink4DataChange
-    Left = 288
-    Top = 456
+    Left = 144
+    Top = 512
   end
   object dsLink5: TDataSource
     OnStateChange = dsLink5StateChange
     OnDataChange = dsLink5DataChange
-    Left = 344
-    Top = 456
+    Left = 192
+    Top = 512
   end
   object iHeaders: TImageList
     Scaled = True
@@ -25070,6 +25069,7 @@ object frmCustomGrid: TfrmCustomGrid
     object pmaAddAudio: TMenuItem
       Caption = 'Add &new audio recording(s)'
       ImageIndex = 0
+      OnClick = sbAddAudioClick
     end
     object Separator27: TMenuItem
       Caption = '-'
@@ -25077,10 +25077,12 @@ object frmCustomGrid: TfrmCustomGrid
     object pmaAudioInfo: TMenuItem
       Caption = 'View/&edit info'
       ImageIndex = 2
+      OnClick = sbAudioInfoClick
     end
     object pmaPlayAudio: TMenuItem
       Caption = '&Play selected audio'
       ImageIndex = 96
+      OnClick = sbPlayAudioClick
     end
     object Separator28: TMenuItem
       Caption = '-'
@@ -25088,6 +25090,7 @@ object frmCustomGrid: TfrmCustomGrid
     object pmaDelAudio: TMenuItem
       Caption = '&Delete'
       ImageIndex = 4
+      OnClick = sbDelAudioClick
     end
     object Separator29: TMenuItem
       Caption = '-'
@@ -26769,7 +26772,7 @@ object frmCustomGrid: TfrmCustomGrid
     OnDrop = DropImagesDrop
     Target = dbgImages
     OptimizedMove = True
-    Left = 409
+    Left = 321
     Top = 408
   end
   object DropAudios: TDropFileTarget
@@ -26777,7 +26780,7 @@ object frmCustomGrid: TfrmCustomGrid
     OnDrop = DropAudiosDrop
     Target = gridAudios
     OptimizedMove = True
-    Left = 409
+    Left = 321
     Top = 464
   end
   object DropDocs: TDropFileTarget
@@ -26785,13 +26788,13 @@ object frmCustomGrid: TfrmCustomGrid
     OnDrop = DropDocsDrop
     Target = gridDocs
     OptimizedMove = True
-    Left = 408
+    Left = 320
     Top = 520
   end
   object dsLink6: TDataSource
     OnStateChange = dsLink6StateChange
     OnDataChange = dsLink6DataChange
-    Left = 344
+    Left = 240
     Top = 512
   end
 end

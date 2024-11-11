@@ -2927,6 +2927,10 @@ msgstr ""
 msgid "Video"
 msgstr ""
 
+#: cbs_locale.rsdropfileshere
+msgid "Drop files here"
+msgstr ""
+
 #: cbs_locale.rsectoparasite
 msgctxt "cbs_locale.rsectoparasite"
 msgid "Ectoparasite"
@@ -6397,9 +6401,18 @@ msgstr ""
 msgid "Import wizard"
 msgstr ""
 
+#: tdlgimport.cbtarget.texthint
+msgid "Select a table..."
+msgstr ""
+
 #: tdlgimport.esourcefile.buttonhint
 msgctxt "tdlgimport.esourcefile.buttonhint"
 msgid "Select file"
+msgstr ""
+
+#: tdlgimport.esourcefile.texthint
+msgctxt "tdlgimport.esourcefile.texthint"
+msgid "Select a file..."
 msgstr ""
 
 #: tdlgimport.gridfields.columns[0].title.caption
@@ -6415,6 +6428,10 @@ msgstr ""
 #: tdlgimport.gridfields.columns[2].title.caption
 msgctxt "tdlgimport.gridfields.columns[2].title.caption"
 msgid "Search table"
+msgstr ""
+
+#: tdlgimport.gridfields.columns[3].title.caption
+msgid "Default value"
 msgstr ""
 
 #: tdlgimport.lblconfirminstruction.caption
@@ -6703,9 +6720,22 @@ msgstr ""
 msgid "Import from Xolmis Mobile"
 msgstr ""
 
+#: tdlgimportxmobile.enest.texthint
+msgid "Select a nest, if it already exists"
+msgstr ""
+
 #: tdlgimportxmobile.esourcefile.buttonhint
 msgctxt "tdlgimportxmobile.esourcefile.buttonhint"
 msgid "Select file"
+msgstr ""
+
+#: tdlgimportxmobile.esourcefile.texthint
+msgctxt "tdlgimportxmobile.esourcefile.texthint"
+msgid "Select a file..."
+msgstr ""
+
+#: tdlgimportxmobile.esurvey.texthint
+msgid "Select a survey, if it already exists"
 msgstr ""
 
 #: tdlgimportxmobile.lbldatatype.caption
@@ -6722,7 +6752,8 @@ msgid "Mackinnon list number:"
 msgstr ""
 
 #: tdlgimportxmobile.lblnest.caption
-msgid "Nest (if already exists):"
+msgctxt "tdlgimportxmobile.lblnest.caption"
+msgid "Nest:"
 msgstr ""
 
 #: tdlgimportxmobile.lblobserver.caption
@@ -6750,7 +6781,7 @@ msgstr ""
 
 #: tdlgimportxmobile.lblsurvey.caption
 msgctxt "tdlgimportxmobile.lblsurvey.caption"
-msgid "Survey (if already exists):"
+msgid "Survey:"
 msgstr ""
 
 #: tdlgimportxmobile.lbltitleimportfinished.caption

@@ -9,10 +9,10 @@ object dlgImportNests: TdlgImportNests
   ClientHeight = 349
   ClientWidth = 759
   Font.Height = -12
+  Position = poMainFormCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  Position = poMainFormCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -117,7 +117,7 @@ object dlgImportNests: TdlgImportNests
         end
         object pNestFile: TBCPanel
           Left = 16
-          Height = 47
+          Height = 50
           Top = 83
           Width = 727
           Align = alTop
@@ -162,7 +162,7 @@ object dlgImportNests: TdlgImportNests
           TabOrder = 0
           object icoNestFile: TImage
             Left = 16
-            Height = 23
+            Height = 26
             Top = 12
             Width = 27
             Align = alLeft
@@ -172,7 +172,7 @@ object dlgImportNests: TdlgImportNests
           end
           object lblNestFile: TLabel
             Left = 51
-            Height = 23
+            Height = 26
             Top = 12
             Width = 29
             Align = alLeft
@@ -182,7 +182,7 @@ object dlgImportNests: TdlgImportNests
           end
           object eNestFile: TFileNameEdit
             Left = 160
-            Height = 23
+            Height = 26
             Hint = 'Select file'
             Top = 12
             Width = 519
@@ -199,32 +199,33 @@ object dlgImportNests: TdlgImportNests
             Anchors = [akTop, akLeft, akRight, akBottom]
             Color = clDefault
             MaxLength = 0
+            ParentColor = True
             ParentShowHint = False
             ShowHint = True
             Spacing = 0
             TabOrder = 0
+            TextHint = 'Select a file...'
             OnButtonClick = eNestFileButtonClick
             OnChange = eNestFileChange
-            TextHint = 'Select a file...'
           end
           object sbClearNestFile: TSpeedButton
             Left = 687
-            Height = 23
+            Height = 26
             Hint = 'Clear field'
             Top = 12
             Width = 24
             Align = alRight
             Images = iButtons
             ImageIndex = 1
-            OnClick = sbClearNestFileClick
             ShowHint = True
             ParentShowHint = False
+            OnClick = sbClearNestFileClick
           end
         end
         object pRevisionFile: TBCPanel
           Left = 16
-          Height = 47
-          Top = 130
+          Height = 50
+          Top = 133
           Width = 727
           Align = alTop
           AutoSize = True
@@ -268,7 +269,7 @@ object dlgImportNests: TdlgImportNests
           TabOrder = 1
           object icoRevisionFile: TImage
             Left = 16
-            Height = 23
+            Height = 26
             Top = 12
             Width = 27
             Align = alLeft
@@ -279,7 +280,7 @@ object dlgImportNests: TdlgImportNests
           end
           object lblRevisionFile: TLabel
             Left = 51
-            Height = 23
+            Height = 26
             Top = 12
             Width = 73
             Align = alLeft
@@ -289,7 +290,7 @@ object dlgImportNests: TdlgImportNests
           end
           object eRevisionFile: TFileNameEdit
             Left = 160
-            Height = 23
+            Height = 26
             Hint = 'Select file'
             Top = 12
             Width = 519
@@ -310,29 +311,29 @@ object dlgImportNests: TdlgImportNests
             ShowHint = True
             Spacing = 0
             TabOrder = 0
+            TextHint = 'Select a file...'
             OnButtonClick = eNestFileButtonClick
             OnChange = eRevisionFileChange
-            TextHint = 'Select a file...'
           end
           object sbClearRevisionFile: TSpeedButton
             Tag = 1
             Left = 687
-            Height = 23
+            Height = 26
             Hint = 'Clear field'
             Top = 12
             Width = 24
             Align = alRight
             Images = iButtons
             ImageIndex = 1
-            OnClick = sbClearNestFileClick
             ShowHint = True
             ParentShowHint = False
+            OnClick = sbClearNestFileClick
           end
         end
         object pEggFile: TBCPanel
           Left = 16
-          Height = 47
-          Top = 177
+          Height = 50
+          Top = 183
           Width = 727
           Align = alTop
           AutoSize = True
@@ -377,7 +378,7 @@ object dlgImportNests: TdlgImportNests
           TabOrder = 2
           object icoEggFile: TImage
             Left = 16
-            Height = 23
+            Height = 26
             Top = 12
             Width = 27
             Align = alLeft
@@ -388,7 +389,7 @@ object dlgImportNests: TdlgImportNests
           end
           object lblEggFile: TLabel
             Left = 51
-            Height = 23
+            Height = 26
             Top = 12
             Width = 25
             Align = alLeft
@@ -398,7 +399,7 @@ object dlgImportNests: TdlgImportNests
           end
           object eEggFile: TFileNameEdit
             Left = 160
-            Height = 23
+            Height = 26
             Hint = 'Select file'
             Top = 12
             Width = 519
@@ -419,23 +420,23 @@ object dlgImportNests: TdlgImportNests
             ShowHint = True
             Spacing = 0
             TabOrder = 0
+            TextHint = 'Select a file...'
             OnButtonClick = eNestFileButtonClick
             OnChange = eEggFileChange
-            TextHint = 'Select a file...'
           end
           object sbClearEggFile: TSpeedButton
             Tag = 2
             Left = 687
-            Height = 23
+            Height = 26
             Hint = 'Clear field'
             Top = 12
             Width = 24
             Align = alRight
             Images = iButtons
             ImageIndex = 1
-            OnClick = sbClearNestFileClick
             ShowHint = True
             ParentShowHint = False
+            OnClick = sbClearNestFileClick
           end
         end
         object lblSubtitleImportFiles: TLabel
@@ -695,13 +696,13 @@ object dlgImportNests: TdlgImportNests
             Left = 315
             Height = 26
             Top = 1
-            Width = 94
+            Width = 95
             AutoSize = True
             Caption = 'Try again'
             Images = iButtons
             ImageIndex = 2
-            OnClick = sbRetryClick
             TabOrder = 0
+            OnClick = sbRetryClick
           end
         end
       end

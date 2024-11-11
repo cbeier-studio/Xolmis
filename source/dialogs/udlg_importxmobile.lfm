@@ -157,6 +157,7 @@ object dlgImportXMobile: TdlgImportXMobile
           ShowHint = True
           Spacing = 0
           TabOrder = 1
+          TextHint = 'Select a file...'
           OnButtonClick = eSourceFileButtonClick
           OnChange = eSourceFileChange
         end
@@ -257,7 +258,7 @@ object dlgImportXMobile: TdlgImportXMobile
             Top = 0
             Width = 528
             BorderSpacing.Bottom = 3
-            Caption = 'Survey (if already exists):'
+            Caption = 'Survey:'
           end
           object eSurvey: TEditButton
             Left = 0
@@ -272,6 +273,7 @@ object dlgImportXMobile: TdlgImportXMobile
             PasswordChar = #0
             Spacing = 0
             TabOrder = 0
+            TextHint = 'Select a survey, if it already exists'
             OnButtonClick = eSurveyButtonClick
             OnChange = eSurveyChange
           end
@@ -395,7 +397,7 @@ object dlgImportXMobile: TdlgImportXMobile
             Top = 0
             Width = 528
             BorderSpacing.Bottom = 3
-            Caption = 'Nest (if already exists):'
+            Caption = 'Nest:'
           end
           object eNest: TEditButton
             Left = 0
@@ -410,6 +412,7 @@ object dlgImportXMobile: TdlgImportXMobile
             PasswordChar = #0
             Spacing = 0
             TabOrder = 0
+            TextHint = 'Select a nest, if it already exists'
             OnButtonClick = eNestButtonClick
           end
         end
