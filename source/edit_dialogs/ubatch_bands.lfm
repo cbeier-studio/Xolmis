@@ -87,6 +87,8 @@ object batchBands: TbatchBands
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
       ClientHeight = 48
@@ -181,6 +183,8 @@ object batchBands: TbatchBands
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
       ClientHeight = 45
@@ -245,6 +249,9 @@ object batchBands: TbatchBands
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 45
       ClientWidth = 400
@@ -254,7 +261,7 @@ object batchBands: TbatchBands
         Left = 16
         Height = 15
         Top = 3
-        Width = 40
+        Width = 368
         BorderSpacing.Top = 3
         Caption = 'Project:'
         ParentFont = False
@@ -291,6 +298,8 @@ object batchBands: TbatchBands
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
       ClientHeight = 45
@@ -357,6 +366,8 @@ object batchBands: TbatchBands
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
       ClientHeight = 45
@@ -437,6 +448,9 @@ object batchBands: TbatchBands
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 45
       ClientWidth = 400
@@ -446,7 +460,7 @@ object batchBands: TbatchBands
         Left = 16
         Height = 15
         Top = 3
-        Width = 46
+        Width = 368
         BorderSpacing.Top = 3
         Caption = 'Supplier:'
         ParentFont = False
@@ -483,6 +497,9 @@ object batchBands: TbatchBands
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 45
       ClientWidth = 400
@@ -492,7 +509,7 @@ object batchBands: TbatchBands
         Left = 16
         Height = 15
         Top = 3
-        Width = 55
+        Width = 368
         BorderSpacing.Top = 3
         Caption = 'Requester:'
         ParentFont = False
@@ -529,6 +546,9 @@ object batchBands: TbatchBands
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 45
       ClientWidth = 400
@@ -538,7 +558,7 @@ object batchBands: TbatchBands
         Left = 16
         Height = 15
         Top = 3
-        Width = 38
+        Width = 368
         BorderSpacing.Top = 3
         Caption = 'Carrier:'
         ParentFont = False
@@ -576,6 +596,9 @@ object batchBands: TbatchBands
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 45
       ClientWidth = 400
@@ -585,7 +608,7 @@ object batchBands: TbatchBands
         Left = 16
         Height = 15
         Top = 3
-        Width = 39
+        Width = 368
         BorderSpacing.Top = 3
         Caption = 'Sender:'
         FocusControl = eSender

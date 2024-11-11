@@ -75,6 +75,8 @@ object edtNest: TedtNest
     VertScrollBar.Page = 600
     Align = alTop
     BorderStyle = bsNone
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
     ClientHeight = 600
     ClientWidth = 399
     Constraints.MinWidth = 176
@@ -103,6 +105,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -159,6 +163,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -232,6 +238,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -332,6 +340,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -388,6 +398,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -444,6 +456,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -542,6 +556,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -639,6 +655,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -720,6 +738,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -786,6 +806,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -853,6 +875,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -977,6 +1001,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -1033,6 +1059,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -1076,6 +1104,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -1133,6 +1163,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -1199,6 +1231,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -1266,6 +1300,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -1332,6 +1368,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -1398,6 +1436,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -1464,8 +1504,10 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
+        ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
@@ -1477,6 +1519,16 @@ object edtNest: TedtNest
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Cover (%):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblNestCover1: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 175
+          BorderSpacing.Top = 3
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -1506,6 +1558,8 @@ object edtNest: TedtNest
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45

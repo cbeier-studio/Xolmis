@@ -1,10 +1,10 @@
 {"version":1,"strings":[
 {"hash":12223118,"name":"tedtrecverification.caption","sourcebytes":[78,101,119,32,114,101,99,111,114,100,32,118,101,114,105,102,105,99,97,116,105,111,110],"value":"New record verification"},
-{"hash":146552458,"name":"tedtrecverification.lblstatus.caption","sourcebytes":[83,116,97,116,117,115,58,32,42],"value":"Status: *"},
 {"hash":19260666,"name":"tedtrecverification.lblresearcher.caption","sourcebytes":[82,101,115,101,97,114,99,104,101,114,58,32,42],"value":"Researcher: *"},
 {"hash":267345746,"name":"tedtrecverification.eresearcher.buttonhint","sourcebytes":[70,105,110,100,32,114,101,115,101,97,114,99,104,101,114],"value":"Find researcher"},
 {"hash":89566314,"name":"tedtrecverification.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
 {"hash":176852074,"name":"tedtrecverification.lbldate.caption","sourcebytes":[68,97,116,101,58,32,42],"value":"Date: *"},
+{"hash":146552458,"name":"tedtrecverification.lblstatus.caption","sourcebytes":[83,116,97,116,117,115,58,32,42],"value":"Status: *"},
 {"hash":38292546,"name":"tedtrecverification.edate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
 {"hash":33581481,"name":"tedtrecverification.edate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
 {"hash":366789,"name":"tedtrecverification.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},

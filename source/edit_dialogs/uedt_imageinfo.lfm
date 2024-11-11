@@ -104,6 +104,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -114,7 +116,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Locality:'
           Font.Color = 6579300
@@ -125,11 +127,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -156,6 +158,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -166,7 +170,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Author:'
           Font.Color = 6579300
@@ -177,11 +181,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -251,6 +255,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -329,6 +335,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -339,7 +347,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Image type:'
           Font.Color = 6579300
@@ -350,7 +358,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 367
           AutoComplete = True
           AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
           Constraints.MinWidth = 365
@@ -375,6 +383,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -385,7 +395,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Coordinates precision:'
           Font.Color = 6579300
@@ -396,7 +406,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 367
           AutoComplete = True
           AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
           Constraints.MinWidth = 365
@@ -421,6 +431,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -508,6 +520,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -518,7 +532,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Taxon:'
           Font.Color = 6579300
@@ -529,11 +543,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -560,6 +574,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -570,7 +586,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Individual:'
           Font.Color = 6579300
@@ -581,11 +597,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -612,6 +628,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -622,7 +640,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Capture:'
           Font.Color = 6579300
@@ -633,11 +651,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -664,6 +682,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -674,7 +694,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Survey:'
           Font.Color = 6579300
@@ -685,11 +705,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -716,6 +736,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -726,7 +748,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Sighting:'
           Font.Color = 6579300
@@ -737,11 +759,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -768,6 +790,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -778,7 +802,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Image file: *'
           Font.Color = 6579300
@@ -789,11 +813,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -821,6 +845,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -831,7 +857,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Specimen:'
           Font.Color = 6579300
@@ -842,11 +868,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -873,6 +899,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -883,7 +911,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Egg:'
           Font.Color = 6579300
@@ -894,11 +922,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -925,6 +953,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -935,7 +965,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Nest revision:'
           Font.Color = 6579300
@@ -946,11 +976,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -977,6 +1007,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -987,7 +1019,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Nest:'
           Font.Color = 6579300
@@ -998,11 +1030,11 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 367
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -1030,6 +1062,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -1096,6 +1130,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -1106,7 +1142,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'License owner:'
           Font.Color = 6579300
@@ -1117,7 +1153,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 367
           DataField = 'license_owner'
           DataSource = dsLink
           Constraints.MinWidth = 365
@@ -1137,6 +1173,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -1147,7 +1185,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'License notes:'
           Font.Color = 6579300
@@ -1158,7 +1196,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 367
           DataField = 'license_notes'
           DataSource = dsLink
           Constraints.MinWidth = 365
@@ -1178,6 +1216,8 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -1188,7 +1228,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'License URL:'
           Font.Color = 6579300
@@ -1199,7 +1239,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 367
           DataField = 'license_uri'
           DataSource = dsLink
           Constraints.MinWidth = 365

@@ -101,6 +101,8 @@ object edtSurvey: TedtSurvey
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -157,6 +159,8 @@ object edtSurvey: TedtSurvey
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -225,6 +229,8 @@ object edtSurvey: TedtSurvey
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -326,6 +332,8 @@ object edtSurvey: TedtSurvey
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -382,6 +390,8 @@ object edtSurvey: TedtSurvey
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -437,6 +447,8 @@ object edtSurvey: TedtSurvey
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -517,6 +529,8 @@ object edtSurvey: TedtSurvey
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -609,6 +623,8 @@ object edtSurvey: TedtSurvey
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -701,6 +717,8 @@ object edtSurvey: TedtSurvey
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -767,6 +785,8 @@ object edtSurvey: TedtSurvey
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -788,7 +808,7 @@ object edtSurvey: TedtSurvey
           Left = 208
           Height = 15
           Top = 3
-          Width = 113
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Mistnet effort (h•m²):'
           Font.Color = 6579300
@@ -812,8 +832,7 @@ object edtSurvey: TedtSurvey
           Left = 208
           Height = 23
           Top = 22
-          Width = 113
-          Alignment = taRightJustify
+          Width = 175
           DataField = 'net_effort'
           DataSource = dsLink
           Layout = tlCenter
@@ -832,6 +851,8 @@ object edtSurvey: TedtSurvey
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45

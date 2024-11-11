@@ -106,6 +106,8 @@ object edtSite: TedtSite
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
@@ -116,7 +118,7 @@ object edtSite: TedtSite
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 368
           BorderSpacing.Top = 3
           Caption = 'Parent toponym:'
           Font.Color = 6579300
@@ -127,11 +129,11 @@ object edtSite: TedtSite
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 368
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -161,6 +163,8 @@ object edtSite: TedtSite
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -171,7 +175,7 @@ object edtSite: TedtSite
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 368
           BorderSpacing.Top = 3
           Caption = 'Name: *'
           Font.Color = 6579300
@@ -182,7 +186,7 @@ object edtSite: TedtSite
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 368
           DataField = 'site_name'
           DataSource = dsLink
           Constraints.MinWidth = 365
@@ -203,6 +207,8 @@ object edtSite: TedtSite
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -279,6 +285,8 @@ object edtSite: TedtSite
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -289,7 +297,7 @@ object edtSite: TedtSite
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 368
           BorderSpacing.Top = 3
           Caption = 'Site name on eBird:'
           Font.Color = 6579300
@@ -300,7 +308,7 @@ object edtSite: TedtSite
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 368
           DataField = 'ebird_name'
           DataSource = dsLink
           Constraints.MinWidth = 365
@@ -321,6 +329,8 @@ object edtSite: TedtSite
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -331,7 +341,7 @@ object edtSite: TedtSite
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 368
           BorderSpacing.Top = 3
           Caption = 'Full name: *'
           Font.Color = 6579300
@@ -342,7 +352,7 @@ object edtSite: TedtSite
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 368
           DataField = 'full_name'
           DataSource = dsLink
           Constraints.MinWidth = 365
@@ -363,6 +373,8 @@ object edtSite: TedtSite
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -455,8 +467,10 @@ object edtSite: TedtSite
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
+        ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
@@ -468,6 +482,16 @@ object edtSite: TedtSite
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Altitude (m):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblAltitude1: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False

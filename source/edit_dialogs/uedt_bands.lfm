@@ -422,6 +422,8 @@ object edtBands: TedtBands
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 46
@@ -443,7 +445,7 @@ object edtBands: TedtBands
           Left = 252
           Height = 15
           Top = 4
-          Width = 66
+          Width = 220
           AutoSize = False
           BorderSpacing.Top = 4
           Font.Color = 6579300
@@ -479,7 +481,7 @@ object edtBands: TedtBands
           Left = 252
           Height = 23
           Top = 23
-          Width = 66
+          Width = 220
           AutoSize = True
           Caption = 'Reported'
           DataField = 'band_reported'
@@ -501,8 +503,10 @@ object edtBands: TedtBands
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
+        ChildSizing.ControlsPerLine = 2
         ClientHeight = 46
         ClientWidth = 488
         ParentBackground = False
@@ -514,6 +518,16 @@ object edtBands: TedtBands
           Width = 220
           BorderSpacing.Top = 4
           Caption = 'Source: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBandSource1: TLabel
+          Left = 252
+          Height = 15
+          Top = 4
+          Width = 220
+          BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -554,6 +568,8 @@ object edtBands: TedtBands
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 49
@@ -610,6 +626,8 @@ object edtBands: TedtBands
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 49
@@ -666,6 +684,8 @@ object edtBands: TedtBands
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 49

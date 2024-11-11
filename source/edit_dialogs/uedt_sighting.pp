@@ -67,6 +67,7 @@ type
     lblLongitude: TLabel;
     lblDetectionType: TLabel;
     lblMackinnonListNumber: TLabel;
+    lblMackinnonListNumber1: TLabel;
     lblTime: TLabel;
     lblQuantity: TLabel;
     lblMethod: TLabel;

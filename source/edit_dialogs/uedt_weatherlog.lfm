@@ -377,8 +377,10 @@ object edtWeatherLog: TedtWeatherLog
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
+        ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
@@ -390,6 +392,16 @@ object edtWeatherLog: TedtWeatherLog
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Moment: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblSampleMoment1: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False

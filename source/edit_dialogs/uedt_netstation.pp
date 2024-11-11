@@ -36,6 +36,7 @@ type
     eLocality: TDBEditButton;
     eLongitude: TDBEditButton;
     lblAcronym: TLabel;
+    lblAcronym1: TLabel;
     lblLongitude: TLabel;
     lblLatitude: TLabel;
     lblNotes: TLabel;

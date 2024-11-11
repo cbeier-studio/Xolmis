@@ -35,9 +35,9 @@ type
     eAccessionSeq: TDBEdit;
     ePreparationDate: TDBEditButton;
     ePreparer: TDBEditButton;
+    lblAccessionSeq: TLabel;
     lblNotes: TLabel;
     lblAccessionNumber: TLabel;
-    lblAccessionSeq: TLabel;
     lblPreparationDate: TLabel;
     lblPreparer: TLabel;
     lblSampleType: TLabel;

@@ -1,13 +1,13 @@
 object edtSamplePrep: TedtSamplePrep
   Left = 373
-  Height = 432
+  Height = 342
   Top = 34
-  Width = 397
+  Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New sample preparation'
-  ClientHeight = 432
-  ClientWidth = 397
+  ClientHeight = 342
+  ClientWidth = 400
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
@@ -18,8 +18,8 @@ object edtSamplePrep: TedtSamplePrep
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 389
-    Width = 397
+    Top = 299
+    Width = 400
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -28,8 +28,8 @@ object edtSamplePrep: TedtSamplePrep
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 391
-    Width = 397
+    Top = 301
+    Width = 400
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -41,13 +41,13 @@ object edtSamplePrep: TedtSamplePrep
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 397
+    ClientWidth = 400
     TabOrder = 0
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 178
+      Width = 180
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -57,10 +57,10 @@ object edtSamplePrep: TedtSamplePrep
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 202
+      Left = 204
       Height = 25
       Top = 8
-      Width = 179
+      Width = 180
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -71,37 +71,37 @@ object edtSamplePrep: TedtSamplePrep
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 389
+    Height = 299
     Top = 0
-    Width = 397
+    Width = 400
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 389
+    VertScrollBar.Page = 299
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 389
-    ClientWidth = 397
+    ClientHeight = 299
+    ClientWidth = 400
     Constraints.MinWidth = 176
     TabOrder = 1
     object pContent: TPanel
       Left = 0
-      Height = 389
+      Height = 299
       Top = 0
-      Width = 397
+      Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 389
-      ClientWidth = 397
+      ClientHeight = 299
+      ClientWidth = 400
       ParentBackground = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 113
-        Top = 260
-        Width = 397
+        Top = 170
+        Width = 400
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -111,14 +111,14 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 113
-        ClientWidth = 397
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 5
         object lblNotes: TLabel
           Left = 16
           Height = 16
           Top = 3
-          Width = 365
+          Width = 368
           Align = alTop
           AutoSize = False
           BorderSpacing.Top = 3
@@ -131,7 +131,7 @@ object edtSamplePrep: TedtSamplePrep
           Left = 16
           Height = 90
           Top = 23
-          Width = 365
+          Width = 368
           Align = alTop
           Constraints.MinWidth = 365
           DataField = 'notes'
@@ -146,16 +146,19 @@ object edtSamplePrep: TedtSamplePrep
         Left = 0
         Height = 45
         Top = 16
-        Width = 397
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
+        ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 0
         object lblAccessionNumber: TLabel
@@ -165,6 +168,17 @@ object edtSamplePrep: TedtSamplePrep
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Accession number: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblAccessionSeq: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'Duplicate/part number:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -182,21 +196,37 @@ object edtSamplePrep: TedtSamplePrep
           OnKeyDown = FormKeyDown
           OnKeyPress = eAccessionNumberKeyPress
         end
+        object eAccessionSeq: TDBEdit
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
+          DataField = 'accession_seq'
+          DataSource = dsLink
+          Constraints.MinWidth = 176
+          MaxLength = 0
+          TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eAccessionNumberKeyPress
+        end
       end
       object pSampleType: TPanel
         Left = 0
-        Height = 45
-        Top = 106
-        Width = 397
+        Height = 48
+        Top = 61
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 397
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 48
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 2
         object lblSampleType: TLabel
@@ -206,6 +236,17 @@ object edtSamplePrep: TedtSamplePrep
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Type: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblPreparationDate: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'Preparation date:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -248,12 +289,39 @@ object edtSamplePrep: TedtSamplePrep
           OnKeyDown = FormKeyDown
           OnKeyPress = eAccessionNumberKeyPress
         end
+        object ePreparationDate: TDBEditButton
+          Left = 208
+          Height = 26
+          Top = 22
+          Width = 176
+          AutoSize = True
+          BevelOuter = bvNone
+          ClientHeight = 26
+          ClientWidth = 176
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 176
+          ParentBackground = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 1
+          ButtonHint = 'Open calendar'
+          ButtonWidth = 24
+          ImageIndex = 1
+          Images = DMM.iEdits
+          TextHint = 'DD/MM/YYYY'
+          DataField = 'preparation_date'
+          DataSource = dsLink
+          CharCase = ecNormal
+          OnButtonClick = ePreparationDateButtonClick
+          OnDBEditKeyDown = FormKeyDown
+          OnDBEditKeyPress = eAccessionNumberKeyPress
+        end
       end
       object pAccessionSeq: TPanel
         Left = 0
-        Height = 45
+        Height = 0
         Top = 61
-        Width = 397
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -261,56 +329,32 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 397
         ParentBackground = False
         TabOrder = 1
-        object lblAccessionSeq: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Duplicate/part number:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eAccessionSeq: TDBEdit
-          Left = 16
-          Height = 23
-          Top = 22
-          Width = 176
-          DataField = 'accession_seq'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
-          TabOrder = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eAccessionNumberKeyPress
-        end
       end
       object pPreparer: TPanel
         Left = 0
         Height = 48
-        Top = 199
-        Width = 397
+        Top = 109
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
-        ClientWidth = 397
+        ClientWidth = 400
         ParentBackground = False
         TabOrder = 4
         object lblPreparer: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 368
           BorderSpacing.Top = 3
           Caption = 'Preparer:'
           Font.Color = 6579300
@@ -321,11 +365,11 @@ object edtSamplePrep: TedtSamplePrep
           Left = 16
           Height = 26
           Top = 22
-          Width = 365
+          Width = 368
           AutoSize = True
           BevelOuter = bvNone
           ClientHeight = 26
-          ClientWidth = 365
+          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
           ParentBackground = False
@@ -343,9 +387,9 @@ object edtSamplePrep: TedtSamplePrep
       end
       object pPreparationDate: TPanel
         Left = 0
-        Height = 48
-        Top = 151
-        Width = 397
+        Height = 0
+        Top = 109
+        Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -353,48 +397,8 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 397
         ParentBackground = False
         TabOrder = 3
-        object lblPreparationDate: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Preparation date:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object ePreparationDate: TDBEditButton
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentBackground = False
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          ImageIndex = 1
-          Images = DMM.iEdits
-          TextHint = 'DD/MM/YYYY'
-          DataField = 'preparation_date'
-          DataSource = dsLink
-          CharCase = ecNormal
-          OnButtonClick = ePreparationDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eAccessionNumberKeyPress
-        end
       end
     end
   end

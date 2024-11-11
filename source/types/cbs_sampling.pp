@@ -425,6 +425,8 @@ type
     procedure Clear; override;
     procedure GetData(aKey: Integer); overload;
     procedure GetData(aDataSet: TDataSet); overload;
+    procedure Insert;
+    function Find(aFieldNumber: String; aYear, aMonth, aDay: Integer; aTaxon, aLocality: Integer): Boolean;
     function Diff(aOld: TSpecimen; var aList: TStrings): Boolean;
   published
     property FieldNumber: String read FFieldNumber write FFieldNumber;
@@ -812,6 +814,11 @@ begin
   end;
 end;
 
+procedure TSpecimen.Insert;
+begin
+  { #todo : Insert - Specimen }
+end;
+
 function TSpecimen.Diff(aOld: TSpecimen; var aList: TStrings): Boolean;
 var
   R: String;
@@ -851,6 +858,11 @@ begin
     aList.Add(R);
 
   Result := aList.Count > 0;
+end;
+
+function TSpecimen.Find(aFieldNumber: String; aYear, aMonth, aDay: Integer; aTaxon, aLocality: Integer): Boolean;
+begin
+  { #todo : Find - Specimen }
 end;
 
 { TSpecimenCollector }

@@ -484,6 +484,8 @@ object edtIndividual: TedtIndividual
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 44
@@ -985,8 +987,10 @@ object edtIndividual: TedtIndividual
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
+        ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
         ClientWidth = 399
         ParentBackground = False
@@ -998,6 +1002,16 @@ object edtIndividual: TedtIndividual
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Double band:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblDoubleBand1: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 175
+          BorderSpacing.Top = 3
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False

@@ -45,6 +45,7 @@ type
     lblAtmosphericPressure: TLabel;
     lblRelativeHumidity: TLabel;
     lblSampleMoment: TLabel;
+    lblSampleMoment1: TLabel;
     lblTemperature: TLabel;
     lblSampleDate: TLabel;
     lblWindSpeedBft: TLabel;

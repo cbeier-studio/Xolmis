@@ -32,6 +32,7 @@ type
     eCloseTime4: TTimeEdit;
     eOpenTime4: TTimeEdit;
     lblCloseTime4: TLabel;
+    lblNetMesh1: TLabel;
     lblOpenTime4: TLabel;
     pOpenCloseTime4: TPanel;
     pSurvey: TBCPanel;

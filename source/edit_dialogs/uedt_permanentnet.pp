@@ -35,6 +35,7 @@ type
     eLongitude: TDBEditButton;
     lblNetNumber: TLabel;
     lblLatitude: TLabel;
+    lblNetNumber1: TLabel;
     lblNotes: TLabel;
     lblLongitude: TLabel;
     lineBottom: TShapeLineBGRA;

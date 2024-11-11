@@ -42,9 +42,11 @@ type
     eTaxon: TDBEditButton;
     eObserver: TDBEditButton;
     eIndividual: TDBEditButton;
+    lblFieldNumber1: TLabel;
     lblLength: TLabel;
     lblMeasureDate: TLabel;
     lblShellPattern: TLabel;
+    lblShellTexture1: TLabel;
     lblStage: TLabel;
     dsLink: TDataSource;
     eFieldNumber: TDBEdit;

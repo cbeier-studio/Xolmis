@@ -147,6 +147,8 @@ object edtPermit: TedtPermit
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -157,7 +159,7 @@ object edtPermit: TedtPermit
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 368
           BorderSpacing.Top = 3
           Caption = 'Name: *'
           Font.Color = 6579300
@@ -168,7 +170,7 @@ object edtPermit: TedtPermit
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 368
           DataField = 'permit_name'
           DataSource = dsLink
           Constraints.MinWidth = 365
@@ -189,6 +191,8 @@ object edtPermit: TedtPermit
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -199,7 +203,7 @@ object edtPermit: TedtPermit
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 368
           BorderSpacing.Top = 3
           Caption = 'Dispatcher: *'
           Font.Color = 6579300
@@ -210,7 +214,7 @@ object edtPermit: TedtPermit
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 368
           DataField = 'dispatcher_name'
           DataSource = dsLink
           Constraints.MinWidth = 365
@@ -231,6 +235,8 @@ object edtPermit: TedtPermit
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -325,6 +331,8 @@ object edtPermit: TedtPermit
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45

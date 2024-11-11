@@ -4,10 +4,10 @@
 {"hash":77089212,"name":"tedtsampleprep.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
 {"hash":89566314,"name":"tedtsampleprep.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
 {"hash":173400922,"name":"tedtsampleprep.lblaccessionnumber.caption","sourcebytes":[65,99,99,101,115,115,105,111,110,32,110,117,109,98,101,114,58,32,42],"value":"Accession number: *"},
-{"hash":201755770,"name":"tedtsampleprep.lblsampletype.caption","sourcebytes":[84,121,112,101,58,32,42],"value":"Type: *"},
 {"hash":20327642,"name":"tedtsampleprep.lblaccessionseq.caption","sourcebytes":[68,117,112,108,105,99,97,116,101,47,112,97,114,116,32,110,117,109,98,101,114,58],"value":"Duplicate/part number:"},
-{"hash":208198618,"name":"tedtsampleprep.lblpreparer.caption","sourcebytes":[80,114,101,112,97,114,101,114,58],"value":"Preparer:"},
+{"hash":201755770,"name":"tedtsampleprep.lblsampletype.caption","sourcebytes":[84,121,112,101,58,32,42],"value":"Type: *"},
 {"hash":146124490,"name":"tedtsampleprep.lblpreparationdate.caption","sourcebytes":[80,114,101,112,97,114,97,116,105,111,110,32,100,97,116,101,58],"value":"Preparation date:"},
 {"hash":38292546,"name":"tedtsampleprep.epreparationdate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
-{"hash":33581481,"name":"tedtsampleprep.epreparationdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"}
+{"hash":33581481,"name":"tedtsampleprep.epreparationdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":208198618,"name":"tedtsampleprep.lblpreparer.caption","sourcebytes":[80,114,101,112,97,114,101,114,58],"value":"Preparer:"}
 ]}

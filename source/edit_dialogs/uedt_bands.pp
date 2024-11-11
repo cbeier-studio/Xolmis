@@ -47,6 +47,7 @@ type
     lblBandPrefix: TLabel;
     lblBandSize: TLabel;
     lblBandSource: TLabel;
+    lblBandSource1: TLabel;
     lblBandStatus: TLabel;
     lblBandSuffix: TLabel;
     lblBandType: TLabel;

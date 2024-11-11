@@ -68,6 +68,7 @@ type
     lblExternalMinDiameter: TLabel;
     lblExternalMaxDiameter: TLabel;
     lblHeightAboveGround: TLabel;
+    lblNestCover1: TLabel;
     lblPlantDbh: TLabel;
     lblPlantMinDiameter: TLabel;
     lblConstructionDays: TLabel;

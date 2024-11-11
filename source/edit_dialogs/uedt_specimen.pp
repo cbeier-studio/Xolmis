@@ -44,6 +44,7 @@ type
     eTaxon: TDBEditButton;
     lblBandStatus4: TLabel;
     lblBandStatus9: TLabel;
+    lblCollectionDate1: TLabel;
     lblNotes: TLabel;
     lblFieldNumber: TLabel;
     lblCollectionDate: TLabel;
@@ -65,7 +66,6 @@ type
     pNest: TPanel;
     pEgg: TPanel;
     pLocality: TPanel;
-    pSampleType: TPanel;
     pStatus4: TPanel;
     pTaxon: TPanel;
     sbCancel: TButton;

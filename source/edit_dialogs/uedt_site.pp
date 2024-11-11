@@ -39,6 +39,7 @@ type
     eParentSite: TDBEditButton;
     eEbirdName: TDBEdit;
     eFullName: TDBEdit;
+    lblAltitude1: TLabel;
     lblLatitude: TLabel;
     lblLongitude: TLabel;
     lblAcronym: TLabel;

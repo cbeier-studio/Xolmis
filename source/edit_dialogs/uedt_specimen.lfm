@@ -1,12 +1,12 @@
 object edtSpecimen: TedtSpecimen
   Left = 373
-  Height = 635
+  Height = 590
   Top = 34
   Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New specimen'
-  ClientHeight = 635
+  ClientHeight = 590
   ClientWidth = 400
   Font.Height = -12
   PopupMode = pmAuto
@@ -19,7 +19,7 @@ object edtSpecimen: TedtSpecimen
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 592
+    Top = 547
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -29,7 +29,7 @@ object edtSpecimen: TedtSpecimen
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 594
+    Top = 549
     Width = 400
     Align = alTop
     AutoSize = True
@@ -69,34 +69,34 @@ object edtSpecimen: TedtSpecimen
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 592
+    Height = 547
     Top = 0
     Width = 400
     HorzScrollBar.Page = 400
-    VertScrollBar.Page = 592
+    VertScrollBar.Page = 547
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 592
+    ClientHeight = 547
     ClientWidth = 400
     Constraints.MinWidth = 176
     TabOrder = 1
     object pContent: TPanel
       Left = 0
-      Height = 592
+      Height = 547
       Top = 0
       Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 592
+      ClientHeight = 547
       ClientWidth = 400
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 464
+        Top = 419
         Width = 400
         Align = alTop
         AutoSize = True
@@ -110,7 +110,7 @@ object edtSpecimen: TedtSpecimen
         ClientHeight = 112
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 8
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -147,9 +147,12 @@ object edtSpecimen: TedtSpecimen
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
+        ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
@@ -161,6 +164,17 @@ object edtSpecimen: TedtSpecimen
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Field number: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblSampleType: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'Type: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -178,36 +192,8 @@ object edtSpecimen: TedtSpecimen
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-      end
-      object pSampleType: TPanel
-        Left = 0
-        Height = 45
-        Top = 61
-        Width = 400
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 400
-        ParentBackground = False
-        TabOrder = 1
-        object lblSampleType: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Type: *'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
         object cbSampleType: TDBComboBox
-          Left = 16
+          Left = 208
           Height = 23
           Top = 22
           Width = 176
@@ -231,7 +217,7 @@ object edtSpecimen: TedtSpecimen
             'Regurgite'
           )
           MaxLength = 0
-          TabOrder = 0
+          TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
@@ -239,7 +225,7 @@ object edtSpecimen: TedtSpecimen
       object pIndividual: TPanel
         Left = 0
         Height = 48
-        Top = 307
+        Top = 262
         Width = 400
         Align = alTop
         AutoSize = True
@@ -247,12 +233,14 @@ object edtSpecimen: TedtSpecimen
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 5
         object lblIndividual: TLabel
           Left = 16
           Height = 15
@@ -295,19 +283,22 @@ object edtSpecimen: TedtSpecimen
       object pCollectionDate: TPanel
         Left = 0
         Height = 44
-        Top = 106
+        Top = 61
         Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
+        ChildSizing.ControlsPerLine = 2
         ClientHeight = 44
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 2
+        TabOrder = 1
         object lblCollectionDate: TLabel
           Left = 16
           Height = 15
@@ -315,6 +306,16 @@ object edtSpecimen: TedtSpecimen
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Collection date: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblCollectionDate1: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -384,19 +385,21 @@ object edtSpecimen: TedtSpecimen
       object pTaxon: TPanel
         Left = 0
         Height = 48
-        Top = 246
+        Top = 201
         Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 4
         object lblTaxon: TLabel
           Left = 16
           Height = 15
@@ -439,19 +442,21 @@ object edtSpecimen: TedtSpecimen
       object pNest: TPanel
         Left = 0
         Height = 48
-        Top = 355
+        Top = 310
         Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 6
         object lblNest: TLabel
           Left = 16
           Height = 15
@@ -494,19 +499,21 @@ object edtSpecimen: TedtSpecimen
       object pEgg: TPanel
         Left = 0
         Height = 48
-        Top = 403
+        Top = 358
         Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 8
+        TabOrder = 7
         object lblEgg: TLabel
           Left = 16
           Height = 15
@@ -549,19 +556,21 @@ object edtSpecimen: TedtSpecimen
       object pLocality: TPanel
         Left = 0
         Height = 48
-        Top = 150
+        Top = 105
         Width = 400
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 3
+        TabOrder = 2
         object lblLocality: TLabel
           Left = 16
           Height = 15
@@ -604,7 +613,7 @@ object edtSpecimen: TedtSpecimen
       object pStatus4: TPanel
         Left = 0
         Height = 48
-        Top = 198
+        Top = 153
         Width = 400
         Align = alTop
         AutoSize = True
@@ -612,12 +621,14 @@ object edtSpecimen: TedtSpecimen
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 3
         object lblBandStatus4: TLabel
           Left = 16
           Height = 15

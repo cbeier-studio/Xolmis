@@ -105,6 +105,8 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -184,6 +186,8 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -277,6 +281,8 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -343,6 +349,8 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -364,7 +372,7 @@ object edtNetEffort: TedtNetEffort
           Left = 208
           Height = 15
           Top = 3
-          Width = 94
+          Width = 176
           BorderSpacing.Top = 3
           Caption = 'Mistnet area (m²):'
           Font.Color = 6579300
@@ -400,12 +408,13 @@ object edtNetEffort: TedtNetEffort
           Left = 208
           Height = 23
           Top = 22
-          Width = 94
-          Alignment = taRightJustify
+          Width = 176
           DataField = 'net_area'
           DataSource = dsLink
+          Font.Height = -12
           Layout = tlCenter
           ParentColor = False
+          ParentFont = False
         end
       end
       object pDateTotalTime: TPanel
@@ -420,6 +429,8 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 48
@@ -441,7 +452,7 @@ object edtNetEffort: TedtNetEffort
           Left = 208
           Height = 15
           Top = 3
-          Width = 104
+          Width = 176
           BorderSpacing.Top = 3
           Caption = 'Total open time (h):'
           Font.Color = 6579300
@@ -479,12 +490,13 @@ object edtNetEffort: TedtNetEffort
           Left = 208
           Height = 26
           Top = 22
-          Width = 104
-          Alignment = taRightJustify
+          Width = 176
           DataField = 'open_time_total'
           DataSource = dsLink
+          Font.Height = -12
           Layout = tlCenter
           ParentColor = False
+          ParentFont = False
         end
       end
       object pNetOpenClose1: TPanel
@@ -498,6 +510,8 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -566,6 +580,8 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -634,6 +650,8 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
@@ -790,6 +808,8 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45

@@ -43,7 +43,6 @@ type
     pResearcher: TPanel;
     pNotes: TPanel;
     pDate: TPanel;
-    pStatus: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
     procedure eDateKeyPress(Sender: TObject; var Key: char);

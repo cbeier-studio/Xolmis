@@ -51,6 +51,7 @@ type
     eNest: TDBEditButton;
     eFather: TDBEditButton;
     eMother: TDBEditButton;
+    lblDoubleBand1: TLabel;
     lblTaxon: TLabel;
     lblRightTibia: TLabel;
     lblLeftTibia: TLabel;
