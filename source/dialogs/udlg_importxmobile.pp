@@ -68,6 +68,7 @@ type
     sbNext: TButton;
     sbRetry: TBitBtn;
     txtDataType: TLabel;
+    procedure btnCreateNestClick(Sender: TObject);
     procedure btnCreateSurveyClick(Sender: TObject);
     procedure eNestButtonClick(Sender: TObject);
     procedure eNestChange(Sender: TObject);
@@ -120,15 +121,70 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
-  cbs_birds, cbs_fullnames, uDarkStyleParams, udm_grid, udm_sampling, uedt_survey;
+  cbs_birds, cbs_fullnames, uDarkStyleParams, udm_grid, udm_sampling, uedt_survey, uedt_nest;
 
 {$R *.lfm}
 
 { TdlgImportXMobile }
 
 function TdlgImportXMobile.AddNest: Integer;
+var
+  CloseQueryAfter: Boolean;
+  aDataSet: TDataSet;
+  f: QWord;
+  aFate: String;
 begin
-  { #todo : AddNest - Import from Xolmis mobile }
+  Result := 0;
+  aDataSet := DMG.qNests;
+
+  CloseQueryAfter := False;
+  if not aDataSet.Active then
+  begin
+    aDataSet.Open;
+    CloseQueryAfter := True;
+  end;
+
+  Application.CreateForm(TedtNest, edtNest);
+  with edtNest do
+  try
+    dsLink.DataSet := aDataSet;
+
+    aDataSet.Insert;
+    EditSourceStr := rsInsertedByForm;
+
+    f := JSONObject.Get('nestFate', 0);
+    case f of
+      0: aFate := 'U';
+      1: aFate := 'S';
+      2: aFate := 'P';
+    end;
+
+    aDataSet.FieldByName('found_date').AsDateTime := StrToDate(JSONObject.Get('foundTime', ''));
+    aDataSet.FieldByName('last_date').AsDateTime := StrToDate(JSONObject.Get('lastTime', ''));
+    aDataSet.FieldByName('field_number').AsString := JSONObject.Get('fieldNumber', '');
+    aDataSet.FieldByName('taxon_id').AsInteger := GetKey('zoo_taxa', 'taxon_id', 'full_name', JSONObject.Get('speciesName', ''));
+    aDataSet.FieldByName('locality_id').AsInteger := GetKey('gazetteer', 'site_id', 'site_name', JSONObject.Get('localityName', ''));
+    aDataSet.FieldByName('longitude').AsFloat := JSONObject.Get('longitude', 0.0);
+    aDataSet.FieldByName('latitude').AsFloat := JSONObject.Get('latitude', 0.0);
+    aDataSet.FieldByName('other_support').AsString := JSONObject.Get('support', '');
+    aDataSet.FieldByName('height_above_ground').AsFloat := JSONObject.Get('heightAboveGround', 0.0);
+    aDataSet.FieldByName('nest_fate').AsString := aFate;
+
+    { #todo : AddNest - male, female, helpers }
+
+    if ShowModal = mrOk then
+    begin
+      aDataSet.Post;
+      Result := GetLastInsertedKey(tbNests);
+    end
+    else
+      aDataSet.Cancel;
+  finally
+    FreeAndNil(edtNest);
+  end;
+
+  if CloseQueryAfter then
+    aDataSet.Close;
 end;
 
 function TdlgImportXMobile.AddSurvey: Integer;
@@ -197,6 +253,22 @@ begin
   icoImportFinished.Images := imgFinishedDark;
 end;
 
+procedure TdlgImportXMobile.btnCreateNestClick(Sender: TObject);
+begin
+  FNestKey := AddNest;
+
+  sbNext.Visible := False;
+  mProgress.Text := Format(rsImportingFile, [FSourceFile]);
+
+  if FNestKey > 0 then
+  begin
+    mProgress.Lines.Add(Format(rsMobileNestCreated, [FNestKey]));
+    FNest := TNest.Create(FNestKey);
+
+    ImportNest;
+  end;
+end;
+
 procedure TdlgImportXMobile.btnCreateSurveyClick(Sender: TObject);
 begin
   FSurveyKey := AddSurvey;
@@ -210,11 +282,6 @@ begin
     FSurvey := TSurvey.Create(FSurveyKey);
 
     ImportInventory;
-  end;
-
-  if FNestKey > 0 then
-  begin
-
   end;
 
 end;

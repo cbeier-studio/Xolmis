@@ -443,6 +443,7 @@ object dlgImportXMobile: TdlgImportXMobile
             Images = iButtons
             ImageIndex = 3
             TabOrder = 0
+            OnClick = btnCreateNestClick
           end
         end
       end
