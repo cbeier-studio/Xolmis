@@ -5,8 +5,10 @@ unit udlg_import;
 interface
 
 uses
-  Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet, memds, dbf, csvdataset, DB, Forms, Controls,
-  Graphics, Dialogs, ExtCtrls, StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset, atshapelinebgra;
+  BCPanel, Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet,
+  memds, dbf, csvdataset, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset,
+  atshapelinebgra;
 
 type
 
@@ -21,18 +23,25 @@ type
     gridConfirm: TStringGrid;
     iButtons: TImageList;
     iButtonsDark: TImageList;
+    icoImportFinished: TImage;
+    imgFinished: TImageList;
+    imgFinishedDark: TImageList;
     lblProgressInstruction: TLabel;
     lblFieldsInstruction: TLabel;
     lblConfirmInstruction: TLabel;
     lblSourceInstruction: TLabel;
     lblSourceFile: TLabel;
+    lblSubtitleImportFinished: TLabel;
     lblTarget: TLabel;
+    lblTitleImportFinished: TLabel;
     lblTitleProgress: TLabel;
     lblTitleFields: TLabel;
     lblTitleConfirm: TLabel;
     lblTitleSource: TLabel;
     lineBottom: TShapeLineBGRA;
     dsMem: TMemDataset;
+    pContentFinished: TBCPanel;
+    pgFinished: TPage;
     pmfSelectAll: TMenuItem;
     pmfDeselectAll: TMenuItem;
     mProgress: TMemo;
@@ -49,17 +58,21 @@ type
     pgSource: TPage;
     PBar: TProgressBar;
     pmFields: TPopupMenu;
+    pRetry: TBCPanel;
     pSourceOptions: TPanel;
     pTitleProgress: TPanel;
     pTitleFields: TPanel;
     pTitleConfirm: TPanel;
     pTitleSource: TPanel;
+    SaveDlg: TSaveDialog;
     sbCancel: TButton;
     sbNext: TButton;
     sbPrior: TButton;
     gridFields: TStringGrid;
     dsSdf: TSdfDataSet;
     dsWorksheet: TsWorksheetDataset;
+    sbRetry: TBitBtn;
+    sbSaveLog: TBitBtn;
     procedure btnOptionsClick(Sender: TObject);
     procedure eSourceFileButtonClick(Sender: TObject);
     procedure eSourceFileChange(Sender: TObject);
@@ -67,6 +80,7 @@ type
     procedure sbCancelClick(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
     procedure sbPriorClick(Sender: TObject);
+    procedure sbSaveLogClick(Sender: TObject);
   private
     FDataSet: TDataSet;
     dsJSON: TExtJSJSONObjectDataSet;
@@ -223,6 +237,12 @@ begin
 
   sbPrior.Enabled := nbPages.PageIndex > 0;
   sbNext.Enabled := nbPages.PageIndex < (nbPages.PageCount - 1);
+end;
+
+procedure TdlgImport.sbSaveLogClick(Sender: TObject);
+begin
+  if SaveDlg.Execute then
+    mProgress.Lines.SaveToFile(SaveDlg.FileName);
 end;
 
 end.

@@ -22,7 +22,12 @@
 {"hash":153742974,"name":"tdlgimport.lblconfirminstruction.caption","sourcebytes":[67,104,101,99,107,32,105,102,32,116,104,101,32,100,97,116,97,32,115,97,109,112,108,101,100,32,105,115,32,99,111,114,114,101,99,116,46],"value":"Check if the data sampled is correct."},
 {"hash":124387335,"name":"tdlgimport.lbltitleprogress.caption","sourcebytes":[73,109,112,111,114,116,105,110,103],"value":"Importing"},
 {"hash":89932398,"name":"tdlgimport.lblprogressinstruction.caption","sourcebytes":[80,108,101,97,115,101,32,119,97,105,116,44,32,119,104,105,108,101,32,105,109,112,111,114,116,105,110,103,32,116,104,101,32,100,97,116,97,46],"value":"Please wait, while importing the data."},
+{"hash":16714049,"name":"tdlgimport.lbltitleimportfinished.caption","sourcebytes":[70,105,110,105,115,104,101,100,32,105,109,112,111,114,116,105,110,103,33],"value":"Finished importing!"},
+{"hash":108267038,"name":"tdlgimport.lblsubtitleimportfinished.caption","sourcebytes":[84,104,101,32,115,101,108,101,99,116,101,100,32,102,105,108,101,40,115,41,32,119,101,114,101,32,115,117,99,101,115,115,102,117,108,108,121,32,105,109,112,111,114,116,101,100,46],"value":"The selected file(s) were sucessfully imported."},
+{"hash":191335534,"name":"tdlgimport.sbretry.caption","sourcebytes":[84,114,121,32,97,103,97,105,110],"value":"Try again"},
+{"hash":147290311,"name":"tdlgimport.sbsavelog.caption","sourcebytes":[83,97,118,101,32,108,111,103],"value":"Save log"},
 {"hash":177244421,"name":"tdlgimport.opendlg.title","sourcebytes":[83,101,108,101,99,116,32,115,111,117,114,99,101,32,102,105,108,101],"value":"Select source file"},
 {"hash":217088739,"name":"tdlgimport.pmfselectall.caption","sourcebytes":[83,101,108,101,99,116,32,97,108,108,32,102,105,101,108,100,115],"value":"Select all fields"},
-{"hash":106988195,"name":"tdlgimport.pmfdeselectall.caption","sourcebytes":[68,101,115,101,108,101,99,116,32,97,108,108,32,102,105,101,108,100,115],"value":"Deselect all fields"}
+{"hash":106988195,"name":"tdlgimport.pmfdeselectall.caption","sourcebytes":[68,101,115,101,108,101,99,116,32,97,108,108,32,102,105,101,108,100,115],"value":"Deselect all fields"},
+{"hash":126622451,"name":"tdlgimport.savedlg.title","sourcebytes":[83,97,118,101,32,108,111,103,32,97,115],"value":"Save log as"}
 ]}

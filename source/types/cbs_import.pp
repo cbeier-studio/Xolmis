@@ -276,8 +276,12 @@ type
     Notes: String;
   end;
 
+  procedure LoadEbirdFile(const aCSVFile: String; CSV: TSdfDataSet);
+  procedure LoadEbirdRecord(CSV: TSdfDataSet; var Reg: TEbirdDownloadFormat);
   procedure ImportEbirdData(aCSVFile: String);
 
+  procedure LoadBandingFile(const aCSVFile: String; CSV: TSdfDataSet);
+  procedure LoadBandingRecord(CSV: TSdfDataSet; var Reg: TBandingData);
   procedure ImportBandingDataV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
   procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
   procedure ImportBandingEffortV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
@@ -292,6 +296,56 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_datatypes, cbs_data, cbs_taxonomy, cbs_birds, cbs_sampling, cbs_gis,
   cbs_breeding, cbs_system, cbs_getvalue, cbs_fullnames, udm_main, udlg_progress, uedt_survey;
+
+procedure LoadEbirdFile(const aCSVFile: String; CSV: TSdfDataSet);
+begin
+  with CSV do
+  begin
+    Delimiter := ',';
+    FirstLineAsSchema := True;
+    CodePage := 'UTF-8';
+    Schema.AddDelimitedText(EbirdSchema, ',', True);
+    FileName := aCSVFile;
+    Open;
+  end;
+end;
+
+procedure LoadEbirdRecord(CSV: TSdfDataSet; var Reg: TEbirdDownloadFormat);
+begin
+  Reg.Clear;
+
+  Reg.SubmissionID := CSV.FieldByName('Submission ID').AsString;
+  Reg.CommonName := CSV.FieldByName('Common Name').AsString;
+  Reg.ScientificName := CSV.FieldByName('Scientific Name').AsString;
+  Reg.TaxonomicOrder := CSV.FieldByName('Taxonomic Order').AsInteger;
+  Reg.Count := CSV.FieldByName('Count').AsString;
+  Reg.StateProvince := CSV.FieldByName('State/Province').AsString;
+  Reg.County := CSV.FieldByName('County').AsString;
+  Reg.LocationID := CSV.FieldByName('Location ID').AsString;
+  Reg.LocationName := CSV.FieldByName('Location').AsString;
+  if (CSV.FieldByName('Latitude').AsString <> '') then
+    Reg.Latitude := CSV.FieldByName('Latitude').AsFloat;
+  if (CSV.FieldByName('Longitude').AsString <> '') then
+    Reg.Longitude := CSV.FieldByName('Longitude').AsFloat;
+  Reg.RecordDate := CSV.FieldByName('Date').AsDateTime;
+  if (CSV.FieldByName('Time').AsString <> '') then
+    Reg.RecordTime := CSV.FieldByName('Time').AsDateTime;
+  Reg.Protocol := CSV.FieldByName('Protocol').AsString;
+  if (CSV.FieldByName('Duration (Min)').AsString <> '') then
+    Reg.Duration := CSV.FieldByName('Duration (Min)').AsInteger;
+  Reg.AllObsReported := CSV.FieldByName('All Obs Reported').AsBoolean;
+  if (CSV.FieldByName('Distance Traveled (km)').AsString <> '') then
+    Reg.DistanceTraveled := CSV.FieldByName('Distance Traveled (km)').AsFloat;
+  if (CSV.FieldByName('Area Covered (ha)').AsString <> '') then
+    Reg.AreaCovered := CSV.FieldByName('Area Covered (ha)').AsFloat;
+  if (CSV.FieldByName('Number of Observers').AsString <> '') then
+    Reg.NumberObservers := CSV.FieldByName('Number of Observers').AsInteger;
+  if (CSV.FieldByName('Breeding Code').AsString <> '') then
+    Reg.BreedingCode := ExtractDelimited(1, CSV.FieldByName('Breeding Code').AsString, [' ']);
+  Reg.ObservationDetails := CSV.FieldByName('Observation Details').AsString;
+  Reg.ChecklistComments := CSV.FieldByName('Checklist Comments').AsString;
+  Reg.MLCatalogNumber := CSV.FieldByName('ML Catalog Numbers').AsString;
+end;
 
 procedure ImportEbirdData(aCSVFile: String);
 var
@@ -319,87 +373,26 @@ begin
   CSV := TSdfDataSet.Create(nil);
   try
     { Load CSV file using TSdfDataSet }
-    with CSV do
-    begin
-      Delimiter := ',';
-      FirstLineAsSchema := True;
-      CodePage := 'UTF-8';
-      Schema.AddDelimitedText(EbirdSchema, ',', True);
-      FileName := aCSVFile;
-      Open;
-    end;
+    LoadEbirdFile(aCSVFile, CSV);
 
     dlgProgress.Position := 0;
     dlgProgress.Max := CSV.RecordCount;
     DMM.sqlTrans.StartTransaction;
     try
       CSV.First;
-      repeat
+      while not CSV.EOF do
+      begin
+        if Parar then
+          Break;
+
         dlgProgress.Text := Format(rsProgressRecords,[CSV.RecNo, CSV.RecordCount]);
-        Reg.Clear;
 
         { Loading field values into TEbirdDownloadFormat }
-        { 0 = Submission ID }
-        Reg.SubmissionID := CSV.FieldByName('Submission ID').AsString;
-        { 1 = Common Name }
-        Reg.CommonName := CSV.FieldByName('Common Name').AsString;
-        { 2 = Scientific Name }
-        Reg.ScientificName := CSV.FieldByName('Scientific Name').AsString;
-        { 3 = Taxonomic Order }
-        Reg.TaxonomicOrder := CSV.FieldByName('Taxonomic Order').AsInteger;
-        { 4 = Count }
-        Reg.Count := CSV.FieldByName('Count').AsString;
-        { 5 = State/Province }
-        Reg.StateProvince := CSV.FieldByName('State/Province').AsString;
-        { 6 = County }
-        Reg.County := CSV.FieldByName('County').AsString;
-        { 7 = Location ID }
-        Reg.LocationID := CSV.FieldByName('Location ID').AsString;
-        { 8 = Location }
-        Reg.LocationName := CSV.FieldByName('Location').AsString;
-        { 9 = Latitude }
-        if (CSV.FieldByName('Latitude').AsString <> '') then
-          Reg.Latitude := CSV.FieldByName('Latitude').AsFloat;
-        { 10 = Longitude }
-        if (CSV.FieldByName('Longitude').AsString <> '') then
-          Reg.Longitude := CSV.FieldByName('Longitude').AsFloat;
-        { 11 = Date }
-        Reg.RecordDate := CSV.FieldByName('Date').AsDateTime;
-        { 12 = Time }
-        if (CSV.FieldByName('Time').AsString <> '') then
-          Reg.RecordTime := CSV.FieldByName('Time').AsDateTime;
-        { 13 = Protocol }
-        Reg.Protocol := CSV.FieldByName('Protocol').AsString;
-        { 14 = Duration (Min) }
-        if (CSV.FieldByName('Duration (Min)').AsString <> '') then
-          Reg.Duration := CSV.FieldByName('Duration (Min)').AsInteger;
-        { 15 = All Obs Reported }
-        Reg.AllObsReported := CSV.FieldByName('All Obs Reported').AsBoolean;
-        { 16 = Distance Traveled (km) }
-        if (CSV.FieldByName('Distance Traveled (km)').AsString <> '') then
-          Reg.DistanceTraveled := CSV.FieldByName('Distance Traveled (km)').AsFloat;
-        { 17 = Area Covered (ha) }
-        if (CSV.FieldByName('Area Covered (ha)').AsString <> '') then
-          Reg.AreaCovered := CSV.FieldByName('Area Covered (ha)').AsFloat;
-        { 18 = Number of Observers }
-        if (CSV.FieldByName('Number of Observers').AsString <> '') then
-          Reg.NumberObservers := CSV.FieldByName('Number of Observers').AsInteger;
-        { 19 = Breeding Code }
-        if (CSV.FieldByName('Breeding Code').AsString <> '') then
-          Reg.BreedingCode := ExtractDelimited(1, CSV.FieldByName('Breeding Code').AsString, [' ']);
-        { 20 = Observation Details }
-        Reg.ObservationDetails := CSV.FieldByName('Observation Details').AsString;
-        { 21 = Checklist Comments }
-        Reg.ChecklistComments := CSV.FieldByName('Checklist Comments').AsString;
-        { 22 = ML Catalog Numbers }
-        Reg.MLCatalogNumber := CSV.FieldByName('ML Catalog Numbers').AsString;
+        LoadEbirdRecord(CSV, Reg);
 
         { Load other variables }
         RDate := FormatDateTime(maskSQLiteDate, Reg.RecordDate);
-        if Reg.Count <> 'X' then
-          Quant := StrToInt(Reg.Count)
-        else
-          Quant := 0;
+        Quant := StrToIntDef(Reg.Count, 0);
 
         Toponimo := TSite.Create(GetKey('gazetteer', 'site_id', 'ebird_name', Reg.LocationName));
         Taxon := TTaxon.Create(GetKey('zoo_taxa', 'taxon_id', 'full_name', Reg.ScientificName));
@@ -464,7 +457,7 @@ begin
         dlgProgress.Position := CSV.RecNo;
         Application.ProcessMessages;
         CSV.Next;
-      until CSV.Eof or Parar;
+      end;
 
       if Parar then
       begin
@@ -490,6 +483,113 @@ begin
   end;
 end;
 
+procedure LoadBandingFile(const aCSVFile: String; CSV: TSdfDataSet);
+begin
+  with CSV do
+  begin
+    Delimiter := ';';
+    FirstLineAsSchema := True;
+    CodePage := 'Windows-1252';
+    Schema.AddDelimitedText(BandingSchema, ';', True);
+    FileName := aCSVFile;
+    Open;
+  end;
+end;
+
+procedure LoadBandingRecord(CSV: TSdfDataSet; var Reg: TBandingData);
+begin
+  Reg.Locality := CSV.FieldByName('LOCALITY').AsString;
+  Reg.NetStation := CSV.FieldByName('STATION').AsString;
+  if (not CSV.FieldByName('DATA').IsNull) then
+    Reg.CaptureDate := CSV.FieldByName('DATA').AsDateTime;
+  Reg.Recorder := AnsiUpperCase(CSV.FieldByName('RECORDER').AsString);
+  Reg.Bander := AnsiUpperCase(CSV.FieldByName('BANDER').AsString);
+  if (not CSV.FieldByName('CAP TIME').IsNull) then
+    Reg.CaptureTime := CSV.FieldByName('CAP TIME').AsDateTime
+  else
+    Reg.CaptureTime := StrToTime('00:00:01');
+  if (CSV.FieldByName('NET SITE NAME').AsString = '') then
+    Reg.NetSiteName := '0'
+  else
+    Reg.NetSiteName := CSV.FieldByName('NET SITE NAME').AsString;
+  Reg.CaptureType := AnsiUpperCase(CSV.FieldByName('NEW_RECAP').AsString);
+  if (Reg.CaptureType <> 'U') then
+    Reg.BandSize := AnsiUpperCase(CSV.FieldByName('BAND_CODE').AsString);
+  if (Reg.BandSize <> '') and (Reg.CaptureType <> 'U') then
+    Reg.BandNumber := CSV.FieldByName('BAND NUMBER').AsInteger;
+  Reg.RightLeg := AnsiUpperCase(CSV.FieldByName('RIGHT LEG').AsString);
+  Reg.LeftLeg := AnsiUpperCase(CSV.FieldByName('LEFT LEG').AsString);
+  Reg.SpeciesName := CSV.FieldByName('SPECIES NAME').AsString;
+  Reg.CloacalProtuberance := AnsiUpperCase(CSV.FieldByName('CP').AsString);
+  Reg.BroodPatch := AnsiUpperCase(CSV.FieldByName('BP').AsString);
+  Reg.Fat := AnsiUpperCase(CSV.FieldByName('FAT').AsString);
+  Reg.BodyMolt := AnsiUpperCase(CSV.FieldByName('BODY MOLT').AsString);
+  Reg.FlightFeathersMolt := AnsiUpperCase(CSV.FieldByName('FF MOLT').AsString);
+  Reg.FlightFeathersWear := AnsiUpperCase(CSV.FieldByName('FF WEAR').AsString);
+  if (not CSV.FieldByName('RIGHT WING').IsNull) then
+    Reg.RightWingChord := CSV.FieldByName('RIGHT WING').AsFloat;
+  if (not CSV.FieldByName('FIRST SECONDARY').IsNull) then
+    Reg.FirstSecondaryChord := CSV.FieldByName('FIRST SECONDARY').AsFloat;
+  if (not CSV.FieldByName('TAIL').IsNull) then
+    Reg.TailLength := CSV.FieldByName('TAIL').AsFloat;
+  if (not CSV.FieldByName('TARSUS LENGTH').IsNull) then
+    Reg.TarsusLength := CSV.FieldByName('TARSUS LENGTH').AsFloat;
+  if (not CSV.FieldByName('RIGHT TARSUS DIAMETER').IsNull) then
+    Reg.RightTarsusDiameter := CSV.FieldByName('RIGHT TARSUS DIAMETER').AsFloat;
+  if (not CSV.FieldByName('WEIGHT').IsNull) then
+    Reg.Weight := CSV.FieldByName('WEIGHT').AsFloat;
+  Reg.MoltLimits := AnsiUpperCase(CSV.FieldByName('MOLT LIMITS').AsString);
+  Reg.SkullOssification := AnsiUpperCase(CSV.FieldByName('SKULL').AsString);
+  Reg.CycleCode := AnsiUpperCase(CSV.FieldByName('CYCLE CODE').AsString);
+  Reg.HowAged := AnsiUpperCase(CSV.FieldByName('HOW AGED').AsString);
+  Reg.Sex := AnsiUpperCase(CSV.FieldByName('SEX').AsString);
+  Reg.HowSexed := AnsiUpperCase(CSV.FieldByName('HOW SEXED').AsString);
+  Reg.SubjectStatus := AnsiUpperCase(CSV.FieldByName('STATUS').AsString);
+  if (not CSV.FieldByName('ESCAPED').IsNull) then
+    Reg.Escaped := CSV.FieldByName('ESCAPED').AsBoolean;
+  Reg.Notes := CSV.FieldByName('NOTES').AsString;
+  Reg.RemovedBand := CSV.FieldByName('REMOVED BAND').AsString;
+  Reg.Photographer1 := AnsiUpperCase(CSV.FieldByName('PHOTOGRAPHER').AsString);
+  if Pos('/', Reg.Photographer1) > 0 then
+  begin
+    Reg.Photographer2 := Trim(ExtractWord(2, Reg.Photographer1, ['/']));
+    Reg.Photographer1 := Trim(ExtractWord(1, Reg.Photographer1, ['/']));
+  end;
+  if (not CSV.FieldByName('INITIAL PHOTO NUMBER').IsNull) then
+    Reg.StartPhotoNumber := CSV.FieldByName('INITIAL PHOTO NUMBER').AsInteger;
+  if (not CSV.FieldByName('FINAL PHOTO NUMBER').IsNull) then
+    Reg.EndPhotoNumber := CSV.FieldByName('FINAL PHOTO NUMBER').AsInteger;
+  Reg.CameraName := CSV.FieldByName('CAMERA NAME').AsString;
+  Reg.PhotoNameFormula := CSV.FieldByName('PHOTO NAME FORMULA').AsString;
+  if (not CSV.FieldByName('CRANIO').IsNull) then
+    Reg.SkullLength := CSV.FieldByName('CRANIO').AsFloat;
+  if (not CSV.FieldByName('CULMEN EXPOSTO').IsNull) then
+    Reg.ExposedCulmen := CSV.FieldByName('CULMEN EXPOSTO').AsFloat;
+  if (not CSV.FieldByName('NP').IsNull) then
+    Reg.NostrilBillTip := CSV.FieldByName('NP').AsFloat;
+  if (not CSV.FieldByName('LARGURA BICO').IsNull) then
+    Reg.BillWidth := CSV.FieldByName('LARGURA BICO').AsFloat;
+  if (not CSV.FieldByName('ALTURA BICO').IsNull) then
+    Reg.BillHeight := CSV.FieldByName('ALTURA BICO').AsFloat;
+  if (not CSV.FieldByName('SANGUE').IsNull) then
+    Reg.BloodSample := CSV.FieldByName('SANGUE').AsBoolean;
+  if (not CSV.FieldByName('PENAS').IsNull) then
+    Reg.FeatherSample := CSV.FieldByName('PENAS').AsBoolean;
+  if (not CSV.FieldByName('LONGITUDE').IsNull) then
+    Reg.Longitude := CSV.FieldByName('LONGITUDE').AsFloat;
+  if (not CSV.FieldByName('LATITUDE').IsNull) then
+    Reg.Latitude := CSV.FieldByName('LATITUDE').AsFloat;
+  if (not CSV.FieldByName('KIPPS').IsNull) then
+    Reg.KippsIndex := CSV.FieldByName('KIPPS').AsFloat;
+  if (not CSV.FieldByName('GLICOSE').IsNull) then
+    Reg.Glucose := CSV.FieldByName('GLICOSE').AsFloat;
+  if (not CSV.FieldByName('HEMOGLOBINA').IsNull) then
+    Reg.Hemoglobin := CSV.FieldByName('HEMOGLOBINA').AsFloat;
+  if (not CSV.FieldByName('HEMATOCRITO').IsNull) then
+    Reg.Hematocrit := CSV.FieldByName('HEMATOCRITO').AsFloat;
+  Reg.GPSNumber := CSV.FieldByName('GPS NUMBER').AsString;
+end;
+
 procedure ImportBandingDataV1(aCSVFile: String; aProgressBar: TProgressBar);
 var
   CSV: TSdfDataSet;
@@ -505,7 +605,6 @@ var
   strDate, strTime: String;
   CodAnilha: Integer;
   NetLat, NetLong: Extended;
-  // FS: TFormatSettings;
 begin
   if not FileExists(aCSVFile) then
   begin
@@ -524,15 +623,7 @@ begin
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
-    with CSV do
-    begin
-      Delimiter := ';';
-      FirstLineAsSchema := True;
-      CodePage := 'Windows-1252';
-      Schema.AddDelimitedText(BandingSchema, ';', True);
-      FileName := aCSVFile;
-      Open;
-    end;
+    LoadBandingFile(aCSVFile, CSV);
 
     if Assigned(aProgressBar) then
     begin
@@ -557,165 +648,9 @@ begin
         NetLat := 500.0;
         NetLong := 500.0;
         strDate := '';
-        // Reg.GetData(CSV[i]);
-        // FS:= TFormatSettings.Create;
-        // FS.ShortDateFormat:= 'dd/mm/yyyy';
-        // FS.ShortTimeFormat:= 'hh:nn';
-        // FS.DateSeparator:= '/';
-        // FS.DecimalSeparator:= ',';
 
-        { 0 = LOCALITY }
-        Reg.Locality := CSV.FieldByName('LOCALITY').AsString;
-        { 1 = STATION }
-        Reg.NetStation := CSV.FieldByName('STATION').AsString;
-        { X = MONTH
-          if (CSV.Fields[1].AsString <> '') then
-          Reg.CaptureMonth:= CSV.Fields[1].AsInteger;
-          X = DAY
-          if (CSV.Fields[2].AsString <> '') then
-          Reg.CaptureDay:= CSV.Fields[2].AsInteger; }
-        { 2 = DATA }
-        if (not CSV.FieldByName('DATA').IsNull) then
-          Reg.CaptureDate := CSV.FieldByName('DATA').AsDateTime;
-        { 3 = RECORDER }
-        Reg.Recorder := AnsiUpperCase(CSV.FieldByName('RECORDER').AsString);
-        { 4 = BANDER }
-        Reg.Bander := AnsiUpperCase(CSV.FieldByName('BANDER').AsString);
-        { 5 = CAP TIME }
-        if (not CSV.FieldByName('CAP TIME').IsNull) then
-          Reg.CaptureTime := CSV.FieldByName('CAP TIME').AsDateTime
-        else
-          Reg.CaptureTime := StrToTime('00:00:01');
-        { 6 = NET SITE NAME }
-        if (CSV.FieldByName('NET SITE NAME').AsString = '') then
-          Reg.NetSiteName := '0'
-        else
-          Reg.NetSiteName := CSV.FieldByName('NET SITE NAME').AsString;
-        { 7 = NEW_RECAP }
-        Reg.CaptureType := AnsiUpperCase(CSV.FieldByName('NEW_RECAP').AsString);
-        { 8 = BAND_CODE }
-        if (Reg.CaptureType <> 'U') then
-          Reg.BandSize := AnsiUpperCase(CSV.FieldByName('BAND_CODE').AsString);
-        { 9 = BAND NUMBER }
-        if (Reg.BandSize <> '') and (Reg.CaptureType <> 'U') then
-          Reg.BandNumber := CSV.FieldByName('BAND NUMBER').AsInteger;
-        { 10 = RIGHT LEG }
-        Reg.RightLeg := AnsiUpperCase(CSV.FieldByName('RIGHT LEG').AsString);
-        { 11 = LEFT LEG }
-        Reg.LeftLeg := AnsiUpperCase(CSV.FieldByName('LEFT LEG').AsString);
-        { X = SPECIES CODE
-          Reg.SpeciesCode:= AnsiUpperCase(CSV.Fields[13].AsString); }
-        { 12 = SPECIES NAME }
-        Reg.SpeciesName := CSV.FieldByName('SPECIES NAME').AsString;
-        { 13 = CP }
-        Reg.CloacalProtuberance := AnsiUpperCase(CSV.FieldByName('CP').AsString);
-        { 14 = BP }
-        Reg.BroodPatch := AnsiUpperCase(CSV.FieldByName('BP').AsString);
-        { 15 = FAT }
-        Reg.Fat := AnsiUpperCase(CSV.FieldByName('FAT').AsString);
-        { 16 = BODY MOLT }
-        Reg.BodyMolt := AnsiUpperCase(CSV.FieldByName('BODY MOLT').AsString);
-        { 17 = FF MOLT }
-        Reg.FlightFeathersMolt := AnsiUpperCase(CSV.FieldByName('FF MOLT').AsString);
-        { 18 = FF WEAR }
-        Reg.FlightFeathersWear := AnsiUpperCase(CSV.FieldByName('FF WEAR').AsString);
-        { 19 = RIGHT WING }
-        if (not CSV.FieldByName('RIGHT WING').IsNull) then
-          Reg.RightWingChord := CSV.FieldByName('RIGHT WING').AsFloat;
-        { 20 = FIRST SECONDARY }
-        if (not CSV.FieldByName('FIRST SECONDARY').IsNull) then
-          Reg.FirstSecondaryChord := CSV.FieldByName('FIRST SECONDARY').AsFloat;
-        { 21 = TAIL }
-        if (not CSV.FieldByName('TAIL').IsNull) then
-          Reg.TailLength := CSV.FieldByName('TAIL').AsFloat;
-        { 22 = TARSUS LENGTH }
-        if (not CSV.FieldByName('TARSUS LENGTH').IsNull) then
-          Reg.TarsusLength := CSV.FieldByName('TARSUS LENGTH').AsFloat;
-        { 23 = RIGHT TARSUS DIAMETER }
-        if (not CSV.FieldByName('RIGHT TARSUS DIAMETER').IsNull) then
-          Reg.RightTarsusDiameter := CSV.FieldByName('RIGHT TARSUS DIAMETER').AsFloat;
-        { 24 = WEIGHT }
-        if (not CSV.FieldByName('WEIGHT').IsNull) then
-          Reg.Weight := CSV.FieldByName('WEIGHT').AsFloat;
-        { 25 = MOLT LIMITS }
-        Reg.MoltLimits := AnsiUpperCase(CSV.FieldByName('MOLT LIMITS').AsString);
-        { 26 = SKULL }
-        Reg.SkullOssification := AnsiUpperCase(CSV.FieldByName('SKULL').AsString);
-        { 27 = CYCLE CODE }
-        Reg.CycleCode := AnsiUpperCase(CSV.FieldByName('CYCLE CODE').AsString);
-        { 28 = HOW AGED }
-        Reg.HowAged := AnsiUpperCase(CSV.FieldByName('HOW AGED').AsString);
-        { 29 = SEX }
-        Reg.Sex := AnsiUpperCase(CSV.FieldByName('SEX').AsString);
-        { 30 = HOW SEXED }
-        Reg.HowSexed := AnsiUpperCase(CSV.FieldByName('HOW SEXED').AsString);
-        { 31 = STATUS }
-        Reg.SubjectStatus := AnsiUpperCase(CSV.FieldByName('STATUS').AsString);
-        { 32 = ESCAPED }
-        if (not CSV.FieldByName('ESCAPED').IsNull) then
-          Reg.Escaped := CSV.FieldByName('ESCAPED').AsBoolean;
-        { 33 = NOTES }
-        Reg.Notes := CSV.FieldByName('NOTES').AsString;
-        { 34 = REMOVED BAND }
-        Reg.RemovedBand := CSV.FieldByName('REMOVED BAND').AsString;
-        { 35 = PHOTOGRAPHER }
-        Reg.Photographer1 := AnsiUpperCase(CSV.FieldByName('PHOTOGRAPHER').AsString);
-        if Pos('/', Reg.Photographer1) > 0 then
-        begin
-          Reg.Photographer2 := Trim(ExtractWord(2, Reg.Photographer1, ['/']));
-          Reg.Photographer1 := Trim(ExtractWord(1, Reg.Photographer1, ['/']));
-        end;
-        { 36 = INITIAL PHOTO NUMBER }
-        if (not CSV.FieldByName('INITIAL PHOTO NUMBER').IsNull) then
-          Reg.StartPhotoNumber := CSV.FieldByName('INITIAL PHOTO NUMBER').AsInteger;
-        { 37 = FINAL PHOTO NUMBER }
-        if (not CSV.FieldByName('FINAL PHOTO NUMBER').IsNull) then
-          Reg.EndPhotoNumber := CSV.FieldByName('FINAL PHOTO NUMBER').AsInteger;
-        { 38 = CAMERA NAME }
-        Reg.CameraName := CSV.FieldByName('CAMERA NAME').AsString;
-        { 39 = PHOTO NAME FORMULA }
-        Reg.PhotoNameFormula := CSV.FieldByName('PHOTO NAME FORMULA').AsString;
-        { 40 = CRANIO }
-        if (not CSV.FieldByName('CRANIO').IsNull) then
-          Reg.SkullLength := CSV.FieldByName('CRANIO').AsFloat;
-        { 41 = CULMEN EXPOSTO }
-        if (not CSV.FieldByName('CULMEN EXPOSTO').IsNull) then
-          Reg.ExposedCulmen := CSV.FieldByName('CULMEN EXPOSTO').AsFloat;
-        { 42 = NP }
-        if (not CSV.FieldByName('NP').IsNull) then
-          Reg.NostrilBillTip := CSV.FieldByName('NP').AsFloat;
-        { 43 = LARGURA BICO }
-        if (not CSV.FieldByName('LARGURA BICO').IsNull) then
-          Reg.BillWidth := CSV.FieldByName('LARGURA BICO').AsFloat;
-        { 44 = ALTURA BICO }
-        if (not CSV.FieldByName('ALTURA BICO').IsNull) then
-          Reg.BillHeight := CSV.FieldByName('ALTURA BICO').AsFloat;
-        { 45 = SANGUE }
-        if (not CSV.FieldByName('SANGUE').IsNull) then
-          Reg.BloodSample := CSV.FieldByName('SANGUE').AsBoolean;
-        { 46 = PENAS }
-        if (not CSV.FieldByName('PENAS').IsNull) then
-          Reg.FeatherSample := CSV.FieldByName('PENAS').AsBoolean;
-        { 47 = LONGITUDE }
-        if (not CSV.FieldByName('LONGITUDE').IsNull) then
-          Reg.Longitude := CSV.FieldByName('LONGITUDE').AsFloat;
-        { 48 = LATITUDE }
-        if (not CSV.FieldByName('LATITUDE').IsNull) then
-          Reg.Latitude := CSV.FieldByName('LATITUDE').AsFloat;
-        { 49 = KIPPS }
-        if (not CSV.FieldByName('KIPPS').IsNull) then
-          Reg.KippsIndex := CSV.FieldByName('KIPPS').AsFloat;
-        { 50 = GLICOSE }
-        if (not CSV.FieldByName('GLICOSE').IsNull) then
-          Reg.Glucose := CSV.FieldByName('GLICOSE').AsFloat;
-        { 51 = HEMOGLOBINA }
-        if (not CSV.FieldByName('HEMOGLOBINA').IsNull) then
-          Reg.Hemoglobin := CSV.FieldByName('HEMOGLOBINA').AsFloat;
-        { 52 = HEMATOCRITO }
-        if (not CSV.FieldByName('HEMATOCRITO').IsNull) then
-          Reg.Hematocrit := CSV.FieldByName('HEMATOCRITO').AsFloat;
-        { 53 = GPS NUMBER }
-        Reg.GPSNumber := CSV.FieldByName('GPS NUMBER').AsString;
+        // Load the record data
+        LoadBandingRecord(CSV, Reg);
 
         // If it is a capture record (including recapture and band change)
         if (Trim(Reg.SpeciesName) <> EmptyStr) then
@@ -1769,6 +1704,7 @@ begin
           if not Nest.Find(CSV.FieldByName('field_number').AsString, Taxon.Id, Toponimo.Id,
                     StrToDate(CSV.FieldByName('found_day').AsString)) then
           begin
+            // if not, create a new nest
             Nest.FieldNumber := CSV.FieldByName('field_number').AsString;
             //Nest.ObserverId := GetKey('people', 'person_id', 'acronym', CSV.FieldByName('observer').AsString);
             Nest.LocalityId := Toponimo.Id;
