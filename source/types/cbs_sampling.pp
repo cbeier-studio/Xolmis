@@ -535,7 +535,7 @@ type
 implementation
 
 uses
-  cbs_locale, cbs_validations, cbs_fullnames, cbs_datacolumns, udm_main;
+  cbs_locale, cbs_system, cbs_validations, cbs_getvalue, cbs_fullnames, cbs_datacolumns, udm_main;
 
 function AuthorListToString(aAuthors: TAuthors): String;
 var
@@ -815,8 +815,73 @@ begin
 end;
 
 procedure TSpecimen.Insert;
+var
+  Qry: TSQLQuery;
+  aDate: TPartialDate;
 begin
-  { #todo : Insert - Specimen }
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO specimens (field_number, taxon_id, sample_type, longitude, latitude, locality_id, ' +
+      'collection_year, collection_month, collection_day, collection_date, individual_id, nest_id, egg_id, ' +
+      'full_name, order_id, family_id, genus_id, species_id, country_id, state_id, municipality_id' +
+      'notes, user_inserted, insert_date) ');
+    Add('VALUES (:afieldnumber, :ataxon, :atype, :alongitude, :alatitude, :alocality, ' +
+      ':ayear, :amonth, :aday, :apartialdate, :aindividual, :anest, :aegg, ' +
+      ':afullname, :aorder, :afamily, :agenus, :aspecies, :acountry, :astate, :amunicipality, ' +
+      ':anote, :auser, datetime(''now'',''localtime''));');
+    ParamByName('AFIELDNUMBER').AsString := FFieldNumber;
+    ParamByName('ATYPE').AsString := FSampleType;
+    ParamByName('AYEAR').AsInteger := FCollectionYear;
+    ParamByName('AMONTH').AsInteger := FCollectionMonth;
+    ParamByName('ADAY').AsInteger := FCollectionDay;
+    aDate.Year := FCollectionYear;
+    aDate.Month := FCollectionMonth;
+    aDate.Day := FCollectionDay;
+    ParamByName('APARTIALDATE').AsString := aDate.ToString;
+    ParamByName('AINDIVIDUAL').AsInteger := FIndividualId;
+    ParamByName('ANEST').AsInteger := FNestId;
+    ParamByName('AEGG').AsInteger := FEggId;
+    ParamByName('ATAXON').AsInteger := FTaxonId;
+    if FLongitude <> 0 then
+      ParamByName('ALONGITUDE').AsFloat := FLongitude
+    else
+      ParamByName('ALONGITUDE').Clear;
+    if FLatitude <> 0 then
+      ParamByName('ALATITUDE').AsFloat := FLatitude
+    else
+      ParamByName('ALATITUDE').Clear;
+    ParamByName('ALOCALITY').AsInteger := FLocalityId;
+    ParamByName('ANOTE').AsString := FNotes;
+    ParamByName('AFULLNAME').AsString := FFullName;
+
+    GetTaxonHierarchyForSpecimen(Self);
+    ParamByName('AORDER').AsInteger := FOrderId;
+    ParamByName('AFAMILY').AsInteger := FFamilyId;
+    ParamByName('AGENUS').AsInteger := FGenusId;
+    ParamByName('ASPECIES').AsInteger := FSpeciesId;
+
+    GetSiteHierarchyForSpecimen(Self);
+    ParamByName('ACOUNTRY').AsInteger := FCountryId;
+    ParamByName('ASTATE').AsInteger := FStateId;
+    ParamByName('AMUNICIPALITY').AsInteger := FMunicipalityId;
+
+    ParamByName('AUSER').AsInteger := FUserInserted;
+//    GravaLogSQL(SQL);
+    ExecSQL;
+
+    // Get the autoincrement key inserted
+    Clear;
+    Add('SELECT DISTINCT last_insert_rowid() FROM specimens');
+    Open;
+    FId := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 function TSpecimen.Diff(aOld: TSpecimen; var aList: TStrings): Boolean;
@@ -861,8 +926,41 @@ begin
 end;
 
 function TSpecimen.Find(aFieldNumber: String; aYear, aMonth, aDay: Integer; aTaxon, aLocality: Integer): Boolean;
+var
+  Qry: TSQLQuery;
 begin
-  { #todo : Find - Specimen }
+  Result := False;
+
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('SELECT specimen_id FROM specimens');
+    Add('WHERE (field_number = :afieldnumber)');
+    Add('AND (collection_year = :ayear)');
+    Add('AND (collection_month = :amonth)');
+    Add('AND (collection_day = :aday)');
+    Add('AND (taxon_id = :ataxon)');
+    Add('AND (locality_id = :alocality)');
+    ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
+    ParamByName('ALOCALITY').AsInteger := aLocality;
+    ParamByName('AYEAR').AsInteger := aYear;
+    ParamByName('AMONTH').AsInteger := aMonth;
+    ParamByName('ADAY').AsInteger := aDay;
+    ParamByName('ALATITUDE').AsInteger := aTaxon;
+
+    Open;
+    Result := RecordCount > 0;
+    if Result = True then
+    begin
+      GetData(FieldByName('specimen_id').AsInteger);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 { TSpecimenCollector }

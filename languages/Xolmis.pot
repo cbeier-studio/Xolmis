@@ -3775,6 +3775,10 @@ msgstr ""
 msgid "Importing species list..."
 msgstr ""
 
+#: cbs_locale.rsmobileimportingspecimens
+msgid "Importing specimens..."
+msgstr ""
+
 #: cbs_locale.rsmobileimportingvegetation
 msgid "Importing vegetation data..."
 msgstr ""
@@ -3812,6 +3816,11 @@ msgstr ""
 #: cbs_locale.rsmobilespeciesexists
 #, object-pascal-format
 msgid "Species %s already recorded!"
+msgstr ""
+
+#: cbs_locale.rsmobilespecimenexists
+#, object-pascal-format
+msgid "Specimen already recorded: %s"
 msgstr ""
 
 #: cbs_locale.rsmobilesurveycreated

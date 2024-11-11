@@ -95,7 +95,7 @@ type
     JSONData: TJSONData;
     JSONObject, SpeciesObject, PoiObject, VegetationObject, WeatherObject: TJSONObject;
     RevisionObject, EggObject: TJSONObject;
-    SpeciesArray, PoisArray, VegetationArray, WeatherArray: TJSONArray;
+    JSONArray, SpeciesArray, PoisArray, VegetationArray, WeatherArray: TJSONArray;
     RevisionArray, EggArray: TJSONArray;
     procedure ApplyDarkMode;
     function AddSurvey: Integer;
@@ -110,6 +110,7 @@ type
     procedure ImportNest;
     procedure ImportRevisionList;
     procedure ImportEggList;
+    procedure ImportSpecimens;
   public
 
   end;
@@ -372,6 +373,7 @@ begin
   end;
 
   btnCreateSurvey.Enabled := IsRequiredFilledSource;
+  btnCreateNest.Enabled := IsRequiredFilledSource;
   sbNext.Enabled := IsRequiredFilledSource;
 end;
 
@@ -387,6 +389,16 @@ end;
 
 procedure TdlgImportXMobile.FormDestroy(Sender: TObject);
 begin
+  if Assigned(EggObject) then
+    EggObject.Free;
+  if Assigned(EggArray) then
+    EggArray.Free;
+
+  if Assigned(RevisionObject) then
+    RevisionObject.Free;
+  if Assigned(RevisionArray) then
+    RevisionArray.Free;
+
   if Assigned(WeatherObject) then
     WeatherObject.Free;
   if Assigned(WeatherArray) then
@@ -404,6 +416,8 @@ begin
 
   if Assigned(JSONObject) then
     JSONObject.Free;
+  if Assigned(JSONArray) then
+    JSONArray.Free;
   if Assigned(JSON) then
     JSON.Free;
 end;
@@ -446,7 +460,7 @@ begin
   if JSONObject.Find('support') <> nil then
     Result := mctNest
   else
-  if JSONObject.Find('fieldNumber') <> nil then
+  if JSONArray.Objects[0].Find('fieldNumber') <> nil then
     Result := mctSpecimens;
 end;
 
@@ -713,6 +727,103 @@ begin
   end;
 end;
 
+procedure TdlgImportXMobile.ImportSpecimens;
+var
+  AItem: TSpecimen;
+  aDate: TDateTime;
+  aTaxon, aLocality, p, j, t: Integer;
+  aYear, aMonth, aDay: Word;
+  aLongitude, aLatitude: Extended;
+  aFieldNumber, aType: String;
+begin
+  nbPages.PageIndex := 1;
+
+  if Parar then
+    Exit;
+
+  mProgress.Lines.Add(rsMobileImportingSpecimens);
+  p := 0;
+  PBar.Position := p;
+  PBar.Max := JSONArray.Count;
+  AItem := TSpecimen.Create();
+  try
+    for j := 0 to JSONArray.Count - 1 do
+    begin
+      Inc(p);
+      AItem.Clear;
+
+      JSONObject := JSONArray.Objects[j];
+      aDate := StrToDate(JSONObject.Get('sampleTime', ''));
+      DecodeDate(aDate, aYear, aMonth, aDay);
+      aLongitude := JSONObject.Get('longitude', 0.0);
+      aLatitude := JSONObject.Get('latitude', 0.0);
+      aFieldNumber := JSONObject.Get('fieldNumber', '');
+      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name', JSONObject.Get('speciesName', ''));
+      aLocality := GetKey('gazetteer', 'site_id', 'site_name', JSONObject.Get('locality', ''));
+      t := JSONObject.Get('type', 0);
+      case t of
+        0: aType := 'WS';
+        1: aType := 'PS';
+        2: aType := 'N';
+        3: aType := 'B';
+        4: aType := 'E';
+        5: aType := 'P';
+        6: aType := 'F';
+        7: aType := 'BS';
+        8: aType := 'C';
+        9: aType := 'S';
+       10: aType := 'T';
+       11: aType := 'D';
+       12: aType := 'R';
+      end;
+
+      if AItem.Find(aFieldNumber, aYear, aMonth, aDay, aTaxon, aLocality) then
+      begin
+        mProgress.Lines.Add(Format(rsMobileSpecimenExists, [JSONObject.Get('fieldNumber', '')]));
+      end
+      else
+      begin
+        AItem.FieldNumber := aFieldNumber;
+        AItem.CollectionYear := aYear;
+        AItem.CollectionMonth := aMonth;
+        AItem.CollectionDay := aDay;
+        AItem.Longitude := aLongitude;
+        AItem.Latitude := aLatitude;
+        AItem.TaxonId := aTaxon;
+        AItem.LocalityId := aLocality;
+        AItem.SampleType := aType;
+        AItem.Notes := JSONObject.Get('notes', '');
+
+        AItem.Insert;
+      end;
+
+      PBar.Position := p;
+      Application.ProcessMessages;
+
+      if Parar then
+        Break;
+    end;
+
+  finally
+    FreeAndNil(AItem);
+  end;
+
+  if Parar then
+  begin
+    lblTitleImportFinished.Caption := rsImportCanceled;
+    lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+    icoImportFinished.ImageIndex := 1;
+  end
+  else
+  begin
+    lblTitleImportFinished.Caption := rsFinishedImporting;
+    lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+    icoImportFinished.ImageIndex := 0;
+  end;
+  sbCancel.Caption := rsCaptionClose;
+  nbPages.PageIndex := 2;
+end;
+
 procedure TdlgImportXMobile.ImportVegetationList;
 var
   AItem: TVegetation;
@@ -855,7 +966,11 @@ begin
   try
     JSON := TFileStream.Create(aJSONFile, fmOpenRead);
     JSONData := GetJSON(JSON);
-    JSONObject := TJSONObject(JSONData);
+    case JSONData.JSONType of
+      jtObject: JSONObject := TJSONObject(JSONData);
+      jtArray: JSONArray := TJSONArray(JSONData);
+    end;
+
     Result := True;
   except
     on E: Exception do
@@ -891,7 +1006,15 @@ begin
 
   if FNestKey > 0 then
   begin
+    mProgress.Lines.Add(Format(rsMobileNestCreated, [FNestKey]));
+    FNest := TNest.Create(FNestKey);
 
+    ImportNest;
+  end;
+
+  if FContentType = mctSpecimens then
+  begin
+    ImportSpecimens;
   end;
 end;
 

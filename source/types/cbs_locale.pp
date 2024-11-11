@@ -807,6 +807,8 @@ uses
     rsMobileImportingEgg = 'Importing eggs...';
     rsMobileRevisionExists = 'Nest revision already recorded: %s';
     rsMobileEggExists = 'Egg already recorded: %s';
+    rsMobileImportingSpecimens = 'Importing specimens...';
+    rsMobileSpecimenExists = 'Specimen already recorded: %s';
 
     rsDistributionNone = 'None';
     rsDistributionRare = 'Rare';

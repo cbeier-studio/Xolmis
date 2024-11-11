@@ -21,7 +21,7 @@ unit cbs_getvalue;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StdCtrls, cbs_taxonomy, cbs_gis;
+  Classes, SysUtils, DB, SQLDB, StdCtrls, cbs_taxonomy, cbs_gis, cbs_sampling;
 
   function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
   function GetName(aTable, aNameField, aKeyField: String; aKeyValue: Integer): String;
@@ -32,8 +32,10 @@ uses
   function GetRank(const aKey: Integer): TZooRank;
 
   procedure GetTaxonHierarchy(aDataset: TDataset; aTaxon: Integer);
+  procedure GetTaxonHierarchyForSpecimen(aSpecimen: TSpecimen);
   procedure GetBotanicHierarchy(aDataset: TDataset; aTaxon: Integer);
   procedure GetSiteHierarchy(aDataset: TDataset; aSite: Integer);
+  procedure GetSiteHierarchyForSpecimen(aSpecimen: TSpecimen);
 
   procedure FillComboBox(aComboBox: TComboBox; aTable, aField, aSort: String; aFilter: String = '');
 
@@ -305,6 +307,51 @@ begin
         Next;
       until EOF;
     end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure GetTaxonHierarchyForSpecimen(aSpecimen: TSpecimen);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Clear;
+    Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
+    Add('WHERE taxon_id = :ataxon');
+    ParamByName('ATAXON').AsInteger := aSpecimen.TaxonId;
+    Open;
+    aSpecimen.OrderId := FieldByName('order_id').AsInteger;
+    aSpecimen.FamilyId := FieldByName('family_id').AsInteger;
+    aSpecimen.GenusId := FieldByName('genus_id').AsInteger;
+    aSpecimen.SpeciesId := FieldByName('species_id').AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure GetSiteHierarchyForSpecimen(aSpecimen: TSpecimen);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Clear;
+    Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+    Add('WHERE site_id = :asite');
+    ParamByName('ASITE').AsInteger := aSpecimen.LocalityId;
+    Open;
+    aSpecimen.CountryId := FieldByName('country_id').AsInteger;
+    aSpecimen.StateId := FieldByName('state_id').AsInteger;
+    aSpecimen.MunicipalityId := FieldByName('municipality_id').AsInteger;
     Close;
   finally
     FreeAndNil(Qry);
