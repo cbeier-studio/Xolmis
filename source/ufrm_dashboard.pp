@@ -223,7 +223,6 @@ end;
 procedure TfrmDashboard.AddBirthday(aName, aBirthday: String);
 var
   B: TBCPanel;
-  //C,
   N, D: TLabel;
 begin
   B := TBCPanel.Create(pBirthdays);
@@ -245,19 +244,6 @@ begin
     //Border.Style := TBCBorderStyle.bboSolid;
     B.Parent := pBirthdays;
   end;
-
-  //C := TLabel.Create(B);
-  //with C do
-  //begin
-  //  C.Parent := B;
-  //  C.AutoSize := False;
-  //  Width := 24;
-  //  Align := alLeft;
-  //  Alignment := taCenter;
-  //  Layout := tlCenter;
-  //  Caption := '🎂';
-  //  Font.Color := clAccentTextPrimaryLight;
-  //end;
 
   D := TLabel.Create(B);
   with D do
@@ -438,7 +424,8 @@ end;
 
 procedure TfrmDashboard.BandsLoaderTerminated(Sender: TObject);
 begin
-  pBandsBalance.Visible := True;
+  if Assigned(pBandsBalance) then
+    pBandsBalance.Visible := True;
   FreeAndNil(FBandsLoader);
 end;
 
@@ -450,11 +437,6 @@ end;
 procedure TfrmDashboard.FormDestroy(Sender: TObject);
 begin
   TimerLoad.Enabled := False;
-  //DMC.qBirthdays.Close;
-  //DMC.qLastLifers.Close;
-  //DMC.qBandsRunningOut.Close;
-  //DMC.qLastSurveys.Close;
-  //DMC.qExpiredPermits.Close;
 
   if Assigned(FBandsLoader) then
     FBandsLoader.Terminate;
@@ -468,8 +450,6 @@ begin
     FPermitsLoader.Terminate;
   if Assigned(FSurveysLoader) then
     FSurveysLoader.Terminate;
-  //mapSurveys.GPSItems.Clear(20);
-  //mapSurveys.Active := False;
 end;
 
 procedure TfrmDashboard.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -525,7 +505,6 @@ begin
     pFlow.ChildSizing.ControlsPerLine := 2
   else
     pFlow.ChildSizing.ControlsPerLine := 3;
-  //pFlow.Refresh;
 end;
 
 procedure TfrmDashboard.pmRefreshClick(Sender: TObject);
@@ -540,17 +519,9 @@ begin
   Working := True;
 
   pLoading.Visible := True;
-  //Application.ProcessMessages;
-
-  //{$IFDEF DEBUG}
-  //Usage := TElapsedTimer.Create(Format('Show %s', [Caption]), 'loading bands running out');
-  //{$ENDIF}
-  //RefreshBandBalance;
-  //Sleep(1000);
 
   {$IFDEF DEBUG}
   Usage := TElapsedTimer.Create(Format('Show %s', [Caption]), 'loading numbers');
-  //Usage.AddPart('loading numbers');
   {$ENDIF}
   RefreshNumbers;
 
@@ -582,10 +553,6 @@ begin
     RefreshBirthday;
 
     TimerDelay.Enabled := True;
-    //{$IFDEF DEBUG}
-    //Usage.AddPart('loading bands running out');
-    //{$ENDIF}
-    //RefreshBandBalance;
     {$IFDEF DEBUG}
     Usage.StopTimer;
     FreeAndNil(Usage);
@@ -746,8 +713,6 @@ begin
         lcsIndividualsMonth.EndUpdate;
       end;
     end;
-    //else
-    //  pChartIndividuals.Visible := False;
     Close;
 
     Clear;
@@ -792,8 +757,6 @@ begin
         lcsSpeciesMonth.EndUpdate;
       end;
     end;
-    //else
-    //  pChartSpecies.Visible := False;
     Close;
   finally
     FreeAndNil(Qry);
@@ -803,18 +766,7 @@ end;
 procedure TfrmDashboard.RefreshLifers;
 var
   i: Integer;
-  //Qry: TSQLQuery;
 begin
-  //Qry := TSQLQuery.Create(nil);
-  //with Qry, SQL do
-  //try
-  //  Database := DMM.sqlCon;
-  //  Clear;
-  //  Add('SELECT taxon, nome_taxon, STRFTIME(''%d/%m/%Y'', data_registro) AS data_registro, tipo');
-  //  Add('FROM get_last_lifers');
-  //  Add('LIMIT 9');
-  //  Open;
-
   pLifers.BeginUpdate;
   pLifers.Visible := False;
   pLifers.AutoSize := False;
@@ -829,21 +781,7 @@ begin
     FLifersLoader := TLifersLoaderThread.Create(pLifers);
     FLifersLoader.OnTerminate := @LifersLoaderTerminated;
     FLifersLoader.Start;
-    //if Qry.RecordCount = 0 then
-    //  Exit;
-    //
-    //Last;
-    //pLifers.AutoSize := True;
-    //repeat
-    //  AddLifer(FieldByName('tipo').AsString, FieldByName('nome_taxon').AsString, FieldByName('data_registro').AsString);
-    //  Prior;
-    //until BOF;
-    //
-    //pLifers.Visible := True;
-    //Top := pLoading.Top + pLoading.Height + 1;
   finally
-    //Close;
-    //FreeAndNil(Qry);
     pLifers.EndUpdate;
     pLifers.Visible := True;
   end;
@@ -855,13 +793,6 @@ var
   rp: TRealPoint;
 begin
   pMapSurveys.BeginUpdate;
-  //with DMC.qLastSurveys do
-  //try
-
-    //if DMC.qLastSurveys.Active then
-    //  Refresh
-    //else
-    //  Open;
 
     mapSurveys.GPSItems.Clear(20);
 
@@ -872,54 +803,17 @@ begin
     FSurveysLoader := TSurveysLoaderThread.Create(mapSurveys);
     FSurveysLoader.OnTerminate := @SurveysLoaderTerminated;
     FSurveysLoader.Start;
-    //if RecordCount > 0 then
-    //begin
-    //  First;
-    //  repeat
-    //    rp.Lon := FieldByName('start_longitude').AsFloat;
-    //    rp.Lat := FieldByName('start_latitude').AsFloat;
-    //    if not (rp.Lon = 0) and not (rp.Lat = 0) then
-    //    begin
-    //      //mapSurveys.LonLatToScreen(rp);
-    //      poi := TGpsPoint.CreateFrom(rp);
-    //      //poi.Name := FieldByName('survey_date').AsString;
-    //        //+ #10 + FieldByName('locality_name').AsString + #10 +
-    //        //FieldByName('method_name').AsString;
-    //      mapSurveys.GPSItems.Add(poi, 20);
-    //    end;
-    //    Next;
-    //  until EOF;
-      //if mapSurveys.GPSItems.Count > 0 then
-      //begin
-      //  mapSurveys.ZoomOnArea(mapSurveys.GPSItems.BoundingBox);
-      //  mapSurveys.Zoom := mapSurveys.Zoom - 1;
-      //  mapSurveys.Visible := True;
-      //end;
-      //else
-      //  mapSurveys.Visible := False;
-    //end;
-    //else
-    //  mapSurveys.Visible := False;
-    //Close;
   finally
     pMapSurveys.EndUpdate;
   end;
 end;
 
 procedure TfrmDashboard.RefreshNumbers;
-//var
-//  Qry: TSQLQuery;
 begin
   lblTotalSpecies.Caption := '----';
   lblTotalIndividuals.Caption := '----';
   lblTotalNests.Caption := '----';
   lblTotalSamplings.Caption := '----';
-
-  //Qry := TSQLQuery.Create(DMM.sqlCon);
-  //with Qry, SQL do
-  //try
-  //  Database := DMM.sqlCon;
-  //  Transaction := DMM.sqlTrans;
 
   { Total of species }
   if Assigned(FNumbersLoader) and not FNumbersLoader.Finished then
@@ -928,53 +822,11 @@ begin
   FNumbersLoader := TNumbersLoaderThread.Create(lblTotalSpecies, lblTotalIndividuals, lblTotalNests, lblTotalSamplings);
   FNumbersLoader.OnTerminate := @NumbersLoaderTerminated;
   FNumbersLoader.Start;
-    //Clear;
-    //Add('SELECT COUNT(DISTINCT taxon_id) AS count_species');
-    //Add('FROM (');
-    //Add(' SELECT taxon_id FROM individuals');
-    //Add(' UNION');
-    //Add(' SELECT taxon_id FROM captures');
-    //Add(' UNION');
-    //Add(' SELECT taxon_id FROM sightings');
-    //Add(' UNION');
-    //Add(' SELECT taxon_id FROM nests');
-    //Add(' UNION');
-    //Add(' SELECT taxon_id FROM specimens');
-    //Add(') AS combined_taxon_ids');
-    //Open;
-    //lblTotalSpecies.Caption := FieldByName('count_species').AsString;
-    //Close;
-
-    { Total of individuals }
-    //Clear;
-    //Add('SELECT count(*) AS count_individuals FROM individuals WHERE (active_status = 1)');
-    //Open;
-    //lblTotalIndividuals.Caption := FieldByName('count_individuals').AsString;
-    //Close;
-
-    { Total of nests }
-    //Clear;
-    //Add('SELECT count(*) AS count_nests FROM nests WHERE (active_status = 1)');
-    //Open;
-    //lblTotalNests.Caption := FieldByName('count_nests').AsString;
-    //Close;
-
-    { Total of samplings }
-    //Clear;
-    //Add('SELECT count(*) AS count_samplings FROM surveys WHERE (active_status = 1)');
-    //Open;
-    //lblTotalSamplings.Caption := FieldByName('count_samplings').AsString;
-    //Close;
-
-  //finally
-  //  FreeAndNil(Qry);
-  //end;
 end;
 
 procedure TfrmDashboard.RefreshPermits;
 var
   i: Integer;
-  //Qry: TSQLQuery;
 begin
   pPermitsExpiring.BeginUpdate;
   pPermitsExpiring.Visible := False;
@@ -983,8 +835,6 @@ begin
     if pPermitsExpiring.Components[i] is TBCPanel then
       pPermitsExpiring.Components[i].Free;
 
-  //Qry := TSQLQuery.Create(nil);
-  //with Qry, SQL do
   if Assigned(FPermitsLoader) and not FPermitsLoader.Finished then
     FPermitsLoader.Terminate;
 
@@ -992,31 +842,7 @@ begin
     FPermitsLoader := TPermitsLoaderThread.Create(pPermitsExpiring);
     FPermitsLoader.OnTerminate := @PermitsLoaderTerminated;
     FPermitsLoader.Start;
-    //Database := DMM.sqlCon;
-    //Transaction := DMM.sqlTrans;
-    //Clear;
-    //Add('SELECT expire_date, permit_name');
-    //Add('FROM get_expired_permits');
-    //Add('LIMIT 7');
-    //Open;
-    //
-    //if Qry.RecordCount = 0 then
-    //  Exit;
-    //
-    //Last;
-    //pPermitsExpiring.AutoSize := True;
-    //while not BOF do
-    //begin
-    //  AddPermit(FieldByName('permit_name').AsString, FieldByName('expire_date').AsString);
-    //  Prior;
-    //end;
-    //
-    //pPermitsExpiring.Visible := True;
-    //AutoSize := True;
-    //pPermitsExpiring.Top := pLoading.Top + pLoading.Height + 1;
   finally
-    //Close;
-    //FreeAndNil(Qry);
     pPermitsExpiring.EndUpdate;
   end;
 end;

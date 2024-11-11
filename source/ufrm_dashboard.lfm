@@ -1951,7 +1951,6 @@ object frmDashboard: TfrmDashboard
   end
   object TimerLoad: TTimer
     Enabled = False
-    Interval = 100
     OnTimer = TimerLoadTimer
     Left = 378
     Top = 192
