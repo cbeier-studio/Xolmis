@@ -31,6 +31,7 @@ type
   TcfgOptions = class(TForm)
     cbCheckUpdates: TComboBox;
     cbClearDeleted: TComboBox;
+    cbStartPage: TComboBox;
     cbMainTaxonomy: TComboBox;
     cbSelectedTheme: TComboBox;
     cbVernacularNames: TComboBox;
@@ -50,6 +51,7 @@ type
     Image15: TImage;
     Image16: TImage;
     icoOpenAfterExport: TImage;
+    icoStartPage: TImage;
     imgPrivacyTerms: TImage;
     icoUseConditionalFormatting: TImage;
     icoShowOutliers: TImage;
@@ -63,6 +65,7 @@ type
     Image9: TImage;
     iIcons: TImageList;
     lblAllowUsageData: TLabel;
+    lblStartPage: TLabel;
     lblOpenAfterExport: TLabel;
     lblPrivacyTerms: TLabel;
     lblAllowWriteLog: TLabel;
@@ -92,6 +95,7 @@ type
     lblTitleSecurity: TLabel;
     lblVernacularNames: TLabel;
     nbPages: TNotebook;
+    pStartPage: TBCPanel;
     pOpenAfterExport: TBCPanel;
     pShowOutliers: TBCPanel;
     pContentAppearance: TPanel;
@@ -156,6 +160,7 @@ type
     procedure cbClearDeletedChange(Sender: TObject);
     procedure cbMainTaxonomyChange(Sender: TObject);
     procedure cbSelectedThemeChange(Sender: TObject);
+    procedure cbStartPageChange(Sender: TObject);
     procedure cbStartupBackupSelect(Sender: TObject);
     procedure cbVernacularNamesChange(Sender: TObject);
     procedure eAttachmentsPathChange(Sender: TObject);
@@ -248,6 +253,11 @@ begin
   lblSelectedThemeRestart.Visible := True;
 end;
 
+procedure TcfgOptions.cbStartPageChange(Sender: TObject);
+begin
+  XSettings.StartPage := cbStartPage.ItemIndex;
+end;
+
 procedure TcfgOptions.cbStartupBackupSelect(Sender: TObject);
 begin
   XSettings.AutomaticBackup := cbStartupBackup.ItemIndex;
@@ -261,6 +271,7 @@ end;
 procedure TcfgOptions.ApplyDarkMode;
 begin
   tvMenu.Images := iIconsDark;
+  icoStartPage.Images := iIconsDark;
   Image4.Images := iIconsDark;
   Image1.Images := iIconsDark;
   Image2.Images := iIconsDark;
@@ -283,6 +294,8 @@ begin
   Image16.Images := iIconsDark;
   icoOpenAfterExport.Images := iIconsDark;
 
+  pStartPage.Background.Color := clCardBGDefaultDark;
+  pStartPage.Border.Color := clSystemSolidNeutralFGDark;
   pEnterAsTab.Background.Color := clCardBGDefaultDark;
   pEnterAsTab.Border.Color := clSystemSolidNeutralFGDark;
   pConfirmCancel.Background.Color := clCardBGDefaultDark;
@@ -465,6 +478,7 @@ end;
 procedure TcfgOptions.LoadConfig;
 begin
   { GENERAL PARAMETERS AND INTERFACE }
+  cbStartPage.ItemIndex := XSettings.StartPage;
   tsConfirmCancel.Checked := XSettings.ConfirmCancel;
   cbClearDeleted.ItemIndex := XSettings.ClearDeletedPeriod;
   tsEnterAsTab.Checked := XSettings.UseEnterAsTab;

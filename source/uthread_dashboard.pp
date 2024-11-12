@@ -116,6 +116,7 @@ begin
   if Terminated then
     Exit;
 
+  Sleep(200);
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -370,6 +371,7 @@ begin
   if Terminated then
     Exit;
 
+  Sleep(200);
   Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
@@ -461,6 +463,7 @@ begin
   if Terminated then
     Exit;
 
+  Sleep(200);
   Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
@@ -577,6 +580,7 @@ begin
   if Terminated then
     Exit;
 
+  Sleep(200);
   Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
@@ -662,6 +666,7 @@ begin
   if Terminated then
     Exit;
 
+  Sleep(200);
   Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try

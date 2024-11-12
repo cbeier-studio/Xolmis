@@ -7,6 +7,7 @@
 {"hash":105607833,"name":"tcfgoptions.lblcleardeleted.caption","sourcebytes":[67,108,101,97,114,32,100,101,108,101,116,101,100,32,114,101,99,111,114,100,115,32,97,117,116,111,109,97,116,105,99,97,108,108,121,32,40,105,110,32,100,97,121,115,41],"value":"Clear deleted records automatically (in days)"},
 {"hash":70677491,"name":"tcfgoptions.lblcheckupdates.caption","sourcebytes":[67,104,101,99,107,32,102,111,114,32,88,111,108,109,105,115,32,117,112,100,97,116,101,115],"value":"Check for Xolmis updates"},
 {"hash":194854535,"name":"tcfgoptions.sbcheckupdatesnow.caption","sourcebytes":[67,104,101,99,107,32,110,111,119],"value":"Check now"},
+{"hash":157470037,"name":"tcfgoptions.lblstartpage.caption","sourcebytes":[83,116,97,114,116,32,112,97,103,101],"value":"Start page"},
 {"hash":193790965,"name":"tcfgoptions.lbltitleappearance.caption","sourcebytes":[65,112,112,101,97,114,97,110,99,101],"value":"Appearance"},
 {"hash":29300803,"name":"tcfgoptions.lbluseconditionalformatting.caption","sourcebytes":[85,115,101,32,99,111,110,100,105,116,105,111,110,97,108,32,102,111,114,109,97,116,116,105,110,103,32,105,110,32,103,114,105,100,115],"value":"Use conditional formatting in grids"},
 {"hash":32483923,"name":"tcfgoptions.lblshowoutliers.caption","sourcebytes":[83,104,111,119,32,111,117,116,108,105,101,114,32,109,101,97,115,117,114,101,109,101,110,116,115,32,105,110,32,99,97,112,116,117,114,101,115],"value":"Show outlier measurements in captures"},

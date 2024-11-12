@@ -96,6 +96,7 @@ type
     Ini: TJSONConfig;
     FFileName: String;
     { General }
+    FStartPage: Integer;
     FConfirmCancel, FEnterAsTab, FTerminatedOk: Boolean;
     FClearDeletedPeriod: Integer;
     FLastClearDeleted, FLastDatabaseOptimization, FLastAutoUpdate: TDateTime;
@@ -141,6 +142,7 @@ type
   published
     property SettingsFile: String read FFileName write SetFileName;
     { General }
+    property StartPage: Integer read FStartPage write FStartPage;
     property ConfirmCancel: Boolean read FConfirmCancel write FConfirmCancel;
     property UseEnterAsTab: Boolean read FEnterAsTab write FEnterAsTab;
     property AppTerminatedOk: Boolean read FTerminatedOk write FTerminatedOk;
@@ -656,6 +658,7 @@ end;
 procedure TXolmisSettings.LoadFromFile;
 begin
   { General }
+  FStartPage := Ini.GetValue('/GENERAL/StartPage', 12);
   FConfirmCancel := Ini.GetValue('/GENERAL/ConfirmCancel', False);
   FEnterAsTab := Ini.GetValue('/GENERAL/EnterAsTab', True);
   FTerminatedOk := Ini.GetValue('/GENERAL/TerminatedOk', True);
@@ -702,6 +705,7 @@ end;
 procedure TXolmisSettings.SaveToFile;
 begin
   { General }
+  Ini.SetValue('/GENERAL/StartPage', FStartPage);
   Ini.SetValue('/GENERAL/ConfirmCancel', FConfirmCancel);
   Ini.SetValue('/GENERAL/EnterAsTab', FEnterAsTab);
   Ini.SetValue('/GENERAL/TerminatedOk', FTerminatedOk);

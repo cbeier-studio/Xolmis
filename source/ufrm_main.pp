@@ -911,16 +911,29 @@ begin
     { Apply the active user settings }
     CarregaPref;
 
-    { Load the start page }
-    //if not Assigned(DMC) then
-    //  DMC := TDMC.Create(Application);
-    OpenTab(Sender, frmDashboard, TfrmDashboard, rsHome, True);
-    Application.ProcessMessages;
-
     { Load data module for the main forms }
     if not Assigned(DMG) then
       DMG := TDMG.Create(Application);
     Application.ProcessMessages;
+
+    { Load the start page }
+    //OpenTab(Sender, frmDashboard, TfrmDashboard, rsHome, True);
+    //Application.ProcessMessages;
+    case XSettings.StartPage of
+      0: actOpenExpeditionsExecute(nil);
+      1: actOpenSurveysExecute(nil);
+      2: actOpenSightingsExecute(nil);
+      3: actOpenSpecimensExecute(nil);
+      4: actOpenBandsExecute(nil);
+      5: actOpenIndividualsExecute(nil);
+      6: actOpenCapturesExecute(nil);
+      7: actOpenNestsExecute(nil);
+      8: actOpenResearchersExecute(nil);
+      9: actOpenProjectsExecute(nil);
+     10: actOpenPermitsExecute(nil);
+     11: actOpenGazetteerExecute(nil);
+     12: actCoordinatesConverterExecute(nil);
+    end;
 
     { Check for updates }
     case XSettings.AutoUpdates of
