@@ -121,8 +121,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
-  cbs_birds, cbs_fullnames, uDarkStyleParams, udm_grid, udm_sampling, uedt_survey, uedt_nest;
+  cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
+  cbs_birds, cbs_fullnames, uDarkStyleParams, udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest;
 
 {$R *.lfm}
 
@@ -659,7 +659,8 @@ end;
 procedure TdlgImportXMobile.ImportSpeciesList;
 var
   AItem: TSighting;
-  aTaxonKey, p, j: Integer;
+  aTaxonKey, p, j, k: Integer;
+  Qry: TSQLQuery;
 begin
   if Parar then
     Exit;
@@ -702,18 +703,33 @@ begin
       end;
 
       // Process POIs within each species
-      //PoisArray := SpeciesObject.Arrays['pois'];
-      //for k := 0 to PoisArray.Count - 1 do
-      //begin
-      //  PoiObject := PoisArray.Objects[k];
-      //  Qry.SQL.Text := 'INSERT INTO Pois (id, speciesId, longitude, latitude) ' +
-      //  'VALUES (:id, :speciesId, :longitude, :latitude);';
-      //  Qry.Params.ParamByName('id').AsInteger := PoiObject.Get('id', 0);
-      //  Qry.Params.ParamByName('speciesId').AsInteger := SpeciesObject.Get('id', 0);
-      //  Qry.Params.ParamByName('longitude').AsFloat := PoiObject.Get('longitude', 0.0);
-      //  Qry.Params.ParamByName('latitude').AsFloat := PoiObject.Get('latitude', 0.0);
-      //  Qry.ExecSQL;
-      //end;
+      PoisArray := SpeciesObject.Arrays['pois'];
+      try
+        Qry := TSQLQuery.Create(nil);
+        Qry.SQLConnection := DMM.sqlCon;
+
+        for k := 0 to PoisArray.Count - 1 do
+        begin
+          PoiObject := PoisArray.Objects[k];
+          Qry.SQL.Text := 'INSERT INTO poi_library (sample_date, longitude, latitude, observer_id, ' +
+            'taxon_id, sighting_id, survey_id, user_inserted, insert_date) ' +
+            'VALUES (:adate, :alongitude, :alatitude, :aobserver, :ataxon, :asighting, :asurvey, ' +
+            ':auser, datetime(''now'',''localtime''))';
+          Qry.ParamByName('adate').AsString := DateToStr(AItem.SightingDate);
+          Qry.ParamByName('alongitude').AsFloat := PoiObject.Get('longitude', 0.0);
+          Qry.ParamByName('alatitude').AsFloat := PoiObject.Get('latitude', 0.0);
+          Qry.ParamByName('aobserver').AsInteger := AItem.ObserverId;
+          Qry.ParamByName('ataxon').AsInteger := AItem.TaxonId;
+          Qry.ParamByName('asighting').AsInteger := AItem.Id;
+          Qry.ParamByName('asurvey').AsInteger := FSurveyKey;
+          Qry.ParamByName('auser').AsInteger := ActiveUser.Id;
+
+          Qry.ExecSQL;
+        end;
+
+      finally
+        FreeAndNil(Qry);
+      end;
 
       PBar.Position := p;
       Application.ProcessMessages;

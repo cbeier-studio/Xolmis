@@ -1003,8 +1003,8 @@ object frmMain: TfrmMain
     object actOpenMolts: TAction
       Category = 'Individuals'
       Caption = '&Molts'
-      Enabled = False
       ImageIndex = 13
+      OnExecute = actOpenMoltsExecute
     end
     object actMaintenance: TAction
       Category = 'File'

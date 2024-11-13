@@ -4494,6 +4494,26 @@ object DMG: TDMG
         Precision = -1
       end    
       item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
         Name = 'user_inserted'
         DataType = ftInteger
         Precision = -1
@@ -4643,6 +4663,10 @@ object DMG: TDMG
       '  mc_molt,'
       '  growth_bar_size,'
       '  notes,'
+      '  order_id,'
+      '  family_id,'
+      '  genus_id,'
+      '  species_id,'
       '  user_inserted,'
       '  insert_date,'
       '  exported_status,'
@@ -4710,6 +4734,10 @@ object DMG: TDMG
       '  :mc_molt,'
       '  :growth_bar_size,'
       '  :notes,'
+      '  :order_id,'
+      '  :family_id,'
+      '  :genus_id,'
+      '  :species_id,'
       '  :user_inserted,'
       '  :insert_date,'
       '  :exported_status,'
@@ -4779,6 +4807,10 @@ object DMG: TDMG
       '  mc_molt = :mc_molt,'
       '  growth_bar_size = :growth_bar_size,'
       '  notes = :notes,'
+      '  order_id = :order_id,'
+      '  family_id = :family_id,'
+      '  genus_id = :genus_id,'
+      '  species_id = :species_id,'
       '  user_updated = :user_inserted,'
       '  update_date = :insert_date,'
       '  exported_status = :exported_status,'
@@ -4806,45 +4838,11 @@ object DMG: TDMG
       Required = False
       DisplayValues = 'True;False'
     end
-    object qMoltssurvey_id: TLongintField
-      DisplayLabel = 'Survey (ID)'
-      FieldKind = fkData
-      FieldName = 'survey_id'
-      Index = 1
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qMoltssurvey_name: TStringField
-      DisplayLabel = 'Survey'
-      DisplayWidth = 30
-      FieldKind = fkData
-      FieldName = 'survey_name'
-      Index = 2
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 100
-    end
-    object qMoltscapture_id: TLongintField
-      DisplayLabel = 'Capture (ID)'
-      FieldKind = fkData
-      FieldName = 'capture_id'
-      Index = 3
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
     object qMoltstaxon_id: TLongintField
       DisplayLabel = 'Taxon (ID)'
       FieldKind = fkData
       FieldName = 'taxon_id'
-      Index = 4
+      Index = 1
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4853,44 +4851,21 @@ object DMG: TDMG
     end
     object qMoltstaxon_name: TStringField
       DisplayLabel = 'Taxon'
-      DisplayWidth = 40
+      DisplayWidth = 25
       FieldKind = fkData
       FieldName = 'taxon_name'
-      Index = 5
+      Index = 2
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
       Size = 100
     end
-    object qMoltsindividual_id: TLongintField
-      DisplayLabel = 'Individual (ID)'
-      FieldKind = fkData
-      FieldName = 'individual_id'
-      Index = 6
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qMoltsindividual_name: TStringField
-      DisplayLabel = 'Individual'
-      DisplayWidth = 40
-      FieldKind = fkData
-      FieldName = 'individual_name'
-      Index = 7
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 120
-    end
     object qMoltsbander_id: TLongintField
       DisplayLabel = 'Bander (ID)'
       FieldKind = fkData
       FieldName = 'bander_id'
-      Index = 8
+      Index = 3
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4901,7 +4876,7 @@ object DMG: TDMG
       DisplayLabel = 'Bander'
       FieldKind = fkData
       FieldName = 'bander_name'
-      Index = 9
+      Index = 4
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4912,7 +4887,7 @@ object DMG: TDMG
       DisplayLabel = 'Band (ID)'
       FieldKind = fkData
       FieldName = 'band_id'
-      Index = 10
+      Index = 5
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4924,7 +4899,7 @@ object DMG: TDMG
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'band_name'
-      Index = 11
+      Index = 6
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -4936,7 +4911,7 @@ object DMG: TDMG
       DisplayLabel = 'Date'
       FieldKind = fkData
       FieldName = 'sample_date'
-      Index = 12
+      Index = 7
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4947,7 +4922,7 @@ object DMG: TDMG
       DisplayLabel = 'Time'
       FieldKind = fkData
       FieldName = 'sample_time'
-      Index = 13
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4955,9 +4930,10 @@ object DMG: TDMG
     end
     object qMoltsp1_molt: TFloatField
       DisplayLabel = 'P1'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'p1_molt'
-      Index = 14
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4967,9 +4943,10 @@ object DMG: TDMG
     end
     object qMoltsp2_molt: TFloatField
       DisplayLabel = 'P2'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'p2_molt'
-      Index = 15
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4979,9 +4956,10 @@ object DMG: TDMG
     end
     object qMoltsp3_molt: TFloatField
       DisplayLabel = 'P3'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'p3_molt'
-      Index = 16
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4991,9 +4969,10 @@ object DMG: TDMG
     end
     object qMoltsp4_molt: TFloatField
       DisplayLabel = 'P4'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'p4_molt'
-      Index = 17
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5003,9 +4982,10 @@ object DMG: TDMG
     end
     object qMoltsp5_molt: TFloatField
       DisplayLabel = 'P5'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'p5_molt'
-      Index = 18
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5015,9 +4995,10 @@ object DMG: TDMG
     end
     object qMoltsp6_molt: TFloatField
       DisplayLabel = 'P6'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'p6_molt'
-      Index = 19
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5027,9 +5008,10 @@ object DMG: TDMG
     end
     object qMoltsp7_molt: TFloatField
       DisplayLabel = 'P7'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'p7_molt'
-      Index = 20
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5039,9 +5021,10 @@ object DMG: TDMG
     end
     object qMoltsp8_molt: TFloatField
       DisplayLabel = 'P8'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'p8_molt'
-      Index = 21
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5051,9 +5034,10 @@ object DMG: TDMG
     end
     object qMoltsp9_molt: TFloatField
       DisplayLabel = 'P9'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'p9_molt'
-      Index = 22
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5063,9 +5047,10 @@ object DMG: TDMG
     end
     object qMoltsp10_molt: TFloatField
       DisplayLabel = 'P10'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'p10_molt'
-      Index = 23
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5075,9 +5060,10 @@ object DMG: TDMG
     end
     object qMoltss1_molt: TFloatField
       DisplayLabel = 'S1'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 's1_molt'
-      Index = 24
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5087,9 +5073,10 @@ object DMG: TDMG
     end
     object qMoltss2_molt: TFloatField
       DisplayLabel = 'S2'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 's2_molt'
-      Index = 25
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5099,9 +5086,10 @@ object DMG: TDMG
     end
     object qMoltss3_molt: TFloatField
       DisplayLabel = 'S3'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 's3_molt'
-      Index = 26
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5111,9 +5099,10 @@ object DMG: TDMG
     end
     object qMoltss4_molt: TFloatField
       DisplayLabel = 'S4'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 's4_molt'
-      Index = 27
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5123,9 +5112,10 @@ object DMG: TDMG
     end
     object qMoltss5_molt: TFloatField
       DisplayLabel = 'S5'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 's5_molt'
-      Index = 28
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5135,9 +5125,10 @@ object DMG: TDMG
     end
     object qMoltss6_molt: TFloatField
       DisplayLabel = 'S6'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 's6_molt'
-      Index = 29
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5147,9 +5138,10 @@ object DMG: TDMG
     end
     object qMoltss7_molt: TFloatField
       DisplayLabel = 'S7'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 's7_molt'
-      Index = 30
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5159,9 +5151,10 @@ object DMG: TDMG
     end
     object qMoltss8_molt: TFloatField
       DisplayLabel = 'S8'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 's8_molt'
-      Index = 31
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5171,9 +5164,10 @@ object DMG: TDMG
     end
     object qMoltss9_molt: TFloatField
       DisplayLabel = 'S9'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 's9_molt'
-      Index = 32
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5183,9 +5177,10 @@ object DMG: TDMG
     end
     object qMoltsr1_molt: TFloatField
       DisplayLabel = 'R1'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'r1_molt'
-      Index = 33
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5195,9 +5190,10 @@ object DMG: TDMG
     end
     object qMoltsr2_molt: TFloatField
       DisplayLabel = 'R2'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'r2_molt'
-      Index = 34
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5207,9 +5203,10 @@ object DMG: TDMG
     end
     object qMoltsr3_molt: TFloatField
       DisplayLabel = 'R3'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'r3_molt'
-      Index = 35
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5219,9 +5216,10 @@ object DMG: TDMG
     end
     object qMoltsr4_molt: TFloatField
       DisplayLabel = 'R4'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'r4_molt'
-      Index = 36
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5231,9 +5229,10 @@ object DMG: TDMG
     end
     object qMoltsr5_molt: TFloatField
       DisplayLabel = 'R5'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'r5_molt'
-      Index = 37
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5243,9 +5242,10 @@ object DMG: TDMG
     end
     object qMoltsr6_molt: TFloatField
       DisplayLabel = 'R6'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'r6_molt'
-      Index = 38
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5255,9 +5255,10 @@ object DMG: TDMG
     end
     object qMoltspc1_molt: TFloatField
       DisplayLabel = 'PC1'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'pc1_molt'
-      Index = 39
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5267,9 +5268,10 @@ object DMG: TDMG
     end
     object qMoltspc2_molt: TFloatField
       DisplayLabel = 'PC2'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'pc2_molt'
-      Index = 40
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5279,9 +5281,10 @@ object DMG: TDMG
     end
     object qMoltspc3_molt: TFloatField
       DisplayLabel = 'PC3'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'pc3_molt'
-      Index = 41
+      Index = 36
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5291,9 +5294,10 @@ object DMG: TDMG
     end
     object qMoltspc4_molt: TFloatField
       DisplayLabel = 'PC4'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'pc4_molt'
-      Index = 42
+      Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5303,9 +5307,10 @@ object DMG: TDMG
     end
     object qMoltspc5_molt: TFloatField
       DisplayLabel = 'PC5'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'pc5_molt'
-      Index = 43
+      Index = 38
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5315,9 +5320,10 @@ object DMG: TDMG
     end
     object qMoltspc6_molt: TFloatField
       DisplayLabel = 'PC6'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'pc6_molt'
-      Index = 44
+      Index = 39
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5327,9 +5333,10 @@ object DMG: TDMG
     end
     object qMoltspc7_molt: TFloatField
       DisplayLabel = 'PC7'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'pc7_molt'
-      Index = 45
+      Index = 40
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5339,9 +5346,10 @@ object DMG: TDMG
     end
     object qMoltspc8_molt: TFloatField
       DisplayLabel = 'PC8'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'pc8_molt'
-      Index = 46
+      Index = 41
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5351,9 +5359,10 @@ object DMG: TDMG
     end
     object qMoltspc9_molt: TFloatField
       DisplayLabel = 'PC9'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'pc9_molt'
-      Index = 47
+      Index = 42
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5363,9 +5372,10 @@ object DMG: TDMG
     end
     object qMoltsgc1_molt: TFloatField
       DisplayLabel = 'GC1'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'gc1_molt'
-      Index = 48
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5375,9 +5385,10 @@ object DMG: TDMG
     end
     object qMoltsgc2_molt: TFloatField
       DisplayLabel = 'GC2'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'gc2_molt'
-      Index = 49
+      Index = 44
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5387,9 +5398,10 @@ object DMG: TDMG
     end
     object qMoltsgc3_molt: TFloatField
       DisplayLabel = 'GC3'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'gc3_molt'
-      Index = 50
+      Index = 45
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5399,9 +5411,10 @@ object DMG: TDMG
     end
     object qMoltsgc4_molt: TFloatField
       DisplayLabel = 'GC4'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'gc4_molt'
-      Index = 51
+      Index = 46
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5411,9 +5424,10 @@ object DMG: TDMG
     end
     object qMoltsgc5_molt: TFloatField
       DisplayLabel = 'GC5'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'gc5_molt'
-      Index = 52
+      Index = 47
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5423,9 +5437,10 @@ object DMG: TDMG
     end
     object qMoltsgc6_molt: TFloatField
       DisplayLabel = 'GC6'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'gc6_molt'
-      Index = 53
+      Index = 48
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5435,9 +5450,10 @@ object DMG: TDMG
     end
     object qMoltsgc7_molt: TFloatField
       DisplayLabel = 'GC7'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'gc7_molt'
-      Index = 54
+      Index = 49
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5447,9 +5463,10 @@ object DMG: TDMG
     end
     object qMoltsgc8_molt: TFloatField
       DisplayLabel = 'GC8'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'gc8_molt'
-      Index = 55
+      Index = 50
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5459,9 +5476,10 @@ object DMG: TDMG
     end
     object qMoltsgc9_molt: TFloatField
       DisplayLabel = 'GC9'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'gc9_molt'
-      Index = 56
+      Index = 51
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5471,9 +5489,10 @@ object DMG: TDMG
     end
     object qMoltsgc10_molt: TFloatField
       DisplayLabel = 'GC10'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'gc10_molt'
-      Index = 57
+      Index = 52
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5483,9 +5502,10 @@ object DMG: TDMG
     end
     object qMoltscc_molt: TFloatField
       DisplayLabel = 'CC'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'cc_molt'
-      Index = 58
+      Index = 53
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5495,9 +5515,10 @@ object DMG: TDMG
     end
     object qMoltsal1_molt: TFloatField
       DisplayLabel = 'Al1'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'al1_molt'
-      Index = 59
+      Index = 54
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5507,9 +5528,10 @@ object DMG: TDMG
     end
     object qMoltsal2_molt: TFloatField
       DisplayLabel = 'Al2'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'al2_molt'
-      Index = 60
+      Index = 55
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5519,9 +5541,10 @@ object DMG: TDMG
     end
     object qMoltsal3_molt: TFloatField
       DisplayLabel = 'Al3'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'al3_molt'
-      Index = 61
+      Index = 56
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5531,9 +5554,10 @@ object DMG: TDMG
     end
     object qMoltsmc_molt: TFloatField
       DisplayLabel = 'MC'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'mc_molt'
-      Index = 62
+      Index = 57
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5543,9 +5567,10 @@ object DMG: TDMG
     end
     object qMoltslc_molt: TFloatField
       DisplayLabel = 'LC'
+      DisplayWidth = 5
       FieldKind = fkData
       FieldName = 'lc_molt'
-      Index = 63
+      Index = 58
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5557,13 +5582,70 @@ object DMG: TDMG
       DisplayLabel = 'Growth bar width'
       FieldKind = fkData
       FieldName = 'growth_bar_size'
-      Index = 64
+      Index = 59
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       DisplayFormat = '#,##0.00'
       Precision = -1
+    end
+    object qMoltssurvey_id: TLongintField
+      DisplayLabel = 'Survey (ID)'
+      FieldKind = fkData
+      FieldName = 'survey_id'
+      Index = 60
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltssurvey_name: TStringField
+      DisplayLabel = 'Survey'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'survey_name'
+      Index = 61
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qMoltscapture_id: TLongintField
+      DisplayLabel = 'Capture (ID)'
+      FieldKind = fkData
+      FieldName = 'capture_id'
+      Index = 62
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsindividual_id: TLongintField
+      DisplayLabel = 'Individual (ID)'
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 63
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsindividual_name: TStringField
+      DisplayLabel = 'Individual'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'individual_name'
+      Index = 64
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
     end
     object qMoltsnotes: TMemoField
       DisplayLabel = 'Notes'
@@ -5600,11 +5682,55 @@ object DMG: TDMG
       Visible = False
       Size = 40
     end
+    object qMoltsorder_id: TLongintField
+      DisplayLabel = 'Order ID'
+      FieldKind = fkData
+      FieldName = 'order_id'
+      Index = 68
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsfamily_id: TLongintField
+      DisplayLabel = 'Family ID'
+      FieldKind = fkData
+      FieldName = 'family_id'
+      Index = 69
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsgenus_id: TLongintField
+      DisplayLabel = 'Genus ID'
+      FieldKind = fkData
+      FieldName = 'genus_id'
+      Index = 70
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsspecies_id: TLongintField
+      DisplayLabel = 'Species ID'
+      FieldKind = fkData
+      FieldName = 'species_id'
+      Index = 71
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
     object qMoltsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 68
+      Index = 72
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5615,7 +5741,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 69
+      Index = 73
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5627,7 +5753,7 @@ object DMG: TDMG
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 70
+      Index = 74
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5639,7 +5765,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 71
+      Index = 75
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5651,7 +5777,7 @@ object DMG: TDMG
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 72
+      Index = 76
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5664,7 +5790,7 @@ object DMG: TDMG
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 73
+      Index = 77
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

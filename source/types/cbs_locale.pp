@@ -58,6 +58,7 @@ uses
     rsTitleInstitutions = 'Institutions';
     rsTitleResearchers = 'Researchers';
     rsTitleProjects = 'Projects';
+    rsTitleProjectMembers = 'Project members';
     rsTitleTeam = 'Team';
     rsTitlePermits = 'Permits';
     rsTitleGazetteer = 'Gazetteer';
@@ -65,6 +66,7 @@ uses
     rsTitlePermanentNets = 'Permanent nets';
     rsTitleMethods = 'Methods';
     rsTitleSurveys = 'Surveys';
+    rsTitleSurveyTeam = 'Survey team';
     rsTitleNetsEffort = 'Nets';
     rsTitleSpecimens = 'Specimens';
     rsTitleCollectors = 'Collectors';

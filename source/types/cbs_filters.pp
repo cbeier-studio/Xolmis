@@ -68,6 +68,7 @@ type
   procedure LoadEggDateTree(aSQL: TStrings);
   procedure LoadSightingDateTree(aSQL: TStrings);
   procedure LoadCaptureDateTree(aSQL: TStrings);
+  procedure LoadMoltDateTree(aSQL: TStrings);
   procedure LoadExpeditionDateTree(aSQL: TStrings);
   procedure LoadSurveyDateTree(aSQL: TStrings);
   procedure LoadIndividualDateTree(aSQL: TStrings);
@@ -85,6 +86,7 @@ type
   procedure FilterNestDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
   procedure FilterSightingDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
   procedure FilterCaptureDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
+  procedure FilterMoltDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
   procedure FilterBandDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
   procedure FilterIndividualDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
   procedure FilterProjectDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
@@ -155,6 +157,18 @@ begin
           Add('JOIN TaxaDetails AS o ON c.order_id = o.taxon_id');
           Add('JOIN TaxaDetails AS t ON c.taxon_id = t.taxon_id');
           Add('WHERE (c.active_status = 1)');
+          Add('UNION');
+          Add('SELECT m.taxon_id, m.species_id, m.family_id, m.order_id,');
+          Add('  s.full_name AS species_name,');
+          Add('  f.full_name AS family_name,');
+          Add('  o.full_name AS order_name,');
+          Add('  t.sort_num AS sort_num');
+          Add('FROM molts AS m');
+          Add('JOIN TaxaDetails AS s ON m.species_id = s.taxon_id');
+          Add('JOIN TaxaDetails AS f ON m.family_id = f.taxon_id');
+          Add('JOIN TaxaDetails AS o ON m.order_id = o.taxon_id');
+          Add('JOIN TaxaDetails AS t ON m.taxon_id = t.taxon_id');
+          Add('WHERE (m.active_status = 1)');
           Add('UNION');
           Add('SELECT ac.taxon_id, ac.species_id, ac.family_id, ac.order_id,');
           Add('  s.full_name AS species_name,');
@@ -231,6 +245,20 @@ begin
           Add('JOIN TaxaDetails AS o ON c.order_id = o.taxon_id');
           Add('JOIN TaxaDetails AS t ON c.taxon_id = t.taxon_id');
           Add('WHERE (c.active_status = 1)');
+        end;
+      tbMolts:
+        begin
+          Add('SELECT m.taxon_id, m.species_id, m.family_id, m.order_id,');
+          Add('  s.full_name AS species_name,');
+          Add('  f.full_name AS family_name,');
+          Add('  o.full_name AS order_name,');
+          Add('  t.sort_num AS sort_num');
+          Add('FROM molts AS m');
+          Add('JOIN TaxaDetails AS s ON m.species_id = s.taxon_id');
+          Add('JOIN TaxaDetails AS f ON m.family_id = f.taxon_id');
+          Add('JOIN TaxaDetails AS o ON m.order_id = o.taxon_id');
+          Add('JOIN TaxaDetails AS t ON m.taxon_id = t.taxon_id');
+          Add('WHERE (m.active_status = 1)');
         end;
       tbSightings:
         begin
@@ -451,6 +479,15 @@ begin
   aSQL.Add('FROM captures AS c WHERE (c.active_status = 1)');
 end;
 
+procedure LoadMoltDateTree(aSQL: TStrings);
+begin
+  aSQL.Add('SELECT ');
+  aSQL.Add('strftime(''%Y'', m.sample_date) AS ano,');
+  aSQL.Add('strftime(''%m'', m.sample_date) AS mes,');
+  aSQL.Add('strftime(''%d'', m.sample_date) AS dia');
+  aSQL.Add('FROM molts AS m WHERE (m.active_status = 1)');
+end;
+
 procedure LoadExpeditionDateTree(aSQL: TStrings);
 begin
   aSQL.Add('SELECT ');
@@ -570,6 +607,8 @@ begin
           Q.Add('UNION');
           LoadCaptureDateTree(Q);
           Q.Add('UNION');
+          LoadMoltDateTree(Q);
+          Q.Add('UNION');
           LoadExpeditionDateTree(Q);
           Q.Add('UNION');
           LoadSurveyDateTree(Q);
@@ -599,7 +638,7 @@ begin
       tbBands: ;
       tbIndividuals:   LoadIndividualDateTree(Q);
       tbCaptures:      LoadCaptureDateTree(Q);
-      tbMolts: ;
+      tbMolts:         LoadMoltDateTree(Q);
       tbImages: ;
       tbAudioLibrary: ;
     end;
@@ -1262,6 +1301,40 @@ begin
       //  '(strftime(''%d'', m.capture_date) = ' + QuotedStr(Format('%2.2d', [aDay])) + '))';
       sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', c.capture_date)', 'Capture date', sdtText,
+        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+    end;
+  end;
+end;
+
+procedure FilterMoltDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
+var
+  sf: Integer;
+begin
+  if aMonth <= 0 then
+  begin
+    //Result := '(strftime(''%Y'', m.capture_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ')';
+    sf := aSearchGroup.Add(TSearchGroup.Create);
+    aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y'', m.sample_date)', 'Date', sdtText,
+      crEqual, True, Format('%4.4d', [aYear])));
+  end
+  else
+  begin
+    if aDay <= 0 then
+    begin
+      //Result := '((strftime(''%Y'', m.capture_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
+      //  '(strftime(''%m'', m.capture_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + '))';
+      sf := aSearchGroup.Add(TSearchGroup.Create);
+      aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y-%m'', m.sample_date)', 'Date', sdtText,
+        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+    end
+    else
+    { Dia > 0 }
+    begin
+      //Result := '((strftime(''%Y'', m.capture_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
+      //  '(strftime(''%m'', m.capture_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + ') AND ' +
+      //  '(strftime(''%d'', m.capture_date) = ' + QuotedStr(Format('%2.2d', [aDay])) + '))';
+      sf := aSearchGroup.Add(TSearchGroup.Create);
+      aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', m.sample_date)', 'Date', sdtText,
         crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;

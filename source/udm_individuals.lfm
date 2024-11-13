@@ -2308,6 +2308,26 @@ object DMI: TDMI
         Precision = -1
       end    
       item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
         Name = 'user_inserted'
         DataType = ftInteger
         Precision = -1
@@ -2459,6 +2479,10 @@ object DMI: TDMI
       '  mc_molt,'
       '  growth_bar_size,'
       '  notes,'
+      '  order_id,'
+      '  family_id,'
+      '  genus_id,'
+      '  species_id,'
       '  user_inserted,'
       '  insert_date,'
       '  exported_status,'
@@ -2526,6 +2550,10 @@ object DMI: TDMI
       '  :mc_molt,'
       '  :growth_bar_size,'
       '  :notes,'
+      '  :order_id,'
+      '  :family_id,'
+      '  :genus_id,'
+      '  :species_id,'
       '  :user_inserted,'
       '  :insert_date,'
       '  :exported_status,'
@@ -2596,6 +2624,10 @@ object DMI: TDMI
       '  mc_molt = :mc_molt,'
       '  growth_bar_size = :growth_bar_size,'
       '  notes = :notes,'
+      '  order_id = :order_id,'
+      '  family_id = :family_id,'
+      '  genus_id = :genus_id,'
+      '  species_id = :species_id,'
       '  user_updated = :user_inserted,'
       '  update_date = :insert_date,'
       '  exported_status = :exported_status,'
@@ -3468,11 +3500,55 @@ object DMI: TDMI
       Visible = False
       Size = 40
     end
+    object qMoltsorder_id: TLongintField
+      DisplayLabel = 'Order ID'
+      FieldKind = fkData
+      FieldName = 'order_id'
+      Index = 68
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsfamily_id: TLongintField
+      DisplayLabel = 'Family ID'
+      FieldKind = fkData
+      FieldName = 'family_id'
+      Index = 69
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsgenus_id: TLongintField
+      DisplayLabel = 'Genus ID'
+      FieldKind = fkData
+      FieldName = 'genus_id'
+      Index = 70
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMoltsspecies_id: TLongintField
+      DisplayLabel = 'Species ID'
+      FieldKind = fkData
+      FieldName = 'species_id'
+      Index = 71
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
     object qMoltsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 68
+      Index = 72
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3483,7 +3559,7 @@ object DMI: TDMI
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 69
+      Index = 73
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3495,7 +3571,7 @@ object DMI: TDMI
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 70
+      Index = 74
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3507,7 +3583,7 @@ object DMI: TDMI
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 71
+      Index = 75
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3519,7 +3595,7 @@ object DMI: TDMI
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 72
+      Index = 76
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -3532,7 +3608,7 @@ object DMI: TDMI
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 73
+      Index = 77
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

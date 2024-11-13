@@ -1591,6 +1591,15 @@ msgstr ""
 msgid "Shrubs distribution"
 msgstr ""
 
+#: cbs_datacolumns.rscsighting
+msgctxt "cbs_datacolumns.rscsighting"
+msgid "Sighting"
+msgstr ""
+
+#: cbs_datacolumns.rscsightingid
+msgid "Sighting ID"
+msgstr ""
+
 #: cbs_datacolumns.rscsitename
 msgid "Site name"
 msgstr ""
@@ -2465,6 +2474,7 @@ msgid "Sampling plot"
 msgstr ""
 
 #: cbs_locale.rscaptionsighting
+msgctxt "cbs_locale.rscaptionsighting"
 msgid "Sighting"
 msgstr ""
 
@@ -4977,6 +4987,10 @@ msgctxt "cbs_locale.rstitleprintpreview"
 msgid "Print preview"
 msgstr ""
 
+#: cbs_locale.rstitleprojectmembers
+msgid "Project members"
+msgstr ""
+
 #: cbs_locale.rstitleprojects
 msgctxt "cbs_locale.rstitleprojects"
 msgid "Projects"
@@ -5029,6 +5043,10 @@ msgstr ""
 #: cbs_locale.rstitlesurveys
 msgctxt "cbs_locale.rstitlesurveys"
 msgid "Surveys"
+msgstr ""
+
+#: cbs_locale.rstitlesurveyteam
+msgid "Survey team"
 msgstr ""
 
 #: cbs_locale.rstitletaxonhierarchy
@@ -11547,6 +11565,11 @@ msgstr ""
 #: tfrmcustomgrid.pmprintmethods.caption
 msgctxt "tfrmcustomgrid.pmprintmethods.caption"
 msgid "Methods"
+msgstr ""
+
+#: tfrmcustomgrid.pmprintmolts.caption
+msgctxt "tfrmcustomgrid.pmprintmolts.caption"
+msgid "Molts"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintnests.caption

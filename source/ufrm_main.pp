@@ -254,6 +254,7 @@ type
     procedure actOpenInstitutionsExecute(Sender: TObject);
     procedure actOpenManualExecute(Sender: TObject);
     procedure actOpenMethodsExecute(Sender: TObject);
+    procedure actOpenMoltsExecute(Sender: TObject);
     procedure actOpenNestRevisionsExecute(Sender: TObject);
     procedure actOpenNestsExecute(Sender: TObject);
     procedure actOpenNetStationsExecute(Sender: TObject);
@@ -590,6 +591,11 @@ end;
 procedure TfrmMain.actOpenMethodsExecute(Sender: TObject);
 begin
   OpenForm(Sender, fMethods, tbMethods, rsTitleMethods, actOpenMethods.ImageIndex);
+end;
+
+procedure TfrmMain.actOpenMoltsExecute(Sender: TObject);
+begin
+  OpenForm(Sender, fMolts, tbMolts, rsTitleMolts, actOpenMolts.ImageIndex);
 end;
 
 procedure TfrmMain.actOpenNestRevisionsExecute(Sender: TObject);

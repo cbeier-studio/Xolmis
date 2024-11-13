@@ -1,6 +1,6 @@
 
 #define MyAppName "Xolmis"
-#define MyAppVersion "0.1.0-beta"
+#define MyAppVersion "0.1.0"
 #define MyAppPublisher "Christian Beier Studio"
 #define MyAppExeName "Xolmis.exe"
 #define MyAppSource "win64\x86_64"
@@ -20,7 +20,7 @@ OutputBaseFilename=xolmis-{#MyAppVersion}-win64
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
-VersionInfoVersion=0.1.0.299
+VersionInfoVersion=0.1.0.350
 VersionInfoCopyright=Christian Beier
 VersionInfoProductName=Xolmis
 MinVersion=0,10.0
@@ -33,11 +33,12 @@ ShowLanguageDialog=auto
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
-Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
+Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl" 
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
+[Files]
 Source: "{#MyAppSource}\Xolmis.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppSource}\sqlite3.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "languages\Xolmis.pt_BR.mo"; DestDir: "{app}\languages"

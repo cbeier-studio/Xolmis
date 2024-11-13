@@ -502,6 +502,7 @@ type
     qMoltscapture_id: TLongintField;
     qMoltscc_molt: TFloatField;
     qMoltsexported_status: TBooleanField;
+    qMoltsfamily_id: TLongintField;
     qMoltsfull_name: TStringField;
     qMoltsgc10_molt: TFloatField;
     qMoltsgc1_molt: TFloatField;
@@ -513,6 +514,7 @@ type
     qMoltsgc7_molt: TFloatField;
     qMoltsgc8_molt: TFloatField;
     qMoltsgc9_molt: TFloatField;
+    qMoltsgenus_id: TLongintField;
     qMoltsgrowth_bar_size: TFloatField;
     qMoltsindividual_id: TLongintField;
     qMoltsindividual_name: TStringField;
@@ -522,6 +524,7 @@ type
     qMoltsmc_molt: TFloatField;
     qMoltsmolt_id: TAutoIncField;
     qMoltsnotes: TMemoField;
+    qMoltsorder_id: TLongintField;
     qMoltsp10_molt: TFloatField;
     qMoltsp1_molt: TFloatField;
     qMoltsp2_molt: TFloatField;
@@ -558,6 +561,7 @@ type
     qMoltss9_molt: TFloatField;
     qMoltssample_date: TDateField;
     qMoltssample_time: TTimeField;
+    qMoltsspecies_id: TLongintField;
     qMoltssurvey_id: TLongintField;
     qMoltssurvey_name: TStringField;
     qMoltstaxon_id: TLongintField;

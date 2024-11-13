@@ -7,6 +7,7 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1243
   ParentFont = True
+  LCLVersion = '4.0.0.1'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -77,7 +78,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            344
+            348
           )
         end
       end
@@ -24930,6 +24931,10 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = 'Colored bands combinations'
       Enabled = False
       Visible = False
+    end
+    object pmPrintMolts: TMenuItem
+      Caption = 'Molts'
+      Enabled = False
     end
     object pmPrintNests: TMenuItem
       Caption = 'Nests'

@@ -141,6 +141,42 @@ type
     property Altitude: Double read FAltitude write FAltitude;
   end;
 
+  { TPoi }
+
+  TPoi = class(TXolmisRecord)
+  protected
+    FSampleDate: TDate;
+    FSampleTime: TTime;
+    FPoiName: String;
+    FLongitude: Extended;
+    FLatitude: Extended;
+    FAltitude: Double;
+    FObserverId: Integer;
+    FTaxonId: Integer;
+    FIndividualId: Integer;
+    FSightingId: Integer;
+    FSurveyId: Integer;
+  public
+    constructor Create(aValue: Integer = 0);
+    procedure Clear; override;
+    procedure GetData(aKey: Integer); overload;
+    procedure GetData(aDataSet: TDataSet); overload;
+    function Diff(aOld: TPoi; var aList: TStrings): Boolean;
+  published
+    property SampleDate: TDate read FSampleDate write FSampleDate;
+    property SampleTime: TTime read FSampleTime write FSampleTime;
+    property PoiName: String read FPoiName write FPoiName;
+    property Longitude: Extended read FLongitude write FLongitude;
+    property Latitude: Extended read FLatitude write FLatitude;
+    property Altitude: Double read FAltitude write FAltitude;
+    property ObserverId: Integer read FObserverId write FObserverId;
+    property TaxonId: Integer read FTaxonId write FTaxonId;
+    property IndividualId: Integer read FIndividualId write FIndividualId;
+    property SightingId: Integer read FSightingId write FSightingId;
+    property SurveyId: Integer read FSurveyId write FSurveyId;
+
+  end;
+
   { Geographic coordinates conversion routines }
 
   function RemoveSymbolsDMS(aCoord: String): String;
@@ -1177,6 +1213,115 @@ begin
     aList.Add(R);
 
   Result := aList.Count > 0;
+end;
+
+{ TPoi }
+
+constructor TPoi.Create(aValue: Integer);
+begin
+  if aValue > 0 then
+    GetData(aValue)
+  else
+    Clear;
+end;
+
+procedure TPoi.Clear;
+begin
+  inherited Clear;
+  FSampleDate := StrToDate('30/12/1500');
+  FSampleTime := StrToTime('00:00:00');
+  FPoiName := EmptyStr;
+  FLongitude := 0.0;
+  FLatitude := 0.0;
+  FAltitude := 0.0;
+  FObserverId := 0;
+  FTaxonId := 0;
+  FIndividualId := 0;
+  FSightingId := 0;
+  FSurveyId := 0;
+end;
+
+function TPoi.Diff(aOld: TPoi; var aList: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+
+  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscTime, aOld.SampleTime, FSampleTime, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscName, aOld.PoiName, FPoiName, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscAltitude, aOld.Altitude, FAltitude, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
+    aList.Add(R);
+
+  Result := aList.Count > 0;
+end;
+
+procedure TPoi.GetData(aKey: Integer);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT * FROM poi_library');
+    Add('WHERE poi_id = :cod');
+    ParamByName('COD').AsInteger := aKey;
+    Open;
+    if RecordCount > 0 then
+      GetData(Qry);
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TPoi.GetData(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('poi_id').AsInteger;
+    FSampleDate := FieldByName('sample_date').AsDateTime;
+    FSampleTime := FieldByName('sample_time').AsDateTime;
+    FPoiName := FieldByName('poi_name').AsString;
+    FLatitude := FieldByName('latitude').AsFloat;
+    FLongitude := FieldByName('longitude').AsFloat;
+    FAltitude := FieldByName('altitude').AsFloat;
+    FObserverId := FieldByName('observer_id').AsInteger;
+    FTaxonId := FieldByName('taxon_id').AsInteger;
+    FIndividualId := FieldByName('individual_id').AsInteger;
+    FSightingId := FieldByName('sighting_id').AsInteger;
+    FSurveyId := FieldByName('survey_id').AsInteger;
+    FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUpdateDate := FieldByName('update_date').AsDateTime;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
 end;
 
 { TUTMPoint }

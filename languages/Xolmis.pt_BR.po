@@ -1593,6 +1593,15 @@ msgstr "Titulo curto"
 msgid "Shrubs distribution"
 msgstr "Distribuição dos arbustos"
 
+#: cbs_datacolumns.rscsighting
+msgctxt "cbs_datacolumns.rscsighting"
+msgid "Sighting"
+msgstr "Observação"
+
+#: cbs_datacolumns.rscsightingid
+msgid "Sighting ID"
+msgstr "Observação ID"
+
 #: cbs_datacolumns.rscsitename
 msgid "Site name"
 msgstr "Topônimo"
@@ -2469,6 +2478,7 @@ msgid "Sampling plot"
 msgstr "Parcela amostral"
 
 #: cbs_locale.rscaptionsighting
+msgctxt "cbs_locale.rscaptionsighting"
 msgid "Sighting"
 msgstr "Observação"
 
@@ -5005,6 +5015,10 @@ msgctxt "cbs_locale.rstitleprintpreview"
 msgid "Print preview"
 msgstr "Visualização de impressão"
 
+#: cbs_locale.rstitleprojectmembers
+msgid "Project members"
+msgstr "Membros do projeto"
+
 #: cbs_locale.rstitleprojects
 msgctxt "cbs_locale.rstitleprojects"
 msgid "Projects"
@@ -5058,6 +5072,10 @@ msgstr "Espécimes"
 msgctxt "cbs_locale.rstitlesurveys"
 msgid "Surveys"
 msgstr "Amostragens"
+
+#: cbs_locale.rstitlesurveyteam
+msgid "Survey team"
+msgstr "Equipe da amostragem"
 
 #: cbs_locale.rstitletaxonhierarchy
 msgctxt "cbs_locale.rstitletaxonhierarchy"
@@ -11578,6 +11596,11 @@ msgstr "Instituições"
 msgctxt "tfrmcustomgrid.pmprintmethods.caption"
 msgid "Methods"
 msgstr "Métodos"
+
+#: tfrmcustomgrid.pmprintmolts.caption
+msgctxt "tfrmcustomgrid.pmprintmolts.caption"
+msgid "Molts"
+msgstr "Mudas"
 
 #: tfrmcustomgrid.pmprintnests.caption
 msgctxt "tfrmcustomgrid.pmprintnests.caption"

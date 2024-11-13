@@ -236,7 +236,7 @@ begin
   begin
     Add(rsCaptionExpeditions);
     Add(rsTitleSurveys);
-    Add('Survey team');
+    Add(rsTitleSurveyTeam);
     Add(rsTitleNetsEffort);
     Add(rsTitleWeather);
     Add(rsTitleVegetation);
@@ -256,7 +256,7 @@ begin
     Add(rsTitleInstitutions);
     Add(rsTitleResearchers);
     Add(rsTitleProjects);
-    Add('Project members');
+    Add(rsTitleProjectMembers);
     Add(rsTitlePermits);
     Add(rsTitleGazetteer);
     Add(rsTitleSamplingPlots);

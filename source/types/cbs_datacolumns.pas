@@ -467,6 +467,8 @@ resourcestring
   rscProportionOfTrees = '% of trees';
   rscTreesDistribution = 'Trees distribution';
   rscAvgHeightOfTrees = 'Avg. height of trees';
+  rscSightingID = 'Sighting ID';
+  rscSighting = 'Sighting';
 
 
   procedure SummaryBands(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
@@ -522,6 +524,7 @@ resourcestring
   procedure TranslateSpecimenCollectors(aDataSet: TDataSet);
   procedure TranslateSamplePreps(aDataSet: TDataSet);
   procedure TranslateVegetation(aDataSet: TDataSet);
+  procedure TranslatePoiLibrary(aDataset: TDataSet);
 
 implementation
 
@@ -1656,6 +1659,10 @@ begin
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'molt_id':                Fields[i].DisplayLabel := rscId;
+        'order_id':               Fields[i].DisplayLabel := rscOrderID;
+        'family_id':              Fields[i].DisplayLabel := rscFamilyID;
+        'genus_id':               Fields[i].DisplayLabel := rscGenusID;
+        'species_id':             Fields[i].DisplayLabel := rscSpeciesID;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
         'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
         'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
@@ -4851,6 +4858,44 @@ begin
     begin
 
       Open;
+    end;
+  end;
+end;
+
+procedure TranslatePoiLibrary(aDataset: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'poi_name':               Fields[i].DisplayLabel := rscName;
+        'sample_date':            Fields[i].DisplayLabel := rscDate;
+        'sample_time':            Fields[i].DisplayLabel := rscTime;
+        'longitude':              Fields[i].DisplayLabel := rscLongitude;
+        'latitude':               Fields[i].DisplayLabel := rscLatitude;
+        'altitude':               Fields[i].DisplayLabel := rscAltitude;
+        'observer_id':            Fields[i].DisplayLabel := rscObserverID;
+        'observer_name':          Fields[i].DisplayLabel := rscObserver;
+        'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
+        'taxon_name':             Fields[i].DisplayLabel := rscTaxon;
+        'individual_id':          Fields[i].DisplayLabel := rscIndividualID;
+        'individual_name':        Fields[i].DisplayLabel := rscIndividual;
+        'sighting_id':            Fields[i].DisplayLabel := rscSightingID;
+        'sighting_name':          Fields[i].DisplayLabel := rscSighting;
+        'survey_id':              Fields[i].DisplayLabel := rscSurveyID;
+        'survey_name':            Fields[i].DisplayLabel := rscSurvey;
+        'poi_id':                 Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+      end;
     end;
   end;
 end;

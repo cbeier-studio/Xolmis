@@ -57,6 +57,7 @@ type
     lblChildTag6: TLabel;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
+    pmPrintMolts: TMenuItem;
     pmcNewVegetation: TMenuItem;
     pgChild6: TPage;
     pChildCount6: TBCPanel;
@@ -1128,6 +1129,7 @@ type
     procedure ClearIndividualFilters;
     procedure ClearInstitutionFilters;
     procedure ClearMethodFilters;
+    procedure ClearMoltFilters;
     procedure ClearNestFilters;
     procedure ClearNestRevisionFilters;
     procedure ClearNetStationFilters;
@@ -1154,6 +1156,7 @@ type
     procedure GetIndividualFilters;
     procedure GetInstitutionFilters;
     procedure GetMethodFilters;
+    procedure GetMoltFilters;
     procedure GetNestFilters;
     procedure GetNestRevisionFilters;
     procedure GetNetStationFilters;
@@ -1212,6 +1215,7 @@ type
     procedure SetColumnsIndividuals(var aGrid: TDBGrid);
     procedure SetColumnsInstitutions(var aGrid: TDBGrid);
     procedure SetColumnsMethods(var aGrid: TDBGrid);
+    procedure SetColumnsMolts(var aGrid: TDBGrid);
     procedure SetColumnsNestOwners(var aGrid: TDBGrid);
     procedure SetColumnsNestRevisions(var aGrid: TDBGrid);
     procedure SetColumnsNests(var aGrid: TDBGrid);
@@ -1236,6 +1240,7 @@ type
     procedure SetGridIndividuals;
     procedure SetGridInstitutions;
     procedure SetGridMethods;
+    procedure SetGridMolts;
     procedure SetGridNestRevisions;
     procedure SetGridNests;
     procedure SetGridExpeditions;
@@ -1266,6 +1271,7 @@ type
     function SearchIndividuals(aValue: String): Boolean;
     function SearchInstitutions(aValue: String): Boolean;
     function SearchMethods(aValue: String): Boolean;
+    function SearchMolts(aValue: String): Boolean;
     function SearchNestRevisions(aValue: String): Boolean;
     function SearchNests(aValue: String): Boolean;
     function SearchNetStations(aValue: String): Boolean;
@@ -1299,6 +1305,7 @@ type
     procedure UpdateFilterPanelsGazetteer;
     procedure UpdateFilterPanelsIndividuals;
     procedure UpdateFilterPanelsInstitutions;
+    procedure UpdateFilterPanelsMolts;
     procedure UpdateFilterPanelsNestRevisions;
     procedure UpdateFilterPanelsNests;
     procedure UpdateFilterPanelsNetStations;
@@ -2400,6 +2407,25 @@ begin
 
 end;
 
+procedure TfrmCustomGrid.ClearMoltFilters;
+begin
+  lblCountTaxonFilter.Caption := rsNoneSelected;
+  tvTaxaFilter.ClearChecked;
+
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
+
+  eStartTimeFilter.Clear;
+  eEndTimeFilter.Clear;
+
+  ePersonFilter.Clear;
+  FPersonKeyFilter := 0;
+  eIndividualFilter.Clear;
+  FIndividualKeyFilter := 0;
+  eSurveyFilter.Clear;
+  FSurveyKeyFilter := 0;
+end;
+
 procedure TfrmCustomGrid.ClearNestFilters;
 begin
   lblCountTaxonFilter.Caption := rsNoneSelected;
@@ -2511,7 +2537,7 @@ begin
     tbBands:         ClearBandFilters;
     tbIndividuals:   ClearIndividualFilters;
     tbCaptures:      ClearCaptureFilters;
-    //tbMolts: ;
+    tbMolts:         ClearMoltFilters;
     //tbImages: ;
     //tbAudioLibrary: ;
   end;
@@ -2778,6 +2804,7 @@ begin
       (FieldName = 'revision_date') or
       (FieldName = 'dispatch_date') or
       (FieldName = 'expire_date') or
+      (FieldName = 'sample_date') or
       (FieldName = 'capture_date') then
       CalendarDlg(InplaceEditor, DataSource.DataSet, FieldName);
 
@@ -5023,7 +5050,7 @@ begin
     tbBands:         GetBandFilters;
     tbIndividuals:   GetIndividualFilters;
     tbCaptures:      GetCaptureFilters;
-    tbMolts: ;
+    tbMolts:         GetMoltFilters;
     tbImages: ;
     tbAudioLibrary: ;
   end;
@@ -5138,6 +5165,42 @@ end;
 procedure TfrmCustomGrid.GetMethodFilters;
 begin
 
+end;
+
+procedure TfrmCustomGrid.GetMoltFilters;
+var
+  sf: Integer;
+begin
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+
+  if ePersonFilter.Text <> EmptyStr then
+    PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
+
+  if eStartTimeFilter.Text <> EmptyStr then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    if eEndTimeFilter.Text <> EmptyStr then
+      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('sample_time', 'Time', sdtTime,
+        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)))
+    else
+      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('sample_time', 'Time', sdtTime,
+        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
+  end;
+
+  if FSurveyKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('survey_id', 'Survey', sdtInteger,
+      crEqual, False, IntToStr(FSurveyKeyFilter)));
+  end;
+
+  if FIndividualKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('individual_id', 'Individual', sdtInteger,
+      crEqual, False, IntToStr(FIndividualKeyFilter)));
+  end;
 end;
 
 procedure TfrmCustomGrid.GetNestFilters;
@@ -8566,7 +8629,7 @@ begin
     tbBands:         Result := SearchBands(aValue);
     tbIndividuals:   Result := SearchIndividuals(aValue);
     tbCaptures:      Result := SearchCaptures(aValue);
-    tbMolts: ;
+    tbMolts:         Result := SearchMolts(aValue);
     tbImages: ;
     tbAudioLibrary: ;
   end;
@@ -9144,6 +9207,68 @@ begin
       FSearch.Fields[g].Fields.Add(TSearchField.Create('method_acronym', 'Acronym', sdtText, Crit,
         False, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('ebird_name', 'eBird name', sdtText, Crit,
+        False, aValue));
+    end;
+  end;
+
+  GetFilters;
+
+  Result := FSearch.RunSearch > 0;
+end;
+
+function TfrmCustomGrid.SearchMolts(aValue: String): Boolean;
+var
+  i, g: Longint;
+  Crit: TCriteriaType;
+  Dt: TDateTime;
+begin
+  Result := False;
+
+  Crit := crLike;
+  aValue := Trim(aValue);
+
+  if aValue <> EmptyStr then
+  begin
+    if ExecRegExpr('^=.+$', aValue) then
+    begin
+      Crit := crEqual;
+      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
+    end
+    else
+    if ExecRegExpr('^:.+$', aValue) then
+    begin
+      Crit := crStartLike;
+      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+    end;
+
+    if TryStrToInt(aValue, i) then
+    begin
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('molt_id', 'Molt (ID)', sdtInteger, crEqual,
+        False, aValue));
+    end
+    else
+    if TryStrToDate(aValue, Dt) then
+    begin
+      aValue := FormatDateTime('yyyy-mm-dd', Dt);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('sample_date', 'Date', sdtDate, crEqual,
+        False, aValue));
+    end
+    else
+    begin
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('taxon_name', 'Taxon', sdtText, Crit,
+        False, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('full_name', 'Full name', sdtText, Crit,
+        False, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('survey_name', 'Survey', sdtText, Crit,
+        False, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('individual_name', 'Individual', sdtText, Crit,
+        False, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('band_name', 'Band', sdtText, Crit,
+        False, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('bander_name', 'Bander', sdtText, Crit,
         False, aValue));
     end;
   end;
@@ -10235,6 +10360,27 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.SetColumnsMolts(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('molt_id').ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName('sample_date').Visible then
+      ColumnByFieldName('sample_date').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('taxon_name').Visible then
+      ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('band_name').Visible then
+      ColumnByFieldName('band_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('bander_name').Visible then
+      ColumnByFieldname('bander_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('survey_name').Visible then
+      ColumnByFieldname('survey_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('individual_name').Visible then
+      ColumnByFieldname('individual_name').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
 procedure TfrmCustomGrid.SetColumnsNestOwners(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
@@ -10632,6 +10778,7 @@ begin
     tbBands:          SetGridBands;
     tbIndividuals:    SetGridIndividuals;
     tbCaptures:       SetGridCaptures;
+    tbMolts:          SetGridMolts;
     tbNests:          SetGridNests;
     tbNestRevisions:  SetGridNestRevisions;
     tbEggs:           SetGridEggs;
@@ -10718,6 +10865,7 @@ begin
     tbBands:          SetColumnsBands(aGrid);
     tbIndividuals:    SetColumnsIndividuals(aGrid);
     tbCaptures:       SetColumnsCaptures(aGrid);
+    tbMolts:          SetColumnsMolts(aGrid);
     tbNests:          SetColumnsNests(aGrid);
     tbNestOwners:     SetColumnsNestOwners(aGrid);
     tbNestRevisions:  SetColumnsNestRevisions(aGrid);
@@ -10865,6 +11013,17 @@ begin
   pmPrintMethods.Visible := True;
 
   sbShowDocs.Visible := True;
+end;
+
+procedure TfrmCustomGrid.SetGridMolts;
+begin
+  Caption := rsTitleMolts;
+  FSearch.DataSet := DMG.qMolts;
+  AddSortedField('sample_date', sdDescending);
+
+  pmPrintMolts.Visible := True;
+
+  //sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridNests;
@@ -11256,7 +11415,14 @@ begin
       lblRecycleId.DataField := 'capture_id';
       lblRecycleName.DataField := 'full_name';
     end;
-    tbMolts: ;
+    tbMolts:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'molt_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'molt_id';
+      lblRecycleName.DataField := 'full_name';
+    end;
     tbNests:
     begin
       qRecycle.MacroByName('FID').AsString := 'nest_id';
@@ -12302,6 +12468,7 @@ begin
     tbBands:          UpdateFilterPanelsBands;
     tbIndividuals:    UpdateFilterPanelsIndividuals;
     tbCaptures:       UpdateFilterPanelsCaptures;
+    tbMolts:          UpdateFilterPanelsMolts;
     tbNests:          UpdateFilterPanelsNests;
     tbNestRevisions:  UpdateFilterPanelsNestRevisions;
     tbEggs:           UpdateFilterPanelsEggs;
@@ -12453,6 +12620,18 @@ procedure TfrmCustomGrid.UpdateFilterPanelsInstitutions;
 begin
   pSiteFilters.Visible := True;
   LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsMolts;
+begin
+  pTaxonFilters.Visible := True;
+  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pIndividualFilter.Visible := True;
+  pPersonFilter.Visible := True;
+  pTimeFilters.Visible := True;
+  pSurveyFilter.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsNests;
