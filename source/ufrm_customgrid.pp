@@ -1170,6 +1170,14 @@ type
     procedure LoadRecordColumns;
     procedure LoadRecordRow;
 
+    procedure OpenExpeditionChilds;
+    procedure OpenIndividualChilds;
+    procedure OpenNestChilds;
+    procedure OpenProjectChilds;
+    procedure OpenSamplingPlotChilds;
+    procedure OpenSpecimenChilds;
+    procedure OpenSurveyChilds;
+
     procedure PrepareCanvasBands(var Column: TColumn; var sender: TObject);
     procedure PrepareCanvasCaptures(var Column: TColumn; var sender: TObject);
     procedure PrepareCanvasEggs(var Column: TColumn; var sender: TObject);
@@ -4435,102 +4443,13 @@ begin
     {$ENDIF}
 
     case FTableType of
-      tbIndividuals:
-      begin
-        AddGridColumns(tbCaptures, gridChild1);
-        dsLink1.DataSet.Open;
-        AddGridColumns(tbMolts, gridChild2);
-        dsLink2.DataSet.Open;
-        AddGridColumns(tbSightings, gridChild3);
-        dsLink3.DataSet.Open;
-        AddGridColumns(tbNests, gridChild4);
-        dsLink4.DataSet.Open;
-        AddGridColumns(tbSpecimens, gridChild5);
-        dsLink5.DataSet.Open;
-        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-        begin
-          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-          (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-          (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
-          (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
-          (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
-        end;
-      end;
-      tbNests:
-      begin
-        AddGridColumns(tbNestOwners, gridChild1);
-        dsLink1.DataSet.Open;
-        AddGridColumns(tbNestRevisions, gridChild2);
-        dsLink2.DataSet.Open;
-        AddGridColumns(tbEggs, gridChild3);
-        dsLink3.DataSet.Open;
-        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-        begin
-          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-          (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-          (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
-        end;
-      end;
-      tbExpeditions:
-      begin
-        AddGridColumns(tbSurveys, gridChild1);
-        dsLink1.DataSet.Open;
-        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-        begin
-          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-        end;
-      end;
-      tbSurveys:
-      begin
-        AddGridColumns(tbSurveyTeams, gridChild1);
-        dsLink1.DataSet.Open;
-        AddGridColumns(tbNetsEffort, gridChild2);
-        dsLink2.DataSet.Open;
-        AddGridColumns(tbWeatherLogs, gridChild3);
-        dsLink3.DataSet.Open;
-        AddGridColumns(tbCaptures, gridChild4);
-        dsLink4.DataSet.Open;
-        AddGridColumns(tbSightings, gridChild5);
-        dsLink5.DataSet.Open;
-        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-        begin
-          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-          (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-          (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
-          (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
-          (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
-        end;
-      end;
-      tbSpecimens:
-      begin
-        AddGridColumns(tbSpecimenCollectors, gridChild1);
-        dsLink1.DataSet.Open;
-        AddGridColumns(tbSamplePreps, gridChild2);
-        dsLink2.DataSet.Open;
-        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-        begin
-          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-          (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-        end;
-      end;
-      tbNetStations:
-      begin
-        AddGridColumns(tbPermanentNets, gridChild1);
-        dsLink1.DataSet.Open;
-        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-        begin
-          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-        end;
-      end;
-      tbProjects:
-      begin
-        AddGridColumns(tbProjectTeams, gridChild1);
-        dsLink1.DataSet.Open;
-        if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-        begin
-          (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-        end;
-      end;
+      tbIndividuals:  OpenIndividualChilds;
+      tbNests:        OpenNestChilds;
+      tbExpeditions:  OpenExpeditionChilds;
+      tbSurveys:      OpenSurveyChilds;
+      tbSpecimens:    OpenSpecimenChilds;
+      tbNetStations:  OpenSamplingPlotChilds;
+      tbProjects:     OpenProjectChilds;
     end;
     //SetGridColumns(FChildTable, dbgChild);
     Application.ProcessMessages;
@@ -5807,6 +5726,112 @@ begin
   ADrawer.TextOut(P.X - ext.CX div 2, P.Y + 5, APoint.Name);
 end;
 
+procedure TfrmCustomGrid.OpenExpeditionChilds;
+begin
+  AddGridColumns(tbSurveys, gridChild1);
+  dsLink1.DataSet.Open;
+  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  begin
+    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.OpenIndividualChilds;
+begin
+  AddGridColumns(tbCaptures, gridChild1);
+  dsLink1.DataSet.Open;
+  AddGridColumns(tbMolts, gridChild2);
+  dsLink2.DataSet.Open;
+  AddGridColumns(tbSightings, gridChild3);
+  dsLink3.DataSet.Open;
+  AddGridColumns(tbNests, gridChild4);
+  dsLink4.DataSet.Open;
+  AddGridColumns(tbSpecimens, gridChild5);
+  dsLink5.DataSet.Open;
+  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  begin
+    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.OpenNestChilds;
+begin
+  AddGridColumns(tbNestOwners, gridChild1);
+  dsLink1.DataSet.Open;
+  AddGridColumns(tbNestRevisions, gridChild2);
+  dsLink2.DataSet.Open;
+  AddGridColumns(tbEggs, gridChild3);
+  dsLink3.DataSet.Open;
+  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  begin
+    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.OpenProjectChilds;
+begin
+  AddGridColumns(tbProjectTeams, gridChild1);
+  dsLink1.DataSet.Open;
+  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  begin
+    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.OpenSamplingPlotChilds;
+begin
+  AddGridColumns(tbPermanentNets, gridChild1);
+  dsLink1.DataSet.Open;
+  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  begin
+    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.OpenSpecimenChilds;
+begin
+  AddGridColumns(tbSpecimenCollectors, gridChild1);
+  dsLink1.DataSet.Open;
+  AddGridColumns(tbSamplePreps, gridChild2);
+  dsLink2.DataSet.Open;
+  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  begin
+    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.OpenSurveyChilds;
+begin
+  AddGridColumns(tbSurveyTeams, gridChild1);
+  dsLink1.DataSet.Open;
+  AddGridColumns(tbNetsEffort, gridChild2);
+  dsLink2.DataSet.Open;
+  AddGridColumns(tbWeatherLogs, gridChild3);
+  dsLink3.DataSet.Open;
+  AddGridColumns(tbCaptures, gridChild4);
+  dsLink4.DataSet.Open;
+  AddGridColumns(tbSightings, gridChild5);
+  dsLink5.DataSet.Open;
+  AddGridColumns(tbVegetation, gridChild6);
+  dsLink6.DataSet.Open;
+  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  begin
+    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink6.DataSet as TSQLQuery).ReadOnly := True;
+  end;
+end;
+
 procedure TfrmCustomGrid.pChildTag1Click(Sender: TObject);
 var
   aTag, aCountTag: TBCPanel;
@@ -5842,6 +5867,12 @@ begin
   begin
     aTag := pChildTag5;
     aCountTag := pChildCount5;
+  end
+  else
+  if (Sender = pChildTag6) or (Sender = lblChildTag6) or (Sender = pChildCount6) or (Sender = lblChildCount6) then
+  begin
+    aTag := pChildTag6;
+    aCountTag := pChildCount6;
   end;
 
   ChildTagClick(aTag, aCountTag);
@@ -5887,6 +5918,7 @@ begin
         2: FChildTable := tbWeatherLogs;
         3: FChildTable := tbCaptures;
         4: FChildTable := tbSightings;
+        5: FChildTable := tbVegetation;
       end;
     tbSpecimens:
       case nbChilds.PageIndex of
@@ -5917,6 +5949,7 @@ begin
     2: UpdateChildButtons(dsLink3.DataSet);
     3: UpdateChildButtons(dsLink4.DataSet);
     4: UpdateChildButtons(dsLink5.DataSet);
+    5: UpdateChildButtons(dsLink6.DataSet);
   end;
 
   UpdateChildStatus;
@@ -5954,6 +5987,12 @@ begin
   begin
     aTag := pChildTag5;
     aCountTag := pChildCount5;
+  end
+  else
+  if (Sender = pChildTag6) or (Sender = lblChildTag6) or (Sender = pChildCount6) or (Sender = lblChildCount6) then
+  begin
+    aTag := pChildTag6;
+    aCountTag := pChildCount6;
   end;
 
   ChildTagMouseEnter(aTag, aCountTag);
@@ -5994,6 +6033,12 @@ begin
   begin
     aTag := pChildTag5;
     aCountTag := pChildCount5;
+  end
+  else
+  if (Sender = pChildTag6) or (Sender = lblChildTag6) or (Sender = pChildCount6) or (Sender = lblChildCount6) then
+  begin
+    aTag := pChildTag6;
+    aCountTag := pChildCount6;
   end;
 
   ChildTagMouseLeave(aTag, aCountTag);
@@ -10462,6 +10507,11 @@ procedure TfrmCustomGrid.SetColumnsVegetation(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
+    ColumnByFieldname('vegetation_id').ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName('observer_name').Visible then
+      ColumnByFieldname('observer_name').ButtonStyle := cbsEllipsis;
+
     ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionNone);
     ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionRare);
     ColumnByFieldname('herbs_distribution').PickList.Add(rsDistributionFewSparse);
@@ -11756,6 +11806,7 @@ begin
       2: UpdateChildButtons(dsLink3.DataSet);
       3: UpdateChildButtons(dsLink4.DataSet);
       4: UpdateChildButtons(dsLink5.DataSet);
+      5: UpdateChildButtons(dsLink6.DataSet);
     end;
 end;
 
@@ -11837,6 +11888,7 @@ begin
     pChildCount3.Visible := False;
     pChildCount4.Visible := False;
     pChildCount5.Visible := False;
+    pChildCount6.Visible := False;
     Exit;
   end;
 
@@ -11999,6 +12051,14 @@ begin
       end
       else
         pChildCount5.Visible := False;
+
+      if dsLink6.DataSet.RecordCount > 0 then
+      begin
+        lblChildCount6.Caption := IntToStr(dsLink6.DataSet.RecordCount);
+        pChildCount6.Visible := True;
+      end
+      else
+        pChildCount6.Visible := False;
     end;
     //tbSurveyTeams: ;
     //tbNetsEffort: ;
@@ -12095,6 +12155,7 @@ begin
         2: DS := dsLink3;
         3: DS := dsLink4;
         4: DS := dsLink5;
+        5: DS := dsLink6;
       end;
     end;
     //tbSurveyTeams: ;

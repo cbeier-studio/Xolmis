@@ -1219,6 +1219,7 @@ begin
   begin
     Clear;
     Add('SELECT z.*,');
+    Add('    r.rank_name AS rank_name,');
     Add('    u.full_name AS parent_taxon_name,');
     Add('    v.full_name AS valid_name,');
     Add('    ui.full_name AS ioc_parent_name,');
@@ -1230,6 +1231,7 @@ begin
     Add('    e.full_name AS species_name,');
     Add('    g.full_name AS subspecies_group_name');
     Add('FROM zoo_taxa AS z');
+    Add('LEFT JOIN taxon_ranks AS r ON z.rank_id = r.rank_id');
     Add('LEFT JOIN zoo_taxa AS u ON z.parent_taxon_id = u.taxon_id');
     Add('LEFT JOIN zoo_taxa AS v ON z.valid_id = v.taxon_id');
     Add('LEFT JOIN zoo_taxa AS ui ON z.ioc_parent_taxon_id = ui.taxon_id');

@@ -51,8 +51,6 @@ type
     dsSamplePreps: TDataSource;
     dsBotany: TDataSource;
     dsTaxa: TDataSource;
-    dsSynonymTaxa: TDataSource;
-    dsChildTaxa: TDataSource;
     dsAudio: TDataSource;
     dsDocuments: TDataSource;
     dsMolts: TDataSource;
@@ -644,6 +642,7 @@ type
     qTaxaiucn_status: TStringField;
     qTaxaorder_name: TStringField;
     qTaxaparent_taxon_name: TStringField;
+    qTaxarank_name: TStringField;
     qTaxaspecies_name: TStringField;
     qTaxasubfamily_name: TStringField;
     qTaxasubspecies_group_name: TStringField;
@@ -1314,6 +1313,10 @@ type
     procedure qSurveysBeforePost(DataSet: TDataSet);
     procedure qSurveyssurvey_dateValidate(Sender: TField);
     procedure qTaxaBeforeOpen(DataSet: TDataSet);
+    procedure qTaxadistributionGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qTaxaioc_distributionGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
     procedure qTaxonRanksBeforePost(DataSet: TDataSet);
   private
     UID: TGUID;
@@ -4283,6 +4286,22 @@ end;
 procedure TDMG.qTaxaBeforeOpen(DataSet: TDataSet);
 begin
   OpenLookupDataSets(DataSet);
+end;
+
+procedure TDMG.qTaxadistributionGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  aText := Sender.AsString;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qTaxaioc_distributionGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  aText := Sender.AsString;
+
+  DisplayText := True;
 end;
 
 procedure TDMG.qTaxonRanksBeforePost(DataSet: TDataSet);

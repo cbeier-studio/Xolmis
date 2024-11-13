@@ -2109,13 +2109,13 @@ begin
     FId := FieldByName('rank_id').AsInteger;
     FName := FieldByName('rank_name').AsString;
     FAcronym := FieldByName('rank_acronym').AsString;
-    FRankIndex := FieldByName('sort_num').AsInteger;
+    FRankIndex := FieldByName('rank_seq').AsInteger;
     FMainRank := FieldByName('main_rank').AsBoolean;
     FSubrank := FieldByName('subrank').AsBoolean;
     FInfrarank := FieldByName('infrarank').AsBoolean;
     FInfraspecific := FieldByName('infraspecific').AsBoolean;
-    FZoologicalCode := FieldByName('zoological_code').AsBoolean;
-    FBotanicalCode := FieldByName('botanical_code').AsBoolean;
+    FZoologicalCode := FieldByName('iczn').AsBoolean;
+    FBotanicalCode := FieldByName('icbn').AsBoolean;
     FUserInserted := FieldByName('user_inserted').AsInteger;
     FUserUpdated := FieldByName('user_updated').AsInteger;
     FInsertDate := FieldByName('insert_date').AsDateTime;

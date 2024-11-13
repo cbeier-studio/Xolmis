@@ -185,7 +185,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="337"/>
+      <BuildNr Value="350"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2024 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1244,6 +1244,13 @@
         <Filename Value="edit_dialogs\uedt_vegetation.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtVegetation"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ufrm_taxa.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmTaxa"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>

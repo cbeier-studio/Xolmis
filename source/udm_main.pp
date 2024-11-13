@@ -35,6 +35,7 @@ type
     FPSExport: TFPSExport;
     iAddMenuDark: TImageList;
     iBandTypesDark: TImageList;
+    iWeb: TImageList;
     iCheckboxDark: TImageList;
     iEditsDark: TImageList;
     iFilesDark: TImageList;
@@ -47,6 +48,7 @@ type
     iTrees: TImageList;
     iCheckbox: TImageList;
     iTreesDark: TImageList;
+    iWebDark: TImageList;
     OpenAudios: TOpenDialog;
     OpenDocs: TOpenDialog;
     OpenKmlDlg: TOpenDialog;

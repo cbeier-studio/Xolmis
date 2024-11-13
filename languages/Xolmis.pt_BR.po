@@ -248,6 +248,7 @@ msgid "Claw"
 msgstr "Garra"
 
 #: cbs_datacolumns.rscclements
+msgctxt "cbs_datacolumns.rscclements"
 msgid "Clements"
 msgstr "Clements"
 
@@ -5622,6 +5623,10 @@ msgstr "Mostrar outliers das medidas nas capturas"
 msgid "Show synonyms in search results"
 msgstr "Mostrar sinônimos nos resultados das buscas"
 
+#: tcfgoptions.lblstartpage.caption
+msgid "Start page"
+msgstr "Página inicial"
+
 #: tcfgoptions.lblstartupbackup.caption
 msgid "Create backup when Xolmis starts"
 msgstr "Criar backup quando o Xolmis iniciar"
@@ -6485,6 +6490,11 @@ msgstr "Arquivo de origem: *"
 msgid "Select a target table and a source file to import."
 msgstr "Selecione uma tabela destino e um arquivo de origem para importar."
 
+#: tdlgimport.lblsubtitleimportfinished.caption
+msgctxt "tdlgimport.lblsubtitleimportfinished.caption"
+msgid "The selected file(s) were sucessfully imported."
+msgstr "O(s) arquivo(s) selecionado(s) foi/foram importado(s) com sucesso."
+
 #: tdlgimport.lbltarget.caption
 msgid "Target table: *"
 msgstr "Tabela destino: *"
@@ -6497,6 +6507,11 @@ msgstr "Confirmação"
 #: tdlgimport.lbltitlefields.caption
 msgid "Fields"
 msgstr "Campos"
+
+#: tdlgimport.lbltitleimportfinished.caption
+msgctxt "tdlgimport.lbltitleimportfinished.caption"
+msgid "Finished importing!"
+msgstr "Importação finalizada!"
 
 #: tdlgimport.lbltitleprogress.caption
 msgctxt "tdlgimport.lbltitleprogress.caption"
@@ -6520,6 +6535,11 @@ msgstr "Desmarcar todos campos"
 msgid "Select all fields"
 msgstr "Marcar todos campos"
 
+#: tdlgimport.savedlg.title
+msgctxt "tdlgimport.savedlg.title"
+msgid "Save log as"
+msgstr "Salvar log como"
+
 #: tdlgimport.sbcancel.caption
 msgctxt "tdlgimport.sbcancel.caption"
 msgid "&Cancel"
@@ -6534,6 +6554,16 @@ msgstr "&Seguinte"
 msgctxt "tdlgimport.sbprior.caption"
 msgid "&Previous"
 msgstr "&Anterior"
+
+#: tdlgimport.sbretry.caption
+msgctxt "tdlgimport.sbretry.caption"
+msgid "Try again"
+msgstr "Tentar novamente"
+
+#: tdlgimport.sbsavelog.caption
+msgctxt "tdlgimport.sbsavelog.caption"
+msgid "Save log"
+msgstr "Salvar log"
 
 #: tdlgimportcaptures.caption
 msgctxt "tdlgimportcaptures.caption"
@@ -6835,6 +6865,7 @@ msgid "Select source file"
 msgstr "Selecionar arquivo de origem"
 
 #: tdlgimportxmobile.savedlg.title
+msgctxt "tdlgimportxmobile.savedlg.title"
 msgid "Save log as"
 msgstr "Salvar log como"
 
@@ -6854,6 +6885,7 @@ msgid "Try again"
 msgstr "Tentar novamente"
 
 #: tdlgimportxmobile.sbsavelog.caption
+msgctxt "tdlgimportxmobile.sbsavelog.caption"
 msgid "Save log"
 msgstr "Salvar log"
 
@@ -11669,14 +11701,17 @@ msgid "Taxa"
 msgstr "Táxons"
 
 #: tfrmcustomgrid.pmprinttaxahierarchical.caption
+msgctxt "tfrmcustomgrid.pmprinttaxahierarchical.caption"
 msgid "Taxa (hierarchical)"
 msgstr "Táxons (hierárquico)"
 
 #: tfrmcustomgrid.pmprinttaxarecorded.caption
+msgctxt "tfrmcustomgrid.pmprinttaxarecorded.caption"
 msgid "Taxa recorded"
 msgstr "Táxons registrados"
 
 #: tfrmcustomgrid.pmprinttaxarecordedbylocality.caption
+msgctxt "tfrmcustomgrid.pmprinttaxarecordedbylocality.caption"
 msgid "Taxa recorded by locality"
 msgstr "Táxons registrados por localidade"
 
@@ -12919,6 +12954,11 @@ msgctxt "tfrmmain.esearch.texthint"
 msgid "Search"
 msgstr "Pesquisar"
 
+#: tfrmmain.lblemptytabs.caption
+msgctxt "tfrmmain.lblemptytabs.caption"
+msgid "All tabs are closed"
+msgstr "Todas as abas estão fechadas"
+
 #: tfrmmain.lblloading.caption
 msgctxt "tfrmmain.lblloading.caption"
 msgid "Welcome"
@@ -13282,6 +13322,171 @@ msgstr "Diminuir"
 msgctxt "tfrmprintpreview.tbzoom.hint"
 msgid "Zoom"
 msgstr "Zoom"
+
+#: tfrmtaxa.caption
+msgctxt "tfrmtaxa.caption"
+msgid "Taxa"
+msgstr "Táxons"
+
+#: tfrmtaxa.ckcbro.caption
+msgctxt "tfrmtaxa.ckcbro.caption"
+msgid "CBRO"
+msgstr "CBRO"
+
+#: tfrmtaxa.ckclements.caption
+msgctxt "tfrmtaxa.ckclements.caption"
+msgid "Clements"
+msgstr "Clements"
+
+#: tfrmtaxa.ckioc.caption
+msgctxt "tfrmtaxa.ckioc.caption"
+msgid "IOC"
+msgstr "IOC"
+
+#: tfrmtaxa.esearch.texthint
+msgctxt "tfrmtaxa.esearch.texthint"
+msgid "Search"
+msgstr "Pesquisar"
+
+#: tfrmtaxa.gridchilds.columns[0].title.caption
+msgid "Subordinate taxa"
+msgstr "Táxons subordinados"
+
+#: tfrmtaxa.gridsynonyms.columns[0].title.caption
+msgid "Synonyms"
+msgstr "Sinônimos"
+
+#: tfrmtaxa.gridtaxa.columns[0].title.caption
+msgctxt "tfrmtaxa.gridtaxa.columns[0].title.caption"
+msgid "Taxon"
+msgstr "Táxon"
+
+#: tfrmtaxa.gridtaxa.columns[1].title.caption
+msgid "valid_id"
+msgstr ""
+
+#: tfrmtaxa.gridtaxa.columns[2].title.caption
+msgid "rank_id"
+msgstr ""
+
+#: tfrmtaxa.label2.caption
+msgid "English"
+msgstr "Inglês"
+
+#: tfrmtaxa.label3.caption
+msgid "Spanish"
+msgstr "Espanhol"
+
+#: tfrmtaxa.label4.caption
+msgid "Portuguese"
+msgstr "Português"
+
+#: tfrmtaxa.label5.caption
+msgid "Geographical distribution"
+msgstr "Distribuição geográfica"
+
+#: tfrmtaxa.lbllinkcaptures.caption
+msgid "Captures (0)"
+msgstr "Capturas (0)"
+
+#: tfrmtaxa.lbllinkeggs.caption
+msgid "Eggs (0)"
+msgstr "Ovos (0)"
+
+#: tfrmtaxa.lbllinkindividuals.caption
+msgid "Individuals (0)"
+msgstr "Indivíduos (0)"
+
+#: tfrmtaxa.lbllinknests.caption
+msgid "Nests (0)"
+msgstr "Ninhos (0)"
+
+#: tfrmtaxa.lbllinksightings.caption
+msgid "Sightings (0)"
+msgstr "Observações (0)"
+
+#: tfrmtaxa.lbllinkspecimens.caption
+msgid "Specimens (0)"
+msgstr "Espécimes (0)"
+
+#: tfrmtaxa.lblvalidname.caption
+msgctxt "tfrmtaxa.lblvalidname.caption"
+msgid "Synonym of"
+msgstr "Sinônimo de"
+
+#: tfrmtaxa.pmprinttaxa.caption
+msgctxt "tfrmtaxa.pmprinttaxa.caption"
+msgid "Taxa"
+msgstr "Táxons"
+
+#: tfrmtaxa.pmprinttaxahierarchical.caption
+msgctxt "tfrmtaxa.pmprinttaxahierarchical.caption"
+msgid "Taxa (hierarchical)"
+msgstr "Táxons (hierárquico)"
+
+#: tfrmtaxa.pmprinttaxarecorded.caption
+msgctxt "tfrmtaxa.pmprinttaxarecorded.caption"
+msgid "Taxa recorded"
+msgstr "Táxons registrados"
+
+#: tfrmtaxa.pmprinttaxarecordedbylocality.caption
+msgctxt "tfrmtaxa.pmprinttaxarecordedbylocality.caption"
+msgid "Taxa recorded by locality"
+msgstr "Táxons registrados por localidade"
+
+#: tfrmtaxa.sbbirdsoftheworld.hint
+msgid "Birds of the World"
+msgstr "Birds of the World"
+
+#: tfrmtaxa.sbclearsearch.hint
+msgctxt "tfrmtaxa.sbclearsearch.hint"
+msgid "Clear search"
+msgstr "Limpar busca"
+
+#: tfrmtaxa.sbebird.hint
+msgctxt "tfrmtaxa.sbebird.hint"
+msgid "eBird"
+msgstr "eBird"
+
+#: tfrmtaxa.sbgbif.hint
+msgctxt "tfrmtaxa.sbgbif.hint"
+msgid "GBIF"
+msgstr "GBIF"
+
+#: tfrmtaxa.sbgoogleimages.hint
+msgctxt "tfrmtaxa.sbgoogleimages.hint"
+msgid "Google Images"
+msgstr "Google Imagens"
+
+#: tfrmtaxa.sbgooglescholar.hint
+msgctxt "tfrmtaxa.sbgooglescholar.hint"
+msgid "Google Scholar"
+msgstr "Google Acadêmico"
+
+#: tfrmtaxa.sbgooglesearch.hint
+msgctxt "tfrmtaxa.sbgooglesearch.hint"
+msgid "Googe Search"
+msgstr "Google Pesquisa"
+
+#: tfrmtaxa.sbiucnredlist.hint
+msgctxt "tfrmtaxa.sbiucnredlist.hint"
+msgid "IUCN Red List"
+msgstr "Lista Vermelha da IUCN"
+
+#: tfrmtaxa.sbprint.hint
+msgctxt "tfrmtaxa.sbprint.hint"
+msgid "Print records"
+msgstr "Imprimir registros"
+
+#: tfrmtaxa.sbsharerecords.hint
+msgctxt "tfrmtaxa.sbsharerecords.hint"
+msgid "Export records"
+msgstr "Exportar registros"
+
+#: tfrmtaxa.sbwikiaves.hint
+msgctxt "tfrmtaxa.sbwikiaves.hint"
+msgid "WikiAves"
+msgstr "Wikiaves"
 
 #: tlstbreedingstatus.caption
 msgid "Breeding and behavior code"

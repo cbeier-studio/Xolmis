@@ -246,6 +246,7 @@ msgid "Claw"
 msgstr ""
 
 #: cbs_datacolumns.rscclements
+msgctxt "cbs_datacolumns.rscclements"
 msgid "Clements"
 msgstr ""
 
@@ -5592,6 +5593,10 @@ msgstr ""
 msgid "Show synonyms in search results"
 msgstr ""
 
+#: tcfgoptions.lblstartpage.caption
+msgid "Start page"
+msgstr ""
+
 #: tcfgoptions.lblstartupbackup.caption
 msgid "Create backup when Xolmis starts"
 msgstr ""
@@ -6455,6 +6460,11 @@ msgstr ""
 msgid "Select a target table and a source file to import."
 msgstr ""
 
+#: tdlgimport.lblsubtitleimportfinished.caption
+msgctxt "tdlgimport.lblsubtitleimportfinished.caption"
+msgid "The selected file(s) were sucessfully imported."
+msgstr ""
+
 #: tdlgimport.lbltarget.caption
 msgid "Target table: *"
 msgstr ""
@@ -6466,6 +6476,11 @@ msgstr ""
 
 #: tdlgimport.lbltitlefields.caption
 msgid "Fields"
+msgstr ""
+
+#: tdlgimport.lbltitleimportfinished.caption
+msgctxt "tdlgimport.lbltitleimportfinished.caption"
+msgid "Finished importing!"
 msgstr ""
 
 #: tdlgimport.lbltitleprogress.caption
@@ -6490,6 +6505,11 @@ msgstr ""
 msgid "Select all fields"
 msgstr ""
 
+#: tdlgimport.savedlg.title
+msgctxt "tdlgimport.savedlg.title"
+msgid "Save log as"
+msgstr ""
+
 #: tdlgimport.sbcancel.caption
 msgctxt "tdlgimport.sbcancel.caption"
 msgid "&Cancel"
@@ -6503,6 +6523,16 @@ msgstr ""
 #: tdlgimport.sbprior.caption
 msgctxt "tdlgimport.sbprior.caption"
 msgid "&Previous"
+msgstr ""
+
+#: tdlgimport.sbretry.caption
+msgctxt "tdlgimport.sbretry.caption"
+msgid "Try again"
+msgstr ""
+
+#: tdlgimport.sbsavelog.caption
+msgctxt "tdlgimport.sbsavelog.caption"
+msgid "Save log"
 msgstr ""
 
 #: tdlgimportcaptures.caption
@@ -6805,6 +6835,7 @@ msgid "Select source file"
 msgstr ""
 
 #: tdlgimportxmobile.savedlg.title
+msgctxt "tdlgimportxmobile.savedlg.title"
 msgid "Save log as"
 msgstr ""
 
@@ -6824,6 +6855,7 @@ msgid "Try again"
 msgstr ""
 
 #: tdlgimportxmobile.sbsavelog.caption
+msgctxt "tdlgimportxmobile.sbsavelog.caption"
 msgid "Save log"
 msgstr ""
 
@@ -11639,14 +11671,17 @@ msgid "Taxa"
 msgstr ""
 
 #: tfrmcustomgrid.pmprinttaxahierarchical.caption
+msgctxt "tfrmcustomgrid.pmprinttaxahierarchical.caption"
 msgid "Taxa (hierarchical)"
 msgstr ""
 
 #: tfrmcustomgrid.pmprinttaxarecorded.caption
+msgctxt "tfrmcustomgrid.pmprinttaxarecorded.caption"
 msgid "Taxa recorded"
 msgstr ""
 
 #: tfrmcustomgrid.pmprinttaxarecordedbylocality.caption
+msgctxt "tfrmcustomgrid.pmprinttaxarecordedbylocality.caption"
 msgid "Taxa recorded by locality"
 msgstr ""
 
@@ -12878,6 +12913,11 @@ msgctxt "tfrmmain.esearch.texthint"
 msgid "Search"
 msgstr ""
 
+#: tfrmmain.lblemptytabs.caption
+msgctxt "tfrmmain.lblemptytabs.caption"
+msgid "All tabs are closed"
+msgstr ""
+
 #: tfrmmain.lblloading.caption
 msgctxt "tfrmmain.lblloading.caption"
 msgid "Welcome"
@@ -13240,6 +13280,171 @@ msgstr ""
 #: tfrmprintpreview.tbzoom.hint
 msgctxt "tfrmprintpreview.tbzoom.hint"
 msgid "Zoom"
+msgstr ""
+
+#: tfrmtaxa.caption
+msgctxt "tfrmtaxa.caption"
+msgid "Taxa"
+msgstr ""
+
+#: tfrmtaxa.ckcbro.caption
+msgctxt "tfrmtaxa.ckcbro.caption"
+msgid "CBRO"
+msgstr ""
+
+#: tfrmtaxa.ckclements.caption
+msgctxt "tfrmtaxa.ckclements.caption"
+msgid "Clements"
+msgstr ""
+
+#: tfrmtaxa.ckioc.caption
+msgctxt "tfrmtaxa.ckioc.caption"
+msgid "IOC"
+msgstr ""
+
+#: tfrmtaxa.esearch.texthint
+msgctxt "tfrmtaxa.esearch.texthint"
+msgid "Search"
+msgstr ""
+
+#: tfrmtaxa.gridchilds.columns[0].title.caption
+msgid "Subordinate taxa"
+msgstr ""
+
+#: tfrmtaxa.gridsynonyms.columns[0].title.caption
+msgid "Synonyms"
+msgstr ""
+
+#: tfrmtaxa.gridtaxa.columns[0].title.caption
+msgctxt "tfrmtaxa.gridtaxa.columns[0].title.caption"
+msgid "Taxon"
+msgstr ""
+
+#: tfrmtaxa.gridtaxa.columns[1].title.caption
+msgid "valid_id"
+msgstr ""
+
+#: tfrmtaxa.gridtaxa.columns[2].title.caption
+msgid "rank_id"
+msgstr ""
+
+#: tfrmtaxa.label2.caption
+msgid "English"
+msgstr ""
+
+#: tfrmtaxa.label3.caption
+msgid "Spanish"
+msgstr ""
+
+#: tfrmtaxa.label4.caption
+msgid "Portuguese"
+msgstr ""
+
+#: tfrmtaxa.label5.caption
+msgid "Geographical distribution"
+msgstr ""
+
+#: tfrmtaxa.lbllinkcaptures.caption
+msgid "Captures (0)"
+msgstr ""
+
+#: tfrmtaxa.lbllinkeggs.caption
+msgid "Eggs (0)"
+msgstr ""
+
+#: tfrmtaxa.lbllinkindividuals.caption
+msgid "Individuals (0)"
+msgstr ""
+
+#: tfrmtaxa.lbllinknests.caption
+msgid "Nests (0)"
+msgstr ""
+
+#: tfrmtaxa.lbllinksightings.caption
+msgid "Sightings (0)"
+msgstr ""
+
+#: tfrmtaxa.lbllinkspecimens.caption
+msgid "Specimens (0)"
+msgstr ""
+
+#: tfrmtaxa.lblvalidname.caption
+msgctxt "tfrmtaxa.lblvalidname.caption"
+msgid "Synonym of"
+msgstr ""
+
+#: tfrmtaxa.pmprinttaxa.caption
+msgctxt "tfrmtaxa.pmprinttaxa.caption"
+msgid "Taxa"
+msgstr ""
+
+#: tfrmtaxa.pmprinttaxahierarchical.caption
+msgctxt "tfrmtaxa.pmprinttaxahierarchical.caption"
+msgid "Taxa (hierarchical)"
+msgstr ""
+
+#: tfrmtaxa.pmprinttaxarecorded.caption
+msgctxt "tfrmtaxa.pmprinttaxarecorded.caption"
+msgid "Taxa recorded"
+msgstr ""
+
+#: tfrmtaxa.pmprinttaxarecordedbylocality.caption
+msgctxt "tfrmtaxa.pmprinttaxarecordedbylocality.caption"
+msgid "Taxa recorded by locality"
+msgstr ""
+
+#: tfrmtaxa.sbbirdsoftheworld.hint
+msgid "Birds of the World"
+msgstr ""
+
+#: tfrmtaxa.sbclearsearch.hint
+msgctxt "tfrmtaxa.sbclearsearch.hint"
+msgid "Clear search"
+msgstr ""
+
+#: tfrmtaxa.sbebird.hint
+msgctxt "tfrmtaxa.sbebird.hint"
+msgid "eBird"
+msgstr ""
+
+#: tfrmtaxa.sbgbif.hint
+msgctxt "tfrmtaxa.sbgbif.hint"
+msgid "GBIF"
+msgstr ""
+
+#: tfrmtaxa.sbgoogleimages.hint
+msgctxt "tfrmtaxa.sbgoogleimages.hint"
+msgid "Google Images"
+msgstr ""
+
+#: tfrmtaxa.sbgooglescholar.hint
+msgctxt "tfrmtaxa.sbgooglescholar.hint"
+msgid "Google Scholar"
+msgstr ""
+
+#: tfrmtaxa.sbgooglesearch.hint
+msgctxt "tfrmtaxa.sbgooglesearch.hint"
+msgid "Googe Search"
+msgstr ""
+
+#: tfrmtaxa.sbiucnredlist.hint
+msgctxt "tfrmtaxa.sbiucnredlist.hint"
+msgid "IUCN Red List"
+msgstr ""
+
+#: tfrmtaxa.sbprint.hint
+msgctxt "tfrmtaxa.sbprint.hint"
+msgid "Print records"
+msgstr ""
+
+#: tfrmtaxa.sbsharerecords.hint
+msgctxt "tfrmtaxa.sbsharerecords.hint"
+msgid "Export records"
+msgstr ""
+
+#: tfrmtaxa.sbwikiaves.hint
+msgctxt "tfrmtaxa.sbwikiaves.hint"
+msgid "WikiAves"
 msgstr ""
 
 #: tlstbreedingstatus.caption

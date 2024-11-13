@@ -85,12 +85,14 @@ type
     ActList: TActionList;
     AppEvents: TApplicationProperties;
     bStatusBarDark: TImageList;
+    icoEmptyTabs: TImage;
     iMenuDark: TImageList;
     iPopupDark: TImageList;
     iSearch: TImageList;
     iMenu: TImageList;
     iPopup: TImageList;
     iSearchDark: TImageList;
+    lblEmptyTabs: TLabel;
     mmfImportXolmisMobile: TMenuItem;
     mmhCheckUpdates: TMenuItem;
     mmfImportCoordinates: TMenuItem;
@@ -148,6 +150,7 @@ type
     mmTaxonomy: TMenuItem;
     mMenu: TMainMenu;
     navTabs: TATTabs;
+    pEmptyTabs: TBCPanel;
     sbClearSearch: TColorSpeedButton;
     icoSbarDatabase: TImage;
     icoSbarUser: TImage;
@@ -260,6 +263,7 @@ type
     procedure actOpenSightingsExecute(Sender: TObject);
     procedure actOpenSpecimensExecute(Sender: TObject);
     procedure actOpenSurveysExecute(Sender: TObject);
+    procedure actOpenTaxaExecute(Sender: TObject);
     procedure actSettingsExecute(Sender: TObject);
     procedure actViewBandsBalanceExecute(Sender: TObject);
     procedure AppEventsException(Sender: TObject; E: Exception);
@@ -277,6 +281,7 @@ type
     procedure navTabsTabChanged(Sender: TObject);
     procedure navTabsTabClose(Sender: TObject; ATabIndex: integer; var ACanClose,
       ACanContinue: boolean);
+    procedure navTabsTabEmpty(Sender: TObject);
     procedure pmaNewBandClick(Sender: TObject);
     procedure pmaNewCaptureClick(Sender: TObject);
     procedure pmaNewEggClick(Sender: TObject);
@@ -351,7 +356,7 @@ uses
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
   udlg_importxmobile,
-  ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance;
+  ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance, ufrm_taxa;
 
 {$R *.lfm}
 
@@ -632,6 +637,11 @@ begin
   OpenForm(Sender, fSurveys, tbSurveys, rsTitleSurveys, actOpenSurveys.ImageIndex);
 end;
 
+procedure TfrmMain.actOpenTaxaExecute(Sender: TObject);
+begin
+  OpenTab(Sender, frmTaxa, TfrmTaxa, rsTitleZooTaxa, False);
+end;
+
 procedure TfrmMain.actSettingsExecute(Sender: TObject);
 begin
   AbreForm(TcfgOptions, cfgOptions);
@@ -661,6 +671,11 @@ begin
   navTabs.ColorTabPassive := clSolidBGBaseDark;
   navTabs.ColorFontActive := clTextPrimaryDark;
   navTabs.ColorFontHot := clTextPrimaryDark;
+
+  icoEmptyTabs.Images := iPopupDark;
+  pEmptyTabs.Background.Color := clCardBGDefaultDark;
+  pEmptyTabs.Border.Color := clSolidBGSecondaryDark;
+  pEmptyTabs.ParentBackground := True;
 
   mMenu.Images := iMenuDark;
   pmTabs.Images := iPopupDark;
@@ -1061,6 +1076,7 @@ begin
     ActiveGrid := nil;
   end;
   UpdateMenu(PGW.ActivePageComponent);
+  pEmptyTabs.Visible := navTabs.TabCount = 0;
 
   //if (ActiveList <> nil) then
   //begin
@@ -1127,6 +1143,11 @@ begin
     UpdateMenu(PGW.ActivePageComponent);
 end;
 
+procedure TfrmMain.navTabsTabEmpty(Sender: TObject);
+begin
+  pEmptyTabs.Visible := navTabs.TabCount = 0;
+end;
+
 procedure TfrmMain.OpenForm(Sender: TObject; var aForm: TfrmCustomGrid; aTableType: TTableType;
   aCaption: String; aIcon: Integer = -1);
 var
@@ -1178,6 +1199,7 @@ begin
 
   //mMenu.TabIndex := 3;
   UpdateMenu(PGW.ActivePageComponent);
+  pEmptyTabs.Visible := navTabs.TabCount = 0;
   sbarStatus.Caption := EmptyStr;
   Screen.EndTempCursor(crAppStart);
   pSplash.Visible := False;
@@ -1224,6 +1246,7 @@ begin
     navTabs.GetTabData(PGW.PageIndex).TabPinned := Pinned;
     navTabs.GetTabData(PGW.PageIndex).TabHideXButton := Pinned;
   end;
+  pEmptyTabs.Visible := navTabs.TabCount = 0;
   UpdateMenu(PGW.ActivePageComponent);
   sbarStatus.Caption := EmptyStr;
   Screen.EndTempCursor(crAppStart);
@@ -1357,9 +1380,9 @@ begin
   if TTDIPage(PGW.ActivePageComponent).FormInPage is TfrmCustomGrid then
     ActiveGrid.SearchString := eSearch.Text
   else
-  //if TTDIPage(PGW.ActivePage).FormInPage is TfrmIndividuals then
-  //  (TTDIPage(PGW.ActivePage).FormInPage as TfrmIndividuals).SearchString := eSearch.Text
-  //else
+  if TTDIPage(PGW.ActivePageComponent).FormInPage is TfrmTaxa then
+    (TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmTaxa).SearchString := eSearch.Text
+  else
     Exit;
 end;
 

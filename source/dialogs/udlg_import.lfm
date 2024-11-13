@@ -12,6 +12,7 @@ object dlgImport: TdlgImport
   PopupMode = pmAuto
   Position = poScreenCenter
   OnDestroy = FormDestroy
+  OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2

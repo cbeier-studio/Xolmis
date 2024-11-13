@@ -77,6 +77,7 @@ type
     procedure eSourceFileButtonClick(Sender: TObject);
     procedure eSourceFileChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
     procedure sbPriorClick(Sender: TObject);
@@ -87,6 +88,7 @@ type
     procedure ApplyDarkMode;
     function IsRequiredFilledSource: Boolean;
     procedure LoadFields;
+    procedure LoadTargetTables;
   public
 
   end;
@@ -97,7 +99,7 @@ var
 implementation
 
 uses
-  cbs_import, ucfg_delimiters, uDarkStyleParams;
+  cbs_locale, cbs_import, ucfg_delimiters, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -106,7 +108,12 @@ uses
 procedure TdlgImport.ApplyDarkMode;
 begin
   btnOptions.Images := iButtonsDark;
+  btnHelp.Images := iButtonsDark;
   eSourceFile.Images := iButtonsDark;
+  pmFields.Images := iButtonsDark;
+  sbRetry.Images := iButtonsDark;
+  sbSaveLog.Images := iButtonsDark;
+  icoImportFinished.Images := imgFinishedDark;
 end;
 
 procedure TdlgImport.btnOptionsClick(Sender: TObject);
@@ -191,6 +198,12 @@ begin
   end;
 end;
 
+procedure TdlgImport.FormShow(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+end;
+
 function TdlgImport.IsRequiredFilledSource: Boolean;
 begin
   Result := False;
@@ -207,14 +220,48 @@ begin
     FDataSet.Open;
 
   gridFields.ColWidths[0] := 40;
-  gridFields.RowCount := 2; // Clear rows
+  gridFields.RowCount := 1; // Clear rows
   gridFields.RowCount := FDataSet.FieldCount + 1;
-  //gridFields.Cells[1, 0] := 'Source field';
   // Target field picklist
   // Search table picklist
   for i := 0 to FDataSet.FieldCount - 1 do
   begin
     gridFields.Cells[1, i+1] := FDataSet.Fields[i].DisplayName;
+  end;
+end;
+
+procedure TdlgImport.LoadTargetTables;
+begin
+  with cbTarget.Items do
+  begin
+    Add(rsCaptionExpeditions);
+    Add(rsTitleSurveys);
+    Add('Survey team');
+    Add(rsTitleNetsEffort);
+    Add(rsTitleWeather);
+    Add(rsTitleVegetation);
+    Add(rsTitleMethods);
+    Add(rsTitleSightings);
+    Add(rsTitleSpecimens);
+    Add(rsTitleSamplePreps);
+    Add(rsTitleCollectors);
+    Add(rsTitleBands);
+    Add(rsTitleIndividuals);
+    Add(rsTitleCaptures);
+    Add(rsTitleMolts);
+    Add(rsTitleNests);
+    Add(rsTitleNestOwners);
+    Add(rsTitleNestRevisions);
+    Add(rsTitleEggs);
+    Add(rsTitleInstitutions);
+    Add(rsTitleResearchers);
+    Add(rsTitleProjects);
+    Add('Project members');
+    Add(rsTitlePermits);
+    Add(rsTitleGazetteer);
+    Add(rsTitleSamplingPlots);
+    Add(rsTitlePermanentNets);
+    Add(rsTitleBotanicTaxa);
   end;
 end;
 
