@@ -20,12 +20,15 @@ type
     dsSynonyms: TDataSource;
     dsChilds: TDataSource;
     eSearch: TEdit;
+    imgEmptyQuery: TImage;
     lblLinkCaptures: TLabel;
     lblLinkEggs: TLabel;
     lblLinkNests: TLabel;
     lblLinkSpecimens: TLabel;
     lblLinkSightings: TLabel;
     lblLinkIndividuals: TLabel;
+    lblEmptyQuery: TLabel;
+    pEmptyQuery: TPanel;
     pTaxonData: TFlowPanel;
     gridChilds: TDBGrid;
     gridSynonyms: TDBGrid;
@@ -87,16 +90,24 @@ type
     txtSpanishName: TDBText;
     txtValidName: TDBText;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
+    procedure dsLinkStateChange(Sender: TObject);
     procedure eSearchChange(Sender: TObject);
     procedure eSearchEnter(Sender: TObject);
     procedure eSearchExit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
+    procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure gridTaxaPrepareCanvas
       (sender: TObject; DataCol: Integer; Column: TColumn; AState: TGridDrawState
       );
+    procedure lblLinkCapturesClick(Sender: TObject);
+    procedure lblLinkEggsClick(Sender: TObject);
+    procedure lblLinkIndividualsClick(Sender: TObject);
+    procedure lblLinkNestsClick(Sender: TObject);
+    procedure lblLinkSightingsClick(Sender: TObject);
+    procedure lblLinkSpecimensClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
     procedure TimerDataTimer(Sender: TObject);
@@ -127,7 +138,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_locale, cbs_themes, cbs_datasearch, cbs_taxonomy, cbs_getvalue, udm_main, udm_grid,
+  cbs_global, cbs_locale, cbs_themes, cbs_datasearch, cbs_taxonomy, cbs_getvalue, ufrm_main, udm_main, udm_grid,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -165,6 +176,11 @@ begin
   TimerData.Enabled := False;
   TimerData.Enabled := True;
 
+end;
+
+procedure TfrmTaxa.dsLinkStateChange(Sender: TObject);
+begin
+  pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
 end;
 
 procedure TfrmTaxa.eSearchChange(Sender: TObject);
@@ -238,6 +254,14 @@ begin
   end;
 end;
 
+procedure TfrmTaxa.FormResize(Sender: TObject);
+begin
+  pEmptyQuery.Left := pToolbar.Left;
+  pEmptyQuery.Width := Width - gridTaxa.Width;
+  pEmptyQuery.Top := gridTaxa.Top;
+  pEmptyQuery.Height := gridTaxa.Height;
+end;
+
 procedure TfrmTaxa.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
@@ -273,6 +297,7 @@ begin
     Close;
 
     lblLinkCaptures.Caption := Format(rsTitleCaptures + ' (%d)', [C]);
+    lblLinkCaptures.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
   end;
@@ -298,6 +323,7 @@ begin
     Close;
 
     lblLinkEggs.Caption := Format(rsTitleEggs + ' (%d)', [C]);
+    lblLinkEggs.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
   end;
@@ -323,6 +349,7 @@ begin
     Close;
 
     lblLinkIndividuals.Caption := Format(rsTitleIndividuals + ' (%d)', [C]);
+    lblLinkIndividuals.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
   end;
@@ -348,6 +375,7 @@ begin
     Close;
 
     lblLinkNests.Caption := Format(rsTitleNests + ' (%d)', [C]);
+    lblLinkNests.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
   end;
@@ -373,6 +401,7 @@ begin
     Close;
 
     lblLinkSightings.Caption := Format(rsTitleSightings + ' (%d)', [C]);
+    lblLinkSightings.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
   end;
@@ -398,6 +427,7 @@ begin
     Close;
 
     lblLinkSpecimens.Caption := Format(rsTitleSpecimens + ' (%d)', [C]);
+    lblLinkSpecimens.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
   end;
@@ -427,6 +457,42 @@ begin
         TDBGrid(Sender).Canvas.Font.Color := $00646464;
     end;
   end;
+end;
+
+procedure TfrmTaxa.lblLinkCapturesClick(Sender: TObject);
+begin
+  frmMain.actOpenCapturesExecute(nil);
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
+end;
+
+procedure TfrmTaxa.lblLinkEggsClick(Sender: TObject);
+begin
+  frmMain.actOpenEggsExecute(nil);
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
+end;
+
+procedure TfrmTaxa.lblLinkIndividualsClick(Sender: TObject);
+begin
+  frmMain.actOpenIndividualsExecute(nil);
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
+end;
+
+procedure TfrmTaxa.lblLinkNestsClick(Sender: TObject);
+begin
+  frmMain.actOpenNestsExecute(nil);
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
+end;
+
+procedure TfrmTaxa.lblLinkSightingsClick(Sender: TObject);
+begin
+  frmMain.actOpenSightingsExecute(nil);
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
+end;
+
+procedure TfrmTaxa.lblLinkSpecimensClick(Sender: TObject);
+begin
+  frmMain.actOpenSpecimensExecute(nil);
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
 end;
 
 procedure TfrmTaxa.sbClearSearchClick(Sender: TObject);
@@ -524,7 +590,11 @@ begin
   FSearchString := aValue;
 
   if FSearchString = EmptyStr then
-    SetZooTaxaSQL(DMG.qTaxa.SQL, fvReset)
+  begin
+    dsLink.DataSet.Close;
+    SetZooTaxaSQL(DMG.qTaxa.SQL, fvReset);
+    dsLink.DataSet.Open;
+  end
   else
     Search(FSearchString);
 end;

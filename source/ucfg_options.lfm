@@ -143,7 +143,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             TabOrder = 0
-            object Image4: TImage
+            object icoEnterAsTab: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -226,7 +226,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             TabOrder = 1
-            object Image1: TImage
+            object icoConfirmCancel: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -310,7 +310,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             TabOrder = 2
-            object Image2: TImage
+            object icoClearDeleted: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -396,7 +396,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             TabOrder = 3
-            object Image10: TImage
+            object icoCheckUpdates: TImage
               Left = 16
               Height = 25
               Top = 12
@@ -514,10 +514,10 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object cbStartPage: TComboBox
-              Left = 436
+              Left = 343
               Height = 23
               Top = 12
-              Width = 173
+              Width = 266
               Align = alRight
               Color = clWhite
               ItemHeight = 15
@@ -550,7 +550,7 @@ object cfgOptions: TcfgOptions
         Height = 422
         Top = 0
         Width = 657
-        HorzScrollBar.Page = 474
+        HorzScrollBar.Page = 482
         VertScrollBar.Page = 217
         Align = alClient
         BorderStyle = bsNone
@@ -942,7 +942,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 0
-            object Image5: TImage
+            object icoVernacularNames: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -1026,7 +1026,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 1
-            object Image3: TImage
+            object icoMainTaxonomy: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -1110,7 +1110,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
             TabOrder = 2
-            object Image6: TImage
+            object icoShowSynonyms: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -1240,7 +1240,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 0
-            object Image7: TImage
+            object icoImagesPath: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -1324,7 +1324,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 1
-            object Image8: TImage
+            object icoAudiosPath: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -1409,7 +1409,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
             TabOrder = 2
-            object Image9: TImage
+            object icoDocumentsPath: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -1621,7 +1621,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 0
-            object Image11: TImage
+            object icoRememberConnection: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -1705,7 +1705,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
             TabOrder = 1
-            object Image12: TImage
+            object icoRememberUser: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -1788,7 +1788,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 2
-            object Image13: TImage
+            object icoAllowWriteLog: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -1886,7 +1886,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 3
             Visible = False
-            object Image14: TImage
+            object icoAllowUsageData: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -2101,7 +2101,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 0
-            object Image15: TImage
+            object icoBackupPath: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -2184,7 +2184,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 1
-            object Image16: TImage
+            object icoStartupBackup: TImage
               Left = 16
               Height = 23
               Top = 12
@@ -2199,9 +2199,9 @@ object cfgOptions: TcfgOptions
               Left = 51
               Height = 23
               Top = 12
-              Width = 178
+              Width = 182
               Align = alLeft
-              Caption = 'Create backup when Xolmis starts'
+              Caption = 'Create backup when Xolmis closes'
               Layout = tlCenter
               ParentColor = False
             end

@@ -10,11 +10,12 @@ object frmTaxa: TfrmTaxa
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
+  OnResize = FormResize
   OnShow = FormShow
   object gridTaxa: TDBGrid
     Left = 0
-    Height = 586
-    Top = 50
+    Height = 584
+    Top = 52
     Width = 320
     Align = alLeft
     AutoFillColumns = True
@@ -45,12 +46,12 @@ object frmTaxa: TfrmTaxa
   end
   object pTop: TPanel
     Left = 0
-    Height = 50
+    Height = 52
     Top = 0
     Width = 1179
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 50
+    ClientHeight = 52
     ClientWidth = 1179
     Color = clWindow
     ParentBackground = False
@@ -62,7 +63,7 @@ object frmTaxa: TfrmTaxa
       AnchorSideTop.Side = asrCenter
       Left = 16
       Height = 29
-      Top = 11
+      Top = 12
       Width = 288
       BorderSpacing.Left = 16
       BorderSpacing.Top = 10
@@ -188,12 +189,12 @@ object frmTaxa: TfrmTaxa
       AnchorSideRight.Control = pTop
       AnchorSideRight.Side = asrBottom
       Left = 320
-      Height = 42
-      Top = 4
+      Height = 40
+      Top = 6
       Width = 843
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Left = 16
-      BorderSpacing.Top = 8
+      BorderSpacing.Top = 16
       BorderSpacing.Right = 16
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
@@ -233,7 +234,7 @@ object frmTaxa: TfrmTaxa
       TabOrder = 1
       object sbShareRecords: TSpeedButton
         Left = 16
-        Height = 26
+        Height = 24
         Hint = 'Export records'
         Top = 8
         Width = 34
@@ -251,7 +252,7 @@ object frmTaxa: TfrmTaxa
       end
       object sbPrint: TSpeedButton
         Left = 70
-        Height = 26
+        Height = 24
         Hint = 'Print records'
         Top = 8
         Width = 34
@@ -272,8 +273,8 @@ object frmTaxa: TfrmTaxa
   end
   object pSideToolbar: TPanel
     Left = 1129
-    Height = 586
-    Top = 50
+    Height = 584
+    Top = 52
     Width = 50
     Align = alRight
     AutoSize = True
@@ -283,7 +284,7 @@ object frmTaxa: TfrmTaxa
     ChildSizing.VerticalSpacing = 8
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
-    ClientHeight = 586
+    ClientHeight = 584
     ClientWidth = 50
     Color = clWindow
     ParentBackground = False
@@ -436,19 +437,19 @@ object frmTaxa: TfrmTaxa
   end
   object SplitRight: TSplitter
     Left = 320
-    Height = 586
-    Top = 50
+    Height = 584
+    Top = 52
     Width = 6
     Visible = False
   end
   object pContent: TPanel
     Left = 326
-    Height = 586
-    Top = 50
+    Height = 584
+    Top = 52
     Width = 803
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 586
+    ClientHeight = 584
     ClientWidth = 803
     Color = clWindow
     ParentBackground = False
@@ -556,14 +557,14 @@ object frmTaxa: TfrmTaxa
       AnchorSideBottom.Control = pContent
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 496
+      Height = 494
       Top = 90
       Width = 803
       HorzScrollBar.Page = 1
-      VertScrollBar.Page = 496
+      VertScrollBar.Page = 494
       Anchors = [akTop, akLeft, akRight, akBottom]
       BorderStyle = bsNone
-      ClientHeight = 496
+      ClientHeight = 494
       ClientWidth = 786
       Constraints.MinWidth = 586
       Color = clWindow
@@ -920,6 +921,7 @@ object frmTaxa: TfrmTaxa
             Font.Color = 13066075
             Font.Height = -15
             ParentFont = False
+            OnClick = lblLinkSightingsClick
             OnMouseEnter = txtValidNameMouseEnter
             OnMouseLeave = txtValidNameMouseLeave
           end
@@ -938,6 +940,7 @@ object frmTaxa: TfrmTaxa
             Font.Color = 13066075
             Font.Height = -15
             ParentFont = False
+            OnClick = lblLinkIndividualsClick
             OnMouseEnter = txtValidNameMouseEnter
             OnMouseLeave = txtValidNameMouseLeave
           end
@@ -956,6 +959,7 @@ object frmTaxa: TfrmTaxa
             Font.Color = 13066075
             Font.Height = -15
             ParentFont = False
+            OnClick = lblLinkCapturesClick
             OnMouseEnter = txtValidNameMouseEnter
             OnMouseLeave = txtValidNameMouseLeave
           end
@@ -974,6 +978,7 @@ object frmTaxa: TfrmTaxa
             Font.Color = 13066075
             Font.Height = -15
             ParentFont = False
+            OnClick = lblLinkSpecimensClick
             OnMouseEnter = txtValidNameMouseEnter
             OnMouseLeave = txtValidNameMouseLeave
           end
@@ -992,6 +997,7 @@ object frmTaxa: TfrmTaxa
             Font.Color = 13066075
             Font.Height = -15
             ParentFont = False
+            OnClick = lblLinkNestsClick
             OnMouseEnter = txtValidNameMouseEnter
             OnMouseLeave = txtValidNameMouseLeave
           end
@@ -1010,6 +1016,7 @@ object frmTaxa: TfrmTaxa
             Font.Color = 13066075
             Font.Height = -15
             ParentFont = False
+            OnClick = lblLinkEggsClick
             OnMouseEnter = txtValidNameMouseEnter
             OnMouseLeave = txtValidNameMouseLeave
           end
@@ -1017,9 +1024,52 @@ object frmTaxa: TfrmTaxa
       end
     end
   end
+  object pEmptyQuery: TPanel
+    Left = 48
+    Height = 168
+    Top = 448
+    Width = 184
+    BevelOuter = bvNone
+    ClientHeight = 168
+    ClientWidth = 184
+    Color = clWhite
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 5
+    Visible = False
+    object lblEmptyQuery: TLabel
+      AnchorSideLeft.Control = imgEmptyQuery
+      AnchorSideLeft.Side = asrCenter
+      AnchorSideTop.Control = imgEmptyQuery
+      AnchorSideTop.Side = asrBottom
+      Left = 36
+      Height = 15
+      Top = 108
+      Width = 113
+      BorderSpacing.Bottom = 12
+      Caption = 'Result query is empty'
+      ParentColor = False
+      ShowAccelChar = False
+    end
+    object imgEmptyQuery: TImage
+      AnchorSideLeft.Control = pEmptyQuery
+      AnchorSideLeft.Side = asrCenter
+      AnchorSideTop.Control = pEmptyQuery
+      AnchorSideTop.Side = asrCenter
+      Left = 68
+      Height = 48
+      Top = 60
+      Width = 48
+      AutoSize = True
+      ImageIndex = 44
+      ImageWidth = 48
+      Images = iButtons
+    end
+  end
   object dsLink: TDataSource
     AutoEdit = False
     DataSet = DMG.qTaxa
+    OnStateChange = dsLinkStateChange
     OnDataChange = dsLinkDataChange
     Left = 64
     Top = 136

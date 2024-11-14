@@ -5620,7 +5620,7 @@ msgid "Start page"
 msgstr ""
 
 #: tcfgoptions.lblstartupbackup.caption
-msgid "Create backup when Xolmis starts"
+msgid "Create backup when Xolmis closes"
 msgstr ""
 
 #: tcfgoptions.lbltitleappearance.caption
@@ -10937,6 +10937,7 @@ msgid "Texture"
 msgstr ""
 
 #: tfrmcustomgrid.lblemptyquery.caption
+msgctxt "tfrmcustomgrid.lblemptyquery.caption"
 msgid "Result query is empty"
 msgstr ""
 
@@ -13369,6 +13370,11 @@ msgstr ""
 
 #: tfrmtaxa.label5.caption
 msgid "Geographical distribution"
+msgstr ""
+
+#: tfrmtaxa.lblemptyquery.caption
+msgctxt "tfrmtaxa.lblemptyquery.caption"
+msgid "Result query is empty"
 msgstr ""
 
 #: tfrmtaxa.lbllinkcaptures.caption

@@ -11,6 +11,7 @@ object dlgImport: TdlgImport
   ClientWidth = 900
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.0.0.1'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
@@ -99,7 +100,7 @@ object dlgImport: TdlgImport
     Height = 430
     Top = 0
     Width = 900
-    PageIndex = 1
+    PageIndex = 0
     Align = alTop
     TabOrder = 1
     object pgSource: TPage
@@ -310,12 +311,12 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 233
+              Width = 235
             end          
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Search table'
-              Width = 233
+              Width = 235
             end          
             item
               SizePriority = 0
@@ -331,8 +332,8 @@ object dlgImport: TdlgImport
             64
             154
             60
-            233
-            233
+            235
+            235
             120
           )
           Cells = (

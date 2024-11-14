@@ -5650,7 +5650,9 @@ msgid "Start page"
 msgstr "Página inicial"
 
 #: tcfgoptions.lblstartupbackup.caption
-msgid "Create backup when Xolmis starts"
+#, fuzzy
+#| msgid "Create backup when Xolmis starts"
+msgid "Create backup when Xolmis closes"
 msgstr "Criar backup quando o Xolmis iniciar"
 
 #: tcfgoptions.lbltitleappearance.caption
@@ -10967,6 +10969,7 @@ msgid "Texture"
 msgstr "Textura"
 
 #: tfrmcustomgrid.lblemptyquery.caption
+msgctxt "tfrmcustomgrid.lblemptyquery.caption"
 msgid "Result query is empty"
 msgstr "Resultado da busca está vazio"
 
@@ -13412,6 +13415,12 @@ msgstr "Português"
 msgid "Geographical distribution"
 msgstr "Distribuição geográfica"
 
+#: tfrmtaxa.lblemptyquery.caption
+#, fuzzy
+msgctxt "tfrmtaxa.lblemptyquery.caption"
+msgid "Result query is empty"
+msgstr "Resultado da busca está vazio"
+
 #: tfrmtaxa.lbllinkcaptures.caption
 msgid "Captures (0)"
 msgstr "Capturas (0)"
@@ -13599,3 +13608,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

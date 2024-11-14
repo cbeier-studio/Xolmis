@@ -7,9 +7,9 @@ object frmMaintenance: TfrmMaintenance
   ClientHeight = 270
   ClientWidth = 771
   Font.Height = -12
-  OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  OnShow = FormShow
   object PG: TNotebook
     Left = 152
     Height = 227
@@ -152,8 +152,8 @@ object frmMaintenance: TfrmMaintenance
               AutoSize = True
               Caption = 'Check'
               Constraints.MinWidth = 120
-              OnClick = sbRewriteTaxaHierarchyClick
               TabOrder = 1
+              OnClick = sbRewriteTaxaHierarchyClick
             end
           end
           object pRewriteTaxaSequence: TBCPanel
@@ -373,8 +373,8 @@ object frmMaintenance: TfrmMaintenance
               AutoSize = True
               Caption = 'Check'
               Constraints.MinWidth = 120
-              OnClick = sbRewriteTaxaHierarchyClick
               TabOrder = 0
+              OnClick = sbRewriteTaxaHierarchyClick
             end
           end
         end
@@ -605,8 +605,8 @@ object frmMaintenance: TfrmMaintenance
               AutoSize = True
               Caption = 'Recreate'
               Constraints.MinWidth = 120
-              OnClick = sbRecreateImageThumbnailsClick
               TabOrder = 0
+              OnClick = sbRecreateImageThumbnailsClick
             end
           end
         end
@@ -668,11 +668,10 @@ object frmMaintenance: TfrmMaintenance
     RightClickSelect = True
     RowSelect = True
     ScrollBars = ssNone
-    SelectionColor = 13066075
+    SelectionColor = 16226706
     SelectionFontColorUsed = True
     ShowRoot = False
     TabOrder = 2
-    OnSelectionChanged = tvMenuSelectionChanged
     Options = [tvoKeepCollapsedNodes, tvoReadOnly, tvoRightClickSelect, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoToolTips]
     Items.Data = {
       F9FFFFFF0200040000000000000000000000FFFFFFFFFFFFFFFF000000000000
@@ -681,6 +680,7 @@ object frmMaintenance: TfrmMaintenance
       00000000000000000B000000496E646976696475616C730300000003000000FF
       FFFFFFFFFFFFFF00000000000000000006000000496D61676573
     }
+    OnSelectionChanged = tvMenuSelectionChanged
   end
   object iIcons: TImageList
     Height = 20

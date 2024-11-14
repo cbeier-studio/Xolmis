@@ -31,6 +31,7 @@
 {"hash":37653321,"name":"tfrmtaxa.lbllinkspecimens.caption","sourcebytes":[83,112,101,99,105,109,101,110,115,32,40,48,41],"value":"Specimens (0)"},
 {"hash":179666921,"name":"tfrmtaxa.lbllinknests.caption","sourcebytes":[78,101,115,116,115,32,40,48,41],"value":"Nests (0)"},
 {"hash":233123737,"name":"tfrmtaxa.lbllinkeggs.caption","sourcebytes":[69,103,103,115,32,40,48,41],"value":"Eggs (0)"},
+{"hash":73584121,"name":"tfrmtaxa.lblemptyquery.caption","sourcebytes":[82,101,115,117,108,116,32,113,117,101,114,121,32,105,115,32,101,109,112,116,121],"value":"Result query is empty"},
 {"hash":370913,"name":"tfrmtaxa.pmprinttaxa.caption","sourcebytes":[84,97,120,97],"value":"Taxa"},
 {"hash":228404697,"name":"tfrmtaxa.pmprinttaxahierarchical.caption","sourcebytes":[84,97,120,97,32,40,104,105,101,114,97,114,99,104,105,99,97,108,41],"value":"Taxa (hierarchical)"},
 {"hash":19447140,"name":"tfrmtaxa.pmprinttaxarecorded.caption","sourcebytes":[84,97,120,97,32,114,101,99,111,114,100,101,100],"value":"Taxa recorded"},

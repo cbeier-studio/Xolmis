@@ -55,7 +55,7 @@ object frmMain: TfrmMain
     BevelOuter = bvNone
     ClientHeight = 49
     ClientWidth = 1924
-    Color = 15263976
+    Color = clBtnFace
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
@@ -242,11 +242,11 @@ object frmMain: TfrmMain
       OnContextPopup = navTabsContextPopup
       DoubleBuffered = True
       TabIndex = -1
-      ColorBg = 15263976
+      ColorBg = clBtnFace
       ColorSeparator = 8945535
-      ColorTabActive = 15263976
+      ColorTabActive = clBtnFace
       ColorTabPassive = 16250871
-      ColorTabOver = 15263976
+      ColorTabOver = clBtnFace
       ColorActiveMark = 16226706
       ColorFont = 9276813
       ColorFontModified = 9787178

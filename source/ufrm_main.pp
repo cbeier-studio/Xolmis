@@ -333,7 +333,6 @@ var
   fPermits: TfrmCustomGrid;
   fTaxonRanks: TfrmCustomGrid;
   fBotanicTaxa: TfrmCustomGrid;
-  fZooTaxa: TfrmCustomGrid;
   fBands: TfrmCustomGrid;
   fIndividuals: TfrmCustomGrid;
   fCaptures: TfrmCustomGrid;
@@ -360,18 +359,6 @@ uses
   ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance, ufrm_taxa;
 
 {$R *.lfm}
-
-//procedure SetDarkStyle;
-//begin
-//  case XSettings.SelectedTheme of
-//    0: PreferredAppMode := pamDefault;
-//    1: PreferredAppMode := pamAllowDark;
-//    2: PreferredAppMode := pamForceDark;
-//    3: PreferredAppMode := pamForceLight;
-//  end;
-//
-//  uMetaDarkStyle.ApplyMetaDarkStyle(DefaultDark);
-//end;
 
 { TfrmMain }
 
@@ -427,12 +414,6 @@ end;
 
 procedure TfrmMain.actImportCapturesExecute(Sender: TObject);
 begin
-  //DMM.OpenCsvDlg.Title := rsTitleImportFile;
-  //if DMM.OpenCsvDlg.Execute then
-  //begin
-  //  ImportBandingDataV1(DMM.OpenCsvDlg.Filename);
-  //end;
-
   dlgImportCaptures := TdlgImportCaptures.Create(nil);
   with dlgImportCaptures do
   try
@@ -575,7 +556,6 @@ end;
 procedure TfrmMain.actOpenIndividualsExecute(Sender: TObject);
 begin
   OpenForm(Sender, fIndividuals, tbIndividuals, rsTitleIndividuals, actOpenIndividuals.ImageIndex);
-  //OpenIndividuals(Sender, fIndividuals, tbIndividuals, rsTitleIndividuals, actOpenIndividuals.ImageIndex);
 end;
 
 procedure TfrmMain.actOpenInstitutionsExecute(Sender: TObject);
@@ -771,10 +751,8 @@ begin
     pSearch.Background.Color := clWhite;
     pSearch.Border.Color := clAccentFillTertiaryLight;
   end;
-  //pSearch.Border.Width := 2;
   eSearch.Color := pSearch.Background.Color;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
-  //TimerAnimSearch.Enabled := True;
 end;
 
 procedure TfrmMain.eSearchExit(Sender: TObject);
@@ -794,7 +772,6 @@ begin
   pSearch.Border.Width := 1;
   eSearch.Color := pSearch.Background.Color;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
-  //TimerAnimSearch.Enabled := True;
 end;
 
 procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -902,10 +879,7 @@ begin
   if OldPPI <> 96 then
   begin
     navTabs.OptScalePercents := (OldPPI * 100) div 96;
-    //navTabs.OptFontScale := (OldPPI * 100) div 96;
   end;
-  //navTabs.Height := (navTabs.OptTabHeight + navTabs.OptSpacer);
-  //TimerScreen.Enabled := True;
 
   { Check if there are connections available }
   DMM.qsConn.Open;
@@ -938,8 +912,6 @@ begin
     Application.ProcessMessages;
 
     { Load the start page }
-    //OpenTab(Sender, frmDashboard, TfrmDashboard, rsHome, True);
-    //Application.ProcessMessages;
     case XSettings.StartPage of
       0: actOpenExpeditionsExecute(nil);
       1: actOpenSurveysExecute(nil);
@@ -955,6 +927,7 @@ begin
      11: actOpenGazetteerExecute(nil);
      12: actCoordinatesConverterExecute(nil);
     end;
+    navTabsTabChanged(nil);
 
     { Check for updates }
     case XSettings.AutoUpdates of
@@ -996,8 +969,6 @@ begin
     if Assigned(ActiveUser) then
       FreeAndNil(ActiveUser);
   end;
-
-  //SmokeScreen.Visible := False;
 end;
 
 procedure TfrmMain.iSearchGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
@@ -1022,20 +993,6 @@ begin
 
   PGW.PageIndex := navTabs.TabIndex;
 
-  //if (TTDIPage(PGW.ActivePage).FormInPage <> nil) and
-  //  (TTDIPage(PGW.ActivePage).FormInPage is TfrmIndividuals) then
-  //begin
-  //  aPage := PGW.ActivePage;
-  //  {$IFDEF DEBUG}
-  //  LogInfo('ACTIVE TAB:' + aPage.Caption);
-  //  {$ENDIF}
-  //  ActiveQuery := DMG.qIndividuals;
-  //  if fIndividuals = nil then
-  //    fIndividuals := TTDIPage(PGW.ActivePage).FormInPage as TfrmIndividuals;
-  //  ActiveList := fIndividuals;
-  //  ActiveGrid := nil;
-  //end
-  //else
   if (TTDIPage(PGW.ActivePageComponent).FormInPage <> nil) and
     (TTDIPage(PGW.ActivePageComponent).FormInPage is TfrmCustomGrid) then
   begin
@@ -1084,12 +1041,6 @@ begin
   UpdateMenu(PGW.ActivePageComponent);
   pEmptyTabs.Visible := navTabs.TabCount = 0;
 
-  //if (ActiveList <> nil) then
-  //begin
-  //  eSearch.Text := (TTDIPage(PGW.ActivePage).FormInPage as TfrmIndividuals).SearchString;
-  //  TimerFind.Enabled := False;
-  //  UpdateQueryButtons;
-  //end else
   if (ActiveGrid <> nil) then
   begin
     eSearch.Text := ActiveGrid.SearchString;
@@ -1115,7 +1066,7 @@ begin
       //tbNone: ;
       tbGazetteer:      fGazetteer := nil;
       tbNetStations:    fNetStations := nil;
-      tbZooTaxa:        fZooTaxa := nil;
+      //tbZooTaxa:        fZooTaxa := nil;
       tbBotanicTaxa:    fBotanicTaxa := nil;
       tbInstitutions:   fInstitutions := nil;
       tbPeople:         fPeople := nil;
@@ -1368,15 +1319,33 @@ begin
 end;
 
 procedure TfrmMain.sbHomeClick(Sender: TObject);
-var
-  i: Integer;
+//var
+//  i: Integer;
 begin
-  for i := 0 to navTabs.TabCount - 1 do
-    if navTabs.GetTabData(i).TabCaption = rsHome then
-    begin
-      navTabs.TabIndex := i;
-      Break;
-    end;
+  { Load the start page }
+  case XSettings.StartPage of
+    0: actOpenExpeditionsExecute(nil);
+    1: actOpenSurveysExecute(nil);
+    2: actOpenSightingsExecute(nil);
+    3: actOpenSpecimensExecute(nil);
+    4: actOpenBandsExecute(nil);
+    5: actOpenIndividualsExecute(nil);
+    6: actOpenCapturesExecute(nil);
+    7: actOpenNestsExecute(nil);
+    8: actOpenResearchersExecute(nil);
+    9: actOpenProjectsExecute(nil);
+   10: actOpenPermitsExecute(nil);
+   11: actOpenGazetteerExecute(nil);
+   12: actCoordinatesConverterExecute(nil);
+  end;
+  navTabsTabChanged(nil);
+
+  //for i := 0 to navTabs.TabCount - 1 do
+  //  if navTabs.GetTabData(i).TabCaption = rsHome then
+  //  begin
+  //    navTabs.TabIndex := i;
+  //    Break;
+  //  end;
 end;
 
 procedure TfrmMain.TimerFindTimer(Sender: TObject);

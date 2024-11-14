@@ -1101,7 +1101,7 @@ type
     FPersonKeyFilter, FInstitutionKeyFilter, FSurveyKeyFilter, FMethodKeyFilter: Integer;
     FProjectKeyFilter, FNestKeyFilter, FIndividualKeyFilter, FExpeditionKeyFilter: Integer;
     FPlantKeyFilter, FSamplingPlotKeyFilter, FEggKeyFilter: Integer;
-    CanToggle: Boolean;
+    FCanToggle: Boolean;
     FSidePanelFactor: Double;
     FChildPanelFactor: Double;
     FDragging: Boolean;
@@ -2504,10 +2504,10 @@ end;
 
 procedure TfrmCustomGrid.ClearSearch;
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
-  CanToggle := False;
+  FCanToggle := False;
   rbMarkedAll.Checked := True;
 
   case TableType of
@@ -2547,7 +2547,7 @@ begin
 
   FSearch.RunSearch;
 
-  CanToggle := True;
+  FCanToggle := True;
 end;
 
 procedure TfrmCustomGrid.ClearSightingFilters;
@@ -3784,7 +3784,7 @@ end;
 
 procedure TfrmCustomGrid.eCycleCodeFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   MoltCycleDialog(eCycleCodeFilter);
@@ -3792,7 +3792,7 @@ end;
 
 procedure TfrmCustomGrid.eCycleCodeFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -3813,7 +3813,7 @@ end;
 
 procedure TfrmCustomGrid.eEggFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FindDlg(tbEggs, eEggFilter, FEggKeyFilter);
@@ -3821,7 +3821,7 @@ end;
 
 procedure TfrmCustomGrid.eEggFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -3849,7 +3849,7 @@ end;
 
 procedure TfrmCustomGrid.eExpeditionFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FindDlg(tbExpeditions, eExpeditionFilter, FExpeditionKeyFilter);
@@ -3857,7 +3857,7 @@ end;
 
 procedure TfrmCustomGrid.eExpeditionFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -3885,7 +3885,7 @@ end;
 
 procedure TfrmCustomGrid.eHowAgedFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   HowAgedDialog(eHowAgedFilter);
@@ -3893,7 +3893,7 @@ end;
 
 procedure TfrmCustomGrid.eHowAgedFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -3914,7 +3914,7 @@ end;
 
 procedure TfrmCustomGrid.eHowSexedFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   HowAgedDialog(eHowAgedFilter);
@@ -3922,7 +3922,7 @@ end;
 
 procedure TfrmCustomGrid.eHowSexedFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -3943,7 +3943,7 @@ end;
 
 procedure TfrmCustomGrid.eIndividualFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FindDlg(tbIndividuals, eIndividualFilter, FIndividualKeyFilter);
@@ -3951,7 +3951,7 @@ end;
 
 procedure TfrmCustomGrid.eIndividualFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -3979,7 +3979,7 @@ end;
 
 procedure TfrmCustomGrid.eInstitutionFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FindDlg(tbInstitutions, eInstitutionFilter, FInstitutionKeyFilter);
@@ -3987,7 +3987,7 @@ end;
 
 procedure TfrmCustomGrid.eInstitutionFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -4015,7 +4015,7 @@ end;
 
 procedure TfrmCustomGrid.eMethodFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FindDlg(tbMethods, eMethodFilter, FMethodKeyFilter);
@@ -4023,7 +4023,7 @@ end;
 
 procedure TfrmCustomGrid.eMethodFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -4051,7 +4051,7 @@ end;
 
 procedure TfrmCustomGrid.eMoltLimitsFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   MoltLimitsDialog(eMoltLimitsFilter);
@@ -4059,7 +4059,7 @@ end;
 
 procedure TfrmCustomGrid.eMoltLimitsFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -4080,7 +4080,7 @@ end;
 
 procedure TfrmCustomGrid.eNestFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FindDlg(tbNests, eNestFilter, FNestKeyFilter);
@@ -4088,7 +4088,7 @@ end;
 
 procedure TfrmCustomGrid.eNestFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -4116,7 +4116,7 @@ end;
 
 procedure TfrmCustomGrid.ePersonFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FindDlg(tbPeople, ePersonFilter, FPersonKeyFilter);
@@ -4124,7 +4124,7 @@ end;
 
 procedure TfrmCustomGrid.ePersonFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -4152,7 +4152,7 @@ end;
 
 procedure TfrmCustomGrid.ePlantFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FindDlg(tbBotanicTaxa, ePlantFilter, FPlantKeyFilter);
@@ -4160,7 +4160,7 @@ end;
 
 procedure TfrmCustomGrid.ePlantFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -4188,7 +4188,7 @@ end;
 
 procedure TfrmCustomGrid.eProjectFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FindDlg(tbProjects, eProjectFilter, FProjectKeyFilter);
@@ -4196,7 +4196,7 @@ end;
 
 procedure TfrmCustomGrid.eProjectFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -4224,7 +4224,7 @@ end;
 
 procedure TfrmCustomGrid.eSamplingPlotFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FindDlg(tbNetStations, eSamplingPlotFilter, FSamplingPlotKeyFilter);
@@ -4232,7 +4232,7 @@ end;
 
 procedure TfrmCustomGrid.eSamplingPlotFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -4260,7 +4260,7 @@ end;
 
 procedure TfrmCustomGrid.eSurveyFilterButtonClick(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FindDlg(tbSurveys, eSurveyFilter, FSurveyKeyFilter);
@@ -4268,7 +4268,7 @@ end;
 
 procedure TfrmCustomGrid.eSurveyFilterKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   FormKeyPress(Sender, Key);
@@ -4361,7 +4361,7 @@ end;
 
 procedure TfrmCustomGrid.FormCreate(Sender: TObject);
 begin
-  CanToggle := False;
+  FCanToggle := False;
   Filtrado := False;
 
   OldSidePanel := False;
@@ -4508,12 +4508,13 @@ begin
   UpdateChildCount;
   if DBG.CanSetFocus then
     DBG.SetFocus;
-  GetColumns;
+  if gridColumns.RowCount <= 2 then
+    GetColumns;
   SetImages;
   SetAudios;
   SetDocs;
   SetRecycle;
-  CanToggle := True;
+  FCanToggle := True;
   Application.ProcessMessages;
 
   {$IFDEF DEBUG}
@@ -4909,6 +4910,8 @@ procedure TfrmCustomGrid.GetColumns;
 var
   i: Integer;
 begin
+  //LoadColumns;
+
   gridColumns.RowCount := dsLink.DataSet.Fields.Count + 1;
 
   for i := 0 to dsLink.DataSet.Fields.Count - 1 do
@@ -5004,10 +5007,10 @@ procedure TfrmCustomGrid.GetFilters;
 var
   sf: Integer;
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
-  CanToggle := False;
+  FCanToggle := False;
 
   if (rbMarkedYes.Checked) then
   begin
@@ -5056,7 +5059,7 @@ begin
   end;
 
   Filtrado := FSearch.QuickFilters.Count > 0;
-  CanToggle := True;
+  FCanToggle := True;
 end;
 
 procedure TfrmCustomGrid.GetGazetteerFilters;
@@ -5614,13 +5617,17 @@ end;
 
 procedure TfrmCustomGrid.gridColumnsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   if aCol = 1 then
+  begin
     dsLink.DataSet.Fields[aRow - 1].Visible := aState = cbChecked;
 
-  AddGridColumns(FTableType, DBG);
+    //SaveColumns;
+
+    AddGridColumns(FTableType, DBG);
+  end;
 end;
 
 procedure TfrmCustomGrid.gridDocsDblClick(Sender: TObject);
@@ -5699,21 +5706,45 @@ procedure TfrmCustomGrid.LoadColumns;
 var
   ColsFile: String;
   i, f: Integer;
+  FieldFound: Boolean = False;
+  FieldIndex: Integer = -1;
 begin
   ColsFile := ConcatPaths([AppDataDir, TableNames[FTableType] + '_columns.xml']);
   if not FileExists(ColsFile) then
+  begin
+    //GetColumns;
     Exit;
+  end;
 
+  gridColumns.RowCount := dsLink.DataSet.Fields.Count + 1;
   gridColumns.LoadFromFile(ColsFile);
   for i := 1 to gridColumns.RowCount - 1 do
   begin
+    FieldFound := False;
+    FieldIndex := -1;
+    // Find the field in the DataSet by the DisplayLabel
     for f := 0 to dsLink.DataSet.Fields.Count - 1 do
-      if dsLink.DataSet.Fields[f].DisplayName = gridColumns.Cells[2, i] then
+    begin
+      if dsLink.DataSet.Fields[f].DisplayLabel = gridColumns.Cells[2, i] then
+      begin
+        FieldIndex := f;
+        FieldFound := True;
         Break;
+      end;
+    end;
 
-    dsLink.DataSet.Fields[f].Visible := gridColumns.Cells[1, i] = '1';
-    if f <> i - 1 then
-      dsLink.DataSet.Fields[f].Index := i - 1;
+    if FieldFound then
+    begin
+      // Update Visible property
+      dsLink.DataSet.Fields[FieldIndex].Visible := gridColumns.Cells[1, i] = '1';
+      // Update field index
+      dsLink.DataSet.Fields[FieldIndex].Index := i - 1;
+    end
+    else
+    begin
+      // Handle when the field is not found
+      ShowMessage('Field not found: ' + gridColumns.Cells[2, i]);
+    end;
   end;
 end;
 
@@ -6369,7 +6400,7 @@ procedure TfrmCustomGrid.pmmInvertMarkedClick(Sender: TObject);
 var
   BM: TBookmark;
 begin
-  CanToggle := False;
+  FCanToggle := False;
 
   with dsLink.DataSet do
   try
@@ -6385,7 +6416,7 @@ begin
   finally
     EnableControls;
     Bookmark := BM;
-    CanToggle := True;
+    FCanToggle := True;
   end;
 end;
 
@@ -6393,7 +6424,7 @@ procedure TfrmCustomGrid.pmmMarkAllClick(Sender: TObject);
 var
   BM: TBookmark;
 begin
-  CanToggle := False;
+  FCanToggle := False;
 
   with dsLink.DataSet do
   try
@@ -6409,7 +6440,7 @@ begin
   finally
     EnableControls;
     Bookmark := BM;
-    CanToggle := True;
+    FCanToggle := True;
   end;
 end;
 
@@ -6417,7 +6448,7 @@ procedure TfrmCustomGrid.pmmMarkAllColumnsClick(Sender: TObject);
 var
   i: Integer;
 begin
-  CanToggle := False;
+  FCanToggle := False;
 
   try
     for i := 0 to dsLink.DataSet.Fields.Count - 1 do
@@ -6426,7 +6457,7 @@ begin
     GetColumns;
     AddGridColumns(FTableType, DBG);
   finally
-    CanToggle := True;
+    FCanToggle := True;
   end;
 end;
 
@@ -6434,7 +6465,7 @@ procedure TfrmCustomGrid.pmmUnmarkAllClick(Sender: TObject);
 var
   BM: TBookmark;
 begin
-  CanToggle := False;
+  FCanToggle := False;
 
   with dsLink.DataSet do
   try
@@ -6450,7 +6481,7 @@ begin
   finally
     EnableControls;
     Bookmark := BM;
-    CanToggle := True;
+    FCanToggle := True;
   end;
 end;
 
@@ -6458,7 +6489,7 @@ procedure TfrmCustomGrid.pmmUnmarkAllColumnsClick(Sender: TObject);
 var
   i: Integer;
 begin
-  CanToggle := False;
+  FCanToggle := False;
 
   try
     for i := 0 to dsLink.DataSet.Fields.Count - 1 do
@@ -6467,7 +6498,7 @@ begin
     GetColumns;
     AddGridColumns(FTableType, DBG);
   finally
-    CanToggle := True;
+    FCanToggle := True;
   end;
 end;
 
@@ -10760,7 +10791,7 @@ end;
 
 procedure TfrmCustomGrid.SetFilters(Sender: TObject);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   Search(FSearchString);
@@ -11530,7 +11561,7 @@ end;
 
 procedure TfrmCustomGrid.SetSearchString(aValue: String);
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   if FSearchString <> OldSearchString then
@@ -11650,7 +11681,7 @@ end;
 procedure TfrmCustomGrid.tvDateFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode;
   var NewState: TCheckState; var Allowed: Boolean);
 begin
-  Allowed := CanToggle;
+  Allowed := FCanToggle;
 end;
 
 procedure TfrmCustomGrid.tvDateFilterFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -11698,7 +11729,7 @@ end;
 procedure TfrmCustomGrid.tvSiteFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode;
   var NewState: TCheckState; var Allowed: Boolean);
 begin
-  Allowed := CanToggle;
+  Allowed := FCanToggle;
 end;
 
 procedure TfrmCustomGrid.tvSiteFilterFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -11738,7 +11769,7 @@ procedure TfrmCustomGrid.tvTaxaFilterChecked(Sender: TBaseVirtualTree; Node: PVi
 var
   Data: PTaxonNodeData;
 begin
-  if not CanToggle then
+  if not FCanToggle then
     Exit;
 
   Data := Sender.GetNodeData(Node);
@@ -11758,7 +11789,7 @@ end;
 procedure TfrmCustomGrid.tvTaxaFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode;
   var NewState: TCheckState; var Allowed: Boolean);
 begin
-  Allowed := CanToggle;
+  Allowed := FCanToggle;
 end;
 
 procedure TfrmCustomGrid.tvTaxaFilterFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
