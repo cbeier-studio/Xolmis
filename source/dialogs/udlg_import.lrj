@@ -13,7 +13,7 @@
 {"hash":231577118,"name":"tdlgimport.cbtarget.texthint","sourcebytes":[83,101,108,101,99,116,32,97,32,116,97,98,108,101,46,46,46],"value":"Select a table..."},
 {"hash":108725763,"name":"tdlgimport.btnoptions.caption","sourcebytes":[79,112,116,105,111,110,115],"value":"Options"},
 {"hash":80724659,"name":"tdlgimport.lbltitlefields.caption","sourcebytes":[70,105,101,108,100,115],"value":"Fields"},
-{"hash":126335168,"name":"tdlgimport.lblfieldsinstruction.caption","sourcebytes":[83,101,116,32,116,104,101,32,102,105,101,108,100,115,32,99,111,114,114,101,115,112,111,110,100,101,110,99,101,32,102,114,111,109,32,115,111,117,114,99,101,32,102,105,108,101,32,116,111,32,116,104,101,32,116,97,114,103,101,116,32,116,97,98,108,101,46,32],"value":"Set the fields correspondence from source file to the target table. "},
+{"hash":148639950,"name":"tdlgimport.lblfieldsinstruction.caption","sourcebytes":[67,111,110,102,105,103,117,114,101,32,116,104,101,32,102,105,101,108,100,32,109,97,112,112,105,110,103,115,32,102,114,111,109,32,116,104,101,32,115,111,117,114,99,101,32,102,105,108,101,32,116,111,32,116,104,101,32,116,97,114,103,101,116,32,116,97,98,108,101,46],"value":"Configure the field mappings from the source file to the target table."},
 {"hash":84178580,"name":"tdlgimport.gridfields.columns[0].title.caption","sourcebytes":[73,109,112,111,114,116],"value":"Import"},
 {"hash":63207396,"name":"tdlgimport.gridfields.columns[1].title.caption","sourcebytes":[84,97,114,103,101,116,32,102,105,101,108,100],"value":"Target field"},
 {"hash":266465717,"name":"tdlgimport.gridfields.columns[2].title.caption","sourcebytes":[83,101,97,114,99,104,32,116,97,98,108,101],"value":"Search table"},

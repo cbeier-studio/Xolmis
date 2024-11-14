@@ -2326,7 +2326,7 @@ object cfgOptions: TcfgOptions
     RightClickSelect = True
     RowSelect = True
     ScrollBars = ssNone
-    SelectionColor = 13066075
+    SelectionColor = 16226706
     SelectionFontColorUsed = True
     ShowRoot = False
     TabOrder = 0

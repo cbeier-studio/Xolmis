@@ -3161,6 +3161,10 @@ msgid ""
 "%s"
 msgstr ""
 
+#: cbs_locale.rserrorimportfinished
+msgid "An error occurred while importing."
+msgstr ""
+
 #: cbs_locale.rserrorimporting
 #, object-pascal-format
 msgctxt "cbs_locale.rserrorimporting"
@@ -6462,7 +6466,7 @@ msgid "Check if the data sampled is correct."
 msgstr ""
 
 #: tdlgimport.lblfieldsinstruction.caption
-msgid "Set the fields correspondence from source file to the target table. "
+msgid "Configure the field mappings from the source file to the target table."
 msgstr ""
 
 #: tdlgimport.lblprogressinstruction.caption

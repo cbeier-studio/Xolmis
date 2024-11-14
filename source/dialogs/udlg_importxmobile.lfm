@@ -10,7 +10,6 @@ object dlgImportXMobile: TdlgImportXMobile
   ClientWidth = 560
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.1'
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -78,6 +77,7 @@ object dlgImportXMobile: TdlgImportXMobile
       Images = iButtons
       ImageIndex = 5
       TabOrder = 2
+      OnClick = btnHelpClick
     end
   end
   object nbPages: TNotebook

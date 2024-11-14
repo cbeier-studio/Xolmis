@@ -7216,6 +7216,11 @@ end;
 
 procedure TfrmCustomGrid.PrepareCanvasMolts(var Column: TColumn; var sender: TObject);
 begin
+  if Column.FieldName = 'taxon_name' then
+  begin
+    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+  end
+  else
   if Column.FieldName = 'sample_date' then
   begin
     {$IFDEF MSWINDOWS}

@@ -124,6 +124,7 @@ uses
     rsErrorGeneratingMap = 'Error generating map.';
     rsErrorFileNotFound = 'File %s not found.';
     rsErrorImporting = 'An error occurred importing:' + LineEnding + '%s';
+    rsErrorImportFinished = 'An error occurred while importing.';
     rsErrorExporting = 'An error occurred exporting:' + LineEnding + '%s';
     rsErrorDatabaseNotFound = 'Database file not found:' + LineEnding + '%s';
     rsErrorDatabaseCorrupted = 'The database file is corrupted.' + LineEnding +

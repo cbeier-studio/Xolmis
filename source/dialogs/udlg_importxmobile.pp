@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, DBCtrls, Buttons, DateUtils,
-  StdCtrls, EditBtn, DBEditButton, atshapelinebgra, BCPanel, DB, SQLDB, Character, fpjson, jsonparser,
-  cbs_gis, cbs_import, cbs_sampling, cbs_breeding;
+  StdCtrls, EditBtn, atshapelinebgra, BCPanel, DB, SQLDB, fpjson, jsonparser, LCLIntf,
+  cbs_import, cbs_sampling, cbs_breeding;
 
 type
 
@@ -70,6 +70,7 @@ type
     txtDataType: TLabel;
     procedure btnCreateNestClick(Sender: TObject);
     procedure btnCreateSurveyClick(Sender: TObject);
+    procedure btnHelpClick(Sender: TObject);
     procedure eNestButtonClick(Sender: TObject);
     procedure eNestChange(Sender: TObject);
     procedure eObserverButtonClick(Sender: TObject);
@@ -287,6 +288,11 @@ begin
 
 end;
 
+procedure TdlgImportXMobile.btnHelpClick(Sender: TObject);
+begin
+  OpenURL('https://github.com/cbeier-studio/Xolmis/wiki/Importing-data#xolmis-mobile');
+end;
+
 procedure TdlgImportXMobile.eNestButtonClick(Sender: TObject);
 begin
   FindDlg(tbNests, eNest, FNestKey);
@@ -448,6 +454,8 @@ begin
 
   txtDataType.Caption := EmptyStr;
   txtListType.Caption := EmptyStr;
+
+  DMM.sqlTrans.CommitRetaining;
 end;
 
 function TdlgImportXMobile.GetContentType: TMobileContentType;
@@ -536,21 +544,33 @@ procedure TdlgImportXMobile.ImportInventory;
 begin
   nbPages.PageIndex := 1;
 
-  ImportSpeciesList;
-  ImportVegetationList;
-  ImportWeatherList;
+  try
+    ImportSpeciesList;
+    ImportVegetationList;
+    ImportWeatherList;
 
-  if Parar then
-  begin
-    lblTitleImportFinished.Caption := rsImportCanceled;
-    lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
-    icoImportFinished.ImageIndex := 1;
-  end
-  else
-  begin
-    lblTitleImportFinished.Caption := rsFinishedImporting;
-    lblSubtitleImportFinished.Caption := rsSuccessfulImport;
-    icoImportFinished.ImageIndex := 0;
+    if Parar then
+    begin
+      DMM.sqlTrans.RollbackRetaining;
+      lblTitleImportFinished.Caption := rsImportCanceled;
+      lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+      icoImportFinished.ImageIndex := 1;
+    end
+    else
+    begin
+      DMM.sqlTrans.CommitRetaining;
+      lblTitleImportFinished.Caption := rsFinishedImporting;
+      lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+      icoImportFinished.ImageIndex := 0;
+    end;
+  except
+    on E: Exception do
+    begin
+      mProgress.Append(Format(rsErrorImporting, [E.Message]));
+      DMM.sqlTrans.RollbackRetaining;
+      lblSubtitleImportFinished.Caption := rsErrorImportFinished;
+      icoImportFinished.ImageIndex := 0;
+    end;
   end;
   sbCancel.Caption := rsCaptionClose;
   nbPages.PageIndex := 2;
@@ -560,20 +580,32 @@ procedure TdlgImportXMobile.ImportNest;
 begin
   nbPages.PageIndex := 1;
 
-  ImportRevisionList;
-  ImportEggList;
+  try
+    ImportRevisionList;
+    ImportEggList;
 
-  if Parar then
-  begin
-    lblTitleImportFinished.Caption := rsImportCanceled;
-    lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
-    icoImportFinished.ImageIndex := 1;
-  end
-  else
-  begin
-    lblTitleImportFinished.Caption := rsFinishedImporting;
-    lblSubtitleImportFinished.Caption := rsSuccessfulImport;
-    icoImportFinished.ImageIndex := 0;
+    if Parar then
+    begin
+      DMM.sqlTrans.RollbackRetaining;
+      lblTitleImportFinished.Caption := rsImportCanceled;
+      lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+      icoImportFinished.ImageIndex := 1;
+    end
+    else
+    begin
+      DMM.sqlTrans.CommitRetaining;
+      lblTitleImportFinished.Caption := rsFinishedImporting;
+      lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+      icoImportFinished.ImageIndex := 0;
+    end;
+  except
+    on E: Exception do
+    begin
+      mProgress.Append(Format(rsErrorImporting, [E.Message]));
+      DMM.sqlTrans.RollbackRetaining;
+      lblSubtitleImportFinished.Caption := rsErrorImportFinished;
+      icoImportFinished.ImageIndex := 0;
+    end;
   end;
   sbCancel.Caption := rsCaptionClose;
   nbPages.PageIndex := 2;
@@ -1047,6 +1079,7 @@ begin
   if SaveDlg.Execute then
   begin
     mProgress.Lines.SaveToFile(SaveDlg.FileName);
+    OpenDocument(SaveDlg.FileName);
   end;
 end;
 

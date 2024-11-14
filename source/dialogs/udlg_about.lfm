@@ -9,9 +9,10 @@ object dlgAbout: TdlgAbout
   ClientHeight = 477
   ClientWidth = 307
   Font.Height = -12
-  OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.0.0.1'
+  OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -48,8 +49,8 @@ object dlgAbout: TdlgAbout
       Caption = 'Copy'
       Images = iButtons
       ImageIndex = 0
-      OnClick = sbCopyClick
       TabOrder = 0
+      OnClick = sbCopyClick
     end
     object sbClose: TButton
       Left = 193

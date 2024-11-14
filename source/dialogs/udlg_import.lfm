@@ -2,23 +2,22 @@ object dlgImport: TdlgImport
   Left = 361
   Height = 474
   Top = 250
-  Width = 560
+  Width = 900
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Import wizard'
   ClientHeight = 474
-  ClientWidth = 560
+  ClientWidth = 900
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.1'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
     Top = 430
-    Width = 560
+    Width = 900
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -28,7 +27,7 @@ object dlgImport: TdlgImport
     Left = 0
     Height = 42
     Top = 432
-    Width = 560
+    Width = 900
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -39,11 +38,11 @@ object dlgImport: TdlgImport
     ChildSizing.ShrinkHorizontal = crsScaleChilds
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 42
-    ClientWidth = 560
+    ClientWidth = 900
     TabOrder = 0
     object sbCancel: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 414
+      Left = 754
       Height = 26
       Top = 8
       Width = 130
@@ -56,7 +55,7 @@ object dlgImport: TdlgImport
     end
     object sbNext: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 268
+      Left = 608
       Height = 26
       Top = 8
       Width = 130
@@ -69,7 +68,7 @@ object dlgImport: TdlgImport
     end
     object sbPrior: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 130
+      Left = 470
       Height = 26
       Top = 8
       Width = 130
@@ -92,14 +91,15 @@ object dlgImport: TdlgImport
       Images = iButtons
       ImageIndex = 5
       TabOrder = 3
+      OnClick = btnHelpClick
     end
   end
   object nbPages: TNotebook
     Left = 0
     Height = 430
     Top = 0
-    Width = 560
-    PageIndex = 0
+    Width = 900
+    PageIndex = 1
     Align = alTop
     TabOrder = 1
     object pgSource: TPage
@@ -288,7 +288,7 @@ object dlgImport: TdlgImport
           Width = 868
           Align = alTop
           BorderSpacing.Bottom = 16
-          Caption = 'Set the fields correspondence from source file to the target table. '
+          Caption = 'Configure the field mappings from the source file to the target table.'
           WordWrap = True
         end
         object gridFields: TStringGrid
@@ -310,12 +310,12 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 235
+              Width = 233
             end          
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Search table'
-              Width = 235
+              Width = 233
             end          
             item
               SizePriority = 0
@@ -331,8 +331,8 @@ object dlgImport: TdlgImport
             64
             154
             60
-            235
-            235
+            233
+            233
             120
           )
           Cells = (
@@ -1156,10 +1156,12 @@ object dlgImport: TdlgImport
     object pmfSelectAll: TMenuItem
       Caption = 'Select all fields'
       ImageIndex = 8
+      OnClick = pmfSelectAllClick
     end
     object pmfDeselectAll: TMenuItem
       Caption = 'Deselect all fields'
       ImageIndex = 7
+      OnClick = pmfDeselectAllClick
     end
   end
   object imgFinished: TImageList

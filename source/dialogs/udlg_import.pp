@@ -5,7 +5,7 @@ unit udlg_import;
 interface
 
 uses
-  BCPanel, Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet,
+  BCPanel, Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet, LCLIntf,
   memds, dbf, csvdataset, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset,
   atshapelinebgra;
@@ -73,11 +73,14 @@ type
     dsWorksheet: TsWorksheetDataset;
     sbRetry: TBitBtn;
     sbSaveLog: TBitBtn;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnOptionsClick(Sender: TObject);
     procedure eSourceFileButtonClick(Sender: TObject);
     procedure eSourceFileChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure pmfDeselectAllClick(Sender: TObject);
+    procedure pmfSelectAllClick(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
     procedure sbPriorClick(Sender: TObject);
@@ -88,7 +91,10 @@ type
     procedure ApplyDarkMode;
     function IsRequiredFilledSource: Boolean;
     procedure LoadFields;
+    procedure LoadSearchTables;
+    procedure LoadTargetFields;
     procedure LoadTargetTables;
+    function ValidateFields: Boolean;
   public
 
   end;
@@ -114,6 +120,11 @@ begin
   sbRetry.Images := iButtonsDark;
   sbSaveLog.Images := iButtonsDark;
   icoImportFinished.Images := imgFinishedDark;
+end;
+
+procedure TdlgImport.btnHelpClick(Sender: TObject);
+begin
+  OpenURL('https://github.com/cbeier-studio/Xolmis/wiki/Importing-data#import-wizard');
 end;
 
 procedure TdlgImport.btnOptionsClick(Sender: TObject);
@@ -219,15 +230,30 @@ begin
   if not FDataSet.Active then
     FDataSet.Open;
 
-  gridFields.ColWidths[0] := 40;
-  gridFields.RowCount := 1; // Clear rows
-  gridFields.RowCount := FDataSet.FieldCount + 1;
-  // Target field picklist
-  // Search table picklist
-  for i := 0 to FDataSet.FieldCount - 1 do
-  begin
-    gridFields.Cells[1, i+1] := FDataSet.Fields[i].DisplayName;
+  gridFields.BeginUpdate;
+  try
+    gridFields.ColWidths[0] := 40;
+    gridFields.RowCount := 1; // Clear rows
+    gridFields.RowCount := FDataSet.FieldCount + 1;
+    // Target field picklist
+    // Search table picklist
+    for i := 0 to FDataSet.FieldCount - 1 do
+    begin
+      gridFields.Cells[1, i+1] := FDataSet.Fields[i].DisplayName;
+    end;
+  finally
+    gridFields.EndUpdate;
   end;
+end;
+
+procedure TdlgImport.LoadSearchTables;
+begin
+
+end;
+
+procedure TdlgImport.LoadTargetFields;
+begin
+
 end;
 
 procedure TdlgImport.LoadTargetTables;
@@ -265,6 +291,32 @@ begin
   end;
 end;
 
+procedure TdlgImport.pmfDeselectAllClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  gridFields.BeginUpdate;
+  try
+    for i := 1 to gridFields.RowCount - 1 do
+      gridFields.Cells[2, i] := '0';
+  finally
+    gridFields.EndUpdate;
+  end;
+end;
+
+procedure TdlgImport.pmfSelectAllClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  gridFields.BeginUpdate;
+  try
+    for i := 1 to gridFields.RowCount - 1 do
+      gridFields.Cells[2, i] := '1';
+  finally
+    gridFields.EndUpdate;
+  end;
+end;
+
 procedure TdlgImport.sbCancelClick(Sender: TObject);
 begin
   ModalResult := mrCancel;
@@ -289,7 +341,15 @@ end;
 procedure TdlgImport.sbSaveLogClick(Sender: TObject);
 begin
   if SaveDlg.Execute then
+  begin
     mProgress.Lines.SaveToFile(SaveDlg.FileName);
+    OpenDocument(SaveDlg.FileName);
+  end;
+end;
+
+function TdlgImport.ValidateFields: Boolean;
+begin
+
 end;
 
 end.

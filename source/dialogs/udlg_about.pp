@@ -111,7 +111,7 @@ end;
 
 procedure TdlgAbout.linkLicenseClick(Sender: TObject);
 begin
-  OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/LICENSE');
+  OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/LICENSE.txt');
 end;
 
 procedure TdlgAbout.linkPrivacyClick(Sender: TObject);
