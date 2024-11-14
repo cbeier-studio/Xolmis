@@ -1966,8 +1966,6 @@ begin
       if FieldName = 'egg_name' then
         FindDlg(tbEggs, InplaceEditor, DataSource.DataSet, 'egg_id', 'egg_name', False, Key);
 
-      if FieldName = 'band_full_name' then
-        FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_full_name', False, Key);
       if FieldName = 'band_name' then
         FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_name', False, Key);
       if FieldName = 'double_band_name' then
@@ -2144,11 +2142,6 @@ begin
         DataSource.DataSet.FieldByName('egg_name').Clear;
       end;
 
-      if FieldName = 'band_full_name' then
-      begin
-        DataSource.DataSet.FieldByName('band_id').Clear;
-        DataSource.DataSet.FieldByName('band_full_name').Clear;
-      end;
       if FieldName = 'band_name' then
       begin
         DataSource.DataSet.FieldByName('band_id').Clear;
@@ -2756,8 +2749,6 @@ begin
     if FieldName = 'egg_name' then
       FindDlg(tbEggs, InplaceEditor, DataSource.DataSet, 'egg_id', 'egg_name');
 
-    if FieldName = 'band_full_name' then
-      FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_full_name');
     if FieldName = 'band_name' then
       FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_name');
     if FieldName = 'double_band_name' then
@@ -2859,7 +2850,7 @@ const
     'locality_name', 'parent_site_name', 'institution_name', 'supplier_name', 'expedition_name', 'survey_name',
     'net_station_name', 'observer_name', 'observer_1_name', 'observer_2_name', 'carrier_name', 'bander_name',
     'annotator_name', 'photographer_1_name', 'photographer_2_name', 'project_name', 'individual_name',
-    'father_name', 'mother_name', 'nest_name', 'egg_name', 'band_full_name', 'band_name', 'double_band_name',
+    'father_name', 'mother_name', 'nest_name', 'egg_name', 'band_name', 'double_band_name',
     'removed_band_name');
 var
   Grid: TDBGrid;
@@ -2952,8 +2943,6 @@ begin
         if FieldName = 'egg_name' then
           FindDlg(tbEggs, InplaceEditor, DataSource.DataSet, 'egg_id', 'egg_name', False, Key);
 
-        if FieldName = 'band_full_name' then
-          FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_full_name', False, Key);
         if FieldName = 'band_name' then
           FindDlg(tbBands, InplaceEditor, DataSource.DataSet, 'band_id', 'band_name', False, Key);
         if FieldName = 'double_band_name' then
@@ -3130,11 +3119,6 @@ begin
           DataSource.DataSet.FieldByName('egg_name').Clear;
         end;
 
-        if FieldName = 'band_full_name' then
-        begin
-          DataSource.DataSet.FieldByName('band_id').Clear;
-          DataSource.DataSet.FieldByName('band_full_name').Clear;
-        end;
         if FieldName = 'band_name' then
         begin
           DataSource.DataSet.FieldByName('band_id').Clear;
@@ -7214,7 +7198,7 @@ begin
     end;
   end
   else
-  if Column.FieldName = 'band_full_name' then
+  if Column.FieldName = 'band_name' then
   begin
     {$IFDEF MSWINDOWS}
     TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
@@ -9142,7 +9126,7 @@ begin
         False, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('taxon_name', 'Taxon', sdtText, Crit,
         True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create('band_full_name', 'Band', sdtText, Crit,
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('band_name', 'Band', sdtText, Crit,
         True, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('double_band_name', 'Double band', sdtText, Crit,
         True, aValue));
@@ -10327,8 +10311,6 @@ begin
 
     if DataSource.DataSet.FieldByName('taxon_name').Visible then
       ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName('band_full_name').Visible then
-      ColumnByFieldName('band_full_name').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('band_name').Visible then
       ColumnByFieldName('band_name').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('double_band_name').Visible then

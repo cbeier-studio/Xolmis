@@ -406,7 +406,6 @@ type
     qIndividualsactive_status: TBooleanField;
     qIndividualsbanding_date: TDateField;
     qIndividualsband_change_date: TDateField;
-    qIndividualsband_full_name: TStringField;
     qIndividualsband_id: TLongintField;
     qIndividualsband_name: TStringField;
     qIndividualsbirth_date: TStringField;
@@ -440,6 +439,7 @@ type
     qIndividualsnest_name: TStringField;
     qIndividualsnotes: TMemoField;
     qIndividualsorder_id: TLongintField;
+    qIndividualsqueued_status: TBooleanField;
     qIndividualsrecognizable_markings: TMemoField;
     qIndividualsremoved_band_id: TLongintField;
     qIndividualsremoved_band_name: TStringField;
@@ -447,7 +447,6 @@ type
     qIndividualsright_leg_below: TStringField;
     qIndividualsspecies_id: TLongintField;
     qIndividualssubfamily_id: TLongintField;
-    qIndividualstaxon_formatted_name: TStringField;
     qIndividualstaxon_id: TLongintField;
     qIndividualstaxon_name: TStringField;
     qIndividualsupdate_date: TDateTimeField;

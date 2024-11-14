@@ -1017,11 +1017,6 @@ object DMG: TDMG
         Precision = -1
       end    
       item
-        Name = 'internal_id'
-        DataType = ftLargeint
-        Precision = -1
-      end    
-      item
         Name = 'formatted_name'
         DataType = ftString
         Precision = -1
@@ -1115,12 +1110,6 @@ object DMG: TDMG
         Name = 'band_id'
         DataType = ftInteger
         Precision = -1
-      end    
-      item
-        Name = 'band_name'
-        DataType = ftString
-        Precision = -1
-        Size = 40
       end    
       item
         Name = 'double_band_id'
@@ -1238,14 +1227,52 @@ object DMG: TDMG
         Precision = -1
       end    
       item
-        Name = 'data_owner'
-        DataType = ftLargeint
+        Name = 'taxon_name'
+        DataType = ftString
         Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'nest_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'band_name'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'double_band_name'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'removed_band_name'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'father_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'mother_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
       end    
       item
         Name = 'captures_tally'
-        DataType = ftInteger
+        DataType = ftString
         Precision = -1
+        Size = 255
       end>
     AfterCancel = qIndividualsAfterCancel
     AfterPost = qIndividualsAfterPost
@@ -1256,11 +1283,10 @@ object DMG: TDMG
     SQL.Strings = (
       'SELECT i.*,'
       '  z.full_name AS taxon_name,'
-      '  z.formatted_name AS taxon_formatted_name,'
       '  n.full_name AS nest_name,'
-      '  b.full_name AS band_full_name,'
-      '  bd.full_name AS double_band_name,'
-      '  br.full_name AS removed_band_name,'
+      '  (b.band_size||'' ''||b.band_number) AS band_name,'
+      '  (bd.band_size||'' ''||bd.band_number) AS double_band_name,'
+      '  (br.band_size||'' ''||br.band_number) AS removed_band_name,'
       '  ip.full_name AS father_name,'
       '  im.full_name AS mother_name,'
       '  (SELECT CAST(SUM(c.active_status) AS INTEGER) FROM captures AS c'
@@ -1444,24 +1470,11 @@ object DMG: TDMG
       Required = False
       Size = 100
     end
-    object qIndividualstaxon_formatted_name: TStringField
-      DisplayLabel = 'Taxon'
-      DisplayWidth = 30
-      FieldKind = fkData
-      FieldName = 'taxon_formatted_name'
-      Index = 3
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-      Size = 250
-    end
     object qIndividualsorder_id: TLongintField
       DisplayLabel = 'Order (ID)'
       FieldKind = fkData
       FieldName = 'order_id'
-      Index = 4
+      Index = 3
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1472,7 +1485,7 @@ object DMG: TDMG
       DisplayLabel = 'Family (ID)'
       FieldKind = fkData
       FieldName = 'family_id'
-      Index = 5
+      Index = 4
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1483,7 +1496,7 @@ object DMG: TDMG
       DisplayLabel = 'Subfamily (ID)'
       FieldKind = fkData
       FieldName = 'subfamily_id'
-      Index = 6
+      Index = 5
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1494,7 +1507,7 @@ object DMG: TDMG
       DisplayLabel = 'Genus (ID)'
       FieldKind = fkData
       FieldName = 'genus_id'
-      Index = 7
+      Index = 6
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1505,7 +1518,7 @@ object DMG: TDMG
       DisplayLabel = 'Species (ID)'
       FieldKind = fkData
       FieldName = 'species_id'
-      Index = 8
+      Index = 7
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1518,7 +1531,7 @@ object DMG: TDMG
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'individual_sex'
-      Index = 9
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1533,7 +1546,7 @@ object DMG: TDMG
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'individual_age'
-      Index = 10
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1546,7 +1559,7 @@ object DMG: TDMG
       DisplayLabel = 'Band (ID)'
       FieldKind = fkData
       FieldName = 'band_id'
-      Index = 11
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1554,38 +1567,24 @@ object DMG: TDMG
       Visible = False
       OnValidate = qIndividualsband_idValidate
     end
-    object qIndividualsband_full_name: TStringField
-      Alignment = taCenter
-      DisplayLabel = 'Band'
-      DisplayWidth = 15
-      FieldKind = fkData
-      FieldName = 'band_full_name'
-      Index = 12
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-      Size = 40
-    end
     object qIndividualsband_name: TStringField
       Alignment = taCenter
       DisplayLabel = 'Band'
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'band_name'
-      Index = 13
+      Index = 11
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Size = 40
+      Size = 255
     end
     object qIndividualsdouble_band_id: TLongintField
       DisplayLabel = 'Double band (ID)'
       FieldKind = fkData
       FieldName = 'double_band_id'
-      Index = 14
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1595,10 +1594,10 @@ object DMG: TDMG
     object qIndividualsdouble_band_name: TStringField
       Alignment = taCenter
       DisplayLabel = 'Double band'
-      DisplayWidth = 15
+      DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'double_band_name'
-      Index = 15
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -1609,7 +1608,7 @@ object DMG: TDMG
       DisplayLabel = 'Removed band (ID)'
       FieldKind = fkData
       FieldName = 'removed_band_id'
-      Index = 16
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1619,10 +1618,10 @@ object DMG: TDMG
     object qIndividualsremoved_band_name: TStringField
       Alignment = taCenter
       DisplayLabel = 'Removed band'
-      DisplayWidth = 15
+      DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'removed_band_name'
-      Index = 17
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -1634,7 +1633,7 @@ object DMG: TDMG
       DisplayLabel = 'Right tarsus'
       FieldKind = fkData
       FieldName = 'right_leg_below'
-      Index = 18
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1646,7 +1645,7 @@ object DMG: TDMG
       DisplayLabel = 'Left tarsus'
       FieldKind = fkData
       FieldName = 'left_leg_below'
-      Index = 19
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1658,7 +1657,7 @@ object DMG: TDMG
       DisplayLabel = 'Right tibia'
       FieldKind = fkData
       FieldName = 'right_leg_above'
-      Index = 20
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1670,7 +1669,7 @@ object DMG: TDMG
       DisplayLabel = 'Left tibia'
       FieldKind = fkData
       FieldName = 'left_leg_above'
-      Index = 21
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1681,7 +1680,7 @@ object DMG: TDMG
       DisplayLabel = 'Nest (ID)'
       FieldKind = fkData
       FieldName = 'nest_id'
-      Index = 22
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1693,7 +1692,7 @@ object DMG: TDMG
       DisplayWidth = 20
       FieldKind = fkData
       FieldName = 'nest_name'
-      Index = 23
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -1704,7 +1703,7 @@ object DMG: TDMG
       DisplayLabel = 'Father (ID)'
       FieldKind = fkData
       FieldName = 'father_id'
-      Index = 24
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1716,7 +1715,7 @@ object DMG: TDMG
       DisplayWidth = 20
       FieldKind = fkData
       FieldName = 'father_name'
-      Index = 25
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -1727,7 +1726,7 @@ object DMG: TDMG
       DisplayLabel = 'Mother (ID)'
       FieldKind = fkData
       FieldName = 'mother_id'
-      Index = 26
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1739,7 +1738,7 @@ object DMG: TDMG
       DisplayWidth = 20
       FieldKind = fkData
       FieldName = 'mother_name'
-      Index = 27
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -1751,7 +1750,7 @@ object DMG: TDMG
       DisplayLabel = 'Birth date'
       FieldKind = fkData
       FieldName = 'birth_date'
-      Index = 28
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1763,7 +1762,7 @@ object DMG: TDMG
       DisplayLabel = 'Birth year'
       FieldKind = fkData
       FieldName = 'birth_year'
-      Index = 29
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1776,7 +1775,7 @@ object DMG: TDMG
       DisplayLabel = 'Birth month'
       FieldKind = fkData
       FieldName = 'birth_month'
-      Index = 30
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1789,7 +1788,7 @@ object DMG: TDMG
       DisplayLabel = 'Birth day'
       FieldKind = fkData
       FieldName = 'birth_day'
-      Index = 31
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1803,7 +1802,7 @@ object DMG: TDMG
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'banding_date'
-      Index = 32
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1815,7 +1814,7 @@ object DMG: TDMG
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'band_change_date'
-      Index = 33
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1826,7 +1825,7 @@ object DMG: TDMG
       DisplayLabel = 'Death date'
       FieldKind = fkData
       FieldName = 'death_date'
-      Index = 34
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1838,7 +1837,7 @@ object DMG: TDMG
       DisplayLabel = 'Death year'
       FieldKind = fkData
       FieldName = 'death_year'
-      Index = 35
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1851,7 +1850,7 @@ object DMG: TDMG
       DisplayLabel = 'Death month'
       FieldKind = fkData
       FieldName = 'death_month'
-      Index = 36
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1864,7 +1863,7 @@ object DMG: TDMG
       DisplayLabel = 'Death day'
       FieldKind = fkData
       FieldName = 'death_day'
-      Index = 37
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1877,7 +1876,7 @@ object DMG: TDMG
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'recognizable_markings'
-      Index = 38
+      Index = 36
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1889,7 +1888,7 @@ object DMG: TDMG
       DisplayLabel = '# captures'
       FieldKind = fkInternalCalc
       FieldName = 'captures_tally'
-      Index = 39
+      Index = 37
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -1900,7 +1899,7 @@ object DMG: TDMG
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 40
+      Index = 38
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1912,7 +1911,7 @@ object DMG: TDMG
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'individual_id'
-      Index = 41
+      Index = 39
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -1923,7 +1922,7 @@ object DMG: TDMG
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 42
+      Index = 40
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1931,11 +1930,11 @@ object DMG: TDMG
       Size = 120
     end
     object qIndividualsformatted_name: TStringField
-      DisplayLabel = 'Full name'
+      DisplayLabel = 'Full name (formated)'
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'formatted_name'
-      Index = 43
+      Index = 41
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1947,7 +1946,7 @@ object DMG: TDMG
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 44
+      Index = 42
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1958,7 +1957,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 45
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1970,7 +1969,7 @@ object DMG: TDMG
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 46
+      Index = 44
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1982,19 +1981,30 @@ object DMG: TDMG
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 47
+      Index = 45
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Visible = False
     end
+    object qIndividualsqueued_status: TBooleanField
+      DisplayLabel = 'Queued'
+      FieldKind = fkData
+      FieldName = 'queued_status'
+      Index = 46
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
     object qIndividualsexported_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 48
+      Index = 47
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2007,7 +2017,7 @@ object DMG: TDMG
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 49
+      Index = 48
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

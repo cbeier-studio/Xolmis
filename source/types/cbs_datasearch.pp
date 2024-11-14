@@ -945,11 +945,10 @@ begin
     Clear;
     Add('SELECT i.*,');
     Add('  z.full_name AS taxon_name,');
-    Add('  z.formatted_name AS taxon_formatted_name,');
     Add('  n.full_name AS nest_name,');
-    Add('  b1.full_name AS band_full_name,');
-    Add('  b2.full_name AS double_band_name,');
-    Add('  b3.full_name AS removed_band_name,');
+    Add('  (b1.band_size||'' ''||b1.band_number) AS band_name,');
+    Add('  (b2.band_size||'' ''||b2.band_number) AS double_band_name,');
+    Add('  (b3.band_size||'' ''||b3.band_number) AS removed_band_name,');
     Add('  fi.full_name AS father_name,');
     Add('  mi.full_name AS mother_name,');
     Add('  (SELECT CAST(SUM(c.active_status) AS INTEGER) FROM captures AS c');
