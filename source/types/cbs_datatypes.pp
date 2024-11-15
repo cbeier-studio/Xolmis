@@ -22,7 +22,7 @@ unit cbs_datatypes;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, DB, SQLDB, Generics.Collections, RegExpr, StrUtils;
+  Classes, SysUtils, Dialogs, DB, SQLDB, Generics.Collections, RegExpr, StrUtils, fgl;
 
 type
   TDBManager = (dbSqlite, dbFirebird, dbPostgre, dbMaria);
@@ -93,6 +93,8 @@ type
     tbAudioLibrary,
     tbDocuments,
     tbVegetation);
+
+  TTablesDictionary = specialize TFPGMap<String, TTableType>;
 
 const
   TableAliases: array [TTableType] of String = ('',
@@ -359,6 +361,9 @@ type
 
 var
   UID: TGUID;
+  TablesDict: TTablesDictionary;
+
+  procedure LoadTablesDict;
 
   function CampoByName(const aCampoName: String): TTableFieldType;
   function SearchTypeByName(const aFilterName: String): TSearchDataType;
@@ -396,6 +401,49 @@ begin
       Break;
     end;
   end;
+end;
+
+procedure LoadTablesDict;
+begin
+  TablesDict := TTablesDictionary.Create;
+
+  TablesDict.Add(rsTitleUsers, tbUsers);
+  //tbRecordHistory,
+  //tbRecordVerifications,
+  TablesDict.Add(rsTitleGazetteer, tbGazetteer);
+  TablesDict.Add(rsTitleSamplingPlots, tbNetStations);
+  TablesDict.Add(rsTitlePermanentNets, tbPermanentNets);
+  TablesDict.Add(rsTitleInstitutions, tbInstitutions);
+  TablesDict.Add(rsTitleResearchers, tbPeople);
+  TablesDict.Add(rsTitleProjects, tbProjects);
+  TablesDict.Add(rsTitleProjectMembers, tbProjectTeams);
+  TablesDict.Add(rsTitlePermits, tbPermits);
+  TablesDict.Add(rsTitleBotanicTaxa, tbBotanicTaxa);
+  TablesDict.Add(rsTitleTaxonRanks, tbTaxonRanks);
+  TablesDict.Add(rsTitleZooTaxa, tbZooTaxa);
+  TablesDict.Add(rsTitleBands, tbBands);
+  //tbBandHistory,
+  TablesDict.Add(rsTitleIndividuals, tbIndividuals);
+  TablesDict.Add(rsTitleCaptures, tbCaptures);
+  TablesDict.Add(rsTitleMolts, tbMolts);
+  TablesDict.Add(rsTitleNests, tbNests);
+  TablesDict.Add(rsTitleNestOwners, tbNestOwners);
+  TablesDict.Add(rsTitleNestRevisions, tbNestRevisions);
+  TablesDict.Add(rsTitleEggs, tbEggs);
+  TablesDict.Add(rsTitleMethods, tbMethods);
+  TablesDict.Add(rsCaptionExpeditions, tbExpeditions);
+  TablesDict.Add(rsTitleSurveys, tbSurveys);
+  TablesDict.Add(rsTitleSurveyTeam, tbSurveyTeams);
+  TablesDict.Add(rsTitleNetsEffort, tbNetsEffort);
+  TablesDict.Add(rsTitleWeather, tbWeatherLogs);
+  TablesDict.Add(rsTitleSightings, tbSightings);
+  TablesDict.Add(rsTitleSpecimens, tbSpecimens);
+  TablesDict.Add(rsTitleCollectors, tbSpecimenCollectors);
+  TablesDict.Add(rsTitleSamplePreps, tbSamplePreps);
+  TablesDict.Add(rsTitleVegetation, tbVegetation);
+  //tbImages,
+  //tbAudioLibrary,
+  //tbDocuments,
 end;
 
 { TTableInfo }

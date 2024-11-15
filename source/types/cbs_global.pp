@@ -93,7 +93,7 @@ type
 
   TXolmisSettings = class
   private
-    Ini: TJSONConfig;
+    FConfig: TJSONConfig;
     FFileName: String;
     { General }
     FStartPage: Integer;
@@ -639,10 +639,10 @@ constructor TXolmisSettings.Create;
 begin
   inherited;
   FFileName := ConcatPaths([AppDataDir, DefaultSettingsFile]);
-  Ini := TJSONConfig.Create(nil);
+  FConfig := TJSONConfig.Create(nil);
   try
-    Ini.Formatted:= True;
-    Ini.Filename:= FFileName;
+    FConfig.Formatted:= True;
+    FConfig.Filename:= FFileName;
   except
     Exit;
   end;
@@ -650,114 +650,114 @@ end;
 
 destructor TXolmisSettings.Destroy;
 begin
-  Ini.Flush;
-  Ini.Free;
+  FConfig.Flush;
+  FConfig.Free;
   inherited Destroy;
 end;
 
 procedure TXolmisSettings.LoadFromFile;
 begin
   { General }
-  FStartPage := Ini.GetValue('/GENERAL/StartPage', 12);
-  FConfirmCancel := Ini.GetValue('/GENERAL/ConfirmCancel', False);
-  FEnterAsTab := Ini.GetValue('/GENERAL/EnterAsTab', True);
-  FTerminatedOk := Ini.GetValue('/GENERAL/TerminatedOk', True);
-  FClearDeletedPeriod := Ini.GetValue('/GENERAL/ClearDeletedPeriod', 2);
-  FLastClearDeleted := Ini.GetValue('/GENERAL/LastClearDeleted', StrToDateTime('30/12/1500 00:00:00'));
-  FLastDatabaseOptimization := Ini.GetValue('/GENERAL/LastDatabaseOptimization', StrToDateTime('30/12/1500 00:00:00'));
-  FLastAutoUpdate := Ini.GetValue('/GENERAL/LastAutoUpdate', StrToDateTime('30/12/1500 00:00:00'));
+  FStartPage := FConfig.GetValue('/GENERAL/StartPage', 12);
+  FConfirmCancel := FConfig.GetValue('/GENERAL/ConfirmCancel', False);
+  FEnterAsTab := FConfig.GetValue('/GENERAL/EnterAsTab', True);
+  FTerminatedOk := FConfig.GetValue('/GENERAL/TerminatedOk', True);
+  FClearDeletedPeriod := FConfig.GetValue('/GENERAL/ClearDeletedPeriod', 2);
+  FLastClearDeleted := FConfig.GetValue('/GENERAL/LastClearDeleted', StrToDateTime('30/12/1500 00:00:00'));
+  FLastDatabaseOptimization := FConfig.GetValue('/GENERAL/LastDatabaseOptimization', StrToDateTime('30/12/1500 00:00:00'));
+  FLastAutoUpdate := FConfig.GetValue('/GENERAL/LastAutoUpdate', StrToDateTime('30/12/1500 00:00:00'));
   { Appearance }
-  FSelectedTheme := Ini.GetValue('/APPEARANCE/SelectedTheme', 1);
-  FShowGridLines := Ini.GetValue('/APPEARANCE/ShowGridLines', True);
-  FAutoAdjustColumns := Ini.GetValue('/APPEARANCE/AutoAdjustColumns', False);
-  FUseConditionalFormatting := Ini.GetValue('/APPEARANCE/UseConditionalFormatting', True);
-  FShowOutliersOnGrid := Ini.GetValue('/APPEARANCE/ShowOutliersOnGrid', True);
-  FDefaultRowHeight := Ini.GetValue('/APPEARANCE/DefaultRowHeight', 25);
-  FAlternateRowColor := Ini.GetValue('/APPEARANCE/AlternateRowColor', StringToColor('$00FFFFFF'));
+  FSelectedTheme := FConfig.GetValue('/APPEARANCE/SelectedTheme', 1);
+  FShowGridLines := FConfig.GetValue('/APPEARANCE/ShowGridLines', True);
+  FAutoAdjustColumns := FConfig.GetValue('/APPEARANCE/AutoAdjustColumns', False);
+  FUseConditionalFormatting := FConfig.GetValue('/APPEARANCE/UseConditionalFormatting', True);
+  FShowOutliersOnGrid := FConfig.GetValue('/APPEARANCE/ShowOutliersOnGrid', True);
+  FDefaultRowHeight := FConfig.GetValue('/APPEARANCE/DefaultRowHeight', 25);
+  FAlternateRowColor := FConfig.GetValue('/APPEARANCE/AlternateRowColor', StringToColor('$00FFFFFF'));
   { Collection }
-  FVernacularNamesLanguage := Ini.GetValue('/COLLECTION/VernacularNamesLanguage', 0);
-  FTaxonomy := Ini.GetValue('/COLLECTION/Taxonomy', 0);
-  FShowSynonyms := Ini.GetValue('/COLLECTION/ShowSynonyms', True);
+  FVernacularNamesLanguage := FConfig.GetValue('/COLLECTION/VernacularNamesLanguage', 0);
+  FTaxonomy := FConfig.GetValue('/COLLECTION/Taxonomy', 0);
+  FShowSynonyms := FConfig.GetValue('/COLLECTION/ShowSynonyms', True);
   { Media }
-  FImagesFolder := Ini.GetValue('/MEDIA/ImagesFolder', ConcatPaths([InstallDir, 'images']));
-  FAudiosFolder := Ini.GetValue('/MEDIA/AudiosFolder', ConcatPaths([InstallDir, 'sounds']));
-  FDocumentsFolder := Ini.GetValue('/MEDIA/DocumentsFolder', ConcatPaths([InstallDir, 'attachments']));
-  FOpenAfterExport := Ini.GetValue('/MEDIA/OpenAfterExport', True);
+  FImagesFolder := FConfig.GetValue('/MEDIA/ImagesFolder', ConcatPaths([InstallDir, 'images']));
+  FAudiosFolder := FConfig.GetValue('/MEDIA/AudiosFolder', ConcatPaths([InstallDir, 'sounds']));
+  FDocumentsFolder := FConfig.GetValue('/MEDIA/DocumentsFolder', ConcatPaths([InstallDir, 'attachments']));
+  FOpenAfterExport := FConfig.GetValue('/MEDIA/OpenAfterExport', True);
   { Security }
-  FRememberUser := Ini.GetValue('/SECURITY/RememberUser', False);
-  FRememberConnection := Ini.GetValue('/SECURITY/RememberConnection', True);
-  FLastUser := Ini.GetValue('/SECURITY/LastUser', EmptyStr);
-  FLastConnection := Ini.GetValue('/SECURITY/LastConnection', EmptyStr);
-  FAutoUpdates := Ini.GetValue('/SECURITY/AutoUpdates', 2);
+  FRememberUser := FConfig.GetValue('/SECURITY/RememberUser', False);
+  FRememberConnection := FConfig.GetValue('/SECURITY/RememberConnection', True);
+  FLastUser := FConfig.GetValue('/SECURITY/LastUser', EmptyStr);
+  FLastConnection := FConfig.GetValue('/SECURITY/LastConnection', EmptyStr);
+  FAutoUpdates := FConfig.GetValue('/SECURITY/AutoUpdates', 2);
   { Privacy }
-  FAllowWriteLogs := Ini.GetValue('/PRIVACY/AllowWriteLogs', False);
-  FAllowUsageData := Ini.GetValue('/PRIVACY/AllowUsageData', False);
+  FAllowWriteLogs := FConfig.GetValue('/PRIVACY/AllowWriteLogs', False);
+  FAllowUsageData := FConfig.GetValue('/PRIVACY/AllowUsageData', False);
   { Backup }
-  FBackupFolder := Ini.GetValue('/BACKUP/BackupFolder', ConcatPaths([InstallDir, 'backup']));
-  FAutomaticBackup := Ini.GetValue('/BACKUP/StartupBackup', 1);
-  FBackupsToKeep := Ini.GetValue('/BACKUP/BackupsToKeep', 10);
+  FBackupFolder := FConfig.GetValue('/BACKUP/BackupFolder', ConcatPaths([InstallDir, 'backup']));
+  FAutomaticBackup := FConfig.GetValue('/BACKUP/StartupBackup', 1);
+  FBackupsToKeep := FConfig.GetValue('/BACKUP/BackupsToKeep', 10);
   { Versions }
-  FClementsVersion := Ini.GetValue('/VERSIONS/Clements', '2023');
-  FIocVersion := Ini.GetValue('/VERSIONS/IOC', '14.1');
-  FCbroVersion := Ini.GetValue('/VERSIONS/CBRO', '2021');
+  FClementsVersion := FConfig.GetValue('/VERSIONS/Clements', '2023');
+  FIocVersion := FConfig.GetValue('/VERSIONS/IOC', '14.1');
+  FCbroVersion := FConfig.GetValue('/VERSIONS/CBRO', '2021');
 end;
 
 procedure TXolmisSettings.SaveToFile;
 begin
   { General }
-  Ini.SetValue('/GENERAL/StartPage', FStartPage);
-  Ini.SetValue('/GENERAL/ConfirmCancel', FConfirmCancel);
-  Ini.SetValue('/GENERAL/EnterAsTab', FEnterAsTab);
-  Ini.SetValue('/GENERAL/TerminatedOk', FTerminatedOk);
-  Ini.SetValue('/GENERAL/ClearDeletedPeriod', FClearDeletedPeriod);
-  Ini.SetValue('/GENERAL/LastClearDeleted', FLastClearDeleted);
-  Ini.SetValue('/GENERAL/LastDatabaseOptimization', FLastDatabaseOptimization);
-  Ini.SetValue('/GENERAL/AutoUpdates', FAutoUpdates);
-  Ini.SetValue('/GENERAL/LastAutoUpdate', FLastAutoUpdate);
+  FConfig.SetValue('/GENERAL/StartPage', FStartPage);
+  FConfig.SetValue('/GENERAL/ConfirmCancel', FConfirmCancel);
+  FConfig.SetValue('/GENERAL/EnterAsTab', FEnterAsTab);
+  FConfig.SetValue('/GENERAL/TerminatedOk', FTerminatedOk);
+  FConfig.SetValue('/GENERAL/ClearDeletedPeriod', FClearDeletedPeriod);
+  FConfig.SetValue('/GENERAL/LastClearDeleted', FLastClearDeleted);
+  FConfig.SetValue('/GENERAL/LastDatabaseOptimization', FLastDatabaseOptimization);
+  FConfig.SetValue('/GENERAL/AutoUpdates', FAutoUpdates);
+  FConfig.SetValue('/GENERAL/LastAutoUpdate', FLastAutoUpdate);
   { Appearance }
-  Ini.SetValue('/APPEARANCE/SelectedTheme', FSelectedTheme);
-  Ini.SetValue('/APPEARANCE/ShowGridLines', FShowGridLines);
-  Ini.SetValue('/APPEARANCE/AutoAdjustColumns', FAutoAdjustColumns);
-  Ini.SetValue('/APPEARANCE/UseConditionalFormatting', FUseConditionalFormatting);
-  Ini.SetValue('/APPEARANCE/ShowOutliersOnGrid', FShowOutliersOnGrid);
-  Ini.SetValue('/APPEARANCE/DefaultRowHeight', FDefaultRowHeight);
-  Ini.SetValue('/APPEARANCE/AlternateRowColor', ColorToString(FAlternateRowColor));
+  FConfig.SetValue('/APPEARANCE/SelectedTheme', FSelectedTheme);
+  FConfig.SetValue('/APPEARANCE/ShowGridLines', FShowGridLines);
+  FConfig.SetValue('/APPEARANCE/AutoAdjustColumns', FAutoAdjustColumns);
+  FConfig.SetValue('/APPEARANCE/UseConditionalFormatting', FUseConditionalFormatting);
+  FConfig.SetValue('/APPEARANCE/ShowOutliersOnGrid', FShowOutliersOnGrid);
+  FConfig.SetValue('/APPEARANCE/DefaultRowHeight', FDefaultRowHeight);
+  FConfig.SetValue('/APPEARANCE/AlternateRowColor', ColorToString(FAlternateRowColor));
   { Collection }
-  Ini.SetValue('/COLLECTION/VernacularNamesLanguage', FVernacularNamesLanguage);
-  Ini.SetValue('/COLLECTION/Taxonomy', FTaxonomy);
-  Ini.SetValue('/COLLECTION/ShowSynonyms', FShowSynonyms);
+  FConfig.SetValue('/COLLECTION/VernacularNamesLanguage', FVernacularNamesLanguage);
+  FConfig.SetValue('/COLLECTION/Taxonomy', FTaxonomy);
+  FConfig.SetValue('/COLLECTION/ShowSynonyms', FShowSynonyms);
   { Media }
-  Ini.SetValue('/MEDIA/ImagesFolder', FImagesFolder);
-  Ini.SetValue('/MEDIA/AudiosFolder', FAudiosFolder);
-  Ini.SetValue('/MEDIA/DocumentsFolder', FDocumentsFolder);
-  Ini.SetValue('/MEDIA/OpenAfterExport', FOpenAfterExport);
+  FConfig.SetValue('/MEDIA/ImagesFolder', FImagesFolder);
+  FConfig.SetValue('/MEDIA/AudiosFolder', FAudiosFolder);
+  FConfig.SetValue('/MEDIA/DocumentsFolder', FDocumentsFolder);
+  FConfig.SetValue('/MEDIA/OpenAfterExport', FOpenAfterExport);
   { Security }
-  Ini.SetValue('/SECURITY/RememberUser', FRememberUser);
-  Ini.SetValue('/SECURITY/RememberConnection', FRememberConnection);
-  Ini.SetValue('/SECURITY/LastUser', FLastUser);
-  Ini.SetValue('/SECURITY/LastConnection', FLastConnection);
+  FConfig.SetValue('/SECURITY/RememberUser', FRememberUser);
+  FConfig.SetValue('/SECURITY/RememberConnection', FRememberConnection);
+  FConfig.SetValue('/SECURITY/LastUser', FLastUser);
+  FConfig.SetValue('/SECURITY/LastConnection', FLastConnection);
   { Privacy }
-  Ini.SetValue('/PRIVACY/AllowWriteLogs', FAllowWriteLogs);
-  Ini.SetValue('/PRIVACY/AllowUsageData', FAllowUsageData);
+  FConfig.SetValue('/PRIVACY/AllowWriteLogs', FAllowWriteLogs);
+  FConfig.SetValue('/PRIVACY/AllowUsageData', FAllowUsageData);
   { Backup }
-  Ini.SetValue('/BACKUP/BackupFolder', FBackupFolder);
-  Ini.SetValue('/BACKUP/StartupBackup', FAutomaticBackup);
-  Ini.SetValue('/BACKUP/BackupsToKeep', FBackupsToKeep);
+  FConfig.SetValue('/BACKUP/BackupFolder', FBackupFolder);
+  FConfig.SetValue('/BACKUP/StartupBackup', FAutomaticBackup);
+  FConfig.SetValue('/BACKUP/BackupsToKeep', FBackupsToKeep);
 
-  Ini.Flush;
+  FConfig.Flush;
 end;
 
 procedure TXolmisSettings.Reset;
 begin
-  Ini.Clear;
-  Ini.Flush;
+  FConfig.Clear;
+  FConfig.Flush;
 
   LoadFromFile;
 end;
 
 procedure TXolmisSettings.Delete(aSection, aKey: String);
 begin
-  Ini.DeleteValue('/' + aSection + '/' + aKey);
+  FConfig.DeleteValue('/' + aSection + '/' + aKey);
 end;
 
 end.

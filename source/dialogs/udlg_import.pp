@@ -5,10 +5,10 @@ unit udlg_import;
 interface
 
 uses
-  BCPanel, Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet, LCLIntf,
+  BCPanel, Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet, LCLIntf, fgl,
   memds, dbf, csvdataset, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset,
-  atshapelinebgra;
+  atshapelinebgra, cbs_datatypes;
 
 type
 
@@ -174,6 +174,19 @@ begin
       '.csv', '.tsv':
       begin
         FDataSet := dsSdf;
+        cfgDelimiters := TcfgDelimiters.Create(nil);
+        with cfgDelimiters do
+        try
+          Delimiter := dsSdf.Delimiter;
+          HaveHeader := dsSdf.FirstLineAsSchema;
+          if ShowModal = mrOk then
+          begin
+            dsSdf.Delimiter := Delimiter;
+            dsSdf.FirstLineAsSchema := HaveHeader;
+          end;
+        finally
+          FreeAndNil(cfgDelimiters);
+        end;
         dsSdf.FileName := eSourceFile.Text;
       end;
       '.xlsx', '.xls', '.ods':
@@ -190,7 +203,8 @@ begin
       '.dbf':
       begin
         FDataSet := dsDbf;
-        dsDbf.FilePathFull := eSourceFile.Text;
+        dsDbf.FilePathFull := ExtractFilePath(eSourceFile.Text);
+        dsDbf.TableName := ExtractFileName(eSourceFile.Text);
       end;
       '.kml', '.kmz': ;
       '.gpx': ;
@@ -235,12 +249,17 @@ begin
     gridFields.ColWidths[0] := 40;
     gridFields.RowCount := 1; // Clear rows
     gridFields.RowCount := FDataSet.FieldCount + 1;
-    // Target field picklist
-    // Search table picklist
+
     for i := 0 to FDataSet.FieldCount - 1 do
     begin
       gridFields.Cells[1, i+1] := FDataSet.Fields[i].DisplayName;
     end;
+
+    // Target field picklist
+    LoadTargetFields;
+
+    // Search table picklist
+    LoadSearchTables;
   finally
     gridFields.EndUpdate;
   end;
@@ -248,7 +267,37 @@ end;
 
 procedure TdlgImport.LoadSearchTables;
 begin
-
+  with gridFields.Columns[3].PickList do
+  begin
+    Add(rsCaptionExpeditions);
+    Add(rsTitleSurveys);
+    Add(rsTitleSurveyTeam);
+    Add(rsTitleNetsEffort);
+    Add(rsTitleWeather);
+    Add(rsTitleVegetation);
+    Add(rsTitleMethods);
+    Add(rsTitleSightings);
+    Add(rsTitleSpecimens);
+    Add(rsTitleSamplePreps);
+    Add(rsTitleCollectors);
+    Add(rsTitleBands);
+    Add(rsTitleIndividuals);
+    Add(rsTitleCaptures);
+    Add(rsTitleMolts);
+    Add(rsTitleNests);
+    Add(rsTitleNestOwners);
+    Add(rsTitleNestRevisions);
+    Add(rsTitleEggs);
+    Add(rsTitleInstitutions);
+    Add(rsTitleResearchers);
+    Add(rsTitleProjects);
+    Add(rsTitleProjectMembers);
+    Add(rsTitlePermits);
+    Add(rsTitleGazetteer);
+    Add(rsTitleSamplingPlots);
+    Add(rsTitlePermanentNets);
+    Add(rsTitleBotanicTaxa);
+  end;
 end;
 
 procedure TdlgImport.LoadTargetFields;

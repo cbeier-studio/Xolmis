@@ -17,6 +17,7 @@
 unit cbs_themes;
 
 {$mode objfpc}{$H+}
+{$modeSwitch advancedRecords}
 
 interface
 
@@ -176,40 +177,49 @@ const
   clBlueBGDark       = TColor($00482400);
 
 type
+  TBackgroundColors = record
+    SolidBase: TColor;
+    SolidSecondary: TColor;
+    SolidTertiary: TColor;
+    SolidQuaternary: TColor;
+    SmokeDefault: TColor;
+    CardDefault: TColor;
+    CardSecondary: TColor;
+    SystemAttention: TColor;
+    SystemSolidAttention: TColor;
+    SystemSuccess: TColor;
+    SystemCaution: TColor;
+    SystemCritical: TColor;
+    SystemNeutral: TColor;
+    SystemSolidNeutral: TColor;
+  end;
+
+  TForegroundColors = record
+    TextPrimary: TColor;
+    TextSecondary: TColor;
+    TextTertiary: TColor;
+    TextDisabled: TColor;
+    AccentTextPrimary: TColor;
+    AccentTextSecondary: TColor;
+    AccentTextTertiary: TColor;
+    AccentTextDisabled: TColor;
+    TextOnAccentPrimary: TColor;
+    TextOnAccentSecondary: TColor;
+    TextOnAccentTertiary: TColor;
+    TextOnAccentDisabled: TColor;
+  end;
+
+  { TColorTheme }
+
   TColorTheme = record
     Name: String;
     IsDark: Boolean;
-    Background: record
-      SolidBase: TColor;
-      SolidSecondary: TColor;
-      SolidTertiary: TColor;
-      SolidQuaternary: TColor;
-      SmokeDefault: TColor;
-      CardDefault: TColor;
-      CardSecondary: TColor;
-      SystemAttention: TColor;
-      SystemSolidAttention: TColor;
-      SystemSuccess: TColor;
-      SystemCaution: TColor;
-      SystemCritical: TColor;
-      SystemNeutral: TColor;
-      SystemSolidNeutral: TColor;
-    end;
-    Foreground: record
-      TextPrimary: TColor;
-      TextSecondary: TColor;
-      TextTertiary: TColor;
-      TextDisabled: TColor;
-      AccentTextPrimary: TColor;
-      AccentTextSecondary: TColor;
-      AccentTextTertiary: TColor;
-      AccentTextDisabled: TColor;
-      TextOnAccentPrimary: TColor;
-      TextOnAccentSecondary: TColor;
-      TextOnAccentTertiary: TColor;
-      TextOnAccentDisabled: TColor;
-    end;
+    Background: TBackgroundColors;
+    Foreground: TForegroundColors;
+    procedure Initialize(const AName: String; AIsDark: Boolean; const ABackground: TBackgroundColors;
+      const AForeground: TForegroundColors);
   end;
+
 
   {$IFDEF DARWIN}
   function MojaveOrNewer: Boolean;
@@ -292,6 +302,17 @@ begin
     Registry.Free;
   end;
   {$ENDIF}
+end;
+
+{ TColorTheme }
+
+procedure TColorTheme.Initialize(const AName: String; AIsDark: Boolean;
+  const ABackground: TBackgroundColors; const AForeground: TForegroundColors);
+begin
+  Name := AName;
+  IsDark := AIsDark;
+  Background := ABackground;
+  Foreground := AForeground;
 end;
 
 end.

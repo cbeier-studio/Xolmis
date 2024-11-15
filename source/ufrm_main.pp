@@ -850,6 +850,9 @@ begin
 
   if Assigned(ActiveUser) then
     FreeAndNil(ActiveUser);
+
+  if Assigned(TablesDict) then
+    TablesDict.Free;
 end;
 
 procedure TfrmMain.FormKeyPress(Sender: TObject; var Key: char);
