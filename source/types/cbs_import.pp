@@ -311,7 +311,12 @@ begin
 end;
 
 procedure LoadEbirdRecord(CSV: TSdfDataSet; var Reg: TEbirdDownloadFormat);
+var
+  EnglishFS: TFormatSettings;
+  FieldValue: String;
 begin
+  GetLocaleFormatSettings(1033, EnglishFS);
+
   Reg.Clear;
 
   Reg.SubmissionID := CSV.FieldByName('Submission ID').AsString;
@@ -323,21 +328,35 @@ begin
   Reg.County := CSV.FieldByName('County').AsString;
   Reg.LocationID := CSV.FieldByName('Location ID').AsString;
   Reg.LocationName := CSV.FieldByName('Location').AsString;
-  if (CSV.FieldByName('Latitude').AsString <> '') then
-    Reg.Latitude := CSV.FieldByName('Latitude').AsFloat;
-  if (CSV.FieldByName('Longitude').AsString <> '') then
-    Reg.Longitude := CSV.FieldByName('Longitude').AsFloat;
-  Reg.RecordDate := CSV.FieldByName('Date').AsDateTime;
-  if (CSV.FieldByName('Time').AsString <> '') then
-    Reg.RecordTime := CSV.FieldByName('Time').AsDateTime;
+
+  FieldValue := CSV.FieldByName('Latitude').AsString;
+  if (FieldValue <> '') then
+    Reg.Latitude := StrToFloat(FieldValue, EnglishFS);
+
+  FieldValue := CSV.FieldByName('Longitude').AsString;
+  if (FieldValue <> '') then
+    Reg.Longitude := StrToFloat(FieldValue, EnglishFS);
+
+  FieldValue := CSV.FieldByName('Date').AsString;
+  Reg.RecordDate := StrToDate(FieldValue, EnglishFS);
+
+  FieldValue := CSV.FieldByName('Time').AsString;
+  if (FieldValue <> '') then
+    Reg.RecordTime := StrToTime(FieldValue, EnglishFS);
+
   Reg.Protocol := CSV.FieldByName('Protocol').AsString;
   if (CSV.FieldByName('Duration (Min)').AsString <> '') then
     Reg.Duration := CSV.FieldByName('Duration (Min)').AsInteger;
   Reg.AllObsReported := CSV.FieldByName('All Obs Reported').AsBoolean;
-  if (CSV.FieldByName('Distance Traveled (km)').AsString <> '') then
-    Reg.DistanceTraveled := CSV.FieldByName('Distance Traveled (km)').AsFloat;
-  if (CSV.FieldByName('Area Covered (ha)').AsString <> '') then
-    Reg.AreaCovered := CSV.FieldByName('Area Covered (ha)').AsFloat;
+
+  FieldValue := CSV.FieldByName('Distance Traveled (km)').AsString;
+  if (FieldValue <> '') then
+    Reg.DistanceTraveled := StrToFloat(FieldValue, EnglishFS);
+
+  FieldValue := CSV.FieldByName('Area Covered (ha)').AsString;
+  if (FieldValue <> '') then
+    Reg.AreaCovered := StrToFloat(FieldValue, EnglishFS);
+
   if (CSV.FieldByName('Number of Observers').AsString <> '') then
     Reg.NumberObservers := CSV.FieldByName('Number of Observers').AsInteger;
   if (CSV.FieldByName('Breeding Code').AsString <> '') then
