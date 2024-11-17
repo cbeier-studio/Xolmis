@@ -34,6 +34,7 @@ type
     iconDB: TImageList;
     iButtons: TImageList;
     lineBottom: TShapeLineBGRA;
+    mmOptimizeDB: TMenuItem;
     pmNewDatabase: TMenuItem;
     pmNewConnection: TMenuItem;
     pmgNew: TMenuItem;
@@ -57,12 +58,14 @@ type
     Separator1: TMenuItem;
     Separator2: TMenuItem;
     Separator3: TMenuItem;
+    Separator4: TMenuItem;
     Separator7: TShapeLineBGRA;
     Separator8: TShapeLineBGRA;
     vtConnections: TVirtualDBGrid;
     procedure dsConnStateChange(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure mmOptimizeDBClick(Sender: TObject);
     procedure mmTestConnectionClick(Sender: TObject);
     procedure pmNewConnectionClick(Sender: TObject);
     procedure pmNewDatabaseClick(Sender: TObject);
@@ -113,6 +116,16 @@ begin
 
   UpdateButtons;
   dsConn.DataSet.Refresh;
+end;
+
+procedure TcfgDatabase.mmOptimizeDBClick(Sender: TObject);
+var
+  Conn: TDBParams;
+begin
+  Conn.Name := dsConn.DataSet.FieldByName('connection_name').AsString;
+  Conn.LoadParams;
+
+  Conn.Optimize;
 end;
 
 procedure TcfgDatabase.mmTestConnectionClick(Sender: TObject);

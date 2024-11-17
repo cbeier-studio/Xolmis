@@ -50,6 +50,7 @@ type
     LastBackup: TDateTime;
     procedure Clear;
     procedure LoadParams;
+    procedure Optimize;
     procedure SetLastBackup;
     function TestConnection: Boolean;
   end;
@@ -370,7 +371,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_conversions, cbs_datasearch, udm_main;
+uses cbs_locale, cbs_global, cbs_conversions, cbs_datasearch, cbs_dialogs, udm_main;
 
 function CampoByName(const aCampoName: String): TTableFieldType;
 var
@@ -1152,6 +1153,32 @@ begin
   end;
 
   C.Close;
+end;
+
+procedure TDBParams.Optimize;
+var
+  uCon: TSQLConnector;
+  uTrans: TSQLTransaction;
+begin
+  uCon := TSQLConnector.Create(nil);
+  uTrans := TSQLTransaction.Create(uCon);
+  try
+    LoadDatabaseParams(Self.Name, uCon);
+
+    try
+      uTrans.Action := caCommitRetaining;
+      uCon.Transaction := uTrans;
+      uCon.Open;
+      uCon.ExecuteDirect('PRAGMA optimize;');
+      uCon.Close;
+    except
+      on E: Exception do
+        MsgDlg(rsTitleError, rsErrorOptimizingDatabase, mtError);
+    end;
+  finally
+    FreeAndNil(uTrans);
+    FreeAndNil(uCon);
+  end;
 end;
 
 procedure TDBParams.SetLastBackup;

@@ -530,6 +530,13 @@ object cfgDatabase: TcfgDatabase
       ImageIndex = 0
       OnClick = mmTestConnectionClick
     end
+    object Separator4: TMenuItem
+      Caption = '-'
+    end
+    object mmOptimizeDB: TMenuItem
+      Caption = 'Optimize database'
+      OnClick = mmOptimizeDBClick
+    end
   end
   object iButtons: TImageList
     Scaled = True

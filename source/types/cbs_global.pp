@@ -500,12 +500,8 @@ begin
 end;
 
 function ConnectDatabase: Boolean;
-var
-  dontConnect: Boolean;
-//  DateCheck: TDateTime;
 begin
   Result := False;
-  dontConnect := False;
 
   dlgConnect := TdlgConnect.Create(nil);
   with dlgConnect do
@@ -514,45 +510,6 @@ begin
     begin
       CloseDatabase;
       LoadDatabaseParams(SelectedConnection, DMM.sqlCon);
-
-      // Create database if not exists
-      //case ConexaoDB.Manager of
-      //  dbSqlite:
-      //    begin
-      //      if not (FileExists(ConexaoDB.Database)) then
-      //        if MessageDlg(rsCreateDatabasePrompt, mtConfirmation, mbYesNo, 0, mbYes) = mrYes then
-      //          CreateUserDatabase(ConexaoDB.Manager, ConexaoDB.Database)
-      //        else
-      //          dontConnect := True;
-
-            // If the last session was not terminated correctly
-            //if (Finalizado = False) then
-            //  CheckDB;
-
-            // Create a backup for quick restore
-            //if (GetPreference('BACKUP', 'BootBackup', True) = True) then
-            //  RunStartupBackup;
-
-            // >> Optimize and reindex database
-            //DateCheck := GetPreference('DATABASE', 'LastBDCheck', DateOf(Now - 7));
-            //if (Finalizado = True) and (Now - DateCheck > 7) then
-            //  OptimizeDB;
-      //    end;
-      //  dbFirebird:
-      //    begin
-      //
-      //    end;
-      //  dbPostgre: ;
-      //  dbMaria: ;
-      //end;
-
-      if dontConnect then
-        Exit;
-
-      // >> Permanently delete inactive records older than a specified period
-      //DateCheck := GetPreference('GENERAL', 'LastClearDeleted', DateOf(Now - 1));
-      //if (GetPreference('GENERAL', 'ClearDeletedPeriod', 2) > 0) and (Now - DateCheck > 0) then
-      //  ClearDeleted(GetPreference('GENERAL', 'ClearDeletedPeriod', 2) * 30);
 
       try
         if not DMM.sqlCon.Connected then

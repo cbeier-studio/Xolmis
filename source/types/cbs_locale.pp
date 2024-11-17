@@ -160,6 +160,7 @@ uses
     rsErrorUpdatingAdminPassword = 'An error occurred while updating the Admin password.';
     rsErrorCheckingUpdates = 'An error occurred while checking for updates.';
     rsErrorReportNotFound = 'Report template not found: %s';
+    rsErrorOptimizingDatabase = 'An error occurred while optimizing the database.';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';

@@ -3189,6 +3189,10 @@ msgctxt "cbs_locale.rserrormontadata"
 msgid "Error in year digits (%d). Send this issue to the Support."
 msgstr ""
 
+#: cbs_locale.rserroroptimizingdatabase
+msgid "An error occurred while optimizing the database."
+msgstr ""
+
 #: cbs_locale.rserrorpopulatingtables
 #, object-pascal-format
 msgid "Error while populating the tables: %s"
@@ -5551,6 +5555,10 @@ msgstr ""
 
 #: tcfgdatabase.caption
 msgid "Xolmis - Manage connections"
+msgstr ""
+
+#: tcfgdatabase.mmoptimizedb.caption
+msgid "Optimize database"
 msgstr ""
 
 #: tcfgdatabase.mmtestconnection.caption
