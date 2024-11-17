@@ -522,7 +522,7 @@ begin
         raise EDatabaseError.Create(rsErrorConnectingDatabase);
       end;
 
-      UpgradeDatabaseSchema(ConexaoDB.Manager);
+      //UpgradeDatabaseSchema(ConexaoDB.Manager);
 
       Result := True;
     end;

@@ -490,7 +490,7 @@ begin
     Add('  gm.site_name AS municipality_name,');
     Add('  gs.site_name AS state_name,');
     Add('  gc.site_name AS country_name,');
-    Add('  ns.station_name AS net_station_name,');
+    Add('  pl.full_name AS net_station_name,');
     Add('  mt.method_name AS method_name,');
     Add('  pj.short_title AS project_name,');
     Add('  (SELECT CAST((SUM(ef.net_area) + SUM(ef.open_time_total)) AS REAL) FROM nets_effort AS ef');
@@ -501,7 +501,7 @@ begin
     Add('LEFT JOIN gazetteer AS gm ON sv.municipality_id = gm.site_id');
     Add('LEFT JOIN gazetteer AS gs ON sv.state_id = gs.site_id');
     Add('LEFT JOIN gazetteer AS gc ON sv.country_id = gc.site_id');
-    Add('LEFT JOIN net_stations AS ns ON sv.net_station_id = ns.net_station_id');
+    Add('LEFT JOIN sampling_plots AS pl ON sv.net_station_id = pl.sampling_plot_id');
     Add('LEFT JOIN methods AS mt ON sv.method_id = mt.method_id');
     Add('LEFT JOIN projects AS pj ON sv.project_id = pj.project_id');
     case aFilter of
@@ -741,7 +741,7 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT ns.*,');
+    Add('SELECT pl.*,');
     Add('  gl.site_name AS locality_name,');
     Add('  gm.site_name AS municipality_name,');
     Add('  gs.site_name AS state_name,');
@@ -996,7 +996,7 @@ begin
     Add('   z.full_name AS taxon_name,');
     Add('   z.formatted_name AS taxon_formatted_name,');
     Add('   sv.full_name AS survey_name,');
-    Add('   ns.station_name AS net_station_name,');
+    Add('   pl.full_name AS net_station_name,');
     Add('   ef.net_number AS net_number,');
     Add('   g.site_name AS locality_name,');
     Add('   p1.acronym AS bander_name,');
@@ -1008,7 +1008,7 @@ begin
     Add('FROM captures AS c');
     Add('LEFT JOIN zoo_taxa AS z ON c.taxon_id = z.taxon_id');
     Add('LEFT JOIN surveys AS sv ON c.survey_id = sv.survey_id');
-    Add('LEFT JOIN net_stations AS ns ON c.net_station_id = ns.net_station_id');
+    Add('LEFT JOIN sampling_plots AS pl ON c.net_station_id = pl.sampling_plot_id');
     Add('LEFT JOIN nets_effort AS ef ON c.net_id = ef.net_id');
     Add('LEFT JOIN gazetteer AS g ON c.locality_id = g.site_id');
     Add('LEFT JOIN people AS p1 ON c.bander_id = p1.person_id');
