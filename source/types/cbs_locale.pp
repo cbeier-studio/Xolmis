@@ -206,17 +206,17 @@ uses
     rsDeleteConnectionPrompt = 'Do you really want to delete this connection?';
     rsDeleteRecordTitle = 'Delete record';
     rsDeleteRecordPrompt = 'Do you really want to delete this record?';
-    rsDeleteRecordFooter = 'Deleted record stay in recycle bin for the time period defined in ' +
-      'Settings before being permanently deleted.';
+    rsDeleteRecordFooter = 'Deleted records remain in the recycle bin for a duration specified in the ' +
+      'Settings before they are permanently deleted.';
     rsDeleteImagePrompt = 'Dow you really want to delete this record?' + LineEnding +
       'This action cannot be undone.';
 
-    rsCantDeleteRecord = 'This record cannot be deleted, because it is linked to other records.';
-    rsCantDeleteUser = 'User %s should not be deleted, because it could compromise the Xolmis functioning!';
+    rsCantDeleteRecord = 'This record cannot be deleted as it is associated with other records.';
+    rsCantDeleteUser = 'User %s should not be deleted as it might affect the proper functioning of Xolmis.';
 
-    rsRecycleAutoDeleteInfo = 'The records that stayed more than %d days in the recycle bin will be deleted automaticaly.';
+    rsRecycleAutoDeleteInfo = 'Records that remain in the recycle bin for more than %d days will be automatically deleted.';
     rsRecycleDeleteTitle = 'Delete permanently';
-    rsRecycleDeletePermanentlyPrompt = 'Do you really want to delete permanently ALL records in this recycle bin list?';
+    rsRecycleDeletePermanentlyPrompt = 'Are you sure you want to permanently delete ALL records in this recycle bin list?';
 
     { Restoration messages }
     rsRestoreRecordTitle = 'Restore record';
@@ -260,8 +260,8 @@ uses
     rsLoadingJSONFile = 'Loading JSON file...';
 
     { Backup messages }
-    rsPromptBackupNow = 'The automatic backup will run now and it could take several minutes.' + LineEnding +
-      'Do you want to continue with backup?';
+    rsPromptBackupNow = 'The automatic backup will start now and may take several minutes.' + LineEnding +
+      'Do you want to proceed with the backup?';
     rsCreatingBackup = 'Creating backup...';
     rsCompressingBackup = 'Compressing backup...';
     rsDecompressingBackup = 'Decompressing backup...';
@@ -291,7 +291,7 @@ uses
     rsCoordinatesAvailableToUse = 'Coordinates are available at the Coordinates Editor.';
     rsSelectCoordinatesTypes = 'Select the origin and destination coordinate types.';
     rsInformUTMZone = 'Inform the origin UTM Zone and the Hemisphere.';
-    rsSameCoordinateFormat = 'Select a destination coordinate type that is different from the origin type.';
+    rsSameCoordinateFormat = 'Please select a destination coordinate type that differs from the origin type.';
 
     { Maintenance messages }
     rsNoThumbnails = 'There are no images to recreate the thumbnails!';
@@ -347,8 +347,7 @@ uses
     rsMaxCollectorsReached = 'The maximum number of authors (%d) was reached!';
     rsListCheckedNone = 'No list items were checked!';
     rsCycleNotSelected = 'No item were selected in one or more columns.';
-    rsUpdateSumCaptures = 'The sum of new captures, recaptures and unmarked individuals ' +
-      'differs from the total number of individuals.' + LineEnding + 'Do you want to update it?';
+    rsUpdateSumCaptures = 'The sum of new captures, recaptures, and unmarked individuals does not match the total count. Update it?';
     rsRequiredVerificationStatus = 'A verification status must be selected.';
 
     { HTML validation messages }

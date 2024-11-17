@@ -2234,14 +2234,14 @@ msgstr ""
 
 #: cbs_locale.rscantdeleterecord
 msgctxt "cbs_locale.rscantdeleterecord"
-msgid "This record cannot be deleted, because it is linked to other records."
-msgstr "Este registro não pode ser apagado, pois está sendo usado por outros registros."
+msgid "This record cannot be deleted as it is associated with other records."
+msgstr "Este registro não pode ser apagado, pois está associado a outros registros."
 
 #: cbs_locale.rscantdeleteuser
 #, object-pascal-format
 msgctxt "cbs_locale.rscantdeleteuser"
-msgid "User %s should not be deleted, because it could compromise the Xolmis functioning!"
-msgstr "Usuário %s não deve ser apagado, pois pode comprometer o funcionamento do Xolmis!"
+msgid "User %s should not be deleted as it might affect the proper functioning of Xolmis."
+msgstr "O usuário %s não deve ser apagado, pois pode comprometer o funcionamento do Xolmis."
 
 #: cbs_locale.rscaptionall
 msgctxt "cbs_locale.rscaptionall"
@@ -2813,8 +2813,8 @@ msgstr ""
 
 #: cbs_locale.rsdeleterecordfooter
 msgctxt "cbs_locale.rsdeleterecordfooter"
-msgid "Deleted record stay in recycle bin for the time period defined in Settings before being permanently deleted."
-msgstr "Registros apagados ficam na lixeira pelo período de tempo definido nas Opções antes de serem permanentemente apagados."
+msgid "Deleted records remain in the recycle bin for a duration specified in the Settings before they are permanently deleted."
+msgstr "Registros apagados ficam na lixeira por um período definido nas Opções antes de serem permanentemente apagados."
 
 #: cbs_locale.rsdeleterecordprompt
 msgctxt "cbs_locale.rsdeleterecordprompt"
@@ -4305,10 +4305,10 @@ msgstr "Despreparando..."
 
 #: cbs_locale.rspromptbackupnow
 msgid ""
-"The automatic backup will run now and it could take several minutes.\n"
-"Do you want to continue with backup?"
+"The automatic backup will start now and may take several minutes.\n"
+"Do you want to proceed with the backup?"
 msgstr ""
-"O backup automático será executado agora e pode demorar vários minutos.\n"
+"O backup automático irá iniciar agora e pode demorar vários minutos.\n"
 "Você deseja continuar com o backup?"
 
 #: cbs_locale.rsqualifieronlyingenus
@@ -4358,12 +4358,12 @@ msgstr ""
 
 #: cbs_locale.rsrecycleautodeleteinfo
 #, object-pascal-format
-msgid "The records that stayed more than %d days in the recycle bin will be deleted automaticaly."
-msgstr "Os registros que ficarem mais de %d dias na lixeira serão apagados automaticamente."
+msgid "Records that remain in the recycle bin for more than %d days will be automatically deleted."
+msgstr "Os registros que ficarem na lixeira por mais de %d dias serão automaticamente apagados."
 
 #: cbs_locale.rsrecycledeletepermanentlyprompt
-msgid "Do you really want to delete permanently ALL records in this recycle bin list?"
-msgstr "Você realmente quer apagar permanentemente TODOS registros nesta lista da lixeira?"
+msgid "Are you sure you want to permanently delete ALL records in this recycle bin list?"
+msgstr "Você tem certeza que quer apagar permanentemente TODOS registros nesta lista da lixeira?"
 
 #: cbs_locale.rsrecycledeletetitle
 msgctxt "cbs_locale.rsrecycledeletetitle"
@@ -4475,8 +4475,8 @@ msgstr "Criando backup de inicialização..."
 
 #: cbs_locale.rssamecoordinateformat
 msgctxt "cbs_locale.rssamecoordinateformat"
-msgid "Select a destination coordinate type that is different from the origin type."
-msgstr "Selecione um formato de coordenada destino que seja diferente do formato de origem."
+msgid "Please select a destination coordinate type that differs from the origin type."
+msgstr "Por favor, selecione um formato de coordenada destino que seja diferente do formato de origem."
 
 #: cbs_locale.rssampleblooddry
 msgctxt "cbs_locale.rssampleblooddry"
@@ -5271,12 +5271,8 @@ msgstr "Nova versão: %s"
 
 #: cbs_locale.rsupdatesumcaptures
 msgctxt "cbs_locale.rsupdatesumcaptures"
-msgid ""
-"The sum of new captures, recaptures and unmarked individuals differs from the total number of individuals.\n"
-"Do you want to update it?"
-msgstr ""
-"A soma das novas capturas, recapturas e indivíduos não marcados difere do número total de indivíduos.\n"
-"Deseja atualizar?"
+msgid "The sum of new captures, recaptures, and unmarked individuals does not match the total count. Update it?"
+msgstr "A soma das novas capturas, recapturas e indivíduos não marcados difere do número total de indivíduos. Deseja atualizar?"
 
 #: cbs_locale.rsusenewdatabaseoption
 msgid "The database file was not found. Use the New database option."

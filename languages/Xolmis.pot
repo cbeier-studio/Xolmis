@@ -2230,13 +2230,13 @@ msgstr ""
 
 #: cbs_locale.rscantdeleterecord
 msgctxt "cbs_locale.rscantdeleterecord"
-msgid "This record cannot be deleted, because it is linked to other records."
+msgid "This record cannot be deleted as it is associated with other records."
 msgstr ""
 
 #: cbs_locale.rscantdeleteuser
 #, object-pascal-format
 msgctxt "cbs_locale.rscantdeleteuser"
-msgid "User %s should not be deleted, because it could compromise the Xolmis functioning!"
+msgid "User %s should not be deleted as it might affect the proper functioning of Xolmis."
 msgstr ""
 
 #: cbs_locale.rscaptionall
@@ -2807,7 +2807,7 @@ msgstr ""
 
 #: cbs_locale.rsdeleterecordfooter
 msgctxt "cbs_locale.rsdeleterecordfooter"
-msgid "Deleted record stay in recycle bin for the time period defined in Settings before being permanently deleted."
+msgid "Deleted records remain in the recycle bin for a duration specified in the Settings before they are permanently deleted."
 msgstr ""
 
 #: cbs_locale.rsdeleterecordprompt
@@ -4285,8 +4285,8 @@ msgstr ""
 
 #: cbs_locale.rspromptbackupnow
 msgid ""
-"The automatic backup will run now and it could take several minutes.\n"
-"Do you want to continue with backup?"
+"The automatic backup will start now and may take several minutes.\n"
+"Do you want to proceed with the backup?"
 msgstr ""
 
 #: cbs_locale.rsqualifieronlyingenus
@@ -4334,11 +4334,11 @@ msgstr ""
 
 #: cbs_locale.rsrecycleautodeleteinfo
 #, object-pascal-format
-msgid "The records that stayed more than %d days in the recycle bin will be deleted automaticaly."
+msgid "Records that remain in the recycle bin for more than %d days will be automatically deleted."
 msgstr ""
 
 #: cbs_locale.rsrecycledeletepermanentlyprompt
-msgid "Do you really want to delete permanently ALL records in this recycle bin list?"
+msgid "Are you sure you want to permanently delete ALL records in this recycle bin list?"
 msgstr ""
 
 #: cbs_locale.rsrecycledeletetitle
@@ -4447,7 +4447,7 @@ msgstr ""
 
 #: cbs_locale.rssamecoordinateformat
 msgctxt "cbs_locale.rssamecoordinateformat"
-msgid "Select a destination coordinate type that is different from the origin type."
+msgid "Please select a destination coordinate type that differs from the origin type."
 msgstr ""
 
 #: cbs_locale.rssampleblooddry
@@ -5243,9 +5243,7 @@ msgstr ""
 
 #: cbs_locale.rsupdatesumcaptures
 msgctxt "cbs_locale.rsupdatesumcaptures"
-msgid ""
-"The sum of new captures, recaptures and unmarked individuals differs from the total number of individuals.\n"
-"Do you want to update it?"
+msgid "The sum of new captures, recaptures, and unmarked individuals does not match the total count. Update it?"
 msgstr ""
 
 #: cbs_locale.rsusenewdatabaseoption
