@@ -525,6 +525,7 @@ begin
           WriteDatabaseMetadata('author', aAuthor);
           WriteDatabaseMetadata('description', aDescription);
           WriteDatabaseMetadata('version', IntToStr(SchemaVersion));
+          WriteDatabaseMetadata('creation date', DateTimeToStr(Now));
 
           DMM.sqlTrans.CommitRetaining;
 
@@ -567,6 +568,7 @@ begin
 
   if not DMM.sqlCon.Connected then
     DMM.sqlCon.Open;
+
   DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = off;');
 
   if not DMM.sqlTrans.Active then
@@ -574,15 +576,26 @@ begin
 
   try
     try
-      if OldVersion < 2 then
+      //if OldVersion < 2 then
+      //begin
+      //
+      //
+      //  Result := True;
+      //end;
+
+      //if OldVersion < 3 then
+      //begin
+      //
+      //
+      //  Result := True;
+      //end;
+
+      if Result then
       begin
-
+        DMM.sqlTrans.CommitRetaining;
+        MsgDlg(rsTitleInformation, rsSuccessfulDatabaseUpgrade, mtInformation);
+        LogInfo('User database succesfully upgraded');
       end;
-
-      DMM.sqlTrans.CommitRetaining;
-      MsgDlg(rsTitleInformation, rsSuccessfulDatabaseUpgrade, mtInformation);
-      LogInfo('User database succesfully upgraded');
-      Result := True;
     except
       on E: Exception do
       begin

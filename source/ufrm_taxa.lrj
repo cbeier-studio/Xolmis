@@ -1,8 +1,8 @@
 {"version":1,"strings":[
 {"hash":370913,"name":"tfrmtaxa.caption","sourcebytes":[84,97,120,97],"value":"Taxa"},
 {"hash":5934942,"name":"tfrmtaxa.gridtaxa.columns[0].title.caption","sourcebytes":[84,97,120,111,110],"value":"Taxon"},
-{"hash":137339444,"name":"tfrmtaxa.gridtaxa.columns[1].title.caption","sourcebytes":[118,97,108,105,100,95,105,100],"value":"valid_id"},
-{"hash":142939524,"name":"tfrmtaxa.gridtaxa.columns[2].title.caption","sourcebytes":[114,97,110,107,95,105,100],"value":"rank_id"},
+{"hash":151093908,"name":"tfrmtaxa.gridtaxa.columns[1].title.caption","sourcebytes":[86,97,108,105,100,32,110,97,109,101,32,73,68],"value":"Valid name ID"},
+{"hash":142922884,"name":"tfrmtaxa.gridtaxa.columns[2].title.caption","sourcebytes":[82,97,110,107,32,73,68],"value":"Rank ID"},
 {"hash":94079128,"name":"tfrmtaxa.esearch.texthint","sourcebytes":[83,101,97,114,99,104],"value":"Search"},
 {"hash":54079704,"name":"tfrmtaxa.sbclearsearch.hint","sourcebytes":[67,108,101,97,114,32,115,101,97,114,99,104],"value":"Clear search"},
 {"hash":131136003,"name":"tfrmtaxa.sbsharerecords.hint","sourcebytes":[69,120,112,111,114,116,32,114,101,99,111,114,100,115],"value":"Export records"},

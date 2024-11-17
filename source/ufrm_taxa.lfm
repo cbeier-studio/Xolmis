@@ -27,13 +27,13 @@ object frmTaxa: TfrmTaxa
         FieldName = 'full_name'
       end    
       item
-        Title.Caption = 'valid_id'
+        Title.Caption = 'Valid name ID'
         Width = 0
         Visible = False
         FieldName = 'valid_id'
       end    
       item
-        Title.Caption = 'rank_id'
+        Title.Caption = 'Rank ID'
         Width = 0
         Visible = False
         FieldName = 'rank_id'
