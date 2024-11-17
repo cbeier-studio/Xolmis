@@ -21,8 +21,9 @@ unit udlg_newdatabase;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, DBCtrls, EditBtn,
-  atshapelinebgra, DCPblowfish, DCPsha256, DB, SQLDB;
+  Buttons, Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  StdCtrls, DBCtrls, EditBtn, atshapelinebgra, DCPblowfish, DCPsha256, DB,
+  SQLDB;
 
 type
 
@@ -30,6 +31,10 @@ type
 
   TdlgNewDatabase = class(TForm)
     BCrypt: TDCP_blowfish;
+    lblRequired: TLabel;
+    sbCreateDB: TBitBtn;
+    sbCreateUser: TBitBtn;
+    sbApplyAdmin: TBitBtn;
     eConfirmPass: TEditButton;
     eAuthor: TEdit;
     eDescription: TEdit;
@@ -44,10 +49,10 @@ type
     iButtonsDark: TImageList;
     lblAuthor: TLabel;
     lblDescription: TLabel;
-    lblUserInstruction: TLabel;
+    lblSubtitleUser: TLabel;
     lblUserConfirmPass: TLabel;
-    lblConnectionInstruction: TLabel;
-    lblAdminInstruction: TLabel;
+    lblSubtitleConnection: TLabel;
+    lblSubtitleAdmin: TLabel;
     lblDBFile: TLabel;
     lblUserName: TLabel;
     lblUserFullName: TLabel;
@@ -74,10 +79,7 @@ type
     pTitleAuthentication: TPanel;
     pTitleUser: TPanel;
     pTitleConnection: TPanel;
-    sbCreateUser: TButton;
     sbCancel: TButton;
-    sbCreateDB: TButton;
-    sbApplyAdmin: TButton;
     procedure eConfirmPassButtonClick(Sender: TObject);
     procedure eDBFileButtonClick(Sender: TObject);
     procedure eNameChange(Sender: TObject);

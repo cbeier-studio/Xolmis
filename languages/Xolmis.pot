@@ -4940,6 +4940,7 @@ msgid "Coordinates converter"
 msgstr ""
 
 #: cbs_locale.rstitlecreatedatabase
+msgctxt "cbs_locale.rstitlecreatedatabase"
 msgid "Create database"
 msgstr ""
 
@@ -6988,11 +6989,6 @@ msgctxt "tdlgnewdatabase.eusernewpass.buttonhint"
 msgid "Show/hide password"
 msgstr ""
 
-#: tdlgnewdatabase.lbladmininstruction.caption
-msgctxt "tdlgnewdatabase.lbladmininstruction.caption"
-msgid "Set a password for the Admin user. "
-msgstr ""
-
 #: tdlgnewdatabase.lblauthor.caption
 msgid "Author name:"
 msgstr ""
@@ -7000,11 +6996,6 @@ msgstr ""
 #: tdlgnewdatabase.lblconfirmpass.caption
 msgctxt "tdlgnewdatabase.lblconfirmpass.caption"
 msgid "Confirm password:"
-msgstr ""
-
-#: tdlgnewdatabase.lblconnectioninstruction.caption
-msgctxt "tdlgnewdatabase.lblconnectioninstruction.caption"
-msgid "Inform a name and a file name to create the new connection."
 msgstr ""
 
 #: tdlgnewdatabase.lbldbfile.caption
@@ -7026,6 +7017,24 @@ msgctxt "tdlgnewdatabase.lblnewpass.caption"
 msgid "New password:"
 msgstr ""
 
+#: tdlgnewdatabase.lblrequired.caption
+msgid "* required"
+msgstr ""
+
+#: tdlgnewdatabase.lblsubtitleadmin.caption
+msgctxt "tdlgnewdatabase.lblsubtitleadmin.caption"
+msgid "Set a password for the Admin user. "
+msgstr ""
+
+#: tdlgnewdatabase.lblsubtitleconnection.caption
+msgid "Inform a file name and metadata to create the new database."
+msgstr ""
+
+#: tdlgnewdatabase.lblsubtitleuser.caption
+msgctxt "tdlgnewdatabase.lblsubtitleuser.caption"
+msgid "Create your user to access the database. "
+msgstr ""
+
 #: tdlgnewdatabase.lbltitleauthentication.caption
 msgctxt "tdlgnewdatabase.lbltitleauthentication.caption"
 msgid "Admin password"
@@ -7037,6 +7046,7 @@ msgid "New database"
 msgstr ""
 
 #: tdlgnewdatabase.lbltitleuser.caption
+msgctxt "tdlgnewdatabase.lbltitleuser.caption"
 msgid "Create user"
 msgstr ""
 
@@ -7047,10 +7057,6 @@ msgstr ""
 #: tdlgnewdatabase.lbluserfullname.caption
 msgctxt "tdlgnewdatabase.lbluserfullname.caption"
 msgid "Full name:"
-msgstr ""
-
-#: tdlgnewdatabase.lbluserinstruction.caption
-msgid "Create your user to access the database. "
 msgstr ""
 
 #: tdlgnewdatabase.lblusername.caption
@@ -7078,12 +7084,12 @@ msgstr ""
 
 #: tdlgnewdatabase.sbcreatedb.caption
 msgctxt "tdlgnewdatabase.sbcreatedb.caption"
-msgid "Create"
+msgid "Create database"
 msgstr ""
 
 #: tdlgnewdatabase.sbcreateuser.caption
 msgctxt "tdlgnewdatabase.sbcreateuser.caption"
-msgid "Create"
+msgid "Create user"
 msgstr ""
 
 #: tdlgplantminer.caption

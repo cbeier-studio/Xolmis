@@ -4968,6 +4968,7 @@ msgid "Coordinates converter"
 msgstr "Conversor de coordenadas"
 
 #: cbs_locale.rstitlecreatedatabase
+msgctxt "cbs_locale.rstitlecreatedatabase"
 msgid "Create database"
 msgstr "Criar banco de dados"
 
@@ -7016,11 +7017,6 @@ msgctxt "tdlgnewdatabase.eusernewpass.buttonhint"
 msgid "Show/hide password"
 msgstr "Mostrar/ocultar senha"
 
-#: tdlgnewdatabase.lbladmininstruction.caption
-msgctxt "tdlgnewdatabase.lbladmininstruction.caption"
-msgid "Set a password for the Admin user. "
-msgstr "Defina uma senha para o usuário Admin."
-
 #: tdlgnewdatabase.lblauthor.caption
 msgid "Author name:"
 msgstr "Nome do autor:"
@@ -7029,11 +7025,6 @@ msgstr "Nome do autor:"
 msgctxt "tdlgnewdatabase.lblconfirmpass.caption"
 msgid "Confirm password:"
 msgstr "Confirmar senha:"
-
-#: tdlgnewdatabase.lblconnectioninstruction.caption
-msgctxt "tdlgnewdatabase.lblconnectioninstruction.caption"
-msgid "Inform a name and a file name to create the new connection."
-msgstr "Informe um nome e um nome de arquivo para criar a nova conexão."
 
 #: tdlgnewdatabase.lbldbfile.caption
 msgctxt "tdlgnewdatabase.lbldbfile.caption"
@@ -7054,6 +7045,24 @@ msgctxt "tdlgnewdatabase.lblnewpass.caption"
 msgid "New password:"
 msgstr "Nova senha:"
 
+#: tdlgnewdatabase.lblrequired.caption
+msgid "* required"
+msgstr "* obrigatório"
+
+#: tdlgnewdatabase.lblsubtitleadmin.caption
+msgctxt "tdlgnewdatabase.lblsubtitleadmin.caption"
+msgid "Set a password for the Admin user. "
+msgstr "Defina uma senha para o usuário Admin. "
+
+#: tdlgnewdatabase.lblsubtitleconnection.caption
+msgid "Inform a file name and metadata to create the new database."
+msgstr "Informe um arquivo e os metadados para criar um novo banco de dados."
+
+#: tdlgnewdatabase.lblsubtitleuser.caption
+msgctxt "tdlgnewdatabase.lblsubtitleuser.caption"
+msgid "Create your user to access the database. "
+msgstr "Crie seu usuário para acessar o banco de dados. "
+
 #: tdlgnewdatabase.lbltitleauthentication.caption
 msgctxt "tdlgnewdatabase.lbltitleauthentication.caption"
 msgid "Admin password"
@@ -7065,6 +7074,7 @@ msgid "New database"
 msgstr "Novo banco de dados"
 
 #: tdlgnewdatabase.lbltitleuser.caption
+msgctxt "tdlgnewdatabase.lbltitleuser.caption"
 msgid "Create user"
 msgstr "Criar usuário"
 
@@ -7076,10 +7086,6 @@ msgstr "Confirmar senha: *"
 msgctxt "tdlgnewdatabase.lbluserfullname.caption"
 msgid "Full name:"
 msgstr "Nome completo:"
-
-#: tdlgnewdatabase.lbluserinstruction.caption
-msgid "Create your user to access the database. "
-msgstr "Crie seu usuário para acessar o banco de dados."
 
 #: tdlgnewdatabase.lblusername.caption
 msgid "User name: *"
@@ -7106,13 +7112,13 @@ msgstr "Cancelar"
 
 #: tdlgnewdatabase.sbcreatedb.caption
 msgctxt "tdlgnewdatabase.sbcreatedb.caption"
-msgid "Create"
-msgstr "Criar"
+msgid "Create database"
+msgstr "Criar banco de dados"
 
 #: tdlgnewdatabase.sbcreateuser.caption
 msgctxt "tdlgnewdatabase.sbcreateuser.caption"
-msgid "Create"
-msgstr "Criar"
+msgid "Create user"
+msgstr "Criar usuário"
 
 #: tdlgplantminer.caption
 msgid "Checking botanic taxon"
