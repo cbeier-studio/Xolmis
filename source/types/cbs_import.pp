@@ -487,6 +487,7 @@ begin
       begin
         dlgProgress.Text := rsProgressFinishing;
         DMM.sqlTrans.CommitRetaining;
+        DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
         MsgDlg(rsTitleImportFile, rsSuccessfulImportEbird, mtInformation);
       end;
     except

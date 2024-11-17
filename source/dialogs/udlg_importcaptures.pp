@@ -97,7 +97,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_import, cbs_themes, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_import, cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -239,6 +239,7 @@ begin
   end
   else
   begin
+    DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;

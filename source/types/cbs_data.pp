@@ -518,6 +518,7 @@ begin
             DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = on;');
           end;
 
+          // Write metadata to the database
           dlgProgress.Text := rsProgressFinishing;
           dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
           WriteDatabaseMetadata('name', aName);
@@ -526,6 +527,8 @@ begin
           WriteDatabaseMetadata('version', IntToStr(SchemaVersion));
 
           DMM.sqlTrans.CommitRetaining;
+
+          // Optimize the database
           dlgProgress.Text := rsProgressOptimizingDatabase;
           DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
 

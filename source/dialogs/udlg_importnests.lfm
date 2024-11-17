@@ -10,6 +10,7 @@ object dlgImportNests: TdlgImportNests
   ClientWidth = 759
   Font.Height = -12
   Position = poMainFormCenter
+  LCLVersion = '4.0.0.1'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow

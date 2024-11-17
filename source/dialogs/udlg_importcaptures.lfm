@@ -9,10 +9,11 @@ object dlgImportCaptures: TdlgImportCaptures
   ClientHeight = 349
   ClientWidth = 759
   Font.Height = -12
+  Position = poMainFormCenter
+  LCLVersion = '4.0.0.1'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  Position = poMainFormCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -114,7 +115,7 @@ object dlgImportCaptures: TdlgImportCaptures
         end
         object pJournalFile: TBCPanel
           Left = 16
-          Height = 47
+          Height = 50
           Top = 83
           Width = 727
           Align = alTop
@@ -159,7 +160,7 @@ object dlgImportCaptures: TdlgImportCaptures
           TabOrder = 0
           object icoJournalFile: TImage
             Left = 16
-            Height = 23
+            Height = 26
             Top = 12
             Width = 27
             Align = alLeft
@@ -169,7 +170,7 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object lblJournalFile: TLabel
             Left = 51
-            Height = 23
+            Height = 26
             Top = 12
             Width = 65
             Align = alLeft
@@ -179,7 +180,7 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object eJournalFile: TFileNameEdit
             Left = 160
-            Height = 23
+            Height = 26
             Hint = 'Select file'
             Top = 12
             Width = 519
@@ -200,28 +201,28 @@ object dlgImportCaptures: TdlgImportCaptures
             ShowHint = True
             Spacing = 0
             TabOrder = 0
+            TextHint = 'Select a file...'
             OnButtonClick = eJournalFileButtonClick
             OnChange = eJournalFileChange
-            TextHint = 'Select a file...'
           end
           object sbClearJournalFile: TSpeedButton
             Left = 687
-            Height = 23
+            Height = 26
             Hint = 'Clear field'
             Top = 12
             Width = 24
             Align = alRight
             Images = iButtons
             ImageIndex = 1
-            OnClick = sbClearJournalFileClick
             ShowHint = True
             ParentShowHint = False
+            OnClick = sbClearJournalFileClick
           end
         end
         object pEffortFile: TBCPanel
           Left = 16
-          Height = 47
-          Top = 130
+          Height = 50
+          Top = 133
           Width = 727
           Align = alTop
           AutoSize = True
@@ -265,7 +266,7 @@ object dlgImportCaptures: TdlgImportCaptures
           TabOrder = 1
           object icoEffortFile: TImage
             Left = 16
-            Height = 23
+            Height = 26
             Top = 12
             Width = 27
             Align = alLeft
@@ -276,7 +277,7 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object lblEffortFile: TLabel
             Left = 51
-            Height = 23
+            Height = 26
             Top = 12
             Width = 62
             Align = alLeft
@@ -286,7 +287,7 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object eEffortFile: TFileNameEdit
             Left = 160
-            Height = 23
+            Height = 26
             Hint = 'Select file'
             Top = 12
             Width = 519
@@ -307,29 +308,29 @@ object dlgImportCaptures: TdlgImportCaptures
             ShowHint = True
             Spacing = 0
             TabOrder = 0
+            TextHint = 'Select a file...'
             OnButtonClick = eJournalFileButtonClick
             OnChange = eEffortFileChange
-            TextHint = 'Select a file...'
           end
           object sbClearEffortFile: TSpeedButton
             Tag = 1
             Left = 687
-            Height = 23
+            Height = 26
             Hint = 'Clear field'
             Top = 12
             Width = 24
             Align = alRight
             Images = iButtons
             ImageIndex = 1
-            OnClick = sbClearJournalFileClick
             ShowHint = True
             ParentShowHint = False
+            OnClick = sbClearJournalFileClick
           end
         end
         object pCaptureFile: TBCPanel
           Left = 16
-          Height = 47
-          Top = 177
+          Height = 50
+          Top = 183
           Width = 727
           Align = alTop
           AutoSize = True
@@ -374,7 +375,7 @@ object dlgImportCaptures: TdlgImportCaptures
           TabOrder = 2
           object icoCaptureFile: TImage
             Left = 16
-            Height = 23
+            Height = 26
             Top = 12
             Width = 27
             Align = alLeft
@@ -385,7 +386,7 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object lblCaptureFile: TLabel
             Left = 51
-            Height = 23
+            Height = 26
             Top = 12
             Width = 47
             Align = alLeft
@@ -395,7 +396,7 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object eCaptureFile: TFileNameEdit
             Left = 160
-            Height = 23
+            Height = 26
             Hint = 'Select file'
             Top = 12
             Width = 519
@@ -416,23 +417,23 @@ object dlgImportCaptures: TdlgImportCaptures
             ShowHint = True
             Spacing = 0
             TabOrder = 0
+            TextHint = 'Select a file...'
             OnButtonClick = eJournalFileButtonClick
             OnChange = eCaptureFileChange
-            TextHint = 'Select a file...'
           end
           object sbClearCaptureFile: TSpeedButton
             Tag = 2
             Left = 687
-            Height = 23
+            Height = 26
             Hint = 'Clear field'
             Top = 12
             Width = 24
             Align = alRight
             Images = iButtons
             ImageIndex = 1
-            OnClick = sbClearJournalFileClick
             ShowHint = True
             ParentShowHint = False
+            OnClick = sbClearJournalFileClick
           end
         end
         object lblSubtitleImportFiles: TLabel
@@ -697,8 +698,8 @@ object dlgImportCaptures: TdlgImportCaptures
             Caption = 'Try again'
             Images = iButtons
             ImageIndex = 2
-            OnClick = sbRetryClick
             TabOrder = 0
+            OnClick = sbRetryClick
           end
         end
       end

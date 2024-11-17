@@ -559,6 +559,7 @@ begin
     else
     begin
       DMM.sqlTrans.CommitRetaining;
+      DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
       lblTitleImportFinished.Caption := rsFinishedImporting;
       lblSubtitleImportFinished.Caption := rsSuccessfulImport;
       icoImportFinished.ImageIndex := 0;
@@ -594,6 +595,7 @@ begin
     else
     begin
       DMM.sqlTrans.CommitRetaining;
+      DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
       lblTitleImportFinished.Caption := rsFinishedImporting;
       lblSubtitleImportFinished.Caption := rsSuccessfulImport;
       icoImportFinished.ImageIndex := 0;
@@ -864,6 +866,7 @@ begin
   end
   else
   begin
+    DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
