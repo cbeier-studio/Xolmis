@@ -3189,6 +3189,11 @@ msgctxt "cbs_locale.rserrormontadata"
 msgid "Error in year digits (%d). Send this issue to the Support."
 msgstr ""
 
+#: cbs_locale.rserrorpopulatingtables
+#, object-pascal-format
+msgid "Error while populating the tables: %s"
+msgstr ""
+
 #: cbs_locale.rserrorreadingjsonfile
 #, object-pascal-format
 msgid "Error reading the JSON file: %s"
@@ -4241,6 +4246,10 @@ msgstr ""
 #: cbs_locale.rsprogressnewbandsbatch
 msgctxt "cbs_locale.rsprogressnewbandsbatch"
 msgid "Inserting new bands..."
+msgstr ""
+
+#: cbs_locale.rsprogresspopulatingtables
+msgid "Populating tables..."
 msgstr ""
 
 #: cbs_locale.rsprogresspreparing

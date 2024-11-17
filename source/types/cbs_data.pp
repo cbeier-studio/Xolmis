@@ -2522,7 +2522,7 @@ begin
         Qry.ParamByName('spanish_name').AsString := FieldByName('spanish_name').AsString;
         Qry.ParamByName('quick_code').AsString := FieldByName('quick_code').AsString;
         Qry.ParamByName('rank_id').AsInteger := FieldByName('rank_id').AsInteger;
-        Qry.ParamByName('parent_taxon_id').AsInteger := FieldByName('parent_taxon_id').AsInteger
+        Qry.ParamByName('parent_taxon_id').AsInteger := FieldByName('parent_taxon_id').AsInteger;
         Qry.ParamByName('valid_id').AsInteger := FieldByName('valid_id').AsInteger;
         Qry.ParamByName('iucn_status').AsString := FieldByName('iucn_status').AsString;
         Qry.ParamByName('extinct').AsBoolean := FieldByName('extinct').AsBoolean;
@@ -2566,7 +2566,7 @@ begin
       on E: Exception do
       begin
         DMM.sqlTrans.RollbackRetaining;
-        MsgDlg(rsTitleError, Format(rsError, [E.Message]), mtError);
+        MsgDlg(rsTitleError, Format(rsErrorPopulatingTables, [E.Message]), mtError);
       end;
     end;
   finally

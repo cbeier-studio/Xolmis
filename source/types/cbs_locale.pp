@@ -147,6 +147,7 @@ uses
       'Restoring a database backup is recommended.';
     rsErrorCreatingDatabaseSchema = 'Error while creating the database schema: %s';
     rsErrorUpgradingDatabaseSchema = 'Error while upgrading the database schema: %s';
+    rsErrorPopulatingTables = 'Error while populating the tables: %s';
     rsErrorBackupFailed = 'Backup file creation failed.';
     rsErrorBackupNotFound = 'Backup file not found: %s';
     rsErrorRestoreFailed = 'Backup restore failed.';
