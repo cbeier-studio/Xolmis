@@ -516,14 +516,14 @@ begin
       LoadDatabaseParams(SelectedConnection, DMM.sqlCon);
 
       // Create database if not exists
-      case ConexaoDB.Manager of
-        dbSqlite:
-          begin
-            if not (FileExists(ConexaoDB.Database)) then
-              if MessageDlg(rsCreateDatabasePrompt, mtConfirmation, mbYesNo, 0, mbYes) = mrYes then
-                CreateUserDatabase(ConexaoDB.Manager, ConexaoDB.Database)
-              else
-                dontConnect := True;
+      //case ConexaoDB.Manager of
+      //  dbSqlite:
+      //    begin
+      //      if not (FileExists(ConexaoDB.Database)) then
+      //        if MessageDlg(rsCreateDatabasePrompt, mtConfirmation, mbYesNo, 0, mbYes) = mrYes then
+      //          CreateUserDatabase(ConexaoDB.Manager, ConexaoDB.Database)
+      //        else
+      //          dontConnect := True;
 
             // If the last session was not terminated correctly
             //if (Finalizado = False) then
@@ -537,14 +537,14 @@ begin
             //DateCheck := GetPreference('DATABASE', 'LastBDCheck', DateOf(Now - 7));
             //if (Finalizado = True) and (Now - DateCheck > 7) then
             //  OptimizeDB;
-          end;
-        dbFirebird:
-          begin
-
-          end;
-        dbPostgre: ;
-        dbMaria: ;
-      end;
+      //    end;
+      //  dbFirebird:
+      //    begin
+      //
+      //    end;
+      //  dbPostgre: ;
+      //  dbMaria: ;
+      //end;
 
       if dontConnect then
         Exit;

@@ -31,6 +31,8 @@ type
   TdlgNewDatabase = class(TForm)
     BCrypt: TDCP_blowfish;
     eConfirmPass: TEditButton;
+    eAuthor: TEdit;
+    eDescription: TEdit;
     eUserConfirmPass: TEditButton;
     eDBFile: TEditButton;
     eName: TEdit;
@@ -40,6 +42,8 @@ type
     eUserNewPass: TEditButton;
     iButtons: TImageList;
     iButtonsDark: TImageList;
+    lblAuthor: TLabel;
+    lblDescription: TLabel;
     lblUserInstruction: TLabel;
     lblUserConfirmPass: TLabel;
     lblConnectionInstruction: TLabel;
@@ -285,7 +289,7 @@ begin
     Exit;
 
   if not FileExists(eDBFile.Text) then
-    CreateUserDatabase(dbSqlite, eDBFile.Text);
+    CreateUserDatabase(dbSqlite, eDBFile.Text, eName.Text, eAuthor.Text, eDescription.Text);
 
   if FileExists(eDBFile.Text) then
   begin

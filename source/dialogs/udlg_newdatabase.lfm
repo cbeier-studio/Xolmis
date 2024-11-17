@@ -1,12 +1,12 @@
 object dlgNewDatabase: TdlgNewDatabase
   Left = 362
-  Height = 283
+  Height = 383
   Top = 250
   Width = 390
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'New database'
-  ClientHeight = 283
+  ClientHeight = 383
   ClientWidth = 390
   PopupMode = pmAuto
   Position = poScreenCenter
@@ -16,7 +16,7 @@ object dlgNewDatabase: TdlgNewDatabase
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 240
+    Top = 340
     Width = 390
     Align = alTop
     LineColor = 9276813
@@ -25,7 +25,7 @@ object dlgNewDatabase: TdlgNewDatabase
   end
   object nbPages: TNotebook
     Left = 0
-    Height = 240
+    Height = 340
     Top = 0
     Width = 390
     PageIndex = 0
@@ -35,7 +35,7 @@ object dlgNewDatabase: TdlgNewDatabase
     object pgConnection: TPage
       object pContentConnection: TPanel
         Left = 0
-        Height = 240
+        Height = 340
         Top = 0
         Width = 390
         Align = alTop
@@ -43,7 +43,7 @@ object dlgNewDatabase: TdlgNewDatabase
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
-        ClientHeight = 240
+        ClientHeight = 340
         ClientWidth = 390
         Constraints.MinWidth = 390
         TabOrder = 0
@@ -92,6 +92,7 @@ object dlgNewDatabase: TdlgNewDatabase
           Width = 358
           Align = alTop
           BorderSpacing.Bottom = 8
+          MaxLength = 40
           TabOrder = 1
           OnChange = eNameChange
           OnKeyPress = eNameKeyPress
@@ -99,7 +100,7 @@ object dlgNewDatabase: TdlgNewDatabase
         object lblDBFile: TLabel
           Left = 16
           Height = 15
-          Top = 133
+          Top = 183
           Width = 358
           Align = alTop
           BorderSpacing.Bottom = 4
@@ -110,7 +111,7 @@ object dlgNewDatabase: TdlgNewDatabase
         object eDBFile: TEditButton
           Left = 16
           Height = 23
-          Top = 152
+          Top = 202
           Width = 358
           Align = alTop
           BorderSpacing.Bottom = 8
@@ -124,7 +125,7 @@ object dlgNewDatabase: TdlgNewDatabase
           PasswordChar = #0
           ShowHint = True
           Spacing = 0
-          TabOrder = 2
+          TabOrder = 3
           OnButtonClick = eDBFileButtonClick
           OnChange = eNameChange
           OnKeyPress = eNameKeyPress
@@ -141,7 +142,7 @@ object dlgNewDatabase: TdlgNewDatabase
         object pCreateDB: TPanel
           Left = 16
           Height = 41
-          Top = 183
+          Top = 283
           Width = 358
           Align = alTop
           BevelOuter = bvNone
@@ -150,7 +151,7 @@ object dlgNewDatabase: TdlgNewDatabase
           ClientHeight = 41
           ClientWidth = 358
           ParentBackground = False
-          TabOrder = 3
+          TabOrder = 5
           object sbCreateDB: TButton
             AnchorSideLeft.Control = pCreateDB
             AnchorSideLeft.Side = asrCenter
@@ -166,6 +167,52 @@ object dlgNewDatabase: TdlgNewDatabase
             OnClick = sbCreateDBClick
             OnKeyPress = FormKeyPress
           end
+        end
+        object eAuthor: TEdit
+          Left = 16
+          Height = 23
+          Top = 152
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          MaxLength = 40
+          TabOrder = 2
+          OnChange = eNameChange
+          OnKeyPress = eNameKeyPress
+        end
+        object lblAuthor: TLabel
+          Left = 16
+          Height = 15
+          Top = 133
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Author name:'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object eDescription: TEdit
+          Left = 16
+          Height = 23
+          Top = 252
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          MaxLength = 40
+          TabOrder = 4
+          OnChange = eNameChange
+          OnKeyPress = eNameKeyPress
+        end
+        object lblDescription: TLabel
+          Left = 16
+          Height = 15
+          Top = 233
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Database description:'
+          Layout = tlCenter
+          ParentColor = False
         end
       end
     end
@@ -487,6 +534,7 @@ object dlgNewDatabase: TdlgNewDatabase
           Width = 358
           Align = alTop
           BorderSpacing.Bottom = 8
+          MaxLength = 30
           TabOrder = 1
           OnChange = eUserNameChange
           OnKeyPress = eNameKeyPress
@@ -509,6 +557,7 @@ object dlgNewDatabase: TdlgNewDatabase
           Width = 358
           Align = alTop
           BorderSpacing.Bottom = 8
+          MaxLength = 60
           TabOrder = 2
           OnChange = eNameChange
           OnKeyPress = eNameKeyPress
@@ -519,7 +568,7 @@ object dlgNewDatabase: TdlgNewDatabase
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 242
+    Top = 342
     Width = 390
     Align = alTop
     AutoSize = True

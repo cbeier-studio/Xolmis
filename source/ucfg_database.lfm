@@ -1129,7 +1129,7 @@ object cfgDatabase: TcfgDatabase
       OnClick = pmNewDatabaseClick
     end
     object pmNewConnection: TMenuItem
-      Caption = 'New connection'
+      Caption = 'Add connection'
       OnClick = pmNewConnectionClick
     end
   end

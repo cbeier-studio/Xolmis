@@ -142,10 +142,13 @@ begin
     dsConn.DataSet.FieldByName('database_type').AsInteger := 0;
     if ShowModal = mrOk then
     begin
-      dsConn.DataSet.Post;
       if not FileExists(dsConn.DataSet.FieldByName('database_name').AsString) then
-        if MsgDlg(rsTitleCreateDatabase, rsCreateDatabasePrompt, mtConfirmation) then
-          CreateUserDatabase(dbSqlite, dsConn.DataSet.FieldByName('database_name').AsString);
+      begin
+        MsgDlg(rsTitleCreateDatabase, rsUseNewDatabaseOption, mtWarning);
+        dsConn.DataSet.Cancel;
+      end
+      else
+        dsConn.DataSet.Post;
     end
     else
       dsConn.DataSet.Cancel;

@@ -4248,6 +4248,10 @@ msgctxt "cbs_locale.rsprogressnewbandsbatch"
 msgid "Inserting new bands..."
 msgstr ""
 
+#: cbs_locale.rsprogressoptimizingdatabase
+msgid "Optimizing database..."
+msgstr ""
+
 #: cbs_locale.rsprogresspopulatingtables
 msgid "Populating tables..."
 msgstr ""
@@ -5244,6 +5248,10 @@ msgid ""
 "Do you want to update it?"
 msgstr ""
 
+#: cbs_locale.rsusenewdatabaseoption
+msgid "The database file was not found. Use the New database option."
+msgstr ""
+
 #: cbs_locale.rsusernumberandtotal
 #, object-pascal-format
 msgctxt "cbs_locale.rsusernumberandtotal"
@@ -5577,7 +5585,7 @@ msgstr ""
 
 #: tcfgdatabase.pmnewconnection.caption
 msgctxt "tcfgdatabase.pmnewconnection.caption"
-msgid "New connection"
+msgid "Add connection"
 msgstr ""
 
 #: tcfgdatabase.pmnewdatabase.caption
@@ -6987,6 +6995,10 @@ msgctxt "tdlgnewdatabase.lbladmininstruction.caption"
 msgid "Set a password for the Admin user. "
 msgstr ""
 
+#: tdlgnewdatabase.lblauthor.caption
+msgid "Author name:"
+msgstr ""
+
 #: tdlgnewdatabase.lblconfirmpass.caption
 msgctxt "tdlgnewdatabase.lblconfirmpass.caption"
 msgid "Confirm password:"
@@ -7000,6 +7012,10 @@ msgstr ""
 #: tdlgnewdatabase.lbldbfile.caption
 msgctxt "tdlgnewdatabase.lbldbfile.caption"
 msgid "Database file: *"
+msgstr ""
+
+#: tdlgnewdatabase.lbldescription.caption
+msgid "Database description:"
 msgstr ""
 
 #: tdlgnewdatabase.lblname.caption

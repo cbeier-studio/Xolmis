@@ -41,7 +41,7 @@ const
   procedure CreateUsageDataTable;
 
   { User database }
-  function CreateUserDatabase(aProtocol: TDBManager; aFilename: String): Boolean;
+  function CreateUserDatabase(aProtocol: TDBManager; aFilename, aName, aAuthor, aDescription: String): Boolean;
   function UpgradeDatabaseSchema(aProtocol: TDBManager): Boolean;
   function ReadDatabaseMetadata(aKey: String): String;
   procedure WriteDatabaseMetadata(aKey, aValue: String);
@@ -94,7 +94,7 @@ const
   procedure CreateBandsRunningOutView;
   procedure CreateAvgExpeditionDurationView;
 
-  procedure PopulateZooTaxaTable;
+  procedure PopulateZooTaxaTable(var aProgressBar: TProgressBar);
 
   { Database information and management }
   function GetTableType(aTableName: String): TTableType;
@@ -285,7 +285,7 @@ end;
 // Do not forget to update the Create...Table/View procedures
 // the SchemaVersion constant and the UpgradeDatabaseSchema function
 // when the database schema change
-function CreateUserDatabase(aProtocol: TDBManager; aFilename: String): Boolean;
+function CreateUserDatabase(aProtocol: TDBManager; aFilename, aName, aAuthor, aDescription: String): Boolean;
 begin
   Result := False;
   if DMM.sqlCon.Connected then
@@ -512,16 +512,23 @@ begin
             dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
             DMM.scriptUserDBInit.ExecuteScript;
 
-            PopulateZooTaxaTable;
+            PopulateZooTaxaTable(dlgProgress.PBar);
 
           finally
             DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = on;');
           end;
 
           dlgProgress.Text := rsProgressFinishing;
+          dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
+          WriteDatabaseMetadata('name', aName);
+          WriteDatabaseMetadata('author', aAuthor);
+          WriteDatabaseMetadata('description', aDescription);
           WriteDatabaseMetadata('version', IntToStr(SchemaVersion));
 
           DMM.sqlTrans.CommitRetaining;
+          dlgProgress.Text := rsProgressOptimizingDatabase;
+          DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+
           MsgDlg(rsTitleInformation, rsSuccessfulDatabaseCreation, mtInformation);
           LogInfo(Format('User database succesfully created (SQLite): %s', [aFileName]));
           Result := True;
@@ -2409,7 +2416,7 @@ begin
     'FROM consecutivo;');
 end;
 
-procedure PopulateZooTaxaTable;
+procedure PopulateZooTaxaTable(var aProgressBar: TProgressBar);
 var
   Qry: TSQLQuery;
 begin
@@ -2420,6 +2427,9 @@ begin
     FileName := ConcatPaths([AppDataDir, 'zoo_taxa_init.csv']);
     CodePage := 'Windows-1252';
     Open;
+    aProgressBar.Position := 0;
+    aProgressBar.Style := TProgressBarStyle.pbstNormal;
+    aProgressBar.Max := RecordCount;
 
     Qry := TSQLQuery.Create(nil);
     Qry.SQLConnection := DMM.sqlCon;
@@ -2557,6 +2567,7 @@ begin
         Qry.ParamByName('ioc_distribution').AsString := FieldByName('ioc_distribution').AsString;
 
         Qry.ExecSQL;
+        aProgressBar.Position := RecNo;
 
         Next;
       end;

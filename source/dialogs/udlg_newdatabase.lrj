@@ -6,6 +6,8 @@
 {"hash":171904661,"name":"tdlgnewdatabase.edbfile.buttonhint","sourcebytes":[83,101,108,101,99,116,32,102,105,108,101],"value":"Select file"},
 {"hash":77422846,"name":"tdlgnewdatabase.lblconnectioninstruction.caption","sourcebytes":[73,110,102,111,114,109,32,97,32,110,97,109,101,32,97,110,100,32,97,32,102,105,108,101,32,110,97,109,101,32,116,111,32,99,114,101,97,116,101,32,116,104,101,32,110,101,119,32,99,111,110,110,101,99,116,105,111,110,46],"value":"Inform a name and a file name to create the new connection."},
 {"hash":78166181,"name":"tdlgnewdatabase.sbcreatedb.caption","sourcebytes":[67,114,101,97,116,101],"value":"Create"},
+{"hash":16313578,"name":"tdlgnewdatabase.lblauthor.caption","sourcebytes":[65,117,116,104,111,114,32,110,97,109,101,58],"value":"Author name:"},
+{"hash":212778394,"name":"tdlgnewdatabase.lbldescription.caption","sourcebytes":[68,97,116,97,98,97,115,101,32,100,101,115,99,114,105,112,116,105,111,110,58],"value":"Database description:"},
 {"hash":65725844,"name":"tdlgnewdatabase.lbltitleauthentication.caption","sourcebytes":[65,100,109,105,110,32,112,97,115,115,119,111,114,100],"value":"Admin password"},
 {"hash":63953844,"name":"tdlgnewdatabase.enewpass.buttonhint","sourcebytes":[83,104,111,119,47,104,105,100,101,32,112,97,115,115,119,111,114,100],"value":"Show/hide password"},
 {"hash":241508010,"name":"tdlgnewdatabase.lblnewpass.caption","sourcebytes":[78,101,119,32,112,97,115,115,119,111,114,100,58],"value":"New password:"},

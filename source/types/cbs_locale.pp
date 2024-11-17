@@ -182,6 +182,7 @@ uses
     rsProgressCreatingTable = 'Creating table: %s (%d/%d)';
     rsProgressCreatingView = 'Creating view: %s (%d/%d)';
     rsProgressPopulatingTables = 'Populating tables...';
+    rsProgressOptimizingDatabase = 'Optimizing database...';
 
     { Success messages }
     rsSuccessfulUpdate = '%s was updated successfully!';
@@ -280,6 +281,7 @@ uses
     rsCancelEditingPrompt = 'There are unsaved changes.' + LineEnding +
       'Do you really want to discard it?';
     rsModificationsNotSaved = 'Changes not saved';
+    rsUseNewDatabaseOption = 'The database file was not found. Use the New database option.';
 
     { Print messages }
     rsPrintRecordsTitle = 'Print records';
