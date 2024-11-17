@@ -60,7 +60,7 @@ type
     tbRecordHistory,
     tbRecordVerifications,
     tbGazetteer,
-    tbNetStations,
+    tbSamplingPlots,
     tbPermanentNets,
     tbInstitutions,
     tbPeople,
@@ -98,14 +98,14 @@ type
 
 const
   TableAliases: array [TTableType] of String = ('',
-    'u','rh','rv','g','ns','pn','it','p','pj','pt','l','r','z','bt','b','bh','i','c','m',
-    'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','snd','doc', 'veg');
+    'u','rh','rv','g','pl','pn','it','p','pj','pt','l','r','z','bt','b','bh','i','c','m',
+    'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','snd','doc','veg');
   TableNames: array [TTableType] of String = ('',
     'users',
     'record_history',
     'record_verifications',
     'gazetteer',
-    'net_stations',
+    'sampling_plots',
     'permanent_nets',
     'institutions',
     'people',
@@ -411,7 +411,7 @@ begin
   //tbRecordHistory,
   //tbRecordVerifications,
   TablesDict.Add(rsTitleGazetteer, tbGazetteer);
-  TablesDict.Add(rsTitleSamplingPlots, tbNetStations);
+  TablesDict.Add(rsTitleSamplingPlots, tbSamplingPlots);
   TablesDict.Add(rsTitlePermanentNets, tbPermanentNets);
   TablesDict.Add(rsTitleInstitutions, tbInstitutions);
   TablesDict.Add(rsTitleResearchers, tbPeople);

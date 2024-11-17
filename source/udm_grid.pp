@@ -41,7 +41,7 @@ type
     dsNestRevisions: TDataSource;
     dsEggs: TDataSource;
     dsGazetteer: TDataSource;
-    dsNetStations: TDataSource;
+    dsSamplingPlots: TDataSource;
     dsPermanentNets: TDataSource;
     dsProjects: TDataSource;
     dsProjectTeam: TDataSource;
@@ -627,6 +627,12 @@ type
     qSampleCollectorsuser_inserted: TLongintField;
     qSampleCollectorsuser_updated: TLongintField;
     qSamplePrepspreparer_name: TStringField;
+    qSamplingPlotsacronym: TStringField;
+    qSamplingPlotscountry_name: TStringField;
+    qSamplingPlotsfull_name: TStringField;
+    qSamplingPlotsmunicipality_name: TStringField;
+    qSamplingPlotssampling_plot_id: TLongintField;
+    qSamplingPlotsstate_name: TStringField;
     qSightingsindividual_name: TStringField;
     qSightingslocality_name: TStringField;
     qSightingsmethod_name: TStringField;
@@ -735,26 +741,23 @@ type
     qNetsEffortupdate_date: TDateTimeField;
     qNetsEffortuser_inserted: TLongintField;
     qNetsEffortuser_updated: TLongintField;
-    qNetStationsactive_status: TBooleanField;
-    qNetStationsarea_shape: TStringField;
-    qNetStationscountry_id: TLongintField;
-    qNetStationsdescription: TMemoField;
-    qNetStationsexported_status: TBooleanField;
-    qNetStationsinsert_date: TDateTimeField;
-    qNetStationslatitude: TFloatField;
-    qNetStationslocality_id: TLongintField;
-    qNetStationslocality_name: TStringField;
-    qNetStationslongitude: TFloatField;
-    qNetStationsmarked_status: TBooleanField;
-    qNetStationsmunicipality_id: TLongintField;
-    qNetStationsnet_station_id: TAutoIncField;
-    qNetStationsnotes: TMemoField;
-    qNetStationsstate_id: TLongintField;
-    qNetStationsstation_acronym: TStringField;
-    qNetStationsstation_name: TStringField;
-    qNetStationsupdate_date: TDateTimeField;
-    qNetStationsuser_inserted: TLongintField;
-    qNetStationsuser_updated: TLongintField;
+    qSamplingPlotsactive_status: TBooleanField;
+    qSamplingPlotsarea_shape: TStringField;
+    qSamplingPlotscountry_id: TLongintField;
+    qSamplingPlotsdescription: TMemoField;
+    qSamplingPlotsexported_status: TBooleanField;
+    qSamplingPlotsinsert_date: TDateTimeField;
+    qSamplingPlotslatitude: TFloatField;
+    qSamplingPlotslocality_id: TLongintField;
+    qSamplingPlotslocality_name: TStringField;
+    qSamplingPlotslongitude: TFloatField;
+    qSamplingPlotsmarked_status: TBooleanField;
+    qSamplingPlotsmunicipality_id: TLongintField;
+    qSamplingPlotsnotes: TMemoField;
+    qSamplingPlotsstate_id: TLongintField;
+    qSamplingPlotsupdate_date: TDateTimeField;
+    qSamplingPlotsuser_inserted: TLongintField;
+    qSamplingPlotsuser_updated: TLongintField;
     qPeopleacronym: TStringField;
     qPeopleactive_status: TBooleanField;
     qPeopleaddress_1: TStringField;
@@ -1020,7 +1023,7 @@ type
     qNestRevisions: TSQLQuery;
     qEggs: TSQLQuery;
     qGazetteer: TSQLQuery;
-    qNetStations: TSQLQuery;
+    qSamplingPlots: TSQLQuery;
     qPermanentNets: TSQLQuery;
     qProjects: TSQLQuery;
     qProjectTeam: TSQLQuery;
@@ -1254,10 +1257,10 @@ type
     procedure qNestsnest_shapeSetText(Sender: TField; const aText: string);
     procedure qNestssupport_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qNestssupport_typeSetText(Sender: TField; const aText: string);
-    procedure qNetStationsAfterCancel(DataSet: TDataSet);
-    procedure qNetStationsAfterPost(DataSet: TDataSet);
-    procedure qNetStationsBeforeEdit(DataSet: TDataSet);
-    procedure qNetStationsBeforePost(DataSet: TDataSet);
+    procedure qSamplingPlotsAfterCancel(DataSet: TDataSet);
+    procedure qSamplingPlotsAfterPost(DataSet: TDataSet);
+    procedure qSamplingPlotsBeforeEdit(DataSet: TDataSet);
+    procedure qSamplingPlotsBeforePost(DataSet: TDataSet);
     procedure qPeopleAfterCancel(DataSet: TDataSet);
     procedure qPeopleAfterInsert(DataSet: TDataSet);
     procedure qPeopleAfterPost(DataSet: TDataSet);
@@ -1324,7 +1327,7 @@ type
   private
     UID: TGUID;
     OldSite: TSite;
-    OldNetStation: TNetStation;
+    OldNetStation: TSamplingPlot;
     OldPermanentNet: TPermanentNet;
     OldPerson: TPerson;
     OldInstitution: TInstitution;
@@ -1422,7 +1425,7 @@ begin
   TranslateProjectTeams(qProjectTeam);
   TranslatePermits(qPermits);
   TranslateGazetteer(qGazetteer);
-  TranslateSamplingPlots(qNetStations);
+  TranslateSamplingPlots(qSamplingPlots);
   TranslatePermanentNets(qPermanentNets);
   TranslateExpeditions(qExpeditions);
   TranslateSurveys(qSurveys);
@@ -3387,29 +3390,29 @@ begin
     Sender.AsString := 'O';
 end;
 
-procedure TDMG.qNetStationsAfterCancel(DataSet: TDataSet);
+procedure TDMG.qSamplingPlotsAfterCancel(DataSet: TDataSet);
 begin
   if Assigned(OldNetStation) then
     FreeAndNil(OldNetStation);
 end;
 
-procedure TDMG.qNetStationsAfterPost(DataSet: TDataSet);
+procedure TDMG.qSamplingPlotsAfterPost(DataSet: TDataSet);
 var
-  NewNetStation: TNetStation;
+  NewNetStation: TSamplingPlot;
   lstDiff: TStrings;
   D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldNetStation) then
   begin
-    NewNetStation := TNetStation.Create;
+    NewNetStation := TSamplingPlot.Create;
     NewNetStation.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewNetStation.Diff(OldNetStation, lstDiff) then
       begin
         for D in lstDiff do
-          WriteRecHistory(tbNetStations, haEdited, OldNetStation.Id,
+          WriteRecHistory(tbSamplingPlots, haEdited, OldNetStation.Id,
             ExtractDelimited(1, D, [';']),
             ExtractDelimited(2, D, [';']),
             ExtractDelimited(3, D, [';']), EditSourceStr);
@@ -3421,15 +3424,15 @@ begin
     end;
   end
   else
-    WriteRecHistory(tbNetStations, haCreated, 0, '', '', '', rsInsertedByForm);
+    WriteRecHistory(tbSamplingPlots, haCreated, 0, '', '', '', rsInsertedByForm);
 end;
 
-procedure TDMG.qNetStationsBeforeEdit(DataSet: TDataSet);
+procedure TDMG.qSamplingPlotsBeforeEdit(DataSet: TDataSet);
 begin
-  OldNetStation := TNetStation.Create(DataSet.FieldByName('net_station_id').AsInteger);
+  OldNetStation := TSamplingPlot.Create(DataSet.FieldByName('net_station_id').AsInteger);
 end;
 
-procedure TDMG.qNetStationsBeforePost(DataSet: TDataSet);
+procedure TDMG.qSamplingPlotsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
 

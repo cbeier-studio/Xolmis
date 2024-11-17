@@ -1132,7 +1132,7 @@ type
     procedure ClearMoltFilters;
     procedure ClearNestFilters;
     procedure ClearNestRevisionFilters;
-    procedure ClearNetStationFilters;
+    procedure ClearSamplingPlotFilters;
     procedure ClearPeopleFilters;
     procedure ClearPermitFilters;
     procedure ClearProjectFilters;
@@ -1159,7 +1159,7 @@ type
     procedure GetMoltFilters;
     procedure GetNestFilters;
     procedure GetNestRevisionFilters;
-    procedure GetNetStationFilters;
+    procedure GetSamplingPlotFilters;
     procedure GetPeopleFilters;
     procedure GetPermitFilters;
     procedure GetProjectFilters;
@@ -1219,7 +1219,7 @@ type
     procedure SetColumnsNestOwners(var aGrid: TDBGrid);
     procedure SetColumnsNestRevisions(var aGrid: TDBGrid);
     procedure SetColumnsNests(var aGrid: TDBGrid);
-    procedure SetColumnsNetStations(var aGrid: TDBGrid);
+    procedure SetColumnsSamplingPlots(var aGrid: TDBGrid);
     procedure SetColumnsPeople(var aGrid: TDBGrid);
     procedure SetColumnsPermanentNets(var aGrid: TDBGrid);
     procedure SetColumnsPermits(var aGrid: TDBGrid);
@@ -1244,7 +1244,7 @@ type
     procedure SetGridNestRevisions;
     procedure SetGridNests;
     procedure SetGridExpeditions;
-    procedure SetGridNetStations;
+    procedure SetGridSamplingPlots;
     procedure SetGridPeople;
     procedure SetGridPermits;
     procedure SetGridProjects;
@@ -1274,7 +1274,7 @@ type
     function SearchMolts(aValue: String): Boolean;
     function SearchNestRevisions(aValue: String): Boolean;
     function SearchNests(aValue: String): Boolean;
-    function SearchNetStations(aValue: String): Boolean;
+    function SearchSamplingPlots(aValue: String): Boolean;
     function SearchPeople(aValue: String): Boolean;
     function SearchPermits(aValue: String): Boolean;
     function SearchProjects(aValue: String): Boolean;
@@ -1308,7 +1308,7 @@ type
     procedure UpdateFilterPanelsMolts;
     procedure UpdateFilterPanelsNestRevisions;
     procedure UpdateFilterPanelsNests;
-    procedure UpdateFilterPanelsNetStations;
+    procedure UpdateFilterPanelsSamplingPlots;
     procedure UpdateFilterPanelsPeople;
     procedure UpdateFilterPanelsPermits;
     procedure UpdateFilterPanelsProjects;
@@ -1931,7 +1931,7 @@ begin
         FindDlg(tbSurveys, InplaceEditor, DataSource.DataSet, 'survey_id', 'survey_name', False, Key);
 
       if FieldName = 'net_station_name' then
-        FindDlg(tbNetStations, InplaceEditor, DataSource.DataSet, 'net_station_id', 'net_station_name', False, Key);
+        FindDlg(tbSamplingPlots, InplaceEditor, DataSource.DataSet, 'net_station_id', 'net_station_name', False, Key);
 
       if FieldName = 'observer_name' then
         FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_id', 'observer_name', False, Key);
@@ -2462,7 +2462,7 @@ begin
   rbPhilornisAll.Checked := True;
 end;
 
-procedure TfrmCustomGrid.ClearNetStationFilters;
+procedure TfrmCustomGrid.ClearSamplingPlotFilters;
 begin
   lblCountSiteFilter.Caption := rsNoneSelected;
   tvSiteFilter.ClearChecked;
@@ -2512,7 +2512,7 @@ begin
     tbNests:         ClearNestFilters;
     tbNestRevisions: ClearNestRevisionFilters;
     tbEggs:          ClearEggFilters;
-    tbNetStations:   ClearNetStationFilters;
+    tbSamplingPlots:   ClearSamplingPlotFilters;
     tbTaxonRanks:    ClearTaxonRankFilters;
     tbZooTaxa:       ClearZooTaxaFilters;
     tbProjects:      ClearProjectFilters;
@@ -2714,7 +2714,7 @@ begin
       FindDlg(tbSurveys, InplaceEditor, DataSource.DataSet, 'survey_id', 'survey_name');
 
     if FieldName = 'net_station_name' then
-      FindDlg(tbNetStations, InplaceEditor, DataSource.DataSet, 'net_station_id', 'net_station_name');
+      FindDlg(tbSamplingPlots, InplaceEditor, DataSource.DataSet, 'net_station_id', 'net_station_name');
 
     if FieldName = 'observer_name' then
       FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_id', 'observer_name');
@@ -2908,7 +2908,7 @@ begin
           FindDlg(tbSurveys, InplaceEditor, DataSource.DataSet, 'survey_id', 'survey_name', False, Key);
 
         if FieldName = 'net_station_name' then
-          FindDlg(tbNetStations, InplaceEditor, DataSource.DataSet, 'net_station_id', 'net_station_name', False, Key);
+          FindDlg(tbSamplingPlots, InplaceEditor, DataSource.DataSet, 'net_station_id', 'net_station_name', False, Key);
 
         if FieldName = 'observer_name' then
           FindDlg(tbPeople, InplaceEditor, DataSource.DataSet, 'observer_id', 'observer_name', False, Key);
@@ -3279,7 +3279,7 @@ begin
         if Sender = gridChild1 then
           aTable := tbSamplePreps;
       end;
-      tbNetStations:
+      tbSamplingPlots:
       begin
         if Sender = gridChild1 then
           aTable := tbPermanentNets;
@@ -3316,7 +3316,7 @@ begin
     //tbUsers: ;
     //tbRecordHistory: ;
     tbGazetteer: ;
-    tbNetStations: ;
+    tbSamplingPlots: ;
     tbProjectTeams: ;
     tbTaxonRanks: ;
     tbZooTaxa: ;
@@ -4211,7 +4211,7 @@ begin
   if not FCanToggle then
     Exit;
 
-  FindDlg(tbNetStations, eSamplingPlotFilter, FSamplingPlotKeyFilter);
+  FindDlg(tbSamplingPlots, eSamplingPlotFilter, FSamplingPlotKeyFilter);
 end;
 
 procedure TfrmCustomGrid.eSamplingPlotFilterKeyPress(Sender: TObject; var Key: char);
@@ -4224,7 +4224,7 @@ begin
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbNetStations, eSamplingPlotFilter, FSamplingPlotKeyFilter, Key);
+    FindDlg(tbSamplingPlots, eSamplingPlotFilter, FSamplingPlotKeyFilter, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
@@ -4459,7 +4459,7 @@ begin
       tbExpeditions:  OpenExpeditionChilds;
       tbSurveys:      OpenSurveyChilds;
       tbSpecimens:    OpenSpecimenChilds;
-      tbNetStations:  OpenSamplingPlotChilds;
+      tbSamplingPlots:  OpenSamplingPlotChilds;
       tbProjects:     OpenProjectChilds;
     end;
     //SetGridColumns(FChildTable, dbgChild);
@@ -4820,7 +4820,7 @@ begin
   Result := nil;
 
   case FTableType of
-    tbNetStations:
+    tbSamplingPlots:
       case nbChilds.PageIndex of
         0: Result := dsLink1.DataSet;
       end;
@@ -5019,7 +5019,7 @@ begin
     tbNests:         GetNestFilters;
     tbNestRevisions: GetNestRevisionFilters;
     tbEggs:          GetEggFilters;
-    tbNetStations:   GetNetStationFilters;
+    tbSamplingPlots:   GetSamplingPlotFilters;
     tbTaxonRanks:    GetTaxonRankFilters;
     tbZooTaxa:       GetZooTaxaFilters;
     tbProjects:      GetProjectFilters;
@@ -5304,7 +5304,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.GetNetStationFilters;
+procedure TfrmCustomGrid.GetSamplingPlotFilters;
 begin
   SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
 end;
@@ -6007,7 +6007,7 @@ begin
         end;
         1: FChildTable := tbSamplePreps;
       end;
-    tbNetStations:
+    tbSamplingPlots:
       case nbChilds.PageIndex of
         0: FChildTable := tbPermanentNets;
       end;
@@ -7648,7 +7648,7 @@ begin
 
   case FTableType of
     tbGazetteer,
-    tbNetStations,
+    tbSamplingPlots,
     tbCaptures,
     tbNests,
     tbSightings,
@@ -7938,7 +7938,7 @@ begin
       //tbUsers: ;
       //tbRecordHistory: ;
       //tbGazetteer: ;
-      tbNetStations:
+      tbSamplingPlots:
         case nbChilds.PageIndex of
           0: DeleteRecord(tbPermanentNets, DMG.qPermanentNets);
         end;
@@ -8086,7 +8086,7 @@ begin
       //tbUsers: ;
       //tbRecordHistory: ;
       //tbGazetteer: ;
-      tbNetStations:
+      tbSamplingPlots:
         case nbChilds.PageIndex of
           0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('net_station_id').AsInteger);
         end;
@@ -8161,7 +8161,7 @@ begin
       //tbUsers: ;
       //tbRecordHistory: ;
       tbGazetteer:     EditSite(dsLink.DataSet);
-      tbNetStations:   EditNetStation(dsLink.DataSet);
+      tbSamplingPlots:   EditSamplingPlot(dsLink.DataSet);
       //tbPermanentNets: ;
       tbInstitutions:  EditInstitution(dsLink.DataSet);
       tbPeople:        EditPerson(dsLink.DataSet);
@@ -8246,7 +8246,7 @@ begin
       //tbUsers: ;
       //tbRecordHistory: ;
       tbGazetteer:     EditSite(dsLink.DataSet, True);
-      tbNetStations:   EditNetStation(dsLink.DataSet, True);
+      tbSamplingPlots:   EditSamplingPlot(dsLink.DataSet, True);
       //tbPermanentNets: ;
       tbInstitutions:  EditInstitution(dsLink.DataSet, True);
       tbPeople:        EditPerson(dsLink.DataSet, True);
@@ -8631,7 +8631,7 @@ begin
     tbNests:         Result := SearchNests(aValue);
     tbNestRevisions: Result := SearchNestRevisions(aValue);
     tbEggs:          Result := SearchEggs(aValue);
-    tbNetStations:   Result := SearchNetStations(aValue);
+    tbSamplingPlots:   Result := SearchSamplingPlots(aValue);
     tbTaxonRanks:    Result := SearchTaxonRanks(aValue);
     tbZooTaxa:       Result := SearchZooTaxa(aValue);
     tbProjects:      Result := SearchProjects(aValue);
@@ -9442,7 +9442,7 @@ begin
   Result := FSearch.RunSearch > 0;
 end;
 
-function TfrmCustomGrid.SearchNetStations(aValue: String): Boolean;
+function TfrmCustomGrid.SearchSamplingPlots(aValue: String): Boolean;
 var
   i, g: Integer;
   f: Extended;
@@ -10053,7 +10053,7 @@ begin
       //tbRecordHistory: ;
       //tbRecordVerifications: ;
       //tbGazetteer: ;
-      //tbNetStations: ;
+      //tbSamplingPlots: ;
       //tbPermanentNets: ;
       //tbInstitutions: ;
       //tbPeople: ;
@@ -10478,7 +10478,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.SetColumnsNetStations(var aGrid: TDBGrid);
+procedure TfrmCustomGrid.SetColumnsSamplingPlots(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
@@ -10725,7 +10725,7 @@ begin
       //tbRecordHistory: ;
       //tbRecordVerifications: ;
       //tbGazetteer: ;
-      tbNetStations:    Add('WHERE (active_status = 1) AND (net_station_id = :net_station_id)');
+      tbSamplingPlots:    Add('WHERE (active_status = 1) AND (net_station_id = :net_station_id)');
       //tbPermanentNets: ;
       //tbInstitutions: ;
       tbPeople:         Add('WHERE (active_status = 1) AND (person_id = :person_id)');
@@ -10759,7 +10759,7 @@ begin
     end;
   end;
 
-  if FTableType in [tbIndividuals, tbSightings, tbSpecimens, tbNetStations, tbPeople, tbProjects, tbPermits,
+  if FTableType in [tbIndividuals, tbSightings, tbSpecimens, tbSamplingPlots, tbPeople, tbProjects, tbPermits,
     tbCaptures, tbNests, tbMethods, tbExpeditions, tbSurveys] then
   begin
     qDocs.SQL.Add('ORDER BY document_date, document_time ASC');
@@ -10789,7 +10789,7 @@ begin
     tbProjects:       SetGridProjects;
     tbPermits:        SetGridPermits;
     tbGazetteer:      SetGridGazetteer;
-    tbNetStations:    SetGridNetStations;
+    tbSamplingPlots:    SetGridSamplingPlots;
     tbTaxonRanks:     SetGridTaxonRanks;
     tbBotanicTaxa:    SetGridBotanicTaxa;
     tbZooTaxa: ;
@@ -10875,7 +10875,7 @@ begin
     tbProjects:       SetColumnsProjects(aGrid);
     tbPermits:        SetColumnsPermits(aGrid);
     tbGazetteer:      SetColumnsGazetteer(aGrid);
-    tbNetStations:    SetColumnsNetStations(aGrid);
+    tbSamplingPlots:    SetColumnsSamplingPlots(aGrid);
     tbPermanentNets:  SetColumnsPermanentNets(aGrid);
     tbTaxonRanks:     SetColumnsTaxonRanks(aGrid);
     tbBotanicTaxa:    SetColumnsBotanicTaxa(aGrid);
@@ -11098,10 +11098,10 @@ begin
   //sbShowDocs.Visible := True;
 end;
 
-procedure TfrmCustomGrid.SetGridNetStations;
+procedure TfrmCustomGrid.SetGridSamplingPlots;
 begin
   Caption := rsTitleSamplingPlots;
-  FSearch.DataSet := DMG.qNetStations;
+  FSearch.DataSet := DMG.qSamplingPlots;
   AddSortedField('station_name', sdAscending);
 
   lblChildTag1.Caption := rsTitlePermanentNets;
@@ -11296,7 +11296,7 @@ begin
       //tbRecordHistory: ;
       //tbRecordVerifications: ;
       //tbGazetteer: ;
-      //tbNetStations: ;
+      //tbSamplingPlots: ;
       //tbPermanentNets: ;
       //tbInstitutions: ;
       //tbPeople: ;
@@ -11356,7 +11356,7 @@ begin
       lblRecycleId.DataField := 'site_id';
       lblRecycleName.DataField := 'site_name';
     end;
-    tbNetStations:
+    tbSamplingPlots:
     begin
       qRecycle.MacroByName('FID').AsString := 'net_station_id';
       qRecycle.MacroByName('FNAME').AsString := 'station_name';
@@ -11577,7 +11577,7 @@ begin
       tbRecordHistory: ;
       tbRecordVerifications: ;
       tbGazetteer:          SummaryGazetteer(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
-      tbNetStations:        SummarySamplingPlots(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbSamplingPlots:        SummarySamplingPlots(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbPermanentNets: ;
       tbInstitutions:       SummaryInstitutions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbPeople:             SummaryPeople(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
@@ -12081,7 +12081,7 @@ begin
     //tbUsers: ;
     //tbRecordHistory: ;
     //tbGazetteer: ;
-    tbNetStations:
+    tbSamplingPlots:
     begin
       if dsLink1.DataSet.RecordCount > 0 then
       begin
@@ -12286,7 +12286,7 @@ begin
     //tbUsers: ;
     //tbRecordHistory: ;
     //tbGazetteer: ;
-    tbNetStations:
+    tbSamplingPlots:
     begin
       DS := dsLink1;
     end;
@@ -12480,7 +12480,7 @@ begin
     tbPeople:         UpdateFilterPanelsPeople;
     tbProjects:       UpdateFilterPanelsProjects;
     tbPermits:        UpdateFilterPanelsPermits;
-    tbNetStations:    UpdateFilterPanelsNetStations;
+    tbSamplingPlots:    UpdateFilterPanelsSamplingPlots;
     tbBotanicTaxa:    UpdateFilterPanelsBotanicTaxa;
     tbZooTaxa:        UpdateFilterPanelsZooTaxa;
     tbBands:          UpdateFilterPanelsBands;
@@ -12693,7 +12693,7 @@ begin
   pPhilornisFilter.Visible := True;
 end;
 
-procedure TfrmCustomGrid.UpdateFilterPanelsNetStations;
+procedure TfrmCustomGrid.UpdateFilterPanelsSamplingPlots;
 begin
   pSiteFilters.Visible := True;
   LoadSiteTreeData(FTableType, tvSiteFilter, 4);

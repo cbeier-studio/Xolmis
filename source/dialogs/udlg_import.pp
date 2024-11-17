@@ -252,7 +252,7 @@ begin
 
     for i := 0 to FDataSet.FieldCount - 1 do
     begin
-      gridFields.Cells[1, i+1] := FDataSet.Fields[i].DisplayName;
+      gridFields.Cells[1, i+1] := FDataSet.Fields[i].DisplayLabel;
     end;
 
     // Target field picklist

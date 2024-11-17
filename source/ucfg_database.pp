@@ -34,6 +34,8 @@ type
     iconDB: TImageList;
     iButtons: TImageList;
     lineBottom: TShapeLineBGRA;
+    pmNewDatabase: TMenuItem;
+    pmNewConnection: TMenuItem;
     pmgNew: TMenuItem;
     pmgEdit: TMenuItem;
     pmgRefresh: TMenuItem;
@@ -45,6 +47,7 @@ type
     pBottom: TPanel;
     pmTools: TPopupMenu;
     pmGrid: TPopupMenu;
+    pmNew: TPopupMenu;
     sbClose: TButton;
     sbDelete: TSpeedButton;
     sbEdit: TSpeedButton;
@@ -61,6 +64,8 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure mmTestConnectionClick(Sender: TObject);
+    procedure pmNewConnectionClick(Sender: TObject);
+    procedure pmNewDatabaseClick(Sender: TObject);
     procedure sbCloseClick(Sender: TObject);
     procedure sbMoreClick(Sender: TObject);
     procedure sbNewClick(Sender: TObject);
@@ -128,6 +133,33 @@ begin
     DMM.qsConn.Open;
 end;
 
+procedure TcfgDatabase.pmNewConnectionClick(Sender: TObject);
+begin
+  edtDatabase := TedtDatabase.Create(Application);
+  with edtDatabase do
+  try
+    dsConn.DataSet.Append;
+    dsConn.DataSet.FieldByName('database_type').AsInteger := 0;
+    if ShowModal = mrOk then
+    begin
+      dsConn.DataSet.Post;
+      if not FileExists(dsConn.DataSet.FieldByName('database_name').AsString) then
+        if MsgDlg(rsTitleCreateDatabase, rsCreateDatabasePrompt, mtConfirmation) then
+          CreateUserDatabase(dbSqlite, dsConn.DataSet.FieldByName('database_name').AsString);
+    end
+    else
+      dsConn.DataSet.Cancel;
+  finally
+    FreeAndNil(edtDatabase);
+  end;
+end;
+
+procedure TcfgDatabase.pmNewDatabaseClick(Sender: TObject);
+begin
+  NewDatabase;
+  dsConn.DataSet.Refresh;
+end;
+
 procedure TcfgDatabase.FormKeyPress(Sender: TObject; var Key: char);
 begin
   { CANCEL = Esc }
@@ -153,6 +185,7 @@ begin
   sbMore.Images := iButtonsDark;
   sbRefreshRecords.Images := iButtonsDark;
   sbDelete.Images := iButtonsDark;
+  pmNew.Images := iButtonsDark;
   pmTools.Images := iButtonsDark;
   pmGrid.Images := iButtonsDark;
 end;
@@ -164,23 +197,8 @@ end;
 
 procedure TcfgDatabase.sbNewClick(Sender: TObject);
 begin
-  edtDatabase := TedtDatabase.Create(Application);
-  with edtDatabase do
-  try
-    dsConn.DataSet.Append;
-    dsConn.DataSet.FieldByName('database_type').AsInteger := 0;
-    if ShowModal = mrOk then
-    begin
-      dsConn.DataSet.Post;
-      if not FileExists(dsConn.DataSet.FieldByName('database_name').AsString) then
-        if MsgDlg(rsTitleCreateDatabase, rsCreateDatabasePrompt, mtConfirmation) then
-          CreateUserDatabase(dbSqlite, dsConn.DataSet.FieldByName('database_name').AsString);
-    end
-    else
-      dsConn.DataSet.Cancel;
-  finally
-    FreeAndNil(edtDatabase);
-  end;
+  with sbNew.ClientToScreen(point(0, sbNew.Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TcfgDatabase.sbRefreshRecordsClick(Sender: TObject);

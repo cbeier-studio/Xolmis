@@ -112,7 +112,7 @@ uses
   uedt_nest,
   uedt_nestrevision,
   uedt_neteffort,
-  uedt_netstation,
+  uedt_samplingplot,
   uedt_permanentnet,
   uedt_person,
   uedt_sighting,
@@ -127,7 +127,7 @@ uses
   { Other forms }
   ufrm_customgrid, ufrm_dashboard, ufrm_geoconverter, ufrm_maintenance,
   udm_breeding, uedt_method, udm_sampling, uedt_weatherlog, uedt_project,
-  uedt_permit, uedt_sampleprep, uedt_specimen, uedt_nestowner, udlg_firstconfig,
+  uedt_permit, uedt_sampleprep, uedt_specimen, uedt_nestowner, udlg_newdatabase,
   udlg_export, cbs_datacolumns, cbs_math, udlg_recverifications,
   uedt_recverification, ufrm_imageviewer, uthread_dashboard, ufrm_printpreview,
   cbs_print, uedt_audioinfo, uedt_documentinfo, udlg_import, udlg_importxmobile,

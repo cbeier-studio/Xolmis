@@ -222,7 +222,7 @@ var
   function HelpDir: String;
 
   { System settings and user permissions manipulation }
-  function FirstConfig: Boolean;
+  function NewDatabase: Boolean;
   function DatabaseConfig: Boolean;
   procedure LoadDatabaseParams(aConnectionName: String; aConnector: TSQLConnector);
   function ConnectDatabase: Boolean;
@@ -232,7 +232,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_data, cbs_conversions, udlg_connect, udlg_firstconfig;
+  cbs_locale, cbs_data, cbs_conversions, udlg_connect, udlg_newdatabase;
 
 { ---------------------------------------------------------------------------------------- }
 { System logging }
@@ -565,6 +565,8 @@ begin
         raise EDatabaseError.Create(rsErrorConnectingDatabase);
       end;
 
+      UpgradeDatabaseSchema(ConexaoDB.Manager);
+
       Result := True;
     end;
   finally
@@ -580,24 +582,24 @@ begin
   ConexaoDB.Clear;
 end;
 
-function FirstConfig: Boolean;
+function NewDatabase: Boolean;
 begin
   Result := False;
 
-  Application.CreateForm(TdlgFirstConfig, dlgFirstConfig);
-  with dlgFirstConfig do
+  Application.CreateForm(TdlgNewDatabase, dlgNewDatabase);
+  with dlgNewDatabase do
   try
     {$IFDEF DEBUG}
-    LogDebug('OPEN: Manage connections');
+    LogDebug('OPEN: New database');
     {$ENDIF}
     GravaStat(Name, '', 'open');
     if ShowModal = mrOK then
       Result := True;
   finally
     {$IFDEF DEBUG}
-    LogDebug('CLOSE: Manage connections');
+    LogDebug('CLOSE: New database');
     {$ENDIF}
-    FreeAndNil(dlgFirstConfig);
+    FreeAndNil(dlgNewDatabase);
   end;
 end;
 

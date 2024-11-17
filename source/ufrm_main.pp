@@ -48,6 +48,7 @@ type
     actImportWizard: TAction;
     actImportCoordinates: TAction;
     actImportXolmisMobile: TAction;
+    actDBNew: TAction;
     actMaintenance: TAction;
     actOpenBandHistory: TAction;
     actOpenTaxonRanks: TAction;
@@ -93,6 +94,7 @@ type
     iPopup: TImageList;
     iSearchDark: TImageList;
     lblEmptyTabs: TLabel;
+    mmfNewDB: TMenuItem;
     mmfImportXolmisMobile: TMenuItem;
     mmhCheckUpdates: TMenuItem;
     mmfImportCoordinates: TMenuItem;
@@ -590,7 +592,7 @@ end;
 
 procedure TfrmMain.actOpenNetStationsExecute(Sender: TObject);
 begin
-  OpenForm(Sender, fNetStations, tbNetStations, rsTitleSamplingPlots, actOpenNetStations.ImageIndex);
+  OpenForm(Sender, fNetStations, tbSamplingPlots, rsTitleSamplingPlots, actOpenNetStations.ImageIndex);
 end;
 
 procedure TfrmMain.actOpenPermitsExecute(Sender: TObject);
@@ -887,7 +889,7 @@ begin
   { Check if there are connections available }
   DMM.qsConn.Open;
   if DMM.qsConn.RecordCount = 0 then
-    if not FirstConfig then
+    if not NewDatabase then
       Application.Terminate;
   DMM.qsConn.Refresh;
   Application.ProcessMessages;
@@ -1007,7 +1009,7 @@ begin
     case TTableType(aPage.Tag) of
       //tbNone: ;
       tbGazetteer:      ActiveQuery := DMG.qGazetteer;
-      tbNetStations:    ActiveQuery := DMG.qNetStations;
+      tbSamplingPlots:  ActiveQuery := DMG.qSamplingPlots;
       tbZooTaxa:        ActiveQuery := DMG.qTaxa;
       tbBotanicTaxa:    ActiveQuery := DMG.qBotany;
       tbInstitutions:   ActiveQuery := DMG.qInstitutions;
@@ -1068,7 +1070,7 @@ begin
     case TTableType(PGW.Page[ATabIndex].Tag) of
       //tbNone: ;
       tbGazetteer:      fGazetteer := nil;
-      tbNetStations:    fNetStations := nil;
+      tbSamplingPlots:    fNetStations := nil;
       //tbZooTaxa:        fZooTaxa := nil;
       tbBotanicTaxa:    fBotanicTaxa := nil;
       tbInstitutions:   fInstitutions := nil;
@@ -1255,7 +1257,7 @@ end;
 
 procedure TfrmMain.pmaNewNetStationClick(Sender: TObject);
 begin
-  EditNetStation(DMG.qNetStations, True);
+  EditSamplingPlot(DMG.qSamplingPlots, True);
 end;
 
 procedure TfrmMain.pmaNewPermitClick(Sender: TObject);

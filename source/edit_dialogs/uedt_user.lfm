@@ -202,9 +202,9 @@ object edtUser: TedtUser
         DataSource = dsUser
         ItemHeight = 15
         Items.Strings = (
-          'Padrão'
-          'Administrador(a)'
-          'Visitante'
+          'Standard'
+          'Admin'
+          'Guest'
         )
         MaxLength = 0
         Style = csDropDownList

@@ -8,14 +8,14 @@ object dlgFind: TdlgFind
   Caption = 'Find'
   ClientHeight = 213
   ClientWidth = 317
+  PopupMode = pmAuto
+  ShowInTaskBar = stNever
+  LCLVersion = '4.0.0.1'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  ShowInTaskBar = stNever
-  LCLVersion = '3.4.0.0'
   object pHeader: TPanel
     Left = 0
     Height = 31
@@ -106,11 +106,11 @@ object dlgFind: TdlgFind
         Images = iButtons
         ImageIndex = 1
         Visible = False
-        OnClick = sbOptionsClick
         ShowCaption = False
         ShowHint = True
         ParentFont = False
         ParentShowHint = False
+        OnClick = sbOptionsClick
         TextAutoSize = True
         Toggle = False
         Pressed = False
@@ -141,11 +141,11 @@ object dlgFind: TdlgFind
         Font.Color = clBlack
         Images = iButtons
         ImageIndex = 0
-        OnClick = sbCloseClick
         ShowCaption = False
         ShowHint = True
         ParentFont = False
         ParentShowHint = False
+        OnClick = sbCloseClick
         TextAutoSize = True
         Toggle = False
         Pressed = False

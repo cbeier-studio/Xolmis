@@ -3091,6 +3091,11 @@ msgctxt "cbs_locale.rserrorcreatefolder"
 msgid "Not able to create folder:"
 msgstr ""
 
+#: cbs_locale.rserrorcreatingdatabaseschema
+#, object-pascal-format
+msgid "Error while creating the database schema: %s"
+msgstr ""
+
 #: cbs_locale.rserrorcreatingsystemdatabase
 msgctxt "cbs_locale.rserrorcreatingsystemdatabase"
 msgid "Unable to create the system database."
@@ -3223,6 +3228,11 @@ msgstr ""
 
 #: cbs_locale.rserrorupdatingadminpassword
 msgid "An error occurred while updating the Admin password."
+msgstr ""
+
+#: cbs_locale.rserrorupgradingdatabaseschema
+#, object-pascal-format
+msgid "Error while upgrading the database schema: %s"
 msgstr ""
 
 #: cbs_locale.rsexactcoordinate
@@ -4169,6 +4179,16 @@ msgctxt "cbs_locale.rsprintrecordstitle"
 msgid "Print records"
 msgstr ""
 
+#: cbs_locale.rsprogresscreatingtable
+#, object-pascal-format
+msgid "Creating table: %s (%d/%d)"
+msgstr ""
+
+#: cbs_locale.rsprogresscreatingview
+#, object-pascal-format
+msgid "Creating view: %s (%d/%d)"
+msgstr ""
+
 #: cbs_locale.rsprogressexporting
 #, object-pascal-format
 msgctxt "cbs_locale.rsprogressexporting"
@@ -4676,6 +4696,10 @@ msgstr ""
 msgid "The database file was created successfully!"
 msgstr ""
 
+#: cbs_locale.rssuccessfuldatabaseupgrade
+msgid "The database schema was upgraded successfully!"
+msgstr ""
+
 #: cbs_locale.rssuccessfulimport
 msgctxt "cbs_locale.rssuccessfulimport"
 msgid "The selected file(s) were sucessfully imported."
@@ -4829,9 +4853,18 @@ msgctxt "cbs_locale.rstitleadminpassword"
 msgid "Admin password"
 msgstr ""
 
+#: cbs_locale.rstitleaudiolibrary
+msgctxt "cbs_locale.rstitleaudiolibrary"
+msgid "Audio recordings"
+msgstr ""
+
 #: cbs_locale.rstitleautoupdate
 msgctxt "cbs_locale.rstitleautoupdate"
 msgid "Autoupdate"
+msgstr ""
+
+#: cbs_locale.rstitleavgexpeditionduration
+msgid "Average expedition duration"
 msgstr ""
 
 #: cbs_locale.rstitlebackup
@@ -4839,9 +4872,23 @@ msgctxt "cbs_locale.rstitlebackup"
 msgid "Backup"
 msgstr ""
 
+#: cbs_locale.rstitlebandhistory
+msgctxt "cbs_locale.rstitlebandhistory"
+msgid "Band history"
+msgstr ""
+
 #: cbs_locale.rstitlebands
 msgctxt "cbs_locale.rstitlebands"
 msgid "Bands"
+msgstr ""
+
+#: cbs_locale.rstitlebandsbalance
+msgctxt "cbs_locale.rstitlebandsbalance"
+msgid "Bands balance"
+msgstr ""
+
+#: cbs_locale.rstitlebandsrunningout
+msgid "Bands running out"
 msgstr ""
 
 #: cbs_locale.rstitlebotanictaxa
@@ -4860,6 +4907,7 @@ msgid "Caution!"
 msgstr ""
 
 #: cbs_locale.rstitlecollectors
+msgctxt "cbs_locale.rstitlecollectors"
 msgid "Collectors"
 msgstr ""
 
@@ -4882,6 +4930,15 @@ msgstr ""
 msgid "Create database"
 msgstr ""
 
+#: cbs_locale.rstitledbmetadata
+msgid "Database metadata"
+msgstr ""
+
+#: cbs_locale.rstitledocuments
+msgctxt "cbs_locale.rstitledocuments"
+msgid "Documents and links"
+msgstr ""
+
 #: cbs_locale.rstitleediting
 #, object-pascal-format
 msgid "Editing %s"
@@ -4897,6 +4954,10 @@ msgctxt "cbs_locale.rstitleerror"
 msgid "Error"
 msgstr ""
 
+#: cbs_locale.rstitleexpiredpermits
+msgid "Expired permits"
+msgstr ""
+
 #: cbs_locale.rstitlegazetteer
 msgctxt "cbs_locale.rstitlegazetteer"
 msgid "Gazetteer"
@@ -4905,6 +4966,11 @@ msgstr ""
 #: cbs_locale.rstitlehistory
 msgctxt "cbs_locale.rstitlehistory"
 msgid "History"
+msgstr ""
+
+#: cbs_locale.rstitleimages
+msgctxt "cbs_locale.rstitleimages"
+msgid "Images"
 msgstr ""
 
 #: cbs_locale.rstitleimportcoordinates
@@ -4930,6 +4996,16 @@ msgstr ""
 #: cbs_locale.rstitleinstitutions
 msgctxt "cbs_locale.rstitleinstitutions"
 msgid "Institutions"
+msgstr ""
+
+#: cbs_locale.rstitlelastlifers
+msgctxt "cbs_locale.rstitlelastlifers"
+msgid "Last lifers"
+msgstr ""
+
+#: cbs_locale.rstitlelastsurveys
+msgctxt "cbs_locale.rstitlelastsurveys"
+msgid "Last surveys"
 msgstr ""
 
 #: cbs_locale.rstitlelogin
@@ -4976,6 +5052,11 @@ msgctxt "cbs_locale.rstitlenewbandsbatch"
 msgid "New batch of bands"
 msgstr ""
 
+#: cbs_locale.rstitlenextbirthdays
+msgctxt "cbs_locale.rstitlenextbirthdays"
+msgid "Next birthdays"
+msgstr ""
+
 #: cbs_locale.rstitlepermanentnets
 msgctxt "cbs_locale.rstitlepermanentnets"
 msgid "Permanent nets"
@@ -4984,6 +5065,10 @@ msgstr ""
 #: cbs_locale.rstitlepermits
 msgctxt "cbs_locale.rstitlepermits"
 msgid "Permits"
+msgstr ""
+
+#: cbs_locale.rstitlepoilibrary
+msgid "Points of interest"
 msgstr ""
 
 #: cbs_locale.rstitleprintpreview
@@ -5039,6 +5124,11 @@ msgctxt "cbs_locale.rstitlesightings"
 msgid "Sightings"
 msgstr ""
 
+#: cbs_locale.rstitlespecimencollectors
+msgctxt "cbs_locale.rstitlespecimencollectors"
+msgid "Collectors"
+msgstr ""
+
 #: cbs_locale.rstitlespecimens
 msgctxt "cbs_locale.rstitlespecimens"
 msgid "Specimens"
@@ -5068,6 +5158,10 @@ msgctxt "cbs_locale.rstitleteam"
 msgid "Team"
 msgstr ""
 
+#: cbs_locale.rstitleupgradedatabase
+msgid "Upgrade database"
+msgstr ""
+
 #: cbs_locale.rstitleusers
 msgctxt "cbs_locale.rstitleusers"
 msgid "Users"
@@ -5076,6 +5170,10 @@ msgstr ""
 #: cbs_locale.rstitlevegetation
 msgctxt "cbs_locale.rstitlevegetation"
 msgid "Vegetation sample"
+msgstr ""
+
+#: cbs_locale.rstitleverifications
+msgid "Verifications"
 msgstr ""
 
 #: cbs_locale.rstitleweather
@@ -5468,6 +5566,16 @@ msgctxt "tcfgdatabase.pmgtest.caption"
 msgid "Test connection"
 msgstr ""
 
+#: tcfgdatabase.pmnewconnection.caption
+msgctxt "tcfgdatabase.pmnewconnection.caption"
+msgid "New connection"
+msgstr ""
+
+#: tcfgdatabase.pmnewdatabase.caption
+msgctxt "tcfgdatabase.pmnewdatabase.caption"
+msgid "New database"
+msgstr ""
+
 #: tcfgdatabase.sbclose.caption
 msgctxt "tcfgdatabase.sbclose.caption"
 msgid "Close"
@@ -5823,6 +5931,7 @@ msgid "Move up"
 msgstr ""
 
 #: tdlgbandhistory.caption
+msgctxt "tdlgbandhistory.caption"
 msgid "Band history"
 msgstr ""
 
@@ -6288,82 +6397,6 @@ msgstr ""
 #: tdlgfindtaxon.sboptions.hint
 msgctxt "tdlgfindtaxon.sboptions.hint"
 msgid "Options"
-msgstr ""
-
-#: tdlgfirstconfig.caption
-msgid "Initial configuration"
-msgstr ""
-
-#: tdlgfirstconfig.econfirmpass.buttonhint
-msgctxt "tdlgfirstconfig.econfirmpass.buttonhint"
-msgid "Show/hide password"
-msgstr ""
-
-#: tdlgfirstconfig.edbfile.buttonhint
-msgctxt "tdlgfirstconfig.edbfile.buttonhint"
-msgid "Select file"
-msgstr ""
-
-#: tdlgfirstconfig.enewpass.buttonhint
-msgctxt "tdlgfirstconfig.enewpass.buttonhint"
-msgid "Show/hide password"
-msgstr ""
-
-#: tdlgfirstconfig.lbladmininstruction.caption
-msgid "Set a password for the Admin user. "
-msgstr ""
-
-#: tdlgfirstconfig.lblconfirmpass.caption
-msgctxt "tdlgfirstconfig.lblconfirmpass.caption"
-msgid "Confirm password:"
-msgstr ""
-
-#: tdlgfirstconfig.lblconnectioninstruction.caption
-msgid "Inform a name and a file name to create the new connection."
-msgstr ""
-
-#: tdlgfirstconfig.lbldbfile.caption
-msgctxt "tdlgfirstconfig.lbldbfile.caption"
-msgid "Database file: *"
-msgstr ""
-
-#: tdlgfirstconfig.lblname.caption
-msgctxt "tdlgfirstconfig.lblname.caption"
-msgid "Connection name: *"
-msgstr ""
-
-#: tdlgfirstconfig.lblnewpass.caption
-msgctxt "tdlgfirstconfig.lblnewpass.caption"
-msgid "New password:"
-msgstr ""
-
-#: tdlgfirstconfig.lbltitleauthentication.caption
-msgctxt "tdlgfirstconfig.lbltitleauthentication.caption"
-msgid "Admin password"
-msgstr ""
-
-#: tdlgfirstconfig.lbltitleconnection.caption
-msgctxt "tdlgfirstconfig.lbltitleconnection.caption"
-msgid "New connection"
-msgstr ""
-
-#: tdlgfirstconfig.opendlg.title
-msgctxt "tdlgfirstconfig.opendlg.title"
-msgid "Select database file"
-msgstr ""
-
-#: tdlgfirstconfig.sbapplyadmin.caption
-msgctxt "tdlgfirstconfig.sbapplyadmin.caption"
-msgid "Apply"
-msgstr ""
-
-#: tdlgfirstconfig.sbcancel.caption
-msgctxt "tdlgfirstconfig.sbcancel.caption"
-msgid "Cancel"
-msgstr ""
-
-#: tdlgfirstconfig.sbcreatedb.caption
-msgid "Create"
 msgstr ""
 
 #: tdlggeoeditor.caption
@@ -6908,6 +6941,126 @@ msgstr ""
 #: tdlglogin.sbok.caption
 msgctxt "tdlglogin.sbok.caption"
 msgid "Sign in"
+msgstr ""
+
+#: tdlgnewdatabase.caption
+msgctxt "tdlgnewdatabase.caption"
+msgid "New database"
+msgstr ""
+
+#: tdlgnewdatabase.econfirmpass.buttonhint
+msgctxt "tdlgnewdatabase.econfirmpass.buttonhint"
+msgid "Show/hide password"
+msgstr ""
+
+#: tdlgnewdatabase.edbfile.buttonhint
+msgctxt "tdlgnewdatabase.edbfile.buttonhint"
+msgid "Select file"
+msgstr ""
+
+#: tdlgnewdatabase.enewpass.buttonhint
+msgctxt "tdlgnewdatabase.enewpass.buttonhint"
+msgid "Show/hide password"
+msgstr ""
+
+#: tdlgnewdatabase.euserconfirmpass.buttonhint
+msgctxt "tdlgnewdatabase.euserconfirmpass.buttonhint"
+msgid "Show/hide password"
+msgstr ""
+
+#: tdlgnewdatabase.eusernewpass.buttonhint
+msgctxt "tdlgnewdatabase.eusernewpass.buttonhint"
+msgid "Show/hide password"
+msgstr ""
+
+#: tdlgnewdatabase.lbladmininstruction.caption
+msgctxt "tdlgnewdatabase.lbladmininstruction.caption"
+msgid "Set a password for the Admin user. "
+msgstr ""
+
+#: tdlgnewdatabase.lblconfirmpass.caption
+msgctxt "tdlgnewdatabase.lblconfirmpass.caption"
+msgid "Confirm password:"
+msgstr ""
+
+#: tdlgnewdatabase.lblconnectioninstruction.caption
+msgctxt "tdlgnewdatabase.lblconnectioninstruction.caption"
+msgid "Inform a name and a file name to create the new connection."
+msgstr ""
+
+#: tdlgnewdatabase.lbldbfile.caption
+msgctxt "tdlgnewdatabase.lbldbfile.caption"
+msgid "Database file: *"
+msgstr ""
+
+#: tdlgnewdatabase.lblname.caption
+msgctxt "tdlgnewdatabase.lblname.caption"
+msgid "Connection name: *"
+msgstr ""
+
+#: tdlgnewdatabase.lblnewpass.caption
+msgctxt "tdlgnewdatabase.lblnewpass.caption"
+msgid "New password:"
+msgstr ""
+
+#: tdlgnewdatabase.lbltitleauthentication.caption
+msgctxt "tdlgnewdatabase.lbltitleauthentication.caption"
+msgid "Admin password"
+msgstr ""
+
+#: tdlgnewdatabase.lbltitleconnection.caption
+msgctxt "tdlgnewdatabase.lbltitleconnection.caption"
+msgid "New database"
+msgstr ""
+
+#: tdlgnewdatabase.lbltitleuser.caption
+msgid "Create user"
+msgstr ""
+
+#: tdlgnewdatabase.lbluserconfirmpass.caption
+msgid "Confirm password: *"
+msgstr ""
+
+#: tdlgnewdatabase.lbluserfullname.caption
+msgctxt "tdlgnewdatabase.lbluserfullname.caption"
+msgid "Full name:"
+msgstr ""
+
+#: tdlgnewdatabase.lbluserinstruction.caption
+msgid "Create your user to access the database. "
+msgstr ""
+
+#: tdlgnewdatabase.lblusername.caption
+msgid "User name: *"
+msgstr ""
+
+#: tdlgnewdatabase.lblusernewpass.caption
+msgid "New password: *"
+msgstr ""
+
+#: tdlgnewdatabase.opendlg.title
+msgctxt "tdlgnewdatabase.opendlg.title"
+msgid "Select database file"
+msgstr ""
+
+#: tdlgnewdatabase.sbapplyadmin.caption
+msgctxt "tdlgnewdatabase.sbapplyadmin.caption"
+msgid "Apply"
+msgstr ""
+
+#: tdlgnewdatabase.sbcancel.caption
+msgctxt "tdlgnewdatabase.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgnewdatabase.sbcreatedb.caption
+msgctxt "tdlgnewdatabase.sbcreatedb.caption"
+msgid "Create"
+msgstr ""
+
+#: tdlgnewdatabase.sbcreateuser.caption
+msgctxt "tdlgnewdatabase.sbcreateuser.caption"
+msgid "Create"
 msgstr ""
 
 #: tdlgplantminer.caption
@@ -9168,66 +9321,6 @@ msgctxt "tedtneteffort.sbsave.caption"
 msgid "Save"
 msgstr ""
 
-#: tedtnetstation.elatitude.buttonhint
-msgctxt "tedtnetstation.elatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr ""
-
-#: tedtnetstation.elocality.buttonhint
-msgctxt "tedtnetstation.elocality.buttonhint"
-msgid "Find locality"
-msgstr ""
-
-#: tedtnetstation.elongitude.buttonhint
-msgctxt "tedtnetstation.elongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr ""
-
-#: tedtnetstation.lblacronym.caption
-msgctxt "tedtnetstation.lblacronym.caption"
-msgid "Acronym: *"
-msgstr ""
-
-#: tedtnetstation.lbldescription.caption
-msgctxt "tedtnetstation.lbldescription.caption"
-msgid "Description:"
-msgstr ""
-
-#: tedtnetstation.lbllatitude.caption
-msgctxt "tedtnetstation.lbllatitude.caption"
-msgid "Latitude:"
-msgstr ""
-
-#: tedtnetstation.lbllocality.caption
-msgctxt "tedtnetstation.lbllocality.caption"
-msgid "Locality: *"
-msgstr ""
-
-#: tedtnetstation.lbllongitude.caption
-msgctxt "tedtnetstation.lbllongitude.caption"
-msgid "Longitude:"
-msgstr ""
-
-#: tedtnetstation.lblname.caption
-msgctxt "tedtnetstation.lblname.caption"
-msgid "Name: *"
-msgstr ""
-
-#: tedtnetstation.lblnotes.caption
-msgctxt "tedtnetstation.lblnotes.caption"
-msgid "Notes:"
-msgstr ""
-
-#: tedtnetstation.sbcancel.caption
-msgctxt "tedtnetstation.sbcancel.caption"
-msgid "Cancel"
-msgstr ""
-
-#: tedtnetstation.sbsave.caption
-msgctxt "tedtnetstation.sbsave.caption"
-msgid "Save"
-msgstr ""
-
 #: tedtpermanentnet.elatitude.buttonhint
 msgctxt "tedtpermanentnet.elatitude.buttonhint"
 msgid "Edit coordinates in DMS format"
@@ -9709,6 +9802,70 @@ msgstr ""
 
 #: tedtsampleprep.sbsave.caption
 msgctxt "tedtsampleprep.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtsamplingplot.caption
+msgid "New sampling plot"
+msgstr ""
+
+#: tedtsamplingplot.elatitude.buttonhint
+msgctxt "tedtsamplingplot.elatitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtsamplingplot.elocality.buttonhint
+msgctxt "tedtsamplingplot.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtsamplingplot.elongitude.buttonhint
+msgctxt "tedtsamplingplot.elongitude.buttonhint"
+msgid "Edit coordinates in DMS format"
+msgstr ""
+
+#: tedtsamplingplot.lblacronym.caption
+msgctxt "tedtsamplingplot.lblacronym.caption"
+msgid "Acronym: *"
+msgstr ""
+
+#: tedtsamplingplot.lbldescription.caption
+msgctxt "tedtsamplingplot.lbldescription.caption"
+msgid "Description:"
+msgstr ""
+
+#: tedtsamplingplot.lbllatitude.caption
+msgctxt "tedtsamplingplot.lbllatitude.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtsamplingplot.lbllocality.caption
+msgctxt "tedtsamplingplot.lbllocality.caption"
+msgid "Locality: *"
+msgstr ""
+
+#: tedtsamplingplot.lbllongitude.caption
+msgctxt "tedtsamplingplot.lbllongitude.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtsamplingplot.lblname.caption
+msgctxt "tedtsamplingplot.lblname.caption"
+msgid "Name: *"
+msgstr ""
+
+#: tedtsamplingplot.lblnotes.caption
+msgctxt "tedtsamplingplot.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtsamplingplot.sbcancel.caption
+msgctxt "tedtsamplingplot.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtsamplingplot.sbsave.caption
+msgctxt "tedtsamplingplot.sbsave.caption"
 msgid "Save"
 msgstr ""
 
@@ -12709,6 +12866,11 @@ msgstr ""
 
 #: tfrmmain.actdbconnect.caption
 msgid "&Connect to database"
+msgstr ""
+
+#: tfrmmain.actdbnew.caption
+msgctxt "tfrmmain.actdbnew.caption"
+msgid "New database"
 msgstr ""
 
 #: tfrmmain.actdbsettings.caption

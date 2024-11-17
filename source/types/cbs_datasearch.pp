@@ -48,7 +48,7 @@ uses
     aSorting: String = ''; aDirection: String = '');
   procedure SetGazetteerSQL(const aSQL: TStrings; aFilter: TFilterValue;
     aSorting: String = ''; aDirection: String = '');
-  procedure SetNetStationsSQL(const aSQL: TStrings; aFilter: TFilterValue;
+  procedure SetSamplingPlotsSQL(const aSQL: TStrings; aFilter: TFilterValue;
     aSorting: String = ''; aDirection: String = '');
   procedure SetInstitutionsSQL(const aSQL: TStrings; aFilter: TFilterValue;
     aSorting: String = ''; aDirection: String = '');
@@ -314,9 +314,9 @@ begin
         SetEggsSQL(aSQL, fvNone);
         //aAlias := TableAliases[aTable] + '.';
       end;
-    tbNetStations:
+    tbSamplingPlots:
       begin
-        SetNetStationsSQL(aSQL, fvNone);
+        SetSamplingPlotsSQL(aSQL, fvNone);
         //aAlias := TableAliases[aTable] + '.';
       end;
     tbTaxonRanks:
@@ -733,7 +733,7 @@ begin
   end;
 end;
 
-procedure SetNetStationsSQL(const aSQL: TStrings; aFilter: TFilterValue;
+procedure SetSamplingPlotsSQL(const aSQL: TStrings; aFilter: TFilterValue;
   aSorting: String = ''; aDirection: String = '');
 var
   AD: String;
@@ -746,22 +746,22 @@ begin
     Add('  gm.site_name AS municipality_name,');
     Add('  gs.site_name AS state_name,');
     Add('  gc.site_name AS country_name');
-    Add('FROM net_stations AS ns');
-    Add('LEFT JOIN gazetteer AS gl ON ns.locality_id = gl.site_id');
-    Add('LEFT JOIN gazetteer AS gm ON ns.municipality_id = gm.site_id');
-    Add('LEFT JOIN gazetteer AS gs ON ns.state_id = gs.site_id');
-    Add('LEFT JOIN gazetteer AS gc ON ns.country_id = gc.site_id');
+    Add('FROM sampling_plots AS pl');
+    Add('LEFT JOIN gazetteer AS gl ON pl.locality_id = gl.site_id');
+    Add('LEFT JOIN gazetteer AS gm ON pl.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON pl.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON pl.country_id = gc.site_id');
     case aFilter of
       fvNone:
         ; // do nothing
       fvReset:
-        Add('WHERE (ns.net_station_id = -1) AND (ns.active_status = 1)');
+        Add('WHERE (pl.sampling_plot_id = -1) AND (pl.active_status = 1)');
       fvAll:
-        Add('WHERE (ns.active_status = 1)');
+        Add('WHERE (pl.active_status = 1)');
       fvMarked:
-        Add('WHERE (ns.active_status = 1) AND (ns.marked_status = 1)');
+        Add('WHERE (pl.active_status = 1) AND (pl.marked_status = 1)');
       fvDeleted:
-        Add('WHERE (ns.active_status = 0)');
+        Add('WHERE (pl.active_status = 0)');
     end;
     if Trim(aSorting) <> '' then
     begin

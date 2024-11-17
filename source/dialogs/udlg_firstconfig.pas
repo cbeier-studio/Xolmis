@@ -26,27 +26,40 @@ uses
 
 type
 
-  { TdlgFirstConfig }
+  { TdlgNewDatabase }
 
-  TdlgFirstConfig = class(TForm)
+  TdlgNewDatabase = class(TForm)
     BCrypt: TDCP_blowfish;
     eConfirmPass: TEditButton;
+    eUserConfirmPass: TEditButton;
     eDBFile: TEditButton;
     eName: TEdit;
+    eUserName: TEdit;
+    eUserFullName: TEdit;
     eNewPass: TEditButton;
+    eUserNewPass: TEditButton;
     iButtons: TImageList;
     iButtonsDark: TImageList;
+    lblUserInstruction: TLabel;
+    lblUserConfirmPass: TLabel;
     lblConnectionInstruction: TLabel;
     lblAdminInstruction: TLabel;
     lblDBFile: TLabel;
+    lblUserName: TLabel;
+    lblUserFullName: TLabel;
     lblNewPass: TLabel;
     lblConfirmPass: TLabel;
     lblName: TLabel;
+    lblUserNewPass: TLabel;
     lblTitleAuthentication: TLabel;
+    lblTitleUser: TLabel;
     lblTitleConnection: TLabel;
     lineBottom: TShapeLineBGRA;
     nbPages: TNotebook;
     OpenDlg: TOpenDialog;
+    pCreateUser: TPanel;
+    pContentUser: TPanel;
+    pgUser: TPage;
     pgConnection: TPage;
     pgAdmin: TPage;
     pContentConnection: TPanel;
@@ -55,7 +68,9 @@ type
     pBottom: TPanel;
     pContentAdmin: TPanel;
     pTitleAuthentication: TPanel;
+    pTitleUser: TPanel;
     pTitleConnection: TPanel;
+    sbCreateUser: TButton;
     sbCancel: TButton;
     sbCreateDB: TButton;
     sbApplyAdmin: TButton;
@@ -66,25 +81,33 @@ type
     procedure eNewPassButtonClick(Sender: TObject);
     procedure eNewPassChange(Sender: TObject);
     procedure eNewPassKeyPress(Sender: TObject; var Key: char);
+    procedure eUserConfirmPassButtonClick(Sender: TObject);
+    procedure eUserConfirmPassChange(Sender: TObject);
+    procedure eUserNameChange(Sender: TObject);
+    procedure eUserNewPassButtonClick(Sender: TObject);
+    procedure eUserNewPassChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbApplyAdminClick(Sender: TObject);
     procedure sbCreateDBClick(Sender: TObject);
+    procedure sbCreateUserClick(Sender: TObject);
   private
     FPass: String;
     function IsRequiredAdminFilled: Boolean;
     function IsRequiredConnectionFilled: Boolean;
+    function IsRequiredUserFilled: Boolean;
     function UpdateAdmin: Boolean;
     function ValidateDatabase: Boolean;
     function ValidatePassword: Boolean;
+    function ValidateUser: Boolean;
     procedure ApplyDarkMode;
   public
 
   end;
 
 var
-  dlgFirstConfig: TdlgFirstConfig;
+  dlgNewDatabase: TdlgNewDatabase;
 
 implementation
 
@@ -93,21 +116,21 @@ uses
 
 {$R *.lfm}
 
-{ TdlgFirstConfig }
+{ TdlgNewDatabase }
 
-procedure TdlgFirstConfig.ApplyDarkMode;
+procedure TdlgNewDatabase.ApplyDarkMode;
 begin
   eDBFile.Images := iButtonsDark;
   eNewPass.Images := iButtonsDark;
   eConfirmPass.Images := iButtonsDark;
 end;
 
-procedure TdlgFirstConfig.eConfirmPassButtonClick(Sender: TObject);
+procedure TdlgNewDatabase.eConfirmPassButtonClick(Sender: TObject);
 begin
   TogglePassView(eConfirmPass);
 end;
 
-procedure TdlgFirstConfig.eDBFileButtonClick(Sender: TObject);
+procedure TdlgNewDatabase.eDBFileButtonClick(Sender: TObject);
 begin
   if OpenDlg.Execute then
   begin
@@ -115,12 +138,12 @@ begin
   end;
 end;
 
-procedure TdlgFirstConfig.eNameChange(Sender: TObject);
+procedure TdlgNewDatabase.eNameChange(Sender: TObject);
 begin
   sbCreateDB.Enabled := IsRequiredConnectionFilled;
 end;
 
-procedure TdlgFirstConfig.eNameKeyPress(Sender: TObject; var Key: char);
+procedure TdlgNewDatabase.eNameKeyPress(Sender: TObject; var Key: char);
 begin
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
@@ -135,17 +158,17 @@ begin
   FormKeyPress(Sender, Key);
 end;
 
-procedure TdlgFirstConfig.eNewPassButtonClick(Sender: TObject);
+procedure TdlgNewDatabase.eNewPassButtonClick(Sender: TObject);
 begin
   TogglePassView(eNewPass);
 end;
 
-procedure TdlgFirstConfig.eNewPassChange(Sender: TObject);
+procedure TdlgNewDatabase.eNewPassChange(Sender: TObject);
 begin
   sbApplyAdmin.Enabled := IsRequiredAdminFilled;
 end;
 
-procedure TdlgFirstConfig.eNewPassKeyPress(Sender: TObject; var Key: char);
+procedure TdlgNewDatabase.eNewPassKeyPress(Sender: TObject; var Key: char);
 begin
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
@@ -160,14 +183,39 @@ begin
   FormKeyPress(Sender, Key);
 end;
 
-procedure TdlgFirstConfig.FormDestroy(Sender: TObject);
+procedure TdlgNewDatabase.eUserConfirmPassButtonClick(Sender: TObject);
+begin
+  TogglePassView(eUserConfirmPass);
+end;
+
+procedure TdlgNewDatabase.eUserConfirmPassChange(Sender: TObject);
+begin
+  sbCreateUser.Enabled := IsRequiredUserFilled;
+end;
+
+procedure TdlgNewDatabase.eUserNameChange(Sender: TObject);
+begin
+  sbCreateUser.Enabled := IsRequiredUserFilled;
+end;
+
+procedure TdlgNewDatabase.eUserNewPassButtonClick(Sender: TObject);
+begin
+  TogglePassView(eUserNewPass);
+end;
+
+procedure TdlgNewDatabase.eUserNewPassChange(Sender: TObject);
+begin
+  sbCreateUser.Enabled := IsRequiredUserFilled;
+end;
+
+procedure TdlgNewDatabase.FormDestroy(Sender: TObject);
 begin
   eNewPass.Clear;
   eConfirmPass.Clear;
   FPass := EmptyStr;
 end;
 
-procedure TdlgFirstConfig.FormKeyPress(Sender: TObject; var Key: char);
+procedure TdlgNewDatabase.FormKeyPress(Sender: TObject; var Key: char);
 begin
   { <ESC> key }
   if Key = #27 then
@@ -177,13 +225,13 @@ begin
   end;
 end;
 
-procedure TdlgFirstConfig.FormShow(Sender: TObject);
+procedure TdlgNewDatabase.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 end;
 
-function TdlgFirstConfig.IsRequiredAdminFilled: Boolean;
+function TdlgNewDatabase.IsRequiredAdminFilled: Boolean;
 begin
   Result := False;
 
@@ -192,7 +240,7 @@ begin
     Result := True;
 end;
 
-function TdlgFirstConfig.IsRequiredConnectionFilled: Boolean;
+function TdlgNewDatabase.IsRequiredConnectionFilled: Boolean;
 begin
   Result := False;
 
@@ -201,7 +249,17 @@ begin
     Result := True;
 end;
 
-procedure TdlgFirstConfig.sbApplyAdminClick(Sender: TObject);
+function TdlgNewDatabase.IsRequiredUserFilled: Boolean;
+begin
+  Result := False;
+
+  if (eUserName.Text <> EmptyStr) and
+    (eNewPass.Text <> EmptyStr) and
+    (eConfirmPass.Text <> EmptyStr) then
+    Result := True;
+end;
+
+procedure TdlgNewDatabase.sbApplyAdminClick(Sender: TObject);
 begin
   if not ValidatePassword then
     Exit;
@@ -210,14 +268,14 @@ begin
 
   if UpdateAdmin then
   begin
-    MsgDlg(rsTitleAdminPassword, rsSuccessfulUpdateAdminPassword, mtInformation);
-    Self.ModalResult := mrOk;
+    //MsgDlg(rsTitleAdminPassword, rsSuccessfulUpdateAdminPassword, mtInformation);
+    nbPages.PageIndex := nbPages.PageIndex + 1;
   end
   else
     MsgDlg(rsTitleAdminPassword, rsErrorUpdatingAdminPassword, mtError);
 end;
 
-procedure TdlgFirstConfig.sbCreateDBClick(Sender: TObject);
+procedure TdlgNewDatabase.sbCreateDBClick(Sender: TObject);
 var
   Qry: TSQLQuery;
 begin
@@ -246,14 +304,70 @@ begin
       FreeAndNil(Qry);
     end;
 
-    MsgDlg(rsTitleCreateDatabase, rsSuccessfulDatabaseCreation, mtInformation);
+    //MsgDlg(rsTitleCreateDatabase, rsSuccessfulDatabaseCreation, mtInformation);
     nbPages.PageIndex := nbPages.PageIndex + 1;
   end
   else
     MsgDlg(rsTitleCreateDatabase, rsErrorDatabaseCreation, mtError);
 end;
 
-function TdlgFirstConfig.UpdateAdmin: Boolean;
+procedure TdlgNewDatabase.sbCreateUserClick(Sender: TObject);
+var
+  uCon: TSQLConnector;
+  uTrans: TSQLTransaction;
+  Qry: TSQLQuery;
+  aPass: String;
+begin
+  sbCreateUser.Enabled := False;
+
+  if not ValidateDatabase then
+    Exit;
+
+  BCrypt.InitStr(BFKey, TDCP_sha256);
+  aPass := BCrypt.EncryptString(eNewPass.Text);
+  BCrypt.Burn;
+
+  uCon := TSQLConnector.Create(nil);
+  uTrans := TSQLTransaction.Create(uCon);
+  Qry := TSQLQuery.Create(nil);
+  try
+    uTrans.Action := caRollbackRetaining;
+    uCon.Transaction := uTrans;
+    LoadDatabaseParams(Self.Name, uCon);
+    with Qry, SQL do
+    try
+      SQLConnection := uCon;
+      uCon.Open;
+      if not uTrans.Active then
+        uTrans.StartTransaction;
+
+      Clear;
+      Add('INSERT INTO users ( user_name, full_name, user_rank, user_password )');
+      Add('VALUES ( :username, :fullname, :rank, :pass );');
+      ParamByName('USERNAME').AsString := eUserName.Text;
+      ParamByName('FULLNAME').AsString := eUserFullName.Text;
+      ParamByName('RANK').AsString := 'S';
+      ParamByName('PASS').AsString := aPass;
+      ExecSQL;
+
+      uTrans.Commit;
+      Self.ModalResult := mrOK;
+    except
+
+      uTrans.Rollback;
+      //raise Exception.Create(rsErrorConnectingDatabase);
+    end;
+  finally
+    if uCon.Connected then
+      uCon.Close;
+
+    FreeAndNil(Qry);
+    FreeAndNil(uTrans);
+    FreeAndNil(uCon);
+  end;
+end;
+
+function TdlgNewDatabase.UpdateAdmin: Boolean;
 var
   uCon: TSQLConnector;
   uTrans: TSQLTransaction;
@@ -305,7 +419,7 @@ begin
   end;
 end;
 
-function TdlgFirstConfig.ValidateDatabase: Boolean;
+function TdlgNewDatabase.ValidateDatabase: Boolean;
 var
   Msgs: TStrings;
 begin
@@ -336,7 +450,7 @@ begin
   Msgs.Free;
 end;
 
-function TdlgFirstConfig.ValidatePassword: Boolean;
+function TdlgNewDatabase.ValidatePassword: Boolean;
 var
   Msgs: TStrings;
 begin
@@ -354,6 +468,37 @@ begin
     end;
     // Check the new password confirmation
     if not(eNewPass.Text = eConfirmPass.Text) then
+    begin
+      Msgs.Add(rsConfirmPasswordError);
+    end;
+  end;
+
+  if Msgs.Count > 0 then
+  begin
+    Result := False;
+    ValidateDlg(Msgs);
+  end;
+  Msgs.Free;
+end;
+
+function TdlgNewDatabase.ValidateUser: Boolean;
+var
+  Msgs: TStrings;
+begin
+  Result := True;
+  Msgs := TStringList.Create;
+  eUserNewPass.Text := Trim(eUserNewPass.Text);
+  eUserConfirmPass.Text := Trim(eUserConfirmPass.Text);
+
+  if (Length(eUserNewPass.Text) > 0) then
+  begin
+    // Check the new password minimum length
+    if (Length(eUserNewPass.Text) < 8) then
+    begin
+      Msgs.Add(rsMinPasswordLength);
+    end;
+    // Check the new password confirmation
+    if not(eUserNewPass.Text = eUserConfirmPass.Text) then
     begin
       Msgs.Add(rsConfirmPasswordError);
     end;

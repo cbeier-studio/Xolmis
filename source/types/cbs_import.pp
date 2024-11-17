@@ -619,7 +619,7 @@ var
   Band, RemovedBand: TBand;
   Individuo: TIndividual;
   Captura: TCapture;
-  NetStation: TNetStation;
+  NetStation: TSamplingPlot;
   NetSite: TNetEffort;
   strDate, strTime: String;
   CodAnilha: Integer;
@@ -679,7 +679,7 @@ begin
 
           try
             Taxon := TTaxon.Create(GetKey('zoo_taxa', 'taxon_id', 'full_name', Reg.SpeciesName));
-            NetStation := TNetStation.Create;
+            NetStation := TSamplingPlot.Create;
             Toponimo := TSite.Create;
             NetSite := TNetEffort.Create;
             Survey := TSurvey.Create;
@@ -975,7 +975,7 @@ var
   CSV: TSdfDataSet;
   Reg: TBandingJournal;
   Toponimo: TSite;
-  NetStation: TNetStation;
+  NetStation: TSamplingPlot;
   Survey: TSurvey;
   Weather1, Weather2, Weather3, Weather4: TWeatherLog;
   Member: TSurveyMember;
@@ -1213,7 +1213,7 @@ begin
 
 
         try
-          NetStation := TNetStation.Create;
+          NetStation := TSamplingPlot.Create;
           Toponimo := TSite.Create;
           Survey := TSurvey.Create;
 
@@ -1452,7 +1452,7 @@ var
   CSV: TSdfDataSet;
   Reg: TBandingEffort;
   Toponimo: TSite;
-  NetStation: TNetStation;
+  NetStation: TSamplingPlot;
   Survey: TSurvey;
   NetSite: TNetEffort;
   strDate: String;
@@ -1564,7 +1564,7 @@ begin
         Reg.Notes := CSV.FieldByName('NOTES').AsString;
 
         try
-          NetStation := TNetStation.Create;
+          NetStation := TSamplingPlot.Create;
           Toponimo := TSite.Create;
           Survey := TSurvey.Create;
           NetSite := TNetEffort.Create;

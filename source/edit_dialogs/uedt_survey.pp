@@ -282,7 +282,7 @@ end;
 
 procedure TedtSurvey.eNetStationButtonClick(Sender: TObject);
 begin
-  FindDlg(tbNetStations, eNetStation, dsLink.DataSet, 'net_station_id', 'net_station_name');
+  FindDlg(tbSamplingPlots, eNetStation, dsLink.DataSet, 'net_station_id', 'net_station_name');
 end;
 
 procedure TedtSurvey.eNetStationDBEditKeyPress(Sender: TObject; var Key: char);
@@ -292,7 +292,7 @@ begin
   // Alphabetic search in numeric fields
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbNetStations, eNetStation, dsLink.DataSet, 'net_station_id', 'net_station_name', False, Key);
+    FindDlg(tbSamplingPlots, eNetStation, dsLink.DataSet, 'net_station_id', 'net_station_name', False, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -421,7 +421,7 @@ begin
     rsCaptionCountry, Msgs);
   ForeignValueExists(tbMethods, 'method_id', dsLink.DataSet.FieldByName('method_id').AsInteger,
     rsCaptionMethod, Msgs);
-  ForeignValueExists(tbNetStations, 'net_station_id', dsLink.DataSet.FieldByName('net_station_id').AsInteger,
+  ForeignValueExists(tbSamplingPlots, 'sampling_plot_id', dsLink.DataSet.FieldByName('sampling_plot_id').AsInteger,
     rsCaptionSamplingPlot, Msgs);
   ForeignValueExists(tbProjects, 'project_id', dsLink.DataSet.FieldByName('project_id').AsInteger,
     rsCaptionProject, Msgs);

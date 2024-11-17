@@ -25,7 +25,7 @@ uses
 
   function EditMethod(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditSite(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
-  function EditNetStation(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditSamplingPlot(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditPermanentNet(aDataSet: TDataSet; aNetStation: Integer; IsNew: Boolean = False): Boolean;
   function EditInstitution(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditPerson(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
@@ -62,7 +62,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_permissions, cbs_finddialogs,
   udm_main, udm_grid, udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
-  uedt_survey, uedt_netstation, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
+  uedt_survey, uedt_samplingplot, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
   uedt_nest, uedt_egg, uedt_molt, uedt_nestrevision, uedt_neteffort, uedt_permanentnet, uedt_sighting,
   uedt_method, uedt_weatherlog, uedt_project, uedt_permit, uedt_specimen, uedt_sampleprep, uedt_nestowner,
   uedt_imageinfo, uedt_audioinfo, uedt_documentinfo, uedt_vegetation;
@@ -141,7 +141,7 @@ begin
     aDataSet.Close;
 end;
 
-function EditNetStation(aDataSet: TDataSet; IsNew: Boolean): Boolean;
+function EditSamplingPlot(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   CloseQueryAfter: Boolean;
 begin
@@ -152,8 +152,8 @@ begin
     CloseQueryAfter := True;
   end;
 
-  Application.CreateForm(TedtNetStation, edtNetStation);
-  with edtNetStation do
+  Application.CreateForm(TedtSamplingPlot, edtSamplingPlot);
+  with edtSamplingPlot do
   try
     dsLink.DataSet := aDataSet;
     if IsNew then
@@ -171,7 +171,7 @@ begin
     else
       aDataSet.Cancel;
   finally
-    FreeAndNil(edtNetStation);
+    FreeAndNil(edtSamplingPlot);
   end;
 
   if CloseQueryAfter then
@@ -1165,7 +1165,7 @@ begin
         //tbRecordHistory: ;
         //tbRecordVerifications: ;
         //tbGazetteer: ;
-        //tbNetStations: ;
+        //tbSamplingPlots: ;
         //tbPermanentNets: ;
         //tbInstitutions: ;
         //tbPeople: ;
@@ -1277,7 +1277,7 @@ begin
         //tbRecordHistory: ;
         //tbRecordVerifications: ;
         //tbGazetteer: ;
-        //tbNetStations: ;
+        //tbSamplingPlots: ;
         //tbPermanentNets: ;
         //tbInstitutions: ;
         //tbPeople: ;
@@ -1381,7 +1381,7 @@ begin
         //tbRecordHistory: ;
         //tbRecordVerifications: ;
         //tbGazetteer: ;
-        //tbNetStations: ;
+        //tbSamplingPlots: ;
         //tbPermanentNets: ;
         //tbInstitutions: ;
         //tbPeople: ;

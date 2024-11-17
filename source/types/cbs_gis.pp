@@ -964,9 +964,6 @@ begin
   if aTableType = tbGazetteer then
     nameField := 'site_name'
   else
-  if aTableType = tbNetStations then
-    nameField := 'station_name'
-  else
     nameField := 'full_name';
 
   BM := aDataSet.Bookmark;

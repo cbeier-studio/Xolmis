@@ -87,7 +87,6 @@ type
     sqlCon: TSQLConnector;
     sysCon: TSQLConnector;
     sqliteLibLoader: TSQLDBLibraryLoader;
-    scriptNewUserDB: TSQLScript;
     qsConn: TSQLQuery;
     qsUsageData: TSQLQuery;
     scriptTablesMap: TSQLScript;

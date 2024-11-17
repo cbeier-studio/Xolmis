@@ -1,0 +1,717 @@
+object dlgNewDatabase: TdlgNewDatabase
+  Left = 362
+  Height = 283
+  Top = 250
+  Width = 390
+  AutoSize = True
+  BorderStyle = bsDialog
+  Caption = 'New database'
+  ClientHeight = 283
+  ClientWidth = 390
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  OnDestroy = FormDestroy
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 240
+    Width = 390
+    Align = alTop
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object nbPages: TNotebook
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 390
+    PageIndex = 0
+    Align = alTop
+    AutoSize = True
+    TabOrder = 0
+    object pgConnection: TPage
+      object pContentConnection: TPanel
+        Left = 0
+        Height = 240
+        Top = 0
+        Width = 390
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 16
+        ClientHeight = 240
+        ClientWidth = 390
+        Constraints.MinWidth = 390
+        TabOrder = 0
+        object pTitleConnection: TPanel
+          Left = 16
+          Height = 28
+          Top = 16
+          Width = 358
+          Align = alTop
+          Alignment = taLeftJustify
+          AutoSize = True
+          BorderSpacing.Top = 16
+          BorderSpacing.Bottom = 8
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 358
+          Font.Color = 13066075
+          Font.Height = -20
+          ParentBackground = False
+          ParentFont = False
+          TabOrder = 0
+          object lblTitleConnection: TLabel
+            Left = 0
+            Height = 28
+            Top = 0
+            Width = 123
+            Align = alLeft
+            Caption = 'New database'
+          end
+        end
+        object lblName: TLabel
+          Left = 16
+          Height = 15
+          Top = 83
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Connection name: *'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object eName: TEdit
+          Left = 16
+          Height = 23
+          Top = 102
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          TabOrder = 1
+          OnChange = eNameChange
+          OnKeyPress = eNameKeyPress
+        end
+        object lblDBFile: TLabel
+          Left = 16
+          Height = 15
+          Top = 133
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Database file: *'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object eDBFile: TEditButton
+          Left = 16
+          Height = 23
+          Top = 152
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          ButtonHint = 'Select file'
+          ButtonWidth = 24
+          Images = iButtons
+          ImageIndex = 2
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 2
+          OnButtonClick = eDBFileButtonClick
+          OnChange = eNameChange
+          OnKeyPress = eNameKeyPress
+        end
+        object lblConnectionInstruction: TLabel
+          Left = 16
+          Height = 15
+          Top = 52
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 16
+          Caption = 'Inform a name and a file name to create the new connection.'
+        end
+        object pCreateDB: TPanel
+          Left = 16
+          Height = 41
+          Top = 183
+          Width = 358
+          Align = alTop
+          BevelOuter = bvNone
+          ChildSizing.TopBottomSpacing = 8
+          ChildSizing.HorizontalSpacing = 8
+          ClientHeight = 41
+          ClientWidth = 358
+          ParentBackground = False
+          TabOrder = 3
+          object sbCreateDB: TButton
+            AnchorSideLeft.Control = pCreateDB
+            AnchorSideLeft.Side = asrCenter
+            AnchorSideTop.Control = pCreateDB
+            AnchorSideTop.Side = asrCenter
+            Left = 114
+            Height = 25
+            Top = 8
+            Width = 130
+            Caption = 'Create'
+            Enabled = False
+            TabOrder = 0
+            OnClick = sbCreateDBClick
+            OnKeyPress = FormKeyPress
+          end
+        end
+      end
+    end
+    object pgAdmin: TPage
+      object pContentAdmin: TPanel
+        Left = 0
+        Height = 240
+        Top = 0
+        Width = 390
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 16
+        ClientHeight = 240
+        ClientWidth = 390
+        Constraints.MinWidth = 390
+        TabOrder = 0
+        object pTitleAuthentication: TPanel
+          Left = 16
+          Height = 28
+          Top = 16
+          Width = 358
+          Align = alTop
+          Alignment = taLeftJustify
+          AutoSize = True
+          BorderSpacing.Top = 16
+          BorderSpacing.Bottom = 8
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 358
+          Font.Color = 13066075
+          Font.Height = -20
+          ParentBackground = False
+          ParentFont = False
+          TabOrder = 0
+          object lblTitleAuthentication: TLabel
+            Left = 0
+            Height = 28
+            Top = 0
+            Width = 146
+            Align = alLeft
+            Caption = 'Admin password'
+          end
+        end
+        object eNewPass: TEditButton
+          Left = 16
+          Height = 23
+          Top = 102
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          ButtonHint = 'Show/hide password'
+          ButtonWidth = 24
+          EchoMode = emPassword
+          Images = iButtons
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = '*'
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
+          OnButtonClick = eNewPassButtonClick
+          OnChange = eNewPassChange
+          OnKeyPress = eNewPassKeyPress
+        end
+        object lblNewPass: TLabel
+          Left = 16
+          Height = 15
+          Top = 83
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'New password:'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object lblConfirmPass: TLabel
+          Left = 16
+          Height = 15
+          Top = 133
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Confirm password:'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object eConfirmPass: TEditButton
+          Left = 16
+          Height = 23
+          Top = 152
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          ButtonHint = 'Show/hide password'
+          ButtonWidth = 24
+          EchoMode = emPassword
+          Images = iButtons
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = '*'
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 2
+          OnButtonClick = eConfirmPassButtonClick
+          OnChange = eNewPassChange
+          OnKeyPress = eNewPassKeyPress
+        end
+        object pApplyAdmin: TPanel
+          Left = 16
+          Height = 41
+          Top = 183
+          Width = 358
+          Align = alTop
+          BevelOuter = bvNone
+          ChildSizing.TopBottomSpacing = 8
+          ChildSizing.HorizontalSpacing = 8
+          ClientHeight = 41
+          ClientWidth = 358
+          ParentBackground = False
+          TabOrder = 3
+          object sbApplyAdmin: TButton
+            AnchorSideLeft.Control = pApplyAdmin
+            AnchorSideLeft.Side = asrCenter
+            AnchorSideTop.Control = pApplyAdmin
+            AnchorSideTop.Side = asrCenter
+            Left = 114
+            Height = 25
+            Top = 8
+            Width = 130
+            Caption = 'Apply'
+            Enabled = False
+            TabOrder = 0
+            OnClick = sbApplyAdminClick
+            OnKeyPress = FormKeyPress
+          end
+        end
+        object lblAdminInstruction: TLabel
+          Left = 16
+          Height = 15
+          Top = 52
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 16
+          Caption = 'Set a password for the Admin user. '
+          WordWrap = True
+        end
+      end
+    end
+    object pgUser: TPage
+      object pContentUser: TPanel
+        Left = 0
+        Height = 340
+        Top = 0
+        Width = 390
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 16
+        ClientHeight = 340
+        ClientWidth = 390
+        Constraints.MinWidth = 390
+        TabOrder = 0
+        object pTitleUser: TPanel
+          Left = 16
+          Height = 28
+          Top = 16
+          Width = 358
+          Align = alTop
+          Alignment = taLeftJustify
+          AutoSize = True
+          BorderSpacing.Top = 16
+          BorderSpacing.Bottom = 8
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 358
+          Font.Color = 13066075
+          Font.Height = -20
+          ParentBackground = False
+          ParentFont = False
+          TabOrder = 0
+          object lblTitleUser: TLabel
+            Left = 0
+            Height = 28
+            Top = 0
+            Width = 97
+            Align = alLeft
+            Caption = 'Create user'
+          end
+        end
+        object eUserNewPass: TEditButton
+          Left = 16
+          Height = 23
+          Top = 202
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          ButtonHint = 'Show/hide password'
+          ButtonWidth = 24
+          EchoMode = emPassword
+          Images = iButtons
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = '*'
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 3
+          OnButtonClick = eUserNewPassButtonClick
+          OnChange = eUserNewPassChange
+          OnKeyPress = eNewPassKeyPress
+        end
+        object lblUserNewPass: TLabel
+          Left = 16
+          Height = 15
+          Top = 183
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'New password: *'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object lblUserConfirmPass: TLabel
+          Left = 16
+          Height = 15
+          Top = 233
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Confirm password: *'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object eUserConfirmPass: TEditButton
+          Left = 16
+          Height = 23
+          Top = 252
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          ButtonHint = 'Show/hide password'
+          ButtonWidth = 24
+          EchoMode = emPassword
+          Images = iButtons
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = '*'
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 4
+          OnButtonClick = eUserConfirmPassButtonClick
+          OnChange = eUserConfirmPassChange
+          OnKeyPress = eNewPassKeyPress
+        end
+        object pCreateUser: TPanel
+          Left = 16
+          Height = 41
+          Top = 283
+          Width = 358
+          Align = alTop
+          BevelOuter = bvNone
+          ChildSizing.TopBottomSpacing = 8
+          ChildSizing.HorizontalSpacing = 8
+          ClientHeight = 41
+          ClientWidth = 358
+          ParentBackground = False
+          TabOrder = 5
+          object sbCreateUser: TButton
+            AnchorSideLeft.Control = pCreateUser
+            AnchorSideLeft.Side = asrCenter
+            AnchorSideTop.Control = pCreateUser
+            AnchorSideTop.Side = asrCenter
+            Left = 114
+            Height = 25
+            Top = 8
+            Width = 130
+            Caption = 'Create'
+            Enabled = False
+            TabOrder = 0
+            OnClick = sbCreateUserClick
+            OnKeyPress = FormKeyPress
+          end
+        end
+        object lblUserInstruction: TLabel
+          Left = 16
+          Height = 15
+          Top = 52
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 16
+          Caption = 'Create your user to access the database. '
+          WordWrap = True
+        end
+        object lblUserName: TLabel
+          Left = 16
+          Height = 15
+          Top = 83
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'User name: *'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object eUserName: TEdit
+          Left = 16
+          Height = 23
+          Top = 102
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          TabOrder = 1
+          OnChange = eUserNameChange
+          OnKeyPress = eNameKeyPress
+        end
+        object lblUserFullName: TLabel
+          Left = 16
+          Height = 15
+          Top = 133
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Full name:'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object eUserFullName: TEdit
+          Left = 16
+          Height = 23
+          Top = 152
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          TabOrder = 2
+          OnChange = eNameChange
+          OnKeyPress = eNameKeyPress
+        end
+      end
+    end
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 41
+    Top = 242
+    Width = 390
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsScaleChilds
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 41
+    ClientWidth = 390
+    TabOrder = 1
+    object sbCancel: TButton
+      AnchorSideLeft.Side = asrBottom
+      Left = 244
+      Height = 25
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = 'Cancel'
+      TabOrder = 0
+      Visible = False
+      OnKeyPress = FormKeyPress
+    end
+  end
+  object OpenDlg: TOpenDialog
+    Title = 'Select database file'
+    DefaultExt = '.sqlite3'
+    Filter = 'SQLite 3 (*.sqlite3; *.db3; *.s3db; *.sl3)|*.sqlite3; *.db3; *.s3db; *.sl3|Firebird (*.fdb)|*.fdb'
+    Left = 288
+    Top = 80
+  end
+  object BCrypt: TDCP_blowfish
+    Id = 5
+    Algorithm = 'Blowfish'
+    MaxKeySize = 448
+    BlockSize = 64
+    Left = 232
+    Top = 80
+  end
+  object iButtons: TImageList
+    Scaled = True
+    Left = 28
+    Top = 229
+    Bitmap = {
+      4C7A030000001000000010000000870200000000000078DAED964D68134114C7
+      6BF5A4D052ED4104C1444390C4432071632426E247F5E6AD228209450F1E3C27
+      31C75C82E92918B13D894A2C1ABC053C28B1B6265049D28021A08818A3D5D2A6
+      E0E6B3E8F6FFC2548675F3C5D28B74E007B333EFFFE6F3BDD98181EDC2178D46
+      33046E81195064CCB0B6A12EDA23E03D7804C6C14106D51FB3BEC36DB4A3E01B
+      98E8E07F82D98C2AF44D8310F77D192C807754E7DA27C95641FF028CB0FA0141
+      10D633998C44509DDA58DF08D976D987EB5EAF576A369B2D3C1E8F446D7D9C41
+      6BFC743A2D11FCF87DF81867EB5FE0D7BF5DB624669E024185FE02F801AC2A7C
+      8C311F36153ECE311F27C169B0043E8007E006D8DD457F1494C032B0833D400B
+      AE8227200B0EB5D1EE035FC1153636CDE3943CAE98CD5E05FD942CFEEF021138
+      657614FF530AFA38186675C16EB74BB1584C32180C159A0F67374CB65DF6E1A6
+      CFE76BC57E3299948C4663156D67FA3887FD168BA5994AA5A45C2E27D96C36CA
+      1F2BE06C1F3E2E81599673AFD1BD607B7A5EC5FD38C17C8CA9F021301F1755F8
+      384E6FD27F943FE84DB90DF22CDE7C60B00F7D28180CCE89A2F8A952A97C76B9
+      5C8B68BBDFAB0FD8AD361A8DD5CDF70A75D1ED762FB238FECEF808EEB489BDBF
+      6F1DC7EF7ABDBEBC49B55A2D462211BA8FF7DAE9C9261008CC23F64A66B37945
+      8EC9642AC3F60F78C8FF03901E63FC74381C5F1289C4EB5AADB684359495A0FD
+      F1FBFD49689EF3FA502834178D46130AEBF88772B94CE7B4C6EBAD562B8D29F6
+      A22F140A6FA179C5EBB3D9EC9B5EB4A0E6743A8BB29C54A139F5A28FC7E309D8
+      3F93E7CE70383C8BF9AF75D0D6F3F9FCBC5EAF2FC97338FBC79BD66AB5BF743A
+      DDBA12E8A31CF8121CEB700F77825D1CF43DC8D8B115B1B701F4CA27B4
+    }
+    BitmapAdv = {
+      4C69020000004C7A030000001400000014000000300300000000000078DAED97
+      5F4853511CC7B57F84FD938A22FA0386EECF83C41042CBF6D21FD3A0977A58AF
+      8342581BAE59F9923D941515064145EBA15EEA5D8C621165386B6B372471BA30
+      A7A653B78AC57473B387D3F7276772B95CB77B870F0D76E1F370B6733EF7DEF3
+      3BF7F73BA7A8A870E5C3555656B6055C036FC0340883B7E026D8A6D2759E3BEE
+      8163603B39C011709BBB1DA05881AB157C06DA0C7DF60237B895C5650243602B
+      6F6F040FC12498024F4029FFAF140C00F312AE15600CECE3ED62F0BEB1B19109
+      82C07A7B7B99CD6663F8CD0356F23E1A7E9FD532BE7AD02D6A1BABAAAA583C1E
+      67F3F3F30BCCCDCDB1EAEA6A72D68BFA51BC4EC9F82E8193A2F6B9A6A6A64557
+      9A969616F2D945FD285EAD0AE2A2E8F954AC199ABF77347F3E9F6F61FEAC562B
+      B93EA5E72F07E706F0004CF0183BD3F12D5C856B99F327ADADC3CBE83BC8F364
+      DE38C12EF092E745A2135CA5DAA2D2497523C19D7AB003EC0127C07D7E3F2BE5
+      60052E0B18E6B97F5AEEDDA9B6F03C733D8BEB0C08809DBC5D277ACEE3E091A8
+      7E6CE67DCD197C83347FA27AF29AF25F656565DA69061F45F543C7DF618D8C8B
+      6AAB206AEF6F686858C8CB5EAF57EAAC93D48FD3323E87A47E9C75381C8BB95E
+      E25C2FEA77145C51109743068381CDCECE2E3A3D1E0F2B2F2F4FE4BA3E31CE65
+      369B99DBED6681408035373753FD10725DF3185302EE806F7C2F7017ACCDC76F
+      73199D07C0B342C6FFEFEB5109DF870B3CFF11AFD2FBD51C7C17EC76BB2F1A8D
+      0E26128971C2EFF7F7545454503E32E4E0EB9F99991996EE47474747BD1A8DE6
+      8FA88610FDE032D894C1379D4C267F497D442A958A626F3A9986EEDBD6D6D683
+      313772F1C981BE3F698C12DFC8C888D762B17CA9A9A9092F05F6D1F4DD321EB7
+      C7609D9C2F180C7A8C46E344281412D00E83482662B1D810CE013E8C7F2AF561
+      2F3F86FB4E21C6034ADF9B8844225F317E5CEA6B6F6FEF26D4B888BEBE3E3ACB
+      754A7DA837317A0795BE446D6D6D88F296D4E772B9BAD43E5B47474717C63E97
+      89EF187D1B6A5C588B21BD5EFF1B6377CB9D7B9D4EE707F4FBABC485D8FD3099
+      4C7EAADB4BAC3F3ACFBE407D8DEB74BA6426B45A6D0A7DBF838BD9CEE8F87F15
+      ED47B291AF79F41F095F67D74C7A030000001800000018000000250400000000
+      000078DAED985F4C53571CC7C5A14613A363BA69A28930201426630FDB83D23E
+      0C8D8DEDFE240407DD13238059A0A9613048240A3121AB5B8408DB035B9698CD
+      B0C4916CCC34B83D143B2B1B5BB6A0DD46E8D880348B3A36C1564A41AFDF9FFE
+      4A6E4EEEBD6D2FB025DA9B7C42399CFBFDD1737EE7FCBEE7AC5A957C1EF5273D
+      3DFD49F022B083C3A0103CBE44CD14F00AF805482A5C027B7468678101D61806
+      35C0049E00DBC13E500FC6B9CFE7606B9CDA3BF8BDEBE00DF09846DFF5E06D10
+      024360630CED34E003FF803C597B063807AE8109F021D822FBFB7E10015F8375
+      1AFA5D202C1F537CCE04339999995255559564B3D9A2634FDF71B3ACDF6BDCEE
+      50D1DE0C82E07DA1FD8BECEC6C697474548A4422F771BBDDD118EF0A7DBF01BF
+      2B8D29DAEAF81D839043376B6A6A16B5A358AD56EA3B2468BCC41A2F2BE8536E
+      3B85B6D5A45F5B5BABA6FF8342FFCFC0C10472F54B1A1FBFDFBFA8EDF178A2E3
+      F3DE32AC5D9ADF5B34BFD5D5D5F2F99D58EA1A96C5781AF4821B60127C1CEF7A
+      4A74CF48EEC6C927F9E85A3BA7C09115D43FCDFBCAD115D24FE1BAF79FC7C0E7
+      A78091EBFDEBE059AD3A9B680CFC7C13DC15BCCF02B8009ED311631BD574D669
+      967908F23FE95C078F8200C7FD24DE5AC05EF02AD7FA3E790C85BE1B380EF91F
+      2FFD1E87FFB902A6C15E1EAB8F84EF61011F505FD97B07D8FFB8C01A0DFD77C0
+      3C785EA88F0B0AF3310636C9FA95711FBB8AF646F20AE08CE87F72727224BBDD
+      2E29C438A9E07FFCE42314F48FF0FBCF88FE87B4C937D4D7D78B314C828645C3
+      FF90AF3FA1D0FEAFDC5F893114729B72C99C40AEF692FF191919598C51515121
+      2DD73A87C62EF2D3E47FCACBCBA592921229232383B46F2F630C3A139CE19CF9
+      95F7C2B4FF6BBF4AC68819C3B18231DAC05B49C7F1487AACDDE02CF8996B2471
+      1E5897493B9C9B9B1B6A6C6C1C6C6969F1126565653ECEE9634BD43F9B979717
+      0A87C337C4B36E6767E7458E411ED226500A5ED0BA0761FDE1A6A6A641513B4A
+      5757D745DE97D5B8AC75A6A47BA4D6D656AF9A3E313B3BFB5728149A10F8D3EB
+      F50EA046CF42E3D3A5E86BE1743ABFA55A1AAF3EE6E1EF9E9E1E776969A9CF68
+      3406625150507093C7E92BA57C93EB93B6D56A1DA5F96E6868F8AEA3A3C3130F
+      EDEDED1E7A0F5A77C0AB6AFA757575DFE7E7E7CF4C4F4F8FE818AB05CE69AF92
+      7E2010F891F264008FDEB9E8EEEEA6BBC1EBA27E7373F3658BC5E2379BCD63E8
+      37AF533F6C3299C8579F13F50D06C37DCF31393939A4F77F77B95C6E9EE74251
+      9FDA1D0E876E6DAC8F6B9413D0E951CA9FACACACF96030F8875EFDB6B6B64BEC
+      BB762AE8FB2A2B2B7FD2AB3D3535E5435ED059E6B8DA3D5B5151D178E4C19390
+      F6DCDC5CB0B8B8F837BE335BAFA26FA6F1B7D96C57FBFAFADCFDFDFD71416B9C
+      F28DCF53C6187BE821F6977735F64991193EA71526500B52C15A05521578A8EF
+      E4EE018EC3F3D7
+    }
+  end
+  object iButtonsDark: TImageList
+    Scaled = True
+    Left = 80
+    Top = 229
+    Bitmap = {
+      4C7A030000001000000010000000A60100000000000078DAEDD5CB2B44511C07
+      F0B1226AA61953D450C2C63F603C22F2186261C795B2188FB2F03FB0662C98CD
+      B05194C9CE42D9DAB2B0B1121B8F189184666EC4F797DFD4E974EE6B4E52D39C
+      FAD47D9CEFEF9EEE3DE71E9FAFD4C4669AA61F16210DD72CCDD7FC0ED9663887
+      1D18877A46C7BB7CAFC9221B863B88DBD48F739FB0E2DE26AC08E7069C3243B8
+      BE4A7D15F92308F2711D7CC237A3E308DF0B525F87F7302F64F3E63C7C8388D5
+      F33DD4988013669466F69FAE997D886AE487E001DA346AC4B84687468D01AED1
+      09BD700F17B04DF3172A1DF22D700B8FD00555D00853B00767D06091AD861B98
+      E467D338BAA53EB3DC27A4C8A7A4F59F8437E891FAD1FA4F29F28710E0E3A8B0
+      F6DE693C42BF00F575780F0BD2DAFF803E0FDFA1D6FC6D628D27E8F750630C8E
+      F99F3B4DF382DFE9A0C6FC68E71A318D1A51AE31AC51A395F6A422FA7FD0DC5F
+      8317FED639D8820A97F965C57E430EA0CC45FE4A91FDE27D7B94C793BFFE0A1B
+      5023E4335236C7FBEF889415256CC6530E3390B5C8928CCDF3DDC81651FEB280
+      BCF8FE960AC827847C88FFABCF2E72347FD6C5F9F39FED0733262146
+    }
+    BitmapAdv = {
+      4C69020000004C7A030000001400000014000000FB0100000000000078DAED97
+      3B48C34018C7D5221617AD8A0AEAE2601D040711C43A888A0F0417171D1CEA24
+      5A5C0A4E520A0A8AAD8A3A28BA38BA77AAAFC11687E2EA031FA083B63AA88876
+      E8A2FF832F70844B7A49155AC9C10F7ABDE3974BBECBF75DF2F2AC960B2D954A
+      958339B00F12E0191C82055069D0E521C72AE80555CC017AC012B9BD205FC2E5
+      0331E0D499530FA260318D6B04DC800AEA97802DF004E260073868AC145C8071
+      0D57017800CD5CFF047CAB3805369AD340D72914F8064084EB77095C0A7DDC3C
+      16AF61816F060C71FD491DDF34378FC5CB271117A9F519D833699F9F09278BEF
+      2678A4E7BECDE26ABDED56FB83FCC9F656F72FFA5C942773C6096A4008DC1321
+      CADF65069DAC6E24C9D908AA411D18046B545B3C92F5630ADC51EE4F88EE9DF2
+      32CB33F3695CA3E08ADD27F5FBB975B6B25A01EC34E60097C0ADE363E32EFA6D
+      0361CA798AD30DF6B8F94E9DFAC16AEB19D76F53E551C539066AB979618DFAE1
+      55D58F09416E569C76D53A6625E2D2A9513B9266F627DB0BE040E08B69C55DC2
+      590C82E01A9C83002802ED669D3AD7CA25E7AE95F1B3BE1EB133F706F850BD0B
+      1D267D418DF7F50BB498F025347CC774168C0AC6DEC08AA89EE0BF4FC1FC23CA
+      0B119DB32AC32FB9E6268D33AA9A5BC9F5C9F262F9B2DE17CFC027DA2F810C7C
+      7E818F7D7FAF8377039E57B06CF4FCF69FDA0F15A0FC494C7A03000000180000
+      0018000000AE0200000000000078DAED984D48554114C735113178686AA55098
+      A68B2888166D2A5D44512416B589B295AB8830ED8336CF7421487ED022FA5814
+      C1D34DA082BA082A9016B54857954A5081CF5CA4A06926F2D29EFF83471886B9
+      73EFDC779F2E9C811FBE37CEFCCFBB7367CEF9DF9B9262DB666FB1586C07380E
+      6AC055700C6C4B5033159C032320EEC07B70C487762978C71A9FC075500E7241
+      013801EE80311ED30DB67BD4DEC5F326413548D38CCD0477C15F3008422EDA39
+      60184C83FD427F31E802BF40143C0379C2FF4FC656DB1B90A1D17F0416C535C5
+      E71230A7587BBAC66C61DC45EEAF75D0CE06F3E0B1D4DFABB9BF6DD2D8B7E0BB
+      6A4DD1778BE7EC93F6D06F8DFEA0A451C9FD6715FAB4B75BA4BE2D2EFA438AF1
+      2FC11983BDDAA7D16F0FE0ECD2FDFDA3D08E267A8685187B410F9802E3E085D7
+      F3649A336C36B6CD365F67E701A84BA2FE43CE2BE124E9A772DD5BF718F8BC13
+      9471BDAF02077575D63406FE5E03FFA5FCBC045E83433E62E40B35BD5EF010E4
+      7F8AB80E86C104C7EDF45A0BD80B7EE15ADF2FC6508CDDCA71C8FF7CA0EF1EFC
+      CF67300B8EF25A3D97AEA3023CA1B1C2BC53EC7F5E81748DFE7DF00F1C96EAE3
+      921483EEC70F90258CBBC4636A1CB443EC15222EFE478CD1AAF03FDFC84728F4
+      EB78FE010FFE672D46B9A451A1F13FE4EB9B14FD330EDEA4DE616FD35E3A6DB0
+      577B34FE271CC099DEC37E5AD65E0830063D134478CF8C722ECCD9A87C6563B8
+      C6A84D628C6670DB3A8E4DE9B1AAF8F95DACE5F43C7B4395D30DB52F68F224F1
+      349118983BE0A24FD791C7F5BF01344ADCE37704990EFA3F35DA9437770BDE42
+      F73BBE92BF51E84F388CA77C5C48CFA3EC2DE21E8818AE5D01BF678A7B24AAD0
+      B8A95853A283DFD9C40D9835581F3F587DAB1FB4FE7880FA333EF29B091F15FA
+      E703D4BFE290672E737E5CF6A1B9CCB9B0DA566AEF6D050D2A1A98
+    }
+  end
+end

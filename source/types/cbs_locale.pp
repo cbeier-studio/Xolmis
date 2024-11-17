@@ -73,6 +73,21 @@ uses
     rsTitleSamplePreps = 'Preparations';
     rsTitleWeather = 'Weather';
     rsTitleVegetation = 'Vegetation sample';
+    rsTitleDBMetadata = 'Database metadata';
+    rsTitleVerifications = 'Verifications';
+    rsTitleBandHistory = 'Band history';
+    rsTitleSpecimenCollectors = 'Collectors';
+    rsTitlePoiLibrary = 'Points of interest';
+    rsTitleImages = 'Images';
+    rsTitleDocuments = 'Documents and links';
+    rsTitleAudioLibrary = 'Audio recordings';
+    rsTitleNextBirthdays = 'Next birthdays';
+    rsTitleLastSurveys = 'Last surveys';
+    rsTitleLastLifers = 'Last lifers';
+    rsTitleExpiredPermits = 'Expired permits';
+    rsTitleBandsBalance = 'Bands balance';
+    rsTitleBandsRunningOut = 'Bands running out';
+    rsTitleAvgExpeditionDuration = 'Average expedition duration';
     rsTitleImportCoordinates = 'Import coordinates';
     rsTabSampling = 'Sampling';
     rsTabIndividuals = 'Individuals';
@@ -96,6 +111,7 @@ uses
     rsTitleRestore = 'Restore backup';
     rsTitleNewBandsBatch = 'New batch of bands';
     rsTitleAutoUpdate = 'Autoupdate';
+    rsTitleUpgradeDatabase = 'Upgrade database';
     rsTitleTaxonHierarchy = 'Taxa hierarchy';
     rsTitleRecreateThumbnails = 'Recreate thumbnails';
     rsTitlePrintPreview = 'Print preview';
@@ -129,6 +145,8 @@ uses
     rsErrorDatabaseNotFound = 'Database file not found:' + LineEnding + '%s';
     rsErrorDatabaseCorrupted = 'The database file is corrupted.' + LineEnding +
       'Restoring a database backup is recommended.';
+    rsErrorCreatingDatabaseSchema = 'Error while creating the database schema: %s';
+    rsErrorUpgradingDatabaseSchema = 'Error while upgrading the database schema: %s';
     rsErrorBackupFailed = 'Backup file creation failed.';
     rsErrorBackupNotFound = 'Backup file not found: %s';
     rsErrorRestoreFailed = 'Backup restore failed.';
@@ -160,6 +178,9 @@ uses
     rsProgressImportCaptures = 'Importing captures...';
     rsFinishedImporting = 'Finished importing!';
     rsProgressGeneratingReport = 'Generating report...';
+    rsProgressCreatingTable = 'Creating table: %s (%d/%d)';
+    rsProgressCreatingView = 'Creating view: %s (%d/%d)';
+    rsProgressPopulatingTables = 'Populating tables...';
 
     { Success messages }
     rsSuccessfulUpdate = '%s was updated successfully!';
@@ -175,6 +196,7 @@ uses
     rsSuccessfulRecreateThumbnails = 'Image thumbnails recreated successfully!';
     rsSuccessfulConnectionTest = 'Connection to database was successful!';
     rsSuccessfulDatabaseCreation = 'The database file was created successfully!';
+    rsSuccessfulDatabaseUpgrade = 'The database schema was upgraded successfully!';
     rsSuccessfulUpdateAdminPassword = 'The Admin password was updated successfully!';
 
     { Deletion messages }

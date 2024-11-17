@@ -1,18 +1,18 @@
-object dlgFirstConfig: TdlgFirstConfig
+object dlgNewDatabase: TdlgNewDatabase
   Left = 362
   Height = 283
   Top = 250
   Width = 390
   AutoSize = True
   BorderStyle = bsDialog
-  Caption = 'Initial configuration'
+  Caption = 'New database'
   ClientHeight = 283
   ClientWidth = 390
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
@@ -30,6 +30,7 @@ object dlgFirstConfig: TdlgFirstConfig
     Width = 390
     PageIndex = 0
     Align = alTop
+    AutoSize = True
     TabOrder = 0
     object pgConnection: TPage
       object pContentConnection: TPanel
@@ -37,7 +38,8 @@ object dlgFirstConfig: TdlgFirstConfig
         Height = 240
         Top = 0
         Width = 390
-        Align = alClient
+        Align = alTop
+        AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
@@ -67,9 +69,9 @@ object dlgFirstConfig: TdlgFirstConfig
             Left = 0
             Height = 28
             Top = 0
-            Width = 141
+            Width = 123
             Align = alLeft
-            Caption = 'New connection'
+            Caption = 'New database'
           end
         end
         object lblName: TLabel
@@ -118,14 +120,14 @@ object dlgFirstConfig: TdlgFirstConfig
           ImageIndex = 2
           MaxLength = 0
           NumGlyphs = 1
-          OnButtonClick = eDBFileButtonClick
-          OnChange = eNameChange
-          OnKeyPress = eNameKeyPress
           ParentShowHint = False
           PasswordChar = #0
           ShowHint = True
           Spacing = 0
           TabOrder = 2
+          OnButtonClick = eDBFileButtonClick
+          OnChange = eNameChange
+          OnKeyPress = eNameKeyPress
         end
         object lblConnectionInstruction: TLabel
           Left = 16
@@ -173,7 +175,7 @@ object dlgFirstConfig: TdlgFirstConfig
         Height = 240
         Top = 0
         Width = 390
-        Align = alClient
+        Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
@@ -223,14 +225,14 @@ object dlgFirstConfig: TdlgFirstConfig
           ImageIndex = 0
           MaxLength = 0
           NumGlyphs = 1
-          OnButtonClick = eNewPassButtonClick
-          OnChange = eNewPassChange
-          OnKeyPress = eNewPassKeyPress
           ParentShowHint = False
           PasswordChar = '*'
           ShowHint = True
           Spacing = 0
           TabOrder = 1
+          OnButtonClick = eNewPassButtonClick
+          OnChange = eNewPassChange
+          OnKeyPress = eNewPassKeyPress
         end
         object lblNewPass: TLabel
           Left = 16
@@ -268,14 +270,14 @@ object dlgFirstConfig: TdlgFirstConfig
           ImageIndex = 0
           MaxLength = 0
           NumGlyphs = 1
-          OnButtonClick = eConfirmPassButtonClick
-          OnChange = eNewPassChange
-          OnKeyPress = eNewPassKeyPress
           ParentShowHint = False
           PasswordChar = '*'
           ShowHint = True
           Spacing = 0
           TabOrder = 2
+          OnButtonClick = eConfirmPassButtonClick
+          OnChange = eNewPassChange
+          OnKeyPress = eNewPassKeyPress
         end
         object pApplyAdmin: TPanel
           Left = 16
@@ -315,6 +317,201 @@ object dlgFirstConfig: TdlgFirstConfig
           BorderSpacing.Bottom = 16
           Caption = 'Set a password for the Admin user. '
           WordWrap = True
+        end
+      end
+    end
+    object pgUser: TPage
+      object pContentUser: TPanel
+        Left = 0
+        Height = 340
+        Top = 0
+        Width = 390
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 16
+        ClientHeight = 340
+        ClientWidth = 390
+        Constraints.MinWidth = 390
+        TabOrder = 0
+        object pTitleUser: TPanel
+          Left = 16
+          Height = 28
+          Top = 16
+          Width = 358
+          Align = alTop
+          Alignment = taLeftJustify
+          AutoSize = True
+          BorderSpacing.Top = 16
+          BorderSpacing.Bottom = 8
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 358
+          Font.Color = 13066075
+          Font.Height = -20
+          ParentBackground = False
+          ParentFont = False
+          TabOrder = 0
+          object lblTitleUser: TLabel
+            Left = 0
+            Height = 28
+            Top = 0
+            Width = 97
+            Align = alLeft
+            Caption = 'Create user'
+          end
+        end
+        object eUserNewPass: TEditButton
+          Left = 16
+          Height = 23
+          Top = 202
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          ButtonHint = 'Show/hide password'
+          ButtonWidth = 24
+          EchoMode = emPassword
+          Images = iButtons
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = '*'
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 3
+          OnButtonClick = eUserNewPassButtonClick
+          OnChange = eUserNewPassChange
+          OnKeyPress = eNewPassKeyPress
+        end
+        object lblUserNewPass: TLabel
+          Left = 16
+          Height = 15
+          Top = 183
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'New password: *'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object lblUserConfirmPass: TLabel
+          Left = 16
+          Height = 15
+          Top = 233
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Confirm password: *'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object eUserConfirmPass: TEditButton
+          Left = 16
+          Height = 23
+          Top = 252
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          ButtonHint = 'Show/hide password'
+          ButtonWidth = 24
+          EchoMode = emPassword
+          Images = iButtons
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = '*'
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 4
+          OnButtonClick = eUserConfirmPassButtonClick
+          OnChange = eUserConfirmPassChange
+          OnKeyPress = eNewPassKeyPress
+        end
+        object pCreateUser: TPanel
+          Left = 16
+          Height = 41
+          Top = 283
+          Width = 358
+          Align = alTop
+          BevelOuter = bvNone
+          ChildSizing.TopBottomSpacing = 8
+          ChildSizing.HorizontalSpacing = 8
+          ClientHeight = 41
+          ClientWidth = 358
+          ParentBackground = False
+          TabOrder = 5
+          object sbCreateUser: TButton
+            AnchorSideLeft.Control = pCreateUser
+            AnchorSideLeft.Side = asrCenter
+            AnchorSideTop.Control = pCreateUser
+            AnchorSideTop.Side = asrCenter
+            Left = 114
+            Height = 25
+            Top = 8
+            Width = 130
+            Caption = 'Create'
+            Enabled = False
+            TabOrder = 0
+            OnClick = sbCreateUserClick
+            OnKeyPress = FormKeyPress
+          end
+        end
+        object lblUserInstruction: TLabel
+          Left = 16
+          Height = 15
+          Top = 52
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 16
+          Caption = 'Create your user to access the database. '
+          WordWrap = True
+        end
+        object lblUserName: TLabel
+          Left = 16
+          Height = 15
+          Top = 83
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'User name: *'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object eUserName: TEdit
+          Left = 16
+          Height = 23
+          Top = 102
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          TabOrder = 1
+          OnChange = eUserNameChange
+          OnKeyPress = eNameKeyPress
+        end
+        object lblUserFullName: TLabel
+          Left = 16
+          Height = 15
+          Top = 133
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Full name:'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object eUserFullName: TEdit
+          Left = 16
+          Height = 23
+          Top = 152
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          TabOrder = 2
+          OnChange = eNameChange
+          OnKeyPress = eNameKeyPress
         end
       end
     end

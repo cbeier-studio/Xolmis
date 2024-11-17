@@ -334,11 +334,11 @@ type
 
 type
 
-  { TNetStation }
+  { TSamplingPlot }
 
-  TNetStation = class(TXolmisRecord)
+  TSamplingPlot = class(TXolmisRecord)
   protected
-    FName: String;
+    FFullName: String;
     FAcronym: String;
     FLongitude: Extended;
     FLatitude: Extended;
@@ -352,9 +352,9 @@ type
     procedure GetData(aKey: Integer); overload;
     procedure GetData(aDataSet: TDataSet); overload;
     function Find(aAcronym: String): Boolean;
-    function Diff(aOld: TNetStation; var aList: TStrings): Boolean;
+    function Diff(aOld: TSamplingPlot; var aList: TStrings): Boolean;
   published
-    property Name: String read FName write FName;
+    property FullName: String read FFullName write FFullName;
     property Acronym: String read FAcronym write FAcronym;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
@@ -2182,9 +2182,9 @@ begin
   end;
 end;
 
-{ TNetStation }
+{ TSamplingPlot }
 
-constructor TNetStation.Create(aValue: Integer);
+constructor TSamplingPlot.Create(aValue: Integer);
 begin
   if aValue > 0 then
     GetData(aValue)
@@ -2192,10 +2192,10 @@ begin
     Clear;
 end;
 
-procedure TNetStation.Clear;
+procedure TSamplingPlot.Clear;
 begin
   inherited;
-  FName := EmptyStr;
+  FFullName := EmptyStr;
   FAcronym := EmptyStr;
   FLongitude := 0.0;
   FLatitude := 0.0;
@@ -2205,7 +2205,7 @@ begin
   FCountryId := 0;
 end;
 
-procedure TNetStation.GetData(aKey: Integer);
+procedure TSamplingPlot.GetData(aKey: Integer);
 var
   Qry: TSQLQuery;
 begin
@@ -2214,8 +2214,8 @@ begin
   try
     DataBase := DMM.sqlCon;
     Clear;
-    Add('SELECT * FROM net_stations');
-    Add('WHERE net_station_id = :cod');
+    Add('SELECT * FROM sampling_plots');
+    Add('WHERE sampling_plot_id = :cod');
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
@@ -2226,16 +2226,16 @@ begin
   end;
 end;
 
-procedure TNetStation.GetData(aDataSet: TDataSet);
+procedure TSamplingPlot.GetData(aDataSet: TDataSet);
 begin
   if not aDataSet.Active then
     Exit;
 
   with aDataSet do
   begin
-    FId := FieldByName('net_station_id').AsInteger;
-    FName := FieldByName('station_name').AsString;
-    FAcronym := FieldByName('station_acronym').AsString;
+    FId := FieldByName('sampling_plot_id').AsInteger;
+    FFullName := FieldByName('full_name').AsString;
+    FAcronym := FieldByName('acronym').AsString;
     FLatitude := FieldByName('latitude').AsFloat;
     FLongitude := FieldByName('longitude').AsFloat;
     FLocalityId := FieldByName('locality_id').AsInteger;
@@ -2248,7 +2248,7 @@ begin
   end;
 end;
 
-function TNetStation.Find(aAcronym: String): Boolean;
+function TSamplingPlot.Find(aAcronym: String): Boolean;
 var
   Qry: TSQLQuery;
 begin
@@ -2260,14 +2260,14 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
     Clear;
-    Add('SELECT net_station_id FROM net_stations');
-    Add('WHERE (station_acronym = :aacronym)');
+    Add('SELECT sampling_plot_id FROM sampling_plots');
+    Add('WHERE (acronym = :aacronym)');
     ParamByName('AACRONYM').AsString := aAcronym;
     Open;
     Result := RecordCount > 0;
     if Result = True then
     begin
-      GetData(FieldByName('net_station_id').AsInteger);
+      GetData(FieldByName('sampling_plot_id').AsInteger);
     end;
     Close;
   finally
@@ -2275,14 +2275,14 @@ begin
   end;
 end;
 
-function TNetStation.Diff(aOld: TNetStation; var aList: TStrings): Boolean;
+function TSamplingPlot.Diff(aOld: TSamplingPlot; var aList: TStrings): Boolean;
 var
   R: String;
 begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff(rscName, aOld.Name, FName, R) then
+  if FieldValuesDiff(rscName, aOld.FullName, FFullName, R) then
     aList.Add(R);
   if FieldValuesDiff(rscAcronym, aOld.Acronym, FAcronym, R) then
     aList.Add(R);

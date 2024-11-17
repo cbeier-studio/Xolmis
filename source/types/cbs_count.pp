@@ -38,7 +38,7 @@ uses
   procedure CountSightingsSQL(const aSQL: TStrings);
   procedure CountBotanicTaxaSQL(const aSQL: TStrings);
   procedure CountGazetteerSQL(const aSQL: TStrings);
-  procedure CountNetStationsSQL(const aSQL: TStrings);
+  procedure CountSamplingPlotsSQL(const aSQL: TStrings);
   procedure CountInstitutionsSQL(const aSQL: TStrings);
   procedure CountNestsSQL(const aSQL: TStrings);
   procedure CountCapturesSQL(const aSQL: TStrings);
@@ -237,8 +237,8 @@ begin
       ;
     tbEggs:
       ;
-    tbNetStations:
-      CountNetStationsSQL(aSQL);
+    tbSamplingPlots:
+      CountSamplingPlotsSQL(aSQL);
     tbTaxonRanks:
       ;
     tbZooTaxa:
@@ -447,22 +447,22 @@ begin
   end;
 end;
 
-procedure CountNetStationsSQL(const aSQL: TStrings);
+procedure CountSamplingPlotsSQL(const aSQL: TStrings);
 begin
   with aSQL do
   begin
     Clear;
     Add('WITH lista AS (');
-    Add('SELECT ns.active_status AS ativo, ns.marked_status AS marcado, ns.*,');
+    Add('SELECT pl.active_status AS ativo, ns.marked_status AS marcado, pl.*,');
     Add('  gl.site_name AS locality_name,');
     Add('  gm.site_name AS municipality_name,');
     Add('  gs.site_name AS state_name,');
     Add('  gc.site_name AS country_name');
-    Add('FROM net_stations AS ns');
-    Add('LEFT JOIN gazetteer AS gl ON ns.locality_id = gl.site_id');
-    Add('LEFT JOIN gazetteer AS gm ON ns.municipality_id = gm.site_id');
-    Add('LEFT JOIN gazetteer AS gs ON ns.state_id = gs.site_id');
-    Add('LEFT JOIN gazetteer AS gc ON ns.country_id = gc.site_id');
+    Add('FROM sampling_plots AS pl');
+    Add('LEFT JOIN gazetteer AS gl ON pl.locality_id = gl.site_id');
+    Add('LEFT JOIN gazetteer AS gm ON pl.municipality_id = gm.site_id');
+    Add('LEFT JOIN gazetteer AS gs ON pl.state_id = gs.site_id');
+    Add('LEFT JOIN gazetteer AS gc ON pl.country_id = gc.site_id');
     // Add(')');
   end;
 end;

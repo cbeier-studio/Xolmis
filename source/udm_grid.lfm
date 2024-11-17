@@ -6840,7 +6840,7 @@ object DMG: TDMG
       '  gm.site_name AS municipality_name,'
       '  gs.site_name AS state_name,'
       '  gc.site_name AS country_name,'
-      '  ns.station_name AS net_station_name,'
+      '  pl.full_name AS net_station_name,'
       '  mt.method_name AS method_name,'
       '  pj.short_title AS project_name,'
       '  (SELECT CAST((SUM(ef.net_area) + SUM(ef.open_time_total)) AS REAL) FROM nets_effort AS ef'
@@ -6851,7 +6851,7 @@ object DMG: TDMG
       'LEFT JOIN gazetteer AS gm ON sv.municipality_id = gm.site_id'
       'LEFT JOIN gazetteer AS gs ON sv.state_id = gs.site_id'
       'LEFT JOIN gazetteer AS gc ON sv.country_id = gc.site_id'
-      'LEFT JOIN net_stations AS ns ON sv.net_station_id = ns.net_station_id'
+      'LEFT JOIN sampling_plots AS pl ON sv.net_station_id = pl.sampling_plot_id'
       'LEFT JOIN methods AS mt ON sv.method_id = mt.method_id'
       'LEFT JOIN projects AS pj ON sv.projetc_id = pj.project_id'
       'WHERE (sv.active_status = 1)'
@@ -12823,28 +12823,23 @@ object DMG: TDMG
       DisplayValues = 'True;False'
     end
   end
-  object qNetStations: TSQLQuery
+  object qSamplingPlots: TSQLQuery
     PacketRecords = -1
     MaxIndexesCount = 4
     FieldDefs = <    
       item
-        Name = 'net_station_id'
+        Name = 'sampling_plot_id'
         DataType = ftInteger
         Precision = -1
       end    
       item
-        Name = 'internal_id'
-        DataType = ftLargeint
-        Precision = -1
-      end    
-      item
-        Name = 'station_name'
+        Name = 'full_name'
         DataType = ftString
         Precision = -1
         Size = 100
       end    
       item
-        Name = 'station_acronym'
+        Name = 'acronym'
         DataType = ftString
         Precision = -1
         Size = 10
@@ -12931,35 +12926,54 @@ object DMG: TDMG
         Precision = -1
       end    
       item
-        Name = 'data_owner'
-        DataType = ftLargeint
+        Name = 'locality_name'
+        DataType = ftString
         Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'municipality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'state_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'country_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
       end>
-    AfterCancel = qNetStationsAfterCancel
-    AfterPost = qNetStationsAfterPost
-    BeforeEdit = qNetStationsBeforeEdit
-    BeforePost = qNetStationsBeforePost
+    AfterCancel = qSamplingPlotsAfterCancel
+    AfterPost = qSamplingPlotsAfterPost
+    BeforeEdit = qSamplingPlotsBeforeEdit
+    BeforePost = qSamplingPlotsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
-      'SELECT ns.*,'
+      'SELECT pl.*,'
       '  gl.site_name AS locality_name,'
       '  gm.site_name AS municipality_name,'
       '  gs.site_name AS state_name,'
       '  gc.site_name AS country_name'
-      'FROM net_stations AS ns'
-      'LEFT JOIN gazetteer AS gl ON ns.locality_id = gl.site_id'
-      'LEFT JOIN gazetteer AS gm ON ns.municipality_id = gm.site_id'
-      'LEFT JOIN gazetteer AS gs ON ns.state_id = gs.site_id'
-      'LEFT JOIN gazetteer AS gc ON ns.country_id = gc.site_id'
-      'WHERE (ns.net_station_id = -1)'
-      '  AND (ns.active_status = 1)'
+      'FROM sampling_plots AS pl'
+      'LEFT JOIN gazetteer AS gl ON pl.locality_id = gl.site_id'
+      'LEFT JOIN gazetteer AS gm ON pl.municipality_id = gm.site_id'
+      'LEFT JOIN gazetteer AS gs ON pl.state_id = gs.site_id'
+      'LEFT JOIN gazetteer AS gc ON pl.country_id = gc.site_id'
+      'WHERE (pl.sampling_plot_id = -1)'
+      '  AND (pl.active_status = 1)'
       ''
     )
     InsertSQL.Strings = (
-      'INSERT INTO net_stations ('
-      '  station_name,'
-      '  station_acronym,'
+      'INSERT INTO sampling_plots ('
+      '  full_name,'
+      '  acronym,'
       '  longitude,'
       '  latitude,'
       '  area_shape,'
@@ -12975,8 +12989,8 @@ object DMG: TDMG
       '  marked_status,'
       '  active_status)'
       'VALUES ('
-      '  :station_name,'
-      '  :station_acronym,'
+      '  :full_name,'
+      '  :acronym,'
       '  :longitude,'
       '  :latitude,'
       '  :area_shape,'
@@ -13018,7 +13032,7 @@ object DMG: TDMG
     Macros = <>
     Left = 371
     Top = 360
-    object qNetStationsmarked_status: TBooleanField
+    object qSamplingPlotsmarked_status: TBooleanField
       DisplayLabel = 'Marked'
       DisplayWidth = 10
       FieldKind = fkData
@@ -13030,11 +13044,9 @@ object DMG: TDMG
       Required = False
       DisplayValues = 'True;False'
     end
-    object qNetStationsstation_name: TStringField
-      DisplayLabel = 'Name'
-      DisplayWidth = 30
+    object qSamplingPlotsfull_name: TStringField
       FieldKind = fkData
-      FieldName = 'station_name'
+      FieldName = 'full_name'
       Index = 1
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -13042,10 +13054,9 @@ object DMG: TDMG
       Required = True
       Size = 100
     end
-    object qNetStationsstation_acronym: TStringField
-      DisplayLabel = 'Acronym'
+    object qSamplingPlotsacronym: TStringField
       FieldKind = fkData
-      FieldName = 'station_acronym'
+      FieldName = 'acronym'
       Index = 2
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -13053,7 +13064,7 @@ object DMG: TDMG
       Required = True
       Size = 10
     end
-    object qNetStationslocality_id: TLongintField
+    object qSamplingPlotslocality_id: TLongintField
       DisplayLabel = 'Locality (ID)'
       FieldKind = fkData
       FieldName = 'locality_id'
@@ -13064,7 +13075,7 @@ object DMG: TDMG
       Required = True
       Visible = False
     end
-    object qNetStationslocality_name: TStringField
+    object qSamplingPlotslocality_name: TStringField
       DisplayLabel = 'Locality'
       DisplayWidth = 40
       FieldKind = fkData
@@ -13076,7 +13087,7 @@ object DMG: TDMG
       Required = False
       Size = 180
     end
-    object qNetStationscountry_id: TLongintField
+    object qSamplingPlotscountry_id: TLongintField
       DisplayLabel = 'Country (ID)'
       FieldKind = fkData
       FieldName = 'country_id'
@@ -13087,21 +13098,20 @@ object DMG: TDMG
       Required = False
       Visible = False
     end
-    object qNetStationsstate_id: TLongintField
+    object qSamplingPlotscountry_name: TStringField
+      FieldKind = fkData
+      FieldName = 'country_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qSamplingPlotsstate_id: TLongintField
       DisplayLabel = 'State (ID)'
       FieldKind = fkData
       FieldName = 'state_id'
-      Index = 6
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qNetStationsmunicipality_id: TLongintField
-      DisplayLabel = 'Municipality (ID)'
-      FieldKind = fkData
-      FieldName = 'municipality_id'
       Index = 7
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -13109,12 +13119,43 @@ object DMG: TDMG
       Required = False
       Visible = False
     end
-    object qNetStationslongitude: TFloatField
+    object qSamplingPlotsstate_name: TStringField
+      FieldKind = fkData
+      FieldName = 'state_name'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qSamplingPlotsmunicipality_id: TLongintField
+      DisplayLabel = 'Municipality (ID)'
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSamplingPlotsmunicipality_name: TStringField
+      FieldKind = fkData
+      FieldName = 'municipality_name'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qSamplingPlotslongitude: TFloatField
       DisplayLabel = 'Longitude'
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'longitude'
-      Index = 8
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -13123,12 +13164,12 @@ object DMG: TDMG
       MinValue = -180
       Precision = -1
     end
-    object qNetStationslatitude: TFloatField
+    object qSamplingPlotslatitude: TFloatField
       DisplayLabel = 'Latitude'
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'latitude'
-      Index = 9
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -13137,91 +13178,57 @@ object DMG: TDMG
       MinValue = -90
       Precision = -1
     end
-    object qNetStationsarea_shape: TStringField
+    object qSamplingPlotsarea_shape: TStringField
       DisplayLabel = 'Area shape'
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'area_shape'
-      Index = 10
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Size = 5
     end
-    object qNetStationsdescription: TMemoField
+    object qSamplingPlotsdescription: TMemoField
       DisplayLabel = 'Description'
       DisplayWidth = 60
       FieldKind = fkData
       FieldName = 'description'
-      Index = 11
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      BlobType = ftMemo
-      Transliterate = False
-    end
-    object qNetStationsnotes: TMemoField
-      DisplayLabel = 'Notes'
-      DisplayWidth = 60
-      FieldKind = fkData
-      FieldName = 'notes'
-      Index = 12
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      BlobType = ftMemo
-      Transliterate = False
-    end
-    object qNetStationsnet_station_id: TAutoIncField
-      DisplayLabel = 'ID'
-      FieldKind = fkData
-      FieldName = 'net_station_id'
-      Index = 13
-      LookupCache = False
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = False
-      Required = False
-    end
-    object qNetStationsuser_inserted: TLongintField
-      DisplayLabel = 'Created by'
-      FieldKind = fkData
-      FieldName = 'user_inserted'
       Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
+      BlobType = ftMemo
+      Transliterate = False
     end
-    object qNetStationsuser_updated: TLongintField
-      DisplayLabel = 'Last modified by'
+    object qSamplingPlotsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 60
       FieldKind = fkData
-      FieldName = 'user_updated'
+      FieldName = 'notes'
       Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
+      BlobType = ftMemo
+      Transliterate = False
     end
-    object qNetStationsinsert_date: TDateTimeField
-      DisplayLabel = 'Creation date'
+    object qSamplingPlotssampling_plot_id: TLongintField
       FieldKind = fkData
-      FieldName = 'insert_date'
+      FieldName = 'sampling_plot_id'
       Index = 16
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
       Required = False
-      Visible = False
     end
-    object qNetStationsupdate_date: TDateTimeField
-      DisplayLabel = 'Last modified date'
+    object qSamplingPlotsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
       FieldKind = fkData
-      FieldName = 'update_date'
+      FieldName = 'user_inserted'
       Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -13229,11 +13236,44 @@ object DMG: TDMG
       Required = False
       Visible = False
     end
-    object qNetStationsexported_status: TBooleanField
+    object qSamplingPlotsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSamplingPlotsinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSamplingPlotsupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSamplingPlotsexported_status: TBooleanField
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 18
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -13241,11 +13281,11 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
-    object qNetStationsactive_status: TBooleanField
+    object qSamplingPlotsactive_status: TBooleanField
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 19
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -13350,7 +13390,7 @@ object DMG: TDMG
         ParamType = ptInput
       end>
     Macros = <>
-    DataSource = dsNetStations
+    DataSource = dsSamplingPlots
     Left = 371
     Top = 419
     object qPermanentNetsmarked_status: TBooleanField
@@ -17285,8 +17325,8 @@ object DMG: TDMG
     Left = 435
     Top = 306
   end
-  object dsNetStations: TDataSource
-    DataSet = qNetStations
+  object dsSamplingPlots: TDataSource
+    DataSet = qSamplingPlots
     Left = 435
     Top = 360
   end

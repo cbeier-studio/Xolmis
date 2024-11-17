@@ -6,11 +6,12 @@ object dlgRecVerifications: TdlgRecVerifications
   Caption = 'Record verifications'
   ClientHeight = 370
   ClientWidth = 771
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  LCLVersion = '4.0.0.1'
   OnClose = FormClose
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
   object pTop: TPanel
     Left = 0
     Height = 40
@@ -107,9 +108,9 @@ object dlgRecVerifications: TdlgRecVerifications
       Images = iButtons
       ImageIndex = 2
       ImageWidth = 20
-      OnClick = sbDelRecordClick
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbDelRecordClick
     end
     object sbInsertRecord: TSpeedButton
       Left = 153
@@ -126,9 +127,9 @@ object dlgRecVerifications: TdlgRecVerifications
       Images = iButtons
       ImageIndex = 0
       ImageWidth = 20
-      OnClick = sbInsertRecordClick
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbInsertRecordClick
     end
   end
   object pBottom: TPanel
@@ -173,17 +174,17 @@ object dlgRecVerifications: TdlgRecVerifications
       end    
       item
         Title.Caption = 'Status'
-        Width = 226
+        Width = 227
         FieldName = 'verification_status'
       end    
       item
         Title.Caption = 'Researcher'
-        Width = 226
+        Width = 227
         FieldName = 'person_name'
       end    
       item
         Title.Caption = 'Notes'
-        Width = 225
+        Width = 227
         FieldName = 'notes'
       end>
     DataSource = dsHistory

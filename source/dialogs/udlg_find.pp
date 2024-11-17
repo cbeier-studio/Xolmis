@@ -79,7 +79,7 @@ type
     procedure FindNestRevisions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindNests(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindNetEffort(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindNetStations(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindSamplingPlots(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindPeople(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindPermanentNets(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindPermits(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
@@ -587,7 +587,7 @@ begin
   end;
 end;
 
-procedure TdlgFind.FindNetStations(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+procedure TdlgFind.FindSamplingPlots(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
 var
   Operador: String;
 begin
@@ -595,13 +595,13 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT net_station_id, station_name FROM net_stations ');
+    Add('SELECT sampling_plot_id, full_name FROM sampling_plots ');
     case aFilter of
       fvNone:
         ; // do nothing
       fvReset:
         begin
-          Add('WHERE (station_name ' + Operador + ' :VALPARAM) ');
+          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
           Add('AND (active_status = 1)');
         end;
       fvAll:
@@ -1101,7 +1101,7 @@ begin
     tbNests:          SetupFields('nest_id', 'full_name');
     tbNestRevisions:  SetupFields('nest_revision_id', 'full_name');
     tbEggs:           SetupFields('egg_id', 'full_name');
-    tbNetStations:    SetupFields('net_station_id', 'station_name');
+    tbSamplingPlots:    SetupFields('sampling_plot_id', 'full_name');
     tbTaxonRanks:     SetupFields('rank_id', 'rank_name');
     tbZooTaxa:        SetupFields('zoo_taxa', 'full_name', 'formatted_name');
     tbProjects:       SetupFields('project_id', 'project_title');
@@ -1311,7 +1311,7 @@ begin
       tbNests:          FindNests(aSQL, aFilter, aCriteria);
       tbNestRevisions:  FindNestRevisions(aSQL, aFilter, aCriteria);
       tbEggs:           FindEggs(aSQL, aFilter, aCriteria);
-      tbNetStations:    FindNetStations(aSQL, aFilter, aCriteria);
+      tbSamplingPlots:    FindSamplingPlots(aSQL, aFilter, aCriteria);
       tbTaxonRanks:     FindTaxonRanks(aSQL, aFilter, aCriteria);
       tbZooTaxa:        FindTaxa(aSQL, aFilter, aCriteria);
       tbProjects:       FindProjects(aSQL, aFilter, aCriteria);
@@ -1383,7 +1383,7 @@ begin
       tbNests:          SetupResult('nest_id', 'full_name');
       tbNestRevisions:  SetupResult('nest_revision_id', 'full_name');
       tbEggs:           SetupResult('egg_id', 'full_name');
-      tbNetStations:    SetupResult('net_station_id', 'station_name');
+      tbSamplingPlots:    SetupResult('sampling_plot_id', 'full_name');
       tbTaxonRanks:     SetupResult('rank_id', 'rank_name');
       tbZooTaxa:
       begin
