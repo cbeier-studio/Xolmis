@@ -126,12 +126,8 @@ object edtSurvey: TedtSurvey
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -143,8 +139,6 @@ object edtSurvey: TedtSurvey
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLocalityButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eLocalityDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -254,12 +248,8 @@ object edtSurvey: TedtSurvey
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -271,8 +261,6 @@ object edtSurvey: TedtSurvey
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eNetStationButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNetStationDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -357,12 +345,8 @@ object edtSurvey: TedtSurvey
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -374,8 +358,6 @@ object edtSurvey: TedtSurvey
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eProjectButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eProjectDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -415,12 +397,8 @@ object edtSurvey: TedtSurvey
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -432,8 +410,6 @@ object edtSurvey: TedtSurvey
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eMethodButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eMethodDBEditKeyPress
         end
       end
       object pDateDuration: TPanel
@@ -483,12 +459,8 @@ object edtSurvey: TedtSurvey
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -501,8 +473,6 @@ object edtSurvey: TedtSurvey
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eDurationKeyPress
         end
         object eDuration: TDBEdit
           Left = 208
@@ -565,12 +535,8 @@ object edtSurvey: TedtSurvey
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -582,8 +548,6 @@ object edtSurvey: TedtSurvey
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eDurationKeyPress
         end
         object eLatitude: TDBEditButton
           Left = 208
@@ -591,12 +555,8 @@ object edtSurvey: TedtSurvey
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -608,8 +568,6 @@ object edtSurvey: TedtSurvey
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eDurationKeyPress
         end
       end
       object pEndCoordinate: TPanel
@@ -659,12 +617,8 @@ object edtSurvey: TedtSurvey
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -676,8 +630,6 @@ object edtSurvey: TedtSurvey
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eEndLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eDurationKeyPress
         end
         object eEndLatitude: TDBEditButton
           Left = 208
@@ -685,12 +637,8 @@ object edtSurvey: TedtSurvey
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -702,8 +650,6 @@ object edtSurvey: TedtSurvey
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eEndLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eDurationKeyPress
         end
       end
       object pAreaDistance: TPanel
@@ -1064,12 +1010,8 @@ object edtSurvey: TedtSurvey
           Width = 339
           Align = alTop
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 339
           Color = 16448250
           Constraints.MaxHeight = 28
-          ParentBackground = False
           ParentColor = False
           ParentShowHint = False
           ShowHint = True
@@ -1082,8 +1024,6 @@ object edtSurvey: TedtSurvey
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eExpeditionButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eExpeditionDBEditKeyPress
         end
       end
     end

@@ -127,12 +127,8 @@ object edtSamplingPlot: TedtSamplingPlot
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -144,8 +140,6 @@ object edtSamplingPlot: TedtSamplingPlot
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLocalityButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eLocalityDBEditKeyPress
         end
       end
       object pNotes: TPanel
@@ -337,12 +331,8 @@ object edtSamplingPlot: TedtSamplingPlot
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -354,8 +344,6 @@ object edtSamplingPlot: TedtSamplingPlot
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNameKeyPress
         end
         object eLatitude: TDBEditButton
           Left = 208
@@ -363,12 +351,8 @@ object edtSamplingPlot: TedtSamplingPlot
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -380,8 +364,6 @@ object edtSamplingPlot: TedtSamplingPlot
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNameKeyPress
         end
       end
       object pDescription: TPanel

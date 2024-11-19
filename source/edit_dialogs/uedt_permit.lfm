@@ -271,12 +271,8 @@ object edtPermit: TedtPermit
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -289,8 +285,6 @@ object edtPermit: TedtPermit
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eDispatchDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNameKeyPress
         end
         object eExpireDate: TDBEditButton
           Left = 208
@@ -298,12 +292,8 @@ object edtPermit: TedtPermit
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -316,8 +306,6 @@ object edtPermit: TedtPermit
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eExpireDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNameKeyPress
         end
       end
       object pPermitNumberType: TPanel
@@ -456,12 +444,8 @@ object edtPermit: TedtPermit
           Width = 340
           Align = alTop
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 340
           Color = 16448250
           Constraints.MaxHeight = 28
-          ParentBackground = False
           ParentColor = False
           ParentShowHint = False
           ShowHint = True
@@ -474,8 +458,6 @@ object edtPermit: TedtPermit
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eProjectButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eProjectDBEditKeyPress
         end
       end
     end

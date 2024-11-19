@@ -6591,13 +6591,13 @@ procedure TfrmCustomGrid.pmvViewVerificationsClick(Sender: TObject);
 var
   DS: TDataSet;
 begin
-  if pmVerifications.PopupComponent = sbRecordVerifications then
+  if (pmVerifications.PopupComponent = sbRecordVerifications) or (Sender = pmgRecordVerifications) then
   begin
     DS := dsLink.DataSet;
     ShowVerifications(FTableType, tbNone, DS.FieldByName(GetPrimaryKey(DS)).AsInteger)
   end
   else
-  if pmVerifications.PopupComponent = sbChildVerifications then
+  if (pmVerifications.PopupComponent = sbChildVerifications) or (Sender = pmcRecordVerifications) then
   begin
     case nbChilds.PageIndex of
       0: DS := dsLink1.DataSet;
@@ -6605,6 +6605,7 @@ begin
       2: DS := dsLink3.DataSet;
       3: DS := dsLink4.DataSet;
       4: DS := dsLink5.DataSet;
+      5: DS := dsLink6.DataSet;
     end;
     ShowVerifications(FTableType, FChildTable, DS.FieldByName(GetPrimaryKey(DS)).AsInteger);
   end;

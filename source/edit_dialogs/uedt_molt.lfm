@@ -178,12 +178,8 @@ object edtMolt: TedtMolt
           Height = 26
           Top = 22
           Width = 179
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 179
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 179
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -196,8 +192,6 @@ object edtMolt: TedtMolt
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eDateDBEditKeyPress
         end
         object eCaptureTime: TDBEdit
           Left = 211
@@ -516,11 +510,7 @@ object edtMolt: TedtMolt
           Height = 26
           Top = 22
           Width = 374
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 374
           Constraints.MinWidth = 374
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -532,8 +522,6 @@ object edtMolt: TedtMolt
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSurveyButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eSurveyDBEditKeyPress
         end
       end
       object pBander: TPanel
@@ -570,11 +558,7 @@ object edtMolt: TedtMolt
           Height = 26
           Top = 22
           Width = 374
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 374
           Constraints.MinWidth = 374
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -586,8 +570,6 @@ object edtMolt: TedtMolt
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eBanderButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eBanderDBEditKeyPress
         end
       end
       object pTitlePrimaries: TPanel

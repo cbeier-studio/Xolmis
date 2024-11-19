@@ -186,12 +186,8 @@ object edtWeatherLog: TedtWeatherLog
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 1
@@ -201,8 +197,6 @@ object edtWeatherLog: TedtWeatherLog
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSampleDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eSampleTimeKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end

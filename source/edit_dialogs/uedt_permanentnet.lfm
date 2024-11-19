@@ -222,12 +222,8 @@ object edtPermanentNet: TedtPermanentNet
         Top = 23
         Width = 220
         AutoSize = True
-        BevelOuter = bvNone
-        ClientHeight = 26
-        ClientWidth = 220
         Constraints.MaxHeight = 28
         Constraints.MinWidth = 220
-        ParentBackground = False
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
@@ -239,8 +235,6 @@ object edtPermanentNet: TedtPermanentNet
         DataSource = dsLink
         CharCase = ecNormal
         OnButtonClick = eLongitudeButtonClick
-        OnDBEditKeyDown = FormKeyDown
-        OnDBEditKeyPress = eNetNumberKeyPress
       end
       object eLatitude: TDBEditButton
         Left = 252
@@ -248,12 +242,8 @@ object edtPermanentNet: TedtPermanentNet
         Top = 23
         Width = 220
         AutoSize = True
-        BevelOuter = bvNone
-        ClientHeight = 26
-        ClientWidth = 220
         Constraints.MaxHeight = 28
         Constraints.MinWidth = 220
-        ParentBackground = False
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
@@ -265,8 +255,6 @@ object edtPermanentNet: TedtPermanentNet
         DataSource = dsLink
         CharCase = ecNormal
         OnButtonClick = eLongitudeButtonClick
-        OnDBEditKeyDown = FormKeyDown
-        OnDBEditKeyPress = eNetNumberKeyPress
       end
     end
   end

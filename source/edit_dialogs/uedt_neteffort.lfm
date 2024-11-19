@@ -141,12 +141,8 @@ object edtNetEffort: TedtNetEffort
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -158,8 +154,6 @@ object edtNetEffort: TedtNetEffort
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = ePermanentNetButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = ePermanentNetDBEditKeyPress
         end
         object eNetNumber: TDBEdit
           Left = 208
@@ -222,12 +216,8 @@ object edtNetEffort: TedtNetEffort
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -239,8 +229,6 @@ object edtNetEffort: TedtNetEffort
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNetNumberKeyPress
         end
         object eLatitude: TDBEditButton
           Left = 208
@@ -248,12 +236,8 @@ object edtNetEffort: TedtNetEffort
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -265,8 +249,6 @@ object edtNetEffort: TedtNetEffort
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNetNumberKeyPress
         end
       end
       object pNetLengthHeight: TPanel
@@ -465,12 +447,8 @@ object edtNetEffort: TedtNetEffort
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -483,8 +461,6 @@ object edtNetEffort: TedtNetEffort
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNetNumberKeyPress
         end
         object txtTotalOpenTime: TDBText
           Left = 208
@@ -775,12 +751,8 @@ object edtNetEffort: TedtNetEffort
           Width = 340
           Align = alTop
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 340
           Color = 16448250
           Constraints.MaxHeight = 28
-          ParentBackground = False
           ParentColor = False
           ParentShowHint = False
           ShowHint = True
@@ -793,8 +765,6 @@ object edtNetEffort: TedtNetEffort
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSurveyButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eSurveyDBEditKeyPress
         end
       end
       object pNetOpenClose4: TPanel

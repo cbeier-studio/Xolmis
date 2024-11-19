@@ -258,12 +258,8 @@ object edtSpecimen: TedtSpecimen
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -275,8 +271,6 @@ object edtSpecimen: TedtSpecimen
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eIndividualButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eIndividualDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -417,12 +411,8 @@ object edtSpecimen: TedtSpecimen
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -434,8 +424,6 @@ object edtSpecimen: TedtSpecimen
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eTaxonButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eTaxonDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -474,12 +462,8 @@ object edtSpecimen: TedtSpecimen
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -491,8 +475,6 @@ object edtSpecimen: TedtSpecimen
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eNestButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNestDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -531,12 +513,8 @@ object edtSpecimen: TedtSpecimen
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -548,8 +526,6 @@ object edtSpecimen: TedtSpecimen
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eEggButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eEggDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -588,12 +564,8 @@ object edtSpecimen: TedtSpecimen
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -605,8 +577,6 @@ object edtSpecimen: TedtSpecimen
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLocalityButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eLocalityDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -657,12 +627,8 @@ object edtSpecimen: TedtSpecimen
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -674,8 +640,6 @@ object edtSpecimen: TedtSpecimen
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eFieldNumberKeyPress
           OnKeyDown = FormKeyDown
         end
         object eLatitude: TDBEditButton
@@ -684,12 +648,8 @@ object edtSpecimen: TedtSpecimen
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -701,8 +661,6 @@ object edtSpecimen: TedtSpecimen
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLatitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eFieldNumberKeyPress
           OnKeyDown = FormKeyDown
         end
       end

@@ -592,12 +592,8 @@ object edtBands: TedtBands
           Height = 26
           Top = 23
           Width = 456
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 456
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -609,8 +605,6 @@ object edtBands: TedtBands
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSupplierButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eSupplierKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eSupplierKeyPress
         end
@@ -650,12 +644,8 @@ object edtBands: TedtBands
           Height = 26
           Top = 23
           Width = 456
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 456
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -667,8 +657,6 @@ object edtBands: TedtBands
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eCarrierButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eCarrierKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eCarrierKeyPress
         end
@@ -708,12 +696,8 @@ object edtBands: TedtBands
           Height = 26
           Top = 23
           Width = 456
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 456
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 456
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -725,8 +709,6 @@ object edtBands: TedtBands
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eProjectButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eProjectKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eProjectKeyPress
         end

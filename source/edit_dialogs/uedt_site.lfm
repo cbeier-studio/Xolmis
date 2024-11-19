@@ -131,12 +131,8 @@ object edtSite: TedtSite
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -148,8 +144,6 @@ object edtSite: TedtSite
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eParentSiteButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eParentSiteDBEditKeyPress
         end
       end
       object pName: TPanel
@@ -409,12 +403,8 @@ object edtSite: TedtSite
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -426,8 +416,6 @@ object edtSite: TedtSite
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNameKeyPress
         end
         object eLatitude: TDBEditButton
           Left = 208
@@ -435,12 +423,8 @@ object edtSite: TedtSite
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -452,8 +436,6 @@ object edtSite: TedtSite
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNameKeyPress
         end
       end
       object pAltitude: TPanel

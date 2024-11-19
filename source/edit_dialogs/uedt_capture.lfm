@@ -405,12 +405,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -423,8 +419,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eCaptureDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -448,12 +442,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 2
@@ -465,8 +455,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eBanderButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eBanderKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eBanderKeyPress
         end
@@ -476,12 +464,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 3
@@ -492,8 +476,6 @@ object edtCapture: TedtCapture
           DataField = 'annotator_name'
           DataSource = dsLink
           CharCase = ecNormal
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eAnnotatorKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eAnnotatorKeyPress
         end
@@ -545,12 +527,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 364
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 364
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 364
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -563,8 +541,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSurveyButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eSurveyKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eSurveyKeyPress
         end
@@ -574,12 +550,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 364
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 364
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 364
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -591,8 +563,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLocalityButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eLocalityKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
         end
@@ -664,12 +634,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -682,8 +648,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecUppercase
           OnButtonClick = eRightLegBelowButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -751,12 +715,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 2
@@ -769,8 +729,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecUppercase
           OnButtonClick = eLeftLegBelowButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -891,12 +849,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 364
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 364
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 364
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -908,8 +862,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eTaxonButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eTaxonKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
         end
@@ -919,12 +871,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -936,8 +884,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eBandButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eBandKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eBandKeyPress
         end
@@ -947,12 +893,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 2
@@ -964,8 +906,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eRemovedBandButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eRemovedBandKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eRemovedBandKeyPress
         end
@@ -1079,12 +1019,8 @@ object edtCapture: TedtCapture
           Height = 26
           Top = 23
           Width = 174
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -1096,8 +1032,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = ePhotographer1ButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = ePhotographer1KeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = ePhotographer1KeyPress
         end
@@ -1106,12 +1040,8 @@ object edtCapture: TedtCapture
           Height = 26
           Top = 23
           Width = 174
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -1123,8 +1053,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = ePhotographer2ButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = ePhotographer2KeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = ePhotographer2KeyPress
         end
@@ -1317,12 +1245,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -1335,8 +1259,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eNetButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNetKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eNetKeyPress
         end
@@ -1346,12 +1268,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 2
@@ -1364,8 +1282,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eLongitudeKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1375,12 +1291,8 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 3
@@ -1393,8 +1305,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLatitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eLongitudeKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2113,12 +2023,8 @@ object edtCapture: TedtCapture
           Height = 26
           Top = 23
           Width = 174
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -2130,8 +2036,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eMoltLimitsButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2227,12 +2131,8 @@ object edtCapture: TedtCapture
           Height = 26
           Top = 23
           Width = 174
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -2244,8 +2144,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eCycleCodeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2254,12 +2152,8 @@ object edtCapture: TedtCapture
           Height = 26
           Top = 23
           Width = 174
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -2271,8 +2165,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eHowAgedButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2300,12 +2192,8 @@ object edtCapture: TedtCapture
           Height = 26
           Top = 23
           Width = 174
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 174
           Constraints.MaxHeight = 35
           Constraints.MinWidth = 174
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 3
@@ -2317,8 +2205,6 @@ object edtCapture: TedtCapture
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eHowSexedButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end

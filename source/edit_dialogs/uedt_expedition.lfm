@@ -209,12 +209,8 @@ object edtExpedition: TedtExpedition
           Height = 26
           Top = 22
           Width = 365
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -226,8 +222,6 @@ object edtExpedition: TedtExpedition
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLocalityButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eLocalityDBEditKeyPress
         end
       end
       object pStartDate: TPanel
@@ -264,12 +258,8 @@ object edtExpedition: TedtExpedition
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -282,8 +272,6 @@ object edtExpedition: TedtExpedition
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eStartDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNameKeyPress
         end
       end
       object pProject: TPanel
@@ -321,12 +309,8 @@ object edtExpedition: TedtExpedition
           Top = 22
           Width = 365
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 365
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -338,8 +322,6 @@ object edtExpedition: TedtExpedition
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eProjectButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eProjectDBEditKeyPress
         end
       end
       object pEndDate: TPanel
@@ -387,12 +369,8 @@ object edtExpedition: TedtExpedition
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -405,8 +383,6 @@ object edtExpedition: TedtExpedition
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eEndDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNameKeyPress
         end
         object txtDuration: TDBText
           Left = 208

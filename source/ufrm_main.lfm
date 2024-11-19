@@ -727,7 +727,7 @@ object frmMain: TfrmMain
     BevelOuter = bvNone
     ClientHeight = 416
     ClientWidth = 376
-    Color = clWhite
+    Color = clBtnFace
     ParentBackground = False
     ParentColor = False
     TabOrder = 3

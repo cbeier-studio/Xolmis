@@ -182,7 +182,7 @@ end;
 
 procedure TedtIndividual.eBandButtonClick(Sender: TObject);
 begin
-  FindDlg(tbBands, eBand, dsLink.DataSet, 'band_id', 'band_full_name');
+  FindDlg(tbBands, eBand, dsLink.DataSet, 'band_id', 'band_name');
 end;
 
 procedure TedtIndividual.eBandChangeDateButtonClick(Sender: TObject);
@@ -202,14 +202,14 @@ begin
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbBands, eBand, dsLink.DataSet, 'band_id', 'band_full_name', False, Key);
+    FindDlg(tbBands, eBand, dsLink.DataSet, 'band_id', 'band_name', False, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
     dsLink.DataSet.FieldByName('band_id').Clear;
-    dsLink.DataSet.FieldByName('band_full_name').Clear;
+    dsLink.DataSet.FieldByName('band_name').Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }

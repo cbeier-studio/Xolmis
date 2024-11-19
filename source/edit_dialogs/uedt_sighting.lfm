@@ -190,12 +190,8 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 232
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 232
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -207,8 +203,6 @@ object edtSighting: TedtSighting
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = cbMethodKeyPress
         end
         object eLatitude: TDBEditButton
           Left = 264
@@ -216,12 +210,8 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 233
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 233
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -233,8 +223,6 @@ object edtSighting: TedtSighting
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = cbMethodKeyPress
         end
       end
       object pDateTime: TPanel
@@ -284,12 +272,8 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 232
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 232
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -302,8 +286,6 @@ object edtSighting: TedtSighting
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = cbMethodKeyPress
         end
         object eTime: TDBEdit
           Left = 264
@@ -489,12 +471,8 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 232
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 232
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -506,8 +484,6 @@ object edtSighting: TedtSighting
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eDetectionTypeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = cbMethodKeyPress
         end
         object eBreedingStatus: TDBEditButton
           Left = 264
@@ -515,12 +491,8 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 233
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 233
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -532,8 +504,6 @@ object edtSighting: TedtSighting
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eBreedingStatusButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = cbMethodKeyPress
         end
       end
       object pCapturesRecapturesUnbanded: TPanel
@@ -665,12 +635,8 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 481
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 481
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -682,8 +648,6 @@ object edtSighting: TedtSighting
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLocalityButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eLocalityDBEditKeyPress
         end
       end
       object pObserver: TPanel
@@ -722,12 +686,8 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 481
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 481
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -739,8 +699,6 @@ object edtSighting: TedtSighting
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eObserverButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eObserverDBEditKeyPress
         end
       end
       object pMethod: TPanel
@@ -779,12 +737,8 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 481
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 481
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -796,8 +750,6 @@ object edtSighting: TedtSighting
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eMethodButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eMethodDBEditKeyPress
         end
       end
       object pTaxon: TPanel
@@ -837,12 +789,8 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 481
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 481
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -854,8 +802,6 @@ object edtSighting: TedtSighting
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eTaxonButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eTaxonDBEditKeyPress
         end
       end
       object pIndividual: TPanel
@@ -894,12 +840,8 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 481
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 481
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 368
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -911,8 +853,6 @@ object edtSighting: TedtSighting
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eIndividualButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eIndividualDBEditKeyPress
         end
       end
       object pHowWasRecorded: TPanel
@@ -1322,12 +1262,8 @@ object edtSighting: TedtSighting
           Width = 453
           Align = alTop
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 453
           Color = 16448250
           Constraints.MaxHeight = 28
-          ParentBackground = False
           ParentColor = False
           ParentShowHint = False
           ShowHint = True
@@ -1340,8 +1276,6 @@ object edtSighting: TedtSighting
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSurveyButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eSurveyDBEditKeyPress
         end
       end
     end

@@ -124,27 +124,29 @@ object edtAudioInfo: TedtAudioInfo
           ParentFont = False
         end
         object eLocality: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
+          ButtonCursor = crDefault
+          ButtonOnlyWhenFocused = False
+          ButtonWidth = 24
+          CharCase = ecNormal
+          Color = clDefault
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 200
-          ParentBackground = False
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CustomEditMask = False
           DataField = 'locality_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eLocalityButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eLocalityDBEditKeyPress
         end
       end
       object pAuthor: TPanel
@@ -178,27 +180,29 @@ object edtAudioInfo: TedtAudioInfo
           ParentFont = False
         end
         object eAuthor: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
+          ButtonCursor = crDefault
+          ButtonOnlyWhenFocused = False
+          ButtonWidth = 24
+          CharCase = ecNormal
+          Color = clDefault
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 200
-          ParentBackground = False
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CustomEditMask = False
           DataField = 'recorder_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eAuthorButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eAuthorDBEditKeyPress
         end
       end
       object pSubtitle: TPanel
@@ -286,28 +290,30 @@ object edtAudioInfo: TedtAudioInfo
           ParentFont = False
         end
         object eRecordingDate: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
+          ButtonCursor = crDefault
+          ButtonOnlyWhenFocused = False
+          ButtonWidth = 24
+          CharCase = ecNormal
+          Color = clDefault
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 1
-          Images = DMM.iEdits
-          TextHint = 'DD/MM/YYYY'
+          CustomEditMask = False
           DataField = 'recording_date'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 1
+          Images = DMM.iEdits
+          MaxLength = 0
+          Spacing = 0
+          TabOrder = 0
+          TextHint = 'DD/MM/YYYY'
           OnButtonClick = eRecordingDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eRecordingTimeKeyPress
         end
         object eRecordingTime: TDBEdit
           Left = 208
@@ -414,50 +420,54 @@ object edtAudioInfo: TedtAudioInfo
           ParentFont = False
         end
         object eLongitude: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
+          ButtonCursor = crDefault
+          ButtonOnlyWhenFocused = False
+          ButtonWidth = 24
+          CharCase = ecNormal
+          Color = clDefault
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 3
-          Images = DMM.iEdits
+          CustomEditMask = False
           DataField = 'longitude'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 3
+          Images = DMM.iEdits
+          MaxLength = 0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eRecordingTimeKeyPress
         end
         object eLatitude: TDBEditButton
+          Cursor = crDefault
           Left = 208
           Height = 26
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
+          ButtonCursor = crDefault
+          ButtonOnlyWhenFocused = False
+          ButtonWidth = 24
+          CharCase = ecNormal
+          Color = clDefault
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
-          TabOrder = 1
-          ButtonWidth = 24
-          ImageIndex = 3
-          Images = DMM.iEdits
+          CustomEditMask = False
           DataField = 'latitude'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 3
+          Images = DMM.iEdits
+          MaxLength = 0
+          Spacing = 0
+          TabOrder = 1
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eRecordingTimeKeyPress
         end
       end
       object pTaxon: TPanel
@@ -492,27 +502,29 @@ object edtAudioInfo: TedtAudioInfo
           ParentFont = False
         end
         object eTaxon: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
+          ButtonCursor = crDefault
+          ButtonOnlyWhenFocused = False
+          ButtonWidth = 24
+          CharCase = ecNormal
+          Color = clDefault
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 200
-          ParentBackground = False
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CustomEditMask = False
           DataField = 'taxon_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eTaxonButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eTaxonDBEditKeyPress
         end
       end
       object pIndividual: TPanel
@@ -546,27 +558,29 @@ object edtAudioInfo: TedtAudioInfo
           ParentFont = False
         end
         object eIndividual: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
+          ButtonCursor = crDefault
+          ButtonOnlyWhenFocused = False
+          ButtonWidth = 24
+          CharCase = ecNormal
+          Color = clDefault
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 200
-          ParentBackground = False
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CustomEditMask = False
           DataField = 'individual_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eIndividualButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eIndividualDBEditKeyPress
         end
       end
       object pSighting: TPanel
@@ -600,27 +614,29 @@ object edtAudioInfo: TedtAudioInfo
           ParentFont = False
         end
         object eSighting: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
+          ButtonCursor = crDefault
+          ButtonOnlyWhenFocused = False
+          ButtonWidth = 24
+          CharCase = ecNormal
+          Color = clDefault
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 200
-          ParentBackground = False
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CustomEditMask = False
           DataField = 'sighting_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eSightingButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eSightingDBEditKeyPress
         end
       end
       object pAudioFile: TPanel
@@ -654,28 +670,29 @@ object edtAudioInfo: TedtAudioInfo
           ParentFont = False
         end
         object eAudioFile: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
+          ButtonCursor = crDefault
+          ButtonOnlyWhenFocused = False
+          ButtonWidth = 24
+          CharCase = ecNormal
+          Color = clDefault
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 200
-          ParentBackground = False
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 6
-          Images = DMM.iEdits
+          CustomEditMask = False
           DataField = 'audio_file'
           DataSource = dsLink
-          ReadOnly = True
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 6
+          Images = DMM.iEdits
+          MaxLength = 0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eAudioFileButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eRecordingTimeKeyPress
         end
       end
       object pSpecimen: TPanel
@@ -709,27 +726,29 @@ object edtAudioInfo: TedtAudioInfo
           ParentFont = False
         end
         object eSpecimen: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
+          ButtonCursor = crDefault
+          ButtonOnlyWhenFocused = False
+          ButtonWidth = 24
+          CharCase = ecNormal
+          Color = clDefault
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 200
-          ParentBackground = False
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CustomEditMask = False
           DataField = 'specimen_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eSpecimenButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eSpecimenDBEditKeyPress
         end
       end
       object pRecorderModel: TPanel

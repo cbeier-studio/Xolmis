@@ -202,12 +202,8 @@ object edtEgg: TedtEgg
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -220,8 +216,6 @@ object edtEgg: TedtEgg
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eMeasureDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eFieldNumberKeyPress
         end
       end
       object pTaxon: TPanel
@@ -259,12 +253,8 @@ object edtEgg: TedtEgg
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -276,8 +266,6 @@ object edtEgg: TedtEgg
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eTaxonButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eTaxonDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -316,12 +304,8 @@ object edtEgg: TedtEgg
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -333,8 +317,6 @@ object edtEgg: TedtEgg
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eObserverButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eObserverDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -373,12 +355,8 @@ object edtEgg: TedtEgg
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -390,8 +368,6 @@ object edtEgg: TedtEgg
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eIndividualButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eIndividualDBEditKeyPress
           OnKeyDown = FormKeyDown
         end
       end

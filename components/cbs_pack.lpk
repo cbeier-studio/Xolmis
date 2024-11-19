@@ -12,7 +12,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Version Minor="2"/>
+    <Version Minor="2" Release="1"/>
     <Files>
       <Item>
         <Filename Value="dbeditbutton.pp"/>

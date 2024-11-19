@@ -126,12 +126,8 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Height = 26
           Top = 23
           Width = 333
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 333
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 200
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -143,8 +139,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eParentTaxonButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eParentTaxonDBEditKeyPress
         end
       end
       object pName: TPanel
@@ -182,12 +176,8 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Height = 26
           Top = 23
           Width = 333
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 333
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 200
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -199,8 +189,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eNameButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eAuthorshipKeyPress
         end
       end
       object pAuthorship: TPanel
@@ -327,12 +315,8 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Height = 26
           Top = 23
           Width = 333
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 333
           Constraints.MaxHeight = 29
           Constraints.MinWidth = 200
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -344,8 +328,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eValidNameButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eValidNameDBEditKeyPress
         end
       end
       object pRank: TPanel

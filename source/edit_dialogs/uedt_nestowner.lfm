@@ -110,12 +110,8 @@ object edtNestOwner: TedtNestOwner
         Top = 22
         Width = 365
         AutoSize = True
-        BevelOuter = bvNone
-        ClientHeight = 26
-        ClientWidth = 365
         Constraints.MaxHeight = 28
         Constraints.MinWidth = 365
-        ParentBackground = False
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
@@ -127,8 +123,6 @@ object edtNestOwner: TedtNestOwner
         DataSource = dsLink
         CharCase = ecNormal
         OnButtonClick = eIndividualButtonClick
-        OnDBEditKeyDown = FormKeyDown
-        OnDBEditKeyPress = eIndividualDBEditKeyPress
       end
     end
   end

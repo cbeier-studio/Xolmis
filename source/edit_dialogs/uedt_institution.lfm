@@ -127,12 +127,8 @@ object edtInstitution: TedtInstitution
           Top = 23
           Width = 456
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 456
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -144,8 +140,6 @@ object edtInstitution: TedtInstitution
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eMunicipalityButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eMunicipalityDBEditKeyPress
         end
       end
       object pFullname: TPanel
@@ -531,12 +525,8 @@ object edtInstitution: TedtInstitution
           Top = 23
           Width = 456
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 456
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -548,8 +538,6 @@ object edtInstitution: TedtInstitution
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eStateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eStateDBEditKeyPress
         end
       end
       object pCountry: TPanel
@@ -588,12 +576,8 @@ object edtInstitution: TedtInstitution
           Top = 23
           Width = 456
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 456
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 456
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -605,8 +589,6 @@ object edtInstitution: TedtInstitution
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eCountryButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eCountryDBEditKeyPress
         end
       end
       object pManagerName: TPanel

@@ -129,12 +129,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 0
@@ -143,8 +139,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLocalityButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eLocalityDBEditKeyPress
         end
       end
       object pAuthor: TPanel
@@ -183,12 +177,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 0
@@ -197,8 +187,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eAuthorButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eAuthorDBEditKeyPress
         end
       end
       object pSubtitle: TPanel
@@ -291,12 +279,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 1
@@ -306,8 +290,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eImageDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eImageTimeKeyPress
         end
         object eImageTime: TDBEdit
           Left = 208
@@ -467,12 +449,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 3
@@ -481,8 +459,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eImageTimeKeyPress
         end
         object eLatitude: TDBEditButton
           Left = 208
@@ -490,12 +466,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           TabOrder = 1
           ButtonWidth = 24
           ImageIndex = 3
@@ -504,8 +476,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eImageTimeKeyPress
         end
       end
       object pTaxon: TPanel
@@ -545,12 +515,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 0
@@ -559,8 +525,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eTaxonButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eTaxonDBEditKeyPress
         end
       end
       object pIndividual: TPanel
@@ -599,12 +563,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 0
@@ -613,8 +573,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eIndividualButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eIndividualDBEditKeyPress
         end
       end
       object pCapture: TPanel
@@ -653,12 +611,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 0
@@ -667,8 +621,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eCaptureButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eCaptureDBEditKeyPress
         end
       end
       object pSurvey: TPanel
@@ -707,12 +659,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 0
@@ -721,8 +669,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSurveyButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eSurveyDBEditKeyPress
         end
       end
       object pSighting: TPanel
@@ -761,12 +707,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 0
@@ -775,8 +717,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSightingButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eSightingDBEditKeyPress
         end
       end
       object pImageFilename: TPanel
@@ -815,12 +755,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 6
@@ -830,8 +766,6 @@ object edtImageInfo: TedtImageInfo
           ReadOnly = True
           CharCase = ecNormal
           OnButtonClick = eImageFilenameButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eImageTimeKeyPress
         end
       end
       object pSpecimen: TPanel
@@ -870,12 +804,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 0
@@ -884,8 +814,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eSpecimenButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eSpecimenDBEditKeyPress
         end
       end
       object pEgg: TPanel
@@ -924,12 +852,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 0
@@ -938,8 +862,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eEggButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eEggDBEditKeyPress
         end
       end
       object pNestRevision: TPanel
@@ -978,12 +900,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 0
@@ -992,8 +910,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eNestRevisionButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNestRevisionDBEditKeyPress
         end
       end
       object pNest: TPanel
@@ -1032,12 +948,8 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 0
@@ -1046,8 +958,6 @@ object edtImageInfo: TedtImageInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eNestButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNestDBEditKeyPress
         end
       end
       object pLicenseTypeYear: TPanel

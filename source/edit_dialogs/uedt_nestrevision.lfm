@@ -295,12 +295,8 @@ object edtNestRevision: TedtNestRevision
           Width = 182
           Alignment = taLeftJustify
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 182
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 120
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -313,8 +309,6 @@ object edtNestRevision: TedtNestRevision
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eRevisionDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eRevisionTimeKeyPress
         end
         object eRevisionTime: TDBEdit
           Left = 214
@@ -367,12 +361,8 @@ object edtNestRevision: TedtNestRevision
           Top = 22
           Width = 381
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 381
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 200
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -384,8 +374,6 @@ object edtNestRevision: TedtNestRevision
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eNidoparasiteButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eNidoparasiteDBEditKeyPress
         end
       end
       object pObserver1: TPanel
@@ -436,12 +424,8 @@ object edtNestRevision: TedtNestRevision
           Width = 182
           Alignment = taLeftJustify
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 182
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 120
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -453,8 +437,6 @@ object edtNestRevision: TedtNestRevision
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eObserver1ButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eObserver1DBEditKeyPress
         end
         object eObserver2: TDBEditButton
           Left = 214
@@ -463,12 +445,8 @@ object edtNestRevision: TedtNestRevision
           Width = 183
           Alignment = taLeftJustify
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 183
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 120
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -480,8 +458,6 @@ object edtNestRevision: TedtNestRevision
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eObserver2ButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eObserver2DBEditKeyPress
         end
       end
       object pNotes: TPanel

@@ -319,12 +319,8 @@ object edtProject: TedtProject
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -337,8 +333,6 @@ object edtProject: TedtProject
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eStartDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eTitleKeyPress
         end
         object eEndDate: TDBEditButton
           Left = 208
@@ -346,12 +340,8 @@ object edtProject: TedtProject
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -364,8 +354,6 @@ object edtProject: TedtProject
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eEndDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eTitleKeyPress
         end
       end
       object pWebsite: TPanel

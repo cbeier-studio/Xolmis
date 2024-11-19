@@ -128,12 +128,8 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -145,8 +141,6 @@ object edtPerson: TedtPerson
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eMunicipalityButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eMunicipalityDBEditKeyPress
         end
       end
       object pFullname: TPanel
@@ -583,12 +577,8 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -600,8 +590,6 @@ object edtPerson: TedtPerson
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eStateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eStateDBEditKeyPress
         end
       end
       object pCountry: TPanel
@@ -640,12 +628,8 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -657,8 +641,6 @@ object edtPerson: TedtPerson
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eCountryButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eCountryDBEditKeyPress
         end
       end
       object pDepartment: TPanel
@@ -840,12 +822,8 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -858,8 +836,6 @@ object edtPerson: TedtPerson
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eBirthDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eFullnameKeyPress
           OnKeyDown = FormKeyDown
         end
         object eDeathDate: TDBEditButton
@@ -868,12 +844,8 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -886,8 +858,6 @@ object edtPerson: TedtPerson
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eDeathDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eFullnameKeyPress
           OnKeyDown = FormKeyDown
         end
       end
@@ -1109,12 +1079,8 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 367
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 367
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -1126,8 +1092,6 @@ object edtPerson: TedtPerson
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eInstitutionButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = eInstitutionDBEditKeyPress
         end
       end
       object pTwitter: TPanel

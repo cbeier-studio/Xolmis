@@ -1840,6 +1840,7 @@ msgid "Valid name"
 msgstr ""
 
 #: cbs_datacolumns.rscvalidnameid
+msgctxt "cbs_datacolumns.rscvalidnameid"
 msgid "Valid name ID"
 msgstr ""
 
@@ -13548,11 +13549,12 @@ msgid "Taxon"
 msgstr ""
 
 #: tfrmtaxa.gridtaxa.columns[1].title.caption
-msgid "valid_id"
+msgctxt "tfrmtaxa.gridtaxa.columns[1].title.caption"
+msgid "Valid name ID"
 msgstr ""
 
 #: tfrmtaxa.gridtaxa.columns[2].title.caption
-msgid "rank_id"
+msgid "Rank ID"
 msgstr ""
 
 #: tfrmtaxa.label2.caption

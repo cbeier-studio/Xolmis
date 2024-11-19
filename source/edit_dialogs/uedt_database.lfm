@@ -299,11 +299,7 @@ object edtDatabase: TedtDatabase
       Width = 358
       Align = alTop
       AutoSize = True
-      BevelOuter = bvNone
-      ClientHeight = 26
-      ClientWidth = 358
       Constraints.MaxHeight = 28
-      ParentBackground = False
       TabOrder = 5
       ButtonWidth = 24
       ImageIndex = 6
@@ -312,8 +308,6 @@ object edtDatabase: TedtDatabase
       DataSource = dsConn
       CharCase = ecNormal
       OnButtonClick = eDBFileButtonClick
-      OnDBEditKeyDown = FormKeyDown
-      OnDBEditKeyPress = eNameKeyPress
     end
   end
   object lineBottom: TShapeLineBGRA

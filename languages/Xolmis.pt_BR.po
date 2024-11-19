@@ -1842,6 +1842,7 @@ msgid "Valid name"
 msgstr "Nome válido"
 
 #: cbs_datacolumns.rscvalidnameid
+msgctxt "cbs_datacolumns.rscvalidnameid"
 msgid "Valid name ID"
 msgstr "Nome válido ID"
 
@@ -13587,11 +13588,13 @@ msgid "Taxon"
 msgstr "Táxon"
 
 #: tfrmtaxa.gridtaxa.columns[1].title.caption
-msgid "valid_id"
-msgstr ""
+#, fuzzy
+msgctxt "tfrmtaxa.gridtaxa.columns[1].title.caption"
+msgid "Valid name ID"
+msgstr "Nome válido ID"
 
 #: tfrmtaxa.gridtaxa.columns[2].title.caption
-msgid "rank_id"
+msgid "Rank ID"
 msgstr ""
 
 #: tfrmtaxa.label2.caption
@@ -13802,3 +13805,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

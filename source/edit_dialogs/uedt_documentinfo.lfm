@@ -136,12 +136,8 @@ object edtDocumentInfo: TedtDocumentInfo
           Top = 22
           Width = 176
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 176
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 176
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 1
@@ -151,8 +147,6 @@ object edtDocumentInfo: TedtDocumentInfo
           DataSource = dsLink
           CharCase = ecNormal
           OnButtonClick = eDocumentDateButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = cbDocumentTypeKeyPress
         end
         object eDocumentTime: TDBEdit
           Left = 208
@@ -261,12 +255,8 @@ object edtDocumentInfo: TedtDocumentInfo
           Top = 22
           Width = 368
           AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 26
-          ClientWidth = 368
           Constraints.MaxHeight = 28
           Constraints.MinWidth = 365
-          ParentBackground = False
           TabOrder = 0
           ButtonWidth = 24
           ImageIndex = 6
@@ -276,8 +266,6 @@ object edtDocumentInfo: TedtDocumentInfo
           ReadOnly = True
           CharCase = ecNormal
           OnButtonClick = eDocumentPathButtonClick
-          OnDBEditKeyDown = FormKeyDown
-          OnDBEditKeyPress = cbDocumentTypeKeyPress
         end
       end
       object pDocumentTitle: TPanel
