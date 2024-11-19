@@ -1424,7 +1424,6 @@ begin
         'individual_sex':         Fields[i].DisplayLabel := rscSex;
         'individual_age':         Fields[i].DisplayLabel := rscAge;
         'band_id':                Fields[i].DisplayLabel := rscBandID;
-        'band_full_name':         Fields[i].DisplayLabel := rscBand;
         'band_name':              Fields[i].DisplayLabel := rscBand;
         'double_band_id':         Fields[i].DisplayLabel := rscDoubleBandID;
         'double_band_name':       Fields[i].DisplayLabel := rscDoubleBand;
@@ -4050,7 +4049,7 @@ begin
 
     case aFieldName of
       'full_name', 'individual_id', 'formatted_name', 'active_status', 'insert_date', 'update_date',
-      'user_inserted', 'user_updated', 'band_id', 'band_full_name', 'band_name':
+      'user_inserted', 'user_updated', 'band_id', 'band_name':
       begin
         Clear;
       end;

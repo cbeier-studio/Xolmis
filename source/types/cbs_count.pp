@@ -293,7 +293,7 @@ begin
     Add('  z.full_name AS taxon_name,');
     Add('  z.formatted_name AS taxon_formatted_name,');
     Add('  n.full_name AS nest_name,');
-    Add('  b1.full_name AS band_full_name,');
+    Add('  b1.full_name AS band_name,');
     Add('  b2.full_name AS double_band_name,');
     Add('  b3.full_name AS removed_band_name,');
     Add('  fi.full_name AS father_name,');

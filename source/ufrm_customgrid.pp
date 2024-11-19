@@ -6591,6 +6591,8 @@ procedure TfrmCustomGrid.pmvViewVerificationsClick(Sender: TObject);
 var
   DS: TDataSet;
 begin
+  DS := nil;
+
   if (pmVerifications.PopupComponent = sbRecordVerifications) or (Sender = pmgRecordVerifications) then
   begin
     DS := dsLink.DataSet;
