@@ -10,7 +10,7 @@ object DMM: TDMM
     FileMustExist = True
     ReadOnly = False
     FieldDefs = <>
-    AllowMultiLine = False
+    AllowMultiLine = True
     Delimiter = ';'
     FirstLineAsSchema = True
     StripTrailingDelimiters = False
@@ -7133,7 +7133,7 @@ object DMM: TDMM
     )
     Script.Strings = (
       '-- Table: users'
-      'INSERT INTO users (user_id, full_name, user_name, user_password, user_rank, allow_collection_edit, allow_print, allow_export, allow_import, uuid, user_inserted, user_updated, insert_date, update_date, exported_status, marked_status, active_status) VALUES (1, ''Administrador do Sistema'', ''admin'', NULL, ''A'', 1, 1, 1, 1, NULL, 1, 1, ''2019-12-30 15:48:21'', ''2022-03-09 19:42:26.781'', 0, 0, 1);'
+      'INSERT INTO users (full_name, user_name, user_password, user_rank, allow_collection_edit, allow_print, allow_export, allow_import, uuid, user_inserted, user_updated, insert_date, update_date, exported_status, marked_status, active_status) VALUES (''Administrador do Sistema'', ''admin'', NULL, ''A'', 1, 1, 1, 1, NULL, 1, 1, ''2019-12-30 15:48:21'', ''2022-03-09 19:42:26.781'', 0, 0, 1);'
       ''
       '-- Table: taxon_ranks'
       'INSERT INTO taxon_ranks (rank_id, rank_seq, rank_name, rank_acronym, main_rank, subrank, infrarank, infraspecific, iczn, icbn, user_inserted, user_updated, insert_date, update_date, exported_status, marked_status, active_status) VALUES (1, 10, ''Superordem'', ''superord.'', 0, 0, 0, 0, 1, 1, 1, 1, ''2020-06-17 18:54:42'', NULL, 0, 0, 1);'

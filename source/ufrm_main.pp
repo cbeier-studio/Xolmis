@@ -232,6 +232,7 @@ type
     procedure actCheckUpdatesExecute(Sender: TObject);
     procedure actCoordinatesConverterExecute(Sender: TObject);
     procedure actDBConnectExecute(Sender: TObject);
+    procedure actDBNewExecute(Sender: TObject);
     procedure actDBSettingsExecute(Sender: TObject);
     procedure actExitExecute(Sender: TObject);
     procedure actGiveFeedbackExecute(Sender: TObject);
@@ -393,10 +394,24 @@ begin
   if ConnectDatabase then
   begin
     CloseAllTabs;
+    sbHomeClick(nil);
 
     UpdateMenu(PGW.ActivePageComponent);
     UpdateStatusBar;
   end;
+end;
+
+procedure TfrmMain.actDBNewExecute(Sender: TObject);
+begin
+  if NewDatabase then
+    if ConnectDatabase then
+    begin
+      CloseAllTabs;
+      sbHomeClick(nil);
+
+      UpdateMenu(PGW.ActivePageComponent);
+      UpdateStatusBar;
+    end;
 end;
 
 procedure TfrmMain.actDBSettingsExecute(Sender: TObject);

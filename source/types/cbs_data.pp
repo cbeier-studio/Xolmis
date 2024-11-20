@@ -43,58 +43,58 @@ const
   { User database }
   function CreateUserDatabase(aProtocol: TDBManager; aFilename, aName, aAuthor, aDescription: String): Boolean;
   function UpgradeDatabaseSchema(aProtocol: TDBManager): Boolean;
-  function ReadDatabaseMetadata(aKey: String): String;
-  procedure WriteDatabaseMetadata(aKey, aValue: String);
+  function ReadDatabaseMetadata(Connection: TSQLConnector; aKey: String): String;
+  procedure WriteDatabaseMetadata(Connection: TSQLConnector; aKey, aValue: String);
 
-  procedure CreateDBMetadataTable;
-  procedure CreateUsersTable;
-  procedure CreateRecordHistoryTable;
-  procedure CreateRecordVerificationsTable;
-  procedure CreateTaxonRanksTable;
-  procedure CreateZooTaxaTable;
-  procedure CreateBotanicTaxaTable;
-  procedure CreateMethodsTable;
-  procedure CreateGazetteerTable;
-  procedure CreateInstitutionsTable;
-  procedure CreatePeopleTable;
-  procedure CreateSamplingPlotsTable;
-  procedure CreatePermanentNetsTable;
-  procedure CreatePermitsTable;
-  procedure CreateProjectsTable;
-  procedure CreateProjectTeamTable;
-  procedure CreateExpeditionsTable;
-  procedure CreateSurveysTable;
-  procedure CreateSurveyTeamTable;
-  procedure CreateNetsEffortTable;
-  procedure CreateWeatherLogsTable;
-  procedure CreateVegetationTable;
-  procedure CreateBandsTable;
-  procedure CreateBandHistoryTable;
-  procedure CreateIndividualsTable;
-  procedure CreateSightingsTable;
-  procedure CreateCapturesTable;
-  procedure CreateMoltsTable;
-  procedure CreateNestsTable;
-  procedure CreateNestOwnersTable;
-  procedure CreateNestRevisionsTable;
-  procedure CreateEggsTable;
-  procedure CreateSpecimensTable;
-  procedure CreateSpecimenCollectorsTable;
-  procedure CreateSamplePrepsTable;
-  procedure CreatePoiLibraryTable;
-  procedure CreateImagesTable;
-  procedure CreateDocumentsTable;
-  procedure CreateAudioLibraryTable;
+  procedure CreateDBMetadataTable(Connection: TSQLConnector);
+  procedure CreateUsersTable(Connection: TSQLConnector);
+  procedure CreateRecordHistoryTable(Connection: TSQLConnector);
+  procedure CreateRecordVerificationsTable(Connection: TSQLConnector);
+  procedure CreateTaxonRanksTable(Connection: TSQLConnector);
+  procedure CreateZooTaxaTable(Connection: TSQLConnector);
+  procedure CreateBotanicTaxaTable(Connection: TSQLConnector);
+  procedure CreateMethodsTable(Connection: TSQLConnector);
+  procedure CreateGazetteerTable(Connection: TSQLConnector);
+  procedure CreateInstitutionsTable(Connection: TSQLConnector);
+  procedure CreatePeopleTable(Connection: TSQLConnector);
+  procedure CreateSamplingPlotsTable(Connection: TSQLConnector);
+  procedure CreatePermanentNetsTable(Connection: TSQLConnector);
+  procedure CreatePermitsTable(Connection: TSQLConnector);
+  procedure CreateProjectsTable(Connection: TSQLConnector);
+  procedure CreateProjectTeamTable(Connection: TSQLConnector);
+  procedure CreateExpeditionsTable(Connection: TSQLConnector);
+  procedure CreateSurveysTable(Connection: TSQLConnector);
+  procedure CreateSurveyTeamTable(Connection: TSQLConnector);
+  procedure CreateNetsEffortTable(Connection: TSQLConnector);
+  procedure CreateWeatherLogsTable(Connection: TSQLConnector);
+  procedure CreateVegetationTable(Connection: TSQLConnector);
+  procedure CreateBandsTable(Connection: TSQLConnector);
+  procedure CreateBandHistoryTable(Connection: TSQLConnector);
+  procedure CreateIndividualsTable(Connection: TSQLConnector);
+  procedure CreateSightingsTable(Connection: TSQLConnector);
+  procedure CreateCapturesTable(Connection: TSQLConnector);
+  procedure CreateMoltsTable(Connection: TSQLConnector);
+  procedure CreateNestsTable(Connection: TSQLConnector);
+  procedure CreateNestOwnersTable(Connection: TSQLConnector);
+  procedure CreateNestRevisionsTable(Connection: TSQLConnector);
+  procedure CreateEggsTable(Connection: TSQLConnector);
+  procedure CreateSpecimensTable(Connection: TSQLConnector);
+  procedure CreateSpecimenCollectorsTable(Connection: TSQLConnector);
+  procedure CreateSamplePrepsTable(Connection: TSQLConnector);
+  procedure CreatePoiLibraryTable(Connection: TSQLConnector);
+  procedure CreateImagesTable(Connection: TSQLConnector);
+  procedure CreateDocumentsTable(Connection: TSQLConnector);
+  procedure CreateAudioLibraryTable(Connection: TSQLConnector);
 
-  procedure CreateNextBirthdaysView;
-  procedure CreateLastSurveysView;
-  procedure CreateLastLifersView;
-  procedure CreateExpiredPermitsView;
-  procedure CreateBandsLeftoverView;
-  procedure CreateBandsRunningOutView;
-  procedure CreateAvgExpeditionDurationView;
+  procedure CreateNextBirthdaysView(Connection: TSQLConnector);
+  procedure CreateLastSurveysView(Connection: TSQLConnector);
+  procedure CreateLastLifersView(Connection: TSQLConnector);
+  procedure CreateExpiredPermitsView(Connection: TSQLConnector);
+  procedure CreateBandsLeftoverView(Connection: TSQLConnector);
+  procedure CreateBandsRunningOutView(Connection: TSQLConnector);
+  procedure CreateAvgExpeditionDurationView(Connection: TSQLConnector);
 
-  procedure PopulateZooTaxaTable(var aProgressBar: TProgressBar);
+  procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
 
   { Database information and management }
   function GetTableType(aTableName: String): TTableType;
@@ -286,273 +286,350 @@ end;
 // the SchemaVersion constant and the UpgradeDatabaseSchema function
 // when the database schema change
 function CreateUserDatabase(aProtocol: TDBManager; aFilename, aName, aAuthor, aDescription: String): Boolean;
+var
+  Conn: TSQLConnector;
+  Trans: TSQLTransaction;
 begin
   Result := False;
-  if DMM.sqlCon.Connected then
-    DMM.sqlCon.Close;
+  //if DMM.sqlCon.Connected then
+  //  DMM.sqlCon.Close;
 
   dlgProgress := TdlgProgress.Create(nil);
+  Conn := TSQLConnector.Create(nil);
+  Trans := TSQLTransaction.Create(nil);
   try
     dlgProgress.Title := rsTitleCreateDatabase;
     dlgProgress.Text := rsProgressPreparing;
     dlgProgress.Max := 46; // Number of tables and views to create
     dlgProgress.Position := 0;
-    case aProtocol of
-      dbSqlite:
-      begin
-        {$IFDEF DEBUG}
-        LogDebug('Creating database: ' + aFilename);
-        {$ENDIF}
-        try
-          //Result := CopyFile(ConcatPaths([AppDataDir, 'XolmisDB_template.sqlite3']), aFilename, False, True);
-          //
-          //if Result then
+    dlgProgress.Show;
+    Application.ProcessMessages;
 
-          DMM.sqlCon.DatabaseName := aFilename;
-          DMM.sqlCon.ConnectorType := 'SQLite3';
-          DMM.sqlCon.Open;
-          if not DMM.sqlTrans.Active then
-            DMM.sqlTrans.StartTransaction;
+    Conn.ConnectorType := 'SQLite3';
+    Conn.CharSet := 'UTF-8';
+    Conn.LoginPrompt := False;
+    Conn.DatabaseName := aFileName;
+    Conn.Transaction := Trans;
+    Trans.DataBase := Conn;
+    Trans.Action := caRollbackRetaining;
 
-          // Create database file
-          dlgProgress.Text := rsProgressPreparing;
-          DMM.sqlCon.CreateDB;
 
-          DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = off;');
+    {$IFDEF DEBUG}
+    LogDebug('Creating database: ' + aFilename);
+    {$ENDIF}
+    try
+      //Result := CopyFile(ConcatPaths([AppDataDir, 'XolmisDB_template.sqlite3']), aFilename, False, True);
+      //
+      //if Result then
 
-          try
-            // Create tables
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleDBMetadata, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateDBMetadataTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+      //Conn.DatabaseName := aFilename;
+      //DMM.sqlCon.ConnectorType := 'SQLite3';
+      Conn.Open;
+      if not Trans.Active then
+        Trans.StartTransaction;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleUsers, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateUsersTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+      // Create database file
+      dlgProgress.Text := rsProgressPreparing;
+      Application.ProcessMessages;
+      //DMM.sqlCon.CreateDB;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleHistory, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateRecordHistoryTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+      Conn.ExecuteDirect('PRAGMA foreign_keys = off;');
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleVerifications, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateRecordVerificationsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+      try
+        // Create tables
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleDBMetadata, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateDBMetadataTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleTaxonRanks, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateTaxonRanksTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleUsers, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateUsersTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleZooTaxa, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateZooTaxaTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleHistory, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateRecordHistoryTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBotanicTaxa, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateBotanicTaxaTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleVerifications, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateRecordVerificationsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleMethods, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateMethodsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleTaxonRanks, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateTaxonRanksTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleGazetteer, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateGazetteerTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleZooTaxa, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateZooTaxaTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleInstitutions, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateInstitutionsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBotanicTaxa, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateBotanicTaxaTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleResearchers, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreatePeopleTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleMethods, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateMethodsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSamplingPlots, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateSamplingPlotsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleGazetteer, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateGazetteerTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePermanentNets, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreatePermanentNetsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleInstitutions, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateInstitutionsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePermits, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreatePermitsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleResearchers, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreatePeopleTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjects, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateProjectsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSamplingPlots, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateSamplingPlotsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectMembers, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateProjectTeamTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePermanentNets, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreatePermanentNetsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsCaptionExpeditions, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateExpeditionsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePermits, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreatePermitsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSurveys, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateSurveysTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjects, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateProjectsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSurveyTeam, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateSurveyTeamTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectMembers, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateProjectTeamTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNetsEffort, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateNetsEffortTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsCaptionExpeditions, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateExpeditionsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleWeather, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateWeatherLogsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSurveys, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateSurveysTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleVegetation, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateVegetationTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSurveyTeam, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateSurveyTeamTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBands, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateBandsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNetsEffort, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateNetsEffortTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBandHistory, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateBandHistoryTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleWeather, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateWeatherLogsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleIndividuals, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateIndividualsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleVegetation, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateVegetationTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSightings, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateSightingsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBands, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateBandsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleCaptures, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateCapturesTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBandHistory, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateBandHistoryTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleMolts, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateMoltsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleIndividuals, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateIndividualsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNests, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateNestsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSightings, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateSightingsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNestOwners, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateNestOwnersTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleCaptures, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateCapturesTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNestRevisions, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateNestRevisionsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleMolts, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateMoltsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleEggs, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateEggsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNests, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateNestsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSpecimens, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateSpecimensTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNestOwners, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateNestOwnersTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSpecimenCollectors, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateSpecimenCollectorsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNestRevisions, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateNestRevisionsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSamplePreps, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateSamplePrepsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleEggs, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateEggsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePoiLibrary, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreatePoiLibraryTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSpecimens, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateSpecimensTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleImages, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateImagesTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSpecimenCollectors, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateSpecimenCollectorsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleDocuments, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateDocumentsTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSamplePreps, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateSamplePrepsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleAudioLibrary, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateAudioLibraryTable;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePoiLibrary, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreatePoiLibraryTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            // Create views
-            dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleNextBirthdays, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateNextBirthdaysView;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleImages, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateImagesTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleLastSurveys, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateLastSurveysView;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleDocuments, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateDocumentsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleLastLifers, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateLastLifersView;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleAudioLibrary, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateAudioLibraryTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleExpiredPermits, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateExpiredPermitsView;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        // Create views
+        dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleNextBirthdays, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateNextBirthdaysView(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleBandsBalance, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateBandsLeftoverView;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleLastSurveys, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateLastSurveysView(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleBandsRunningOut, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateBandsRunningOutView;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleLastLifers, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateLastLifersView(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleAvgExpeditionDuration, dlgProgress.Position + 1, dlgProgress.Max]);
-            CreateAvgExpeditionDurationView;
-            dlgProgress.Position := dlgProgress.Position + 1;
+        dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleExpiredPermits, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateExpiredPermitsView(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            // Populate tables
-            dlgProgress.Text := rsProgressPopulatingTables;
-            dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
-            DMM.scriptUserDBInit.ExecuteScript;
+        dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleBandsBalance, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateBandsLeftoverView(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-            PopulateZooTaxaTable(dlgProgress.PBar);
+        dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleBandsRunningOut, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateBandsRunningOutView(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-          finally
-            DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = on;');
-          end;
+        dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleAvgExpeditionDuration, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateAvgExpeditionDurationView(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
 
-          // Write metadata to the database
-          dlgProgress.Text := rsProgressFinishing;
-          dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
-          WriteDatabaseMetadata('name', aName);
-          WriteDatabaseMetadata('author', aAuthor);
-          WriteDatabaseMetadata('description', aDescription);
-          WriteDatabaseMetadata('version', IntToStr(SchemaVersion));
-          WriteDatabaseMetadata('creation date', DateTimeToStr(Now));
+        Trans.CommitRetaining;
+        if not Trans.Active then
+        Trans.StartTransaction;
 
-          DMM.sqlTrans.CommitRetaining;
+        // Populate tables
+        dlgProgress.Text := rsProgressPopulatingTables;
+        dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
+        Application.ProcessMessages;
+        DMM.scriptUserDBInit.DataBase := Conn;
+        DMM.scriptUserDBInit.Transaction := Conn.Transaction;
+        DMM.scriptUserDBInit.ExecuteScript;
 
-          // Optimize the database
-          dlgProgress.Text := rsProgressOptimizingDatabase;
-          DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+        Trans.CommitRetaining;
+        if not Trans.Active then
+        Trans.StartTransaction;
 
-          MsgDlg(rsTitleInformation, rsSuccessfulDatabaseCreation, mtInformation);
-          LogInfo(Format('User database succesfully created (SQLite): %s', [aFileName]));
-          Result := True;
-        except
-          on E: Exception do
-          begin
-            DMM.sqlTrans.RollbackRetaining;
-            MsgDlg(rsTitleError, Format(rsErrorCreatingDatabaseSchema, [E.Message]), mtError);
-            LogError(Format('Unable to create the user database (SQLite): %s', [aFileName]));
-            Result := False;
-          end;
-        end;
+        PopulateZooTaxaTable(Conn, dlgProgress.PBar);
+
+        Trans.CommitRetaining;
+        if not Trans.Active then
+        Trans.StartTransaction;
+
+      finally
+        Conn.ExecuteDirect('PRAGMA foreign_keys = on;');
       end;
-      dbFirebird: ;
-      dbPostgre: ;
-      dbMaria: ;
+
+      // Write metadata to the database
+      dlgProgress.Text := rsProgressFinishing;
+      dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
+      Application.ProcessMessages;
+      WriteDatabaseMetadata(Conn, 'name', aName);
+      WriteDatabaseMetadata(Conn, 'author', aAuthor);
+      WriteDatabaseMetadata(Conn, 'description', aDescription);
+      WriteDatabaseMetadata(Conn, 'version', IntToStr(SchemaVersion));
+      WriteDatabaseMetadata(Conn, 'creation date', DateTimeToStr(Now));
+
+      Trans.CommitRetaining;
+
+      // Optimize the database
+      dlgProgress.Text := rsProgressOptimizingDatabase;
+      Application.ProcessMessages;
+      Conn.ExecuteDirect('PRAGMA optimize;');
+      dlgProgress.Hide;
+
+      //MsgDlg(rsTitleInformation, rsSuccessfulDatabaseCreation, mtInformation);
+      LogInfo(Format('User database succesfully created (SQLite): %s', [aFileName]));
+      Result := True;
+    except
+      on E: Exception do
+      begin
+        Trans.RollbackRetaining;
+        MsgDlg(rsTitleError, Format(rsErrorCreatingDatabaseSchema, [E.Message]), mtError);
+        LogError(Format('Unable to create the user database (SQLite): %s', [aFileName]));
+        Result := False;
+      end;
     end;
 
   finally
-    FreeAndNil(dlgProgress);
+    FreeAndNil(Trans);
+    FreeAndNil(Conn);
+    if Assigned(dlgProgress) then
+      FreeAndNil(dlgProgress);
   end;
 end;
 
@@ -564,7 +641,7 @@ var
 begin
   Result := False;
 
-  OldVersion := StrToIntDef(ReadDatabaseMetadata('version'), SchemaVersion);
+  OldVersion := StrToIntDef(ReadDatabaseMetadata(DMM.sqlCon, 'version'), SchemaVersion);
 
   if not DMM.sqlCon.Connected then
     DMM.sqlCon.Open;
@@ -611,10 +688,10 @@ begin
   end;
 
   if Result then
-    WriteDatabaseMetadata('version', IntToStr(SchemaVersion));
+    WriteDatabaseMetadata(DMM.sqlCon, 'version', IntToStr(SchemaVersion));
 end;
 
-function ReadDatabaseMetadata(aKey: String): String;
+function ReadDatabaseMetadata(Connection: TSQLConnector; aKey: String): String;
 var
   Qry: TSQLQuery;
 begin
@@ -623,8 +700,8 @@ begin
   Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
+    SQLConnection := Connection;
+    SQLTransaction := Connection.Transaction;
 
     Add('SELECT * FROM db_metadata');
     Add('WHERE property_name = :aname');
@@ -640,15 +717,15 @@ begin
   end;
 end;
 
-procedure WriteDatabaseMetadata(aKey, aValue: String);
+procedure WriteDatabaseMetadata(Connection: TSQLConnector; aKey, aValue: String);
 var
   Qry: TSQLQuery;
 begin
   Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
+    SQLConnection := Connection;
+    SQLTransaction := Connection.Transaction;
 
     Add('INSERT OR REPLACE INTO db_metadata (');
     Add('property_name, property_value)');
@@ -662,17 +739,17 @@ begin
   end;
 end;
 
-procedure CreateDBMetadataTable;
+procedure CreateDBMetadataTable(Connection: TSQLConnector);
 begin
   { Create table "db_metadata" }
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS db_metadata (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS db_metadata (' +
       'property_name  VARCHAR (40)  PRIMARY KEY UNIQUE NOT NULL, ' +
       'property_value VARCHAR (150) );');
 end;
 
-procedure CreateUsersTable;
+procedure CreateUsersTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS users (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS users (' +
     'user_id               INTEGER      PRIMARY KEY AUTOINCREMENT,' +
     'full_name             VARCHAR (60) NOT NULL,' +
     'user_name             VARCHAR (30) UNIQUE NOT NULL,' +
@@ -692,18 +769,18 @@ begin
     'active_status         BOOLEAN      DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_user_fullname ON users (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_user_fullname ON users (' +
     'full_name COLLATE NOCASE' +
   ');')
 end;
 
-procedure CreateRecordHistoryTable;
+procedure CreateRecordHistoryTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS record_history (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS record_history (' +
     'event_id     INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'event_date   DATETIME,' +
     'user_id      INTEGER,' +
-    'event_action VARCHAR (30)' +
+    'event_action VARCHAR (30),' +
     'event_table  VARCHAR (40),' +
     'record_id    INTEGER,' +
     'event_field  VARCHAR (60),' +
@@ -714,19 +791,19 @@ begin
       'REFERENCES users (user_id) ON DELETE SET NULL ON UPDATE CASCADE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_history_table_record ON record_history (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_history_table_record ON record_history (' +
     'event_table,' +
     'record_id' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_history_date ON record_history (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_history_date ON record_history (' +
     'event_date COLLATE BINARY' +
   ');');
 end;
 
-procedure CreateRecordVerificationsTable;
+procedure CreateRecordVerificationsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS record_verifications (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS record_verifications (' +
     'verification_id     INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'table_name          VARCHAR (40) NOT NULL,' +
     'record_id           INTEGER      NOT NULL,' +
@@ -737,9 +814,9 @@ begin
   ');');
 end;
 
-procedure CreateTaxonRanksTable;
+procedure CreateTaxonRanksTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS taxon_ranks (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS taxon_ranks (' +
     'rank_id         INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'rank_seq        INTEGER      NOT NULL,' +
     'rank_name       VARCHAR (30) NOT NULL UNIQUE,' +
@@ -759,18 +836,18 @@ begin
     'active_status   BOOLEAN      DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_rank_seq ON taxon_ranks (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_rank_seq ON taxon_ranks (' +
     'rank_seq COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_rank_acronym ON taxon_ranks (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_rank_acronym ON taxon_ranks (' +
     'rank_acronym COLLATE BINARY' +
   ');');
 end;
 
-procedure CreateZooTaxaTable;
+procedure CreateZooTaxaTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS zoo_taxa (' +
     'taxon_id               INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'full_name              VARCHAR (100) NOT NULL UNIQUE,' +
     'authorship             VARCHAR (150),' +
@@ -815,86 +892,86 @@ begin
     'ioc_distribution       TEXT' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_authorship ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_authorship ON zoo_taxa (' +
     'authorship COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_ebird_code ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_ebird_code ON zoo_taxa (' +
     'ebird_code COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_order ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_order ON zoo_taxa (' +
     'order_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_family ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_family ON zoo_taxa (' +
     'family_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_genus ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_genus ON zoo_taxa (' +
     'genus_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_species ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_species ON zoo_taxa (' +
     'species_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_subspecies_group ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_subspecies_group ON zoo_taxa (' +
     'subspecies_group_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_parent_taxon ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_parent_taxon ON zoo_taxa (' +
     'parent_taxon_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_parent_taxon_ioc ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_parent_taxon_ioc ON zoo_taxa (' +
     'ioc_parent_taxon_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_valid ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_valid ON zoo_taxa (' +
     'valid_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_valid_ioc ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_valid_ioc ON zoo_taxa (' +
     'ioc_valid_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_english_name ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_english_name ON zoo_taxa (' +
     'english_name COLLATE NOCASE' +
-  ';');
+  ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_portuguese_name ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_portuguese_name ON zoo_taxa (' +
     'portuguese_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_spanish_name ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_spanish_name ON zoo_taxa (' +
     'spanish_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_quickcodes ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_quickcodes ON zoo_taxa (' +
     'quick_code COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_rank ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_rank ON zoo_taxa (' +
     'rank_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_rank_ioc ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_rank_ioc ON zoo_taxa (' +
     'ioc_rank_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_sort_num ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_sort_num ON zoo_taxa (' +
     'sort_num COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_sort_num_ioc ON zoo_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_sort_num_ioc ON zoo_taxa (' +
     'ioc_sort_num COLLATE BINARY' +
   ');');
 end;
 
-procedure CreateBotanicTaxaTable;
+procedure CreateBotanicTaxaTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS botanic_taxa (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS botanic_taxa (' +
     'taxon_id        INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'taxon_name      VARCHAR (100) NOT NULL UNIQUE,' +
     'authorship      VARCHAR (100),' +
@@ -916,42 +993,42 @@ begin
     'active_status   BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_parent_taxon ON botanic_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_parent_taxon ON botanic_taxa (' +
     'parent_taxon_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_valid ON botanic_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_valid ON botanic_taxa (' +
     'valid_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_order ON botanic_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_order ON botanic_taxa (' +
     'order_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_family ON botanic_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_family ON botanic_taxa (' +
     'family_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_genus ON botanic_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_genus ON botanic_taxa (' +
     'genus_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_species ON botanic_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_species ON botanic_taxa (' +
     'species_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_vernacular_name ON botanic_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_vernacular_name ON botanic_taxa (' +
     'vernacular_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_tax_authorship ON botanic_taxa (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_tax_authorship ON botanic_taxa (' +
     'authorship COLLATE NOCASE' +
   ');');
 end;
 
-procedure CreateMethodsTable;
+procedure CreateMethodsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS methods (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS methods (' +
     'method_id       INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'method_name     VARCHAR (100) UNIQUE NOT NULL,' +
     'method_acronym  VARCHAR (20),' +
@@ -966,18 +1043,18 @@ begin
     'active_status   BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_acronym ON methods (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_acronym ON methods (' +
     'method_acronym COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_ebird_name ON methods (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_ebird_name ON methods (' +
     'ebird_name COLLATE NOCASE' +
   ');');
 end;
 
-procedure CreateGazetteerTable;
+procedure CreateGazetteerTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS gazetteer (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS gazetteer (' +
     'site_id         INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'site_name       VARCHAR (60)  NOT NULL,' +
     'site_acronym    VARCHAR (10),' +
@@ -1003,43 +1080,43 @@ begin
     'active_status   BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_site_name ON gazetteer (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_site_name ON gazetteer (' +
     'site_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_fullname ON gazetteer (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_fullname ON gazetteer (' +
     'full_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_ebird_name ON gazetteer (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_ebird_name ON gazetteer (' +
     'ebird_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_parent_site ON gazetteer (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_parent_site ON gazetteer (' +
     'parent_site_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_country ON gazetteer (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_country ON gazetteer (' +
     'country_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_state ON gazetteer (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_state ON gazetteer (' +
     'state_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_municipality ON gazetteer (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_municipality ON gazetteer (' +
     'municipality_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_coordinate ON gazetteer (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_coordinate ON gazetteer (' +
     'longitude,' +
     'latitude' +
   ');');
 end;
 
-procedure CreateInstitutionsTable;
+procedure CreateInstitutionsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS institutions (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS institutions (' +
     'institution_id  INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'full_name       VARCHAR (100) NOT NULL UNIQUE,' +
     'acronym         VARCHAR (15),' +
@@ -1063,14 +1140,14 @@ begin
     'active_status   BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_institutions_acronym ON institutions (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_institutions_acronym ON institutions (' +
     'acronym COLLATE NOCASE' +
   ');');
 end;
 
-procedure CreatePeopleTable;
+procedure CreatePeopleTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS people (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS people (' +
     'person_id              INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'full_name              VARCHAR (100) NOT NULL,' +
     'acronym                VARCHAR (10)  UNIQUE NOT NULL,' +
@@ -1111,22 +1188,22 @@ begin
     'active_status          BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_people_fullname ON people (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_people_fullname ON people (' +
     'full_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_people_citation ON people (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_people_citation ON people (' +
     'citation COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_people_birthday ON people (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_people_birthday ON people (' +
     'birth_date COLLATE BINARY' +
   ');');
 end;
 
-procedure CreateSamplingPlotsTable;
+procedure CreateSamplingPlotsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS sampling_plots (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS sampling_plots (' +
     'sampling_plot_id INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'full_name        VARCHAR (100) NOT NULL UNIQUE,' +
     'acronym          VARCHAR (10)  NOT NULL UNIQUE,' +
@@ -1149,9 +1226,9 @@ begin
   ');');
 end;
 
-procedure CreatePermanentNetsTable;
+procedure CreatePermanentNetsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS permanent_nets (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS permanent_nets (' +
     'permanent_net_id INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'net_station_id   INTEGER       NOT NULL REFERENCES sampling_plots (sampling_plot_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
     'net_number       INTEGER       NOT NULL,' +
@@ -1169,9 +1246,9 @@ begin
   ');');
 end;
 
-procedure CreatePermitsTable;
+procedure CreatePermitsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS legal (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS legal (' +
     'permit_id       INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'project_id      INTEGER       REFERENCES projects (project_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
     'permit_name     VARCHAR (150),' +
@@ -1193,9 +1270,9 @@ begin
   ');');
 end;
 
-procedure CreateProjectsTable;
+procedure CreateProjectsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS projects (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS projects (' +
     'project_id       INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'project_title    VARCHAR (150) NOT NULL UNIQUE,' +
     'short_title      VARCHAR (60),' +
@@ -1217,14 +1294,14 @@ begin
     'active_status    BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_projects_short_title ON projects (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_projects_short_title ON projects (' +
     'short_title COLLATE NOCASE' +
   ');');
 end;
 
-procedure CreateProjectTeamTable;
+procedure CreateProjectTeamTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_team (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_team (' +
     'project_member_id INTEGER  UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'project_id        INTEGER  REFERENCES projects (project_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
     'person_id         INTEGER  NOT NULL REFERENCES people (person_id) ON UPDATE CASCADE,' +
@@ -1239,9 +1316,9 @@ begin
   ');');
 end;
 
-procedure CreateExpeditionsTable;
+procedure CreateExpeditionsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS expeditions (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS expeditions (' +
     'expedition_id   INTEGER       PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'expedition_name VARCHAR (150) NOT NULL,' +
     'start_date      DATE,' +
@@ -1262,14 +1339,14 @@ begin
     'active_status   BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_expeditions_name ON expeditions (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_expeditions_name ON expeditions (' +
     'expedition_name COLLATE NOCASE' +
   ');');
 end;
 
-procedure CreateSurveysTable;
+procedure CreateSurveysTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS surveys (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS surveys (' +
     'survey_id                INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_date              DATE          NOT NULL,' +
     'start_time               TIME,' +
@@ -1305,18 +1382,18 @@ begin
     'active_status            BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_surveys_date ON surveys (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_surveys_date ON surveys (' +
     'survey_date COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_surveys_fullname ON surveys (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_surveys_fullname ON surveys (' +
     'full_name COLLATE NOCASE' +
   ');');
 end;
 
-procedure CreateSurveyTeamTable;
+procedure CreateSurveyTeamTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS survey_team (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS survey_team (' +
     'survey_member_id INTEGER  UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_id        INTEGER,' +
     'person_id        INTEGER  NOT NULL REFERENCES people (person_id) ON UPDATE CASCADE,' +
@@ -1331,9 +1408,9 @@ begin
   ');');
 end;
 
-procedure CreateNetsEffortTable;
+procedure CreateNetsEffortTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS nets_effort (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nets_effort (' +
     'net_id           INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_id        INTEGER,' +
     'net_station_id   INTEGER      REFERENCES net_stations (net_station_id) ON UPDATE CASCADE,' +
@@ -1366,15 +1443,15 @@ begin
     'active_status    BOOLEAN      DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nets_effort_survey_netnumber ON nets_effort (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nets_effort_survey_netnumber ON nets_effort (' +
     'survey_id,' +
     'net_number' +
   ');');
 end;
 
-procedure CreateWeatherLogsTable;
+procedure CreateWeatherLogsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS weather_logs (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS weather_logs (' +
     'weather_id           INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'survey_id            INTEGER,' +
     'sample_date          DATE     NOT NULL,' +
@@ -1400,9 +1477,9 @@ begin
   ');');
 end;
 
-procedure CreateVegetationTable;
+procedure CreateVegetationTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS vegetation (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS vegetation (' +
     'vegetation_id       INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,' +
     'survey_id           INTEGER,' +
     'sample_date         DATE     NOT NULL,' +
@@ -1430,9 +1507,9 @@ begin
   ');');
 end;
 
-procedure CreateBandsTable;
+procedure CreateBandsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS bands (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS bands (' +
     'band_id         INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'band_size       VARCHAR (5),' +
     'band_number     INTEGER,' +
@@ -1458,27 +1535,27 @@ begin
     'active_status   BOOLEAN      DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_bands_fullname ON bands (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_bands_fullname ON bands (' +
     'full_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_bands_band_size ON bands (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_bands_band_size ON bands (' +
     'band_size' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_bands_number ON bands (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_bands_number ON bands (' +
     'band_number COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_band_size_status ON bands (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_band_size_status ON bands (' +
     'band_size,' +
     'band_status' +
   ');');
 end;
 
-procedure CreateBandHistoryTable;
+procedure CreateBandHistoryTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS band_history (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS band_history (' +
     'event_id        INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'band_id         INTEGER  REFERENCES bands (band_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
     'event_type      CHAR (5) NOT NULL,' +
@@ -1497,14 +1574,14 @@ begin
     'active_status   BOOLEAN  DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_band_history_date ON band_history (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_band_history_date ON band_history (' +
     'event_date COLLATE BINARY ASC' +
   ');');
 end;
 
-procedure CreateIndividualsTable;
+procedure CreateIndividualsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS individuals (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS individuals (' +
     'individual_id         INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'formatted_name        VARCHAR (150),' +
     'full_name             VARCHAR (120),' +
@@ -1548,18 +1625,18 @@ begin
     'active_status         BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_individuals_fullname ON individuals (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_individuals_fullname ON individuals (' +
     'full_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_individuals_taxon ON individuals (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_individuals_taxon ON individuals (' +
     'taxon_id COLLATE BINARY' +
   ');');
 end;
 
-procedure CreateSightingsTable;
+procedure CreateSightingsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS sightings (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS sightings (' +
     'sighting_id          INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_id            INTEGER,' +
     'individual_id        INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
@@ -1610,22 +1687,22 @@ begin
     'active_status        BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_fullname ON sightings (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_fullname ON sightings (' +
     'full_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_taxon ON sightings (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_taxon ON sightings (' +
     'taxon_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_date ON sightings (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_date ON sightings (' +
     'sighting_date COLLATE BINARY' +
   ');');
 end;
 
-procedure CreateCapturesTable;
+procedure CreateCapturesTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS captures (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS captures (' +
     'capture_id             INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_id              INTEGER,' +
     'individual_id          INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
@@ -1724,31 +1801,31 @@ begin
     'active_status          BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_fullname ON captures (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_fullname ON captures (' +
     'full_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_date ON captures (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_date ON captures (' +
     'capture_date COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_taxon ON captures (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_taxon ON captures (' +
     'taxon_id COLLATE BINARY' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_band ON captures (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_band ON captures (' +
     'band_id' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_type_band ON captures (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_type_band ON captures (' +
     'capture_type,' +
     'band_id' +
   ');');
 end;
 
-procedure CreateMoltsTable;
+procedure CreateMoltsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS molts (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS molts (' +
     'molt_id         INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_id       INTEGER,' +
     'full_name       VARCHAR (40),' +
@@ -1825,9 +1902,9 @@ begin
   ');');
 end;
 
-procedure CreateNestsTable;
+procedure CreateNestsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS nests (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nests (' +
     'nest_id               INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'field_number          VARCHAR (20)  UNIQUE NOT NULL,' +
     'observer_id           INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
@@ -1883,14 +1960,14 @@ begin
     'active_status         BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nests_fullname ON nests (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nests_fullname ON nests (' +
     'full_name COLLATE NOCASE' +
   ');');
 end;
 
-procedure CreateNestOwnersTable;
+procedure CreateNestOwnersTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS nest_owners (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nest_owners (' +
     'nest_owner_id   INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'nest_id         INTEGER     REFERENCES nests (nest_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
     'role            VARCHAR (5),' +
@@ -1905,9 +1982,9 @@ begin
   ');');
 end;
 
-procedure CreateNestRevisionsTable;
+procedure CreateNestRevisionsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS nest_revisions (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nest_revisions (' +
     'nest_revision_id             INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'nest_id                      INTEGER       REFERENCES nests (nest_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
     'full_name                    VARCHAR (100),' +
@@ -1934,9 +2011,9 @@ begin
   ');');
 end;
 
-procedure CreateEggsTable;
+procedure CreateEggsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS eggs (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS eggs (' +
     'egg_id           INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'nest_id          INTEGER       REFERENCES nests (nest_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
     'egg_seq          INTEGER,' +
@@ -1973,9 +2050,9 @@ begin
   ');');
 end;
 
-procedure CreateSpecimensTable;
+procedure CreateSpecimensTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS specimens (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS specimens (' +
     'specimen_id      INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'field_number     VARCHAR (20),' +
     'full_name        VARCHAR (100),' +
@@ -2009,22 +2086,22 @@ begin
     'active_status    BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_specimens_fullname ON specimens (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_specimens_fullname ON specimens (' +
     'full_name COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_specimens_fieldnumber ON specimens (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_specimens_fieldnumber ON specimens (' +
     'field_number COLLATE NOCASE' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_specimens_date ON specimens (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_specimens_date ON specimens (' +
     'collection_date COLLATE BINARY' +
   ');');
 end;
 
-procedure CreateSpecimenCollectorsTable;
+procedure CreateSpecimenCollectorsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS specimen_collectors (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS specimen_collectors (' +
     'collector_id    INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'specimen_id     INTEGER,' +
     'person_id       INTEGER,' +
@@ -2039,9 +2116,9 @@ begin
   ');');
 end;
 
-procedure CreateSamplePrepsTable;
+procedure CreateSamplePrepsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS sample_preps (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS sample_preps (' +
     'sample_prep_id   INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'specimen_id      INTEGER       REFERENCES specimens ON DELETE CASCADE ON UPDATE CASCADE,' +
     'accession_num    VARCHAR (20),' +
@@ -2072,14 +2149,14 @@ begin
     'active_status    BOOLEAN       DEFAULT (1)' +
   ');');
 
-  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_preparation_date ON sample_preps (' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_preparation_date ON sample_preps (' +
     'preparation_date COLLATE BINARY' +
   ');');
 end;
 
-procedure CreatePoiLibraryTable;
+procedure CreatePoiLibraryTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS poi_library (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS poi_library (' +
     'poi_id          INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'sample_date     DATE         NOT NULL,' +
     'sample_time     TIME,' +
@@ -2102,9 +2179,9 @@ begin
   ');');
 end;
 
-procedure CreateImagesTable;
+procedure CreateImagesTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS images (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS images (' +
     'image_id             INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'image_date           DATE,' +
     'image_time           TIME,' +
@@ -2148,9 +2225,9 @@ begin
   ');');
 end;
 
-procedure CreateDocumentsTable;
+procedure CreateDocumentsTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS documents (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS documents (' +
     'document_id     INTEGER       PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,' +
     'permit_id       INTEGER       REFERENCES legal (permit_id) ON DELETE CASCADE,' +
     'project_id      INTEGER       REFERENCES projects (project_id) ON DELETE CASCADE,' +
@@ -2184,9 +2261,9 @@ begin
   ');');
 end;
 
-procedure CreateAudioLibraryTable;
+procedure CreateAudioLibraryTable(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS audio_library (' +
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS audio_library (' +
     'audio_id          INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'full_name         VARCHAR (100),' +
     'taxon_id          INTEGER,' +
@@ -2238,204 +2315,209 @@ begin
   ');');
 end;
 
-procedure CreateNextBirthdaysView;
+procedure CreateNextBirthdaysView(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_next_birthdays AS' +
-    'SELECT full_name,' +
-      'birth_date,' +
-      'strftime(''%d/%m'', birth_date) AS ANIVER,' +
-      'strftime(''%j'', birth_date) - strftime(''%j'', ''now'') AS days_remaining' +
-    'FROM people' +
-    'WHERE (active_status = 1) AND' +
-      '(birth_date NOTNULL)' +
+  Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_next_birthdays AS ' +
+    'SELECT full_name, ' +
+      'birth_date, ' +
+      'strftime(''%d/%m'', birth_date) AS ANIVER, ' +
+      'strftime(''%j'', birth_date) - strftime(''%j'', ''now'') AS days_remaining ' +
+    'FROM people ' +
+    'WHERE (active_status = 1) AND ' +
+      '(birth_date NOTNULL) ' +
     'ORDER BY CASE WHEN days_remaining >= 0 THEN days_remaining ELSE days_remaining + strftime(''%j'', strftime(''%Y-12-31'', ''now'') ) END;');
 end;
 
-procedure CreateLastSurveysView;
+procedure CreateLastSurveysView(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_last_surveys AS' +
-    'SELECT a.survey_date,' +
-      'a.start_longitude,' +
-      'a.start_latitude,' +
-      'm.method_name,' +
-      'g.full_name AS locality_name' +
-    'FROM surveys AS a' +
-    'JOIN methods AS m ON a.method_id = m.method_id' +
-    'JOIN gazetteer AS g ON a.locality_id = g.site_id' +
-    'WHERE a.active_status = 1' +
+  Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_last_surveys AS ' +
+    'SELECT a.survey_date, ' +
+      'a.start_longitude, ' +
+      'a.start_latitude, ' +
+      'm.method_name, ' +
+      'g.full_name AS locality_name ' +
+    'FROM surveys AS a ' +
+    'JOIN methods AS m ON a.method_id = m.method_id ' +
+    'JOIN gazetteer AS g ON a.locality_id = g.site_id ' +
+    'WHERE a.active_status = 1 ' +
     'ORDER BY a.survey_date DESC;');
 end;
 
-procedure CreateLastLifersView;
+procedure CreateLastLifersView(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_last_lifers AS' +
-    'WITH FirstRecords AS (' +
-      'SELECT taxon_id,' +
-        'MIN(capture_date) AS first_date,' +
-        '''C'' AS tipo' +
-      'FROM captures' +
-      'WHERE active_status = 1' +
-      'GROUP BY taxon_id' +
-      'UNION ALL' +
-      'SELECT taxon_id,' +
-        'MIN(sighting_date) AS first_date,' +
-        '''S'' AS tipo' +
-      'FROM sightings' +
-      'WHERE active_status = 1' +
-      'GROUP BY taxon_id' +
-    ')' +
-    'SELECT z.taxon_id AS taxon,' +
-      'z.full_name AS nome_taxon,' +
-      'date(fr.first_date) AS data_registro,' +
-      'fr.tipo' +
-    'FROM zoo_taxa z' +
-    'LEFT JOIN FirstRecords fr ON z.taxon_id = fr.taxon_id' +
-    'WHERE data_registro NOTNULL' +
+  Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_last_lifers AS ' +
+    'WITH FirstRecords AS ( ' +
+      'SELECT taxon_id, ' +
+        'MIN(capture_date) AS first_date, ' +
+        '''C'' AS tipo ' +
+      'FROM captures ' +
+      'WHERE active_status = 1 ' +
+      'GROUP BY taxon_id ' +
+      'UNION ALL ' +
+      'SELECT taxon_id, ' +
+        'MIN(sighting_date) AS first_date, ' +
+        '''S'' AS tipo ' +
+      'FROM sightings ' +
+      'WHERE active_status = 1 ' +
+      'GROUP BY taxon_id ' +
+    ') ' +
+    'SELECT z.taxon_id AS taxon, ' +
+      'z.full_name AS nome_taxon, ' +
+      'date(fr.first_date) AS data_registro, ' +
+      'fr.tipo ' +
+    'FROM zoo_taxa z ' +
+    'LEFT JOIN FirstRecords fr ON z.taxon_id = fr.taxon_id ' +
+    'WHERE data_registro NOTNULL ' +
     'ORDER BY data_registro DESC;');
 end;
 
-procedure CreateExpiredPermitsView;
+procedure CreateExpiredPermitsView(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_expired_permits AS' +
-    'SELECT permit_name,' +
-      'expire_date,' +
-      'strftime(''%j'', expire_date) - strftime(''%j'', ''now'') AS days_remaining' +
-      'FROM legal' +
-    'WHERE (days_remaining <= 30) AND' +
-      '(active_status = 1)' +
+  Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_expired_permits AS ' +
+    'SELECT permit_name, ' +
+      'expire_date, ' +
+      'strftime(''%j'', expire_date) - strftime(''%j'', ''now'') AS days_remaining ' +
+      'FROM legal ' +
+    'WHERE (days_remaining <= 30) AND ' +
+      '(active_status = 1) ' +
     'ORDER BY days_remaining ASC;');
 end;
 
-procedure CreateBandsLeftoverView;
+procedure CreateBandsLeftoverView(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_bands_leftover AS' +
-    'WITH BandSizes AS (' +
-      'SELECT band_size,' +
-        'COUNT( * ) AS total_bands' +
-      'FROM bands' +
-      'GROUP BY band_size' +
-    '),' +
-    'UsedBands AS (' +
-      'SELECT band_size,' +
-        'COUNT( * ) AS used_bands' +
-      'FROM bands' +
-      'WHERE (band_status != ''D'')' +
-      'GROUP BY band_size' +
-    '),' +
-    'DailyAverage AS (' +
-      'SELECT b.band_size,' +
-        'DATE(c.capture_date) AS capture_date,' +
-        'COUNT( * ) AS daily_count' +
-      'FROM captures c' +
-      'JOIN bands b ON c.band_id = b.band_id' +
-      'WHERE c.capture_type = ''N''' +
-      'GROUP BY b.band_size,' +
-      'DATE(c.capture_date)' +
-    '),' +
-    'MaxDaily AS (' +
-      'SELECT band_size,' +
-        'MAX(daily_count) AS max_daily_count' +
-      'FROM DailyAverage' +
-      'GROUP BY band_size' +
-    ')' +
-    'SELECT bs.band_size,' +
-      '(bs.total_bands - IFNULL(ub.used_bands, 0) ) AS saldo,' +
-      'AVG(da.daily_count) AS media_dia,' +
-      'md.max_daily_count AS maximo_dia' +
-    'FROM BandSizes bs' +
-    'LEFT JOIN UsedBands ub ON bs.band_size = ub.band_size' +
-    'LEFT JOIN DailyAverage da ON bs.band_size = da.band_size' +
-    'LEFT JOIN MaxDaily md ON bs.band_size = md.band_size' +
-    'GROUP BY bs.band_size' +
+  Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_bands_leftover AS ' +
+    'WITH BandSizes AS ( ' +
+      'SELECT band_size, ' +
+        'COUNT( * ) AS total_bands ' +
+      'FROM bands ' +
+      'GROUP BY band_size ' +
+    '), ' +
+    'UsedBands AS ( ' +
+      'SELECT band_size, ' +
+        'COUNT( * ) AS used_bands ' +
+      'FROM bands ' +
+      'WHERE (band_status != ''D'') ' +
+      'GROUP BY band_size ' +
+    '), ' +
+    'DailyAverage AS ( ' +
+      'SELECT b.band_size, ' +
+        'DATE(c.capture_date) AS capture_date, ' +
+        'COUNT( * ) AS daily_count ' +
+      'FROM captures c ' +
+      'JOIN bands b ON c.band_id = b.band_id ' +
+      'WHERE c.capture_type = ''N'' ' +
+      'GROUP BY b.band_size, ' +
+      'DATE(c.capture_date) ' +
+    '), ' +
+    'MaxDaily AS ( ' +
+      'SELECT band_size, ' +
+        'MAX(daily_count) AS max_daily_count ' +
+      'FROM DailyAverage ' +
+      'GROUP BY band_size ' +
+    ') ' +
+    'SELECT bs.band_size, ' +
+      '(bs.total_bands - IFNULL(ub.used_bands, 0) ) AS saldo, ' +
+      'AVG(da.daily_count) AS media_dia, ' +
+      'md.max_daily_count AS maximo_dia ' +
+    'FROM BandSizes bs ' +
+    'LEFT JOIN UsedBands ub ON bs.band_size = ub.band_size ' +
+    'LEFT JOIN DailyAverage da ON bs.band_size = da.band_size ' +
+    'LEFT JOIN MaxDaily md ON bs.band_size = md.band_size ' +
+    'GROUP BY bs.band_size ' +
     'ORDER BY bs.band_size;');
 end;
 
-procedure CreateBandsRunningOutView;
+procedure CreateBandsRunningOutView(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_bands_running_out AS' +
-    'WITH grupos AS (' +
-      'SELECT date(capture_date) AS capture_date,' +
-        'date(capture_date, ''-'' || DENSE_RANK() OVER (ORDER BY date(capture_date) ) || '' days'') AS grp' +
-      'FROM captures' +
-      'WHERE active_status = 1' +
-      'GROUP BY capture_date' +
-    '),' +
-    'consecutivo AS (' +
-      'SELECT COUNT(capture_date) AS consecutive_dates,' +
-        'MIN(capture_date) AS min_date,' +
-        'MAX(capture_date) AS max_date' +
-      'FROM grupos' +
-      'GROUP BY grp' +
-    '),' +
-    'expedicao AS (' +
-      'SELECT AVG(consecutive_dates) AS media_dias_expedicao' +
-      'FROM consecutivo' +
-    '),' +
-    'UsedBands AS (' +
-      'SELECT bands.band_size AS tamanho,' +
-        'COUNT(captures.band_id) AS conta' +
-      'FROM captures' +
-      'JOIN bands ON captures.band_id = bands.band_id' +
-      'WHERE captures.capture_type = ''N'' AND' +
-        'captures.active_status = 1' +
-      'GROUP BY tamanho,' +
-        'capture_date' +
-    '),' +
-    'DailyAverage AS (' +
-      'SELECT ub.tamanho,' +
-        'AVG(ub.conta) AS daily_use' +
-      'FROM UsedBands AS ub' +
-      'GROUP BY ub.tamanho' +
-    '),' +
-    'AvailableBands AS (' +
-      'SELECT b.band_size,' +
-        'COUNT(b2.band_number) AS remaining_bands' +
-      'FROM bands AS b' +
-      'LEFT JOIN bands AS b2 ON b.band_size = b2.band_size AND b2.band_status = ''D''' +
-      'GROUP BY b.band_size' +
-    ')' +
-    'SELECT b1.band_size,' +
-      'IFNULL(ab.remaining_bands, 0) AS saldo,' +
-      'da.daily_use AS media_dia,' +
-      '(da.daily_use * e.media_dias_expedicao) AS media_expedicao' +
-    'FROM bands AS b1' +
-    'JOIN expedicao AS e' +
-    'LEFT JOIN AvailableBands AS ab ON b1.band_size = ab.band_size' +
-    'LEFT JOIN DailyAverage AS da ON b1.band_size = da.tamanho' +
-    'WHERE saldo < media_expedicao' +
-    'GROUP BY b1.band_size' +
+  Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_bands_running_out AS ' +
+    'WITH grupos AS ( ' +
+      'SELECT date(capture_date) AS capture_date, ' +
+        'date(capture_date, ''-'' || DENSE_RANK() OVER (ORDER BY date(capture_date) ) || '' days'') AS grp ' +
+      'FROM captures ' +
+      'WHERE active_status = 1 ' +
+      'GROUP BY capture_date ' +
+    '), ' +
+    'consecutivo AS ( ' +
+      'SELECT COUNT(capture_date) AS consecutive_dates, ' +
+        'MIN(capture_date) AS min_date, ' +
+        'MAX(capture_date) AS max_date ' +
+      'FROM grupos ' +
+      'GROUP BY grp ' +
+    '), ' +
+    'expedicao AS ( ' +
+      'SELECT AVG(consecutive_dates) AS media_dias_expedicao ' +
+      'FROM consecutivo ' +
+    '), ' +
+    'UsedBands AS ( ' +
+      'SELECT bands.band_size AS tamanho, ' +
+        'COUNT(captures.band_id) AS conta ' +
+      'FROM captures ' +
+      'JOIN bands ON captures.band_id = bands.band_id ' +
+      'WHERE captures.capture_type = ''N'' AND ' +
+        'captures.active_status = 1 ' +
+      'GROUP BY tamanho, ' +
+        'capture_date ' +
+    '), ' +
+    'DailyAverage AS ( ' +
+      'SELECT ub.tamanho, ' +
+        'AVG(ub.conta) AS daily_use ' +
+      'FROM UsedBands AS ub ' +
+      'GROUP BY ub.tamanho ' +
+    '), ' +
+    'AvailableBands AS ( ' +
+      'SELECT b.band_size, ' +
+        'COUNT(b2.band_number) AS remaining_bands ' +
+      'FROM bands AS b ' +
+      'LEFT JOIN bands AS b2 ON b.band_size = b2.band_size AND b2.band_status = ''D'' ' +
+      'GROUP BY b.band_size ' +
+    ') ' +
+    'SELECT b1.band_size, ' +
+      'IFNULL(ab.remaining_bands, 0) AS saldo, ' +
+      'da.daily_use AS media_dia, ' +
+      '(da.daily_use * e.media_dias_expedicao) AS media_expedicao ' +
+    'FROM bands AS b1 ' +
+    'JOIN expedicao AS e ' +
+    'LEFT JOIN AvailableBands AS ab ON b1.band_size = ab.band_size ' +
+    'LEFT JOIN DailyAverage AS da ON b1.band_size = da.tamanho ' +
+    'WHERE saldo < media_expedicao ' +
+    'GROUP BY b1.band_size ' +
     'ORDER BY saldo ASC;');
 end;
 
-procedure CreateAvgExpeditionDurationView;
+procedure CreateAvgExpeditionDurationView(Connection: TSQLConnector);
 begin
-  DMM.sqlCon.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_average_expedition_duration AS' +
-    'WITH grupos (' +
-      'capture_date,' +
-      'grp' +
-    ')' +
-    'AS (' +
-      'SELECT DISTINCT date(c.capture_date),' +
-        'date(c.capture_date, ''-'' || DENSE_RANK() OVER (ORDER BY date(capture_date) ) || '' days'') AS gr' +
-      'FROM captures AS c' +
-      'WHERE (c.active_status = 1)' +
-    '),' +
-    'consecutivo AS (' +
-      'SELECT count( * ) AS consecutive_dates,' +
-        'min(grupos.capture_date) AS min_date,' +
-        'max(grupos.capture_date) AS max_date' +
-      'FROM grupos' +
-      'GROUP BY gr' +
-      'ORDER BY 1 DESC, 2 DESC' +
-    ')' +
-    'SELECT avg(consecutive_dates) AS media_dias_expedicao' +
+  Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_average_expedition_duration AS ' +
+    'WITH grupos ( ' +
+      'capture_date, ' +
+      'grp ' +
+    ') ' +
+    'AS ( ' +
+      'SELECT DISTINCT date(c.capture_date), ' +
+        'date(c.capture_date, ''-'' || DENSE_RANK() OVER (ORDER BY date(capture_date) ) || '' days'') AS gr ' +
+      'FROM captures AS c ' +
+      'WHERE (c.active_status = 1) ' +
+    '), ' +
+    'consecutivo AS ( ' +
+      'SELECT count( * ) AS consecutive_dates, ' +
+        'min(grupos.capture_date) AS min_date, ' +
+        'max(grupos.capture_date) AS max_date ' +
+      'FROM grupos ' +
+      'GROUP BY gr ' +
+      'ORDER BY 1 DESC, 2 DESC ' +
+    ') ' +
+    'SELECT avg(consecutive_dates) AS media_dias_expedicao ' +
     'FROM consecutivo;');
 end;
 
-procedure PopulateZooTaxaTable(var aProgressBar: TProgressBar);
+procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
 var
   Qry: TSQLQuery;
+  FS: TFormatSettings;
+  SortNum: Double;
 begin
+  FS := DefaultSQLFormatSettings;
+
+  Qry := TSQLQuery.Create(nil);
   with DMM.batchCsvRead do
   try
     Delimiter := ';';
@@ -2447,9 +2529,8 @@ begin
     aProgressBar.Style := TProgressBarStyle.pbstNormal;
     aProgressBar.Max := RecordCount;
 
-    Qry := TSQLQuery.Create(nil);
-    Qry.SQLConnection := DMM.sqlCon;
-    Qry.SQLTransaction := DMM.sqlTrans;
+    Qry.SQLConnection := Connection;
+    Qry.SQLTransaction := Connection.Transaction;
     Qry.SQL.Text := 'INSERT INTO zoo_taxa (' +
         'taxon_id,' +
         'full_name,' +
@@ -2539,6 +2620,8 @@ begin
     try
       while not EOF do
       begin
+        SortNum := 0.0;
+
         Qry.ParamByName('taxon_id').AsInteger := FieldByName('taxon_id').AsInteger;
         Qry.ParamByName('full_name').AsString := FieldByName('full_name').AsString;
         Qry.ParamByName('authorship').AsString := FieldByName('authorship').AsString;
@@ -2547,35 +2630,59 @@ begin
         Qry.ParamByName('portuguese_name').AsString := FieldByName('portuguese_name').AsString;
         Qry.ParamByName('spanish_name').AsString := FieldByName('spanish_name').AsString;
         Qry.ParamByName('quick_code').AsString := FieldByName('quick_code').AsString;
-        Qry.ParamByName('rank_id').AsInteger := FieldByName('rank_id').AsInteger;
-        Qry.ParamByName('parent_taxon_id').AsInteger := FieldByName('parent_taxon_id').AsInteger;
-        Qry.ParamByName('valid_id').AsInteger := FieldByName('valid_id').AsInteger;
+        if not (FieldByName('rank_id').AsString = EmptyStr) then
+          Qry.ParamByName('rank_id').AsInteger := FieldByName('rank_id').AsInteger;
+        if not (FieldByName('parent_taxon_id').AsString = EmptyStr) then
+          Qry.ParamByName('parent_taxon_id').AsInteger := FieldByName('parent_taxon_id').AsInteger;
+        if not (FieldByName('valid_id').AsString = EmptyStr) then
+          Qry.ParamByName('valid_id').AsInteger := FieldByName('valid_id').AsInteger;
         Qry.ParamByName('iucn_status').AsString := FieldByName('iucn_status').AsString;
         Qry.ParamByName('extinct').AsBoolean := FieldByName('extinct').AsBoolean;
         Qry.ParamByName('extinction_year').AsString := FieldByName('extinction_year').AsString;
-        Qry.ParamByName('sort_num').AsFloat := FieldByName('sort_num').AsFloat;
+        if not (FieldByName('sort_num').AsString = EmptyStr) then
+        begin
+          SortNum := StrToFloat(FieldByName('sort_num').AsString, FS);
+          Qry.ParamByName('sort_num').AsFloat := SortNum;
+        end;
         Qry.ParamByName('group_name').AsString := FieldByName('group_name').AsString;
-        Qry.ParamByName('order_id').AsInteger := FieldByName('order_id').AsInteger;
-        Qry.ParamByName('family_id').AsInteger := FieldByName('family_id').AsInteger;
-        Qry.ParamByName('subfamily_id').AsInteger := FieldByName('subfamily_id').AsInteger;
-        Qry.ParamByName('genus_id').AsInteger := FieldByName('genus_id').AsInteger;
-        Qry.ParamByName('species_id').AsInteger := FieldByName('species_id').AsInteger;
-        Qry.ParamByName('subspecies_group_id').AsInteger := FieldByName('subspecies_group_id').AsInteger;
+        if not (FieldByName('order_id').AsString = EmptyStr) then
+          Qry.ParamByName('order_id').AsInteger := FieldByName('order_id').AsInteger;
+        if not (FieldByName('family_id').AsString = EmptyStr) then
+          Qry.ParamByName('family_id').AsInteger := FieldByName('family_id').AsInteger;
+        if not (FieldByName('subfamily_id').AsString = EmptyStr) then
+          Qry.ParamByName('subfamily_id').AsInteger := FieldByName('subfamily_id').AsInteger;
+        if not (FieldByName('genus_id').AsString = EmptyStr) then
+          Qry.ParamByName('genus_id').AsInteger := FieldByName('genus_id').AsInteger;
+        if not (FieldByName('species_id').AsString = EmptyStr) then
+          Qry.ParamByName('species_id').AsInteger := FieldByName('species_id').AsInteger;
+        if not (FieldByName('subspecies_group_id').AsString = EmptyStr) then
+          Qry.ParamByName('subspecies_group_id').AsInteger := FieldByName('subspecies_group_id').AsInteger;
         Qry.ParamByName('incertae_sedis').AsBoolean := FieldByName('incertae_sedis').AsBoolean;
         Qry.ParamByName('ebird_code').AsString := FieldByName('ebird_code').AsString;
         Qry.ParamByName('clements_taxonomy').AsBoolean := FieldByName('clements_taxonomy').AsBoolean;
         Qry.ParamByName('ioc_taxonomy').AsBoolean := FieldByName('ioc_taxonomy').AsBoolean;
-        Qry.ParamByName('ioc_rank_id').AsInteger := FieldByName('ioc_rank_id').AsInteger;
-        Qry.ParamByName('ioc_parent_taxon_id').AsInteger := FieldByName('ioc_parent_taxon_id').AsInteger;
-        Qry.ParamByName('ioc_valid_id').AsInteger := FieldByName('ioc_valid_id').AsInteger;
-        Qry.ParamByName('ioc_sort_num').AsFloat := FieldByName('ioc_sort_num').AsFloat;
+        if not (FieldByName('ioc_rank_id').AsString = EmptyStr) then
+          Qry.ParamByName('ioc_rank_id').AsInteger := FieldByName('ioc_rank_id').AsInteger;
+        if not (FieldByName('ioc_parent_taxon_id').AsString = EmptyStr) then
+          Qry.ParamByName('ioc_parent_taxon_id').AsInteger := FieldByName('ioc_parent_taxon_id').AsInteger;
+        if not (FieldByName('ioc_valid_id').AsString = EmptyStr) then
+          Qry.ParamByName('ioc_valid_id').AsInteger := FieldByName('ioc_valid_id').AsInteger;
+        if not (FieldByName('ioc_sort_num').AsString = EmptyStr) then
+        begin
+          SortNum := StrToFloat(FieldByName('ioc_sort_num').AsString, FS);
+          Qry.ParamByName('ioc_sort_num').AsFloat := SortNum;
+        end;
         Qry.ParamByName('ioc_english_name').AsString := FieldByName('ioc_english_name').AsString;
         Qry.ParamByName('cbro_taxonomy').AsBoolean := FieldByName('cbro_taxonomy').AsBoolean;
         Qry.ParamByName('other_portuguese_names').AsString := FieldByName('other_portuguese_names').AsString;
-        Qry.ParamByName('user_inserted').AsInteger := FieldByName('user_inserted').AsInteger;
-        Qry.ParamByName('user_updated').AsInteger := FieldByName('user_updated').AsInteger;
-        Qry.ParamByName('insert_date').AsDateTime := FieldByName('insert_date').AsDateTime;
-        Qry.ParamByName('update_date').AsDateTime := FieldByName('update_date').AsDateTime;
+        if not (FieldByName('user_inserted').AsString = EmptyStr) then
+          Qry.ParamByName('user_inserted').AsInteger := FieldByName('user_inserted').AsInteger;
+        if not (FieldByName('user_updated').AsString = EmptyStr) then
+          Qry.ParamByName('user_updated').AsInteger := FieldByName('user_updated').AsInteger;
+        if not (FieldByName('insert_date').AsString = EmptyStr) then
+          Qry.ParamByName('insert_date').AsDateTime := ISO8601ToDate(FieldByName('insert_date').AsString);
+        if not (FieldByName('update_date').AsString = EmptyStr) then
+          Qry.ParamByName('update_date').AsDateTime := ISO8601ToDate(FieldByName('update_date').AsString);
         Qry.ParamByName('exported_status').AsBoolean := FieldByName('exported_status').AsBoolean;
         Qry.ParamByName('marked_status').AsBoolean := FieldByName('marked_status').AsBoolean;
         Qry.ParamByName('active_status').AsBoolean := FieldByName('active_status').AsBoolean;
@@ -2588,11 +2695,11 @@ begin
         Next;
       end;
 
-      DMM.sqlTrans.CommitRetaining;
+      Connection.Transaction.CommitRetaining;
     except
       on E: Exception do
       begin
-        DMM.sqlTrans.RollbackRetaining;
+        Connection.Transaction.RollbackRetaining;
         MsgDlg(rsTitleError, Format(rsErrorPopulatingTables, [E.Message]), mtError);
       end;
     end;

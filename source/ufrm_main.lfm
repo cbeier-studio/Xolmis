@@ -1008,8 +1008,9 @@ object frmMain: TfrmMain
     end
     object actDBNew: TAction
       Category = 'File'
-      Caption = 'New database'
+      Caption = '&New database'
       ImageIndex = 43
+      OnExecute = actDBNewExecute
     end
     object actDBConnect: TAction
       Category = 'File'

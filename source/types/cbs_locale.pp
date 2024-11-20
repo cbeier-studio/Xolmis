@@ -161,6 +161,8 @@ uses
     rsErrorCheckingUpdates = 'An error occurred while checking for updates.';
     rsErrorReportNotFound = 'Report template not found: %s';
     rsErrorOptimizingDatabase = 'An error occurred while optimizing the database.';
+    rsErrorCreatingUser = 'An error occurred while creating the user: %s';
+    rsErrorWritingAdminPassword = 'An error occurred while writing the Admin user password: %s';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';
@@ -182,7 +184,7 @@ uses
     rsProgressGeneratingReport = 'Generating report...';
     rsProgressCreatingTable = 'Creating table: %s (%d/%d)';
     rsProgressCreatingView = 'Creating view: %s (%d/%d)';
-    rsProgressPopulatingTables = 'Populating tables...';
+    rsProgressPopulatingTables = 'Populating tables... This may take a few minutes.';
     rsProgressOptimizingDatabase = 'Optimizing database...';
 
     { Success messages }

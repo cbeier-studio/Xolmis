@@ -47,7 +47,7 @@
 {"hash":192799745,"name":"tfrmmain.actimportnests.caption","sourcebytes":[38,78,101,115,116,115,32,100,97,116,97],"value":"&Nests data"},
 {"hash":104434579,"name":"tfrmmain.actimportcoordinates.caption","sourcebytes":[38,71,101,111,103,114,97,112,104,105,99,97,108,32,99,111,111,114,100,105,110,97,116,101,115],"value":"&Geographical coordinates"},
 {"hash":163027876,"name":"tfrmmain.actimportwizard.caption","sourcebytes":[73,109,112,111,114,116,32,38,119,105,122,97,114,100],"value":"Import &wizard"},
-{"hash":233512501,"name":"tfrmmain.actdbnew.caption","sourcebytes":[78,101,119,32,100,97,116,97,98,97,115,101],"value":"New database"},
+{"hash":65740309,"name":"tfrmmain.actdbnew.caption","sourcebytes":[38,78,101,119,32,100,97,116,97,98,97,115,101],"value":"&New database"},
 {"hash":76011317,"name":"tfrmmain.actdbconnect.caption","sourcebytes":[38,67,111,110,110,101,99,116,32,116,111,32,100,97,116,97,98,97,115,101],"value":"&Connect to database"},
 {"hash":133751523,"name":"tfrmmain.actdbsettings.caption","sourcebytes":[38,77,97,110,97,103,101,32,99,111,110,110,101,99,116,105,111,110,115],"value":"&Manage connections"},
 {"hash":181368500,"name":"tfrmmain.actexport.caption","sourcebytes":[38,69,120,112,111,114,116],"value":"&Export"},

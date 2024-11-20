@@ -3110,6 +3110,11 @@ msgctxt "cbs_locale.rserrorcreatingsystemdatabase"
 msgid "Unable to create the system database."
 msgstr "Não foi possível criar o banco de dados do sistema."
 
+#: cbs_locale.rserrorcreatinguser
+#, object-pascal-format
+msgid "An error occurred while creating the user: %s"
+msgstr "Ocorreu um erro criando o usuário: %s"
+
 #: cbs_locale.rserrorcsvindexnotfound
 msgctxt "cbs_locale.rserrorcsvindexnotfound"
 msgid "Field index of CSV record not exists!"
@@ -3262,6 +3267,11 @@ msgstr "Um erro ocorreu durante a atualização da senha do Admin."
 #, object-pascal-format
 msgid "Error while upgrading the database schema: %s"
 msgstr "Erro atualizando o esquema do banco de dados: %s"
+
+#: cbs_locale.rserrorwritingadminpassword
+#, object-pascal-format
+msgid "An error occurred while writing the Admin user password: %s"
+msgstr "Ocorreu um erro gravando a senha do usuário Admin: %s"
 
 #: cbs_locale.rsexactcoordinate
 msgctxt "cbs_locale.rsexactcoordinate"
@@ -4278,8 +4288,8 @@ msgid "Optimizing database..."
 msgstr "Otimizando banco de dados..."
 
 #: cbs_locale.rsprogresspopulatingtables
-msgid "Populating tables..."
-msgstr "Povoando tabelas..."
+msgid "Populating tables... This may take a few minutes."
+msgstr "Povoando tabelas... Isso pode demorar alguns minutos."
 
 #: cbs_locale.rsprogresspreparing
 msgctxt "cbs_locale.rsprogresspreparing"
@@ -12947,8 +12957,8 @@ msgstr "&Conectar banco de dados"
 
 #: tfrmmain.actdbnew.caption
 msgctxt "tfrmmain.actdbnew.caption"
-msgid "New database"
-msgstr "Novo banco de dados"
+msgid "&New database"
+msgstr "&Novo banco de dados"
 
 #: tfrmmain.actdbsettings.caption
 msgctxt "tfrmmain.actdbsettings.caption"
@@ -13588,14 +13598,13 @@ msgid "Taxon"
 msgstr "Táxon"
 
 #: tfrmtaxa.gridtaxa.columns[1].title.caption
-#, fuzzy
 msgctxt "tfrmtaxa.gridtaxa.columns[1].title.caption"
 msgid "Valid name ID"
 msgstr "Nome válido ID"
 
 #: tfrmtaxa.gridtaxa.columns[2].title.caption
 msgid "Rank ID"
-msgstr ""
+msgstr "Nível ID"
 
 #: tfrmtaxa.label2.caption
 msgid "English"
@@ -13805,4 +13814,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

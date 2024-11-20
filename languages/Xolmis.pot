@@ -3102,6 +3102,11 @@ msgctxt "cbs_locale.rserrorcreatingsystemdatabase"
 msgid "Unable to create the system database."
 msgstr ""
 
+#: cbs_locale.rserrorcreatinguser
+#, object-pascal-format
+msgid "An error occurred while creating the user: %s"
+msgstr ""
+
 #: cbs_locale.rserrorcsvindexnotfound
 msgctxt "cbs_locale.rserrorcsvindexnotfound"
 msgid "Field index of CSV record not exists!"
@@ -3243,6 +3248,11 @@ msgstr ""
 #: cbs_locale.rserrorupgradingdatabaseschema
 #, object-pascal-format
 msgid "Error while upgrading the database schema: %s"
+msgstr ""
+
+#: cbs_locale.rserrorwritingadminpassword
+#, object-pascal-format
+msgid "An error occurred while writing the Admin user password: %s"
 msgstr ""
 
 #: cbs_locale.rsexactcoordinate
@@ -4258,7 +4268,7 @@ msgid "Optimizing database..."
 msgstr ""
 
 #: cbs_locale.rsprogresspopulatingtables
-msgid "Populating tables..."
+msgid "Populating tables... This may take a few minutes."
 msgstr ""
 
 #: cbs_locale.rsprogresspreparing
@@ -12908,7 +12918,7 @@ msgstr ""
 
 #: tfrmmain.actdbnew.caption
 msgctxt "tfrmmain.actdbnew.caption"
-msgid "New database"
+msgid "&New database"
 msgstr ""
 
 #: tfrmmain.actdbsettings.caption

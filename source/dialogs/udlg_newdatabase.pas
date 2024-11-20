@@ -291,30 +291,31 @@ begin
     Exit;
 
   if not FileExists(eDBFile.Text) then
-    CreateUserDatabase(dbSqlite, eDBFile.Text, eName.Text, eAuthor.Text, eDescription.Text);
+    if CreateUserDatabase(dbSqlite, eDBFile.Text, eName.Text, eAuthor.Text, eDescription.Text) then
+    begin
+      Qry := TSQLQuery.Create(nil);
+      with Qry, SQL do
+      try
+        // Create new connection
+        SQLConnection := DMM.sysCon;
+        SQLTransaction := DMM.sysTrans;
+        Clear;
+        Add('INSERT INTO connections (connection_name, database_type, database_name, insert_date) ');
+        Add('VALUES (:aname, 0, :afile, datetime(''now'', ''localtime''))');
+        ParamByName('ANAME').AsString := eName.Text;
+        ParamByName('AFILE').AsString := eDBFile.Text;
+        ExecSQL;
+      finally
+        FreeAndNil(Qry);
+      end;
 
-  if FileExists(eDBFile.Text) then
-  begin
-    Qry := TSQLQuery.Create(nil);
-    with Qry, SQL do
-    try
-      // Create new connection
-      SQLConnection := DMM.sysCon;
-      Clear;
-      Add('INSERT INTO connections (connection_name, database_type, database_name, insert_date) ');
-      Add('VALUES (:aname, 0, :afile, datetime(''now'', ''localtime''))');
-      ParamByName('ANAME').AsString := eName.Text;
-      ParamByName('AFILE').AsString := eDBFile.Text;
-      ExecSQL;
-    finally
-      FreeAndNil(Qry);
-    end;
+      DMM.sysTrans.CommitRetaining;
 
-    //MsgDlg(rsTitleCreateDatabase, rsSuccessfulDatabaseCreation, mtInformation);
-    nbPages.PageIndex := nbPages.PageIndex + 1;
-  end
-  else
-    MsgDlg(rsTitleCreateDatabase, rsErrorDatabaseCreation, mtError);
+      //MsgDlg(rsTitleCreateDatabase, rsSuccessfulDatabaseCreation, mtInformation);
+      nbPages.PageIndex := nbPages.PageIndex + 1;
+    end
+    else
+      MsgDlg(rsTitleCreateDatabase, rsErrorDatabaseCreation, mtError);
 end;
 
 procedure TdlgNewDatabase.sbCreateUserClick(Sender: TObject);
@@ -330,7 +331,7 @@ begin
     Exit;
 
   BCrypt.InitStr(BFKey, TDCP_sha256);
-  aPass := BCrypt.EncryptString(eNewPass.Text);
+  aPass := BCrypt.EncryptString(eUserNewPass.Text);
   BCrypt.Burn;
 
   uCon := TSQLConnector.Create(nil);
@@ -339,7 +340,13 @@ begin
   try
     uTrans.Action := caRollbackRetaining;
     uCon.Transaction := uTrans;
-    LoadDatabaseParams(Self.Name, uCon);
+    uTrans.DataBase := uCon;
+    uCon.CharSet := 'UTF-8';
+    uCon.ConnectorType := 'SQLite3';
+    uCon.LoginPrompt := False;
+    uCon.DatabaseName := eDBFile.Text;
+
+    //LoadDatabaseParams(eName.Text, uCon);
     with Qry, SQL do
     try
       SQLConnection := uCon;
@@ -356,12 +363,15 @@ begin
       ParamByName('PASS').AsString := aPass;
       ExecSQL;
 
-      uTrans.Commit;
+      uTrans.CommitRetaining;
       Self.ModalResult := mrOK;
     except
-
-      uTrans.Rollback;
-      //raise Exception.Create(rsErrorConnectingDatabase);
+      on E: Exception do
+      begin
+        uTrans.Rollback;
+        MsgDlg(rsTitleError, Format(rsErrorCreatingUser, [E.Message]), mtError);
+        LogError(E.Message);
+      end;
     end;
   finally
     if uCon.Connected then
@@ -391,7 +401,13 @@ begin
   try
     uTrans.Action := caRollbackRetaining;
     uCon.Transaction := uTrans;
-    LoadDatabaseParams(Self.Name, uCon);
+    uTrans.DataBase := uCon;
+    uCon.CharSet := 'UTF-8';
+    uCon.ConnectorType := 'SQLite3';
+    uCon.LoginPrompt := False;
+    uCon.DatabaseName := eDBFile.Text;
+
+    //LoadDatabaseParams(eName.Text, uCon);
     with Qry, SQL do
     try
       SQLConnection := uCon;
@@ -406,14 +422,17 @@ begin
       ParamByName('PASS').AsString := FPass;
       ExecSQL;
 
-      uTrans.Commit;
+      uTrans.CommitRetaining;
 
       Result := True;
     except
-      Result := False;
-
-      uTrans.Rollback;
-      //raise Exception.Create(rsErrorConnectingDatabase);
+      on E: Exception do
+      begin
+        Result := False;
+        uTrans.Rollback;
+        MsgDlg(rsTitleError, Format(rsErrorWritingAdminPassword, [E.Message]), mtError);
+        LogError(E.Message);
+      end;
     end;
   finally
     if uCon.Connected then
@@ -434,19 +453,19 @@ begin
   eName.Text := Trim(eName.Text);
   eDBFile.Text := Trim(eDBFile.Text);
 
-  if (Length(eDBFile.Text) > 0) then
-  begin
-    // Check if the connection name exists
-    if (Length(eNewPass.Text) < 8) then
-    begin
-      Msgs.Add(rsMinPasswordLength);
-    end;
-    // Check if the database file exists
-    if not(eNewPass.Text = eConfirmPass.Text) then
-    begin
-      Msgs.Add(rsConfirmPasswordError);
-    end;
-  end;
+  //if (Length(eDBFile.Text) = 0) then
+  //begin
+  //  // Check if the connection name exists
+  //  if (Length(eNewPass.Text) < 8) then
+  //  begin
+  //    Msgs.Add(rsMinPasswordLength);
+  //  end;
+  //  // Check if the database file exists
+  //  if not(eNewPass.Text = eConfirmPass.Text) then
+  //  begin
+  //    Msgs.Add(rsConfirmPasswordError);
+  //  end;
+  //end;
 
   if Msgs.Count > 0 then
   begin
