@@ -159,7 +159,7 @@ type
     property ButtonCaption: TTranslateString read GetButtonCaption write SetButtonCaption;
     property ButtonCursor: TCursor read GetButtonCursor write SetButtonCursor;
     property ButtonHint: TTranslateString read GetButtonHint write SetButtonHint;
-    property ButtonOnlyWhenFocused: Boolean read FButtonOnlyWhenFocused write SetButtonOnlyWhenFocused;
+    property ButtonOnlyWhenFocused: Boolean read FButtonOnlyWhenFocused write SetButtonOnlyWhenFocused default False;
     property ButtonWidth: Integer read GetButtonWidth write SetButtonWidth;
     property CharCase: TEditCharCase read GetCharCase write SetCharCase;
     property Color: TColor read GetColor write SetColor;
@@ -351,7 +351,8 @@ end;
 
 procedure TDBEditButton.FDBEditEnter(Sender: TObject);
 begin
-  FButton.Visible := FButtonOnlyWhenFocused and FDBEdit.Focused;
+  if FButtonOnlyWhenFocused then
+    FButton.Visible := FDBEdit.Focused;
 
   if Assigned(OnEnter) then
     OnEnter(Self);
@@ -633,7 +634,7 @@ end;
 procedure TDBEditButton.SetDirectInput(AValue: Boolean);
 begin
   FDirectInput := AValue;
-  FDBEdit.ReadOnly := FDirectInput or FReadOnly;
+  FDBEdit.ReadOnly := not FDirectInput or FReadOnly;
 end;
 
 procedure TDBEditButton.SetDisabledImageIndex(AValue: Integer);
