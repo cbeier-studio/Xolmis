@@ -6385,6 +6385,25 @@ msgctxt "tdlgexport.sbrun.caption"
 msgid "Export"
 msgstr ""
 
+#: tdlgexportpreview.caption
+msgid "Export preview"
+msgstr ""
+
+#: tdlgexportpreview.sbclose.caption
+msgctxt "tdlgexportpreview.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tdlgexportpreview.sbexport.caption
+msgctxt "tdlgexportpreview.sbexport.caption"
+msgid "Export"
+msgstr ""
+
+#: tdlgexportpreview.sbprint.caption
+msgctxt "tdlgexportpreview.sbprint.caption"
+msgid "Print"
+msgstr ""
+
 #: tdlgfind.caption
 msgctxt "tdlgfind.caption"
 msgid "Find"

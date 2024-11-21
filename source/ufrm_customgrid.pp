@@ -987,6 +987,7 @@ type
     procedure pmPrintPermitsClick(Sender: TObject);
     procedure pmPrintProjectsClick(Sender: TObject);
     procedure pmPrintResearchersClick(Sender: TObject);
+    procedure pmPrintSightingsByObserverClick(Sender: TObject);
     procedure pmtClearSelectionClick(Sender: TObject);
     procedure pmtColapseAllClick(Sender: TObject);
     procedure pmtExpandAllClick(Sender: TObject);
@@ -1332,7 +1333,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
   cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print,
-  cbs_validations, cbs_graphics, udlg_progress,
+  cbs_validations, cbs_graphics, udlg_progress, udlg_exportpreview,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
 
@@ -6535,6 +6536,58 @@ end;
 procedure TfrmCustomGrid.pmPrintResearchersClick(Sender: TObject);
 begin
   PrintPreview('rep_people.lrf', dsLink);
+end;
+
+procedure TfrmCustomGrid.pmPrintSightingsByObserverClick(Sender: TObject);
+var
+  Qry, qObservers: TSQLQuery;
+  aSurvey: Integer;
+begin
+  if not FindDlg(tbSurveys, nil, aSurvey) then
+    Exit;
+
+  Qry := TSQLQuery.Create(nil);
+  qObservers := TSQLQuery.Create(nil);
+  try
+    Qry.SQLConnection := DMM.sqlCon;
+    Qry.SQLTransaction := DMM.sqlTrans;
+    qObservers.SQLConnection := DMM.sqlCon;
+    qObservers.SQLTransaction := DMM.sqlTrans;
+
+    qObservers.SQL.Text := 'SELECT DISTINCT s.observer_id, p.acronym FROM sightings AS s ' +
+      'LEFT JOIN people AS p ON s.observer_id = p.person_id WHERE s.survey_id = :survey_id;';
+    qObservers.ParamByName('survey_id').AsInteger := aSurvey;
+    qObservers.Open;
+
+    Qry.SQL.Add('SELECT z.full_name, ');
+    qObservers.First;
+    while not qObservers.EOF do
+    begin
+      Qry.SQL.Add('MAX(CASE WHEN s.observer_id = ''' + qObservers.FieldByName('observer_id').AsString +
+        ''' THEN ''X'' ELSE '' '' END) AS ' + qObservers.FieldByName('acronym').AsString + ', ');
+    end;
+    Qry.SQL.Add('COUNT(DISTINCT s.observer_id) AS X_Count');
+    Qry.SQL.Add('FROM sightings AS s');
+    Qry.SQL.Add('LEFT JOIN zoo_taxa AS z ON s.taxon_id = z.taxon_id');
+    Qry.SQL.Add('WHERE s.survey_id = :survey_id');
+    Qry.SQL.Add('GROUP BY s.taxon_id;');
+
+    Qry.Open;
+
+    dlgExportPreview := TdlgExportPreview.Create(nil);
+    with dlgExportPreview do
+    try
+      dlgExportPreview.dsLink.DataSet := Qry;
+      ShowModal;
+    finally
+      FreeAndNil(dlgExportPreview);
+    end;
+
+    Qry.Close;
+  finally
+    FreeAndNil(qObservers);
+    FreeAndNil(Qry);
+  end;
 end;
 
 procedure TfrmCustomGrid.pmtClearSelectionClick(Sender: TObject);

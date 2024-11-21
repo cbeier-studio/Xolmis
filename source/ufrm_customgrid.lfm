@@ -7,7 +7,6 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1243
   ParentFont = True
-  LCLVersion = '4.0.0.1'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -78,7 +77,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            348
+            344
           )
         end
       end
@@ -24831,8 +24830,8 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pmPrintSightingsByObserver: TMenuItem
       Caption = 'Sightings by observer'
-      Enabled = False
       Visible = False
+      OnClick = pmPrintSightingsByObserverClick
     end
     object pmPrintSightingsByProject: TMenuItem
       Caption = 'Sightings by project'

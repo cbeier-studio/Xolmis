@@ -185,7 +185,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="373"/>
+      <BuildNr Value="375"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2024 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1252,6 +1252,12 @@
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmTaxa"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_exportpreview.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgExportPreview"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
