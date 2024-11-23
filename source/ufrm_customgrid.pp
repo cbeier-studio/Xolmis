@@ -6555,9 +6555,16 @@ begin
     qObservers.SQLTransaction := DMM.sqlTrans;
 
     qObservers.SQL.Text := 'SELECT DISTINCT s.observer_id, p.acronym FROM sightings AS s ' +
-      'LEFT JOIN people AS p ON s.observer_id = p.person_id WHERE s.survey_id = :survey_id;';
+      'LEFT JOIN people AS p ON s.observer_id = p.person_id ' +
+      'WHERE (s.survey_id = :survey_id) and (s.observer_id NOT NULL);';
     qObservers.ParamByName('survey_id').AsInteger := aSurvey;
     qObservers.Open;
+
+    if qObservers.RecordCount = 0 then
+    begin
+      MsgDlg(rsTitleInformation, rsNothingToPrint, mtInformation);
+      Exit;
+    end;
 
     Qry.SQL.Add('SELECT z.full_name, ');
     qObservers.First;
@@ -6583,6 +6590,7 @@ begin
       FreeAndNil(dlgExportPreview);
     end;
 
+    qObservers.Close;
     Qry.Close;
   finally
     FreeAndNil(qObservers);

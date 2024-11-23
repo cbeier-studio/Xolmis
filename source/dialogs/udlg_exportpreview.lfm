@@ -52,6 +52,7 @@ object dlgExportPreview: TdlgExportPreview
       Images = iButtons
       ImageIndex = 4
       ImageWidth = 20
+      OnClick = sbExportClick
     end
     object sbClose: TSpeedButton
       Left = 768
@@ -219,9 +220,10 @@ object dlgExportPreview: TdlgExportPreview
       A02D3781AD5CFF1B011AF86FEFC6DBABB27CF91B30602C3B
     }
   end
-  object FrPrintGrid1: TFrPrintGrid
+  object printGrid: TFrPrintGrid
     DBGrid = gridPreview
     Orientation = poLandscape
+    Caption = 'Grid'
     PrinterIndex = -1
     ShowCaption = True
     Left = 376

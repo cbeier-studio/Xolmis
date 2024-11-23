@@ -1346,6 +1346,7 @@ end;
 procedure TdlgFind.SetupFields(aKeyField, aNameField: String; aFormattedNameField: String);
 begin
   Caption := Format('%s %s', [Caption, TableNames[FTableType]]);
+  EP.TextHint := Format(rsHintFind, [AnsiLowerCase(TableNames[FTableType])]);
   FKeyField := aKeyField;
   FFullNameField := aNameField;
   FFormattedNameField := aFormattedNameField;

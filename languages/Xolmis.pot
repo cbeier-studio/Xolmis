@@ -3500,6 +3500,11 @@ msgctxt "cbs_locale.rshintcheckuncheckall"
 msgid "Mark/unmark all"
 msgstr ""
 
+#: cbs_locale.rshintfind
+#, object-pascal-format
+msgid "Find %s..."
+msgstr ""
+
 #: cbs_locale.rshintheaderallmarked
 #, object-pascal-format
 msgctxt "cbs_locale.rshintheaderallmarked"

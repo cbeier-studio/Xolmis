@@ -15,7 +15,7 @@ type
   TdlgExportPreview = class(TForm)
     dsLink: TDataSource;
     gridPreview: TDBGrid;
-    FrPrintGrid1: TFrPrintGrid;
+    printGrid: TFrPrintGrid;
     iButtons: TImageList;
     pToolbar: TPanel;
     sbClose: TSpeedButton;
@@ -23,6 +23,7 @@ type
     sbExport: TSpeedButton;
     procedure FormShow(Sender: TObject);
     procedure sbCloseClick(Sender: TObject);
+    procedure sbExportClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
   private
 
@@ -34,6 +35,9 @@ var
   dlgExportPreview: TdlgExportPreview;
 
 implementation
+
+uses
+  cbs_dialogs;
 
 {$R *.lfm}
 
@@ -49,9 +53,14 @@ begin
   ModalResult := mrClose;
 end;
 
+procedure TdlgExportPreview.sbExportClick(Sender: TObject);
+begin
+  ExportDlg(dsLink.DataSet);
+end;
+
 procedure TdlgExportPreview.sbPrintClick(Sender: TObject);
 begin
-  FrPrintGrid1.PreviewReport;
+  printGrid.PreviewReport;
 end;
 
 end.

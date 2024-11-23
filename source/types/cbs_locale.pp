@@ -378,6 +378,7 @@ uses
     rsHintHeaderAllMarked = 'All %d records marked';
     rsHintAddExistingSurvey = 'Add existing survey';
     rsCheckUncheckAll = 'Mark/unmark all records';
+    rsHintFind = 'Find %s...';
 
     { Filtering }
     rsFilterAnd = 'and ';
