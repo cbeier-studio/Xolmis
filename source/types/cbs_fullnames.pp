@@ -61,7 +61,7 @@ begin
   else
     MethodName := '';
   if aStation > 0 then
-    StationName := GetName('net_stations', 'acronym', 'net_station_id', aStation)
+    StationName := GetName('sampling_plots', 'acronym', 'sampling_plot_id', aStation)
   else
     StationName := aID;
 
@@ -79,7 +79,7 @@ begin
   Result := EmptyStr;
 
   DecodeDate(aDate, a, m, d);
-  StationName := GetName('net_stations', 'acronym', 'net_station_id', aStation);
+  StationName := GetName('sampling_plots', 'acronym', 'sampling_plot_id', aStation);
 
   { [Net station] [Year-Month-Day] [Net number] }
   Result := Format('%s %4.4d-%2.2d-%2.2d %3.3d', [StationName, a, m, d, aNetNumber]);
@@ -216,7 +216,7 @@ begin
   Result := EmptyStr;
 
   if aNetStation > 0 then
-    StationName := GetName('net_stations', 'station_acronym', 'net_station_id', aNetStation)
+    StationName := GetName('sampling_plots', 'acronym', 'sampling_plot_id', aNetStation)
   else
     StationName := EmptyStr;
 

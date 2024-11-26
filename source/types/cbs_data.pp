@@ -1413,7 +1413,7 @@ begin
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nets_effort (' +
     'net_id           INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_id        INTEGER,' +
-    'net_station_id   INTEGER      REFERENCES net_stations (net_station_id) ON UPDATE CASCADE,' +
+    'net_station_id   INTEGER      REFERENCES sampling_plots (sampling_plot_id) ON UPDATE CASCADE,' +
     'permanent_net_id INTEGER      REFERENCES permanent_nets (permanent_net_id) ON UPDATE CASCADE,' +
     'net_number       INTEGER,' +
     'longitude        REAL,' +
@@ -1712,7 +1712,7 @@ begin
     'capture_date           DATE          NOT NULL,' +
     'capture_time           TIME,' +
     'locality_id            INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    'net_station_id         INTEGER       REFERENCES net_stations (net_station_id) ON UPDATE CASCADE,' +
+    'net_station_id         INTEGER       REFERENCES sampling_plots (sampling_plot_id) ON UPDATE CASCADE,' +
     'net_id                 INTEGER       REFERENCES nets_effort (net_id) ON UPDATE CASCADE,' +
     'longitude              REAL,' +
     'latitude               REAL,' +

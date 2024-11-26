@@ -13299,11 +13299,11 @@ object DMG: TDMG
     FieldDefs = <    
       item
         Name = 'permanent_net_id'
-        DataType = ftAutoInc
+        DataType = ftInteger
         Precision = -1
       end    
       item
-        Name = 'net_station_id'
+        Name = 'sampling_plot_id'
         DataType = ftInteger
         Precision = -1
       end    
@@ -13377,7 +13377,7 @@ object DMG: TDMG
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT * FROM permanent_nets'
-      'WHERE (net_station_id = :net_station_id)'
+      'WHERE (sampling_plot_id = :sampling_plot_id)'
       '  AND (active_status = 1)'
       'ORDER BY net_number ASC'
       ''
@@ -13386,7 +13386,7 @@ object DMG: TDMG
     Params = <    
       item
         DataType = ftUnknown
-        Name = 'net_station_id'
+        Name = 'sampling_plot_id'
         ParamType = ptInput
       end>
     Macros = <>
@@ -13406,15 +13406,15 @@ object DMG: TDMG
       Required = False
       DisplayValues = 'True;False'
     end
-    object qPermanentNetsnet_station_id: TLongintField
-      DisplayLabel = 'Mistnet station (ID)'
+    object qPermanentNetssampling_plot_id: TLongintField
+      DisplayLabel = 'Mistnet station ID'
       FieldKind = fkData
-      FieldName = 'net_station_id'
+      FieldName = 'sampling_plot_id'
       Index = 1
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = True
+      Required = False
       Visible = False
     end
     object qPermanentNetsnet_number: TLongintField

@@ -9534,7 +9534,7 @@ begin
     if TryStrToInt(aValue, i) then
     begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create('net_station_id', 'Sampling plot (ID)', sdtInteger, crEqual,
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('sampling_plot_id', 'Sampling plot (ID)', sdtInteger, crEqual,
         False, aValue));
     end
     else
@@ -9549,9 +9549,9 @@ begin
     else
     begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create('station_name', 'Full name', sdtText, Crit,
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('full_name', 'Full name', sdtText, Crit,
         False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create('station_acronym', 'Acronym', sdtText, Crit,
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('acronym', 'Acronym', sdtText, Crit,
         False, aValue));
     end;
   end;
@@ -10546,7 +10546,7 @@ procedure TfrmCustomGrid.SetColumnsSamplingPlots(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname('net_station_id').ReadOnly := True;
+    ColumnByFieldname('sampling_plot_id').ReadOnly := True;
 
     if DataSource.DataSet.FieldByName('locality_name').Visible then
       ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
@@ -10789,7 +10789,7 @@ begin
       //tbRecordHistory: ;
       //tbRecordVerifications: ;
       //tbGazetteer: ;
-      tbSamplingPlots:    Add('WHERE (active_status = 1) AND (net_station_id = :net_station_id)');
+      tbSamplingPlots:    Add('WHERE (active_status = 1) AND (net_station_id = :sampling_plot_id)');
       //tbPermanentNets: ;
       //tbInstitutions: ;
       tbPeople:         Add('WHERE (active_status = 1) AND (person_id = :person_id)');
@@ -11166,7 +11166,7 @@ procedure TfrmCustomGrid.SetGridSamplingPlots;
 begin
   Caption := rsTitleSamplingPlots;
   FSearch.DataSet := DMG.qSamplingPlots;
-  AddSortedField('station_name', sdAscending);
+  AddSortedField('full_name', sdAscending);
 
   lblChildTag1.Caption := rsTitlePermanentNets;
   pChildTag1.Visible := True;
@@ -11422,11 +11422,11 @@ begin
     end;
     tbSamplingPlots:
     begin
-      qRecycle.MacroByName('FID').AsString := 'net_station_id';
-      qRecycle.MacroByName('FNAME').AsString := 'station_name';
+      qRecycle.MacroByName('FID').AsString := 'sampling_plot_id';
+      qRecycle.MacroByName('FNAME').AsString := 'full_name';
       qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
-      lblRecycleId.DataField := 'net_station_id';
-      lblRecycleName.DataField := 'station_name';
+      lblRecycleId.DataField := 'sampling_plot_id';
+      lblRecycleName.DataField := 'full_name';
     end;
     tbPermanentNets: ;
     tbInstitutions:

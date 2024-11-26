@@ -1007,19 +1007,22 @@ begin
     begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
-        'station_name':           Fields[i].DisplayLabel := rscName;
-        'station_acronym':        Fields[i].DisplayLabel := rscAcronym;
+        'full_name':              Fields[i].DisplayLabel := rscFullName;
+        'acronym':                Fields[i].DisplayLabel := rscAcronym;
         'locality_id':            Fields[i].DisplayLabel := rscLocalityID;
         'locality_name':          Fields[i].DisplayLabel := rscLocality;
         'country_id':             Fields[i].DisplayLabel := rscCountryID;
+        'country_name':           Fields[i].DisplayLabel := rscCountry;
         'state_id':               Fields[i].DisplayLabel := rscStateID;
+        'state_name':             Fields[i].DisplayLabel := rscState;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
+        'municipality_name':      Fields[i].DisplayLabel := rscMunicipality;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
         'area_shape':             Fields[i].DisplayLabel := rscAreaShape;
         'description':            Fields[i].DisplayLabel := rscDescription;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
-        'net_station_id':         Fields[i].DisplayLabel := rscId;
+        'sampling_plot_id':       Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
         'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
         'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
@@ -2445,9 +2448,9 @@ begin
       end;
       'net_station_id', 'net_station_name':
       begin
-        Add('SELECT ns.station_name AS name, COUNT(*) AS tally');
+        Add('SELECT pl.full_name AS name, COUNT(*) AS tally');
         Add('FROM captures AS c');
-        Add('JOIN net_stations AS ns ON c.net_station_id = ns.net_station_id');
+        Add('JOIN sampling_plots AS pl ON c.net_station_id = pl.sampling_plot_id');
         if aWhereText <> EmptyStr then
           AddText(aWhereText)
         else
@@ -3393,9 +3396,9 @@ begin
       end;
       'net_station_id', 'net_station_name':
       begin
-        Add('SELECT ns.station_name AS name, COUNT(*) AS tally');
+        Add('SELECT pl.full_name AS name, COUNT(*) AS tally');
         Add('FROM surveys AS sv');
-        Add('JOIN net_stations AS ns ON sv.net_station_id = ns.net_station_id');
+        Add('JOIN sampling_plots AS pl ON sv.net_station_id = pl.sampling_plot_id');
         if aWhereText <> EmptyStr then
           AddText(aWhereText)
         else
@@ -4760,7 +4763,7 @@ begin
     Clear;
 
     case aFieldName of
-      'station_name', 'net_station_id', 'station_acronym', 'active_status', 'insert_date', 'update_date',
+      'full_name', 'sampling_plot_id', 'acronym', 'active_status', 'insert_date', 'update_date',
       'user_inserted', 'user_updated', 'longitude', 'latitude':
       begin
         Clear;

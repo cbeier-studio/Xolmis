@@ -612,6 +612,7 @@ type
     qNestsinternal_max_diameter: TFloatField;
     qNestsinternal_min_diameter: TFloatField;
     qNeststaxon_formatted_name: TStringField;
+    qPermanentNetssampling_plot_id: TLongintField;
     qPermitsnotes: TMemoField;
     qSampleCollectors: TSQLQuery;
     qSampleCollectorsactive_status: TBooleanField;
@@ -808,7 +809,6 @@ type
     qPermanentNetslongitude: TFloatField;
     qPermanentNetsmarked_status: TBooleanField;
     qPermanentNetsnet_number: TLongintField;
-    qPermanentNetsnet_station_id: TLongintField;
     qPermanentNetsnotes: TStringField;
     qPermanentNetspermanent_net_id: TAutoIncField;
     qPermanentNetsupdate_date: TDateTimeField;
@@ -1327,7 +1327,7 @@ type
   private
     UID: TGUID;
     OldSite: TSite;
-    OldNetStation: TSamplingPlot;
+    OldSamplingPlot: TSamplingPlot;
     OldPermanentNet: TPermanentNet;
     OldPerson: TPerson;
     OldInstitution: TInstitution;
@@ -3392,8 +3392,8 @@ end;
 
 procedure TDMG.qSamplingPlotsAfterCancel(DataSet: TDataSet);
 begin
-  if Assigned(OldNetStation) then
-    FreeAndNil(OldNetStation);
+  if Assigned(OldSamplingPlot) then
+    FreeAndNil(OldSamplingPlot);
 end;
 
 procedure TDMG.qSamplingPlotsAfterPost(DataSet: TDataSet);
@@ -3403,23 +3403,23 @@ var
   D: String;
 begin
   { Save changes to the record history }
-  if Assigned(OldNetStation) then
+  if Assigned(OldSamplingPlot) then
   begin
     NewNetStation := TSamplingPlot.Create;
     NewNetStation.GetData(DataSet);
     lstDiff := TStringList.Create;
     try
-      if NewNetStation.Diff(OldNetStation, lstDiff) then
+      if NewNetStation.Diff(OldSamplingPlot, lstDiff) then
       begin
         for D in lstDiff do
-          WriteRecHistory(tbSamplingPlots, haEdited, OldNetStation.Id,
+          WriteRecHistory(tbSamplingPlots, haEdited, OldSamplingPlot.Id,
             ExtractDelimited(1, D, [';']),
             ExtractDelimited(2, D, [';']),
             ExtractDelimited(3, D, [';']), EditSourceStr);
       end;
     finally
       FreeAndNil(NewNetStation);
-      FreeAndNil(OldNetStation);
+      FreeAndNil(OldSamplingPlot);
       FreeAndNil(lstDiff);
     end;
   end
@@ -3429,7 +3429,7 @@ end;
 
 procedure TDMG.qSamplingPlotsBeforeEdit(DataSet: TDataSet);
 begin
-  OldNetStation := TSamplingPlot.Create(DataSet.FieldByName('net_station_id').AsInteger);
+  OldSamplingPlot := TSamplingPlot.Create(DataSet.FieldByName('sampling_plot_id').AsInteger);
 end;
 
 procedure TDMG.qSamplingPlotsBeforePost(DataSet: TDataSet);
