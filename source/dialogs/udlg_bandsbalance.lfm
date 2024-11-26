@@ -7,10 +7,10 @@ object dlgBandsBalance: TdlgBandsBalance
   Caption = 'Bands balance'
   ClientHeight = 429
   ClientWidth = 320
-  OnDestroy = FormDestroy
-  OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  OnDestroy = FormDestroy
+  OnShow = FormShow
   object pBottom: TPanel
     Left = 0
     Height = 38
@@ -433,11 +433,11 @@ object dlgBandsBalance: TdlgBandsBalance
   end
   object FrPrintGrid1: TFrPrintGrid
     DBGrid = dbgSaldo
-    Font.Color = clBlack
-    TitleFont.Color = clBlack
+    TitleFont.Color = 6579300
     Caption = 'Bands balance'
     PrinterIndex = -1
     ShowCaption = True
+    ShowProgress = True
     Left = 108
     Top = 330
   end

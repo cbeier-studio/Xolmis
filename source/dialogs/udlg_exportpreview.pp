@@ -15,6 +15,7 @@ type
   TdlgExportPreview = class(TForm)
     dsLink: TDataSource;
     gridPreview: TDBGrid;
+    iButtonsDark: TImageList;
     printGrid: TFrPrintGrid;
     iButtons: TImageList;
     pToolbar: TPanel;
@@ -26,7 +27,7 @@ type
     procedure sbExportClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
   private
-
+    procedure ApplyDarkMode;
   public
 
   end;
@@ -42,6 +43,13 @@ uses
 {$R *.lfm}
 
 { TdlgExportPreview }
+
+procedure TdlgExportPreview.ApplyDarkMode;
+begin
+  sbPrint.Images := iButtonsDark;
+  sbExport.Images := iButtonsDark;
+  sbClose.Images := iButtonsDark;
+end;
 
 procedure TdlgExportPreview.FormShow(Sender: TObject);
 begin
