@@ -63,7 +63,7 @@ const
 type
   TImportFileType = (iftCSV, iftTSV, iftExcel, iftExcelOOXML, iftOpenDocument, iftJSON, iftDBF, iftXML,
                       iftKML, iftGPX, iftGeoJSON);
-  TMobileContentType = (mctEmpty, mctInventory, mctNest, mctSpecimens);
+  TMobileContentType = (mctEmpty, mctInventory, mctInventories, mctNest, mctNests, mctSpecimens);
   TMobileInventoryType = (invQualitativeFree, invQualitativeTimed, invMackinnonList, invTransectionCount,
                           invPointCount, invBanding, invCasual);
 

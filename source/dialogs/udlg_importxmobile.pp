@@ -104,10 +104,12 @@ type
     function GetContentType: TMobileContentType;
     function IsRequiredFilledSource: Boolean;
     function LoadJSON(aJSONFile: String): Boolean;
+    procedure ImportInventories;
     procedure ImportInventory;
     procedure ImportSpeciesList;
     procedure ImportVegetationList;
     procedure ImportWeatherList;
+    procedure ImportNests;
     procedure ImportNest;
     procedure ImportRevisionList;
     procedure ImportEggList;
@@ -280,6 +282,7 @@ begin
 
   if FSurveyKey > 0 then
   begin
+    nbPages.PageIndex := 1;
     mProgress.Lines.Add(Format(rsMobileSurveyCreated, [FSurveyKey]));
     FSurvey := TSurvey.Create(FSurveyKey);
 
@@ -366,12 +369,21 @@ begin
             pSurvey.Visible := True;
             pSurveyOptions.Visible := True;
           end;
+        mctInventories:
+          begin
+            txtDataType.Caption := rsTitleSurveys;
+            txtListType.Caption := EmptyStr;
+          end;
         mctNest:
           begin
             txtDataType.Caption := rsTitleNests;
 
             pNest.Visible := True;
             pNestOptions.Visible := True;
+          end;
+        mctNests:
+          begin
+            txtDataType.Caption := rsTitleNests;
           end;
         mctSpecimens: txtDataType.Caption := rsTitleSpecimens;
       end;
@@ -462,14 +474,27 @@ function TdlgImportXMobile.GetContentType: TMobileContentType;
 begin
   Result := mctEmpty;
 
-  if JSONObject.Find('duration') <> nil then
-    Result := mctInventory
-  else
-  if JSONObject.Find('support') <> nil then
-    Result := mctNest
-  else
-  if JSONArray.Objects[0].Find('fieldNumber') <> nil then
-    Result := mctSpecimens;
+  case JSONData.JSONType of
+    jtArray:
+      begin
+        if JSONArray.Objects[0].Find('duration') <> nil then
+          Result := mctInventories
+        else
+        if JSONArray.Objects[0].Find('support') <> nil then
+          Result := mctNests
+        else
+        if JSONArray.Objects[0].Find('fieldNumber') <> nil then
+          Result := mctSpecimens;
+      end;
+    jtObject:
+      begin
+        if JSONObject.Find('duration') <> nil then
+          Result := mctInventory
+        else
+        if JSONObject.Find('support') <> nil then
+          Result := mctNest;
+      end;
+  end;
 end;
 
 procedure TdlgImportXMobile.ImportEggList;
@@ -540,10 +565,70 @@ begin
   end;
 end;
 
-procedure TdlgImportXMobile.ImportInventory;
+procedure TdlgImportXMobile.ImportInventories;
+var
+  p, j, t: Integer;
 begin
   nbPages.PageIndex := 1;
 
+  if Parar then
+    Exit;
+
+  p := 0;
+  PBar.Position := p;
+  PBar.Max := JSONArray.Count;
+  FSurvey := TSurvey.Create();
+  try
+    for j := 0 to JSONArray.Count - 1 do
+    begin
+      Inc(p);
+      FSurvey.Clear;
+      FSurveyKey := 0;
+
+      JSONObject := JSONArray.Objects[j];
+
+      FSurveyKey := AddSurvey;
+
+      if FSurveyKey > 0 then
+      begin
+        mProgress.Lines.Add(Format(rsMobileSurveyCreated, [FSurveyKey]));
+        FSurvey.GetData(FSurveyKey);
+
+        ImportInventory;
+      end
+      else
+        Parar := True;
+
+      PBar.Position := p;
+      Application.ProcessMessages;
+
+      if Parar then
+        Break;
+    end;
+
+  finally
+    FreeAndNil(FSurvey);
+  end;
+
+  if Parar then
+  begin
+    lblTitleImportFinished.Caption := rsImportCanceled;
+    lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+    icoImportFinished.ImageIndex := 1;
+  end
+  else
+  begin
+    DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+    lblTitleImportFinished.Caption := rsFinishedImporting;
+    lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+    icoImportFinished.ImageIndex := 0;
+  end;
+  sbCancel.Caption := rsCaptionClose;
+  nbPages.PageIndex := 2;
+end;
+
+procedure TdlgImportXMobile.ImportInventory;
+begin
   try
     ImportSpeciesList;
     ImportVegetationList;
@@ -552,17 +637,22 @@ begin
     if Parar then
     begin
       DMM.sqlTrans.RollbackRetaining;
-      lblTitleImportFinished.Caption := rsImportCanceled;
-      lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
-      icoImportFinished.ImageIndex := 1;
+      if FContentType = mctInventory then
+      begin
+        lblTitleImportFinished.Caption := rsImportCanceled;
+        lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+        icoImportFinished.ImageIndex := 1;
+      end;
     end
     else
     begin
       DMM.sqlTrans.CommitRetaining;
-      DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
-      lblTitleImportFinished.Caption := rsFinishedImporting;
-      lblSubtitleImportFinished.Caption := rsSuccessfulImport;
-      icoImportFinished.ImageIndex := 0;
+      if FContentType = mctInventory then
+      begin
+        lblTitleImportFinished.Caption := rsFinishedImporting;
+        lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+        icoImportFinished.ImageIndex := 0;
+      end;
     end;
   except
     on E: Exception do
@@ -570,17 +660,15 @@ begin
       mProgress.Append(Format(rsErrorImporting, [E.Message]));
       DMM.sqlTrans.RollbackRetaining;
       lblSubtitleImportFinished.Caption := rsErrorImportFinished;
-      icoImportFinished.ImageIndex := 0;
+      icoImportFinished.ImageIndex := 1;
+      sbCancel.Caption := rsCaptionClose;
+      nbPages.PageIndex := 2;
     end;
   end;
-  sbCancel.Caption := rsCaptionClose;
-  nbPages.PageIndex := 2;
 end;
 
 procedure TdlgImportXMobile.ImportNest;
 begin
-  nbPages.PageIndex := 1;
-
   try
     ImportRevisionList;
     ImportEggList;
@@ -588,17 +676,22 @@ begin
     if Parar then
     begin
       DMM.sqlTrans.RollbackRetaining;
-      lblTitleImportFinished.Caption := rsImportCanceled;
-      lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
-      icoImportFinished.ImageIndex := 1;
+      if FContentType = mctNest then
+      begin
+        lblTitleImportFinished.Caption := rsImportCanceled;
+        lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+        icoImportFinished.ImageIndex := 1;
+      end;
     end
     else
     begin
       DMM.sqlTrans.CommitRetaining;
-      DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
-      lblTitleImportFinished.Caption := rsFinishedImporting;
-      lblSubtitleImportFinished.Caption := rsSuccessfulImport;
-      icoImportFinished.ImageIndex := 0;
+      if FContentType = mctNest then
+      begin
+        lblTitleImportFinished.Caption := rsFinishedImporting;
+        lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+        icoImportFinished.ImageIndex := 0;
+      end;
     end;
   except
     on E: Exception do
@@ -606,8 +699,70 @@ begin
       mProgress.Append(Format(rsErrorImporting, [E.Message]));
       DMM.sqlTrans.RollbackRetaining;
       lblSubtitleImportFinished.Caption := rsErrorImportFinished;
-      icoImportFinished.ImageIndex := 0;
+      icoImportFinished.ImageIndex := 1;
+      sbCancel.Caption := rsCaptionClose;
+      nbPages.PageIndex := 2;
     end;
+  end;
+end;
+
+procedure TdlgImportXMobile.ImportNests;
+var
+  p, j, t: Integer;
+begin
+  nbPages.PageIndex := 1;
+
+  if Parar then
+    Exit;
+
+  p := 0;
+  PBar.Position := p;
+  PBar.Max := JSONArray.Count;
+  FNest := TNest.Create();
+  try
+    for j := 0 to JSONArray.Count - 1 do
+    begin
+      Inc(p);
+      FNest.Clear;
+      FNestKey := 0;
+
+      JSONObject := JSONArray.Objects[j];
+
+      FNestKey := AddNest;
+
+      if FNestKey > 0 then
+      begin
+        mProgress.Lines.Add(Format(rsMobileNestCreated, [FNestKey]));
+        FNest.GetData(FNestKey);
+
+        ImportNest;
+      end
+      else
+        Parar := True;
+
+      PBar.Position := p;
+      Application.ProcessMessages;
+
+      if Parar then
+        Break;
+    end;
+
+  finally
+    FreeAndNil(FNest);
+  end;
+
+  if Parar then
+  begin
+    lblTitleImportFinished.Caption := rsImportCanceled;
+    lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+    icoImportFinished.ImageIndex := 1;
+  end
+  else
+  begin
+    DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+    lblTitleImportFinished.Caption := rsFinishedImporting;
+    lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+    icoImportFinished.ImageIndex := 0;
   end;
   sbCancel.Caption := rsCaptionClose;
   nbPages.PageIndex := 2;
@@ -1049,18 +1204,36 @@ begin
 
   if FSurveyKey > 0 then
   begin
+    nbPages.PageIndex := 1;
     mProgress.Lines.Add(Format(rsMobileSurveyCreated, [FSurveyKey]));
     FSurvey := TSurvey.Create(FSurveyKey);
 
     ImportInventory;
+
+    sbCancel.Caption := rsCaptionClose;
+    nbPages.PageIndex := 2;
   end;
 
   if FNestKey > 0 then
   begin
+    nbPages.PageIndex := 1;
     mProgress.Lines.Add(Format(rsMobileNestCreated, [FNestKey]));
     FNest := TNest.Create(FNestKey);
 
     ImportNest;
+
+    sbCancel.Caption := rsCaptionClose;
+    nbPages.PageIndex := 2;
+  end;
+
+  if FContentType = mctInventories then
+  begin
+    ImportInventories;
+  end;
+
+  if FContentType = mctNests then
+  begin
+    ImportNests;
   end;
 
   if FContentType = mctSpecimens then
