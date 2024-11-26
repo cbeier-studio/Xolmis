@@ -32,6 +32,7 @@ type
   TdlgNewDatabase = class(TForm)
     BCrypt: TDCP_blowfish;
     lblRequired: TLabel;
+    SaveDlg: TSaveDialog;
     sbCreateDB: TBitBtn;
     sbCreateUser: TBitBtn;
     sbApplyAdmin: TBitBtn;
@@ -65,7 +66,6 @@ type
     lblTitleConnection: TLabel;
     lineBottom: TShapeLineBGRA;
     nbPages: TNotebook;
-    OpenDlg: TOpenDialog;
     pCreateUser: TPanel;
     pContentUser: TPanel;
     pgUser: TPage;
@@ -138,9 +138,9 @@ end;
 
 procedure TdlgNewDatabase.eDBFileButtonClick(Sender: TObject);
 begin
-  if OpenDlg.Execute then
+  if SaveDlg.Execute then
   begin
-    eDBFile.Text := OpenDlg.FileName;
+    eDBFile.Text := SaveDlg.FileName;
   end;
 end;
 

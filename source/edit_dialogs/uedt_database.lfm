@@ -293,20 +293,28 @@ object edtDatabase: TedtDatabase
       OnSelect = cbDBManagerSelect
     end
     object eDBFile: TDBEditButton
+      Cursor = crDefault
       Left = 16
       Height = 26
       Top = 262
       Width = 358
       Align = alTop
       AutoSize = True
-      Constraints.MaxHeight = 28
-      TabOrder = 5
+      ButtonCursor = crDefault
+      ButtonOnlyWhenFocused = False
       ButtonWidth = 24
-      ImageIndex = 6
-      Images = DMM.iEdits
+      CharCase = ecNormal
+      Color = clDefault
+      Constraints.MaxHeight = 28
+      CustomEditMask = False
       DataField = 'database_name'
       DataSource = dsConn
-      CharCase = ecNormal
+      DirectInput = False
+      ImageIndex = 6
+      Images = DMM.iEdits
+      MaxLength = 0
+      Spacing = 0
+      TabOrder = 5
       OnButtonClick = eDBFileButtonClick
     end
   end
@@ -330,7 +338,7 @@ object edtDatabase: TedtDatabase
   object OpenDlg: TOpenDialog
     Title = 'Select database file'
     DefaultExt = '.sqlite3'
-    Filter = 'SQLite 3 (*.sqlite3; *.db3; *.s3db; *.sl3)|*.sqlite3; *.db3; *.s3db; *.sl3|Firebird (*.fdb)|*.fdb'
+    Filter = 'SQLite 3 (*.sqlite3; *.db3; *.s3db; *.sl3)|*.sqlite3; *.db3; *.s3db; *.sl3'
     Left = 304
     Top = 144
   end

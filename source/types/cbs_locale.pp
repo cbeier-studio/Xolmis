@@ -117,12 +117,16 @@ uses
     rsTitlePrintPreview = 'Print preview';
     rsTitleConnectionTest = 'Test connection';
     rsTitleLogin = 'Login';
+    rsTitleNoConnectionsFound = 'No connections found';
     rsClosing = 'Closing...';
 
     { Input messages }
     rsCoordinatesNameInput = 'Give a name to the coordinates set:';
     rsCreateDatabasePrompt = 'Database file not found. Do you want to create it?';
     rsDropFilesHere = 'Drop files here';
+    rsSelectAnOptionToProceed = 'Select an option to proceed:';
+    rsNewDatabase = 'New database';
+    rsOpenDatabase = 'Open database';
 
     { Error messages }
     rsErrorFound = '<p><b>%d error</b> found! Please fix it before proceeding.</p>';
@@ -379,6 +383,8 @@ uses
     rsHintAddExistingSurvey = 'Add existing survey';
     rsCheckUncheckAll = 'Mark/unmark all records';
     rsHintFind = 'Find %s...';
+    rsHintNewDatabase = 'Create an empty database file';
+    rsHintOpenDatabase = 'Select an existing database file';
 
     { Filtering }
     rsFilterAnd = 'and ';

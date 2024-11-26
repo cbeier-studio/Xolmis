@@ -885,9 +885,11 @@ end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
+  // Apply dark mode if enabled
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  // Show splash screen
   pSplash.Top := 0;
   pSplash.Left := 0;
   pSplash.Height := Self.ClientHeight;
@@ -895,6 +897,7 @@ begin
   pSplash.Visible := True;
   Application.ProcessMessages;
 
+  // Adjust to screen resolution
   OldPPI := Self.PixelsPerInch;
   if OldPPI <> 96 then
   begin
@@ -904,8 +907,48 @@ begin
   { Check if there are connections available }
   DMM.qsConn.Open;
   if DMM.qsConn.RecordCount = 0 then
-    if not NewDatabase then
-      Application.Terminate;
+  begin
+    with TTaskDialog.Create(Self) do
+    try
+      Caption := 'Xolmis';
+      Title := rsTitleNoConnectionsFound;
+      Text := rsSelectAnOptionToProceed;
+      CommonButtons := [];
+      Flags := Flags + [tfUseCommandLinks];
+      //MainIcon := tdiQuestion;
+      with TTaskDialogButtonItem(Buttons.Add) do
+      begin
+        Caption := rsNewDatabase;
+        CommandLinkHint := rsHintNewDatabase;
+        ModalResult := mrYes;
+      end;
+      with TTaskDialogButtonItem(Buttons.Add) do
+      begin
+        Caption := rsOpenDatabase;
+        CommandLinkHint := rsHintOpenDatabase;
+        ModalResult := mrNo;
+      end;
+
+      if Execute then
+      begin
+        if ModalResult = mrYes then
+        begin
+          if not NewDatabase then
+            Application.Terminate;
+        end
+        else
+        if ModalResult = mrNo then
+        begin
+          if not EditConnection(DMM.qsConn, True) then
+            Application.Terminate;
+        end
+        else
+          Application.Terminate;
+      end;
+    finally
+      Free;
+    end;
+  end;
   DMM.qsConn.Refresh;
   Application.ProcessMessages;
 

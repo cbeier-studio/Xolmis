@@ -3540,6 +3540,14 @@ msgctxt "cbs_locale.rshintheadersomemarked"
 msgid "%d of %d records marked"
 msgstr "%d de %d registros marcados"
 
+#: cbs_locale.rshintnewdatabase
+msgid "Create an empty database file"
+msgstr "Criar um arquivo de banco de dados vazio"
+
+#: cbs_locale.rshintopendatabase
+msgid "Select an existing database file"
+msgstr "Selecionar um arquivo de banco de dados existente"
+
 #: cbs_locale.rshome
 msgctxt "cbs_locale.rshome"
 msgid "Home"
@@ -4067,6 +4075,11 @@ msgctxt "cbs_locale.rsnestunknown"
 msgid "Unknown"
 msgstr "Indeterminada"
 
+#: cbs_locale.rsnewdatabase
+msgctxt "cbs_locale.rsnewdatabase"
+msgid "New database"
+msgstr "Novo banco de dados"
+
 #: cbs_locale.rsnewpassword
 msgctxt "cbs_locale.rsnewpassword"
 msgid "New password"
@@ -4131,6 +4144,10 @@ msgstr "%d selecionado"
 msgctxt "cbs_locale.rsoneselectedfemale"
 msgid "%d selected"
 msgstr "%d selecionada"
+
+#: cbs_locale.rsopendatabase
+msgid "Open database"
+msgstr "Abrir banco de dados"
 
 #: cbs_locale.rsoriginalsearch
 msgctxt "cbs_locale.rsoriginalsearch"
@@ -4612,6 +4629,10 @@ msgstr "Língua"
 msgctxt "cbs_locale.rsseen"
 msgid "Seen"
 msgstr "Visto"
+
+#: cbs_locale.rsselectanoptiontoproceed
+msgid "Select an option to proceed:"
+msgstr "Selecione uma opção para continuar:"
 
 #: cbs_locale.rsselectcoordinatestypes
 msgctxt "cbs_locale.rsselectcoordinatestypes"
@@ -5118,6 +5139,10 @@ msgstr "Novo lote de anilhas"
 msgctxt "cbs_locale.rstitlenextbirthdays"
 msgid "Next birthdays"
 msgstr "Próximos aniversários"
+
+#: cbs_locale.rstitlenoconnectionsfound
+msgid "No connections found"
+msgstr "Nenhuma conexão encontrada"
 
 #: cbs_locale.rstitlepermanentnets
 msgctxt "cbs_locale.rstitlepermanentnets"
@@ -7138,10 +7163,9 @@ msgstr "Nome de usuário: *"
 msgid "New password: *"
 msgstr "Nova senha: *"
 
-#: tdlgnewdatabase.opendlg.title
-msgctxt "tdlgnewdatabase.opendlg.title"
-msgid "Select database file"
-msgstr "Selecione o arquivo de banco de dados"
+#: tdlgnewdatabase.savedlg.title
+msgid "Create database file"
+msgstr "Criar arquivo de banco de dados"
 
 #: tdlgnewdatabase.sbapplyadmin.caption
 msgctxt "tdlgnewdatabase.sbapplyadmin.caption"

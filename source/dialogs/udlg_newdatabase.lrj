@@ -26,5 +26,5 @@
 {"hash":242270122,"name":"tdlgnewdatabase.lbluserfullname.caption","sourcebytes":[70,117,108,108,32,110,97,109,101,58],"value":"Full name:"},
 {"hash":77089212,"name":"tdlgnewdatabase.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
 {"hash":210423604,"name":"tdlgnewdatabase.lblrequired.caption","sourcebytes":[42,32,114,101,113,117,105,114,101,100],"value":"* required"},
-{"hash":265753941,"name":"tdlgnewdatabase.opendlg.title","sourcebytes":[83,101,108,101,99,116,32,100,97,116,97,98,97,115,101,32,102,105,108,101],"value":"Select database file"}
+{"hash":189011301,"name":"tdlgnewdatabase.savedlg.title","sourcebytes":[67,114,101,97,116,101,32,100,97,116,97,98,97,115,101,32,102,105,108,101],"value":"Create database file"}
 ]}

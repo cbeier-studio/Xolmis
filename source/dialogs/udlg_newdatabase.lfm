@@ -612,13 +612,6 @@ object dlgNewDatabase: TdlgNewDatabase
       Layout = tlCenter
     end
   end
-  object OpenDlg: TOpenDialog
-    Title = 'Select database file'
-    DefaultExt = '.sqlite3'
-    Filter = 'SQLite 3 (*.sqlite3; *.db3; *.s3db; *.sl3)|*.sqlite3; *.db3; *.s3db; *.sl3'
-    Left = 288
-    Top = 80
-  end
   object BCrypt: TDCP_blowfish
     Id = 5
     Algorithm = 'Blowfish'
@@ -946,5 +939,13 @@ object dlgNewDatabase: TdlgNewDatabase
       CF534388CFD355E2B32EBF6C09777E91E4C704300FAC01C7393FAEE59C49F931
       F2FF5C23FC0543344D85
     }
+  end
+  object SaveDlg: TSaveDialog
+    Title = 'Create database file'
+    DefaultExt = '.sqlite3'
+    Filter = 'SQLite 3 (*.sqlite3; *.db3; *.s3db; *.sl3)|*.sqlite3; *.db3; *.s3db; *.sl3'
+    Options = [ofEnableSizing]
+    Left = 288
+    Top = 80
   end
 end

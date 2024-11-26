@@ -3522,6 +3522,14 @@ msgctxt "cbs_locale.rshintheadersomemarked"
 msgid "%d of %d records marked"
 msgstr ""
 
+#: cbs_locale.rshintnewdatabase
+msgid "Create an empty database file"
+msgstr ""
+
+#: cbs_locale.rshintopendatabase
+msgid "Select an existing database file"
+msgstr ""
+
 #: cbs_locale.rshome
 msgctxt "cbs_locale.rshome"
 msgid "Home"
@@ -4049,6 +4057,11 @@ msgctxt "cbs_locale.rsnestunknown"
 msgid "Unknown"
 msgstr ""
 
+#: cbs_locale.rsnewdatabase
+msgctxt "cbs_locale.rsnewdatabase"
+msgid "New database"
+msgstr ""
+
 #: cbs_locale.rsnewpassword
 msgctxt "cbs_locale.rsnewpassword"
 msgid "New password"
@@ -4110,6 +4123,10 @@ msgstr ""
 #, object-pascal-format
 msgctxt "cbs_locale.rsoneselectedfemale"
 msgid "%d selected"
+msgstr ""
+
+#: cbs_locale.rsopendatabase
+msgid "Open database"
 msgstr ""
 
 #: cbs_locale.rsoriginalsearch
@@ -4583,6 +4600,10 @@ msgstr ""
 #: cbs_locale.rsseen
 msgctxt "cbs_locale.rsseen"
 msgid "Seen"
+msgstr ""
+
+#: cbs_locale.rsselectanoptiontoproceed
+msgid "Select an option to proceed:"
 msgstr ""
 
 #: cbs_locale.rsselectcoordinatestypes
@@ -5089,6 +5110,10 @@ msgstr ""
 #: cbs_locale.rstitlenextbirthdays
 msgctxt "cbs_locale.rstitlenextbirthdays"
 msgid "Next birthdays"
+msgstr ""
+
+#: cbs_locale.rstitlenoconnectionsfound
+msgid "No connections found"
 msgstr ""
 
 #: cbs_locale.rstitlepermanentnets
@@ -7110,9 +7135,8 @@ msgstr ""
 msgid "New password: *"
 msgstr ""
 
-#: tdlgnewdatabase.opendlg.title
-msgctxt "tdlgnewdatabase.opendlg.title"
-msgid "Select database file"
+#: tdlgnewdatabase.savedlg.title
+msgid "Create database file"
 msgstr ""
 
 #: tdlgnewdatabase.sbapplyadmin.caption

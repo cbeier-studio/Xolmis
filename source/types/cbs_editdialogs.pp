@@ -23,6 +23,8 @@ interface
 uses
   Classes, SysUtils, Forms, DB, System.UITypes, cbs_datatypes;
 
+  function EditConnection(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+
   function EditMethod(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditSite(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditSamplingPlot(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
@@ -60,12 +62,12 @@ uses
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_permissions, cbs_finddialogs,
+  cbs_locale, cbs_global, cbs_permissions, cbs_finddialogs, cbs_dialogs,
   udm_main, udm_grid, udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
   uedt_survey, uedt_samplingplot, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
   uedt_nest, uedt_egg, uedt_molt, uedt_nestrevision, uedt_neteffort, uedt_permanentnet, uedt_sighting,
   uedt_method, uedt_weatherlog, uedt_project, uedt_permit, uedt_specimen, uedt_sampleprep, uedt_nestowner,
-  uedt_imageinfo, uedt_audioinfo, uedt_documentinfo, uedt_vegetation;
+  uedt_imageinfo, uedt_audioinfo, uedt_documentinfo, uedt_vegetation, uedt_database;
 
 function EditMethod(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
@@ -1490,6 +1492,43 @@ begin
       aDataSet.Cancel;
   finally
     FreeAndNil(edtVegetation);
+  end;
+
+  if CloseQueryAfter then
+    aDataSet.Close;
+end;
+
+function EditConnection(aDataSet: TDataSet; IsNew: Boolean): Boolean;
+var
+  CloseQueryAfter: Boolean;
+begin
+  CloseQueryAfter := False;
+  if not aDataSet.Active then
+  begin
+    aDataSet.Open;
+    CloseQueryAfter := True;
+  end;
+
+  edtDatabase := TedtDatabase.Create(Application);
+  with edtDatabase do
+  try
+    dsConn.DataSet := aDataSet;
+    aDataSet.Append;
+    aDataSet.FieldByName('database_type').AsInteger := 0;
+    if ShowModal = mrOk then
+    begin
+      if not FileExists(aDataSet.FieldByName('database_name').AsString) then
+      begin
+        MsgDlg(rsTitleCreateDatabase, rsUseNewDatabaseOption, mtWarning);
+        aDataSet.Cancel;
+      end
+      else
+        aDataSet.Post;
+    end
+    else
+      aDataSet.Cancel;
+  finally
+    FreeAndNil(edtDatabase);
   end;
 
   if CloseQueryAfter then
