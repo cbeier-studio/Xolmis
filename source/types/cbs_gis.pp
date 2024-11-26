@@ -87,6 +87,10 @@ type
     function ToString(WithZone: Boolean = False; aSeparator: TSeparator = spNone): String;
   end;
 
+  TMercatorPoint = record
+    X, Y: Extended;
+  end;
+
   { TMapPointObject }
 
   TMapPointObject = class
@@ -188,6 +192,8 @@ type
   function UtmToDecimal(aUtm: TUTMPoint): TMapPoint;
   function DecimalToUtm(aDec: TMapPoint): TUTMPoint;
   function DmsToUtm(aDms: TDMSPoint): TUTMPoint;
+  function DecimalToMercator(aDec: TMapPoint): TMercatorPoint;
+  function MercatorToDecimal(aMerc: TMercatorPoint): TMapPoint;
 
   { >> returns only Longitude or Latitude }
   function AxisDecToDMS(aCoord: String; aAxis: TMapAxis; WithSymbols: Boolean = False): String; overload;
@@ -1101,6 +1107,23 @@ begin
     LogDebug('CLOSE DIALOG: GeoEditor');
     {$ENDIF}
   end;
+end;
+
+function DecimalToMercator(aDec: TMapPoint): TMercatorPoint;
+var
+  lat, lon: Extended;
+begin
+  lat := DegToRad(aDec.Y);
+  lon := DegToRad(aDec.X);
+
+  Result.X := datumA * lon;
+  Result.Y := datumA * ln(tan(Pi/4 + lat/2));
+end;
+
+function MercatorToDecimal(aMerc: TMercatorPoint): TMapPoint;
+begin
+  Result.X := aMerc.X / datumA;
+  Result.Y := RadToDeg(2 * ArcTan(Exp(aMerc.Y / datumA)) - Pi / 2);
 end;
 
 { TSite }
