@@ -23,7 +23,7 @@ interface
 
 uses
   { System }
-  SysUtils, Classes, Forms, Dialogs, StrUtils, ComCtrls, DateUtils,
+  SysUtils, Classes, Forms, Dialogs, StrUtils, ComCtrls, DateUtils, fgl,
   { Data }
   DB, SQLDB, SdfData, fpjson, jsonparser, fpjsondataset;
 
@@ -66,6 +66,8 @@ type
   TMobileContentType = (mctEmpty, mctInventory, mctInventories, mctNest, mctNests, mctSpecimens);
   TMobileInventoryType = (invQualitativeFree, invQualitativeTimed, invMackinnonList, invTransectionCount,
                           invPointCount, invBanding, invCasual);
+
+  TFieldsMap = specialize TFPGMap<string, string>;
 
   { TEbirdDownloadFormat }
 
@@ -1681,7 +1683,7 @@ begin
       Delimiter := ';';
       FirstLineAsSchema := True;
       CodePage := 'Windows-1252';
-      //Schema.AddDelimitedText(NetEffortSchema, ';', True);
+      //Schema.AddDelimitedText(NestSchema, ';', True);
       FileName := aCSVFile;
       Open;
     end;
@@ -1820,6 +1822,8 @@ var
   Nest: TNest;
   Taxon: TTaxon;
   CSV: TSdfDataSet;
+  aDate, aTime: String;
+  aObserver: Integer;
 begin
   if not FileExists(aCSVFile) then
   begin
@@ -1843,7 +1847,7 @@ begin
       Delimiter := ';';
       FirstLineAsSchema := True;
       CodePage := 'Windows-1252';
-      //Schema.AddDelimitedText(NetEffortSchema, ';', True);
+      //Schema.AddDelimitedText(NestRevisionSchema, ';', True);
       FileName := aCSVFile;
       Open;
     end;
@@ -1867,6 +1871,15 @@ begin
         if Assigned(dlgProgress) then
           dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
         // Reset variables
+        aDate := CSV.FieldByName('revision_date').AsString;
+        aTime := CSV.FieldByName('revision_time').AsString;
+
+        if CSV.FieldByName('observer').AsString <> EmptyStr then
+        begin
+          aObserver := GetKey('people', 'person_id', 'acronym', CSV.FieldByName('observer').AsString);
+        end
+        else
+          aObserver := 0;
 
         try
           Taxon := TTaxon.Create;
@@ -1877,20 +1890,17 @@ begin
           if (CSV.FieldByName('nidoparasite').AsString <> EmptyStr) then
             Taxon.GetData(GetKey('zoo_taxa', 'taxon_id', 'full_name', CSV.FieldByName('nidoparasite').AsString));
 
-          // Get locality
-          //if (CSV.FieldByName('locality').AsString <> EmptyStr) then
-          //  Toponimo.GetData(GetKey('gazetteer', 'site_id', 'site_name', CSV.FieldByName('locality').AsString));
+          // Get nest
+          if (CSV.FieldByName('nest').AsString <> EmptyStr) then
+            Nest.GetData(GetKey('nests', 'nest_id', 'field_number', CSV.FieldByName('nest').AsString));
 
-
-          { #todo : Nest revision import }
-          // Check if the nest exists
-          //if not Nest.Find(CSV.FieldByName('field_number').AsString, Taxon.Id, Toponimo.Id,
-          //          StrToDate(CSV.FieldByName('found_day').AsString)) then
+          // Check if the nest revision exists
+          if not Revision.Find(Nest.Id, aDate, aTime, aObserver) then
           begin
             Revision.NestId := Nest.Id;
             Revision.RevisionDate := CSV.FieldByName('revision_date').AsDateTime;
             Revision.RevisionTime := CSV.FieldByName('revision_time').AsDateTime;
-            Revision.Observer1Id := 0;
+            Revision.Observer1Id := aObserver;
             Revision.Observer2Id := 0;
             Revision.NestStatus := CSV.FieldByName('nest_status').AsString;
             Revision.HostEggsTally := CSV.FieldByName('host_eggs_tally').AsInteger;
@@ -1957,8 +1967,158 @@ begin
 end;
 
 procedure ImportEggDataV1(aCSVFile: String; aProgressBar: TProgressBar);
+var
+  aObserver: Integer;
+  Taxon: TTaxon;
+  Nest: TNest;
+  Egg: TEgg;
+  CSV: TSdfDataSet;
+  aDate: String;
 begin
-  { #todo : Eggs import }
+  if not FileExists(aCSVFile) then
+  begin
+    MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
+    Exit;
+  end;
+
+  Parar := False;
+  if not Assigned(aProgressBar) then
+  begin
+    dlgProgress := TdlgProgress.Create(nil);
+    dlgProgress.Show;
+    dlgProgress.Title := rsTitleImportFile;
+    dlgProgress.Text := rsLoadingCSVFile;
+  end;
+  CSV := TSdfDataSet.Create(nil);
+  try
+    { Define CSV format settings }
+    with CSV do
+    begin
+      Delimiter := ';';
+      FirstLineAsSchema := True;
+      CodePage := 'Windows-1252';
+      //Schema.AddDelimitedText(EggSchema, ';', True);
+      FileName := aCSVFile;
+      Open;
+    end;
+
+    if Assigned(aProgressBar) then
+    begin
+      aProgressBar.Position := 0;
+      aProgressBar.Max := CSV.RecordCount;
+    end
+    else
+    if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Position := 0;
+      dlgProgress.Max := CSV.RecordCount;
+    end;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      CSV.First;
+      repeat
+        if Assigned(dlgProgress) then
+          dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
+        // Reset variables
+        aDate := CSV.FieldByName('revision_date').AsString;
+
+        if CSV.FieldByName('observer').AsString <> EmptyStr then
+        begin
+          aObserver := GetKey('people', 'person_id', 'acronym', CSV.FieldByName('observer').AsString);
+        end
+        else
+          aObserver := 0;
+
+        try
+          Taxon := TTaxon.Create;
+          Nest := TNest.Create;
+          Egg := TEgg.Create;
+
+          // Get taxon
+          if (CSV.FieldByName('nidoparasite').AsString <> EmptyStr) then
+            Taxon.GetData(GetKey('zoo_taxa', 'taxon_id', 'full_name', CSV.FieldByName('nidoparasite').AsString));
+
+          // Get nest
+          if (CSV.FieldByName('nest').AsString <> EmptyStr) then
+            Nest.GetData(GetKey('nests', 'nest_id', 'field_number', CSV.FieldByName('nest').AsString));
+
+          // Check if the egg exists
+          if not Egg.Find(Nest.Id, CSV.FieldByName('field_number').AsString, aDate, aObserver) then
+          begin
+            Egg.FieldNumber := CSV.FieldByName('field_number').AsString;
+            Egg.EggSeq := CSV.FieldByName('egg_seq').AsInteger;
+            Egg.NestId := Nest.Id;
+            Egg.EggShape := CSV.FieldByName('egg_shape').AsString;
+            Egg.Width := CSV.FieldByName('egg_width').AsFloat;
+            Egg.Length := CSV.FieldByName('egg_length').AsFloat;
+            Egg.Mass := CSV.FieldByName('egg_mass').AsFloat;
+            Egg.Volume := CSV.FieldByName('egg_volume').AsFloat;
+            Egg.EggStage := CSV.FieldByName('egg_stage').AsString;
+            Egg.EggshellColor := CSV.FieldByName('eggshell_color').AsString;
+            Egg.EggshellPattern := CSV.FieldByName('eggshell_pattern').AsString;
+            Egg.EggshellTexture := CSV.FieldByName('eggshell_texture').AsString;
+            Egg.EggHatched := CSV.FieldByName('egg_hatched').AsBoolean;
+            Egg.IndividualId := CSV.FieldByName('individual_id').AsInteger;
+            Egg.ResearcherId := aObserver;
+            Egg.MeasureDate := StrToDate(aDate);
+            Egg.TaxonId := Taxon.Id;
+            Egg.HostEgg := Nest.TaxonId = Egg.TaxonId;
+            Egg.Description := CSV.FieldByName('description').AsString;
+            Egg.Notes := CSV.FieldByName('notes').AsString;
+            Egg.FullName := CSV.FieldByName('full_name').AsString;
+            Egg.UserInserted := ActiveUser.Id;
+
+            Egg.Insert;
+
+            // Insert record history
+            WriteRecHistory(tbEggs, haCreated, Egg.Id, '', '', '', rsInsertedByImport);
+
+          end;
+
+        finally
+          FreeAndNil(Nest);
+          FreeAndNil(Taxon);
+          FreeAndNil(Egg);
+        end;
+
+        if Assigned(aProgressBar) then
+          aProgressBar.Position := CSV.RecNo
+        else
+        if Assigned(dlgProgress) then
+          dlgProgress.Position := CSV.RecNo;
+        Application.ProcessMessages;
+        CSV.Next;
+      until CSV.Eof or Parar;
+
+      if Parar then
+      begin
+        DMM.sqlTrans.Rollback;
+        MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
+      end
+      else
+      begin
+        if Assigned(dlgProgress) then
+        begin
+          dlgProgress.Text := rsProgressFinishing;
+          MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingEffort, mtInformation);
+        end;
+        DMM.sqlTrans.CommitRetaining;
+      end;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+
+  finally
+    CSV.Close;
+    FreeAndNil(CSV);
+    if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Close;
+      FreeAndNil(dlgProgress);
+    end;
+  end;
 end;
 
 { TBandingEffort }

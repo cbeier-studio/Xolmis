@@ -10,7 +10,6 @@ object dlgImportNests: TdlgImportNests
   ClientWidth = 759
   Font.Height = -12
   Position = poMainFormCenter
-  LCLVersion = '4.0.0.1'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -200,7 +199,6 @@ object dlgImportNests: TdlgImportNests
             Anchors = [akTop, akLeft, akRight, akBottom]
             Color = clDefault
             MaxLength = 0
-            ParentColor = True
             ParentShowHint = False
             ShowHint = True
             Spacing = 0

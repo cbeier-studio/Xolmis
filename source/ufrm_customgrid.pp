@@ -981,12 +981,15 @@ type
     procedure pmPrintBandsByStatusClick(Sender: TObject);
     procedure pmPrintBandsClick(Sender: TObject);
     procedure pmPrintBandsWithHistoryClick(Sender: TObject);
+    procedure pmPrintGazetteerClick(Sender: TObject);
     procedure pmPrintGridClick(Sender: TObject);
     procedure pmPrintInstitutionsClick(Sender: TObject);
     procedure pmPrintMethodsClick(Sender: TObject);
     procedure pmPrintPermitsClick(Sender: TObject);
     procedure pmPrintProjectsClick(Sender: TObject);
     procedure pmPrintResearchersClick(Sender: TObject);
+    procedure pmPrintSamplingPlotsByLocalityClick(Sender: TObject);
+    procedure pmPrintSamplingPlotsClick(Sender: TObject);
     procedure pmPrintSightingsByObserverClick(Sender: TObject);
     procedure pmtClearSelectionClick(Sender: TObject);
     procedure pmtColapseAllClick(Sender: TObject);
@@ -5728,7 +5731,7 @@ begin
     else
     begin
       // Handle when the field is not found
-      ShowMessage('Field not found: ' + gridColumns.Cells[2, i]);
+      LogError('Field not found: ' + gridColumns.Cells[2, i]);
     end;
   end;
 end;
@@ -6507,6 +6510,11 @@ begin
   PrintPreview('rep_bands_history.lrf', dsLink, DMG.dsBandHistory);
 end;
 
+procedure TfrmCustomGrid.pmPrintGazetteerClick(Sender: TObject);
+begin
+  PrintPreview('rep_gazetteer.lrf', dsLink);
+end;
+
 procedure TfrmCustomGrid.pmPrintGridClick(Sender: TObject);
 begin
   PrintGrid.Caption := Caption;
@@ -6536,6 +6544,16 @@ end;
 procedure TfrmCustomGrid.pmPrintResearchersClick(Sender: TObject);
 begin
   PrintPreview('rep_people.lrf', dsLink);
+end;
+
+procedure TfrmCustomGrid.pmPrintSamplingPlotsByLocalityClick(Sender: TObject);
+begin
+  PrintPreview('rep_sampling_plots_by_locality.lrf', dsLink);
+end;
+
+procedure TfrmCustomGrid.pmPrintSamplingPlotsClick(Sender: TObject);
+begin
+  PrintPreview('rep_sampling_plots.lrf', dsLink);
 end;
 
 procedure TfrmCustomGrid.pmPrintSightingsByObserverClick(Sender: TObject);

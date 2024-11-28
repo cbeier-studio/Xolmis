@@ -406,7 +406,10 @@ end;
 
 procedure LoadTablesDict;
 begin
-  TablesDict := TTablesDictionary.Create;
+  if not Assigned(TablesDict) then
+    TablesDict := TTablesDictionary.Create;
+
+  TablesDict.Clear;
 
   TablesDict.Add(rsTitleUsers, tbUsers);
   //tbRecordHistory,

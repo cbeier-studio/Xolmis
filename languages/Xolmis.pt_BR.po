@@ -11738,11 +11738,11 @@ msgid "Bands"
 msgstr "Anilhas"
 
 #: tfrmcustomgrid.pmprintbandsbycarrier.caption
-msgid "Bands by carrier"
+msgid "Bands per carrier"
 msgstr "Anilhas por portador"
 
 #: tfrmcustomgrid.pmprintbandsbystatus.caption
-msgid "Bands by status"
+msgid "Bands per status"
 msgstr "Anilhas por status"
 
 #: tfrmcustomgrid.pmprintbandswithhistory.caption
@@ -11768,19 +11768,19 @@ msgid "Captures"
 msgstr "Capturas"
 
 #: tfrmcustomgrid.pmprintcapturesbydate.caption
-msgid "Captures by date"
+msgid "Captures per date"
 msgstr "Capturas por data"
 
 #: tfrmcustomgrid.pmprintcapturesbylocality.caption
-msgid "Captures by locality"
+msgid "Captures per locality"
 msgstr "Capturas por localidade"
 
 #: tfrmcustomgrid.pmprintcapturesbyproject.caption
-msgid "Captures by project"
+msgid "Captures per project"
 msgstr "Capturas por projeto"
 
 #: tfrmcustomgrid.pmprintcapturesbytaxon.caption
-msgid "Captures by taxon"
+msgid "Captures per taxon"
 msgstr "Capturas por táxon"
 
 #: tfrmcustomgrid.pmprintcoloredbands.caption
@@ -11793,15 +11793,15 @@ msgid "Eggs"
 msgstr "Ovos"
 
 #: tfrmcustomgrid.pmprinteggsbylocality.caption
-msgid "Eggs by locality"
+msgid "Eggs per locality"
 msgstr "Ovos por localidade"
 
 #: tfrmcustomgrid.pmprinteggsbynest.caption
-msgid "Eggs by nest"
+msgid "Eggs per nest"
 msgstr "Ovos por ninho"
 
 #: tfrmcustomgrid.pmprinteggsbytaxon.caption
-msgid "Eggs by taxon"
+msgid "Eggs per taxon"
 msgstr "Ovos por táxon"
 
 #: tfrmcustomgrid.pmprintexpeditions.caption
@@ -11810,11 +11810,11 @@ msgid "Expeditions"
 msgstr "Expedições"
 
 #: tfrmcustomgrid.pmprintexpeditionsbylocality.caption
-msgid "Expeditions by locality"
+msgid "Expeditions per locality"
 msgstr "Expedições por localidade"
 
 #: tfrmcustomgrid.pmprintexpeditionsbyproject.caption
-msgid "Expeditions by project"
+msgid "Expeditions per project"
 msgstr "Expedições por projeto"
 
 #: tfrmcustomgrid.pmprintgazetteer.caption
@@ -11836,11 +11836,11 @@ msgid "Individuals"
 msgstr "Indivíduos"
 
 #: tfrmcustomgrid.pmprintindividualsbyparents.caption
-msgid "Individuals by parents"
+msgid "Individuals per parents"
 msgstr "Indivíduos pelos pais"
 
 #: tfrmcustomgrid.pmprintindividualsbytaxon.caption
-msgid "Individuals by taxon"
+msgid "Individuals per taxon"
 msgstr "Indivíduos por táxon"
 
 #: tfrmcustomgrid.pmprintinstitutions.caption
@@ -11864,19 +11864,19 @@ msgid "Nests"
 msgstr "Ninhos"
 
 #: tfrmcustomgrid.pmprintnestsbylocality.caption
-msgid "Nests by locality"
+msgid "Nests per locality"
 msgstr "Ninhos por localidade"
 
 #: tfrmcustomgrid.pmprintnestsbyperiod.caption
-msgid "Nests by period"
+msgid "Nests per period"
 msgstr "Ninhos por período"
 
 #: tfrmcustomgrid.pmprintnestsbyproject.caption
-msgid "Nests by project"
+msgid "Nests per project"
 msgstr "Ninhos por projeto"
 
 #: tfrmcustomgrid.pmprintnestsbytaxon.caption
-msgid "Nests by taxon"
+msgid "Nests per taxon"
 msgstr "Ninhos por táxon"
 
 #: tfrmcustomgrid.pmprintpermits.caption
@@ -11885,11 +11885,11 @@ msgid "Permits"
 msgstr "Licenças"
 
 #: tfrmcustomgrid.pmprintpermitsbyexpiration.caption
-msgid "Permits by date of expiration"
+msgid "Permits per expiration date"
 msgstr "Licenças por data de vencimento"
 
 #: tfrmcustomgrid.pmprintpermitsbyproject.caption
-msgid "Permits by project"
+msgid "Permits per project"
 msgstr "Licenças por projeto"
 
 #: tfrmcustomgrid.pmprintprojects.caption
@@ -11908,7 +11908,7 @@ msgid "Sampling plots"
 msgstr "Parcelas amostrais"
 
 #: tfrmcustomgrid.pmprintsamplingplotsbylocality.caption
-msgid "Sampling plots by locality"
+msgid "Sampling plots per locality"
 msgstr "Parcelas amostrais por localidade"
 
 #: tfrmcustomgrid.pmprintsightings.caption
@@ -11917,23 +11917,23 @@ msgid "Sightings"
 msgstr "Observações"
 
 #: tfrmcustomgrid.pmprintsightingsbylocality.caption
-msgid "Sightings by locality"
+msgid "Sightings per locality"
 msgstr "Observações por localidade"
 
 #: tfrmcustomgrid.pmprintsightingsbyobserver.caption
-msgid "Sightings by observer"
+msgid "Sightings per observer"
 msgstr "Observações por observador"
 
 #: tfrmcustomgrid.pmprintsightingsbyproject.caption
-msgid "Sightings by project"
+msgid "Sightings per project"
 msgstr "Observações por projeto"
 
 #: tfrmcustomgrid.pmprintsightingsbysurvey.caption
-msgid "Sightings by survey"
+msgid "Sightings per survey"
 msgstr "Observações por amostragem"
 
 #: tfrmcustomgrid.pmprintsightingsbytaxon.caption
-msgid "Sightings by taxon"
+msgid "Sightings per taxon"
 msgstr "Observações por táxon"
 
 #: tfrmcustomgrid.pmprintspecimens.caption
@@ -11942,19 +11942,19 @@ msgid "Specimens"
 msgstr "Espécimes"
 
 #: tfrmcustomgrid.pmprintspecimensbylocality.caption
-msgid "Specimens by locality"
+msgid "Specimens per locality"
 msgstr "Espécimes por localidade"
 
 #: tfrmcustomgrid.pmprintspecimensbyproject.caption
-msgid "Specimens by project"
+msgid "Specimens per project"
 msgstr "Espécimes por projeto"
 
 #: tfrmcustomgrid.pmprintspecimensbytaxon.caption
-msgid "Specimens by taxon"
+msgid "Specimens per taxon"
 msgstr "Espécimes por táxon"
 
 #: tfrmcustomgrid.pmprintspecimensbyyear.caption
-msgid "Specimens by year"
+msgid "Specimens per year"
 msgstr "Espécimes por ano"
 
 #: tfrmcustomgrid.pmprintsurveys.caption
@@ -11963,15 +11963,15 @@ msgid "Surveys"
 msgstr "Amostragens"
 
 #: tfrmcustomgrid.pmprintsurveysbyexpedition.caption
-msgid "Surveys by expedition"
+msgid "Surveys per expedition"
 msgstr "Amostragens por expedição"
 
 #: tfrmcustomgrid.pmprintsurveysbylocality.caption
-msgid "Surveys by locality"
+msgid "Surveys per locality"
 msgstr "Amostragens por localidade"
 
 #: tfrmcustomgrid.pmprintsurveysbyproject.caption
-msgid "Surveys by project"
+msgid "Surveys per project"
 msgstr "Amostragens por projeto"
 
 #: tfrmcustomgrid.pmprinttaxa.caption
@@ -11991,7 +11991,7 @@ msgstr "Táxons registrados"
 
 #: tfrmcustomgrid.pmprinttaxarecordedbylocality.caption
 msgctxt "tfrmcustomgrid.pmprinttaxarecordedbylocality.caption"
-msgid "Taxa recorded by locality"
+msgid "Taxa recorded per locality"
 msgstr "Táxons registrados por localidade"
 
 #: tfrmcustomgrid.pmrdelpermanently.caption

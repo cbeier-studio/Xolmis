@@ -24784,12 +24784,12 @@ object frmCustomGrid: TfrmCustomGrid
       Visible = False
     end
     object pmPrintExpeditionsByLocality: TMenuItem
-      Caption = 'Expeditions by locality'
+      Caption = 'Expeditions per locality'
       Enabled = False
       Visible = False
     end
     object pmPrintExpeditionsByProject: TMenuItem
-      Caption = 'Expeditions by project'
+      Caption = 'Expeditions per project'
       Enabled = False
       Visible = False
     end
@@ -24799,17 +24799,17 @@ object frmCustomGrid: TfrmCustomGrid
       Visible = False
     end
     object pmPrintSurveysByExpedition: TMenuItem
-      Caption = 'Surveys by expedition'
+      Caption = 'Surveys per expedition'
       Enabled = False
       Visible = False
     end
     object pmPrintSurveysByLocality: TMenuItem
-      Caption = 'Surveys by locality'
+      Caption = 'Surveys per locality'
       Enabled = False
       Visible = False
     end
     object pmPrintSurveysByProject: TMenuItem
-      Caption = 'Surveys by project'
+      Caption = 'Surveys per project'
       Enabled = False
       Visible = False
     end
@@ -24819,27 +24819,27 @@ object frmCustomGrid: TfrmCustomGrid
       Visible = False
     end
     object pmPrintSightingsBySurvey: TMenuItem
-      Caption = 'Sightings by survey'
+      Caption = 'Sightings per survey'
       Enabled = False
       Visible = False
     end
     object pmPrintSightingsByLocality: TMenuItem
-      Caption = 'Sightings by locality'
+      Caption = 'Sightings per locality'
       Enabled = False
       Visible = False
     end
     object pmPrintSightingsByObserver: TMenuItem
-      Caption = 'Sightings by observer'
+      Caption = 'Sightings per observer'
       Visible = False
       OnClick = pmPrintSightingsByObserverClick
     end
     object pmPrintSightingsByProject: TMenuItem
-      Caption = 'Sightings by project'
+      Caption = 'Sightings per project'
       Enabled = False
       Visible = False
     end
     object pmPrintSightingsByTaxon: TMenuItem
-      Caption = 'Sightings by taxon'
+      Caption = 'Sightings per taxon'
       Enabled = False
       Visible = False
     end
@@ -24849,22 +24849,22 @@ object frmCustomGrid: TfrmCustomGrid
       Visible = False
     end
     object pmPrintSpecimensByProject: TMenuItem
-      Caption = 'Specimens by project'
+      Caption = 'Specimens per project'
       Enabled = False
       Visible = False
     end
     object pmPrintSpecimensByLocality: TMenuItem
-      Caption = 'Specimens by locality'
+      Caption = 'Specimens per locality'
       Enabled = False
       Visible = False
     end
     object pmPrintSpecimensByTaxon: TMenuItem
-      Caption = 'Specimens by taxon'
+      Caption = 'Specimens per taxon'
       Enabled = False
       Visible = False
     end
     object pmPrintSpecimensByYear: TMenuItem
-      Caption = 'Specimens by year'
+      Caption = 'Specimens per year'
       Enabled = False
       Visible = False
     end
@@ -24874,12 +24874,12 @@ object frmCustomGrid: TfrmCustomGrid
       OnClick = pmPrintBandsClick
     end
     object pmPrintBandsByCarrier: TMenuItem
-      Caption = 'Bands by carrier'
+      Caption = 'Bands per carrier'
       Visible = False
       OnClick = pmPrintBandsByCarrierClick
     end
     object pmPrintBandsByStatus: TMenuItem
-      Caption = 'Bands by status'
+      Caption = 'Bands per status'
       Visible = False
       OnClick = pmPrintBandsByStatusClick
     end
@@ -24894,12 +24894,12 @@ object frmCustomGrid: TfrmCustomGrid
       Visible = False
     end
     object pmPrintIndividualsByTaxon: TMenuItem
-      Caption = 'Individuals by taxon'
+      Caption = 'Individuals per taxon'
       Enabled = False
       Visible = False
     end
     object pmPrintIndividualsByParents: TMenuItem
-      Caption = 'Individuals by parents'
+      Caption = 'Individuals per parents'
       Enabled = False
       Visible = False
     end
@@ -24909,22 +24909,22 @@ object frmCustomGrid: TfrmCustomGrid
       Visible = False
     end
     object pmPrintCapturesByProject: TMenuItem
-      Caption = 'Captures by project'
+      Caption = 'Captures per project'
       Enabled = False
       Visible = False
     end
     object pmPrintCapturesByDate: TMenuItem
-      Caption = 'Captures by date'
+      Caption = 'Captures per date'
       Enabled = False
       Visible = False
     end
     object pmPrintCapturesByLocality: TMenuItem
-      Caption = 'Captures by locality'
+      Caption = 'Captures per locality'
       Enabled = False
       Visible = False
     end
     object pmPrintCapturesByTaxon: TMenuItem
-      Caption = 'Captures by taxon'
+      Caption = 'Captures per taxon'
       Enabled = False
       Visible = False
     end
@@ -24936,6 +24936,7 @@ object frmCustomGrid: TfrmCustomGrid
     object pmPrintMolts: TMenuItem
       Caption = 'Molts'
       Enabled = False
+      Visible = False
     end
     object pmPrintNests: TMenuItem
       Caption = 'Nests'
@@ -24943,22 +24944,22 @@ object frmCustomGrid: TfrmCustomGrid
       Visible = False
     end
     object pmPrintNestsByProject: TMenuItem
-      Caption = 'Nests by project'
+      Caption = 'Nests per project'
       Enabled = False
       Visible = False
     end
     object pmPrintNestsByLocality: TMenuItem
-      Caption = 'Nests by locality'
+      Caption = 'Nests per locality'
       Enabled = False
       Visible = False
     end
     object pmPrintNestsByPeriod: TMenuItem
-      Caption = 'Nests by period'
+      Caption = 'Nests per period'
       Enabled = False
       Visible = False
     end
     object pmPrintNestsByTaxon: TMenuItem
-      Caption = 'Nests by taxon'
+      Caption = 'Nests per taxon'
       Enabled = False
       Visible = False
     end
@@ -24968,17 +24969,17 @@ object frmCustomGrid: TfrmCustomGrid
       Visible = False
     end
     object pmPrintEggsByNest: TMenuItem
-      Caption = 'Eggs by nest'
+      Caption = 'Eggs per nest'
       Enabled = False
       Visible = False
     end
     object pmPrintEggsByLocality: TMenuItem
-      Caption = 'Eggs by locality'
+      Caption = 'Eggs per locality'
       Enabled = False
       Visible = False
     end
     object pmPrintEggsByTaxon: TMenuItem
-      Caption = 'Eggs by taxon'
+      Caption = 'Eggs per taxon'
       Enabled = False
       Visible = False
     end
@@ -25003,19 +25004,19 @@ object frmCustomGrid: TfrmCustomGrid
       OnClick = pmPrintPermitsClick
     end
     object pmPrintPermitsByProject: TMenuItem
-      Caption = 'Permits by project'
+      Caption = 'Permits per project'
       Enabled = False
       Visible = False
     end
     object pmPrintPermitsByExpiration: TMenuItem
-      Caption = 'Permits by date of expiration'
+      Caption = 'Permits per expiration date'
       Enabled = False
       Visible = False
     end
     object pmPrintGazetteer: TMenuItem
       Caption = 'Gazetteer'
-      Enabled = False
       Visible = False
+      OnClick = pmPrintGazetteerClick
     end
     object pmPrintGazetteerHierarchical: TMenuItem
       Caption = 'Gazetteer (hierarchical)'
@@ -25024,13 +25025,13 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pmPrintSamplingPlots: TMenuItem
       Caption = 'Sampling plots'
-      Enabled = False
       Visible = False
+      OnClick = pmPrintSamplingPlotsClick
     end
     object pmPrintSamplingPlotsByLocality: TMenuItem
-      Caption = 'Sampling plots by locality'
-      Enabled = False
+      Caption = 'Sampling plots per locality'
       Visible = False
+      OnClick = pmPrintSamplingPlotsByLocalityClick
     end
     object pmPrintBotanicTaxa: TMenuItem
       Caption = 'Botanic taxa'
@@ -25063,7 +25064,7 @@ object frmCustomGrid: TfrmCustomGrid
       Visible = False
     end
     object pmPrintTaxaRecordedByLocality: TMenuItem
-      Caption = 'Taxa recorded by locality'
+      Caption = 'Taxa recorded per locality'
       Enabled = False
       Visible = False
     end

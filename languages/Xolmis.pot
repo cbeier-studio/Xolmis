@@ -11710,11 +11710,11 @@ msgid "Bands"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintbandsbycarrier.caption
-msgid "Bands by carrier"
+msgid "Bands per carrier"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintbandsbystatus.caption
-msgid "Bands by status"
+msgid "Bands per status"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintbandswithhistory.caption
@@ -11740,19 +11740,19 @@ msgid "Captures"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintcapturesbydate.caption
-msgid "Captures by date"
+msgid "Captures per date"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintcapturesbylocality.caption
-msgid "Captures by locality"
+msgid "Captures per locality"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintcapturesbyproject.caption
-msgid "Captures by project"
+msgid "Captures per project"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintcapturesbytaxon.caption
-msgid "Captures by taxon"
+msgid "Captures per taxon"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintcoloredbands.caption
@@ -11765,15 +11765,15 @@ msgid "Eggs"
 msgstr ""
 
 #: tfrmcustomgrid.pmprinteggsbylocality.caption
-msgid "Eggs by locality"
+msgid "Eggs per locality"
 msgstr ""
 
 #: tfrmcustomgrid.pmprinteggsbynest.caption
-msgid "Eggs by nest"
+msgid "Eggs per nest"
 msgstr ""
 
 #: tfrmcustomgrid.pmprinteggsbytaxon.caption
-msgid "Eggs by taxon"
+msgid "Eggs per taxon"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintexpeditions.caption
@@ -11782,11 +11782,11 @@ msgid "Expeditions"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintexpeditionsbylocality.caption
-msgid "Expeditions by locality"
+msgid "Expeditions per locality"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintexpeditionsbyproject.caption
-msgid "Expeditions by project"
+msgid "Expeditions per project"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintgazetteer.caption
@@ -11808,11 +11808,11 @@ msgid "Individuals"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintindividualsbyparents.caption
-msgid "Individuals by parents"
+msgid "Individuals per parents"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintindividualsbytaxon.caption
-msgid "Individuals by taxon"
+msgid "Individuals per taxon"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintinstitutions.caption
@@ -11836,19 +11836,19 @@ msgid "Nests"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintnestsbylocality.caption
-msgid "Nests by locality"
+msgid "Nests per locality"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintnestsbyperiod.caption
-msgid "Nests by period"
+msgid "Nests per period"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintnestsbyproject.caption
-msgid "Nests by project"
+msgid "Nests per project"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintnestsbytaxon.caption
-msgid "Nests by taxon"
+msgid "Nests per taxon"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintpermits.caption
@@ -11857,11 +11857,11 @@ msgid "Permits"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintpermitsbyexpiration.caption
-msgid "Permits by date of expiration"
+msgid "Permits per expiration date"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintpermitsbyproject.caption
-msgid "Permits by project"
+msgid "Permits per project"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintprojects.caption
@@ -11880,7 +11880,7 @@ msgid "Sampling plots"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsamplingplotsbylocality.caption
-msgid "Sampling plots by locality"
+msgid "Sampling plots per locality"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsightings.caption
@@ -11889,23 +11889,23 @@ msgid "Sightings"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsightingsbylocality.caption
-msgid "Sightings by locality"
+msgid "Sightings per locality"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsightingsbyobserver.caption
-msgid "Sightings by observer"
+msgid "Sightings per observer"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsightingsbyproject.caption
-msgid "Sightings by project"
+msgid "Sightings per project"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsightingsbysurvey.caption
-msgid "Sightings by survey"
+msgid "Sightings per survey"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsightingsbytaxon.caption
-msgid "Sightings by taxon"
+msgid "Sightings per taxon"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintspecimens.caption
@@ -11914,19 +11914,19 @@ msgid "Specimens"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintspecimensbylocality.caption
-msgid "Specimens by locality"
+msgid "Specimens per locality"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintspecimensbyproject.caption
-msgid "Specimens by project"
+msgid "Specimens per project"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintspecimensbytaxon.caption
-msgid "Specimens by taxon"
+msgid "Specimens per taxon"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintspecimensbyyear.caption
-msgid "Specimens by year"
+msgid "Specimens per year"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsurveys.caption
@@ -11935,15 +11935,15 @@ msgid "Surveys"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsurveysbyexpedition.caption
-msgid "Surveys by expedition"
+msgid "Surveys per expedition"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsurveysbylocality.caption
-msgid "Surveys by locality"
+msgid "Surveys per locality"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintsurveysbyproject.caption
-msgid "Surveys by project"
+msgid "Surveys per project"
 msgstr ""
 
 #: tfrmcustomgrid.pmprinttaxa.caption
@@ -11963,7 +11963,7 @@ msgstr ""
 
 #: tfrmcustomgrid.pmprinttaxarecordedbylocality.caption
 msgctxt "tfrmcustomgrid.pmprinttaxarecordedbylocality.caption"
-msgid "Taxa recorded by locality"
+msgid "Taxa recorded per locality"
 msgstr ""
 
 #: tfrmcustomgrid.pmrdelpermanently.caption

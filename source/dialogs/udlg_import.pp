@@ -8,7 +8,7 @@ uses
   BCPanel, Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet, LCLIntf, fgl,
   memds, dbf, csvdataset, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset,
-  atshapelinebgra, cbs_datatypes;
+  atshapelinebgra, cbs_import, cbs_datatypes;
 
 type
 
@@ -75,8 +75,10 @@ type
     sbSaveLog: TBitBtn;
     procedure btnHelpClick(Sender: TObject);
     procedure btnOptionsClick(Sender: TObject);
+    procedure cbTargetSelect(Sender: TObject);
     procedure eSourceFileButtonClick(Sender: TObject);
     procedure eSourceFileChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure pmfDeselectAllClick(Sender: TObject);
@@ -88,6 +90,8 @@ type
   private
     FDataSet: TDataSet;
     dsJSON: TExtJSJSONObjectDataSet;
+    FFieldMap: TFieldsMap;
+    FTableType: TTableType;
     procedure ApplyDarkMode;
     function IsRequiredFilledSource: Boolean;
     procedure LoadFields;
@@ -105,7 +109,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_import, ucfg_delimiters, uDarkStyleParams;
+  cbs_locale, udm_grid, udm_sampling, ucfg_delimiters, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -149,6 +153,12 @@ begin
   finally
     FreeAndNil(cfgDelimiters);
   end;
+end;
+
+procedure TdlgImport.cbTargetSelect(Sender: TObject);
+begin
+  if TablesDict.IndexOf(cbTarget.Text) >= 0 then
+    FTableType := TablesDict[cbTarget.Text];
 end;
 
 procedure TdlgImport.eSourceFileButtonClick(Sender: TObject);
@@ -214,6 +224,13 @@ begin
     end;
 end;
 
+procedure TdlgImport.FormCreate(Sender: TObject);
+begin
+  FFieldMap := TFieldsMap.Create;
+  FTableType := tbNone;
+  LoadTablesDict;
+end;
+
 procedure TdlgImport.FormDestroy(Sender: TObject);
 begin
   if Assigned(dsJSON) then
@@ -221,6 +238,11 @@ begin
     dsJSON.Close;
     dsJSON.Free;
   end;
+
+  if Assigned(FFieldMap) then
+    FFieldMap.Free;
+  if Assigned(TablesDict) then
+    TablesDict.Free;
 end;
 
 procedure TdlgImport.FormShow(Sender: TObject);
@@ -301,7 +323,62 @@ begin
 end;
 
 procedure TdlgImport.LoadTargetFields;
+var
+  FDS: TDataSet;
+  i: Integer;
 begin
+  FDS := nil;
+
+  if not (Assigned(DMS)) then
+    DMS := TDMS.Create(Application);
+
+  case FTableType of
+    tbNone: ;
+    tbUsers: ;
+    tbRecordHistory: ;
+    tbRecordVerifications: ;
+    tbGazetteer:            FDS := DMG.qGazetteer;
+    tbSamplingPlots:        FDS := DMG.qSamplingPlots;
+    tbPermanentNets:        FDS := DMG.qPermanentNets;
+    tbInstitutions:         FDS := DMG.qInstitutions;
+    tbPeople:               FDS := DMG.qPeople;
+    tbProjects:             FDS := DMG.qProjects;
+    tbProjectTeams:         FDS := DMG.qProjectTeam;
+    tbPermits:              FDS := DMG.qPermits;
+    tbTaxonRanks: ;
+    tbZooTaxa: ;
+    tbBotanicTaxa:          FDS := DMG.qBotany;
+    tbBands:                FDS := DMG.qBands;
+    tbBandHistory: ;
+    tbIndividuals:          FDS := DMG.qIndividuals;
+    tbCaptures:             FDS := DMG.qCaptures;
+    tbMolts:                FDS := DMG.qMolts;
+    tbNests:                FDS := DMG.qNests;
+    tbNestOwners: ;
+    tbNestRevisions:        FDS := DMG.qNestRevisions;
+    tbEggs:                 FDS := DMG.qEggs;
+    tbMethods:              FDS := DMG.qMethods;
+    tbExpeditions:          FDS := DMG.qExpeditions;
+    tbSurveys:              FDS := DMG.qSurveys;
+    tbSurveyTeams: ;
+    tbNetsEffort:           FDS := DMS.qNetsEffort;
+    tbWeatherLogs:          FDS := DMS.qWeatherLogs;
+    tbSightings:            FDS := DMG.qSightings;
+    tbSpecimens:            FDS := DMG.qSpecimens;
+    tbSamplePreps:          FDS := DMG.qSamplePreps;
+    tbSpecimenCollectors:   FDS := DMG.qSampleCollectors;
+    tbImages:               FDS := DMG.qImages;
+    tbAudioLibrary:         FDS := DMG.qAudio;
+    tbDocuments:            FDS := DMG.qDocuments;
+    tbVegetation:           FDS := DMS.qVegetation;
+  end;
+
+  gridFields.Columns[3].PickList.Clear;
+  for i := 0 to FDS.FieldCount - 1 do
+  begin
+    FFieldMap.Add(FDS.Fields[i].DisplayLabel, FDS.Fields[i].FieldName);
+    gridFields.Columns[3].PickList.Add(FDS.Fields[i].DisplayLabel);
+  end;
 
 end;
 

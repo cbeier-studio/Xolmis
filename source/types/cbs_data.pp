@@ -136,7 +136,7 @@ const
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_conversions, cbs_system,
+  cbs_locale, cbs_global, cbs_dialogs, cbs_conversions, cbs_system, cbs_debug,
   cbs_count, udm_main, udlg_progress;
 
   {
@@ -2514,8 +2514,17 @@ var
   Qry: TSQLQuery;
   FS: TFormatSettings;
   SortNum: Double;
+  i: Integer;
+  {$IFDEF DEBUG}
+  Usage: TElapsedTimer;
+  {$ENDIF}
 begin
   FS := DefaultSQLFormatSettings;
+  i := 0;
+
+  {$IFDEF DEBUG}
+  Usage := TElapsedTimer.Create('Populating zoo_taxa table in a new database');
+  {$ENDIF}
 
   Qry := TSQLQuery.Create(nil);
   with DMM.batchCsvRead do
@@ -2621,6 +2630,13 @@ begin
       while not EOF do
       begin
         SortNum := 0.0;
+        if i = 500 then
+        begin
+          i := 0;
+          Connection.Transaction.CommitRetaining;
+          if not Connection.Transaction.Active then
+            Connection.Transaction.StartTransaction;
+        end;
 
         Qry.ParamByName('taxon_id').AsInteger := FieldByName('taxon_id').AsInteger;
         Qry.ParamByName('full_name').AsString := FieldByName('full_name').AsString;
@@ -2692,6 +2708,7 @@ begin
         Qry.ExecSQL;
         aProgressBar.Position := RecNo;
 
+        Inc(i);
         Next;
       end;
 
@@ -2704,6 +2721,10 @@ begin
       end;
     end;
   finally
+    {$IFDEF DEBUG}
+    Usage.StopTimer;
+    FreeAndNil(Usage);
+    {$ENDIF}
     FreeAndNil(Qry);
     Close;
   end;

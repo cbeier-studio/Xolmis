@@ -11,6 +11,8 @@ object dlgImport: TdlgImport
   ClientWidth = 560
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.0.0.1'
+  OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
@@ -208,6 +210,7 @@ object dlgImport: TdlgImport
           TabOrder = 2
           TextHint = 'Select a table...'
           OnChange = eSourceFileChange
+          OnSelect = cbTargetSelect
         end
         object pSourceOptions: TPanel
           Left = 16
