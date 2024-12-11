@@ -122,15 +122,26 @@ type
     FStateId: Integer;
     FCountryId: Integer;
     FFullName: String;
+    FEbirdName: String;
     FLongitude: Extended;
     FLatitude: Extended;
     FAltitude: Double;
+    FLanguage: String;
+    FDescription: String;
+    FNotes: String;
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
     procedure GetData(aKey: Integer); overload;
     procedure GetData(aDataSet: TDataSet); overload;
     function Diff(aOld: TSite; var aList: TStrings): Boolean;
+    procedure Insert;
+    procedure Update;
+    procedure Save;
+    procedure Delete;
+    procedure Copy(aFrom: TSite);
+    function ToJSON: String;
+    function Find(const FieldName: String; const Value: Variant): Boolean;
   published
     property Name: String read FName write FName;
     property Acronym: String read FAcronym write FAcronym;
@@ -140,9 +151,13 @@ type
     property StateId: Integer read FStateId write FStateId;
     property CountryId: Integer read FCountryId write FCountryId;
     property FullName: String read FFullName write FFullName;
+    property EbirdName: String read FEbirdName write FEbirdName;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
     property Altitude: Double read FAltitude write FAltitude;
+    property Language: String read FLanguage write FLanguage;
+    property Description: String read FDescription write FDescription;
+    property Notes: String read FNotes write FNotes;
   end;
 
   { TPoi }
@@ -225,7 +240,7 @@ type
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_conversions, cbs_validations, cbs_datacolumns, udm_main, udlg_geoeditor;
+uses cbs_locale, cbs_global, cbs_system, cbs_conversions, cbs_validations, cbs_datacolumns, udm_main, udlg_geoeditor;
 
 function RemoveSymbolsDMS(aCoord: String): String;
 begin
@@ -1147,9 +1162,53 @@ begin
   FStateId := 0;
   FCountryId := 0;
   FFullName := EmptyStr;
+  FEbirdName := EmptyStr;
   FLatitude := 0.0;
   FLongitude := 0.0;
   FAltitude := 0.0;
+  FLanguage := EmptyStr;
+  FDescription := EmptyStr;
+  FNotes := EmptyStr;
+end;
+
+procedure TSite.Copy(aFrom: TSite);
+begin
+  FName := aFrom.Name;
+  FAcronym := aFrom.Acronym;
+  FRank := aFrom.Rank;
+  FParentSiteId := aFrom.ParentSiteId;
+  FMunicipalityId := aFrom.MunicipalityId;
+  FStateId := aFrom.StateId;
+  FCountryId := aFrom.CountryId;
+  FFullName := aFrom.FullName;
+  FEbirdName := aFrom.EbirdName;
+  FLatitude := aFrom.Latitude;
+  FLongitude := aFrom.Longitude;
+  FAltitude := aFrom.Altitude;
+  FLanguage := aFrom.Language;
+  FDescription := aFrom.Description;
+  FNotes := aFrom.Notes;
+end;
+
+procedure TSite.Delete;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('DELETE FROM gazetteer');
+    Add('WHERE (site_id = :aid)');
+
+    ParamByName('aid').AsInteger := FId;
+
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 procedure TSite.GetData(aKey: Integer);
@@ -1188,10 +1247,14 @@ begin
     FMunicipalityId := FieldByName('municipality_id').AsInteger;
     FStateId := FieldByName('state_id').AsInteger;
     FCountryId := FieldByName('country_id').AsInteger;
+    FLanguage := FieldByName('language').AsString;
     FFullName := FieldByName('full_name').AsString;
+    FEbirdName := FieldByName('ebird_name').AsString;
     FLatitude := FieldByName('latitude').AsFloat;
     FLongitude := FieldByName('longitude').AsFloat;
     FAltitude := FieldByName('altitude').AsFloat;
+    FDescription := FieldByName('description').AsString;
+    FNotes := FieldByName('notes').AsString;
     FInsertDate := FieldByName('insert_date').AsDateTime;
     FUserInserted := FieldByName('user_inserted').AsInteger;
     FUpdateDate := FieldByName('update_date').AsDateTime;
@@ -1199,6 +1262,189 @@ begin
     FExported := FieldByName('exported_status').AsBoolean;
     FMarked := FieldByName('marked_status').AsBoolean;
     FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TSite.Insert;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO gazetteer (' +
+        'site_name, ' +
+        'site_acronym, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'altitude, ' +
+        'site_rank, ' +
+        'parent_site_id, ' +
+        'country_id, ' +
+        'state_id, ' +
+        'municipality_id, ' +
+        'full_name, ' +
+        'ebird_name, ' +
+        'language, ' +
+        'description, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':site_name, ' +
+        ':site_acronym, ' +
+        ':longitude, ' +
+        ':latitude, ' +
+        ':altitude, ' +
+        ':site_rank, ' +
+        ':parent_site_id, ' +
+        ':country_id, ' +
+        ':state_id, ' +
+        ':municipality_id, ' +
+        ':full_name, ' +
+        ':ebird_name, ' +
+        ':language, ' +
+        ':description, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''localtime''))');
+
+      ParamByName('site_name').AsString := FName;
+      ParamByName('site_acronym').AsString := FAcronym;
+      ParamByName('longitude').AsFloat := FLongitude;
+      ParamByName('latitude').AsFloat := FLatitude;
+      ParamByName('altitude').AsFloat := FAltitude;
+      ParamByName('site_rank').AsString := FRank;
+      ParamByName('parent_site_id').AsInteger := FParentSiteId;
+      ParamByName('country_id').AsInteger := FCountryId;
+      ParamByName('state_id').AsInteger := FStateId;
+      ParamByName('municipality_id').AsInteger := FMunicipalityId;
+      ParamByName('ebird_name').AsString := FEbirdName;
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('language').AsString := FLanguage;
+      ParamByName('description').AsString := FDescription;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSite.Save;
+begin
+  if FId = 0 then
+    Insert
+  else
+    Update;
+end;
+
+function TSite.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('Name', FName);
+    JSONObject.Add('Acronym', FAcronym);
+    JSONObject.Add('Rank', FRank);
+    JSONObject.Add('ParentSiteId', FParentSiteId);
+    JSONObject.Add('MunicipalityId', FMunicipalityId);
+    JSONObject.Add('StateId', FStateId);
+    JSONObject.Add('CountryId', FCountryId);
+    JSONObject.Add('FullName', FFullName);
+    JSONObject.Add('EbirdName', FEbirdName);
+    JSONObject.Add('Longitude', FLongitude);
+    JSONObject.Add('Latitude', FLatitude);
+    JSONObject.Add('Altitude', FAltitude);
+    JSONObject.Add('Language', FLanguage);
+    JSONObject.Add('Description', FDescription);
+    JSONObject.Add('Notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+procedure TSite.Update;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE gazetteer SET ' +
+        'site_name = :site_name, ' +
+        'site_acronym = :site_acronym, ' +
+        'longitude = :longitude, ' +
+        'latitude = :latitude, ' +
+        'altitude = :altitude, ' +
+        'site_rank = :site_rank, ' +
+        'parent_site_id = :parent_site_id, ' +
+        'country_id = :country_id, ' +
+        'state_id = :state_id, ' +
+        'municipality_id = :municipality_id, ' +
+        'full_name = :full_name, ' +
+        'ebird_name = :ebird_name, ' +
+        'language = :language, ' +
+        'description = :description, ' +
+        'notes = :notes, ' +
+        'user_updated = :user_updated, ' +
+        'insert_date = datetime(''now'', ''localtime''), ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (site_id = :site_id)');
+
+      ParamByName('site_name').AsString := FName;
+      ParamByName('site_acronym').AsString := FAcronym;
+      ParamByName('longitude').AsFloat := FLongitude;
+      ParamByName('latitude').AsFloat := FLatitude;
+      ParamByName('altitude').AsFloat := FAltitude;
+      ParamByName('site_rank').AsString := FRank;
+      ParamByName('parent_site_id').AsInteger := FParentSiteId;
+      ParamByName('country_id').AsInteger := FCountryId;
+      ParamByName('state_id').AsInteger := FStateId;
+      ParamByName('municipality_id').AsInteger := FMunicipalityId;
+      ParamByName('ebird_name').AsString := FEbirdName;
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('language').AsString := FLanguage;
+      ParamByName('description').AsString := FDescription;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -1219,6 +1465,8 @@ begin
     aList.Add(R);
   if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
+  if FieldValuesDiff(rscEBirdName, aOld.EbirdName, FEbirdName, R) then
+    aList.Add(R);
   if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     aList.Add(R);
   if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
@@ -1231,8 +1479,46 @@ begin
     aList.Add(R);
   if FieldValuesDiff(rscCountryID, aOld.CountryId, FCountryId, R) then
     aList.Add(R);
+  if FieldValuesDiff(rscLanguage, aOld.Language, FLanguage, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    aList.Add(R);
 
   Result := aList.Count > 0;
+end;
+
+function TSite.Find(const FieldName: String; const Value: Variant): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Result := False;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    SQLTransaction := DMM.sqlTrans;
+    MacroCheck := True;
+
+    Add('SELECT * FROM gazetteer');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      GetData(Qry);
+
+      Result := True;
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
 end;
 
 { TPoi }

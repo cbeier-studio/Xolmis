@@ -105,7 +105,7 @@ type
     procedure eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
     procedure eMethodButtonClick(Sender: TObject);
-    procedure eMethodDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eMethodKeyPress(Sender: TObject; var Key: char);
     procedure eNetStationButtonClick(Sender: TObject);
     procedure eNetStationDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
@@ -254,7 +254,7 @@ begin
   FindDlg(tbMethods, eMethod, dsLink.DataSet, 'method_id', 'method_name');
 end;
 
-procedure TedtSurvey.eMethodDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSurvey.eMethodKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
@@ -406,6 +406,7 @@ begin
   // Required fields
   RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'survey_date', Msgs);
   RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'locality_id', Msgs);
+  RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'method_id', Msgs);
 
   // Duplicated record
   // RegistroDuplicado(WorkingTable.TableName,'PES_NOME',cdsConsultaPES_NOME.AsWideString,cdsConsultaPES_CODIGO.AsInteger);
@@ -421,7 +422,7 @@ begin
     rsCaptionCountry, Msgs);
   ForeignValueExists(tbMethods, 'method_id', dsLink.DataSet.FieldByName('method_id').AsInteger,
     rsCaptionMethod, Msgs);
-  ForeignValueExists(tbSamplingPlots, 'sampling_plot_id', dsLink.DataSet.FieldByName('sampling_plot_id').AsInteger,
+  ForeignValueExists(tbSamplingPlots, 'net_station_id', dsLink.DataSet.FieldByName('net_station_id').AsInteger,
     rsCaptionSamplingPlot, Msgs);
   ForeignValueExists(tbProjects, 'project_id', dsLink.DataSet.FieldByName('project_id').AsInteger,
     rsCaptionProject, Msgs);

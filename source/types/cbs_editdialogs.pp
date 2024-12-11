@@ -21,7 +21,7 @@ unit cbs_editdialogs;
 interface
 
 uses
-  Classes, SysUtils, Forms, DB, System.UITypes, cbs_datatypes;
+  Classes, SysUtils, Forms, DB, SQLDB, System.UITypes, cbs_datatypes;
 
   function EditConnection(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
 
@@ -117,6 +117,7 @@ begin
     CloseQueryAfter := True;
   end;
 
+  LogEvent('OPEN EDIT DIALOG', 'Gazetter');
   Application.CreateForm(TedtSite, edtSite);
   with edtSite do
   try
@@ -132,11 +133,14 @@ begin
     end;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
+    begin
+      aDataSet.Post;
+    end
     else
       aDataSet.Cancel;
   finally
     FreeAndNil(edtSite);
+    LogEvent('CLOSE EDIT DIALOG', 'Gazetter');
   end;
 
   if CloseQueryAfter then

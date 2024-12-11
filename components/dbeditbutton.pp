@@ -245,6 +245,7 @@ begin
   FDBEdit := TDBEdit.Create(Self);
   FDBEdit.Parent := Self;
   FDBEdit.Align := alClient;
+  FDBEdit.ReadOnly := not FDirectInput or FReadOnly;
   FDBEdit.OnChange := @FDBEditChange;
   FDBEdit.OnKeyPress := @FDBEditKeyPress;
   FDBEdit.OnKeyDown := @FDBEditKeyDown;
@@ -276,6 +277,7 @@ begin
   FButton.Align := alRight;
   FButtonWidth := 25;
   FButton.Width := FButtonWidth;
+  FButton.Enabled := not FReadOnly;
 
   Height := FDBEdit.Height;
   Width := 150;
@@ -698,6 +700,7 @@ end;
 procedure TDBEditButton.SetReadOnly(AValue: Boolean);
 begin
   FDBEdit.ReadOnly := AValue;
+  FButton.Enabled := not AValue;
 end;
 
 procedure TDBEditButton.SetSelectedImageIndex(AValue: Integer);

@@ -8309,8 +8309,8 @@ msgstr "Data final: *"
 
 #: tedtexpedition.lbllocality.caption
 msgctxt "tedtexpedition.lbllocality.caption"
-msgid "Locality: *"
-msgstr "Localidade: *"
+msgid "Locality:"
+msgstr "Localidade:"
 
 #: tedtexpedition.lblname.caption
 msgctxt "tedtexpedition.lblname.caption"
@@ -10247,7 +10247,7 @@ msgstr "Procurar topônimo superior"
 
 #: tedtsite.lblacronym.caption
 msgctxt "tedtsite.lblacronym.caption"
-msgid "Acronym:"
+msgid "Abbreviation:"
 msgstr "Abreviatura:"
 
 #: tedtsite.lblaltitude.caption

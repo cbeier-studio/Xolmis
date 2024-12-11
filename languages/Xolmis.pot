@@ -8281,7 +8281,7 @@ msgstr ""
 
 #: tedtexpedition.lbllocality.caption
 msgctxt "tedtexpedition.lbllocality.caption"
-msgid "Locality: *"
+msgid "Locality:"
 msgstr ""
 
 #: tedtexpedition.lblname.caption
@@ -10219,7 +10219,7 @@ msgstr ""
 
 #: tedtsite.lblacronym.caption
 msgctxt "tedtsite.lblacronym.caption"
-msgid "Acronym:"
+msgid "Abbreviation:"
 msgstr ""
 
 #: tedtsite.lblaltitude.caption

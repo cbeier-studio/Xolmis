@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, DB, SQLDB, StrUtils, Graphics, DateUtils,
   { CBS }
-  cbs_gis, cbs_entities, cbs_botany, cbs_taxonomy, cbs_birds, cbs_sampling, cbs_breeding;
+  cbs_gis, cbs_entities, cbs_botany, cbs_taxonomy, cbs_birds, cbs_sampling, cbs_breeding, BufDataset;
 
 type
 
@@ -339,7 +339,8 @@ type
     qExpeditionsuser_updated: TLongintField;
     qGazetteeractive_status: TBooleanField;
     qGazetteeraltitude: TFloatField;
-    qGazetteercountry_id: TLargeintField;
+    qGazetteercountry_id: TLongintField;
+    qGazetteercountry_name: TStringField;
     qGazetteerdescription: TMemoField;
     qGazetteerebird_name: TStringField;
     qGazetteerexported_status: TBooleanField;
@@ -349,15 +350,17 @@ type
     qGazetteerlatitude: TFloatField;
     qGazetteerlongitude: TFloatField;
     qGazetteermarked_status: TBooleanField;
-    qGazetteermunicipality_id: TLargeintField;
+    qGazetteermunicipality_id: TLongintField;
+    qGazetteermunicipality_name: TStringField;
     qGazetteernotes: TMemoField;
-    qGazetteerparent_site_id: TLargeintField;
+    qGazetteerparent_site_id: TLongintField;
     qGazetteerparent_site_name: TStringField;
     qGazetteersite_acronym: TStringField;
-    qGazetteersite_id: TLargeintField;
+    qGazetteersite_id: TLongintField;
     qGazetteersite_name: TStringField;
     qGazetteersite_rank: TStringField;
-    qGazetteerstate_id: TLargeintField;
+    qGazetteerstate_id: TLongintField;
+    qGazetteerstate_name: TStringField;
     qGazetteerupdate_date: TDateTimeField;
     qGazetteeruser_inserted: TLongintField;
     qGazetteeruser_updated: TLongintField;
@@ -2398,6 +2401,10 @@ end;
 procedure TDMG.qExpeditionsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qExpeditionsend_dateValidate(Sender: TField);
@@ -4281,6 +4288,10 @@ end;
 procedure TDMG.qSurveysBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+
+  { Load hierarchies }
+  if not DataSet.FieldByName('locality_id').IsNull then
+    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qSurveyssurvey_dateValidate(Sender: TField);

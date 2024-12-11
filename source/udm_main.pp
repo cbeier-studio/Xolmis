@@ -139,6 +139,8 @@ type
     procedure qUsersuser_rankSetText(Sender: TField; const aText: string);
     procedure sqlConAfterDisconnect(Sender: TObject);
     procedure sqlConBeforeConnect(Sender: TObject);
+    procedure sqlConLog(Sender: TSQLConnection; EventType: TDBEventType;
+      const Msg: String);
     procedure sysConBeforeConnect(Sender: TObject);
     procedure UniqueInstance1OtherInstance(Sender: TObject; ParamCount: Integer;
       const Parameters: array of String);
@@ -374,6 +376,27 @@ end;
 procedure TDMM.sqlConBeforeConnect(Sender: TObject);
 begin
   sqlCon.DatabaseName := ConexaoDB.Database;
+end;
+
+procedure TDMM.sqlConLog(Sender: TSQLConnection; EventType: TDBEventType;
+  const Msg: String);
+var
+  EventName: String;
+begin
+  EventName := EmptyStr;
+  case EventType of
+    detCustom: ;
+    detPrepare: ;
+    detExecute: EventName := 'Execute';
+    detFetch: ;
+    detCommit: EventName := 'Commit';
+    detRollBack: EventName := 'RollBack';
+    detParamValue: EventName := 'ParamValue';
+    detActualSQL: EventName := 'ActualSQL';
+  end;
+
+  if EventName <> EmptyStr then
+    LogEvent(EventName, Msg);
 end;
 
 procedure TDMM.sysConBeforeConnect(Sender: TObject);

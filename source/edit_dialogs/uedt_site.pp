@@ -21,8 +21,8 @@ unit uedt_site;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls, StdCtrls, Character,
-  DBEditButton, atshapelinebgra;
+  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
+  ExtCtrls, DBCtrls, StdCtrls, Character, DBEditButton, atshapelinebgra;
 
 type
 
@@ -67,17 +67,19 @@ type
     procedure eNameKeyPress(Sender: TObject; var Key: char);
     procedure eParentSiteButtonClick(Sender: TObject);
     procedure eParentSiteDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure eParentSiteEditingDone(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsEditing: Boolean;
+    procedure GetFullName;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsEditing: Boolean read FIsEditing write FIsEditing default False;
   end;
 
 var
@@ -86,7 +88,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, udm_main,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
+  udm_main,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -128,6 +131,7 @@ end;
 procedure TedtSite.eParentSiteButtonClick(Sender: TObject);
 begin
   FindSiteDlg([gfAll], eParentSite, dsLink.DataSet, 'parent_site_id', 'parent_site_name');
+  GetFullName;
 end;
 
 procedure TedtSite.eParentSiteDBEditKeyPress(Sender: TObject; var Key: char);
@@ -155,9 +159,9 @@ begin
   end;
 end;
 
-procedure TedtSite.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+procedure TedtSite.eParentSiteEditingDone(Sender: TObject);
 begin
-  // CloseAction := caFree;
+  GetFullName;
 end;
 
 procedure TedtSite.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -203,6 +207,16 @@ begin
   cbRank.Items.Add(rsCaptionLocality);
 end;
 
+procedure TedtSite.GetFullName;
+var
+  S: String;
+begin
+  S := dsLink.DataSet.FieldByName('site_name').AsString + ', ';
+  S := S + GetName('gazetteer', 'full_name', 'site_id', dsLink.DataSet.FieldByName('parent_site_id').AsInteger);
+
+  dsLink.DataSet.FieldByName('full_name').AsString := S;
+end;
+
 function TedtSite.IsRequiredFilled: Boolean;
 begin
   Result := False;
@@ -234,8 +248,8 @@ begin
   RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_rank', Msgs);
 
   // Foreign keys
-  ForeignValueExists(tbGazetteer, 'parent_site_id',
-    dsLink.DataSet.FieldByName('parent_site_id').AsInteger, rsCaptionParentSite, Msgs);
+  //ForeignValueExists(tbGazetteer, 'parent_site_id',
+  //  dsLink.DataSet.FieldByName('parent_site_id').AsInteger, rsCaptionParentSite, Msgs);
 
   // Geographical coordinates
   //CoordenadaIsOk(dsLink.DataSet, 'longitude', maLongitude, Msgs);

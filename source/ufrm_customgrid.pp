@@ -8243,7 +8243,7 @@ begin
       //tbUsers: ;
       //tbRecordHistory: ;
       tbGazetteer:     EditSite(dsLink.DataSet);
-      tbSamplingPlots:   EditSamplingPlot(dsLink.DataSet);
+      tbSamplingPlots: EditSamplingPlot(dsLink.DataSet);
       //tbPermanentNets: ;
       tbInstitutions:  EditInstitution(dsLink.DataSet);
       tbPeople:        EditPerson(dsLink.DataSet);
@@ -8328,7 +8328,7 @@ begin
       //tbUsers: ;
       //tbRecordHistory: ;
       tbGazetteer:     EditSite(dsLink.DataSet, True);
-      tbSamplingPlots:   EditSamplingPlot(dsLink.DataSet, True);
+      tbSamplingPlots: EditSamplingPlot(dsLink.DataSet, True);
       //tbPermanentNets: ;
       tbInstitutions:  EditInstitution(dsLink.DataSet, True);
       tbPeople:        EditPerson(dsLink.DataSet, True);

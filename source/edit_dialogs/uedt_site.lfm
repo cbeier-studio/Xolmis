@@ -11,7 +11,6 @@ object edtSite: TedtSite
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -43,7 +42,7 @@ object edtSite: TedtSite
     ClientHeight = 41
     ClientWidth = 400
     ParentBackground = False
-    TabOrder = 0
+    TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
@@ -80,7 +79,7 @@ object edtSite: TedtSite
     ClientHeight = 366
     ClientWidth = 400
     Constraints.MinWidth = 176
-    TabOrder = 1
+    TabOrder = 0
     object pClient: TPanel
       Left = 0
       Height = 366
@@ -126,24 +125,33 @@ object edtSite: TedtSite
           ParentFont = False
         end
         object eParentSite: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 368
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          ButtonCursor = crDefault
           ButtonHint = 'Find parent toponym'
           ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 365
+          CustomEditMask = False
           DataField = 'parent_site_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eParentSiteButtonClick
+          OnEditingDone = eParentSiteEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eParentSiteDBEditKeyPress
         end
       end
       object pName: TPanel
@@ -215,7 +223,7 @@ object edtSite: TedtSite
           Top = 3
           Width = 176
           BorderSpacing.Top = 3
-          Caption = 'Acronym:'
+          Caption = 'Abbreviation:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
@@ -398,44 +406,59 @@ object edtSite: TedtSite
           ParentFont = False
         end
         object eLongitude: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 176
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          ButtonCursor = crDefault
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 3
-          Images = DMM.iEdits
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 176
+          CustomEditMask = False
           DataField = 'longitude'
           DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 3
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eLongitudeButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNameKeyPress
         end
         object eLatitude: TDBEditButton
+          Cursor = crDefault
           Left = 208
           Height = 26
           Top = 22
           Width = 176
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
+          ButtonCursor = crDefault
           ButtonHint = 'Edit coordinates in DMS format'
           ButtonWidth = 24
-          ImageIndex = 3
-          Images = DMM.iEdits
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 176
+          CustomEditMask = False
           DataField = 'latitude'
           DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 3
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
           OnButtonClick = eLongitudeButtonClick
+          OnKeyPress = eNameKeyPress
         end
       end
       object pAltitude: TPanel

@@ -199,29 +199,38 @@ object edtExpedition: TedtExpedition
           Top = 3
           Width = 365
           BorderSpacing.Top = 3
-          Caption = 'Locality: *'
+          Caption = 'Locality:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object eLocality: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 365
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          ButtonCursor = crDefault
           ButtonHint = 'Find locality'
           ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 365
+          CustomEditMask = False
           DataField = 'locality_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eLocalityButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLocalityDBEditKeyPress
         end
       end
       object pStartDate: TPanel
@@ -253,25 +262,34 @@ object edtExpedition: TedtExpedition
           ParentFont = False
         end
         object eStartDate: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 176
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          ButtonCursor = crDefault
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 1
-          Images = DMM.iEdits
-          TextHint = 'DD/MM/YYYY'
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 176
+          CustomEditMask = False
           DataField = 'start_date'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 1
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          TextHint = 'DD/MM/YYYY'
           OnButtonClick = eStartDateButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNameKeyPress
         end
       end
       object pProject: TPanel
@@ -304,24 +322,33 @@ object edtExpedition: TedtExpedition
           ParentFont = False
         end
         object eProject: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 365
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          ButtonCursor = crDefault
           ButtonHint = 'Find project'
           ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 365
+          CustomEditMask = False
           DataField = 'project_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eProjectButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eProjectDBEditKeyPress
         end
       end
       object pEndDate: TPanel
@@ -364,25 +391,34 @@ object edtExpedition: TedtExpedition
           ParentFont = False
         end
         object eEndDate: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 176
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          ButtonCursor = crDefault
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 1
-          Images = DMM.iEdits
-          TextHint = 'DD/MM/YYYY'
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 176
+          CustomEditMask = False
           DataField = 'end_date'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 1
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          TextHint = 'DD/MM/YYYY'
           OnButtonClick = eEndDateButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNameKeyPress
         end
         object txtDuration: TDBText
           Left = 208

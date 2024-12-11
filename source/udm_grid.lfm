@@ -729,10 +729,7 @@ object DMG: TDMG
       '  municipality_id,'
       '  description,'
       '  user_inserted,'
-      '  insert_date,'
-      '  exported_status,'
-      '  marked_status,'
-      '  active_status)'
+      '  insert_date)'
       'VALUES ('
       '  :expedition_name,'
       '  :start_date,'
@@ -744,10 +741,7 @@ object DMG: TDMG
       '  :municipality_id,'
       '  :description,'
       '  :user_inserted,'
-      '  :insert_date,'
-      '  :exported_status,'
-      '  :marked_status,'
-      '  :active_status)'
+      '  datetime(''now'',''localtime''))'
     )
     UpdateSQL.Strings = (
       'UPDATE expeditions SET'
@@ -841,7 +835,7 @@ object DMG: TDMG
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = True
+      Required = False
       Visible = False
     end
     object qExpeditionslocality_name: TStringField
@@ -6853,7 +6847,7 @@ object DMG: TDMG
       'LEFT JOIN gazetteer AS gc ON sv.country_id = gc.site_id'
       'LEFT JOIN sampling_plots AS pl ON sv.net_station_id = pl.sampling_plot_id'
       'LEFT JOIN methods AS mt ON sv.method_id = mt.method_id'
-      'LEFT JOIN projects AS pj ON sv.projetc_id = pj.project_id'
+      'LEFT JOIN projects AS pj ON sv.project_id = pj.project_id'
       'WHERE (sv.active_status = 1)'
     )
     InsertSQL.Strings = (
@@ -6884,10 +6878,7 @@ object DMG: TDMG
       '  full_name,'
       '  notes,'
       '  user_inserted,'
-      '  insert_date,'
-      '  exported_status,'
-      '  marked_status,'
-      '  active_status)'
+      '  insert_date)'
       'VALUES ('
       '  :survey_date,'
       '  :start_time,'
@@ -6915,10 +6906,7 @@ object DMG: TDMG
       '  :full_name,'
       '  :notes,'
       '  :user_inserted,'
-      '  :insert_date,'
-      '  :exported_status,'
-      '  :marked_status,'
-      '  :active_status)'
+      '  datetime(''now'',''localtime''))'
     )
     UpdateSQL.Strings = (
       'UPDATE surveys SET'
@@ -12292,11 +12280,6 @@ object DMG: TDMG
         Precision = -1
       end    
       item
-        Name = 'internal_id'
-        DataType = ftLargeint
-        Precision = -1
-      end    
-      item
         Name = 'site_name'
         DataType = ftString
         Precision = -1
@@ -12475,10 +12458,7 @@ object DMG: TDMG
       '  description,'
       '  notes,'
       '  user_inserted,'
-      '  insert_date,'
-      '  exported_status,'
-      '  marked_status,'
-      '  active_status)'
+      '  insert_date)'
       'VALUES ('
       '  :site_name,'
       '  :site_acronym,'
@@ -12496,10 +12476,7 @@ object DMG: TDMG
       '  :description,'
       '  :notes,'
       '  :user_inserted,'
-      '  :insert_date,'
-      '  :exported_status,'
-      '  :marked_status,'
-      '  :active_status)'
+      '  datetime(''now'', ''localtime''))'
       ''
     )
     UpdateSQL.Strings = (
@@ -12530,10 +12507,10 @@ object DMG: TDMG
     Options = [sqoAutoApplyUpdates]
     Params = <>
     Macros = <>
+    Sequence.FieldName = 'site_id'
     Left = 371
     Top = 306
     object qGazetteermarked_status: TBooleanField
-      Alignment = taCenter
       DisplayLabel = 'Marked'
       FieldKind = fkData
       FieldName = 'marked_status'
@@ -12623,8 +12600,8 @@ object DMG: TDMG
       Required = False
       Precision = -1
     end
-    object qGazetteerparent_site_id: TLargeintField
-      DisplayLabel = 'Parent site (ID)'
+    object qGazetteerparent_site_id: TLongintField
+      DisplayLabel = 'Parent site ID'
       FieldKind = fkData
       FieldName = 'parent_site_id'
       Index = 7
@@ -12646,8 +12623,8 @@ object DMG: TDMG
       Required = False
       Size = 60
     end
-    object qGazetteermunicipality_id: TLargeintField
-      DisplayLabel = 'Municipality (ID)'
+    object qGazetteermunicipality_id: TLongintField
+      DisplayLabel = 'Municipality ID'
       FieldKind = fkData
       FieldName = 'municipality_id'
       Index = 9
@@ -12657,21 +12634,21 @@ object DMG: TDMG
       Required = False
       Visible = False
     end
-    object qGazetteerstate_id: TLargeintField
-      DisplayLabel = 'State (ID)'
+    object qGazetteermunicipality_name: TStringField
+      DisplayLabel = 'Municipality'
       FieldKind = fkData
-      FieldName = 'state_id'
+      FieldName = 'municipality_name'
       Index = 10
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
+      Size = 60
     end
-    object qGazetteercountry_id: TLargeintField
-      DisplayLabel = 'Country (ID)'
+    object qGazetteerstate_id: TLongintField
+      DisplayLabel = 'State ID'
       FieldKind = fkData
-      FieldName = 'country_id'
+      FieldName = 'state_id'
       Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -12679,12 +12656,45 @@ object DMG: TDMG
       Required = False
       Visible = False
     end
+    object qGazetteerstate_name: TStringField
+      DisplayLabel = 'State'
+      FieldKind = fkData
+      FieldName = 'state_name'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qGazetteercountry_id: TLongintField
+      DisplayLabel = 'Country ID'
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qGazetteercountry_name: TStringField
+      DisplayLabel = 'Country'
+      FieldKind = fkData
+      FieldName = 'country_name'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
     object qGazetteerfull_name: TStringField
       DisplayLabel = 'Full name'
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 12
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -12696,7 +12706,7 @@ object DMG: TDMG
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'ebird_name'
-      Index = 13
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -12707,7 +12717,7 @@ object DMG: TDMG
       DisplayLabel = 'Language'
       FieldKind = fkData
       FieldName = 'language'
-      Index = 14
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -12719,7 +12729,7 @@ object DMG: TDMG
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'description'
-      Index = 15
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -12732,7 +12742,7 @@ object DMG: TDMG
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 16
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -12740,11 +12750,11 @@ object DMG: TDMG
       BlobType = ftMemo
       Transliterate = False
     end
-    object qGazetteersite_id: TLargeintField
+    object qGazetteersite_id: TLongintField
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'site_id'
-      Index = 17
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -12754,7 +12764,7 @@ object DMG: TDMG
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 18
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -12765,7 +12775,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 19
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -12777,7 +12787,7 @@ object DMG: TDMG
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 20
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -12789,7 +12799,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 21
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -12797,11 +12807,10 @@ object DMG: TDMG
       Visible = False
     end
     object qGazetteerexported_status: TBooleanField
-      Alignment = taCenter
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 22
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -12810,11 +12819,10 @@ object DMG: TDMG
       DisplayValues = 'True;False'
     end
     object qGazetteeractive_status: TBooleanField
-      Alignment = taCenter
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 23
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

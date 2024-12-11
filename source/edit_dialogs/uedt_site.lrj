@@ -5,7 +5,7 @@
 {"hash":246509370,"name":"tedtsite.lblparenttoponym.caption","sourcebytes":[80,97,114,101,110,116,32,116,111,112,111,110,121,109,58],"value":"Parent toponym:"},
 {"hash":16217245,"name":"tedtsite.eparentsite.buttonhint","sourcebytes":[70,105,110,100,32,112,97,114,101,110,116,32,116,111,112,111,110,121,109],"value":"Find parent toponym"},
 {"hash":75730042,"name":"tedtsite.lblname.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
-{"hash":177626234,"name":"tedtsite.lblacronym.caption","sourcebytes":[65,99,114,111,110,121,109,58],"value":"Acronym:"},
+{"hash":134449818,"name":"tedtsite.lblacronym.caption","sourcebytes":[65,98,98,114,101,118,105,97,116,105,111,110,58],"value":"Abbreviation:"},
 {"hash":201755770,"name":"tedtsite.lbltype.caption","sourcebytes":[84,121,112,101,58,32,42],"value":"Type: *"},
 {"hash":145107818,"name":"tedtsite.lblebirdname.caption","sourcebytes":[83,105,116,101,32,110,97,109,101,32,111,110,32,101,66,105,114,100,58],"value":"Site name on eBird:"},
 {"hash":12558938,"name":"tedtsite.lblfullname.caption","sourcebytes":[70,117,108,108,32,110,97,109,101,58,32,42],"value":"Full name: *"},

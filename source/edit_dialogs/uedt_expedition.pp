@@ -233,7 +233,7 @@ begin
   Result := False;
 
   if (dsLink.DataSet.FieldByName('expedition_name').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('locality_id').AsInteger <> 0) and
+    //(dsLink.DataSet.FieldByName('locality_id').AsInteger <> 0) and
     (dsLink.DataSet.FieldByName('start_date').IsNull = False) and
     (dsLink.DataSet.FieldByName('end_date').IsNull = False) then
     Result := True;
@@ -259,7 +259,7 @@ begin
 
   // Required fields
   RequiredIsEmpty(D, tbExpeditions, 'expedition_name', Msgs);
-  RequiredIsEmpty(D, tbExpeditions, 'locality_id', Msgs);
+  //RequiredIsEmpty(D, tbExpeditions, 'locality_id', Msgs);
   RequiredIsEmpty(D, tbExpeditions, 'start_date', Msgs);
   RequiredIsEmpty(D, tbExpeditions, 'end_date', Msgs);
 
