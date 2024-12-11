@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, DBCtrls, Buttons, DateUtils,
-  StdCtrls, EditBtn, atshapelinebgra, BCPanel, DB, SQLDB, fpjson, jsonparser, LCLIntf,
+  StdCtrls, EditBtn, atshapelinebgra, BCPanel, DB, SQLDB, fpjson, jsonparser, LCLIntf, StrUtils,
   cbs_import, cbs_sampling, cbs_breeding;
 
 type
@@ -74,6 +74,7 @@ type
     procedure eNestButtonClick(Sender: TObject);
     procedure eNestChange(Sender: TObject);
     procedure eObserverButtonClick(Sender: TObject);
+    procedure eObserverChange(Sender: TObject);
     procedure eSourceFileButtonClick(Sender: TObject);
     procedure eSourceFileChange(Sender: TObject);
     procedure eSurveyButtonClick(Sender: TObject);
@@ -195,6 +196,7 @@ function TdlgImportXMobile.AddSurvey: Integer;
 var
   CloseQueryAfter: Boolean;
   aDataSet: TDataSet;
+  sdt, y, m, d, stm, etm: String;
 begin
   Result := 0;
   aDataSet := DMG.qSurveys;
@@ -214,9 +216,19 @@ begin
     aDataSet.Insert;
     EditSourceStr := rsInsertedByForm;
 
-    aDataSet.FieldByName('survey_date').AsDateTime := StrToDate(JSONObject.Get('startTime', ''));
-    aDataSet.FieldByName('start_time').AsDateTime := StrToTime(JSONObject.Get('startTime', ''));
-    aDataSet.FieldByName('end_time').AsDateTime := StrToTime(JSONObject.Get('endTime', ''));
+    sdt := ExtractWord(1, JSONObject.Get('startTime', ''), ['T']);
+    y := ExtractDelimited(1, sdt, ['-']);
+    m := ExtractDelimited(2, sdt, ['-']);
+    d := ExtractDelimited(3, sdt, ['-']);
+    sdt := Concat(d, '/', m, '/', y);
+
+    stm := ExtractWord(2, JSONObject.Get('startTime', ''), ['T']);
+
+    etm := ExtractWord(2, JSONObject.Get('endTime', ''), ['T']);
+
+    aDataSet.FieldByName('survey_date').AsDateTime := StrToDate(sdt);
+    aDataSet.FieldByName('start_time').AsDateTime := StrToTime(ExtractWord(1, stm, ['.']));
+    aDataSet.FieldByName('end_time').AsDateTime := StrToTime(ExtractWord(1, etm, ['.']));
     aDataSet.FieldByName('duration').AsInteger := MinutesBetween(aDataSet.FieldByName('start_time').AsDateTime,
                                                           aDataSet.FieldByName('end_time').AsDateTime);
     aDataSet.FieldByName('sample_id').AsString := JSONObject.Get('id', '');
@@ -309,6 +321,13 @@ end;
 procedure TdlgImportXMobile.eObserverButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eObserver, FObserverKey);
+end;
+
+procedure TdlgImportXMobile.eObserverChange(Sender: TObject);
+begin
+  btnCreateSurvey.Enabled := IsRequiredFilledSource;
+  btnCreateNest.Enabled := IsRequiredFilledSource;
+  sbNext.Enabled := IsRequiredFilledSource;
 end;
 
 procedure TdlgImportXMobile.eSourceFileButtonClick(Sender: TObject);

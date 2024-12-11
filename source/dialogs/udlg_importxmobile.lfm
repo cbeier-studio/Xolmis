@@ -220,7 +220,7 @@ object dlgImportXMobile: TdlgImportXMobile
             Spacing = 0
             TabOrder = 1
             OnButtonClick = eObserverButtonClick
-            OnChange = eSourceFileChange
+            OnChange = eObserverChange
           end
           object eMackinnonListNumber: TEdit
             Left = 272
@@ -230,7 +230,7 @@ object dlgImportXMobile: TdlgImportXMobile
             Enabled = False
             NumbersOnly = True
             TabOrder = 0
-            OnChange = eSourceFileChange
+            OnChange = eObserverChange
           end
         end
         object pSurvey: TPanel
@@ -415,6 +415,7 @@ object dlgImportXMobile: TdlgImportXMobile
             TabOrder = 0
             TextHint = 'Select a nest, if it already exists'
             OnButtonClick = eNestButtonClick
+            OnChange = eNestChange
           end
         end
         object pNestOptions: TPanel
