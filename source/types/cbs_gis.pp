@@ -104,9 +104,12 @@ type
   TMapPointList = specialize TObjectList<TMapPointObject>;
 
 type
-  TSiteRank = (srCountry, srState, srRegion, srMunicipality, srDistrict, srLocality);
+  TSiteRank = (srNone, srCountry, srState, srRegion, srMunicipality, srDistrict, srLocality);
   TGazetteerFilter = (gfAll, gfCountries, gfStates, gfRegions, gfCities, gfDistricts, gfLocalities);
   TGazetteerFilters = set of TGazetteerFilter;
+
+const
+  SiteRankStr: array[TSiteRank] of String = ('', 'P', 'E', 'R', 'M', 'D', 'L');
 
 type
 
@@ -116,7 +119,7 @@ type
   protected
     FName: String;
     FAcronym: String;
-    FRank: String;
+    FRank: TSiteRank;
     FParentSiteId: Integer;
     FMunicipalityId: Integer;
     FStateId: Integer;
@@ -1156,7 +1159,7 @@ begin
   inherited;
   FName := EmptyStr;
   FAcronym := EmptyStr;
-  FRank := EmptyStr;
+  FRank := srNone;
   FParentSiteId := 0;
   FMunicipalityId := 0;
   FStateId := 0;
@@ -1220,12 +1223,38 @@ begin
   try
     DataBase := DMM.sqlCon;
     Clear;
-    Add('SELECT * FROM gazetteer');
+    Add('SELECT ' +
+        'site_id, ' +
+        'site_name, ' +
+        'site_acronym, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'altitude, ' +
+        'site_rank, ' +
+        'parent_site_id, ' +
+        'country_id, ' +
+        'state_id, ' +
+        'municipality_id, ' +
+        'full_name, ' +
+        'ebird_name, ' +
+        'language, ' +
+        'description, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'user_updated, ' +
+        'datetime(insert_date, ''localtime'') AS insert_date, ' +
+        'datetime(update_date, ''localtime'') AS update_date, ' +
+        'exported_status, ' +
+        'marked_status, ' +
+        'active_status ' +
+      'FROM gazetteer');
     Add('WHERE site_id = :cod');
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-      GetData(Qry);
+      GetData(Qry)
+    else
+      Self.Clear;
     Close;
   finally
     FreeAndNil(Qry);
@@ -1242,7 +1271,16 @@ begin
     FId := FieldByName('site_id').AsInteger;
     FName := FieldByName('site_name').AsString;
     FAcronym := FieldByName('site_acronym').AsString;
-    FRank := FieldByName('site_rank').AsString;
+    case FieldByName('site_rank').AsString of
+      'P': FRank := srCountry;
+      'E': FRank := srState;
+      'R': FRank := srRegion;
+      'M': FRank := srMunicipality;
+      'D': FRank := srDistrict;
+      'L': FRank := srLocality;
+    else
+      FRank := srNone;
+    end;
     FParentSiteId := FieldByName('parent_site_id').AsInteger;
     FMunicipalityId := FieldByName('municipality_id').AsInteger;
     FStateId := FieldByName('state_id').AsInteger;
@@ -1314,14 +1352,14 @@ begin
         ':description, ' +
         ':notes, ' +
         ':user_inserted, ' +
-        'datetime(''now'',''localtime''))');
+        'datetime(''now''))');
 
       ParamByName('site_name').AsString := FName;
       ParamByName('site_acronym').AsString := FAcronym;
       ParamByName('longitude').AsFloat := FLongitude;
       ParamByName('latitude').AsFloat := FLatitude;
       ParamByName('altitude').AsFloat := FAltitude;
-      ParamByName('site_rank').AsString := FRank;
+      ParamByName('site_rank').AsString := SiteRankStr[FRank];
       ParamByName('parent_site_id').AsInteger := FParentSiteId;
       ParamByName('country_id').AsInteger := FCountryId;
       ParamByName('state_id').AsInteger := FStateId;
@@ -1333,6 +1371,41 @@ begin
       ParamByName('notes').AsString := FNotes;
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
+      ExecSQL;
+
+      // Get the record ID
+      Clear;
+      Add('SELECT DISTINCT last_insert_rowid() FROM gazetteer');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      // Get the site hierarchy
+      Clear;
+      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      Add('WHERE site_id = :asite');
+      ParamByName('ASITE').AsInteger := FParentSiteId;
+      Open;
+      FCountryId := FieldByName('country_id').AsInteger;
+      FStateId := FieldByName('state_id').AsInteger;
+      FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      case FRank of
+        srCountry:      FCountryId := FId;
+        srState:        FStateId := FId;
+        srMunicipality: FMunicipalityId := FId;
+      end;
+      Close;
+      // Save the site hierarchy
+      Clear;
+      Add('UPDATE gazetteer SET');
+      Add('country_id = :country_id,');
+      Add('state_id = :state_id,');
+      Add('municipality_id = :municipality_id');
+      Add('WHERE site_id = :aid');
+      ParamByName('country_id').AsInteger := FCountryId;
+      ParamByName('state_id').AsInteger := FStateId;
+      ParamByName('municipality_id').AsInteger := FMunicipalityId;
+      ParamByName('aid').AsInteger := FId;
       ExecSQL;
 
       DMM.sqlTrans.CommitRetaining;
@@ -1361,7 +1434,7 @@ begin
   try
     JSONObject.Add('Name', FName);
     JSONObject.Add('Acronym', FAcronym);
-    JSONObject.Add('Rank', FRank);
+    JSONObject.Add('Rank', SiteRankStr[FRank]);
     JSONObject.Add('ParentSiteId', FParentSiteId);
     JSONObject.Add('MunicipalityId', FMunicipalityId);
     JSONObject.Add('StateId', FStateId);
@@ -1412,7 +1485,7 @@ begin
         'description = :description, ' +
         'notes = :notes, ' +
         'user_updated = :user_updated, ' +
-        'insert_date = datetime(''now'', ''localtime''), ' +
+        'insert_date = datetime(''now''), ' +
         'marked_status = :marked_status, ' +
         'active_status = :active_status');
       Add('WHERE (site_id = :site_id)');
@@ -1422,7 +1495,7 @@ begin
       ParamByName('longitude').AsFloat := FLongitude;
       ParamByName('latitude').AsFloat := FLatitude;
       ParamByName('altitude').AsFloat := FAltitude;
-      ParamByName('site_rank').AsString := FRank;
+      ParamByName('site_rank').AsString := SiteRankStr[FRank];
       ParamByName('parent_site_id').AsInteger := FParentSiteId;
       ParamByName('country_id').AsInteger := FCountryId;
       ParamByName('state_id').AsInteger := FStateId;
@@ -1436,6 +1509,34 @@ begin
       ParamByName('marked_status').AsBoolean := FMarked;
       ParamByName('active_status').AsBoolean := FActive;
 
+      ExecSQL;
+
+      // Get the site hierarchy
+      Clear;
+      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      Add('WHERE site_id = :asite');
+      ParamByName('ASITE').AsInteger := FParentSiteId;
+      Open;
+      FCountryId := FieldByName('country_id').AsInteger;
+      FStateId := FieldByName('state_id').AsInteger;
+      FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      case FRank of
+        srCountry:      FCountryId := FId;
+        srState:        FStateId := FId;
+        srMunicipality: FMunicipalityId := FId;
+      end;
+      Close;
+      // Save the site hierarchy
+      Clear;
+      Add('UPDATE gazetteer SET');
+      Add('country_id = :country_id,');
+      Add('state_id = :state_id,');
+      Add('municipality_id = :municipality_id');
+      Add('WHERE site_id = :aid');
+      ParamByName('country_id').AsInteger := FCountryId;
+      ParamByName('state_id').AsInteger := FStateId;
+      ParamByName('municipality_id').AsInteger := FMunicipalityId;
+      ParamByName('aid').AsInteger := FId;
       ExecSQL;
 
       DMM.sqlTrans.CommitRetaining;
