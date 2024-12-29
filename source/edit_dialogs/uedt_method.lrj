@@ -4,6 +4,6 @@
 {"hash":77089212,"name":"tedtmethod.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
 {"hash":75730042,"name":"tedtmethod.lblname.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
 {"hash":140209402,"name":"tedtmethod.lblebirdname.caption","sourcebytes":[77,101,116,104,111,100,32,110,97,109,101,32,111,110,32,101,66,105,114,100,58],"value":"Method name on eBird:"},
-{"hash":106723002,"name":"tedtmethod.lblacronym.caption","sourcebytes":[65,99,114,111,110,121,109,58,32,42],"value":"Acronym: *"},
+{"hash":59413546,"name":"tedtmethod.lblacronym.caption","sourcebytes":[65,98,98,114,101,118,105,97,116,105,111,110,58,32,42],"value":"Abbreviation: *"},
 {"hash":81166474,"name":"tedtmethod.lbldescription.caption","sourcebytes":[68,101,115,99,114,105,112,116,105,111,110,58],"value":"Description:"}
 ]}

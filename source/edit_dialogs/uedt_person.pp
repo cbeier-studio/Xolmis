@@ -403,12 +403,14 @@ end;
 procedure TedtPerson.sbAddImageClick(Sender: TObject);
 begin
   if DMM.OpenImgs.Execute then
+  begin
     imgProfile.Picture.LoadFromFile(DMM.OpenImgs.FileName);
+  end;
 end;
 
 procedure TedtPerson.sbRemoveImageClick(Sender: TObject);
 begin
-  if MessageDlg('Profile picture', 'Do you really want to remove the profile picture?', mtConfirmation, mbYesNo, 0) = mrYes then
+  if MessageDlg(rsTitleProfilePicture, rsDeleteProfilePicture, mtConfirmation, mbYesNo, 0) = mrYes then
     imgProfile.Picture.Clear;
 end;
 

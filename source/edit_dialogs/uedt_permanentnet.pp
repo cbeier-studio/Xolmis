@@ -21,25 +21,25 @@ unit uedt_permanentnet;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls, StdCtrls, DBEditButton,
-  atshapelinebgra;
+  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  DBCtrls, StdCtrls, DBEditButton, atshapelinebgra, cbs_sampling;
 
 type
 
   { TedtPermanentNet }
 
   TedtPermanentNet = class(TForm)
-    eNetNumber: TDBEdit;
+    eLongitude: TEditButton;
+    eLatitude: TEditButton;
+    eNetNumber: TEdit;
     dsLink: TDataSource;
-    eLatitude: TDBEditButton;
-    eLongitude: TDBEditButton;
     lblNetNumber: TLabel;
     lblLatitude: TLabel;
     lblNetNumber1: TLabel;
     lblNotes: TLabel;
     lblLongitude: TLabel;
     lineBottom: TShapeLineBGRA;
-    mNotes: TDBMemo;
+    mNotes: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
     pNetNumber: TPanel;
@@ -49,18 +49,26 @@ type
     sbSave: TButton;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eLongitudeButtonClick(Sender: TObject);
+    procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
+    procedure eNetNumberEditingDone(Sender: TObject);
     procedure eNetNumberKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FNet: TPermanentNet;
+    procedure SetPermanentNet(Value: TPermanentNet);
+    procedure GetRecord;
+    procedure SetRecord;
+    procedure GetFullName;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property PermanentNet: TPermanentNet read FNet write SetPermanentNet;
   end;
 
 var
@@ -69,7 +77,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_gis, cbs_validations, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_gis, cbs_validations, cbs_fullnames,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -83,15 +92,105 @@ end;
 
 procedure TedtPermanentNet.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtPermanentNet.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'longitude', 'latitude');
+  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+end;
+
+procedure TedtPermanentNet.eLongitudeKeyPress(Sender: TObject; var Key: char);
+const
+  AllowedChars = ['0'..'9', ',', '.', '+', '-', #8, #13, #27];
+var
+  EditText: String;
+  PosDecimal: Integer;
+  DecimalValue: Extended;
+begin
+  FormKeyPress(Sender, Key);
+
+  sbSave.Enabled := IsRequiredFilled;
+
+  EditText := EmptyStr;
+  PosDecimal := 0;
+  DecimalValue := 0;
+
+  if not (Key in AllowedChars) then
+  begin
+    Key := #0;
+    Exit;
+  end;
+
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+    Exit;
+  end;
+
+  if (Sender is TEdit) then
+    EditText := TEdit(Sender).Text
+  else
+  if (Sender is TEditButton) then
+    EditText := TEditButton(Sender).Text;
+  PosDecimal := Pos(FormatSettings.DecimalSeparator, EditText);
+
+  // Decimal separator
+  if (Key in [',', '.']) then
+  begin
+    if (PosDecimal = 0) then
+      Key := FormatSettings.DecimalSeparator
+    else
+      Key := #0;
+    Exit;
+  end;
+
+  // Numeric signal
+  if (Key in ['+', '-']) then
+  begin
+    if (Length(EditText) > 0) then
+    begin
+      if TryStrToFloat(EditText, DecimalValue) then
+      begin
+        if ((DecimalValue > 0) and (Key = '-')) or ((DecimalValue < 0) and (Key = '+')) then
+          DecimalValue := DecimalValue * -1.0;
+        EditText := FloatToStr(DecimalValue);
+
+        if (Sender is TEdit) then
+        begin
+          TEdit(Sender).Text := EditText;
+          TEdit(Sender).SelStart := Length(EditText);
+        end
+        else
+        if (Sender is TEditButton) then
+        begin
+          TEditButton(Sender).Text := EditText;
+          TEditButton(Sender).SelStart := Length(EditText);
+        end;
+      end;
+      Key := #0;
+    end
+    else
+    begin
+      if (Key = '+') then
+        Key := #0;
+    end;
+
+    Exit;
+  end;
+end;
+
+procedure TedtPermanentNet.eNetNumberEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtPermanentNet.eNetNumberKeyPress(Sender: TObject; var Key: char);
@@ -101,14 +200,12 @@ begin
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtPermanentNet.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtPermanentNet.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -117,7 +214,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not (sbSave.Enabled) then
       Exit;
 
     sbSaveClick(nil);
@@ -141,18 +239,39 @@ begin
     ApplyDarkMode;
 
   if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPermanentNet)])
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPermanentNet)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionPermanentNet)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtPermanentNet.GetFullName;
+begin
+  FNet.FullName := GetPermanentNetFullName(FNet.NetStationId, FNet.NetNumber);
+end;
+
+procedure TedtPermanentNet.GetRecord;
+begin
+  eNetNumber.Text := IntToStr(FNet.NetNumber);
+  eLongitude.Text := FloatToStr(FNet.Longitude);
+  eLatitude.Text := FloatToStr(FNet.Latitude);
+  mNotes.Text := FNet.Notes;
 end;
 
 function TedtPermanentNet.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('net_number').AsInteger <> 0) and
-    ((dsLink.DataSet.FieldByName('longitude').AsFloat <> 0.0) and
-      (dsLink.DataSet.FieldByName('latitude').AsFloat <> 0.0)) then
+  //if (dsLink.DataSet.FieldByName('net_number').AsInteger <> 0) and
+  //  ((dsLink.DataSet.FieldByName('longitude').AsFloat <> 0.0) and
+  //    (dsLink.DataSet.FieldByName('latitude').AsFloat <> 0.0)) then
+  if (eNetNumber.Text <> EmptyStr) and
+    (eLongitude.Text <> EmptyStr) and
+    (eLatitude.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -162,20 +281,42 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtPermanentNet.SetPermanentNet(Value: TPermanentNet);
+begin
+  if Assigned(Value) then
+    FNet := Value;
+end;
+
+procedure TedtPermanentNet.SetRecord;
+begin
+  FNet.NetNumber := StrToInt(eNetNumber.Text);
+  FNet.Longitude := StrToFloat(eLongitude.Text);
+  FNet.Latitude := StrToFloat(eLatitude.Text);
+  FNet.Notes := mNotes.Text;
+
+  GetFullName;
 end;
 
 function TedtPermanentNet.ValidateFields: Boolean;
 var
   Msgs: TStrings;
+  Msg: String;
 begin
   Result := True;
+  Msg := EmptyStr;
   Msgs := TStringList.Create;
 
   // Required fields
-  RequiredIsEmpty(dsLink.DataSet, tbPermanentNets, 'net_number', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbPermanentNets, 'net_number', Msgs);
 
   // Geographical coordinates
+  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
   //CoordenadaIsOk(DSP.DataSet, 'longitude', maLongitude, Msgs);
   //CoordenadaIsOk(DSP.DataSet, 'latitude', maLatitude, Msgs);
 

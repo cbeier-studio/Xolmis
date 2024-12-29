@@ -98,7 +98,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_system,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_users,
   cbs_validations, cbs_themes, udm_main, udlg_progress, uDarkStyleParams;
 
 {$R *.lfm}

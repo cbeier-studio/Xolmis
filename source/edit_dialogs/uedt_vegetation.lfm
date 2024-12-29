@@ -1,24 +1,23 @@
 object edtVegetation: TedtVegetation
   Left = 363
-  Height = 720
+  Height = 714
   Top = 250
-  Width = 400
+  Width = 397
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New vegetation sample'
-  ClientHeight = 720
-  ClientWidth = 400
+  ClientHeight = 714
+  ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.1'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 677
-    Width = 400
+    Top = 671
+    Width = 397
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -27,8 +26,8 @@ object edtVegetation: TedtVegetation
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 679
-    Width = 400
+    Top = 673
+    Width = 397
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -40,13 +39,13 @@ object edtVegetation: TedtVegetation
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 400
+    ClientWidth = 397
     TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 180
+      Width = 178
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -56,10 +55,10 @@ object edtVegetation: TedtVegetation
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 204
+      Left = 202
       Height = 25
       Top = 8
-      Width = 180
+      Width = 179
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -70,35 +69,35 @@ object edtVegetation: TedtVegetation
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 677
+    Height = 671
     Top = 0
-    Width = 400
-    HorzScrollBar.Page = 400
-    VertScrollBar.Page = 677
+    Width = 397
+    HorzScrollBar.Page = 397
+    VertScrollBar.Page = 671
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 677
-    ClientWidth = 400
+    ClientHeight = 671
+    ClientWidth = 397
     Constraints.MinWidth = 176
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 677
+      Height = 671
       Top = 0
-      Width = 400
+      Width = 397
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 8
-      ClientHeight = 677
-      ClientWidth = 400
+      ClientHeight = 671
+      ClientWidth = 397
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 549
-        Width = 400
+        Top = 543
+        Width = 397
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -109,14 +108,14 @@ object edtVegetation: TedtVegetation
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 112
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 11
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -124,15 +123,13 @@ object edtVegetation: TedtVegetation
           ParentColor = False
           ParentFont = False
         end
-        object mNotes: TDBMemo
+        object mNotes: TMemo
           Left = 16
           Height = 90
           Top = 22
-          Width = 368
+          Width = 365
           Align = alTop
           Constraints.MinWidth = 365
-          DataField = 'notes'
-          DataSource = dsLink
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -141,9 +138,9 @@ object edtVegetation: TedtVegetation
       end
       object pSampleDateTime: TPanel
         Left = 0
-        Height = 48
+        Height = 45
         Top = 8
-        Width = 400
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -154,15 +151,15 @@ object edtVegetation: TedtVegetation
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 400
+        ClientHeight = 45
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 0
         object lblSampleDate: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Date: *'
           Font.Color = 6579300
@@ -170,45 +167,39 @@ object edtVegetation: TedtVegetation
           ParentFont = False
         end
         object lblSampleTime: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Time:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eSampleDate: TDBEditButton
+        object eSampleDate: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 176
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 1
+          Width = 174
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           TextHint = 'DD/MM/YYYY'
-          DataField = 'sample_date'
-          DataSource = dsLink
-          CharCase = ecNormal
           OnButtonClick = eSampleDateButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end
-        object eSampleTime: TDBEdit
-          Left = 208
-          Height = 26
+        object eSampleTime: TEdit
+          Left = 206
+          Height = 23
           Top = 22
-          Width = 176
-          DataField = 'sample_time'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 175
           TabOrder = 1
           TextHint = 'HH:MM'
           OnKeyDown = FormKeyDown
@@ -218,8 +209,8 @@ object edtVegetation: TedtVegetation
       object pHerbsDIstribution: TPanel
         Left = 0
         Height = 45
-        Top = 158
-        Width = 400
+        Top = 152
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -231,35 +222,27 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 3
         object lblSampleMoment: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           BorderSpacing.Top = 3
           Caption = 'Distribution:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object cbHerbsDistribution: TDBComboBox
+        object cbHerbsDistribution: TComboBox
           Left = 16
           Height = 23
           Top = 22
-          Width = 368
+          Width = 365
           Constraints.MinWidth = 150
-          DataField = 'herbs_distribution'
-          DataSource = dsLink
           ItemHeight = 15
-          Items.Strings = (
-            'Start'
-            'Middle'
-            'End'
-          )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -269,8 +252,8 @@ object edtVegetation: TedtVegetation
       object pHerbsProportionHeight: TPanel
         Left = 0
         Height = 45
-        Top = 203
-        Width = 400
+        Top = 197
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -282,14 +265,14 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 4
         object lblCloudCover: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Proportion (%):'
           Font.Color = 6579300
@@ -297,38 +280,34 @@ object edtVegetation: TedtVegetation
           ParentFont = False
         end
         object lblTemperature: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Average height (cm):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eHerbsProportion: TDBEdit
+        object eHerbsProportion: TSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'herbs_proportion'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          Constraints.MinWidth = 150
+          MaxValue = 100
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end
-        object eHerbsAvgHeight: TDBEdit
-          Left = 208
+        object eHerbsAvgHeight: TSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'herbs_avg_height'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 175
+          Constraints.MinWidth = 150
+          MaxValue = 5000
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
@@ -336,9 +315,9 @@ object edtVegetation: TedtVegetation
       end
       object pLongitudeLatitude: TPanel
         Left = 0
-        Height = 48
-        Top = 56
-        Width = 400
+        Height = 45
+        Top = 53
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -349,15 +328,15 @@ object edtVegetation: TedtVegetation
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 400
+        ClientHeight = 45
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 1
         object lblLongitude: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
           Font.Color = 6579300
@@ -365,56 +344,49 @@ object edtVegetation: TedtVegetation
           ParentFont = False
         end
         object lblLatitude: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eLongitude: TDBEditButton
+        object eLongitude: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 176
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          ButtonHint = 'Edit coordinates in DMS format'
-          ButtonWidth = 24
-          ImageIndex = 3
+          Width = 174
+          Alignment = taRightJustify
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'longitude'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eLongitudeButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eLongitudeKeyPress
         end
-        object eLatitude: TDBEditButton
-          Left = 208
-          Height = 26
+        object eLatitude: TEditButton
+          Left = 206
+          Height = 23
           Top = 22
-          Width = 176
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
-          ButtonHint = 'Edit coordinates in DMS format'
-          ButtonWidth = 24
-          ImageIndex = 3
+          Width = 175
+          Alignment = taRightJustify
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'latitude'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 1
+          OnButtonClick = eLongitudeButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eLongitudeKeyPress
         end
@@ -422,8 +394,8 @@ object edtVegetation: TedtVegetation
       object pTitleHerbs: TPanel
         Left = 0
         Height = 38
-        Top = 120
-        Width = 400
+        Top = 114
+        Width = 397
         Align = alTop
         Alignment = taLeftJustify
         AutoSize = True
@@ -431,7 +403,7 @@ object edtVegetation: TedtVegetation
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ClientHeight = 38
-        ClientWidth = 400
+        ClientWidth = 397
         Font.Color = 13066075
         Font.Height = -20
         ParentBackground = False
@@ -454,8 +426,8 @@ object edtVegetation: TedtVegetation
       object pTitleShrubs: TPanel
         Left = 0
         Height = 38
-        Top = 264
-        Width = 400
+        Top = 258
+        Width = 397
         Align = alTop
         Alignment = taLeftJustify
         AutoSize = True
@@ -463,7 +435,7 @@ object edtVegetation: TedtVegetation
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ClientHeight = 38
-        ClientWidth = 400
+        ClientWidth = 397
         Font.Color = 13066075
         Font.Height = -20
         ParentBackground = False
@@ -486,8 +458,8 @@ object edtVegetation: TedtVegetation
       object pShrubsDistribution: TPanel
         Left = 0
         Height = 45
-        Top = 302
-        Width = 400
+        Top = 296
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -499,35 +471,27 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 6
         object lblSampleMoment1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           BorderSpacing.Top = 3
           Caption = 'Distribution:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object cbShrubsDistribution: TDBComboBox
+        object cbShrubsDistribution: TComboBox
           Left = 16
           Height = 23
           Top = 22
-          Width = 368
+          Width = 365
           Constraints.MinWidth = 150
-          DataField = 'shrubs_distribution'
-          DataSource = dsLink
           ItemHeight = 15
-          Items.Strings = (
-            'Start'
-            'Middle'
-            'End'
-          )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -537,8 +501,8 @@ object edtVegetation: TedtVegetation
       object pShrubsProportionHeight: TPanel
         Left = 0
         Height = 45
-        Top = 347
-        Width = 400
+        Top = 341
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -550,14 +514,14 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 7
         object lblCloudCover1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Proportion (%):'
           Font.Color = 6579300
@@ -565,38 +529,34 @@ object edtVegetation: TedtVegetation
           ParentFont = False
         end
         object lblTemperature1: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Average height (cm):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eShrubsProportion: TDBEdit
+        object eShrubsProportion: TSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'shrubs_proportion'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          Constraints.MinWidth = 150
+          MaxValue = 100
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end
-        object eShrubsAvgHeight: TDBEdit
-          Left = 208
+        object eShrubsAvgHeight: TSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'shrubs_avg_height'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 175
+          Constraints.MinWidth = 150
+          MaxValue = 5000
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
@@ -605,8 +565,8 @@ object edtVegetation: TedtVegetation
       object pTitleTrees: TPanel
         Left = 0
         Height = 38
-        Top = 408
-        Width = 400
+        Top = 402
+        Width = 397
         Align = alTop
         Alignment = taLeftJustify
         AutoSize = True
@@ -614,7 +574,7 @@ object edtVegetation: TedtVegetation
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ClientHeight = 38
-        ClientWidth = 400
+        ClientWidth = 397
         Font.Color = 13066075
         Font.Height = -20
         ParentBackground = False
@@ -637,8 +597,8 @@ object edtVegetation: TedtVegetation
       object pTreesDistribution: TPanel
         Left = 0
         Height = 45
-        Top = 446
-        Width = 400
+        Top = 440
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -650,35 +610,26 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 9
         object lblSampleMoment2: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           BorderSpacing.Top = 3
           Caption = 'Distribution:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object cbTreesDistribution: TDBComboBox
+        object cbTreesDistribution: TComboBox
           Left = 16
           Height = 23
           Top = 22
-          Width = 368
-          Constraints.MinWidth = 150
-          DataField = 'trees_distribution'
-          DataSource = dsLink
+          Width = 365
           ItemHeight = 15
-          Items.Strings = (
-            'Start'
-            'Middle'
-            'End'
-          )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -688,8 +639,8 @@ object edtVegetation: TedtVegetation
       object pTreesProportionHeight: TPanel
         Left = 0
         Height = 45
-        Top = 491
-        Width = 400
+        Top = 485
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -701,14 +652,14 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 10
         object lblCloudCover2: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Proportion (%):'
           Font.Color = 6579300
@@ -716,38 +667,34 @@ object edtVegetation: TedtVegetation
           ParentFont = False
         end
         object lblTemperature2: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Average height (cm):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eTreesProportion: TDBEdit
+        object eTreesProportion: TSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'trees_proportion'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          Constraints.MinWidth = 150
+          MaxValue = 100
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end
-        object eTreesAvgHeight: TDBEdit
-          Left = 208
+        object eTreesAvgHeight: TSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'trees_avg_height'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 175
+          Constraints.MinWidth = 150
+          MaxValue = 5000
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress

@@ -1,23 +1,22 @@
 object edtExpedition: TedtExpedition
   Left = 352
-  Height = 450
+  Height = 393
   Top = 33
   Width = 397
   AutoSize = True
   Caption = 'New expedition'
-  ClientHeight = 450
+  ClientHeight = 393
   ClientWidth = 397
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 407
+    Top = 350
     Width = 397
     Align = alTop
     LineColor = 9276813
@@ -27,7 +26,7 @@ object edtExpedition: TedtExpedition
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 409
+    Top = 352
     Width = 397
     Align = alTop
     AutoSize = True
@@ -52,6 +51,8 @@ object edtExpedition: TedtExpedition
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
       Left = 202
@@ -62,32 +63,34 @@ object edtExpedition: TedtExpedition
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 407
+    Height = 350
     Top = 0
     Width = 397
     HorzScrollBar.Page = 397
-    VertScrollBar.Page = 407
+    VertScrollBar.Page = 350
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 407
+    ClientHeight = 350
     ClientWidth = 397
     Constraints.MinWidth = 176
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 407
+      Height = 350
       Top = 0
       Width = 397
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 407
+      ClientHeight = 350
       ClientWidth = 397
       TabOrder = 0
       object pName: TPanel
@@ -101,6 +104,8 @@ object edtExpedition: TedtExpedition
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
@@ -118,16 +123,13 @@ object edtExpedition: TedtExpedition
           ParentColor = False
           ParentFont = False
         end
-        object eName: TDBEdit
+        object eName: TEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 365
-          DataField = 'expedition_name'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
           TabOrder = 0
+          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -135,7 +137,7 @@ object edtExpedition: TedtExpedition
       object pDescription: TPanel
         Left = 0
         Height = 112
-        Top = 279
+        Top = 222
         Width = 397
         Align = alTop
         AutoSize = True
@@ -148,7 +150,7 @@ object edtExpedition: TedtExpedition
         ClientHeight = 112
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 4
         object lblDescription: TLabel
           Left = 16
           Height = 15
@@ -161,15 +163,13 @@ object edtExpedition: TedtExpedition
           ParentColor = False
           ParentFont = False
         end
-        object mDescription: TDBMemo
+        object mDescription: TMemo
           Left = 16
           Height = 90
           Top = 22
           Width = 365
           Align = alTop
           Constraints.MinWidth = 365
-          DataField = 'description'
-          DataSource = dsLink
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -178,8 +178,8 @@ object edtExpedition: TedtExpedition
       end
       object pLocality: TPanel
         Left = 0
-        Height = 48
-        Top = 61
+        Height = 45
+        Top = 106
         Width = 397
         Align = alTop
         AutoSize = True
@@ -187,12 +187,14 @@ object edtExpedition: TedtExpedition
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 1
+        TabOrder = 2
         object lblLocality: TLabel
           Left = 16
           Height = 15
@@ -204,98 +206,28 @@ object edtExpedition: TedtExpedition
           ParentColor = False
           ParentFont = False
         end
-        object eLocality: TDBEditButton
-          Cursor = crDefault
+        object eLocality: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 365
-          ButtonCursor = crDefault
-          ButtonHint = 'Find locality'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          CustomEditMask = False
-          DataField = 'locality_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
+          NumGlyphs = 1
+          PasswordChar = #0
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
           OnKeyDown = FormKeyDown
-          OnKeyPress = eLocalityDBEditKeyPress
-        end
-      end
-      object pStartDate: TPanel
-        Left = 0
-        Height = 48
-        Top = 109
-        Width = 397
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 397
-        ParentBackground = False
-        TabOrder = 2
-        object lblStartDate: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Start date: *'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eStartDate: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'start_date'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 1
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          TextHint = 'DD/MM/YYYY'
-          OnButtonClick = eStartDateButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eNameKeyPress
+          OnKeyPress = eLocalityKeyPress
         end
       end
       object pProject: TPanel
         Left = 0
-        Height = 48
-        Top = 218
+        Height = 45
+        Top = 164
         Width = 397
         Align = alTop
         AutoSize = True
@@ -304,12 +236,14 @@ object edtExpedition: TedtExpedition
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 3
         object lblProject: TLabel
           Left = 16
           Height = 15
@@ -321,40 +255,28 @@ object edtExpedition: TedtExpedition
           ParentColor = False
           ParentFont = False
         end
-        object eProject: TDBEditButton
-          Cursor = crDefault
+        object eProject: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 365
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Find project'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          CustomEditMask = False
-          DataField = 'project_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
+          NumGlyphs = 1
+          PasswordChar = #0
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eProjectButtonClick
           OnKeyDown = FormKeyDown
-          OnKeyPress = eProjectDBEditKeyPress
+          OnKeyPress = eProjectKeyPress
         end
       end
-      object pEndDate: TPanel
+      object pDate: TPanel
         Left = 0
-        Height = 48
-        Top = 157
+        Height = 45
+        Top = 61
         Width = 397
         Align = alTop
         AutoSize = True
@@ -362,75 +284,71 @@ object edtExpedition: TedtExpedition
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 3
-        object lblEndDate: TLabel
+        TabOrder = 1
+        object lblStartDate: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
+          BorderSpacing.Top = 3
+          Caption = 'Start date: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblEndDate: TLabel
+          Left = 206
+          Height = 15
+          Top = 3
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'End date: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object lblDuration: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 84
-          BorderSpacing.Top = 3
-          Caption = 'Duration (days):'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eEndDate: TDBEditButton
-          Cursor = crDefault
+        object eStartDate: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'end_date'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 1
+          Width = 174
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 1
           MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
+          NumGlyphs = 1
+          PasswordChar = #0
           Spacing = 0
           TabOrder = 0
-          TextHint = 'DD/MM/YYYY'
-          OnButtonClick = eEndDateButtonClick
+          OnButtonClick = eStartDateButtonClick
+          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
-        object txtDuration: TDBText
-          Left = 208
-          Height = 26
+        object eEndDate: TEditButton
+          Left = 206
+          Height = 23
           Top = 22
-          Width = 84
-          Alignment = taRightJustify
-          DataField = 'duration'
-          DataSource = dsLink
-          Layout = tlCenter
-          ParentColor = False
-          ShowAccelChar = False
+          Width = 175
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 1
+          OnButtonClick = eEndDateButtonClick
+          OnEditingDone = eNameEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNameKeyPress
         end
       end
     end

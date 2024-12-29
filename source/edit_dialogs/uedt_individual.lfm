@@ -10,6 +10,7 @@ object edtIndividual: TedtIndividual
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.0.0.1'
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
@@ -131,7 +132,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Find individual'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -203,7 +203,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Find band'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -233,7 +232,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Open calendar'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -295,7 +293,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Find taxon'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -401,7 +398,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Find nest'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -462,7 +458,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Find individual'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -699,7 +694,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Select colors'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -729,7 +723,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Select colors'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -845,7 +838,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Select colors'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -875,7 +867,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Select colors'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -947,7 +938,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Find band'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -977,7 +967,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Open calendar'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault
@@ -1049,7 +1038,6 @@ object edtIndividual: TedtIndividual
           AutoSize = True
           ButtonCursor = crDefault
           ButtonHint = 'Find band'
-          ButtonOnlyWhenFocused = False
           ButtonWidth = 24
           CharCase = ecNormal
           Color = clDefault

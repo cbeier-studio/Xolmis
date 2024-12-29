@@ -8,28 +8,27 @@ object dlgValidate: TdlgValidate
   Caption = 'Xolmis'
   ClientHeight = 228
   ClientWidth = 504
+  PopupMode = pmAuto
+  Position = poMainFormCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poMainFormCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 38
-    Top = 247
-    Width = 630
+    Top = 190
+    Width = 504
     Align = alBottom
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ClientHeight = 38
-    ClientWidth = 630
+    ClientWidth = 504
     TabOrder = 0
     object sbOK: TButton
-      Left = 510
-      Height = 32
+      Left = 384
+      Height = 22
       Top = 8
       Width = 104
       Align = alRight
@@ -43,8 +42,8 @@ object dlgValidate: TdlgValidate
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 235
-    Width = 630
+    Top = 188
+    Width = 504
     Align = alBottom
     Visible = False
     LineColor = 9276813
@@ -53,9 +52,9 @@ object dlgValidate: TdlgValidate
   end
   object LV: THtmlViewer
     Left = 0
-    Height = 235
+    Height = 188
     Top = 0
-    Width = 630
+    Width = 504
     BorderStyle = htNone
     DefBackground = clWindow
     DefFontColor = clBlack

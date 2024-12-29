@@ -21,20 +21,20 @@ unit uedt_samplingplot;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls,
-  Character, DBEditButton, atshapelinebgra;
+  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  ExtCtrls, DBCtrls, Character, DBEditButton, atshapelinebgra, cbs_sampling;
 
 type
 
   { TedtSamplingPlot }
 
   TedtSamplingPlot = class(TForm)
-    eName: TDBEdit;
-    eAcronym: TDBEdit;
+    eName: TEdit;
+    eAbbreviation: TEdit;
+    eLocality: TEditButton;
+    eLongitude: TEditButton;
+    eLatitude: TEditButton;
     dsLink: TDataSource;
-    eLatitude: TDBEditButton;
-    eLocality: TDBEditButton;
-    eLongitude: TDBEditButton;
     lblAcronym: TLabel;
     lblAcronym1: TLabel;
     lblLongitude: TLabel;
@@ -44,8 +44,8 @@ type
     lblName: TLabel;
     lblLocality: TLabel;
     lineBottom: TShapeLineBGRA;
-    mNotes: TDBMemo;
-    mDescription: TDBMemo;
+    mDescription: TMemo;
+    mNotes: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
     pNotes: TPanel;
@@ -59,20 +59,28 @@ type
     sbSave: TButton;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eLocalityButtonClick(Sender: TObject);
-    procedure eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eLocalityKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
+    procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
+    procedure eNameEditingDone(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FSamplingPlot: TSamplingPlot;
+    FLocalityId: Integer;
+    procedure SetSamplingPlot(Value: TSamplingPlot);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property SamplingPlot: TSamplingPlot read FSamplingPlot write SetSamplingPlot;
   end;
 
 var
@@ -81,7 +89,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, udm_main,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
+  udm_main,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -97,45 +106,141 @@ end;
 
 procedure TedtSamplingPlot.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSamplingPlot.eLocalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name');
+  FindSiteDlg([gfAll], eLocality, FLocalityId);
+  FSamplingPlot.LocalityId := FLocalityId;
 end;
 
-procedure TedtSamplingPlot.eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSamplingPlot.eLocalityKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name', Key);
+    FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
+    FSamplingPlot.LocalityId := FLocalityId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('locality_id').Clear;
-    dsLink.DataSet.FieldByName('locality_name').Clear;
+    FLocalityId := 0;
+    FSamplingPlot.LocalityId := 0;
+    eLocality.Text := EmptyStr;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSamplingPlot.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'longitude', 'latitude');
+  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+end;
+
+procedure TedtSamplingPlot.eLongitudeKeyPress(Sender: TObject; var Key: char);
+const
+  AllowedChars = ['0'..'9', ',', '.', '+', '-', #8, #13, #27];
+var
+  EditText: String;
+  PosDecimal: Integer;
+  DecimalValue: Extended;
+begin
+  FormKeyPress(Sender, Key);
+
+  sbSave.Enabled := IsRequiredFilled;
+
+  EditText := EmptyStr;
+  PosDecimal := 0;
+  DecimalValue := 0;
+
+  if not (Key in AllowedChars) then
+  begin
+    Key := #0;
+    Exit;
+  end;
+
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+    Exit;
+  end;
+
+  if (Sender is TEdit) then
+    EditText := TEdit(Sender).Text
+  else
+  if (Sender is TEditButton) then
+    EditText := TEditButton(Sender).Text;
+  PosDecimal := Pos(FormatSettings.DecimalSeparator, EditText);
+
+  // Decimal separator
+  if (Key in [',', '.']) then
+  begin
+    if (PosDecimal = 0) then
+      Key := FormatSettings.DecimalSeparator
+    else
+      Key := #0;
+    Exit;
+  end;
+
+  // Numeric signal
+  if (Key in ['+', '-']) then
+  begin
+    if (Length(EditText) > 0) then
+    begin
+      if TryStrToFloat(EditText, DecimalValue) then
+      begin
+        if ((DecimalValue > 0) and (Key = '-')) or ((DecimalValue < 0) and (Key = '+')) then
+          DecimalValue := DecimalValue * -1.0;
+        EditText := FloatToStr(DecimalValue);
+
+        if (Sender is TEdit) then
+        begin
+          TEdit(Sender).Text := EditText;
+          TEdit(Sender).SelStart := Length(EditText);
+        end
+        else
+        if (Sender is TEditButton) then
+        begin
+          TEditButton(Sender).Text := EditText;
+          TEditButton(Sender).SelStart := Length(EditText);
+        end;
+      end;
+      Key := #0;
+    end
+    else
+    begin
+      if (Key = '+') then
+        Key := #0;
+    end;
+
+    Exit;
+  end;
+end;
+
+procedure TedtSamplingPlot.eNameEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSamplingPlot.eNameKeyPress(Sender: TObject; var Key: char);
@@ -145,14 +250,12 @@ begin
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtSamplingPlot.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtSamplingPlot.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -161,7 +264,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not (sbSave.Enabled) then
       Exit;
 
     sbSaveClick(nil);
@@ -185,18 +289,38 @@ begin
     ApplyDarkMode;
 
   if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSamplingPlot)])
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSamplingPlot)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSamplingPlot)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtSamplingPlot.GetRecord;
+begin
+  eName.Text := FSamplingPlot.FullName;
+  eAbbreviation.Text := FSamplingPlot.Acronym;
+  FLocalityId := FSamplingPlot.LocalityId;
+  eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+  eLongitude.Text := FloatToStr(FSamplingPlot.Longitude);
+  eLatitude.Text := FloatToStr(FSamplingPlot.Latitude);
+  mDescription.Text := FSamplingPlot.Description;
+  mNotes.Text := FSamplingPlot.Notes;
 end;
 
 function TedtSamplingPlot.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('locality_id').AsInteger <> 0) and
-    (dsLink.DataSet.FieldByName('full_name').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('acronym').AsString <> EmptyStr) then
+  //if (dsLink.DataSet.FieldByName('locality_id').AsInteger <> 0) and
+  //  (dsLink.DataSet.FieldByName('full_name').AsString <> EmptyStr) and
+  //  (dsLink.DataSet.FieldByName('acronym').AsString <> EmptyStr) then
+  if (eName.Text <> EmptyStr) and
+    (eAbbreviation.Text <> EmptyStr) and
+    (FLocalityId > 0) then
     Result := True;
 end;
 
@@ -206,31 +330,59 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtSamplingPlot.SetRecord;
+begin
+  FSamplingPlot.FullName := eName.Text;
+  FSamplingPlot.Acronym := eAbbreviation.Text;
+  FSamplingPlot.LocalityId := FLocalityId;
+  if (Length(eLongitude.Text) > 0) then
+    FSamplingPlot.Longitude := StrToFloat(eLongitude.Text)
+  else
+    FSamplingPlot.Longitude := 0;
+  if (Length(eLatitude.Text) > 0) then
+    FSamplingPlot.Latitude := StrToFloat(eLatitude.Text)
+  else
+    FSamplingPlot.Latitude := 0;
+  FSamplingPlot.Description := mDescription.Text;
+  FSamplingPlot.Notes := mNotes.Text;
+end;
+
+procedure TedtSamplingPlot.SetSamplingPlot(Value: TSamplingPlot);
+begin
+  if Assigned(Value) then
+    FSamplingPlot := Value;
 end;
 
 function TedtSamplingPlot.ValidateFields: Boolean;
 var
   Msgs: TStrings;
+  Msg: String;
 begin
   Result := True;
+  Msg := EmptyStr;
   Msgs := TStringList.Create;
 
   // Required fields
-  RequiredIsEmpty(dsLink.DataSet, tbSamplingPlots, 'full_name', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbSamplingPlots, 'acronym', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbSamplingPlots, 'locality_id', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbSamplingPlots, 'full_name', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbSamplingPlots, 'acronym', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbSamplingPlots, 'locality_id', Msgs);
 
   // Duplicated record
   RecordDuplicated(tbSamplingPlots, 'sampling_plot_id', 'acronym',
-    dsLink.DataSet.FieldByName('acronym').AsString,
-    dsLink.DataSet.FieldByName('sampling_plot_id').AsInteger, Msgs);
+    eAbbreviation.Text, FSamplingPlot.Id, Msgs);
 
   // Foreign keys
-  ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('locality_id').AsInteger,
-    rsCaptionLocality, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('locality_id').AsInteger,
+  //  rsCaptionLocality, Msgs);
 
   // Geographical coordinates
+  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
   //CoordenadaIsOk(cdsConsulta, 'longitude', maLongitude, Msgs);
   //CoordenadaIsOk(cdsConsulta, 'latitude', maLatitude, Msgs);
 

@@ -11,7 +11,7 @@
 {"hash":12558938,"name":"tedtsite.lblfullname.caption","sourcebytes":[70,117,108,108,32,110,97,109,101,58,32,42],"value":"Full name: *"},
 {"hash":235834570,"name":"tedtsite.lbllongitude.caption","sourcebytes":[76,111,110,103,105,116,117,100,101,58],"value":"Longitude:"},
 {"hash":185329674,"name":"tedtsite.lbllatitude.caption","sourcebytes":[76,97,116,105,116,117,100,101,58],"value":"Latitude:"},
-{"hash":12937236,"name":"tedtsite.elongitude.buttonhint","sourcebytes":[69,100,105,116,32,99,111,111,114,100,105,110,97,116,101,115,32,105,110,32,68,77,83,32,102,111,114,109,97,116],"value":"Edit coordinates in DMS format"},
-{"hash":12937236,"name":"tedtsite.elatitude.buttonhint","sourcebytes":[69,100,105,116,32,99,111,111,114,100,105,110,97,116,101,115,32,105,110,32,68,77,83,32,102,111,114,109,97,116],"value":"Edit coordinates in DMS format"},
+{"hash":110507173,"name":"tedtsite.elongitude.buttonhint","sourcebytes":[69,100,105,116,47,105,109,112,111,114,116,32,99,111,111,114,100,105,110,97,116,101],"value":"Edit/import coordinate"},
+{"hash":110507173,"name":"tedtsite.elatitude.buttonhint","sourcebytes":[69,100,105,116,47,105,109,112,111,114,116,32,99,111,111,114,100,105,110,97,116,101],"value":"Edit/import coordinate"},
 {"hash":38396986,"name":"tedtsite.lblaltitude.caption","sourcebytes":[65,108,116,105,116,117,100,101,32,40,109,41,58],"value":"Altitude (m):"}
 ]}

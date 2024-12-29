@@ -21,20 +21,21 @@ unit uedt_sampleprep;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls,
-  DBEditButton, DB, Character, DateUtils, atshapelinebgra;
+  Classes, EditBtn, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, ExtCtrls, DBCtrls, DBEditButton, DB, Character, DateUtils,
+  atshapelinebgra, cbs_sampling;
 
 type
 
   { TedtSamplePrep }
 
   TedtSamplePrep = class(TForm)
-    cbSampleType: TDBComboBox;
+    cbSampleType: TComboBox;
     dsLink: TDataSource;
-    eAccessionNumber: TDBEdit;
-    eAccessionSeq: TDBEdit;
-    ePreparationDate: TDBEditButton;
-    ePreparer: TDBEditButton;
+    eAccessionNumber: TEdit;
+    eAccessionSeq: TEdit;
+    ePreparationDate: TEditButton;
+    ePreparer: TEditButton;
     lblAccessionSeq: TLabel;
     lblNotes: TLabel;
     lblAccessionNumber: TLabel;
@@ -42,7 +43,7 @@ type
     lblPreparer: TLabel;
     lblSampleType: TLabel;
     lineBottom: TShapeLineBGRA;
-    mNotes: TDBMemo;
+    mNotes: TMemo;
     pBottom: TPanel;
     pContent: TPanel;
     pNotes: TPanel;
@@ -55,21 +56,30 @@ type
     sbSave: TButton;
     scrollContent: TScrollBox;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
+    procedure eAccessionNumberEditingDone(Sender: TObject);
     procedure eAccessionNumberKeyPress(Sender: TObject; var Key: char);
     procedure ePreparationDateButtonClick(Sender: TObject);
     procedure ePreparerButtonClick(Sender: TObject);
-    procedure ePreparerDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure ePreparerKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FSamplePrep: TSamplePrep;
+    FSpecimen: TSpecimen;
+    FSpecimenId, FPreparerId: Integer;
+    procedure SetSamplePrep(Value: TSamplePrep);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property SamplePrep: TSamplePrep read FSamplePrep write SetSamplePrep;
+    property SpecimenId: Integer read FSpecimenId write FSpecimenId;
   end;
 
 var
@@ -78,7 +88,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, udm_main,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue,
+  udm_main,
   uDarkStyleParams;
 
 { TedtSamplePrep }
@@ -91,10 +102,15 @@ end;
 
 procedure TedtSamplePrep.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
+end;
+
+procedure TedtSamplePrep.eAccessionNumberEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSamplePrep.eAccessionNumberKeyPress(Sender: TObject; var Key: char);
@@ -104,49 +120,55 @@ begin
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSamplePrep.ePreparationDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(ePreparationDate, dsLink.DataSet, 'preparation_date');
+  CalendarDlg(ePreparationDate.Text, ePreparationDate, Dt);
 end;
 
 procedure TedtSamplePrep.ePreparerButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, ePreparer, dsLink.DataSet, 'preparer_id', 'preparer_name');
+  FindDlg(tbPeople, ePreparer, FPreparerId);
+  FSamplePrep.PreparerId := FPreparerId;
 end;
 
-procedure TedtSamplePrep.ePreparerDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSamplePrep.ePreparerKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbPeople, ePreparer, dsLink.DataSet, 'preparer_id', 'preparer_name', False, Key);
+    FindDlg(tbPeople, ePreparer, FPreparerId, Key);
+    FSamplePrep.PreparerId := FPreparerId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('preparer_id').Clear;
-    dsLink.DataSet.FieldByName('preparer_name').Clear;
+    FPreparerId := 0;
+    FSamplePrep.PreparerId := FPreparerId;
+    ePreparer.Text := EmptyStr;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtSamplePrep.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtSamplePrep.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -155,7 +177,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not (sbSave.Enabled) then
       Exit;
 
     sbSaveClick(nil);
@@ -178,18 +201,83 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  cbSampleType.Items.Clear;
+  cbSampleType.Items.Add(rsSampleSkinStandard);
+  cbSampleType.Items.Add(rsSampleSkinShmoo);
+  cbSampleType.Items.Add(rsSampleSkinMounted);
+  cbSampleType.Items.Add(rsSampleOpenedWing);
+  cbSampleType.Items.Add(rsSampleSkeletonWhole);
+  cbSampleType.Items.Add(rsSampleSkeletonPartial);
+  cbSampleType.Items.Add(rsSampleNest);
+  cbSampleType.Items.Add(rsSampleEgg);
+  cbSampleType.Items.Add(rsSampleParasites);
+  cbSampleType.Items.Add(rsSampleFeathers);
+  cbSampleType.Items.Add(rsSampleBloodDry);
+  cbSampleType.Items.Add(rsSampleBloodWet);
+  cbSampleType.Items.Add(rsSampleBloodSmear);
+  cbSampleType.Items.Add(rsSampleSexing);
+  cbSampleType.Items.Add(rsSampleGeneticSequence);
+  cbSampleType.Items.Add(rsSampleMicrobialCulture);
+  cbSampleType.Items.Add(rsSampleTissues);
+  cbSampleType.Items.Add(rsSampleEyes);
+  cbSampleType.Items.Add(rsSampleTongue);
+  cbSampleType.Items.Add(rsSampleSyrinx);
+  cbSampleType.Items.Add(rsSampleGonads);
+  cbSampleType.Items.Add(rsSampleStomach);
+
   if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionEgg)])
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionEgg)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionEgg)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtSamplePrep.GetRecord;
+begin
+  eAccessionNumber.Text := FSamplePrep.AccessionNum;
+  eAccessionSeq.Text := IntToStr(FSamplePrep.AccessionSeq);
+  case FSamplePrep.AccessionType of
+    'NS':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleSkinStandard);
+    'SS':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleSkinShmoo);
+    'MS':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleSkinMounted);
+    'OW':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleOpenedWing);
+    'WS':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleSkeletonWhole);
+    'PS':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleSkeletonPartial);
+    'N':   cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleNest);
+    'EGG': cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleEgg);
+    'P':   cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleParasites);
+    'F':   cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleFeathers);
+    'BD':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleBloodDry);
+    'BL':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleBloodWet);
+    'BS':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleBloodSmear);
+    'SX':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleSexing);
+    'GS':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleGeneticSequence);
+    'MC':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleMicrobialCulture);
+    'TS':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleTissues);
+    'EYE': cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleEyes);
+    'T':   cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleTongue);
+    'S':   cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleSyrinx);
+    'G':   cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleGonads);
+    'M':   cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleStomach);
+  end;
+  ePreparationDate.Text := DateToStr(FSamplePrep.PreparationDate);
+  FPreparerId := FSamplePrep.PreparerId;
+  ePreparer.Text := GetName('people', 'full_name', 'person_id', FPreparerId);
+  mNotes.Text := FSamplePrep.Notes;
 end;
 
 function TedtSamplePrep.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('accession_num').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('accession_type').AsString <> EmptyStr) then
+  //if (dsLink.DataSet.FieldByName('accession_num').AsString <> EmptyStr) and
+  //  (dsLink.DataSet.FieldByName('accession_type').AsString <> EmptyStr) then
+  if (eAccessionNumber.Text <> EmptyStr) and
+    (eAccessionSeq.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -198,7 +286,66 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtSamplePrep.SetRecord;
+begin
+  FSamplePrep.AccessionNum := eAccessionNumber.Text;
+  if (eAccessionSeq.Text <> EmptyStr) then
+    FSamplePrep.AccessionSeq := StrToInt(eAccessionSeq.Text)
+  else
+    FSamplePrep.AccessionSeq := 0;
+  case cbSampleType.ItemIndex of
+    0: FSamplePrep.AccessionType := 'NS';
+    1: FSamplePrep.AccessionType := 'SS';
+    2: FSamplePrep.AccessionType := 'MS';
+    3: FSamplePrep.AccessionType := 'OW';
+    4: FSamplePrep.AccessionType := 'WS';
+    5: FSamplePrep.AccessionType := 'PS';
+    6: FSamplePrep.AccessionType := 'N';
+    7: FSamplePrep.AccessionType := 'EGG';
+    8: FSamplePrep.AccessionType := 'P';
+    9: FSamplePrep.AccessionType := 'F';
+   10: FSamplePrep.AccessionType := 'BD';
+   11: FSamplePrep.AccessionType := 'BL';
+   12: FSamplePrep.AccessionType := 'BS';
+   13: FSamplePrep.AccessionType := 'SX';
+   14: FSamplePrep.AccessionType := 'GS';
+   15: FSamplePrep.AccessionType := 'MC';
+   16: FSamplePrep.AccessionType := 'TS';
+   17: FSamplePrep.AccessionType := 'EYE';
+   18: FSamplePrep.AccessionType := 'T';
+   19: FSamplePrep.AccessionType := 'S';
+   20: FSamplePrep.AccessionType := 'G';
+   21: FSamplePrep.AccessionType := 'M';
+  end;
+  if (ePreparationDate.Text <> EmptyStr) then
+    FSamplePrep.PreparationDate := StrToDate(ePreparationDate.Text);
+  FSamplePrep.PreparerId := FPreparerId;
+  FSamplePrep.Notes := mNotes.Text;
+
+  if FIsNew then
+  begin
+    FSpecimen := TSpecimen.Create(FSpecimenId);
+    try
+      FSamplePrep.SpecimenId := FSpecimen.Id;
+      FSamplePrep.TaxonId := FSpecimen.TaxonId;
+      FSamplePrep.IndividualId := FSpecimen.IndividualId;
+      FSamplePrep.NestId := FSpecimen.NestId;
+      FSamplePrep.EggId := FSpecimen.EggId;
+    finally
+      FSpecimen.Free;
+    end;
+  end;
+end;
+
+procedure TedtSamplePrep.SetSamplePrep(Value: TSamplePrep);
+begin
+  if Assigned(Value) then
+    FSamplePrep := Value;
 end;
 
 function TedtSamplePrep.ValidateFields: Boolean;
@@ -211,19 +358,19 @@ begin
   D := dsLink.DataSet;
 
   // Required fields
-  RequiredIsEmpty(D, tbSamplePreps, 'accession_num', Msgs);
-  RequiredIsEmpty(D, tbSamplePreps, 'accession_type', Msgs);
+  //RequiredIsEmpty(D, tbSamplePreps, 'accession_num', Msgs);
+  //RequiredIsEmpty(D, tbSamplePreps, 'accession_type', Msgs);
 
   // Duplicated record
-  RecordDuplicated(tbSamplePreps, 'sample_prep_id', 'full_name',
-    D.FieldByName('full_name').AsString, D.FieldByName('sample_prep_id').AsInteger);
+  //RecordDuplicated(tbSamplePreps, 'sample_prep_id', 'full_name',
+  //  FSamplePrep.FullName, FSamplePrep.Id);
 
   // Dates
-  if D.FieldByName('preparation_date').AsString <> '' then
-    ValidDate(D.FieldByName('preparation_date').AsString, rsDatePreparation, Msgs);
+  if ePreparationDate.Text <> EmptyStr then
+    ValidDate(ePreparationDate.Text, rsDatePreparation, Msgs);
 
-  if (D.FieldByName('preparation_date').AsString <> '') then
-    IsFutureDate(D.FieldByName('preparation_date').AsDateTime, Today,
+  if (ePreparationDate.Text <> EmptyStr) then
+    IsFutureDate(StrToDate(ePreparationDate.Text), Today,
       AnsiLowerCase(rsDatePreparation), AnsiLowerCase(rsDateToday), Msgs);
 
   if Msgs.Count > 0 then

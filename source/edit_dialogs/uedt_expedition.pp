@@ -21,21 +21,21 @@ unit uedt_expedition;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls,
-  Character, DateUtils, Buttons, DBEditButton, atshapelinebgra;
+  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  ExtCtrls, DBCtrls, Character, DateUtils, Buttons, DBEditButton,
+  atshapelinebgra, cbs_sampling;
 
 type
 
   { TedtExpedition }
 
   TedtExpedition = class(TForm)
-    eEndDate: TDBEditButton;
-    eStartDate: TDBEditButton;
-    eLocality: TDBEditButton;
-    eProject: TDBEditButton;
-    eName: TDBEdit;
+    eName: TEdit;
+    eStartDate: TEditButton;
+    eLocality: TEditButton;
+    eEndDate: TEditButton;
+    eProject: TEditButton;
     dsLink: TDataSource;
-    lblDuration: TLabel;
     lblStartDate: TLabel;
     lblEndDate: TLabel;
     lblDescription: TLabel;
@@ -43,38 +43,43 @@ type
     lblName: TLabel;
     lblProject: TLabel;
     lineBottom: TShapeLineBGRA;
-    mDescription: TDBMemo;
+    mDescription: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
     pDescription: TPanel;
     pLocality: TPanel;
     pName: TPanel;
     pProject: TPanel;
-    pStartDate: TPanel;
-    pEndDate: TPanel;
+    pDate: TPanel;
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
-    txtDuration: TDBText;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEndDateButtonClick(Sender: TObject);
     procedure eLocalityButtonClick(Sender: TObject);
-    procedure eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eLocalityKeyPress(Sender: TObject; var Key: char);
+    procedure eNameEditingDone(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
-    procedure eProjectDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eProjectKeyPress(Sender: TObject; var Key: char);
     procedure eStartDateButtonClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FExpedition: TExpedition;
+    FLocalityId, FProjectId: Integer;
+    procedure SetExpedition(Value: TExpedition);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Expedition: TExpedition read FExpedition write SetExpedition;
   end;
 
 var
@@ -83,7 +88,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, udm_main,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
+  udm_main,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -100,45 +106,55 @@ end;
 
 procedure TedtExpedition.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtExpedition.eEndDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eEndDate, dsLink.DataSet, 'end_date');
+  CalendarDlg(eEndDate.Text, eEndDate, Dt);
 end;
 
 procedure TedtExpedition.eLocalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name');
+  FindSiteDlg([gfAll], eLocality, FLocalityId);
 end;
 
-procedure TedtExpedition.eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtExpedition.eLocalityKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name', Key);
+    FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('locality_id').Clear;
-    dsLink.DataSet.FieldByName('locality_name').Clear;
+    FLocalityId := 0;
+    eLocality.Text := EmptyStr;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
+end;
+
+procedure TedtExpedition.eNameEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtExpedition.eNameKeyPress(Sender: TObject; var Key: char);
@@ -148,49 +164,52 @@ begin
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtExpedition.eProjectButtonClick(Sender: TObject);
 begin
-  FindDlg(tbProjects, eProject, dsLink.DataSet, 'project_id', 'project_name');
+  FindDlg(tbProjects, eProject, FProjectId);
 end;
 
-procedure TedtExpedition.eProjectDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtExpedition.eProjectKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbProjects, eProject, dsLink.DataSet, 'project_id', 'project_name', False, Key);
+    FindDlg(tbProjects, eProject, FProjectId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('project_id').Clear;
-    dsLink.DataSet.FieldByName('project_name').Clear;
+    FProjectId := 0;
+    eProject.Text := EmptyStr;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtExpedition.eStartDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eStartDate, dsLink.DataSet, 'start_date');
-end;
-
-procedure TedtExpedition.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
+  CalendarDlg(eStartDate.Text, eStartDate, Dt);
 end;
 
 procedure TedtExpedition.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -199,7 +218,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not (sbSave.Enabled) then
       Exit;
 
     sbSaveClick(nil);
@@ -223,19 +243,39 @@ begin
     ApplyDarkMode;
 
   if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionExpedition)])
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionExpedition)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionExpedition)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtExpedition.GetRecord;
+begin
+  eName.Text := FExpedition.Name;
+  eStartDate.Text := DateToStr(FExpedition.StartDate);
+  eEndDate.Text := DateToStr(FExpedition.EndDate);
+  FLocalityId := FExpedition.LocalityId;
+  eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+  FProjectId := FExpedition.ProjectId;
+  eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
+  mDescription.Text := FExpedition.Description;
 end;
 
 function TedtExpedition.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('expedition_name').AsString <> EmptyStr) and
-    //(dsLink.DataSet.FieldByName('locality_id').AsInteger <> 0) and
-    (dsLink.DataSet.FieldByName('start_date').IsNull = False) and
-    (dsLink.DataSet.FieldByName('end_date').IsNull = False) then
+  //if (dsLink.DataSet.FieldByName('expedition_name').AsString <> EmptyStr) and
+  //  //(dsLink.DataSet.FieldByName('locality_id').AsInteger <> 0) and
+  //  (dsLink.DataSet.FieldByName('start_date').IsNull = False) and
+  //  (dsLink.DataSet.FieldByName('end_date').IsNull = False) then
+  if (eName.Text <> EmptyStr) and
+    (eStartDate.Text <> EmptyStr) and
+    (eEndDate.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -245,7 +285,25 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtExpedition.SetExpedition(Value: TExpedition);
+begin
+  if Assigned(Value) then
+    FExpedition := Value;
+end;
+
+procedure TedtExpedition.SetRecord;
+begin
+  FExpedition.Name := eName.Text;
+  FExpedition.StartDate := StrToDate(eStartDate.Text);
+  FExpedition.EndDate := StrToDate(eEndDate.Text);
+  FExpedition.LocalityId := FLocalityId;
+  FExpedition.ProjectId := FProjectId;
+  FExpedition.Description := mDescription.Text;
 end;
 
 function TedtExpedition.ValidateFields: Boolean;
@@ -258,27 +316,23 @@ begin
   D := dsLink.DataSet;
 
   // Required fields
-  RequiredIsEmpty(D, tbExpeditions, 'expedition_name', Msgs);
+  //RequiredIsEmpty(D, tbExpeditions, 'expedition_name', Msgs);
   //RequiredIsEmpty(D, tbExpeditions, 'locality_id', Msgs);
-  RequiredIsEmpty(D, tbExpeditions, 'start_date', Msgs);
-  RequiredIsEmpty(D, tbExpeditions, 'end_date', Msgs);
+  //RequiredIsEmpty(D, tbExpeditions, 'start_date', Msgs);
+  //RequiredIsEmpty(D, tbExpeditions, 'end_date', Msgs);
 
   // Duplicated record
-  RecordDuplicated(tbExpeditions, 'expedition_id', 'full_name',
-    D.FieldByName('full_name').AsString, D.FieldByName('expedition_id').AsInteger);
+  RecordDuplicated(tbExpeditions, 'expedition_id', 'expedition_name', eName.Text, FExpedition.Id);
 
   // Dates
-  if D.FieldByName('start_date').AsString <> '' then
-    ValidDate(D.FieldByName('start_date').AsString, rsDateStart, Msgs);
-  if D.FieldByName('end_date').AsString <> '' then
-    ValidDate(D.FieldByName('end_date').AsString, rsDateEnd, Msgs);
-
-  if (D.FieldByName('start_date').AsString <> '') then
-    IsFutureDate(D.FieldByName('start_date').AsDateTime, Today,
-      AnsiLowerCase(rsDateStart), AnsiLowerCase(rsDateToday), Msgs);
-  if (D.FieldByName('end_date').AsString <> '') then
-    IsFutureDate(D.FieldByName('end_date').AsDateTime, Today,
-      AnsiLowerCase(rsDateEnd), AnsiLowerCase(rsDateToday), Msgs);
+  if eStartDate.Text <> EmptyStr then
+  begin
+    if ValidDate(eStartDate.Text, rsDateStart, Msgs) then
+      IsFutureDate(StrToDate(eStartDate.Text), Today, AnsiLowerCase(rsDateStart), AnsiLowerCase(rsDateToday), Msgs);
+  end;
+  if eEndDate.Text <> EmptyStr then
+    if ValidDate(eEndDate.Text, rsDateEnd, Msgs) then
+      IsFutureDate(StrToDate(eEndDate.Text), Today, AnsiLowerCase(rsDateEnd), AnsiLowerCase(rsDateToday), Msgs);
 
   if Msgs.Count > 0 then
   begin

@@ -123,23 +123,30 @@ object edtPerson: TedtPerson
           ParentFont = False
         end
         object eMunicipality: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 367
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          ButtonCursor = crDefault
           ButtonHint = 'Find municipality'
           ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 365
+          CustomEditMask = False
           DataField = 'municipality_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eMunicipalityButtonClick
         end
       end
@@ -572,23 +579,30 @@ object edtPerson: TedtPerson
           ParentFont = False
         end
         object eState: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 367
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          ButtonCursor = crDefault
           ButtonHint = 'Find state'
           ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 365
+          CustomEditMask = False
           DataField = 'state_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eStateButtonClick
         end
       end
@@ -623,23 +637,30 @@ object edtPerson: TedtPerson
           ParentFont = False
         end
         object eCountry: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 367
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          ButtonCursor = crDefault
           ButtonHint = 'Find country'
           ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 365
+          CustomEditMask = False
           DataField = 'country_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eCountryButtonClick
         end
       end
@@ -817,46 +838,60 @@ object edtPerson: TedtPerson
           ParentFont = False
         end
         object eBirthDate: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 176
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          ButtonCursor = crDefault
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 1
-          Images = DMM.iEdits
-          TextHint = 'DD/MM/YYYY'
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 176
+          CustomEditMask = False
           DataField = 'birth_date'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 1
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          TextHint = 'DD/MM/YYYY'
           OnButtonClick = eBirthDateButtonClick
           OnKeyDown = FormKeyDown
         end
         object eDeathDate: TDBEditButton
+          Cursor = crDefault
           Left = 208
           Height = 26
           Top = 22
           Width = 176
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
+          ButtonCursor = crDefault
           ButtonHint = 'Open calendar'
           ButtonWidth = 24
-          ImageIndex = 1
-          Images = DMM.iEdits
-          TextHint = 'DD/MM/YYYY'
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 176
+          CustomEditMask = False
           DataField = 'death_date'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 1
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
+          TextHint = 'DD/MM/YYYY'
           OnButtonClick = eDeathDateButtonClick
           OnKeyDown = FormKeyDown
         end
@@ -1074,23 +1109,30 @@ object edtPerson: TedtPerson
           ParentFont = False
         end
         object eInstitution: TDBEditButton
+          Cursor = crDefault
           Left = 16
           Height = 26
           Top = 22
           Width = 367
           AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          ButtonCursor = crDefault
           ButtonHint = 'Find institution'
           ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
+          CharCase = ecNormal
+          Color = clDefault
+          Constraints.MaxHeight = 28
+          Constraints.MinWidth = 365
+          CustomEditMask = False
           DataField = 'institution_name'
           DataSource = dsLink
-          CharCase = ecNormal
+          DirectInput = False
+          ImageIndex = 0
+          Images = DMM.iEdits
+          MaxLength = 0
+          ParentShowHint = False
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eInstitutionButtonClick
         end
       end

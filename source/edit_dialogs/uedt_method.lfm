@@ -1,24 +1,24 @@
 object edtMethod: TedtMethod
   Left = 373
-  Height = 365
+  Height = 342
   Top = 34
   Width = 404
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New method'
-  ClientHeight = 365
+  ClientHeight = 342
   ClientWidth = 404
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
+  LCLVersion = '4.0.0.1'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 322
+    Top = 299
     Width = 404
     Align = alTop
     LineColor = 9276813
@@ -28,7 +28,7 @@ object edtMethod: TedtMethod
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 324
+    Top = 301
     Width = 404
     Align = alTop
     AutoSize = True
@@ -42,7 +42,7 @@ object edtMethod: TedtMethod
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 404
-    TabOrder = 0
+    TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
@@ -71,28 +71,28 @@ object edtMethod: TedtMethod
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 322
+    Height = 299
     Top = 0
     Width = 404
     HorzScrollBar.Page = 404
-    VertScrollBar.Page = 322
+    VertScrollBar.Page = 299
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 322
+    ClientHeight = 299
     ClientWidth = 404
     Constraints.MinWidth = 220
-    TabOrder = 1
+    TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 322
+      Height = 299
       Top = 0
       Width = 404
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 322
+      ClientHeight = 299
       ClientWidth = 404
       TabOrder = 0
       object pName: TPanel
@@ -123,15 +123,13 @@ object edtMethod: TedtMethod
           ParentColor = False
           ParentFont = False
         end
-        object eName: TDBEdit
+        object eName: TEdit
           Left = 16
           Height = 23
           Top = 23
           Width = 372
-          DataField = 'method_name'
-          DataSource = dsLink
           Constraints.MinWidth = 372
-          MaxLength = 0
+          MaxLength = 100
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
@@ -165,15 +163,13 @@ object edtMethod: TedtMethod
           ParentColor = False
           ParentFont = False
         end
-        object eEbirdName: TDBEdit
+        object eEbirdName: TEdit
           Left = 16
           Height = 23
           Top = 23
           Width = 372
-          DataField = 'ebird_name'
-          DataSource = dsLink
           Constraints.MinWidth = 372
-          MaxLength = 0
+          MaxLength = 60
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
@@ -202,20 +198,18 @@ object edtMethod: TedtMethod
           Top = 4
           Width = 220
           BorderSpacing.Top = 4
-          Caption = 'Acronym: *'
+          Caption = 'Abbreviation: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eAcronym: TDBEdit
+        object eAbbreviation: TEdit
           Left = 16
           Height = 23
           Top = 23
           Width = 220
-          DataField = 'method_acronym'
-          DataSource = dsLink
           Constraints.MinWidth = 220
-          MaxLength = 0
+          MaxLength = 20
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
@@ -223,7 +217,7 @@ object edtMethod: TedtMethod
       end
       object pDescription: TPanel
         Left = 0
-        Height = 136
+        Height = 113
         Top = 170
         Width = 404
         Align = alTop
@@ -234,7 +228,7 @@ object edtMethod: TedtMethod
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 136
+        ClientHeight = 113
         ClientWidth = 404
         ParentBackground = False
         TabOrder = 3
@@ -250,14 +244,12 @@ object edtMethod: TedtMethod
           ParentColor = False
           ParentFont = False
         end
-        object mDescription: TDBMemo
+        object mDescription: TMemo
           Left = 16
-          Height = 113
+          Height = 90
           Top = 23
           Width = 372
           Align = alTop
-          DataField = 'description'
-          DataSource = dsLink
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown

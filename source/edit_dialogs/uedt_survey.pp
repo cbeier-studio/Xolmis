@@ -21,33 +21,31 @@ unit uedt_survey;
 interface
 
 uses
-  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  DBCtrls, DBEditButton, atshapelinebgra, BCPanel;
+  Classes, EditBtn, Spin, SysUtils, Character, DB, SQLDB, Forms, Controls, Graphics,
+  Dialogs, ExtCtrls, StdCtrls, DBCtrls, DBEditButton, atshapelinebgra, BCPanel, cbs_sampling;
 
 type
 
   { TedtSurvey }
 
   TedtSurvey = class(TForm)
-    eDate: TDBEditButton;
-    eDuration: TDBEdit;
-    eMethod: TDBEditButton;
-    eObserversTally: TDBEdit;
-    eLatitude: TDBEditButton;
-    eEndLatitude: TDBEditButton;
-    eLongitude: TDBEditButton;
-    eEndLongitude: TDBEditButton;
-    eArea: TDBEdit;
-    eDistance: TDBEdit;
-    eExpedition: TDBEditButton;
-    eTotalNets: TDBEdit;
-    eSampleId: TDBEdit;
-    eStartTime: TDBEdit;
-    eEndTime: TDBEdit;
-    eLocality: TDBEditButton;
-    eNetStation: TDBEditButton;
-    eProject: TDBEditButton;
+    eSampleId: TEdit;
+    eEndLatitude: TEditButton;
+    eLongitude: TEditButton;
+    eLatitude: TEditButton;
+    eEndLongitude: TEditButton;
+    eStartTime: TEdit;
+    eEndTime: TEdit;
+    eDate: TEditButton;
+    eExpedition: TEditButton;
+    eMethod: TEditButton;
+    eLocality: TEditButton;
+    eNetStation: TEditButton;
+    eProject: TEditButton;
     dsLink: TDataSource;
+    eArea: TFloatSpinEdit;
+    eDistance: TFloatSpinEdit;
+    txtNetEffort: TLabel;
     lblNetStation: TLabel;
     lblEndLatitude: TLabel;
     lblDistance: TLabel;
@@ -71,9 +69,9 @@ type
     lblLocality: TLabel;
     lblProject: TLabel;
     lineBottom: TShapeLineBGRA;
-    mNotes: TDBMemo;
-    mHabitat: TDBMemo;
-    mNetRounds: TDBMemo;
+    mHabitat: TMemo;
+    mNotes: TMemo;
+    mNetRounds: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
     pNotes: TPanel;
@@ -94,32 +92,45 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
-    txtNetEffort: TDBText;
+    eDuration: TSpinEdit;
+    eObserversTally: TSpinEdit;
+    eTotalNets: TSpinEdit;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDateButtonClick(Sender: TObject);
+    procedure eDateEditingDone(Sender: TObject);
     procedure eDurationKeyPress(Sender: TObject; var Key: char);
     procedure eEndLongitudeButtonClick(Sender: TObject);
     procedure eExpeditionButtonClick(Sender: TObject);
-    procedure eExpeditionDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eExpeditionKeyPress(Sender: TObject; var Key: char);
     procedure eLocalityButtonClick(Sender: TObject);
-    procedure eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eLocalityKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
+    procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eMethodButtonClick(Sender: TObject);
     procedure eMethodKeyPress(Sender: TObject; var Key: char);
     procedure eNetStationButtonClick(Sender: TObject);
-    procedure eNetStationDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eNetStationKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
-    procedure eProjectDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eProjectKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FSurvey: TSurvey;
+    FExpeditionId, FMethodId, FLocalityId, FSamplingPlotId, FProjectId: Integer;
+    procedure SetSurvey(Value: TSurvey);
+    procedure GetRecord;
+    procedure SetRecord;
+    procedure GetFullName;
+    procedure AutoCalcFields;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Survey: TSurvey read FSurvey write SetSurvey;
   end;
 
 var
@@ -129,7 +140,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_themes,
-  udm_main, uDarkStyleParams;
+  cbs_getvalue, cbs_fullnames, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -152,17 +163,51 @@ begin
   eEndLatitude.Images := DMM.iEditsDark;
 end;
 
+procedure TedtSurvey.AutoCalcFields;
+var
+  Qry: TSQLQuery;
+begin
+  if not FIsNew then
+  begin
+    Qry := TSQLQuery.Create(nil);
+    with Qry, SQL do
+    try
+      SQLConnection := DMM.sqlCon;
+      SQLTransaction := DMM.sqlTrans;
+
+      Add('SELECT CAST((SUM(net_area) + SUM(open_time_total)) AS REAL)');
+      Add('FROM nets_effort');
+      Add('WHERE (survey_id = :survey_id) AND (active_status = 1)');
+      Open;
+      if RecordCount > 0 then
+        txtNetEffort.Caption := FloatToStr(Fields[0].AsFloat)
+      else
+        txtNetEffort.Caption := '0';
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
+  end;
+end;
+
 procedure TedtSurvey.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSurvey.eDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eDate, dsLink.DataSet, 'survey_date');
+  CalendarDlg(eDate.Text, eDate, Dt);
+end;
+
+procedure TedtSurvey.eDateEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSurvey.eDurationKeyPress(Sender: TObject; var Key: char);
@@ -172,86 +217,180 @@ begin
   // <ENTER/RETURN> Key
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSurvey.eEndLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'end_longitude', 'end_latitude');
+  GeoEditorDlg(TControl(Sender), eEndLongitude, eEndLatitude);
 end;
 
 procedure TedtSurvey.eExpeditionButtonClick(Sender: TObject);
 begin
-  FindDlg(tbExpeditions, eExpedition, dsLink.DataSet, 'expedition_id', 'expedition_name');
+  FindDlg(tbExpeditions, eExpedition, FExpeditionId);
 end;
 
-procedure TedtSurvey.eExpeditionDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSurvey.eExpeditionKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   // Alphabetic search in numeric fields
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbExpeditions, eExpedition, dsLink.DataSet, 'expedition_id', 'expedition_name', False, Key);
+    FindDlg(tbExpeditions, eExpedition, FExpeditionId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('expedition_id').Clear;
-    dsLink.DataSet.FieldByName('expedition_name').Clear;
+    FExpeditionId := 0;
+    eExpedition.Text := EmptyStr;
     Key := #0;
   end;
 
   // <ENTER> Key
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSurvey.eLocalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name');
+  FindSiteDlg([gfAll], eLocality, FLocalityId);
 end;
 
-procedure TedtSurvey.eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSurvey.eLocalityKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   // Alphabetic search in numeric fields
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name', Key);
+    FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('locality_id').Clear;
-    dsLink.DataSet.FieldByName('locality_name').Clear;
+    FLocalityId := 0;
+    eLocality.Text := EmptyStr;
     Key := #0;
   end;
 
   // <ENTER> Key
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSurvey.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'start_longitude', 'start_latitude');
+  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+end;
+
+procedure TedtSurvey.eLongitudeKeyPress(Sender: TObject; var Key: char);
+const
+  AllowedChars = ['0'..'9', ',', '.', '+', '-', #8, #13, #27];
+var
+  EditText: String;
+  PosDecimal: Integer;
+  DecimalValue: Extended;
+begin
+  FormKeyPress(Sender, Key);
+
+  sbSave.Enabled := IsRequiredFilled;
+
+  EditText := EmptyStr;
+  PosDecimal := 0;
+  DecimalValue := 0;
+
+  if not (Key in AllowedChars) then
+  begin
+    Key := #0;
+    Exit;
+  end;
+
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+    Exit;
+  end;
+
+  if (Sender is TEdit) then
+    EditText := TEdit(Sender).Text
+  else
+  if (Sender is TEditButton) then
+    EditText := TEditButton(Sender).Text;
+  PosDecimal := Pos(FormatSettings.DecimalSeparator, EditText);
+
+  // Decimal separator
+  if (Key in [',', '.']) then
+  begin
+    if (PosDecimal = 0) then
+      Key := FormatSettings.DecimalSeparator
+    else
+      Key := #0;
+    Exit;
+  end;
+
+  // Numeric signal
+  if (Key in ['+', '-']) then
+  begin
+    if (Length(EditText) > 0) then
+    begin
+      if TryStrToFloat(EditText, DecimalValue) then
+      begin
+        if ((DecimalValue > 0) and (Key = '-')) or ((DecimalValue < 0) and (Key = '+')) then
+          DecimalValue := DecimalValue * -1.0;
+        EditText := FloatToStr(DecimalValue);
+
+        if (Sender is TEdit) then
+        begin
+          TEdit(Sender).Text := EditText;
+          TEdit(Sender).SelStart := Length(EditText);
+        end
+        else
+        if (Sender is TEditButton) then
+        begin
+          TEditButton(Sender).Text := EditText;
+          TEditButton(Sender).SelStart := Length(EditText);
+        end;
+      end;
+      Key := #0;
+    end
+    else
+    begin
+      if (Key = '+') then
+        Key := #0;
+    end;
+
+    Exit;
+  end;
 end;
 
 procedure TedtSurvey.eMethodButtonClick(Sender: TObject);
 begin
-  FindDlg(tbMethods, eMethod, dsLink.DataSet, 'method_id', 'method_name');
+  FindDlg(tbMethods, eMethod, FMethodId);
 end;
 
 procedure TedtSurvey.eMethodKeyPress(Sender: TObject; var Key: char);
@@ -261,83 +400,92 @@ begin
   // Alphabetic search in numeric fields
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbMethods, eMethod, dsLink.DataSet, 'method_id', 'method_name', False, Key);
+    FindDlg(tbMethods, eMethod, FMethodId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('method_id').Clear;
-    dsLink.DataSet.FieldByName('method_name').Clear;
+    FMethodId := 0;
+    eMethod.Text := EmptyStr;
     Key := #0;
   end;
 
   // <ENTER> Key
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSurvey.eNetStationButtonClick(Sender: TObject);
 begin
-  FindDlg(tbSamplingPlots, eNetStation, dsLink.DataSet, 'net_station_id', 'net_station_name');
+  FindDlg(tbSamplingPlots, eNetStation, FSamplingPlotId);
 end;
 
-procedure TedtSurvey.eNetStationDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSurvey.eNetStationKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   // Alphabetic search in numeric fields
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbSamplingPlots, eNetStation, dsLink.DataSet, 'net_station_id', 'net_station_name', False, Key);
+    FindDlg(tbSamplingPlots, eNetStation, FSamplingPlotId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('net_station_id').Clear;
-    dsLink.DataSet.FieldByName('net_station_name').Clear;
+    FSamplingPlotId := 0;
+    eNetStation.Text := EmptyStr;
     Key := #0;
   end;
 
   // <ENTER> Key
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSurvey.eProjectButtonClick(Sender: TObject);
 begin
-  FindDlg(tbProjects, eProject, dsLink.DataSet, 'project_id', 'project_name');
+  FindDlg(tbProjects, eProject, FProjectId);
 end;
 
-procedure TedtSurvey.eProjectDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSurvey.eProjectKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   // Alphabetic search in numeric fields
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbProjects, eProject, dsLink.DataSet, 'project_id', 'project_name', False, Key);
+    FindDlg(tbProjects, eProject, FProjectId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('project_id').Clear;
-    dsLink.DataSet.FieldByName('project_name').Clear;
+    FProjectId := 0;
+    eProject.Text := EmptyStr;
     Key := #0;
   end;
 
   // <ENTER> Key
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
@@ -348,7 +496,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not (sbSave.Enabled) then
       Exit;
 
     sbSaveClick(nil);
@@ -372,18 +521,63 @@ begin
     ApplyDarkMode;
 
   if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSurvey)])
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSurvey)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSurvey)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtSurvey.GetFullName;
+begin
+  FSurvey.FullName := GetSurveyFullname(FSurvey.SurveyDate, FLocalityId, FMethodId, FSamplingPlotId, FSurvey.SampleId);
+end;
+
+procedure TedtSurvey.GetRecord;
+begin
+  FExpeditionId := FSurvey.ExpeditionId;
+  eExpedition.Text := GetName('expeditions', 'expedition_name', 'expedition_id', FExpeditionId);
+  eDate.Text := DateToStr(FSurvey.SurveyDate);
+  eDuration.Value := FSurvey.Duration;
+  eStartTime.Text := TimeToStr(FSurvey.StartTime);
+  eEndTime.Text := TimeToStr(FSurvey.EndTime);
+  FMethodId := FSurvey.MethodId;
+  eMethod.Text := GetName('methods', 'method_name', 'method_id', FMethodId);
+  FLocalityId := FSurvey.LocalityId;
+  eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+  FSamplingPlotId := FSurvey.NetStationId;
+  eNetStation.Text := GetName('sampling_plots', 'full_name', 'sampling_plot_id', FSamplingPlotId);
+  FProjectId := FSurvey.ProjectId;
+  eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
+  eLongitude.Text := FloatToStr(FSurvey.StartLongitude);
+  eLatitude.Text := FloatToStr(FSurvey.StartLatitude);
+  eEndLongitude.Text := FloatToStr(FSurvey.EndLongitude);
+  eEndLatitude.Text := FloatToStr(FSurvey.EndLatitude);
+  eObserversTally.Value := FSurvey.ObserversTally;
+  eSampleId.Text := FSurvey.SampleId;
+  eArea.Value := FSurvey.TotalArea;
+  eDistance.Value := FSurvey.TotalDistance;
+  eTotalNets.Value := FSurvey.TotalNets;
+  mHabitat.Text := FSurvey.Habitat;
+  mNetRounds.Text := FSurvey.NetRounds;
+  mNotes.Text := FSurvey.Notes;
+
+  AutoCalcFields;
 end;
 
 function TedtSurvey.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('locality_id').AsInteger <> 0) and
-    (dsLink.DataSet.FieldByName('method_id').AsInteger <> 0) and
-    (dsLink.DataSet.FieldByName('survey_date').IsNull = False) then
+  //if (dsLink.DataSet.FieldByName('locality_id').AsInteger <> 0) and
+  //  (dsLink.DataSet.FieldByName('method_id').AsInteger <> 0) and
+  //  (dsLink.DataSet.FieldByName('survey_date').IsNull = False) then
+  if (eDate.Text <> EmptyStr) and
+    (FMethodId > 0) and
+    (FLocalityId > 0) then
     Result := True;
 end;
 
@@ -393,43 +587,86 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtSurvey.SetRecord;
+begin
+  FSurvey.ExpeditionId   := FExpeditionId;
+  FSurvey.SurveyDate     := StrToDate(eDate.Text);
+  FSurvey.Duration       := eDuration.Value;
+  FSurvey.StartTime      := StrToTime(eStartTime.Text);
+  FSurvey.EndTime        := StrToTime(eEndTime.Text);
+  FSurvey.MethodId       := FMethodId;
+  FSurvey.LocalityId     := FLocalityId;
+  FSurvey.NetStationId   := FSamplingPlotId;
+  FSurvey.ProjectId      := FProjectId;
+  FSurvey.StartLongitude := StrToFloat(eLongitude.Text);
+  FSurvey.StartLatitude  := StrToFloat(eLatitude.Text);
+  FSurvey.EndLongitude   := StrToFloat(eEndLongitude.Text);
+  FSurvey.EndLatitude    := StrToFloat(eEndLatitude.Text);
+  FSurvey.ObserversTally := eObserversTally.Value;
+  FSurvey.SampleId       := eSampleId.Text;
+  FSurvey.TotalArea      := eArea.Value;
+  FSurvey.TotalDistance  := eDistance.Value;
+  FSurvey.TotalNets      := eTotalNets.Value;
+  FSurvey.Habitat        := mHabitat.Text;
+  FSurvey.NetRounds      := mNetRounds.Text;
+  FSurvey.Notes          := mNotes.Text;
+
+  GetFullName;
+end;
+
+procedure TedtSurvey.SetSurvey(Value: TSurvey);
+begin
+  if Assigned(Value) then
+    FSurvey := Value;
 end;
 
 function TedtSurvey.ValidateFields: Boolean;
 var
   Msgs: TStrings;
+  Msg: String;
 begin
   Result := True;
+  Msg := EmptyStr;
   Msgs := TStringList.Create;
 
   // Required fields
-  RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'survey_date', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'locality_id', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'method_id', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'survey_date', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'locality_id', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'method_id', Msgs);
 
   // Duplicated record
   // RegistroDuplicado(WorkingTable.TableName,'PES_NOME',cdsConsultaPES_NOME.AsWideString,cdsConsultaPES_CODIGO.AsInteger);
 
   // Foreign keys
-  ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('locality_id').AsInteger,
-    rsCaptionLocality, Msgs);
-  ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('municipality_id').AsInteger,
-    rsCaptionMunicipality, Msgs);
-  ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('state_id').AsInteger,
-    rsCaptionState, Msgs);
-  ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('country_id').AsInteger,
-    rsCaptionCountry, Msgs);
-  ForeignValueExists(tbMethods, 'method_id', dsLink.DataSet.FieldByName('method_id').AsInteger,
-    rsCaptionMethod, Msgs);
-  ForeignValueExists(tbSamplingPlots, 'net_station_id', dsLink.DataSet.FieldByName('net_station_id').AsInteger,
-    rsCaptionSamplingPlot, Msgs);
-  ForeignValueExists(tbProjects, 'project_id', dsLink.DataSet.FieldByName('project_id').AsInteger,
-    rsCaptionProject, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('locality_id').AsInteger,
+  //  rsCaptionLocality, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('municipality_id').AsInteger,
+  //  rsCaptionMunicipality, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('state_id').AsInteger,
+  //  rsCaptionState, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('country_id').AsInteger,
+  //  rsCaptionCountry, Msgs);
+  //ForeignValueExists(tbMethods, 'method_id', dsLink.DataSet.FieldByName('method_id').AsInteger,
+  //  rsCaptionMethod, Msgs);
+  //ForeignValueExists(tbSamplingPlots, 'net_station_id', dsLink.DataSet.FieldByName('net_station_id').AsInteger,
+  //  rsCaptionSamplingPlot, Msgs);
+  //ForeignValueExists(tbProjects, 'project_id', dsLink.DataSet.FieldByName('project_id').AsInteger,
+  //  rsCaptionProject, Msgs);
 
   // Dates
-  if dsLink.DataSet.FieldByName('survey_date').AsString <> EmptyStr then
-    ValidDate(dsLink.DataSet.FieldByName('survey_date').AsString, rsCaptionDate, Msgs);
+  if eDate.Text <> EmptyStr then
+    ValidDate(eDate.Text, rsCaptionDate, Msgs);
+
+  // Geographical coordinates
+  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+  ValueInRange(StrToFloat(eEndLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  ValueInRange(StrToFloat(eEndLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   if Msgs.Count > 0 then
   begin

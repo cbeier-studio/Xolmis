@@ -131,7 +131,7 @@ uses
   udlg_export, cbs_datacolumns, cbs_math, udlg_recverifications,
   uedt_recverification, ufrm_imageviewer, uthread_dashboard, ufrm_printpreview,
   cbs_print, uedt_audioinfo, uedt_documentinfo, udlg_import, udlg_importxmobile,
-  uedt_vegetation, ufrm_taxa, udlg_exportpreview;
+  uedt_vegetation, ufrm_taxa, udlg_exportpreview, cbs_users;
 
 {$R *.res}
 
