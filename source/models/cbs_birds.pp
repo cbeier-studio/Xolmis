@@ -17,7 +17,6 @@
 unit cbs_birds;
 
 {$mode objfpc}{$H+}
-{$modeSwitch advancedRecords}
 
 interface
 
@@ -40,6 +39,10 @@ type
   TBodyPart = (bpRightTibia, bpLeftTibia, bpRightTarsus, bpLeftTarsus, bpRightWing, bpLeftWing, bpNeck);
   TMarkType = (mkButtEndBand, mkFlag, mkCollar, mkWingTag, mkTriangularBand, mkLockOnBand, mkRivetBand,
     mkClosedBand, mkOther);
+  TBandStatus = (bstAvailable, bstUsed, bstRemoved, bstBroken, bstLost, bstTransfered);
+  TBandSource = (bscAcquiredFromSupplier, bscTransferBetweenBanders, bscLivingBirdBandedByOthers,
+    bscDeadBirdBandedByOthers, bscFoundLoose);
+  TBandEvent = (bevOrder, bevReceive, bevTransfer, bevRetrieve, bevReport, bevUse, bevDischarge);
 
   TBirdMark = class
     BodyPart: TBodyPart;
@@ -52,6 +55,13 @@ type
 
   TBirdMarks = specialize TObjectList<TBirdMark>;
 
+const
+  CEMAVEBandSizes: array[1..19] of Char = ('A','C','D','E','F','G','H','J','L','M','N','P','R','S','T','U','V','X','Z');
+  BandStatusStr: array[TBandStatus] of Char = ('D', 'U', 'R', 'Q', 'P', 'T');
+  MarkTypesStr: array[TMarkType] of Char = ('A', 'F', 'N', 'W', 'T', 'L', 'R', 'C', 'O');
+  BandSourceStr: array[TBandSource] of Char = ('A', 'T', 'L', 'D', 'F');
+  BandEventStr: array[TBandEvent] of Char = ('O', 'C', 'T', 'R', 'P', 'U', 'D');
+
 type
 
   { TBand }
@@ -61,12 +71,12 @@ type
     FFullName: String;
     FSize: String;
     FNumber: Integer;
-    FStatus: String;
-    FSource: String;
+    FStatus: TBandStatus;
+    FSource: TBandSource;
     FPrefix: String;
     FSuffix: String;
     FBandColor: String;
-    FBandType: String;
+    FBandType: TMarkType;
     FSupplierId: Integer;
     FCarrierId: Integer;
     FIndividualId: Integer;
@@ -90,12 +100,12 @@ type
     property FullName: String read FFullName write FFullName;
     property Size: String read FSize write FSize;
     property Number: Integer read FNumber write FNumber;
-    property Status: String read FStatus write FStatus;
-    property Source: String read FSource write FSource;
+    property Status: TBandStatus read FStatus write FStatus;
+    property Source: TBandSource read FSource write FSource;
     property Prefix: String read FPrefix write FPrefix;
     property Suffix: String read FSuffix write FSuffix;
     property BandColor: String read FBandColor write FBandColor;
-    property BandType: String read FBandType write FBandType;
+    property BandType: TMarkType read FBandType write FBandType;
     property SupplierId: Integer read FSupplierId write FSupplierId;
     property CarrierId: Integer read FCarrierId write FCarrierId;
     property IndividualId: Integer read FIndividualId write FIndividualId;
@@ -111,7 +121,7 @@ type
   TBandHistory = class(TXolmisRecord)
   protected
     FBandId: Integer;
-    FEventType: String;
+    FEventType: TBandEvent;
     FEventDate: TDate;
     FOrderNumber: Integer;
     FSupplierId: Integer;
@@ -122,6 +132,7 @@ type
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
     procedure GetData(aKey: Integer);
+    procedure LoadFromDataSet(aDataSet: TDataSet);
     function Diff(aOld: TBandHistory; var aList: TStrings): Boolean;
     procedure Insert;
     procedure Update;
@@ -131,7 +142,7 @@ type
     function ToJSON: String;
   published
     property BandId: Integer read FBandId write FBandId;
-    property EventType: String read FEventType write FEventType;
+    property EventType: TBandEvent read FEventType write FEventType;
     property EventDate: TDate read FEventDate write FEventDate;
     property OrderNumber: Integer read FOrderNumber write FOrderNumber;
     property SupplierId: Integer read FSupplierId write FSupplierId;
@@ -235,7 +246,14 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+type
+  TCaptureType = (cptNew, cptRecapture, cptSameDay, cptChangeBand, cptUnbanded);
+  TSubjectStatus = (sstNormal, sstInjured, sstWingSprain, sstStressed, sstDead);
+
 const
+  CaptureTypeStr: array[TCaptureType] of Char = ('N', 'R', 'S', 'C', 'U');
+  SubjectStatusStr: array[TSubjectStatus] of Char = ('N', 'I', 'W', 'X', 'D');
+
   CloacalProtuberanceValues: array [0 .. 4] of String = ('U', 'N', 'S', 'M', 'L');
   BroodPatchValues: array [0 .. 4] of String          = ('F', 'N', 'V', 'W', 'O');
   FatValues: array [0 .. 7] of String                 = ('N', 'T', 'L', 'H', 'F', 'B', 'G', 'V');
@@ -271,8 +289,8 @@ type
     FLatitude: Extended;
     FBanderId: Integer;
     FAnnotatorId: Integer;
-    FSubjectStatus: String;
-    FCaptureType: String;
+    FSubjectStatus: TSubjectStatus;
+    FCaptureType: TCaptureType;
     FSubjectSex: TSex;
     FHowSexed: String;
     FBandId: Integer;
@@ -373,8 +391,8 @@ type
     property Latitude: Extended read FLatitude write FLatitude;
     property BanderId: Integer read FBanderId write FBanderId;
     property AnnotatorId: Integer read FAnnotatorId write FAnnotatorId;
-    property SubjectStatus: String read FSubjectStatus write FSubjectStatus;
-    property CaptureType: String read FCaptureType write FCaptureType;
+    property SubjectStatus: TSubjectStatus read FSubjectStatus write FSubjectStatus;
+    property CaptureType: TCaptureType read FCaptureType write FCaptureType;
     property SubjectSex: TSex read FSubjectSex write FSubjectSex;
     property HowSexed: String read FHowSexed write FHowSexed;
     property BandId: Integer read FBandId write FBandId;
@@ -715,7 +733,7 @@ begin
   FBandId := 0;
   FEventDate := StrToDate('30/12/1500');
   FOrderNumber := 0;
-  FEventType := EmptyStr;
+  FEventType := bevUse;
   FSupplierId := 0;
   FRequesterId := 0;
   FSenderId := 0;
@@ -758,46 +776,35 @@ end;
 procedure TBandHistory.GetData(aKey: Integer);
 var
   Qry: TSQLQuery;
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
 begin
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Clear;
-    Add('SELECT * FROM band_history');
+    Add('SELECT ' +
+      'event_id, ' +
+      'band_id, ' +
+      'event_type, ' +
+      'event_date, ' +
+      'order_number, ' +
+      'supplier_id, ' +
+      'sender_id, ' +
+      'requester_id, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM band_history');
     Add('WHERE event_id = :cod');
     ParamByName('COD').AsInteger := aKey;
     Open;
     if RecordCount > 0 then
-    begin
-      FId := FieldByName('event_id').AsInteger;
-      FBandId := FieldByName('band_id').AsInteger;
-      FEventDate := FieldByName('event_date').AsDateTime;
-      FOrderNumber := FieldByName('order_number').AsInteger;
-      FEventType := FieldByName('event_type').AsString;
-      FSupplierId := FieldByName('supplier_id').AsInteger;
-      FRequesterId := FieldByName('requester_id').AsInteger;
-      FSenderId := FieldByName('sender_id').AsInteger;
-      FNotes := FieldByName('notes').AsString;
-      FUserInserted := FieldByName('user_inserted').AsInteger;
-      FUserUpdated := FieldByName('user_updated').AsInteger;
-      // SQLite may store date and time data as ISO8601 string or Julian date real formats
-      // so it checks in which format it is stored before load the value
-      if not (FieldByName('insert_date').IsNull) then
-        if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-          FInsertDate := InsertTimeStamp
-        else
-          FInsertDate := FieldByName('insert_date').AsDateTime;
-      if not (FieldByName('update_date').IsNull) then
-        if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-          FUpdateDate := UpdateTimeStamp
-        else
-          FUpdateDate := FieldByName('update_date').AsDateTime;
-      FExported := FieldByName('exported_status').AsBoolean;
-      FMarked := FieldByName('marked_status').AsBoolean;
-      FActive := FieldByName('active_status').AsBoolean;
-    end;
+      LoadFromDataSet(Qry);
     Close;
   finally
     FreeAndNil(Qry);
@@ -852,7 +859,7 @@ begin
       'insert_date) ');
     Add('VALUES (' +
       ':band_id, ' +
-      ':event_date, ' +
+      'date(:event_date), ' +
       ':notes, ' +
       ':event_type, ' +
       ':supplier_id, ' +
@@ -864,7 +871,7 @@ begin
     ParamByName('band_id').AsInteger := FBandId;
     ParamByName('event_date').AsString := FormatDateTime('yyyy-MM-dd', FEventDate);
     ParamByName('notes').AsString := FNotes;
-    ParamByName('event_type').AsString := FEventType;
+    ParamByName('event_type').AsString := BandEventStr[FEventType];
     if FSupplierId > 0 then
       ParamByName('supplier_id').AsInteger := FSupplierId
     else
@@ -893,6 +900,52 @@ begin
   end;
 end;
 
+procedure TBandHistory.LoadFromDataSet(aDataSet: TDataSet);
+var
+  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('event_id').AsInteger;
+    FBandId := FieldByName('band_id').AsInteger;
+    FEventDate := FieldByName('event_date').AsDateTime;
+    FOrderNumber := FieldByName('order_number').AsInteger;
+    case FieldByName('event_type').AsString of
+      'O': FEventType := bevOrder;
+      'C': FEventType := bevReceive;
+      'T': FEventType := bevTransfer;
+      'R': FEventType := bevRetrieve;
+      'P': FEventType := bevReport;
+      'U': FEventType := bevUse;
+      'D': FEventType := bevDischarge;
+    end;
+    FSupplierId := FieldByName('supplier_id').AsInteger;
+    FRequesterId := FieldByName('requester_id').AsInteger;
+    FSenderId := FieldByName('sender_id').AsInteger;
+    FNotes := FieldByName('notes').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    if not (FieldByName('insert_date').IsNull) then
+      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
+        FInsertDate := InsertTimeStamp
+      else
+        FInsertDate := FieldByName('insert_date').AsDateTime;
+    if not (FieldByName('update_date').IsNull) then
+      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
+        FUpdateDate := UpdateTimeStamp
+      else
+        FUpdateDate := FieldByName('update_date').AsDateTime;
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
 procedure TBandHistory.Save;
 begin
   if FId = 0 then
@@ -910,7 +963,7 @@ begin
     JSONObject.Add('Band', FBandId);
     JSONObject.Add('Date', FEventDate);
     JSONObject.Add('Notes', FNotes);
-    JSONObject.Add('Type', FEventType);
+    JSONObject.Add('Type', BandEventStr[FEventType]);
     JSONObject.Add('Supplier', FSupplierId);
     JSONObject.Add('Order number', FOrderNumber);
     JSONObject.Add('Requester', FRequesterId);
@@ -934,7 +987,7 @@ begin
     Clear;
     Add('UPDATE band_history SET ' +
       'band_id = :band_id, ' +
-      'event_date = :event_date, ' +
+      'event_date = date(:event_date), ' +
       'notes = :notes, ' +
       'event_type = :event_type, ' +
       'supplier_id = :supplier_id, ' +
@@ -947,7 +1000,7 @@ begin
     ParamByName('band_id').AsInteger := FBandId;
     ParamByName('event_date').AsString := FormatDateTime('yyyy-MM-dd', FEventDate);
     ParamByName('notes').AsString := FNotes;
-    ParamByName('event_type').AsString := FEventType;
+    ParamByName('event_type').AsString := BandEventStr[FEventType];
     if FSupplierId > 0 then
       ParamByName('supplier_id').AsInteger := FSupplierId
     else
@@ -3055,8 +3108,8 @@ begin
   FLongitude := 0.0;
   FBanderId := 0;
   FAnnotatorId := 0;
-  FSubjectStatus := EmptyStr;
-  FCaptureType := EmptyStr;
+  FSubjectStatus := sstNormal;
+  FCaptureType := cptNew;
   FSubjectSex := sexUnknown;
   FHowSexed := EmptyStr;
   FBandId := 0;
@@ -3379,8 +3432,21 @@ begin
     FLongitude := FieldByName('longitude').AsFloat;
     FBanderId := FieldByName('bander_id').AsInteger;
     FAnnotatorId := FieldByName('annotator_id').AsInteger;
-    FSubjectStatus := FieldByName('subject_status').AsString;
-    FCaptureType := FieldByName('capture_type').AsString;
+    case FieldByName('subject_status').AsString of
+      'N': FSubjectStatus := sstNormal;
+      'I': FSubjectStatus := sstInjured;
+      'W': FSubjectStatus := sstWingSprain;
+      'X': FSubjectStatus := sstStressed;
+      'D': FSubjectStatus := sstDead;
+    end;
+    case FieldByName('capture_type').AsString of
+      'N': FCaptureType := cptNew;
+      'R': FCaptureType := cptRecapture;
+      'S': FCaptureType := cptSameDay;
+      'C': FCaptureType := cptChangeBand;
+    else
+      FCaptureType := cptUnbanded;
+    end;
     case FieldByName('subject_sex').AsString of
       'M': FSubjectSex := sexMale;
       'F': FSubjectSex := sexFemale;
@@ -3563,8 +3629,8 @@ begin
       ':full_name, ' +
       ':taxon_id, ' +
       ':individual_id, ' +
-      ':capture_date, ' +
-      ':capture_time, ' +
+      'date(:capture_date), ' +
+      'time(:capture_time), ' +
       ':locality_id, ' +
       ':net_station_id, ' +
       ':net_id, ' +
@@ -3620,7 +3686,7 @@ begin
 
     ParamByName('survey_id').AsInteger := FSurveyId;
     ParamByName('full_name').AsString :=
-      GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex], FCaptureType, FCycleCode, False);
+      GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex], CaptureTypeStr[FCaptureType], FCycleCode, False);
     ParamByName('taxon_id').AsInteger := FTaxonId;
     ParamByName('individual_id').AsInteger := FIndividualId;
     ParamByName('capture_date').AsString := FormatDateTime('yyyy-mm-dd', FCaptureDate);
@@ -3641,8 +3707,8 @@ begin
       ParamByName('longitude').AsFloat := FLongitude;
     ParamByName('bander_id').AsInteger := FBanderId;
     ParamByName('annotator_id').AsInteger := FAnnotatorId;
-    ParamByName('subject_status').AsString := FSubjectStatus;
-    ParamByName('capture_type').AsString := FCaptureType;
+    ParamByName('subject_status').AsString := SubjectStatusStr[FSubjectStatus];
+    ParamByName('capture_type').AsString := CaptureTypeStr[FCaptureType];
     ParamByName('subject_sex').AsString := Sexes[FSubjectSex];
     ParamByName('how_sexed').AsString := FHowSexed;
     if (FBandId = 0) then
@@ -3858,8 +3924,8 @@ begin
     JSONObject.Add('Latitude', FLatitude);
     JSONObject.Add('Bander', FBanderId);
     JSONObject.Add('Annotator', FAnnotatorId);
-    JSONObject.Add('Subject status', FSubjectStatus);
-    JSONObject.Add('Type', FCaptureType);
+    JSONObject.Add('Subject status', SubjectStatusStr[FSubjectStatus]);
+    JSONObject.Add('Type', CaptureTypeStr[FCaptureType]);
     JSONObject.Add('Sex', Sexes[FSubjectSex]);
     JSONObject.Add('How was sexed', FHowSexed);
     JSONObject.Add('Band', FBandId);
@@ -3927,8 +3993,8 @@ begin
       'taxon_id = :taxon_id, ' +
       'individual_id = :individual_id, ' +
       'project_id = :project_id, ' +
-      'capture_date = :capture_date, ' +
-      'capture_time = :capture_time, ' +
+      'capture_date = date(:capture_date), ' +
+      'capture_time = time(:capture_time), ' +
       'locality_id = :locality_id, ' +
       'net_station_id = :net_station_id, ' +
       'net_id = :net_id, ' +
@@ -4006,7 +4072,7 @@ begin
     Add('WHERE (capture_id = :capture_id)');
     ParamByName('survey_id').AsInteger := FSurveyId;
     ParamByName('full_name').AsString :=
-      GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex], FCaptureType, FCycleCode, False);
+      GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex], CaptureTypeStr[FCaptureType], FCycleCode, False);
     ParamByName('taxon_id').AsInteger := FTaxonId;
     ParamByName('individual_id').AsInteger := FIndividualId;
     if (FProjectId = 0) then
@@ -4031,8 +4097,8 @@ begin
       ParamByName('longitude').AsFloat := FLongitude;
     ParamByName('bander_id').AsInteger := FBanderId;
     ParamByName('annotator_id').AsInteger := FAnnotatorId;
-    ParamByName('subject_status').AsString := FSubjectStatus;
-    ParamByName('capture_type').AsString := FCaptureType;
+    ParamByName('subject_status').AsString := SubjectStatusStr[FSubjectStatus];
+    ParamByName('capture_type').AsString := CaptureTypeStr[FCaptureType];
     ParamByName('subject_sex').AsString := Sexes[FSubjectSex];
     ParamByName('how_sexed').AsString := FHowSexed;
     if (FBandId = 0) then
@@ -5181,13 +5247,13 @@ begin
   FFullName := EmptyStr;
   FSize := EmptyStr;
   FNumber := 0;
-  FStatus := EmptyStr;
-  FSource := EmptyStr;
+  FStatus := bstAvailable;
+  FSource := bscAcquiredFromSupplier;
   FPrefix := EmptyStr;
   FSuffix := EmptyStr;
   FSupplierId := 0;
   FBandColor := EmptyStr;
-  FBandType := EmptyStr;
+  FBandType := mkButtEndBand;
   FCarrierId := 0;
   FIndividualId := 0;
   FProjectId := 0;
@@ -5293,13 +5359,36 @@ begin
     FFullName := FieldByName('full_name').AsString;
     FSize := FieldByName('band_size').AsString;
     FNumber := FieldByName('band_number').AsInteger;
-    FStatus := FieldByName('band_status').AsString;
-    FSource := FieldByName('band_source').AsString;
+    case FieldByName('band_status').AsString of
+      'D': FStatus := bstAvailable;
+      'U': FStatus := bstUsed;
+      'R': FStatus := bstRemoved;
+      'Q': FStatus := bstBroken;
+      'P': FStatus := bstLost;
+      'T': FStatus := bstTransfered;
+    end;
+    case FieldByName('band_source').AsString of
+      'A': FSource := bscAcquiredFromSupplier;
+      'T': FSource := bscTransferBetweenBanders;
+      'L': FSource := bscLivingBirdBandedByOthers;
+      'D': FSource := bscDeadBirdBandedByOthers;
+      'F': FSource := bscFoundLoose;
+    end;
     FPrefix := FieldByName('band_prefix').AsString;
     FSuffix := FieldByName('band_suffix').AsString;
     FSupplierId := FieldByName('supplier_id').AsInteger;
     FBandColor := FieldByName('band_color').AsString;
-    FBandType := FieldByName('band_type').AsString;
+    case FieldByName('band_type').AsString of
+      'A': FBandType := mkButtEndBand;
+      'F': FBandType := mkFlag;
+      'N': FBandType := mkCollar;
+      'W': FBandType := mkWingTag;
+      'T': FBandType := mkTriangularBand;
+      'L': FBandType := mkLockOnBand;
+      'R': FBandType := mkRivetBand;
+      'C': FBandType := mkClosedBand;
+      'O': FBandType := mkOther;
+    end;
     FCarrierId := FieldByName('carrier_id').AsInteger;
     FIndividualId := FieldByName('individual_id').AsInteger;
     FProjectId := FieldByName('project_id').AsInteger;
@@ -5368,8 +5457,8 @@ begin
       'datetime(''now'',''subsec''));');
     ParamByName('band_size').AsString := FSize;
     ParamByName('band_number').AsInteger := FNumber;
-    ParamByName('band_status').AsString := FStatus;
-    ParamByName('band_type').AsString := FBandType;
+    ParamByName('band_status').AsString := BandStatusStr[FStatus];
+    ParamByName('band_type').AsString := MarkTypesStr[FBandType];
     if (FPrefix <> EmptyStr) then
       ParamByName('band_prefix').AsString := FPrefix
     else
@@ -5382,7 +5471,7 @@ begin
       ParamByName('band_color').AsString := FBandColor
     else
       ParamByName('band_color').Clear;
-    ParamByName('band_source').AsString := FSource;
+    ParamByName('band_source').AsString := BandSourceStr[FSource];
     ParamByName('supplier_id').AsInteger := FSupplierId;
     if (FCarrierId > 0) then
       ParamByName('carrier_id').AsInteger := FCarrierId
@@ -5425,12 +5514,12 @@ begin
     JSONObject.Add('Name', FFullName);
     JSONObject.Add('Size', FSize);
     JSONObject.Add('Number', FNumber);
-    JSONObject.Add('Status', FStatus);
-    JSONObject.Add('Source', FSource);
+    JSONObject.Add('Status', BandStatusStr[FStatus]);
+    JSONObject.Add('Source', BandSourceStr[FSource]);
     JSONObject.Add('Prefix', FPrefix);
     JSONObject.Add('Suffix', FSuffix);
     JSONObject.Add('Color', FBandColor);
-    JSONObject.Add('Type', FBandType);
+    JSONObject.Add('Type', MarkTypesStr[FBandType]);
     JSONObject.Add('Supplier', FSupplierId);
     JSONObject.Add('Carrier', FCarrierId);
     JSONObject.Add('Individual', FIndividualId);
@@ -5474,8 +5563,8 @@ begin
     Add('WHERE (band_id = :band_id)');
     ParamByName('band_size').AsString := FSize;
     ParamByName('band_number').AsInteger := FNumber;
-    ParamByName('band_status').AsString := FStatus;
-    ParamByName('band_type').AsString := FBandType;
+    ParamByName('band_status').AsString := BandStatusStr[FStatus];
+    ParamByName('band_type').AsString := MarkTypesStr[FBandType];
     if (FPrefix <> EmptyStr) then
       ParamByName('band_prefix').AsString := FPrefix
     else
@@ -5488,7 +5577,7 @@ begin
       ParamByName('band_color').AsString := FBandColor
     else
       ParamByName('band_color').Clear;
-    ParamByName('band_source').AsString := FSource;
+    ParamByName('band_source').AsString := BandSourceStr[FSource];
     ParamByName('supplier_id').AsInteger := FSupplierId;
     if (FCarrierId > 0) then
       ParamByName('carrier_id').AsInteger := FCarrierId

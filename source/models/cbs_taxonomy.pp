@@ -17,13 +17,12 @@
 unit cbs_taxonomy;
 
 {$mode objfpc}{$H+}
-{$modeSwitch advancedRecords}
 
 interface
 
 uses
   Classes, SysUtils, Forms, StrUtils, ComCtrls, DB, SQLDB, RegExpr, laz.VirtualTrees, CheckLst, fpjson,
-  Generics.Collections, cbs_record_types;
+  fgl, cbs_record_types;
 
 const
   TaxonomyName: array [0 .. 2] of String = ('Clements/eBird', 'IOC', 'CBRO');
@@ -192,7 +191,7 @@ type
   end;
 
 var
-  ZooRankDict: specialize TDictionary<String, TZooRank>;
+  ZooRankDict: specialize TFPGMap<String, TZooRank>;
 
   function GetRankType(aKey: Integer): TZooRank;
   procedure InitZooRankDict;
@@ -243,7 +242,7 @@ uses
 function GetRankType(aKey: Integer): TZooRank;
 var
   aRank: TRank;
-  i: Integer;
+  //i: TZooRank;
 begin
   Result := trDomain;
   aRank := TRank.Create(aKey);
@@ -262,7 +261,7 @@ begin
   if Assigned(ZooRankDict) then
     Exit;
 
-  ZooRankDict := specialize TDictionary<string, TZooRank>.Create;
+  ZooRankDict := specialize TFPGMap<string, TZooRank>.Create;
   ZooRankDict.Add('D.', trDomain);
   ZooRankDict.Add('SD.', trSubDomain);
   ZooRankDict.Add('HK.', trHyperkingdom);
@@ -342,13 +341,16 @@ end;
 
 function StringToZooRank(const aRankStr: String): TZooRank;
 begin
+  if aRankStr = EmptyStr then
+    Exit;
+
   InitZooRankDict;
 
-  if not ZooRankDict.TryGetValue(aRankStr, Result) then
+  if not ZooRankDict.TryGetData(aRankStr, Result) then
     raise Exception.CreateFmt('Invalid Zoo Rank: %s', [aRankStr]);
 
-  if Assigned(ZooRankDict) then
-    ZooRankDict.Free;
+  //if Assigned(ZooRankDict) then
+  //  ZooRankDict.Free;
 end;
 
 function FormattedBirdName(aName: String; aRank: Integer; aAuthor: String = ''): String;
@@ -2807,6 +2809,12 @@ begin
     FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
+
+initialization
+  InitZooRankDict;
+
+finalization
+  ZooRankDict.Free;
 
 end.
 

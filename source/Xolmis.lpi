@@ -165,7 +165,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="390"/>
+      <BuildNr Value="391"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2024 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -179,7 +179,7 @@
             <Filename Value="../$(TargetOS)/$(BuildMode)-$(TargetCPU)/Xolmis"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
+            <IncludeFiles Value="$(ProjOutDir);C:\lazarus_RC\fpc\3.2.2\source\packages\rtl-generics\src\"/>
             <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
@@ -425,9 +425,6 @@
       <FormatVersion Value="2"/>
     </RunParams>
     <RequiredPackages>
-      <Item>
-        <PackageName Value="RunTimeTypeInfoControls"/>
-      </Item>
       <Item>
         <PackageName Value="DBFLaz"/>
       </Item>
@@ -1131,7 +1128,6 @@
         <ComponentName Value="DMM"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="data_modules\udm_grid.pp"/>
@@ -1139,7 +1135,6 @@
         <ComponentName Value="DMG"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="data_modules\udm_breeding.pp"/>
@@ -1163,7 +1158,6 @@
         <ComponentName Value="DML"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="data_modules\udm_sampling.pp"/>
@@ -1259,7 +1253,6 @@
         <ComponentName Value="frmTaxa"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="screens\uthread_dashboard.pp"/>

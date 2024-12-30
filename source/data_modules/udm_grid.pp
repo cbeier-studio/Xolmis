@@ -1387,26 +1387,15 @@ begin
   if Sender.AsString = EmptyStr then
     Exit;
 
-  if Sender.AsString = 'O' then
-    aText := rsBandEventOrder
-  else
-  if Sender.AsString = 'C' then
-    aText := rsBandEventReceive
-  else
-  if Sender.AsString = 'T' then
-    aText := rsBandEventTransfer
-  else
-  if Sender.AsString = 'R' then
-    aText := rsBandEventRetrieve
-  else
-  if Sender.AsString = 'P' then
-    aText := rsBandEventReport
-  else
-  if Sender.AsString = 'U' then
-    aText := rsBandEventUse
-  else
-  if Sender.AsString = 'D' then
-    aText := rsBandEventDischarge;
+  case Sender.AsString of
+    'O': aText := rsBandEventOrder;
+    'C': aText := rsBandEventReceive;
+    'T': aText := rsBandEventTransfer;
+    'R': aText := rsBandEventRetrieve;
+    'P': aText := rsBandEventReport;
+    'U': aText := rsBandEventUse;
+    'D': aText := rsBandEventDischarge;
+  end;
 
   DisplayText := True;
 end;
@@ -2125,20 +2114,13 @@ begin
   if Sender.AsString = EmptyStr then
     Exit;
 
-  if Sender.AsString = 'N' then
-    aText := rsStatusNormal
-  else
-  if Sender.AsString = 'I' then
-    aText := rsStatusInjured
-  else
-  if Sender.AsString = 'W' then
-    aText := rsStatusWingSprain
-  else
-  if Sender.AsString = 'X' then
-    aText := rsStatusStressed
-  else
-  if Sender.AsString = 'D' then
-    aText := rsStatusDead;
+  case Sender.AsString of
+    'N': aText := rsStatusNormal;
+    'I': aText := rsStatusInjured;
+    'W': aText := rsStatusWingSprain;
+    'X': aText := rsStatusStressed;
+    'D': aText := rsStatusDead;
+  end;
 
   DisplayText := True;
 end;

@@ -5,7 +5,7 @@ unit ufrm_taxa;
 interface
 
 uses
-  ATLinkLabel, BCPanel, Buttons, Classes, ComCtrls, DB, SQLDB, DBCtrls, DBGrids,
+  BCPanel, Buttons, Classes, ComCtrls, DB, SQLDB, DBCtrls, DBGrids,
   ExtCtrls, Menus, StdCtrls, ColorSpeedButton, SysUtils, Forms, RegExpr,
   Controls, Graphics, Dialogs, cbs_datatypes, Grids, Types;
 
@@ -99,9 +99,7 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure gridTaxaPrepareCanvas
-      (sender: TObject; DataCol: Integer; Column: TColumn; AState: TGridDrawState
-      );
+    procedure gridTaxaPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn; AState: TGridDrawState);
     procedure lblLinkCapturesClick(Sender: TObject);
     procedure lblLinkEggsClick(Sender: TObject);
     procedure lblLinkIndividualsClick(Sender: TObject);

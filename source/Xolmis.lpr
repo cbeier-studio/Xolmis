@@ -27,7 +27,7 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
-  runtimetypeinfocontrols, sdflaz,
+  sdflaz,
   tachartlazaruspkg, lazdbexport, memdslaz, printer4lazarus, tachartbgra,
   virtualdbgrid_package,
   FrameViewer09,
