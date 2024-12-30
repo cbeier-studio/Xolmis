@@ -894,14 +894,6 @@ begin
       'egg_id, ' +
       'preparation_date, ' +
       'preparer_id, ' +
-      //'order_id, ' +
-      //'family_id, ' +
-      //'subfamily_id, ' +
-      //'genus_id, ' +
-      //'species_id, ' +
-      //'country_id, ' +
-      //'state_id, ' +
-      //'municipality_id, ' +
       'notes, ' +
       'user_inserted, ' +
       'insert_date) ');
@@ -917,14 +909,6 @@ begin
       ':egg_id, ' +
       'date(:preparation_date), ' +
       ':preparer_id, ' +
-      //':order_id, ' +
-      //':family_id, ' +
-      //':subfamily_id, ' +
-      //':genus_id, ' +
-      //':species_id, ' +
-      //':country_id, ' +
-      //':state_id, ' +
-      //':municipality_id, ' +
       ':notes, ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))');
@@ -1096,14 +1080,6 @@ begin
       'egg_id = :egg_id, ' +
       'preparation_date = date(:preparation_date), ' +
       'preparer_id = :preparer_id, ' +
-      //'order_id, ' +
-      //'family_id, ' +
-      //'subfamily_id, ' +
-      //'genus_id, ' +
-      //'species_id, ' +
-      //'country_id, ' +
-      //'state_id, ' +
-      //'municipality_id, ' +
       'notes = :notes, ' +
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'', ''subsec'') ');
@@ -3435,7 +3411,7 @@ begin
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))');
     ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
-    ParamByName('sample_time').AsString := TimeToStr(FSampleTime);
+    ParamByName('sample_time').AsString := FormatDateTime('hh:nn', FSampleTime);
     ParamByName('survey_id').AsInteger := FSurveyId;
     if (FLongitude <> 0) and (FLatitude <> 0) then
     begin

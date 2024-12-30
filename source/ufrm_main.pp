@@ -712,7 +712,7 @@ begin
   // SBarTaxonomy.Caption:= TaxonomyName[ActiveTaxonomy];
 
   // Get user permissions
-  actMaintenance.Enabled := ActiveUser.Rank = 'A';
+  actMaintenance.Enabled := ActiveUser.Rank = urAdministrator;
   actExport.Enabled := ActiveUser.AllowExport;
   actImport.Enabled := ActiveUser.AllowImport;
   actPrint.Enabled := ActiveUser.AllowPrint;

@@ -533,8 +533,8 @@ begin
 
       ParamByName('project_title').AsString := FTitle;
       ParamByName('short_title').AsString := FShortTitle;
-      ParamByName('start_date').AsString := DateToStr(FStartDate);
-      ParamByName('end_date').AsString := DateToStr(FEndDate);
+      ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate);
+      ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate);
       ParamByName('website_uri').AsString := FWebsiteUri;
       ParamByName('email_addr').AsString := FEmailAddress;
       ParamByName('contact_name').AsString := FContactName;
@@ -621,8 +621,8 @@ begin
 
       ParamByName('project_title').AsString := FTitle;
       ParamByName('short_title').AsString := FShortTitle;
-      ParamByName('start_date').AsString := DateToStr(FStartDate);
-      ParamByName('end_date').AsString := DateToStr(FEndDate);
+      ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate);
+      ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate);
       ParamByName('website_uri').AsString := FWebsiteUri;
       ParamByName('email_addr').AsString := FEmailAddress;
       ParamByName('contact_name').AsString := FContactName;
@@ -1529,8 +1529,8 @@ begin
       ParamByName('national_id_card').AsString := FIdDocument1;
       ParamByName('social_security_number').AsString := FIdDocument2;
       ParamByName('gender').AsString := FGender;
-      ParamByName('birth_date').AsString := DateToStr(FBirthDate);
-      ParamByName('death_date').AsString := DateToStr(FDeathDate);
+      ParamByName('birth_date').AsString := FormatDateTime('yyyy-mm-dd', FBirthDate);
+      ParamByName('death_date').AsString := FormatDateTime('yyyy-mm-dd', FDeathDate);
       ParamByName('email_addr').AsString := FEmail;
       ParamByName('phone_1').AsString := FPhone1;
       ParamByName('phone_2').AsString := FPhone2;
@@ -1690,8 +1690,8 @@ begin
       ParamByName('national_id_card').AsString := FIdDocument1;
       ParamByName('social_security_number').AsString := FIdDocument2;
       ParamByName('gender').AsString := FGender;
-      ParamByName('birth_date').AsString := DateToStr(FBirthDate);
-      ParamByName('death_date').AsString := DateToStr(FDeathDate);
+      ParamByName('birth_date').AsString := FormatDateTime('yyyy-mm-dd', FBirthDate);
+      ParamByName('death_date').AsString := FormatDateTime('yyyy-mm-dd', FDeathDate);
       ParamByName('email_addr').AsString := FEmail;
       ParamByName('phone_1').AsString := FPhone1;
       ParamByName('phone_2').AsString := FPhone2;
@@ -2285,8 +2285,8 @@ begin
       ParamByName('permit_number').AsString := FNumber;
       ParamByName('permit_type').AsString := FPermitType;
       ParamByName('dispatcher_name').AsString := FDispatcher;
-      ParamByName('dispatch_date').AsString := DateToStr(FDispatchDate);
-      ParamByName('expire_date').AsString := DateToStr(FExpireDate);
+      ParamByName('dispatch_date').AsString := FormatDateTime('yyyy-mm-dd', FDispatchDate);
+      ParamByName('expire_date').AsString := FormatDateTime('yyyy-mm-dd', FExpireDate);
       ParamByName('notes').AsString := FNotes;
       ParamByName('permit_filename').AsString := FFileName;
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
@@ -2376,8 +2376,8 @@ begin
       ParamByName('permit_number').AsString := FNumber;
       ParamByName('permit_type').AsString := FPermitType;
       ParamByName('dispatcher_name').AsString := FDispatcher;
-      ParamByName('dispatch_date').AsString := DateToStr(FDispatchDate);
-      ParamByName('expire_date').AsString := DateToStr(FExpireDate);
+      ParamByName('dispatch_date').AsString := FormatDateTime('yyyy-mm-dd', FDispatchDate);
+      ParamByName('expire_date').AsString := FormatDateTime('yyyy-mm-dd', FExpireDate);
       ParamByName('notes').AsString := FNotes;
       ParamByName('permit_filename').AsString := FFileName;
       ParamByName('user_updated').AsInteger := ActiveUser.Id;

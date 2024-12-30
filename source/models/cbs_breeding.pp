@@ -529,8 +529,8 @@ begin
     Add('VALUES (' +
       ':nest_id, ' +
       ':full_name, ' +
-      ':revision_date, ' +
-      ':revision_time, ' +
+      'date(:revision_date), ' +
+      'time(:revision_time), ' +
       ':observer_1_id, ' +
       ':observer_2_id, ' +
       ':nest_status, ' +
@@ -546,8 +546,8 @@ begin
       'datetime(''now'',''subsec''))');
     ParamByName('nest_id').AsInteger := FNestId;
     ParamByName('full_name').AsString := FFullname;
-    ParamByName('revision_date').AsDateTime := FRevisionDate;
-    ParamByName('revision_time').AsDateTime := FRevisionTime;
+    ParamByName('revision_date').AsString := FormatDateTime('yyyy-mm-dd', FRevisionDate);
+    ParamByName('revision_time').AsString := FormatDateTime('hh:nn', FRevisionTime);
     ParamByName('observer_1_id').AsInteger := FObserver1Id;
     ParamByName('observer_2_id').AsInteger := FObserver2Id;
     ParamByName('nest_status').AsString := NestStates[FNestStatus];
@@ -622,8 +622,8 @@ begin
     Add('UPDATE nest_revisions SET');
     Add('  nest_id = :nest_id,');
     Add('  full_name = :full_name,');
-    Add('  revision_date = :revision_date,');
-    Add('  revision_time = :revision_time,');
+    Add('  revision_date = date(:revision_date),');
+    Add('  revision_time = time(:revision_time),');
     Add('  observer_1_id = :observer_1_id,');
     Add('  observer_2_id = :observer_2_id,');
     Add('  nest_status = :nest_status,');
@@ -641,8 +641,8 @@ begin
     ParamByName('nest_revision_id').AsInteger := FId;
     ParamByName('nest_id').AsInteger := FNestId;
     ParamByName('full_name').AsString := FFullname;
-    ParamByName('revision_date').AsDateTime := FRevisionDate;
-    ParamByName('revision_time').AsDateTime := FRevisionTime;
+    ParamByName('revision_date').AsString := FormatDateTime('yyyy-mm-dd', FRevisionDate);
+    ParamByName('revision_time').AsString := FormatDateTime('hh:nn', FRevisionTime);
     ParamByName('observer_1_id').AsInteger := FObserver1Id;
     ParamByName('observer_2_id').AsInteger := FObserver2Id;
     ParamByName('nest_status').AsString := NestStates[FNestStatus];
@@ -1014,7 +1014,7 @@ begin
       ':egg_hatched, ' +
       ':researcher_id, ' +
       ':individual_id, ' +
-      ':measure_date, ' +
+      'date(:measure_date), ' +
       ':taxon_id, ' +
       ':host_egg, ' +
       ':description, ' +
@@ -1037,7 +1037,7 @@ begin
     ParamByName('egg_hatched').AsBoolean := FEggHatched;
     ParamByName('researcher_id').AsInteger := FResearcherId;
     ParamByName('individual_id').AsInteger := FIndividualId;
-    ParamByName('measure_date').AsDateTime := FMeasureDate;
+    ParamByName('measure_date').AsString := FormatDateTime('yyyy-mm-dd', FMeasureDate);
     ParamByName('taxon_id').AsInteger := FTaxonId;
     ParamByName('host_egg').AsBoolean := FHostEgg;
     ParamByName('description').AsString := FDescription;
@@ -1049,7 +1049,7 @@ begin
 
     // Get the autoincrement key inserted
     Clear;
-    Add('SELECT DISTINCT last_insert_rowid() FROM eggs');
+    Add('SELECT last_insert_rowid()');
     Open;
     FId := Fields[0].AsInteger;
     Close;
@@ -1167,7 +1167,7 @@ begin
     Add('  egg_hatched = :egg_hatched,');
     Add('  researcher_id = :researcher_id,');
     Add('  individual_id = :individual_id,');
-    Add('  measure_date = :measute_date,');
+    Add('  measure_date = date(:measute_date),');
     Add('  taxon_id = :taxon_id,');
     Add('  host_egg = :host_egg,');
     Add('  description = :description,');
@@ -1192,7 +1192,7 @@ begin
     ParamByName('egg_hatched').AsBoolean := FEggHatched;
     ParamByName('researcher_id').AsInteger := FResearcherId;
     ParamByName('individual_id').AsInteger := FIndividualId;
-    ParamByName('measure_date').AsDateTime := FMeasureDate;
+    ParamByName('measure_date').AsString := FormatDateTime('yyyy-mm-dd', FMeasureDate);
     ParamByName('taxon_id').AsInteger := FTaxonId;
     ParamByName('host_egg').AsBoolean := FHostEgg;
     ParamByName('description').AsString := FDescription;
@@ -1694,8 +1694,8 @@ begin
       ':plant_dbh, ' +
       ':nest_fate,' +
       ':nest_productivity, ' +
-      ':found_date, ' +
-      ':last_date, ' +
+      'date(:found_date), ' +
+      'date(:last_date), ' +
       ':full_name, ' +
       ':description, ' +
       ':notes, ' +
@@ -1733,8 +1733,8 @@ begin
     ParamByName('plant_dbh').AsFloat := FPlantDbh;
     ParamByName('nest_fate').AsString := NestFates[FNestFate];
     ParamByName('nest_productivity').AsInteger := FNestProductivity;
-    ParamByName('found_date').AsDateTime := FFoundDate;
-    ParamByName('last_date').AsDateTime := FLastDate;
+    ParamByName('found_date').AsString := FormatDateTime('yyyy-mm-dd', FFoundDate);
+    ParamByName('last_date').AsString := FormatDateTime('yyyy-mm-dd', FLastDate);
     ParamByName('full_name').AsString := FFullName;
     ParamByName('description').AsString := FDescription;
     ParamByName('notes').AsString := FNotes;
@@ -1937,8 +1937,8 @@ begin
     Add('  plant_dbh = :plant_dbh,');
     Add('  nest_fate = :nest_fate,');
     Add('  nest_productivity = :nest_productivity,');
-    Add('  found_date = :found_date,');
-    Add('  last_date = :last_date,');
+    Add('  found_date = date(:found_date),');
+    Add('  last_date = date(:last_date),');
     Add('  full_name = :full_name,');
     Add('  description = :description,');
     Add('  notes = :notes,');
@@ -1978,8 +1978,8 @@ begin
     ParamByName('plant_dbh').AsFloat := FPlantDbh;
     ParamByName('nest_fate').AsString := NestFates[FNestFate];
     ParamByName('nest_productivity').AsInteger := FNestProductivity;
-    ParamByName('found_date').AsDateTime := FFoundDate;
-    ParamByName('last_date').AsDateTime := FLastDate;
+    ParamByName('found_date').AsString := FormatDateTime('yyyy-mm-dd', FFoundDate);
+    ParamByName('last_date').AsString := FormatDateTime('yyyy-mm-dd', FLastDate);
     ParamByName('full_name').AsString := FFullName;
     ParamByName('description').AsString := FDescription;
     ParamByName('notes').AsString := FNotes;

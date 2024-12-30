@@ -21,17 +21,22 @@ unit cbs_users;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, cbs_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, cbs_record_types;
 
 type
+  TUserRank = (urAdministrator, urStandard, urVisitor);
 
+const
+  UserRankStr: array[TUserRank] of Char = ('A', 'S', 'V');
+
+type
   { TUser }
 
   TUser = class(TXolmisRecord)
   private
     FFullName: String;
     FUserName: String;
-    FRank: String;
+    FRank: TUserRank;
     FAllowManageCollection: Boolean;
     FAllowPrint: Boolean;
     FAllowExport: Boolean;
@@ -44,10 +49,17 @@ type
     function IsAdmin: Boolean;
     function IsVisitor: Boolean;
     function Diff(aOld: TUser; var aList: TStrings): Boolean;
+    procedure Insert;
+    procedure Update;
+    procedure Save;
+    procedure Delete;
+    procedure Copy(aFrom: TUser);
+    function ToJSON: String;
+    function Find(const FieldName: String; const Value: Variant): Boolean;
   published
     property FullName: String read FFullName write FFullName;
     property UserName: String read FUserName write FUserName;
-    property Rank: String read FRank write FRank;
+    property Rank: TUserRank read FRank write FRank;
     property AllowManageCollection: Boolean read FAllowManageCollection write FAllowManageCollection;
     property AllowPrint: Boolean read FAllowPrint write FAllowPrint;
     property AllowExport: Boolean read FAllowExport write FAllowExport;
@@ -88,6 +100,56 @@ begin
   Result := aList.Count > 0;
 end;
 
+function TUser.Find(const FieldName: String; const Value: Variant): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Result := False;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    SQLTransaction := DMM.sqlTrans;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+      'user_id, ' +
+      'full_name, ' +
+      'user_name, ' +
+      'user_password, ' +
+      'user_rank, ' +
+      'allow_collection_edit, ' +
+      'allow_print, ' +
+      'allow_export, ' +
+      'allow_import, ' +
+      'uuid, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM users');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      LoadFromDataSet(Qry);
+
+      Result := True;
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
 constructor TUser.Create(aValue: Integer);
 begin
   if (aValue > 0) then
@@ -101,11 +163,43 @@ begin
   inherited Clear;
   FFullName := EmptyStr;
   FUserName := EmptyStr;
-  FRank := EmptyStr;
+  FRank := urStandard;
   FAllowManageCollection := False;
   FAllowPrint := False;
   FAllowExport := False;
   FAllowImport := False;
+end;
+
+procedure TUser.Copy(aFrom: TUser);
+begin
+  FFullName := aFrom.FullName;
+  FUserName := aFrom.UserName;
+  FRank := aFrom.Rank;
+  FAllowManageCollection := aFrom.AllowManageCollection;
+  FAllowPrint := aFrom.AllowPrint;
+  FAllowExport := aFrom.AllowExport;
+  FAllowImport := aFrom.AllowImport;
+end;
+
+procedure TUser.Delete;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('DELETE FROM users');
+    Add('WHERE (user_id = :aid)');
+
+    ParamByName('aid').AsInteger := FId;
+
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 procedure TUser.GetData(aKey: Integer);
@@ -117,7 +211,25 @@ begin
   try
     DataBase := DMM.sqlCon;
     Clear;
-    Add('SELECT * FROM users');
+    Add('SELECT ' +
+      'user_id, ' +
+      'full_name, ' +
+      'user_name, ' +
+      'user_password, ' +
+      'user_rank, ' +
+      'allow_collection_edit, ' +
+      'allow_print, ' +
+      'allow_export, ' +
+      'allow_import, ' +
+      'uuid, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM users');
     Add('WHERE user_id = :keyv');
     ParamByName('KEYV').AsInteger := aKey;
     Open;
@@ -129,7 +241,66 @@ begin
   end;
 end;
 
+procedure TUser.Insert;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO users (' +
+      'full_name, ' +
+      'user_name, ' +
+      //'user_password, ' +
+      'user_rank, ' +
+      'allow_collection_edit, ' +
+      'allow_print, ' +
+      'allow_export, ' +
+      'allow_import, ' +
+      'uuid, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':full_name, ' +
+      ':user_name, ' +
+      //':user_password, ' +
+      ':user_rank, ' +
+      ':allow_collection_edit, ' +
+      ':allow_print, ' +
+      ':allow_export, ' +
+      ':allow_import, ' +
+      ':uuid, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''))');
+    ParamByName('full_name').AsString := FFullName;
+    ParamByName('user_name').AsString := FUserName;
+    ParamByName('uuid').AsString := FGuid;
+    ParamByName('user_rank').AsString := UserRankStr[FRank];
+    ParamByName('allow_collection_edit').AsBoolean := FAllowManageCollection;
+    ParamByName('allow_print').AsBoolean := FAllowPrint;
+    ParamByName('allow_export').AsBoolean := FAllowExport;
+    ParamByName('allow_import').AsBoolean := FAllowImport;
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the autoincrement key inserted
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    FId := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 procedure TUser.LoadFromDataSet(aDataSet: TDataSet);
+var
+  InsertTimeStamp, UpdateTimeStamp: TDateTime;
 begin
   if not aDataSet.Active then
     Exit;
@@ -140,29 +311,123 @@ begin
     FGuid := FieldByName('uuid').AsString;
     FFullName := FieldByName('full_name').AsString;
     FUserName := FieldByName('user_name').AsString;
-    FRank := FieldByName('user_rank').AsString;
+    case FieldByName('user_rank').AsString of
+      'A': FRank := urAdministrator;
+      'S': FRank := urStandard;
+      'V': FRank := urVisitor;
+    end;
     FAllowManageCollection := FieldByName('allow_collection_edit').AsBoolean;
     FAllowPrint := FieldByName('allow_print').AsBoolean;
     FAllowExport := FieldByName('allow_export').AsBoolean;
     FAllowImport := FieldByName('allow_import').AsBoolean;
     FUserInserted := FieldByName('user_inserted').AsInteger;
     FUserUpdated := FieldByName('user_updated').AsInteger;
-    FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUpdateDate := FieldByName('update_date').AsDateTime;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    if not (FieldByName('insert_date').IsNull) then
+      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
+        FInsertDate := InsertTimeStamp
+      else
+        FInsertDate := FieldByName('insert_date').AsDateTime;
+    if not (FieldByName('update_date').IsNull) then
+      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
+        FUpdateDate := UpdateTimeStamp
+      else
+        FUpdateDate := FieldByName('update_date').AsDateTime;
     FExported := FieldByName('exported_status').AsBoolean;
     FMarked := FieldByName('marked_status').AsBoolean;
     FActive := FieldByName('active_status').AsBoolean;
   end;
 end;
 
+procedure TUser.Save;
+begin
+  if FId = 0 then
+    Insert
+  else
+    Update;
+end;
+
+function TUser.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('GUID', FGuid);
+    JSONObject.Add('Fullname', FFullName);
+    JSONObject.Add('Username', FUserName);
+    JSONObject.Add('Rank', UserRankStr[FRank]);
+    JSONObject.Add('Manage collection', FAllowManageCollection);
+    JSONObject.Add('Print', FAllowPrint);
+    JSONObject.Add('Export', FAllowExport);
+    JSONObject.Add('Import', FAllowImport);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+procedure TUser.Update;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE users SET ' +
+      'full_name = :full_name, ' +
+      'user_name = :user_name, ' +
+      //'user_password = :user_password, ' +
+      'user_rank = :user_rank, ' +
+      'allow_collection_edit = :allow_collection_edit, ' +
+      'allow_print = :allow_print, ' +
+      'allow_export = :allow_export, ' +
+      'allow_import = :allow_import, ' +
+      'uuid = :uuid, ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status, ' +
+      'user_inserted = :user_inserted, ' +
+      'insert_date = datetime(''now'',''subsec'') ');
+    Add('WHERE (user_id = :user_id)');
+    ParamByName('full_name').AsString := FFullName;
+    ParamByName('user_name').AsString := FUserName;
+    ParamByName('uuid').AsString := FGuid;
+    ParamByName('user_rank').AsString := UserRankStr[FRank];
+    ParamByName('allow_collection_edit').AsBoolean := FAllowManageCollection;
+    ParamByName('allow_print').AsBoolean := FAllowPrint;
+    ParamByName('allow_export').AsBoolean := FAllowExport;
+    ParamByName('allow_import').AsBoolean := FAllowImport;
+    ParamByName('marked_status').AsBoolean := FMarked;
+    ParamByName('active_status').AsBoolean := FActive;
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ParamByName('user_id').AsInteger := FId;
+
+    ExecSQL;
+
+    // Get the autoincrement key inserted
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    FId := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 function TUser.IsAdmin: Boolean;
 begin
-  Result := FRank = 'A';
+  Result := FRank = urAdministrator;
 end;
 
 function TUser.IsVisitor: Boolean;
 begin
-  Result := FRank = 'V';
+  Result := FRank = urVisitor;
 end;
 
 end.
