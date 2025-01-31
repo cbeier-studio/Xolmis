@@ -41,6 +41,8 @@ const
   LogFile: String               = 'xlmslog.txt';
   GeoBankFile: String           = 'geobank.dat';
   BFKey: String                 = 'support lottery birds sample';
+  NullDateStr: String           = '30/12/1500';
+  NullTimeStr: String           = '00:00:00';
 
   { Format masks constants }
 const
@@ -220,6 +222,8 @@ var
   function AppDataDir: String;
   function TempDir: String;
   function HelpDir: String;
+  function NullDate: TDate;
+  function NullTime: TTime;
 
   { System settings and user permissions manipulation }
   function NewDatabase: Boolean;
@@ -416,6 +420,16 @@ end;
 function HelpDir: String;
 begin
   Result := IncludeTrailingPathDelimiter(ConcatPaths([InstallDir, 'help']));
+end;
+
+function NullDate: TDate;
+begin
+  Result := StrToDate(NullDateStr);
+end;
+
+function NullTime: TTime;
+begin
+  Result := StrToTime(NullTimeStr);
 end;
 
 { ---------------------------------------------------------------------------------------- }

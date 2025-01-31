@@ -13,9 +13,6 @@
 {"hash":209100596,"name":"tedtbands.ckreported.caption","sourcebytes":[82,101,112,111,114,116,101,100],"value":"Reported"},
 {"hash":210359882,"name":"tedtbands.lblbandsource.caption","sourcebytes":[83,111,117,114,99,101,58,32,42],"value":"Source: *"},
 {"hash":44473178,"name":"tedtbands.lblsupplier.caption","sourcebytes":[83,117,112,112,108,105,101,114,58,32,42],"value":"Supplier: *"},
-{"hash":114304686,"name":"tedtbands.esupplier.buttonhint","sourcebytes":[70,105,110,100,32,105,110,115,116,105,116,117,116,105,111,110],"value":"Find institution"},
 {"hash":144242890,"name":"tedtbands.lblcarrier.caption","sourcebytes":[67,97,114,114,105,101,114,58],"value":"Carrier:"},
-{"hash":223988130,"name":"tedtbands.ecarrier.buttonhint","sourcebytes":[70,105,110,100,32,99,97,114,114,105,101,114],"value":"Find carrier"},
-{"hash":157335306,"name":"tedtbands.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"},
-{"hash":57036244,"name":"tedtbands.eproject.buttonhint","sourcebytes":[70,105,110,100,32,112,114,111,106,101,99,116],"value":"Find project"}
+{"hash":157335306,"name":"tedtbands.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"}
 ]}

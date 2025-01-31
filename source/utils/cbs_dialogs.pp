@@ -39,7 +39,8 @@ uses
     aControl: TControl; aInit: String = '');
   procedure EditAuthorship(aDataset: TDataset; aTextField, KeyFields: String; aLimit: Integer;
     aControl: TControl);
-  procedure EditColorBands(aDataset: TDataset; aTextField: String; aControl: TControl; aLimit: Integer = 4);
+  procedure EditColorBands(aDataset: TDataset; aTextField: String; aControl: TControl; aLimit: Integer = 4); overload;
+  procedure EditColorBands(aControl: TControl; aLimit: Integer = 4); overload;
   function CalendarDlg(aDateStr: String; aEdit: TCustomEditButton; var aDate: TDate): Boolean; overload;
   function CalendarDlg(aControl: TControl; aDataset: TDataset; aField: String): Boolean; overload;
   function MoltLimitsDialog(aLimits: String; aDataset: TDataset; aCampo: String): Boolean; overload;
@@ -317,6 +318,34 @@ begin
     begin
       CanEdit(aDataSet);
       aDataset.FieldByName(aTextField).AsString := BandsStr;
+    end;
+  finally
+    FreeAndNil(dlgColorBands);
+    {$IFDEF DEBUG}
+    LogDebug('CLOSE DIALOG: Color bands');
+    {$ENDIF}
+  end;
+end;
+
+procedure EditColorBands(aControl: TControl; aLimit: Integer = 4);
+var
+  PControl: TPoint;
+begin
+  {$IFDEF DEBUG}
+  LogDebug('OPEN DIALOG: Color bands');
+  {$ENDIF}
+  dlgColorBands := TdlgColorBands.Create(nil);
+  with dlgColorBands do
+  try
+    //PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
+    PControl := aControl.ClientOrigin;
+    SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+    BandsLimit := aLimit;
+    if (aControl is TEditButton) then
+      BandsStr := TEditButton(aControl).Text;
+    if ShowModal = mrOK then
+    begin
+      TEditButton(aControl).Text := BandsStr;
     end;
   finally
     FreeAndNil(dlgColorBands);

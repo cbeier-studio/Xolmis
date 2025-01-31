@@ -21,27 +21,24 @@ unit uedt_nestrevision;
 interface
 
 uses
-  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls,
-  StdCtrls, DateUtils, DBEditButton, atshapelinebgra;
+  Classes, EditBtn, Spin, SysUtils, Character, DB, Forms, Controls, Graphics,
+  Dialogs, ExtCtrls, DBCtrls, StdCtrls, DateUtils, DBEditButton,
+  atshapelinebgra, cbs_breeding;
 
 type
 
   { TedtNestRevision }
 
   TedtNestRevision = class(TForm)
-    cbNestStatus: TDBComboBox;
-    ckHasPhilornisLarvae: TDBCheckBox;
-    cbNestStage: TDBComboBox;
-    eHostNestlingsTally: TDBEdit;
-    eNidoparasiteNestlingsTally: TDBEdit;
-    eObserver2: TDBEditButton;
-    eRevisionDate: TDBEditButton;
+    ckHasPhilornisLarvae: TCheckBox;
+    cbNestStage: TComboBox;
+    cbNestStatus: TComboBox;
+    eRevisionTime: TEdit;
+    eRevisionDate: TEditButton;
+    eObserver1: TEditButton;
+    eObserver2: TEditButton;
+    eNidoparasite: TEditButton;
     dsLink: TDataSource;
-    eObserver1: TDBEditButton;
-    eNidoparasite: TDBEditButton;
-    eHostEggsTally: TDBEdit;
-    eNidoparasiteEggsTally: TDBEdit;
-    eRevisionTime: TDBEdit;
     lblHostNestlingsTally: TLabel;
     lblNestStage: TLabel;
     lblNestStatus: TLabel;
@@ -55,7 +52,7 @@ type
     lblNotes: TLabel;
     lblRevisionTime: TLabel;
     lineBottom: TShapeLineBGRA;
-    mNotes: TDBMemo;
+    mNotes: TMemo;
     pBottom: TPanel;
     pContent: TPanel;
     pHostEggsTally: TPanel;
@@ -69,29 +66,40 @@ type
     sbCancel: TButton;
     sBox: TScrollBox;
     sbSave: TButton;
-    procedure cbNestStageExit(Sender: TObject);
+    eHostEggsTally: TSpinEdit;
+    eHostNestlingsTally: TSpinEdit;
+    eNidoparasiteEggsTally: TSpinEdit;
+    eNidoparasiteNestlingsTally: TSpinEdit;
+    procedure cbNestStageSelect(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eNidoparasiteButtonClick(Sender: TObject);
-    procedure eNidoparasiteDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eNidoparasiteKeyPress(Sender: TObject; var Key: char);
     procedure eObserver1ButtonClick(Sender: TObject);
-    procedure eObserver1DBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eObserver1KeyPress(Sender: TObject; var Key: char);
     procedure eObserver2ButtonClick(Sender: TObject);
-    procedure eObserver2DBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eObserver2KeyPress(Sender: TObject; var Key: char);
     procedure eRevisionDateButtonClick(Sender: TObject);
+    procedure eRevisionDateEditingDone(Sender: TObject);
     procedure eRevisionTimeKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FRevision: TNestRevision;
+    FNestId, FObserver1Id, FObserver2Id, FNidoparasiteId: Integer;
+    procedure SetRevision(Value: TNestRevision);
+    procedure GetRecord;
+    procedure SetRecord;
     procedure ApplyDarkMode;
-    procedure AssembleFullName;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property NestRevision: TNestRevision read FRevision write SetRevision;
+    property NestId: Integer read FNestId write FNestId;
   end;
 
 var
@@ -100,7 +108,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_getvalue,
   cbs_fullnames, cbs_validations, udm_breeding, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -115,128 +123,129 @@ begin
   eNidoparasite.Images := DMM.iEditsDark;
 end;
 
-procedure TedtNestRevision.AssembleFullName;
-var
-  Status, Stage: String;
-  Nest: LongInt;
+procedure TedtNestRevision.cbNestStageSelect(Sender: TObject);
 begin
-  Nest := dsLink.DataSet.FieldByName('nest_id').AsInteger;
-  Status := dsLink.DataSet.FieldByName('nest_status').AsString;
-  Stage := dsLink.DataSet.FieldByName('nest_stage').AsString;
-
-  dsLink.DataSet.FieldByName('full_name').AsString :=
-    GetNestRevisionFullname(dsLink.DataSet.FieldByName('revision_date').AsDateTime, Nest, Status, Stage);
-end;
-
-procedure TedtNestRevision.cbNestStageExit(Sender: TObject);
-begin
-  if dsLink.DataSet.FieldByName('nest_status').AsString = 'I' then
-    dsLink.DataSet.FieldByName('nest_stage').AsString := 'X';
+  if cbNestStage.Text = rsNestInactive then
+    cbNestStatus.ItemIndex := cbNestStatus.Items.IndexOf(rsNestInactive);
 end;
 
 procedure TedtNestRevision.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtNestRevision.eNidoparasiteButtonClick(Sender: TObject);
 begin
-  FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], eNidoparasite, dsLink.DataSet,
-    'nidoparasite_id', 'nidoparasite_name', True);
+  FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], eNidoparasite, True, FNidoparasiteId);
 end;
 
-procedure TedtNestRevision.eNidoparasiteDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtNestRevision.eNidoparasiteKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], eNidoparasite, dsLink.DataSet,
-    'nidoparasite_id', 'nidoparasite_name', True, Key);
+    FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], eNidoparasite, True, FNidoparasiteId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('nidoparasite_id').Clear;
-    dsLink.DataSet.FieldByName('nidoparasite_name').Clear;
+    FNidoparasiteId := 0;
+    eNidoparasite.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtNestRevision.eObserver1ButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eObserver1, dsLink.DataSet, 'observer_1_id', 'observer_1_name');
+  FindDlg(tbPeople, eObserver1, FObserver1Id);
 end;
 
-procedure TedtNestRevision.eObserver1DBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtNestRevision.eObserver1KeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbPeople, eObserver1, dsLink.DataSet, 'observer_1_id', 'observer_1_name', False, Key);
+    FindDlg(tbPeople, eObserver1, FObserver1Id, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('observer_1_id').Clear;
-    dsLink.DataSet.FieldByName('observer_1_name').Clear;
+    FObserver1Id := 0;
+    eObserver1.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtNestRevision.eObserver2ButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eObserver2, dsLink.DataSet, 'observer_2_id', 'observer_2_name');
+  FindDlg(tbPeople, eObserver2, FObserver2Id);
 end;
 
-procedure TedtNestRevision.eObserver2DBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtNestRevision.eObserver2KeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbPeople, eObserver2, dsLink.DataSet, 'observer_2_id', 'observer_2_name', False, Key);
+    FindDlg(tbPeople, eObserver2, FObserver2Id, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('observer_2_id').Clear;
-    dsLink.DataSet.FieldByName('observer_2_name').Clear;
+    FObserver2Id := 0;
+    eObserver2.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtNestRevision.eRevisionDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eRevisionDate, dsLink.DataSet, 'revision_date');
+  CalendarDlg(eRevisionDate.Text, eRevisionDate, Dt);
+end;
+
+procedure TedtNestRevision.eRevisionDateEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtNestRevision.eRevisionTimeKeyPress(Sender: TObject; var Key: char);
@@ -246,14 +255,12 @@ begin
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtNestRevision.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtNestRevision.FormCreate(Sender: TObject);
@@ -269,7 +276,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);
@@ -292,24 +300,65 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNestRevision)])
+  if FIsNew then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNestRevision)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionNestRevision)]);
+    GetRecord;
+  end;
 
   sBox.VertScrollBar.Position := 0;
 
   eRevisionDate.SetFocus;
 end;
 
+procedure TedtNestRevision.GetRecord;
+begin
+  eRevisionDate.Text := DateToStr(FRevision.RevisionDate);
+  eRevisionTime.Text := TimeToStr(FRevision.RevisionTime);
+  FObserver1Id := FRevision.Observer1Id;
+  eObserver1.Text := GetName('people', 'acronym', 'person_id', FRevision.Observer1Id);
+  FObserver2Id := FRevision.Observer2Id;
+  eObserver2.Text := GetName('people', 'acronym', 'person_id', FRevision.Observer2Id);
+  case FRevision.NestStage of
+    nsgInactive:      cbNestStage.ItemIndex := cbNestStage.Items.IndexOf(rsNestInactive);
+    nsgConstruction:  cbNestStage.ItemIndex := cbNestStage.Items.IndexOf(rsNestBuilding);
+    nsgLaying:        cbNestStage.ItemIndex := cbNestStage.Items.IndexOf(rsNestLaying);
+    nsgIncubation:    cbNestStage.ItemIndex := cbNestStage.Items.IndexOf(rsNestIncubating);
+    nsgHatching:      cbNestStage.ItemIndex := cbNestStage.Items.IndexOf(rsNestHatching);
+    nsgNestling:      cbNestStage.ItemIndex := cbNestStage.Items.IndexOf(rsNestNestling);
+    nsgUnknown:       cbNestStage.ItemIndex := cbNestStage.Items.IndexOf(rsNestUnknown);
+  end;
+  case FRevision.NestStatus of
+    nstInactive:  cbNestStatus.ItemIndex := cbNestStatus.Items.IndexOf(rsNestInactive);
+    nstActive:    cbNestStatus.ItemIndex := cbNestStatus.Items.IndexOf(rsNestActive);
+    nstUnknown:   cbNestStatus.ItemIndex := cbNestStatus.Items.IndexOf(rsNestUnknown);
+  end;
+  eHostEggsTally.Value := FRevision.HostEggsTally;
+  eHostNestlingsTally.Value := FRevision.HostNestlingsTally;
+  FNidoparasiteId := FRevision.NidoparasiteId;
+  eNidoparasite.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FNidoparasiteId);
+  eNidoparasiteEggsTally.Value := FRevision.NidoparasiteEggsTally;
+  eNidoparasiteNestlingsTally.Value := FRevision.NidoparasiteNestlingsTally;
+  ckHasPhilornisLarvae.Checked := FRevision.HavePhilornisLarvae;
+  mNotes.Text := FRevision.Notes;
+end;
+
 function TedtNestRevision.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('revision_date').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('observer_1_id').AsInteger <> 0) and
-    (dsLink.DataSet.FieldByName('nest_stage').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('nest_status').AsString <> EmptyStr) then
+  //if (dsLink.DataSet.FieldByName('revision_date').AsString <> EmptyStr) and
+  //  (dsLink.DataSet.FieldByName('observer_1_id').AsInteger <> 0) and
+  //  (dsLink.DataSet.FieldByName('nest_stage').AsString <> EmptyStr) and
+  //  (dsLink.DataSet.FieldByName('nest_status').AsString <> EmptyStr) then
+  if (eRevisionDate.Text <> EmptyStr) and
+    (FObserver1Id > 0) and
+    (cbNestStage.ItemIndex >= 0) and
+    (cbNestStatus.ItemIndex >= 0) then
     Result := True;
 end;
 
@@ -318,9 +367,44 @@ begin
   if not ValidateFields then
     Exit;
 
-  AssembleFullName;
+  SetRecord;
 
   ModalResult := mrOK;
+end;
+
+procedure TedtNestRevision.SetRecord;
+begin
+  FRevision.RevisionDate := StrToDate(eRevisionDate.Text);
+  FRevision.RevisionTime := StrToTime(eRevisionTime.Text);
+  FRevision.Observer1Id  := FObserver1Id;
+  FRevision.Observer2Id  := FObserver2Id;
+  case cbNestStage.ItemIndex of
+    0: FRevision.NestStage := nsgConstruction;
+    1: FRevision.NestStage := nsgLaying;
+    2: FRevision.NestStage := nsgIncubation;
+    3: FRevision.NestStage := nsgHatching;
+    4: FRevision.NestStage := nsgNestling;
+    5: FRevision.NestStage := nsgInactive;
+    6: FRevision.NestStage := nsgUnknown;
+  end;
+  case cbNestStatus.ItemIndex of
+    0: FRevision.NestStatus := nstActive;
+    1: FRevision.NestStatus := nstInactive;
+    2: FRevision.NestStatus := nstUnknown;
+  end;
+  FRevision.HostEggsTally              := eHostEggsTally.Value;
+  FRevision.HostNestlingsTally         := eHostNestlingsTally.Value;
+  FRevision.NidoparasiteId             := FNidoparasiteId;
+  FRevision.NidoparasiteEggsTally      := eNidoparasiteEggsTally.Value;
+  FRevision.NidoparasiteNestlingsTally := eNidoparasiteNestlingsTally.Value;
+  FRevision.HavePhilornisLarvae        := ckHasPhilornisLarvae.Checked;
+  FRevision.Notes                      := mNotes.Text;
+end;
+
+procedure TedtNestRevision.SetRevision(Value: TNestRevision);
+begin
+  if Assigned(Value) then
+    FRevision := Value;
 end;
 
 function TedtNestRevision.ValidateFields: Boolean;
@@ -331,18 +415,18 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'revision_date', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'observer_1_id', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'nest_status', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'nest_stage', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'revision_date', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'observer_1_id', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'nest_status', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'nest_stage', Msgs);
 
   // Datas
-  if dsLink.DataSet.FieldByName('revision_date').AsString <> '' then
-    ValidDate(dsLink.DataSet.FieldByName('revision_date').AsString, rsDateNestRevision, Msgs);
-
-  if (dsLink.DataSet.FieldByName('revision_date').AsString <> '') then
-    IsFutureDate(dsLink.DataSet.FieldByName('revision_date').AsDateTime, Today,
+  if (eRevisionDate.Text <> EmptyStr) then
+  begin
+    ValidDate(eRevisionDate.Text, rsDateNestRevision, Msgs);
+    IsFutureDate(StrToDate(eRevisionDate.Text), Today,
       AnsiLowerCase(rsDateNestRevision), AnsiLowerCase(rsDateToday), Msgs);
+  end;
 
   if Msgs.Count > 0 then
   begin

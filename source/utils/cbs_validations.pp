@@ -45,6 +45,8 @@ type
   function CheckCPF(aCPF: String; aMessageList: TStrings = nil): Boolean;
   function CheckCNPJ(aCNPJ: String): Boolean;
 
+  function DateIsNull(aDate: TDateTime): Boolean;
+  function TimeIsNull(aTime: TDateTime): Boolean;
   function ValidDate(aDateStr: String; aDisplayName: String = ''; aMessageList: TStrings = nil): Boolean;
   function ValidPartialDate(aYear, aMonth, aDay: Integer): Boolean; overload;
   function ValidPartialDate(aPartialDate: TPartialDate; aDisplayName: String = ''; aMessageList: TStrings = nil)
@@ -319,6 +321,16 @@ begin
   begin
     Result := True;
   end;
+end;
+
+function DateIsNull(aDate: TDateTime): Boolean;
+begin
+  Result := aDate = NullDate;
+end;
+
+function TimeIsNull(aTime: TDateTime): Boolean;
+begin
+  Result := aTime = NullTime;
 end;
 
 function ValidDate(aDateStr: String; aDisplayName: String; aMessageList: TStrings): Boolean;

@@ -21,29 +21,31 @@ unit uedt_institution;
 interface
 
 uses
-  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls,
-  atshapelinebgra, DBEditButton;
+  Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, ExtCtrls, DBCtrls, atshapelinebgra, DBEditButton, cbs_entities;
 
 type
 
   { TedtInstitution }
 
   TedtInstitution = class(TForm)
-    eCountry: TDBEditButton;
-    eFullname: TDBEdit;
+    eMunicipality: TEditButton;
+    eState: TEditButton;
+    eCountry: TEditButton;
+    eEmail: TEdit;
+    eManagerName: TEdit;
+    ePhone: TEdit;
+    eFullname: TEdit;
+    eAcronym: TEdit;
+    ePostalCode: TEdit;
+    eAddress: TEdit;
+    eComplement: TEdit;
+    eNeighborhood: TEdit;
     dsLink: TDataSource;
-    eAcronym: TDBEdit;
-    ePostalCode: TDBEdit;
-    eMunicipality: TDBEditButton;
-    eState: TDBEditButton;
-    eComplement: TDBEdit;
-    eAddress: TDBEdit;
-    eNeighborhood: TDBEdit;
-    eManagerName: TDBEdit;
-    eEmail: TDBEdit;
-    ePhone: TDBEdit;
+    lblAcronym1: TLabel;
     lblPhone: TLabel;
     lblAcronym: TLabel;
+    lblPhone1: TLabel;
     lblPostalCode: TLabel;
     lblNotes: TLabel;
     lblComplement: TLabel;
@@ -53,10 +55,11 @@ type
     lblEmail: TLabel;
     lblFullname: TLabel;
     lblMunicipality: TLabel;
+    lblPostalCode1: TLabel;
     lblState: TLabel;
     lblCountry: TLabel;
     lineBottom: TShapeLineBGRA;
-    mNotes: TDBMemo;
+    mNotes: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
     pNotes: TPanel;
@@ -77,23 +80,30 @@ type
     sbSave: TButton;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eCountryButtonClick(Sender: TObject);
-    procedure eCountryDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eCountryKeyPress(Sender: TObject; var Key: char);
+    procedure eFullnameEditingDone(Sender: TObject);
     procedure eFullnameKeyPress(Sender: TObject; var Key: char);
     procedure eMunicipalityButtonClick(Sender: TObject);
-    procedure eMunicipalityDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eMunicipalityKeyPress(Sender: TObject; var Key: char);
     procedure eStateButtonClick(Sender: TObject);
-    procedure eStateDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure eStateKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FInstitution: TInstitution;
+    FMunicipalityId, FStateId, FCountryId: Integer;
+    procedure SetInstitution(Value: TInstitution);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Institution: TInstitution read FInstitution write SetInstitution;
   end;
 
 var
@@ -102,8 +112,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, udm_main,
-  uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -118,40 +128,48 @@ end;
 
 procedure TedtInstitution.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtInstitution.eCountryButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfCountries], eCountry, dsLink.Dataset, 'country_id', 'country_name');
+  FindSiteDlg([gfCountries], eCountry, FCountryId);
 end;
 
-procedure TedtInstitution.eCountryDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtInstitution.eCountryKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindSiteDlg([gfCountries], eCountry, dsLink.Dataset, 'country_id', 'country_name', Key);
+    FindSiteDlg([gfCountries], eCountry, FCountryId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('country_id').Clear;
-    dsLink.DataSet.FieldByName('country_name').Clear;
+    FCountryId := 0;
+    eCountry.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
+end;
+
+procedure TedtInstitution.eFullnameEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtInstitution.eFullnameKeyPress(Sender: TObject; var Key: char);
@@ -161,74 +179,78 @@ begin
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtInstitution.eMunicipalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfCities], eMunicipality, dsLink.Dataset, 'municipality_id', 'municipality_name');
+  FindSiteDlg([gfCities], eMunicipality, FMunicipalityId);
 end;
 
-procedure TedtInstitution.eMunicipalityDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtInstitution.eMunicipalityKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindSiteDlg([gfCities], eMunicipality, dsLink.Dataset, 'municipality_id', 'municipality_name', Key);
+    FindSiteDlg([gfCities], eMunicipality, FMunicipalityId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('municipality_id').Clear;
-    dsLink.DataSet.FieldByName('municipality_name').Clear;
+    FMunicipalityId := 0;
+    eMunicipality.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtInstitution.eStateButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfStates], eState, dsLink.Dataset, 'state_id', 'state_name');
+  FindSiteDlg([gfStates], eState, FStateId);
 end;
 
-procedure TedtInstitution.eStateDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtInstitution.eStateKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindSiteDlg([gfStates], eState, dsLink.Dataset, 'state_id', 'state_name', Key);
+    FindSiteDlg([gfStates], eState, FStateId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('state_id').Clear;
-    dsLink.DataSet.FieldByName('state_name').Clear;
+    FStateId := 0;
+    eState.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtInstitution.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtInstitution.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -237,7 +259,7 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);
@@ -260,18 +282,43 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionInstitution)])
+  if FIsNew then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionInstitution)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionInstitution)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtInstitution.GetRecord;
+begin
+  eFullname.Text := FInstitution.FullName;
+  eAcronym.Text := FInstitution.Acronym;
+  ePostalCode.Text := FInstitution.ZipCode;
+  eAddress.Text := FInstitution.Address1;
+  eComplement.Text := FInstitution.Address2;
+  eNeighborhood.Text := FInstitution.Neighborhood;
+  FMunicipalityId := FInstitution.MunicipalityId;
+  eMunicipality.Text := GetName('gazetteer', 'site_name', 'site_id', FMunicipalityId);
+  FStateId := FInstitution.StateId;
+  eState.Text := GetName('gazetteer', 'site_name', 'site_id', FStateId);
+  FCountryId := FInstitution.CountryId;
+  eCountry.Text := GetName('gazetteer', 'site_name', 'site_id', FCountryId);
+  eManagerName.Text := FInstitution.ManagerName;
+  eEmail.Text := FInstitution.Email;
+  ePhone.Text := FInstitution.Phone;
+  mNotes.Text := FInstitution.Notes;
 end;
 
 function TedtInstitution.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('full_name').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('acronym').AsString <> EmptyStr) then
+  if (eFullname.Text <> EmptyStr) and
+    (eAcronym.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -281,7 +328,32 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtInstitution.SetInstitution(Value: TInstitution);
+begin
+  if Assigned(Value) then
+    FInstitution := Value;
+end;
+
+procedure TedtInstitution.SetRecord;
+begin
+  FInstitution.FullName       := eFullname.Text;
+  FInstitution.Acronym        := eAcronym.Text;
+  FInstitution.ZipCode        := ePostalCode.Text;
+  FInstitution.Address1       := eAddress.Text;
+  FInstitution.Address2       := eComplement.Text;
+  FInstitution.Neighborhood   := eNeighborhood.Text;
+  FInstitution.MunicipalityId := FMunicipalityId;
+  FInstitution.StateId        := FStateId;
+  FInstitution.CountryId      := FCountryId;
+  FInstitution.ManagerName    := eManagerName.Text;
+  FInstitution.Email          := eEmail.Text;
+  FInstitution.Phone          := ePhone.Text;
+  FInstitution.Notes          := mNotes.Text;
 end;
 
 function TedtInstitution.ValidateFields: Boolean;
@@ -294,22 +366,21 @@ begin
   D := dsLink.DataSet;
 
   // Campos obrigatórios
-  RequiredIsEmpty(D, tbInstitutions, 'full_name', Msgs);
-  RequiredIsEmpty(D, tbInstitutions, 'acronym', Msgs);
+  //RequiredIsEmpty(D, tbInstitutions, 'full_name', Msgs);
+  //RequiredIsEmpty(D, tbInstitutions, 'acronym', Msgs);
 
   // Registro duplicado
-  RecordDuplicated(tbInstitutions, 'institution_id', 'full_name', D.FieldByName('full_name').AsString,
-    D.FieldByName('institution_id').AsInteger, Msgs);
+  RecordDuplicated(tbInstitutions, 'institution_id', 'full_name', eFullname.Text, FInstitution.Id, Msgs);
 
   // Chaves estrangeiras
-  ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('municipality_id').AsInteger,
-    rsCaptionMunicipality, Msgs);
-  ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('state_id').AsInteger, rsCaptionState, Msgs);
-  ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('country_id').AsInteger, rsCaptionCountry, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('municipality_id').AsInteger,
+  //  rsCaptionMunicipality, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('state_id').AsInteger, rsCaptionState, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('country_id').AsInteger, rsCaptionCountry, Msgs);
 
   // Email
-  if (D.FieldByName('email_addr').AsString <> '') then
-    CheckEmail(D.FieldByName('email_addr').AsString, Msgs);
+  if (eEmail.Text <> EmptyStr) then
+    CheckEmail(eEmail.Text, Msgs);
 
   if Msgs.Count > 0 then
   begin

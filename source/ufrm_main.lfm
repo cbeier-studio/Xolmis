@@ -9,7 +9,7 @@ object frmMain: TfrmMain
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
-  LCLVersion = '4.0.0.1'
+  LCLVersion = '4.0.0.2'
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate

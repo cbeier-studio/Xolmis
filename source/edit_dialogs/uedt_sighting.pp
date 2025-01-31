@@ -21,46 +21,43 @@ unit uedt_sighting;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Character, DBCtrls, StdCtrls, DBEditButton, atshapelinebgra, BCPanel;
+  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
+  ExtCtrls, Character, DBCtrls, StdCtrls, DBEditButton, atshapelinebgra,
+  BCPanel, cbs_birds;
 
 type
 
   { TedtSighting }
 
   TedtSighting = class(TForm)
-    ckCaptured: TDBCheckBox;
-    ckSeen: TDBCheckBox;
-    ckHeard: TDBCheckBox;
-    ckPhotographed: TDBCheckBox;
-    ckAudioRecording: TDBCheckBox;
-    ckIsInEbird: TDBCheckBox;
-    ckNotSurveying: TDBCheckBox;
-    eMethod: TDBEditButton;
-    eMackinnonListNumber: TDBEdit;
-    eSurvey: TDBEditButton;
-    eUnbandedTally: TDBEdit;
-    eMalesTally: TDBEdit;
-    eFemalesTally: TDBEdit;
-    eNotSexedTally: TDBEdit;
-    eAdultsTally: TDBEdit;
-    eImmaturesTally: TDBEdit;
-    eNotAgedTally: TDBEdit;
-    eNewCaptureTally: TDBEdit;
-    eRecapturesTally: TDBEdit;
-    eTime: TDBEdit;
+    ckCaptured: TCheckBox;
+    ckSeen: TCheckBox;
+    ckHeard: TCheckBox;
+    ckPhotographed: TCheckBox;
+    ckAudioRecording: TCheckBox;
+    ckIsInEbird: TCheckBox;
+    ckNotSurveying: TCheckBox;
+    eAdultsTally: TEdit;
+    eImmaturesTally: TEdit;
+    eNotAgedTally: TEdit;
+    eMalesTally: TEdit;
+    eFemalesTally: TEdit;
+    eNotSexedTally: TEdit;
+    eMackinnonListNumber: TEdit;
+    eDetectionType: TEditButton;
+    eBreedingStatus: TEditButton;
+    eTaxon: TEditButton;
+    eIndividual: TEditButton;
+    eTime: TEdit;
+    eObserver: TEditButton;
+    eMethod: TEditButton;
+    eLocality: TEditButton;
+    eLongitude: TEditButton;
+    eLatitude: TEditButton;
+    eDate: TEditButton;
+    eSurvey: TEditButton;
     dsLink: TDataSource;
-    eDate: TDBEditButton;
-    eLongitude: TDBEditButton;
-    eLatitude: TDBEditButton;
-    eDetectionType: TDBEditButton;
-    eBreedingStatus: TDBEditButton;
-    eIndividual: TDBEditButton;
-    eTaxon: TDBEditButton;
-    eLocality: TDBEditButton;
-    eObserver: TDBEditButton;
-    eQuantity: TDBEdit;
-    eDistance: TDBEdit;
+    eDistance: TFloatSpinEdit;
     lblDistance: TLabel;
     lblLatitude: TLabel;
     lblDate: TLabel;
@@ -90,7 +87,7 @@ type
     lblHowWasRecorded: TLabel;
     lblUseDate1: TLabel;
     lineBottom: TShapeLineBGRA;
-    mNotes: TDBMemo;
+    mNotes: TMemo;
     pBottom: TPanel;
     pMethod: TPanel;
     pClient: TPanel;
@@ -113,35 +110,48 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
-    procedure cbMethodKeyPress(Sender: TObject; var Key: char);
+    eNewCapturesTally: TSpinEdit;
+    eRecapturesTally: TSpinEdit;
+    eUnbandedTally: TSpinEdit;
+    eQuantity: TSpinEdit;
+    procedure eDateKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eBreedingStatusButtonClick(Sender: TObject);
     procedure eDateButtonClick(Sender: TObject);
     procedure eDetectionTypeButtonClick(Sender: TObject);
     procedure eIndividualButtonClick(Sender: TObject);
-    procedure eIndividualDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eIndividualKeyPress(Sender: TObject; var Key: char);
     procedure eLocalityButtonClick(Sender: TObject);
-    procedure eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eLocalityKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
+    procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
+    procedure eMalesTallyKeyPress(Sender: TObject; var Key: char);
     procedure eMethodButtonClick(Sender: TObject);
-    procedure eMethodDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eMethodKeyPress(Sender: TObject; var Key: char);
     procedure eObserverButtonClick(Sender: TObject);
-    procedure eObserverDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eObserverKeyPress(Sender: TObject; var Key: char);
     procedure eSurveyButtonClick(Sender: TObject);
-    procedure eSurveyDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eSurveyKeyPress(Sender: TObject; var Key: char);
     procedure eTaxonButtonClick(Sender: TObject);
-    procedure eTaxonDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure eTaxonKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FSighting: TSighting;
+    FSurveyId, FObserverId, FMethodId, FLocalityId, FTaxonId, FIndividualId: Integer;
+    procedure SetSighting(Value: TSighting);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Sighting: TSighting read FSighting write SetSighting;
+    property SurveyId: Integer read FSurveyId write FSurveyId;
   end;
 
 var
@@ -151,7 +161,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
-  cbs_themes, udm_main, uDarkStyleParams;
+  cbs_getvalue, cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -175,24 +185,12 @@ begin
   eBreedingStatus.Images := DMM.iEditsDark;
 end;
 
-procedure TedtSighting.cbMethodKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
-
 procedure TedtSighting.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSighting.eBreedingStatusButtonClick(Sender: TObject);
@@ -201,8 +199,25 @@ begin
 end;
 
 procedure TedtSighting.eDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eDate, dsLink.DataSet, 'sighting_date');
+  CalendarDlg(eDate.Text, eDate, Dt);
+end;
+
+procedure TedtSighting.eDateKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
 end;
 
 procedure TedtSighting.eDetectionTypeButtonClick(Sender: TObject);
@@ -212,192 +227,344 @@ end;
 
 procedure TedtSighting.eIndividualButtonClick(Sender: TObject);
 begin
-  FindDlg(tbIndividuals, eIndividual, dsLink.DataSet, 'individual_id', 'individual_name');
+  FindDlg(tbIndividuals, eIndividual, FIndividualId);
 end;
 
-procedure TedtSighting.eIndividualDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSighting.eIndividualKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbIndividuals, eIndividual, dsLink.DataSet, 'individual_id', 'individual_name', False, Key);
+    FindDlg(tbIndividuals, eIndividual, FIndividualId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('individual_id').Clear;
-    dsLink.DataSet.FieldByName('individual_name').Clear;
+    FIndividualId := 0;
+    eIndividual.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSighting.eLocalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name');
+  FindSiteDlg([gfAll], eLocality, FLocalityId);
 end;
 
-procedure TedtSighting.eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSighting.eLocalityKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name', Key);
+    FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('locality_id').Clear;
-    dsLink.DataSet.FieldByName('locality_name').Clear;
+    FLocalityId := 0;
+    eLocality.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSighting.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'longitude', 'latitude');
+  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+end;
+
+procedure TedtSighting.eLongitudeKeyPress(Sender: TObject; var Key: char);
+const
+  AllowedChars = ['0'..'9', ',', '.', '+', '-', #8, #13, #27];
+var
+  EditText: String;
+  PosDecimal: Integer;
+  DecimalValue: Extended;
+begin
+  FormKeyPress(Sender, Key);
+
+  EditText := EmptyStr;
+  PosDecimal := 0;
+  DecimalValue := 0;
+
+  if not (Key in AllowedChars) then
+  begin
+    Key := #0;
+    Exit;
+  end;
+
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+    Exit;
+  end;
+
+  if (Sender is TEdit) then
+    EditText := TEdit(Sender).Text
+  else
+  if (Sender is TEditButton) then
+    EditText := TEditButton(Sender).Text;
+  PosDecimal := Pos(FormatSettings.DecimalSeparator, EditText);
+
+  // Decimal separator
+  if (Key in [',', '.']) then
+  begin
+    if (PosDecimal = 0) then
+      Key := FormatSettings.DecimalSeparator
+    else
+      Key := #0;
+    Exit;
+  end;
+
+  // Numeric signal
+  if (Key in ['+', '-']) then
+  begin
+    if (Length(EditText) > 0) then
+    begin
+      if TryStrToFloat(EditText, DecimalValue) then
+      begin
+        if ((DecimalValue > 0) and (Key = '-')) or ((DecimalValue < 0) and (Key = '+')) then
+          DecimalValue := DecimalValue * -1.0;
+        EditText := FloatToStr(DecimalValue);
+
+        if (Sender is TEdit) then
+        begin
+          TEdit(Sender).Text := EditText;
+          TEdit(Sender).SelStart := Length(EditText);
+        end
+        else
+        if (Sender is TEditButton) then
+        begin
+          TEditButton(Sender).Text := EditText;
+          TEditButton(Sender).SelStart := Length(EditText);
+        end;
+      end;
+      Key := #0;
+    end
+    else
+    begin
+      if (Key = '+') then
+        Key := #0;
+    end;
+
+    Exit;
+  end;
+end;
+
+procedure TedtSighting.eMalesTallyKeyPress(Sender: TObject; var Key: char);
+const
+  AllowedChars = ['0'..'9', 'X', 'x', #8, #13, #27];
+var
+  EditText: String;
+  PosX: Integer;
+begin
+  FormKeyPress(Sender, Key);
+
+  if not (Key in AllowedChars) then
+  begin
+    Key := #0;
+    Exit;
+  end;
+
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+    Exit;
+  end;
+
+  if (Sender is TEdit) then
+    EditText := TEdit(Sender).Text
+  else
+  if (Sender is TEditButton) then
+    EditText := TEditButton(Sender).Text;
+  PosX := Pos('X', EditText);
+
+  if (PosX > 0) and (Key in ['0'..'9']) then
+  begin
+    if (Sender is TEdit) then
+      TEdit(Sender).Clear
+    else
+    if (Sender is TEditButton) then
+      TEditButton(Sender).Clear;
+    //Key := #0;
+    Exit;
+  end;
+
+  if (Key in ['X', 'x']) then
+  begin
+    if (Sender is TEdit) then
+      TEdit(Sender).Text := AnsiUpperCase(Key)
+    else
+    if (Sender is TEditButton) then
+      TEditButton(Sender).Text := AnsiUpperCase(Key);
+    Key := #0;
+    Exit;
+  end;
 end;
 
 procedure TedtSighting.eMethodButtonClick(Sender: TObject);
 begin
-  FindDlg(tbMethods, eMethod, dsLink.DataSet, 'method_id', 'method_name');
+  FindDlg(tbMethods, eMethod, FMethodId);
 end;
 
-procedure TedtSighting.eMethodDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSighting.eMethodKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbMethods, eMethod, dsLink.DataSet, 'method_id', 'method_name', False, Key);
+    FindDlg(tbMethods, eMethod, FMethodId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('method_id').Clear;
-    dsLink.DataSet.FieldByName('method_name').Clear;
+    FMethodId := 0;
+    eMethod.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSighting.eObserverButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eObserver, dsLink.DataSet, 'observer_id', 'observer_name');
+  FindDlg(tbPeople, eObserver, FObserverId);
 end;
 
-procedure TedtSighting.eObserverDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSighting.eObserverKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbPeople, eObserver, dsLink.DataSet, 'observer_id', 'observer_name', False, Key);
+    FindDlg(tbPeople, eObserver, FObserverId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('observer_id').Clear;
-    dsLink.DataSet.FieldByName('observer_name').Clear;
+    FObserverId := 0;
+    eObserver.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSighting.eSurveyButtonClick(Sender: TObject);
 begin
-  FindDlg(tbSurveys, eSurvey, dsLink.DataSet, 'survey_id', 'survey_name');
+  FindDlg(tbSurveys, eSurvey, FSurveyId);
 end;
 
-procedure TedtSighting.eSurveyDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSighting.eSurveyKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbSurveys, eSurvey, dsLink.DataSet, 'survey_id', 'survey_name', False, Key);
+    FindDlg(tbSurveys, eSurvey, FSurveyId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('survey_id').Clear;
-    dsLink.DataSet.FieldByName('survey_name').Clear;
+    FSurveyId := 0;
+    eSurvey.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtSighting.eTaxonButtonClick(Sender: TObject);
 begin
-  FindTaxonDlg([tfAll], eTaxon, dsLink.DataSet, 'taxon_id', 'taxon_name', True);
+  FindTaxonDlg([tfAll], eTaxon, True, FTaxonId);
 end;
 
-procedure TedtSighting.eTaxonDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtSighting.eTaxonKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindTaxonDlg([tfAll], eTaxon, dsLink.DataSet, 'taxon_id', 'taxon_name', True, Key);
+    FindTaxonDlg([tfAll], eTaxon, True, FTaxonId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('taxon_id').Clear;
-    dsLink.DataSet.FieldByName('taxon_name').Clear;
+    FTaxonId := 0;
+    eTaxon.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtSighting.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtSighting.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -406,7 +573,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);
@@ -429,20 +597,67 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSighting)])
+  if FIsNew then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSighting)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSighting)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtSighting.GetRecord;
+begin
+  FSurveyId := FSighting.SurveyId;
+  eSurvey.Text := GetName('surveys', 'full_name', 'survey_id', FSurveyId);
+  FObserverId := FSighting.ObserverId;
+  eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+  FMethodId := FSighting.MethodId;
+  eMethod.Text := GetName('methods', 'method_name', 'method_id', FMethodId);
+  FLocalityId := FSighting.LocalityId;
+  eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+  eLongitude.Text := FloatToStr(FSighting.Longitude);
+  eLatitude.Text := FloatToStr(FSighting.Latitude);
+  eDate.Text := DateToStr(FSighting.SightingDate);
+  eTime.Text := TimeToStr(FSighting.SightingTime);
+  FTaxonId := FSighting.TaxonId;
+  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  FIndividualId := FSighting.IndividualId;
+  eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+  eQuantity.Value := FSighting.SubjectTally;
+  eDistance.Value := FSighting.SubjectDistance;
+  eDetectionType.Text := FSighting.DetectionType;
+  eBreedingStatus.Text := FSighting.BreedingStatus;
+  eMackinnonListNumber.Text := IntToStr(FSighting.MackinnonListNumber);
+  ckCaptured.Checked := FSighting.SubjectCaptured;
+  ckSeen.Checked := FSighting.SubjectSeen;
+  ckHeard.Checked := FSighting.SubjectHeard;
+  ckPhotographed.Checked := FSighting.SubjectPhotographed;
+  ckAudioRecording.Checked := FSighting.SubjectRecorded;
+  eNewCapturesTally.Value := FSighting.NewCapturesTally;
+  eRecapturesTally.Value := FSighting.RecapturesTally;
+  eUnbandedTally.Value := FSighting.UnbandedTally;
+  eAdultsTally.Text := FSighting.AdultsTally;
+  eImmaturesTally.Text := FSighting.ImmatureTally;
+  eNotAgedTally.Text := FSighting.NotAgedTally;
+  eMalesTally.Text := FSighting.MalesTally;
+  eFemalesTally.Text := FSighting.FemalesTally;
+  eNotSexedTally.Text := FSighting.NotSexedTally;
+  ckIsInEbird.Checked := FSighting.IsOnEbird;
+  ckNotSurveying.Checked := FSighting.NotSurveying;
+  mNotes.Text := FSighting.Notes;
 end;
 
 function TedtSighting.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('locality_id').AsInteger <> 0) and
-    (dsLink.DataSet.FieldByName('method_id').AsInteger <> 0) and
-    (dsLink.DataSet.FieldByName('taxon_id').AsInteger <> 0) and
-    (dsLink.DataSet.FieldByName('sighting_date').IsNull = False) then
+  if (FLocalityId > 0) and
+    (FMethodId > 0) and
+    (FTaxonId > 0) and
+    (eDate.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -452,21 +667,75 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtSighting.SetRecord;
+begin
+  FSighting.SurveyId            := FSurveyId;
+  FSighting.ObserverId          := FObserverId;
+  FSighting.MethodId            := FMethodId;
+  FSighting.LocalityId          := FLocalityId;
+  FSighting.Longitude           := StrToFloat(eLongitude.Text);
+  FSighting.Latitude            := StrToFloat(eLatitude.Text);
+  FSighting.SightingDate        := StrToDate(eDate.Text);
+  FSighting.SightingTime        := StrToTime(eTime.Text);
+  FSighting.TaxonId             := FTaxonId;
+  FSighting.IndividualId        := FIndividualId;
+  FSighting.SubjectTally        := eQuantity.Value;
+  FSighting.SubjectDistance     := eDistance.Value;
+  FSighting.DetectionType       := eDetectionType.Text;
+  FSighting.BreedingStatus      := eBreedingStatus.Text;
+  FSighting.MackinnonListNumber := StrToInt(eMackinnonListNumber.Text);
+  FSighting.SubjectCaptured     := ckCaptured.Checked;
+  FSighting.SubjectSeen         := ckSeen.Checked;
+  FSighting.SubjectHeard        := ckHeard.Checked;
+  FSighting.SubjectPhotographed := ckPhotographed.Checked;
+  FSighting.SubjectRecorded     := ckAudioRecording.Checked;
+  FSighting.NewCapturesTally    := eNewCapturesTally.Value;
+  FSighting.RecapturesTally     := eRecapturesTally.Value;
+  FSighting.UnbandedTally       := eUnbandedTally.Value;
+  FSighting.AdultsTally         := eAdultsTally.Text;
+  FSighting.ImmatureTally       := eImmaturesTally.Text;
+  FSighting.NotAgedTally        := eNotAgedTally.Text;
+  FSighting.MalesTally          := eMalesTally.Text;
+  FSighting.FemalesTally        := eFemalesTally.Text;
+  FSighting.NotSexedTally       := eNotSexedTally.Text;
+  FSighting.IsOnEbird           := ckIsInEbird.Checked;
+  FSighting.NotSurveying        := ckNotSurveying.Checked;
+  FSighting.Notes               := mNotes.Text;
+end;
+
+procedure TedtSighting.SetSighting(Value: TSighting);
+begin
+  if Assigned(Value) then
+    FSighting := Value;
 end;
 
 function TedtSighting.ValidateFields: Boolean;
 var
   Msgs: TStrings;
+  Msg: String;
 begin
   Result := True;
+  Msg := EmptyStr;
   Msgs := TStringList.Create;
 
-  // Campos obrigatórios
-  RequiredIsEmpty(dsLink.DataSet, tbSightings, 'taxon_id', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbSightings, 'method_id', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbSightings, 'locality_id', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbSightings, 'sighting_date', Msgs);
+  // Required fields
+  //RequiredIsEmpty(dsLink.DataSet, tbSightings, 'taxon_id', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbSightings, 'method_id', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbSightings, 'locality_id', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbSightings, 'sighting_date', Msgs);
+
+  // Dates
+  if eDate.Text <> EmptyStr then
+    ValidDate(eDate.Text, rsCaptionDate, Msgs);
+
+  // Geographical coordinates
+  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   if Msgs.Count > 0 then
   begin

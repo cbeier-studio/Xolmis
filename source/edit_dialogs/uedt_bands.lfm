@@ -1,17 +1,17 @@
 object edtBands: TedtBands
   Left = 352
-  Height = 630
+  Height = 603
   Top = 33
   Width = 488
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'New band'
-  ClientHeight = 630
+  ClientHeight = 603
   ClientWidth = 488
   ParentFont = True
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
+  LCLVersion = '4.0.0.2'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -19,7 +19,7 @@ object edtBands: TedtBands
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 589
+    Top = 562
     Width = 488
     Align = alTop
     AutoSize = True
@@ -63,7 +63,7 @@ object edtBands: TedtBands
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 587
+    Top = 560
     Width = 488
     Align = alTop
     LineColor = 9276813
@@ -72,14 +72,15 @@ object edtBands: TedtBands
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 587
+    Height = 560
     Top = 0
     Width = 488
     HorzScrollBar.Page = 488
-    VertScrollBar.Page = 580
+    VertScrollBar.Page = 560
     Align = alTop
+    AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 587
+    ClientHeight = 560
     ClientWidth = 488
     Constraints.MinWidth = 220
     Color = clDefault
@@ -87,21 +88,21 @@ object edtBands: TedtBands
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 580
+      Height = 560
       Top = 0
       Width = 488
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 580
+      ClientHeight = 560
       ClientWidth = 488
       Constraints.MinHeight = 560
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
-        Height = 136
-        Top = 428
+        Height = 113
+        Top = 414
         Width = 488
         Align = alTop
         AutoSize = True
@@ -112,7 +113,7 @@ object edtBands: TedtBands
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 136
+        ClientHeight = 113
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 8
@@ -128,15 +129,13 @@ object edtBands: TedtBands
           ParentColor = False
           ParentFont = False
         end
-        object mNotes: TDBMemo
+        object mNotes: TMemo
           Left = 16
-          Height = 113
+          Height = 90
           Top = 23
           Width = 456
           Align = alTop
           Constraints.MinWidth = 456
-          DataField = 'notes'
-          DataSource = dsLink
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -184,15 +183,11 @@ object edtBands: TedtBands
           ParentColor = False
           ParentFont = False
         end
-        object cbBandSize: TDBComboBox
+        object cbBandSize: TComboBox
           Left = 16
           Height = 23
           Top = 23
           Width = 220
-          Constraints.MinWidth = 220
-          DataField = 'band_size'
-          DataSource = dsLink
-          DropDownCount = 12
           ItemHeight = 15
           Items.Strings = (
             'A'
@@ -215,22 +210,20 @@ object edtBands: TedtBands
             'X'
             'Z'
           )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
+          OnEditingDone = cbBandSizeEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
-        object eBandNumber: TDBEdit
+        object eBandNumber: TEdit
           Left = 252
           Height = 23
           Top = 23
           Width = 220
-          DataField = 'band_number'
-          DataSource = dsLink
-          Constraints.MinWidth = 220
-          MaxLength = 0
+          NumbersOnly = True
           TabOrder = 1
+          OnEditingDone = cbBandSizeEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
@@ -276,28 +269,20 @@ object edtBands: TedtBands
           ParentColor = False
           ParentFont = False
         end
-        object ePrefix: TDBEdit
+        object ePrefix: TEdit
           Left = 16
           Height = 23
           Top = 23
           Width = 220
-          DataField = 'band_prefix'
-          DataSource = dsLink
-          Constraints.MinWidth = 220
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
-        object eSuffix: TDBEdit
+        object eSuffix: TEdit
           Left = 252
           Height = 23
           Top = 23
           Width = 220
-          DataField = 'band_suffix'
-          DataSource = dsLink
-          Constraints.MinWidth = 220
-          MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
@@ -305,7 +290,7 @@ object edtBands: TedtBands
       end
       object pTypeColor: TPanel
         Left = 0
-        Height = 49
+        Height = 44
         Top = 108
         Width = 488
         Align = alTop
@@ -318,7 +303,7 @@ object edtBands: TedtBands
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 49
+        ClientHeight = 44
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 2
@@ -344,69 +329,26 @@ object edtBands: TedtBands
           ParentColor = False
           ParentFont = False
         end
-        object cbBandType: TDBComboBox
+        object cbBandType: TComboBox
           Left = 16
-          Height = 26
+          Height = 21
           Top = 23
           Width = 220
-          AutoComplete = True
-          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-          Constraints.MinWidth = 220
-          DataField = 'band_type'
-          DataSource = dsLink
-          DropDownCount = 12
-          ItemHeight = 20
-          Items.Strings = (
-            'Butt-end'
-            'Flag'
-            'Neck collar'
-            'Wing tag'
-            'Triangular'
-            'Lock on'
-            'Rivet'
-            'Closed'
-            'Other'
-          )
-          MaxLength = 0
+          ItemHeight = 15
           Style = csOwnerDrawFixed
           TabOrder = 0
-          OnDrawItem = cbBandTypeDrawItem
+          OnEditingDone = cbBandSizeEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
-        object cbBandColor: TDBComboBox
+        object cbBandColor: TComboBox
           Left = 252
-          Height = 26
+          Height = 21
           Top = 23
           Width = 220
-          AutoComplete = True
-          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-          Constraints.MinWidth = 220
-          DataField = 'band_color'
-          DataSource = dsLink
-          DropDownCount = 12
-          ItemHeight = 20
-          Items.Strings = (
-            'yellow'
-            'orange'
-            'red'
-            'carmine'
-            'pink'
-            'violet'
-            'pale blue'
-            'blue'
-            'green'
-            'lime green'
-            'umber'
-            'white'
-            'gray'
-            'black'
-            'other'
-          )
-          MaxLength = 0
+          ItemHeight = 15
           Style = csOwnerDrawFixed
           TabOrder = 1
-          OnDrawItem = cbBandColorDrawItem
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
@@ -414,7 +356,7 @@ object edtBands: TedtBands
       object pStatus: TPanel
         Left = 0
         Height = 46
-        Top = 157
+        Top = 152
         Width = 488
         Align = alTop
         AutoSize = True
@@ -452,49 +394,33 @@ object edtBands: TedtBands
           ParentColor = False
           ParentFont = False
         end
-        object cbBandStatus: TDBComboBox
+        object cbBandStatus: TComboBox
           Left = 16
           Height = 23
           Top = 23
           Width = 220
-          AutoComplete = True
-          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-          Constraints.MinWidth = 220
-          DataField = 'band_status'
-          DataSource = dsLink
           ItemHeight = 15
-          Items.Strings = (
-            'Available'
-            'Used'
-            'Removed'
-            'Transfered'
-            'Broken'
-            'Lost'
-          )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
+          OnEditingDone = cbBandSizeEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
-        object ckReported: TDBCheckBox
+        object ckReported: TCheckBox
           Left = 252
           Height = 23
           Top = 23
           Width = 220
-          AutoSize = True
           Caption = 'Reported'
-          DataField = 'band_reported'
-          DataSource = dsLink
           TabOrder = 1
-          ValueChecked = 'True'
-          ValueUnchecked = 'False'
+          OnKeyPress = cbBandSizeKeyPress
+          OnKeyDown = FormKeyDown
         end
       end
       object pSourceOrderNumber: TPanel
         Left = 0
         Height = 46
-        Top = 219
+        Top = 214
         Width = 488
         Align = alTop
         AutoSize = True
@@ -532,35 +458,23 @@ object edtBands: TedtBands
           ParentColor = False
           ParentFont = False
         end
-        object cbBandSource: TDBComboBox
+        object cbBandSource: TComboBox
           Left = 16
           Height = 23
           Top = 23
           Width = 220
-          AutoComplete = True
-          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-          Constraints.MinWidth = 220
-          DataField = 'band_source'
-          DataSource = dsLink
           ItemHeight = 15
-          Items.Strings = (
-            'Acquired from supplier'
-            'Transfer between banders'
-            'Bird banded by others (alive)'
-            'Dead bird banded by others'
-            'Found in the field (loose)'
-          )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
+          OnEditingDone = cbBandSizeEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
       end
       object pSupplier: TPanel
         Left = 0
-        Height = 49
-        Top = 265
+        Height = 46
+        Top = 260
         Width = 488
         Align = alTop
         AutoSize = True
@@ -572,7 +486,7 @@ object edtBands: TedtBands
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 5
@@ -587,32 +501,31 @@ object edtBands: TedtBands
           ParentColor = False
           ParentFont = False
         end
-        object eSupplier: TDBEditButton
+        object eSupplier: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          ButtonHint = 'Find institution'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'supplier_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eSupplierButtonClick
+          OnEditingDone = cbBandSizeEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eSupplierKeyPress
         end
       end
       object pCarrier: TPanel
         Left = 0
-        Height = 49
-        Top = 314
+        Height = 46
+        Top = 306
         Width = 488
         Align = alTop
         AutoSize = True
@@ -624,7 +537,7 @@ object edtBands: TedtBands
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 6
@@ -639,23 +552,21 @@ object edtBands: TedtBands
           ParentColor = False
           ParentFont = False
         end
-        object eCarrier: TDBEditButton
+        object eCarrier: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          ButtonHint = 'Find carrier'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'carrier_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eCarrierButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eCarrierKeyPress
@@ -663,8 +574,8 @@ object edtBands: TedtBands
       end
       object pProject: TPanel
         Left = 0
-        Height = 49
-        Top = 363
+        Height = 46
+        Top = 352
         Width = 488
         Align = alTop
         AutoSize = True
@@ -676,7 +587,7 @@ object edtBands: TedtBands
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 7
@@ -691,23 +602,21 @@ object edtBands: TedtBands
           ParentColor = False
           ParentFont = False
         end
-        object eProject: TDBEditButton
+        object eProject: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 456
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 456
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          ButtonHint = 'Find project'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'project_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eProjectButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eProjectKeyPress
@@ -718,7 +627,7 @@ object edtBands: TedtBands
   object dsLink: TDataSource
     DataSet = DMG.qBands
     OnDataChange = dsLinkDataChange
-    Left = 312
-    Top = 264
+    Left = 336
+    Top = 208
   end
 end

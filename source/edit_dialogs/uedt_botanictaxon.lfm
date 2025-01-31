@@ -130,6 +130,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Height = 23
           Top = 23
           Width = 333
+          ButtonHint = 'Find parent taxon'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -178,6 +179,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Height = 23
           Top = 23
           Width = 333
+          ButtonHint = 'Check name on Plantminer'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 5
@@ -308,6 +310,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Height = 23
           Top = 23
           Width = 333
+          ButtonHint = 'Find valid name'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0

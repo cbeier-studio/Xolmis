@@ -1280,7 +1280,7 @@ end;
 
 procedure TfrmMain.pmaNewCaptureClick(Sender: TObject);
 begin
-  EditCapture(DMG.qCaptures, 0, True);
+  EditCapture(DMG.qCaptures, 0, 0, True);
 end;
 
 procedure TfrmMain.pmaNewEggClick(Sender: TObject);

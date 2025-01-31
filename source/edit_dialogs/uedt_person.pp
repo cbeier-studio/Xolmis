@@ -21,28 +21,45 @@ unit uedt_person;
 interface
 
 uses
-  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls,
-  Menus, Buttons, DBEditButton, atshapelinebgra, BCPanel;
+  Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, ExtCtrls, DBCtrls, Menus, Buttons, DBEditButton, atshapelinebgra,
+  BCPanel, cbs_entities;
 
 type
 
   { TedtPerson }
 
   TedtPerson = class(TForm)
-    cbGender: TDBComboBox;
-    eBirthDate: TDBEditButton;
-    eCPF: TDBEdit;
-    eDeathDate: TDBEditButton;
-    eInstagram: TDBEdit;
-    eInstitution: TDBEditButton;
-    eCountry: TDBEditButton;
-    eMunicipality: TDBEditButton;
-    eOrcid: TDBEdit;
-    ePhone2: TDBEdit;
-    eState: TDBEditButton;
+    cbTreatment: TComboBox;
+    cbGender: TComboBox;
+    eDepartment: TEdit;
+    eAddress1: TEdit;
+    eBirthDate: TEditButton;
+    eDeathDate: TEditButton;
+    eRG: TEdit;
+    eCPF: TEdit;
+    eEmail: TEdit;
+    ePhone1: TEdit;
+    ePhone2: TEdit;
+    eFullname: TEdit;
+    eCitation: TEdit;
+    eAbbreviation: TEdit;
+    eZipCode: TEdit;
+    eMunicipality: TEditButton;
+    eState: TEditButton;
+    eCountry: TEditButton;
+    eInstitution: TEditButton;
+    eJobRole: TEdit;
+    eNeighborhood: TEdit;
+    eAddress2: TEdit;
+    eLattes: TEdit;
+    eOrcid: TEdit;
+    eTwitter: TEdit;
+    eInstagram: TEdit;
+    eWebsite: TEdit;
     iButtons: TImageList;
     iButtonsDark: TImageList;
-    lblAcronym1: TLabel;
+    lblAbbreviation1: TLabel;
     lblCPF: TLabel;
     lblDeathDate: TLabel;
     lblGender: TLabel;
@@ -50,29 +67,14 @@ type
     lblOrcid: TLabel;
     lblPhone2: TLabel;
     lblZipCode1: TLabel;
+    mNotes: TMemo;
     pImageToolbar: TBCPanel;
-    cbTreatment: TDBComboBox;
     imgProfile: TDBImage;
-    eFullname: TDBEdit;
-    eCitation: TDBEdit;
-    eEmail: TDBEdit;
     dsLink: TDataSource;
-    eAcronym: TDBEdit;
-    eZipCode: TDBEdit;
-    eRG: TDBEdit;
-    ePhone1: TDBEdit;
-    eAddress2: TDBEdit;
-    eAddress1: TDBEdit;
-    eNeighborhood: TDBEdit;
-    eDepartment: TDBEdit;
-    eJobRole: TDBEdit;
-    eLattes: TDBEdit;
-    eTwitter: TDBEdit;
-    eWebsite: TDBEdit;
     lblTreatment: TLabel;
     lblLattes: TLabel;
     lblTwitter: TLabel;
-    lblAcronym: TLabel;
+    lblAbbreviation: TLabel;
     lblZipCode: TLabel;
     lblBirthDate: TLabel;
     lblRG: TLabel;
@@ -97,7 +99,6 @@ type
     mmCopyImage: TMenuItem;
     mmPasteImage: TMenuItem;
     mmRemoveImage: TMenuItem;
-    mNotes: TDBMemo;
     pmImage: TPopupMenu;
     pTreatment: TPanel;
     pBottom: TPanel;
@@ -134,16 +135,16 @@ type
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eBirthDateButtonClick(Sender: TObject);
     procedure eCountryButtonClick(Sender: TObject);
-    procedure eCountryDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eCountryKeyPress(Sender: TObject; var Key: char);
     procedure eDeathDateButtonClick(Sender: TObject);
+    procedure eFullnameEditingDone(Sender: TObject);
     procedure eFullnameKeyPress(Sender: TObject; var Key: char);
     procedure eInstitutionButtonClick(Sender: TObject);
-    procedure eInstitutionDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eInstitutionKeyPress(Sender: TObject; var Key: char);
     procedure eMunicipalityButtonClick(Sender: TObject);
-    procedure eMunicipalityDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eMunicipalityKeyPress(Sender: TObject; var Key: char);
     procedure eStateButtonClick(Sender: TObject);
-    procedure eStateDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure eStateKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -153,11 +154,18 @@ type
     procedure sbRemoveImageClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FPerson: TPerson;
+    FMunicipalityId, FStateId, FCountryId, FInstitutionId: Integer;
+    procedure SetPerson(Value: TPerson);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Person: TPerson read FPerson write SetPerson;
   end;
 
 var
@@ -166,7 +174,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_themes,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
+  cbs_themes,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -189,50 +198,62 @@ end;
 
 procedure TedtPerson.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtPerson.eBirthDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eBirthDate, dsLink.DataSet, 'birth_date');
+  CalendarDlg(eBirthDate.Text, eBirthDate, Dt);
 end;
 
 procedure TedtPerson.eCountryButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfCountries], eCountry, dsLink.Dataset, 'country_id', 'country_name');
+  FindSiteDlg([gfCountries], eCountry, FCountryId);
 end;
 
-procedure TedtPerson.eCountryDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtPerson.eCountryKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindSiteDlg([gfCountries], eCountry, dsLink.Dataset, 'country_id', 'country_name', Key);
+    FindSiteDlg([gfCountries], eCountry, FCountryId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('country_id').Clear;
-    dsLink.DataSet.FieldByName('country_name').Clear;
+    FCountryId := 0;
+    eCountry.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtPerson.eDeathDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eDeathDate, dsLink.DataSet, 'death_name');
+  CalendarDlg(eDeathDate.Text, eDeathDate, Dt);
+end;
+
+procedure TedtPerson.eFullnameEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtPerson.eFullnameKeyPress(Sender: TObject; var Key: char);
@@ -242,104 +263,111 @@ begin
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtPerson.eInstitutionButtonClick(Sender: TObject);
 begin
-  FindDlg(tbInstitutions, eInstitution, dsLink.DataSet, 'institution_id', 'full_name');
+  FindDlg(tbInstitutions, eInstitution, FInstitutionId);
 end;
 
-procedure TedtPerson.eInstitutionDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtPerson.eInstitutionKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbInstitutions, eInstitution, dsLink.DataSet, 'institution_id', 'institution_name', False, Key);
+    FindDlg(tbInstitutions, eInstitution, FInstitutionId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('institution_id').Clear;
-    dsLink.DataSet.FieldByName('institution_name').Clear;
+    FInstitutionId := 0;
+    eInstitution.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtPerson.eMunicipalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfCities], eMunicipality, dsLink.Dataset, 'municipality_id', 'municipality_name');
+  FindSiteDlg([gfCities], eMunicipality, FMunicipalityId);
 end;
 
-procedure TedtPerson.eMunicipalityDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtPerson.eMunicipalityKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindSiteDlg([gfCities], eMunicipality, dsLink.Dataset, 'municipality_id', 'municipality_name', Key);
+    FindSiteDlg([gfCities], eMunicipality, FMunicipalityId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('municipality_id').Clear;
-    dsLink.DataSet.FieldByName('municipality_name').Clear;
+    FMunicipalityId := 0;
+    eMunicipality.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtPerson.eStateButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfStates], eState, dsLink.Dataset, 'state_id', 'state_name');
+  FindSiteDlg([gfStates], eState, FStateId);
 end;
 
-procedure TedtPerson.eStateDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtPerson.eStateKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindSiteDlg([gfStates], eState, dsLink.Dataset, 'state_id', 'state_name', Key);
+    FindSiteDlg([gfStates], eState, FStateId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('state_id').Clear;
-    dsLink.DataSet.FieldByName('state_name').Clear;
+    FStateId := 0;
+    eState.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtPerson.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  //CloseAction := caFree;
 end;
 
 procedure TedtPerson.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -348,7 +376,7 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);
@@ -371,22 +399,63 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPerson)])
-  else
-    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionPerson)]);
-
   cbTreatment.Items.CommaText := rsTreatmentList;
   cbGender.Items.CommaText := rsGenderList;
+
+  if FIsNew then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPerson)]);
+  end
+  else
+  begin
+    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionPerson)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtPerson.GetRecord;
+begin
+  eFullname.Text := FPerson.FullName;
+  eCitation.Text := FPerson.Citation;
+  eAbbreviation.Text := FPerson.Acronym;
+  cbTreatment.ItemIndex := cbTreatment.Items.IndexOf(FPerson.TitleTreatment);
+  cbGender.ItemIndex := cbGender.Items.IndexOf(FPerson.Gender);
+  eBirthDate.Text := DateToStr(FPerson.BirthDate);
+  eDeathDate.Text := DateToStr(FPerson.DeathDate);
+  eRG.Text := FPerson.IdDocument1;
+  eCPF.Text := FPerson.IdDocument2;
+  eEmail.Text := FPerson.Email;
+  ePhone1.Text := FPerson.Phone1;
+  ePhone2.Text := FPerson.Phone2;
+  eZipCode.Text := FPerson.ZipCode;
+  eAddress1.Text := FPerson.Address1;
+  eAddress2.Text := FPerson.Address2;
+  eNeighborhood.Text := FPerson.Neighborhood;
+  FMunicipalityId := FPerson.MunicipalityId;
+  eMunicipality.Text := GetName('gazetteer', 'site_name', 'site_id', FMunicipalityId);
+  FStateId := FPerson.StateId;
+  eState.Text := GetName('gazetteer', 'site_name', 'site_id', FStateId);
+  FCountryId := FPerson.CountryId;
+  eCountry.Text := GetName('gazetteer', 'site_name', 'site_id', FCountryId);
+  FInstitutionId := FPerson.InstitutionId;
+  eInstitution.Text := GetName('institutions', 'full_name', 'institution_id', FInstitutionId);
+  eDepartment.Text := FPerson.Department;
+  eJobRole.Text := FPerson.JobRole;
+  eLattes.Text := FPerson.LattesUri;
+  eOrcid.Text := FPerson.OrcidUri;
+  eTwitter.Text := FPerson.TwitterUri;
+  eInstagram.Text := FPerson.InstagramUri;
+  eWebsite.Text := FPerson.WebsiteUri;
+  mNotes.Text := FPerson.Notes;
 end;
 
 function TedtPerson.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('full_name').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('acronym').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('citation').AsString <> EmptyStr) then
+  if (eFullname.Text <> EmptyStr) and
+    (eCitation.Text <> EmptyStr) and
+    (eAbbreviation.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -420,7 +489,47 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtPerson.SetPerson(Value: TPerson);
+begin
+  if Assigned(Value) then
+    FPerson := Value;
+end;
+
+procedure TedtPerson.SetRecord;
+begin
+  FPerson.FullName       := eFullname.Text;
+  FPerson.Citation       := eCitation.Text;
+  FPerson.Acronym        := eAbbreviation.Text;
+  FPerson.TitleTreatment := cbTreatment.Text;
+  FPerson.Gender         := cbGender.Text;
+  FPerson.BirthDate      := StrToDate(eBirthDate.Text);
+  FPerson.DeathDate      := StrToDate(eDeathDate.Text);
+  FPerson.IdDocument1    := eRG.Text;
+  FPerson.IdDocument2    := eCPF.Text;
+  FPerson.Email          := eEmail.Text;
+  FPerson.Phone1         := ePhone1.Text;
+  FPerson.Phone2         := ePhone2.Text;
+  FPerson.ZipCode        := eZipCode.Text;
+  FPerson.Address1       := eAddress1.Text;
+  FPerson.Address2       := eAddress2.Text;
+  FPerson.Neighborhood   := eNeighborhood.Text;
+  FPerson.MunicipalityId := FMunicipalityId;
+  FPerson.StateId        := FStateId;
+  FPerson.CountryId      := FCountryId;
+  FPerson.InstitutionId  := FInstitutionId;
+  FPerson.Department     := eDepartment.Text;
+  FPerson.JobRole        := eJobRole.Text;
+  FPerson.LattesUri      := eLattes.Text;
+  FPerson.OrcidUri       := eOrcid.Text;
+  FPerson.TwitterUri     := eTwitter.Text;
+  FPerson.InstagramUri   := eInstagram.Text;
+  FPerson.WebsiteUri     := eWebsite.Text;
+  FPerson.Notes          := mNotes.Text;
 end;
 
 function TedtPerson.ValidateFields: Boolean;
@@ -433,31 +542,30 @@ begin
   D := dsLink.DataSet;
 
   // Campos obrigatórios
-  RequiredIsEmpty(D, tbPeople, 'full_name', Msgs);
-  RequiredIsEmpty(D, tbPeople, 'acronym', Msgs);
-  RequiredIsEmpty(D, tbPeople, 'citation', Msgs);
-  RequiredIsEmpty(D, tbPeople, 'country_id', Msgs);
+  //RequiredIsEmpty(D, tbPeople, 'full_name', Msgs);
+  //RequiredIsEmpty(D, tbPeople, 'acronym', Msgs);
+  //RequiredIsEmpty(D, tbPeople, 'citation', Msgs);
+  //RequiredIsEmpty(D, tbPeople, 'country_id', Msgs);
 
   // Registro duplicado
   RecordDuplicated(tbPeople, 'person_id', 'acronym',
-    D.FieldByName('acronym').AsString, D.FieldByName('person_id').AsInteger, Msgs);
+    eAbbreviation.Text, FPerson.Id, Msgs);
 
   // Chaves estrangeiras
-  ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('municipality_id').AsInteger,
-    rsCaptionMunicipality, Msgs);
-  ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('state_id').AsInteger, rsCaptionState, Msgs);
-  ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('country_id').AsInteger, rsCaptionCountry, Msgs);
-  ForeignValueExists(tbInstitutions, 'institution_id', D.FieldByName('institution_id').AsInteger,
-    rsCaptionInstitution, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('municipality_id').AsInteger,
+  //  rsCaptionMunicipality, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('state_id').AsInteger, rsCaptionState, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('country_id').AsInteger, rsCaptionCountry, Msgs);
+  //ForeignValueExists(tbInstitutions, 'institution_id', D.FieldByName('institution_id').AsInteger,
+  //  rsCaptionInstitution, Msgs);
 
   // Email
-  if (D.FieldByName('email_addr').AsString <> '') then
-    CheckEmail(D.FieldByName('email_addr').AsString, Msgs);
+  if (eEmail.Text <> EmptyStr) then
+    CheckEmail(eEmail.Text, Msgs);
 
   // Email
-  if (D.FieldByName('social_security_number').AsString <> '') and
-    (D.FieldByName('social_security_number').AsString <> '   .   .   -  ') then
-    CheckCPF(D.FieldByName('social_security_number').AsString, Msgs);
+  if (eCPF.Text <> EmptyStr) and (eCPF.Text <> '   .   .   -  ') then
+    CheckCPF(eCPF.Text, Msgs);
 
   if Msgs.Count > 0 then
   begin

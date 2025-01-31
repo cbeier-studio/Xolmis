@@ -1,12 +1,12 @@
 object edtNestOwner: TedtNestOwner
   Left = 362
-  Height = 176
+  Height = 173
   Top = 250
   Width = 397
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New nest owner'
-  ClientHeight = 176
+  ClientHeight = 173
   ClientWidth = 397
   PopupMode = pmAuto
   Position = poMainFormCenter
@@ -16,14 +16,14 @@ object edtNestOwner: TedtNestOwner
   OnShow = FormShow
   object pContent: TPanel
     Left = 0
-    Height = 133
+    Height = 130
     Top = 0
     Width = 397
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 133
+    ClientHeight = 130
     ClientWidth = 397
     TabOrder = 0
     object pRole: TPanel
@@ -53,14 +53,12 @@ object edtNestOwner: TedtNestOwner
         ParentColor = False
         ParentFont = False
       end
-      object cbRole: TDBComboBox
+      object cbRole: TComboBox
         Left = 16
         Height = 23
         Top = 22
         Width = 224
         Constraints.MinWidth = 224
-        DataField = 'role'
-        DataSource = dsLink
         ItemHeight = 15
         Items.Strings = (
           'Breeding male'
@@ -69,16 +67,16 @@ object edtNestOwner: TedtNestOwner
           'Offspring'
           'Unknown'
         )
-        MaxLength = 0
         Style = csDropDownList
         TabOrder = 0
+        OnEditingDone = cbRoleEditingDone
         OnKeyDown = FormKeyDown
         OnKeyPress = cbRoleKeyPress
       end
     end
     object pIndividual: TPanel
       Left = 0
-      Height = 48
+      Height = 45
       Top = 69
       Width = 397
       Align = alTop
@@ -89,7 +87,7 @@ object edtNestOwner: TedtNestOwner
       ChildSizing.VerticalSpacing = 4
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 48
+      ClientHeight = 45
       ClientWidth = 397
       ParentBackground = False
       TabOrder = 1
@@ -99,37 +97,37 @@ object edtNestOwner: TedtNestOwner
         Top = 3
         Width = 365
         BorderSpacing.Top = 3
-        Caption = 'Individual:'
+        Caption = 'Individual: *'
         Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
-      object eIndividual: TDBEditButton
+      object eIndividual: TEditButton
         Left = 16
-        Height = 26
+        Height = 23
         Top = 22
         Width = 365
-        AutoSize = True
-        Constraints.MaxHeight = 28
-        Constraints.MinWidth = 365
-        ParentShowHint = False
-        ShowHint = True
-        TabOrder = 0
         ButtonHint = 'Find individual'
-        ButtonWidth = 24
-        ImageIndex = 0
+        ButtonWidth = 23
+        Constraints.MinWidth = 365
         Images = DMM.iEdits
-        DataField = 'individual_name'
-        DataSource = dsLink
-        CharCase = ecNormal
+        ImageIndex = 0
+        MaxLength = 0
+        NumGlyphs = 1
+        PasswordChar = #0
+        Spacing = 0
+        TabOrder = 0
         OnButtonClick = eIndividualButtonClick
+        OnEditingDone = cbRoleEditingDone
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eIndividualDBEditKeyPress
       end
     end
   end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 133
+    Top = 130
     Width = 397
     Align = alTop
     LineColor = 9276813
@@ -139,7 +137,7 @@ object edtNestOwner: TedtNestOwner
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 135
+    Top = 132
     Width = 397
     Align = alTop
     AutoSize = True
@@ -164,6 +162,8 @@ object edtNestOwner: TedtNestOwner
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
       Left = 202
@@ -174,6 +174,8 @@ object edtNestOwner: TedtNestOwner
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
   end
   object dsLink: TDataSource

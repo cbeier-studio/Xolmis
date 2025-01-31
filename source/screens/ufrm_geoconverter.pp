@@ -147,6 +147,9 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  seConvertFrom.Gutter.Parts.Part[0].MarkupInfo.Background := seConvertFrom.Color;
+  seConverted.Gutter.Parts.Part[0].MarkupInfo.Background := seConverted.Color;
+
   UpdateCurrentCaretPos;
 end;
 

@@ -715,7 +715,7 @@ type
 implementation
 
 uses
-  cbs_system, cbs_users, cbs_validations, cbs_fullnames, cbs_datacolumns, udm_main;
+  cbs_system, cbs_global, cbs_users, cbs_validations, cbs_fullnames, cbs_datacolumns, udm_main;
 
 { TBandHistory }
 
@@ -731,7 +731,7 @@ procedure TBandHistory.Clear;
 begin
   inherited Clear;
   FBandId := 0;
-  FEventDate := StrToDate('30/12/1500');
+  FEventDate := NullDate;
   FOrderNumber := 0;
   FEventType := bevUse;
   FSupplierId := 0;
@@ -1037,8 +1037,8 @@ procedure TSighting.Clear;
 begin
   inherited;
   FSurveyId := 0;
-  FSightingDate := StrToDate('30/12/1500');
-  FSightingTime := StrToTime('00:00:00');
+  FSightingDate := NullDate;
+  FSightingTime := NullTime;
   FLocalityId := 0;
   FLatitude := 0.0;
   FLongitude := 0.0;
@@ -1914,8 +1914,8 @@ begin
   FTaxonId := 0;
   FIndividualId := 0;
   FCaptureId := 0;
-  FCaptureDate := StrToDate('30/12/1500');
-  FCaptureTime := StrToTime('00:00:00');
+  FCaptureDate := NullDate;
+  FCaptureTime := NullTime;
   FBanderId := 0;
   FBandId := 0;
   FPrimary1 := 0.0;
@@ -3096,8 +3096,8 @@ begin
   FSpeciesId := 0;
   FIndividualId := 0;
   FProjectId := 0;
-  FCaptureDate := StrToDate('30/12/1500');
-  FCaptureTime := StrToTime('00:00:00');
+  FCaptureDate := NullDate;
+  FCaptureTime := NullTime;
   FCountryId := 0;
   FStateId := 0;
   FMunicipalityId := 0;
@@ -4558,8 +4558,8 @@ begin
   FBirthDay := 0;
   FBirthMonth := 0;
   FBirthYear := 0;
-  FBandingDate := StrToDate('30/12/1500');
-  FBandChangeDate := StrToDate('30/12/1500');
+  FBandingDate := NullDate;
+  FBandChangeDate := NullDate;
   FBandId := 0;
   FDoubleBandId := 0;
   FRemovedBandId := 0;
@@ -4737,8 +4737,14 @@ begin
     FBirthDay := FieldByName('birth_day').AsInteger;
     FBirthMonth := FieldByName('birth_month').AsInteger;
     FBirthYear := FieldByName('birth_year').AsInteger;
-    FBandingDate := FieldByName('banding_date').AsDateTime;
-    FBandChangeDate := FieldByName('band_change_date').AsDateTime;
+    if not FieldByName('banding_date').IsNull then
+      FBandingDate := FieldByName('banding_date').AsDateTime
+    else
+      FBandingDate := NullDate;
+    if not FieldByName('band_change_date').IsNull then
+      FBandChangeDate := FieldByName('band_change_date').AsDateTime
+    else
+      FBandChangeDate := NullDate;
     FBandId := FieldByName('band_id').AsInteger;
     FDoubleBandId := FieldByName('double_band_id').AsInteger;
     FRemovedBandId := FieldByName('removed_band_id').AsInteger;
@@ -4869,8 +4875,14 @@ begin
       ParamByName('removed_band_id').AsInteger := FRemovedBandId
     else
       ParamByName('removed_band_id').Clear;
-    ParamByName('banding_date').AsString := DateToStr(FBandingDate);
-    ParamByName('band_change_date').AsString := DateToStr(FBandChangeDate);
+    if not DateIsNull(FBandingDate) then
+      ParamByName('banding_date').AsString := DateToStr(FBandingDate)
+    else
+      ParamByName('banding_date').Clear;
+    if not DateIsNull(FBandChangeDate) then
+      ParamByName('band_change_date').AsString := DateToStr(FBandChangeDate)
+    else
+      ParamByName('band_change_date').Clear;
     ParamByName('recognizable_markings').AsString := FRecognizableMarkings;
     ParamByName('notes').AsString := FNotes;
     if (FFatherId > 0) then
@@ -5058,8 +5070,14 @@ begin
       ParamByName('removed_band_id').AsInteger := FRemovedBandId
     else
       ParamByName('removed_band_id').Clear;
-    ParamByName('banding_date').AsString := DateToStr(FBandingDate);
-    ParamByName('band_change_date').AsString := DateToStr(FBandChangeDate);
+    if not DateIsNull(FBandingDate) then
+      ParamByName('banding_date').AsString := DateToStr(FBandingDate)
+    else
+      ParamByName('banding_date').Clear;
+    if not DateIsNull(FBandChangeDate) then
+      ParamByName('band_change_date').AsString := DateToStr(FBandChangeDate)
+    else
+      ParamByName('band_change_date').Clear;
     ParamByName('recognizable_markings').AsString := FRecognizableMarkings;
     ParamByName('notes').AsString := FNotes;
     if (FFatherId > 0) then

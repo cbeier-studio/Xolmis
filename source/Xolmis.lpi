@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="135">
+      <ExcludedIdentifiers Count="136">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -159,6 +159,7 @@
         <Item133 Value="tedtNetEffort.txtNetArea.Caption"/>
         <Item134 Value="tedtNetEffort.txtTotalOpenTime.Caption"/>
         <Item135 Value="tedtSurvey.txtNetEffort.Caption"/>
+        <Item136 Value="tedtEgg.txtVolume.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
@@ -1142,7 +1143,6 @@
         <ComponentName Value="DMB"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="data_modules\udm_individuals.pp"/>
@@ -1205,7 +1205,6 @@
         <ComponentName Value="frmCustomGrid"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="screens\ufrm_dashboard.pp"/>
@@ -1256,6 +1255,10 @@
       </Unit>
       <Unit>
         <Filename Value="screens\uthread_dashboard.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\cbs_media.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

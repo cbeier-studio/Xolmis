@@ -19,6 +19,7 @@
 {"hash":129233642,"name":"tedtegg.lblshellpattern.caption","sourcebytes":[69,103,103,115,104,101,108,108,32,112,97,116,116,101,114,110,58],"value":"Eggshell pattern:"},
 {"hash":5474922,"name":"tedtegg.lblweight.caption","sourcebytes":[77,97,115,115,58],"value":"Mass:"},
 {"hash":224642010,"name":"tedtegg.lblvolume.caption","sourcebytes":[86,111,108,117,109,101,58],"value":"Volume:"},
+{"hash":165036485,"name":"tedtegg.txtvolume.caption","sourcebytes":[116,120,116,86,111,108,117,109,101],"value":"txtVolume"},
 {"hash":98548410,"name":"tedtegg.lblwidth.caption","sourcebytes":[87,105,100,116,104,58],"value":"Width:"},
 {"hash":46459626,"name":"tedtegg.lbllength.caption","sourcebytes":[76,101,110,103,116,104,58],"value":"Length:"},
 {"hash":89566314,"name":"tedtegg.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},

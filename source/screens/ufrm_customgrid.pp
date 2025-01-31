@@ -6252,9 +6252,9 @@ procedure TfrmCustomGrid.pmcNewCaptureClick(Sender: TObject);
 begin
   case FTableType of
     tbIndividuals:
-      EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
+      EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger, 0, True);
     tbSurveys:
-      EditCapture(DMS.qCaptures, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
+      EditCapture(DMS.qCaptures, 0, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
   end;
 
   UpdateChildBar;
@@ -8341,7 +8341,7 @@ begin
       tbBands:         EditBand(dsLink.DataSet, True);
       //tbBandHistory: ;
       tbIndividuals:   EditIndividual(dsLink.DataSet, True);
-      tbCaptures:      EditCapture(dsLink.DataSet, 0, True);
+      tbCaptures:      EditCapture(dsLink.DataSet, 0, 0, True);
       tbMolts:         EditMolt(dsLink.DataSet, 0, True);
       tbNests:         EditNest(dsLink.DataSet, True);
       tbNestOwners:    EditNestOwner(dsLink.DataSet, 0, True);

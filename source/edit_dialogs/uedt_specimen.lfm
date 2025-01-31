@@ -252,6 +252,7 @@ object edtSpecimen: TedtSpecimen
           Height = 23
           Top = 22
           Width = 365
+          ButtonHint = 'Find individual'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -400,6 +401,7 @@ object edtSpecimen: TedtSpecimen
           Height = 23
           Top = 22
           Width = 365
+          ButtonHint = 'Find taxon'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -450,6 +452,7 @@ object edtSpecimen: TedtSpecimen
           Height = 23
           Top = 22
           Width = 365
+          ButtonHint = 'Find nest'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -499,6 +502,7 @@ object edtSpecimen: TedtSpecimen
           Height = 23
           Top = 22
           Width = 365
+          ButtonHint = 'Find egg'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -548,6 +552,7 @@ object edtSpecimen: TedtSpecimen
           Height = 23
           Top = 22
           Width = 365
+          ButtonHint = 'Find locality'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -610,6 +615,7 @@ object edtSpecimen: TedtSpecimen
           Height = 23
           Top = 22
           Width = 174
+          ButtonHint = 'Open coordinates editor'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 3
@@ -629,6 +635,7 @@ object edtSpecimen: TedtSpecimen
           Height = 23
           Top = 22
           Width = 175
+          ButtonHint = 'Open coordinates editor'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 3

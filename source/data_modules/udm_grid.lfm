@@ -9034,11 +9034,6 @@ object DMG: TDMG
         Precision = -1
       end    
       item
-        Name = 'internal_id'
-        DataType = ftLargeint
-        Precision = -1
-      end    
-      item
         Name = 'full_name'
         DataType = ftString
         Precision = -1
@@ -9060,7 +9055,7 @@ object DMG: TDMG
         Name = 'title_treatment'
         DataType = ftString
         Precision = -1
-        Size = 10
+        Size = 15
       end    
       item
         Name = 'national_id_card'
@@ -9078,7 +9073,7 @@ object DMG: TDMG
         Name = 'gender'
         DataType = ftString
         Precision = -1
-        Size = 5
+        Size = 15
       end    
       item
         Name = 'birth_date'
@@ -9244,6 +9239,30 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'municipality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'state_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'country_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'institution_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
       end>
     AfterCancel = qPeopleAfterCancel
     AfterInsert = qPeopleAfterInsert
@@ -9418,7 +9437,7 @@ object DMG: TDMG
       Size = 100
     end
     object qPeopleacronym: TStringField
-      DisplayLabel = 'Acronym'
+      DisplayLabel = 'Abbreviation'
       FieldKind = fkData
       FieldName = 'acronym'
       Index = 3
@@ -9437,11 +9456,10 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Size = 10
+      Size = 15
     end
     object qPeoplegender: TStringField
       DisplayLabel = 'Gender'
-      DisplayWidth = 12
       FieldKind = fkData
       FieldName = 'gender'
       Index = 5
@@ -9449,7 +9467,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Size = 5
+      Size = 15
     end
     object qPeoplenational_id_card: TStringField
       DisplayLabel = 'RG'

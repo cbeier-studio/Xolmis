@@ -11,7 +11,6 @@ object edtSite: TedtSite
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.1'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -140,7 +139,9 @@ object edtSite: TedtSite
           ImageIndex = 0
           MaxLength = 0
           NumGlyphs = 1
+          ParentShowHint = False
           PasswordChar = #0
+          ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eParentSiteButtonClick
@@ -393,7 +394,9 @@ object edtSite: TedtSite
           ImageIndex = 3
           MaxLength = 0
           NumGlyphs = 1
+          ParentShowHint = False
           PasswordChar = #0
+          ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLongitudeButtonClick
@@ -412,7 +415,9 @@ object edtSite: TedtSite
           ImageIndex = 3
           MaxLength = 0
           NumGlyphs = 1
+          ParentShowHint = False
           PasswordChar = #0
+          ShowHint = True
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eLongitudeButtonClick

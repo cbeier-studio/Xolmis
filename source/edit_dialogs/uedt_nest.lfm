@@ -2,15 +2,14 @@ object edtNest: TedtNest
   Left = 352
   Height = 643
   Top = 33
-  Width = 416
+  Width = 413
   AutoSize = True
   Caption = 'New nest'
   ClientHeight = 643
-  ClientWidth = 416
+  ClientWidth = 413
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -19,7 +18,7 @@ object edtNest: TedtNest
     Left = 0
     Height = 2
     Top = 600
-    Width = 416
+    Width = 413
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -29,7 +28,7 @@ object edtNest: TedtNest
     Left = 0
     Height = 41
     Top = 602
-    Width = 416
+    Width = 413
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -41,13 +40,13 @@ object edtNest: TedtNest
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 416
+    ClientWidth = 413
     TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 188
+      Width = 186
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -55,10 +54,10 @@ object edtNest: TedtNest
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 212
+      Left = 210
       Height = 25
       Top = 8
-      Width = 188
+      Width = 187
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -69,7 +68,7 @@ object edtNest: TedtNest
     Left = 0
     Height = 600
     Top = 0
-    Width = 416
+    Width = 413
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 600
@@ -78,27 +77,27 @@ object edtNest: TedtNest
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
     ClientHeight = 600
-    ClientWidth = 399
+    ClientWidth = 396
     Constraints.MinWidth = 176
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1287
+      Height = 1263
       Top = 0
-      Width = 399
+      Width = 396
       Align = alTop
       AutoSize = True
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1287
-      ClientWidth = 399
+      ClientHeight = 1263
+      ClientWidth = 396
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
-        Height = 48
-        Top = 253
-        Width = 399
+        Height = 45
+        Top = 241
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -109,48 +108,46 @@ object edtNest: TedtNest
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 5
         object lblLocality: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 364
           BorderSpacing.Top = 3
-          Caption = 'Locality:'
+          Caption = 'Locality: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eLocality: TDBEditButton
+        object eLocality: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 368
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 368
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          Width = 364
           ButtonHint = 'Find locality'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'locality_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eLocalityButtonClick
+          OnEditingDone = eTaxonEditingDone
           OnKeyDown = FormKeyDown
+          OnKeyPress = eLocalityKeyPress
         end
       end
       object pFieldNumberFate: TPanel
         Left = 0
         Height = 45
-        Top = 64
-        Width = 399
+        Top = 61
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -162,59 +159,52 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 1
         object lblRequester: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
-          Caption = 'Field number:'
+          Caption = 'Field number: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
         object lblRequester3: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Fate:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eFieldNumber: TDBEdit
+        object eFieldNumber: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'field_number'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
+          OnEditingDone = eTaxonEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-        object cbNestFate: TDBComboBox
-          Left = 208
+        object cbNestFate: TComboBox
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          Constraints.MinWidth = 176
-          DataField = 'nest_fate'
-          DataSource = dsLink
+          Width = 174
           ItemHeight = 15
           Items.Strings = (
             'Lost'
             'Success'
             'Unknown'
           )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -223,9 +213,9 @@ object edtNest: TedtNest
       end
       object pTaxon: TPanel
         Left = 0
-        Height = 48
+        Height = 45
         Top = 16
-        Width = 399
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -236,48 +226,47 @@ object edtNest: TedtNest
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 0
         object lblBandStatus1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           BorderSpacing.Top = 3
-          Caption = 'Taxon:'
+          Caption = 'Taxon: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eTaxon: TDBEditButton
+        object eTaxon: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 368
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 368
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          Width = 365
           ButtonHint = 'Find taxon'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
+          Constraints.MinWidth = 365
           Images = DMM.iEdits
-          DataField = 'taxon_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eTaxonButtonClick
+          OnEditingDone = eTaxonEditingDone
           OnKeyDown = FormKeyDown
+          OnKeyPress = eTaxonKeyPress
         end
       end
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 1143
-        Width = 399
+        Top = 1119
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -287,14 +276,14 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 112
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 22
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -302,15 +291,12 @@ object edtNest: TedtNest
           ParentColor = False
           ParentFont = False
         end
-        object mNotes: TDBMemo
+        object mNotes: TMemo
           Left = 16
           Height = 90
           Top = 22
-          Width = 368
+          Width = 364
           Align = alTop
-          Constraints.MinWidth = 368
-          DataField = 'notes'
-          DataSource = dsLink
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -319,9 +305,9 @@ object edtNest: TedtNest
       end
       object pProject: TPanel
         Left = 0
-        Height = 48
-        Top = 157
-        Width = 399
+        Height = 45
+        Top = 151
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -332,48 +318,45 @@ object edtNest: TedtNest
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 3
         object lblSupplier1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Project:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eProject: TDBEditButton
+        object eProject: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 368
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 368
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          Width = 364
           ButtonHint = 'Find project'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'project_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eProjectButtonClick
           OnKeyDown = FormKeyDown
+          OnKeyPress = eProjectKeyPress
         end
       end
       object pObserver: TPanel
         Left = 0
-        Height = 48
-        Top = 205
-        Width = 399
+        Height = 45
+        Top = 196
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -384,48 +367,46 @@ object edtNest: TedtNest
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 4
         object lblRequester1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 364
           BorderSpacing.Top = 3
-          Caption = 'Observer:'
+          Caption = 'Observer: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eObserver: TDBEditButton
+        object eObserver: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 368
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 368
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          Width = 364
           ButtonHint = 'Find observer'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'observer_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eObserverButtonClick
+          OnEditingDone = eTaxonEditingDone
           OnKeyDown = FormKeyDown
+          OnKeyPress = eObserverKeyPress
         end
       end
       object pDateFoundLast: TPanel
         Left = 0
-        Height = 48
-        Top = 109
-        Width = 399
+        Height = 45
+        Top = 106
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -436,15 +417,15 @@ object edtNest: TedtNest
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 2
         object lblBandStatus3: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Nest encounter date:'
           Font.Color = 6579300
@@ -452,58 +433,50 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblBandStatus8: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Last date:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eFoundDate: TDBEditButton
+        object eFoundDate: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 176
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          Width = 174
           ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          ImageIndex = 1
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           TextHint = 'DD/MM/YYYY'
-          DataField = 'found_date'
-          DataSource = dsLink
-          CharCase = ecNormal
           OnButtonClick = eFoundDateButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-        object eLastDate: TDBEditButton
-          Left = 208
-          Height = 26
+        object eLastDate: TEditButton
+          Left = 206
+          Height = 23
           Top = 22
-          Width = 176
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
+          Width = 174
           ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          ImageIndex = 1
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 1
           TextHint = 'DD/MM/YYYY'
-          DataField = 'last_date'
-          DataSource = dsLink
-          CharCase = ecNormal
           OnButtonClick = eLastDateButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -511,9 +484,9 @@ object edtNest: TedtNest
       end
       object pLongLat: TPanel
         Left = 0
-        Height = 48
-        Top = 301
-        Width = 399
+        Height = 45
+        Top = 286
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -524,15 +497,15 @@ object edtNest: TedtNest
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 6
         object lblBandStatus4: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
           Font.Color = 6579300
@@ -540,66 +513,58 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblBandStatus9: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eLongitude: TDBEditButton
+        object eLongitude: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 176
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
+          Width = 174
+          ButtonHint = 'Open coordinates editor'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
           TabOrder = 0
-          ButtonHint = 'Edit coordinates in DMS format'
-          ButtonWidth = 24
-          ImageIndex = 3
-          Images = DMM.iEdits
-          DataField = 'longitude'
-          DataSource = dsLink
-          CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
           OnKeyDown = FormKeyDown
-          OnKeyPress = eFieldNumberKeyPress
+          OnKeyPress = eLongitudeKeyPress
         end
-        object eLatitude: TDBEditButton
-          Left = 208
-          Height = 26
+        object eLatitude: TEditButton
+          Left = 206
+          Height = 23
           Top = 22
-          Width = 176
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
-          ButtonHint = 'Edit coordinates in DMS format'
-          ButtonWidth = 24
-          ImageIndex = 3
+          Width = 174
+          ButtonHint = 'Open coordinates editor'
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'latitude'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 1
           OnButtonClick = eLongitudeButtonClick
           OnKeyDown = FormKeyDown
-          OnKeyPress = eFieldNumberKeyPress
+          OnKeyPress = eLongitudeKeyPress
         end
       end
       object pTypeHeight: TPanel
         Left = 0
         Height = 45
-        Top = 513
-        Width = 399
+        Top = 495
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -612,14 +577,14 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 9
         object lblSupportType: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Support type:'
           Font.Color = 6579300
@@ -627,24 +592,21 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblHeightAboveGround: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Height at ground level:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object cbSupportType: TDBComboBox
+        object cbSupportType: TComboBox
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          Constraints.MinWidth = 176
-          DataField = 'support_type'
-          DataSource = dsLink
+          Width = 174
           ItemHeight = 15
           Items.Strings = (
             'Ground'
@@ -658,22 +620,19 @@ object edtNest: TedtNest
             'Anthropic'
             'Other'
           )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
           OnSelect = cbSupportTypeSelect
         end
-        object eHeightAboveGround: TDBEdit
-          Left = 208
+        object eHeightAboveGround: TFloatSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'height_above_ground'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
+          MaxValue = 1000
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -682,8 +641,8 @@ object edtNest: TedtNest
       object pPlantHeightDbh: TPanel
         Left = 0
         Height = 45
-        Top = 699
-        Width = 399
+        Top = 675
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -695,14 +654,14 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 13
         object lblPlantHeight: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Plant height:'
           Font.Color = 6579300
@@ -710,38 +669,32 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblPlantDbh: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Stem thickness (DBH):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object ePlantHeight: TDBEdit
+        object ePlantHeight: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'plant_height'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-        object ePlantDbh: TDBEdit
-          Left = 208
+        object ePlantDbh: TFloatSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'plant_dbh'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -750,8 +703,8 @@ object edtNest: TedtNest
       object pPlantDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 744
-        Width = 399
+        Top = 720
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -763,14 +716,14 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 14
         object lblPlantMaxDiameter: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Greater plant diameter:'
           Font.Color = 6579300
@@ -778,38 +731,32 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblPlantMinDiameter: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Lesser plant diameter:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object ePlantMaxDiameter: TDBEdit
+        object ePlantMaxDiameter: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'plant_max_diameter'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-        object ePlantMinDiameter: TDBEdit
-          Left = 208
+        object ePlantMinDiameter: TFloatSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'plant_min_diameter'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -818,8 +765,8 @@ object edtNest: TedtNest
       object pProductivity: TPanel
         Left = 0
         Height = 45
-        Top = 455
-        Width = 399
+        Top = 437
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -832,14 +779,14 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 8
         object lblRequester2: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Productivity:'
           Font.Color = 6579300
@@ -847,37 +794,31 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblRequester5: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Nest shape:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eProductivity: TDBEdit
+        object eProductivity: TSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'nest_productivity'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          MaxValue = 100
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-        object cbNestShape: TDBComboBox
-          Left = 208
+        object cbNestShape: TComboBox
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          Constraints.MinWidth = 176
-          DataField = 'nest_shape'
-          DataSource = dsLink
+          Width = 174
           ItemHeight = 15
           Items.Strings = (
             'Scrape'
@@ -890,19 +831,17 @@ object edtNest: TedtNest
             'Burrow'
             'Cavity'
           )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
-          OnSelect = cbSupportTypeSelect
         end
       end
       object pDescription: TPanel
         Left = 0
         Height = 80
-        Top = 362
-        Width = 399
+        Top = 344
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -912,14 +851,14 @@ object edtNest: TedtNest
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 80
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 7
         object lblNotes1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Nest description:'
@@ -927,15 +866,13 @@ object edtNest: TedtNest
           ParentColor = False
           ParentFont = False
         end
-        object mDescription: TDBMemo
+        object mDescription: TMemo
           Left = 16
           Height = 58
           Top = 22
-          Width = 367
+          Width = 365
           Align = alTop
           Constraints.MinWidth = 365
-          DataField = 'description'
-          DataSource = dsLink
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -944,61 +881,9 @@ object edtNest: TedtNest
       end
       object pSupportPlant1: TPanel
         Left = 0
-        Height = 48
-        Top = 558
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 10
-        object lblSupportPlant1: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 368
-          BorderSpacing.Top = 3
-          Caption = 'Support plant 1:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eSupportPlant1: TDBEditButton
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 368
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 368
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          ButtonHint = 'Find support plant taxon'
-          ButtonWidth = 24
-          ImageIndex = 0
-          Images = DMM.iEdits
-          DataField = 'support_plant_1_name'
-          DataSource = dsLink
-          CharCase = ecNormal
-          OnButtonClick = eSupportPlant1ButtonClick
-          OnKeyDown = FormKeyDown
-        end
-      end
-      object pOtherSupport: TPanel
-        Left = 0
         Height = 45
-        Top = 654
-        Width = 399
+        Top = 540
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1010,40 +895,44 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
-        TabOrder = 12
-        Visible = False
-        object lblOtherSupport: TLabel
+        TabOrder = 10
+        object lblSupportPlant1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 364
           BorderSpacing.Top = 3
-          Caption = 'Other support:'
+          Caption = 'Support plant 1:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eOtherSupport: TDBEdit
+        object eSupportPlant1: TEditButton
           Left = 16
           Height = 23
           Top = 22
-          Width = 368
-          DataField = 'other_support'
-          DataSource = dsLink
-          Constraints.MinWidth = 368
+          Width = 364
+          ButtonHint = 'Find support plant taxon'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
           TabOrder = 0
+          OnButtonClick = eSupportPlant1ButtonClick
           OnKeyDown = FormKeyDown
-          OnKeyPress = eFieldNumberKeyPress
+          OnKeyPress = eSupportPlant1KeyPress
         end
       end
-      object pSupportPlant2: TPanel
+      object pOtherSupport: TPanel
         Left = 0
-        Height = 48
-        Top = 606
-        Width = 399
+        Height = 45
+        Top = 630
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1054,48 +943,86 @@ object edtNest: TedtNest
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
+        ParentBackground = False
+        TabOrder = 12
+        Visible = False
+        object lblOtherSupport: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 364
+          BorderSpacing.Top = 3
+          Caption = 'Other support:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eOtherSupport: TEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 364
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eFieldNumberKeyPress
+        end
+      end
+      object pSupportPlant2: TPanel
+        Left = 0
+        Height = 45
+        Top = 585
+        Width = 396
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 11
         object lblSupportPlant2: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Support plant 2:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eSupportPlant2: TDBEditButton
+        object eSupportPlant2: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 368
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 368
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          Width = 364
           ButtonHint = 'Find support plant taxon'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'support_plant_2_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eSupportPlant2ButtonClick
           OnKeyDown = FormKeyDown
+          OnKeyPress = eSupportPlant2KeyPress
         end
       end
       object pConstructionIncubationDays: TPanel
         Left = 0
         Height = 45
-        Top = 802
-        Width = 399
+        Top = 778
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -1108,14 +1035,14 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 15
         object lblConstructionDays: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Days building:'
           Font.Color = 6579300
@@ -1123,38 +1050,32 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblIncubationDays: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Days incubating:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eConstructionDays: TDBEdit
+        object eBuildingDays: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'construction_days'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-        object eIncubationDays: TDBEdit
-          Left = 208
+        object eIncubatingDays: TFloatSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'incubation_days'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1163,8 +1084,8 @@ object edtNest: TedtNest
       object pNestlingActiveDays: TPanel
         Left = 0
         Height = 45
-        Top = 847
-        Width = 399
+        Top = 823
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1176,14 +1097,14 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 16
         object lblNestlingDays: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Nestling-days:'
           Font.Color = 6579300
@@ -1191,38 +1112,32 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblActiveDays: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Total active-days:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eNestlingDays: TDBEdit
+        object eNestlingDays: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'nestling_days'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-        object eActiveDays: TDBEdit
-          Left = 208
+        object eActiveDays: TFloatSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'active_days'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1231,8 +1146,8 @@ object edtNest: TedtNest
       object pInternalDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 905
-        Width = 399
+        Top = 881
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -1245,14 +1160,14 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 17
         object lblInternalMinDiameter: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Lesser internal diameter:'
           Font.Color = 6579300
@@ -1260,38 +1175,30 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblInternalMaxDiameter: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Greater internal diameter:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eInternalMinDiameter: TDBEdit
+        object eInternalMinDiameter: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'internal_min_diameter'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-        object eInternalMaxDiameter: TDBEdit
-          Left = 208
+        object eInternalMaxDiameter: TFloatSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'internal_max_diameter'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1300,8 +1207,8 @@ object edtNest: TedtNest
       object pEdgeCenterDistance: TPanel
         Left = 0
         Height = 45
-        Top = 1040
-        Width = 399
+        Top = 1016
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1313,14 +1220,14 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 20
         object lblEdgeDistance: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Distance from plant edge:'
           Font.Color = 6579300
@@ -1328,38 +1235,32 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblCenterDistance: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Distance from plant center:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eEdgeDistance: TDBEdit
+        object eEdgeDistance: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'edge_distance'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-        object eCenterDistance: TDBEdit
-          Left = 208
+        object eCenterDistance: TFloatSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'center_distance'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1368,8 +1269,8 @@ object edtNest: TedtNest
       object pInternalExternalHeight: TPanel
         Left = 0
         Height = 45
-        Top = 995
-        Width = 399
+        Top = 971
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1381,14 +1282,14 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 19
         object lblInternalHeight: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Internal height:'
           Font.Color = 6579300
@@ -1396,38 +1297,30 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblExternalHeight: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'External height:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eInternalHeight: TDBEdit
+        object eInternalHeight: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'internal_height'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-        object eExternalHeight: TDBEdit
-          Left = 208
+        object eExternalHeight: TFloatSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'external_height'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1436,8 +1329,8 @@ object edtNest: TedtNest
       object pNestCover: TPanel
         Left = 0
         Height = 45
-        Top = 1085
-        Width = 399
+        Top = 1061
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1449,14 +1342,14 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 21
         object lblNestCover: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Cover (%):'
           Font.Color = 6579300
@@ -1464,24 +1357,21 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblNestCover1: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 175
+          Width = 174
           BorderSpacing.Top = 3
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eNestCover: TDBEdit
+        object eNestCover: TSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'nest_cover'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          MaxValue = 100
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1490,8 +1380,8 @@ object edtNest: TedtNest
       object pExternalDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 950
-        Width = 399
+        Top = 926
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1503,14 +1393,14 @@ object edtNest: TedtNest
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 18
         object lblExternalMinDiameter: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Lesser external diameter:'
           Font.Color = 6579300
@@ -1518,38 +1408,30 @@ object edtNest: TedtNest
           ParentFont = False
         end
         object lblExternalMaxDiameter: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Greater external diameter:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eExternalMinDiameter: TDBEdit
+        object eExternalMinDiameter: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'external_min_diameter'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
-        object eExternalMaxDiameter: TDBEdit
-          Left = 208
+        object eExternalMaxDiameter: TFloatSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'external_max_diameter'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress

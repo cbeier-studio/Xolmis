@@ -489,6 +489,7 @@ uses
     rsDateDeath = 'Death date';
     rsDateReceipt = 'Receipt date';
     rsDateBanding = 'Banding date';
+    rsDateBandChange = 'Band change date';
     rsDateReport = 'Report date';
     rsDateDischarge = 'Discharge date';
     rsDateMeasured = 'Measurement date';
@@ -592,6 +593,21 @@ uses
 
     rsBandColorList = '"yellow","orange","red","carmine","pink","violet","pale blue","blue","green",' +
       '"lime green","umber","white","gray","black","other"';
+    rsColorYellow = 'yellow';
+    rsColorOrange = 'orange';
+    rsColorRed = 'red';
+    rsColorCarmine = 'carmine';
+    rsColorPink = 'pink';
+    rsColorViolet = 'violet';
+    rsColorPaleBlue = 'pale blue';
+    rsColorBlue = 'blue';
+    rsColorGreen = 'green';
+    rsColorLimeGreen = 'lime green';
+    rsColorUmber = 'umber';
+    rsColorWhite = 'white';
+    rsColorGray = 'gray';
+    rsColorBlack = 'black';
+    rsColorOther = 'other';
 
     { Nests }
     rsNestActive = 'Active';

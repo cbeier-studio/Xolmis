@@ -2,15 +2,14 @@ object edtPerson: TedtPerson
   Left = 352
   Height = 700
   Top = 33
-  Width = 416
+  Width = 413
   AutoSize = True
   Caption = 'New researcher'
   ClientHeight = 700
-  ClientWidth = 416
+  ClientWidth = 413
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -18,7 +17,7 @@ object edtPerson: TedtPerson
     Left = 0
     Height = 2
     Top = 657
-    Width = 416
+    Width = 413
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -28,7 +27,7 @@ object edtPerson: TedtPerson
     Left = 0
     Height = 41
     Top = 659
-    Width = 416
+    Width = 413
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -40,121 +39,67 @@ object edtPerson: TedtPerson
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 416
+    ClientWidth = 413
     TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 188
+      Width = 186
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 212
+      Left = 210
       Height = 25
       Top = 8
-      Width = 188
+      Width = 187
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
   end
   object SBox: TScrollBox
     Left = 0
     Height = 657
     Top = 0
-    Width = 416
+    Width = 413
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 657
     Align = alTop
     BorderStyle = bsNone
     ClientHeight = 657
-    ClientWidth = 399
+    ClientWidth = 396
     Constraints.MinWidth = 176
     ParentShowHint = False
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 1288
+      Height = 1273
       Top = 0
-      Width = 399
+      Width = 396
       Align = alTop
       AutoSize = True
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1288
-      ClientWidth = 399
+      ClientHeight = 1273
+      ClientWidth = 396
       TabOrder = 0
       object pMunicipality: TPanel
         Left = 0
-        Height = 48
-        Top = 688
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 13
-        object lblMunicipality: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          BorderSpacing.Top = 3
-          Caption = 'Municipality:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eMunicipality: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Find municipality'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          CustomEditMask = False
-          DataField = 'municipality_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eMunicipalityButtonClick
-        end
-      end
-      object pFullname: TPanel
-        Left = 0
         Height = 45
-        Top = 119
-        Width = 399
+        Top = 685
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -166,30 +111,78 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
+        ParentBackground = False
+        TabOrder = 13
+        object lblMunicipality: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 364
+          BorderSpacing.Top = 3
+          Caption = 'Municipality:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eMunicipality: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 364
+          ButtonHint = 'Find municipality'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eMunicipalityButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eMunicipalityKeyPress
+        end
+      end
+      object pFullname: TPanel
+        Left = 0
+        Height = 45
+        Top = 119
+        Width = 396
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 1
         object lblFullname: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Name: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eFullname: TDBEdit
+        object eFullname: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 367
-          DataField = 'full_name'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 364
           TabOrder = 0
+          OnEditingDone = eFullnameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -198,7 +191,7 @@ object edtPerson: TedtPerson
         Left = 0
         Height = 45
         Top = 209
-        Width = 399
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -210,40 +203,37 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 3
-        object lblAcronym: TLabel
+        object lblAbbreviation: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
-          Caption = 'Acronym: *'
+          Caption = 'Abbreviation: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object lblAcronym1: TLabel
-          Left = 208
+        object lblAbbreviation1: TLabel
+          Left = 206
           Height = 15
           Top = 3
-          Width = 175
+          Width = 174
           BorderSpacing.Top = 3
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eAcronym: TDBEdit
+        object eAbbreviation: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'acronym'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
+          OnEditingDone = eFullnameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -251,8 +241,8 @@ object edtPerson: TedtPerson
       object pAddress2: TPanel
         Left = 0
         Height = 45
-        Top = 598
-        Width = 399
+        Top = 595
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -264,29 +254,25 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 11
         object lblAddress2: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Address detail:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eAddress2: TDBEdit
+        object eAddress2: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 367
-          DataField = 'address_2'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 364
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -295,8 +281,8 @@ object edtPerson: TedtPerson
       object pAddress1: TPanel
         Left = 0
         Height = 45
-        Top = 553
-        Width = 399
+        Top = 550
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -308,29 +294,25 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 10
         object lblAddress1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Address:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eAddress1: TDBEdit
+        object eAddress1: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 367
-          DataField = 'address_1'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 364
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -339,8 +321,8 @@ object edtPerson: TedtPerson
       object pLattes: TPanel
         Left = 0
         Height = 45
-        Top = 996
-        Width = 399
+        Top = 981
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -353,14 +335,14 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 19
         object lblLattes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Lattes:'
           Font.Color = 6579300
@@ -368,38 +350,30 @@ object edtPerson: TedtPerson
           ParentFont = False
         end
         object lblOrcid: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Orcid:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eLattes: TDBEdit
+        object eLattes: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'lattes_uri'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
-        object eOrcid: TDBEdit
-          Left = 208
+        object eOrcid: TEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'orcid_uri'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -408,8 +382,8 @@ object edtPerson: TedtPerson
       object pZipCode: TPanel
         Left = 0
         Height = 45
-        Top = 508
-        Width = 399
+        Top = 505
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -422,14 +396,14 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 9
         object lblZipCode: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Postal code:'
           Font.Color = 6579300
@@ -437,24 +411,20 @@ object edtPerson: TedtPerson
           ParentFont = False
         end
         object lblZipCode1: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 175
+          Width = 174
           BorderSpacing.Top = 3
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eZipCode: TDBEdit
+        object eZipCode: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'zip_code'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -463,8 +433,8 @@ object edtPerson: TedtPerson
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 1144
-        Width = 399
+        Top = 1129
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -474,14 +444,14 @@ object edtPerson: TedtPerson
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 112
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 22
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -489,15 +459,13 @@ object edtPerson: TedtPerson
           ParentColor = False
           ParentFont = False
         end
-        object mNotes: TDBMemo
+        object mNotes: TMemo
           Left = 16
           Height = 90
           Top = 22
-          Width = 367
+          Width = 365
           Align = alTop
           Constraints.MinWidth = 365
-          DataField = 'notes'
-          DataSource = dsLink
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -507,8 +475,8 @@ object edtPerson: TedtPerson
       object pNeighborhood: TPanel
         Left = 0
         Height = 45
-        Top = 643
-        Width = 399
+        Top = 640
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -520,29 +488,25 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 12
         object lblNeighborhood: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Neighborhood:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eNeighborhood: TDBEdit
+        object eNeighborhood: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 367
-          DataField = 'neighborhood'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 364
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -550,125 +514,9 @@ object edtPerson: TedtPerson
       end
       object pState: TPanel
         Left = 0
-        Height = 48
-        Top = 736
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 14
-        object lblState: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          BorderSpacing.Top = 3
-          Caption = 'State:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eState: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Find state'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          CustomEditMask = False
-          DataField = 'state_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eStateButtonClick
-        end
-      end
-      object pCountry: TPanel
-        Left = 0
-        Height = 48
-        Top = 784
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 15
-        object lblCountry: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          BorderSpacing.Top = 3
-          Caption = 'Country:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eCountry: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Find country'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          CustomEditMask = False
-          DataField = 'country_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eCountryButtonClick
-        end
-      end
-      object pDepartment: TPanel
-        Left = 0
         Height = 45
-        Top = 893
-        Width = 399
+        Top = 730
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -680,29 +528,127 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
+        ParentBackground = False
+        TabOrder = 14
+        object lblState: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 364
+          BorderSpacing.Top = 3
+          Caption = 'State:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eState: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 364
+          ButtonHint = 'Find state'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eStateButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eStateKeyPress
+        end
+      end
+      object pCountry: TPanel
+        Left = 0
+        Height = 45
+        Top = 775
+        Width = 396
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 396
+        ParentBackground = False
+        TabOrder = 15
+        object lblCountry: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 364
+          BorderSpacing.Top = 3
+          Caption = 'Country:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eCountry: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 364
+          ButtonHint = 'Find country'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eCountryButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eCountryKeyPress
+        end
+      end
+      object pDepartment: TPanel
+        Left = 0
+        Height = 45
+        Top = 878
+        Width = 396
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 17
         object lblDepartment: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Department:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eDepartment: TDBEdit
+        object eDepartment: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 367
-          DataField = 'department'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 364
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -711,8 +657,8 @@ object edtPerson: TedtPerson
       object pJobRole: TPanel
         Left = 0
         Height = 45
-        Top = 938
-        Width = 399
+        Top = 923
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -724,29 +670,25 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 18
         object lblJobRole: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Role:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eJobRole: TDBEdit
+        object eJobRole: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 367
-          DataField = 'job_role'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 364
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -756,7 +698,7 @@ object edtPerson: TedtPerson
         Left = 0
         Height = 45
         Top = 164
-        Width = 399
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -768,139 +710,36 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 2
         object lblCitation: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Citation: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eCitation: TDBEdit
+        object eCitation: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 367
-          DataField = 'citation'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 364
           TabOrder = 0
+          OnEditingDone = eFullnameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
       end
       object pBirthDate: TPanel
         Left = 0
-        Height = 48
-        Top = 299
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 5
-        object lblBirthDate: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Date of birth:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblDeathDate: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Date of death:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eBirthDate: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'birth_date'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 1
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          TextHint = 'DD/MM/YYYY'
-          OnButtonClick = eBirthDateButtonClick
-          OnKeyDown = FormKeyDown
-        end
-        object eDeathDate: TDBEditButton
-          Cursor = crDefault
-          Left = 208
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'death_date'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 1
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 1
-          TextHint = 'DD/MM/YYYY'
-          OnButtonClick = eDeathDateButtonClick
-          OnKeyDown = FormKeyDown
-        end
-      end
-      object pNationalIDCard: TPanel
-        Left = 0
         Height = 45
-        Top = 347
-        Width = 399
+        Top = 299
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -912,14 +751,98 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
+        ParentBackground = False
+        TabOrder = 5
+        object lblBirthDate: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 174
+          BorderSpacing.Top = 3
+          Caption = 'Date of birth:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblDeathDate: TLabel
+          Left = 206
+          Height = 15
+          Top = 3
+          Width = 174
+          BorderSpacing.Top = 3
+          Caption = 'Date of death:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eBirthDate: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 174
+          ButtonHint = 'Open calendar'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          TextHint = 'DD/MM/YYYY'
+          OnButtonClick = eBirthDateButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eFullnameKeyPress
+        end
+        object eDeathDate: TEditButton
+          Left = 206
+          Height = 23
+          Top = 22
+          Width = 174
+          ButtonHint = 'Open calendar'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
+          TextHint = 'DD/MM/YYYY'
+          OnButtonClick = eDeathDateButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eFullnameKeyPress
+        end
+      end
+      object pNationalIDCard: TPanel
+        Left = 0
+        Height = 45
+        Top = 344
+        Width = 396
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 6
         object lblRG: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'RG:'
           Font.Color = 6579300
@@ -927,38 +850,30 @@ object edtPerson: TedtPerson
           ParentFont = False
         end
         object lblCPF: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'CPF:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eRG: TDBEdit
+        object eRG: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'national_id_card'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
-        object eCPF: TDBEdit
-          Left = 208
+        object eCPF: TEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'social_security_number'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -967,8 +882,8 @@ object edtPerson: TedtPerson
       object pPhone1: TPanel
         Left = 0
         Height = 45
-        Top = 450
-        Width = 399
+        Top = 447
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -980,14 +895,14 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 8
         object lblPhone1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Telephone:'
           Font.Color = 6579300
@@ -995,38 +910,30 @@ object edtPerson: TedtPerson
           ParentFont = False
         end
         object lblPhone2: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Mobile phone:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object ePhone1: TDBEdit
+        object ePhone1: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'phone_1'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
-        object ePhone2: TDBEdit
-          Left = 208
+        object ePhone2: TEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'phone_2'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -1035,8 +942,8 @@ object edtPerson: TedtPerson
       object pEmail: TPanel
         Left = 0
         Height = 45
-        Top = 405
-        Width = 399
+        Top = 402
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -1049,29 +956,25 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 7
         object lblEmail: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'E-mail:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eEmail: TDBEdit
+        object eEmail: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 367
-          DataField = 'email_addr'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 364
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -1079,9 +982,9 @@ object edtPerson: TedtPerson
       end
       object pInstitution: TPanel
         Left = 0
-        Height = 48
-        Top = 845
-        Width = 399
+        Height = 45
+        Top = 833
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -1093,54 +996,47 @@ object edtPerson: TedtPerson
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 16
         object lblInstitution: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Institution:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eInstitution: TDBEditButton
-          Cursor = crDefault
+        object eInstitution: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
+          Width = 364
           ButtonHint = 'Find institution'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          CustomEditMask = False
-          DataField = 'institution_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
+          NumGlyphs = 1
           ParentShowHint = False
+          PasswordChar = #0
           ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eInstitutionButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eInstitutionKeyPress
         end
       end
       object pTwitter: TPanel
         Left = 0
         Height = 45
-        Top = 1041
-        Width = 399
+        Top = 1026
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1152,14 +1048,14 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 20
         object lblTwitter: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'X (Twitter):'
           Font.Color = 6579300
@@ -1167,38 +1063,30 @@ object edtPerson: TedtPerson
           ParentFont = False
         end
         object lblInstagram: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Instagram:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eTwitter: TDBEdit
+        object eTwitter: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'twitter_uri'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
-        object eInstagram: TDBEdit
-          Left = 208
+        object eInstagram: TEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'instagram_uri'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -1207,8 +1095,8 @@ object edtPerson: TedtPerson
       object pWebsite: TPanel
         Left = 0
         Height = 45
-        Top = 1086
-        Width = 399
+        Top = 1071
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1220,29 +1108,25 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 21
         object lblWebsite: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Website:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eWebsite: TDBEdit
+        object eWebsite: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 367
-          DataField = 'website_uri'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 364
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -1252,7 +1136,7 @@ object edtPerson: TedtPerson
         Left = 0
         Height = 90
         Top = 16
-        Width = 399
+        Width = 396
         Align = alTop
         BorderSpacing.Bottom = 13
         BevelOuter = bvNone
@@ -1260,7 +1144,7 @@ object edtPerson: TedtPerson
         ChildSizing.HorizontalSpacing = 1
         ChildSizing.VerticalSpacing = 4
         ClientHeight = 90
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 0
         object imgProfile: TDBImage
@@ -1354,7 +1238,7 @@ object edtPerson: TedtPerson
         Left = 0
         Height = 45
         Top = 254
-        Width = 399
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1366,14 +1250,14 @@ object edtPerson: TedtPerson
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 4
         object lblTreatment: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Treatment:'
           Font.Color = 6579300
@@ -1381,24 +1265,21 @@ object edtPerson: TedtPerson
           ParentFont = False
         end
         object lblGender: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Gender:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object cbTreatment: TDBComboBox
+        object cbTreatment: TComboBox
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          Constraints.MinWidth = 176
-          DataField = 'title_treatment'
-          DataSource = dsLink
+          Width = 174
           ItemHeight = 15
           Items.Strings = (
             'Mr.'
@@ -1411,26 +1292,23 @@ object edtPerson: TedtPerson
             'M./MSc.'
             'Dr./PhD.'
           )
-          MaxLength = 0
+          Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
-        object cbGender: TDBComboBox
-          Left = 208
+        object cbGender: TComboBox
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          Constraints.MinWidth = 176
-          DataField = 'gender'
-          DataSource = dsLink
+          Width = 174
           ItemHeight = 15
           Items.Strings = (
             'he/him'
             'she/her'
             'they/them'
           )
-          MaxLength = 0
+          Style = csDropDownList
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress

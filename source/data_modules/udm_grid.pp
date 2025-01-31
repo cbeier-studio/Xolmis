@@ -615,6 +615,8 @@ type
     qNestsinternal_max_diameter: TFloatField;
     qNestsinternal_min_diameter: TFloatField;
     qNeststaxon_formatted_name: TStringField;
+    qPeoplegender: TStringField;
+    qPeopletitle_treatment: TStringField;
     qPermanentNetssampling_plot_id: TLongintField;
     qPermitsnotes: TMemoField;
     qSampleCollectors: TSQLQuery;
@@ -775,7 +777,6 @@ type
     qPeopleemail_addr: TStringField;
     qPeopleexported_status: TBooleanField;
     qPeoplefull_name: TStringField;
-    qPeoplegender: TStringField;
     qPeopleinsert_date: TDateTimeField;
     qPeopleinstagram_uri: TStringField;
     qPeopleinstitution_id: TLongintField;
@@ -797,7 +798,6 @@ type
     qPeoplesocial_security_number: TStringField;
     qPeoplestate_id: TLongintField;
     qPeoplestate_name: TStringField;
-    qPeopletitle_treatment: TStringField;
     qPeopletwitter_uri: TStringField;
     qPeopleupdate_date: TDateTimeField;
     qPeopleuser_inserted: TLongintField;
@@ -3259,32 +3259,17 @@ begin
   if Sender.AsString = EmptyStr then
     Exit;
 
-  if Sender.AsString = 'SC' then
-    aText := rsNestShapeScrape
-  else
-  if Sender.AsString = 'CP' then
-    aText := rsNestShapeCup
-  else
-  if Sender.AsString = 'SP' then
-    aText := rsNestShapeSphere
-  else
-  if Sender.AsString = 'PD' then
-    aText := rsNestShapePendent
-  else
-  if Sender.AsString = 'PL' then
-    aText := rsNestShapePlatform
-  else
-  if Sender.AsString = 'MN' then
-    aText := rsNestShapeMound
-  else
-  if Sender.AsString = 'BR' then
-    aText := rsNestShapeBurrow
-  else
-  if Sender.AsString = 'CV' then
-    aText := rsNestShapeCavity
-  else
-  if Sender.AsString = 'PT' then
-    aText := rsNestShapePlate;
+  case Sender.AsString of
+    'SC': aText := rsNestShapeScrape;
+    'CP': aText := rsNestShapeCup;
+    'SP': aText := rsNestShapeSphere;
+    'PD': aText := rsNestShapePendent;
+    'PL': aText := rsNestShapePlatform;
+    'MN': aText := rsNestShapeMound;
+    'BR': aText := rsNestShapeBurrow;
+    'CV': aText := rsNestShapeCavity;
+    'PT': aText := rsNestShapePlate;
+  end;
 
   DisplayText := True;
 end;

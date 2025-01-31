@@ -37,7 +37,7 @@ uses
   function EditBotanicTaxon(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditBand(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditIndividual(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
-  function EditCapture(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditCapture(aDataSet: TDataSet; aIndividual: Integer = 0; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditMolt(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditNest(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditNestOwner(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
@@ -63,6 +63,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_permissions, cbs_finddialogs, cbs_dialogs, cbs_gis, cbs_sampling, cbs_botany,
+  cbs_breeding, cbs_birds, cbs_entities,
   udm_main, udm_grid, udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
   uedt_survey, uedt_samplingplot, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
   uedt_nest, uedt_egg, uedt_molt, uedt_nestrevision, uedt_neteffort, uedt_permanentnet, uedt_sighting,
@@ -257,113 +258,140 @@ end;
 
 function EditInstitution(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TInstitution;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Institution');
   Application.CreateForm(TedtInstitution, edtInstitution);
   with edtInstitution do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TInstitution.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TInstitution.Create(aDataSet.FieldByName('institution_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    Institution := FRecord;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Institution.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtInstitution);
+    LogInfo('CLOSE EDIT DIALOG: Institution');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditPerson(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TPerson;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Person');
   Application.CreateForm(TedtPerson, edtPerson);
   with edtPerson do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TPerson.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TPerson.Create(aDataSet.FieldByName('person_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    Person := FRecord;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Person.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtPerson);
+    LogInfo('CLOSE EDIT DIALOG: Person');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditProject(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TProject;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Project');
   Application.CreateForm(TedtProject, edtProject);
   with edtProject do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TProject.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TProject.Create(aDataSet.FieldByName('project_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    Project := FRecord;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Project.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtProject);
+    LogInfo('CLOSE EDIT DIALOG: Project');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditProjectMember(aDataSet: TDataSet; aProject: Integer; IsNew: Boolean): Boolean;
@@ -406,39 +434,49 @@ end;
 
 function EditPermit(aDataSet: TDataSet; aProject: Integer; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TPermit;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Permit');
   Application.CreateForm(TedtPermit, edtPermit);
   with edtPermit do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TPermit.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TPermit.Create(aDataSet.FieldByName('permit_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    Permit := FRecord;
+    ProjectId := aProject;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Permit.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtPermit);
+    LogInfo('CLOSE EDIT DIALOG: Permit');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditBotanicTaxon(aDataSet: TDataSet; IsNew: Boolean): Boolean;
@@ -489,113 +527,143 @@ end;
 
 function EditBand(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TBand;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Band');
   Application.CreateForm(TedtBands, edtBands);
   with edtBands do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TBand.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TBand.Create(aDataSet.FieldByName('band_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    Band := FRecord;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Band.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtBands);
+    LogInfo('CLOSE EDIT DIALOG: Band');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditIndividual(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TIndividual;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Individual');
   Application.CreateForm(TedtIndividual, edtIndividual);
   with edtIndividual do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TIndividual.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TIndividual.Create(aDataSet.FieldByName('individual_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    Individual := FRecord;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Individual.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtIndividual);
+    LogInfo('CLOSE EDIT DIALOG: Individual');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
-function EditCapture(aDataSet: TDataSet; aIndividual: Integer; IsNew: Boolean): Boolean;
+function EditCapture(aDataSet: TDataSet; aIndividual: Integer; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TCapture;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Capture');
   edtCapture := TedtCapture.Create(nil);
   with edtCapture do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TCapture.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TCapture.Create(aDataSet.FieldByName('capture_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    Capture := FRecord;
+    IndividualId := aIndividual;
+    pIndividual.Visible := aIndividual = 0;
+    SurveyId := aSurvey;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Capture.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtCapture);
+    LogInfo('CLOSE EDIT DIALOG: Capture');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditMolt(aDataSet: TDataSet; aIndividual: Integer; IsNew: Boolean): Boolean;
@@ -637,150 +705,189 @@ end;
 
 function EditNest(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TNest;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Nest');
   Application.CreateForm(TedtNest, edtNest);
   with edtNest do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TNest.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TNest.Create(aDataSet.FieldByName('nest_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    Nest := FRecord;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Nest.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtNest);
+    LogInfo('CLOSE EDIT DIALOG: Nest');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditNestOwner(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+//  CloseQueryAfter: Boolean;
+  FRecord: TNestOwner;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Nest owner');
   Application.CreateForm(TedtNestOwner, edtNestOwner);
   with edtNestOwner do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TNestOwner.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TNestOwner.Create(aDataSet.FieldByName('nest_owner_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    NestOwner := FRecord;
+    NestId := aNest;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      NestOwner.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtNestOwner);
+    LogInfo('CLOSE EDIT DIALOG: Nest owner');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditNestRevision(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TNestRevision;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Nest revision');
   Application.CreateForm(TedtNestRevision, edtNestRevision);
   with edtNestRevision do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TNestRevision.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TNestRevision.Create(aDataSet.FieldByName('nest_revision_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    NestRevision := FRecord;
+    NestId := aNest;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      NestRevision.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtNestRevision);
+    LogInfo('CLOSE EDIT DIALOG: Nest revision');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditEgg(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TEgg;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Egg');
   Application.CreateForm(TedtEgg, edtEgg);
   with edtEgg do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TEgg.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TEgg.Create(aDataSet.FieldByName('egg_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    Egg := FRecord;
+    NestId := aNest;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Egg.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtEgg);
+    LogInfo('CLOSE EDIT DIALOG: Egg');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditExpedition(aDataSet: TDataSet; IsNew: Boolean): Boolean;
@@ -1022,41 +1129,51 @@ end;
 
 function EditSighting(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TSighting;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Sighting');
   Application.CreateForm(TedtSighting, edtSighting);
   with edtSighting do
   try
     dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     if aDataSet <> DMG.qSightings then
       pSurvey.Visible := True;
     if IsNew then
     begin
-      aDataSet.Insert;
+      FRecord := TSighting.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TSighting.Create(aDataSet.FieldByName('sighting_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
+    Sighting := FRecord;
+    SurveyId := aSurvey;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Sighting.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtSighting);
+    LogInfo('CLOSE EDIT DIALOG: Sighting');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditSpecimen(aDataSet: TDataSet; IsNew: Boolean): Boolean;

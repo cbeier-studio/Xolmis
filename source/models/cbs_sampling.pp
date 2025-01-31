@@ -637,7 +637,7 @@ type
 implementation
 
 uses
-  cbs_locale, cbs_users, cbs_validations, cbs_getvalue, cbs_fullnames, cbs_datacolumns, udm_main;
+  cbs_locale, cbs_global, cbs_users, cbs_validations, cbs_getvalue, cbs_fullnames, cbs_datacolumns, udm_main;
 
 function AuthorListToString(aAuthors: TAuthors): String;
 var
@@ -2157,8 +2157,8 @@ procedure TExpedition.Clear;
 begin
   inherited Clear;
   FName := EmptyStr;
-  FStartDate := StrToDate('30/12/1500');
-  FEndDate := StrToDate('30/12/1500');
+  FStartDate := NullDate;
+  FEndDate := NullDate;
   FLocalityId := 0;
   FProjectId := 0;
   FMunicipalityId := 0;
@@ -2255,8 +2255,14 @@ begin
   begin
     FId := FieldByName('expedition_id').AsInteger;
     FName := FieldByName('expedition_name').AsString;
-    FStartDate := FieldByName('start_date').AsDateTime;
-    FEndDate := FieldByName('end_date').AsDateTime;
+    if not (FieldByName('start_date').IsNull) then
+      FStartDate := FieldByName('start_date').AsDateTime
+    else
+      FStartDate := NullDate;
+    if not (FieldByName('end_date').IsNull) then
+      FEndDate := FieldByName('end_date').AsDateTime
+    else
+      FEndDate := NullDate;
     FLocalityId := FieldByName('locality_id').AsInteger;
     FProjectId := FieldByName('project_id').AsInteger;
     FMunicipalityId := FieldByName('municipality_id').AsInteger;
@@ -2299,28 +2305,31 @@ begin
       'end_date, ' +
       'project_id, ' +
       'locality_id, ' +
-      //'country_id, ' +
-      //'state_id, ' +
-      //'municipality_id, ' +
       'description, ' +
       'user_inserted, ' +
       'insert_date) ');
     Add('VALUES (' +
       ':expedition_name, ' +
-      ':start_date, ' +
-      ':end_date, ' +
+      'date(:start_date), ' +
+      'date(:end_date), ' +
       ':project_id, ' +
       ':locality_id, ' +
-      //':country_id, ' +
-      //':state_id, ' +
-      //':municipality_id, ' +
       ':description, ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))');
     ParamByName('expedition_name').AsString := FName;
-    ParamByName('start_date').AsDateTime := FStartDate;
-    ParamByName('end_date').AsDateTime := FEndDate;
-    ParamByName('project_id').AsInteger := FProjectId;
+    if not DateIsNull(FStartDate) then
+      ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate)
+    else
+      ParamByName('start_date').Clear;
+    if not DateIsNull(FEndDate) then
+      ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate)
+    else
+      ParamByName('end_date').Clear;
+    if FProjectId > 0 then
+      ParamByName('project_id').AsInteger := FProjectId
+    else
+      ParamByName('project_id').Clear;
     ParamByName('locality_id').AsInteger := FLocalityId;
     ParamByName('description').AsString := FDescription;
     ParamByName('user_inserted').AsInteger := FUserInserted;
@@ -2412,13 +2421,10 @@ begin
     Clear;
     Add('UPDATE expeditions SET ' +
       'expedition_name = :expedition_name, ' +
-      'start_date = :start_date, ' +
-      'end_date = :end_date, ' +
+      'start_date = date(:start_date), ' +
+      'end_date = date(:end_date), ' +
       'project_id = :project_id, ' +
       'locality_id = :locality_id, ' +
-      //'country_id, ' +
-      //'state_id, ' +
-      //'municipality_id, ' +
       'description = :description, ' +
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'', ''subsec''), ' +
@@ -2426,9 +2432,18 @@ begin
       'active_status = :active_status');
     Add('WHERE (expedition_id = :expedition_id)');
     ParamByName('expedition_name').AsString := FName;
-    ParamByName('start_date').AsDateTime := FStartDate;
-    ParamByName('end_date').AsDateTime := FEndDate;
-    ParamByName('project_id').AsInteger := FProjectId;
+    if not DateIsNull(FStartDate) then
+      ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate)
+    else
+      ParamByName('start_date').Clear;
+    if not DateIsNull(FEndDate) then
+      ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate)
+    else
+      ParamByName('end_date').Clear;
+    if FProjectId > 0 then
+      ParamByName('project_id').AsInteger := FProjectId
+    else
+      ParamByName('project_id').Clear;
     ParamByName('locality_id').AsInteger := FLocalityId;
     ParamByName('description').AsString := FDescription;
     ParamByName('user_updated').AsInteger := FUserInserted;
@@ -3130,8 +3145,8 @@ procedure TVegetation.Clear;
 begin
   inherited Clear;
   FSurveyId := 0;
-  FSampleDate := StrToDate('30/12/1500');
-  FSampleTime := StrToTime('00:00:00');
+  FSampleDate := NullDate;
+  FSampleTime := NullTime;
   FNotes := EmptyStr;
   FLongitude := 0.0;
   FLatitude := 0.0;
@@ -3521,7 +3536,7 @@ begin
       'active_status = :active_status');
     Add('WHERE (vegetation_id = :vegetation_id)');
     ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
-    ParamByName('sample_time').AsString := TimeToStr(FSampleTime);
+    ParamByName('sample_time').AsString := FormatDateTime('hh:nn', FSampleTime);
     ParamByName('survey_id').AsInteger := FSurveyId;
     if (FLongitude <> 0) and (FLatitude <> 0) then
     begin
@@ -3837,9 +3852,9 @@ end;
 procedure TSurvey.Clear;
 begin
   inherited;
-  FSurveyDate := StrToDate('30/12/1500');
-  FStartTime := StrToTime('00:00:00');
-  FEndTime := StrToTime('00:00:00');
+  FSurveyDate := NullDate;
+  FStartTime := NullTime;
+  FEndTime := NullTime;
   FDuration := 0;
   FMethodId := 0;
   FNetStationId := 0;
@@ -4095,7 +4110,7 @@ begin
         'datetime(''now'',''subsec''));');
     ParamByName('survey_date').AsString := FormatDateTime('yyyy-mm-dd', FSurveyDate);
     ParamByName('start_time').AsString := TimeToStr(FStartTime);
-    if FEndTime <> StrToTime('00:00:00') then
+    if not TimeIsNull(FEndTime) then
       ParamByName('end_time').AsString := TimeToStr(FEndTime)
     else
       ParamByName('end_time').Clear;
@@ -4174,7 +4189,7 @@ begin
       ParamByName('notes').Clear;
     ParamByName('full_name').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, 0, '');
     ParamByName('user_inserted').AsInteger := FUserInserted;
-//    GravaLogSQL(SQL);
+
     ExecSQL;
 
     // Get the autoincrement key inserted
@@ -4274,7 +4289,7 @@ begin
 
     ParamByName('survey_date').AsString := FormatDateTime('yyyy-mm-dd', FSurveyDate);
     ParamByName('start_time').AsString := TimeToStr(FStartTime);
-    if FEndTime <> StrToTime('00:00:00') then
+    if not TimeIsNull(FEndTime) then
       ParamByName('end_time').AsString := TimeToStr(FEndTime)
     else
       ParamByName('end_time').Clear;

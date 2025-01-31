@@ -21,49 +21,48 @@ unit uedt_nest;
 interface
 
 uses
-  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls,
-  DBEditButton, atshapelinebgra;
+  Classes, EditBtn, Spin, SysUtils, Character, DB, Forms, Controls, Graphics,
+  Dialogs, StdCtrls, ExtCtrls, DBCtrls, DBEditButton, atshapelinebgra,
+  cbs_breeding;
 
 type
 
   { TedtNest }
 
   TedtNest = class(TForm)
-    cbNestFate: TDBComboBox;
-    cbSupportType: TDBComboBox;
-    cbNestShape: TDBComboBox;
-    eExternalMaxDiameter: TDBEdit;
-    eExternalMinDiameter: TDBEdit;
-    eOtherSupport: TDBEdit;
-    eFieldNumber: TDBEdit;
+    cbNestFate: TComboBox;
+    cbNestShape: TComboBox;
+    cbSupportType: TComboBox;
+    eOtherSupport: TEdit;
+    eSupportPlant1: TEditButton;
+    eSupportPlant2: TEditButton;
+    eFieldNumber: TEdit;
+    eTaxon: TEditButton;
+    eFoundDate: TEditButton;
+    eLastDate: TEditButton;
+    eProject: TEditButton;
+    eObserver: TEditButton;
+    eLocality: TEditButton;
+    eLongitude: TEditButton;
+    eLatitude: TEditButton;
     dsLink: TDataSource;
-    eFoundDate: TDBEditButton;
-    eLastDate: TDBEditButton;
-    eHeightAboveGround: TDBEdit;
-    ePlantHeight: TDBEdit;
-    ePlantDbh: TDBEdit;
-    eNestCover: TDBEdit;
-    ePlantMaxDiameter: TDBEdit;
-    ePlantMinDiameter: TDBEdit;
-    eConstructionDays: TDBEdit;
-    eIncubationDays: TDBEdit;
-    eNestlingDays: TDBEdit;
-    eActiveDays: TDBEdit;
-    eInternalMinDiameter: TDBEdit;
-    eInternalMaxDiameter: TDBEdit;
-    eInternalHeight: TDBEdit;
-    eExternalHeight: TDBEdit;
-    eEdgeDistance: TDBEdit;
-    eCenterDistance: TDBEdit;
-    eProductivity: TDBEdit;
-    eSupportPlant1: TDBEditButton;
-    eSupportPlant2: TDBEditButton;
-    eTaxon: TDBEditButton;
-    eProject: TDBEditButton;
-    eObserver: TDBEditButton;
-    eLocality: TDBEditButton;
-    eLongitude: TDBEditButton;
-    eLatitude: TDBEditButton;
+    ePlantHeight: TFloatSpinEdit;
+    ePlantDbh: TFloatSpinEdit;
+    ePlantMaxDiameter: TFloatSpinEdit;
+    ePlantMinDiameter: TFloatSpinEdit;
+    eInternalMinDiameter: TFloatSpinEdit;
+    eInternalMaxDiameter: TFloatSpinEdit;
+    eExternalMinDiameter: TFloatSpinEdit;
+    eExternalMaxDiameter: TFloatSpinEdit;
+    eInternalHeight: TFloatSpinEdit;
+    eExternalHeight: TFloatSpinEdit;
+    eEdgeDistance: TFloatSpinEdit;
+    eCenterDistance: TFloatSpinEdit;
+    eBuildingDays: TFloatSpinEdit;
+    eHeightAboveGround: TFloatSpinEdit;
+    eIncubatingDays: TFloatSpinEdit;
+    eNestlingDays: TFloatSpinEdit;
+    eActiveDays: TFloatSpinEdit;
     lblBandStatus1: TLabel;
     lblExternalMinDiameter: TLabel;
     lblExternalMaxDiameter: TLabel;
@@ -102,8 +101,8 @@ type
     lblLocality: TLabel;
     lblSupplier1: TLabel;
     lineBottom: TShapeLineBGRA;
-    mNotes: TDBMemo;
-    mDescription: TDBMemo;
+    mDescription: TMemo;
+    mNotes: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
     pNotes: TPanel;
@@ -132,37 +131,47 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    eNestCover: TSpinEdit;
+    eProductivity: TSpinEdit;
     procedure cbSupportTypeSelect(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eFieldNumberKeyPress(Sender: TObject; var Key: char);
     procedure eFoundDateButtonClick(Sender: TObject);
     procedure eLastDateButtonClick(Sender: TObject);
     procedure eLocalityButtonClick(Sender: TObject);
-    procedure eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eLocalityKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
+    procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eObserverButtonClick(Sender: TObject);
-    procedure eObserverDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eObserverKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
-    procedure eProjectDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eProjectKeyPress(Sender: TObject; var Key: char);
     procedure eSupportPlant1ButtonClick(Sender: TObject);
-    procedure eSupportPlant1DBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eSupportPlant1KeyPress(Sender: TObject; var Key: char);
     procedure eSupportPlant2ButtonClick(Sender: TObject);
-    procedure eSupportPlant2DBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eSupportPlant2KeyPress(Sender: TObject; var Key: char);
     procedure eTaxonButtonClick(Sender: TObject);
-    procedure eTaxonDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure eTaxonEditingDone(Sender: TObject);
+    procedure eTaxonKeyPress(Sender: TObject; var Key: char);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FNest: TNest;
+    FTaxonId, FProjectId, FObserverId, FLocalityId: Integer;
+    FSupportPlant1Id, FSupportPlant2Id: Integer;
+    procedure SetNest(Value: TNest);
+    procedure GetRecord;
+    procedure SetRecord;
     procedure ApplyDarkMode;
-    procedure AssembleFullName;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Nest: TNest read FNest write SetNest;
   end;
 
 var
@@ -171,7 +180,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_fullnames,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_fullnames, cbs_getvalue,
   cbs_taxonomy, cbs_gis, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -192,26 +201,6 @@ begin
   eSupportPlant2.Images := DMM.iEditsDark;
 end;
 
-procedure TedtNest.AssembleFullName;
-var
-  dt: TDateTime;
-  Nr: String;
-  Tax, Site: LongInt;
-begin
-  if dsLink.DataSet.FieldByName('found_date').IsNull then
-    Exit;
-
-  with dsLink.DataSet do
-  begin
-    Site := FieldByName('locality_id').AsInteger;
-    Tax := FieldByName('taxon_id').AsInteger;
-    Nr := FieldByName('field_number').AsString;
-    dt := FieldByName('found_date').AsDateTime;
-
-    FieldByName('full_name').AsString := GetNestFullname(dt, Tax, Site, Nr);
-  end;
-end;
-
 procedure TedtNest.cbSupportTypeSelect(Sender: TObject);
 begin
   if cbSupportType.ItemIndex = cbSupportType.Items.Count - 1 then
@@ -222,10 +211,10 @@ end;
 
 procedure TedtNest.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtNest.eFieldNumberKeyPress(Sender: TObject; var Key: char);
@@ -235,211 +224,317 @@ begin
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtNest.eFoundDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eFoundDate, dsLink.DataSet, 'found_date');
+  CalendarDlg(eFoundDate.Text, eFoundDate, Dt);
 end;
 
 procedure TedtNest.eLastDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eLastDate, dsLink.DataSet, 'last_date');
+  CalendarDlg(eLastDate.Text, eLastDate, Dt);
 end;
 
 procedure TedtNest.eLocalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name');
+  FindSiteDlg([gfAll], eLocality, FLocalityId);
 end;
 
-procedure TedtNest.eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtNest.eLocalityKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name', Key);
+    FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('locality_id').Clear;
-    dsLink.DataSet.FieldByName('locality_name').Clear;
+    FLocalityId := 0;
+    eLocality.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtNest.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'longitude', 'latitude');
+  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+end;
+
+procedure TedtNest.eLongitudeKeyPress(Sender: TObject; var Key: char);
+const
+  AllowedChars = ['0'..'9', ',', '.', '+', '-', #8, #13, #27];
+var
+  EditText: String;
+  PosDecimal: Integer;
+  DecimalValue: Extended;
+begin
+  FormKeyPress(Sender, Key);
+
+  EditText := EmptyStr;
+  PosDecimal := 0;
+  DecimalValue := 0;
+
+  if not (Key in AllowedChars) then
+  begin
+    Key := #0;
+    Exit;
+  end;
+
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+    Exit;
+  end;
+
+  if (Sender is TEdit) then
+    EditText := TEdit(Sender).Text
+  else
+  if (Sender is TEditButton) then
+    EditText := TEditButton(Sender).Text;
+  PosDecimal := Pos(FormatSettings.DecimalSeparator, EditText);
+
+  // Decimal separator
+  if (Key in [',', '.']) then
+  begin
+    if (PosDecimal = 0) then
+      Key := FormatSettings.DecimalSeparator
+    else
+      Key := #0;
+    Exit;
+  end;
+
+  // Numeric signal
+  if (Key in ['+', '-']) then
+  begin
+    if (Length(EditText) > 0) then
+    begin
+      if TryStrToFloat(EditText, DecimalValue) then
+      begin
+        if ((DecimalValue > 0) and (Key = '-')) or ((DecimalValue < 0) and (Key = '+')) then
+          DecimalValue := DecimalValue * -1.0;
+        EditText := FloatToStr(DecimalValue);
+
+        if (Sender is TEdit) then
+        begin
+          TEdit(Sender).Text := EditText;
+          TEdit(Sender).SelStart := Length(EditText);
+        end
+        else
+        if (Sender is TEditButton) then
+        begin
+          TEditButton(Sender).Text := EditText;
+          TEditButton(Sender).SelStart := Length(EditText);
+        end;
+      end;
+      Key := #0;
+    end
+    else
+    begin
+      if (Key = '+') then
+        Key := #0;
+    end;
+
+    Exit;
+  end;
 end;
 
 procedure TedtNest.eObserverButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eObserver, dsLink.DataSet, 'observer_id', 'observer_name');
+  FindDlg(tbPeople, eObserver, FObserverId);
 end;
 
-procedure TedtNest.eObserverDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtNest.eObserverKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbPeople, eObserver, dsLink.DataSet, 'observer_id', 'observer_name', False, Key);
+    FindDlg(tbPeople, eObserver, FObserverId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('observer_id').Clear;
-    dsLink.DataSet.FieldByName('observer_name').Clear;
+    FObserverId := 0;
+    eObserver.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtNest.eProjectButtonClick(Sender: TObject);
 begin
-  FindDlg(tbProjects, eProject, dsLink.DataSet, 'project_id', 'project_name');
+  FindDlg(tbProjects, eProject, FProjectId);
 end;
 
-procedure TedtNest.eProjectDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtNest.eProjectKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbProjects, eProject, dsLink.DataSet, 'project_id', 'project_name', False, Key);
+    FindDlg(tbProjects, eProject, FProjectId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('project_id').Clear;
-    dsLink.DataSet.FieldByName('project_name').Clear;
+    FProjectId := 0;
+    eProject.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtNest.eSupportPlant1ButtonClick(Sender: TObject);
 begin
-  FindBotanicDlg([tfAll], eSupportPlant1, dsLink.DataSet, 'support_plant_1_id', 'support_plant_1_name');
+  FindBotanicDlg([tfAll], eSupportPlant1, FSupportPlant1Id);
 end;
 
-procedure TedtNest.eSupportPlant1DBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtNest.eSupportPlant1KeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindBotanicDlg([tfAll], eSupportPlant1, dsLink.DataSet, 'support_plant_1_id', 'support_plant_1_name', Key);
+    FindBotanicDlg([tfAll], eSupportPlant1, FSupportPlant1Id, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('support_plant_1_id').Clear;
-    dsLink.DataSet.FieldByName('support_plant_1_name').Clear;
+    FSupportPlant1Id := 0;
+    eSupportPlant1.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtNest.eSupportPlant2ButtonClick(Sender: TObject);
 begin
-  FindBotanicDlg([tfAll], eSupportPlant2, dsLink.DataSet, 'support_plant_2_id', 'support_plant_2_name');
+  FindBotanicDlg([tfAll], eSupportPlant2, FSupportPlant2Id);
 end;
 
-procedure TedtNest.eSupportPlant2DBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtNest.eSupportPlant2KeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindBotanicDlg([tfAll], eSupportPlant2, dsLink.DataSet, 'support_plant_2_id', 'support_plant_2_name', Key);
+    FindBotanicDlg([tfAll], eSupportPlant2, FSupportPlant2Id, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('support_plant_2_id').Clear;
-    dsLink.DataSet.FieldByName('support_plant_2_name').Clear;
+    FSupportPlant2Id := 0;
+    eSupportPlant2.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtNest.eTaxonButtonClick(Sender: TObject);
 begin
-  FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], eTaxon, dsLink.DataSet,
-    'taxon_id', 'taxon_name', True);
+  FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], eTaxon, True, FTaxonId);
 end;
 
-procedure TedtNest.eTaxonDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtNest.eTaxonEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
+end;
+
+procedure TedtNest.eTaxonKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindTaxonDlg([tfSpecies, tfSubspecies, tfSubspeciesGroups], eTaxon, dsLink.DataSet,
-      'taxon_id', 'taxon_name', True, Key);
+    FindTaxonDlg([tfSpecies, tfSubspecies, tfSubspeciesGroups], eTaxon, True, FTaxonId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('taxon_id').Clear;
-    dsLink.DataSet.FieldByName('taxon_name').Clear;
+    FTaxonId := 0;
+    eTaxon.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtNest.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtNest.FormCreate(Sender: TObject);
@@ -460,7 +555,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);
@@ -483,27 +579,105 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNest)])
+  if FIsNew then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNest)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionNest)]);
+    GetRecord;
+  end;
 
   sBox.VertScrollBar.Position := 0;
 
   eTaxon.SetFocus;
 
-  //eLongitudeExit(eLongitude);
-  //eLongitudeExit(eLatitude);
+end;
+
+procedure TedtNest.GetRecord;
+begin
+  FTaxonId := FNest.TaxonId;
+  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  eFieldNumber.Text := FNest.FieldNumber;
+  case FNest.NestFate of
+    nfLoss:     cbNestFate.ItemIndex := cbNestFate.Items.IndexOf(rsNestLost);
+    nfSuccess:  cbNestFate.ItemIndex := cbNestFate.Items.IndexOf(rsNestSuccess);
+    nfUnknown:  cbNestFate.ItemIndex := cbNestFate.Items.IndexOf(rsNestUnknown);
+  end;
+  eFoundDate.Text := DateToStr(FNest.FoundDate);
+  eLastDate.Text := DateToStr(FNest.LastDate);
+  FProjectId := FNest.ProjectId;
+  eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
+  FObserverId := FNest.ObserverId;
+  eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+  FLocalityId := FNest.LocalityId;
+  eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+  eLongitude.Text := FloatToStr(FNest.Longitude);
+  eLatitude.Text := FloatToStr(FNest.Latitude);
+  mDescription.Text := FNest.Description;
+  eProductivity.Value := FNest.NestProductivity;
+  case FNest.NestShape of
+    'SC': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapeScrape);
+    'CP': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapeCup);
+    'PT': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapePlate);
+    'SP': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapeSphere);
+    'PD': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapePendent);
+    'PL': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapePlatform);
+    'MN': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapeMound);
+    'BR': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapeBurrow);
+    'CV': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapeCavity);
+  end;
+  case FNest.SupportType of
+    'G': cbSupportType.ItemIndex := cbSupportType.Items.IndexOf(rsSupportGround);
+    'H': cbSupportType.ItemIndex := cbSupportType.Items.IndexOf(rsSupportHerbBush);
+    'F': cbSupportType.ItemIndex := cbSupportType.Items.IndexOf(rsSupportBranchFork);
+    'L': cbSupportType.ItemIndex := cbSupportType.Items.IndexOf(rsSupportLeaves);
+    'D': cbSupportType.ItemIndex := cbSupportType.Items.IndexOf(rsSupportLedge);
+    'C': cbSupportType.ItemIndex := cbSupportType.Items.IndexOf(rsSupportRockCliff);
+    'R': cbSupportType.ItemIndex := cbSupportType.Items.IndexOf(rsSupportRavine);
+    'B': cbSupportType.ItemIndex := cbSupportType.Items.IndexOf(rsSupportNestBox);
+    'A': cbSupportType.ItemIndex := cbSupportType.Items.IndexOf(rsSupportAnthropic);
+    'O': cbSupportType.ItemIndex := cbSupportType.Items.IndexOf(rsSupportOther);
+  end;
+  eHeightAboveGround.Value := FNest.HeightAboveGround;
+  FSupportPlant1Id := FNest.SupportPlant1Id;
+  eSupportPlant1.Text := GetName('botanic_taxa', 'taxon_name', 'taxon_id', FSupportPlant1Id);
+  FSupportPlant2Id := FNest.SupportPlant2Id;
+  eSupportPlant2.Text := GetName('botanic_taxa', 'taxon_name', 'taxon_id', FSupportPlant2Id);
+  eOtherSupport.Text := FNest.OtherSupport;
+  ePlantHeight.Value := FNest.PlantHeight;
+  ePlantDbh.Value := FNest.PlantDbh;
+  ePlantMaxDiameter.Value := FNest.PlantMaxDiameter;
+  ePlantMinDiameter.Value := FNest.PlantMinDiameter;
+  eBuildingDays.Value := FNest.ConstructionDays;
+  eIncubatingDays.Value := FNest.IncubationDays;
+  eNestlingDays.Value := FNest.NestlingDays;
+  eActiveDays.Value := FNest.ActiveDays;
+  eInternalMinDiameter.Value := FNest.InternalMinDiameter;
+  eInternalMaxDiameter.Value := FNest.InternalMaxDiameter;
+  eExternalMinDiameter.Value := FNest.ExternalMinDiameter;
+  eExternalMaxDiameter.Value := FNest.ExternalMaxDiameter;
+  eInternalHeight.Value := FNest.InternalHeight;
+  eExternalHeight.Value := FNest.ExternalHeight;
+  eEdgeDistance.Value := FNest.EdgeDistance;
+  eCenterDistance.Value := FNest.CenterDistance;
+  eNestCover.Value := FNest.NestCover;
+  mNotes.Text := FNest.Notes;
 end;
 
 function TedtNest.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('field_number').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('taxon_id').AsInteger <> 0) and
-    (dsLink.DataSet.FieldByName('observer_id').AsInteger <> 0) and
-    (dsLink.DataSet.FieldByName('locality_id').AsInteger <> 0) then
+  //if (dsLink.DataSet.FieldByName('field_number').AsString <> EmptyStr) and
+  //  (dsLink.DataSet.FieldByName('taxon_id').AsInteger <> 0) and
+  //  (dsLink.DataSet.FieldByName('observer_id').AsInteger <> 0) and
+  //  (dsLink.DataSet.FieldByName('locality_id').AsInteger <> 0) then
+  if (eFieldNumber.Text <> EmptyStr) and
+    (FTaxonId > 0) and
+    (FObserverId > 0) and
+    (FLocalityId > 0) then
     Result := True;
 end;
 
@@ -512,8 +686,6 @@ begin
   // Data validation
   if not ValidateFields then
     Exit;
-
-  AssembleFullName;
 
   // Workaround to not post zero value when it is null
   with dsLink.DataSet do
@@ -526,34 +698,117 @@ begin
     end;
   end;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtNest.SetNest(Value: TNest);
+begin
+  if Assigned(Value) then
+    FNest := Value;
+end;
+
+procedure TedtNest.SetRecord;
+begin
+  FNest.TaxonId     := FTaxonId;
+  FNest.FieldNumber := eFieldNumber.Text;
+  case cbNestFate.ItemIndex of
+    0: FNest.NestFate := nfLoss;
+    1: FNest.NestFate := nfSuccess;
+    2: FNest.NestFate := nfUnknown;
+  end;
+  FNest.FoundDate         := StrToDate(eFoundDate.Text);
+  FNest.LastDate          := StrToDate(eLastDate.Text);
+  FNest.ProjectId         := FProjectId;
+  FNest.ObserverId        := FObserverId;
+  FNest.LocalityId        := FLocalityId;
+  FNest.Longitude         := StrToFloat(eLongitude.Text);
+  FNest.Latitude          := StrToFloat(eLatitude.Text);
+  FNest.Description       := mDescription.Text;
+  FNest.NestProductivity  := eProductivity.Value;
+  case cbNestShape.ItemIndex of
+    0: FNest.NestShape := 'SC';
+    1: FNest.NestShape := 'CP';
+    2: FNest.NestShape := 'PT';
+    3: FNest.NestShape := 'SP';
+    4: FNest.NestShape := 'PD';
+    5: FNest.NestShape := 'PL';
+    6: FNest.NestShape := 'MN';
+    7: FNest.NestShape := 'BR';
+    8: FNest.NestShape := 'CV';
+  end;
+  case cbSupportType.ItemIndex of
+    0: FNest.SupportType := 'G';
+    1: FNest.SupportType := 'H';
+    2: FNest.SupportType := 'F';
+    3: FNest.SupportType := 'L';
+    4: FNest.SupportType := 'D';
+    5: FNest.SupportType := 'C';
+    6: FNest.SupportType := 'R';
+    7: FNest.SupportType := 'B';
+    8: FNest.SupportType := 'A';
+    9: FNest.SupportType := 'O';
+  end;
+  FNest.HeightAboveGround   := eHeightAboveGround.Value;
+  FNest.SupportPlant1Id     := FSupportPlant1Id;
+  FNest.SupportPlant2Id     := FSupportPlant2Id;
+  FNest.OtherSupport        := eOtherSupport.Text;
+  FNest.PlantHeight         := ePlantHeight.Value;
+  FNest.PlantDbh            := ePlantDbh.Value;
+  FNest.PlantMaxDiameter    := ePlantMaxDiameter.Value;
+  FNest.PlantMinDiameter    := ePlantMinDiameter.Value;
+  FNest.ConstructionDays    := eBuildingDays.Value;
+  FNest.IncubationDays      := eIncubatingDays.Value;
+  FNest.NestlingDays        := eNestlingDays.Value;
+  FNest.ActiveDays          := eActiveDays.Value;
+  FNest.InternalMinDiameter := eInternalMinDiameter.Value;
+  FNest.InternalMaxDiameter := eInternalMaxDiameter.Value;
+  FNest.ExternalMinDiameter := eExternalMinDiameter.Value;
+  FNest.ExternalMaxDiameter := eExternalMaxDiameter.Value;
+  FNest.InternalHeight      := eInternalHeight.Value;
+  FNest.ExternalHeight      := eExternalHeight.Value;
+  FNest.EdgeDistance        := eEdgeDistance.Value;
+  FNest.CenterDistance      := eCenterDistance.Value;
+  FNest.NestCover           := eNestCover.Value;
+  FNest.Notes               := mNotes.Text;
 end;
 
 function TedtNest.ValidateFields: Boolean;
 var
   Msgs: TStrings;
+  Msg: String;
 begin
   Result := True;
+  Msg := EmptyStr;
   Msgs := TStringList.Create;
 
   // Required fields
-  RequiredIsEmpty(dsLink.DataSet, tbNests, 'field_number', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbNests, 'locality_id', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbNests, 'field_number', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbNests, 'locality_id', Msgs);
 
   // Duplicated record
-  RecordDuplicated(tbNests, 'nest_id', 'field_number',
-    dsLink.DataSet.FieldByName('field_number').AsString,
-    dsLink.DataSet.FieldByName('nest_id').AsInteger);
+  RecordDuplicated(tbNests, 'nest_id', 'field_number', eFieldNumber.Text, FNest.Id);
 
   // Foreign keys
-  ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('locality_id').AsInteger,
-    rsCaptionLocality, Msgs);
-  ForeignValueExists(tbZooTaxa, 'taxon_id', dsLink.DataSet.FieldByName('taxon_id').AsInteger,
-    rsCaptionTaxon, Msgs);
-  ForeignValueExists(tbPeople, 'person_id', dsLink.DataSet.FieldByName('observer_id').AsInteger,
-    rsCaptionObserver, Msgs);
-  ForeignValueExists(tbProjects, 'project_id', dsLink.DataSet.FieldByName('project_id').AsInteger,
-    rsCaptionProject, Msgs);
+  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('locality_id').AsInteger,
+  //  rsCaptionLocality, Msgs);
+  //ForeignValueExists(tbZooTaxa, 'taxon_id', dsLink.DataSet.FieldByName('taxon_id').AsInteger,
+  //  rsCaptionTaxon, Msgs);
+  //ForeignValueExists(tbPeople, 'person_id', dsLink.DataSet.FieldByName('observer_id').AsInteger,
+  //  rsCaptionObserver, Msgs);
+  //ForeignValueExists(tbProjects, 'project_id', dsLink.DataSet.FieldByName('project_id').AsInteger,
+  //  rsCaptionProject, Msgs);
+
+  // Dates
+  if eFoundDate.Text <> EmptyStr then
+    ValidDate(eFoundDate.Text, rsDateFound, Msgs);
+  if eLastDate.Text <> EmptyStr then
+    ValidDate(eLastDate.Text, rsDateLast, Msgs);
+
+  // Geographical coordinates
+  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   if Msgs.Count > 0 then
   begin
