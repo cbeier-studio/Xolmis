@@ -166,7 +166,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="391"/>
+      <BuildNr Value="394"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2024 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -220,7 +220,6 @@
             </Verbosity>
             <WriteFPCLogo Value="False"/>
             <CustomOptions Value="-dDEBUG"/>
-            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>
       </Item>
@@ -263,7 +262,6 @@
           </Linking>
           <Other>
             <WriteFPCLogo Value="False"/>
-            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>
       </Item>
@@ -312,7 +310,6 @@
             <OtherDefines Count="1">
               <Define0 Value="DEBUG"/>
             </OtherDefines>
-            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>
       </Item>
@@ -361,7 +358,6 @@
             <OtherDefines Count="1">
               <Define0 Value="DEBUG"/>
             </OtherDefines>
-            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>
       </Item>
@@ -410,7 +406,6 @@
             <OtherDefines Count="1">
               <Define0 Value="DEBUG"/>
             </OtherDefines>
-            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>
       </Item>
@@ -1288,9 +1283,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions>

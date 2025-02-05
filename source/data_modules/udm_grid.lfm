@@ -3148,7 +3148,7 @@ object DMG: TDMG
       Size = 100
     end
     object qCapturestaxon_formatted_name: TStringField
-      DisplayLabel = 'Taxon'
+      DisplayLabel = 'Taxon (formatted)'
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'taxon_formatted_name'
@@ -8029,7 +8029,7 @@ object DMG: TDMG
       Size = 100
     end
     object qSightingstaxon_formatted_name: TStringField
-      DisplayLabel = 'Taxon'
+      DisplayLabel = 'Taxon (formatted)'
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'taxon_formatted_name'

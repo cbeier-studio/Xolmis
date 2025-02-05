@@ -33,7 +33,17 @@ uses
   function TextToBool(aValue, aTrue, aFalse: String): Boolean;
   function BoolToText(const aValue: Boolean; aTrue, aFalse: String): String;
 
+  // Date and time treatment
+  function TextToDate(aValue: String): TDate;
+  function TextToTime(aValue: String): TTime;
+
+  // Numeric treatment
+  function StrToIntOrZero(aValue: String): Integer;
+  function StrToFloatOrZero(aValue: String): Double;
+
 implementation
+
+uses cbs_global;
 
 function WildcardWords(aText: String; aWildcard: String): String;
 var
@@ -153,6 +163,54 @@ begin
     Result := aTrue
   else
     Result := aFalse;
+end;
+
+{ --------------------------------------------------------- }
+{ Date and time treatment }
+{ --------------------------------------------------------- }
+
+function TextToDate(aValue: String): TDate;
+var
+  Dt: TDate;
+begin
+  if TryStrToDate(aValue, Dt) then
+    Result := Dt
+  else
+    Result := NullDate;
+end;
+
+function TextToTime(aValue: String): TTime;
+var
+  Tm: TTime;
+begin
+  if TryStrToTime(aValue, Tm) then
+    Result := Tm
+  else
+    Result := NullTime;
+end;
+
+{ --------------------------------------------------------- }
+{ Numeric treatment }
+{ --------------------------------------------------------- }
+
+function StrToIntOrZero(aValue: String): Integer;
+var
+  I: Integer;
+begin
+  if TryStrToInt(aValue, I) then
+    Result := I
+  else
+    Result := 0;
+end;
+
+function StrToFloatOrZero(avalue: String): Double;
+var
+  Fl: Double;
+begin
+  if TryStrToFloat(aValue, Fl) then
+    Result := Fl
+  else
+    Result := 0.0;
 end;
 
 end.

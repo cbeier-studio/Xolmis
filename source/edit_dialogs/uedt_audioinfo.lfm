@@ -9,6 +9,7 @@ object edtAudioInfo: TedtAudioInfo
   ClientWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -82,20 +83,20 @@ object edtAudioInfo: TedtAudioInfo
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 1228
+      Height = 1072
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1228
+      ClientHeight = 1072
       ClientWidth = 399
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
-        Height = 48
-        Top = 300
+        Height = 45
+        Top = 297
         Width = 399
         Align = alTop
         AutoSize = True
@@ -108,7 +109,7 @@ object edtAudioInfo: TedtAudioInfo
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
@@ -123,36 +124,31 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eLocality: TDBEditButton
-          Cursor = crDefault
+        object eLocality: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 200
-          CustomEditMask = False
-          DataField = 'locality_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
+          ButtonHint = 'Find locality'
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLocalityKeyPress
         end
       end
       object pAuthor: TPanel
         Left = 0
-        Height = 48
-        Top = 98
+        Height = 45
+        Top = 104
         Width = 399
         Align = alTop
         AutoSize = True
@@ -164,7 +160,7 @@ object edtAudioInfo: TedtAudioInfo
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 1
@@ -179,35 +175,30 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eAuthor: TDBEditButton
-          Cursor = crDefault
+        object eAuthor: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 200
-          CustomEditMask = False
-          DataField = 'recorder_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
+          ButtonHint = 'Find author'
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eAuthorButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eAuthorKeyPress
         end
       end
       object pSubtitle: TPanel
         Left = 0
-        Height = 82
+        Height = 88
         Top = 16
         Width = 399
         Align = alTop
@@ -217,7 +208,7 @@ object edtAudioInfo: TedtAudioInfo
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 82
+        ClientHeight = 88
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
@@ -233,15 +224,13 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object mSubtitle: TDBMemo
+        object mSubtitle: TMemo
           Left = 16
-          Height = 60
+          Height = 66
           Top = 22
           Width = 367
           Align = alTop
-          Constraints.MinWidth = 200
-          DataField = 'subtitle'
-          DataSource = dsLink
+          Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -250,8 +239,8 @@ object edtAudioInfo: TedtAudioInfo
       end
       object pDateTime: TPanel
         Left = 0
-        Height = 48
-        Top = 146
+        Height = 45
+        Top = 149
         Width = 399
         Align = alTop
         AutoSize = True
@@ -263,7 +252,7 @@ object edtAudioInfo: TedtAudioInfo
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
@@ -282,48 +271,40 @@ object edtAudioInfo: TedtAudioInfo
           Left = 208
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Recording time:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eRecordingDate: TDBEditButton
-          Cursor = crDefault
+        object eRecordingDate: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'recording_date'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 1
+          ButtonHint = 'Open calendar'
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 1
           MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
           Spacing = 0
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eRecordingDateButtonClick
+          OnEditingDone = eRecordingDateEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
         end
-        object eRecordingTime: TDBEdit
+        object eRecordingTime: TEdit
           Left = 208
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 176
-          DataField = 'recording_time'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 175
           TabOrder = 1
           TextHint = 'HH:MM'
           OnKeyDown = FormKeyDown
@@ -360,18 +341,12 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object cbAudioType: TDBComboBox
+        object cbAudioType: TComboBox
           Left = 16
           Height = 23
           Top = 22
           Width = 367
-          AutoComplete = True
-          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-          Constraints.MinWidth = 200
-          DataField = 'audio_type'
-          DataSource = dsLink
           ItemHeight = 15
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -380,8 +355,8 @@ object edtAudioInfo: TedtAudioInfo
       end
       object pLongitudeLatitude: TPanel
         Left = 0
-        Height = 48
-        Top = 348
+        Height = 45
+        Top = 342
         Width = 399
         Align = alTop
         AutoSize = True
@@ -393,7 +368,7 @@ object edtAudioInfo: TedtAudioInfo
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 6
@@ -412,68 +387,58 @@ object edtAudioInfo: TedtAudioInfo
           Left = 208
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eLongitude: TDBEditButton
-          Cursor = crDefault
+        object eLongitude: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'longitude'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 3
+          ButtonHint = 'Edit/import coordinate'
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 3
           MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLongitudeButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLongitudeKeyPress
         end
-        object eLatitude: TDBEditButton
-          Cursor = crDefault
+        object eLatitude: TEditButton
           Left = 208
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'latitude'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 3
+          Width = 175
+          ButtonHint = 'Edit/import coordinate'
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 3
           MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eLongitudeButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLongitudeKeyPress
         end
       end
       object pTaxon: TPanel
         Left = 0
-        Height = 48
-        Top = 409
+        Height = 45
+        Top = 400
         Width = 399
         Align = alTop
         AutoSize = True
@@ -486,7 +451,7 @@ object edtAudioInfo: TedtAudioInfo
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 7
@@ -501,147 +466,30 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eTaxon: TDBEditButton
-          Cursor = crDefault
+        object eTaxon: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 200
-          CustomEditMask = False
-          DataField = 'taxon_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
+          ButtonHint = 'Find taxon'
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
-        end
-      end
-      object pIndividual: TPanel
-        Left = 0
-        Height = 48
-        Top = 457
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 8
-        object lblIndividual: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          BorderSpacing.Top = 3
-          Caption = 'Individual:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eIndividual: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 200
-          CustomEditMask = False
-          DataField = 'individual_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eIndividualButtonClick
-        end
-      end
-      object pSighting: TPanel
-        Left = 0
-        Height = 48
-        Top = 505
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 9
-        object lblSighting: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          BorderSpacing.Top = 3
-          Caption = 'Sighting:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eSighting: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 200
-          CustomEditMask = False
-          DataField = 'sighting_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eSightingButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eTaxonKeyPress
         end
       end
       object pAudioFile: TPanel
         Left = 0
-        Height = 48
+        Height = 45
         Top = 239
         Width = 399
         Align = alTop
@@ -654,7 +502,7 @@ object edtAudioInfo: TedtAudioInfo
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
@@ -669,92 +517,32 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eAudioFile: TDBEditButton
-          Cursor = crDefault
+        object eAudioFile: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 200
-          CustomEditMask = False
-          DataField = 'audio_file'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 6
+          ButtonHint = 'Choose file'
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 6
           MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eAudioFileButtonClick
-        end
-      end
-      object pSpecimen: TPanel
-        Left = 0
-        Height = 48
-        Top = 553
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 10
-        object lblSpecimen: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          BorderSpacing.Top = 3
-          Caption = 'Specimen:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eSpecimen: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 200
-          CustomEditMask = False
-          DataField = 'specimen_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eSpecimenButtonClick
+          OnEditingDone = eRecordingDateEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
         end
       end
       object pRecorderModel: TPanel
         Left = 0
         Height = 45
-        Top = 614
+        Top = 458
         Width = 399
         Align = alTop
         AutoSize = True
@@ -770,7 +558,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 11
+        TabOrder = 8
         object lblRecorderModel: TLabel
           Left = 16
           Height = 15
@@ -782,15 +570,11 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eRecorderModel: TDBEdit
+        object eRecorderModel: TEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 367
-          DataField = 'recorder_model'
-          DataSource = dsLink
-          Constraints.MinWidth = 200
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
@@ -799,7 +583,7 @@ object edtAudioInfo: TedtAudioInfo
       object pMicModel: TPanel
         Left = 0
         Height = 45
-        Top = 659
+        Top = 503
         Width = 399
         Align = alTop
         AutoSize = True
@@ -814,7 +598,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 12
+        TabOrder = 9
         object lblMicModel: TLabel
           Left = 16
           Height = 15
@@ -826,15 +610,11 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eMicModel: TDBEdit
+        object eMicModel: TEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 367
-          DataField = 'mic_model'
-          DataSource = dsLink
-          Constraints.MinWidth = 200
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
@@ -843,7 +623,7 @@ object edtAudioInfo: TedtAudioInfo
       object pFilterModel: TPanel
         Left = 0
         Height = 45
-        Top = 704
+        Top = 548
         Width = 399
         Align = alTop
         AutoSize = True
@@ -858,7 +638,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 13
+        TabOrder = 10
         object lblFilterModel: TLabel
           Left = 16
           Height = 15
@@ -870,15 +650,11 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eFilterModel: TDBEdit
+        object eFilterModel: TEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 367
-          DataField = 'filter_model'
-          DataSource = dsLink
-          Constraints.MinWidth = 200
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
@@ -887,7 +663,7 @@ object edtAudioInfo: TedtAudioInfo
       object pSubjectsTallyDistance: TPanel
         Left = 0
         Height = 45
-        Top = 794
+        Top = 638
         Width = 399
         Align = alTop
         AutoSize = True
@@ -902,7 +678,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 15
+        TabOrder = 12
         object lblSubjectsTally: TLabel
           Left = 16
           Height = 15
@@ -918,35 +694,28 @@ object edtAudioInfo: TedtAudioInfo
           Left = 208
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Distance (m):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eSubjectsTally: TDBEdit
+        object eSubjectsTally: TSpinEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 176
-          DataField = 'subjects_tally'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
-        object eDistance: TDBEdit
+        object eDistance: TFloatSpinEdit
           Left = 208
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'distance'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 175
+          DecimalPlaces = 1
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
@@ -955,7 +724,7 @@ object edtAudioInfo: TedtAudioInfo
       object pHumidityPlayback: TPanel
         Left = 0
         Height = 45
-        Top = 929
+        Top = 773
         Width = 399
         Align = alTop
         AutoSize = True
@@ -970,7 +739,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 18
+        TabOrder = 15
         object lblRelativeHumidity: TLabel
           Left = 16
           Height = 15
@@ -992,35 +761,32 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eRelativeHumidity: TDBEdit
+        object eRelativeHumidity: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 176
-          DataField = 'relative_humidity'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          DecimalPlaces = 1
+          MaxValue = 100
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
-        object ckPlaybackUsed: TDBCheckBox
+        object ckPlaybackUsed: TCheckBox
           Left = 208
           Height = 23
           Top = 22
           Width = 175
           Caption = 'Playback was used'
-          DataField = 'playback_used'
-          DataSource = dsLink
           TabOrder = 1
-          ValueUnchecked = '0'
+          OnKeyPress = eRecordingTimeKeyPress
+          OnKeyDown = FormKeyDown
         end
       end
       object pPrecipitationWindSpeed: TPanel
         Left = 0
         Height = 45
-        Top = 884
+        Top = 728
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1035,7 +801,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 17
+        TabOrder = 14
         object lblPrecipitation: TLabel
           Left = 16
           Height = 15
@@ -1051,45 +817,31 @@ object edtAudioInfo: TedtAudioInfo
           Left = 208
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Wind speed (bft):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object cbPrecipitation: TDBComboBox
+        object cbPrecipitation: TComboBox
           Left = 16
           Height = 23
           Top = 22
           Width = 176
-          Constraints.MinWidth = 176
-          DataField = 'precipitation'
-          DataSource = dsLink
           ItemHeight = 15
-          Items.Strings = (
-            'N'
-            'F'
-            'M'
-            'D'
-            'R'
-          )
-          MaxLength = 0
           Style = csDropDownList
-          TabOrder = 0
+          TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
-        object eWindSpeed: TDBEdit
+        object eWindSpeed: TSpinEdit
           Left = 208
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'wind_speed'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
-          TabOrder = 1
+          Width = 175
+          MaxValue = 12
+          TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -1097,7 +849,7 @@ object edtAudioInfo: TedtAudioInfo
       object pTemperatureCloudCover: TPanel
         Left = 0
         Height = 45
-        Top = 839
+        Top = 683
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1112,7 +864,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 16
+        TabOrder = 13
         object lblTemperature: TLabel
           Left = 16
           Height = 15
@@ -1128,35 +880,29 @@ object edtAudioInfo: TedtAudioInfo
           Left = 208
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Cloud cover (%):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eTemperature: TDBEdit
+        object eTemperature: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 176
-          DataField = 'temperature'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          DecimalPlaces = 1
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
-        object eCloudCover: TDBEdit
+        object eCloudCover: TSpinEdit
           Left = 208
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'cloud_cover'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 175
+          MaxValue = 100
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
@@ -1165,7 +911,7 @@ object edtAudioInfo: TedtAudioInfo
       object pRecordingContext: TPanel
         Left = 0
         Height = 45
-        Top = 749
+        Top = 593
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1180,7 +926,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 14
+        TabOrder = 11
         object lblRecordingContext: TLabel
           Left = 16
           Height = 15
@@ -1192,15 +938,11 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eRecordingContext: TDBEdit
+        object eRecordingContext: TEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 367
-          DataField = 'recording_context'
-          DataSource = dsLink
-          Constraints.MinWidth = 200
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
@@ -1209,7 +951,7 @@ object edtAudioInfo: TedtAudioInfo
       object pHabitat: TPanel
         Left = 0
         Height = 45
-        Top = 974
+        Top = 818
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1224,7 +966,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 19
+        TabOrder = 16
         object lblHabitat: TLabel
           Left = 16
           Height = 15
@@ -1236,15 +978,11 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eHabitat: TDBEdit
+        object eHabitat: TEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 367
-          DataField = 'habitat'
-          DataSource = dsLink
-          Constraints.MinWidth = 200
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
@@ -1253,7 +991,7 @@ object edtAudioInfo: TedtAudioInfo
       object pLicenseTypeYear: TPanel
         Left = 0
         Height = 45
-        Top = 1032
+        Top = 876
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1269,7 +1007,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 20
+        TabOrder = 17
         object lblLicenseType: TLabel
           Left = 16
           Height = 15
@@ -1292,37 +1030,32 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object cbLicenseType: TDBComboBox
+        object cbLicenseType: TComboBox
           Left = 16
           Height = 23
           Top = 22
           Width = 176
-          Constraints.MinWidth = 150
-          DataField = 'license_type'
-          DataSource = dsLink
           ItemHeight = 15
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
         end
-        object eLicenseYear: TDBEdit
+        object eLicenseYear: TEdit
           Left = 208
           Height = 23
           Top = 22
           Width = 175
-          DataField = 'license_year'
-          DataSource = dsLink
-          Constraints.MinWidth = 150
-          MaxLength = 0
+          NumbersOnly = True
           TabOrder = 1
           OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
         end
       end
       object pLicenseOwner: TPanel
         Left = 0
         Height = 45
-        Top = 1077
+        Top = 921
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1337,7 +1070,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 21
+        TabOrder = 18
         object lblLicenseOwner: TLabel
           Left = 16
           Height = 15
@@ -1349,23 +1082,20 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eLicenseOwner: TDBEdit
+        object eLicenseOwner: TEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 367
-          DataField = 'license_owner'
-          DataSource = dsLink
-          Constraints.MinWidth = 200
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
         end
       end
       object pLicenseNotes: TPanel
         Left = 0
         Height = 45
-        Top = 1122
+        Top = 966
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1380,7 +1110,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 22
+        TabOrder = 19
         object lblLicenseNotes: TLabel
           Left = 16
           Height = 15
@@ -1392,23 +1122,20 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eLicenseNotes: TDBEdit
+        object eLicenseNotes: TEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 367
-          DataField = 'license_notes'
-          DataSource = dsLink
-          Constraints.MinWidth = 200
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
         end
       end
       object pLicenseUri: TPanel
         Left = 0
         Height = 45
-        Top = 1167
+        Top = 1011
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1423,7 +1150,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 23
+        TabOrder = 20
         object lblLicenseUri: TLabel
           Left = 16
           Height = 15
@@ -1435,17 +1162,14 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eLicenseUri: TDBEdit
+        object eLicenseUri: TEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 367
-          DataField = 'license_uri'
-          DataSource = dsLink
-          Constraints.MinWidth = 200
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
         end
       end
     end

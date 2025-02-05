@@ -107,6 +107,10 @@ msgctxt "cbs_datacolumns.rscaudiorecorded"
 msgid "Audio recorded"
 msgstr ""
 
+#: cbs_datacolumns.rscauthorid
+msgid "Author ID"
+msgstr ""
+
 #: cbs_datacolumns.rscauthorship
 msgctxt "cbs_datacolumns.rscauthorship"
 msgid "Authorship"
@@ -321,8 +325,16 @@ msgstr ""
 msgid "Contact person"
 msgstr ""
 
+#: cbs_datacolumns.rsccontext
+msgid "Context"
+msgstr ""
+
 #: cbs_datacolumns.rsccontractfile
 msgid "Contract file"
+msgstr ""
+
+#: cbs_datacolumns.rsccoordinateprecision
+msgid "Coordinate precision"
 msgstr ""
 
 #: cbs_datacolumns.rsccountry
@@ -596,6 +608,10 @@ msgstr ""
 msgid "File name"
 msgstr ""
 
+#: cbs_datacolumns.rscfiltermodel
+msgid "Filter model"
+msgstr ""
+
 #: cbs_datacolumns.rscfinalphotonr
 msgid "Final photo nr."
 msgstr ""
@@ -616,6 +632,10 @@ msgstr ""
 
 #: cbs_datacolumns.rscfullname
 msgid "Full name"
+msgstr ""
+
+#: cbs_datacolumns.rscfullnameformatted
+msgid "Full name (formatted)"
 msgstr ""
 
 #: cbs_datacolumns.rscgc1
@@ -853,6 +873,26 @@ msgstr ""
 msgid "Length"
 msgstr ""
 
+#: cbs_datacolumns.rsclicensenotes
+msgid "License notes"
+msgstr ""
+
+#: cbs_datacolumns.rsclicenseowner
+msgid "License owner"
+msgstr ""
+
+#: cbs_datacolumns.rsclicensetype
+msgid "License type"
+msgstr ""
+
+#: cbs_datacolumns.rsclicenseuri
+msgid "License URL"
+msgstr ""
+
+#: cbs_datacolumns.rsclicenseyear
+msgid "License year"
+msgstr ""
+
 #: cbs_datacolumns.rsclocality
 msgctxt "cbs_datacolumns.rsclocality"
 msgid "Locality"
@@ -920,6 +960,10 @@ msgstr ""
 
 #: cbs_datacolumns.rscmethodid
 msgid "Method ID"
+msgstr ""
+
+#: cbs_datacolumns.rscmicmodel
+msgid "Microphone model"
 msgstr ""
 
 #: cbs_datacolumns.rscminexternaldiameter
@@ -1052,6 +1096,10 @@ msgstr ""
 
 #: cbs_datacolumns.rscnestproductivity
 msgid "Nest productivity"
+msgstr ""
+
+#: cbs_datacolumns.rscnestrevisionid
+msgid "Nest revision ID"
 msgstr ""
 
 #: cbs_datacolumns.rscneststage
@@ -1278,6 +1326,10 @@ msgstr ""
 msgid "Permanent net ID"
 msgstr ""
 
+#: cbs_datacolumns.rscpermitid
+msgid "Permit ID"
+msgstr ""
+
 #: cbs_datacolumns.rscperson
 msgctxt "cbs_datacolumns.rscperson"
 msgid "Person"
@@ -1326,6 +1378,10 @@ msgstr ""
 
 #: cbs_datacolumns.rscplantheight
 msgid "Plant height"
+msgstr ""
+
+#: cbs_datacolumns.rscplaybackused
+msgid "Playback used"
 msgstr ""
 
 #: cbs_datacolumns.rscport
@@ -1446,6 +1502,10 @@ msgstr ""
 
 #: cbs_datacolumns.rscrecorded
 msgid "Recorded"
+msgstr ""
+
+#: cbs_datacolumns.rscrecordermodel
+msgid "Recorder model"
 msgstr ""
 
 #: cbs_datacolumns.rscrelativehumidity
@@ -1691,6 +1751,10 @@ msgstr ""
 msgid "Subspecies group ID"
 msgstr ""
 
+#: cbs_datacolumns.rscsubtitle
+msgid "Subtitle"
+msgstr ""
+
 #: cbs_datacolumns.rscsuffix
 msgid "Suffix"
 msgstr ""
@@ -1753,6 +1817,10 @@ msgstr ""
 #: cbs_datacolumns.rsctaxon
 msgctxt "cbs_datacolumns.rsctaxon"
 msgid "Taxon"
+msgstr ""
+
+#: cbs_datacolumns.rsctaxonformatted
+msgid "Taxon (formatted)"
 msgstr ""
 
 #: cbs_datacolumns.rsctaxonid
@@ -7446,6 +7514,36 @@ msgstr ""
 msgid "Playback was used"
 msgstr ""
 
+#: tedtaudioinfo.eaudiofile.buttonhint
+msgctxt "tedtaudioinfo.eaudiofile.buttonhint"
+msgid "Choose file"
+msgstr ""
+
+#: tedtaudioinfo.eauthor.buttonhint
+msgctxt "tedtaudioinfo.eauthor.buttonhint"
+msgid "Find author"
+msgstr ""
+
+#: tedtaudioinfo.elatitude.buttonhint
+msgctxt "tedtaudioinfo.elatitude.buttonhint"
+msgid "Edit/import coordinate"
+msgstr ""
+
+#: tedtaudioinfo.elocality.buttonhint
+msgctxt "tedtaudioinfo.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtaudioinfo.elongitude.buttonhint
+msgctxt "tedtaudioinfo.elongitude.buttonhint"
+msgid "Edit/import coordinate"
+msgstr ""
+
+#: tedtaudioinfo.erecordingdate.buttonhint
+msgctxt "tedtaudioinfo.erecordingdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtaudioinfo.erecordingdate.texthint
 msgctxt "tedtaudioinfo.erecordingdate.texthint"
 msgid "DD/MM/YYYY"
@@ -7454,6 +7552,11 @@ msgstr ""
 #: tedtaudioinfo.erecordingtime.texthint
 msgctxt "tedtaudioinfo.erecordingtime.texthint"
 msgid "HH:MM"
+msgstr ""
+
+#: tedtaudioinfo.etaxon.buttonhint
+msgctxt "tedtaudioinfo.etaxon.buttonhint"
+msgid "Find taxon"
 msgstr ""
 
 #: tedtaudioinfo.lblaudiofile.caption
@@ -7485,11 +7588,6 @@ msgstr ""
 
 #: tedtaudioinfo.lblhabitat.caption
 msgid "Habitat:"
-msgstr ""
-
-#: tedtaudioinfo.lblindividual.caption
-msgctxt "tedtaudioinfo.lblindividual.caption"
-msgid "Individual:"
 msgstr ""
 
 #: tedtaudioinfo.lbllatitude.caption
@@ -7565,16 +7663,6 @@ msgstr ""
 #: tedtaudioinfo.lblrelativehumidity.caption
 msgctxt "tedtaudioinfo.lblrelativehumidity.caption"
 msgid "Relative humidity (%):"
-msgstr ""
-
-#: tedtaudioinfo.lblsighting.caption
-msgctxt "tedtaudioinfo.lblsighting.caption"
-msgid "Sighting:"
-msgstr ""
-
-#: tedtaudioinfo.lblspecimen.caption
-msgctxt "tedtaudioinfo.lblspecimen.caption"
-msgid "Specimen:"
 msgstr ""
 
 #: tedtaudioinfo.lblsubjectstally.caption
@@ -8193,9 +8281,19 @@ msgstr ""
 msgid "Document info"
 msgstr ""
 
+#: tedtdocumentinfo.edocumentdate.buttonhint
+msgctxt "tedtdocumentinfo.edocumentdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtdocumentinfo.edocumentdate.texthint
 msgctxt "tedtdocumentinfo.edocumentdate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtdocumentinfo.edocumentpath.buttonhint
+msgctxt "tedtdocumentinfo.edocumentpath.buttonhint"
+msgid "Choose file"
 msgstr ""
 
 #: tedtdocumentinfo.edocumenttime.texthint
@@ -8424,9 +8522,24 @@ msgctxt "tedtexpedition.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtimageinfo.eauthor.buttonhint
+msgctxt "tedtimageinfo.eauthor.buttonhint"
+msgid "Find author"
+msgstr ""
+
+#: tedtimageinfo.eimagedate.buttonhint
+msgctxt "tedtimageinfo.eimagedate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
 #: tedtimageinfo.eimagedate.texthint
 msgctxt "tedtimageinfo.eimagedate.texthint"
 msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtimageinfo.eimagefilename.buttonhint
+msgctxt "tedtimageinfo.eimagefilename.buttonhint"
+msgid "Choose file"
 msgstr ""
 
 #: tedtimageinfo.eimagetime.texthint
@@ -8434,24 +8547,34 @@ msgctxt "tedtimageinfo.eimagetime.texthint"
 msgid "HH:MM"
 msgstr ""
 
+#: tedtimageinfo.elatitude.buttonhint
+msgctxt "tedtimageinfo.elatitude.buttonhint"
+msgid "Edit/import coordinate"
+msgstr ""
+
+#: tedtimageinfo.elocality.buttonhint
+msgctxt "tedtimageinfo.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtimageinfo.elongitude.buttonhint
+msgctxt "tedtimageinfo.elongitude.buttonhint"
+msgid "Edit/import coordinate"
+msgstr ""
+
+#: tedtimageinfo.etaxon.buttonhint
+msgctxt "tedtimageinfo.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr ""
+
 #: tedtimageinfo.lblauthor.caption
 msgctxt "tedtimageinfo.lblauthor.caption"
 msgid "Author:"
 msgstr ""
 
-#: tedtimageinfo.lblcapture.caption
-msgctxt "tedtimageinfo.lblcapture.caption"
-msgid "Capture:"
-msgstr ""
-
 #: tedtimageinfo.lblcoordinatesprecision.caption
 msgctxt "tedtimageinfo.lblcoordinatesprecision.caption"
 msgid "Coordinates precision:"
-msgstr ""
-
-#: tedtimageinfo.lblegg.caption
-msgctxt "tedtimageinfo.lblegg.caption"
-msgid "Egg:"
 msgstr ""
 
 #: tedtimageinfo.lblimagedate.caption
@@ -8472,11 +8595,6 @@ msgstr ""
 #: tedtimageinfo.lblimagetype.caption
 msgctxt "tedtimageinfo.lblimagetype.caption"
 msgid "Image type:"
-msgstr ""
-
-#: tedtimageinfo.lblindividual.caption
-msgctxt "tedtimageinfo.lblindividual.caption"
-msgid "Individual:"
 msgstr ""
 
 #: tedtimageinfo.lbllatitude.caption
@@ -8519,34 +8637,9 @@ msgctxt "tedtimageinfo.lbllongitude.caption"
 msgid "Longitude:"
 msgstr ""
 
-#: tedtimageinfo.lblnest.caption
-msgctxt "tedtimageinfo.lblnest.caption"
-msgid "Nest:"
-msgstr ""
-
-#: tedtimageinfo.lblnestrevision.caption
-msgctxt "tedtimageinfo.lblnestrevision.caption"
-msgid "Nest revision:"
-msgstr ""
-
-#: tedtimageinfo.lblsighting.caption
-msgctxt "tedtimageinfo.lblsighting.caption"
-msgid "Sighting:"
-msgstr ""
-
-#: tedtimageinfo.lblspecimen.caption
-msgctxt "tedtimageinfo.lblspecimen.caption"
-msgid "Specimen:"
-msgstr ""
-
 #: tedtimageinfo.lblsubtitle.caption
 msgctxt "tedtimageinfo.lblsubtitle.caption"
 msgid "Subtitle:"
-msgstr ""
-
-#: tedtimageinfo.lblsurvey.caption
-msgctxt "tedtimageinfo.lblsurvey.caption"
-msgid "Survey:"
 msgstr ""
 
 #: tedtimageinfo.lbltaxon.caption
@@ -10380,6 +10473,7 @@ msgid "YYYY"
 msgstr ""
 
 #: tedtspecimen.eegg.buttonhint
+msgctxt "tedtspecimen.eegg.buttonhint"
 msgid "Find egg"
 msgstr ""
 

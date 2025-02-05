@@ -63,7 +63,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_permissions, cbs_finddialogs, cbs_dialogs, cbs_gis, cbs_sampling, cbs_botany,
-  cbs_breeding, cbs_birds, cbs_entities,
+  cbs_breeding, cbs_birds, cbs_entities, cbs_media,
   udm_main, udm_grid, udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
   uedt_survey, uedt_samplingplot, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
   uedt_nest, uedt_egg, uedt_molt, uedt_nestrevision, uedt_neteffort, uedt_permanentnet, uedt_sighting,
@@ -1372,322 +1372,294 @@ end;
 
 function EditImageInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TImageData;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Image');
   Application.CreateForm(TedtImageInfo, edtImageInfo);
   with edtImageInfo do
   try
     edtImageInfo.dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     //if aDataSet <> DMG.qSamplePreps then
     //  pSurvey.Visible := True;
     if IsNew then
     begin
-      aDataSet.Insert;
-      case aMasterType of
-        //tbNone: ;
-        //tbUsers: ;
-        //tbRecordHistory: ;
-        //tbRecordVerifications: ;
-        //tbGazetteer: ;
-        //tbSamplingPlots: ;
-        //tbPermanentNets: ;
-        //tbInstitutions: ;
-        //tbPeople: ;
-        //tbProjects: ;
-        //tbProjectTeams: ;
-        //tbPermits: ;
-        //tbTaxonRanks: ;
-        //tbZooTaxa: ;
-        //tbBotanicTaxa: ;
-        //tbBands: ;
-        //tbBandHistory: ;
-        tbIndividuals:
-        begin
-          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-        end;
-        tbCaptures:
-        begin
-          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
-          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-          aDataSet.FieldByName('survey_id').AsInteger := aMaster.FieldByName('survey_id').AsInteger;
-        end;
-        //tbMolts: ;
-        tbNests:
-        begin
-          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-        end;
-        //tbNestOwners: ;
-        tbNestRevisions:
-        begin
-          aDataSet.FieldByName('nest_id').AsInteger := aMaster.FieldByName('nest_id').AsInteger;
-        end;
-        tbEggs:
-        begin
-          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
-          aDataSet.FieldByName('nest_id').AsInteger := aMaster.FieldByName('nest_id').AsInteger;
-        end;
-        //tbMethods: ;
-        //tbExpeditions: ;
-        tbSurveys:
-        begin
-          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-        end;
-        //tbSurveyTeams: ;
-        //tbNetsEffort: ;
-        //tbWeatherLogs: ;
-        tbSightings:
-        begin
-          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
-          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-          aDataSet.FieldByName('survey_id').AsInteger := aMaster.FieldByName('survey_id').AsInteger;
-        end;
-        tbSpecimens:
-        begin
-          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
-          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-        end;
-        //tbSamplePreps: ;
-        //tbSpecimenCollectors: ;
-        //tbImages: ;
-        //tbAudioLibrary: ;
-      end;
+      FRecord := TImageData.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TImageData.Create(aDataSet.FieldByName('image_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
+    end;
+    Image := FRecord;
+    case aMasterType of
+      //tbSamplingPlots: ;
+      //tbPeople: ;
+      tbIndividuals:
+      begin
+        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+      end;
+      tbCaptures:
+      begin
+        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        CaptureId := aMaster.FieldByName('capture_id').AsInteger;
+        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
+        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+      end;
+      //tbMolts: ;
+      tbNests:
+      begin
+        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
+        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
+        NestId := aMaster.FieldByName('nest_id').AsInteger;
+      end;
+      tbNestRevisions:
+      begin
+        NestId := aMaster.FieldByName('nest_id').AsInteger;
+        NestRevisionId := aMaster.FieldByName('nest_revision_id').AsInteger;
+      end;
+      tbEggs:
+      begin
+        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        NestId := aMaster.FieldByName('nest_id').AsInteger;
+        EggId := aMaster.FieldByName('egg_id').AsInteger;
+      end;
+      //tbMethods: ;
+      //tbExpeditions: ;
+      tbSurveys:
+      begin
+        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
+        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+      end;
+      tbSightings:
+      begin
+        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
+        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+        SightingId := aMaster.FieldByName('sighting_id').AsInteger;
+      end;
+      tbSpecimens:
+      begin
+        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
+        SpecimenId := aMaster.FieldByName('specimen_id').AsInteger;
+      end;
     end;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Image.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtImageInfo);
+    LogInfo('CLOSE EDIT DIALOG: Image');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditAudioInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TAudioData;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Audio');
   Application.CreateForm(TedtAudioInfo, edtAudioInfo);
   with edtAudioInfo do
   try
     edtAudioInfo.dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     //if aDataSet <> DMG.qSamplePreps then
     //  pSurvey.Visible := True;
     if IsNew then
     begin
-      aDataSet.Insert;
-      case aMasterType of
-        //tbNone: ;
-        //tbUsers: ;
-        //tbRecordHistory: ;
-        //tbRecordVerifications: ;
-        //tbGazetteer: ;
-        //tbSamplingPlots: ;
-        //tbPermanentNets: ;
-        //tbInstitutions: ;
-        //tbPeople: ;
-        //tbProjects: ;
-        //tbProjectTeams: ;
-        //tbPermits: ;
-        //tbTaxonRanks: ;
-        //tbZooTaxa: ;
-        //tbBotanicTaxa: ;
-        //tbBands: ;
-        //tbBandHistory: ;
-        tbIndividuals:
-        begin
-          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-        end;
-        //tbCaptures:
-        //begin
-        //  aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-        //  aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
-        //  aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-        //  aDataSet.FieldByName('survey_id').AsInteger := aMaster.FieldByName('survey_id').AsInteger;
-        //end;
-        //tbMolts: ;
-        tbNests:
-        begin
-          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-        end;
-        //tbNestOwners: ;
-        //tbNestRevisions: ;
-        //tbEggs: ;
-        //tbMethods: ;
-        //tbExpeditions: ;
-        //tbSurveys:
-        //begin
-        //  aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-        //end;
-        //tbSurveyTeams: ;
-        //tbNetsEffort: ;
-        //tbWeatherLogs: ;
-        tbSightings:
-        begin
-          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
-          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-          //aDataSet.FieldByName('survey_id').AsInteger := aMaster.FieldByName('survey_id').AsInteger;
-        end;
-        tbSpecimens:
-        begin
-          aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
-          aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-        end;
-        //tbSamplePreps: ;
-        //tbSpecimenCollectors: ;
-        //tbImages: ;
-        //tbAudioLibrary: ;
-      end;
+      FRecord := TAudioData.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TAudioData.Create(aDataSet.FieldByName('audio_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
+    end;
+    AudioRecording := FRecord;
+    case aMasterType of
+      tbIndividuals:
+      begin
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
+      end;
+      //tbCaptures: ;
+      //tbNests: ;
+      //tbNestRevisions: ;
+      //tbExpeditions: ;
+      tbSurveys:
+      begin
+        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
+        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+      end;
+      tbSightings:
+      begin
+        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
+        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+        SightingId := aMaster.FieldByName('sighting_id').AsInteger;
+      end;
+      tbSpecimens:
+      begin
+        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
+        SpecimenId := aMaster.FieldByName('specimen_id').AsInteger;
+      end;
+      //tbSamplePreps: ;
     end;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      AudioRecording.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtAudioInfo);
+    LogInfo('CLOSE EDIT DIALOG: Audio');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditDocInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
-  CloseQueryAfter: Boolean;
+  //CloseQueryAfter: Boolean;
+  FRecord: TDocumentData;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
+  //CloseQueryAfter := False;
+  //if not aDataSet.Active then
+  //begin
+  //  aDataSet.Open;
+  //  CloseQueryAfter := True;
+  //end;
 
+  LogInfo('OPEN EDIT DIALOG: Document');
   Application.CreateForm(TedtDocumentInfo, edtDocumentInfo);
   with edtDocumentInfo do
   try
     edtDocumentInfo.dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
     //if aDataSet <> DMG.qSamplePreps then
     //  pSurvey.Visible := True;
     if IsNew then
     begin
-      aDataSet.Insert;
-      case aMasterType of
-        //tbNone: ;
-        //tbUsers: ;
-        //tbRecordHistory: ;
-        //tbRecordVerifications: ;
-        //tbGazetteer: ;
-        //tbSamplingPlots: ;
-        //tbPermanentNets: ;
-        //tbInstitutions: ;
-        //tbPeople: ;
-        //tbProjects: ;
-        //tbProjectTeams: ;
-        //tbPermits: ;
-        //tbTaxonRanks: ;
-        //tbZooTaxa: ;
-        //tbBotanicTaxa: ;
-        //tbBands: ;
-        //tbBandHistory: ;
-        //tbIndividuals:
-        //begin
-        //  aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-        //end;
-        tbCaptures:
-        begin
-          //aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
-          //aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-          aDataSet.FieldByName('survey_id').AsInteger := aMaster.FieldByName('survey_id').AsInteger;
-        end;
-        //tbMolts: ;
-        //tbNests:
-        //begin
-        //  aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-        //  aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-        //end;
-        //tbNestOwners: ;
-        //tbNestRevisions: ;
-        //tbEggs: ;
-        //tbMethods: ;
-        //tbExpeditions: ;
-        //tbSurveys:
-        //begin
-        //  aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-        //end;
-        //tbSurveyTeams: ;
-        //tbNetsEffort: ;
-        //tbWeatherLogs: ;
-        tbSightings:
-        begin
-          //aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
-          //aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-          aDataSet.FieldByName('survey_id').AsInteger := aMaster.FieldByName('survey_id').AsInteger;
-        end;
-        tbSpecimens:
-        begin
-          //aDataSet.FieldByName('taxon_id').AsInteger := aMaster.FieldByName('taxon_id').AsInteger;
-          aDataSet.FieldByName('individual_id').AsInteger := aMaster.FieldByName('individual_id').AsInteger;
-          //aDataSet.FieldByName('locality_id').AsInteger := aMaster.FieldByName('locality_id').AsInteger;
-        end;
-        //tbSamplePreps: ;
-        //tbSpecimenCollectors: ;
-        //tbImages: ;
-        //tbAudioLibrary: ;
-      end;
+      FRecord := TDocumentData.Create();
+      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      aDataSet.Edit;
+      FRecord := TDocumentData.Create(aDataSet.FieldByName('document_id').AsInteger);
+      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
+    end;
+    Document := FRecord;
+    case aMasterType of
+      tbSamplingPlots:
+      begin
+        SamplingPlotId := aMaster.FieldByName('sampling_plot_id').AsInteger;
+      end;
+      //tbInstitutions: ;
+      tbPeople:
+      begin
+        PersonId := aMaster.FieldByName('person_id').AsInteger;
+      end;
+      tbProjects:
+      begin
+        ProjectId := aMaster.FieldByName('project_id').AsInteger;
+      end;
+      tbPermits:
+      begin
+        PermitId := aMaster.FieldByName('permit_id').AsInteger;
+      end;
+      //tbBandHistory: ;
+      tbIndividuals:
+      begin
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+      end;
+      tbCaptures:
+      begin
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+        CaptureId := aMaster.FieldByName('capture_id').AsInteger;
+      end;
+      tbNests:
+      begin
+        NestId := aMaster.FieldByName('nest_id').AsInteger;
+      end;
+      tbMethods:
+      begin
+        MethodId := aMaster.FieldByName('method_id').AsInteger;
+      end;
+      tbExpeditions:
+      begin
+        ExpeditionId := aMaster.FieldByName('expedition_id').AsInteger;
+      end;
+      tbSurveys:
+      begin
+        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+        ExpeditionId := aMaster.FieldByName('expedition_id').AsInteger;
+      end;
+      tbSightings:
+      begin
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+        SightingId := aMaster.FieldByName('sighting_id').AsInteger;
+      end;
+      tbSpecimens:
+      begin
+        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        SpecimenId := aMaster.FieldByName('specimen_id').AsInteger;
+      end;
     end;
     Result := ShowModal = mrOk;
     if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
+      Document.Save;
+    //  aDataSet.Post
+    //else
+    //  aDataSet.Cancel;
   finally
+    FRecord.Free;
     FreeAndNil(edtDocumentInfo);
+    LogInfo('CLOSE EDIT DIALOG: Document');
   end;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+  //if CloseQueryAfter then
+  //  aDataSet.Close;
 end;
 
 function EditVegetation(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
@@ -1753,7 +1725,8 @@ begin
     dsConn.DataSet := aDataSet;
     aDataSet.Append;
     aDataSet.FieldByName('database_type').AsInteger := 0;
-    if ShowModal = mrOk then
+    Result := ShowModal = mrOK;
+    if Result then
     begin
       if not FileExists(aDataSet.FieldByName('database_name').AsString) then
       begin

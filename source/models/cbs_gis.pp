@@ -112,8 +112,11 @@ type
   TGazetteerFilter = (gfAll, gfCountries, gfStates, gfRegions, gfCities, gfDistricts, gfLocalities);
   TGazetteerFilters = set of TGazetteerFilter;
 
+  TCoordinatePrecision = (cpEmpty = -1, cpExact, cpApproximated, cpReference);
+
 const
   SiteRankStr: array[TSiteRank] of String = ('', 'P', 'E', 'R', 'M', 'D', 'L');
+  CoordinatePrecisionStr: array[TCoordinatePrecision] of String = ('', 'E', 'A', 'R');
 
 type
 
