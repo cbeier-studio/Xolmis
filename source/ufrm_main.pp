@@ -94,6 +94,7 @@ type
     iPopup: TImageList;
     iSearchDark: TImageList;
     lblEmptyTabs: TLabel;
+    lblSbarVersion: TLabel;
     mmfNewDB: TMenuItem;
     mmfImportXolmisMobile: TMenuItem;
     mmhCheckUpdates: TMenuItem;
@@ -153,6 +154,7 @@ type
     mMenu: TMainMenu;
     navTabs: TATTabs;
     pEmptyTabs: TBCPanel;
+    sbarVersion: TBCPanel;
     sbClearSearch: TColorSpeedButton;
     icoSbarDatabase: TImage;
     icoSbarUser: TImage;
@@ -888,6 +890,9 @@ begin
   // Apply dark mode if enabled
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  // Load version in status bar
+  lblSbarVersion.Caption := GetBuildInfoAsString;
 
   // Show splash screen
   pSplash.Top := 0;
