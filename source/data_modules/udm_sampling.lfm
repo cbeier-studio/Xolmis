@@ -177,41 +177,6 @@ object DMS: TDMS
         Precision = -1
       end    
       item
-        Name = 'order_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'family_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'genus_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'species_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'country_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'state_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'municipality_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
         Name = 'full_name'
         DataType = ftString
         Precision = -1
@@ -270,6 +235,26 @@ object DMS: TDMS
         Size = 250
       end    
       item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
         Name = 'individual_name'
         DataType = ftString
         Precision = -1
@@ -298,6 +283,21 @@ object DMS: TDMS
         DataType = ftString
         Precision = -1
         Size = 180
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
       end>
     AfterCancel = qSightingsAfterCancel
     AfterInsert = qSightingsAfterInsert
@@ -310,11 +310,18 @@ object DMS: TDMS
       'SELECT s.*,'
       '  z.full_name AS taxon_name,'
       '  z.formatted_name AS taxon_formatted_name,'
+      '  z.order_id AS order_id,'
+      '  z.family_id AS family_id,'
+      '  z.genus_id AS genus_id,'
+      '  z.species_id AS species_id,'
       '  i.full_name AS individual_name,'
       '  p.full_name AS observer_name,'
       '  sv.full_name AS survey_name,'
       '  mt.method_name AS method_name,'
-      '  g.full_name AS locality_name'
+      '  g.full_name AS locality_name,'
+      '  g.country_id AS country_id,'
+      '  g.state_id AS state_id,'
+      '  g.municipality_id AS municipality_id'
       'FROM sightings AS s'
       'LEFT JOIN zoo_taxa AS z ON s.taxon_id = z.taxon_id'
       'LEFT JOIN individuals AS i ON s.individual_id = i.individual_id'
@@ -358,13 +365,6 @@ object DMS: TDMS
       '  breeding_status,'
       '  not_surveying,'
       '  ebird_available,'
-      '  order_id,'
-      '  family_id,'
-      '  genus_id,'
-      '  species_id,'
-      '  country_id,'
-      '  state_id,'
-      '  municipality_id,'
       '  full_name,'
       '  notes,'
       '  user_inserted,'
@@ -401,13 +401,6 @@ object DMS: TDMS
       '  :breeding_status,'
       '  :not_surveying,'
       '  :ebird_available,'
-      '  :order_id,'
-      '  :family_id,'
-      '  :genus_id,'
-      '  :species_id,'
-      '  :country_id,'
-      '  :state_id,'
-      '  :municipality_id,'
       '  :full_name,'
       '  :notes,'
       '  :user_inserted,'
@@ -447,13 +440,6 @@ object DMS: TDMS
       '  breeding_status = :breeding_status,'
       '  not_surveying = :not_surveying,'
       '  ebird_available = :ebird_available,'
-      '  order_id = :order_id,'
-      '  family_id = :family_id,'
-      '  genus_id = :genus_id,'
-      '  species_id = :species_id,'
-      '  country_id = :country_id,'
-      '  state_id = :state_id,'
-      '  municipality_id = :municipality_id,'
       '  full_name = :full_name,'
       '  notes = :notes,'
       '  user_updated = :user_updated,'
@@ -966,81 +952,67 @@ object DMS: TDMS
       Size = 100
     end
     object qSightingsorder_id: TLongintField
-      DisplayLabel = 'Order (ID)'
       FieldKind = fkData
       FieldName = 'order_id'
       Index = 42
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsfamily_id: TLongintField
-      DisplayLabel = 'Family (ID)'
       FieldKind = fkData
       FieldName = 'family_id'
       Index = 43
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsgenus_id: TLongintField
-      DisplayLabel = 'Genus (ID)'
       FieldKind = fkData
       FieldName = 'genus_id'
       Index = 44
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsspecies_id: TLongintField
-      DisplayLabel = 'Species (ID)'
       FieldKind = fkData
       FieldName = 'species_id'
       Index = 45
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingscountry_id: TLongintField
-      DisplayLabel = 'Country (ID)'
       FieldKind = fkData
       FieldName = 'country_id'
       Index = 46
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsstate_id: TLongintField
-      DisplayLabel = 'State (ID)'
       FieldKind = fkData
       FieldName = 'state_id'
       Index = 47
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsmunicipality_id: TLongintField
-      DisplayLabel = 'Municipality (ID)'
       FieldKind = fkData
       FieldName = 'municipality_id'
       Index = 48
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -1126,11 +1098,6 @@ object DMS: TDMS
       item
         Name = 'capture_id'
         DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'internal_id'
-        DataType = ftLargeint
         Precision = -1
       end    
       item
@@ -1564,41 +1531,6 @@ object DMS: TDMS
         Precision = -1
       end    
       item
-        Name = 'order_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'family_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'genus_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'species_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'country_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'state_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'municipality_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
         Name = 'notes'
         DataType = ftMemo
         Precision = -1
@@ -1639,11 +1571,6 @@ object DMS: TDMS
         Precision = -1
       end    
       item
-        Name = 'data_owner'
-        DataType = ftLargeint
-        Precision = -1
-      end    
-      item
         Name = 'taxon_name'
         DataType = ftString
         Precision = -1
@@ -1654,6 +1581,26 @@ object DMS: TDMS
         DataType = ftString
         Precision = -1
         Size = 250
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
       end    
       item
         Name = 'survey_name'
@@ -1677,6 +1624,21 @@ object DMS: TDMS
         DataType = ftString
         Precision = -1
         Size = 60
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
       end    
       item
         Name = 'bander_name'
@@ -1725,10 +1687,17 @@ object DMS: TDMS
       'SELECT c.*,'
       '    z.full_name AS taxon_name,'
       '    z.formatted_name AS taxon_formatted_name,'
+      '    z.order_id AS order_id,'
+      '    z.family_id AS family_id,'
+      '    z.genus_id AS genus_id,'
+      '    z.species_id AS species_id,'
       '    sv.full_name AS survey_name,'
       '    pl.full_name AS net_station_name,'
       '    ef.net_number AS net_number,'
       '    g.site_name AS locality_name,'
+      '    g.country_id AS country_id,'
+      '    g.state_id AS state_id,'
+      '    g.municipality_id AS municipality_id,'
       '    p1.acronym AS bander_name,'
       '    p2.acronym AS annotator_name,'
       '    (b1.band_size||'' ''||b1.band_number) AS band_name,'
@@ -1833,13 +1802,6 @@ object DMS: TDMS
       '  camera_name,'
       '  escaped,'
       '  needs_review,'
-      '  order_id,'
-      '  family_id,'
-      '  genus_id,'
-      '  species_id,'
-      '  country_id,'
-      '  state_id,'
-      '  municipality_id,'
       '  notes,'
       '  user_inserted,'
       '  insert_date)'
@@ -1924,13 +1886,6 @@ object DMS: TDMS
       '  :camera_name,'
       '  :escaped,'
       '  :needs_review,'
-      '  :order_id,'
-      '  :family_id,'
-      '  :genus_id,'
-      '  :species_id,'
-      '  :country_id,'
-      '  :state_id,'
-      '  :municipality_id,'
       '  :notes,'
       '  :user_inserted,'
       '  datetime(''now'',''subsec''))'
@@ -2018,13 +1973,6 @@ object DMS: TDMS
       '  camera_name = :camera_name,'
       '  escaped = :escaped,'
       '  needs_review = :needs_review,'
-      '  order_id = :order_id,'
-      '  family_id = :family_id,'
-      '  genus_id = :genus_id,'
-      '  species_id = :species_id,'
-      '  country_id = :country_id,'
-      '  state_id = :state_id,'
-      '  municipality_id = :municipality_id,'
       '  notes = :notes,'
       '  user_updated = :user_updated,'
       '  update_date = datetime(''now'',''subsec''),'
@@ -3045,81 +2993,67 @@ object DMS: TDMS
       Size = 120
     end
     object qCapturesorder_id: TLongintField
-      DisplayLabel = 'Order (ID)'
       FieldKind = fkData
       FieldName = 'order_id'
       Index = 84
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qCapturesfamily_id: TLongintField
-      DisplayLabel = 'Family (ID)'
       FieldKind = fkData
       FieldName = 'family_id'
       Index = 85
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qCapturesgenus_id: TLongintField
-      DisplayLabel = 'Genus (ID)'
       FieldKind = fkData
       FieldName = 'genus_id'
       Index = 86
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qCapturesspecies_id: TLongintField
-      DisplayLabel = 'Species (ID)'
       FieldKind = fkData
       FieldName = 'species_id'
       Index = 87
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qCapturescountry_id: TLongintField
-      DisplayLabel = 'Country (ID)'
       FieldKind = fkData
       FieldName = 'country_id'
       Index = 88
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qCapturesstate_id: TLongintField
-      DisplayLabel = 'State (ID)'
       FieldKind = fkData
       FieldName = 'state_id'
       Index = 89
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qCapturesmunicipality_id: TLongintField
-      DisplayLabel = 'Municipality (ID)'
       FieldKind = fkData
       FieldName = 'municipality_id'
       Index = 90
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qCapturesuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -4578,11 +4512,6 @@ object DMS: TDMS
         Precision = -1
       end    
       item
-        Name = 'internal_id'
-        DataType = ftLargeint
-        Precision = -1
-      end    
-      item
         Name = 'survey_date'
         DataType = ftDate
         Precision = -1
@@ -4624,21 +4553,6 @@ object DMS: TDMS
       end    
       item
         Name = 'locality_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'country_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'state_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'municipality_id'
         DataType = ftInteger
         Precision = -1
       end    
@@ -4823,15 +4737,31 @@ object DMS: TDMS
         Precision = -1
       end    
       item
-        Name = 'data_owner'
-        DataType = ftLargeint
-        Precision = -1
-      end    
-      item
         Name = 'expedition_name'
         DataType = ftString
         Precision = -1
         Size = 150
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 180
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
       end    
       item
         Name = 'municipality_name'
@@ -4850,12 +4780,6 @@ object DMS: TDMS
         DataType = ftString
         Precision = -1
         Size = 60
-      end    
-      item
-        Name = 'locality_name'
-        DataType = ftString
-        Precision = -1
-        Size = 180
       end    
       item
         Name = 'net_station_name'
@@ -4889,6 +4813,9 @@ object DMS: TDMS
       'SELECT sv.*,'
       '  x.expedition_name AS expedition_name,'
       '  gl.full_name AS locality_name,'
+      '  gl.country_id AS country_id,'
+      '  gl.state_id AS state_id,'
+      '  gl.municipality_id AS municipality_id,'
       '  gm.site_name AS municipality_name,'
       '  gs.site_name AS state_name,'
       '  gc.site_name AS country_name,'
@@ -4900,9 +4827,9 @@ object DMS: TDMS
       'FROM surveys AS sv'
       'LEFT JOIN expeditions AS x ON sv.expedition_id = x.expedition_id'
       'LEFT JOIN gazetteer AS gl ON sv.locality_id = gl.site_id'
-      'LEFT JOIN gazetteer AS gm ON sv.municipality_id = gm.site_id'
-      'LEFT JOIN gazetteer AS gs ON sv.state_id = gs.site_id'
-      'LEFT JOIN gazetteer AS gc ON sv.country_id = gc.site_id'
+      'LEFT JOIN gazetteer AS gm ON gl.municipality_id = gm.site_id'
+      'LEFT JOIN gazetteer AS gs ON gl.state_id = gs.site_id'
+      'LEFT JOIN gazetteer AS gc ON gl.country_id = gc.site_id'
       'LEFT JOIN sampling_plots AS pl ON sv.net_station_id = pl.sampling_plot_id'
       'LEFT JOIN methods AS mt ON sv.method_id = mt.method_id'
       'LEFT JOIN projects AS pj ON sv.project_id = pj.project_id'
@@ -4919,9 +4846,6 @@ object DMS: TDMS
       '  expedition_id,'
       '  project_id,'
       '  locality_id,'
-      '  country_id,'
-      '  state_id,'
-      '  municipality_id,'
       '  sample_id,'
       '  start_latitude,'
       '  start_longitude,'
@@ -4947,9 +4871,6 @@ object DMS: TDMS
       '  :expedition_id,'
       '  :project_id,'
       '  :locality_id,'
-      '  :country_id,'
-      '  :state_id,'
-      '  :municipality_id,'
       '  :sample_id,'
       '  :start_latitude,'
       '  :start_longitude,'
@@ -4978,9 +4899,6 @@ object DMS: TDMS
       '  expedition_id = :expedition_id,'
       '  project_id = :project_id,'
       '  locality_id = :locality_id,'
-      '  country_id = :country_id,'
-      '  state_id = :state_id,'
-      '  municipality_id = :municipality_id,'
       '  sample_id = :sample_id,'
       '  start_latitude = :start_latitude,'
       '  start_longitude = :start_longitude,'
@@ -5167,15 +5085,13 @@ object DMS: TDMS
       Size = 180
     end
     object qSurveyscountry_id: TLongintField
-      DisplayLabel = 'Country (ID)'
       FieldKind = fkData
       FieldName = 'country_id'
       Index = 13
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSurveyscountry_name: TStringField
       DisplayLabel = 'Country'
@@ -5191,15 +5107,13 @@ object DMS: TDMS
       Size = 60
     end
     object qSurveysstate_id: TLongintField
-      DisplayLabel = 'State (ID)'
       FieldKind = fkData
       FieldName = 'state_id'
       Index = 15
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSurveysstate_name: TStringField
       DisplayLabel = 'State'
@@ -5215,15 +5129,13 @@ object DMS: TDMS
       Size = 60
     end
     object qSurveysmunicipality_id: TLongintField
-      DisplayLabel = 'Municipality (ID)'
       FieldKind = fkData
       FieldName = 'municipality_id'
       Index = 17
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSurveysmunicipality_name: TStringField
       DisplayLabel = 'Municipality'

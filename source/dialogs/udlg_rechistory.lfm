@@ -9,7 +9,6 @@ object dlgRecHistory: TdlgRecHistory
   ClientWidth = 824
   PopupMode = pmAuto
   Position = poMainFormCenter
-  LCLVersion = '4.0.0.1'
   OnClose = FormClose
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -160,7 +159,7 @@ object dlgRecHistory: TdlgRecHistory
     Width = 336
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 269
+    VertScrollBar.Page = 285
     Align = alLeft
     BorderStyle = bsNone
     ChildSizing.LeftRightSpacing = 16

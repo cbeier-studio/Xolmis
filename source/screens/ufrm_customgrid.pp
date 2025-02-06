@@ -73,9 +73,6 @@ type
     pmdRefreshDocs: TMenuItem;
     pmDocs: TPopupMenu;
     pmAddDocs: TPopupMenu;
-    qAudioscountry_id: TLongintField;
-    qAudiosmunicipality_id: TLongintField;
-    qAudiosstate_id: TLongintField;
     qDocsactive_status: TBooleanField;
     qDocscapture_id: TLongintField;
     qDocsdocument_date: TDateField;
@@ -581,10 +578,8 @@ type
     qAudioscloud_cover: TLongintField;
     qAudiosdistance: TFloatField;
     qAudiosexported_status: TBooleanField;
-    qAudiosfamily_id: TLongintField;
     qAudiosfilter_model: TStringField;
     qAudiosfull_name: TStringField;
-    qAudiosgenus_id: TLongintField;
     qAudioshabitat: TStringField;
     qAudiosindividual_id: TLongintField;
     qAudiosindividual_name: TStringField;
@@ -601,7 +596,6 @@ type
     qAudiosmarked_status: TBooleanField;
     qAudiosmic_model: TStringField;
     qAudiosnotes: TMemoField;
-    qAudiosorder_id: TLongintField;
     qAudiosplayback_used: TBooleanField;
     qAudiosprecipitation: TStringField;
     qAudiosrecorder_id: TLongintField;
@@ -613,7 +607,6 @@ type
     qAudiosrelative_humidity: TLongintField;
     qAudiossighting_id: TLongintField;
     qAudiossighting_name: TStringField;
-    qAudiosspecies_id: TLongintField;
     qAudiosspecimen_id: TLongintField;
     qAudiosspecimen_name: TStringField;
     qAudiossubjects_tally: TLongintField;
@@ -631,12 +624,9 @@ type
     qImagescapture_id: TLongintField;
     qImagescapture_name: TStringField;
     qImagescoordinate_precision: TStringField;
-    qImagescountry_id: TLongintField;
     qImagesegg_id: TLongintField;
     qImagesegg_name: TStringField;
     qImagesexported_status: TBooleanField;
-    qImagesfamily_id: TLongintField;
-    qImagesgenus_id: TLongintField;
     qImagesimage_date: TDateField;
     qImagesimage_filename: TStringField;
     qImagesimage_id: TLongintField;
@@ -656,18 +646,14 @@ type
     qImageslocality_name: TStringField;
     qImageslongitude: TFloatField;
     qImagesmarked_status: TBooleanField;
-    qImagesmunicipality_id: TLongintField;
     qImagesnest_id: TLongintField;
     qImagesnest_name: TStringField;
     qImagesnest_revision_id: TLongintField;
-    qImagesorder_id: TLongintField;
     qImagesrevision_name: TStringField;
     qImagessighting_id: TLongintField;
     qImagessighting_name: TStringField;
-    qImagesspecies_id: TLongintField;
     qImagesspecimen_id: TLongintField;
     qImagesspecimen_name: TStringField;
-    qImagesstate_id: TLongintField;
     qImagessubtitle: TMemoField;
     qImagessurvey_id: TLongintField;
     qImagessurvey_name: TStringField;
@@ -7955,7 +7941,6 @@ var
 begin
   aDataSet := nil;
 
-  aKeyField := GetPrimaryKey(TableNames[FChildTable]);
   case nbChilds.PageIndex of
     0: aDataSet := gridChild1.DataSource.DataSet;
     1: aDataSet := gridChild2.DataSource.DataSet;
@@ -7963,6 +7948,8 @@ begin
     3: aDataSet := gridChild4.DataSource.DataSet;
     4: aDataSet := gridChild5.DataSource.DataSet;
   end;
+  aKeyField := GetPrimaryKey(aDataSet);
+
   ShowHistory(FTableType, FChildTable, aDataSet.FieldByName(aKeyField).AsInteger);
 end;
 
@@ -8534,7 +8521,7 @@ procedure TfrmCustomGrid.sbRecordHistoryClick(Sender: TObject);
 var
   aKeyField: String;
 begin
-  aKeyField := GetPrimaryKey(TableNames[FTableType]);
+  aKeyField := GetPrimaryKey(dsLink.DataSet);
   ShowHistory(FTableType, tbNone, dsLink.DataSet.FieldByName(aKeyField).AsInteger);
 end;
 

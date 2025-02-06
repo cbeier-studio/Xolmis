@@ -928,9 +928,6 @@ begin
         AItem.MackinnonListNumber := StrToInt(eMackinnonListNumber.Text);
         AItem.MethodId := FSurvey.MethodId;
         AItem.ObserverId := FObserverKey;
-        AItem.MunicipalityId := FSurvey.MunicipalityId;
-        AItem.StateId := FSurvey.StateId;
-        AItem.CountryId := FSurvey.CountryId;
 
         AItem.Insert;
       end;

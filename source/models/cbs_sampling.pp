@@ -73,9 +73,6 @@ type
     FEndDate: TDate;
     FLocalityId: Integer;
     FProjectId: Integer;
-    FMunicipalityId: Integer;
-    FStateId: Integer;
-    FCountryId: Integer;
     FDescription: String;
   public
     constructor Create(aValue: Integer = 0);
@@ -96,9 +93,6 @@ type
     property EndDate: TDate read FEndDate write FEndDate;
     property LocalityId: Integer read FLocalityId write FLocalityId;
     property ProjectId: Integer read FProjectId write FProjectId;
-    property MunicipalityId: Integer read FMunicipalityId write FMunicipalityId;
-    property StateId: Integer read FStateId write FStateId;
-    property CountryId: Integer read FCountryId write FCountryId;
     property Description: String read FDescription write FDescription;
   end;
 
@@ -117,9 +111,6 @@ type
     FExpeditionId: Integer;
     FLocalityId: Integer;
     FProjectId: Integer;
-    FMunicipalityId: Integer;
-    FStateId: Integer;
-    FCountryId: Integer;
     FSampleId: String;
     FStartLatitude: Extended;
     FStartLongitude: Extended;
@@ -155,9 +146,6 @@ type
     property ExpeditionId: Integer read FExpeditionId write FExpeditionId;
     property LocalityId: Integer read FLocalityId write FLocalityId;
     property ProjectId: Integer read FProjectId write FProjectId;
-    property MunicipalityId: Integer read FMunicipalityId write FMunicipalityId;
-    property StateId: Integer read FStateId write FStateId;
-    property CountryId: Integer read FCountryId write FCountryId;
     property SampleId: String read FSampleId write FSampleId;
     property StartLatitude: Extended read FStartLatitude write FStartLatitude;
     property StartLongitude: Extended read FStartLongitude write FStartLongitude;
@@ -409,9 +397,6 @@ type
     FLatitude: Extended;
     FAreaShape: String;
     FLocalityId: Integer;
-    FMunicipalityId: Integer;
-    FStateId: Integer;
-    FCountryId: Integer;
     FDescription: String;
     FNotes: String;
   public
@@ -434,9 +419,6 @@ type
     property Latitude: Extended read FLatitude write FLatitude;
     property AreaShape: String read FAreaShape write FAreaShape;
     property LocalityId: Integer read FLocalityId write FLocalityId;
-    property MunicipalityId: Integer read FMunicipalityId write FMunicipalityId;
-    property StateId: Integer read FStateId write FStateId;
-    property CountryId: Integer read FCountryId write FCountryId;
     property Description: String read FDescription write FDescription;
     property Notes: String read FNotes write FNotes;
   end;
@@ -485,11 +467,6 @@ type
     FSampleType: String;
     FFullName: String;
     FTaxonId: Integer;
-    FOrderId: Integer;
-    FFamilyId: Integer;
-    FSubfamilyId: Integer;
-    FGenusId: Integer;
-    FSpeciesId: Integer;
     FIndividualId: Integer;
     FNestId: Integer;
     FEggId: Integer;
@@ -498,9 +475,6 @@ type
     FCollectionMonth: Integer;
     FCollectionYear: Integer;
     FLocalityId: Integer;
-    FMunicipalityId: Integer;
-    FStateId: Integer;
-    FCountryId: Integer;
     FLatitude: Extended;
     FLongitude: Extended;
     FNotes: String;
@@ -522,11 +496,6 @@ type
     property SampleType: String read FSampleType write FSampleType;
     property FullName: String read FFullName write FFullName;
     property TaxonId: Integer read FTaxonId write FTaxonId;
-    property OrderId: Integer read FOrderId write FOrderId;
-    property FamilyId: Integer read FFamilyId write FFamilyId;
-    property SubfamilyId: Integer read FSubfamilyId write FSubfamilyId;
-    property GenusId: Integer read FGenusId write FGenusId;
-    property SpeciesId: Integer read FSpeciesId write FSpeciesId;
     property IndividualId: Integer read FIndividualId write FIndividualId;
     property NestId: Integer read FNestId write FNestId;
     property EggId: Integer read FEggId write FEggId;
@@ -535,9 +504,6 @@ type
     property CollectionMonth: Integer read FCollectionMonth write FCollectionMonth;
     property CollectionYear: Integer read FCollectionYear write FCollectionYear;
     property LocalityId: Integer read FLocalityId write FLocalityId;
-    property MunicipalityId: Integer read FMunicipalityId write FMunicipalityId;
-    property StateId: Integer read FStateId write FStateId;
-    property CountryId: Integer read FCountryId write FCountryId;
     property Latitude: Extended read FLatitude write FLatitude;
     property Longitude: Extended read FLongitude write FLongitude;
     property Notes: String read FNotes write FNotes;
@@ -586,14 +552,6 @@ type
     FEggId: Integer;
     FPreparationDate: TDate;
     FPreparerId: Integer;
-    FOrderId: Integer;
-    FFamilyId: Integer;
-    FSubfamilyId: Integer;
-    FGenusId: Integer;
-    FSpeciesId: Integer;
-    FMunicipalityId: Integer;
-    FStateId: Integer;
-    FCountryId: Integer;
     FNotes: String;
   public
     constructor Create(aValue: Integer = 0);
@@ -620,14 +578,6 @@ type
     property EggId: Integer read FEggId write FEggId;
     property PreparationDate: TDate read FPreparationDate write FPreparationDate;
     property PreparerId: Integer read FPreparerId write FPreparerId;
-    property OrderId: Integer read FOrderId write FOrderId;
-    property FamilyId: Integer read FFamilyId write FFamilyId;
-    property SubfamilyId: Integer read FSubfamilyId write FSubfamilyId;
-    property GenusId: Integer read FGenusId write FGenusId;
-    property SpeciesId: Integer read FSpeciesId write FSpeciesId;
-    property MunicipalityId: Integer read FMunicipalityId write FMunicipalityId;
-    property StateId: Integer read FStateId write FStateId;
-    property CountryId: Integer read FCountryId write FCountryId;
     property Notes: String read FNotes write FNotes;
   end;
 
@@ -708,19 +658,11 @@ begin
   FAccessionType := EmptyStr;
   FAccessionSeq := 0;
   FTaxonId := 0;
-  FOrderId := 0;
-  FFamilyId := 0;
-  FSubfamilyId := 0;
-  FGenusId := 0;
-  FSpeciesId := 0;
   FIndividualId := 0;
   FNestId := 0;
   FEggId := 0;
   FPreparationDate := StrToDate('30/12/1500');
   FPreparerId := 0;
-  FMunicipalityId := 0;
-  FStateId := 0;
-  FCountryId := 0;
   FNotes := EmptyStr;
 end;
 
@@ -732,19 +674,11 @@ begin
   FAccessionType := aFrom.AccessionType;
   FAccessionSeq := aFrom.AccessionSeq;
   FTaxonId := aFrom.TaxonId;
-  FOrderId := aFrom.OrderId;
-  FFamilyId := aFrom.FamilyId;
-  FSubfamilyId := aFrom.SubfamilyId;
-  FGenusId := aFrom.GenusId;
-  FSpeciesId := aFrom.SpeciesId;
   FIndividualId := aFrom.IndividualId;
   FNestId := aFrom.NestId;
   FEggId := aFrom.EggId;
   FPreparationDate := aFrom.PreparationDate;
   FPreparerId := aFrom.PreparerId;
-  FMunicipalityId := aFrom.MunicipalityId;
-  FStateId := aFrom.StateId;
-  FCountryId := aFrom.CountryId;
   FNotes := aFrom.Notes;
 end;
 
@@ -794,14 +728,6 @@ begin
         'egg_id, ' +
         'preparation_date, ' +
         'preparer_id, ' +
-        'order_id, ' +
-        'family_id, ' +
-        'subfamily_id, ' +
-        'genus_id, ' +
-        'species_id, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
         'notes, ' +
         'user_inserted, ' +
         'user_updated, ' +
@@ -838,19 +764,11 @@ begin
     FAccessionType := FieldByName('accession_type').AsString;
     FAccessionSeq := FieldByName('accession_seq').AsInteger;
     FTaxonId := FieldByName('taxon_id').AsInteger;
-    FOrderId := FieldByName('order_id').AsInteger;
-    FFamilyId := FieldByName('family_id').AsInteger;
-    FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-    FGenusId := FieldByName('genus_id').AsInteger;
-    FSpeciesId := FieldByName('species_id').AsInteger;
     FIndividualId := FieldByName('individual_id').AsInteger;
     FNestId := FieldByName('nest_id').AsInteger;
     FEggId := FieldByName('egg_id').AsInteger;
     FPreparationDate := FieldByName('preparation_date').AsDateTime;
     FPreparerId := FieldByName('preparer_id').AsInteger;
-    FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    FStateId := FieldByName('state_id').AsInteger;
-    FCountryId := FieldByName('country_id').AsInteger;
     FNotes := FieldByName('notes').AsString;
     FUserInserted := FieldByName('user_inserted').AsInteger;
     FUserUpdated := FieldByName('user_updated').AsInteger;
@@ -934,84 +852,84 @@ begin
     FId := Fields[0].AsInteger;
     Close;
 
-    // Get the site hierarchy
-    if (FSpecimenId > 0) then
-    begin
-      Clear;
-      Add('SELECT country_id, state_id, municipality_id FROM specimens');
-      Add('WHERE specimen_id = :aspecimen');
-      ParamByName('aspecimen').AsInteger := FSpecimenId;
-      Open;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      Close;
-    end;
-    // Save the site hierarchy
-    Clear;
-    Add('UPDATE sample_preps SET');
-    Add('  country_id = :country_id,');
-    Add('  state_id = :state_id,');
-    Add('  municipality_id = :municipality_id');
-    Add('WHERE sample_prep_id = :aid');
-    ParamByName('country_id').AsInteger := FCountryId;
-    if (FStateId > 0) then
-      ParamByName('state_id').AsInteger := FStateId
-    else
-      ParamByName('state_id').Clear;
-    if (FMunicipalityId > 0) then
-      ParamByName('municipality_id').AsInteger := FMunicipalityId
-    else
-      ParamByName('municipality_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
-
-    // Get the taxon hierarchy
-    if (FTaxonId > 0) then
-    begin
-      Clear;
-      Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
-      Add('WHERE taxon_id = :ataxon');
-      ParamByName('ataxon').AsInteger := FTaxonId;
-      Open;
-      FOrderId := FieldByName('order_id').AsInteger;
-      FFamilyId := FieldByName('family_id').AsInteger;
-      FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-      FGenusId := FieldByName('genus_id').AsInteger;
-      FSpeciesId := FieldByName('species_id').AsInteger;
-      Close;
-    end;
-    // Save the taxon hierarchy
-    Clear;
-    Add('UPDATE sample_preps SET');
-    Add('  order_id = :order_id,');
-    Add('  family_id = :family_id,');
-    Add('  subfamily_id = :subfamily_id,');
-    Add('  genus_id = :genus_id,');
-    Add('  species_id = :species_id');
-    Add('WHERE sample_prep_id = :aid');
-    if (FOrderId > 0) then
-      ParamByName('order_id').AsInteger := FOrderId
-    else
-      ParamByName('order_id').Clear;
-    if (FFamilyId > 0) then
-      ParamByName('family_id').AsInteger := FFamilyId
-    else
-      ParamByName('family_id').Clear;
-    if (FSubfamilyId > 0) then
-      ParamByName('subfamily_id').AsInteger := FSubfamilyId
-    else
-      ParamByName('subfamily_id').Clear;
-    if (FGenusId > 0) then
-      ParamByName('genus_id').AsInteger := FGenusId
-    else
-      ParamByName('genus_id').Clear;
-    if (FSpeciesId > 0) then
-      ParamByName('species_id').AsInteger := FSpeciesId
-    else
-      ParamByName('species_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
+    //// Get the site hierarchy
+    //if (FSpecimenId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT country_id, state_id, municipality_id FROM specimens');
+    //  Add('WHERE specimen_id = :aspecimen');
+    //  ParamByName('aspecimen').AsInteger := FSpecimenId;
+    //  Open;
+    //  FCountryId := FieldByName('country_id').AsInteger;
+    //  FStateId := FieldByName('state_id').AsInteger;
+    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the site hierarchy
+    //Clear;
+    //Add('UPDATE sample_preps SET');
+    //Add('  country_id = :country_id,');
+    //Add('  state_id = :state_id,');
+    //Add('  municipality_id = :municipality_id');
+    //Add('WHERE sample_prep_id = :aid');
+    //ParamByName('country_id').AsInteger := FCountryId;
+    //if (FStateId > 0) then
+    //  ParamByName('state_id').AsInteger := FStateId
+    //else
+    //  ParamByName('state_id').Clear;
+    //if (FMunicipalityId > 0) then
+    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+    //else
+    //  ParamByName('municipality_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
+    //
+    //// Get the taxon hierarchy
+    //if (FTaxonId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
+    //  Add('WHERE taxon_id = :ataxon');
+    //  ParamByName('ataxon').AsInteger := FTaxonId;
+    //  Open;
+    //  FOrderId := FieldByName('order_id').AsInteger;
+    //  FFamilyId := FieldByName('family_id').AsInteger;
+    //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+    //  FGenusId := FieldByName('genus_id').AsInteger;
+    //  FSpeciesId := FieldByName('species_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the taxon hierarchy
+    //Clear;
+    //Add('UPDATE sample_preps SET');
+    //Add('  order_id = :order_id,');
+    //Add('  family_id = :family_id,');
+    //Add('  subfamily_id = :subfamily_id,');
+    //Add('  genus_id = :genus_id,');
+    //Add('  species_id = :species_id');
+    //Add('WHERE sample_prep_id = :aid');
+    //if (FOrderId > 0) then
+    //  ParamByName('order_id').AsInteger := FOrderId
+    //else
+    //  ParamByName('order_id').Clear;
+    //if (FFamilyId > 0) then
+    //  ParamByName('family_id').AsInteger := FFamilyId
+    //else
+    //  ParamByName('family_id').Clear;
+    //if (FSubfamilyId > 0) then
+    //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
+    //else
+    //  ParamByName('subfamily_id').Clear;
+    //if (FGenusId > 0) then
+    //  ParamByName('genus_id').AsInteger := FGenusId
+    //else
+    //  ParamByName('genus_id').Clear;
+    //if (FSpeciesId > 0) then
+    //  ParamByName('species_id').AsInteger := FSpeciesId
+    //else
+    //  ParamByName('species_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1037,19 +955,11 @@ begin
     JSONObject.Add('Accession type', FAccessionType);
     JSONObject.Add('Sequence', FAccessionSeq);
     JSONObject.Add('Taxon', FTaxonId);
-    JSONObject.Add('Order', FOrderId);
-    JSONObject.Add('Family', FFamilyId);
-    JSONObject.Add('Subfamily', FSubfamilyId);
-    JSONObject.Add('Genus', FGenusId);
-    JSONObject.Add('Species', FSpeciesId);
     JSONObject.Add('Individual', FIndividualId);
     JSONObject.Add('Nest', FNestId);
     JSONObject.Add('Egg', FEggId);
     JSONObject.Add('Preparation date', FPreparationDate);
     JSONObject.Add('Preparer', FPreparerId);
-    JSONObject.Add('Municipality', FMunicipalityId);
-    JSONObject.Add('State', FStateId);
-    JSONObject.Add('Country', FCountryId);
     JSONObject.Add('Notes', FNotes);
 
     Result := JSONObject.AsJSON;
@@ -1100,84 +1010,84 @@ begin
 
     ExecSQL;
 
-    // Get the site hierarchy
-    if (FSpecimenId > 0) then
-    begin
-      Clear;
-      Add('SELECT country_id, state_id, municipality_id FROM specimens');
-      Add('WHERE specimen_id = :aspecimen');
-      ParamByName('aspecimen').AsInteger := FSpecimenId;
-      Open;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      Close;
-    end;
-    // Save the site hierarchy
-    Clear;
-    Add('UPDATE sample_preps SET');
-    Add('  country_id = :country_id,');
-    Add('  state_id = :state_id,');
-    Add('  municipality_id = :municipality_id');
-    Add('WHERE sample_prep_id = :aid');
-    ParamByName('country_id').AsInteger := FCountryId;
-    if (FStateId > 0) then
-      ParamByName('state_id').AsInteger := FStateId
-    else
-      ParamByName('state_id').Clear;
-    if (FMunicipalityId > 0) then
-      ParamByName('municipality_id').AsInteger := FMunicipalityId
-    else
-      ParamByName('municipality_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
-
-    // Get the taxon hierarchy
-    if (FTaxonId > 0) then
-    begin
-      Clear;
-      Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
-      Add('WHERE taxon_id = :ataxon');
-      ParamByName('ataxon').AsInteger := FTaxonId;
-      Open;
-      FOrderId := FieldByName('order_id').AsInteger;
-      FFamilyId := FieldByName('family_id').AsInteger;
-      FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-      FGenusId := FieldByName('genus_id').AsInteger;
-      FSpeciesId := FieldByName('species_id').AsInteger;
-      Close;
-    end;
-    // Save the taxon hierarchy
-    Clear;
-    Add('UPDATE sample_preps SET');
-    Add('  order_id = :order_id,');
-    Add('  family_id = :family_id,');
-    Add('  subfamily_id = :subfamily_id,');
-    Add('  genus_id = :genus_id,');
-    Add('  species_id = :species_id');
-    Add('WHERE sample_prep_id = :aid');
-    if (FOrderId > 0) then
-      ParamByName('order_id').AsInteger := FOrderId
-    else
-      ParamByName('order_id').Clear;
-    if (FFamilyId > 0) then
-      ParamByName('family_id').AsInteger := FFamilyId
-    else
-      ParamByName('family_id').Clear;
-    if (FSubfamilyId > 0) then
-      ParamByName('subfamily_id').AsInteger := FSubfamilyId
-    else
-      ParamByName('subfamily_id').Clear;
-    if (FGenusId > 0) then
-      ParamByName('genus_id').AsInteger := FGenusId
-    else
-      ParamByName('genus_id').Clear;
-    if (FSpeciesId > 0) then
-      ParamByName('species_id').AsInteger := FSpeciesId
-    else
-      ParamByName('species_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
+    //// Get the site hierarchy
+    //if (FSpecimenId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT country_id, state_id, municipality_id FROM specimens');
+    //  Add('WHERE specimen_id = :aspecimen');
+    //  ParamByName('aspecimen').AsInteger := FSpecimenId;
+    //  Open;
+    //  FCountryId := FieldByName('country_id').AsInteger;
+    //  FStateId := FieldByName('state_id').AsInteger;
+    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the site hierarchy
+    //Clear;
+    //Add('UPDATE sample_preps SET');
+    //Add('  country_id = :country_id,');
+    //Add('  state_id = :state_id,');
+    //Add('  municipality_id = :municipality_id');
+    //Add('WHERE sample_prep_id = :aid');
+    //ParamByName('country_id').AsInteger := FCountryId;
+    //if (FStateId > 0) then
+    //  ParamByName('state_id').AsInteger := FStateId
+    //else
+    //  ParamByName('state_id').Clear;
+    //if (FMunicipalityId > 0) then
+    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+    //else
+    //  ParamByName('municipality_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
+    //
+    //// Get the taxon hierarchy
+    //if (FTaxonId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
+    //  Add('WHERE taxon_id = :ataxon');
+    //  ParamByName('ataxon').AsInteger := FTaxonId;
+    //  Open;
+    //  FOrderId := FieldByName('order_id').AsInteger;
+    //  FFamilyId := FieldByName('family_id').AsInteger;
+    //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+    //  FGenusId := FieldByName('genus_id').AsInteger;
+    //  FSpeciesId := FieldByName('species_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the taxon hierarchy
+    //Clear;
+    //Add('UPDATE sample_preps SET');
+    //Add('  order_id = :order_id,');
+    //Add('  family_id = :family_id,');
+    //Add('  subfamily_id = :subfamily_id,');
+    //Add('  genus_id = :genus_id,');
+    //Add('  species_id = :species_id');
+    //Add('WHERE sample_prep_id = :aid');
+    //if (FOrderId > 0) then
+    //  ParamByName('order_id').AsInteger := FOrderId
+    //else
+    //  ParamByName('order_id').Clear;
+    //if (FFamilyId > 0) then
+    //  ParamByName('family_id').AsInteger := FFamilyId
+    //else
+    //  ParamByName('family_id').Clear;
+    //if (FSubfamilyId > 0) then
+    //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
+    //else
+    //  ParamByName('subfamily_id').Clear;
+    //if (FGenusId > 0) then
+    //  ParamByName('genus_id').AsInteger := FGenusId
+    //else
+    //  ParamByName('genus_id').Clear;
+    //if (FSpeciesId > 0) then
+    //  ParamByName('species_id').AsInteger := FSpeciesId
+    //else
+    //  ParamByName('species_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1242,14 +1152,6 @@ begin
         'egg_id, ' +
         'preparation_date, ' +
         'preparer_id, ' +
-        'order_id, ' +
-        'family_id, ' +
-        'subfamily_id, ' +
-        'genus_id, ' +
-        'species_id, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
         'notes, ' +
         'user_inserted, ' +
         'user_updated, ' +
@@ -1294,11 +1196,6 @@ begin
   FSampleType := EmptyStr;
   FFullName := EmptyStr;
   FTaxonId := 0;
-  FOrderId := 0;
-  FFamilyId := 0;
-  FSubfamilyId := 0;
-  FGenusId := 0;
-  FSpeciesId := 0;
   FIndividualId := 0;
   FNestId := 0;
   FEggId := 0;
@@ -1307,9 +1204,6 @@ begin
   FCollectionMonth := 0;
   FCollectionYear := 0;
   FLocalityId := 0;
-  FMunicipalityId := 0;
-  FStateId := 0;
-  FCountryId := 0;
   FLatitude := 0.0;
   FLongitude := 0.0;
   FNotes := EmptyStr;
@@ -1321,11 +1215,6 @@ begin
   FSampleType := aFrom.SampleType;
   FFullName := aFrom.FullName;
   FTaxonId := aFrom.TaxonId;
-  FOrderId := aFrom.OrderId;
-  FFamilyId := aFrom.FamilyId;
-  FSubfamilyId := aFrom.SubfamilyId;
-  FGenusId := aFrom.GenusId;
-  FSpeciesId := aFrom.SpeciesId;
   FIndividualId := aFrom.IndividualId;
   FNestId := aFrom.NestId;
   FEggId := aFrom.EggId;
@@ -1334,9 +1223,6 @@ begin
   FCollectionMonth := aFrom.CollectionMonth;
   FCollectionYear := aFrom.CollectionYear;
   FLocalityId := aFrom.LocalityId;
-  FMunicipalityId := aFrom.MunicipalityId;
-  FStateId := aFrom.StateId;
-  FCountryId := aFrom.CountryId;
   FLatitude := aFrom.Latitude;
   FLongitude := aFrom.Longitude;
   FNotes := aFrom.Notes;
@@ -1391,14 +1277,6 @@ begin
         'locality_id, ' +
         'longitude, ' +
         'latitude, ' +
-        'order_id, ' +
-        'family_id, ' +
-        'subfamily_id, ' +
-        'genus_id, ' +
-        'species_id, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
         'notes, ' +
         'user_inserted, ' +
         'user_updated, ' +
@@ -1433,11 +1311,6 @@ begin
     FSampleType := FieldByName('sample_type').AsString;
     FFullName := FieldByName('full_name').AsString;
     FTaxonId := FieldByName('taxon_id').AsInteger;
-    FOrderId := FieldByName('order_id').AsInteger;
-    FFamilyId := FieldByName('family_id').AsInteger;
-    FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-    FGenusId := FieldByName('genus_id').AsInteger;
-    FSpeciesId := FieldByName('species_id').AsInteger;
     FIndividualId := FieldByName('individual_id').AsInteger;
     FNestId := FieldByName('nest_id').AsInteger;
     FEggId := FieldByName('egg_id').AsInteger;
@@ -1446,9 +1319,6 @@ begin
     FCollectionMonth := FieldByName('collection_month').AsInteger;
     FCollectionYear := FieldByName('collection_year').AsInteger;
     FLocalityId := FieldByName('locality_id').AsInteger;
-    FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    FStateId := FieldByName('state_id').AsInteger;
-    FCountryId := FieldByName('country_id').AsInteger;
     FLatitude := FieldByName('latitude').AsFloat;
     FLongitude := FieldByName('longitude').AsFloat;
     FNotes := FieldByName('notes').AsString;
@@ -1498,14 +1368,6 @@ begin
       'locality_id, ' +
       'longitude, ' +
       'latitude, ' +
-      'order_id, ' +
-      'family_id, ' +
-      'subfamily_id, ' +
-      'genus_id, ' +
-      'species_id, ' +
-      'country_id, ' +
-      'state_id, ' +
-      'municipality_id, ' +
       'notes, ' +
       'user_inserted, ' +
       'insert_date) ');
@@ -1524,14 +1386,6 @@ begin
       ':locality_id, ' +
       ':longitude, ' +
       ':latitude, ' +
-      ':order_id, ' +
-      ':family_id, ' +
-      ':subfamily_id, ' +
-      ':genus_id, ' +
-      ':species_id, ' +
-      ':country_id, ' +
-      ':state_id, ' +
-      ':municipality_id, ' +
       ':notes, ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))');
@@ -1560,16 +1414,16 @@ begin
     ParamByName('notes').AsString := FNotes;
     ParamByName('full_name').AsString := FFullName;
 
-    GetTaxonHierarchyForSpecimen(Self);
-    ParamByName('order_id').AsInteger := FOrderId;
-    ParamByName('family_id').AsInteger := FFamilyId;
-    ParamByName('genus_id').AsInteger := FGenusId;
-    ParamByName('species_id').AsInteger := FSpeciesId;
-
-    GetSiteHierarchyForSpecimen(Self);
-    ParamByName('country_id').AsInteger := FCountryId;
-    ParamByName('state_id').AsInteger := FStateId;
-    ParamByName('municipality_id').AsInteger := FMunicipalityId;
+    //GetTaxonHierarchyForSpecimen(Self);
+    //ParamByName('order_id').AsInteger := FOrderId;
+    //ParamByName('family_id').AsInteger := FFamilyId;
+    //ParamByName('genus_id').AsInteger := FGenusId;
+    //ParamByName('species_id').AsInteger := FSpeciesId;
+    //
+    //GetSiteHierarchyForSpecimen(Self);
+    //ParamByName('country_id').AsInteger := FCountryId;
+    //ParamByName('state_id').AsInteger := FStateId;
+    //ParamByName('municipality_id').AsInteger := FMunicipalityId;
 
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
@@ -1582,84 +1436,84 @@ begin
     FId := Fields[0].AsInteger;
     Close;
 
-    // Get the site hierarchy
-    if (FLocalityId > 0) then
-    begin
-      Clear;
-      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-      Add('WHERE site_id = :asite');
-      ParamByName('asite').AsInteger := FLocalityId;
-      Open;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      Close;
-    end;
-    // Save the site hierarchy
-    Clear;
-    Add('UPDATE specimens SET');
-    Add('  country_id = :country_id,');
-    Add('  state_id = :state_id,');
-    Add('  municipality_id = :municipality_id');
-    Add('WHERE specimen_id = :aid');
-    ParamByName('country_id').AsInteger := FCountryId;
-    if (FStateId > 0) then
-      ParamByName('state_id').AsInteger := FStateId
-    else
-      ParamByName('state_id').Clear;
-    if (FMunicipalityId > 0) then
-      ParamByName('municipality_id').AsInteger := FMunicipalityId
-    else
-      ParamByName('municipality_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
-
-    // Get the taxon hierarchy
-    if (FTaxonId > 0) then
-    begin
-      Clear;
-      Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
-      Add('WHERE taxon_id = :ataxon');
-      ParamByName('ataxon').AsInteger := FTaxonId;
-      Open;
-      FOrderId := FieldByName('order_id').AsInteger;
-      FFamilyId := FieldByName('family_id').AsInteger;
-      FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-      FGenusId := FieldByName('genus_id').AsInteger;
-      FSpeciesId := FieldByName('species_id').AsInteger;
-      Close;
-    end;
-    // Save the taxon hierarchy
-    Clear;
-    Add('UPDATE specimens SET');
-    Add('  order_id = :order_id,');
-    Add('  family_id = :family_id,');
-    Add('  subfamily_id = :subfamily_id,');
-    Add('  genus_id = :genus_id,');
-    Add('  species_id = :species_id');
-    Add('WHERE specimen_id = :aid');
-    if (FOrderId > 0) then
-      ParamByName('order_id').AsInteger := FOrderId
-    else
-      ParamByName('order_id').Clear;
-    if (FFamilyId > 0) then
-      ParamByName('family_id').AsInteger := FFamilyId
-    else
-      ParamByName('family_id').Clear;
-    if (FSubfamilyId > 0) then
-      ParamByName('subfamily_id').AsInteger := FSubfamilyId
-    else
-      ParamByName('subfamily_id').Clear;
-    if (FGenusId > 0) then
-      ParamByName('genus_id').AsInteger := FGenusId
-    else
-      ParamByName('genus_id').Clear;
-    if (FSpeciesId > 0) then
-      ParamByName('species_id').AsInteger := FSpeciesId
-    else
-      ParamByName('species_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
+    //// Get the site hierarchy
+    //if (FLocalityId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+    //  Add('WHERE site_id = :asite');
+    //  ParamByName('asite').AsInteger := FLocalityId;
+    //  Open;
+    //  FCountryId := FieldByName('country_id').AsInteger;
+    //  FStateId := FieldByName('state_id').AsInteger;
+    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the site hierarchy
+    //Clear;
+    //Add('UPDATE specimens SET');
+    //Add('  country_id = :country_id,');
+    //Add('  state_id = :state_id,');
+    //Add('  municipality_id = :municipality_id');
+    //Add('WHERE specimen_id = :aid');
+    //ParamByName('country_id').AsInteger := FCountryId;
+    //if (FStateId > 0) then
+    //  ParamByName('state_id').AsInteger := FStateId
+    //else
+    //  ParamByName('state_id').Clear;
+    //if (FMunicipalityId > 0) then
+    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+    //else
+    //  ParamByName('municipality_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
+    //
+    //// Get the taxon hierarchy
+    //if (FTaxonId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
+    //  Add('WHERE taxon_id = :ataxon');
+    //  ParamByName('ataxon').AsInteger := FTaxonId;
+    //  Open;
+    //  FOrderId := FieldByName('order_id').AsInteger;
+    //  FFamilyId := FieldByName('family_id').AsInteger;
+    //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+    //  FGenusId := FieldByName('genus_id').AsInteger;
+    //  FSpeciesId := FieldByName('species_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the taxon hierarchy
+    //Clear;
+    //Add('UPDATE specimens SET');
+    //Add('  order_id = :order_id,');
+    //Add('  family_id = :family_id,');
+    //Add('  subfamily_id = :subfamily_id,');
+    //Add('  genus_id = :genus_id,');
+    //Add('  species_id = :species_id');
+    //Add('WHERE specimen_id = :aid');
+    //if (FOrderId > 0) then
+    //  ParamByName('order_id').AsInteger := FOrderId
+    //else
+    //  ParamByName('order_id').Clear;
+    //if (FFamilyId > 0) then
+    //  ParamByName('family_id').AsInteger := FFamilyId
+    //else
+    //  ParamByName('family_id').Clear;
+    //if (FSubfamilyId > 0) then
+    //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
+    //else
+    //  ParamByName('subfamily_id').Clear;
+    //if (FGenusId > 0) then
+    //  ParamByName('genus_id').AsInteger := FGenusId
+    //else
+    //  ParamByName('genus_id').Clear;
+    //if (FSpeciesId > 0) then
+    //  ParamByName('species_id').AsInteger := FSpeciesId
+    //else
+    //  ParamByName('species_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1683,11 +1537,6 @@ begin
     JSONObject.Add('Sample type', FSampleType);
     JSONObject.Add('Name', FFullName);
     JSONObject.Add('Taxon', FTaxonId);
-    JSONObject.Add('Order', FOrderId);
-    JSONObject.Add('Family', FFamilyId);
-    JSONObject.Add('Subfamily', FSubfamilyId);
-    JSONObject.Add('Genus', FGenusId);
-    JSONObject.Add('Species', FSpeciesId);
     JSONObject.Add('Individual', FIndividualId);
     JSONObject.Add('Nest', FNestId);
     JSONObject.Add('Egg', FEggId);
@@ -1696,9 +1545,6 @@ begin
     JSONObject.Add('Collection month', FCollectionMonth);
     JSONObject.Add('Collection year', FCollectionYear);
     JSONObject.Add('Locality', FLocalityId);
-    JSONObject.Add('Municipality', FMunicipalityId);
-    JSONObject.Add('State', FStateId);
-    JSONObject.Add('Country', FCountryId);
     JSONObject.Add('Longitude', FLongitude);
     JSONObject.Add('Latitude', FLatitude);
     JSONObject.Add('Notes', FNotes);
@@ -1734,14 +1580,6 @@ begin
       'locality_id = :locality_id, ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
-      'order_id = :order_id, ' +
-      'family_id = :family_id, ' +
-      'subfamily_id = :subfamily_id, ' +
-      'genus_id = :genus_id, ' +
-      'species_id = :species_id, ' +
-      'country_id = :country_id, ' +
-      'state_id = :state_id, ' +
-      'municipality_id = :municipality_id, ' +
       'notes = :notes, ' +
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'', ''subsec''), ' +
@@ -1776,16 +1614,16 @@ begin
     ParamByName('notes').AsString := FNotes;
     ParamByName('full_name').AsString := FFullName;
 
-    GetTaxonHierarchyForSpecimen(Self);
-    ParamByName('order_id').AsInteger := FOrderId;
-    ParamByName('family_id').AsInteger := FFamilyId;
-    ParamByName('genus_id').AsInteger := FGenusId;
-    ParamByName('species_id').AsInteger := FSpeciesId;
-
-    GetSiteHierarchyForSpecimen(Self);
-    ParamByName('country_id').AsInteger := FCountryId;
-    ParamByName('state_id').AsInteger := FStateId;
-    ParamByName('municipality_id').AsInteger := FMunicipalityId;
+    //GetTaxonHierarchyForSpecimen(Self);
+    //ParamByName('order_id').AsInteger := FOrderId;
+    //ParamByName('family_id').AsInteger := FFamilyId;
+    //ParamByName('genus_id').AsInteger := FGenusId;
+    //ParamByName('species_id').AsInteger := FSpeciesId;
+    //
+    //GetSiteHierarchyForSpecimen(Self);
+    //ParamByName('country_id').AsInteger := FCountryId;
+    //ParamByName('state_id').AsInteger := FStateId;
+    //ParamByName('municipality_id').AsInteger := FMunicipalityId;
 
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('marked_status').AsBoolean := FMarked;
@@ -2161,9 +1999,6 @@ begin
   FEndDate := NullDate;
   FLocalityId := 0;
   FProjectId := 0;
-  FMunicipalityId := 0;
-  FStateId := 0;
-  FCountryId := 0;
   FDescription := EmptyStr;
 end;
 
@@ -2174,9 +2009,6 @@ begin
   FEndDate := aFrom.EndDate;
   FLocalityId := aFrom.LocalityId;
   FProjectId := aFrom.ProjectId;
-  FMunicipalityId := aFrom.MunicipalityId;
-  FStateId := aFrom.StateId;
-  FCountryId := aFrom.CountryId;
   FDescription := aFrom.Description;
 end;
 
@@ -2221,9 +2053,6 @@ begin
         'duration, ' +
         'project_id, ' +
         'locality_id, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
         'description, ' +
         'user_inserted, ' +
         'user_updated, ' +
@@ -2265,9 +2094,6 @@ begin
       FEndDate := NullDate;
     FLocalityId := FieldByName('locality_id').AsInteger;
     FProjectId := FieldByName('project_id').AsInteger;
-    FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    FStateId := FieldByName('state_id').AsInteger;
-    FCountryId := FieldByName('country_id').AsInteger;
     FDescription := FieldByName('description').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
@@ -2343,37 +2169,37 @@ begin
     FId := Fields[0].AsInteger;
     Close;
 
-    // Get the site hierarchy
-    if (FLocalityId > 0) then
-    begin
-      Clear;
-      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-      Add('WHERE site_id = :asite');
-      ParamByName('ASITE').AsInteger := FLocalityId;
-      Open;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      Close;
-    end;
-    // Save the site hierarchy
-    Clear;
-    Add('UPDATE expeditions SET');
-    Add('  country_id = :country_id,');
-    Add('  state_id = :state_id,');
-    Add('  municipality_id = :municipality_id');
-    Add('WHERE expedition_id = :aid');
-    ParamByName('country_id').AsInteger := FCountryId;
-    if (FStateId > 0) then
-      ParamByName('state_id').AsInteger := FStateId
-    else
-      ParamByName('state_id').Clear;
-    if (FMunicipalityId > 0) then
-      ParamByName('municipality_id').AsInteger := FMunicipalityId
-    else
-      ParamByName('municipality_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
+    //// Get the site hierarchy
+    //if (FLocalityId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+    //  Add('WHERE site_id = :asite');
+    //  ParamByName('ASITE').AsInteger := FLocalityId;
+    //  Open;
+    //  FCountryId := FieldByName('country_id').AsInteger;
+    //  FStateId := FieldByName('state_id').AsInteger;
+    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the site hierarchy
+    //Clear;
+    //Add('UPDATE expeditions SET');
+    //Add('  country_id = :country_id,');
+    //Add('  state_id = :state_id,');
+    //Add('  municipality_id = :municipality_id');
+    //Add('WHERE expedition_id = :aid');
+    //ParamByName('country_id').AsInteger := FCountryId;
+    //if (FStateId > 0) then
+    //  ParamByName('state_id').AsInteger := FStateId
+    //else
+    //  ParamByName('state_id').Clear;
+    //if (FMunicipalityId > 0) then
+    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+    //else
+    //  ParamByName('municipality_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -2397,9 +2223,6 @@ begin
     JSONObject.Add('Start date', FStartDate);
     JSONObject.Add('End date', FEndDate);
     JSONObject.Add('Locality', FLocalityId);
-    JSONObject.Add('Municipality', FMunicipalityId);
-    JSONObject.Add('State', FStateId);
-    JSONObject.Add('Country', FCountryId);
     JSONObject.Add('Project', FProjectId);
     JSONObject.Add('Description', FDescription);
 
@@ -2453,37 +2276,37 @@ begin
 
     ExecSQL;
 
-    // Get the site hierarchy
-    if (FLocalityId > 0) then
-    begin
-      Clear;
-      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-      Add('WHERE site_id = :asite');
-      ParamByName('ASITE').AsInteger := FLocalityId;
-      Open;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      Close;
-    end;
-    // Save the site hierarchy
-    Clear;
-    Add('UPDATE expeditions SET');
-    Add('  country_id = :country_id,');
-    Add('  state_id = :state_id,');
-    Add('  municipality_id = :municipality_id');
-    Add('WHERE expedition_id = :aid');
-    ParamByName('country_id').AsInteger := FCountryId;
-    if (FStateId > 0) then
-      ParamByName('state_id').AsInteger := FStateId
-    else
-      ParamByName('state_id').Clear;
-    if (FMunicipalityId > 0) then
-      ParamByName('municipality_id').AsInteger := FMunicipalityId
-    else
-      ParamByName('municipality_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
+    //// Get the site hierarchy
+    //if (FLocalityId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+    //  Add('WHERE site_id = :asite');
+    //  ParamByName('ASITE').AsInteger := FLocalityId;
+    //  Open;
+    //  FCountryId := FieldByName('country_id').AsInteger;
+    //  FStateId := FieldByName('state_id').AsInteger;
+    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the site hierarchy
+    //Clear;
+    //Add('UPDATE expeditions SET');
+    //Add('  country_id = :country_id,');
+    //Add('  state_id = :state_id,');
+    //Add('  municipality_id = :municipality_id');
+    //Add('WHERE expedition_id = :aid');
+    //ParamByName('country_id').AsInteger := FCountryId;
+    //if (FStateId > 0) then
+    //  ParamByName('state_id').AsInteger := FStateId
+    //else
+    //  ParamByName('state_id').Clear;
+    //if (FMunicipalityId > 0) then
+    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+    //else
+    //  ParamByName('municipality_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -2533,9 +2356,6 @@ begin
         'duration, ' +
         'project_id, ' +
         'locality_id, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
         'description, ' +
         'user_inserted, ' +
         'user_updated, ' +
@@ -3861,9 +3681,6 @@ begin
   FExpeditionId := 0;
   FLocalityId := 0;
   FProjectId := 0;
-  FMunicipalityId := 0;
-  FStateId := 0;
-  FCountryId := 0;
   FSampleId := EmptyStr;
   FStartLatitude := 0.0;
   FStartLongitude := 0.0;
@@ -3890,9 +3707,6 @@ begin
   FExpeditionId := aFrom.ExpeditionId;
   FLocalityId := aFrom.LocalityId;
   FProjectId := aFrom.ProjectId;
-  FMunicipalityId := aFrom.MunicipalityId;
-  FStateId := aFrom.StateId;
-  FCountryId := aFrom.CountryId;
   FSampleId := aFrom.SampleId;
   FStartLatitude := aFrom.StartLatitude;
   FStartLongitude := aFrom.StartLongitude;
@@ -3952,9 +3766,6 @@ begin
         'expedition_id, ' +
         'project_id, ' +
         'locality_id, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
         'sample_id, ' +
         'start_latitude, ' +
         'start_longitude, ' +
@@ -4006,9 +3817,6 @@ begin
     FExpeditionId := FieldByName('expedition_id').AsInteger;
     FLocalityId := FieldByName('locality_id').AsInteger;
     FProjectId := FieldByName('project_id').AsInteger;
-    FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    FStateId := FieldByName('state_id').AsInteger;
-    FCountryId := FieldByName('country_id').AsInteger;
     FSampleId := FieldByName('sample_id').AsString;
     FStartLatitude := FieldByName('start_latitude').AsFloat;
     FStartLongitude := FieldByName('start_longitude').AsFloat;
@@ -4062,9 +3870,6 @@ begin
         'expedition_id, ' +
         'project_id, ' +
         'locality_id, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
         'sample_id, ' +
         'start_latitude, ' +
         'start_longitude, ' +
@@ -4090,9 +3895,6 @@ begin
         ':expedition_id, ' +
         ':project_id, ' +
         ':locality_id, ' +
-        ':country_id, ' +
-        ':state_id, ' +
-        ':municipality_id, ' +
         ':sample_id, ' +
         ':start_latitude, ' +
         ':start_longitude, ' +
@@ -4132,9 +3934,6 @@ begin
     else
       ParamByName('project_id').Clear;
     ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('municipality_id').AsInteger := FMunicipalityId;
-    ParamByName('state_id').AsInteger := FStateId;
-    ParamByName('country_id').AsInteger := FCountryId;
     if (FStartLongitude <> 0) and (FStartLatitude <> 0) then
     begin
       ParamByName('start_longitude').AsFloat := FStartLongitude;
@@ -4199,37 +3998,37 @@ begin
     FId := Fields[0].AsInteger;
     Close;
 
-    // Get the site hierarchy
-    if (FLocalityId > 0) then
-    begin
-      Clear;
-      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-      Add('WHERE site_id = :asite');
-      ParamByName('ASITE').AsInteger := FLocalityId;
-      Open;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      Close;
-    end;
-    // Save the site hierarchy
-    Clear;
-    Add('UPDATE surveys SET');
-    Add('  country_id = :country_id,');
-    Add('  state_id = :state_id,');
-    Add('  municipality_id = :municipality_id');
-    Add('WHERE survey_id = :aid');
-    ParamByName('country_id').AsInteger := FCountryId;
-    if (FStateId > 0) then
-      ParamByName('state_id').AsInteger := FStateId
-    else
-      ParamByName('state_id').Clear;
-    if (FMunicipalityId > 0) then
-      ParamByName('municipality_id').AsInteger := FMunicipalityId
-    else
-      ParamByName('municipality_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
+    //// Get the site hierarchy
+    //if (FLocalityId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+    //  Add('WHERE site_id = :asite');
+    //  ParamByName('ASITE').AsInteger := FLocalityId;
+    //  Open;
+    //  FCountryId := FieldByName('country_id').AsInteger;
+    //  FStateId := FieldByName('state_id').AsInteger;
+    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the site hierarchy
+    //Clear;
+    //Add('UPDATE surveys SET');
+    //Add('  country_id = :country_id,');
+    //Add('  state_id = :state_id,');
+    //Add('  municipality_id = :municipality_id');
+    //Add('WHERE survey_id = :aid');
+    //ParamByName('country_id').AsInteger := FCountryId;
+    //if (FStateId > 0) then
+    //  ParamByName('state_id').AsInteger := FStateId
+    //else
+    //  ParamByName('state_id').Clear;
+    //if (FMunicipalityId > 0) then
+    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+    //else
+    //  ParamByName('municipality_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -4264,9 +4063,6 @@ begin
       'expedition_id = :expedition_id, ' +
       'project_id = :project_id, ' +
       'locality_id = :locality_id, ' +
-      'country_id = :country_id, ' +
-      'state_id = :state_id, ' +
-      'municipality_id = :municipality_id, ' +
       'sample_id = :sample_id, ' +
       'start_latitude = :start_latitude, ' +
       'start_longitude = :start_longitude, ' +
@@ -4311,9 +4107,6 @@ begin
     else
       ParamByName('project_id').Clear;
     ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('municipality_id').AsInteger := FMunicipalityId;
-    ParamByName('state_id').AsInteger := FStateId;
-    ParamByName('country_id').AsInteger := FCountryId;
     if (FStartLongitude <> 0) and (FStartLatitude <> 0) then
     begin
       ParamByName('start_longitude').AsFloat := FStartLongitude;
@@ -4375,37 +4168,37 @@ begin
 
     ExecSQL;
 
-    // Get the site hierarchy
-    if (FLocalityId > 0) then
-    begin
-      Clear;
-      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-      Add('WHERE site_id = :asite');
-      ParamByName('ASITE').AsInteger := FLocalityId;
-      Open;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      Close;
-    end;
-    // Save the site hierarchy
-    Clear;
-    Add('UPDATE surveys SET');
-    Add('  country_id = :country_id,');
-    Add('  state_id = :state_id,');
-    Add('  municipality_id = :municipality_id');
-    Add('WHERE survey_id = :aid');
-    ParamByName('country_id').AsInteger := FCountryId;
-    if (FStateId > 0) then
-      ParamByName('state_id').AsInteger := FStateId
-    else
-      ParamByName('state_id').Clear;
-    if (FMunicipalityId > 0) then
-      ParamByName('municipality_id').AsInteger := FMunicipalityId
-    else
-      ParamByName('municipality_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
+    //// Get the site hierarchy
+    //if (FLocalityId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+    //  Add('WHERE site_id = :asite');
+    //  ParamByName('ASITE').AsInteger := FLocalityId;
+    //  Open;
+    //  FCountryId := FieldByName('country_id').AsInteger;
+    //  FStateId := FieldByName('state_id').AsInteger;
+    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the site hierarchy
+    //Clear;
+    //Add('UPDATE surveys SET');
+    //Add('  country_id = :country_id,');
+    //Add('  state_id = :state_id,');
+    //Add('  municipality_id = :municipality_id');
+    //Add('WHERE survey_id = :aid');
+    //ParamByName('country_id').AsInteger := FCountryId;
+    //if (FStateId > 0) then
+    //  ParamByName('state_id').AsInteger := FStateId
+    //else
+    //  ParamByName('state_id').Clear;
+    //if (FMunicipalityId > 0) then
+    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+    //else
+    //  ParamByName('municipality_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
 
   finally
     FreeAndNil(Qry);
@@ -4926,9 +4719,6 @@ begin
   FLatitude := 0.0;
   FAreaShape := EmptyStr;
   FLocalityId := 0;
-  FMunicipalityId := 0;
-  FStateId := 0;
-  FCountryId := 0;
   FDescription := EmptyStr;
   FNotes := EmptyStr;
 end;
@@ -4941,9 +4731,6 @@ begin
   FLatitude := aFrom.Latitude;
   FAreaShape := aFrom.AreaShape;
   FLocalityId := aFrom.LocalityId;
-  FMunicipalityId := aFrom.MunicipalityId;
-  FStateId := aFrom.StateId;
-  FCountryId := aFrom.CountryId;
   FDescription := aFrom.Description;
   FNotes := aFrom.Notes;
 end;
@@ -4988,9 +4775,6 @@ begin
       'longitude, ' +
       'latitude, ' +
       'area_shape, ' +
-      'country_id, ' +
-      'state_id, ' +
-      'municipality_id, ' +
       'locality_id, ' +
       'description, ' +
       'notes, ' +
@@ -5029,9 +4813,6 @@ begin
     FLongitude := FieldByName('longitude').AsFloat;
     FAreaShape := FieldByName('area_shape').AsString;
     FLocalityId := FieldByName('locality_id').AsInteger;
-    FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    FStateId := FieldByName('state_id').AsInteger;
-    FCountryId := FieldByName('country_id').AsInteger;
     FDescription := FieldByName('description').AsString;
     FNotes := FieldByName('notes').AsString;
     FUserInserted := FieldByName('user_inserted').AsInteger;
@@ -5122,37 +4903,37 @@ begin
     FId := Fields[0].AsInteger;
     Close;
 
-    // Get the site hierarchy
-    if (FLocalityId > 0) then
-    begin
-      Clear;
-      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-      Add('WHERE site_id = :asite');
-      ParamByName('ASITE').AsInteger := FLocalityId;
-      Open;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      Close;
-    end;
-    // Save the site hierarchy
-    Clear;
-    Add('UPDATE sampling_plots SET');
-    Add('  country_id = :country_id,');
-    Add('  state_id = :state_id,');
-    Add('  municipality_id = :municipality_id');
-    Add('WHERE sampling_plot_id = :aid');
-    ParamByName('country_id').AsInteger := FCountryId;
-    if (FStateId > 0) then
-      ParamByName('state_id').AsInteger := FStateId
-    else
-      ParamByName('state_id').Clear;
-    if (FMunicipalityId > 0) then
-      ParamByName('municipality_id').AsInteger := FMunicipalityId
-    else
-      ParamByName('municipality_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
+    //// Get the site hierarchy
+    //if (FLocalityId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+    //  Add('WHERE site_id = :asite');
+    //  ParamByName('ASITE').AsInteger := FLocalityId;
+    //  Open;
+    //  FCountryId := FieldByName('country_id').AsInteger;
+    //  FStateId := FieldByName('state_id').AsInteger;
+    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the site hierarchy
+    //Clear;
+    //Add('UPDATE sampling_plots SET');
+    //Add('  country_id = :country_id,');
+    //Add('  state_id = :state_id,');
+    //Add('  municipality_id = :municipality_id');
+    //Add('WHERE sampling_plot_id = :aid');
+    //ParamByName('country_id').AsInteger := FCountryId;
+    //if (FStateId > 0) then
+    //  ParamByName('state_id').AsInteger := FStateId
+    //else
+    //  ParamByName('state_id').Clear;
+    //if (FMunicipalityId > 0) then
+    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+    //else
+    //  ParamByName('municipality_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -5178,9 +4959,6 @@ begin
     JSONObject.Add('Longitude', FLongitude);
     JSONObject.Add('Latitude', FLatitude);
     JSONObject.Add('Locality', FLocalityId);
-    JSONObject.Add('Municipality', FMunicipalityId);
-    JSONObject.Add('State', FStateId);
-    JSONObject.Add('Country', FCountryId);
     JSONObject.Add('Description', FDescription);
     JSONObject.Add('Notes', FNotes);
 
@@ -5243,37 +5021,37 @@ begin
 
     ExecSQL;
 
-    // Get the site hierarchy
-    if (FLocalityId > 0) then
-    begin
-      Clear;
-      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-      Add('WHERE site_id = :asite');
-      ParamByName('ASITE').AsInteger := FLocalityId;
-      Open;
-      FCountryId := FieldByName('country_id').AsInteger;
-      FStateId := FieldByName('state_id').AsInteger;
-      FMunicipalityId := FieldByName('municipality_id').AsInteger;
-      Close;
-    end;
-    // Save the site hierarchy
-    Clear;
-    Add('UPDATE sampling_plots SET');
-    Add('  country_id = :country_id,');
-    Add('  state_id = :state_id,');
-    Add('  municipality_id = :municipality_id');
-    Add('WHERE sampling_plot_id = :aid');
-    ParamByName('country_id').AsInteger := FCountryId;
-    if (FStateId > 0) then
-      ParamByName('state_id').AsInteger := FStateId
-    else
-      ParamByName('state_id').Clear;
-    if (FMunicipalityId > 0) then
-      ParamByName('municipality_id').AsInteger := FMunicipalityId
-    else
-      ParamByName('municipality_id').Clear;
-    ParamByName('aid').AsInteger := FId;
-    ExecSQL;
+    //// Get the site hierarchy
+    //if (FLocalityId > 0) then
+    //begin
+    //  Clear;
+    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+    //  Add('WHERE site_id = :asite');
+    //  ParamByName('ASITE').AsInteger := FLocalityId;
+    //  Open;
+    //  FCountryId := FieldByName('country_id').AsInteger;
+    //  FStateId := FieldByName('state_id').AsInteger;
+    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+    //  Close;
+    //end;
+    //// Save the site hierarchy
+    //Clear;
+    //Add('UPDATE sampling_plots SET');
+    //Add('  country_id = :country_id,');
+    //Add('  state_id = :state_id,');
+    //Add('  municipality_id = :municipality_id');
+    //Add('WHERE sampling_plot_id = :aid');
+    //ParamByName('country_id').AsInteger := FCountryId;
+    //if (FStateId > 0) then
+    //  ParamByName('state_id').AsInteger := FStateId
+    //else
+    //  ParamByName('state_id').Clear;
+    //if (FMunicipalityId > 0) then
+    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+    //else
+    //  ParamByName('municipality_id').Clear;
+    //ParamByName('aid').AsInteger := FId;
+    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;

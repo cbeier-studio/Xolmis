@@ -535,7 +535,7 @@ object DMB: TDMB
     FieldDefs = <    
       item
         Name = 'egg_id'
-        DataType = ftAutoInc
+        DataType = ftInteger
         Precision = -1
       end    
       item
@@ -630,6 +630,11 @@ object DMB: TDMB
         Precision = -1
       end    
       item
+        Name = 'host_egg'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
         Name = 'description'
         DataType = ftMemo
         Precision = -1
@@ -679,6 +684,44 @@ object DMB: TDMB
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'researcher_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
       end>
     AfterCancel = qEggsAfterCancel
     AfterPost = qEggsAfterPost
@@ -690,7 +733,11 @@ object DMB: TDMB
       'SELECT e.*,'
       '  p.acronym AS researcher_name,'
       '  i.full_name AS individual_name,'
-      '  z.full_name AS taxon_name'
+      '  z.full_name AS taxon_name,'
+      '  z.order_id AS order_id,'
+      '  z.family_id AS family_id,'
+      '  z.genus_id AS genus_id,'
+      '  z.species_id AS species_id'
       'FROM eggs AS e'
       'LEFT JOIN people AS p ON e.researcher_id = p.person_id'
       'LEFT JOIN individuals AS i ON e.individual_id = i.individual_id'
@@ -721,10 +768,6 @@ object DMB: TDMB
       '  description,'
       '  full_name,'
       '  notes,'
-      '  order_id,'
-      '  family_id,'
-      '  genus_id,'
-      '  species_id,'
       '  user_inserted,'
       '  insert_date)'
       'VALUES ('
@@ -749,10 +792,6 @@ object DMB: TDMB
       '  :description,'
       '  :full_name,'
       '  :notes,'
-      '  :order_id,'
-      '  :family_id,'
-      '  :genus_id,'
-      '  :species_id,'
       '  :user_inserted,'
       '  datetime(''now'',''subsec''))'
     )
@@ -779,10 +818,6 @@ object DMB: TDMB
       '  description = :description,'
       '  full_name = :full_name,'
       '  notes = :notes,'
-      '  order_id = :order_id,'
-      '  family_id = :family_id,'
-      '  genus_id = :genus_id,'
-      '  species_id = :species_id,'
       '  user_updated = :user_updated,'
       '  update_date = datetime(''now'',''subsec''),'
       '  exported_status = :exported_status,'
@@ -996,12 +1031,22 @@ object DMB: TDMB
       Required = False
       DisplayValues = 'True;False'
     end
+    object qEggshost_egg: TBooleanField
+      FieldKind = fkData
+      FieldName = 'host_egg'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
     object qEggsmeasure_date: TDateField
       Alignment = taCenter
       DisplayLabel = 'Measurement date'
       FieldKind = fkData
       FieldName = 'measure_date'
-      Index = 16
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1011,7 +1056,7 @@ object DMB: TDMB
       DisplayLabel = 'Researcher (ID)'
       FieldKind = fkData
       FieldName = 'researcher_id'
-      Index = 17
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1023,7 +1068,7 @@ object DMB: TDMB
       DisplayLabel = 'Researcher'
       FieldKind = fkData
       FieldName = 'researcher_name'
-      Index = 18
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -1035,7 +1080,7 @@ object DMB: TDMB
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'description'
-      Index = 19
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1048,7 +1093,7 @@ object DMB: TDMB
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 20
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1060,7 +1105,7 @@ object DMB: TDMB
       DisplayLabel = 'Individual (ID)'
       FieldKind = fkData
       FieldName = 'individual_id'
-      Index = 21
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1072,7 +1117,7 @@ object DMB: TDMB
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'individual_name'
-      Index = 22
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -1083,7 +1128,7 @@ object DMB: TDMB
       DisplayLabel = 'Internal nr.'
       FieldKind = fkData
       FieldName = 'egg_id'
-      Index = 23
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -1094,7 +1139,7 @@ object DMB: TDMB
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 24
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1102,11 +1147,47 @@ object DMB: TDMB
       Visible = False
       Size = 100
     end
+    object qEggsorder_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'order_id'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qEggsfamily_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'family_id'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qEggsgenus_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'genus_id'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qEggsspecies_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'species_id'
+      Index = 29
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
     object qEggsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 25
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1117,7 +1198,7 @@ object DMB: TDMB
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 26
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1128,7 +1209,7 @@ object DMB: TDMB
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 27
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1139,7 +1220,7 @@ object DMB: TDMB
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 28
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1150,7 +1231,7 @@ object DMB: TDMB
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 29
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1162,7 +1243,7 @@ object DMB: TDMB
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 30
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

@@ -119,6 +119,7 @@ type
     qCapturessubject_sex: TStringField;
     qCapturessubject_status: TStringField;
     qCapturessurvey_id: TLongintField;
+    qCapturessurvey_name: TStringField;
     qCapturestail_length: TFloatField;
     qCapturestarsus_diameter: TFloatField;
     qCapturestarsus_length: TFloatField;
@@ -308,7 +309,6 @@ type
     qNestsproject_name: TStringField;
     qNestsspecies_id: TLongintField;
     qNestsstate_id: TLongintField;
-    qNestssubfamily_id: TLongintField;
     qNestssupport_plant_1_id: TLongintField;
     qNestssupport_plant_1_name: TStringField;
     qNestssupport_plant_2_id: TLongintField;
@@ -442,7 +442,6 @@ type
     qSpecimensspecimen_id1: TAutoIncField;
     qSpecimensstate_id: TLongintField;
     qSpecimensstate_id1: TLongintField;
-    qSpecimenssubfamily_id: TLongintField;
     qSpecimenssubfamily_id1: TLongintField;
     qSpecimenstaxon_id: TLongintField;
     qSpecimenstaxon_id1: TLongintField;

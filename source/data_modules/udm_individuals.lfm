@@ -14,11 +14,6 @@ object DMI: TDMI
         Precision = -1
       end    
       item
-        Name = 'internal_id'
-        DataType = ftLargeint
-        Precision = -1
-      end    
-      item
         Name = 'survey_id'
         DataType = ftInteger
         Precision = -1
@@ -449,41 +444,6 @@ object DMI: TDMI
         Precision = -1
       end    
       item
-        Name = 'order_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'family_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'genus_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'species_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'country_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'state_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'municipality_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
         Name = 'notes'
         DataType = ftMemo
         Precision = -1
@@ -524,9 +484,110 @@ object DMI: TDMI
         Precision = -1
       end    
       item
-        Name = 'data_owner'
-        DataType = ftLargeint
+        Name = 'taxon_name'
+        DataType = ftString
         Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'taxon_formatted_name'
+        DataType = ftString
+        Precision = -1
+        Size = 250
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'survey_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'net_station_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'net_number'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'bander_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'annotator_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'band_name'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'removed_band_name'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'photographer_1_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'photographer_2_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
       end>
     AfterCancel = qCapturesAfterCancel
     AfterInsert = qCapturesAfterInsert
@@ -539,10 +600,17 @@ object DMI: TDMI
       'SELECT c.*,'
       '    z.full_name AS taxon_name,'
       '    z.formatted_name AS taxon_formatted_name,'
+      '    z.order_id AS order_id,'
+      '    z.family_id AS family_id,'
+      '    z.genus_id AS genus_id,'
+      '    z.species_id AS species_id,'
       '    sv.full_name AS survey_name,'
       '    pl.full_name AS net_station_name,'
       '    ef.net_number AS net_number,'
       '    g.site_name AS locality_name,'
+      '    g.country_id AS country_id,'
+      '    g.state_id AS state_id,'
+      '    g.municipality_id AS municipality_id,'
       '    p1.acronym AS bander_name,'
       '    p2.acronym AS annotator_name,'
       '    (b1.band_size||'' ''||b1.band_number) AS band_name,'
@@ -646,13 +714,6 @@ object DMI: TDMI
       '  camera_name,'
       '  escaped,'
       '  needs_review,'
-      '  order_id,'
-      '  family_id,'
-      '  genus_id,'
-      '  species_id,'
-      '  country_id,'
-      '  state_id,'
-      '  municipality_id,'
       '  notes,'
       '  user_inserted,'
       '  insert_date)'
@@ -737,13 +798,6 @@ object DMI: TDMI
       '  :camera_name,'
       '  :escaped,'
       '  :needs_review,'
-      '  :order_id,'
-      '  :family_id,'
-      '  :genus_id,'
-      '  :species_id,'
-      '  :country_id,'
-      '  :state_id,'
-      '  :municipality_id,'
       '  :notes,'
       '  :user_inserted,'
       '  datetime(''now'',''subsec''))'
@@ -831,13 +885,6 @@ object DMI: TDMI
       '  camera_name = :camera_name,'
       '  escaped = :escaped,'
       '  needs_review = :needs_review,'
-      '  order_id = :order_id,'
-      '  family_id = :family_id,'
-      '  genus_id = :genus_id,'
-      '  species_id = :species_id,'
-      '  country_id = :country_id,'
-      '  state_id = :state_id,'
-      '  municipality_id = :municipality_id,'
       '  notes = :notes,'
       '  user_updated = :user_updated,'
       '  update_date = datetime(''now'',''subsec''),'
@@ -1838,87 +1885,83 @@ object DMI: TDMI
       Size = 120
     end
     object qCapturesorder_id: TLongintField
-      DisplayLabel = 'Order (ID)'
       FieldKind = fkData
       FieldName = 'order_id'
       Index = 82
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qCapturesfamily_id: TLongintField
-      DisplayLabel = 'Family (ID)'
       FieldKind = fkData
       FieldName = 'family_id'
       Index = 83
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qCapturesgenus_id: TLongintField
-      DisplayLabel = 'Genus (ID)'
       FieldKind = fkData
       FieldName = 'genus_id'
       Index = 84
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qCapturesspecies_id: TLongintField
-      DisplayLabel = 'Species (ID)'
       FieldKind = fkData
       FieldName = 'species_id'
       Index = 85
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
-    object qCapturescountry_id: TLongintField
-      DisplayLabel = 'Country (ID)'
+    object qCapturessurvey_name: TStringField
       FieldKind = fkData
-      FieldName = 'country_id'
+      FieldName = 'survey_name'
       Index = 86
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
+      Size = 100
     end
-    object qCapturesstate_id: TLongintField
-      DisplayLabel = 'State (ID)'
+    object qCapturescountry_id: TLongintField
       FieldKind = fkData
-      FieldName = 'state_id'
+      FieldName = 'country_id'
       Index = 87
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
-    object qCapturesmunicipality_id: TLongintField
-      DisplayLabel = 'Municipality (ID)'
+    object qCapturesstate_id: TLongintField
       FieldKind = fkData
-      FieldName = 'municipality_id'
+      FieldName = 'state_id'
       Index = 88
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
+    end
+    object qCapturesmunicipality_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 89
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
     end
     object qCapturesuser_inserted: TLongintField
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 89
+      Index = 90
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1929,7 +1972,7 @@ object DMI: TDMI
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 90
+      Index = 91
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1941,7 +1984,7 @@ object DMI: TDMI
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 91
+      Index = 92
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1953,7 +1996,7 @@ object DMI: TDMI
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 92
+      Index = 93
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1965,7 +2008,7 @@ object DMI: TDMI
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 93
+      Index = 94
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -1978,7 +2021,7 @@ object DMI: TDMI
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 94
+      Index = 95
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -2302,26 +2345,6 @@ object DMI: TDMI
         Precision = -1
       end    
       item
-        Name = 'order_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'family_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'genus_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'species_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
         Name = 'user_inserted'
         DataType = ftInteger
         Precision = -1
@@ -2363,6 +2386,26 @@ object DMI: TDMI
         Size = 100
       end    
       item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
         Name = 'individual_name'
         DataType = ftString
         Precision = -1
@@ -2396,6 +2439,10 @@ object DMI: TDMI
     SQL.Strings = (
       'SELECT m.*,'
       '  z.full_name AS taxon_name,'
+      '  z.order_id AS order_id,'
+      '  z.family_id AS family_id,'
+      '  z.genus_id AS genus_id,'
+      '  z.species_id AS species_id,'
       '  i.full_name AS individual_name,'
       '  p.acronym AS bander_name,'
       '  sv.full_name AS survey_name,'
@@ -2473,10 +2520,6 @@ object DMI: TDMI
       '  mc_molt,'
       '  growth_bar_size,'
       '  notes,'
-      '  order_id,'
-      '  family_id,'
-      '  genus_id,'
-      '  species_id,'
       '  user_inserted,'
       '  insert_date)'
       'VALUES ('
@@ -2541,10 +2584,6 @@ object DMI: TDMI
       '  :mc_molt,'
       '  :growth_bar_size,'
       '  :notes,'
-      '  :order_id,'
-      '  :family_id,'
-      '  :genus_id,'
-      '  :species_id,'
       '  :user_inserted,'
       '  datetime(''now'',''subsec''))'
       ''
@@ -2612,10 +2651,6 @@ object DMI: TDMI
       '  mc_molt = :mc_molt,'
       '  growth_bar_size = :growth_bar_size,'
       '  notes = :notes,'
-      '  order_id = :order_id,'
-      '  family_id = :family_id,'
-      '  genus_id = :genus_id,'
-      '  species_id = :species_id,'
       '  user_updated = :user_updated,'
       '  update_date = datetime(''now'',''subsec''),'
       '  exported_status = :exported_status,'
@@ -3489,48 +3524,40 @@ object DMI: TDMI
       Size = 40
     end
     object qMoltsorder_id: TLongintField
-      DisplayLabel = 'Order ID'
       FieldKind = fkData
       FieldName = 'order_id'
       Index = 68
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qMoltsfamily_id: TLongintField
-      DisplayLabel = 'Family ID'
       FieldKind = fkData
       FieldName = 'family_id'
       Index = 69
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qMoltsgenus_id: TLongintField
-      DisplayLabel = 'Genus ID'
       FieldKind = fkData
       FieldName = 'genus_id'
       Index = 70
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qMoltsspecies_id: TLongintField
-      DisplayLabel = 'Species ID'
       FieldKind = fkData
       FieldName = 'species_id'
       Index = 71
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qMoltsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -3621,11 +3648,6 @@ object DMI: TDMI
       item
         Name = 'sighting_id'
         DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'internal_id'
-        DataType = ftLargeint
         Precision = -1
       end    
       item
@@ -3792,41 +3814,6 @@ object DMI: TDMI
         Precision = -1
       end    
       item
-        Name = 'order_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'family_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'genus_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'species_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'country_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'state_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'municipality_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
         Name = 'full_name'
         DataType = ftString
         Precision = -1
@@ -3873,11 +3860,6 @@ object DMI: TDMI
         Precision = -1
       end    
       item
-        Name = 'data_owner'
-        DataType = ftLargeint
-        Precision = -1
-      end    
-      item
         Name = 'taxon_name'
         DataType = ftString
         Precision = -1
@@ -3888,6 +3870,26 @@ object DMI: TDMI
         DataType = ftString
         Precision = -1
         Size = 250
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
       end    
       item
         Name = 'individual_name'
@@ -3918,6 +3920,21 @@ object DMI: TDMI
         DataType = ftString
         Precision = -1
         Size = 180
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
       end>
     AfterCancel = qSightingsAfterCancel
     AfterInsert = qSightingsAfterInsert
@@ -3930,11 +3947,18 @@ object DMI: TDMI
       'SELECT s.*,'
       '  z.full_name AS taxon_name,'
       '  z.formatted_name AS taxon_formatted_name,'
+      '  z.order_id AS order_id,'
+      '  z.family_id AS family_id,'
+      '  z.genus_id AS genus_id,'
+      '  z.species_id AS species_id,'
       '  i.full_name AS individual_name,'
       '  p.full_name AS observer_name,'
       '  sv.full_name AS survey_name,'
       '  mt.method_name AS method_name,'
-      '  g.full_name AS locality_name'
+      '  g.full_name AS locality_name,'
+      '  g.country_id AS country_id,'
+      '  g.state_id AS state_id,'
+      '  g.municipality_id AS municipality_id'
       'FROM sightings AS s'
       'LEFT JOIN zoo_taxa AS z ON s.taxon_id = z.taxon_id'
       'LEFT JOIN individuals AS i ON s.individual_id = i.individual_id'
@@ -3978,13 +4002,6 @@ object DMI: TDMI
       '  breeding_status,'
       '  not_surveying,'
       '  ebird_available,'
-      '  order_id,'
-      '  family_id,'
-      '  genus_id,'
-      '  species_id,'
-      '  country_id,'
-      '  state_id,'
-      '  municipality_id,'
       '  full_name,'
       '  notes,'
       '  user_inserted,'
@@ -4021,13 +4038,6 @@ object DMI: TDMI
       '  :breeding_status,'
       '  :not_surveying,'
       '  :ebird_available,'
-      '  :order_id,'
-      '  :family_id,'
-      '  :genus_id,'
-      '  :species_id,'
-      '  :country_id,'
-      '  :state_id,'
-      '  :municipality_id,'
       '  :full_name,'
       '  :notes,'
       '  :user_inserted,'
@@ -4067,13 +4077,6 @@ object DMI: TDMI
       '  breeding_status = :breeding_status,'
       '  not_surveying = :not_surveying,'
       '  ebird_available = :ebird_available,'
-      '  order_id = :order_id,'
-      '  family_id = :family_id,'
-      '  genus_id = :genus_id,'
-      '  species_id = :species_id,'
-      '  country_id = :country_id,'
-      '  state_id = :state_id,'
-      '  municipality_id = :municipality_id,'
       '  full_name = :full_name,'
       '  notes = :notes,'
       '  user_updated = :user_updated,'
@@ -4573,81 +4576,67 @@ object DMI: TDMI
       Size = 100
     end
     object qSightingsorder_id: TLongintField
-      DisplayLabel = 'Order (ID)'
       FieldKind = fkData
       FieldName = 'order_id'
       Index = 42
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsfamily_id: TLongintField
-      DisplayLabel = 'Family (ID)'
       FieldKind = fkData
       FieldName = 'family_id'
       Index = 43
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsgenus_id: TLongintField
-      DisplayLabel = 'Genus (ID)'
       FieldKind = fkData
       FieldName = 'genus_id'
       Index = 44
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsspecies_id: TLongintField
-      DisplayLabel = 'Species (ID)'
       FieldKind = fkData
       FieldName = 'species_id'
       Index = 45
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingscountry_id: TLongintField
-      DisplayLabel = 'Country (ID)'
       FieldKind = fkData
       FieldName = 'country_id'
       Index = 46
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsstate_id: TLongintField
-      DisplayLabel = 'State (ID)'
       FieldKind = fkData
       FieldName = 'state_id'
       Index = 47
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsmunicipality_id: TLongintField
-      DisplayLabel = 'Municipality (ID)'
       FieldKind = fkData
       FieldName = 'municipality_id'
       Index = 48
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSightingsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -4911,46 +4900,6 @@ object DMI: TDMI
         Precision = -1
       end    
       item
-        Name = 'order_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'family_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'subfamily_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'genus_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'species_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'country_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'state_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'municipality_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
         Name = 'full_name'
         DataType = ftString
         Precision = -1
@@ -5020,6 +4969,21 @@ object DMI: TDMI
         Size = 60
       end    
       item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
         Name = 'taxon_name'
         DataType = ftString
         Precision = -1
@@ -5030,6 +4994,26 @@ object DMI: TDMI
         DataType = ftString
         Precision = -1
         Size = 250
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
       end    
       item
         Name = 'support_plant_1_name'
@@ -5054,8 +5038,15 @@ object DMI: TDMI
       '  p.full_name AS observer_name,'
       '  pj.project_title AS project_name,'
       '  g.site_name locality_name,'
+      '  g.country_id AS country_id,'
+      '  g.state_id AS state_id,'
+      '  g.municipality_id AS municipality_id,'
       '  z.full_name AS taxon_name,'
       '  z.formatted_name AS taxon_formatted_name,'
+      '  z.order_id AS order_id,'
+      '  z.family_id AS family_id,'
+      '  z.genus_id AS genus_id,'
+      '  z.species_id AS species_id,'
       '  bt1.taxon_name AS support_plant_1_name,'
       '  bt2.taxon_name AS support_plant_2_name'
       'FROM nests AS n'
@@ -5105,14 +5096,6 @@ object DMI: TDMI
       '  nest_productivity,'
       '  found_date,'
       '  last_date,'
-      '  order_id,'
-      '  family_id,'
-      '  subfamily_id,'
-      '  genus_id,'
-      '  species_id,'
-      '  country_id,'
-      '  state_id,'
-      '  municipality_id,'
       '  full_name,'
       '  description,'
       '  notes,'
@@ -5153,14 +5136,6 @@ object DMI: TDMI
       '  :nest_productivity,'
       '  :found_date,'
       '  :last_date,'
-      '  :order_id,'
-      '  :family_id,'
-      '  :subfamily_id,'
-      '  :genus_id,'
-      '  :species_id,'
-      '  :country_id,'
-      '  :state_id,'
-      '  :municipality_id,'
       '  :full_name,'
       '  :description,'
       '  :notes,'
@@ -5204,14 +5179,6 @@ object DMI: TDMI
       '  nest_productivity = :nest_productivity,'
       '  found_date = :found_date,'
       '  last_date = :last_date,'
-      '  order_id = :order_id,'
-      '  family_id = :family_id,'
-      '  subfamily_id = :subfamily_id,'
-      '  genus_id = :genus_id,'
-      '  species_id = :species_id,'
-      '  country_id = :country_id,'
-      '  state_id = :state_id,'
-      '  municipality_id = :municipality_id,'
       '  full_name = :full_name,'
       '  description = :description,'
       '  notes = :notes,'
@@ -5730,85 +5697,68 @@ object DMI: TDMI
       FieldName = 'order_id'
       Index = 46
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qNestsfamily_id: TLongintField
       FieldKind = fkData
       FieldName = 'family_id'
       Index = 47
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
-    end
-    object qNestssubfamily_id: TLongintField
-      FieldKind = fkData
-      FieldName = 'subfamily_id'
-      Index = 48
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
     end
     object qNestsgenus_id: TLongintField
       FieldKind = fkData
       FieldName = 'genus_id'
-      Index = 49
+      Index = 48
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qNestsspecies_id: TLongintField
       FieldKind = fkData
       FieldName = 'species_id'
-      Index = 50
+      Index = 49
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qNestscountry_id: TLongintField
       FieldKind = fkData
       FieldName = 'country_id'
-      Index = 51
+      Index = 50
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qNestsstate_id: TLongintField
       FieldKind = fkData
       FieldName = 'state_id'
-      Index = 52
+      Index = 51
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qNestsmunicipality_id: TLongintField
       FieldKind = fkData
       FieldName = 'municipality_id'
-      Index = 53
+      Index = 52
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qNestsuser_inserted: TLongintField
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 54
+      Index = 53
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5818,7 +5768,7 @@ object DMI: TDMI
     object qNestsuser_updated: TLongintField
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 55
+      Index = 54
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5829,7 +5779,7 @@ object DMI: TDMI
       Alignment = taCenter
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 56
+      Index = 55
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5840,7 +5790,7 @@ object DMI: TDMI
       Alignment = taCenter
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 57
+      Index = 56
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5851,7 +5801,7 @@ object DMI: TDMI
       Alignment = taCenter
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 58
+      Index = 57
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5863,7 +5813,7 @@ object DMI: TDMI
       Alignment = taCenter
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 59
+      Index = 58
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -5882,7 +5832,7 @@ object DMI: TDMI
     FieldDefs = <    
       item
         Name = 'specimen_id'
-        DataType = ftAutoInc
+        DataType = ftInteger
         Precision = -1
       end    
       item
@@ -5959,72 +5909,6 @@ object DMI: TDMI
         Precision = -1
       end    
       item
-        Name = 'collectors'
-        DataType = ftString
-        Precision = -1
-        Size = 120
-      end    
-      item
-        Name = 'collector_1'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'collector_2'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'collector_3'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'collector_4'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'order_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'family_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'subfamily_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'genus_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'species_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'country_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'state_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'municipality_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
         Name = 'notes'
         DataType = ftMemo
         Precision = -1
@@ -6063,6 +5947,71 @@ object DMI: TDMI
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'nest_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'egg_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
       end>
     AfterCancel = qSpecimensAfterCancel
     AfterInsert = qSpecimensAfterInsert
@@ -6074,7 +6023,14 @@ object DMI: TDMI
     SQL.Strings = (
       'SELECT sp.*,'
       '  z.full_name AS taxon_name,'
+      '  z.order_id AS order_id,'
+      '  z.family_id AS family_id,'
+      '  z.genus_id AS genus_id,'
+      '  z.species_id AS species_id,'
       '  g.site_name AS locality_name,'
+      '  g.country_id AS country_id,'
+      '  g.state_id AS state_id,'
+      '  g.municipality_id AS municipality_id,'
       '  i.full_name AS individual_name,'
       '  n.full_name AS nest_name,'
       '  e.full_name AS egg_name'
@@ -6103,14 +6059,6 @@ object DMI: TDMI
       '  locality_id,'
       '  longitude,'
       '  latitude,'
-      '  order_id,'
-      '  family_id,'
-      '  subfamily_id,'
-      '  genus_id,'
-      '  species_id,'
-      '  country_id,'
-      '  state_id,'
-      '  municipality_id,'
       '  notes,'
       '  user_inserted,'
       '  insert_date)'
@@ -6129,14 +6077,6 @@ object DMI: TDMI
       '  :locality_id,'
       '  :longitude,'
       '  :latitude,'
-      '  :order_id,'
-      '  :family_id,'
-      '  :subfamily_id,'
-      '  :genus_id,'
-      '  :species_id,'
-      '  :country_id,'
-      '  :state_id,'
-      '  :municipality_id,'
       '  :notes,'
       '  :user_inserted,'
       '  datetime(''now'',''subsec''))'
@@ -6158,14 +6098,6 @@ object DMI: TDMI
       '  locality_id = :locality_id,'
       '  longitude = :longitude,'
       '  latitude = :latitude,'
-      '  order_id = :order_id,'
-      '  family_id = :family_id,'
-      '  subfamily_id = :subfamily_id,'
-      '  genus_id = :genus_id,'
-      '  species_id = :species_id,'
-      '  country_id = :country_id,'
-      '  state_id = :state_id,'
-      '  municipality_id = :municipality_id,'
       '  notes = :notes,'
       '  user_updated = :user_updated,'
       '  update_date = datetime(''now'',''subsec''),'
@@ -6445,98 +6377,73 @@ object DMI: TDMI
       Size = 100
     end
     object qSpecimensorder_id: TLongintField
-      DisplayLabel = 'Order (Id)'
       FieldKind = fkData
       FieldName = 'order_id'
       Index = 22
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSpecimensfamily_id: TLongintField
-      DisplayLabel = 'Family (Id)'
       FieldKind = fkData
       FieldName = 'family_id'
       Index = 23
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
-    end
-    object qSpecimenssubfamily_id: TLongintField
-      DisplayLabel = 'Subfamily (Id)'
-      FieldKind = fkData
-      FieldName = 'subfamily_id'
-      Index = 24
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
     end
     object qSpecimensgenus_id: TLongintField
-      DisplayLabel = 'Genus (Id)'
       FieldKind = fkData
       FieldName = 'genus_id'
-      Index = 25
+      Index = 24
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSpecimensspecies_id: TLongintField
-      DisplayLabel = 'Species (Id)'
       FieldKind = fkData
       FieldName = 'species_id'
-      Index = 26
+      Index = 25
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSpecimenscountry_id: TLongintField
-      DisplayLabel = 'Country (Id)'
       FieldKind = fkData
       FieldName = 'country_id'
-      Index = 27
+      Index = 26
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSpecimensstate_id: TLongintField
-      DisplayLabel = 'State (Id)'
       FieldKind = fkData
       FieldName = 'state_id'
-      Index = 28
+      Index = 27
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSpecimensmunicipality_id: TLongintField
-      DisplayLabel = 'Municipality (Id)'
       FieldKind = fkData
       FieldName = 'municipality_id'
-      Index = 29
+      Index = 28
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSpecimensuser_inserted: TLongintField
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 30
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -6547,7 +6454,7 @@ object DMI: TDMI
       DisplayLabel = 'Modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 31
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -6559,7 +6466,7 @@ object DMI: TDMI
       DisplayLabel = 'Date of creation'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 32
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -6571,7 +6478,7 @@ object DMI: TDMI
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 33
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -6583,7 +6490,7 @@ object DMI: TDMI
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 34
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -6596,7 +6503,7 @@ object DMI: TDMI
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 35
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

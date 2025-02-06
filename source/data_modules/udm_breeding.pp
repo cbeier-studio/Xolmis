@@ -47,8 +47,11 @@ type
     qEggsegg_volume: TFloatField;
     qEggsegg_width: TFloatField;
     qEggsexported_status: TBooleanField;
+    qEggsfamily_id: TLongintField;
     qEggsfield_number: TStringField;
     qEggsfull_name: TStringField;
+    qEggsgenus_id: TLongintField;
+    qEggshost_egg: TBooleanField;
     qEggsindividual_id: TLongintField;
     qEggsindividual_name: TStringField;
     qEggsinsert_date: TDateTimeField;
@@ -56,8 +59,10 @@ type
     qEggsmeasure_date: TDateField;
     qEggsnest_id: TLongintField;
     qEggsnotes: TMemoField;
+    qEggsorder_id: TLongintField;
     qEggsresearcher_id: TLongintField;
     qEggsresearcher_name: TStringField;
+    qEggsspecies_id: TLongintField;
     qEggstaxon_id: TLongintField;
     qEggstaxon_name: TStringField;
     qEggsupdate_date: TDateTimeField;

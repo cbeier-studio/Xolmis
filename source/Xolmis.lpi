@@ -166,9 +166,9 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="394"/>
+      <BuildNr Value="395"/>
       <Attributes pvaPreRelease="True"/>
-      <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2024 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
+      <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
     <BuildModes>
       <Item Name="Default" Default="True"/>
@@ -1145,7 +1145,6 @@
         <ComponentName Value="DMI"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="data_modules\udm_lookup.pp"/>
@@ -1160,7 +1159,6 @@
         <ComponentName Value="DMS"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="dialogs\ucfg_database.pp"/>
