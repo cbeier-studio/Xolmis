@@ -636,8 +636,8 @@ begin
         'user_inserted, ' +
         'insert_date) ');
       Add('VALUES (' +
-        ':image_date, ' +
-        ':image_time, ' +
+        'date(:image_date), ' +
+        'time(:image_time), ' +
         ':image_type, ' +
         ':taxon_id, ' +
         ':individual_id, ' +
@@ -664,8 +664,8 @@ begin
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
-      ParamByName('image_date').AsDateTime := FImageDate;
-      ParamByName('image_time').AsDateTime := FImageTime;
+      ParamByName('image_date').AsString := FormatDateTime('yyyy-MM-dd', FImageDate);
+      ParamByName('image_time').AsString := TimeToStr(FImageTime);
       ParamByName('image_type').AsString := ImageTypeStr[FImageType];
       ParamByName('image_filename').AsString := FFilename;
       if FFilename <> EmptyStr then
@@ -908,8 +908,8 @@ begin
     try
       Clear;
       Add('UPDATE images SET ' +
-        'image_date = :image_date, ' +
-        'image_time = :image_time, ' +
+        'image_date = date(:image_date), ' +
+        'image_time = time(:image_time), ' +
         'image_type = :image_type, ' +
         'taxon_id = :taxon_id, ' +
         'individual_id = :individual_id, ' +
@@ -938,8 +938,8 @@ begin
       Add('WHERE (image_id = :image_id)');
 
       ParamByName('image_id').AsInteger := FId;
-      ParamByName('image_date').AsDateTime := FImageDate;
-      ParamByName('image_time').AsDateTime := FImageTime;
+      ParamByName('image_date').AsString := FormatDateTime('yyyy-MM-dd', FImageDate);
+      ParamByName('image_time').AsString := TimeToStr(FImageTime);
       ParamByName('image_type').AsString := ImageTypeStr[FImageType];
       ParamByName('image_filename').AsString := FFilename;
       if FFilename <> EmptyStr then
@@ -1409,9 +1409,9 @@ begin
         ':sighting_id, ' +
         ':audio_type, ' +
         ':locality_id, ' +
-        ':recording_date, ' +
+        'date(:recording_date), ' +
         ':recorder_id, ' +
-        ':recording_time, ' +
+        'time(:recording_time), ' +
         ':longitude, ' +
         ':latitude, ' +
         ':temperature, ' +
@@ -1438,8 +1438,8 @@ begin
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
-      ParamByName('recording_date').AsDateTime := FRecordingDate;
-      ParamByName('recording_time').AsDateTime := FRecordingTime;
+      ParamByName('recording_date').AsString := FormatDateTime('yyyy-MM-dd', FRecordingDate);
+      ParamByName('recording_time').AsString := TimeToStr(FRecordingTime);
       ParamByName('audio_type').AsString := FAudioType;
 
       ParamByName('audio_file').AsString := FFilename;
@@ -1680,7 +1680,7 @@ begin
       DMM.sqlTrans.StartTransaction;
     try
       Clear;
-      Add('INSERT INTO audio_library (' +
+      Add('UPDATE audio_library SET ' +
         'full_name = :full_name, ' +
         'taxon_id = :taxon_id, ' +
         'individual_id = :individual_id, ' +
@@ -1688,9 +1688,9 @@ begin
         'sighting_id = :sighting_id, ' +
         'audio_type = :audio_type, ' +
         'locality_id = :locality_id, ' +
-        'recording_date = :recording_date, ' +
+        'recording_date = date(:recording_date), ' +
         'recorder_id = :recorder_id, ' +
-        'recording_time = :recording_time, ' +
+        'recording_time = time(:recording_time), ' +
         'longitude = :longitude, ' +
         'latitude = :latitude, ' +
         'temperature = :temperature, ' +
@@ -1719,8 +1719,8 @@ begin
       Add('WHERE (audio_id = :audio_id)');
 
       ParamByName('audio_id').AsInteger := FId;
-      ParamByName('recording_date').AsDateTime := FRecordingDate;
-      ParamByName('recording_time').AsDateTime := FRecordingTime;
+      ParamByName('recording_date').AsString := FormatDateTime('yyyy-MM-dd', FRecordingDate);
+      ParamByName('recording_time').AsString := TimeToStr(FRecordingTime);
       ParamByName('audio_type').AsString := FAudioType;
 
       ParamByName('audio_file').AsString := FFilename;
@@ -2110,8 +2110,8 @@ begin
         ':document_type, ' +
         ':document_name, ' +
         ':document_path, ' +
-        ':document_date, ' +
-        ':document_time, ' +
+        'date(:document_date), ' +
+        'time(:document_time), ' +
         ':license_type, ' +
         ':license_year, ' +
         ':license_uri, ' +
@@ -2120,8 +2120,8 @@ begin
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
-      ParamByName('document_date').AsDateTime := FDocumentDate;
-      ParamByName('document_time').AsDateTime := FDocumentTime;
+      ParamByName('document_date').AsString := FormatDateTime('yyyy-MM-dd', FDocumentDate);
+      ParamByName('document_time').AsString := TimeToStr(FDocumentTime);
       ParamByName('document_name').AsString := FName;
       ParamByName('document_type').AsString := FDocumentType;
       ParamByName('document_path').AsString := FFilename;
@@ -2325,8 +2325,8 @@ begin
         'document_type = :document_type, ' +
         'document_name = :document_name, ' +
         'document_path = :document_path, ' +
-        'document_date = :document_date, ' +
-        'document_time = :document_time, ' +
+        'document_date = date(:document_date), ' +
+        'document_time = time(:document_time), ' +
         'license_type = :license_type, ' +
         'license_year = :license_year, ' +
         'license_uri = :license_uri, ' +
@@ -2338,8 +2338,8 @@ begin
         'active_status = :active_status');
       Add('WHERE (document_id = :document_id)');
 
-      ParamByName('document_date').AsDateTime := FDocumentDate;
-      ParamByName('document_time').AsDateTime := FDocumentTime;
+      ParamByName('document_date').AsString := FormatDateTime('yyyy-MM-dd', FDocumentDate);
+      ParamByName('document_time').AsString := TimeToStr(FDocumentTime);
       ParamByName('document_name').AsString := FName;
       ParamByName('document_type').AsString := FDocumentType;
       ParamByName('document_path').AsString := FFilename;
