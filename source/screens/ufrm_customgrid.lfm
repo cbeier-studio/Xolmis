@@ -7,7 +7,6 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1243
   ParentFont = True
-  LCLVersion = '4.0.0.2'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -78,7 +77,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            348
+            344
           )
         end
       end
@@ -8016,7 +8015,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbEditChildClick
         end
         object sbDelChild: TSpeedButton
-          Left = 655
+          Left = 651
           Height = 30
           Hint = 'Delete selected record'
           Top = 5
@@ -8024,6 +8023,7 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alRight
           AutoSize = True
           BorderSpacing.Left = 20
+          BorderSpacing.Right = 20
           DisabledImageIndex = 5
           Enabled = False
           Flat = True
@@ -8061,7 +8061,7 @@ object frmCustomGrid: TfrmCustomGrid
           LineWidth = 1
         end
         object Separator16: TShapeLineBGRA
-          Left = 631
+          Left = 627
           Height = 30
           Top = 5
           Width = 4

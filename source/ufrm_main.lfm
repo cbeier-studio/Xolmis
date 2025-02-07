@@ -858,26 +858,26 @@ object frmMain: TfrmMain
       ImageIndex = 1
       OnExecute = actInsertRecordExecute
     end
-    object actOpenResearchers: TAction
-      Category = 'Entities'
-      Caption = '&Researchers'
-      ImageIndex = 18
-      OnExecute = actOpenResearchersExecute
-    end
     object actOpenInstitutions: TAction
-      Category = 'Entities'
+      Category = 'Management'
       Caption = '&Institutions'
       ImageIndex = 17
       OnExecute = actOpenInstitutionsExecute
     end
+    object actOpenResearchers: TAction
+      Category = 'Management'
+      Caption = '&Researchers'
+      ImageIndex = 18
+      OnExecute = actOpenResearchersExecute
+    end
     object actOpenProjects: TAction
-      Category = 'Entities'
+      Category = 'Management'
       Caption = 'Pro&jects'
       ImageIndex = 19
       OnExecute = actOpenProjectsExecute
     end
     object actOpenPermits: TAction
-      Category = 'Entities'
+      Category = 'Management'
       Caption = '&Permits'
       ImageIndex = 20
       OnExecute = actOpenPermitsExecute
@@ -8752,6 +8752,7 @@ object frmMain: TfrmMain
       end
       object mmfExport: TMenuItem
         Action = actExport
+        Visible = False
       end
       object mmfImport: TMenuItem
         Caption = 'Import'
@@ -8882,7 +8883,7 @@ object frmMain: TfrmMain
       end
     end
     object mmEntities: TMenuItem
-      Caption = '&Entities'
+      Caption = '&Management'
       object mmeInstitutions: TMenuItem
         Action = actOpenInstitutions
       end
@@ -8927,7 +8928,7 @@ object frmMain: TfrmMain
       end
     end
     object mmMedia: TMenuItem
-      Caption = '&Media'
+      Caption = 'M&edia'
       Visible = False
       object mmmImageGallery: TMenuItem
         Action = actOpenImagesList

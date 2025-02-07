@@ -13379,7 +13379,7 @@ msgstr ""
 
 #: tfrmmain.mmentities.caption
 msgctxt "tfrmmain.mmentities.caption"
-msgid "&Entities"
+msgid "&Management"
 msgstr ""
 
 #: tfrmmain.mmfile.caption
@@ -13409,7 +13409,7 @@ msgstr ""
 
 #: tfrmmain.mmmedia.caption
 msgctxt "tfrmmain.mmmedia.caption"
-msgid "&Media"
+msgid "M&edia"
 msgstr ""
 
 #: tfrmmain.mmsampling.caption

@@ -13415,8 +13415,8 @@ msgstr "&Reprodução"
 
 #: tfrmmain.mmentities.caption
 msgctxt "tfrmmain.mmentities.caption"
-msgid "&Entities"
-msgstr "&Entidades"
+msgid "&Management"
+msgstr "G&estão"
 
 #: tfrmmain.mmfile.caption
 msgctxt "tfrmmain.mmfile.caption"
@@ -13445,8 +13445,8 @@ msgstr "&Indivíduos"
 
 #: tfrmmain.mmmedia.caption
 msgctxt "tfrmmain.mmmedia.caption"
-msgid "&Media"
-msgstr "&Mídias"
+msgid "M&edia"
+msgstr "Mí&dias"
 
 #: tfrmmain.mmsampling.caption
 msgctxt "tfrmmain.mmsampling.caption"

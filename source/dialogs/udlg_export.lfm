@@ -7,9 +7,9 @@ object dlgExport: TdlgExport
   Caption = 'Export data'
   ClientHeight = 445
   ClientWidth = 664
-  OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
+  OnShow = FormShow
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -189,8 +189,8 @@ object dlgExport: TdlgExport
         Caption = 'Options'
         Images = iButtons
         ImageIndex = 1
-        OnClick = btnOptionsClick
         TabOrder = 0
+        OnClick = btnOptionsClick
       end
       object ckUseDarwinCoreFormat: TCheckBox
         Left = 304
@@ -228,12 +228,11 @@ object dlgExport: TdlgExport
     RightClickSelect = True
     RowSelect = True
     ScrollBars = ssNone
-    SelectionColor = 13066075
+    SelectionColor = 16226706
     SelectionFontColorUsed = True
     ShowRoot = False
     SortType = stText
     TabOrder = 2
-    OnSelectionChanged = tvFiletypeSelectionChanged
     Options = [tvoKeepCollapsedNodes, tvoReadOnly, tvoRightClickSelect, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoToolTips]
     Items.Data = {
       F9FFFFFF0200050000000000000000000000FFFFFFFFFFFFFFFF000000000000
@@ -243,6 +242,7 @@ object dlgExport: TdlgExport
       0000000004000000584C53580200000002000000FFFFFFFFFFFFFFFF00000000
       000000000003000000584D4C
     }
+    OnSelectionChanged = tvFiletypeSelectionChanged
   end
   object iIcons: TImageList
     Height = 32
