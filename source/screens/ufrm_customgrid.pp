@@ -104,6 +104,7 @@ type
     qDocsuser_inserted: TLongintField;
     qDocsuser_updated: TLongintField;
     sbAddDoc: TSpeedButton;
+    sbClearAllFilters: TSpeedButton;
     sbDocInfo: TSpeedButton;
     sbDelDoc: TSpeedButton;
     sbOpenDoc: TSpeedButton;
@@ -1466,6 +1467,7 @@ begin
       begin
         C := aGrid.Columns.Add;
         C.FieldName := aGrid.DataSource.DataSet.Fields[i].FieldName;
+        C.ReadOnly := not (C.FieldName = 'marked_status');
         //C := nil;
       end;
 
@@ -1657,6 +1659,7 @@ begin
   sbColumnHide.Images := iButtonsDark;
   sbShowRecycle.Images := iButtonsDark;
   sbClearFilters.Images := iButtonsDark;
+  sbClearAllFilters.Images := iButtonsDark;
   sbRestoreRecord.Images := iButtonsDark;
   sbDelPermanently.Images := iButtonsDark;
 
@@ -12040,6 +12043,7 @@ begin
   pmgRecordVerifications.Enabled := sbRecordVerifications.Enabled;
 
   sbClearFilters.Enabled := FSearch.QuickFilters.Count > 0;
+  sbClearAllFilters.Enabled := sbClearFilters.Enabled;
 
   if dsLink.DataSet.RecordCount = 1 then
     lblRecordStatus.Caption := Format(rsRecordsFound, [dsLink.DataSet.RecordCount, rsRecords])

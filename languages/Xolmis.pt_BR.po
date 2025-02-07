@@ -12486,6 +12486,10 @@ msgstr "Verificações do registro"
 msgid "Clear all quick filters"
 msgstr "Limpar todos filtros rápidos"
 
+#: tfrmcustomgrid.sbclearfilters1.hint
+msgid "Clear all filters"
+msgstr ""
+
 #: tfrmcustomgrid.sbcolumnhide.hint
 msgid "Hide the selected column"
 msgstr "Ocultar a coluna selecionada"
@@ -14010,3 +14014,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

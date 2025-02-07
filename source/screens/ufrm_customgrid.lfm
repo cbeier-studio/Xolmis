@@ -8657,7 +8657,7 @@ object frmCustomGrid: TfrmCustomGrid
         OnClick = sbPrintClick
       end
       object sbSaveRecord: TBitBtn
-        Left = 435
+        Left = 381
         Height = 32
         Hint = 'Save changes'
         Top = 4
@@ -8676,7 +8676,7 @@ object frmCustomGrid: TfrmCustomGrid
         OnClick = sbSaveRecordClick
       end
       object sbCancelRecord: TBitBtn
-        Left = 518
+        Left = 464
         Height = 32
         Hint = 'Cancel editing'
         Top = 4
@@ -8693,6 +8693,26 @@ object frmCustomGrid: TfrmCustomGrid
         TabOrder = 1
         Visible = False
         OnClick = sbCancelRecordClick
+      end
+      object sbClearAllFilters: TSpeedButton
+        Left = 574
+        Height = 32
+        Hint = 'Clear all filters'
+        Top = 4
+        Width = 34
+        Align = alRight
+        AutoSize = True
+        BorderSpacing.Left = 20
+        BorderSpacing.Right = 20
+        DisabledImageIndex = 45
+        Enabled = False
+        Flat = True
+        Images = iButtons
+        ImageIndex = 44
+        ImageWidth = 24
+        ShowHint = True
+        ParentShowHint = False
+        OnClick = sbClearFiltersClick
       end
     end
     object pChildsBar: TBCPanel
@@ -9619,7 +9639,7 @@ object frmCustomGrid: TfrmCustomGrid
         DataSource = dsLink
         FixedColor = 15987699
         FixedHotColor = 16448250
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgCellEllipsis, dgRowHighlight, dgThumbTracking, dgDisplayMemoText]
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgCellEllipsis, dgRowHighlight, dgThumbTracking, dgDisplayMemoText]
         OptionsExtra = [dgeCheckboxColumn]
         PopupMenu = pmGrid
         Scrollbars = ssAutoBoth

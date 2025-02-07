@@ -229,6 +229,7 @@
 {"hash":366789,"name":"tfrmcustomgrid.sbsaverecord.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":66655927,"name":"tfrmcustomgrid.sbcancelrecord.hint","sourcebytes":[67,97,110,99,101,108,32,101,100,105,116,105,110,103],"value":"Cancel editing"},
 {"hash":77089212,"name":"tfrmcustomgrid.sbcancelrecord.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":149793139,"name":"tfrmcustomgrid.sbclearallfilters.hint","sourcebytes":[67,108,101,97,114,32,97,108,108,32,102,105,108,116,101,114,115],"value":"Clear all filters"},
 {"hash":142330963,"name":"tfrmcustomgrid.lblchildtag1.caption","sourcebytes":[67,97,112,116,117,114,101,115],"value":"Captures"},
 {"hash":48,"name":"tfrmcustomgrid.lblchildcount1.caption","sourcebytes":[48],"value":"0"},
 {"hash":5530547,"name":"tfrmcustomgrid.lblchildtag2.caption","sourcebytes":[77,111,108,116,115],"value":"Molts"},

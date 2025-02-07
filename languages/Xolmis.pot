@@ -12461,6 +12461,10 @@ msgstr ""
 msgid "Clear all quick filters"
 msgstr ""
 
+#: tfrmcustomgrid.sbclearfilters1.hint
+msgid "Clear all filters"
+msgstr ""
+
 #: tfrmcustomgrid.sbcolumnhide.hint
 msgid "Hide the selected column"
 msgstr ""
