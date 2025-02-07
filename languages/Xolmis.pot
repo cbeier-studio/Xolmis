@@ -12457,12 +12457,13 @@ msgctxt "tfrmcustomgrid.sbchildverifications.hint"
 msgid "Record verifications"
 msgstr ""
 
-#: tfrmcustomgrid.sbclearfilters.hint
-msgid "Clear all quick filters"
+#: tfrmcustomgrid.sbclearallfilters.hint
+msgctxt "tfrmcustomgrid.sbclearallfilters.hint"
+msgid "Clear all filters"
 msgstr ""
 
-#: tfrmcustomgrid.sbclearfilters1.hint
-msgid "Clear all filters"
+#: tfrmcustomgrid.sbclearfilters.hint
+msgid "Clear all quick filters"
 msgstr ""
 
 #: tfrmcustomgrid.sbcolumnhide.hint

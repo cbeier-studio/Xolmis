@@ -12482,13 +12482,14 @@ msgctxt "tfrmcustomgrid.sbchildverifications.hint"
 msgid "Record verifications"
 msgstr "Verificações do registro"
 
+#: tfrmcustomgrid.sbclearallfilters.hint
+msgctxt "tfrmcustomgrid.sbclearallfilters.hint"
+msgid "Clear all filters"
+msgstr "Limpar todos os filtros"
+
 #: tfrmcustomgrid.sbclearfilters.hint
 msgid "Clear all quick filters"
 msgstr "Limpar todos filtros rápidos"
-
-#: tfrmcustomgrid.sbclearfilters1.hint
-msgid "Clear all filters"
-msgstr ""
 
 #: tfrmcustomgrid.sbcolumnhide.hint
 msgid "Hide the selected column"
@@ -14014,4 +14015,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-
