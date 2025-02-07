@@ -545,12 +545,12 @@ end;
 
 procedure TedtCapture.eHowAgedButtonClick(Sender: TObject);
 begin
-  HowAgedDialog(dsLink.DataSet.FieldByName('how_aged').AsString, dsLink.DataSet, 'how_aged');
+  HowAgedDialog(eHowAged);
 end;
 
 procedure TedtCapture.eHowSexedButtonClick(Sender: TObject);
 begin
-  HowAgedDialog(dsLink.DataSet.FieldByName('how_sexed').AsString, dsLink.DataSet, 'how_sexed');
+  HowAgedDialog(eHowSexed);
 end;
 
 procedure TedtCapture.eIndividualButtonClick(Sender: TObject);

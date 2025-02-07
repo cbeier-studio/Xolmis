@@ -195,7 +195,7 @@ end;
 
 procedure TedtSighting.eBreedingStatusButtonClick(Sender: TObject);
 begin
-  BreedingDialog(dsLink.DataSet.FieldByName('breeding_status').AsString, dsLink.DataSet, 'breeding_status');
+  BreedingDialog(eBreedingStatus);
 end;
 
 procedure TedtSighting.eDateButtonClick(Sender: TObject);

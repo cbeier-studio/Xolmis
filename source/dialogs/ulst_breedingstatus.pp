@@ -21,19 +21,19 @@ unit ulst_breedingstatus;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, CheckLst,
-  atshapelinebgra, BCPanel;
+  Classes, laz.VirtualTrees, SysUtils, Forms, Controls, Graphics, Dialogs,
+  ExtCtrls, Buttons, CheckLst, atshapelinebgra, BCPanel;
 
 type
 
   { TlstBreedingStatus }
 
   TlstBreedingStatus = class(TForm)
+    vtBreeding: TLazVirtualStringTree;
     lineBottom: TShapeLineBGRA;
     pCode: TBCPanel;
     sbOK: TBitBtn;
     sbCancel: TBitBtn;
-    cklBreed: TCheckListBox;
     pBottom: TPanel;
     procedure cklBreedClickCheck(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -41,11 +41,22 @@ type
     procedure FormShow(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbOKClick(Sender: TObject);
+    procedure vtBreedingChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
+    procedure vtBreedingGetText
+      (Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType;
+      var CellText: String);
+    procedure vtBreedingInitChildren
+      (Sender: TBaseVirtualTree; Node: PVirtualNode; var ChildCount: Cardinal);
+    procedure vtBreedingInitNode
+      (Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
+      var InitialStates: TVirtualNodeInitStates);
   private
-    xBreed: String;
-    function BreedingCode: String;
+    FBreedingStatus: String;
+    //function BreedingCode: String;
+    procedure UpdateBreedingCode;
+    procedure UpdateCheckedByCode;
   public
-    property BreedingStatus: String read xBreed write xBreed;
+    property BreedingStatus: String read FBreedingStatus write FBreedingStatus;
   end;
 
 var
@@ -57,23 +68,33 @@ uses cbs_locale, cbs_global, cbs_dialogs;
 
 {$R *.lfm}
 
+type
+  PNodeData = ^TNodeData;
+  TNodeData = record
+    ItemCaption: String;
+    IsParent: Boolean;
+  end;
+
 { TlstBreedingStatus }
 
 procedure TlstBreedingStatus.cklBreedClickCheck(Sender: TObject);
 begin
   GravaStat(Name, 'cklBreed', 'clickcheck');
-  pCode.Caption := BreedingCode;
+  pCode.Caption := FBreedingStatus;
 end;
 
 procedure TlstBreedingStatus.FormCreate(Sender: TObject);
 begin
-  BreedingStatus := '';
+  FBreedingStatus := '';
 
-  cklBreed.Header[0] := True;
-  cklBreed.Header[10] := True;
-  cklBreed.Header[13] := True;
-  cklBreed.Header[23] := True;
-  cklBreed.Header[26] := True;
+  vtBreeding.NodeDataSize := SizeOf(TNodeData);
+  vtBreeding.RootNodeCount := 5;
+
+  //cklBreed.Header[0] := True;
+  //cklBreed.Header[10] := True;
+  //cklBreed.Header[13] := True;
+  //cklBreed.Header[23] := True;
+  //cklBreed.Header[26] := True;
 end;
 
 procedure TlstBreedingStatus.FormKeyPress(Sender: TObject; var Key: char);
@@ -104,45 +125,48 @@ procedure TlstBreedingStatus.FormShow(Sender: TObject);
 var
   C: String;
   i: Integer;
-  Codes: TStringList;
+  //Codes: TStringList;
 begin
-  cklBreed.Items.CommaText := rsBreedingCodes;
+  //cklBreed.Items.CommaText := rsBreedingCodes;
 
-  if Length(BreedingStatus) > 0 then
+  if Length(FBreedingStatus) > 0 then
   begin
-    Codes := TStringList.Create;
-    Codes.CommaText := BreedingStatus;
-    for i := 0 to Codes.Count - 1 do
-    begin
-      C := Codes[i];
-      case C of
-        'NY': cklBreed.Checked[1] := True;
-        'NE': cklBreed.Checked[2] := True;
-        'FS': cklBreed.Checked[3] := True;
-        'FY': cklBreed.Checked[4] := True;
-        'CF': cklBreed.Checked[5] := True;
-        'FL': cklBreed.Checked[6] := True;
-        'ON': cklBreed.Checked[7] := True;
-        'UN': cklBreed.Checked[8] := True;
-        'DD': cklBreed.Checked[9] := True;
-        'NB': cklBreed.Checked[11] := True;
-        'CN': cklBreed.Checked[12] := True;
-        'PE': cklBreed.Checked[14] := True;
-        'B':  cklBreed.Checked[15] := True;
-        'A':  cklBreed.Checked[16] := True;
-        'N':  cklBreed.Checked[17] := True;
-        'C':  cklBreed.Checked[18] := True;
-        'T':  cklBreed.Checked[19] := True;
-        'P':  cklBreed.Checked[20] := True;
-        'M':  cklBreed.Checked[21] := True;
-        'S7': cklBreed.Checked[22] := True;
-        'S':  cklBreed.Checked[24] := True;
-        'H':  cklBreed.Checked[25] := True;
-        'F':  cklBreed.Checked[27] := True;
-      end;
-    end;
-    pCode.Caption := BreedingStatus;
+    //Codes := TStringList.Create;
+    //Codes.CommaText := BreedingStatus;
+    //for i := 0 to Codes.Count - 1 do
+    //begin
+    //  C := Codes[i];
+    //  case C of
+    //    'NY': cklBreed.Checked[1] := True;
+    //    'NE': cklBreed.Checked[2] := True;
+    //    'FS': cklBreed.Checked[3] := True;
+    //    'FY': cklBreed.Checked[4] := True;
+    //    'CF': cklBreed.Checked[5] := True;
+    //    'FL': cklBreed.Checked[6] := True;
+    //    'ON': cklBreed.Checked[7] := True;
+    //    'UN': cklBreed.Checked[8] := True;
+    //    'DD': cklBreed.Checked[9] := True;
+    //    'NB': cklBreed.Checked[11] := True;
+    //    'CN': cklBreed.Checked[12] := True;
+    //    'PE': cklBreed.Checked[14] := True;
+    //    'B':  cklBreed.Checked[15] := True;
+    //    'A':  cklBreed.Checked[16] := True;
+    //    'N':  cklBreed.Checked[17] := True;
+    //    'C':  cklBreed.Checked[18] := True;
+    //    'T':  cklBreed.Checked[19] := True;
+    //    'P':  cklBreed.Checked[20] := True;
+    //    'M':  cklBreed.Checked[21] := True;
+    //    'S7': cklBreed.Checked[22] := True;
+    //    'S':  cklBreed.Checked[24] := True;
+    //    'H':  cklBreed.Checked[25] := True;
+    //    'F':  cklBreed.Checked[27] := True;
+    //  end;
+    //end;
+    pCode.Caption := FBreedingStatus;
+    UpdateCheckedByCode;
   end;
+
+  vtBreeding.FullExpand();
 end;
 
 procedure TlstBreedingStatus.sbCancelClick(Sender: TObject);
@@ -154,62 +178,222 @@ end;
 procedure TlstBreedingStatus.sbOKClick(Sender: TObject);
 begin
   GravaStat(Name, 'SBSave', 'click');
-  if BreedingCode = '' then
+  if FBreedingStatus = '' then
   begin
     MsgDlg('', rsListCheckedNone, mtError);
     Exit;
   end;
 
-  BreedingStatus := BreedingCode;
+  //FBreedingStatus := BreedingCode;
 
   ModalResult := mrOK;
 end;
 
-function TlstBreedingStatus.BreedingCode: String;
+procedure TlstBreedingStatus.UpdateBreedingCode;
 var
-  L: String;
-  i: Integer;
+  Node: PVirtualNode;
+  Data: PNodeData;
+  CheckedString: String;
+  CodePart: String;
 begin
-  Result := '';
-
-  L := '';
-  for i := 0 to cklBreed.Count - 1 do
-    if cklBreed.Checked[i] then
+  CheckedString := '';
+  Node := vtBreeding.GetFirst;
+  while Assigned(Node) do
+  begin
+    Data := vtBreeding.GetNodeData(Node);
+    if not Data^.IsParent and (Node^.CheckState = csCheckedNormal) then
     begin
-      case i of
-        0: ;
-        1:  L := L + 'NY';
-        2:  L := L + 'NE';
-        3:  L := L + 'FS';
-        4:  L := L + 'FY';
-        5:  L := L + 'CF';
-        6:  L := L + 'FL';
-        7:  L := L + 'ON';
-        8:  L := L + 'UN';
-        9:  L := L + 'DD';
-        10: ;
-        11: L := L + 'NB';
-        12: L := L + 'CN';
-        13: ;
-        14: L := L + 'PE';
-        15: L := L + 'B';
-        16: L := L + 'A';
-        17: L := L + 'N';
-        18: L := L + 'C';
-        19: L := L + 'T';
-        20: L := L + 'P';
-        21: L := L + 'M';
-        22: L := L + 'S7';
-        23: ;
-        24: L := L + 'S';
-        25: L := L + 'H';
-        26: ;
-        27: L := L + 'F';
-      end;
+      CodePart := Trim(Copy(Data^.ItemCaption, 1, Pos(' -', Data^.ItemCaption) - 1));
+      if CheckedString <> '' then
+        CheckedString := CheckedString + ',';
+      CheckedString := CheckedString + CodePart;
     end;
-
-  Result := L;
+    Node := vtBreeding.GetNext(Node);
+  end;
+  FBreedingStatus := CheckedString;
+  pCode.Caption := FBreedingStatus;
 end;
+
+procedure TlstBreedingStatus.UpdateCheckedByCode;
+var
+  Node: PVirtualNode;
+  Data: PNodeData;
+  i: Integer;
+  CodePart: String;
+  Codes: TStringList;
+begin
+  Codes := TStringList.Create;
+  try
+    Codes.Delimiter := ',';
+    Codes.StrictDelimiter := True;
+    Codes.DelimitedText := FBreedingStatus;
+
+    Node := vtBreeding.GetFirst;
+    while Assigned(Node) do
+    begin
+      Data := vtBreeding.GetNodeData(Node);
+      if not Data^.IsParent then
+      begin
+        //vtBreeding.CheckState[Node] := csUncheckedNormal;
+
+        CodePart := Trim(Copy(Data^.ItemCaption, 1, Pos(' -', Data^.ItemCaption) - 1));
+
+        for i := 0 to Codes.Count - 1 do
+        begin
+          if CodePart = Codes[i] then
+          begin
+            vtBreeding.CheckState[Node] := csCheckedNormal;
+            //Break;
+          end;
+        end;
+      end;
+      Node := vtBreeding.GetNext(Node);
+    end;
+  finally
+    Codes.Free;
+  end;
+end;
+
+procedure TlstBreedingStatus.vtBreedingChecked
+  (Sender: TBaseVirtualTree; Node: PVirtualNode);
+begin
+  UpdateBreedingCode;
+end;
+
+procedure TlstBreedingStatus.vtBreedingGetText
+  (Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType;
+  var CellText: String);
+var
+  Data: PNodeData;
+begin
+  Data := Sender.GetNodeData(Node);
+  CellText := Data^.ItemCaption;
+end;
+
+procedure TlstBreedingStatus.vtBreedingInitChildren
+  (Sender: TBaseVirtualTree; Node: PVirtualNode; var ChildCount: Cardinal);
+begin
+  case Node^.Index of
+    0: ChildCount := 9; // Confirmed
+    1: ChildCount := 2;  // Confirmed/Probable
+    2: ChildCount := 9;  // Probable
+    3: ChildCount := 2;  // Possible
+    4: ChildCount := 1;  // Observed
+  end;
+end;
+
+procedure TlstBreedingStatus.vtBreedingInitNode
+  (Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
+  var InitialStates: TVirtualNodeInitStates);
+var
+  Data, ParentData: PNodeData;
+begin
+  Data := Sender.GetNodeData(Node);
+  if not Assigned(ParentNode) then
+  begin
+    Data^.IsParent := True;
+    case Node^.Index of
+      0: Data^.ItemCaption := 'Confirmed';
+      1: Data^.ItemCaption := 'Confirmed/Probable';
+      2: Data^.ItemCaption := 'Probable';
+      3: Data^.ItemCaption := 'Possible';
+      4: Data^.ItemCaption := 'Observed';
+    end;
+    InitialStates := [ivsHasChildren];
+  end
+  else
+  begin
+    Data^.IsParent := False;
+    Node^.CheckType := ctCheckBox;
+    ParentData := Sender.GetNodeData(ParentNode);
+    case ParentData^.ItemCaption of
+      'Confirmed':
+        case Node^.Index of
+          0: Data^.ItemCaption := 'NY - Nest with Young';
+          1: Data^.ItemCaption := 'NE - Nest with Eggs';
+          2: Data^.ItemCaption := 'FS - carrying Fecal Sac';
+          3: Data^.ItemCaption := 'FY - Feeding Young';
+          4: Data^.ItemCaption := 'CF - Carrying Food';
+          5: Data^.ItemCaption := 'FL - recently Fledged young';
+          6: Data^.ItemCaption := 'ON - Occupied Nest';
+          7: Data^.ItemCaption := 'UN - Used Nest';
+          8: Data^.ItemCaption := 'DD - Distraction Display';
+        end;
+      'Confirmed/Probable':
+        case Node^.Index of
+          0: Data^.ItemCaption := 'NB - Nest Building';
+          1: Data^.ItemCaption := 'CN - Carrying Nesting material';
+        end;
+      'Probable':
+        case Node^.Index of
+          0: Data^.ItemCaption := 'PE - Physiological Evidence';
+          1: Data^.ItemCaption := 'B - wren/woodpecker nest Building';
+          2: Data^.ItemCaption := 'A - Agitated behavior';
+          3: Data^.ItemCaption := 'N - visiting probable Nest site';
+          4: Data^.ItemCaption := 'C - Sourtship, display or copulation';
+          5: Data^.ItemCaption := 'T - Territorial defense';
+          6: Data^.ItemCaption := 'P - Pair in suitable habitat';
+          7: Data^.ItemCaption := 'M - Multiple singing birds (7+)';
+          8: Data^.ItemCaption := 'S7 - Singing bird present 7+ days';
+        end;
+      'Possible':
+        case Node^.Index of
+          0: Data^.ItemCaption := 'S - Singing bird';
+          1: Data^.ItemCaption := 'H - in appropriate Habitat';
+        end;
+      'Observed':
+        case Node^.Index of
+          0: Data^.ItemCaption := 'F - Flyover';
+        end;
+    end;
+  end;
+end;
+
+//function TlstBreedingStatus.BreedingCode: String;
+//var
+//  L: String;
+//  i: Integer;
+//begin
+//  Result := '';
+//
+//  L := '';
+//  for i := 0 to cklBreed.Count - 1 do
+//    if cklBreed.Checked[i] then
+//    begin
+//      case i of
+//        0: ;
+//        1:  L := L + 'NY';
+//        2:  L := L + 'NE';
+//        3:  L := L + 'FS';
+//        4:  L := L + 'FY';
+//        5:  L := L + 'CF';
+//        6:  L := L + 'FL';
+//        7:  L := L + 'ON';
+//        8:  L := L + 'UN';
+//        9:  L := L + 'DD';
+//        10: ;
+//        11: L := L + 'NB';
+//        12: L := L + 'CN';
+//        13: ;
+//        14: L := L + 'PE';
+//        15: L := L + 'B';
+//        16: L := L + 'A';
+//        17: L := L + 'N';
+//        18: L := L + 'C';
+//        19: L := L + 'T';
+//        20: L := L + 'P';
+//        21: L := L + 'M';
+//        22: L := L + 'S7';
+//        23: ;
+//        24: L := L + 'S';
+//        25: L := L + 'H';
+//        26: ;
+//        27: L := L + 'F';
+//      end;
+//    end;
+//
+//  Result := L;
+//end;
 
 end.
 

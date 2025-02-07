@@ -645,7 +645,7 @@ begin
   lstBreedingStatus := TlstBreedingStatus.Create(nil);
   with lstBreedingStatus do
   try
-    //BreedingStatus := aBreeding;
+    BreedingStatus := aEdit.Text;
     // GetFormPosition(aEdit, WindowPos);
     if ShowModal = mrOK then
     begin
