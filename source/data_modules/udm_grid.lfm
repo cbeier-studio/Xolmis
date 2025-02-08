@@ -272,7 +272,7 @@ object DMG: TDMG
       FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInUpdate, pfInWhere, pfRefreshOnUpdate]
       ReadOnly = False
       Required = False
       DisplayValues = 'True;False'
@@ -1454,7 +1454,7 @@ object DMG: TDMG
       FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInUpdate, pfInWhere, pfRefreshOnUpdate]
       ReadOnly = False
       Required = False
       DisplayValues = 'True;False'
@@ -2923,7 +2923,7 @@ object DMG: TDMG
       FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInUpdate, pfInWhere, pfRefreshOnUpdate]
       ReadOnly = False
       Required = False
       DisplayValues = 'True;False'
@@ -4781,7 +4781,7 @@ object DMG: TDMG
       FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInUpdate, pfInWhere, pfRefreshOnUpdate]
       ReadOnly = False
       Required = False
       DisplayValues = 'True;False'
@@ -17782,7 +17782,7 @@ object DMG: TDMG
       FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInUpdate, pfInWhere, pfRefreshOnUpdate]
       ReadOnly = False
       Required = False
       DisplayValues = 'True;False'

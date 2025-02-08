@@ -3281,6 +3281,10 @@ msgstr ""
 msgid "Error loading field info: the field name is blank."
 msgstr ""
 
+#: cbs_locale.rserroremptyid
+msgid "ID is empty"
+msgstr ""
+
 #: cbs_locale.rserrorexporting
 #, object-pascal-format
 msgid ""

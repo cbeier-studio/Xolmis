@@ -178,8 +178,9 @@ begin
       Add('SELECT CAST((SUM(net_area) + SUM(open_time_total)) AS REAL)');
       Add('FROM nets_effort');
       Add('WHERE (survey_id = :survey_id) AND (active_status = 1)');
+      ParamByName('survey_id').AsInteger := FSurvey.Id;
       Open;
-      if RecordCount > 0 then
+      if (RecordCount > 0) and not (Fields[0].IsNull) then
         txtNetEffort.Caption := FloatToStr(Fields[0].AsFloat)
       else
         txtNetEffort.Caption := '0';
@@ -542,8 +543,10 @@ begin
   eExpedition.Text := GetName('expeditions', 'expedition_name', 'expedition_id', FExpeditionId);
   eDate.Text := DateToStr(FSurvey.SurveyDate);
   eDuration.Value := FSurvey.Duration;
-  eStartTime.Text := TimeToStr(FSurvey.StartTime);
-  eEndTime.Text := TimeToStr(FSurvey.EndTime);
+  if (FSurvey.StartTime <> NullTime) then
+    eStartTime.Text := FormatDateTime('hh:nn', FSurvey.StartTime);
+  if (FSurvey.EndTime <> NullTime) then
+    eEndTime.Text := FormatDateTime('hh:nn', FSurvey.EndTime);
   FMethodId := FSurvey.MethodId;
   eMethod.Text := GetName('methods', 'method_name', 'method_id', FMethodId);
   FLocalityId := FSurvey.LocalityId;

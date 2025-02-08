@@ -73,7 +73,9 @@ type
   function ForeignValueExists(aTable: TTableType; aFieldName: String; aValue: Integer; aDisplayName: String;
     aMessageList: TStrings = nil): Boolean;
   function RecordDuplicated(aTable: TTableType; aKeyField, aNameField, aNameValue: String; aKeyValue: Integer;
-    aMessageList: TStrings = nil): Boolean;
+    aMessageList: TStrings = nil): Boolean; overload;
+  function RecordDuplicated(aTable: TTableType; FieldsSet: array of String; ValuesSet: array of Variant;
+    aKeyField: String; aKeyValue: Integer; aMessageList: TStrings = nil): Boolean; overload;
   function IsRecordActive(aTable: TTableType; aFieldName, aValue: String): Boolean;
   function SpuhAllowed(aDataset: TDataset; aTaxon, aQualifier: String; aMessageList: TStrings = nil): Boolean;
   function EpithetIsEmpty(aDataset: TDataset; aRank, aEpithet: String; aMessageList: TStrings = nil): Boolean;
@@ -751,6 +753,85 @@ begin
     end;
     //else
     //  MsgDlg('', M, mtInformation);
+  end;
+end;
+
+function RecordDuplicated(aTable: TTableType; FieldsSet: array of String; ValuesSet: array of Variant;
+    aKeyField: String; aKeyValue: Integer; aMessageList: TStrings = nil): Boolean;
+var
+  Qry: TSQLQuery;
+  SQLText: String;
+  i: Integer;
+begin
+  Result := False;
+
+  // Check if fields and values match
+  if Length(FieldsSet) <> Length(ValuesSet) then
+    raise Exception.Create('O número de campos e valores não correspondem.');
+
+  // Start SQL query command
+  SQLText := 'SELECT count(*) AS record_exists FROM %table WHERE ';
+
+  // Add field conditions
+  for i := Low(FieldsSet) to High(FieldsSet) do
+  begin
+    if i > Low(FieldsSet) then
+      SQLText := SQLText + ' AND ';
+    SQLText := SQLText + '(%field' + IntToStr(i) + ' = :value' + IntToStr(i) + ')';
+  end;
+
+  // Remove key value from SELECT, if not null
+  if not VarIsNull(aKeyValue) then
+  begin
+    SQLText := SQLText + ' AND (%key_field <> :key_value)';
+  end;
+
+  Qry := TSQLQuery.Create(nil);
+  try
+    Qry.DataBase := DMM.sqlCon;
+    Qry.MacroCheck := True;
+    Qry.SQL.Text := SQLText;
+
+    Qry.MacroByName('table').Value := TableNames[aTable];
+    Qry.MacroByName('key_field').Value := aKeyField;
+
+    // Assign fields
+    for i := Low(FieldsSet) to High(FieldsSet) do
+    begin
+      Qry.MacroByName('field' + IntToStr(i)).Value := FieldsSet[i];
+    end;
+
+    // Assign value params
+    for i := Low(ValuesSet) to High(ValuesSet) do
+    begin
+      if VarIsStr(ValuesSet[i]) then
+        Qry.ParamByName('value' + IntToStr(i)).AsString := ValuesSet[i]
+      else
+      if VarIsNumeric (ValuesSet[i]) then
+        Qry.ParamByName('value' + IntToStr(i)).AsInteger := ValuesSet[i]
+      else
+      if VarIsFloat(ValuesSet[i]) then
+        Qry.ParamByName('value' + IntToStr(i)).AsFloat := ValuesSet[i]
+      else
+      if VarIsBool(ValuesSet[i]) then
+        Qry.ParamByName('value' + IntToStr(i)).AsBoolean := ValuesSet[i]
+      else
+      if (VarIsEmpty(ValuesSet[i])) or (VarIsNull(ValuesSet[i])) or (ValuesSet[i] = 'NULL') then
+        Qry.ParamByName('value' + IntToStr(i)).Clear;
+    end;
+
+    // Assign key value param, if not null
+    if not VarIsNull(aKeyValue) then
+    begin
+      Qry.ParamByName('key_value').Value := aKeyValue;
+    end;
+
+    Qry.Open;
+
+    Result := Qry.FieldByName('record_exists').AsInteger > 0;
+  finally
+    Qry.Close;
+    Qry.Free;
   end;
 end;
 

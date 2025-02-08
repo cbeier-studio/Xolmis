@@ -621,7 +621,8 @@ begin
   eLongitude.Text := FloatToStr(FSighting.Longitude);
   eLatitude.Text := FloatToStr(FSighting.Latitude);
   eDate.Text := DateToStr(FSighting.SightingDate);
-  eTime.Text := TimeToStr(FSighting.SightingTime);
+  if (FSighting.SightingTime <> NullTime) then
+    eTime.Text := FormatDateTime('hh:nn', FSighting.SightingTime);
   FTaxonId := FSighting.TaxonId;
   eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
   FIndividualId := FSighting.IndividualId;

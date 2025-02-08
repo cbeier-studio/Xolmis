@@ -669,7 +669,8 @@ type
 implementation
 
 uses
-  cbs_system, cbs_global, cbs_users, cbs_validations, cbs_fullnames, cbs_datacolumns, udm_main;
+  cbs_system, cbs_global, cbs_users, cbs_validations, cbs_fullnames, cbs_datacolumns, cbs_setparam, cbs_getvalue,
+  cbs_locale, udm_main;
 
 { TBandHistory }
 
@@ -710,6 +711,9 @@ procedure TBandHistory.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TBandHistory.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -823,22 +827,13 @@ begin
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))');
     ParamByName('band_id').AsInteger := FBandId;
-    ParamByName('event_date').AsString := FormatDateTime('yyyy-MM-dd', FEventDate);
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('event_type').AsString := BandEventStr[FEventType];
-    if FSupplierId > 0 then
-      ParamByName('supplier_id').AsInteger := FSupplierId
-    else
-      ParamByName('supplier_id').Clear;
-    ParamByName('order_number').AsInteger := FOrderNumber;
-    if FRequesterId > 0 then
-      ParamByName('requester_id').AsInteger := FRequesterId
-    else
-      ParamByName('requester_id').Clear;
-    if FSenderId > 0 then
-      ParamByName('sender_id').AsInteger := FSenderId
-    else
-      ParamByName('sender_id').Clear;
+    SetDateParam(ParamByName('event_date'), FEventDate);
+    SetStrParam(ParamByName('notes'), FNotes);
+    SetStrParam(ParamByName('event_type'), BandEventStr[FEventType]);
+    SetForeignParam(ParamByName('supplier_id'), FSupplierId);
+    SetIntParam(ParamByName('order_number'), FOrderNumber);
+    SetForeignParam(ParamByName('requester_id'), FRequesterId);
+    SetForeignParam(ParamByName('sender_id'), FSenderId);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -855,8 +850,8 @@ begin
 end;
 
 procedure TBandHistory.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+//var
+//  InsertTimeStamp, UpdateTimeStamp: TDateTime;
 begin
   if not aDataSet.Active then
     Exit;
@@ -884,16 +879,18 @@ begin
     FUserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
+    GetTimeStamp(FieldByName('insert_date'), FInsertDate);
+    GetTimeStamp(FieldByName('update_date'), FUpdateDate);
+    //if not (FieldByName('insert_date').IsNull) then
+    //  if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
+    //    FInsertDate := InsertTimeStamp
+    //  else
+    //    FInsertDate := FieldByName('insert_date').AsDateTime;
+    //if not (FieldByName('update_date').IsNull) then
+    //  if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
+    //    FUpdateDate := UpdateTimeStamp
+    //  else
+    //    FUpdateDate := FieldByName('update_date').AsDateTime;
     FExported := FieldByName('exported_status').AsBoolean;
     FMarked := FieldByName('marked_status').AsBoolean;
     FActive := FieldByName('active_status').AsBoolean;
@@ -933,6 +930,9 @@ procedure TBandHistory.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TBandHistory.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -952,22 +952,15 @@ begin
       'update_date = datetime(''now'',''subsec'') ');
     Add('WHERE (event_id = :event_id)');
     ParamByName('band_id').AsInteger := FBandId;
-    ParamByName('event_date').AsString := FormatDateTime('yyyy-MM-dd', FEventDate);
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('event_type').AsString := BandEventStr[FEventType];
-    if FSupplierId > 0 then
-      ParamByName('supplier_id').AsInteger := FSupplierId
-    else
-      ParamByName('supplier_id').Clear;
-    ParamByName('order_number').AsInteger := FOrderNumber;
-    if FRequesterId > 0 then
-      ParamByName('requester_id').AsInteger := FRequesterId
-    else
-      ParamByName('requester_id').Clear;
-    if FSenderId > 0 then
-      ParamByName('sender_id').AsInteger := FSenderId
-    else
-      ParamByName('sender_id').Clear;
+    SetDateParam(ParamByName('event_date'), FEventDate);
+    SetStrParam(ParamByName('notes'), FNotes);
+    SetStrParam(ParamByName('event_type'), BandEventStr[FEventType]);
+    SetForeignParam(ParamByName('supplier_id'), FSupplierId);
+    SetIntParam(ParamByName('order_number'), FOrderNumber);
+    SetForeignParam(ParamByName('requester_id'), FRequesterId);
+    SetForeignParam(ParamByName('sender_id'), FSenderId);
+    //ParamByName('marked_status').AsBoolean := FMarked;
+    //ParamByName('active_status').AsBoolean := FActive;
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
     ParamByName('event_id').AsInteger := FId;
 
@@ -1064,6 +1057,9 @@ procedure TSighting.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TSighting.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -1146,8 +1142,6 @@ begin
 end;
 
 procedure TSighting.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
 begin
   if not aDataSet.Active then
     Exit;
@@ -1191,16 +1185,8 @@ begin
     FUserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
+    GetTimeStamp(FieldByName('insert_date'), FInsertDate);
+    GetTimeStamp(FieldByName('update_date'), FUpdateDate);
     FExported := FieldByName('exported_status').AsBoolean;
     FMarked := FieldByName('marked_status').AsBoolean;
     FActive := FieldByName('active_status').AsBoolean;
@@ -1289,79 +1275,38 @@ begin
       ':notes, ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))');
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    ParamByName('individual_id').AsInteger := FIndividualId;
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('sighting_date').AsString := FormatDateTime('yyyy-MM-dd', FSightingDate);
-    ParamByName('sighting_time').AsString := TimeToStr(FSightingTime);
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    if (FLongitude <> 0) and (FLatitude <> 0) then
-    begin
-      ParamByName('longitude').AsFloat := FLongitude;
-      ParamByName('latitude').AsFloat := FLatitude;
-    end
-    else
-    begin
-      ParamByName('longitude').Clear;
-      ParamByName('latitude').Clear;
-    end;
-    ParamByName('method_id').AsInteger := FMethodId;
-    ParamByName('mackinnon_list_num').AsInteger := FMackinnonListNumber;
-    ParamByName('observer_id').AsInteger := FObserverId;
-    if FSubjectTally > 0 then
-      ParamByName('subjects_tally').AsInteger := FSubjectTally
-    else
-      ParamByName('subjects_tally').Clear;
-    if FSubjectDistance > 0 then
-      ParamByName('subject_distance').AsFloat := FSubjectDistance
-    else
-      ParamByName('subject_distance').Clear;
+
+    SetForeignParam(ParamByName('survey_id'), FSurveyId);
+    SetForeignParam(ParamByName('individual_id'), FIndividualId);
+    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+    SetDateParam(ParamByName('sighting_date'), FSightingDate);
+    SetTimeParam(ParamByName('sighting_time'), FSightingTime);
+    SetForeignParam(ParamByName('locality_id'), FLocalityId);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+    SetForeignParam(ParamByName('method_id'), FMethodId);
+    SetIntParam(ParamByName('mackinnon_list_num'), FMackinnonListNumber);
+    SetForeignParam(ParamByName('observer_id'), FObserverId);
+    SetIntParam(ParamByName('subjects_tally'), FSubjectTally);
+    SetFloatParam(ParamByName('subject_distance'), FSubjectDistance);
     ParamByName('subject_captured').AsBoolean := FSubjectCaptured;
     ParamByName('subject_seen').AsBoolean := FSubjectSeen;
     ParamByName('subject_heard').AsBoolean := FSubjectHeard;
     ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
     ParamByName('subject_recorded').AsBoolean := FSubjectRecorded;
-    if FMalesTally <> EmptyStr then
-      ParamByName('males_tally').AsString := FMalesTally
-    else
-      ParamByName('males_tally').Clear;
-    if FFemalesTally <> EmptyStr then
-      ParamByName('females_tally').AsString := FFemalesTally
-    else
-      ParamByName('females_tally').Clear;
-    if FNotSexedTally <> EmptyStr then
-      ParamByName('not_sexed_tally').AsString := FNotSexedTally
-    else
-      ParamByName('not_sexed_tally').Clear;
-    if FAdultsTally <> EmptyStr then
-      ParamByName('adults_tally').AsString := FAdultsTally
-    else
-      ParamByName('adults_tally').Clear;
-    if FImmatureTally <> EmptyStr then
-      ParamByName('immatures_tally').AsString := FImmatureTally
-    else
-      ParamByName('immatures_tally').Clear;
-    if FNotAgedTally <> EmptyStr then
-      ParamByName('not_aged_tally').AsString := FNotAgedTally
-    else
-      ParamByName('not_aged_tally').Clear;
-    if FNewCapturesTally > 0 then
-      ParamByName('new_captures_tally').AsInteger := FNewCapturesTally
-    else
-      ParamByName('new_captures_tally').Clear;
-    if FRecapturesTally > 0 then
-      ParamByName('recaptures_tally').AsInteger := FRecapturesTally
-    else
-      ParamByName('recaptures_tally').Clear;
-    if FUnbandedTally > 0 then
-      ParamByName('unbanded_tally').AsInteger := FUnbandedTally
-    else
-      ParamByName('unbanded_tally').Clear;
-    ParamByName('detection_type').AsString := FDetectionType;
-    ParamByName('breeding_status').AsString := FBreedingStatus;
+    SetStrParam(ParamByName('males_tally'), FMalesTally);
+    SetStrParam(ParamByName('females_tally'), FFemalesTally);
+    SetStrParam(ParamByName('not_sexed_tally'), FNotSexedTally);
+    SetStrParam(ParamByName('adults_tally'), FAdultsTally);
+    SetStrParam(ParamByName('immatures_tally'), FImmatureTally);
+    SetStrParam(ParamByName('not_aged_tally'), FNotAgedTally);
+    SetIntParam(ParamByName('new_captures_tally'), FNewCapturesTally);
+    SetIntParam(ParamByName('recaptures_tally'), FRecapturesTally);
+    SetIntParam(ParamByName('unbanded_tally'), FUnbandedTally);
+    SetStrParam(ParamByName('detection_type'), FDetectionType);
+    SetStrParam(ParamByName('breeding_status'), FBreedingStatus);
     ParamByName('not_surveying').AsBoolean := FNotSurveying;
     ParamByName('ebird_available').AsBoolean := FIsOnEbird;
-    ParamByName('notes').AsString := FNotes;
+    SetStrParam(ParamByName('notes'), FNotes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -1372,76 +1317,6 @@ begin
     Open;
     FId := Fields[0].AsInteger;
     Close;
-
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE sightings SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE sighting_id = :aid');
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
-    //
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE sightings SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE sighting_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1504,6 +1379,9 @@ procedure TSighting.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TSighting.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -1549,155 +1427,44 @@ begin
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'',''subsec'') ');
     Add('WHERE (sighting_id = :sighting_id)');
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    ParamByName('individual_id').AsInteger := FIndividualId;
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('sighting_date').AsString := FormatDateTime('yyyy-MM-dd', FSightingDate);
-    ParamByName('sighting_time').AsString := TimeToStr(FSightingTime);
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    if (FLongitude <> 0) and (FLatitude <> 0) then
-    begin
-      ParamByName('longitude').AsFloat := FLongitude;
-      ParamByName('latitude').AsFloat := FLatitude;
-    end
-    else
-    begin
-      ParamByName('longitude').Clear;
-      ParamByName('latitude').Clear;
-    end;
-    ParamByName('method_id').AsInteger := FMethodId;
-    ParamByName('mackinnon_list_num').AsInteger := FMackinnonListNumber;
-    ParamByName('observer_id').AsInteger := FObserverId;
-    if FSubjectTally > 0 then
-      ParamByName('subjects_tally').AsInteger := FSubjectTally
-    else
-      ParamByName('subjects_tally').Clear;
-    if FSubjectDistance > 0 then
-      ParamByName('subject_distance').AsFloat := FSubjectDistance
-    else
-      ParamByName('subject_distance').Clear;
+
+    SetForeignParam(ParamByName('survey_id'), FSurveyId);
+    SetForeignParam(ParamByName('individual_id'), FIndividualId);
+    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+    SetDateParam(ParamByName('sighting_date'), FSightingDate);
+    SetTimeParam(ParamByName('sighting_time'), FSightingTime);
+    SetForeignParam(ParamByName('locality_id'), FLocalityId);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+    SetForeignParam(ParamByName('method_id'), FMethodId);
+    SetIntParam(ParamByName('mackinnon_list_num'), FMackinnonListNumber);
+    SetForeignParam(ParamByName('observer_id'), FObserverId);
+    SetIntParam(ParamByName('subjects_tally'), FSubjectTally);
+    SetFloatParam(ParamByName('subject_distance'), FSubjectDistance);
     ParamByName('subject_captured').AsBoolean := FSubjectCaptured;
     ParamByName('subject_seen').AsBoolean := FSubjectSeen;
     ParamByName('subject_heard').AsBoolean := FSubjectHeard;
     ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
     ParamByName('subject_recorded').AsBoolean := FSubjectRecorded;
-    if FMalesTally <> EmptyStr then
-      ParamByName('males_tally').AsString := FMalesTally
-    else
-      ParamByName('males_tally').Clear;
-    if FFemalesTally <> EmptyStr then
-      ParamByName('females_tally').AsString := FFemalesTally
-    else
-      ParamByName('females_tally').Clear;
-    if FNotSexedTally <> EmptyStr then
-      ParamByName('not_sexed_tally').AsString := FNotSexedTally
-    else
-      ParamByName('not_sexed_tally').Clear;
-    if FAdultsTally <> EmptyStr then
-      ParamByName('adults_tally').AsString := FAdultsTally
-    else
-      ParamByName('adults_tally').Clear;
-    if FImmatureTally <> EmptyStr then
-      ParamByName('immatures_tally').AsString := FImmatureTally
-    else
-      ParamByName('immatures_tally').Clear;
-    if FNotAgedTally <> EmptyStr then
-      ParamByName('not_aged_tally').AsString := FNotAgedTally
-    else
-      ParamByName('not_aged_tally').Clear;
-    if FNewCapturesTally > 0 then
-      ParamByName('new_captures_tally').AsInteger := FNewCapturesTally
-    else
-      ParamByName('new_captures_tally').Clear;
-    if FRecapturesTally > 0 then
-      ParamByName('recaptures_tally').AsInteger := FRecapturesTally
-    else
-      ParamByName('recaptures_tally').Clear;
-    if FUnbandedTally > 0 then
-      ParamByName('unbanded_tally').AsInteger := FUnbandedTally
-    else
-      ParamByName('unbanded_tally').Clear;
-    ParamByName('detection_type').AsString := FDetectionType;
-    ParamByName('breeding_status').AsString := FBreedingStatus;
+    SetStrParam(ParamByName('males_tally'), FMalesTally);
+    SetStrParam(ParamByName('females_tally'), FFemalesTally);
+    SetStrParam(ParamByName('not_sexed_tally'), FNotSexedTally);
+    SetStrParam(ParamByName('adults_tally'), FAdultsTally);
+    SetStrParam(ParamByName('immatures_tally'), FImmatureTally);
+    SetStrParam(ParamByName('not_aged_tally'), FNotAgedTally);
+    SetIntParam(ParamByName('new_captures_tally'), FNewCapturesTally);
+    SetIntParam(ParamByName('recaptures_tally'), FRecapturesTally);
+    SetIntParam(ParamByName('unbanded_tally'), FUnbandedTally);
+    SetStrParam(ParamByName('detection_type'), FDetectionType);
+    SetStrParam(ParamByName('breeding_status'), FBreedingStatus);
     ParamByName('not_surveying').AsBoolean := FNotSurveying;
     ParamByName('ebird_available').AsBoolean := FIsOnEbird;
-    ParamByName('notes').AsString := FNotes;
+    SetStrParam(ParamByName('notes'), FNotes);
     ParamByName('marked_status').AsBoolean := FMarked;
     ParamByName('active_status').AsBoolean := FActive;
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('sighting_id').AsInteger := FId;
 
     ExecSQL;
-
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE sightings SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE sighting_id = :aid');
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
-    //
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE sightings SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE sighting_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1762,20 +1529,6 @@ begin
     aList.Add(R);
   if FieldValuesDiff(rscIsInEBird, aOld.IsOnEbird, FIsOnEbird, R) then
     aList.Add(R);
-  //if FieldValuesDiff(rsCaptionOrder, aOld.OrderId, OrderId, R) then
-  //  aList.Add(R);
-  //if FieldValuesDiff(rsCaptionFamily, aOld.FamilyId, FamilyId, R) then
-  //  aList.Add(R);
-  //if FieldValuesDiff(rsCaptionGenus, aOld.GenusId, GenusId, R) then
-  //  aList.Add(R);
-  //if FieldValuesDiff(rsCaptionSpecies, aOld.SpeciesId, SpeciesId, R) then
-  //  aList.Add(R);
-  //if FieldValuesDiff(rsCaptionMunicipality, aOld.MunicipalityId, MunicipalityId, R) then
-  //  aList.Add(R);
-  //if FieldValuesDiff(rsCaptionState, aOld.StateId, StateId, R) then
-  //  aList.Add(R);
-  //if FieldValuesDiff(rsCaptionCountry, aOld.CountryId, CountryId, R) then
-  //  aList.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
@@ -1960,6 +1713,9 @@ procedure TMolt.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TMolt.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -2069,8 +1825,6 @@ begin
 end;
 
 procedure TMolt.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
 begin
   if not aDataSet.Active then
     Exit;
@@ -2143,16 +1897,8 @@ begin
     FUserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
+    GetTimeStamp(FieldByName('insert_date'), FInsertDate);
+    GetTimeStamp(FieldByName('update_date'), FUpdateDate);
     FExported := FieldByName('exported_status').AsBoolean;
     FMarked := FieldByName('marked_status').AsBoolean;
     FActive := FieldByName('active_status').AsBoolean;
@@ -2302,33 +2048,15 @@ begin
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
-      ParamByName('full_name').AsString := FFullName;
-      if (FSurveyId > 0) then
-        ParamByName('survey_id').AsInteger := FSurveyId
-      else
-        ParamByName('survey_id').Clear;
-      if (FTaxonId > 0) then
-        ParamByName('taxon_id').AsInteger := FTaxonId
-      else
-        ParamByName('taxon_id').Clear;
-      if (FIndividualId > 0) then
-        ParamByName('individual_id').AsInteger := FIndividualId
-      else
-        ParamByName('individual_id').Clear;
-      if (FCaptureId > 0) then
-        ParamByName('capture_id').AsInteger := FCaptureId
-      else
-        ParamByName('capture_id').Clear;
-      ParamByName('sample_date').AsString := DateToStr(FCaptureDate);
-      ParamByName('sample_time').AsString := TimeToStr(FCaptureTime);
-      if (FBanderId > 0) then
-        ParamByName('bander_id').AsInteger := FBanderId
-      else
-        ParamByName('bander_id').Clear;
-      if (FBandId > 0) then
-        ParamByName('band_id').AsInteger := FBandId
-      else
-        ParamByName('band_id').Clear;
+      SetStrParam(ParamByName('full_name'), FFullName);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('capture_id'), FCaptureId);
+      SetDateParam(ParamByName('sample_date'), FCaptureDate);
+      SetTimeParam(ParamByName('sample_time'), FCaptureTime);
+      SetForeignParam(ParamByName('bander_id'), FBanderId);
+      SetForeignParam(ParamByName('band_id'), FBandId);
       ParamByName('p1_molt').AsFloat := FPrimary1;
       ParamByName('p2_molt').AsFloat := FPrimary2;
       ParamByName('p3_molt').AsFloat := FPrimary3;
@@ -2379,11 +2107,8 @@ begin
       ParamByName('al3_molt').AsFloat := FAlula3;
       ParamByName('lc_molt').AsFloat := FLeastCoverts;
       ParamByName('mc_molt').AsFloat := FMedianCoverts;
-      if (FGrowthBarWidth > 0) then
-        ParamByName('growth_bar_size').AsFloat := FGrowthBarWidth
-      else
-        ParamByName('growth_bar_size').Clear;
-      ParamByName('notes').AsString := FNotes;
+      SetFloatParam(ParamByName('growth_bar_size'), FGrowthBarWidth);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -2394,44 +2119,6 @@ begin
       Open;
       FId := Fields[0].AsInteger;
       Close;
-
-      //// Get the taxon hierarchy
-      //if (FTaxonId > 0) then
-      //begin
-      //  Clear;
-      //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
-      //  Add('WHERE taxon_id = :ataxon');
-      //  ParamByName('ataxon').AsInteger := FTaxonId;
-      //  Open;
-      //  FOrderId := FieldByName('order_id').AsInteger;
-      //  FFamilyId := FieldByName('family_id').AsInteger;
-      //  FGenusId := FieldByName('genus_id').AsInteger;
-      //  FSpeciesId := FieldByName('species_id').AsInteger;
-      //  Close;
-      //end;
-      //// Save the taxon hierarchy
-      //Clear;
-      //Add('UPDATE molts SET');
-      //Add('  order_id = :order_id,');
-      //Add('  family_id = :family_id,');
-      //Add('  genus_id = :genus_id,');
-      //Add('  species_id = :species_id');
-      //Add('WHERE molt_id = :aid');
-      //ParamByName('order_id').AsInteger := FOrderId;
-      //if (FFamilyId > 0) then
-      //  ParamByName('family_id').AsInteger := FFamilyId
-      //else
-      //  ParamByName('family_id').Clear;
-      //if (FGenusId > 0) then
-      //  ParamByName('genus_id').AsInteger := FGenusId
-      //else
-      //  ParamByName('genus_id').Clear;
-      //if (FSpeciesId > 0) then
-      //  ParamByName('species_id').AsInteger := FSpeciesId
-      //else
-      //  ParamByName('species_id').Clear;
-      //ParamByName('aid').AsInteger := FId;
-      //ExecSQL;
 
       DMM.sqlTrans.CommitRetaining;
     except
@@ -2529,6 +2216,9 @@ procedure TMolt.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TMolt.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -2608,33 +2298,15 @@ begin
         'update_date = datetime(''now'',''subsec'') ');
       Add('WHERE (molt_id = :molt_id)');
 
-      ParamByName('full_name').AsString := FFullName;
-      if (FSurveyId > 0) then
-        ParamByName('survey_id').AsInteger := FSurveyId
-      else
-        ParamByName('survey_id').Clear;
-      if (FTaxonId > 0) then
-        ParamByName('taxon_id').AsInteger := FTaxonId
-      else
-        ParamByName('taxon_id').Clear;
-      if (FIndividualId > 0) then
-        ParamByName('individual_id').AsInteger := FIndividualId
-      else
-        ParamByName('individual_id').Clear;
-      if (FCaptureId > 0) then
-        ParamByName('capture_id').AsInteger := FCaptureId
-      else
-        ParamByName('capture_id').Clear;
-      ParamByName('sample_date').AsString := DateToStr(FCaptureDate);
-      ParamByName('sample_time').AsString := TimeToStr(FCaptureTime);
-      if (FBanderId > 0) then
-        ParamByName('bander_id').AsInteger := FBanderId
-      else
-        ParamByName('bander_id').Clear;
-      if (FBandId > 0) then
-        ParamByName('band_id').AsInteger := FBandId
-      else
-        ParamByName('band_id').Clear;
+      SetStrParam(ParamByName('full_name'), FFullName);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('capture_id'), FCaptureId);
+      SetDateParam(ParamByName('sample_date'), FCaptureDate);
+      SetTimeParam(ParamByName('sample_time'), FCaptureTime);
+      SetForeignParam(ParamByName('bander_id'), FBanderId);
+      SetForeignParam(ParamByName('band_id'), FBandId);
       ParamByName('p1_molt').AsFloat := FPrimary1;
       ParamByName('p2_molt').AsFloat := FPrimary2;
       ParamByName('p3_molt').AsFloat := FPrimary3;
@@ -2685,11 +2357,8 @@ begin
       ParamByName('al3_molt').AsFloat := FAlula3;
       ParamByName('lc_molt').AsFloat := FLeastCoverts;
       ParamByName('mc_molt').AsFloat := FMedianCoverts;
-      if (FGrowthBarWidth > 0) then
-        ParamByName('growth_bar_size').AsFloat := FGrowthBarWidth
-      else
-        ParamByName('growth_bar_size').Clear;
-      ParamByName('notes').AsString := FNotes;
+      SetFloatParam(ParamByName('growth_bar_size'), FGrowthBarWidth);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('marked_status').AsBoolean := FMarked;
       ParamByName('active_status').AsBoolean := FActive;
       ParamByName('exported_status').AsBoolean := FExported;
@@ -2697,44 +2366,6 @@ begin
       ParamByName('molt_id').AsInteger := FId;
 
       ExecSQL;
-
-      //// Get the taxon hierarchy
-      //if (FTaxonId > 0) then
-      //begin
-      //  Clear;
-      //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
-      //  Add('WHERE taxon_id = :ataxon');
-      //  ParamByName('ataxon').AsInteger := FTaxonId;
-      //  Open;
-      //  FOrderId := FieldByName('order_id').AsInteger;
-      //  FFamilyId := FieldByName('family_id').AsInteger;
-      //  FGenusId := FieldByName('genus_id').AsInteger;
-      //  FSpeciesId := FieldByName('species_id').AsInteger;
-      //  Close;
-      //end;
-      //// Save the taxon hierarchy
-      //Clear;
-      //Add('UPDATE molts SET');
-      //Add('  order_id = :order_id,');
-      //Add('  family_id = :family_id,');
-      //Add('  genus_id = :genus_id,');
-      //Add('  species_id = :species_id');
-      //Add('WHERE molt_id = :aid');
-      //ParamByName('order_id').AsInteger := FOrderId;
-      //if (FFamilyId > 0) then
-      //  ParamByName('family_id').AsInteger := FFamilyId
-      //else
-      //  ParamByName('family_id').Clear;
-      //if (FGenusId > 0) then
-      //  ParamByName('genus_id').AsInteger := FGenusId
-      //else
-      //  ParamByName('genus_id').Clear;
-      //if (FSpeciesId > 0) then
-      //  ParamByName('species_id').AsInteger := FSpeciesId
-      //else
-      //  ParamByName('species_id').Clear;
-      //ParamByName('aid').AsInteger := FId;
-      //ExecSQL;
 
       DMM.sqlTrans.CommitRetaining;
     except
@@ -3166,6 +2797,9 @@ procedure TCapture.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TCapture.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -3295,8 +2929,6 @@ begin
 end;
 
 procedure TCapture.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
 begin
   if not aDataSet.Active then
     Exit;
@@ -3425,16 +3057,8 @@ begin
     FUserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
+    GetTimeStamp(FieldByName('insert_date'), FInsertDate);
+    GetTimeStamp(FieldByName('update_date'), FUpdateDate);
     FExported := FieldByName('exported_status').AsBoolean;
     FMarked := FieldByName('marked_status').AsBoolean;
     FActive := FieldByName('active_status').AsBoolean;
@@ -3570,134 +3194,65 @@ begin
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))');
 
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    ParamByName('full_name').AsString :=
-      GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex], CaptureTypeStr[FCaptureType], FCycleCode, False);
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('individual_id').AsInteger := FIndividualId;
-    ParamByName('capture_date').AsString := FormatDateTime('yyyy-mm-dd', FCaptureDate);
-    ParamByName('capture_time').AsString := FormatDateTime('hh:nn', FCaptureTime);
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('net_station_id').AsInteger := FNetStationId;
-    if (FNetId = 0) then
-      ParamByName('net_id').Clear
-    else
-      ParamByName('net_id').AsInteger := FNetId;
-    if (FLatitude > 200.0) then
-      ParamByName('latitude').Clear
-    else
-      ParamByName('latitude').AsFloat := FLatitude;
-    if (FLongitude > 200.0) then
-      ParamByName('longitude').Clear
-    else
-      ParamByName('longitude').AsFloat := FLongitude;
-    ParamByName('bander_id').AsInteger := FBanderId;
-    ParamByName('annotator_id').AsInteger := FAnnotatorId;
-    ParamByName('subject_status').AsString := SubjectStatusStr[FSubjectStatus];
-    ParamByName('capture_type').AsString := CaptureTypeStr[FCaptureType];
-    ParamByName('subject_sex').AsString := Sexes[FSubjectSex];
-    ParamByName('how_sexed').AsString := FHowSexed;
-    if (FBandId = 0) then
-      ParamByName('band_id').Clear
-    else
-      ParamByName('band_id').AsInteger := FBandId;
-    if (FWeight = 0.0) then
-      ParamByName('weight').Clear
-    else
-      ParamByName('weight').AsFloat := FWeight;
-    if (FTarsusLength = 0.0) then
-      ParamByName('tarsus_length').Clear
-    else
-      ParamByName('tarsus_length').AsFloat := FTarsusLength;
-    if (FTarsusDiameter = 0.0) then
-      ParamByName('tarsus_diameter').Clear
-    else
-      ParamByName('tarsus_diameter').AsFloat := FTarsusDiameter;
-    if (FExposedCulmen = 0.0) then
-      ParamByName('exposed_culmen').Clear
-    else
-      ParamByName('exposed_culmen').AsFloat := FExposedCulmen;
-    if (FBillWidth = 0.0) then
-      ParamByName('bill_width').Clear
-    else
-      ParamByName('bill_width').AsFloat := FBillWidth;
-    if (FBillHeight = 0.0) then
-      ParamByName('bill_height').Clear
-    else
-      ParamByName('bill_height').AsFloat := FBillHeight;
-    if (FNostrilBillTip = 0.0) then
-      ParamByName('nostril_bill_tip').Clear
-    else
-      ParamByName('nostril_bill_tip').AsFloat := FNostrilBillTip;
-    if (FSkullLength = 0.0) then
-      ParamByName('skull_length').Clear
-    else
-      ParamByName('skull_length').AsFloat := FSkullLength;
-    if (FRightWingChord = 0.0) then
-      ParamByName('right_wing_chord').Clear
-    else
-      ParamByName('right_wing_chord').AsFloat := FRightWingChord;
-    if (FFirstSecondaryChord = 0.0) then
-      ParamByName('first_secondary_chord').Clear
-    else
-      ParamByName('first_secondary_chord').AsFloat := FFirstSecondaryChord;
-    if (FTailLength = 0.0) then
-      ParamByName('tail_length').Clear
-    else
-      ParamByName('tail_length').AsFloat := FTailLength;
-    ParamByName('fat').AsString := FFat;
-    ParamByName('brood_patch').AsString := FBroodPatch;
-    ParamByName('cloacal_protuberance').AsString := FCloacalProtuberance;
-    ParamByName('body_molt').AsString := FBodyMolt;
-    ParamByName('flight_feathers_molt').AsString := FFlightFeathersMolt;
-    ParamByName('flight_feathers_wear').AsString := FFlightFeathersWear;
-    ParamByName('molt_limits').AsString := FMoltLimits;
-    ParamByName('cycle_code').AsString := FCycleCode;
-    ParamByName('how_aged').AsString := FHowAged;
-    ParamByName('skull_ossification').AsString := FSkullOssification;
-    if (FKippsIndex = 0.0) then
-      ParamByName('kipps_index').Clear
-    else
-      ParamByName('kipps_index').AsFloat := FKippsIndex;
-    if (FGlucose = 0.0) then
-      ParamByName('glucose').Clear
-    else
-      ParamByName('glucose').AsFloat := FGlucose;
-    if (FHemoglobin = 0.0) then
-      ParamByName('hemoglobin').Clear
-    else
-      ParamByName('hemoglobin').AsFloat := FHemoglobin;
-    if (FHematocrit = 0.0) then
-      ParamByName('hematocrit').Clear
-    else
-      ParamByName('hematocrit').AsFloat := FHematocrit;
-    ParamByName('blood_sample').AsInteger := Integer(FBloodSample);
-    ParamByName('feather_sample').AsInteger := Integer(FFeatherSample);
+    FFullName := GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex],
+      CaptureTypeStr[FCaptureType], FCycleCode, False);
+    SetForeignParam(ParamByName('survey_id'), FSurveyId);
+    SetStrParam(ParamByName('full_name'), FFullName);
+    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+    SetForeignParam(ParamByName('individual_id'), FIndividualId);
+    SetDateParam(ParamByName('capture_date'), FCaptureDate);
+    SetTimeParam(ParamByName('capture_time'), FCaptureTime);
+    SetForeignParam(ParamByName('locality_id'), FLocalityId);
+    SetForeignParam(ParamByName('net_station_id'), FNetStationId);
+    SetForeignParam(ParamByName('net_id'), FNetId);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+    SetForeignParam(ParamByName('bander_id'), FBanderId);
+    SetForeignParam(ParamByName('annotator_id'), FAnnotatorId);
+    SetStrParam(ParamByName('subject_status'), SubjectStatusStr[FSubjectStatus]);
+    SetStrParam(ParamByName('capture_type'), CaptureTypeStr[FCaptureType]);
+    SetStrParam(ParamByName('subject_sex'), Sexes[FSubjectSex]);
+    SetStrParam(ParamByName('how_sexed'), FHowSexed);
+    SetForeignParam(ParamByName('band_id'), FBandId);
+    SetFloatParam(ParamByName('weight'), FWeight);
+    SetFloatParam(ParamByName('tarsus_length'), FTarsusLength);
+    SetFloatParam(ParamByName('tarsus_diameter'), FTarsusDiameter);
+    SetFloatParam(ParamByName('exposed_culmen'), FExposedCulmen);
+    SetFloatParam(ParamByName('bill_width'), FBillWidth);
+    SetFloatParam(ParamByName('bill_height'), FBillHeight);
+    SetFloatParam(ParamByName('nostril_bill_tip'), FNostrilBillTip);
+    SetFloatParam(ParamByName('skull_length'), FSkullLength);
+    SetFloatParam(ParamByName('right_wing_chord'), FRightWingChord);
+    SetFloatParam(ParamByName('first_secondary_chord'), FFirstSecondaryChord);
+    SetFloatParam(ParamByName('tail_length'), FTailLength);
+    SetStrParam(ParamByName('fat'), FFat);
+    SetStrParam(ParamByName('brood_patch'), FBroodPatch);
+    SetStrParam(ParamByName('cloacal_protuberance'), FCloacalProtuberance);
+    SetStrParam(ParamByName('body_molt'), FBodyMolt);
+    SetStrParam(ParamByName('flight_feathers_molt'), FFlightFeathersMolt);
+    SetStrParam(ParamByName('flight_feathers_wear'), FFlightFeathersWear);
+    SetStrParam(ParamByName('molt_limits'), FMoltLimits);
+    SetStrParam(ParamByName('cycle_code'), FCycleCode);
+    SetStrParam(ParamByName('how_aged'), FHowAged);
+    SetStrParam(ParamByName('skull_ossification'), FSkullOssification);
+    SetFloatParam(ParamByName('kipps_index'), FKippsIndex);
+    SetFloatParam(ParamByName('glucose'), FGlucose);
+    SetFloatParam(ParamByName('hemoglobin'), FHemoglobin);
+    SetFloatParam(ParamByName('hematocrit'), FHematocrit);
+    ParamByName('blood_sample').AsBoolean := FBloodSample;
+    ParamByName('feather_sample').AsBoolean := FFeatherSample;
+    SetForeignParam(ParamByName('photographer_1_id'), FPhotographer1Id);
+    SetForeignParam(ParamByName('photographer_2_id'), FPhotographer2Id);
     if (FPhotographer1Id > 0) then
-    begin
-      ParamByName('subject_photographed').AsInteger := 1;
-      ParamByName('photographer_1_id').AsInteger := FPhotographer1Id;
-      if (FPhotographer2Id > 0) then
-        ParamByName('photographer_2_id').AsInteger := FPhotographer2Id;
-    end else
-    begin
-      ParamByName('subject_photographed').AsInteger := 0;
-      ParamByName('photographer_1_id').Clear;
-      ParamByName('photographer_2_id').Clear;
-    end;
-    if (FStartPhotoNumber <> EmptyStr) then
-      ParamByName('start_photo_number').AsInteger := StrToInt(FStartPhotoNumber);
-    if (FEndPhotoNumber <> EmptyStr) then
-      ParamByName('end_photo_number').AsInteger := StrToInt(FEndPhotoNumber);
-    ParamByName('camera_name').AsString := FCameraName;
-    if (FRemovedBandId = 0) then
-      ParamByName('removed_band_id').Clear
-    else
-      ParamByName('removed_band_id').AsInteger := FRemovedBandId;
-    ParamByName('right_leg_below').AsString := FRightLegBelow;
-    ParamByName('left_leg_below').AsString := FLeftLegBelow;
-    ParamByName('escaped').AsInteger := Integer(FEscaped);
-    ParamByName('notes').AsString := FNotes;
+      FSubjectPhotographed := True;
+    ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
+    SetStrParam(ParamByName('start_photo_number'), FStartPhotoNumber);
+    SetStrParam(ParamByName('end_photo_number'), FEndPhotoNumber);
+    SetStrParam(ParamByName('camera_name'), FCameraName);
+    SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
+    SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
+    SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
+    ParamByName('escaped').AsBoolean := FEscaped;
+    SetStrParam(ParamByName('notes'), FNotes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -3709,75 +3264,6 @@ begin
     FId := Fields[0].AsInteger;
     Close;
 
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE captures SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE capture_id = :aid');
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
-    //
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE captures SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE capture_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -3867,6 +3353,9 @@ procedure TCapture.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TCapture.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -3956,181 +3445,67 @@ begin
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'',''subsec'')');
     Add('WHERE (capture_id = :capture_id)');
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    ParamByName('full_name').AsString :=
-      GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex], CaptureTypeStr[FCaptureType], FCycleCode, False);
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('individual_id').AsInteger := FIndividualId;
-    if (FProjectId = 0) then
-      ParamByName('project_id').Clear
-    else
-      ParamByName('project_id').AsInteger := FProjectId;
-    ParamByName('capture_date').AsString := FormatDateTime('yyyy-mm-dd', FCaptureDate);
-    ParamByName('capture_time').AsString := FormatDateTime('hh:nn', FCaptureTime);
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('net_station_id').AsInteger := FNetStationId;
-    if (FNetId = 0) then
-      ParamByName('net_id').Clear
-    else
-      ParamByName('net_id').AsInteger := FNetId;
-    if (FLatitude > 200.0) then
-      ParamByName('latitude').Clear
-    else
-      ParamByName('latitude').AsFloat := FLatitude;
-    if (FLongitude > 200.0) then
-      ParamByName('longitude').Clear
-    else
-      ParamByName('longitude').AsFloat := FLongitude;
-    ParamByName('bander_id').AsInteger := FBanderId;
-    ParamByName('annotator_id').AsInteger := FAnnotatorId;
-    ParamByName('subject_status').AsString := SubjectStatusStr[FSubjectStatus];
-    ParamByName('capture_type').AsString := CaptureTypeStr[FCaptureType];
-    ParamByName('subject_sex').AsString := Sexes[FSubjectSex];
-    ParamByName('how_sexed').AsString := FHowSexed;
-    if (FBandId = 0) then
-      ParamByName('band_id').Clear
-    else
-      ParamByName('band_id').AsInteger := FBandId;
-    if (FWeight = 0.0) then
-      ParamByName('weight').Clear
-    else
-      ParamByName('weight').AsFloat := FWeight;
-    if (FTarsusLength = 0.0) then
-      ParamByName('tarsus_length').Clear
-    else
-      ParamByName('tarsus_length').AsFloat := FTarsusLength;
-    if (FTarsusDiameter = 0.0) then
-      ParamByName('tarsus_diameter').Clear
-    else
-      ParamByName('tarsus_diameter').AsFloat := FTarsusDiameter;
-    if (FCulmenLength = 0.0) then
-      ParamByName('culmen_length').Clear
-    else
-      ParamByName('culmen_length').AsFloat := FCulmenLength;
-    if (FExposedCulmen = 0.0) then
-      ParamByName('exposed_culmen').Clear
-    else
-      ParamByName('exposed_culmen').AsFloat := FExposedCulmen;
-    if (FBillWidth = 0.0) then
-      ParamByName('bill_width').Clear
-    else
-      ParamByName('bill_width').AsFloat := FBillWidth;
-    if (FBillHeight = 0.0) then
-      ParamByName('bill_height').Clear
-    else
-      ParamByName('bill_height').AsFloat := FBillHeight;
-    if (FNostrilBillTip = 0.0) then
-      ParamByName('nostril_bill_tip').Clear
-    else
-      ParamByName('nostril_bill_tip').AsFloat := FNostrilBillTip;
-    if (FSkullLength = 0.0) then
-      ParamByName('skull_length').Clear
-    else
-      ParamByName('skull_length').AsFloat := FSkullLength;
-    if (FRightWingChord = 0.0) then
-      ParamByName('right_wing_chord').Clear
-    else
-      ParamByName('right_wing_chord').AsFloat := FRightWingChord;
-    if (FFirstSecondaryChord = 0.0) then
-      ParamByName('first_secondary_chord').Clear
-    else
-      ParamByName('first_secondary_chord').AsFloat := FFirstSecondaryChord;
-    if (FTailLength = 0.0) then
-      ParamByName('tail_length').Clear
-    else
-      ParamByName('tail_length').AsFloat := FTailLength;
-    ParamByName('fat').AsString := FFat;
-    ParamByName('brood_patch').AsString := FBroodPatch;
-    ParamByName('cloacal_protuberance').AsString := FCloacalProtuberance;
-    ParamByName('body_molt').AsString := FBodyMolt;
-    ParamByName('flight_feathers_molt').AsString := FFlightFeathersMolt;
-    ParamByName('flight_feathers_wear').AsString := FFlightFeathersWear;
-    ParamByName('molt_limits').AsString := FMoltLimits;
-    ParamByName('cycle_code').AsString := FCycleCode;
-    ParamByName('subject_age').AsString := Ages[FSubjectAge];
-    ParamByName('how_aged').AsString := FHowAged;
-    ParamByName('skull_ossification').AsString := FSkullOssification;
-    if (FHaluxLengthTotal = 0.0) then
-      ParamByName('halux_length_total').Clear
-    else
-      ParamByName('halux_length_total').AsFloat := FHaluxLengthTotal;
-    if (FHaluxLengthFinger = 0.0) then
-      ParamByName('halux_length_finger').Clear
-    else
-      ParamByName('halux_length_finger').AsFloat := FHaluxLengthFinger;
-    if (FHaluxLengthClaw = 0.0) then
-      ParamByName('halux_length_claw').Clear
-    else
-      ParamByName('halux_length_claw').AsFloat := FHaluxLengthClaw;
-    if (FCentralRetrixLength = 0.0) then
-      ParamByName('central_retrix_length').Clear
-    else
-      ParamByName('central_retrix_length').AsFloat := FCentralRetrixLength;
-    if (FExternalRetrixLength = 0.0) then
-      ParamByName('external_retrix_length').Clear
-    else
-      ParamByName('external_retrix_length').AsFloat := FExternalRetrixLength;
-    if (FTotalLength = 0.0) then
-      ParamByName('total_length').Clear
-    else
-      ParamByName('total_length').AsFloat := FTotalLength;
-    ParamByName('feather_mites').AsString := FFeatherMites;
-    if (FPhilornisLarvaeTally = 0.0) then
-      ParamByName('philornis_larvae_tally').Clear
-    else
-      ParamByName('philornis_larvae_tally').AsInteger := FPhilornisLarvaeTally;
-    if (FKippsIndex = 0.0) then
-      ParamByName('kipps_index').Clear
-    else
-      ParamByName('kipps_index').AsFloat := FKippsIndex;
-    if (FGlucose = 0.0) then
-      ParamByName('glucose').Clear
-    else
-      ParamByName('glucose').AsFloat := FGlucose;
-    if (FHemoglobin = 0.0) then
-      ParamByName('hemoglobin').Clear
-    else
-      ParamByName('hemoglobin').AsFloat := FHemoglobin;
-    if (FHematocrit = 0.0) then
-      ParamByName('hematocrit').Clear
-    else
-      ParamByName('hematocrit').AsFloat := FHematocrit;
-    ParamByName('field_number').AsString := FFieldNumber;
-    ParamByName('blood_sample').AsInteger := Integer(FBloodSample);
-    ParamByName('feather_sample').AsInteger := Integer(FFeatherSample);
-    ParamByName('claw_sample').AsInteger := Integer(FClawSample);
-    ParamByName('feces_sample').AsInteger := Integer(FFecesSample);
-    ParamByName('parasite_sample').AsInteger := Integer(FParasiteSample);
-    ParamByName('subject_collected').AsInteger := Integer(FSubjectCollected);
-    ParamByName('subject_recorded').AsInteger := Integer(FSubjectRecorded);
+
+    FFullName := GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex],
+      CaptureTypeStr[FCaptureType], FCycleCode, False);
+    SetForeignParam(ParamByName('survey_id'), FSurveyId);
+    SetStrParam(ParamByName('full_name'), FFullName);
+    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+    SetForeignParam(ParamByName('individual_id'), FIndividualId);
+    SetDateParam(ParamByName('capture_date'), FCaptureDate);
+    SetTimeParam(ParamByName('capture_time'), FCaptureTime);
+    SetForeignParam(ParamByName('locality_id'), FLocalityId);
+    SetForeignParam(ParamByName('net_station_id'), FNetStationId);
+    SetForeignParam(ParamByName('net_id'), FNetId);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+    SetForeignParam(ParamByName('bander_id'), FBanderId);
+    SetForeignParam(ParamByName('annotator_id'), FAnnotatorId);
+    SetStrParam(ParamByName('subject_status'), SubjectStatusStr[FSubjectStatus]);
+    SetStrParam(ParamByName('capture_type'), CaptureTypeStr[FCaptureType]);
+    SetStrParam(ParamByName('subject_sex'), Sexes[FSubjectSex]);
+    SetStrParam(ParamByName('how_sexed'), FHowSexed);
+    SetForeignParam(ParamByName('band_id'), FBandId);
+    SetFloatParam(ParamByName('weight'), FWeight);
+    SetFloatParam(ParamByName('tarsus_length'), FTarsusLength);
+    SetFloatParam(ParamByName('tarsus_diameter'), FTarsusDiameter);
+    SetFloatParam(ParamByName('exposed_culmen'), FExposedCulmen);
+    SetFloatParam(ParamByName('bill_width'), FBillWidth);
+    SetFloatParam(ParamByName('bill_height'), FBillHeight);
+    SetFloatParam(ParamByName('nostril_bill_tip'), FNostrilBillTip);
+    SetFloatParam(ParamByName('skull_length'), FSkullLength);
+    SetFloatParam(ParamByName('right_wing_chord'), FRightWingChord);
+    SetFloatParam(ParamByName('first_secondary_chord'), FFirstSecondaryChord);
+    SetFloatParam(ParamByName('tail_length'), FTailLength);
+    SetStrParam(ParamByName('fat'), FFat);
+    SetStrParam(ParamByName('brood_patch'), FBroodPatch);
+    SetStrParam(ParamByName('cloacal_protuberance'), FCloacalProtuberance);
+    SetStrParam(ParamByName('body_molt'), FBodyMolt);
+    SetStrParam(ParamByName('flight_feathers_molt'), FFlightFeathersMolt);
+    SetStrParam(ParamByName('flight_feathers_wear'), FFlightFeathersWear);
+    SetStrParam(ParamByName('molt_limits'), FMoltLimits);
+    SetStrParam(ParamByName('cycle_code'), FCycleCode);
+    SetStrParam(ParamByName('how_aged'), FHowAged);
+    SetStrParam(ParamByName('skull_ossification'), FSkullOssification);
+    SetFloatParam(ParamByName('kipps_index'), FKippsIndex);
+    SetFloatParam(ParamByName('glucose'), FGlucose);
+    SetFloatParam(ParamByName('hemoglobin'), FHemoglobin);
+    SetFloatParam(ParamByName('hematocrit'), FHematocrit);
+    ParamByName('blood_sample').AsBoolean := FBloodSample;
+    ParamByName('feather_sample').AsBoolean := FFeatherSample;
+    SetForeignParam(ParamByName('photographer_1_id'), FPhotographer1Id);
+    SetForeignParam(ParamByName('photographer_2_id'), FPhotographer2Id);
     if (FPhotographer1Id > 0) then
-    begin
-      ParamByName('subject_photographed').AsInteger := 1;
-      ParamByName('photographer_1_id').AsInteger := FPhotographer1Id;
-      if (FPhotographer2Id > 0) then
-        ParamByName('photographer_2_id').AsInteger := FPhotographer2Id;
-    end else
-    begin
-      ParamByName('subject_photographed').AsInteger := 0;
-      ParamByName('photographer_1_id').Clear;
-      ParamByName('photographer_2_id').Clear;
-    end;
-    if (FStartPhotoNumber <> EmptyStr) then
-      ParamByName('start_photo_number').AsInteger := StrToInt(FStartPhotoNumber);
-    if (FEndPhotoNumber <> EmptyStr) then
-      ParamByName('end_photo_number').AsInteger := StrToInt(FEndPhotoNumber);
-    ParamByName('camera_name').AsString := FCameraName;
-    if (FRemovedBandId = 0) then
-      ParamByName('removed_band_id').Clear
-    else
-      ParamByName('removed_band_id').AsInteger := FRemovedBandId;
-    ParamByName('right_leg_below').AsString := FRightLegBelow;
-    ParamByName('left_leg_below').AsString := FLeftLegBelow;
-    ParamByName('right_leg_above').AsString := FRightLegAbove;
-    ParamByName('left_leg_above').AsString := FLeftLegAbove;
+      FSubjectPhotographed := True;
+    ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
+    SetStrParam(ParamByName('start_photo_number'), FStartPhotoNumber);
+    SetStrParam(ParamByName('end_photo_number'), FEndPhotoNumber);
+    SetStrParam(ParamByName('camera_name'), FCameraName);
+    SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
+    SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
+    SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
     ParamByName('escaped').AsBoolean := FEscaped;
+    SetStrParam(ParamByName('notes'), FNotes);
     ParamByName('needs_review').AsBoolean := FNeedsReview;
-    ParamByName('notes').AsString := FNotes;
     ParamByName('exported_status').AsBoolean := FExported;
     ParamByName('marked_status').AsBoolean := FMarked;
     ParamByName('active_status').AsBoolean := FActive;
@@ -4139,75 +3514,6 @@ begin
 
     ExecSQL;
 
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE captures SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE capture_id = :aid');
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
-    //
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE captures SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE capture_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -4492,6 +3798,9 @@ procedure TIndividual.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TIndividual.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -4568,8 +3877,6 @@ begin
 end;
 
 procedure TIndividual.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
 begin
   if not aDataSet.Active then
     Exit;
@@ -4630,16 +3937,8 @@ begin
     FUserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
+    GetTimeStamp(FieldByName('insert_date'), FInsertDate);
+    GetTimeStamp(FieldByName('update_date'), FUpdateDate);
     FExported := FieldByName('exported_status').AsBoolean;
     FMarked := FieldByName('marked_status').AsBoolean;
     FActive := FieldByName('active_status').AsBoolean;
@@ -4717,62 +4016,39 @@ begin
       ':full_name, ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))');
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('individual_sex').AsString := Sexes[FSex];
-    ParamByName('individual_age').AsString := Ages[FAge];
-    if (FNestId > 0) then
-      ParamByName('nest_id').AsInteger := FNestId
-    else
-      ParamByName('nest_id').Clear;
+
+    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+    SetStrParam(ParamByName('individual_sex'), Sexes[FSex]);
+    SetStrParam(ParamByName('individual_age'), Ages[FAge]);
+    SetForeignParam(ParamByName('nest_id'), FNestId);
     ParamByName('birth_year').AsInteger := FBirthYear;
     ParamByName('birth_month').AsInteger := FBirthMonth;
     ParamByName('birth_day').AsInteger := FBirthDay;
     Birth.Encode(FBirthYear, FBirthMonth, FBirthDay);
-    ParamByName('birth_date').AsString := Birth.ToString;
-    if (FBandId > 0) then
-      ParamByName('band_id').AsInteger := FBandId
-    else
-      ParamByName('band_id').Clear;
-    if (FDoubleBandId > 0) then
-      ParamByName('double_band_id').AsInteger := FDoubleBandId
-    else
-      ParamByName('double_band_id').Clear;
-    if (FRemovedBandId > 0) then
-      ParamByName('removed_band_id').AsInteger := FRemovedBandId
-    else
-      ParamByName('removed_band_id').Clear;
-    if not DateIsNull(FBandingDate) then
-      ParamByName('banding_date').AsString := DateToStr(FBandingDate)
-    else
-      ParamByName('banding_date').Clear;
-    if not DateIsNull(FBandChangeDate) then
-      ParamByName('band_change_date').AsString := DateToStr(FBandChangeDate)
-    else
-      ParamByName('band_change_date').Clear;
-    ParamByName('recognizable_markings').AsString := FRecognizableMarkings;
-    ParamByName('notes').AsString := FNotes;
-    if (FFatherId > 0) then
-      ParamByName('father_id').AsInteger := FFatherId
-    else
-      ParamByName('father_id').Clear;
-    if (FMotherId > 0) then
-      ParamByName('mother_id').AsInteger := FMotherId
-    else
-      ParamByName('mother_id').Clear;
+    SetStrParam(ParamByName('birth_date'), Birth.ToString);
+    SetForeignParam(ParamByName('band_id'), FBandId);
+    SetForeignParam(ParamByName('double_band_id'), FDoubleBandId);
+    SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
+    SetDateParam(ParamByName('banding_date'), FBandingDate);
+    SetDateParam(ParamByName('band_change_date'), FBandChangeDate);
+    SetStrParam(ParamByName('recognizable_markings'), FRecognizableMarkings);
+    SetStrParam(ParamByName('notes'), FNotes);
+    SetForeignParam(ParamByName('father_id'), FFatherId);
+    SetForeignParam(ParamByName('mother_id'), FMotherId);
     ParamByName('death_year').AsInteger := FDeathYear;
     ParamByName('death_month').AsInteger := FDeathMonth;
     ParamByName('death_day').AsInteger := FDeathDay;
     Death.Encode(FDeathYear, FDeathMonth, FDeathDay);
-    ParamByName('death_date').AsString := Death.ToString;
-    ParamByName('formatted_name').AsString :=
-      GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], True);
-    ParamByName('full_name').AsString :=
-      GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], False);
-    ParamByName('right_leg_below').AsString := FRightLegBelow;
-    ParamByName('left_leg_below').AsString := FLeftLegBelow;
-    ParamByName('right_leg_above').AsString := FRightLegAbove;
-    ParamByName('left_leg_above').AsString := FLeftLegAbove;
+    SetStrParam(ParamByName('death_date'), Death.ToString);
+    SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], True));
+    FFullName := GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], False);
+    SetStrParam(ParamByName('full_name'), FFullName);
+    SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
+    SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
+    SetStrParam(ParamByName('right_leg_above'), FRightLegAbove);
+    SetStrParam(ParamByName('left_leg_above'), FLeftLegAbove);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
     ExecSQL;
 
     // Get the autoincrement key inserted
@@ -4782,43 +4058,6 @@ begin
     FId := Fields[0].AsInteger;
     Close;
 
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE individuals SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE individual_id = :aid');
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -4875,6 +4114,9 @@ var
   Qry: TSQLQuery;
   Birth, Death: TPartialDate;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TIndividual.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -4909,105 +4151,49 @@ begin
       'notes = :notes, ' +
       'formatted_name = :formatted_name, ' +
       'full_name = :full_name, ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status, ' +
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'',''subsec'')');
     Add('WHERE (individual_id = :individual_id)');
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('individual_sex').AsString := Sexes[FSex];
-    ParamByName('individual_age').AsString := Ages[FAge];
-    if (FNestId > 0) then
-      ParamByName('nest_id').AsInteger := FNestId
-    else
-      ParamByName('nest_id').Clear;
+
+    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+    SetStrParam(ParamByName('individual_sex'), Sexes[FSex]);
+    SetStrParam(ParamByName('individual_age'), Ages[FAge]);
+    SetForeignParam(ParamByName('nest_id'), FNestId);
     ParamByName('birth_year').AsInteger := FBirthYear;
     ParamByName('birth_month').AsInteger := FBirthMonth;
     ParamByName('birth_day').AsInteger := FBirthDay;
     Birth.Encode(FBirthYear, FBirthMonth, FBirthDay);
-    ParamByName('birth_date').AsString := Birth.ToString;
-    if (FBandId > 0) then
-      ParamByName('band_id').AsInteger := FBandId
-    else
-      ParamByName('band_id').Clear;
-    if (FDoubleBandId > 0) then
-      ParamByName('double_band_id').AsInteger := FDoubleBandId
-    else
-      ParamByName('double_band_id').Clear;
-    if (FRemovedBandId > 0) then
-      ParamByName('removed_band_id').AsInteger := FRemovedBandId
-    else
-      ParamByName('removed_band_id').Clear;
-    if not DateIsNull(FBandingDate) then
-      ParamByName('banding_date').AsString := DateToStr(FBandingDate)
-    else
-      ParamByName('banding_date').Clear;
-    if not DateIsNull(FBandChangeDate) then
-      ParamByName('band_change_date').AsString := DateToStr(FBandChangeDate)
-    else
-      ParamByName('band_change_date').Clear;
-    ParamByName('recognizable_markings').AsString := FRecognizableMarkings;
-    ParamByName('notes').AsString := FNotes;
-    if (FFatherId > 0) then
-      ParamByName('father_id').AsInteger := FFatherId
-    else
-      ParamByName('father_id').Clear;
-    if (FMotherId > 0) then
-      ParamByName('mother_id').AsInteger := FMotherId
-    else
-      ParamByName('mother_id').Clear;
+    SetStrParam(ParamByName('birth_date'), Birth.ToString);
+    SetForeignParam(ParamByName('band_id'), FBandId);
+    SetForeignParam(ParamByName('double_band_id'), FDoubleBandId);
+    SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
+    SetDateParam(ParamByName('banding_date'), FBandingDate);
+    SetDateParam(ParamByName('band_change_date'), FBandChangeDate);
+    SetStrParam(ParamByName('recognizable_markings'), FRecognizableMarkings);
+    SetStrParam(ParamByName('notes'), FNotes);
+    SetForeignParam(ParamByName('father_id'), FFatherId);
+    SetForeignParam(ParamByName('mother_id'), FMotherId);
     ParamByName('death_year').AsInteger := FDeathYear;
     ParamByName('death_month').AsInteger := FDeathMonth;
     ParamByName('death_day').AsInteger := FDeathDay;
     Death.Encode(FDeathYear, FDeathMonth, FDeathDay);
-    ParamByName('death_date').AsString := Death.ToString;
-    ParamByName('formatted_name').AsString :=
-      GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], True);
-    ParamByName('full_name').AsString :=
-      GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], False);
-    ParamByName('right_leg_below').AsString := FRightLegBelow;
-    ParamByName('left_leg_below').AsString := FLeftLegBelow;
-    ParamByName('right_leg_above').AsString := FRightLegAbove;
-    ParamByName('left_leg_above').AsString := FLeftLegAbove;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    SetStrParam(ParamByName('death_date'), Death.ToString);
+    SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], True));
+    FFullName := GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], False);
+    SetStrParam(ParamByName('full_name'), FFullName);
+    SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
+    SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
+    SetStrParam(ParamByName('right_leg_above'), FRightLegAbove);
+    SetStrParam(ParamByName('left_leg_above'), FLeftLegAbove);
+    ParamByName('marked_status').AsBoolean := FMarked;
+    ParamByName('active_status').AsBoolean := FActive;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('individual_id').AsInteger := FId;
+
     ExecSQL;
 
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE individuals SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE individual_id = :aid');
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -5168,6 +4354,9 @@ procedure TBand.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TBand.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -5231,8 +4420,6 @@ begin
 end;
 
 procedure TBand.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
 begin
   if not aDataSet.Active then
     Exit;
@@ -5282,16 +4469,8 @@ begin
     FUserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
+    GetTimeStamp(FieldByName('insert_date'), FInsertDate);
+    GetTimeStamp(FieldByName('update_date'), FUpdateDate);
     FExported := FieldByName('exported_status').AsBoolean;
     FMarked := FieldByName('marked_status').AsBoolean;
     FActive := FieldByName('active_status').AsBoolean;
@@ -5339,35 +4518,23 @@ begin
       ':full_name, ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''));');
-    ParamByName('band_size').AsString := FSize;
-    ParamByName('band_number').AsInteger := FNumber;
-    ParamByName('band_status').AsString := BandStatusStr[FStatus];
-    ParamByName('band_type').AsString := MarkTypesStr[FBandType];
-    if (FPrefix <> EmptyStr) then
-      ParamByName('band_prefix').AsString := FPrefix
-    else
-      ParamByName('band_prefix').Clear;
-    if (FSuffix <> EmptyStr) then
-      ParamByName('band_suffix').AsString := FSuffix
-    else
-      ParamByName('band_suffix').Clear;
-    if (FBandColor <> EmptyStr) then
-      ParamByName('band_color').AsString := FBandColor
-    else
-      ParamByName('band_color').Clear;
-    ParamByName('band_source').AsString := BandSourceStr[FSource];
-    ParamByName('supplier_id').AsInteger := FSupplierId;
-    if (FCarrierId > 0) then
-      ParamByName('carrier_id').AsInteger := FCarrierId
-    else
-      ParamByName('carrier_id').Clear;
-    if (FProjectId > 0) then
-      ParamByName('project_id').AsInteger := FProjectId
-    else
-      ParamByName('project_id').Clear;
-    ParamByName('full_name').AsString := GetBandFullname(FSize, FNumber, FSupplierId);
-    ParamByName('notes').AsString := FNotes;
+
+    SetStrParam(ParamByName('band_size'), FSize);
+    SetIntParam(ParamByName('band_number'), FNumber);
+    SetStrParam(ParamByName('band_status'), BandStatusStr[FStatus]);
+    SetStrParam(ParamByName('band_type'), MarkTypesStr[FBandType]);
+    SetStrParam(ParamByName('band_prefix'), FPrefix);
+    SetStrParam(ParamByName('band_suffix'), FSuffix);
+    SetStrParam(ParamByName('band_color'), FBandColor);
+    SetStrParam(ParamByName('band_source'), BandSourceStr[FSource]);
+    SetForeignParam(ParamByName('supplier_id'), FSupplierId);
+    SetForeignParam(ParamByName('carrier_id'), FCarrierId);
+    SetForeignParam(ParamByName('project_id'), FProjectId);
+    FFullName := GetBandFullname(FSize, FNumber, FSupplierId);
+    SetStrParam(ParamByName('full_name'), FFullName);
+    SetStrParam(ParamByName('notes'), FNotes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
     ExecSQL;
 
     // Get the autoincrement key inserted
@@ -5421,6 +4588,9 @@ procedure TBand.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TBand.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -5445,38 +4615,26 @@ begin
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'',''subsec'') ');
     Add('WHERE (band_id = :band_id)');
-    ParamByName('band_size').AsString := FSize;
-    ParamByName('band_number').AsInteger := FNumber;
-    ParamByName('band_status').AsString := BandStatusStr[FStatus];
-    ParamByName('band_type').AsString := MarkTypesStr[FBandType];
-    if (FPrefix <> EmptyStr) then
-      ParamByName('band_prefix').AsString := FPrefix
-    else
-      ParamByName('band_prefix').Clear;
-    if (FSuffix <> EmptyStr) then
-      ParamByName('band_suffix').AsString := FSuffix
-    else
-      ParamByName('band_suffix').Clear;
-    if (FBandColor <> EmptyStr) then
-      ParamByName('band_color').AsString := FBandColor
-    else
-      ParamByName('band_color').Clear;
-    ParamByName('band_source').AsString := BandSourceStr[FSource];
-    ParamByName('supplier_id').AsInteger := FSupplierId;
-    if (FCarrierId > 0) then
-      ParamByName('carrier_id').AsInteger := FCarrierId
-    else
-      ParamByName('carrier_id').Clear;
-    if (FProjectId > 0) then
-      ParamByName('project_id').AsInteger := FProjectId
-    else
-      ParamByName('project_id').Clear;
+
+    SetStrParam(ParamByName('band_size'), FSize);
+    SetIntParam(ParamByName('band_number'), FNumber);
+    SetStrParam(ParamByName('band_status'), BandStatusStr[FStatus]);
+    SetStrParam(ParamByName('band_type'), MarkTypesStr[FBandType]);
+    SetStrParam(ParamByName('band_prefix'), FPrefix);
+    SetStrParam(ParamByName('band_suffix'), FSuffix);
+    SetStrParam(ParamByName('band_color'), FBandColor);
+    SetStrParam(ParamByName('band_source'), BandSourceStr[FSource]);
+    SetForeignParam(ParamByName('supplier_id'), FSupplierId);
+    SetForeignParam(ParamByName('carrier_id'), FCarrierId);
+    SetForeignParam(ParamByName('project_id'), FProjectId);
+    FFullName := GetBandFullname(FSize, FNumber, FSupplierId);
+    SetStrParam(ParamByName('full_name'), FFullName);
+    SetStrParam(ParamByName('notes'), FNotes);
     ParamByName('marked_status').AsBoolean := FMarked;
     ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('full_name').AsString := GetBandFullname(FSize, FNumber, FSupplierId);
-    ParamByName('notes').AsString := FNotes;
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('band_id').AsInteger := FId;
+
     ExecSQL;
   finally
     FreeAndNil(Qry);

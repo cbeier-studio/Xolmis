@@ -1469,7 +1469,7 @@ begin
 
       ParamByName('site_name').AsString := FName;
       ParamByName('site_acronym').AsString := FAbbreviation;
-      if (FLongitude <> 0) and (FLatitude <> 0) then
+      if (FLongitude <> 0.0) and (FLatitude <> 0.0) then
       begin
         ParamByName('longitude').AsFloat := FLongitude;
         ParamByName('latitude').AsFloat := FLatitude;
@@ -1479,7 +1479,7 @@ begin
         ParamByName('longitude').Clear;
         ParamByName('latitude').Clear;
       end;
-      if (FAltitude <> 0) then
+      if (FAltitude <> 0.0) then
         ParamByName('altitude').AsFloat := FAltitude
       else
         ParamByName('altitude').Clear;

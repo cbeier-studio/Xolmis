@@ -1116,13 +1116,15 @@ end;
 
 procedure TedtCapture.GetRecord;
 begin
+  FIndividualId := FCapture.IndividualId;
   eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
   FSurveyId := FCapture.SurveyId;
   eSurvey.Text := GetName('surveys', 'full_name', 'survey_id', FSurveyId);
   FLocalityId := FCapture.LocalityId;
   eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
   eCaptureDate.Text := DateToStr(FCapture.CaptureDate);
-  eCaptureTime.Text := TimeToStr(FCapture.CaptureTime);
+  if (FCapture.CaptureTime <> NullTime) then
+    eCaptureTime.Text := FormatDateTime('hh:nn', FCapture.CaptureTime);
   FBanderId := FCapture.BanderId;
   eBander.Text := GetName('people', 'acronym', 'person_id', FBanderId);
   FAnnotatorId := FCapture.AnnotatorId;
@@ -1135,9 +1137,12 @@ begin
     cptUnbanded:    cbCaptureType.ItemIndex := cbCaptureType.Items.IndexOf(rsCaptureUnbanded);
   end;
   FNetId := FCapture.NetId;
-  eNet.Text := GetName('nets_effort', 'full_name', 'net_id', FNetId);
-  eLongitude.Text := FloatToStr(FCapture.Longitude);
-  eLatitude.Text := FloatToStr(FCapture.Latitude);
+  eNet.Text := GetName('nets_effort', 'net_number', 'net_id', FNetId);
+  if (FCapture.Longitude <> 0.0) and (FCapture.Latitude <> 0.0) then
+  begin
+    eLongitude.Text := FloatToStr(FCapture.Longitude);
+    eLatitude.Text := FloatToStr(FCapture.Latitude);
+  end;
   FTaxonId := FCapture.TaxonId;
   eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
   FBandId := FCapture.BandId;
@@ -1211,8 +1216,10 @@ begin
   FPhotographer2Id := FCapture.Photographer2Id;
   ePhotographer2.Text := GetName('people', 'acronym', 'person_id', FPhotographer2Id);
   cbCamera.ItemIndex := cbCamera.Items.IndexOf(FCapture.CameraName);
-  eStartPhoto.Text := FCapture.StartPhotoNumber;
-  eEndPhoto.Text := FCapture.EndPhotoNumber;
+  if (FCapture.StartPhotoNumber <> EmptyStr) and (FCapture.StartPhotoNumber <> '0') then
+    eStartPhoto.Text := FCapture.StartPhotoNumber;
+  if (FCapture.EndPhotoNumber <> EmptyStr) and (FCapture.EndPhotoNumber <> '0') then
+    eEndPhoto.Text := FCapture.EndPhotoNumber;
   eFieldNumber.Text := FCapture.FieldNumber;
   eHemoglobin.Value := FCapture.Hemoglobin;
   eHematocrit.Value := FCapture.Hematocrit;
@@ -1382,7 +1389,8 @@ end;
 procedure TedtCapture.SetIndividualId(Value: Integer);
 begin
   FIndividualId := Value;
-  FCapture.IndividualId := Value;
+  if FCapture.IndividualId <> FIndividualId then
+    FCapture.IndividualId := Value;
 end;
 
 procedure TedtCapture.SetRecord;

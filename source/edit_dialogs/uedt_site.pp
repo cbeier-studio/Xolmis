@@ -391,18 +391,18 @@ begin
     4: FSite.Rank := srDistrict;
     5: FSite.Rank := srLocality;
   end;
-  if (Length(eLongitude.Text) > 0) then
+  if (eLongitude.Text <> EmptyStr) then
     FSite.Longitude := StrToFloat(eLongitude.Text)
   else
-    FSite.Longitude := 0;
-  if (Length(eLatitude.Text) > 0) then
+    FSite.Longitude := 0.0;
+  if (eLatitude.Text <> EmptyStr) then
     FSite.Latitude := StrToFloat(eLatitude.Text)
   else
-    FSite.Latitude := 0;
-  if (Length(eAltitude.Text) > 0) then
+    FSite.Latitude := 0.0;
+  if (eAltitude.Text <> EmptyStr) then
     FSite.Altitude := StrToFloat(eAltitude.Text)
   else
-    FSite.Altitude := 0;
+    FSite.Altitude := 0.0;
   //FSite.ParentSiteId := GetKey('gazetteer', 'site_id', 'site_name', eParentSite.Text);
   if (Length(eFullname.Text) = 0) then
     GetFullName;
@@ -425,6 +425,8 @@ begin
   Msg := EmptyStr;
   Msgs := TStringList.Create;
 
+  // Unique values
+
   // Required fields
   //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_name', Msgs);
   //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_rank', Msgs);
@@ -434,8 +436,10 @@ begin
   //  dsLink.DataSet.FieldByName('parent_site_id').AsInteger, rsCaptionParentSite, Msgs);
 
   // Geographical coordinates
-  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
-  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+  if eLongitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  if eLatitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
   //CoordenadaIsOk(dsLink.DataSet, 'longitude', maLongitude, Msgs);
   //CoordenadaIsOk(dsLink.DataSet, 'latitude', maLatitude, Msgs);
 

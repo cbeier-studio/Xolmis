@@ -21,7 +21,7 @@ unit cbs_getvalue;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StdCtrls, cbs_taxonomy, cbs_gis, cbs_sampling;
+  Classes, SysUtils, DB, SQLDB, StdCtrls, DateUtils, cbs_taxonomy, cbs_gis, cbs_sampling;
 
   function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
   function GetName(aTable, aNameField, aKeyField: String; aKeyValue: Integer): String;
@@ -30,6 +30,8 @@ uses
   function GetRankFromSite(aSiteKey: Integer): String;
   function GetRankFromTaxon(aTaxonKey: Integer): Integer;
   function GetRank(const aKey: Integer): TZooRank;
+
+  procedure GetTimeStamp(aField: TField; aTimeStampField: TDateTime);
 
   procedure GetTaxonHierarchy(aDataset: TDataset; aTaxon: Integer);
   //procedure GetTaxonHierarchyForSpecimen(aSpecimen: TSpecimen);
@@ -79,6 +81,8 @@ function GetName(aTable, aNameField, aKeyField: String; aKeyValue: Integer): Str
 var
   Qry: TSQLQuery;
 begin
+  Result := EmptyStr;
+
   if aKeyValue > 0 then
   begin
     Qry := TSQLQuery.Create(DMM.sqlCon);
@@ -202,6 +206,17 @@ begin
   //    Result := TZooRank(i);
   //    Break;
   //  end;
+end;
+
+procedure GetTimeStamp(aField: TField; aTimeStampField: TDateTime);
+var
+  vTimeStamp: TDateTime;
+begin
+  if not (aField.IsNull) then
+    if TryISOStrToDateTime(aField.AsString, vTimeStamp) then
+      aTimeStampField := vTimeStamp
+    else
+      aTimeStampField := aField.AsDateTime;
 end;
 
 procedure GetTaxonHierarchy(aDataset: TDataset; aTaxon: Integer);

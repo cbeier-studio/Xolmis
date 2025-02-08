@@ -3785,7 +3785,7 @@ begin
         'datetime(update_date, ''localtime'') AS update_date, ' +
         'exported_status, ' +
         'marked_status, ' +
-        'active_status' +
+        'active_status ' +
       'FROM surveys');
     Add('WHERE survey_id = :cod');
     ParamByName('COD').AsInteger := aKey;

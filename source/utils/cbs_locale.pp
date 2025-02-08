@@ -168,6 +168,7 @@ uses
     rsErrorOptimizingDatabase = 'An error occurred while optimizing the database.';
     rsErrorCreatingUser = 'An error occurred while creating the user: %s';
     rsErrorWritingAdminPassword = 'An error occurred while writing the Admin user password: %s';
+    rsErrorEmptyId = 'ID is empty';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';

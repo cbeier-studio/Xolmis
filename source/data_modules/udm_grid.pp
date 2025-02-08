@@ -1822,11 +1822,11 @@ begin
   SetRecordDateUser(DataSet);
 
   { Load hierarchies }
-  if not DataSet.FieldByName('taxon_id').IsNull then
-    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
-
-  if not DataSet.FieldByName('locality_id').IsNull then
-    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+  //if not DataSet.FieldByName('taxon_id').IsNull then
+  //  GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+  //
+  //if not DataSet.FieldByName('locality_id').IsNull then
+  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qCapturesbody_moltValidate(Sender: TField);
@@ -2745,8 +2745,8 @@ begin
   SetRecordDateUser(DataSet);
 
   { Load hierarchies }
-  if not DataSet.FieldByName('taxon_id').IsNull then
-    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+  //if not DataSet.FieldByName('taxon_id').IsNull then
+  //  GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
 end;
 
 procedure TDMG.qIndividualsbirth_yearValidate(Sender: TField);

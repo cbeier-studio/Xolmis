@@ -3293,6 +3293,10 @@ msgstr "Erro executando Sweep e Analyze do banco de dados"
 msgid "Error loading field info: the field name is blank."
 msgstr "Erro carregando informação do campo: nome do campo está em branco."
 
+#: cbs_locale.rserroremptyid
+msgid "ID is empty"
+msgstr ""
+
 #: cbs_locale.rserrorexporting
 #, object-pascal-format
 msgid ""
@@ -14015,3 +14019,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

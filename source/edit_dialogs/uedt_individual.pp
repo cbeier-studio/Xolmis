@@ -464,8 +464,8 @@ procedure TedtIndividual.FormCreate(Sender: TObject);
 begin
   cbSex.Items.CommaText := rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
   cbAge.Items.CommaText := rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
-    rsAgeFledgling + ',' + rsAgeNestling + ',' + rsAgeFirstYear + ',' + rsAgeSecondYear + ',' +
-    rsAgeThirdYear + ',' + rsAgeFourthYear + ',' + rsAgeFifthYear;
+    rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
+    rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
 end;
 
 procedure TedtIndividual.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
