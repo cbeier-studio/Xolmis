@@ -555,10 +555,16 @@ begin
   eNetStation.Text := GetName('sampling_plots', 'full_name', 'sampling_plot_id', FSamplingPlotId);
   FProjectId := FSurvey.ProjectId;
   eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
-  eLongitude.Text := FloatToStr(FSurvey.StartLongitude);
-  eLatitude.Text := FloatToStr(FSurvey.StartLatitude);
-  eEndLongitude.Text := FloatToStr(FSurvey.EndLongitude);
-  eEndLatitude.Text := FloatToStr(FSurvey.EndLatitude);
+  if (FSurvey.StartLongitude <> 0.0) or (FSurvey.StartLatitude <> 0.0) then
+  begin
+    eLongitude.Text := FloatToStr(FSurvey.StartLongitude);
+    eLatitude.Text := FloatToStr(FSurvey.StartLatitude);
+  end;
+  if (FSurvey.EndLongitude <> 0.0) or (FSurvey.EndLatitude <> 0.0) then
+  begin
+    eEndLongitude.Text := FloatToStr(FSurvey.EndLongitude);
+    eEndLatitude.Text := FloatToStr(FSurvey.EndLatitude);
+  end;
   eObserversTally.Value := FSurvey.ObserversTally;
   eSampleId.Text := FSurvey.SampleId;
   eArea.Value := FSurvey.TotalArea;

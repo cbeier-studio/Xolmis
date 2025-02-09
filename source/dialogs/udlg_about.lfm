@@ -1,22 +1,21 @@
 object dlgAbout: TdlgAbout
   Left = 352
-  Height = 477
+  Height = 481
   Top = 33
   Width = 307
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'About'
-  ClientHeight = 477
+  ClientHeight = 481
   ClientWidth = 307
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.1'
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 433
+    Top = 437
     Width = 307
     Align = alTop
     LineColor = 9276813
@@ -26,7 +25,7 @@ object dlgAbout: TdlgAbout
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 435
+    Top = 439
     Width = 307
     Align = alTop
     AutoSize = True
@@ -49,7 +48,7 @@ object dlgAbout: TdlgAbout
       Caption = 'Copy'
       Images = iButtons
       ImageIndex = 0
-      TabOrder = 0
+      TabOrder = 1
       OnClick = sbCopyClick
     end
     object sbClose: TButton
@@ -59,14 +58,15 @@ object dlgAbout: TdlgAbout
       Width = 98
       Align = alRight
       Caption = 'Close'
+      Default = True
       ModalResult = 11
-      TabOrder = 1
+      TabOrder = 0
     end
   end
   object pContent: TPanel
     Left = 0
     Height = 336
-    Top = 97
+    Top = 101
     Width = 307
     Align = alTop
     AutoSize = True
@@ -458,7 +458,7 @@ object dlgAbout: TdlgAbout
   end
   object pTitle: TPanel
     Left = 0
-    Height = 97
+    Height = 101
     Top = 0
     Width = 307
     Align = alTop
@@ -467,7 +467,7 @@ object dlgAbout: TdlgAbout
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
     ChildSizing.VerticalSpacing = 4
-    ClientHeight = 97
+    ClientHeight = 101
     ClientWidth = 307
     Color = 16448250
     ParentBackground = False

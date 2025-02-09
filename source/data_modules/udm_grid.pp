@@ -2368,8 +2368,8 @@ begin
   SetRecordDateUser(DataSet);
 
   { Load hierarchies }
-  if not DataSet.FieldByName('locality_id').IsNull then
-    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+  //if not DataSet.FieldByName('locality_id').IsNull then
+  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qExpeditionsend_dateValidate(Sender: TField);
@@ -2487,11 +2487,11 @@ begin
   SetRecordDateUser(DataSet);
 
   { Load hierarchies }
-  if not DataSet.FieldByName('taxon_id').IsNull then
-    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
-
-  if not DataSet.FieldByName('locality_id').IsNull then
-    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+  //if not DataSet.FieldByName('taxon_id').IsNull then
+  //  GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+  //
+  //if not DataSet.FieldByName('locality_id').IsNull then
+  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qImagescoordinate_precisionGetText(Sender: TField; var aText: string;
@@ -3180,11 +3180,11 @@ begin
   SetRecordDateUser(DataSet);
 
   { Load hierarchies }
-  if not DataSet.FieldByName('taxon_id').IsNull then
-    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
-
-  if not DataSet.FieldByName('locality_id').IsNull then
-    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+  //if not DataSet.FieldByName('taxon_id').IsNull then
+  //  GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+  //
+  //if not DataSet.FieldByName('locality_id').IsNull then
+  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qNestsfound_dateValidate(Sender: TField);
@@ -3394,8 +3394,8 @@ begin
   SetRecordDateUser(DataSet);
 
   { Load hierarchies }
-  if not DataSet.FieldByName('locality_id').IsNull then
-    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+  //if not DataSet.FieldByName('locality_id').IsNull then
+  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qPeopleAfterCancel(DataSet: TDataSet);
@@ -3956,11 +3956,11 @@ begin
   SetRecordDateUser(DataSet);
 
   { Load hierarchies }
-  if not DataSet.FieldByName('taxon_id').IsNull then
-    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
-
-  if not DataSet.FieldByName('locality_id').IsNull then
-    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+  //if not DataSet.FieldByName('taxon_id').IsNull then
+  //  GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+  //
+  //if not DataSet.FieldByName('locality_id').IsNull then
+  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qSightingsAfterCancel(DataSet: TDataSet);
@@ -4021,11 +4021,11 @@ begin
   SetRecordDateUser(DataSet);
 
   { Load hierarchies }
-  if not DataSet.FieldByName('taxon_id').IsNull then
-    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
-
-  if not DataSet.FieldByName('locality_id').IsNull then
-    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+  //if not DataSet.FieldByName('taxon_id').IsNull then
+  //  GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+  //
+  //if not DataSet.FieldByName('locality_id').IsNull then
+  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qSightingssighting_dateValidate(Sender: TField);
@@ -4081,11 +4081,11 @@ begin
   SetRecordDateUser(DataSet);
 
   { Load hierarchies }
-  if not DataSet.FieldByName('taxon_id').IsNull then
-    GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
-
-  if not DataSet.FieldByName('locality_id').IsNull then
-    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+  //if not DataSet.FieldByName('taxon_id').IsNull then
+  //  GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
+  //
+  //if not DataSet.FieldByName('locality_id').IsNull then
+  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qSpecimenscollection_yearValidate(Sender: TField);
@@ -4240,8 +4240,8 @@ begin
   SetRecordDateUser(DataSet);
 
   { Load hierarchies }
-  if not DataSet.FieldByName('locality_id').IsNull then
-    GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+  //if not DataSet.FieldByName('locality_id').IsNull then
+  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TDMG.qSurveyssurvey_dateValidate(Sender: TField);

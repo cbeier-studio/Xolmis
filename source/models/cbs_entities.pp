@@ -270,7 +270,7 @@ type
 
 implementation
 
-uses cbs_locale, cbs_users, cbs_validations, cbs_datacolumns;
+uses cbs_locale, cbs_users, cbs_global, cbs_validations, cbs_datacolumns;
 
 
 { TProject }
@@ -464,8 +464,14 @@ begin
   begin
     FId := FieldByName('project_id').AsInteger;
     FTitle := FieldByName('project_title').AsString;
-    FStartDate := FieldByName('start_date').AsDateTime;
-    FEndDate := FieldByName('end_date').AsDateTime;
+    if (FieldByName('start_date').IsNull) then
+      FStartDate := NullDate
+    else
+      FStartDate := FieldByName('start_date').AsDateTime;
+    if (FieldByName('end_date').IsNull) then
+      FEndDate := NullDate
+    else
+      FEndDate := FieldByName('end_date').AsDateTime;
     FShortTitle := FieldByName('short_title').AsString;
     FWebsiteUri := FieldByName('website_uri').AsString;
     FEmailAddress := FieldByName('email_addr').AsString;
@@ -1239,8 +1245,8 @@ begin
   FCitation := EmptyStr;
   FTitleTreatment := EmptyStr;
   FGender := EmptyStr;
-  FBirthDate := StrToDate('30/12/1500');
-  FDeathDate := StrToDate('30/12/1500');
+  FBirthDate := NullDate;
+  FDeathDate := NullDate;
   FIdDocument1 := EmptyStr;
   FIdDocument2 := EmptyStr;
   FEmail := EmptyStr;
@@ -1331,45 +1337,45 @@ begin
     DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
-      'p.person_id, ' +
-      'p.full_name, ' +
-      'p.acronym, ' +
-      'p.citation, ' +
-      'p.title_treatment, ' +
-      'p.national_id_card, ' +
-      'p.social_security_number, ' +
-      'p.gender, ' +
-      'p.birth_date, ' +
-      'p.death_date, ' +
-      'p.email_addr, ' +
-      'p.phone_1, ' +
-      'p.phone_2, ' +
-      'p.address_1, ' +
-      'p.address_2, ' +
-      'p.neighborhood, ' +
-      'p.zip_code, ' +
-      'p.country_id, ' +
-      'p.state_id, ' +
-      'p.municipality_id, ' +
-      'p.institution_id, ' +
-      'i.full_name AS institution_name' +
-      'p.department, ' +
-      'p.job_role, ' +
-      'p.lattes_uri, ' +
-      'p.orcid_uri, ' +
-      'p.twitter_uri, ' +
-      'p.instagram_uri, ' +
-      'p.website_uri, ' +
-      'p.profile_color, ' +
-      'p.notes, ' +
-      'p.profile_image, ' +
-      'p.user_inserted, ' +
-      'p.user_updated, ' +
-      'datetime(p.insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(p.update_date, ''localtime'') AS update_date, ' +
-      'p.exported_status, ' +
-      'p.marked_status, ' +
-      'p.active_status ' +
+        'p.person_id, ' +
+        'p.full_name, ' +
+        'p.acronym, ' +
+        'p.citation, ' +
+        'p.title_treatment, ' +
+        'p.national_id_card, ' +
+        'p.social_security_number, ' +
+        'p.gender, ' +
+        'p.birth_date, ' +
+        'p.death_date, ' +
+        'p.email_addr, ' +
+        'p.phone_1, ' +
+        'p.phone_2, ' +
+        'p.address_1, ' +
+        'p.address_2, ' +
+        'p.neighborhood, ' +
+        'p.zip_code, ' +
+        'p.country_id, ' +
+        'p.state_id, ' +
+        'p.municipality_id, ' +
+        'p.institution_id, ' +
+        'i.full_name AS institution_name, ' +
+        'p.department, ' +
+        'p.job_role, ' +
+        'p.lattes_uri, ' +
+        'p.orcid_uri, ' +
+        'p.twitter_uri, ' +
+        'p.instagram_uri, ' +
+        'p.website_uri, ' +
+        'p.profile_color, ' +
+        'p.notes, ' +
+        'p.profile_image, ' +
+        'p.user_inserted, ' +
+        'p.user_updated, ' +
+        'datetime(p.insert_date, ''localtime'') AS insert_date, ' +
+        'datetime(p.update_date, ''localtime'') AS update_date, ' +
+        'p.exported_status, ' +
+        'p.marked_status, ' +
+        'p.active_status ' +
       'FROM people AS p');
     Add('LEFT JOIN institutions AS i ON p.institution_id = i.institution_id');
     Add('WHERE p.person_id = :cod');
@@ -1398,8 +1404,14 @@ begin
     FCitation := FieldByName('citation').AsString;
     FTitleTreatment := FieldByName('title_treatment').AsString;
     FGender := FieldByName('gender').AsString;
-    FBirthDate := FieldByName('birth_date').AsDateTime;
-    FDeathDate := FieldByName('death_date').AsDateTime;
+    if (FieldByName('birth_date').IsNull) then
+      FBirthDate := NullDate
+    else
+      FBirthDate := FieldByName('birth_date').AsDateTime;
+    if (FieldByName('death_date').IsNull) then
+      FDeathDate := NullDate
+    else
+      FDeathDate := FieldByName('death_date').AsDateTime;
     FIdDocument1 := FieldByName('national_id_card').AsString;
     FIdDocument2 := FieldByName('social_security_number').AsString;
     FEmail := FieldByName('email_addr').AsString;
@@ -2120,8 +2132,8 @@ begin
   FNumber := EmptyStr;
   FPermitType := EmptyStr;
   FDispatcher := EmptyStr;
-  FDispatchDate := StrToDate('30/12/1500');
-  FExpireDate := StrToDate('30/12/1500');
+  FDispatchDate := NullDate;
+  FExpireDate := NullDate;
   FFileName := EmptyStr;
   FNotes := EmptyStr;
 end;
@@ -2214,8 +2226,10 @@ begin
     FNumber := FieldByName('permit_number').AsString;
     FPermitType := FieldByName('permit_type').AsString;
     FDispatcher := FieldByName('dispatcher_name').AsString;
-    FDispatchDate := FieldByName('dispatch_date').AsDateTime;
-    FExpireDate := FieldByName('expire_date').AsDateTime;
+    if not (FieldByName('dispatch_date').IsNull) then
+      FDispatchDate := FieldByName('dispatch_date').AsDateTime;
+    if not (FieldByName('expire_date').IsNull) then
+      FExpireDate := FieldByName('expire_date').AsDateTime;
     FFileName := FieldByName('permit_filename').AsString;
     FNotes := FieldByName('notes').AsString;
     FUserInserted := FieldByName('user_inserted').AsInteger;

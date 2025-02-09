@@ -32,8 +32,8 @@ type
     cbBandSize: TComboBox;
     cbBandType: TComboBox;
     cbBandSource: TComboBox;
-    eOrderDate: TDateEdit;
-    eReceiptDate: TDateEdit;
+    eOrderDate: TEditButton;
+    eReceiptDate: TEditButton;
     eOrderNumber: TEdit;
     eProject: TEditButton;
     eSupplier: TEditButton;
@@ -73,7 +73,9 @@ type
     procedure cbBandSizeKeyPress(Sender: TObject; var Key: char);
     procedure cbBandTypeDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
     procedure eCarrierButtonClick(Sender: TObject);
+    procedure eOrderDateButtonClick(Sender: TObject);
     procedure eProjectButtonClick(Sender: TObject);
+    procedure eReceiptDateButtonClick(Sender: TObject);
     procedure eRequesterButtonClick(Sender: TObject);
     procedure eSenderButtonClick(Sender: TObject);
     procedure eSupplierButtonClick(Sender: TObject);
@@ -514,9 +516,9 @@ begin
   cbBandType.Canvas.TextRect(ARect, 24, ARect.Top, cbBandType.Items[Index]);
   if Index < cbBandType.Items.Count - 1 then
     if IsDarkModeEnabled then
-      DMM.iBandTypesDark.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType)
+      DMM.iBandTypesDark.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 16, cbBandType)
     else
-      DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType);
+      DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 16, cbBandType);
 end;
 
 procedure TbatchBands.eCarrierButtonClick(Sender: TObject);
@@ -524,9 +526,23 @@ begin
   FindDlg(tbPeople, eCarrier, CodCarrier);
 end;
 
+procedure TbatchBands.eOrderDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
+begin
+  CalendarDlg(eOrderDate.Text, eOrderDate, Dt);
+end;
+
 procedure TbatchBands.eProjectButtonClick(Sender: TObject);
 begin
   FindDlg(tbProjects, eProject, CodProject);
+end;
+
+procedure TbatchBands.eReceiptDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
+begin
+  CalendarDlg(eReceiptDate.Text, eReceiptDate, Dt);
 end;
 
 procedure TbatchBands.eRequesterButtonClick(Sender: TObject);

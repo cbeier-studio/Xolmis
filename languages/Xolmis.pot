@@ -8671,9 +8671,19 @@ msgctxt "tedtindividual.ebandchangedate.buttonhint"
 msgid "Open calendar"
 msgstr ""
 
+#: tedtindividual.ebandchangedate.texthint
+msgctxt "tedtindividual.ebandchangedate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
 #: tedtindividual.ebandingdate.buttonhint
 msgctxt "tedtindividual.ebandingdate.buttonhint"
 msgid "Open calendar"
+msgstr ""
+
+#: tedtindividual.ebandingdate.texthint
+msgctxt "tedtindividual.ebandingdate.texthint"
+msgid "DD/MM/YYYY"
 msgstr ""
 
 #: tedtindividual.ebirthday.texthint

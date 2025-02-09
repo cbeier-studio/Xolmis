@@ -618,8 +618,11 @@ begin
   eMethod.Text := GetName('methods', 'method_name', 'method_id', FMethodId);
   FLocalityId := FSighting.LocalityId;
   eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
-  eLongitude.Text := FloatToStr(FSighting.Longitude);
-  eLatitude.Text := FloatToStr(FSighting.Latitude);
+  if (FSighting.Longitude <> 0.0) or (FSighting.Latitude <> 0.0) then
+  begin
+    eLongitude.Text := FloatToStr(FSighting.Longitude);
+    eLatitude.Text := FloatToStr(FSighting.Latitude);
+  end;
   eDate.Text := DateToStr(FSighting.SightingDate);
   if (FSighting.SightingTime <> NullTime) then
     eTime.Text := FormatDateTime('hh:nn', FSighting.SightingTime);
@@ -631,7 +634,8 @@ begin
   eDistance.Value := FSighting.SubjectDistance;
   eDetectionType.Text := FSighting.DetectionType;
   eBreedingStatus.Text := FSighting.BreedingStatus;
-  eMackinnonListNumber.Text := IntToStr(FSighting.MackinnonListNumber);
+  if (FSighting.MackinnonListNumber > 0) then
+    eMackinnonListNumber.Text := IntToStr(FSighting.MackinnonListNumber);
   ckCaptured.Checked := FSighting.SubjectCaptured;
   ckSeen.Checked := FSighting.SubjectSeen;
   ckHeard.Checked := FSighting.SubjectHeard;

@@ -272,7 +272,7 @@ object DMG: TDMG
       FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere, pfRefreshOnUpdate]
+      ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       DisplayValues = 'True;False'
@@ -1417,7 +1417,6 @@ object DMG: TDMG
       '  banding_date = :banding_date,'
       '  band_change_date = :band_change_date,'
       '  band_id = :band_id,'
-      '  band_name = :band_name,'
       '  double_band_id = :double_band_id,'
       '  removed_band_id = :removed_band_id,'
       '  right_leg_below = :right_leg_below,'
@@ -1454,7 +1453,7 @@ object DMG: TDMG
       FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere, pfRefreshOnUpdate]
+      ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       DisplayValues = 'True;False'
@@ -2693,11 +2692,6 @@ object DMG: TDMG
       '  fat,'
       '  brood_patch,'
       '  cloacal_protuberance,'
-      '  old_molt,'
-      '  old_primaries_molt,'
-      '  old_secondaries_molt,'
-      '  old_retrices_molt,'
-      '  old_body_molt,'
       '  body_molt,'
       '  flight_feathers_molt,'
       '  flight_feathers_wear,'
@@ -2866,11 +2860,6 @@ object DMG: TDMG
       '  fat = :fat,'
       '  brood_patch = :brood_patch,'
       '  cloacal_protuberance = :cloacal_protuberance,'
-      '  old_molt = :old_molt,'
-      '  old_primaries_molt = :old_primaries_molt,'
-      '  old_secondaries_molt = :old_secondaries_molt,'
-      '  old_retrices_molt = :old_retrices_molt,'
-      '  old_body_molt = :old_body_molt,'
       '  body_molt = :body_molt,'
       '  flight_feathers_molt = :flight_feathers_molt,'
       '  flight_feathers_wear = :flight_feathers_wear,'
@@ -2923,7 +2912,7 @@ object DMG: TDMG
       FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere, pfRefreshOnUpdate]
+      ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       DisplayValues = 'True;False'
@@ -4781,7 +4770,7 @@ object DMG: TDMG
       FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere, pfRefreshOnUpdate]
+      ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       DisplayValues = 'True;False'
@@ -12809,6 +12798,7 @@ object DMG: TDMG
       DisplayValues = 'True;False'
     end
     object qSamplingPlotsfull_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'full_name'
       Index = 1
@@ -12860,9 +12850,11 @@ object DMG: TDMG
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSamplingPlotscountry_name: TStringField
       DisplayLabel = 'Country'
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'country_name'
       Index = 6
@@ -12881,9 +12873,11 @@ object DMG: TDMG
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSamplingPlotsstate_name: TStringField
       DisplayLabel = 'State'
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'state_name'
       Index = 8
@@ -12902,9 +12896,11 @@ object DMG: TDMG
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSamplingPlotsmunicipality_name: TStringField
       DisplayLabel = 'Municipality'
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'municipality_name'
       Index = 10
@@ -17782,7 +17778,7 @@ object DMG: TDMG
       FieldName = 'marked_status'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere, pfRefreshOnUpdate]
+      ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       DisplayValues = 'True;False'

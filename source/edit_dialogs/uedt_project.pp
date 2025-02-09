@@ -188,8 +188,10 @@ procedure TedtProject.GetRecord;
 begin
   eTitle.Text := FProject.Title;
   eShortTitle.Text := FProject.ShortTitle;
-  eStartDate.Text := DateToStr(FProject.StartDate);
-  eEndDate.Text := DateToStr(FProject.EndDate);
+  if not DateIsNull(FProject.StartDate) then
+    eStartDate.Text := DateToStr(FProject.StartDate);
+  if not DateIsNull(FProject.EndDate) then
+    eEndDate.Text := DateToStr(FProject.EndDate);
   eWebsite.Text := FProject.WebsiteUri;
   eEmail.Text := FProject.EmailAddress;
   eContactName.Text := FProject.ContactName;

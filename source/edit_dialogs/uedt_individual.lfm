@@ -217,6 +217,7 @@ object edtIndividual: TedtIndividual
           PasswordChar = #0
           Spacing = 0
           TabOrder = 1
+          TextHint = 'DD/MM/YYYY'
           OnButtonClick = eBandingDateButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
@@ -267,6 +268,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
+          OnEditingDone = eTaxonEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
         end
@@ -849,6 +851,7 @@ object edtIndividual: TedtIndividual
           PasswordChar = #0
           Spacing = 0
           TabOrder = 1
+          TextHint = 'DD/MM/YYYY'
           OnButtonClick = eBandChangeDateButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress

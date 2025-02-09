@@ -821,6 +821,7 @@ begin
   Msk := MaskV1;
 
   FDataSet.SQL.Clear;
+  FDataSet.RefreshSQL.Clear;
   FSQLWhere.Clear;
   FSQLOrderBy := EmptyStr;
 
@@ -1027,6 +1028,8 @@ begin
     FDataSet.SQL.Add('ORDER BY ' + aSort);
     FSQLOrderBy := 'ORDER BY ' + aSort;
   end;
+
+  //FDataSet.RefreshSQL.Text := FDataSet.SQL.Text;
 
   {$IFDEF DEBUG}
   LogSQL(FDataSet.SQL);

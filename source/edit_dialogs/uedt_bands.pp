@@ -187,9 +187,9 @@ begin
   cbBandType.Canvas.TextRect(ARect, 24, ARect.Top, cbBandType.Items[Index]);
   if Index < cbBandType.Items.Count - 1 then
     if IsDarkModeEnabled then
-      DMM.iBandTypesDark.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType)
+      DMM.iBandTypesDark.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 16, cbBandType)
     else
-      DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType);
+      DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 16, cbBandType);
 end;
 
 procedure TedtBands.dsLinkDataChange(Sender: TObject; Field: TField);

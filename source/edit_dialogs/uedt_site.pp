@@ -346,8 +346,11 @@ begin
     srDistrict:     cbRank.ItemIndex := 4;
     srLocality:     cbRank.ItemIndex := 5;
   end;
-  eLongitude.Text := FloatToStr(FSite.Longitude);
-  eLatitude.Text := FloatToStr(FSite.Latitude);
+  if (FSite.Longitude <> 0.0) or (FSite.Latitude <> 0.0) then
+  begin
+    eLongitude.Text := FloatToStr(FSite.Longitude);
+    eLatitude.Text := FloatToStr(FSite.Latitude);
+  end;
   eAltitude.Text := FloatToStr(FSite.Altitude);
   FParentSiteId := FSite.ParentSiteId;
   eParentSite.Text := GetName('gazetteer', 'site_name', 'site_id', FSite.ParentSiteId);

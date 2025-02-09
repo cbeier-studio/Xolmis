@@ -420,8 +420,10 @@ begin
   eAbbreviation.Text := FPerson.Acronym;
   cbTreatment.ItemIndex := cbTreatment.Items.IndexOf(FPerson.TitleTreatment);
   cbGender.ItemIndex := cbGender.Items.IndexOf(FPerson.Gender);
-  eBirthDate.Text := DateToStr(FPerson.BirthDate);
-  eDeathDate.Text := DateToStr(FPerson.DeathDate);
+  if not DateIsNull(FPerson.BirthDate) then
+    eBirthDate.Text := DateToStr(FPerson.BirthDate);
+  if (FPerson.DeathDate <> NullDate) then
+    eDeathDate.Text := DateToStr(FPerson.DeathDate);
   eRG.Text := FPerson.IdDocument1;
   eCPF.Text := FPerson.IdDocument2;
   eEmail.Text := FPerson.Email;
@@ -507,8 +509,14 @@ begin
   FPerson.Acronym        := eAbbreviation.Text;
   FPerson.TitleTreatment := cbTreatment.Text;
   FPerson.Gender         := cbGender.Text;
-  FPerson.BirthDate      := StrToDate(eBirthDate.Text);
-  FPerson.DeathDate      := StrToDate(eDeathDate.Text);
+  if eBirthDate.Text = EmptyStr then
+    FPerson.BirthDate := NullDate
+  else
+    FPerson.BirthDate      := StrToDate(eBirthDate.Text);
+  if eDeathDate.Text = EmptyStr then
+    FPerson.DeathDate := NullDate
+  else
+    FPerson.DeathDate      := StrToDate(eDeathDate.Text);
   FPerson.IdDocument1    := eRG.Text;
   FPerson.IdDocument2    := eCPF.Text;
   FPerson.Email          := eEmail.Text;

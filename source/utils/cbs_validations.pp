@@ -337,28 +337,28 @@ end;
 
 function ValidDate(aDateStr: String; aDisplayName: String; aMessageList: TStrings): Boolean;
 var
-  m: String;
-  d, Mes, a: Word;
+  FMsg: String;
+  FDay, FMonth, FYear: Word;
   aDate: TDateTime;
 begin
   Result := TryStrToDate(aDateStr, aDate);
 
   if Result = True then
   begin
-    DecodeDate(aDate, a, Mes, d);
-    Result := IsValidDate(a, Mes, d);
+    DecodeDate(aDate, FYear, FMonth, FDay);
+    Result := IsValidDate(FYear, FMonth, FDay);
   end;
 
   if Result = False then
   begin
-    m := Format(rsInvalidDate, [aDisplayName]);
+    FMsg := Format(rsInvalidDate, [aDisplayName]);
     if (Assigned(aMessageList)) then
     begin
-      LogError(m);
-      aMessageList.Add(m);
+      LogError(FMsg);
+      aMessageList.Add(FMsg);
     end
     else
-      MsgDlg('', m, mtInformation);
+      MsgDlg('', FMsg, mtInformation);
   end;
 end;
 
@@ -366,74 +366,65 @@ function ValidPartialDate(aYear, aMonth, aDay: Integer): Boolean;
 begin
   Result := False;
 
-  if (aYear < 0) or (aMonth < 0) or (aDay < 0) then
+  // Negative values or empty year are not allowed
+  if (aYear <= 0) or (aMonth < 0) or (aDay < 0) then
     Exit;
-  if (aYear = 0) then
-    Exit;
+  // Empty month with filled day is not allowed
   if (aMonth = 0) and (aDay > 0) then
     Exit;
-
+  // Check invalid month
   if not(aMonth in [0 .. 12]) then
     Exit;
-  if not(aDay in [0 .. 31]) then
+  // Check invalid days for the month
+  if (aDay > 31) or ((aMonth = 2) and ((aDay > 29) or ((aDay > 28) and not IsLeapYear(aYear)))) then
     Exit;
-  if (IsLeapYear(aYear)) then
-  begin
-    if (aMonth = 2) and (aDay > 29) then
-      Exit;
-  end
-  else
-  begin
-    if (aMonth = 2) and (aDay > 28) then
-      Exit;
-  end;
+  if (aDay > 30) and (aMonth in [4, 6, 9, 11]) then
+    Exit;
 
   Result := True;
 end;
 
 function ValidPartialDate(aPartialDate: TPartialDate; aDisplayName: String; aMessageList: TStrings): Boolean;
 var
-  m: String;
+  FMsg: String;
 begin
   Result := ValidPartialDate(aPartialDate.Year, aPartialDate.Month, aPartialDate.Day);
 
   if Result = False then
   begin
-    m := Format(rsInvalidPartialDate, [aDisplayName]);
+    FMsg := Format(rsInvalidPartialDate, [aDisplayName]);
     if (Assigned(aMessageList)) then
     begin
-      LogError(m);
-      aMessageList.Add(m);
+      LogError(FMsg);
+      aMessageList.Add(FMsg);
     end
     else
     if (aDisplayName <> EmptyStr) then
-      MsgDlg('', m, mtInformation);
+      MsgDlg('', FMsg, mtInformation);
   end;
 end;
 
-function PartialDateIsEmpty(aYear, aMonth, aDay: Integer; aDisplayName: String; aMessageList: TStrings
-  ): Boolean;
+function PartialDateIsEmpty(aYear, aMonth, aDay: Integer; aDisplayName: String; aMessageList: TStrings): Boolean;
 var
-  m: String;
+  FMsg: String;
 begin
 
   Result := (aYear = 0);
 
   if Result then
   begin
-    m := Format(rsPartialDateEmpty, [aDisplayName]);
+    FMsg := Format(rsPartialDateEmpty, [aDisplayName]);
     if (Assigned(aMessageList)) then
     begin
-      LogError(m);
-      aMessageList.Add(m);
+      LogError(FMsg);
+      aMessageList.Add(FMsg);
     end
     else
-      MsgDlg('', m, mtInformation);
+      MsgDlg('', FMsg, mtInformation);
   end;
 end;
 
-function PartialDateIsEmpty(aPartialDate: TPartialDate; aDisplayName: String; aMessageList: TStrings
-  ): Boolean;
+function PartialDateIsEmpty(aPartialDate: TPartialDate; aDisplayName: String; aMessageList: TStrings): Boolean;
 begin
   Result := PartialDateIsEmpty(aPartialDate.Year, aPartialDate.Month, aPartialDate.Day, aDisplayName,
     aMessageList);
@@ -442,72 +433,77 @@ end;
 function IsFutureDate(aDate, aReferenceDate: TDateTime; aDisplayName: String; aReferenceName: String;
   aMessageList: TStrings): Boolean;
 var
-  m: String;
+  FMsg: String;
 begin
   Result := (CompareDate(aDate, aReferenceDate) > 0);
 
   if Result then
   begin
-    m := Format(rsFutureDate, [aReferenceName, aDisplayName, DateToStr(aDate)]);
+    FMsg := Format(rsFutureDate, [aReferenceName, aDisplayName, DateToStr(aDate)]);
     if (Assigned(aMessageList)) then
     begin
-      LogError(m);
-      aMessageList.Add(m);
+      LogError(FMsg);
+      aMessageList.Add(FMsg);
     end;
     //else
     //if (aDisplayName <> EmptyStr) and (aReferenceName <> EmptyStr) then
-    //  MsgDlg('', m, mtInformation);
+    //  MsgDlg('', FMsg, mtInformation);
   end;
 end;
 
 function IsFuturePartialDate(aDate, aReferenceDate: TPartialDate; aDisplayName: String; aReferenceName: String;
   aMessageList: TStrings): Boolean;
 var
-  m, ano1, mes1, dia1, ano2, mes2, dia2: String;
-  d1, d2: Integer;
+  FMsg, FYear1, FMonth1, FDay1, FYear2, FMonth2, FDay2: String;
+  FDate1, FDate2: Integer;
 begin
   Result := False;
+
+  // Validate partial dates
   if not(ValidPartialDate(aDate)) or not(ValidPartialDate(aReferenceDate)) then
     Exit;
 
-  ano1 := Format('%4.4d', [aDate.Year]);
-  ano2 := Format('%4.4d', [aReferenceDate.Year]);
+  FYear1 := Format('%4.4d', [aDate.Year]);
+  FYear2 := Format('%4.4d', [aReferenceDate.Year]);
   if (aDate.Month > 0) and (aReferenceDate.Month > 0) then
   begin
-    mes1 := Format('%2.2d', [aDate.Month]);
-    mes2 := Format('%2.2d', [aReferenceDate.Month]);
+    FMonth1 := Format('%2.2d', [aDate.Month]);
+    FMonth2 := Format('%2.2d', [aReferenceDate.Month]);
     if (aDate.Day > 0) and (aReferenceDate.Day > 0) then
     begin
-      dia1 := Format('%2.2d', [aDate.Day]);
-      dia2 := Format('%2.2d', [aReferenceDate.Day]);
+      FDay1 := Format('%2.2d', [aDate.Day]);
+      FDay2 := Format('%2.2d', [aReferenceDate.Day]);
     end
     else
     begin
-      dia1 := '';
-      dia2 := '';
+      FDay1 := '';
+      FDay2 := '';
     end;
   end
   else
   begin
-    mes1 := '';
-    mes2 := '';
+    FMonth1 := '';
+    FMonth2 := '';
   end;
-  d1 := StrToInt(Format('%s%s%s', [ano1, mes1, dia1]));
-  d2 := StrToInt(Format('%s%s%s', [ano2, mes2, dia2]));
 
-  Result := d1 > d2;
+  // Assemble values and convert to integer
+  FDate1 := StrToIntDef(Format('%s%s%s', [FYear1, FMonth1, FDay1]), 0);
+  FDate2 := StrToIntDef(Format('%s%s%s', [FYear2, FMonth2, FDay2]), 0);
+
+  // Compare integers
+  Result := FDate1 > FDate2;
 
   if Result then
   begin
-    m := Format(rsFuturePartialDate, [aDisplayName, aReferenceName, aReferenceDate.ToString]);
+    FMsg := Format(rsFuturePartialDate, [aDisplayName, aReferenceName, aReferenceDate.ToString]);
     if (Assigned(aMessageList)) then
     begin
-      LogError(m);
-      aMessageList.Add(m);
+      LogError(FMsg);
+      aMessageList.Add(FMsg);
     end
     else
     if (aDisplayName <> EmptyStr) and (aReferenceName <> EmptyStr) then
-      MsgDlg('', m, mtInformation);
+      MsgDlg('', FMsg, mtInformation);
   end;
 end;
 

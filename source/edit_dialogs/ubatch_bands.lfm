@@ -1,24 +1,23 @@
 object batchBands: TbatchBands
   Left = 352
-  Height = 475
+  Height = 472
   Top = 33
   Width = 400
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'New batch of bands'
-  ClientHeight = 475
+  ClientHeight = 472
   ClientWidth = 400
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.1'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 434
+    Top = 431
     Width = 400
     Align = alTop
     AutoSize = True
@@ -61,25 +60,23 @@ object batchBands: TbatchBands
   end
   object pEdit: TPanel
     Left = 0
-    Height = 432
+    Height = 429
     Top = 0
     Width = 400
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 432
+    ClientHeight = 429
     ClientWidth = 400
-    Color = 16444392
     Constraints.MinHeight = 400
-    Font.Color = 6579300
     ParentBackground = False
     ParentColor = False
     ParentFont = False
     TabOrder = 0
     object pSizeType: TPanel
       Left = 0
-      Height = 48
+      Height = 45
       Top = 8
       Width = 400
       Align = alTop
@@ -92,7 +89,7 @@ object batchBands: TbatchBands
       ChildSizing.ShrinkHorizontal = crsSameSize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
-      ClientHeight = 48
+      ClientHeight = 45
       ClientWidth = 400
       ParentBackground = False
       TabOrder = 0
@@ -151,12 +148,12 @@ object batchBands: TbatchBands
       end
       object cbBandType: TComboBox
         Left = 208
-        Height = 26
+        Height = 23
         Top = 22
         Width = 176
         Constraints.MinWidth = 176
         DropDownCount = 12
-        ItemHeight = 20
+        ItemHeight = 17
         Items.Strings = (
           'Aberta'
           'Fechada'
@@ -176,7 +173,7 @@ object batchBands: TbatchBands
     object pFromToNumber: TPanel
       Left = 0
       Height = 45
-      Top = 56
+      Top = 53
       Width = 400
       Align = alTop
       AutoSize = True
@@ -242,7 +239,7 @@ object batchBands: TbatchBands
     object pProject: TPanel
       Left = 0
       Height = 45
-      Top = 101
+      Top = 98
       Width = 400
       Align = alTop
       AutoSize = True
@@ -291,7 +288,7 @@ object batchBands: TbatchBands
     object pSourceOrderNumber: TPanel
       Left = 0
       Height = 45
-      Top = 146
+      Top = 143
       Width = 400
       Align = alTop
       AutoSize = True
@@ -359,7 +356,7 @@ object batchBands: TbatchBands
     object pDateOrderReceipt: TPanel
       Left = 0
       Height = 45
-      Top = 191
+      Top = 188
       Width = 400
       Align = alTop
       AutoSize = True
@@ -393,47 +390,45 @@ object batchBands: TbatchBands
         Caption = 'Receipt date:'
         ParentFont = False
       end
-      object eOrderDate: TDateEdit
+      object eOrderDate: TEditButton
         Left = 16
         Height = 23
         Top = 22
         Width = 176
-        CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-        DateOrder = doNone
         ButtonHint = 'Open calendar'
         ButtonWidth = 23
-        Constraints.MinWidth = 176
-        NumGlyphs = 1
         Images = DMM.iEdits
         ImageIndex = 1
         MaxLength = 0
+        NumGlyphs = 1
         ParentShowHint = False
+        PasswordChar = #0
         ShowHint = True
-        TabOrder = 0
         Spacing = 0
+        TabOrder = 0
         TextHint = 'DD/MM/YYYY'
+        OnButtonClick = eOrderDateButtonClick
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
       end
-      object eReceiptDate: TDateEdit
+      object eReceiptDate: TEditButton
         Left = 208
         Height = 23
         Top = 22
         Width = 176
-        CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-        DateOrder = doNone
         ButtonHint = 'Open calendar'
         ButtonWidth = 23
-        Constraints.MinWidth = 176
-        NumGlyphs = 1
         Images = DMM.iEdits
         ImageIndex = 1
         MaxLength = 0
+        NumGlyphs = 1
         ParentShowHint = False
+        PasswordChar = #0
         ShowHint = True
-        TabOrder = 1
         Spacing = 0
+        TabOrder = 1
         TextHint = 'DD/MM/YYYY'
+        OnButtonClick = eReceiptDateButtonClick
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
       end
@@ -441,7 +436,7 @@ object batchBands: TbatchBands
     object pSupplier: TPanel
       Left = 0
       Height = 45
-      Top = 236
+      Top = 233
       Width = 400
       Align = alTop
       AutoSize = True
@@ -490,7 +485,7 @@ object batchBands: TbatchBands
     object pRequester: TPanel
       Left = 0
       Height = 45
-      Top = 281
+      Top = 278
       Width = 400
       Align = alTop
       AutoSize = True
@@ -539,7 +534,7 @@ object batchBands: TbatchBands
     object pCarrier: TPanel
       Left = 0
       Height = 45
-      Top = 326
+      Top = 323
       Width = 400
       Align = alTop
       AutoSize = True
@@ -588,7 +583,7 @@ object batchBands: TbatchBands
     object pSender: TPanel
       Left = 0
       Height = 45
-      Top = 371
+      Top = 368
       Width = 400
       Align = alTop
       AutoSize = True
@@ -640,7 +635,7 @@ object batchBands: TbatchBands
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 432
+    Top = 429
     Width = 400
     Align = alTop
     LineColor = 9276813

@@ -256,8 +256,10 @@ end;
 procedure TedtExpedition.GetRecord;
 begin
   eName.Text := FExpedition.Name;
-  eStartDate.Text := DateToStr(FExpedition.StartDate);
-  eEndDate.Text := DateToStr(FExpedition.EndDate);
+  if (FExpedition.StartDate <> NullDate) then
+    eStartDate.Text := DateToStr(FExpedition.StartDate);
+  if (FExpedition.EndDate <> NullDate) then
+    eEndDate.Text := DateToStr(FExpedition.EndDate);
   FLocalityId := FExpedition.LocalityId;
   eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
   FProjectId := FExpedition.ProjectId;

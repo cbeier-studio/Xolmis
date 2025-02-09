@@ -11,7 +11,6 @@ object edtBands: TedtBands
   ParentFont = True
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -102,7 +101,7 @@ object edtBands: TedtBands
       object pNotes: TPanel
         Left = 0
         Height = 113
-        Top = 414
+        Top = 416
         Width = 488
         Align = alTop
         AutoSize = True
@@ -221,6 +220,7 @@ object edtBands: TedtBands
           Height = 23
           Top = 23
           Width = 220
+          MaxLength = 6
           NumbersOnly = True
           TabOrder = 1
           OnEditingDone = cbBandSizeEditingDone
@@ -290,7 +290,7 @@ object edtBands: TedtBands
       end
       object pTypeColor: TPanel
         Left = 0
-        Height = 44
+        Height = 46
         Top = 108
         Width = 488
         Align = alTop
@@ -303,7 +303,7 @@ object edtBands: TedtBands
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 44
+        ClientHeight = 46
         ClientWidth = 488
         ParentBackground = False
         TabOrder = 2
@@ -331,24 +331,26 @@ object edtBands: TedtBands
         end
         object cbBandType: TComboBox
           Left = 16
-          Height = 21
+          Height = 23
           Top = 23
           Width = 220
-          ItemHeight = 15
+          ItemHeight = 17
           Style = csOwnerDrawFixed
           TabOrder = 0
+          OnDrawItem = cbBandTypeDrawItem
           OnEditingDone = cbBandSizeEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
         object cbBandColor: TComboBox
           Left = 252
-          Height = 21
+          Height = 23
           Top = 23
           Width = 220
-          ItemHeight = 15
+          ItemHeight = 17
           Style = csOwnerDrawFixed
           TabOrder = 1
+          OnDrawItem = cbBandColorDrawItem
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
@@ -356,7 +358,7 @@ object edtBands: TedtBands
       object pStatus: TPanel
         Left = 0
         Height = 46
-        Top = 152
+        Top = 154
         Width = 488
         Align = alTop
         AutoSize = True
@@ -420,7 +422,7 @@ object edtBands: TedtBands
       object pSourceOrderNumber: TPanel
         Left = 0
         Height = 46
-        Top = 214
+        Top = 216
         Width = 488
         Align = alTop
         AutoSize = True
@@ -474,7 +476,7 @@ object edtBands: TedtBands
       object pSupplier: TPanel
         Left = 0
         Height = 46
-        Top = 260
+        Top = 262
         Width = 488
         Align = alTop
         AutoSize = True
@@ -525,7 +527,7 @@ object edtBands: TedtBands
       object pCarrier: TPanel
         Left = 0
         Height = 46
-        Top = 306
+        Top = 308
         Width = 488
         Align = alTop
         AutoSize = True
@@ -575,7 +577,7 @@ object edtBands: TedtBands
       object pProject: TPanel
         Left = 0
         Height = 46
-        Top = 352
+        Top = 354
         Width = 488
         Align = alTop
         AutoSize = True

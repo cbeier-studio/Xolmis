@@ -12,6 +12,7 @@ object edtProject: TedtProject
   PopupMode = pmAuto
   Position = poScreenCenter
   ShowInTaskBar = stNever
+  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow

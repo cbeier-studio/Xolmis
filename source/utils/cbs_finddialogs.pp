@@ -170,6 +170,12 @@ begin
       begin
         TCustomEdit(aControl).Text := dlgFindTaxon.Nome;
         TCustomEdit(aControl).Modified := True;
+      end
+      else
+      if aControl is TEditButton then
+      begin
+        TEditButton(aControl).Text := dlgFindTaxon.Nome;
+        TEditButton(aControl).Modified := True;
       end;
       Result := True;
     end;

@@ -305,8 +305,11 @@ begin
   eAbbreviation.Text := FSamplingPlot.Acronym;
   FLocalityId := FSamplingPlot.LocalityId;
   eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
-  eLongitude.Text := FloatToStr(FSamplingPlot.Longitude);
-  eLatitude.Text := FloatToStr(FSamplingPlot.Latitude);
+  if (FSamplingPlot.Longitude <> 0.0) or (FSamplingPlot.Latitude <> 0.0) then
+  begin
+    eLongitude.Text := FloatToStr(FSamplingPlot.Longitude);
+    eLatitude.Text := FloatToStr(FSamplingPlot.Latitude);
+  end;
   mDescription.Text := FSamplingPlot.Description;
   mNotes.Text := FSamplingPlot.Notes;
 end;

@@ -496,13 +496,19 @@ begin
     'D':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenFeces);
     'R':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenRegurgite);
   end;
-  eCollectionYear.Text := IntToStr(FSpecimen.CollectionYear);
-  eCollectionMonth.Text := IntToStr(FSpecimen.CollectionMonth);
-  eCollectionDay.Text := IntToStr(FSpecimen.CollectionDay);
+  if (FSpecimen.CollectionYear > 0) then
+  begin
+    eCollectionYear.Text := IntToStr(FSpecimen.CollectionYear);
+    eCollectionMonth.Text := IntToStr(FSpecimen.CollectionMonth);
+    eCollectionDay.Text := IntToStr(FSpecimen.CollectionDay);
+  end;
   FLocalityId := FSpecimen.LocalityId;
   eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
-  eLongitude.Text := FloatToStr(FSpecimen.Longitude);
-  eLatitude.Text := FloatToStr(FSpecimen.Latitude);
+  if (FSpecimen.Longitude <> 0.0) or (FSpecimen.Latitude <> 0.0) then
+  begin
+    eLongitude.Text := FloatToStr(FSpecimen.Longitude);
+    eLatitude.Text := FloatToStr(FSpecimen.Latitude);
+  end;
   FTaxonId := FSpecimen.TaxonId;
   eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
   FIndividualId := FSpecimen.IndividualId;

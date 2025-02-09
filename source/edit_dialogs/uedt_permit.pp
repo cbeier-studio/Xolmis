@@ -249,8 +249,10 @@ begin
     'O': cbPermitType.ItemIndex := cbPermitType.Items.IndexOf(rsPermitOther);
   end;
   eDispatcher.Text := FPermit.Dispatcher;
-  eDispatchDate.Text := DateToStr(FPermit.DispatchDate);
-  eExpireDate.Text := DateToStr(FPermit.ExpireDate);
+  if not DateIsNull(FPermit.DispatchDate) then
+    eDispatchDate.Text := DateToStr(FPermit.DispatchDate);
+  if not DateIsNull(FPermit.ExpireDate) then
+    eExpireDate.Text := DateToStr(FPermit.ExpireDate);
   mNotes.Text := FPermit.Notes;
 end;
 

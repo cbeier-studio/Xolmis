@@ -115,6 +115,7 @@ type
     procedure eRightTarsusButtonClick(Sender: TObject);
     procedure eRightTibiaButtonClick(Sender: TObject);
     procedure eTaxonButtonClick(Sender: TObject);
+    procedure eTaxonEditingDone(Sender: TObject);
     procedure eTaxonKeyPress(Sender: TObject; var Key: char);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -432,6 +433,11 @@ begin
   FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], eTaxon, True, FTaxonId);
 end;
 
+procedure TedtIndividual.eTaxonEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
+end;
+
 procedure TedtIndividual.eTaxonKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
@@ -531,12 +537,18 @@ begin
   eLeftTarsus.Text := FIndividual.LeftLegBelow;
   eRightTibia.Text := FIndividual.RightLegAbove;
   eLeftTibia.Text := FIndividual.LeftLegAbove;
-  eBirthYear.Text := IntToStr(FIndividual.BirthYear);
-  eBirthMonth.Text := IntToStr(FIndividual.BirthMonth);
-  eBirthDay.Text := IntToStr(FIndividual.BirthDay);
-  eDeathYear.Text := IntToStr(FIndividual.DeathYear);
-  eDeathMonth.Text := IntToStr(FIndividual.DeathMonth);
-  eDeathDay.Text := IntToStr(FIndividual.DeathDay);
+  if (FIndividual.BirthYear > 0) then
+  begin
+    eBirthYear.Text := IntToStr(FIndividual.BirthYear);
+    eBirthMonth.Text := IntToStr(FIndividual.BirthMonth);
+    eBirthDay.Text := IntToStr(FIndividual.BirthDay);
+  end;
+  if (FIndividual.DeathYear > 0) then
+  begin
+    eDeathYear.Text := IntToStr(FIndividual.DeathYear);
+    eDeathMonth.Text := IntToStr(FIndividual.DeathMonth);
+    eDeathDay.Text := IntToStr(FIndividual.DeathDay);
+  end;
   case FIndividual.Sex of
     sexMale: cbSex.ItemIndex := cbSex.Items.IndexOf(rsSexMale);
     sexFemale: cbSex.ItemIndex := cbSex.Items.IndexOf(rsSexFemale);
@@ -608,16 +620,36 @@ begin
   FIndividual.LeftLegBelow   := eLeftTarsus.Text;
   FIndividual.RightLegAbove  := eRightTibia.Text;
   FIndividual.LeftLegAbove   := eLeftTibia.Text;
-  FIndividual.BirthYear      := StrToInt(eBirthYear.Text);
-  FIndividual.BirthMonth     := StrToInt(eBirthMonth.Text);
-  FIndividual.BirthDay       := StrToInt(eBirthDay.Text);
-  FIndividual.DeathYear      := StrToInt(eDeathYear.Text);
-  FIndividual.DeathMonth     := StrToInt(eDeathMonth.Text);
-  FIndividual.DeathDay       := StrToInt(eDeathDay.Text);
+  if eBirthYear.Text = EmptyStr then
+    FIndividual.BirthYear := 0
+  else
+    FIndividual.BirthYear      := StrToInt(eBirthYear.Text);
+  if eBirthMonth.Text = EmptyStr then
+    FIndividual.BirthMonth := 0
+  else
+    FIndividual.BirthMonth     := StrToInt(eBirthMonth.Text);
+  if eBirthDay.Text = EmptyStr then
+    FIndividual.BirthDay := 0
+  else
+    FIndividual.BirthDay       := StrToInt(eBirthDay.Text);
+  if eDeathYear.Text = EmptyStr then
+    FIndividual.DeathYear := 0
+  else
+    FIndividual.DeathYear      := StrToInt(eDeathYear.Text);
+  if eDeathMonth.Text = EmptyStr then
+    FIndividual.DeathMonth := 0
+  else
+    FIndividual.DeathMonth     := StrToInt(eDeathMonth.Text);
+  if eDeathDay.Text = EmptyStr then
+    FIndividual.DeathDay := 0
+  else
+    FIndividual.DeathDay       := StrToInt(eDeathDay.Text);
   case cbSex.ItemIndex of
     0: FIndividual.Sex := sexMale;
     1: FIndividual.Sex := sexFemale;
     2: FIndividual.Sex := sexUnknown;
+  else
+    FIndividual.Sex := sexUnknown;
   end;
   case cbAge.ItemIndex of
     0: FIndividual.Age := ageUnknown;
@@ -630,6 +662,8 @@ begin
     7: FIndividual.Age := ageThirdYear;
     8: FIndividual.Age := ageFourthYear;
     9: FIndividual.Age := ageFifthYear;
+  else
+    FIndividual.Age := ageUnknown;
   end;
   FIndividual.NestId               := FNestId;
   FIndividual.FatherId             := FFatherId;
@@ -642,11 +676,11 @@ function TedtIndividual.ValidateFields: Boolean;
 var
   Msgs: TStrings;
   DataNasc, DataOb, Hoje: TPartialDate;
-  D: TDataSet;
+  //D: TDataSet;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
+  //D := dsLink.DataSet;
 
   { Required fields }
   //RequiredIsEmpty(D, tbIndividuals, 'taxon_id', Msgs);
@@ -674,34 +708,41 @@ begin
 
   { Dates }
   Hoje.Today;
-  if eBirthYear.Text <> EmptyStr then
-  begin
+  // Assemble partial birth date
+  if eBirthYear.Text = EmptyStr then
+    DataNasc.Year := 0
+  else
     DataNasc.Year := StrToInt(eBirthYear.Text);
-    if eBirthMonth.Text = EmptyStr then
-      DataNasc.Month := 0
-    else
-      DataNasc.Month := StrToInt(eBirthMonth.Text);
-    if eBirthDay.Text = EmptyStr then
-      DataNasc.Day := 0
-    else
-      DataNasc.Day := StrToInt(eBirthDay.Text);
-    if ValidPartialDate(DataNasc, rsDateBirth, Msgs) then
-      IsFuturePartialDate(DataNasc, Hoje, rsDateBirth, LowerCase(rsDateToday), Msgs);
-  end;
-  if eDeathYear.Text <> EmptyStr then
-  begin
+  if eBirthMonth.Text = EmptyStr then
+    DataNasc.Month := 0
+  else
+    DataNasc.Month := StrToInt(eBirthMonth.Text);
+  if eBirthDay.Text = EmptyStr then
+    DataNasc.Day := 0
+  else
+    DataNasc.Day := StrToInt(eBirthDay.Text);
+  // If valid, check if birth date is a future date
+  if ValidPartialDate(DataNasc, rsDateBirth, Msgs) then
+    IsFuturePartialDate(DataNasc, Hoje, rsDateBirth, LowerCase(rsDateToday), Msgs);
+
+  // Assemble partial death date
+  if eDeathYear.Text = EmptyStr then
+    DataOb.Year := 0
+  else
     DataOb.Year := StrToInt(eDeathYear.Text);
-    if eDeathMonth.Text = EmptyStr then
-      DataOb.Month := 0
-    else
-      DataOb.Month := StrToInt(eDeathMonth.Text);
-    if eDeathDay.Text = EmptyStr then
-      DataOb.Day := 0
-    else
-      DataOb.Day := StrToInt(eDeathDay.Text);
-    if ValidPartialDate(DataOb, rsDateDeath, Msgs) then
-      IsFuturePartialDate(DataOb, Hoje, rsDateDeath, LowerCase(rsDateToday), Msgs);
-  end;
+  if eDeathMonth.Text = EmptyStr then
+    DataOb.Month := 0
+  else
+    DataOb.Month := StrToInt(eDeathMonth.Text);
+  if eDeathDay.Text = EmptyStr then
+    DataOb.Day := 0
+  else
+    DataOb.Day := StrToInt(eDeathDay.Text);
+  // If valid, check if death date is a future date
+  if ValidPartialDate(DataOb, rsDateDeath, Msgs) then
+    IsFuturePartialDate(DataOb, Hoje, rsDateDeath, LowerCase(rsDateToday), Msgs);
+
+  // Check if banding and band change dates are valid
   if eBandingDate.Text <> EmptyStr then
     ValidDate(eBandingDate.Text, rsDateBanding, Msgs);
   if eBandChangeDate.Text <> EmptyStr then
