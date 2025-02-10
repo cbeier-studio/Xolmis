@@ -2926,6 +2926,15 @@ msgctxt "cbs_locale.rsdeadbird"
 msgid "Dead bird"
 msgstr "Ave morta"
 
+#: cbs_locale.rsdecimalseparatorcolon
+msgctxt "cbs_locale.rsdecimalseparatorcolon"
+msgid "Colon"
+msgstr "Vírgula"
+
+#: cbs_locale.rsdecimalseparatorperiod
+msgid "Period"
+msgstr "Ponto"
+
 #: cbs_locale.rsdecompressingbackup
 msgctxt "cbs_locale.rsdecompressingbackup"
 msgid "Decompressing backup..."
@@ -2967,6 +2976,24 @@ msgstr "Deseja realmente apagar esse registro?"
 msgctxt "cbs_locale.rsdeleterecordtitle"
 msgid "Delete record"
 msgstr "Apagar registro"
+
+#: cbs_locale.rsdelimitercolon
+msgctxt "cbs_locale.rsdelimitercolon"
+msgid "Colon"
+msgstr "Vírgula"
+
+#: cbs_locale.rsdelimiterother
+msgid "Other..."
+msgstr "Outro..."
+
+#: cbs_locale.rsdelimitersemicolon
+msgctxt "cbs_locale.rsdelimitersemicolon"
+msgid "Semicolon"
+msgstr "Ponto e vírgula"
+
+#: cbs_locale.rsdelimitertab
+msgid "Tab"
+msgstr "Tab"
 
 #: cbs_locale.rsdetectiontypes
 msgid "\"S - song\",\"C - call\",\"V - seen\",\"W - wing flapping\",\"D - drumming\",\"F - flying\""
@@ -5880,10 +5907,12 @@ msgid "Delimitation options"
 msgstr "Opções de delimitação"
 
 #: tcfgdelimiters.cbdecimalseparator.text
+msgctxt "tcfgdelimiters.cbdecimalseparator.text"
 msgid "Colon"
 msgstr "Vírgula"
 
 #: tcfgdelimiters.cbdelimiter.text
+msgctxt "tcfgdelimiters.cbdelimiter.text"
 msgid "Semicolon"
 msgstr "Ponto e vírgula"
 

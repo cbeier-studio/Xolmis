@@ -1174,7 +1174,6 @@
         <ComponentName Value="cfgDelimiters"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="dialogs\ucfg_options.pp"/>
@@ -1182,7 +1181,6 @@
         <ComponentName Value="cfgOptions"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="dialogs\ucfg_users.pp"/>

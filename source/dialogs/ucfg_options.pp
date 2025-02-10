@@ -167,6 +167,7 @@ type
     procedure eAudiosPathChange(Sender: TObject);
     procedure eBackupPathChange(Sender: TObject);
     procedure eImagesPathChange(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure lblPrivacyTermsClick(Sender: TObject);
     procedure sbCheckUpdatesNowClick(Sender: TObject);
@@ -381,6 +382,11 @@ end;
 procedure TcfgOptions.eImagesPathChange(Sender: TObject);
 begin
   XSettings.ImagesFolder := eImagesPath.Text;
+end;
+
+procedure TcfgOptions.FormDestroy(Sender: TObject);
+begin
+  XSettings.SaveToFile;
 end;
 
 procedure TcfgOptions.FormShow(Sender: TObject);

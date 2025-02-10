@@ -826,6 +826,14 @@ uses
     rsDocGis = 'GIS file';
     rsDocOther = 'Other';
 
+    { CSV options }
+    rsDelimiterSemicolon = 'Semicolon';
+    rsDelimiterColon = 'Colon';
+    rsDelimiterTab = 'Tab';
+    rsDelimiterOther = 'Other...';
+    rsDecimalSeparatorColon = 'Colon';
+    rsDecimalSeparatorPeriod = 'Period';
+
     { Versions }
     rsVersionStr = 'Version %s';
     rsVersionPlusStr = 'Version %s (%s)';

@@ -388,10 +388,10 @@ object cfgDelimiters: TcfgDelimiters
         ParentColor = False
       end
       object cbDecimalSeparator: TComboBox
-        Left = 195
+        Left = 245
         Height = 23
         Top = 12
-        Width = 173
+        Width = 123
         Align = alRight
         Color = clWhite
         ItemHeight = 15

@@ -38,6 +38,7 @@ const
 
 const
   DefaultSettingsFile: String   = 'settings.json';
+  DebugSettingsFile: String     = 'settings_debug.json';
   LogFile: String               = 'xlmslog.txt';
   GeoBankFile: String           = 'geobank.dat';
   BFKey: String                 = 'support lottery birds sample';
@@ -126,6 +127,12 @@ type
     FBackupFolder: String;
     FAutomaticBackup: Integer;
     FBackupsToKeep: Integer;
+    { CSV options }
+    FHaveHeader: Boolean;
+    FQuotedAsText: Boolean;
+    FDelimiterIndex: Integer;
+    FDelimiter: Char;
+    FDecimalSeparator: Char;
     { Versions }
     FClementsVersion, FIocVersion, FCbroVersion: String;
     procedure SetFileName(aValue: String);
@@ -183,6 +190,12 @@ type
     property BackupFolder: String read FBackupFolder write SetBackupFolder;
     property AutomaticBackup: Integer read FAutomaticBackup write FAutomaticBackup;
     property BackupsToKeep: Integer read FBackupsToKeep write FBackupsToKeep;
+    { CSV options }
+    property HaveHeader: Boolean read FHaveHeader write FHaveHeader;
+    property QuotedAsText: Boolean read FQuotedAsText write FQuotedAsText;
+    property DelimiterIndex: Integer read FDelimiterIndex write FDelimiterIndex;
+    property Delimiter: Char read FDelimiter write FDelimiter;
+    property DecimalSeparator: Char read FDecimalSeparator write FDecimalSeparator;
     { Versions }
     property ClementsVersion: String read FClementsVersion;
     property IocVersion: String read FIocVersion;
@@ -611,7 +624,11 @@ end;
 constructor TXolmisSettings.Create;
 begin
   inherited;
+  {$IFDEF DEBUG}
+  FFileName := ConcatPaths([AppDataDir, DebugSettingsFile]);
+  {$ELSE}
   FFileName := ConcatPaths([AppDataDir, DefaultSettingsFile]);
+  {$ENDIF}
   FConfig := TJSONConfig.Create(nil);
   try
     FConfig.Formatted:= True;
@@ -638,6 +655,7 @@ begin
   FClearDeletedPeriod := FConfig.GetValue('/GENERAL/ClearDeletedPeriod', 2);
   FLastClearDeleted := FConfig.GetValue('/GENERAL/LastClearDeleted', StrToDateTime('30/12/1500 00:00:00'));
   FLastDatabaseOptimization := FConfig.GetValue('/GENERAL/LastDatabaseOptimization', StrToDateTime('30/12/1500 00:00:00'));
+  FAutoUpdates := FConfig.GetValue('/GENERAL/AutoUpdates', 2);
   FLastAutoUpdate := FConfig.GetValue('/GENERAL/LastAutoUpdate', StrToDateTime('30/12/1500 00:00:00'));
   { Appearance }
   FSelectedTheme := FConfig.GetValue('/APPEARANCE/SelectedTheme', 1);
@@ -661,7 +679,6 @@ begin
   FRememberConnection := FConfig.GetValue('/SECURITY/RememberConnection', True);
   FLastUser := FConfig.GetValue('/SECURITY/LastUser', EmptyStr);
   FLastConnection := FConfig.GetValue('/SECURITY/LastConnection', EmptyStr);
-  FAutoUpdates := FConfig.GetValue('/SECURITY/AutoUpdates', 2);
   { Privacy }
   FAllowWriteLogs := FConfig.GetValue('/PRIVACY/AllowWriteLogs', False);
   FAllowUsageData := FConfig.GetValue('/PRIVACY/AllowUsageData', False);
@@ -669,6 +686,12 @@ begin
   FBackupFolder := FConfig.GetValue('/BACKUP/BackupFolder', ConcatPaths([InstallDir, 'backup']));
   FAutomaticBackup := FConfig.GetValue('/BACKUP/StartupBackup', 1);
   FBackupsToKeep := FConfig.GetValue('/BACKUP/BackupsToKeep', 10);
+  { CSV options }
+  FHaveHeader := FConfig.GetValue('/CSV/HaveHeader', True);
+  FQuotedAsText := FConfig.GetValue('/CSV/QuotedAsText', True);
+  FDelimiterIndex := FConfig.GetValue('/CSV/DelimiterIndex', 0);
+  FDelimiter := FConfig.GetValue('/CSV/Delimiter', ';')[1];
+  FDecimalSeparator := FConfig.GetValue('/CSV/DecimalSeparator', ',')[1];
   { Versions }
   FClementsVersion := FConfig.GetValue('/VERSIONS/Clements', '2023');
   FIocVersion := FConfig.GetValue('/VERSIONS/IOC', '14.1');
@@ -716,6 +739,12 @@ begin
   FConfig.SetValue('/BACKUP/BackupFolder', FBackupFolder);
   FConfig.SetValue('/BACKUP/StartupBackup', FAutomaticBackup);
   FConfig.SetValue('/BACKUP/BackupsToKeep', FBackupsToKeep);
+  { CSV options }
+  FConfig.SetValue('/CSV/HaveHeader', FHaveHeader);
+  FConfig.SetValue('/CSV/QuotedAsText', FQuotedAsText);
+  FConfig.SetValue('/CSV/DelimiterIndex', FDelimiterIndex);
+  FConfig.SetValue('/CSV/Delimiter', FDelimiter);
+  FConfig.SetValue('/CSV/DecimalSeparator', FDecimalSeparator);
 
   FConfig.Flush;
 end;

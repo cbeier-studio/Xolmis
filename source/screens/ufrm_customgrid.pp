@@ -1593,11 +1593,15 @@ begin
   pChildTag5.Background.Color := clCardBGSecondaryDark;
   pChildTag5.Border.Color := clSolidBGTertiaryDark;
   pChildTag5.Color := clCardBGDefaultDark;
+  pChildTag6.Background.Color := clCardBGSecondaryDark;
+  pChildTag6.Border.Color := clSolidBGTertiaryDark;
+  pChildTag6.Color := clCardBGDefaultDark;
   pChildCount1.Color := pChildTag1.Background.Color;
   pChildCount2.Color := pChildTag2.Background.Color;
   pChildCount3.Color := pChildTag3.Background.Color;
   pChildCount4.Color := pChildTag4.Background.Color;
   pChildCount5.Color := pChildTag5.Background.Color;
+  pChildCount6.Color := pChildTag5.Background.Color;
 
   pSideToolbar.Color := clSolidBGQuaternaryDark;
 
@@ -5681,12 +5685,18 @@ end;
 
 procedure TfrmCustomGrid.LoadColumns;
 var
-  ColsFile: String;
+  ColsFile, ColsFolder: String;
   i, f: Integer;
   FieldFound: Boolean = False;
   FieldIndex: Integer = -1;
 begin
-  ColsFile := ConcatPaths([AppDataDir, TableNames[FTableType] + '_columns.xml']);
+  {$IFDEF DEBUG}
+  ColsFolder := 'debug_columns\';
+  {$ELSE}
+  ColsFolder := 'columns\';
+  {$ENDIF}
+
+  ColsFile := ConcatPaths([AppDataDir, ColsFolder, TableNames[FTableType] + '_columns.xml']);
   if not FileExists(ColsFile) then
   begin
     //GetColumns;
@@ -7788,9 +7798,17 @@ end;
 
 procedure TfrmCustomGrid.SaveColumns;
 var
-  ColsFile: String;
+  ColsFile, ColsFolder: String;
 begin
-  ColsFile := ConcatPaths([AppDataDir, TableNames[FTableType] + '_columns.xml']);
+  {$IFDEF DEBUG}
+  ColsFolder := 'debug_columns\';
+  {$ELSE}
+  ColsFolder := 'columns\';
+  {$ENDIF}
+  if not DirectoryExists(AppDataDir + ColsFolder) then
+    CreateDir(AppDataDir + ColsFolder);
+
+  ColsFile := ConcatPaths([AppDataDir, ColsFolder, TableNames[FTableType] + '_columns.xml']);
   gridColumns.SaveToFile(ColsFile);
 end;
 

@@ -54,18 +54,18 @@ type
     procedure FormShow(Sender: TObject);
     procedure sbOKClick(Sender: TObject);
   private
-    FDelimiter, FDecimal: Char;
-    FQuotes, FHeader: Boolean;
+    FDelimiter, FDecimalSeparator: Char;
+    FQuotedAsText, FHaveHeader: Boolean;
     procedure ApplyDarkMode;
     procedure SetQuotedAsText(aValue: Boolean);
     procedure SetDelimiter(aValue: Char);
     procedure SetDecimalSeparator(aValue: Char);
     procedure SetHaveHeader(aValue: Boolean);
   public
-    property QuotedAsText: Boolean read FQuotes write FQuotes default False;
+    property QuotedAsText: Boolean read FQuotedAsText write FQuotedAsText default False;
     property Delimiter: Char read FDelimiter write FDelimiter default ';';
-    property DecimalSeparator: Char read FDecimal write FDecimal default ',';
-    property HaveHeader: Boolean read FHeader write FHeader default True;
+    property DecimalSeparator: Char read FDecimalSeparator write FDecimalSeparator default ',';
+    property HaveHeader: Boolean read FHaveHeader write FHaveHeader default True;
   end;
 
 var
@@ -73,7 +73,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_graphics, cbs_themes, uDarkStyleParams;
+uses cbs_global, cbs_locale, cbs_graphics, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -118,8 +118,24 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  { #todo : Get the values from config }
-  tsQuotedAsText.Checked := FQuotes;
+  // Get values from settings
+  FHaveHeader := XSettings.HaveHeader;
+  FQuotedAsText := XSettings.QuotedAsText;
+  FDelimiter := XSettings.Delimiter;
+  FDecimalSeparator := XSettings.DecimalSeparator;
+
+  // Translate comboboxes' items
+  cbDelimiter.Items.Clear;
+  cbDelimiter.Items.Add(rsDelimiterSemicolon);
+  cbDelimiter.Items.Add(rsDelimiterColon);
+  cbDelimiter.Items.Add(rsDelimiterTab);
+  cbDelimiter.Items.Add(rsDelimiterOther);
+  cbDecimalSeparator.Items.Clear;
+  cbDecimalSeparator.Items.Add(rsDecimalSeparatorColon);
+  cbDecimalSeparator.Items.Add(rsDecimalSeparatorPeriod);
+
+  // Load values in UI
+  tsQuotedAsText.Checked := FQuotedAsText;
 
   case FDelimiter of
     ';': cbDelimiter.ItemIndex := 0;
@@ -131,9 +147,9 @@ begin
     eOther.Text := FDelimiter;
   end;
 
-  tsHaveHeader.Checked := FHeader;
+  tsHaveHeader.Checked := FHaveHeader;
 
-  case FDecimal of
+  case FDecimalSeparator of
     ',': cbDecimalSeparator.ItemIndex := 0;
     '.': cbDecimalSeparator.ItemIndex := 1;
   end;
@@ -150,7 +166,7 @@ begin
   { #todo : Validate values }
 
   { Double quoted values as text }
-  QuotedAsText := tsQuotedAsText.Checked;
+  FQuotedAsText := tsQuotedAsText.Checked;
   { Delimiter }
   cOther := #0;
   if (cbDelimiter.ItemIndex = 3) and (Length(Trim(eOther.Text)) > 0) then
@@ -159,26 +175,33 @@ begin
     cOther := sOther[1];
   end;
   case cbDelimiter.ItemIndex of
-    0: Delimiter := ';'; { semicolon }
-    1: Delimiter := ','; { comma }
-    2: Delimiter := #9;  { <Tab> }
-    3: Delimiter := cOther;   { other delimiter }
+    0: FDelimiter := ';'; { semicolon }
+    1: FDelimiter := ','; { comma }
+    2: FDelimiter := #9;  { <Tab> }
+    3: FDelimiter := cOther;   { other delimiter }
   end;
   { Decimal separator }
   case cbDecimalSeparator.ItemIndex of
-    0: DecimalSeparator := ',';  { comma }
-    1: DecimalSeparator := '.';  { period/point }
+    0: FDecimalSeparator := ',';  { comma }
+    1: FDecimalSeparator := '.';  { period/point }
   end;
   { Have a header line with column names }
-  HaveHeader := tsHaveHeader.Checked;
+  FHaveHeader := tsHaveHeader.Checked;
+
+  XSettings.HaveHeader := FHaveHeader;
+  XSettings.QuotedAsText := FQuotedAsText;
+  XSettings.DelimiterIndex := cbDelimiter.ItemIndex;
+  XSettings.Delimiter := FDelimiter;
+  XSettings.DecimalSeparator := FDecimalSeparator;
+  XSettings.SaveToFile;
 
   ModalResult := mrOK;
 end;
 
 procedure TcfgDelimiters.SetQuotedAsText(aValue: Boolean);
 begin
-  FQuotes := aValue;
-  tsQuotedAsText.Checked := FQuotes;
+  FQuotedAsText := aValue;
+  tsQuotedAsText.Checked := FQuotedAsText;
 end;
 
 procedure TcfgDelimiters.SetDelimiter(aValue: Char);
@@ -197,8 +220,8 @@ end;
 
 procedure TcfgDelimiters.SetDecimalSeparator(aValue: Char);
 begin
-  FDecimal := aValue;
-  case FDecimal of
+  FDecimalSeparator := aValue;
+  case FDecimalSeparator of
     ',': cbDecimalSeparator.ItemIndex := 0;
     '.': cbDecimalSeparator.ItemIndex := 1;
   end;
@@ -206,8 +229,8 @@ end;
 
 procedure TcfgDelimiters.SetHaveHeader(aValue: Boolean);
 begin
-  FHeader := aValue;
-  tsHaveHeader.Checked := FHeader;
+  FHaveHeader := aValue;
+  tsHaveHeader.Checked := FHaveHeader;
 end;
 
 end.

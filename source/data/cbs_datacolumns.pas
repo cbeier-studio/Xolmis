@@ -840,7 +840,7 @@ begin
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'citation':               Fields[i].DisplayLabel := rscCitation;
-        'acronym':                Fields[i].DisplayLabel := rscAcronym;
+        'acronym':                Fields[i].DisplayLabel := rscAbbreviation;
         'title_treatment':        Fields[i].DisplayLabel := rscTreatment;
         'gender':                 Fields[i].DisplayLabel := rscGender;
         'national_id_card':       Fields[i].DisplayLabel := rscRG;

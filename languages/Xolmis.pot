@@ -2922,6 +2922,15 @@ msgctxt "cbs_locale.rsdeadbird"
 msgid "Dead bird"
 msgstr ""
 
+#: cbs_locale.rsdecimalseparatorcolon
+msgctxt "cbs_locale.rsdecimalseparatorcolon"
+msgid "Colon"
+msgstr ""
+
+#: cbs_locale.rsdecimalseparatorperiod
+msgid "Period"
+msgstr ""
+
 #: cbs_locale.rsdecompressingbackup
 msgctxt "cbs_locale.rsdecompressingbackup"
 msgid "Decompressing backup..."
@@ -2960,6 +2969,24 @@ msgstr ""
 #: cbs_locale.rsdeleterecordtitle
 msgctxt "cbs_locale.rsdeleterecordtitle"
 msgid "Delete record"
+msgstr ""
+
+#: cbs_locale.rsdelimitercolon
+msgctxt "cbs_locale.rsdelimitercolon"
+msgid "Colon"
+msgstr ""
+
+#: cbs_locale.rsdelimiterother
+msgid "Other..."
+msgstr ""
+
+#: cbs_locale.rsdelimitersemicolon
+msgctxt "cbs_locale.rsdelimitersemicolon"
+msgid "Semicolon"
+msgstr ""
+
+#: cbs_locale.rsdelimitertab
+msgid "Tab"
 msgstr ""
 
 #: cbs_locale.rsdetectiontypes
@@ -5852,10 +5879,12 @@ msgid "Delimitation options"
 msgstr ""
 
 #: tcfgdelimiters.cbdecimalseparator.text
+msgctxt "tcfgdelimiters.cbdecimalseparator.text"
 msgid "Colon"
 msgstr ""
 
 #: tcfgdelimiters.cbdelimiter.text
+msgctxt "tcfgdelimiters.cbdelimiter.text"
 msgid "Semicolon"
 msgstr ""
 

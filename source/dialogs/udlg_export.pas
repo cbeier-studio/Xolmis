@@ -78,6 +78,7 @@ begin
   eFilename.Images := iButtonsDark;
   btnOptions.Images := iButtonsDark;
   tvFiletype.Images := iIconsDark;
+  tvFiletype.SelectionColor := $00C75F5B;
   pBottom.Color := clSolidBGBaseDark;
 end;
 
