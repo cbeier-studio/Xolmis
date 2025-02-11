@@ -21,7 +21,7 @@ unit cbs_editdialogs;
 interface
 
 uses
-  Classes, SysUtils, Forms, DB, SQLDB, System.UITypes, cbs_datatypes;
+  Classes, SysUtils, Forms, DB, SQLDB, StrUtils, System.UITypes, cbs_datatypes;
 
   function EditConnection(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
 
@@ -72,16 +72,10 @@ uses
 
 function EditMethod(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
-  FRecord: TMethod;
+  FRecord, FOldRecord: TMethod;
+  lstDiff: TStrings;
+  D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Method');
   Application.CreateForm(TedtMethod, edtMethod);
   with edtMethod do
@@ -91,43 +85,64 @@ begin
     if IsNew then
     begin
       FRecord := TMethod.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TMethod.Create(aDataSet.FieldByName('method_id').AsInteger);
       FRecord := TMethod.Create(aDataSet.FieldByName('method_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Method := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Method.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Method.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbMethods, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbMethods, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('method_id', Method.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtMethod);
     LogInfo('CLOSE EDIT DIALOG: Method');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditSite(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
-  FRecord: TSite;
+  FRecord, FOldRecord: TSite;
+  lstDiff: TStrings;
+  D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Gazetteer');
   Application.CreateForm(TedtSite, edtSite);
   with edtSite do
@@ -137,12 +152,11 @@ begin
     if IsNew then
     begin
       FRecord := TSite.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TSite.Create(aDataSet.FieldByName('site_id').AsInteger);
       FRecord := TSite.Create(aDataSet.FieldByName('site_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Site := FRecord;
@@ -150,24 +164,52 @@ begin
     if Result then
     begin
       Site.Save;
-      //aDataSet.Post;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Site.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbGazetteer, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbGazetteer, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('site_id', Site.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+
     end;
-    //else
-      //aDataSet.Cancel;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSite);
     LogInfo('CLOSE EDIT DIALOG: Gazetteer');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditSamplingPlot(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TSamplingPlot;
+  FRecord, FOldRecord: TSamplingPlot;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -189,6 +231,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TSamplingPlot.Create(aDataSet.FieldByName('sampling_plot_id').AsInteger);
       FRecord := TSamplingPlot.Create(aDataSet.FieldByName('sampling_plot_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -196,11 +239,45 @@ begin
     SamplingPlot := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       SamplingPlot.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if SamplingPlot.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbSamplingPlots, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbSamplingPlots, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('sampling_plot_id', SamplingPlot.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSamplingPlot);
     LogInfo('CLOSE EDIT DIALOG: Sampling plot');
@@ -213,7 +290,9 @@ end;
 function EditPermanentNet(aDataSet: TDataSet; aNetStation: Integer; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TPermanentNet;
+  FRecord, FOldRecord: TPermanentNet;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -235,6 +314,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TPermanentNet.Create(aDataSet.FieldByName('permanent_net_id').AsInteger);
       FRecord := TPermanentNet.Create(aDataSet.FieldByName('permanent_net_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -242,11 +322,44 @@ begin
     PermanentNet := FRecord;
     Result := ShowModal = mrOk;
     if Result then
-    PermanentNet.Save;
+    begin
+      PermanentNet.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if PermanentNet.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbPermanentNets, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbPermanentNets, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('permanent_net_id', PermanentNet.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtPermanentNet);
     LogInfo('CLOSE EDIT DIALOG: Permanent net');
@@ -259,7 +372,9 @@ end;
 function EditInstitution(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TInstitution;
+  FRecord, FOldRecord: TInstitution;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -281,6 +396,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TInstitution.Create(aDataSet.FieldByName('institution_id').AsInteger);
       FRecord := TInstitution.Create(aDataSet.FieldByName('institution_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -288,11 +404,44 @@ begin
     Institution := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Institution.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Institution.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbInstitutions, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbInstitutions, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('institution_id', Institution.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtInstitution);
     LogInfo('CLOSE EDIT DIALOG: Institution');
@@ -305,7 +454,9 @@ end;
 function EditPerson(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TPerson;
+  FRecord, FOldRecord: TPerson;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -327,6 +478,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TPerson.Create(aDataSet.FieldByName('person_id').AsInteger);
       FRecord := TPerson.Create(aDataSet.FieldByName('person_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -334,11 +486,44 @@ begin
     Person := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Person.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Person.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbPeople, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbPeople, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('person_id', Person.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtPerson);
     LogInfo('CLOSE EDIT DIALOG: Person');
@@ -351,7 +536,9 @@ end;
 function EditProject(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TProject;
+  FRecord, FOldRecord: TProject;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -373,6 +560,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TProject.Create(aDataSet.FieldByName('project_id').AsInteger);
       FRecord := TProject.Create(aDataSet.FieldByName('project_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -380,11 +568,44 @@ begin
     Project := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Project.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Project.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbProjects, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbProjects, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('project_id', Project.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtProject);
     LogInfo('CLOSE EDIT DIALOG: Project');
@@ -435,7 +656,9 @@ end;
 function EditPermit(aDataSet: TDataSet; aProject: Integer; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TPermit;
+  FRecord, FOldRecord: TPermit;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -457,6 +680,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TPermit.Create(aDataSet.FieldByName('permit_id').AsInteger);
       FRecord := TPermit.Create(aDataSet.FieldByName('permit_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -465,11 +689,44 @@ begin
     ProjectId := aProject;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Permit.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Permit.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbPermits, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbPermits, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('permit_id', Permit.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtPermit);
     LogInfo('CLOSE EDIT DIALOG: Permit');
@@ -482,7 +739,9 @@ end;
 function EditBotanicTaxon(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TBotanicTaxon;
+  FRecord, FOldRecord: TBotanicTaxon;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -504,6 +763,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TBotanicTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
       FRecord := TBotanicTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -511,11 +771,44 @@ begin
     Taxon := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Taxon.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Taxon.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbBotanicTaxa, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbBotanicTaxa, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('taxon_id', Taxon.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtBotanicTaxon);
     LogInfo('CLOSE EDIT DIALOG: Botanic taxon');
@@ -528,7 +821,9 @@ end;
 function EditBand(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TBand;
+  FRecord, FOldRecord: TBand;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -550,6 +845,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TBand.Create(aDataSet.FieldByName('band_id').AsInteger);
       FRecord := TBand.Create(aDataSet.FieldByName('band_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -557,11 +853,44 @@ begin
     Band := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Band.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Band.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbBands, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbBands, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('band_id', Band.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtBands);
     LogInfo('CLOSE EDIT DIALOG: Band');
@@ -574,7 +903,9 @@ end;
 function EditIndividual(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TIndividual;
+  FRecord, FOldRecord: TIndividual;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -596,6 +927,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TIndividual.Create(aDataSet.FieldByName('individual_id').AsInteger);
       FRecord := TIndividual.Create(aDataSet.FieldByName('individual_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -603,11 +935,44 @@ begin
     Individual := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Individual.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Individual.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbIndividuals, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbIndividuals, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('individual_id', Individual.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtIndividual);
     LogInfo('CLOSE EDIT DIALOG: Individual');
@@ -620,7 +985,9 @@ end;
 function EditCapture(aDataSet: TDataSet; aIndividual: Integer; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TCapture;
+  FRecord, FOldRecord: TCapture;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -642,6 +1009,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TCapture.Create(aDataSet.FieldByName('capture_id').AsInteger);
       FRecord := TCapture.Create(aDataSet.FieldByName('capture_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -652,11 +1020,44 @@ begin
     SurveyId := aSurvey;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Capture.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Capture.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbCaptures, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbCaptures, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('capture_id', Capture.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtCapture);
     LogInfo('CLOSE EDIT DIALOG: Capture');
@@ -706,7 +1107,9 @@ end;
 function EditNest(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TNest;
+  FRecord, FOldRecord: TNest;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -728,6 +1131,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TNest.Create(aDataSet.FieldByName('nest_id').AsInteger);
       FRecord := TNest.Create(aDataSet.FieldByName('nest_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -735,11 +1139,44 @@ begin
     Nest := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Nest.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Nest.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbNests, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbNests, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('nest_id', Nest.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtNest);
     LogInfo('CLOSE EDIT DIALOG: Nest');
@@ -752,7 +1189,9 @@ end;
 function EditNestOwner(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
 //  CloseQueryAfter: Boolean;
-  FRecord: TNestOwner;
+  FRecord, FOldRecord: TNestOwner;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -774,6 +1213,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TNestOwner.Create(aDataSet.FieldByName('nest_owner_id').AsInteger);
       FRecord := TNestOwner.Create(aDataSet.FieldByName('nest_owner_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -782,11 +1222,44 @@ begin
     NestId := aNest;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       NestOwner.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if NestOwner.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbNestOwners, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbNestOwners, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('nest_owner_id', NestOwner.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtNestOwner);
     LogInfo('CLOSE EDIT DIALOG: Nest owner');
@@ -799,7 +1272,9 @@ end;
 function EditNestRevision(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TNestRevision;
+  FRecord, FOldRecord: TNestRevision;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -821,6 +1296,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TNestRevision.Create(aDataSet.FieldByName('nest_revision_id').AsInteger);
       FRecord := TNestRevision.Create(aDataSet.FieldByName('nest_revision_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -829,11 +1305,44 @@ begin
     NestId := aNest;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       NestRevision.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if NestRevision.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbNestRevisions, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbNestRevisions, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('nest_revision_id', NestRevision.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtNestRevision);
     LogInfo('CLOSE EDIT DIALOG: Nest revision');
@@ -846,7 +1355,9 @@ end;
 function EditEgg(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TEgg;
+  FRecord, FOldRecord: TEgg;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -868,6 +1379,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TEgg.Create(aDataSet.FieldByName('egg_id').AsInteger);
       FRecord := TEgg.Create(aDataSet.FieldByName('egg_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -876,11 +1388,44 @@ begin
     NestId := aNest;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Egg.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Egg.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbEggs, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbEggs, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('egg_id', Egg.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtEgg);
     LogInfo('CLOSE EDIT DIALOG: Egg');
@@ -893,7 +1438,9 @@ end;
 function EditExpedition(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TExpedition;
+  FRecord, FOldRecord: TExpedition;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -917,6 +1464,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TExpedition.Create(aDataSet.FieldByName('expedition_id').AsInteger);
       FRecord := TExpedition.Create(aDataSet.FieldByName('expedition_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -924,6 +1472,7 @@ begin
     Expedition := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Expedition.Save;
     //begin
     //  aDataSet.Post;
@@ -931,7 +1480,39 @@ begin
     //end
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Expedition.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbExpeditions, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbExpeditions, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('expedition_id', Expedition.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtExpedition);
     LogInfo('CLOSE EDIT DIALOG: Expedition');
@@ -944,7 +1525,9 @@ end;
 function EditSurvey(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TSurvey;
+  FRecord, FOldRecord: TSurvey;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -966,6 +1549,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TSurvey.Create(aDataSet.FieldByName('survey_id').AsInteger);
       FRecord := TSurvey.Create(aDataSet.FieldByName('survey_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -973,11 +1557,44 @@ begin
     Survey := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Survey.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Survey.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbSurveys, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbSurveys, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('survey_id', Survey.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSurvey);
     LogInfo('CLOSE EDIT DIALOG: Survey');
@@ -991,7 +1608,9 @@ function EditSurveyMember(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean):
 var
   MemberKey: Integer;
   //CloseQueryAfter: Boolean;
-  FRecord: TSurveyMember;
+  FRecord, FOldRecord: TSurveyMember;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -1013,12 +1632,43 @@ begin
         EditSourceStr := rsInsertedByForm;
       end else
       begin
+        FOldRecord := TSurveyMember.Create(aDataSet.FieldByName('survey_member_id').AsInteger);
         FRecord := TSurveyMember.Create(aDataSet.FieldByName('survey_member_id').AsInteger);
         //aDataSet.Edit;
         EditSourceStr := rsEditedByForm;
       end;
       FRecord.PersonId := MemberKey;
       FRecord.Save;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if FRecord.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbSurveyTeams, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbSurveyTeams, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('survey_member_id', FRecord.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+
       //aDataSet.FieldByName('person_id').AsInteger := MemberKey;
       //aDataSet.Post;
       aDataSet.Refresh;
@@ -1027,6 +1677,8 @@ begin
     //  aDataSet.Cancel;
     //end;
     finally
+      if Assigned(FOldRecord) then
+        FreeAndNil(FOldRecord);
       FRecord.Free;
     end;
   end;
@@ -1038,7 +1690,9 @@ end;
 function EditNetEffort(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TNetEffort;
+  FRecord, FOldRecord: TNetEffort;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -1060,6 +1714,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TNetEffort.Create(aDataSet.FieldByName('net_id').AsInteger);
       FRecord := TNetEffort.Create(aDataSet.FieldByName('net_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -1067,11 +1722,44 @@ begin
     NetEffort := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       NetEffort.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if NetEffort.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbNetsEffort, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbNetsEffort, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('net_id', NetEffort.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtNetEffort);
     LogInfo('CLOSE EDIT DIALOG: Net effort');
@@ -1084,7 +1772,9 @@ end;
 function EditWeatherLog(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TWeatherLog;
+  FRecord, FOldRecord: TWeatherLog;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -1106,6 +1796,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TWeatherLog.Create(aDataSet.FieldByName('weather_id').AsInteger);
       FRecord := TWeatherLog.Create(aDataSet.FieldByName('weather_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -1113,11 +1804,44 @@ begin
     WeatherLog := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       WeatherLog.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if WeatherLog.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbWeatherLogs, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbWeatherLogs, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('weather_id', WeatherLog.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtWeatherLog);
     LogInfo('CLOSE EDIT DIALOG: Weather log');
@@ -1130,7 +1854,9 @@ end;
 function EditSighting(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TSighting;
+  FRecord, FOldRecord: TSighting;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -1154,6 +1880,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TSighting.Create(aDataSet.FieldByName('sighting_id').AsInteger);
       FRecord := TSighting.Create(aDataSet.FieldByName('sighting_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -1162,11 +1889,44 @@ begin
     SurveyId := aSurvey;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Sighting.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Sighting.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbSightings, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbSightings, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('sighting_id', Sighting.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSighting);
     LogInfo('CLOSE EDIT DIALOG: Sighting');
@@ -1179,7 +1939,9 @@ end;
 function EditSpecimen(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TSpecimen;
+  FRecord, FOldRecord: TSpecimen;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -1203,6 +1965,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TSpecimen.Create(aDataSet.FieldByName('specimen_id').AsInteger);
       FRecord := TSpecimen.Create(aDataSet.FieldByName('specimen_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -1210,11 +1973,44 @@ begin
     Specimen := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Specimen.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Specimen.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbSpecimens, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbSpecimens, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('specimen_id', Specimen.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSpecimen);
     LogInfo('CLOSE EDIT DIALOG: Specimen');
@@ -1265,7 +2061,9 @@ end;
 function EditSamplePrep(aDataSet: TDataSet; aSpecimen: Integer; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TSamplePrep;
+  FRecord, FOldRecord: TSamplePrep;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -1289,6 +2087,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TSamplePrep.Create(aDataSet.FieldByName('sample_prep_id').AsInteger);
       FRecord := TSamplePrep.Create(aDataSet.FieldByName('sample_prep_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -1296,11 +2095,44 @@ begin
     SamplePrep := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       SamplePrep.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if SamplePrep.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbSamplePreps, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbSamplePreps, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('sample_prep_id', SamplePrep.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSamplePrep);
     LogInfo('CLOSE EDIT DIALOG: Sample prep');
@@ -1373,7 +2205,9 @@ end;
 function EditImageInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TImageData;
+  FRecord, FOldRecord: TImageData;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -1397,6 +2231,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TImageData.Create(aDataSet.FieldByName('image_id').AsInteger);
       FRecord := TImageData.Create(aDataSet.FieldByName('image_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -1462,11 +2297,44 @@ begin
     end;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Image.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Image.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbImages, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbImages, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('image_id', Image.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtImageInfo);
     LogInfo('CLOSE EDIT DIALOG: Image');
@@ -1479,7 +2347,9 @@ end;
 function EditAudioInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TAudioData;
+  FRecord, FOldRecord: TAudioData;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -1503,6 +2373,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TAudioData.Create(aDataSet.FieldByName('audio_id').AsInteger);
       FRecord := TAudioData.Create(aDataSet.FieldByName('audio_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -1542,11 +2413,44 @@ begin
     end;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       AudioRecording.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if AudioRecording.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbAudioLibrary, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbAudioLibrary, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('audio_id', AudioRecording.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtAudioInfo);
     LogInfo('CLOSE EDIT DIALOG: Audio');
@@ -1559,7 +2463,9 @@ end;
 function EditDocInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TDocumentData;
+  FRecord, FOldRecord: TDocumentData;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -1583,6 +2489,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TDocumentData.Create(aDataSet.FieldByName('document_id').AsInteger);
       FRecord := TDocumentData.Create(aDataSet.FieldByName('document_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -1648,11 +2555,44 @@ begin
     end;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Document.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Document.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbDocuments, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbDocuments, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('document_id', Document.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtDocumentInfo);
     LogInfo('CLOSE EDIT DIALOG: Document');
@@ -1665,7 +2605,9 @@ end;
 function EditVegetation(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
-  FRecord: TVegetation;
+  FRecord, FOldRecord: TVegetation;
+  lstDiff: TStrings;
+  D: String;
 begin
   //CloseQueryAfter := False;
   //if not aDataSet.Active then
@@ -1687,6 +2629,7 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
+      FOldRecord := TVegetation.Create(aDataSet.FieldByName('vegetation_id').AsInteger);
       FRecord := TVegetation.Create(aDataSet.FieldByName('vegetation_id').AsInteger);
       //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
@@ -1694,11 +2637,44 @@ begin
     Vegetation := FRecord;
     Result := ShowModal = mrOk;
     if Result then
+    begin
       Vegetation.Save;
     //  aDataSet.Post
     //else
     //  aDataSet.Cancel;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if Vegetation.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbVegetation, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbVegetation, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('vegetation_id', Vegetation.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
   finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtVegetation);
     LogInfo('CLOSE EDIT DIALOG: Vegetation');

@@ -708,39 +708,46 @@ begin
 
   { Dates }
   Hoje.Today;
-  // Assemble partial birth date
-  if eBirthYear.Text = EmptyStr then
-    DataNasc.Year := 0
-  else
-    DataNasc.Year := StrToInt(eBirthYear.Text);
-  if eBirthMonth.Text = EmptyStr then
-    DataNasc.Month := 0
-  else
-    DataNasc.Month := StrToInt(eBirthMonth.Text);
-  if eBirthDay.Text = EmptyStr then
-    DataNasc.Day := 0
-  else
-    DataNasc.Day := StrToInt(eBirthDay.Text);
-  // If valid, check if birth date is a future date
-  if ValidPartialDate(DataNasc, rsDateBirth, Msgs) then
-    IsFuturePartialDate(DataNasc, Hoje, rsDateBirth, LowerCase(rsDateToday), Msgs);
 
-  // Assemble partial death date
-  if eDeathYear.Text = EmptyStr then
-    DataOb.Year := 0
-  else
-    DataOb.Year := StrToInt(eDeathYear.Text);
-  if eDeathMonth.Text = EmptyStr then
-    DataOb.Month := 0
-  else
-    DataOb.Month := StrToInt(eDeathMonth.Text);
-  if eDeathDay.Text = EmptyStr then
-    DataOb.Day := 0
-  else
-    DataOb.Day := StrToInt(eDeathDay.Text);
-  // If valid, check if death date is a future date
-  if ValidPartialDate(DataOb, rsDateDeath, Msgs) then
-    IsFuturePartialDate(DataOb, Hoje, rsDateDeath, LowerCase(rsDateToday), Msgs);
+  if eBirthYear.Text <> EmptyStr then
+  begin
+    // Assemble partial birth date
+    if eBirthYear.Text = EmptyStr then
+      DataNasc.Year := 0
+    else
+      DataNasc.Year := StrToInt(eBirthYear.Text);
+    if eBirthMonth.Text = EmptyStr then
+      DataNasc.Month := 0
+    else
+      DataNasc.Month := StrToInt(eBirthMonth.Text);
+    if eBirthDay.Text = EmptyStr then
+      DataNasc.Day := 0
+    else
+      DataNasc.Day := StrToInt(eBirthDay.Text);
+    // If valid, check if birth date is a future date
+    if ValidPartialDate(DataNasc, rsDateBirth, Msgs) then
+      IsFuturePartialDate(DataNasc, Hoje, rsDateBirth, LowerCase(rsDateToday), Msgs);
+  end;
+
+  if eDeathYear.Text <> EmptyStr then
+  begin
+    // Assemble partial death date
+    if eDeathYear.Text = EmptyStr then
+      DataOb.Year := 0
+    else
+      DataOb.Year := StrToInt(eDeathYear.Text);
+    if eDeathMonth.Text = EmptyStr then
+      DataOb.Month := 0
+    else
+      DataOb.Month := StrToInt(eDeathMonth.Text);
+    if eDeathDay.Text = EmptyStr then
+      DataOb.Day := 0
+    else
+      DataOb.Day := StrToInt(eDeathDay.Text);
+    // If valid, check if death date is a future date
+    if ValidPartialDate(DataOb, rsDateDeath, Msgs) then
+      IsFuturePartialDate(DataOb, Hoje, rsDateDeath, LowerCase(rsDateToday), Msgs);
+  end;
 
   // Check if banding and band change dates are valid
   if eBandingDate.Text <> EmptyStr then

@@ -84,7 +84,7 @@ object edtIndividual: TedtIndividual
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 786
+      Height = 787
       Top = 0
       Width = 411
       Align = alTop
@@ -92,13 +92,13 @@ object edtIndividual: TedtIndividual
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 786
+      ClientHeight = 787
       ClientWidth = 411
       TabOrder = 0
       object pMother: TPanel
         Left = 0
         Height = 45
-        Top = 491
+        Top = 492
         Width = 411
         Align = alTop
         AutoSize = True
@@ -276,7 +276,7 @@ object edtIndividual: TedtIndividual
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 642
+        Top = 643
         Width = 411
         Align = alTop
         AutoSize = True
@@ -318,7 +318,7 @@ object edtIndividual: TedtIndividual
       object pNest: TPanel
         Left = 0
         Height = 45
-        Top = 401
+        Top = 402
         Width = 411
         Align = alTop
         AutoSize = True
@@ -368,7 +368,7 @@ object edtIndividual: TedtIndividual
       object pFather: TPanel
         Left = 0
         Height = 45
-        Top = 446
+        Top = 447
         Width = 411
         Align = alTop
         AutoSize = True
@@ -416,7 +416,7 @@ object edtIndividual: TedtIndividual
       end
       object pBirthDeath: TPanel
         Left = 0
-        Height = 44
+        Height = 45
         Top = 299
         Width = 411
         Align = alTop
@@ -430,7 +430,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 44
+        ClientHeight = 45
         ClientWidth = 411
         ParentBackground = False
         TabOrder = 6
@@ -458,7 +458,7 @@ object edtIndividual: TedtIndividual
         end
         object pBirthDate: TPanel
           Left = 16
-          Height = 22
+          Height = 23
           Top = 22
           Width = 182
           AutoSize = True
@@ -468,9 +468,8 @@ object edtIndividual: TedtIndividual
           ChildSizing.ShrinkHorizontal = crsSameSize
           ChildSizing.Layout = cclLeftToRightThenTopToBottom
           ChildSizing.ControlsPerLine = 3
-          ClientHeight = 22
+          ClientHeight = 23
           ClientWidth = 182
-          Constraints.MaxHeight = 22
           Constraints.MinHeight = 22
           Constraints.MinWidth = 176
           ParentBackground = False
@@ -520,7 +519,7 @@ object edtIndividual: TedtIndividual
         end
         object pDeathDate: TPanel
           Left = 214
-          Height = 22
+          Height = 23
           Top = 22
           Width = 181
           AutoSize = True
@@ -530,9 +529,8 @@ object edtIndividual: TedtIndividual
           ChildSizing.ShrinkHorizontal = crsSameSize
           ChildSizing.Layout = cclLeftToRightThenTopToBottom
           ChildSizing.ControlsPerLine = 3
-          ClientHeight = 22
+          ClientHeight = 23
           ClientWidth = 181
-          Constraints.MaxHeight = 22
           Constraints.MinHeight = 22
           Constraints.MinWidth = 176
           ParentBackground = False
@@ -662,7 +660,7 @@ object edtIndividual: TedtIndividual
       object pRecognizableMarkings: TPanel
         Left = 0
         Height = 80
-        Top = 549
+        Top = 550
         Width = 411
         Align = alTop
         AutoSize = True
@@ -919,7 +917,7 @@ object edtIndividual: TedtIndividual
       object pSexAge: TPanel
         Left = 0
         Height = 45
-        Top = 343
+        Top = 344
         Width = 411
         Align = alTop
         AutoSize = True

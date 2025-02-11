@@ -70,7 +70,7 @@ type
     YearFirst: Boolean;
     Separator: Char;
     function ToString: String;
-    procedure Encode(aYear, aMonth, aDay: Integer);
+    procedure Encode(aYear, aMonth, aDay: Integer; aSeparator: Char);
     procedure Clear;
     procedure Today;
   end;
@@ -265,11 +265,12 @@ begin
   Separator := '.';
 end;
 
-procedure TPartialDate.Encode(aYear, aMonth, aDay: Integer);
+procedure TPartialDate.Encode(aYear, aMonth, aDay: Integer; aSeparator: Char);
 begin
   Year := aYear;
   Month := aMonth;
   Day := aDay;
+  Separator := aSeparator;
 end;
 
 procedure TPartialDate.Today;
@@ -289,12 +290,15 @@ function TPartialDate.ToString: String;
 var
   S, m, d, Y: String;
 begin
+  if Separator = #0 then
+    Separator := '.';
+
   if RomanMonth then
     m := MesRomano[Month]
   else
     m := Format('%2.2d', [Month]);
   d := Format('%2.2d', [Day]);
-  Y := Format('%4.4d', [YearOf(EncodeDate(Year, 1, 1))]);
+  Y := Format('%4.4d', [Year]);
   if YearFirst then
     S := Y + Separator + m + Separator + d
   else

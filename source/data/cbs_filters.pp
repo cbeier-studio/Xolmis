@@ -692,7 +692,8 @@ begin
       Qry.First;
       repeat
         if (Qry.FieldByName('ano').AsString <> Ano) and
-          (Qry.FieldByName('ano').AsString <> EmptyStr) then
+          (Qry.FieldByName('ano').AsString <> EmptyStr) and
+          (Qry.FieldByName('ano').AsInteger > 0) then
         begin
           Ano := Qry.FieldByName('ano').AsString;
           Mes := EmptyStr;
@@ -706,7 +707,8 @@ begin
           yearParent := xNode;
         end;
         if (Qry.FieldByName('mes').AsString <> Mes) and
-          (Qry.FieldByName('mes').AsString <> EmptyStr) then
+          (Qry.FieldByName('mes').AsString <> EmptyStr) and
+          (Qry.FieldByName('mes').AsInteger > 0) then
         begin
           Mes := Qry.FieldByName('mes').AsString;
           //Lista.Add(#9 + FS.LongMonthNames[Qry.FieldByName('mes').AsInteger]);
@@ -723,7 +725,8 @@ begin
           monthParent := xNode;
         end;
         if (Qry.FieldByName('dia').AsString <> Dia) and
-          (Qry.FieldByName('dia').AsString <> EmptyStr) then
+          (Qry.FieldByName('dia').AsString <> EmptyStr) and
+          (Qry.FieldByName('dia').AsInteger > 0) then
         begin
           Dia := Qry.FieldByName('dia').AsString;
           Data := TBasicNodeData.Create;

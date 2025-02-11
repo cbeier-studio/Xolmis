@@ -4021,11 +4021,21 @@ begin
     SetStrParam(ParamByName('individual_sex'), Sexes[FSex]);
     SetStrParam(ParamByName('individual_age'), Ages[FAge]);
     SetForeignParam(ParamByName('nest_id'), FNestId);
-    ParamByName('birth_year').AsInteger := FBirthYear;
-    ParamByName('birth_month').AsInteger := FBirthMonth;
-    ParamByName('birth_day').AsInteger := FBirthDay;
-    Birth.Encode(FBirthYear, FBirthMonth, FBirthDay);
-    SetStrParam(ParamByName('birth_date'), Birth.ToString);
+    if FBirthYear > 0 then
+    begin
+      ParamByName('birth_year').AsInteger := FBirthYear;
+      ParamByName('birth_month').AsInteger := FBirthMonth;
+      ParamByName('birth_day').AsInteger := FBirthDay;
+      Birth.Encode(FBirthYear, FBirthMonth, FBirthDay, '.');
+      SetStrParam(ParamByName('birth_date'), Birth.ToString);
+    end
+    else
+    begin
+      ParamByName('birth_year').Clear;
+      ParamByName('birth_month').Clear;
+      ParamByName('birth_day').Clear;
+      ParamByName('birth_date').Clear;
+    end;
     SetForeignParam(ParamByName('band_id'), FBandId);
     SetForeignParam(ParamByName('double_band_id'), FDoubleBandId);
     SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
@@ -4035,11 +4045,21 @@ begin
     SetStrParam(ParamByName('notes'), FNotes);
     SetForeignParam(ParamByName('father_id'), FFatherId);
     SetForeignParam(ParamByName('mother_id'), FMotherId);
-    ParamByName('death_year').AsInteger := FDeathYear;
-    ParamByName('death_month').AsInteger := FDeathMonth;
-    ParamByName('death_day').AsInteger := FDeathDay;
-    Death.Encode(FDeathYear, FDeathMonth, FDeathDay);
-    SetStrParam(ParamByName('death_date'), Death.ToString);
+    if FDeathYear > 0 then
+    begin
+      ParamByName('death_year').AsInteger := FDeathYear;
+      ParamByName('death_month').AsInteger := FDeathMonth;
+      ParamByName('death_day').AsInteger := FDeathDay;
+      Death.Encode(FDeathYear, FDeathMonth, FDeathDay, '.');
+      SetStrParam(ParamByName('death_date'), Death.ToString);
+    end
+    else
+    begin
+      ParamByName('death_year').Clear;
+      ParamByName('death_month').Clear;
+      ParamByName('death_day').Clear;
+      ParamByName('death_date').Clear;
+    end;
     SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], True));
     FFullName := GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], False);
     SetStrParam(ParamByName('full_name'), FFullName);
@@ -4132,8 +4152,8 @@ begin
       'birth_day = :birth_day, ' +
       'birth_month = :birth_month, ' +
       'birth_year = :birth_year, ' +
-      'banding_date = :banding_date, ' +
-      'band_change_date = :band_change_date, ' +
+      'banding_date = date(:banding_date), ' +
+      'band_change_date = date(:band_change_date), ' +
       'band_id = :band_id, ' +
       'double_band_id = :double_band_id, ' +
       'removed_band_id = :removed_band_id, ' +
@@ -4161,11 +4181,21 @@ begin
     SetStrParam(ParamByName('individual_sex'), Sexes[FSex]);
     SetStrParam(ParamByName('individual_age'), Ages[FAge]);
     SetForeignParam(ParamByName('nest_id'), FNestId);
-    ParamByName('birth_year').AsInteger := FBirthYear;
-    ParamByName('birth_month').AsInteger := FBirthMonth;
-    ParamByName('birth_day').AsInteger := FBirthDay;
-    Birth.Encode(FBirthYear, FBirthMonth, FBirthDay);
-    SetStrParam(ParamByName('birth_date'), Birth.ToString);
+    if FBirthYear > 0 then
+    begin
+      ParamByName('birth_year').AsInteger := FBirthYear;
+      ParamByName('birth_month').AsInteger := FBirthMonth;
+      ParamByName('birth_day').AsInteger := FBirthDay;
+      Birth.Encode(FBirthYear, FBirthMonth, FBirthDay, '.');
+      SetStrParam(ParamByName('birth_date'), Birth.ToString);
+    end
+    else
+    begin
+      ParamByName('birth_year').Clear;
+      ParamByName('birth_month').Clear;
+      ParamByName('birth_day').Clear;
+      ParamByName('birth_date').Clear;
+    end;
     SetForeignParam(ParamByName('band_id'), FBandId);
     SetForeignParam(ParamByName('double_band_id'), FDoubleBandId);
     SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
@@ -4175,11 +4205,21 @@ begin
     SetStrParam(ParamByName('notes'), FNotes);
     SetForeignParam(ParamByName('father_id'), FFatherId);
     SetForeignParam(ParamByName('mother_id'), FMotherId);
-    ParamByName('death_year').AsInteger := FDeathYear;
-    ParamByName('death_month').AsInteger := FDeathMonth;
-    ParamByName('death_day').AsInteger := FDeathDay;
-    Death.Encode(FDeathYear, FDeathMonth, FDeathDay);
-    SetStrParam(ParamByName('death_date'), Death.ToString);
+    if FDeathYear > 0 then
+    begin
+      ParamByName('death_year').AsInteger := FDeathYear;
+      ParamByName('death_month').AsInteger := FDeathMonth;
+      ParamByName('death_day').AsInteger := FDeathDay;
+      Death.Encode(FDeathYear, FDeathMonth, FDeathDay, '.');
+      SetStrParam(ParamByName('death_date'), Death.ToString);
+    end
+    else
+    begin
+      ParamByName('death_year').Clear;
+      ParamByName('death_month').Clear;
+      ParamByName('death_day').Clear;
+      ParamByName('death_date').Clear;
+    end;
     SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], True));
     FFullName := GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], False);
     SetStrParam(ParamByName('full_name'), FFullName);

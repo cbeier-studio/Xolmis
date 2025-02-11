@@ -106,6 +106,9 @@ begin
   sbOptions.StateHover.Color := clSolidBGBaseDark;
   sbOptions.StateActive.Color := clSolidBGSecondaryDark;
   sbOptions.StateNormal.Color := pEP.Background.Color;
+
+  uList.AlternateColor := clSolidBGSecondaryDark;
+  lblVernacular.Font.Color := clGray;
 end;
 
 procedure TdlgFindTaxon.EPChange(Sender: TObject);
