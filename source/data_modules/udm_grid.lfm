@@ -876,8 +876,11 @@ object DMG: TDMG
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qExpeditionscountry_name: TStringField
+      DisplayLabel = 'Country'
+      DisplayWidth = 25
       FieldKind = fkData
       FieldName = 'country_name'
       Index = 8
@@ -895,8 +898,11 @@ object DMG: TDMG
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qExpeditionsstate_name: TStringField
+      DisplayLabel = 'State'
+      DisplayWidth = 25
       FieldKind = fkData
       FieldName = 'state_name'
       Index = 10
@@ -914,8 +920,11 @@ object DMG: TDMG
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qExpeditionsmunicipality_name: TStringField
+      DisplayLabel = 'Municipality'
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'municipality_name'
       Index = 12

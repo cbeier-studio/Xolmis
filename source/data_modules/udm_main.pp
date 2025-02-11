@@ -207,10 +207,15 @@ begin
   //if not FileExists(ConcatPaths([AppDataDir, GeoBankFile])) then
   //  tabGeoBank.CreateDataset;
   tabGeoBank.Open;
+
+  LoadLocaleTablesDict;
 end;
 
 procedure TDMM.DataModuleDestroy(Sender: TObject);
 begin
+  if Assigned(LocaleTablesDict) then
+    LocaleTablesDict.Free;
+
   //tabGeoBank.SaveToFile(ConcatPaths([AppDataDir, GeoBankFile]));
   //tabGeoBank.SaveFileAs(ConcatPaths([AppDataDir, GeoBankFile]));
   //tabGeoBank.SaveToFile(ConcatPaths([AppDataDir, GeoBankFile]), True);

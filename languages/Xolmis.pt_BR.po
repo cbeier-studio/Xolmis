@@ -11729,8 +11729,8 @@ msgstr "Atuali&zar"
 
 #: tfrmcustomgrid.pmccolumnsautoadjustwidth.caption
 msgctxt "tfrmcustomgrid.pmccolumnsautoadjustwidth.caption"
-msgid "Auto adjust columns' &width"
-msgstr "Ajustar automaticamente a &largura das colunas"
+msgid "Adjust columns' &width to content"
+msgstr "Ajustar co&lunas ao conteúdo"
 
 #: tfrmcustomgrid.pmccolumnsortasc.caption
 msgid "Sort column &ascending"
@@ -11864,8 +11864,8 @@ msgstr "Atuali&zar"
 
 #: tfrmcustomgrid.pmgautosizecolumns.caption
 msgctxt "tfrmcustomgrid.pmgautosizecolumns.caption"
-msgid "Auto adjust columns' &width"
-msgstr "Ajustar automaticamente a &largura das colunas"
+msgid "Adjust columns' &width to content"
+msgstr "Ajustar co&lunas ao conteúdo"
 
 #: tfrmcustomgrid.pmgdecreaserowheight.caption
 msgid "De&crease"

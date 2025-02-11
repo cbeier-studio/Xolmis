@@ -188,7 +188,8 @@ begin
     finally
       FreeAndNil(Qry);
     end;
-  end;
+  end else
+    txtNetEffort.Caption := '0';
 end;
 
 procedure TedtSurvey.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -541,7 +542,8 @@ procedure TedtSurvey.GetRecord;
 begin
   FExpeditionId := FSurvey.ExpeditionId;
   eExpedition.Text := GetName('expeditions', 'expedition_name', 'expedition_id', FExpeditionId);
-  eDate.Text := DateToStr(FSurvey.SurveyDate);
+  if not DateIsNull(FSurvey.SurveyDate) then
+    eDate.Text := DateToStr(FSurvey.SurveyDate);
   eDuration.Value := FSurvey.Duration;
   if (FSurvey.StartTime <> NullTime) then
     eStartTime.Text := FormatDateTime('hh:nn', FSurvey.StartTime);

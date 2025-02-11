@@ -21,11 +21,11 @@ unit ufrm_customgrid;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character, Buttons, CheckLst, DBCtrls,
   laz.VirtualTrees, TAGraph, TASeries, TADbSource, TASources, LR_PGrid, TAGUIConnectorBGRA, atshapelinebgra,
-  BCPanel, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, ToggleSwitch, DragDropFile, mvMapViewer,
-  mvDE_BGRA, mvTypes, mvGpsObj, mvDrawingEngine, LR_Class, DropTarget;
+  BCPanel, bctypes, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, ToggleSwitch, DragDropFile,
+  mvMapViewer, mvDE_BGRA, mvTypes, mvGpsObj, mvDrawingEngine, LR_Class, DropTarget;
 
 type
   { TStringMemoEditor }
@@ -42,6 +42,7 @@ type
     procedure msgSelectAll(var Msg: TGridMessage);  message GM_SELECTALL;
   end;
 
+  TCustomPanelTab = class;
 
   { TfrmCustomGrid }
 
@@ -53,15 +54,11 @@ type
     dsLink6: TDataSource;
     gridChild6: TDBGrid;
     gridDocs: TDBGrid;
-    lblChildCount6: TLabel;
-    lblChildTag6: TLabel;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
     pmPrintMolts: TMenuItem;
     pmcNewVegetation: TMenuItem;
     pgChild6: TPage;
-    pChildCount6: TBCPanel;
-    pChildTag6: TBCPanel;
     pmPrintSightingsByObserver: TMenuItem;
     pmAddLink: TMenuItem;
     pmAddDocument: TMenuItem;
@@ -418,15 +415,7 @@ type
     lblHasSynonymsFilter: TLabel;
     lblHowAgedFilter: TLabel;
     lblMoltLimitsFilter: TLabel;
-    lblChildCount2: TLabel;
-    lblChildTag2: TLabel;
-    lblChildCount4: TLabel;
-    lblChildTag4: TLabel;
-    lblChildCount3: TLabel;
-    lblChildTag3: TLabel;
     lblSkullOssificationFilter: TLabel;
-    lblChildCount5: TLabel;
-    lblChildTag5: TLabel;
     lblStartTimeFilter: TLabel;
     lblSynonymFilter: TLabel;
     lblTaxonomyCbroFilter: TLabel;
@@ -456,10 +445,6 @@ type
     pmcNewSpecimen: TMenuItem;
     pMoltCycleFilter: TBCPanel;
     pMoltLimitsFilter: TBCPanel;
-    pChildCount2: TBCPanel;
-    pChildTag2: TBCPanel;
-    pChildCount4: TBCPanel;
-    pChildTag4: TBCPanel;
     pInstitutionFilter: TBCPanel;
     pRecordStatus: TBCPanel;
     pChildStatus: TBCPanel;
@@ -467,11 +452,7 @@ type
     pColumnsToolbar: TBCPanel;
     pImagesToolbar: TBCPanel;
     pRecycleContent: TPanel;
-    pChildCount3: TBCPanel;
-    pChildTag3: TBCPanel;
     pSkullOssificationFilter: TBCPanel;
-    pChildCount5: TBCPanel;
-    pChildTag5: TBCPanel;
     pStartTimeFilter: TBCPanel;
     cbBroodPatchFilter: TComboBox;
     cbCloacalProtuberanceFilter: TComboBox;
@@ -852,6 +833,10 @@ type
     procedure dbgImagesDblClick(Sender: TObject);
     procedure DBGKeyPress(Sender: TObject; var Key: char);
     procedure DBGMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure DBGMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure DBGMouseUp
+      (Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer
+      );
     procedure DBGMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
       var Handled: Boolean);
     procedure DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
@@ -1093,10 +1078,19 @@ type
     FProjectKeyFilter, FNestKeyFilter, FIndividualKeyFilter, FExpeditionKeyFilter: Integer;
     FPlantKeyFilter, FSamplingPlotKeyFilter, FEggKeyFilter: Integer;
     FCanToggle: Boolean;
+    FIsResizing: Boolean;
+    FIsMoving: Boolean;
+    FStartX: Integer;
+    FStartY: Integer;
+    FStartCol: Integer;
+    FStartRow: Integer;
     FSidePanelFactor: Double;
     FChildPanelFactor: Double;
     FDragging: Boolean;
     cellMemo: TMemo;
+
+    PanelTabs: specialize TFPGList<TCustomPanelTab>;
+    procedure CreatePanelTabs;
 
     procedure AddAudio(aDataSet: TDataSet; aFileName: String);
     procedure AddDocument(aDataSet: TDataSet; aFileName: String);
@@ -1309,10 +1303,32 @@ type
     procedure UpdateFilterPanelsZooTaxa;
   public
     property TableType: TTableType read FTableType write FTableType;
+    property ChildTable: TTableType read FChildTable write FChildTable;
 
     property SearchString: String read FSearchString write SetSearchString;
     property ShowSidePanel: Boolean read FSidePanel write SetSidePanel;
     property SidePanelIndex: Integer read FSideIndex write SetSideIndex;
+  end;
+
+  { TCustomPanelTab }
+
+  TCustomPanelTab = class(TBCPanel)
+  private
+    FTitleLabel: TLabel;
+    FCounterBadge: TBCPanel;
+    FCounterLabel: TLabel;
+    FPageIndex: Integer;
+    FIsActive: Boolean;
+    FParentForm: TfrmCustomGrid;
+    procedure TabClick(Sender: TObject);
+    procedure TabMouseEnter(Sender: TObject);
+    procedure TabMouseLeave(Sender: TObject);
+    procedure SetActive(Value: Boolean);
+  public
+    constructor Create(AOwner: TComponent; AParentForm: TfrmCustomGrid; ATitle: string; ACount: Integer; APageIndex: Integer); reintroduce;
+    procedure UpdateCounter(ACount: Integer);
+    property PageIndex: Integer read FPageIndex write FPageIndex;
+    property IsActive: Boolean read FIsActive write SetActive;
   end;
 
 var
@@ -1362,6 +1378,315 @@ end;
 procedure TStringMemoEditor.msgSetValue(var Msg: TGridMessage);
 begin
   Self.Text := Msg.Value;
+end;
+
+{ TCustomPanelTab }
+
+constructor TCustomPanelTab.Create
+  (AOwner: TComponent; AParentForm: TfrmCustomGrid; ATitle: string; ACount: Integer; APageIndex: Integer);
+var
+  Panel: TBCPanel;
+  LeftBorder: Integer;
+begin
+  inherited Create(AOwner);
+
+  FPageIndex := APageIndex;
+  FIsActive := False;
+  FParentForm := AParentForm;
+  Panel := Owner as TBCPanel;
+  LeftBorder := Panel.Width + (Panel.ComponentCount + 10);
+
+  // BCPanel setting
+  Self.Parent := TWinControl(AOwner);
+  Self.Height := 50;
+  Self.Width := 150;
+  Self.Left := LeftBorder;
+  Self.Align := alLeft;
+  Self.BevelOuter := bvNone;
+  Self.BevelInner := bvNone;
+  Self.BorderBCStyle := bpsBorder;
+  Self.Caption := '';
+  Self.Rounding.RoundX := 4;
+  Self.Rounding.RoundY := 4;
+  Self.ChildSizing.HorizontalSpacing := 8;
+  Self.ChildSizing.LeftRightSpacing := 16;
+  Self.ChildSizing.TopBottomSpacing := 8;
+  Self.OnClick := @TabClick;
+  Self.OnMouseEnter := @TabMouseEnter;
+  Self.OnMouseLeave := @TabMouseLeave;
+  Self.Border.Style := bboSolid;
+  if IsDarkModeEnabled then
+  begin
+    Self.Background.Color := clCardBGSecondaryDark;
+    Self.Border.Color := clSolidBGTertiaryDark;
+    Self.Color := clCardBGDefaultDark;
+  end
+  else
+  begin
+    Self.Border.Color := $00D1D1D1;
+    Self.Background.Color := $00FAFAFA;
+    Self.Color := $00F3F3F3;
+  end;
+
+  // Title label
+  FTitleLabel := TLabel.Create(Self);
+  FTitleLabel.Parent := Self;
+  FTitleLabel.Caption := ATitle;
+  FTitleLabel.Top := 5;
+  FTitleLabel.Left := 5;
+  //if IsDarkModeEnabled then
+  //begin
+  //  FTitleLabel.Font.Color := $00C75F5B;
+  //end
+  //else
+  //begin
+  //  FTitleLabel.Font.Color := clDefault;
+  //end;
+  FTitleLabel.AnchorVerticalCenterTo(Self);
+  FTitleLabel.AnchorSide[akLeft].Side := asrLeft;
+  FTitleLabel.AnchorSide[akLeft].Control := Self;
+  FTitleLabel.OnClick := @TabClick;
+  FTitleLabel.OnMouseEnter := @TabMouseEnter;
+  FTitleLabel.OnMouseLeave := @TabMouseLeave;
+
+  // Counter badge
+  FCounterBadge := TBCPanel.Create(Self);
+  FCounterBadge.Parent := Self;
+  FCounterBadge.Height := 18;
+  FCounterBadge.Width := 25;
+  FCounterBadge.BevelOuter := bvNone;
+  FCounterBadge.BevelInner := bvNone;
+  FCounterBadge.BorderBCStyle := bpsBorder;
+  FCounterBadge.Caption := '';
+  FCounterBadge.Rounding.RoundX := 12;
+  FCounterBadge.Rounding.RoundY := 12;
+  FCounterBadge.OnClick := @TabClick;
+  FCounterBadge.OnMouseEnter := @TabMouseEnter;
+  FCounterBadge.OnMouseLeave := @TabMouseLeave;
+  FCounterBadge.Border.Style := bboNone;
+  if IsDarkModeEnabled then
+  begin
+    FCounterBadge.Border.Color := $00C75F5B;
+    FCounterBadge.Background.Color := $00C75F5B;
+  end
+  else
+  begin
+    FCounterBadge.Border.Color := $00C75F5B;
+    FCounterBadge.Background.Color := $00C75F5B;
+  end;
+  FCounterBadge.Color := Self.Background.Color;
+  FCounterBadge.AnchorVerticalCenterTo(Self);
+  FCounterBadge.AnchorSide[akLeft].Side := asrRight;
+  FCounterBadge.AnchorSide[akLeft].Control := FTitleLabel;
+  FCounterBadge.OnClick := @TabClick;
+  FCounterBadge.OnMouseEnter := @TabMouseEnter;
+  FCounterBadge.OnMouseLeave := @TabMouseLeave;
+
+  // Counter label
+  FCounterLabel := TLabel.Create(FCounterBadge);
+  FCounterLabel.Parent := FCounterBadge;
+  FCounterLabel.Caption := IntToStr(ACount);
+  FCounterLabel.Top := 5;
+  FCounterLabel.Left := 5;
+  FCounterLabel.BorderSpacing.Left := 8;
+  FCounterLabel.BorderSpacing.Right := 8;
+  FCounterLabel.BorderSpacing.Top := 4;
+  FCounterLabel.BorderSpacing.Bottom := 4;
+  FCounterLabel.Font.Style := [fsBold];
+  FCounterLabel.Font.Color := $00FAEBE8;
+  FCounterLabel.AutoSize := True;
+  FCounterLabel.Layout := tlCenter;
+  FCounterLabel.Align := alClient;
+  FCounterLabel.OnClick := @TabClick;
+  FCounterLabel.OnMouseEnter := @TabMouseEnter;
+  FCounterLabel.OnMouseLeave := @TabMouseLeave;
+
+  FCounterBadge.AutoSize := True;
+  Self.AutoSize := True;
+end;
+
+procedure TCustomPanelTab.SetActive(Value: Boolean);
+begin
+  if FIsActive <> Value then
+  begin
+    FIsActive := Value;
+    if FIsActive then
+    begin
+      Self.Border.Color := clVioletFGLight;
+      Self.Border.Width := 2;
+    end
+    else
+    begin
+      if IsDarkModeEnabled then
+        Self.Border.Color := clSolidBGTertiaryDark
+      else
+        Self.Border.Color := $00D1D1D1;
+      Self.Border.Width := 1;
+    end;
+  end;
+end;
+
+procedure TCustomPanelTab.TabClick(Sender: TObject);
+var
+  i: Integer;
+  Panel: TBCPanel;
+  PanelTab: TCustomPanelTab;
+begin
+  if Working then
+    Exit;
+
+  Working := True;
+  Panel := Owner as TBCPanel;
+  // Iterate all tabs and deactivate them
+  for i := 0 to Panel.ComponentCount - 1 do
+  begin
+    if Panel.Components[i] is TCustomPanelTab then
+    begin
+      PanelTab := TCustomPanelTab(Panel.Components[i]);
+      PanelTab.IsActive := False;
+    end;
+  end;
+
+  if IsDarkModeEnabled then
+    Self.Background.Color := clVioletBG1Dark
+  else
+    Self.Background.Color := clVioletBG1Light;
+  FCounterBadge.Color := Self.Background.Color;
+  if (FParentForm.pChild.Visible) and (Self.PageIndex = FParentForm.nbChilds.PageIndex) then
+  begin
+    // Hide child grid, if clicked then active tab
+    FParentForm.pChild.Visible := False;
+    if IsDarkModeEnabled then
+      Self.Border.Color := clSolidBGTertiaryDark
+    else
+      Self.Border.Color := $00D1D1D1;
+    Self.Border.Width := 1;
+  end
+  else
+  begin
+    // Show child grid when there is no active tab
+    FParentForm.nbChilds.PageIndex := Self.PageIndex;
+    if not FParentForm.pChild.Visible then
+      FParentForm.pChild.Visible := True;
+    FParentForm.pChild.Top := FParentForm.pChildsBar.Top + FParentForm.pChildsBar.Height + 1;
+
+    // Activate clicked tab
+    Self.IsActive := True;
+  end;
+  //splitChild.Visible := pChild.Visible;
+  Self.Background.Color := $00E0C0C0;
+  FCounterBadge.Color := Self.Background.Color;
+
+  FParentForm.eAddChild.Visible := False;
+  FParentForm.sbAddNetsBatch.Visible := False;
+
+  // Set the child table
+  case FParentForm.TableType of
+    tbIndividuals:
+      case FParentForm.nbChilds.PageIndex of
+        0: FParentForm.ChildTable := tbCaptures;
+        1: FParentForm.ChildTable := tbMolts;
+        2: FParentForm.ChildTable := tbSightings;
+        3: FParentForm.ChildTable := tbNests;
+        4: FParentForm.ChildTable := tbSpecimens;
+      end;
+    tbNests:
+      case FParentForm.nbChilds.PageIndex of
+        0: FParentForm.ChildTable := tbNestOwners;
+        1: FParentForm.ChildTable := tbNestRevisions;
+        2: FParentForm.ChildTable := tbEggs;
+      end;
+    tbExpeditions:
+      case FParentForm.nbChilds.PageIndex of
+        0:
+        begin
+          FParentForm.ChildTable := tbSurveys;
+          FParentForm.eAddChild.Visible := True;
+          FParentForm.eAddChild.TextHint := rsHintAddExistingSurvey;
+        end;
+      end;
+    tbSurveys:
+      case FParentForm.nbChilds.PageIndex of
+        0:
+        begin
+          FParentForm.ChildTable := tbSurveyTeams;
+          FParentForm.eAddChild.Visible := True;
+        end;
+        1:
+        begin
+          FParentForm.ChildTable := tbNetsEffort;
+          FParentForm.sbAddNetsBatch.Visible := True;
+        end;
+        2: FParentForm.ChildTable := tbWeatherLogs;
+        3: FParentForm.ChildTable := tbCaptures;
+        4: FParentForm.ChildTable := tbSightings;
+        5: FParentForm.ChildTable := tbVegetation;
+      end;
+    tbSpecimens:
+      case FParentForm.nbChilds.PageIndex of
+        0:
+        begin
+          FParentForm.ChildTable := tbSpecimenCollectors;
+          FParentForm.eAddChild.Visible := True;
+        end;
+        1: FParentForm.ChildTable := tbSamplePreps;
+      end;
+    tbSamplingPlots:
+      case FParentForm.nbChilds.PageIndex of
+        0: FParentForm.ChildTable := tbPermanentNets;
+      end;
+    tbProjects:
+      case FParentForm.nbChilds.PageIndex of
+        0:
+        begin
+          FParentForm.ChildTable := tbProjectTeams;
+          FParentForm.eAddChild.Visible := True;
+        end;
+      end;
+  end;
+
+  case FParentForm.nbChilds.PageIndex of
+    0: FParentForm.UpdateChildButtons(FParentForm.dsLink1.DataSet);
+    1: FParentForm.UpdateChildButtons(FParentForm.dsLink2.DataSet);
+    2: FParentForm.UpdateChildButtons(FParentForm.dsLink3.DataSet);
+    3: FParentForm.UpdateChildButtons(FParentForm.dsLink4.DataSet);
+    4: FParentForm.UpdateChildButtons(FParentForm.dsLink5.DataSet);
+    5: FParentForm.UpdateChildButtons(FParentForm.dsLink6.DataSet);
+  end;
+
+  FParentForm.UpdateChildStatus;
+  Working := False;
+end;
+
+procedure TCustomPanelTab.TabMouseEnter(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    Self.Background.Color := clVioletBG1Dark
+  else
+    Self.Background.Color := $00E0C0C0;
+  FCounterBadge.Color := Self.Background.Color;
+end;
+
+procedure TCustomPanelTab.TabMouseLeave(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    Self.Background.Color := clCardBGSecondaryDark
+  else
+    Self.Background.Color := clCardBGSecondaryLight;
+  FCounterBadge.Color := Self.Background.Color;
+end;
+
+procedure TCustomPanelTab.UpdateCounter(ACount: Integer);
+begin
+  if ACount > 0 then
+  begin
+    FCounterLabel.Caption := IntToStr(ACount);
+    FCounterBadge.Visible := True;
+  end
+  else
+  begin
+    FCounterBadge.Visible := False;
+  end;
 end;
 
 { TfrmCustomGrid }
@@ -1578,30 +1903,30 @@ begin
   pChildStatus.Border.Color := clCardBGSecondaryDark;
   pChildsBar.Background.Color := clCardBGDefaultDark;
   pChildsBar.Border.Color := clCardBGSecondaryDark;
-  pChildTag1.Background.Color := clCardBGSecondaryDark;
-  pChildTag1.Border.Color := clSolidBGTertiaryDark;
-  pChildTag1.Color := clCardBGDefaultDark;
-  pChildTag2.Background.Color := clCardBGSecondaryDark;
-  pChildTag2.Border.Color := clSolidBGTertiaryDark;
-  pChildTag2.Color := clCardBGDefaultDark;
-  pChildTag3.Background.Color := clCardBGSecondaryDark;
-  pChildTag3.Border.Color := clSolidBGTertiaryDark;
-  pChildTag3.Color := clCardBGDefaultDark;
-  pChildTag4.Background.Color := clCardBGSecondaryDark;
-  pChildTag4.Border.Color := clSolidBGTertiaryDark;
-  pChildTag4.Color := clCardBGDefaultDark;
-  pChildTag5.Background.Color := clCardBGSecondaryDark;
-  pChildTag5.Border.Color := clSolidBGTertiaryDark;
-  pChildTag5.Color := clCardBGDefaultDark;
-  pChildTag6.Background.Color := clCardBGSecondaryDark;
-  pChildTag6.Border.Color := clSolidBGTertiaryDark;
-  pChildTag6.Color := clCardBGDefaultDark;
-  pChildCount1.Color := pChildTag1.Background.Color;
-  pChildCount2.Color := pChildTag2.Background.Color;
-  pChildCount3.Color := pChildTag3.Background.Color;
-  pChildCount4.Color := pChildTag4.Background.Color;
-  pChildCount5.Color := pChildTag5.Background.Color;
-  pChildCount6.Color := pChildTag5.Background.Color;
+  //pChildTag1.Background.Color := clCardBGSecondaryDark;
+  //pChildTag1.Border.Color := clSolidBGTertiaryDark;
+  //pChildTag1.Color := clCardBGDefaultDark;
+  //pChildTag2.Background.Color := clCardBGSecondaryDark;
+  //pChildTag2.Border.Color := clSolidBGTertiaryDark;
+  //pChildTag2.Color := clCardBGDefaultDark;
+  //pChildTag3.Background.Color := clCardBGSecondaryDark;
+  //pChildTag3.Border.Color := clSolidBGTertiaryDark;
+  //pChildTag3.Color := clCardBGDefaultDark;
+  //pChildTag4.Background.Color := clCardBGSecondaryDark;
+  //pChildTag4.Border.Color := clSolidBGTertiaryDark;
+  //pChildTag4.Color := clCardBGDefaultDark;
+  //pChildTag5.Background.Color := clCardBGSecondaryDark;
+  //pChildTag5.Border.Color := clSolidBGTertiaryDark;
+  //pChildTag5.Color := clCardBGDefaultDark;
+  //pChildTag6.Background.Color := clCardBGSecondaryDark;
+  //pChildTag6.Border.Color := clSolidBGTertiaryDark;
+  //pChildTag6.Color := clCardBGDefaultDark;
+  //pChildCount1.Color := pChildTag1.Background.Color;
+  //pChildCount2.Color := pChildTag2.Background.Color;
+  //pChildCount3.Color := pChildTag3.Background.Color;
+  //pChildCount4.Color := pChildTag4.Background.Color;
+  //pChildCount5.Color := pChildTag5.Background.Color;
+  //pChildCount6.Color := pChildTag5.Background.Color;
 
   pSideToolbar.Color := clSolidBGQuaternaryDark;
 
@@ -2165,57 +2490,57 @@ begin
     Exit;
 
   Working := True;
-  if IsDarkModeEnabled then
-  begin
-    pChildTag1.Border.Color := clSolidBGTertiaryDark;
-    pChildTag2.Border.Color := clSolidBGTertiaryDark;
-    pChildTag3.Border.Color := clSolidBGTertiaryDark;
-    pChildTag4.Border.Color := clSolidBGTertiaryDark;
-    pChildTag5.Border.Color := clSolidBGTertiaryDark;
-    pChildTag6.Border.Color := clSolidBGTertiaryDark;
-  end
-  else
-  begin
-    pChildTag1.Border.Color := $00D1D1D1;
-    pChildTag2.Border.Color := $00D1D1D1;
-    pChildTag3.Border.Color := $00D1D1D1;
-    pChildTag4.Border.Color := $00D1D1D1;
-    pChildTag5.Border.Color := $00D1D1D1;
-    pChildTag6.Border.Color := $00D1D1D1;
-  end;
-  pChildTag1.Border.Width := 1;
-  pChildTag2.Border.Width := 1;
-  pChildTag3.Border.Width := 1;
-  pChildTag4.Border.Width := 1;
-  pChildTag5.Border.Width := 1;
-  pChildTag6.Border.Width := 1;
-
-  if IsDarkModeEnabled then
-    aTag.Background.Color := clVioletBG1Dark
-  else
-    aTag.Background.Color := clVioletBG1Light;
-  aCountTag.Color := aTag.Background.Color;
-  if (pChild.Visible) and (aTag.Tag = nbChilds.PageIndex) then
-  begin
-    pChild.Visible := False;
-    if IsDarkModeEnabled then
-      aTag.Border.Color := clSolidBGTertiaryDark
-    else
-      aTag.Border.Color := $00D1D1D1;
-    aTag.Border.Width := 1;
-  end
-  else
-  begin
-    nbChilds.PageIndex := aTag.Tag;
-    if not pChild.Visible then
-      pChild.Visible := True;
-    pChild.Top := pChildsBar.Top + pChildsBar.Height + 1;
-    aTag.Border.Color := clVioletFGLight;
-    aTag.Border.Width := 2;
-  end;
-  //splitChild.Visible := pChild.Visible;
-  aTag.Background.Color := $00E0C0C0;
-  aCountTag.Color := aTag.Background.Color;
+  //if IsDarkModeEnabled then
+  //begin
+  //  pChildTag1.Border.Color := clSolidBGTertiaryDark;
+  //  pChildTag2.Border.Color := clSolidBGTertiaryDark;
+  //  pChildTag3.Border.Color := clSolidBGTertiaryDark;
+  //  pChildTag4.Border.Color := clSolidBGTertiaryDark;
+  //  pChildTag5.Border.Color := clSolidBGTertiaryDark;
+  //  pChildTag6.Border.Color := clSolidBGTertiaryDark;
+  //end
+  //else
+  //begin
+  //  pChildTag1.Border.Color := $00D1D1D1;
+  //  pChildTag2.Border.Color := $00D1D1D1;
+  //  pChildTag3.Border.Color := $00D1D1D1;
+  //  pChildTag4.Border.Color := $00D1D1D1;
+  //  pChildTag5.Border.Color := $00D1D1D1;
+  //  pChildTag6.Border.Color := $00D1D1D1;
+  //end;
+  //pChildTag1.Border.Width := 1;
+  //pChildTag2.Border.Width := 1;
+  //pChildTag3.Border.Width := 1;
+  //pChildTag4.Border.Width := 1;
+  //pChildTag5.Border.Width := 1;
+  //pChildTag6.Border.Width := 1;
+  //
+  //if IsDarkModeEnabled then
+  //  aTag.Background.Color := clVioletBG1Dark
+  //else
+  //  aTag.Background.Color := clVioletBG1Light;
+  //aCountTag.Color := aTag.Background.Color;
+  //if (pChild.Visible) and (aTag.Tag = nbChilds.PageIndex) then
+  //begin
+  //  pChild.Visible := False;
+  //  if IsDarkModeEnabled then
+  //    aTag.Border.Color := clSolidBGTertiaryDark
+  //  else
+  //    aTag.Border.Color := $00D1D1D1;
+  //  aTag.Border.Width := 1;
+  //end
+  //else
+  //begin
+  //  nbChilds.PageIndex := aTag.Tag;
+  //  if not pChild.Visible then
+  //    pChild.Visible := True;
+  //  pChild.Top := pChildsBar.Top + pChildsBar.Height + 1;
+  //  aTag.Border.Color := clVioletFGLight;
+  //  aTag.Border.Width := 2;
+  //end;
+  ////splitChild.Visible := pChild.Visible;
+  //aTag.Background.Color := $00E0C0C0;
+  //aCountTag.Color := aTag.Background.Color;
   Working := False;
 end;
 
@@ -2627,6 +2952,67 @@ begin
 
   rbIsSynonymAll.Checked := True;
   rbHasSynonymsAll.Checked := True;
+end;
+
+procedure TfrmCustomGrid.CreatePanelTabs;
+var
+  PanelTab: TCustomPanelTab;
+  Titles: array of string;
+  Counts: array of Integer;
+  i: Integer;
+  XPos: Integer;
+begin
+  // Define tabs titles
+  case FTableType of
+    tbIndividuals:
+      begin
+        Titles := [rsTitleCaptures, rsTitleMolts, rsTitleSightings, rsTitleNests, rsTitleSpecimens];
+        Counts := [0, 0, 0, 0, 0];
+      end;
+    tbNests:
+      begin
+        Titles := [rsTitleNestOwners, rsTitleNestRevisions, rsTitleEggs];
+        Counts := [0, 0, 0];
+      end;
+    tbExpeditions:
+      begin
+        Titles := [rsTitleSurveys];
+        Counts := [0];
+      end;
+    tbSurveys:
+      begin
+        Titles := [rsTitleSurveyTeam, rsTitleNetsEffort, rsTitleWeather, rsTitleCaptures, rsTitleSightings, rsTitleVegetation];
+        Counts := [0, 0, 0, 0, 0, 0];
+      end;
+    tbSpecimens:
+      begin
+        Titles := [rsTitleSpecimenCollectors, rsTitleSamplePreps];
+        Counts := [0, 0];
+      end;
+    tbSamplingPlots:
+      begin
+        Titles := [rsTitlePermanentNets];
+        Counts := [0];
+      end;
+    tbProjects:
+      begin
+        Titles := [rsTitleProjectMembers];
+        Counts := [0];
+      end;
+  end;
+
+  XPos := 70;
+
+  for i := 0 to High(Titles) do
+  begin
+    PanelTab := TCustomPanelTab.Create(pChildsBar, Self, Titles[i], Counts[i], i);
+    PanelTab.Left := XPos;
+    PanelTab.Top := 0; //i * (PanelTab.Height + 5) + 10;
+
+    XPos := XPos + PanelTab.Width + 10;
+
+    PanelTabs.Add(PanelTab);
+  end;
 end;
 
 procedure TfrmCustomGrid.DBGColEnter(Sender: TObject);
@@ -3139,6 +3525,56 @@ end;
 
 procedure TfrmCustomGrid.DBGMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var
+  ACol, ARow: Longint;
+  Grid: TDBGrid;
+  CellRect: TRect;
+begin
+  Grid := TDBGrid(Sender);
+  Grid.MouseToCell(X, Y, ACol, ARow);
+
+  FIsResizing := False;
+  FIsMoving := False;
+  FStartX := X;
+  FStartY := Y;
+  FStartCol := ACol;
+  FStartRow := ARow;
+
+  if (Button = mbLeft) and (ARow = 0) then
+  begin
+    CellRect := Grid.CellRect(ACol, ARow);
+    // Check if mouse is near the column right border to resize
+    if (Abs(X - CellRect.Right) <= 3) then
+    begin
+      FIsResizing := True;
+    end;
+  end;
+end;
+
+procedure TfrmCustomGrid.DBGMouseMove
+  (Sender: TObject; Shift: TShiftState; X, Y: Integer);
+var
+  DeltaX, DeltaY: Integer;
+begin
+  if FIsResizing then
+  begin
+    // Add here the column resizing logic, if necessary
+  end
+  else if (ssLeft in Shift) then
+  begin
+    DeltaX := Abs(X - FStartX);
+    DeltaY := Abs(Y - FStartY);
+
+    if (DeltaX > 4) or (DeltaY > 4) then
+    begin
+      FIsMoving := True;
+      // Add here the column moving logic, if necessary
+    end;
+  end;
+end;
+
+procedure TfrmCustomGrid.DBGMouseUp
+  (Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
   Direction: TSortDirection;
   ACol, ARow: Longint;
   Column: TColumn;
@@ -3147,6 +3583,14 @@ var
 begin
   Grid := TDBGrid(Sender);
   idx := -1;
+
+  // If was resizing or moving a column, do not sort records
+  if FIsResizing or FIsMoving then
+  begin
+    FIsResizing := False;
+    FIsMoving := False;
+    Exit;
+  end;
 
   { Sort records on title click }
   if (Button = mbLeft) and (Grid.MouseCoord(X, Y).Y = 0) then
@@ -4352,15 +4796,23 @@ begin
   tvSiteFilter.NodeDataSize := SizeOf(PSiteNodeData);
   tvDateFilter.NodeDataSize := SizeOf(PDateNodeData);
 
+  PanelTabs := specialize TFPGList<TCustomPanelTab>.Create;
+
   //cellMemo.Tag := -1;
 end;
 
 procedure TfrmCustomGrid.FormDestroy(Sender: TObject);
+var
+  PanelTab: TCustomPanelTab;
 begin
   //if Assigned(DMI) then
   //  FreeAndNil(DMI);
   //if Assigned(DMB) then
   //  FreeAndNil(DMB);
+
+  for PanelTab in PanelTabs do
+    PanelTab.Free;
+  PanelTabs.Free;
 
   FreeAndNil(FSearch);
 end;
@@ -5920,163 +6372,163 @@ begin
   aTag := nil;
   aCountTag := nil;
 
-  if (Sender = pChildTag1) or (Sender = lblChildTag1) or (Sender = pChildCount1) or (Sender = lblChildCount1) then
-  begin
-    aTag := pChildTag1;
-    aCountTag := pChildCount1;
-  end
-  else
-  if (Sender = pChildTag2) or (Sender = lblChildTag2) or (Sender = pChildCount2) or (Sender = lblChildCount2) then
-  begin
-    aTag := pChildTag2;
-    aCountTag := pChildCount2;
-  end
-  else
-  if (Sender = pChildTag3) or (Sender = lblChildTag3) or (Sender = pChildCount3) or (Sender = lblChildCount3) then
-  begin
-    aTag := pChildTag3;
-    aCountTag := pChildCount3;
-  end
-  else
-  if (Sender = pChildTag4) or (Sender = lblChildTag4) or (Sender = pChildCount4) or (Sender = lblChildCount4) then
-  begin
-    aTag := pChildTag4;
-    aCountTag := pChildCount4;
-  end
-  else
-  if (Sender = pChildTag5) or (Sender = lblChildTag5) or (Sender = pChildCount5) or (Sender = lblChildCount5) then
-  begin
-    aTag := pChildTag5;
-    aCountTag := pChildCount5;
-  end
-  else
-  if (Sender = pChildTag6) or (Sender = lblChildTag6) or (Sender = pChildCount6) or (Sender = lblChildCount6) then
-  begin
-    aTag := pChildTag6;
-    aCountTag := pChildCount6;
-  end;
-
-  ChildTagClick(aTag, aCountTag);
-  eAddChild.Visible := False;
-  sbAddNetsBatch.Visible := False;
-
-  case FTableType of
-    tbIndividuals:
-      case nbChilds.PageIndex of
-        0: FChildTable := tbCaptures;
-        1: FChildTable := tbMolts;
-        2: FChildTable := tbSightings;
-        3: FChildTable := tbNests;
-        4: FChildTable := tbSpecimens;
-      end;
-    tbNests:
-      case nbChilds.PageIndex of
-        0: FChildTable := tbNestOwners;
-        1: FChildTable := tbNestRevisions;
-        2: FChildTable := tbEggs;
-      end;
-    tbExpeditions:
-      case nbChilds.PageIndex of
-        0:
-        begin
-          FChildTable := tbSurveys;
-          eAddChild.Visible := True;
-          eAddChild.TextHint := rsHintAddExistingSurvey;
-        end;
-      end;
-    tbSurveys:
-      case nbChilds.PageIndex of
-        0:
-        begin
-          FChildTable := tbSurveyTeams;
-          eAddChild.Visible := True;
-        end;
-        1:
-        begin
-          FChildTable := tbNetsEffort;
-          sbAddNetsBatch.Visible := True;
-        end;
-        2: FChildTable := tbWeatherLogs;
-        3: FChildTable := tbCaptures;
-        4: FChildTable := tbSightings;
-        5: FChildTable := tbVegetation;
-      end;
-    tbSpecimens:
-      case nbChilds.PageIndex of
-        0:
-        begin
-          FChildTable := tbSpecimenCollectors;
-          eAddChild.Visible := True;
-        end;
-        1: FChildTable := tbSamplePreps;
-      end;
-    tbSamplingPlots:
-      case nbChilds.PageIndex of
-        0: FChildTable := tbPermanentNets;
-      end;
-    tbProjects:
-      case nbChilds.PageIndex of
-        0:
-        begin
-          FChildTable := tbProjectTeams;
-          eAddChild.Visible := True;
-        end;
-      end;
-  end;
-
-  case nbChilds.PageIndex of
-    0: UpdateChildButtons(dsLink1.DataSet);
-    1: UpdateChildButtons(dsLink2.DataSet);
-    2: UpdateChildButtons(dsLink3.DataSet);
-    3: UpdateChildButtons(dsLink4.DataSet);
-    4: UpdateChildButtons(dsLink5.DataSet);
-    5: UpdateChildButtons(dsLink6.DataSet);
-  end;
-
-  UpdateChildStatus;
+  //if (Sender = pChildTag1) or (Sender = lblChildTag1) or (Sender = pChildCount1) or (Sender = lblChildCount1) then
+  //begin
+  //  aTag := pChildTag1;
+  //  aCountTag := pChildCount1;
+  //end
+  //else
+  //if (Sender = pChildTag2) or (Sender = lblChildTag2) or (Sender = pChildCount2) or (Sender = lblChildCount2) then
+  //begin
+  //  aTag := pChildTag2;
+  //  aCountTag := pChildCount2;
+  //end
+  //else
+  //if (Sender = pChildTag3) or (Sender = lblChildTag3) or (Sender = pChildCount3) or (Sender = lblChildCount3) then
+  //begin
+  //  aTag := pChildTag3;
+  //  aCountTag := pChildCount3;
+  //end
+  //else
+  //if (Sender = pChildTag4) or (Sender = lblChildTag4) or (Sender = pChildCount4) or (Sender = lblChildCount4) then
+  //begin
+  //  aTag := pChildTag4;
+  //  aCountTag := pChildCount4;
+  //end
+  //else
+  //if (Sender = pChildTag5) or (Sender = lblChildTag5) or (Sender = pChildCount5) or (Sender = lblChildCount5) then
+  //begin
+  //  aTag := pChildTag5;
+  //  aCountTag := pChildCount5;
+  //end
+  //else
+  //if (Sender = pChildTag6) or (Sender = lblChildTag6) or (Sender = pChildCount6) or (Sender = lblChildCount6) then
+  //begin
+  //  aTag := pChildTag6;
+  //  aCountTag := pChildCount6;
+  //end;
+  //
+  //ChildTagClick(aTag, aCountTag);
+  //eAddChild.Visible := False;
+  //sbAddNetsBatch.Visible := False;
+  //
+  //case FTableType of
+  //  tbIndividuals:
+  //    case nbChilds.PageIndex of
+  //      0: FChildTable := tbCaptures;
+  //      1: FChildTable := tbMolts;
+  //      2: FChildTable := tbSightings;
+  //      3: FChildTable := tbNests;
+  //      4: FChildTable := tbSpecimens;
+  //    end;
+  //  tbNests:
+  //    case nbChilds.PageIndex of
+  //      0: FChildTable := tbNestOwners;
+  //      1: FChildTable := tbNestRevisions;
+  //      2: FChildTable := tbEggs;
+  //    end;
+  //  tbExpeditions:
+  //    case nbChilds.PageIndex of
+  //      0:
+  //      begin
+  //        FChildTable := tbSurveys;
+  //        eAddChild.Visible := True;
+  //        eAddChild.TextHint := rsHintAddExistingSurvey;
+  //      end;
+  //    end;
+  //  tbSurveys:
+  //    case nbChilds.PageIndex of
+  //      0:
+  //      begin
+  //        FChildTable := tbSurveyTeams;
+  //        eAddChild.Visible := True;
+  //      end;
+  //      1:
+  //      begin
+  //        FChildTable := tbNetsEffort;
+  //        sbAddNetsBatch.Visible := True;
+  //      end;
+  //      2: FChildTable := tbWeatherLogs;
+  //      3: FChildTable := tbCaptures;
+  //      4: FChildTable := tbSightings;
+  //      5: FChildTable := tbVegetation;
+  //    end;
+  //  tbSpecimens:
+  //    case nbChilds.PageIndex of
+  //      0:
+  //      begin
+  //        FChildTable := tbSpecimenCollectors;
+  //        eAddChild.Visible := True;
+  //      end;
+  //      1: FChildTable := tbSamplePreps;
+  //    end;
+  //  tbSamplingPlots:
+  //    case nbChilds.PageIndex of
+  //      0: FChildTable := tbPermanentNets;
+  //    end;
+  //  tbProjects:
+  //    case nbChilds.PageIndex of
+  //      0:
+  //      begin
+  //        FChildTable := tbProjectTeams;
+  //        eAddChild.Visible := True;
+  //      end;
+  //    end;
+  //end;
+  //
+  //case nbChilds.PageIndex of
+  //  0: UpdateChildButtons(dsLink1.DataSet);
+  //  1: UpdateChildButtons(dsLink2.DataSet);
+  //  2: UpdateChildButtons(dsLink3.DataSet);
+  //  3: UpdateChildButtons(dsLink4.DataSet);
+  //  4: UpdateChildButtons(dsLink5.DataSet);
+  //  5: UpdateChildButtons(dsLink6.DataSet);
+  //end;
+  //
+  //UpdateChildStatus;
 end;
 
 procedure TfrmCustomGrid.pChildTag1MouseEnter(Sender: TObject);
 var
   aTag, aCountTag: TBCPanel;
 begin
-  if (Sender = pChildTag1) or (Sender = lblChildTag1) or (Sender = pChildCount1) or (Sender = lblChildCount1) then
-  begin
-    aTag := pChildTag1;
-    aCountTag := pChildCount1;
-  end
-  else
-  if (Sender = pChildTag2) or (Sender = lblChildTag2) or (Sender = pChildCount2) or (Sender = lblChildCount2) then
-  begin
-    aTag := pChildTag2;
-    aCountTag := pChildCount2;
-  end
-  else
-  if (Sender = pChildTag3) or (Sender = lblChildTag3) or (Sender = pChildCount3) or (Sender = lblChildCount3) then
-  begin
-    aTag := pChildTag3;
-    aCountTag := pChildCount3;
-  end
-  else
-  if (Sender = pChildTag4) or (Sender = lblChildTag4) or (Sender = pChildCount4) or (Sender = lblChildCount4) then
-  begin
-    aTag := pChildTag4;
-    aCountTag := pChildCount4;
-  end
-  else
-  if (Sender = pChildTag5) or (Sender = lblChildTag5) or (Sender = pChildCount5) or (Sender = lblChildCount5) then
-  begin
-    aTag := pChildTag5;
-    aCountTag := pChildCount5;
-  end
-  else
-  if (Sender = pChildTag6) or (Sender = lblChildTag6) or (Sender = pChildCount6) or (Sender = lblChildCount6) then
-  begin
-    aTag := pChildTag6;
-    aCountTag := pChildCount6;
-  end;
-
-  ChildTagMouseEnter(aTag, aCountTag);
+  //if (Sender = pChildTag1) or (Sender = lblChildTag1) or (Sender = pChildCount1) or (Sender = lblChildCount1) then
+  //begin
+  //  aTag := pChildTag1;
+  //  aCountTag := pChildCount1;
+  //end
+  //else
+  //if (Sender = pChildTag2) or (Sender = lblChildTag2) or (Sender = pChildCount2) or (Sender = lblChildCount2) then
+  //begin
+  //  aTag := pChildTag2;
+  //  aCountTag := pChildCount2;
+  //end
+  //else
+  //if (Sender = pChildTag3) or (Sender = lblChildTag3) or (Sender = pChildCount3) or (Sender = lblChildCount3) then
+  //begin
+  //  aTag := pChildTag3;
+  //  aCountTag := pChildCount3;
+  //end
+  //else
+  //if (Sender = pChildTag4) or (Sender = lblChildTag4) or (Sender = pChildCount4) or (Sender = lblChildCount4) then
+  //begin
+  //  aTag := pChildTag4;
+  //  aCountTag := pChildCount4;
+  //end
+  //else
+  //if (Sender = pChildTag5) or (Sender = lblChildTag5) or (Sender = pChildCount5) or (Sender = lblChildCount5) then
+  //begin
+  //  aTag := pChildTag5;
+  //  aCountTag := pChildCount5;
+  //end
+  //else
+  //if (Sender = pChildTag6) or (Sender = lblChildTag6) or (Sender = pChildCount6) or (Sender = lblChildCount6) then
+  //begin
+  //  aTag := pChildTag6;
+  //  aCountTag := pChildCount6;
+  //end;
+  //
+  //ChildTagMouseEnter(aTag, aCountTag);
 end;
 
 procedure TfrmCustomGrid.pChildTag1MouseLeave(Sender: TObject);
@@ -6086,43 +6538,43 @@ begin
   aTag := nil;
   aCountTag := nil;
 
-  if (Sender = pChildTag1) or (Sender = lblChildTag1) or (Sender = pChildCount1) or (Sender = lblChildCount1) then
-  begin
-    aTag := pChildTag1;
-    aCountTag := pChildCount1;
-  end
-  else
-  if (Sender = pChildTag2) or (Sender = lblChildTag2) or (Sender = pChildCount2) or (Sender = lblChildCount2) then
-  begin
-    aTag := pChildTag2;
-    aCountTag := pChildCount2;
-  end
-  else
-  if (Sender = pChildTag3) or (Sender = lblChildTag3) or (Sender = pChildCount3) or (Sender = lblChildCount3) then
-  begin
-    aTag := pChildTag3;
-    aCountTag := pChildCount3;
-  end
-  else
-  if (Sender = pChildTag4) or (Sender = lblChildTag4) or (Sender = pChildCount4) or (Sender = lblChildCount4) then
-  begin
-    aTag := pChildTag4;
-    aCountTag := pChildCount4;
-  end
-  else
-  if (Sender = pChildTag5) or (Sender = lblChildTag5) or (Sender = pChildCount5) or (Sender = lblChildCount5) then
-  begin
-    aTag := pChildTag5;
-    aCountTag := pChildCount5;
-  end
-  else
-  if (Sender = pChildTag6) or (Sender = lblChildTag6) or (Sender = pChildCount6) or (Sender = lblChildCount6) then
-  begin
-    aTag := pChildTag6;
-    aCountTag := pChildCount6;
-  end;
-
-  ChildTagMouseLeave(aTag, aCountTag);
+  //if (Sender = pChildTag1) or (Sender = lblChildTag1) or (Sender = pChildCount1) or (Sender = lblChildCount1) then
+  //begin
+  //  aTag := pChildTag1;
+  //  aCountTag := pChildCount1;
+  //end
+  //else
+  //if (Sender = pChildTag2) or (Sender = lblChildTag2) or (Sender = pChildCount2) or (Sender = lblChildCount2) then
+  //begin
+  //  aTag := pChildTag2;
+  //  aCountTag := pChildCount2;
+  //end
+  //else
+  //if (Sender = pChildTag3) or (Sender = lblChildTag3) or (Sender = pChildCount3) or (Sender = lblChildCount3) then
+  //begin
+  //  aTag := pChildTag3;
+  //  aCountTag := pChildCount3;
+  //end
+  //else
+  //if (Sender = pChildTag4) or (Sender = lblChildTag4) or (Sender = pChildCount4) or (Sender = lblChildCount4) then
+  //begin
+  //  aTag := pChildTag4;
+  //  aCountTag := pChildCount4;
+  //end
+  //else
+  //if (Sender = pChildTag5) or (Sender = lblChildTag5) or (Sender = pChildCount5) or (Sender = lblChildCount5) then
+  //begin
+  //  aTag := pChildTag5;
+  //  aCountTag := pChildCount5;
+  //end
+  //else
+  //if (Sender = pChildTag6) or (Sender = lblChildTag6) or (Sender = pChildCount6) or (Sender = lblChildCount6) then
+  //begin
+  //  aTag := pChildTag6;
+  //  aCountTag := pChildCount6;
+  //end;
+  //
+  //ChildTagMouseLeave(aTag, aCountTag);
 end;
 
 procedure TfrmCustomGrid.pClientResize(Sender: TObject);
@@ -10896,6 +11348,7 @@ begin
     tbSightings:      SetGridSightings;
     tbSpecimens:      SetGridSpecimens;
   end;
+  CreatePanelTabs;
   dsLink.DataSet := FSearch.DataSet;
 
   SplitChild.Visible := pChild.Visible;
@@ -11016,8 +11469,8 @@ begin
   FSearch.DataSet := DMG.qExpeditions;
   AddSortedField('start_date', sdDescending);
 
-  lblChildTag1.Caption := rsTitleSurveys;
-  pChildTag1.Visible := True;
+  //lblChildTag1.Caption := rsTitleSurveys;
+  //pChildTag1.Visible := True;
   nbChilds.PageIndex := 0;
   if not Assigned(DMS) then
     DMS := TDMS.Create(nil);
@@ -11061,16 +11514,16 @@ begin
   FSearch.DataSet := DMG.qIndividuals;
   AddSortedField('full_name', sdAscending);
 
-  lblChildTag1.Caption := rsTitleCaptures;
-  lblChildTag2.Caption := rsTitleMolts;
-  lblChildTag3.Caption := rsTitleSightings;
-  lblChildTag4.Caption := rsTitleNests;
-  lblChildTag5.Caption := rsTitleSpecimens;
-  pChildTag1.Visible := True;
-  pChildTag2.Visible := True;
-  pChildTag3.Visible := True;
-  pChildTag4.Visible := True;
-  pChildTag5.Visible := True;
+  //lblChildTag1.Caption := rsTitleCaptures;
+  //lblChildTag2.Caption := rsTitleMolts;
+  //lblChildTag3.Caption := rsTitleSightings;
+  //lblChildTag4.Caption := rsTitleNests;
+  //lblChildTag5.Caption := rsTitleSpecimens;
+  //pChildTag1.Visible := True;
+  //pChildTag2.Visible := True;
+  //pChildTag3.Visible := True;
+  //pChildTag4.Visible := True;
+  //pChildTag5.Visible := True;
   nbChilds.PageIndex := 0;
   if not Assigned(DMI) then
     DMI := TDMI.Create(nil);
@@ -11140,12 +11593,12 @@ begin
   FSearch.DataSet := DMG.qNests;
   AddSortedField('full_name', sdAscending);
 
-  lblChildTag1.Caption := rsTitleNestOwners;
-  lblChildTag2.Caption := rsTitleNestRevisions;
-  lblChildTag3.Caption := rsTitleEggs;
-  pChildTag1.Visible := True;
-  pChildTag2.Visible := True;
-  pChildTag3.Visible := True;
+  //lblChildTag1.Caption := rsTitleNestOwners;
+  //lblChildTag2.Caption := rsTitleNestRevisions;
+  //lblChildTag3.Caption := rsTitleEggs;
+  //pChildTag1.Visible := True;
+  //pChildTag2.Visible := True;
+  //pChildTag3.Visible := True;
   nbChilds.PageIndex := 0;
   if not Assigned(DMB) then
     DMB := TDMB.Create(nil);
@@ -11194,8 +11647,8 @@ begin
   FSearch.DataSet := DMG.qSamplingPlots;
   AddSortedField('full_name', sdAscending);
 
-  lblChildTag1.Caption := rsTitlePermanentNets;
-  pChildTag1.Visible := True;
+  //lblChildTag1.Caption := rsTitlePermanentNets;
+  //pChildTag1.Visible := True;
   nbChilds.PageIndex := 0;
   FChildTable := tbPermanentNets;
   dsLink1.DataSet := DMG.qPermanentNets;
@@ -11245,8 +11698,8 @@ begin
   FSearch.DataSet := DMG.qProjects;
   AddSortedField('project_title', sdAscending);
 
-  lblChildTag1.Caption := rsTitleTeam;
-  pChildTag1.Visible := True;
+  //lblChildTag1.Caption := rsTitleTeam;
+  //pChildTag1.Visible := True;
   nbChilds.PageIndex := 0;
   FChildTable := tbProjectTeams;
   dsLink1.DataSet := DMG.qProjectTeam;
@@ -11289,10 +11742,10 @@ begin
   FSearch.DataSet := DMG.qSpecimens;
   AddSortedField('full_name', sdAscending);
 
-  lblChildTag1.Caption := rsTitleCollectors;
-  lblChildTag2.Caption := rsTitleSamplePreps;
-  pChildTag1.Visible := True;
-  pChildTag2.Visible := True;
+  //lblChildTag1.Caption := rsTitleCollectors;
+  //lblChildTag2.Caption := rsTitleSamplePreps;
+  //pChildTag1.Visible := True;
+  //pChildTag2.Visible := True;
   nbChilds.PageIndex := 0;
   FChildTable := tbSpecimenCollectors;
   dsLink1.DataSet := DMG.qSampleCollectors;
@@ -11324,18 +11777,18 @@ begin
   FSearch.DataSet := DMG.qSurveys;
   AddSortedField('survey_date', sdDescending);
 
-  lblChildTag1.Caption := rsTitleTeam;
-  lblChildTag2.Caption := rsTitleNetsEffort;
-  lblChildTag3.Caption := rsTitleWeather;
-  lblChildTag4.Caption := rsTitleCaptures;
-  lblChildTag5.Caption := rsTitleSightings;
-  lblChildTag6.Caption := rsTitleVegetation;
-  pChildTag1.Visible := True;
-  pChildTag2.Visible := True;
-  pChildTag3.Visible := True;
-  pChildTag4.Visible := True;
-  pChildTag5.Visible := True;
-  pChildTag6.Visible := True;
+  //lblChildTag1.Caption := rsTitleTeam;
+  //lblChildTag2.Caption := rsTitleNetsEffort;
+  //lblChildTag3.Caption := rsTitleWeather;
+  //lblChildTag4.Caption := rsTitleCaptures;
+  //lblChildTag5.Caption := rsTitleSightings;
+  //lblChildTag6.Caption := rsTitleVegetation;
+  //pChildTag1.Visible := True;
+  //pChildTag2.Visible := True;
+  //pChildTag3.Visible := True;
+  //pChildTag4.Visible := True;
+  //pChildTag5.Visible := True;
+  //pChildTag6.Visible := True;
   nbChilds.PageIndex := 0;
   if not Assigned(DMS) then
     DMS := TDMS.Create(nil);
@@ -12152,18 +12605,22 @@ begin
 end;
 
 procedure TfrmCustomGrid.UpdateChildCount;
+var
+  PanelTab: TCustomPanelTab;
 begin
   if Closing then
     Exit;
 
   if not dsLink.DataSet.Active then
   begin
-    pChildCount1.Visible := False;
-    pChildCount2.Visible := False;
-    pChildCount3.Visible := False;
-    pChildCount4.Visible := False;
-    pChildCount5.Visible := False;
-    pChildCount6.Visible := False;
+    for PanelTab in PanelTabs do
+      PanelTab.UpdateCounter(0);
+    //pChildCount1.Visible := False;
+    //pChildCount2.Visible := False;
+    //pChildCount3.Visible := False;
+    //pChildCount4.Visible := False;
+    //pChildCount5.Visible := False;
+    //pChildCount6.Visible := False;
     Exit;
   end;
 
@@ -12174,26 +12631,28 @@ begin
     //tbGazetteer: ;
     tbSamplingPlots:
     begin
-      if dsLink1.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-        pChildCount1.Visible := True;
-      end
-      else
-        pChildCount1.Visible := False;
+      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      //if dsLink1.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
+      //  pChildCount1.Visible := True;
+      //end
+      //else
+      //  pChildCount1.Visible := False;
     end;
     //tbPermanentNets: ;
     //tbInstitutions: ;
     //tbPeople: ;
     tbProjects:
     begin
-      if dsLink1.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-        pChildCount1.Visible := True;
-      end
-      else
-        pChildCount1.Visible := False;
+      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      //if dsLink1.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
+      //  pChildCount1.Visible := True;
+      //end
+      //else
+      //  pChildCount1.Visible := False;
     end;
     //tbProjectTeams: ;
     //tbPermits: ;
@@ -12204,157 +12663,174 @@ begin
     //tbBandHistory: ;
     tbIndividuals:
     begin
-      if dsLink1.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-        pChildCount1.Visible := True;
-      end
-      else
-        pChildCount1.Visible := False;
-
-      if dsLink2.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
-        pChildCount2.Visible := True;
-      end
-      else
-        pChildCount2.Visible := False;
-
-      if dsLink3.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount3.Caption := IntToStr(dsLink3.DataSet.RecordCount);
-        pChildCount3.Visible := True;
-      end
-      else
-        pChildCount3.Visible := False;
-
-      if dsLink4.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount4.Caption := IntToStr(dsLink4.DataSet.RecordCount);
-        pChildCount4.Visible := True;
-      end
-      else
-        pChildCount4.Visible := False;
-
-      if dsLink5.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount5.Caption := IntToStr(dsLink5.DataSet.RecordCount);
-        pChildCount5.Visible := True;
-      end
-      else
-        pChildCount5.Visible := False;
+      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+      PanelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+      PanelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
+      PanelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
+      //if dsLink1.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
+      //  pChildCount1.Visible := True;
+      //end
+      //else
+      //  pChildCount1.Visible := False;
+      //
+      //if dsLink2.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
+      //  pChildCount2.Visible := True;
+      //end
+      //else
+      //  pChildCount2.Visible := False;
+      //
+      //if dsLink3.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount3.Caption := IntToStr(dsLink3.DataSet.RecordCount);
+      //  pChildCount3.Visible := True;
+      //end
+      //else
+      //  pChildCount3.Visible := False;
+      //
+      //if dsLink4.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount4.Caption := IntToStr(dsLink4.DataSet.RecordCount);
+      //  pChildCount4.Visible := True;
+      //end
+      //else
+      //  pChildCount4.Visible := False;
+      //
+      //if dsLink5.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount5.Caption := IntToStr(dsLink5.DataSet.RecordCount);
+      //  pChildCount5.Visible := True;
+      //end
+      //else
+      //  pChildCount5.Visible := False;
     end;
     //tbCaptures: ;
     //tbMolts: ;
     tbNests:
     begin
-      if dsLink1.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-        pChildCount1.Visible := True;
-      end
-      else
-        pChildCount1.Visible := False;
-
-      if dsLink2.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
-        pChildCount2.Visible := True;
-      end
-      else
-        pChildCount2.Visible := False;
-
-      if dsLink3.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount3.Caption := IntToStr(dsLink3.DataSet.RecordCount);
-        pChildCount3.Visible := True;
-      end
-      else
-        pChildCount3.Visible := False;
+      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+      PanelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+      //if dsLink1.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
+      //  pChildCount1.Visible := True;
+      //end
+      //else
+      //  pChildCount1.Visible := False;
+      //
+      //if dsLink2.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
+      //  pChildCount2.Visible := True;
+      //end
+      //else
+      //  pChildCount2.Visible := False;
+      //
+      //if dsLink3.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount3.Caption := IntToStr(dsLink3.DataSet.RecordCount);
+      //  pChildCount3.Visible := True;
+      //end
+      //else
+      //  pChildCount3.Visible := False;
     end;
     //tbNestRevisions: ;
     //tbEggs: ;
     //tbMethods: ;
     tbExpeditions:
     begin
-      if dsLink1.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-        pChildCount1.Visible := True;
-      end
-      else
-        pChildCount1.Visible := False;
+      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      //if dsLink1.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
+      //  pChildCount1.Visible := True;
+      //end
+      //else
+      //  pChildCount1.Visible := False;
     end;
     tbSurveys:
     begin
-      if dsLink1.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-        pChildCount1.Visible := True;
-      end
-      else
-        pChildCount1.Visible := False;
-
-      if dsLink2.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
-        pChildCount2.Visible := True;
-      end
-      else
-        pChildCount2.Visible := False;
-
-      if dsLink3.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount3.Caption := IntToStr(dsLink3.DataSet.RecordCount);
-        pChildCount3.Visible := True;
-      end
-      else
-        pChildCount3.Visible := False;
-
-      if dsLink4.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount4.Caption := IntToStr(dsLink4.DataSet.RecordCount);
-        pChildCount4.Visible := True;
-      end
-      else
-        pChildCount4.Visible := False;
-
-      if dsLink5.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount5.Caption := IntToStr(dsLink5.DataSet.RecordCount);
-        pChildCount5.Visible := True;
-      end
-      else
-        pChildCount5.Visible := False;
-
-      if dsLink6.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount6.Caption := IntToStr(dsLink6.DataSet.RecordCount);
-        pChildCount6.Visible := True;
-      end
-      else
-        pChildCount6.Visible := False;
+      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+      PanelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+      PanelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
+      PanelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
+      PanelTabs[5].UpdateCounter(dsLink6.DataSet.RecordCount);
+      //if dsLink1.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
+      //  pChildCount1.Visible := True;
+      //end
+      //else
+      //  pChildCount1.Visible := False;
+      //
+      //if dsLink2.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
+      //  pChildCount2.Visible := True;
+      //end
+      //else
+      //  pChildCount2.Visible := False;
+      //
+      //if dsLink3.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount3.Caption := IntToStr(dsLink3.DataSet.RecordCount);
+      //  pChildCount3.Visible := True;
+      //end
+      //else
+      //  pChildCount3.Visible := False;
+      //
+      //if dsLink4.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount4.Caption := IntToStr(dsLink4.DataSet.RecordCount);
+      //  pChildCount4.Visible := True;
+      //end
+      //else
+      //  pChildCount4.Visible := False;
+      //
+      //if dsLink5.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount5.Caption := IntToStr(dsLink5.DataSet.RecordCount);
+      //  pChildCount5.Visible := True;
+      //end
+      //else
+      //  pChildCount5.Visible := False;
+      //
+      //if dsLink6.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount6.Caption := IntToStr(dsLink6.DataSet.RecordCount);
+      //  pChildCount6.Visible := True;
+      //end
+      //else
+      //  pChildCount6.Visible := False;
     end;
     //tbSurveyTeams: ;
     //tbNetsEffort: ;
     tbSightings: ;
     tbSpecimens:
     begin
-      if dsLink1.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-        pChildCount1.Visible := True;
-      end
-      else
-        pChildCount1.Visible := False;
-
-      if dsLink2.DataSet.RecordCount > 0 then
-      begin
-        lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
-        pChildCount2.Visible := True;
-      end
-      else
-        pChildCount2.Visible := False;
+      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+      //if dsLink1.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
+      //  pChildCount1.Visible := True;
+      //end
+      //else
+      //  pChildCount1.Visible := False;
+      //
+      //if dsLink2.DataSet.RecordCount > 0 then
+      //begin
+      //  lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
+      //  pChildCount2.Visible := True;
+      //end
+      //else
+      //  pChildCount2.Visible := False;
     end;
     //tbSamplePreps: ;
     //tbImages: ;

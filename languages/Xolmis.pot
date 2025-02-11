@@ -11702,7 +11702,7 @@ msgstr ""
 
 #: tfrmcustomgrid.pmccolumnsautoadjustwidth.caption
 msgctxt "tfrmcustomgrid.pmccolumnsautoadjustwidth.caption"
-msgid "Auto adjust columns' &width"
+msgid "Adjust columns' &width to content"
 msgstr ""
 
 #: tfrmcustomgrid.pmccolumnsortasc.caption
@@ -11839,7 +11839,7 @@ msgstr ""
 
 #: tfrmcustomgrid.pmgautosizecolumns.caption
 msgctxt "tfrmcustomgrid.pmgautosizecolumns.caption"
-msgid "Auto adjust columns' &width"
+msgid "Adjust columns' &width to content"
 msgstr ""
 
 #: tfrmcustomgrid.pmgdecreaserowheight.caption

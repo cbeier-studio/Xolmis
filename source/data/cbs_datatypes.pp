@@ -96,6 +96,7 @@ type
     tbVegetation);
 
   TTablesDictionary = specialize TFPGMap<String, TTableType>;
+  TLocaleTablesDictionary = specialize TFPGMap<TTableType, String>;
 
 const
   TableAliases: array [TTableType] of String = ('',
@@ -363,8 +364,10 @@ type
 var
   UID: TGUID;
   TablesDict: TTablesDictionary;
+  LocaleTablesDict: TLocaleTablesDictionary;
 
   procedure LoadTablesDict;
+  procedure LoadLocaleTablesDict;
 
   function CampoByName(const aCampoName: String): TTableFieldType;
   function SearchTypeByName(const aFilterName: String): TSearchDataType;
@@ -445,6 +448,52 @@ begin
   TablesDict.Add(rsTitleCollectors, tbSpecimenCollectors);
   TablesDict.Add(rsTitleSamplePreps, tbSamplePreps);
   TablesDict.Add(rsTitleVegetation, tbVegetation);
+  //tbImages,
+  //tbAudioLibrary,
+  //tbDocuments,
+end;
+
+procedure LoadLocaleTablesDict;
+begin
+  if not Assigned(LocaleTablesDict) then
+    LocaleTablesDict := TLocaleTablesDictionary.Create;
+
+  LocaleTablesDict.Clear;
+
+  LocaleTablesDict.Add(tbUsers, rsTitleUsers);
+  //tbRecordHistory,
+  //tbRecordVerifications,
+  LocaleTablesDict.Add(tbGazetteer, rsTitleGazetteer);
+  LocaleTablesDict.Add(tbSamplingPlots, rsTitleSamplingPlots);
+  LocaleTablesDict.Add(tbPermanentNets, rsTitlePermanentNets);
+  LocaleTablesDict.Add(tbInstitutions, rsTitleInstitutions);
+  LocaleTablesDict.Add(tbPeople, rsTitleResearchers);
+  LocaleTablesDict.Add(tbProjects, rsTitleProjects);
+  LocaleTablesDict.Add(tbProjectTeams, rsTitleProjectMembers);
+  LocaleTablesDict.Add(tbPermits, rsTitlePermits);
+  LocaleTablesDict.Add(tbBotanicTaxa, rsTitleBotanicTaxa);
+  LocaleTablesDict.Add(tbTaxonRanks, rsTitleTaxonRanks);
+  LocaleTablesDict.Add(tbZooTaxa, rsTitleZooTaxa);
+  LocaleTablesDict.Add(tbBands, rsTitleBands);
+  //tbBandHistory,
+  LocaleTablesDict.Add(tbIndividuals, rsTitleIndividuals);
+  LocaleTablesDict.Add(tbCaptures, rsTitleCaptures);
+  LocaleTablesDict.Add(tbMolts, rsTitleMolts);
+  LocaleTablesDict.Add(tbNests, rsTitleNests);
+  LocaleTablesDict.Add(tbNestOwners, rsTitleNestOwners);
+  LocaleTablesDict.Add(tbNestRevisions, rsTitleNestRevisions);
+  LocaleTablesDict.Add(tbEggs, rsTitleEggs);
+  LocaleTablesDict.Add(tbMethods, rsTitleMethods);
+  LocaleTablesDict.Add(tbExpeditions, rsCaptionExpeditions);
+  LocaleTablesDict.Add(tbSurveys, rsTitleSurveys);
+  LocaleTablesDict.Add(tbSurveyTeams, rsTitleSurveyTeam);
+  LocaleTablesDict.Add(tbNetsEffort, rsTitleNetsEffort);
+  LocaleTablesDict.Add(tbWeatherLogs, rsTitleWeather);
+  LocaleTablesDict.Add(tbSightings, rsTitleSightings);
+  LocaleTablesDict.Add(tbSpecimens, rsTitleSpecimens);
+  LocaleTablesDict.Add(tbSpecimenCollectors, rsTitleCollectors);
+  LocaleTablesDict.Add(tbSamplePreps, rsTitleSamplePreps);
+  LocaleTablesDict.Add(tbVegetation, rsTitleVegetation);
   //tbImages,
   //tbAudioLibrary,
   //tbDocuments,
