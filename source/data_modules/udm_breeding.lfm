@@ -1,0 +1,1527 @@
+object DMB: TDMB
+  OnCreate = DataModuleCreate
+  OldCreateOrder = False
+  Height = 410
+  HorizontalOffset = 373
+  VerticalOffset = 34
+  Width = 526
+  object qNestRevisions: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'nest_revision_id'
+        DataType = ftAutoInc
+        Precision = -1
+      end    
+      item
+        Name = 'nest_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'revision_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'revision_time'
+        DataType = ftTime
+        Precision = -1
+      end    
+      item
+        Name = 'observer_1_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'observer_2_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'nest_status'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 1
+      end    
+      item
+        Name = 'host_eggs_tally'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'host_nestlings_tally'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'nidoparasite_eggs_tally'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'nidoparasite_nestlings_tally'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'nidoparasite_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'have_philornis_larvae'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'nest_stage'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    AfterCancel = qNestRevisionsAfterCancel
+    AfterPost = qNestRevisionsAfterPost
+    BeforeEdit = qNestRevisionsBeforeEdit
+    BeforePost = qNestRevisionsBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT nr.*,'
+      '  p1.acronym AS observer_1_name,'
+      '  p2.acronym AS observer_2_name,'
+      '  z.full_name AS nidoparasite_name'
+      'FROM nest_revisions AS nr'
+      'LEFT JOIN people AS p1 ON nr.observer_1_id = p1.person_id'
+      'LEFT JOIN people AS p2 ON nr.observer_2_id = p2.person_id'
+      'LEFT JOIN zoo_taxa AS z ON nr.nidoparasite_id = z.taxon_id'
+      'WHERE (nr.active_status = 1)'
+      '  AND (nr.nest_id = :nest_id)'
+      ''
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO nest_revisions ('
+      '  nest_id,'
+      '  full_name,'
+      '  revision_date,'
+      '  revision_time,'
+      '  observer_1_id,'
+      '  observer_2_id,'
+      '  nest_status,'
+      '  host_eggs_tally,'
+      '  host_nestlings_tally,'
+      '  nidoparasite_eggs_tally,'
+      '  nidoparasite_nestlings_tally,'
+      '  nidoparasite_id,'
+      '  have_philornis_larvae,'
+      '  nest_stage,'
+      '  notes,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :nest_id,'
+      '  :full_name,'
+      '  :revision_date,'
+      '  :revision_time,'
+      '  :observer_1_id,'
+      '  :observer_2_id,'
+      '  :nest_status,'
+      '  :host_eggs_tally,'
+      '  :host_nestlings_tally,'
+      '  :nidoparasite_eggs_tally,'
+      '  :nidoparasite_nestlings_tally,'
+      '  :nidoparasite_id,'
+      '  :have_philornis_larvae,'
+      '  :nest_stage,'
+      '  :notes,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+    )
+    UpdateSQL.Strings = (
+      'UPDATE nest_revisions SET'
+      '  nest_id = :nest_id,'
+      '  full_name = :full_name,'
+      '  revision_date = :revision_date,'
+      '  revision_time = :revision_time,'
+      '  observer_1_id = :observer_1_id,'
+      '  observer_2_id = :observer_2_id,'
+      '  nest_status = :nest_status,'
+      '  host_eggs_tally = :host_eggs_tally,'
+      '  host_nestlings_tally = :host_nestlings_tally,'
+      '  nidoparasite_eggs_tally = :nidoparasite_eggs_tally,'
+      '  nidoparasite_nestlings_tally = :nidoparasite_nestlings_tally,'
+      '  nidoparasite_id = :nidoparasite_id,'
+      '  have_philornis_larvae = :have_philornis_larvae,'
+      '  nest_stage = :nest_stage,'
+      '  notes = :notes,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (nest_revision_id = :nest_revision_id)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'nest_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = DMG.dsNests
+    Left = 72
+    Top = 48
+    object qNestRevisionsmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qNestRevisionsnest_id: TLongintField
+      DisplayLabel = 'Nest (ID)'
+      FieldKind = fkData
+      FieldName = 'nest_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestRevisionsrevision_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'revision_date'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      EditMask = '00/00/9999;1;_'
+    end
+    object qNestRevisionsrevision_time: TTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Time'
+      FieldKind = fkData
+      FieldName = 'revision_time'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = 'hh:nn'
+      EditMask = '90:00;1;_'
+    end
+    object qNestRevisionsobserver_1_id: TLongintField
+      DisplayLabel = 'Observer 1 (ID)'
+      FieldKind = fkData
+      FieldName = 'observer_1_id'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestRevisionsobserver_1_name: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Observer 1'
+      FieldKind = fkData
+      FieldName = 'observer_1_name'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qNestRevisionsobserver_2_id: TLongintField
+      DisplayLabel = 'Observer 2 (ID)'
+      FieldKind = fkData
+      FieldName = 'observer_2_id'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestRevisionsobserver_2_name: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Observer 2'
+      FieldKind = fkData
+      FieldName = 'observer_2_name'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qNestRevisionsnest_status: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Status'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'nest_status'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qNestRevisionsnest_statusGetText
+      OnSetText = qNestRevisionsnest_statusSetText
+      Size = 1
+    end
+    object qNestRevisionsnest_stage: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Stage'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'nest_stage'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qNestRevisionsnest_stageGetText
+      OnSetText = qNestRevisionsnest_stageSetText
+      Size = 1
+    end
+    object qNestRevisionshost_eggs_tally: TLongintField
+      Alignment = taCenter
+      DisplayLabel = '# eggs (host)'
+      FieldKind = fkData
+      FieldName = 'host_eggs_tally'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qNestRevisionsnidoparasite_eggs_tally: TLongintField
+      Alignment = taCenter
+      DisplayLabel = '# eggs of nidoparasite'
+      FieldKind = fkData
+      FieldName = 'nidoparasite_eggs_tally'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qNestRevisionshost_nestlings_tally: TLongintField
+      Alignment = taCenter
+      DisplayLabel = '# nestlings (host)'
+      FieldKind = fkData
+      FieldName = 'host_nestlings_tally'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qNestRevisionsnidoparasite_nestlings_tally: TLongintField
+      Alignment = taCenter
+      DisplayLabel = '# nestlings of nidoparasite'
+      FieldKind = fkData
+      FieldName = 'nidoparasite_nestlings_tally'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qNestRevisionsnidoparasite_id: TLongintField
+      DisplayLabel = 'Nidoparasite (ID)'
+      FieldKind = fkData
+      FieldName = 'nidoparasite_id'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestRevisionsnidoparasite_name: TStringField
+      DisplayLabel = 'Nidoparasite'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'nidoparasite_name'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qNestRevisionshave_philornis_larvae: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Philornis larvae'
+      FieldKind = fkData
+      FieldName = 'have_philornis_larvae'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qNestRevisionsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qNestRevisionsnest_revision_id: TAutoIncField
+      DisplayLabel = 'Internal nr.'
+      FieldKind = fkData
+      FieldName = 'nest_revision_id'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qNestRevisionsfull_name: TStringField
+      DisplayLabel = 'Full name'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qNestRevisionsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestRevisionsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestRevisionsinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestRevisionsupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestRevisionsexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qNestRevisionsactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qEggs: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'egg_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'nest_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'egg_seq'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'field_number'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'eggshell_color'
+        DataType = ftString
+        Precision = -1
+        Size = 40
+      end    
+      item
+        Name = 'eggshell_pattern'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'eggshell_texture'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'egg_shape'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'egg_width'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'egg_length'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'egg_mass'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'egg_volume'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'egg_stage'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'egg_hatched'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'measure_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'researcher_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'host_egg'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'description'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'researcher_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end>
+    AfterCancel = qEggsAfterCancel
+    AfterPost = qEggsAfterPost
+    BeforeEdit = qEggsBeforeEdit
+    BeforePost = qEggsBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT e.*,'
+      '  p.acronym AS researcher_name,'
+      '  i.full_name AS individual_name,'
+      '  z.full_name AS taxon_name,'
+      '  z.order_id AS order_id,'
+      '  z.family_id AS family_id,'
+      '  z.genus_id AS genus_id,'
+      '  z.species_id AS species_id'
+      'FROM eggs AS e'
+      'LEFT JOIN people AS p ON e.researcher_id = p.person_id'
+      'LEFT JOIN individuals AS i ON e.individual_id = i.individual_id'
+      'LEFT JOIN zoo_taxa AS z ON e.taxon_id = z.taxon_id'
+      'WHERE (e.active_status = 1)'
+      '  AND (e.nest_id = :nest_id)'
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO eggs ('
+      '  nest_id,'
+      '  egg_seq,'
+      '  field_number,'
+      '  taxon_id,'
+      '  eggshell_color,'
+      '  eggshell_pattern,'
+      '  eggshell_texture,'
+      '  egg_shape,'
+      '  egg_width,'
+      '  egg_length,'
+      '  egg_mass,'
+      '  egg_volume,'
+      '  egg_stage,'
+      '  egg_hatched,'
+      '  measure_date,'
+      '  researcher_id,'
+      '  individual_id,'
+      '  host_egg,'
+      '  description,'
+      '  full_name,'
+      '  notes,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :nest_id,'
+      '  :egg_seq,'
+      '  :field_number,'
+      '  :taxon_id,'
+      '  :eggshell_color,'
+      '  :eggshell_pattern,'
+      '  :eggshell_texture,'
+      '  :egg_shape,'
+      '  :egg_width,'
+      '  :egg_length,'
+      '  :egg_mass,'
+      '  :egg_volume,'
+      '  :egg_stage,'
+      '  :egg_hatched,'
+      '  :measure_date,'
+      '  :researcher_id,'
+      '  :individual_id,'
+      '  :host_egg,'
+      '  :description,'
+      '  :full_name,'
+      '  :notes,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+    )
+    UpdateSQL.Strings = (
+      'UPDATE eggs SET'
+      '  nest_id = :nest_id,'
+      '  egg_seq = :egg_seq,'
+      '  field_number = :field_number,'
+      '  taxon_id = :taxon_id,'
+      '  eggshell_color = :eggshell_color,'
+      '  eggshell_pattern = :eggshell_pattern,'
+      '  eggshell_texture = :eggshell_texture,'
+      '  egg_shape = :egg_shape,'
+      '  egg_width = :egg_width,'
+      '  egg_length = :egg_length,'
+      '  egg_mass = :egg_mass,'
+      '  egg_volume = :egg_volume,'
+      '  egg_stage = :egg_stage,'
+      '  egg_hatched = :egg_hatched,'
+      '  measure_date = :measure_date,'
+      '  researcher_id = :researcher_id,'
+      '  individual_id = :individual_id,'
+      '  host_egg = :host_egg,'
+      '  description = :description,'
+      '  full_name = :full_name,'
+      '  notes = :notes,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (egg_id = :egg_id)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'nest_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = DMG.dsNests
+    Left = 72
+    Top = 113
+    object qEggsmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qEggsnest_id: TLongintField
+      DisplayLabel = 'Nest (ID)'
+      FieldKind = fkData
+      FieldName = 'nest_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qEggsfield_number: TStringField
+      DisplayLabel = 'Field number'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'field_number'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qEggsegg_seq: TLongintField
+      Alignment = taCenter
+      DisplayLabel = 'Egg number'
+      FieldKind = fkData
+      FieldName = 'egg_seq'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qEggstaxon_id: TLongintField
+      DisplayLabel = 'Taxon (ID)'
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qEggstaxon_name: TStringField
+      DisplayLabel = 'Taxon'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qEggsegg_shape: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Shape'
+      FieldKind = fkData
+      FieldName = 'egg_shape'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qEggsegg_shapeGetText
+      OnSetText = qEggsegg_shapeSetText
+      Size = 5
+    end
+    object qEggsegg_width: TFloatField
+      DisplayLabel = 'Width'
+      FieldKind = fkData
+      FieldName = 'egg_width'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.0'
+      Precision = -1
+    end
+    object qEggsegg_length: TFloatField
+      DisplayLabel = 'Length'
+      FieldKind = fkData
+      FieldName = 'egg_length'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.0'
+      Precision = -1
+    end
+    object qEggsegg_mass: TFloatField
+      DisplayLabel = 'Mass'
+      FieldKind = fkData
+      FieldName = 'egg_mass'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.00'
+      Precision = -1
+    end
+    object qEggsegg_volume: TFloatField
+      DisplayLabel = 'Volume'
+      FieldKind = fkInternalCalc
+      FieldName = 'egg_volume'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.000'
+      Precision = -1
+    end
+    object qEggseggshell_color: TStringField
+      DisplayLabel = 'Color'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'eggshell_color'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 40
+    end
+    object qEggseggshell_pattern: TStringField
+      DisplayLabel = 'Pattern'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'eggshell_pattern'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qEggseggshell_patternGetText
+      OnSetText = qEggseggshell_patternSetText
+      Size = 5
+    end
+    object qEggseggshell_texture: TStringField
+      DisplayLabel = 'Texture'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'eggshell_texture'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qEggseggshell_textureGetText
+      OnSetText = qEggseggshell_textureSetText
+      Size = 5
+    end
+    object qEggsegg_stage: TStringField
+      DisplayLabel = 'Stage'
+      FieldKind = fkData
+      FieldName = 'egg_stage'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qEggsegg_hatched: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Hatched'
+      FieldKind = fkData
+      FieldName = 'egg_hatched'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qEggshost_egg: TBooleanField
+      FieldKind = fkData
+      FieldName = 'host_egg'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qEggsmeasure_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Measurement date'
+      FieldKind = fkData
+      FieldName = 'measure_date'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qEggsresearcher_id: TLongintField
+      DisplayLabel = 'Researcher (ID)'
+      FieldKind = fkData
+      FieldName = 'researcher_id'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qEggsresearcher_name: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Researcher'
+      FieldKind = fkData
+      FieldName = 'researcher_name'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qEggsdescription: TMemoField
+      DisplayLabel = 'Description'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'description'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qEggsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qEggsindividual_id: TLongintField
+      DisplayLabel = 'Individual (ID)'
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qEggsindividual_name: TStringField
+      DisplayLabel = 'Individual'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'individual_name'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
+    end
+    object qEggsegg_id: TAutoIncField
+      DisplayLabel = 'Internal nr.'
+      FieldKind = fkData
+      FieldName = 'egg_id'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qEggsfull_name: TStringField
+      DisplayLabel = 'Full name'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qEggsorder_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'order_id'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qEggsfamily_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'family_id'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qEggsgenus_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'genus_id'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qEggsspecies_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'species_id'
+      Index = 29
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qEggsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 30
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qEggsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 31
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qEggsinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 32
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qEggsupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 33
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qEggsexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 34
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qEggsactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 35
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsNestRevisions: TDataSource
+    DataSet = qNestRevisions
+    Left = 200
+    Top = 48
+  end
+  object dsEggs: TDataSource
+    DataSet = qEggs
+    Left = 200
+    Top = 113
+  end
+  object qNestOwners: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'nest_owner_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'nest_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'role'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end>
+    AfterCancel = qNestOwnersAfterCancel
+    AfterPost = qNestOwnersAfterPost
+    BeforeEdit = qNestOwnersBeforeEdit
+    BeforePost = qNestOwnersBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT nw.*,'
+      '  i.full_name AS individual_name'
+      'FROM nest_owners AS nw'
+      'LEFT JOIN individuals AS i ON nw.individual_id = i.individual_id'
+      'WHERE (nw.nest_id = :nest_id)'
+      'AND (nw.active_status = 1)'
+      ''
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO nest_owners ('
+      '  nest_id,'
+      '  role,'
+      '  individual_id,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :nest_id,'
+      '  :role,'
+      '  :individual_id,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+      ''
+    )
+    UpdateSQL.Strings = (
+      'UPDATE nest_owners SET'
+      '  nest_id = :nest_id,'
+      '  role = :role,'
+      '  individual_id = :individual_id,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (nest_owner_id = :nest_owner_id)'
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'nest_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = DMG.dsNests
+    Left = 72
+    Top = 179
+    object qNestOwnersmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qNestOwnersnest_id: TLongintField
+      DisplayLabel = 'Nest (ID)'
+      FieldKind = fkData
+      FieldName = 'nest_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestOwnersrole: TStringField
+      DisplayLabel = 'Role'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'role'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qNestOwnersroleGetText
+      OnSetText = qNestOwnersroleSetText
+      Size = 5
+    end
+    object qNestOwnersindividual_id: TLongintField
+      DisplayLabel = 'Individual (ID)'
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestOwnersindividual_name: TStringField
+      DisplayLabel = 'Individual'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'individual_name'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
+    end
+    object qNestOwnersnest_owner_id: TLongintField
+      DisplayLabel = 'Nest owner (ID)'
+      FieldKind = fkData
+      FieldName = 'nest_owner_id'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestOwnersuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestOwnersuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestOwnersinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestOwnersupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestOwnersexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qNestOwnersactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsNestOwners: TDataSource
+    DataSet = qNestOwners
+    Left = 200
+    Top = 179
+  end
+end

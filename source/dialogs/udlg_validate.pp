@@ -88,22 +88,22 @@ procedure TdlgValidate.FormShow(Sender: TObject);
 var
   i: Integer;
 begin
-  if Lista.Count > 1 then
-    FList.Add(Format(rsErrorsFound, [Lista.Count]))
+  if lst.Count > 1 then
+    FList.Add(Format(rsErrorsFound, [lst.Count]))
   else
-    FList.Add(Format(rsErrorFound, [Lista.Count]));
+    FList.Add(Format(rsErrorFound, [lst.Count]));
 
   FList.Add('<body>');
   FList.Add('<ul>');
-  for i := 0 to Lista.Count - 1 do
+  for i := 0 to lst.Count - 1 do
   begin
-    FList.Add('<li>' {'<font color="$001C2BC4">' + #$26A0 + '</font> '} + Lista[i] + '</li>');
+    FList.Add('<li>' {'<font color="$001C2BC4">' + #$26A0 + '</font> '} + lst[i] + '</li>');
     // Application.ProcessMessages;
   end;
   FList.Add('</ul>');
   FList.Add('</body>');
 
-  LV.Caption := FList.Text;
+  LV.LoadFromString(FList.Text);
   LV.Refresh;
 end;
 

@@ -21,8 +21,9 @@ unit uedt_project;
 interface
 
 uses
-  Classes, SysUtils, DB, DateUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBEditButton,
-  DBCtrls, StdCtrls, atshapelinebgra;
+  Classes, EditBtn, SysUtils, DB, DateUtils, LResources, Forms, Controls,
+  Graphics, Dialogs, ExtCtrls, DBEditButton, DBCtrls, StdCtrls, atshapelinebgra,
+  cbs_entities;
 
 type
 
@@ -30,13 +31,13 @@ type
 
   TedtProject = class(TForm)
     dsLink: TDataSource;
-    eShortTitle: TDBEdit;
-    eWebsite: TDBEdit;
-    eEmail: TDBEdit;
-    eContactName: TDBEdit;
-    eStartDate: TDBEditButton;
-    eTitle: TDBEdit;
-    eEndDate: TDBEditButton;
+    eTitle: TEdit;
+    eShortTitle: TEdit;
+    eWebsite: TEdit;
+    eEmail: TEdit;
+    eContactName: TEdit;
+    eStartDate: TEditButton;
+    eEndDate: TEditButton;
     lblStartDate: TLabel;
     lblEndDate: TLabel;
     lblShortTitle: TLabel;
@@ -47,8 +48,8 @@ type
     lblAbstract: TLabel;
     lblTitle: TLabel;
     lineBottom: TShapeLineBGRA;
-    mAbstract: TDBMemo;
-    mNotes: TDBMemo;
+    mAbstract: TMemo;
+    mNotes: TMemo;
     pStartEndDate: TPanel;
     pBottom: TPanel;
     pClient: TPanel;
@@ -65,18 +66,24 @@ type
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEndDateButtonClick(Sender: TObject);
     procedure eStartDateButtonClick(Sender: TObject);
+    procedure eTitleEditingDone(Sender: TObject);
     procedure eTitleKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FProject: TProject;
+    procedure SetProject(Value: TProject);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Project: TProject read FProject write SetProject;
   end;
 
 var
@@ -85,7 +92,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_validations, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_validations, cbs_getvalue, udm_main, uDarkStyleParams;
 
 { TedtProject }
 
@@ -97,20 +104,29 @@ end;
 
 procedure TedtProject.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtProject.eEndDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eEndDate, dsLink.DataSet, 'end_date');
+  CalendarDlg(eEndDate.Text, eEndDate, Dt);
 end;
 
 procedure TedtProject.eStartDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eStartDate, dsLink.DataSet, 'start_date');
+  CalendarDlg(eStartDate.Text, eStartDate, Dt);
+end;
+
+procedure TedtProject.eTitleEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtProject.eTitleKeyPress(Sender: TObject; var Key: char);
@@ -120,14 +136,12 @@ begin
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtProject.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtProject.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -136,7 +150,7 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);
@@ -159,18 +173,38 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionProject)])
+  if FIsNew then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionProject)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionProject)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtProject.GetRecord;
+begin
+  eTitle.Text := FProject.Title;
+  eShortTitle.Text := FProject.ShortTitle;
+  if not DateIsNull(FProject.StartDate) then
+    eStartDate.Text := DateToStr(FProject.StartDate);
+  if not DateIsNull(FProject.EndDate) then
+    eEndDate.Text := DateToStr(FProject.EndDate);
+  eWebsite.Text := FProject.WebsiteUri;
+  eEmail.Text := FProject.EmailAddress;
+  eContactName.Text := FProject.ContactName;
+  mAbstract.Text := FProject.ProjectAbstract;
+  mNotes.Text := FProject.Notes;
 end;
 
 function TedtProject.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('project_title').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('short_title').AsString <> EmptyStr) then
+  if (eTitle.Text <> EmptyStr) and
+    (eShortTitle.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -180,7 +214,28 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtProject.SetProject(Value: TProject);
+begin
+  if Assigned(Value) then
+    FProject := Value;
+end;
+
+procedure TedtProject.SetRecord;
+begin
+  FProject.Title           := eTitle.Text;
+  FProject.ShortTitle      := eShortTitle.Text;
+  FProject.StartDate       := StrToDate(eStartDate.Text);
+  FProject.EndDate         := StrToDate(eEndDate.Text);
+  FProject.WebsiteUri      := eWebsite.Text;
+  FProject.EmailAddress    := eEmail.Text;
+  FProject.ContactName     := eContactName.Text;
+  FProject.ProjectAbstract := mAbstract.Text;
+  FProject.Notes           := mNotes.Text;
 end;
 
 function TedtProject.ValidateFields: Boolean;
@@ -193,25 +248,25 @@ begin
   D := dsLink.DataSet;
 
   // Required fields
-  RequiredIsEmpty(D, tbProjects, 'project_title', Msgs);
-  RequiredIsEmpty(D, tbProjects, 'short_title', Msgs);
+  //RequiredIsEmpty(D, tbProjects, 'project_title', Msgs);
+  //RequiredIsEmpty(D, tbProjects, 'short_title', Msgs);
 
   // Duplicated record
   RecordDuplicated(tbProjects, 'project_id', 'project_title',
-    D.FieldByName('project_title').AsString, D.FieldByName('project_id').AsInteger);
+    eTitle.Text, FProject.Id);
 
   // Dates
-  if D.FieldByName('start_date').AsString <> '' then
-    ValidDate(D.FieldByName('start_date').AsString, rsDateStart, Msgs);
-  if D.FieldByName('end_date').AsString <> '' then
-    ValidDate(D.FieldByName('end_date').AsString, rsDateEnd, Msgs);
+  if eStartDate.Text <> EmptyStr then
+    ValidDate(eStartDate.Text, rsDateStart, Msgs);
+  if eEndDate.Text <> EmptyStr then
+    ValidDate(eEndDate.Text, rsDateEnd, Msgs);
 
-  if (D.FieldByName('start_date').AsString <> '') then
-    IsFutureDate(D.FieldByName('start_date').AsDateTime, Today,
-      AnsiLowerCase(rsDateStart), AnsiLowerCase(rsDateToday), Msgs);
-  if (D.FieldByName('end_date').AsString <> '') then
-    IsFutureDate(D.FieldByName('end_date').AsDateTime, Today,
-      AnsiLowerCase(rsDateEnd), AnsiLowerCase(rsDateToday), Msgs);
+  //if (D.FieldByName('start_date').AsString <> '') then
+  //  IsFutureDate(D.FieldByName('start_date').AsDateTime, Today,
+  //    AnsiLowerCase(rsDateStart), AnsiLowerCase(rsDateToday), Msgs);
+  //if (D.FieldByName('end_date').AsString <> '') then
+  //  IsFutureDate(D.FieldByName('end_date').AsDateTime, Today,
+  //    AnsiLowerCase(rsDateEnd), AnsiLowerCase(rsDateToday), Msgs);
 
   if Msgs.Count > 0 then
   begin

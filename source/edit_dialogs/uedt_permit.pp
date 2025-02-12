@@ -21,22 +21,23 @@ unit uedt_permit;
 interface
 
 uses
-  Classes, SysUtils, DB, LResources, DateUtils, Character, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, StdCtrls, DBCtrls, DBEditButton, atshapelinebgra, BCPanel;
+  Classes, EditBtn, SysUtils, DB, LResources, DateUtils, Character, Forms,
+  Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, DBCtrls, DBEditButton,
+  atshapelinebgra, BCPanel, cbs_entities;
 
 type
 
   { TedtPermit }
 
   TedtPermit = class(TForm)
-    cbPermitType: TDBComboBox;
+    cbPermitType: TComboBox;
     dsLink: TDataSource;
-    eExpireDate: TDBEditButton;
-    ePermitNumber: TDBEdit;
-    eDispatcher: TDBEdit;
-    eDispatchDate: TDBEditButton;
-    eName: TDBEdit;
-    eProject: TDBEditButton;
+    eName: TEdit;
+    ePermitNumber: TEdit;
+    eDispatcher: TEdit;
+    eDispatchDate: TEditButton;
+    eExpireDate: TEditButton;
+    eProject: TEditButton;
     lblExpireDate: TLabel;
     lblPermitType: TLabel;
     lblNotes: TLabel;
@@ -46,7 +47,7 @@ type
     lblName: TLabel;
     lblProject: TLabel;
     lineBottom: TShapeLineBGRA;
-    mNotes: TDBMemo;
+    mNotes: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
     pNotes: TPanel;
@@ -61,20 +62,29 @@ type
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDispatchDateButtonClick(Sender: TObject);
     procedure eExpireDateButtonClick(Sender: TObject);
+    procedure eNameEditingDone(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
-    procedure eProjectDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure eProjectKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FPermit: TPermit;
+    FProjectId: Integer;
+    procedure SetPermit(Value: TPermit);
+    procedure SetProjectId(value: Integer);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Permit: TPermit read FPermit write SetPermit;
+    property ProjectId: Integer read FProjectId write SetProjectId;
   end;
 
 var
@@ -83,8 +93,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_themes, udm_main,
-  uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue, cbs_themes,
+  udm_main, uDarkStyleParams;
 
 { TedtPermit }
 
@@ -100,20 +110,29 @@ end;
 
 procedure TedtPermit.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtPermit.eDispatchDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eDispatchDate, dsLink.DataSet, 'dispatch_date');
+  CalendarDlg(eDispatchDate.Text, eDispatchDate, Dt);
 end;
 
 procedure TedtPermit.eExpireDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eExpireDate, dsLink.DataSet, 'expire_date');
+  CalendarDlg(eExpireDate.Text, eExpireDate, Dt);
+end;
+
+procedure TedtPermit.eNameEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtPermit.eNameKeyPress(Sender: TObject; var Key: char);
@@ -123,44 +142,45 @@ begin
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtPermit.eProjectButtonClick(Sender: TObject);
 begin
-  FindDlg(tbProjects, eProject, dsLink.DataSet, 'project_id', 'project_name');
+  FindDlg(tbProjects, eProject, FProjectId);
 end;
 
-procedure TedtPermit.eProjectDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtPermit.eProjectKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbProjects, eProject, dsLink.DataSet, 'project_id', 'project_name', False, Key);
+    FindDlg(tbProjects, eProject, FProjectId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('project_id').Clear;
-    dsLink.DataSet.FieldByName('project_name').Clear;
+    FProjectId := 0;
+    eProject.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtPermit.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtPermit.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -169,7 +189,7 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);
@@ -192,11 +212,6 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPermit)])
-  else
-    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionPermit)]);
-
   with cbPermitType.Items do
   begin
     Clear;
@@ -207,16 +222,48 @@ begin
     Add(rsPermitTransport);
     Add(rsPermitOther);
   end;
+
+  if FIsNew then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPermit)]);
+  end
+  else
+  begin
+    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionPermit)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtPermit.GetRecord;
+begin
+  FProjectId := FPermit.ProjectId;
+  eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
+  eName.Text := FPermit.Name;
+  ePermitNumber.Text := FPermit.Number;
+  case FPermit.PermitType of
+    'B': cbPermitType.ItemIndex := cbPermitType.Items.IndexOf(rsPermitBanding);
+    'C': cbPermitType.ItemIndex := cbPermitType.Items.IndexOf(rsPermitCollection);
+    'R': cbPermitType.ItemIndex := cbPermitType.Items.IndexOf(rsPermitResearch);
+    'E': cbPermitType.ItemIndex := cbPermitType.Items.IndexOf(rsPermitEntry);
+    'T': cbPermitType.ItemIndex := cbPermitType.Items.IndexOf(rsPermitTransport);
+    'O': cbPermitType.ItemIndex := cbPermitType.Items.IndexOf(rsPermitOther);
+  end;
+  eDispatcher.Text := FPermit.Dispatcher;
+  if not DateIsNull(FPermit.DispatchDate) then
+    eDispatchDate.Text := DateToStr(FPermit.DispatchDate);
+  if not DateIsNull(FPermit.ExpireDate) then
+    eExpireDate.Text := DateToStr(FPermit.ExpireDate);
+  mNotes.Text := FPermit.Notes;
 end;
 
 function TedtPermit.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('permit_name').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('permit_type').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('dispatcher_name').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('dispatch_date').IsNull = False) then
+  if (eName.Text <> EmptyStr) and
+    (cbPermitType.ItemIndex >= 0) and
+    (eDispatcher.Text <> EmptyStr) and
+    (eDispatchDate.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -226,7 +273,40 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtPermit.SetPermit(Value: TPermit);
+begin
+  if Assigned(Value) then
+    FPermit := Value;
+end;
+
+procedure TedtPermit.SetProjectId(value: Integer);
+begin
+  FProjectId := value;
+  FPermit.ProjectId := value;
+end;
+
+procedure TedtPermit.SetRecord;
+begin
+  FPermit.ProjectId := FProjectId;
+  FPermit.Name      := eName.Text;
+  FPermit.Number    := ePermitNumber.Text;
+  case cbPermitType.ItemIndex of
+    0: FPermit.PermitType := 'B';
+    1: FPermit.PermitType := 'C';
+    2: FPermit.PermitType := 'R';
+    3: FPermit.PermitType := 'E';
+    4: FPermit.PermitType := 'T';
+    5: FPermit.PermitType := 'O';
+  end;
+  FPermit.Dispatcher   := eDispatcher.Text;
+  FPermit.DispatchDate := StrToDate(eDispatchDate.Text);
+  FPermit.ExpireDate   := StrToDate(eExpireDate.Text);
+  FPermit.Notes        := mNotes.Text;
 end;
 
 function TedtPermit.ValidateFields: Boolean;
@@ -239,27 +319,23 @@ begin
   D := dsLink.DataSet;
 
   // Required fields
-  RequiredIsEmpty(D, tbPermits, 'permit_name', Msgs);
-  RequiredIsEmpty(D, tbPermits, 'permit_type', Msgs);
-  RequiredIsEmpty(D, tbPermits, 'dispatcher_name', Msgs);
-  RequiredIsEmpty(D, tbPermits, 'dispatch_date', Msgs);
+  //RequiredIsEmpty(D, tbPermits, 'permit_name', Msgs);
+  //RequiredIsEmpty(D, tbPermits, 'permit_type', Msgs);
+  //RequiredIsEmpty(D, tbPermits, 'dispatcher_name', Msgs);
+  //RequiredIsEmpty(D, tbPermits, 'dispatch_date', Msgs);
 
   // Duplicated record
-  RecordDuplicated(tbPermits, 'permit_id', 'permit_name',
-    D.FieldByName('permit_name').AsString, D.FieldByName('permit_id').AsInteger);
+  RecordDuplicated(tbPermits, 'permit_id', 'permit_name', eName.Text, FPermit.Id);
 
   // Dates
-  if D.FieldByName('dispatch_date').AsString <> '' then
-    ValidDate(D.FieldByName('dispatch_date').AsString, rsDateDispatch, Msgs);
-  if D.FieldByName('expire_date').AsString <> '' then
-    ValidDate(D.FieldByName('expire_date').AsString, rsDateExpire, Msgs);
-
-  if (D.FieldByName('dispatch_date').AsString <> '') then
-    IsFutureDate(D.FieldByName('dispatch_date').AsDateTime, Today,
-      AnsiLowerCase(rsDateDispatch), AnsiLowerCase(rsDateToday), Msgs);
-  if (D.FieldByName('expire_date').AsString <> '') then
-    IsFutureDate(D.FieldByName('expire_date').AsDateTime, Today,
-      AnsiLowerCase(rsDateExpire), AnsiLowerCase(rsDateToday), Msgs);
+  if eDispatchDate.Text <> EmptyStr then
+    if ValidDate(eDispatchDate.Text, rsDateDispatch, Msgs) then
+      IsFutureDate(StrToDate(eDispatchDate.Text), Today,
+        AnsiLowerCase(rsDateDispatch), AnsiLowerCase(rsDateToday), Msgs);
+  if eExpireDate.Text <> EmptyStr then
+    if ValidDate(eExpireDate.Text, rsDateExpire, Msgs) then
+      IsFutureDate(StrToDate(eExpireDate.Text), Today,
+        AnsiLowerCase(rsDateExpire), AnsiLowerCase(rsDateToday), Msgs);
 
   if Msgs.Count > 0 then
   begin

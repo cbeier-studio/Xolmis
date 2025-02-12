@@ -21,26 +21,24 @@ unit uedt_weatherlog;
 interface
 
 uses
-  Classes, SysUtils, DB, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls, StdCtrls,
-  DBEditButton, atshapelinebgra;
+  Classes, EditBtn, MaskEdit, Spin, SysUtils, DB, LResources, Forms, Controls,
+  Graphics, Dialogs, ExtCtrls, DBCtrls, StdCtrls, DBEditButton, atshapelinebgra,
+  cbs_sampling;
 
 type
 
   { TedtWeatherLog }
 
   TedtWeatherLog = class(TForm)
-    cbPrecipitation: TDBComboBox;
-    cbSampleMoment: TDBComboBox;
+    cbSampleMoment: TComboBox;
+    cbPrecipitation: TComboBox;
     dsLink: TDataSource;
-    eCloudCover: TDBEdit;
-    eAtmosphericPressure: TDBEdit;
-    eRelativeHumidity: TDBEdit;
-    eTemperature: TDBEdit;
-    eSampleDate: TDBEditButton;
-    eSampleTime: TDBEdit;
-    eWindSpeedBft: TDBEdit;
-    eRainfall: TDBEdit;
-    eWindSpeedKmh: TDBEdit;
+    eSampleTime: TEdit;
+    eSampleDate: TEditButton;
+    eTemperature: TFloatSpinEdit;
+    eWindSpeedKmh: TFloatSpinEdit;
+    eRelativeHumidity: TFloatSpinEdit;
+    eAtmosphericPressure: TFloatSpinEdit;
     lblCloudCover: TLabel;
     lblAtmosphericPressure: TLabel;
     lblRelativeHumidity: TLabel;
@@ -55,7 +53,7 @@ type
     lblRainfall: TLabel;
     lblNotes: TLabel;
     lineBottom: TShapeLineBGRA;
-    mNotes: TDBMemo;
+    mNotes: TMemo;
     pSampleMoment: TPanel;
     pBottom: TPanel;
     pContent: TPanel;
@@ -68,6 +66,9 @@ type
     sbCancel: TButton;
     sbSave: TButton;
     scrollContent: TScrollBox;
+    eCloudCover: TSpinEdit;
+    eRainfall: TSpinEdit;
+    eWindSpeedBft: TSpinEdit;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eSampleDateButtonClick(Sender: TObject);
     procedure eSampleTimeKeyPress(Sender: TObject; var Key: char);
@@ -76,11 +77,17 @@ type
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FWeather: TWeatherLog;
+    procedure SetWeather(Value: TWeatherLog);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property WeatherLog: TWeatherLog read FWeather write SetWeather;
   end;
 
 var
@@ -89,7 +96,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_dialogs, cbs_validations, cbs_datacolumns, udm_main, uDarkStyleParams;
 
 { TedtWeatherLog }
 
@@ -100,10 +107,10 @@ end;
 
 procedure TedtWeatherLog.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtWeatherLog.eSampleDateButtonClick(Sender: TObject);
@@ -115,12 +122,17 @@ procedure TedtWeatherLog.eSampleTimeKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
-  { <ENTER/RETURN> key }
+  { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
+
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtWeatherLog.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -129,7 +141,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not (sbSave.Enabled) then
       Exit;
 
     sbSaveClick(nil);
@@ -152,25 +165,62 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionWeatherLogEntry)])
-  else
-    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionWeatherLogEntry)]);
-
   cbSampleMoment.Items.CommaText := rsMomentStart + ',' + rsMomentMiddle + ',' + rsMomentEnd;
   cbPrecipitation.Items.CommaText := rsPrecipitationNone + ',' +
                                      rsPrecipitationFog + ',' +
                                      rsPrecipitationMist + ',' +
                                      rsPrecipitationDrizzle + ',' +
                                      rsPrecipitationRain;
+
+  if IsNewRecord then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionWeatherLogEntry)]);
+  end
+  else
+  begin
+    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionWeatherLogEntry)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtWeatherLog.GetRecord;
+begin
+  eSampleDate.Text := DateToStr(FWeather.SampleDate);
+  eSampleTime.Text := TimeToStr(FWeather.SampleTime);
+  case FWeather.SampleMoment of
+    wmStart:  cbSampleMoment.ItemIndex := 0;
+    wmMiddle: cbSampleMoment.ItemIndex := 1;
+    wmEnd:    cbSampleMoment.ItemIndex := 2;
+  else
+    cbSampleMoment.ItemIndex := -1;
+  end;
+  eCloudCover.Value := FWeather.CloudCover;
+  eTemperature.Value := FWeather.Temperature;
+  case FWeather.Precipitation of
+    wpNone:    cbPrecipitation.ItemIndex := 0;
+    wpFog:     cbPrecipitation.ItemIndex := 1;
+    wpMist:    cbPrecipitation.ItemIndex := 2;
+    wpDrizzle: cbPrecipitation.ItemIndex := 3;
+    wpRain:    cbPrecipitation.ItemIndex := 4;
+  else
+    cbPrecipitation.ItemIndex := -1;
+  end;
+  eRainfall.Value := FWeather.Rainfall;
+  eWindSpeedBft.Value := FWeather.WindSpeedBft;
+  eWindSpeedKmh.Value := FWeather.WindSpeedKmH;
+  eRelativeHumidity.Value := FWeather.RelativeHumidity;
+  eAtmosphericPressure.Value := FWeather.AtmosphericPressure;
+  mNotes.Text := FWeather.Notes;
 end;
 
 function TedtWeatherLog.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('sample_date').IsNull = False) and
-    (dsLink.DataSet.FieldByName('sample_moment').AsString <> EmptyStr) then
+  //if (dsLink.DataSet.FieldByName('sample_date').IsNull = False) and
+  //  (dsLink.DataSet.FieldByName('sample_moment').AsString <> EmptyStr) then
+  if (eSampleDate.Text <> EmptyStr) and
+    (eSampleTime.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -180,13 +230,71 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
 end;
 
+procedure TedtWeatherLog.SetRecord;
+begin
+  FWeather.SampleDate := StrToDate(eSampleDate.Text);
+  FWeather.SampleTime := StrToTime(eSampleTime.Text);
+  case cbSampleMoment.ItemIndex of
+    0: FWeather.SampleMoment := wmStart;
+    1: FWeather.SampleMoment := wmMiddle;
+    2: FWeather.SampleMoment := wmEnd;
+  else
+    FWeather.SampleMoment := wmNone;
+  end;
+  FWeather.CloudCover  := eCloudCover.Value;
+  FWeather.Temperature := eTemperature.Value;
+  case cbPrecipitation.ItemIndex of
+    0: FWeather.Precipitation := wpNone;
+    1: FWeather.Precipitation := wpFog;
+    2: FWeather.Precipitation := wpMist;
+    3: FWeather.Precipitation := wpDrizzle;
+    4: FWeather.Precipitation := wpRain;
+  else
+    FWeather.Precipitation := wpEmpty;
+  end;
+  FWeather.Rainfall            := eRainfall.Value;
+  FWeather.WindSpeedBft        := eWindSpeedBft.Value;
+  FWeather.WindSpeedKmH        := eWindSpeedKmh.Value;
+  FWeather.RelativeHumidity    := eRelativeHumidity.Value;
+  FWeather.AtmosphericPressure := eAtmosphericPressure.Value;
+  FWeather.Notes               := mNotes.Text;
+end;
+
+procedure TedtWeatherLog.SetWeather(Value: TWeatherLog);
+begin
+  if Assigned(Value) then
+    FWeather := Value;
+end;
+
 function TedtWeatherLog.ValidateFields: Boolean;
+var
+  Msgs: TStrings;
+  Msg: String;
 begin
   Result := True;
+  Msg := EmptyStr;
+  Msgs := TStringList.Create;
 
+  // Required fields
+  //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_name', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_rank', Msgs);
+
+  // Date and time
+  ValidDate(eSampleDate.Text, rscDate, Msgs);
+  ValidTime(eSampleTime.Text, rscTime, Msgs);
+
+
+  if Msgs.Count > 0 then
+  begin
+    Result := False;
+    ValidateDlg(Msgs);
+  end;
+  Msgs.Free;
 end;
 
 initialization

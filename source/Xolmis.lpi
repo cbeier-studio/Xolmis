@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="155">
+      <ExcludedIdentifiers Count="136">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -37,157 +37,138 @@
         <Item11 Value="tdlgValidate.Caption"/>
         <Item12 Value="tedtEgg.Caption"/>
         <Item13 Value="tedtEgg.eMeasureDate.Text"/>
-        <Item14 Value="tedtEgg.eMeasureDate.TextHint"/>
-        <Item15 Value="tedtNestRevision.Caption"/>
-        <Item16 Value="tedtNestRevision.eRevisionDate.Text"/>
-        <Item17 Value="tedtNestRevision.eRevisionDate.TextHint"/>
-        <Item18 Value="tedtBands.Caption"/>
-        <Item19 Value="tedtBands.eDischargeDate.Text"/>
-        <Item20 Value="tedtBands.eDischargeDate.TextHint"/>
-        <Item21 Value="tedtBands.eOrderDate.Text"/>
-        <Item22 Value="tedtBands.eOrderDate.TextHint"/>
-        <Item23 Value="tedtBands.eReceiptDate.Text"/>
-        <Item24 Value="tedtBands.eReceiptDate.TextHint"/>
-        <Item25 Value="tedtBands.eReportDate.Text"/>
-        <Item26 Value="tedtBands.eReportDate.TextHint"/>
-        <Item27 Value="tedtBands.eUseDate.Text"/>
-        <Item28 Value="tedtBands.eUseDate.TextHint"/>
-        <Item29 Value="tedtBotanicTaxon.Caption"/>
-        <Item30 Value="tedtCapture.Caption"/>
-        <Item31 Value="tedtImageInfo.Caption"/>
-        <Item32 Value="tedtIndividual.Caption"/>
-        <Item33 Value="tedtInstitution.Caption"/>
-        <Item34 Value="tedtMethod.Caption"/>
-        <Item35 Value="tedtMolt.Caption"/>
-        <Item36 Value="tedtNest.Caption"/>
-        <Item37 Value="tedtNetEffort.Caption"/>
-        <Item38 Value="tedtNetStation.Caption"/>
-        <Item39 Value="tedtPermanentNet.Caption"/>
-        <Item40 Value="tedtPermit.Caption"/>
-        <Item41 Value="tedtPerson.Caption"/>
-        <Item42 Value="tedtProject.Caption"/>
-        <Item43 Value="tedtExpedition.Caption"/>
-        <Item44 Value="tedtSurvey.Caption"/>
-        <Item45 Value="tedtSighting.Caption"/>
-        <Item46 Value="tedtWeatherLog.Caption"/>
-        <Item47 Value="tedtSite.Caption"/>
-        <Item48 Value="tedtSpecimen.Caption"/>
-        <Item49 Value="tedtSamplePrep.Caption"/>
-        <Item50 Value="tedtUser.Caption"/>
-        <Item51 Value="tedtDatabase.Caption"/>
-        <Item52 Value="tfrmMain.Caption"/>
-        <Item53 Value="tdlgAbout.lblAppName.Caption"/>
-        <Item54 Value="tdlgAbout.lblAppCopyright.Caption"/>
-        <Item55 Value="tdlgAbout.pAppVersion.Caption"/>
-        <Item56 Value="tdlgAbout.pClementsVersion.Caption"/>
-        <Item57 Value="tdlgAbout.pIocVersion.Caption"/>
-        <Item58 Value="tdlgAbout.pCbroVersion.Caption"/>
-        <Item59 Value="tdlgAbout.lblClementsVersion.Caption"/>
-        <Item60 Value="tdlgAbout.lblIocVersion.Caption"/>
-        <Item61 Value="tdlgAbout.lblCbroVersion.Caption"/>
-        <Item62 Value="tfrmdashboard.lbltotalindividuals.caption"/>
-        <Item63 Value="tfrmdashboard.lbltotalnests.caption"/>
-        <Item64 Value="tfrmdashboard.lbltotalsamplings.caption"/>
-        <Item65 Value="tfrmdashboard.lbltotalspecies.caption"/>
-        <Item66 Value="tfrmdashboard.txtAppUpdate.caption"/>
-        <Item67 Value="tfrmcustomgrid.lblchildcount1.caption"/>
-        <Item68 Value="tfrmcustomgrid.lblchildcount2.caption"/>
-        <Item69 Value="tfrmcustomgrid.lblchildcount3.caption"/>
-        <Item70 Value="tfrmcustomgrid.lblchildcount4.caption"/>
-        <Item71 Value="tfrmcustomgrid.lblchildcount5.caption"/>
-        <Item72 Value="tfrmcustomgrid.lblchildcount6.caption"/>
-        <Item73 Value="tfrmcustomgrid.lblchildtag1.caption"/>
-        <Item74 Value="tfrmcustomgrid.lblchildtag2.caption"/>
-        <Item75 Value="tfrmcustomgrid.lblchildtag3.caption"/>
-        <Item76 Value="tfrmcustomgrid.lblchildtag4.caption"/>
-        <Item77 Value="tfrmcustomgrid.lblchildtag5.caption"/>
-        <Item78 Value="tfrmcustomgrid.lblchildtag6.caption"/>
-        <Item79 Value="tfrmcustomgrid.lblrecyclewarning.caption"/>
-        <Item80 Value="tdlgGeoEditor.pDecimal.caption"/>
-        <Item81 Value="tdlgImportCaptures.lblTitleImportFinished.Caption"/>
-        <Item82 Value="tdlgImportCaptures.lblSubtitleImportFinished.Caption"/>
-        <Item83 Value="tcfgDatabase.vtConnections.Columns[0].Text"/>
-        <Item84 Value="tedtMolt.lblP1.Caption"/>
-        <Item85 Value="tedtMolt.lblP2.Caption"/>
-        <Item86 Value="tedtMolt.lblP3.Caption"/>
-        <Item87 Value="tedtMolt.lblP4.Caption"/>
-        <Item88 Value="tedtMolt.lblP5.Caption"/>
-        <Item89 Value="tedtMolt.lblP6.Caption"/>
-        <Item90 Value="tedtMolt.lblP7.Caption"/>
-        <Item91 Value="tedtMolt.lblP8.Caption"/>
-        <Item92 Value="tedtMolt.lblP9.Caption"/>
-        <Item93 Value="tedtMolt.lblP10.Caption"/>
-        <Item94 Value="tedtMolt.lblS1.Caption"/>
-        <Item95 Value="tedtMolt.lblS2.Caption"/>
-        <Item96 Value="tedtMolt.lblS3.Caption"/>
-        <Item97 Value="tedtMolt.lblS4.Caption"/>
-        <Item98 Value="tedtMolt.lblS5.Caption"/>
-        <Item99 Value="tedtMolt.lblS6.Caption"/>
-        <Item100 Value="tedtMolt.lblS7.Caption"/>
-        <Item101 Value="tedtMolt.lblS8.Caption"/>
-        <Item102 Value="tedtMolt.lblS9.Caption"/>
-        <Item103 Value="tedtMolt.lblR1.Caption"/>
-        <Item104 Value="tedtMolt.lblR2.Caption"/>
-        <Item105 Value="tedtMolt.lblR3.Caption"/>
-        <Item106 Value="tedtMolt.lblR4.Caption"/>
-        <Item107 Value="tedtMolt.lblR5.Caption"/>
-        <Item108 Value="tedtMolt.lblR6.Caption"/>
-        <Item109 Value="tedtMolt.lblPC1.Caption"/>
-        <Item110 Value="tedtMolt.lblPC2.Caption"/>
-        <Item111 Value="tedtMolt.lblPC3.Caption"/>
-        <Item112 Value="tedtMolt.lblPC4.Caption"/>
-        <Item113 Value="tedtMolt.lblPC5.Caption"/>
-        <Item114 Value="tedtMolt.lblPC6.Caption"/>
-        <Item115 Value="tedtMolt.lblPC7.Caption"/>
-        <Item116 Value="tedtMolt.lblPC8.Caption"/>
-        <Item117 Value="tedtMolt.lblPC9.Caption"/>
-        <Item118 Value="tedtMolt.lblGC1.Caption"/>
-        <Item119 Value="tedtMolt.lblGC2.Caption"/>
-        <Item120 Value="tedtMolt.lblGC3.Caption"/>
-        <Item121 Value="tedtMolt.lblGC4.Caption"/>
-        <Item122 Value="tedtMolt.lblGC5.Caption"/>
-        <Item123 Value="tedtMolt.lblGC6.Caption"/>
-        <Item124 Value="tedtMolt.lblGC7.Caption"/>
-        <Item125 Value="tedtMolt.lblGC8.Caption"/>
-        <Item126 Value="tedtMolt.lblGC9.Caption"/>
-        <Item127 Value="tedtMolt.lblGC10.Caption"/>
-        <Item128 Value="tedtMolt.lblAl1.Caption"/>
-        <Item129 Value="tedtMolt.lblAl2.Caption"/>
-        <Item130 Value="tedtMolt.lblAl3.Caption"/>
-        <Item131 Value="tedtMolt.lblMC.Caption"/>
-        <Item132 Value="tedtMolt.lblLC.Caption"/>
-        <Item133 Value="tedtMolt.lblCC.Caption"/>
-        <Item134 Value="tbatchneteffort.eopentime1.texthint"/>
-        <Item135 Value="tbatchneteffort.eclosetime1.texthint"/>
-        <Item136 Value="tbatchneteffort.eopentime2.texthint"/>
-        <Item137 Value="tbatchneteffort.eclosetime2.texthint"/>
-        <Item138 Value="tbatchneteffort.eopentime3.texthint"/>
-        <Item139 Value="tbatchneteffort.eclosetime3.texthint"/>
-        <Item140 Value="tbatchneteffort.eopentime4.texthint"/>
-        <Item141 Value="tbatchneteffort.eclosetime4.texthint"/>
-        <Item142 Value="tfrmimageviewer.lblzoom.caption"/>
-        <Item143 Value="tfrmimageviewer.lblsize.caption"/>
-        <Item144 Value="tfrmprintpreview.lblzoom.caption"/>
-        <Item145 Value="tfrmprintpreview.lblpage.caption"/>
-        <Item146 Value="tedtImageInfo.eImageDate.TextHint"/>
-        <Item147 Value="tedtImageInfo.eImageTime.TextHint"/>
-        <Item148 Value="tedtAudioInfo.eRecordingDate.TextHint"/>
-        <Item149 Value="tedtAudioInfo.eRecordingTime.TextHint"/>
-        <Item150 Value="tedtDocumentInfo.eDocumentDate.TextHint"/>
-        <Item151 Value="tedtDocumentInfo.eDocumentTime.TextHint"/>
-        <Item152 Value="tdlgImportXMobile.txtDataType.Caption"/>
-        <Item153 Value="tdlgImportXMobile.txtListType.Caption"/>
-        <Item154 Value="tedtVegetation.eSampleDate.TextHint"/>
-        <Item155 Value="tedtVegetation.eSampleTime.TextHint"/>
+        <Item14 Value="tedtNestRevision.Caption"/>
+        <Item15 Value="tedtNestRevision.eRevisionDate.Text"/>
+        <Item16 Value="tedtBands.Caption"/>
+        <Item17 Value="tedtBands.eDischargeDate.Text"/>
+        <Item18 Value="tedtBands.eOrderDate.Text"/>
+        <Item19 Value="tedtBands.eReceiptDate.Text"/>
+        <Item20 Value="tedtBands.eReportDate.Text"/>
+        <Item21 Value="tedtBands.eUseDate.Text"/>
+        <Item22 Value="tedtBotanicTaxon.Caption"/>
+        <Item23 Value="tedtCapture.Caption"/>
+        <Item24 Value="tedtImageInfo.Caption"/>
+        <Item25 Value="tedtIndividual.Caption"/>
+        <Item26 Value="tedtInstitution.Caption"/>
+        <Item27 Value="tedtMethod.Caption"/>
+        <Item28 Value="tedtMolt.Caption"/>
+        <Item29 Value="tedtNest.Caption"/>
+        <Item30 Value="tedtNetEffort.Caption"/>
+        <Item31 Value="tedtNetStation.Caption"/>
+        <Item32 Value="tedtPermanentNet.Caption"/>
+        <Item33 Value="tedtPermit.Caption"/>
+        <Item34 Value="tedtPerson.Caption"/>
+        <Item35 Value="tedtProject.Caption"/>
+        <Item36 Value="tedtExpedition.Caption"/>
+        <Item37 Value="tedtSurvey.Caption"/>
+        <Item38 Value="tedtSighting.Caption"/>
+        <Item39 Value="tedtWeatherLog.Caption"/>
+        <Item40 Value="tedtSite.Caption"/>
+        <Item41 Value="tedtSpecimen.Caption"/>
+        <Item42 Value="tedtSamplePrep.Caption"/>
+        <Item43 Value="tedtUser.Caption"/>
+        <Item44 Value="tedtDatabase.Caption"/>
+        <Item45 Value="tfrmMain.Caption"/>
+        <Item46 Value="tdlgAbout.lblAppName.Caption"/>
+        <Item47 Value="tdlgAbout.lblAppCopyright.Caption"/>
+        <Item48 Value="tdlgAbout.pAppVersion.Caption"/>
+        <Item49 Value="tdlgAbout.pClementsVersion.Caption"/>
+        <Item50 Value="tdlgAbout.pIocVersion.Caption"/>
+        <Item51 Value="tdlgAbout.pCbroVersion.Caption"/>
+        <Item52 Value="tdlgAbout.lblClementsVersion.Caption"/>
+        <Item53 Value="tdlgAbout.lblIocVersion.Caption"/>
+        <Item54 Value="tdlgAbout.lblCbroVersion.Caption"/>
+        <Item55 Value="tfrmdashboard.lbltotalindividuals.caption"/>
+        <Item56 Value="tfrmdashboard.lbltotalnests.caption"/>
+        <Item57 Value="tfrmdashboard.lbltotalsamplings.caption"/>
+        <Item58 Value="tfrmdashboard.lbltotalspecies.caption"/>
+        <Item59 Value="tfrmdashboard.txtAppUpdate.caption"/>
+        <Item60 Value="tfrmcustomgrid.lblchildcount1.caption"/>
+        <Item61 Value="tfrmcustomgrid.lblchildcount2.caption"/>
+        <Item62 Value="tfrmcustomgrid.lblchildcount3.caption"/>
+        <Item63 Value="tfrmcustomgrid.lblchildcount4.caption"/>
+        <Item64 Value="tfrmcustomgrid.lblchildcount5.caption"/>
+        <Item65 Value="tfrmcustomgrid.lblchildcount6.caption"/>
+        <Item66 Value="tfrmcustomgrid.lblchildtag1.caption"/>
+        <Item67 Value="tfrmcustomgrid.lblchildtag2.caption"/>
+        <Item68 Value="tfrmcustomgrid.lblchildtag3.caption"/>
+        <Item69 Value="tfrmcustomgrid.lblchildtag4.caption"/>
+        <Item70 Value="tfrmcustomgrid.lblchildtag5.caption"/>
+        <Item71 Value="tfrmcustomgrid.lblchildtag6.caption"/>
+        <Item72 Value="tfrmcustomgrid.lblrecyclewarning.caption"/>
+        <Item73 Value="tdlgGeoEditor.pDecimal.caption"/>
+        <Item74 Value="tdlgImportCaptures.lblTitleImportFinished.Caption"/>
+        <Item75 Value="tdlgImportCaptures.lblSubtitleImportFinished.Caption"/>
+        <Item76 Value="tcfgDatabase.vtConnections.Columns[0].Text"/>
+        <Item77 Value="tedtMolt.lblP1.Caption"/>
+        <Item78 Value="tedtMolt.lblP2.Caption"/>
+        <Item79 Value="tedtMolt.lblP3.Caption"/>
+        <Item80 Value="tedtMolt.lblP4.Caption"/>
+        <Item81 Value="tedtMolt.lblP5.Caption"/>
+        <Item82 Value="tedtMolt.lblP6.Caption"/>
+        <Item83 Value="tedtMolt.lblP7.Caption"/>
+        <Item84 Value="tedtMolt.lblP8.Caption"/>
+        <Item85 Value="tedtMolt.lblP9.Caption"/>
+        <Item86 Value="tedtMolt.lblP10.Caption"/>
+        <Item87 Value="tedtMolt.lblS1.Caption"/>
+        <Item88 Value="tedtMolt.lblS2.Caption"/>
+        <Item89 Value="tedtMolt.lblS3.Caption"/>
+        <Item90 Value="tedtMolt.lblS4.Caption"/>
+        <Item91 Value="tedtMolt.lblS5.Caption"/>
+        <Item92 Value="tedtMolt.lblS6.Caption"/>
+        <Item93 Value="tedtMolt.lblS7.Caption"/>
+        <Item94 Value="tedtMolt.lblS8.Caption"/>
+        <Item95 Value="tedtMolt.lblS9.Caption"/>
+        <Item96 Value="tedtMolt.lblR1.Caption"/>
+        <Item97 Value="tedtMolt.lblR2.Caption"/>
+        <Item98 Value="tedtMolt.lblR3.Caption"/>
+        <Item99 Value="tedtMolt.lblR4.Caption"/>
+        <Item100 Value="tedtMolt.lblR5.Caption"/>
+        <Item101 Value="tedtMolt.lblR6.Caption"/>
+        <Item102 Value="tedtMolt.lblPC1.Caption"/>
+        <Item103 Value="tedtMolt.lblPC2.Caption"/>
+        <Item104 Value="tedtMolt.lblPC3.Caption"/>
+        <Item105 Value="tedtMolt.lblPC4.Caption"/>
+        <Item106 Value="tedtMolt.lblPC5.Caption"/>
+        <Item107 Value="tedtMolt.lblPC6.Caption"/>
+        <Item108 Value="tedtMolt.lblPC7.Caption"/>
+        <Item109 Value="tedtMolt.lblPC8.Caption"/>
+        <Item110 Value="tedtMolt.lblPC9.Caption"/>
+        <Item111 Value="tedtMolt.lblGC1.Caption"/>
+        <Item112 Value="tedtMolt.lblGC2.Caption"/>
+        <Item113 Value="tedtMolt.lblGC3.Caption"/>
+        <Item114 Value="tedtMolt.lblGC4.Caption"/>
+        <Item115 Value="tedtMolt.lblGC5.Caption"/>
+        <Item116 Value="tedtMolt.lblGC6.Caption"/>
+        <Item117 Value="tedtMolt.lblGC7.Caption"/>
+        <Item118 Value="tedtMolt.lblGC8.Caption"/>
+        <Item119 Value="tedtMolt.lblGC9.Caption"/>
+        <Item120 Value="tedtMolt.lblGC10.Caption"/>
+        <Item121 Value="tedtMolt.lblAl1.Caption"/>
+        <Item122 Value="tedtMolt.lblAl2.Caption"/>
+        <Item123 Value="tedtMolt.lblAl3.Caption"/>
+        <Item124 Value="tedtMolt.lblMC.Caption"/>
+        <Item125 Value="tedtMolt.lblLC.Caption"/>
+        <Item126 Value="tedtMolt.lblCC.Caption"/>
+        <Item127 Value="tfrmimageviewer.lblzoom.caption"/>
+        <Item128 Value="tfrmimageviewer.lblsize.caption"/>
+        <Item129 Value="tfrmprintpreview.lblzoom.caption"/>
+        <Item130 Value="tfrmprintpreview.lblpage.caption"/>
+        <Item131 Value="tdlgImportXMobile.txtDataType.Caption"/>
+        <Item132 Value="tdlgImportXMobile.txtListType.Caption"/>
+        <Item133 Value="tedtNetEffort.txtNetArea.Caption"/>
+        <Item134 Value="tedtNetEffort.txtTotalOpenTime.Caption"/>
+        <Item135 Value="tedtSurvey.txtNetEffort.Caption"/>
+        <Item136 Value="tedtEgg.txtVolume.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="388"/>
+      <BuildNr Value="409"/>
       <Attributes pvaPreRelease="True"/>
-      <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2024 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
+      <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
     <BuildModes>
       <Item Name="Default" Default="True"/>
@@ -199,8 +180,8 @@
             <Filename Value="../$(TargetOS)/$(BuildMode)-$(TargetCPU)/Xolmis"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="types;dialogs;edit_dialogs"/>
+            <IncludeFiles Value="$(ProjOutDir);C:\lazarus_RC\fpc\3.2.2\source\packages\rtl-generics\src\"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -239,7 +220,6 @@
             </Verbosity>
             <WriteFPCLogo Value="False"/>
             <CustomOptions Value="-dDEBUG"/>
-            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>
       </Item>
@@ -255,7 +235,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="types;dialogs;edit_dialogs"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -282,7 +262,6 @@
           </Linking>
           <Other>
             <WriteFPCLogo Value="False"/>
-            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>
       </Item>
@@ -331,7 +310,6 @@
             <OtherDefines Count="1">
               <Define0 Value="DEBUG"/>
             </OtherDefines>
-            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>
       </Item>
@@ -380,7 +358,6 @@
             <OtherDefines Count="1">
               <Define0 Value="DEBUG"/>
             </OtherDefines>
-            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>
       </Item>
@@ -429,7 +406,6 @@
             <OtherDefines Count="1">
               <Define0 Value="DEBUG"/>
             </OtherDefines>
-            <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
           </Other>
         </CompilerOptions>
       </Item>
@@ -445,9 +421,6 @@
       <FormatVersion Value="2"/>
     </RunParams>
     <RequiredPackages>
-      <Item>
-        <PackageName Value="RunTimeTypeInfoControls"/>
-      </Item>
       <Item>
         <PackageName Value="DBFLaz"/>
       </Item>
@@ -566,173 +539,6 @@
         <ComponentName Value="frmMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_system.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_filters.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_gis.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_backup.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_global.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_fullnames.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_entities.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="udm_grid.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="DMG"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
-      </Unit>
-      <Unit>
-        <Filename Value="udm_main.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="DMM"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ucfg_database.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="cfgDatabase"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ucfg_users.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="cfgUsers"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ufrm_geoconverter.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmGeoConverter"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ufrm_dashboard.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmDashboard"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ucfg_delimiters.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="cfgDelimiters"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ucfg_options.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="cfgOptions"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="udm_lookup.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="DML"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_dialogs.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_taxonomy.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_botany.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_birds.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_sampling.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_breeding.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_graphics.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_import.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_locale.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_data.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_conversions.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_themes.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_validations.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_export.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_permissions.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_getvalue.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_autoupdate.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_finddialogs.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_count.pp"/>
-        <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="edit_dialogs\uedt_user.pp"/>
@@ -1036,51 +842,6 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="types\cbs_record_types.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="udm_individuals.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="DMI"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ufrm_maintenance.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmMaintenance"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_blobs.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_debug.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ufrm_customgrid.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmCustomGrid"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_datatypes.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_editdialogs.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_datasearch.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="dialogs\udlg_importnests.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgImportNests"/>
@@ -1088,25 +849,11 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="udm_breeding.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="DMB"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
-      </Unit>
-      <Unit>
         <Filename Value="edit_dialogs\uedt_method.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtMethod"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="udm_sampling.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="DMS"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
       </Unit>
       <Unit>
         <Filename Value="edit_dialogs\uedt_weatherlog.pp"/>
@@ -1165,19 +912,11 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="types\cbs_datacolumns.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="dialogs\udlg_importcaptures.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgImportCaptures"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_math.pas"/>
-        <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="dialogs\udlg_recverifications.pas"/>
@@ -1192,28 +931,6 @@
         <ComponentName Value="edtRecVerification"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ufrm_imageviewer.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmImageViewer"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="uthread_dashboard.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ufrm_printpreview.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmPrintPreview"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="types\cbs_print.pp"/>
-        <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="edit_dialogs\uedt_audioinfo.pp"/>
@@ -1251,18 +968,292 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="ufrm_taxa.pp"/>
+        <Filename Value="dialogs\udlg_exportpreview.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgExportPreview"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\cbs_birds.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\cbs_entities.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\cbs_breeding.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\cbs_sampling.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\cbs_botany.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\cbs_taxonomy.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\cbs_users.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\cbs_gis.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\cbs_record_types.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\cbs_data.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\cbs_datacolumns.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\cbs_datasearch.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\cbs_datatypes.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\cbs_blobs.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\cbs_getvalue.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\cbs_export.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\cbs_import.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_autoupdate.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_backup.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_conversions.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_count.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_debug.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_dialogs.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_editdialogs.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_finddialogs.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_fullnames.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_global.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_graphics.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_locale.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_math.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_permissions.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_print.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_system.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_themes.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\cbs_validations.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\cbs_filters.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data_modules\udm_main.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMM"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data_modules\udm_grid.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMG"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data_modules\udm_breeding.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMB"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data_modules\udm_individuals.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMI"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data_modules\udm_lookup.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DML"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data_modules\udm_sampling.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMS"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\ucfg_database.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="cfgDatabase"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <ResourceBaseClassname Value=""/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\ucfg_delimiters.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="cfgDelimiters"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\ucfg_options.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="cfgOptions"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\ucfg_users.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="cfgUsers"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <ResourceBaseClassname Value=""/>
+      </Unit>
+      <Unit>
+        <Filename Value="screens\ufrm_customgrid.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmCustomGrid"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="screens\ufrm_dashboard.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmDashboard"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <ResourceBaseClassname Value=""/>
+      </Unit>
+      <Unit>
+        <Filename Value="screens\ufrm_geoconverter.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmGeoConverter"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <ResourceBaseClassname Value=""/>
+      </Unit>
+      <Unit>
+        <Filename Value="screens\ufrm_imageviewer.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmImageViewer"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <ResourceBaseClassname Value=""/>
+      </Unit>
+      <Unit>
+        <Filename Value="screens\ufrm_maintenance.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmMaintenance"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="screens\ufrm_printpreview.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmPrintPreview"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <ResourceBaseClassname Value=""/>
+      </Unit>
+      <Unit>
+        <Filename Value="screens\ufrm_taxa.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmTaxa"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="dialogs\udlg_exportpreview.pp"/>
+        <Filename Value="screens\uthread_dashboard.pp"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="dlgExportPreview"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\cbs_media.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\cbs_setparam.pp"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
     <Debugger>
@@ -1278,7 +1269,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="types;dialogs;edit_dialogs"/>
+      <OtherUnitFiles Value="utils;data;models;dialogs;edit_dialogs;data_modules;screens"/>
       <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
@@ -1291,9 +1282,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerPath Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions>

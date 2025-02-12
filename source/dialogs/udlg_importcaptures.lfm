@@ -10,7 +10,6 @@ object dlgImportCaptures: TdlgImportCaptures
   ClientWidth = 759
   Font.Height = -12
   Position = poMainFormCenter
-  LCLVersion = '4.0.0.1'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -40,7 +39,7 @@ object dlgImportCaptures: TdlgImportCaptures
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 759
-    TabOrder = 0
+    TabOrder = 1
     object sbCancel: TButton
       AnchorSideLeft.Side = asrBottom
       Left = 475
@@ -49,7 +48,7 @@ object dlgImportCaptures: TdlgImportCaptures
       Width = 130
       Align = alRight
       Caption = 'Cancel'
-      TabOrder = 0
+      TabOrder = 1
       Visible = False
       OnClick = sbCancelClick
     end
@@ -62,7 +61,7 @@ object dlgImportCaptures: TdlgImportCaptures
       Align = alRight
       Caption = 'Import'
       Enabled = False
-      TabOrder = 1
+      TabOrder = 0
       OnClick = sbRunClick
     end
     object sbClose: TButton
@@ -84,7 +83,7 @@ object dlgImportCaptures: TdlgImportCaptures
     Width = 759
     PageIndex = 0
     Align = alClient
-    TabOrder = 1
+    TabOrder = 0
     object pgImportFiles: TPage
       object pContentFiles: TPanel
         Left = 0
@@ -178,12 +177,34 @@ object dlgImportCaptures: TdlgImportCaptures
             Layout = tlCenter
             ParentColor = False
           end
-          object eJournalFile: TFileNameEdit
-            Left = 160
+          object sbClearJournalFile: TSpeedButton
+            AnchorSideLeft.Control = eJournalFile
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pJournalFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pJournalFile
+            AnchorSideRight.Side = asrBottom
+            Left = 687
             Height = 26
-            Hint = 'Select file'
+            Hint = 'Clear field'
             Top = 12
-            Width = 519
+            Width = 24
+            Anchors = [akTop, akRight]
+            Images = iButtons
+            ImageIndex = 1
+            ShowHint = True
+            ParentShowHint = False
+            OnClick = sbClearJournalFileClick
+          end
+          object eJournalFile: TFileNameEdit
+            AnchorSideTop.Control = pJournalFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = sbClearJournalFile
+            Left = 208
+            Height = 23
+            Hint = 'Select file'
+            Top = 14
+            Width = 471
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
@@ -193,8 +214,7 @@ object dlgImportCaptures: TdlgImportCaptures
             NumGlyphs = 1
             Images = iButtons
             ImageIndex = 0
-            Align = alRight
-            Anchors = [akTop, akLeft, akRight, akBottom]
+            Anchors = [akTop, akRight]
             Color = clDefault
             MaxLength = 0
             ParentShowHint = False
@@ -204,19 +224,6 @@ object dlgImportCaptures: TdlgImportCaptures
             TextHint = 'Select a file...'
             OnButtonClick = eJournalFileButtonClick
             OnChange = eJournalFileChange
-          end
-          object sbClearJournalFile: TSpeedButton
-            Left = 687
-            Height = 26
-            Hint = 'Clear field'
-            Top = 12
-            Width = 24
-            Align = alRight
-            Images = iButtons
-            ImageIndex = 1
-            ShowHint = True
-            ParentShowHint = False
-            OnClick = sbClearJournalFileClick
           end
         end
         object pEffortFile: TBCPanel
@@ -286,11 +293,14 @@ object dlgImportCaptures: TdlgImportCaptures
             ParentColor = False
           end
           object eEffortFile: TFileNameEdit
-            Left = 160
-            Height = 26
+            AnchorSideTop.Control = pEffortFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = sbClearEffortFile
+            Left = 208
+            Height = 23
             Hint = 'Select file'
-            Top = 12
-            Width = 519
+            Top = 14
+            Width = 471
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
@@ -300,8 +310,7 @@ object dlgImportCaptures: TdlgImportCaptures
             NumGlyphs = 1
             Images = iButtons
             ImageIndex = 0
-            Align = alRight
-            Anchors = [akTop, akLeft, akRight, akBottom]
+            Anchors = [akTop, akRight]
             Color = clDefault
             MaxLength = 0
             ParentShowHint = False
@@ -314,12 +323,16 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object sbClearEffortFile: TSpeedButton
             Tag = 1
+            AnchorSideTop.Control = pEffortFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pEffortFile
+            AnchorSideRight.Side = asrBottom
             Left = 687
             Height = 26
             Hint = 'Clear field'
             Top = 12
             Width = 24
-            Align = alRight
+            Anchors = [akTop, akRight]
             Images = iButtons
             ImageIndex = 1
             ShowHint = True
@@ -395,11 +408,14 @@ object dlgImportCaptures: TdlgImportCaptures
             ParentColor = False
           end
           object eCaptureFile: TFileNameEdit
-            Left = 160
-            Height = 26
+            AnchorSideTop.Control = pCaptureFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = sbClearCaptureFile
+            Left = 208
+            Height = 23
             Hint = 'Select file'
-            Top = 12
-            Width = 519
+            Top = 14
+            Width = 471
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
@@ -409,8 +425,7 @@ object dlgImportCaptures: TdlgImportCaptures
             NumGlyphs = 1
             Images = iButtons
             ImageIndex = 0
-            Align = alRight
-            Anchors = [akTop, akLeft, akRight, akBottom]
+            Anchors = [akTop, akRight]
             Color = clDefault
             MaxLength = 0
             ParentShowHint = False
@@ -423,12 +438,16 @@ object dlgImportCaptures: TdlgImportCaptures
           end
           object sbClearCaptureFile: TSpeedButton
             Tag = 2
+            AnchorSideTop.Control = pCaptureFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pCaptureFile
+            AnchorSideRight.Side = asrBottom
             Left = 687
             Height = 26
             Hint = 'Clear field'
             Top = 12
             Width = 24
-            Align = alRight
+            Anchors = [akTop, akRight]
             Images = iButtons
             ImageIndex = 1
             ShowHint = True

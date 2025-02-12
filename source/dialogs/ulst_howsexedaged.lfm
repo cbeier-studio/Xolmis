@@ -1,14 +1,13 @@
 object lstHowSexedAged: TlstHowSexedAged
   Left = 352
-  Height = 747
+  Height = 673
   Top = 33
-  Width = 438
-  AutoSize = True
+  Width = 469
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'How sexed/aged'
-  ClientHeight = 747
-  ClientWidth = 438
+  ClientHeight = 673
+  ClientWidth = 469
   PopupMode = pmAuto
   Position = poOwnerFormCenter
   OnCreate = FormCreate
@@ -17,8 +16,8 @@ object lstHowSexedAged: TlstHowSexedAged
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 706
-    Width = 438
+    Top = 632
+    Width = 469
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
@@ -30,13 +29,13 @@ object lstHowSexedAged: TlstHowSexedAged
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 438
+    ClientWidth = 469
     TabOrder = 0
     object sbOK: TBitBtn
       Left = 16
       Height = 25
       Top = 8
-      Width = 199
+      Width = 214
       Caption = 'Apply'
       Font.Name = 'Segoe UI Semibold'
       ParentFont = False
@@ -44,69 +43,20 @@ object lstHowSexedAged: TlstHowSexedAged
       OnClick = sbOKClick
     end
     object sbCancel: TBitBtn
-      Left = 223
+      Left = 238
       Height = 25
       Top = 8
-      Width = 199
+      Width = 215
       Caption = 'Cancel'
       TabOrder = 1
       OnClick = sbCancelClick
     end
   end
-  object cklAged: TCheckListBox
-    Left = 8
-    Height = 645
-    Top = 8
-    Width = 422
-    Align = alClient
-    BorderSpacing.Around = 8
-    Constraints.MinHeight = 645
-    Constraints.MinWidth = 422
-    Items.Strings = (
-      'Physical differences'
-      'B - Brood patch'
-      'C - Cloacal protuberance'
-      '@ - egg in oviduct'
-      'E - Eye color'
-      'I - mouth/bill color or striations on bill (in hummingbirds)'
-      'G - Gape'
-      '$ - feet or legs'
-      'S - Skull ossification'
-      'Q - measurements (details in notes)'
-      'Y - symmetrical flight feather molt'
-      'Plumage characters'
-      'K - definitive basic plumage'
-      'A - definitve Alternate plumage'
-      'F - Formative plumage (applies to first alternate plumage as well)'
-      'J - Juvenal plumage'
-      'M - Molt limits'
-      'P - Plumage (only for sexual dimorphism)'
-      'L - plumage color patch Length or extent (details in notes)'
-      'Feather characters'
-      'W - feather Wear'
-      'V - feather shape'
-      'R - Prejuvenal (first prebasic) molt'
-      '= - fault bar alignment'
-      '# - growth bar alignment'
-      'Undetermined or remaining'
-      'O - Other (such as behavior/copulation; put in notes)'
-      'U - Undetermined after examination'
-      'X - age or sex determination not attempted'
-      'Z - less precise age (< 95%) but high certainty'
-    )
-    ItemHeight = 21
-    TabOrder = 1
-    OnClickCheck = cklAgedClickCheck
-    Data = {
-      1E00000000000000000000000000000000000000000000000000000000000000
-      0000
-    }
-  end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 704
-    Width = 438
+    Top = 630
+    Width = 469
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
@@ -115,8 +65,8 @@ object lstHowSexedAged: TlstHowSexedAged
   object pCode: TBCPanel
     Left = 8
     Height = 35
-    Top = 661
-    Width = 422
+    Top = 587
+    Width = 453
     Align = alBottom
     BorderSpacing.Left = 8
     BorderSpacing.Right = 8
@@ -154,6 +104,24 @@ object lstHowSexedAged: TlstHowSexedAged
     ParentBackground = False
     Rounding.RoundX = 8
     Rounding.RoundY = 8
+    TabOrder = 1
+  end
+  object vtAged: TLazVirtualStringTree
+    Left = 8
+    Height = 571
+    Top = 8
+    Width = 453
+    Align = alClient
+    BorderSpacing.Around = 8
+    DefaultText = 'Node'
+    Header.AutoSizeIndex = 0
+    Header.Columns = <>
+    Header.MainColumn = -1
     TabOrder = 2
+    TreeOptions.MiscOptions = [toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
+    OnChecked = vtAgedChecked
+    OnGetText = vtAgedGetText
+    OnInitChildren = vtAgedInitChildren
+    OnInitNode = vtAgedInitNode
   end
 end

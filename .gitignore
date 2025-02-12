@@ -36,7 +36,6 @@ published/
 # User defined
 #*.sqlite3
 test/
-data/
 Output/
 *.json
 *.ini

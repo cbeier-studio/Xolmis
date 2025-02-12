@@ -27,7 +27,7 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
-  runtimetypeinfocontrols, sdflaz,
+  sdflaz,
   tachartlazaruspkg, lazdbexport, memdslaz, printer4lazarus, tachartbgra,
   virtualdbgrid_package,
   FrameViewer09,
@@ -131,7 +131,8 @@ uses
   udlg_export, cbs_datacolumns, cbs_math, udlg_recverifications,
   uedt_recverification, ufrm_imageviewer, uthread_dashboard, ufrm_printpreview,
   cbs_print, uedt_audioinfo, uedt_documentinfo, udlg_import, udlg_importxmobile,
-  uedt_vegetation, ufrm_taxa, udlg_exportpreview;
+  uedt_vegetation, ufrm_taxa, udlg_exportpreview, cbs_users, cbs_media, 
+cbs_setparam;
 
 {$R *.res}
 

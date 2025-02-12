@@ -16,6 +16,10 @@ msgstr ""
 msgid "1st secondary chord"
 msgstr "Corda da 1ª secundária"
 
+#: cbs_datacolumns.rscabbreviation
+msgid "Abbreviation"
+msgstr "Abreviação"
+
 #: cbs_datacolumns.rscabstract
 msgid "Abstract"
 msgstr "Resumo"
@@ -105,6 +109,10 @@ msgctxt "cbs_datacolumns.rscaudiorecorded"
 msgid "Audio recorded"
 msgstr "Áudio gravado"
 
+#: cbs_datacolumns.rscauthorid
+msgid "Author ID"
+msgstr "Autor ID"
+
 #: cbs_datacolumns.rscauthorship
 msgctxt "cbs_datacolumns.rscauthorship"
 msgid "Authorship"
@@ -128,6 +136,7 @@ msgid "Band"
 msgstr "Anilha"
 
 #: cbs_datacolumns.rscbandchangedate
+msgctxt "cbs_datacolumns.rscbandchangedate"
 msgid "Band change date"
 msgstr "Data de troca da anilha"
 
@@ -318,9 +327,17 @@ msgstr "Estado de conservação"
 msgid "Contact person"
 msgstr "Pessoa para contato"
 
+#: cbs_datacolumns.rsccontext
+msgid "Context"
+msgstr "Contexto"
+
 #: cbs_datacolumns.rsccontractfile
 msgid "Contract file"
 msgstr "Arquivo do contrato"
+
+#: cbs_datacolumns.rsccoordinateprecision
+msgid "Coordinate precision"
+msgstr "Precisão da coordenada"
 
 #: cbs_datacolumns.rsccountry
 msgctxt "cbs_datacolumns.rsccountry"
@@ -593,6 +610,10 @@ msgstr "Arquivo"
 msgid "File name"
 msgstr "Nome do arquivo"
 
+#: cbs_datacolumns.rscfiltermodel
+msgid "Filter model"
+msgstr "Modelo do filtro"
+
 #: cbs_datacolumns.rscfinalphotonr
 msgid "Final photo nr."
 msgstr "Nº da foto final"
@@ -614,6 +635,10 @@ msgstr "Data do encontro"
 #: cbs_datacolumns.rscfullname
 msgid "Full name"
 msgstr "Nome completo"
+
+#: cbs_datacolumns.rscfullnameformatted
+msgid "Full name (formatted)"
+msgstr "Nome completo (formatado)"
 
 #: cbs_datacolumns.rscgc1
 msgid "GC1"
@@ -850,6 +875,26 @@ msgstr "Tíbia esquerda"
 msgid "Length"
 msgstr "Comprimento"
 
+#: cbs_datacolumns.rsclicensenotes
+msgid "License notes"
+msgstr "Notas da licença"
+
+#: cbs_datacolumns.rsclicenseowner
+msgid "License owner"
+msgstr "Detentor da licença"
+
+#: cbs_datacolumns.rsclicensetype
+msgid "License type"
+msgstr "Tipo da licença"
+
+#: cbs_datacolumns.rsclicenseuri
+msgid "License URL"
+msgstr "URL da licença"
+
+#: cbs_datacolumns.rsclicenseyear
+msgid "License year"
+msgstr "Ano da licença"
+
 #: cbs_datacolumns.rsclocality
 msgctxt "cbs_datacolumns.rsclocality"
 msgid "Locality"
@@ -918,6 +963,10 @@ msgstr "Método"
 #: cbs_datacolumns.rscmethodid
 msgid "Method ID"
 msgstr "Método ID"
+
+#: cbs_datacolumns.rscmicmodel
+msgid "Microphone model"
+msgstr "Modelo do microfone"
 
 #: cbs_datacolumns.rscminexternaldiameter
 msgid "Lesser external diameter"
@@ -1050,6 +1099,10 @@ msgstr "# ninhegos (nidoparasita)"
 #: cbs_datacolumns.rscnestproductivity
 msgid "Nest productivity"
 msgstr "Produtividade do ninho"
+
+#: cbs_datacolumns.rscnestrevisionid
+msgid "Nest revision ID"
+msgstr "Revisão de ninho ID"
 
 #: cbs_datacolumns.rscneststage
 msgctxt "cbs_datacolumns.rscneststage"
@@ -1275,6 +1328,10 @@ msgstr "Rede permanente"
 msgid "Permanent net ID"
 msgstr "Rede permanente ID"
 
+#: cbs_datacolumns.rscpermitid
+msgid "Permit ID"
+msgstr "Licença ID"
+
 #: cbs_datacolumns.rscperson
 msgctxt "cbs_datacolumns.rscperson"
 msgid "Person"
@@ -1324,6 +1381,10 @@ msgstr "Distância da borda da planta"
 #: cbs_datacolumns.rscplantheight
 msgid "Plant height"
 msgstr "Altura da planta"
+
+#: cbs_datacolumns.rscplaybackused
+msgid "Playback used"
+msgstr "Playback usado"
 
 #: cbs_datacolumns.rscport
 msgid "Port"
@@ -1444,6 +1505,10 @@ msgstr "Marcas reconhecíveis"
 #: cbs_datacolumns.rscrecorded
 msgid "Recorded"
 msgstr "Gravado"
+
+#: cbs_datacolumns.rscrecordermodel
+msgid "Recorder model"
+msgstr "Modelo do gravador"
 
 #: cbs_datacolumns.rscrelativehumidity
 msgid "Relative humidity (%)"
@@ -1688,6 +1753,10 @@ msgstr "Grupo subespecífico"
 msgid "Subspecies group ID"
 msgstr "Grupo subespecífico ID"
 
+#: cbs_datacolumns.rscsubtitle
+msgid "Subtitle"
+msgstr "Legenda"
+
 #: cbs_datacolumns.rscsuffix
 msgid "Suffix"
 msgstr "Sufixo"
@@ -1751,6 +1820,10 @@ msgstr "Comprimento do tarso"
 msgctxt "cbs_datacolumns.rsctaxon"
 msgid "Taxon"
 msgstr "Táxon"
+
+#: cbs_datacolumns.rsctaxonformatted
+msgid "Taxon (formatted)"
+msgstr "Táxon (formatado)"
 
 #: cbs_datacolumns.rsctaxonid
 msgid "Taxon ID"
@@ -1962,10 +2035,9 @@ msgctxt "cbs_locale.rsagefourthyear"
 msgid "Fourth year"
 msgstr "Quarto ano"
 
-#: cbs_locale.rsageimmature
-msgctxt "cbs_locale.rsageimmature"
-msgid "Immature"
-msgstr "Imaturo"
+#: cbs_locale.rsagejuvenile
+msgid "Juvenile"
+msgstr "Jovem"
 
 #: cbs_locale.rsagenestling
 msgctxt "cbs_locale.rsagenestling"
@@ -2620,6 +2692,66 @@ msgctxt "cbs_locale.rscolorbandsrightleft"
 msgid "r %s / l %s"
 msgstr "d %s / e %s"
 
+#: cbs_locale.rscolorblack
+msgid "black"
+msgstr "preto"
+
+#: cbs_locale.rscolorblue
+msgid "blue"
+msgstr "azul"
+
+#: cbs_locale.rscolorcarmine
+msgid "carmine"
+msgstr "carmim"
+
+#: cbs_locale.rscolorgray
+msgid "gray"
+msgstr "cinza"
+
+#: cbs_locale.rscolorgreen
+msgid "green"
+msgstr "verde"
+
+#: cbs_locale.rscolorlimegreen
+msgid "lime green"
+msgstr "verde lima"
+
+#: cbs_locale.rscolororange
+msgid "orange"
+msgstr "laranja"
+
+#: cbs_locale.rscolorother
+msgid "other"
+msgstr "outra"
+
+#: cbs_locale.rscolorpaleblue
+msgid "pale blue"
+msgstr "azul claro"
+
+#: cbs_locale.rscolorpink
+msgid "pink"
+msgstr "rosa"
+
+#: cbs_locale.rscolorred
+msgid "red"
+msgstr "vermelho"
+
+#: cbs_locale.rscolorumber
+msgid "umber"
+msgstr "marrom"
+
+#: cbs_locale.rscolorviolet
+msgid "violet"
+msgstr "violeta"
+
+#: cbs_locale.rscolorwhite
+msgid "white"
+msgstr "branco"
+
+#: cbs_locale.rscoloryellow
+msgid "yellow"
+msgstr "amarelo"
+
 #: cbs_locale.rscompressingbackup
 msgctxt "cbs_locale.rscompressingbackup"
 msgid "Compressing backup..."
@@ -2673,6 +2805,11 @@ msgstr "Criando backup..."
 msgctxt "cbs_locale.rscyclenotselected"
 msgid "No item were selected in one or more columns."
 msgstr "Nenhum item selecionado em uma ou mais colunas."
+
+#: cbs_locale.rsdatebandchange
+msgctxt "cbs_locale.rsdatebandchange"
+msgid "Band change date"
+msgstr "Data de troca da anilha"
 
 #: cbs_locale.rsdatebanding
 msgctxt "cbs_locale.rsdatebanding"
@@ -2789,6 +2926,15 @@ msgctxt "cbs_locale.rsdeadbird"
 msgid "Dead bird"
 msgstr "Ave morta"
 
+#: cbs_locale.rsdecimalseparatorcolon
+msgctxt "cbs_locale.rsdecimalseparatorcolon"
+msgid "Colon"
+msgstr "Vírgula"
+
+#: cbs_locale.rsdecimalseparatorperiod
+msgid "Period"
+msgstr "Ponto"
+
 #: cbs_locale.rsdecompressingbackup
 msgctxt "cbs_locale.rsdecompressingbackup"
 msgid "Decompressing backup..."
@@ -2812,6 +2958,10 @@ msgstr ""
 "Deseja realmente apagar esse registro?\n"
 "Esta operação não pode ser desfeita."
 
+#: cbs_locale.rsdeleteprofilepicture
+msgid "Do you really want to remove the profile picture?"
+msgstr "Você realmente deseja remover a foto de perfil?"
+
 #: cbs_locale.rsdeleterecordfooter
 msgctxt "cbs_locale.rsdeleterecordfooter"
 msgid "Deleted records remain in the recycle bin for a duration specified in the Settings before they are permanently deleted."
@@ -2826,6 +2976,24 @@ msgstr "Deseja realmente apagar esse registro?"
 msgctxt "cbs_locale.rsdeleterecordtitle"
 msgid "Delete record"
 msgstr "Apagar registro"
+
+#: cbs_locale.rsdelimitercolon
+msgctxt "cbs_locale.rsdelimitercolon"
+msgid "Colon"
+msgstr "Vírgula"
+
+#: cbs_locale.rsdelimiterother
+msgid "Other..."
+msgstr "Outro..."
+
+#: cbs_locale.rsdelimitersemicolon
+msgctxt "cbs_locale.rsdelimitersemicolon"
+msgid "Semicolon"
+msgstr "Ponto e vírgula"
+
+#: cbs_locale.rsdelimitertab
+msgid "Tab"
+msgstr "Tab"
 
 #: cbs_locale.rsdetectiontypes
 msgid "\"S - song\",\"C - call\",\"V - seen\",\"W - wing flapping\",\"D - drumming\",\"F - flying\""
@@ -3151,6 +3319,10 @@ msgstr "Erro executando Sweep e Analyze do banco de dados"
 #: cbs_locale.rserroremptyfieldname
 msgid "Error loading field info: the field name is blank."
 msgstr "Erro carregando informação do campo: nome do campo está em branco."
+
+#: cbs_locale.rserroremptyid
+msgid "ID is empty"
+msgstr "ID está vazia"
 
 #: cbs_locale.rserrorexporting
 #, object-pascal-format
@@ -3694,6 +3866,11 @@ msgstr "A longitude informada não é um número decimal válido."
 msgctxt "cbs_locale.rsinvalidpartialdate"
 msgid "The %s is not a valid date."
 msgstr "A %s não é uma data válida."
+
+#: cbs_locale.rsinvalidtime
+#, object-pascal-format
+msgid "The %s is not a valid time."
+msgstr "A %s não é uma hora válida."
 
 #: cbs_locale.rsinvalidtimerange
 msgctxt "cbs_locale.rsinvalidtimerange"
@@ -5163,6 +5340,10 @@ msgctxt "cbs_locale.rstitleprintpreview"
 msgid "Print preview"
 msgstr "Visualização de impressão"
 
+#: cbs_locale.rstitleprofilepicture
+msgid "Profile picture"
+msgstr "Foto de perfil"
+
 #: cbs_locale.rstitleprojectmembers
 msgid "Project members"
 msgstr "Membros do projeto"
@@ -5333,8 +5514,8 @@ msgstr "usuário %d de %d"
 #: cbs_locale.rsvaluenotinrange
 #, object-pascal-format
 msgctxt "cbs_locale.rsvaluenotinrange"
-msgid "The value of %s must be between %d and %d."
-msgstr "O valor de %s deve estar entre %d e %d."
+msgid "The value of %s must be between %f and %f."
+msgstr "O valor de %s deve estar entre %f e %f."
 
 #: cbs_locale.rsvaluenotinset
 #, object-pascal-format
@@ -5506,40 +5687,80 @@ msgctxt "tbatchneteffort.eclosetime1.buttonhint"
 msgid "Select time"
 msgstr "Selecionar hora"
 
+#: tbatchneteffort.eclosetime1.texthint
+msgctxt "tbatchneteffort.eclosetime1.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
 #: tbatchneteffort.eclosetime2.buttonhint
 msgctxt "tbatchneteffort.eclosetime2.buttonhint"
 msgid "Select time"
 msgstr "Selecionar hora"
+
+#: tbatchneteffort.eclosetime2.texthint
+msgctxt "tbatchneteffort.eclosetime2.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
 
 #: tbatchneteffort.eclosetime3.buttonhint
 msgctxt "tbatchneteffort.eclosetime3.buttonhint"
 msgid "Select time"
 msgstr "Selecionar hora"
 
+#: tbatchneteffort.eclosetime3.texthint
+msgctxt "tbatchneteffort.eclosetime3.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
 #: tbatchneteffort.eclosetime4.buttonhint
 msgctxt "tbatchneteffort.eclosetime4.buttonhint"
 msgid "Select time"
 msgstr "Selecionar hora"
+
+#: tbatchneteffort.eclosetime4.texthint
+msgctxt "tbatchneteffort.eclosetime4.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
 
 #: tbatchneteffort.eopentime1.buttonhint
 msgctxt "tbatchneteffort.eopentime1.buttonhint"
 msgid "Select time"
 msgstr "Selecionar hora"
 
+#: tbatchneteffort.eopentime1.texthint
+msgctxt "tbatchneteffort.eopentime1.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
 #: tbatchneteffort.eopentime2.buttonhint
 msgctxt "tbatchneteffort.eopentime2.buttonhint"
 msgid "Select time"
 msgstr "Selecionar hora"
+
+#: tbatchneteffort.eopentime2.texthint
+msgctxt "tbatchneteffort.eopentime2.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
 
 #: tbatchneteffort.eopentime3.buttonhint
 msgctxt "tbatchneteffort.eopentime3.buttonhint"
 msgid "Select time"
 msgstr "Selecionar hora"
 
+#: tbatchneteffort.eopentime3.texthint
+msgctxt "tbatchneteffort.eopentime3.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
 #: tbatchneteffort.eopentime4.buttonhint
 msgctxt "tbatchneteffort.eopentime4.buttonhint"
 msgid "Select time"
 msgstr "Selecionar hora"
+
+#: tbatchneteffort.eopentime4.texthint
+msgctxt "tbatchneteffort.eopentime4.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
 
 #: tbatchneteffort.esurvey.buttonhint
 msgid "Select survey to copy mistnets from"
@@ -5624,11 +5845,11 @@ msgstr "Salvar"
 
 #: tcfgdatabase.caption
 msgid "Xolmis - Manage connections"
-msgstr "Xolmis - Gerenciar conexões"
+msgstr "Gerenciar conexões"
 
 #: tcfgdatabase.mmoptimizedb.caption
 msgid "Optimize database"
-msgstr "Otimizar o banco de dados"
+msgstr "Otimizar banco de dados"
 
 #: tcfgdatabase.mmtestconnection.caption
 msgctxt "tcfgdatabase.mmtestconnection.caption"
@@ -5645,7 +5866,6 @@ msgid "Edit connection"
 msgstr "Editar conexão"
 
 #: tcfgdatabase.pmgnew.caption
-msgctxt "tcfgdatabase.pmgnew.caption"
 msgid "New connection"
 msgstr "Nova conexão"
 
@@ -5660,7 +5880,6 @@ msgid "Test connection"
 msgstr "Testar conexão"
 
 #: tcfgdatabase.pmnewconnection.caption
-msgctxt "tcfgdatabase.pmnewconnection.caption"
 msgid "Add connection"
 msgstr "Adicionar conexão"
 
@@ -5688,10 +5907,12 @@ msgid "Delimitation options"
 msgstr "Opções de delimitação"
 
 #: tcfgdelimiters.cbdecimalseparator.text
+msgctxt "tcfgdelimiters.cbdecimalseparator.text"
 msgid "Colon"
 msgstr "Vírgula"
 
 #: tcfgdelimiters.cbdelimiter.text
+msgctxt "tcfgdelimiters.cbdelimiter.text"
 msgid "Semicolon"
 msgstr "Ponto e vírgula"
 
@@ -5705,7 +5926,7 @@ msgstr "Delimitador"
 
 #: tcfgdelimiters.lblhaveheader.caption
 msgid "First row as header"
-msgstr "Primeira linha como cabeçalho"
+msgstr "Primeira linha com cabeçalho"
 
 #: tcfgdelimiters.lblquotedastext.caption
 msgid "Quoted values as text"
@@ -5731,7 +5952,6 @@ msgid "Apply"
 msgstr "Aplicar"
 
 #: tcfgoptions.caption
-msgctxt "tcfgoptions.caption"
 msgid "Settings"
 msgstr "Opções"
 
@@ -5741,7 +5961,7 @@ msgstr "Permitir que o Xolmis colete dados de uso anônimos"
 
 #: tcfgoptions.lblallowwritelog.caption
 msgid "Allow Xolmis to log events for technical support"
-msgstr "Permitir o Xolmis gerar arquivo de log para suporte técnico"
+msgstr "Permitir que o Xolmis crie um log de eventos para suporte técnico"
 
 #: tcfgoptions.lblattachmentspath.caption
 msgid "Documents location"
@@ -5753,11 +5973,11 @@ msgstr "Local dos arquivos de áudio"
 
 #: tcfgoptions.lblbackuppath.caption
 msgid "Backup files folder"
-msgstr "Pasta de backup"
+msgstr "Pasta dos arquivos de backup"
 
 #: tcfgoptions.lblcheckupdates.caption
 msgid "Check for Xolmis updates"
-msgstr "Verificar por atualizações do Xolmis"
+msgstr "Verificar atualizações do Xolmis"
 
 #: tcfgoptions.lblcleardeleted.caption
 msgid "Clear deleted records automatically (in days)"
@@ -5765,11 +5985,11 @@ msgstr "Limpar os registros apagados automaticamente (em dias)"
 
 #: tcfgoptions.lblconfirmcancel.caption
 msgid "Confirm data insert/edit cancelation"
-msgstr "Confirmar ao cancelar a inserção/edição de dados"
+msgstr "Confirmar cancelamento de inserção/edição"
 
 #: tcfgoptions.lblenterastab.caption
 msgid "Use <Enter/Return> keys to jump to the next control"
-msgstr "Usar teclas <Enter/Return> para ir para o próximo controle"
+msgstr "Usar tecla <Enter/Return> para ir para o próximo controle"
 
 #: tcfgoptions.lblimagespath.caption
 msgid "Images location"
@@ -5777,7 +5997,7 @@ msgstr "Local das imagens"
 
 #: tcfgoptions.lblmaintaxonomy.caption
 msgid "Prefered taxonomy"
-msgstr "Taxonomia preferencial"
+msgstr "Taxonomia preferida"
 
 #: tcfgoptions.lblmanagebackups.caption
 msgid "Manage backups"
@@ -5788,7 +6008,6 @@ msgid "Open files after export"
 msgstr "Abrir arquivos após exportar"
 
 #: tcfgoptions.lblprivacyterms.caption
-msgctxt "tcfgoptions.lblprivacyterms.caption"
 msgid "Privacy terms"
 msgstr "Termos de privacidade"
 
@@ -5806,40 +6025,37 @@ msgstr "Tema"
 
 #: tcfgoptions.lblselectedthemerestart.caption
 msgid "Xolmis need to be restarted to apply changes"
-msgstr "Xolmis precisa ser reiniciado para aplicar mudanças"
+msgstr "Xolmis precisa ser reiniciado para aplicar as mudanças"
 
 #: tcfgoptions.lblshowoutliers.caption
 msgid "Show outlier measurements in captures"
-msgstr "Mostrar outliers das medidas nas capturas"
+msgstr "Mostrar medidas outlier nas capturas"
 
 #: tcfgoptions.lblshowsynonyms.caption
 msgid "Show synonyms in search results"
-msgstr "Mostrar sinônimos nos resultados das buscas"
+msgstr "Mostrar sinônimos nos resultados da busca"
 
 #: tcfgoptions.lblstartpage.caption
 msgid "Start page"
-msgstr "Página inicial"
+msgstr "Página de início"
 
 #: tcfgoptions.lblstartupbackup.caption
 msgid "Create backup when Xolmis closes"
-msgstr "Criar backup quando o Xolmis fechar"
+msgstr "Criar backup quando o Xolmis encerrar"
 
 #: tcfgoptions.lbltitleappearance.caption
 msgid "Appearance"
 msgstr "Aparência"
 
 #: tcfgoptions.lbltitlebackup.caption
-msgctxt "tcfgoptions.lbltitlebackup.caption"
 msgid "Backup and restore"
 msgstr "Backup e restauração"
 
 #: tcfgoptions.lbltitlecollection.caption
-msgctxt "tcfgoptions.lbltitlecollection.caption"
 msgid "Collection"
-msgstr "Acervo"
+msgstr "Coleção"
 
 #: tcfgoptions.lbltitleinterface.caption
-msgctxt "tcfgoptions.lbltitleinterface.caption"
 msgid "General"
 msgstr "Geral"
 
@@ -5849,7 +6065,6 @@ msgid "Media"
 msgstr "Mídias"
 
 #: tcfgoptions.lbltitlesecurity.caption
-msgctxt "tcfgoptions.lbltitlesecurity.caption"
 msgid "Security and privacy"
 msgstr "Segurança e privacidade"
 
@@ -5867,7 +6082,7 @@ msgstr "Verificar agora"
 
 #: tcfgoptions.sbclearlogfiles.caption
 msgid "Clear log files"
-msgstr "Limpar arquivos de log"
+msgstr "Limpar logs"
 
 #: tcfgoptions.sbclearusagedata.caption
 msgid "Clear usage data"
@@ -5883,12 +6098,10 @@ msgid "Create backup"
 msgstr "Criar backup"
 
 #: tcfgoptions.sbrestorebackup.caption
-msgctxt "tcfgoptions.sbrestorebackup.caption"
 msgid "Restore"
 msgstr "Restaurar"
 
 #: tcfgusers.caption
-msgctxt "tcfgusers.caption"
 msgid "Manage users"
 msgstr "Gerenciar usuários"
 
@@ -5913,7 +6126,6 @@ msgid "Delete"
 msgstr "Apagar"
 
 #: tcfgusers.pmgedit.caption
-msgctxt "tcfgusers.pmgedit.caption"
 msgid "Edit"
 msgstr "Editar"
 
@@ -7348,7 +7560,6 @@ msgid "Add audio recordings"
 msgstr "Adicionar gravações de áudio"
 
 #: tdmm.opendocs.title
-msgctxt "tdmm.opendocs.title"
 msgid "Add documents"
 msgstr "Adicionar documentos"
 
@@ -7363,6 +7574,51 @@ msgstr "Info da gravação de áudio"
 #: tedtaudioinfo.ckplaybackused.caption
 msgid "Playback was used"
 msgstr "Playback foi usado"
+
+#: tedtaudioinfo.eaudiofile.buttonhint
+msgctxt "tedtaudioinfo.eaudiofile.buttonhint"
+msgid "Choose file"
+msgstr "Selecionar arquivo"
+
+#: tedtaudioinfo.eauthor.buttonhint
+msgctxt "tedtaudioinfo.eauthor.buttonhint"
+msgid "Find author"
+msgstr "Buscar autor"
+
+#: tedtaudioinfo.elatitude.buttonhint
+msgctxt "tedtaudioinfo.elatitude.buttonhint"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
+
+#: tedtaudioinfo.elocality.buttonhint
+msgctxt "tedtaudioinfo.elocality.buttonhint"
+msgid "Find locality"
+msgstr "Procurar localidade"
+
+#: tedtaudioinfo.elongitude.buttonhint
+msgctxt "tedtaudioinfo.elongitude.buttonhint"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
+
+#: tedtaudioinfo.erecordingdate.buttonhint
+msgctxt "tedtaudioinfo.erecordingdate.buttonhint"
+msgid "Open calendar"
+msgstr "Abrir calendário"
+
+#: tedtaudioinfo.erecordingdate.texthint
+msgctxt "tedtaudioinfo.erecordingdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
+#: tedtaudioinfo.erecordingtime.texthint
+msgctxt "tedtaudioinfo.erecordingtime.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
+#: tedtaudioinfo.etaxon.buttonhint
+msgctxt "tedtaudioinfo.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr "Buscar táxon"
 
 #: tedtaudioinfo.lblaudiofile.caption
 msgid "Recording file: *"
@@ -7394,11 +7650,6 @@ msgstr "Modelo do filtro:"
 #: tedtaudioinfo.lblhabitat.caption
 msgid "Habitat:"
 msgstr "Habitat:"
-
-#: tedtaudioinfo.lblindividual.caption
-msgctxt "tedtaudioinfo.lblindividual.caption"
-msgid "Individual:"
-msgstr "Indivíduo:"
 
 #: tedtaudioinfo.lbllatitude.caption
 msgctxt "tedtaudioinfo.lbllatitude.caption"
@@ -7475,16 +7726,6 @@ msgctxt "tedtaudioinfo.lblrelativehumidity.caption"
 msgid "Relative humidity (%):"
 msgstr "Umidade relativa (%):"
 
-#: tedtaudioinfo.lblsighting.caption
-msgctxt "tedtaudioinfo.lblsighting.caption"
-msgid "Sighting:"
-msgstr "Observação:"
-
-#: tedtaudioinfo.lblspecimen.caption
-msgctxt "tedtaudioinfo.lblspecimen.caption"
-msgid "Specimen:"
-msgstr "Espécime:"
-
 #: tedtaudioinfo.lblsubjectstally.caption
 msgid "# individuals:"
 msgstr "# indivíduos:"
@@ -7517,21 +7758,6 @@ msgstr "Salvar"
 msgctxt "tedtbands.ckreported.caption"
 msgid "Reported"
 msgstr "Relatada"
-
-#: tedtbands.ecarrier.buttonhint
-msgctxt "tedtbands.ecarrier.buttonhint"
-msgid "Find carrier"
-msgstr "Procurar portador"
-
-#: tedtbands.eproject.buttonhint
-msgctxt "tedtbands.eproject.buttonhint"
-msgid "Find project"
-msgstr "Procurar projeto"
-
-#: tedtbands.esupplier.buttonhint
-msgctxt "tedtbands.esupplier.buttonhint"
-msgid "Find institution"
-msgstr "Procurar instituição"
 
 #: tedtbands.lblbandcolor.caption
 msgctxt "tedtbands.lblbandcolor.caption"
@@ -7604,16 +7830,16 @@ msgid "Save"
 msgstr "Salvar"
 
 #: tedtbotanictaxon.ename.buttonhint
-msgid "Check name"
-msgstr "Verificar nome"
+msgid "Check name on Plantminer"
+msgstr "Verificar nome no Plantminer"
 
 #: tedtbotanictaxon.eparenttaxon.buttonhint
 msgid "Find parent taxon"
-msgstr "Procurar táxon superior"
+msgstr "Buscar táxon superior"
 
 #: tedtbotanictaxon.evalidname.buttonhint
-msgid "Find valid taxon"
-msgstr "Procurar táxon válido"
+msgid "Find valid name"
+msgstr "Buscar nome válido"
 
 #: tedtbotanictaxon.lblauthorship.caption
 msgctxt "tedtbotanictaxon.lblauthorship.caption"
@@ -7686,8 +7912,8 @@ msgid "Parasite(s)"
 msgstr "Parasita(s)"
 
 #: tedtcapture.ckphotos.caption
-msgid "Photos"
-msgstr "Fotos"
+msgid "Photo(s)"
+msgstr "Foto(s)"
 
 #: tedtcapture.ckwholespecimen.caption
 msgid "Specimen (whole)"
@@ -7727,22 +7953,27 @@ msgid "Select molt cycle code"
 msgstr "Selecionar código do ciclo de muda"
 
 #: tedtcapture.ehowaged.buttonhint
-msgid "Select how was aged"
+msgid "Select how individual was aged"
 msgstr "Selecionar como foi etariado"
 
 #: tedtcapture.ehowsexed.buttonhint
-msgid "Select how was sexed"
+msgid "Select how individual was sexed"
 msgstr "Selecionar como foi sexado"
+
+#: tedtcapture.eindividual.buttonhint
+msgctxt "tedtcapture.eindividual.buttonhint"
+msgid "Find individual"
+msgstr "Buscar indivíduo"
 
 #: tedtcapture.elatitude.buttonhint
 msgctxt "tedtcapture.elatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtcapture.elefttarsus.buttonhint
 msgctxt "tedtcapture.elefttarsus.buttonhint"
-msgid "Select colors"
-msgstr "Selecionar cores"
+msgid "Select colors of bands"
+msgstr "Selecionar cores de anilhas"
 
 #: tedtcapture.elocality.buttonhint
 msgctxt "tedtcapture.elocality.buttonhint"
@@ -7751,8 +7982,8 @@ msgstr "Procurar localidade"
 
 #: tedtcapture.elongitude.buttonhint
 msgctxt "tedtcapture.elongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtcapture.emoltlimits.buttonhint
 msgid "Select molt limits"
@@ -7774,13 +8005,13 @@ msgstr "Procurar fotógrafo"
 
 #: tedtcapture.eremovedband.buttonhint
 msgctxt "tedtcapture.eremovedband.buttonhint"
-msgid "Find band"
-msgstr "Procurar anilha"
+msgid "Find removed band"
+msgstr "Procurar anilha removida"
 
 #: tedtcapture.erighttarsus.buttonhint
 msgctxt "tedtcapture.erighttarsus.buttonhint"
-msgid "Select colors"
-msgstr "Selecionar cores"
+msgid "Select colors of bands"
+msgstr "Selecionar cores de anilhas"
 
 #: tedtcapture.esurvey.buttonhint
 msgctxt "tedtcapture.esurvey.buttonhint"
@@ -7904,6 +8135,11 @@ msgstr "Como foi etariado:"
 #: tedtcapture.lblhowsexed.caption
 msgid "How was sexed:"
 msgstr "Como foi sexado:"
+
+#: tedtcapture.lblindividual.caption
+msgctxt "tedtcapture.lblindividual.caption"
+msgid "Individual: *"
+msgstr "Indivíduo: *"
 
 #: tedtcapture.lblkippsindex.caption
 msgid "Kipp's Index:"
@@ -8106,6 +8342,26 @@ msgstr "Salvar"
 msgid "Document info"
 msgstr "Info do documento"
 
+#: tedtdocumentinfo.edocumentdate.buttonhint
+msgctxt "tedtdocumentinfo.edocumentdate.buttonhint"
+msgid "Open calendar"
+msgstr "Abrir calendário"
+
+#: tedtdocumentinfo.edocumentdate.texthint
+msgctxt "tedtdocumentinfo.edocumentdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
+#: tedtdocumentinfo.edocumentpath.buttonhint
+msgctxt "tedtdocumentinfo.edocumentpath.buttonhint"
+msgid "Choose file"
+msgstr "Selecionar arquivo"
+
+#: tedtdocumentinfo.edocumenttime.texthint
+msgctxt "tedtdocumentinfo.edocumenttime.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
 #: tedtdocumentinfo.lbldocumentdate.caption
 msgid "Document date: *"
 msgstr "Data do documento: *"
@@ -8169,17 +8425,22 @@ msgstr "Eclodiu"
 #: tedtegg.eindividual.buttonhint
 msgctxt "tedtegg.eindividual.buttonhint"
 msgid "Find individual"
-msgstr "Procurar indivíduo"
+msgstr "Buscar indivíduo"
 
 #: tedtegg.emeasuredate.buttonhint
 msgctxt "tedtegg.emeasuredate.buttonhint"
 msgid "Open calendar"
 msgstr "Abrir calendário"
 
+#: tedtegg.emeasuredate.texthint
+msgctxt "tedtegg.emeasuredate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
 #: tedtegg.eobserver.buttonhint
 msgctxt "tedtegg.eobserver.buttonhint"
 msgid "Find observer"
-msgstr "Procurar observador"
+msgstr "Buscar observador"
 
 #: tedtegg.etaxon.buttonhint
 msgctxt "tedtegg.etaxon.buttonhint"
@@ -8269,11 +8530,6 @@ msgctxt "tedtexpedition.eenddate.buttonhint"
 msgid "Open calendar"
 msgstr "Abrir calendário"
 
-#: tedtexpedition.eenddate.texthint
-msgctxt "tedtexpedition.eenddate.texthint"
-msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
-
 #: tedtexpedition.elocality.buttonhint
 msgctxt "tedtexpedition.elocality.buttonhint"
 msgid "Find locality"
@@ -8289,19 +8545,10 @@ msgctxt "tedtexpedition.estartdate.buttonhint"
 msgid "Open calendar"
 msgstr "Abrir calendário"
 
-#: tedtexpedition.estartdate.texthint
-msgctxt "tedtexpedition.estartdate.texthint"
-msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
-
 #: tedtexpedition.lbldescription.caption
 msgctxt "tedtexpedition.lbldescription.caption"
 msgid "Description:"
 msgstr "Descrição:"
-
-#: tedtexpedition.lblduration.caption
-msgid "Duration (days):"
-msgstr "Duração (dias):"
 
 #: tedtexpedition.lblenddate.caption
 msgid "End date: *"
@@ -8336,25 +8583,60 @@ msgctxt "tedtexpedition.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtimageinfo.eauthor.buttonhint
+msgctxt "tedtimageinfo.eauthor.buttonhint"
+msgid "Find author"
+msgstr "Buscar autor"
+
+#: tedtimageinfo.eimagedate.buttonhint
+msgctxt "tedtimageinfo.eimagedate.buttonhint"
+msgid "Open calendar"
+msgstr "Abrir calendário"
+
+#: tedtimageinfo.eimagedate.texthint
+msgctxt "tedtimageinfo.eimagedate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
+#: tedtimageinfo.eimagefilename.buttonhint
+msgctxt "tedtimageinfo.eimagefilename.buttonhint"
+msgid "Choose file"
+msgstr "Selecionar arquivo"
+
+#: tedtimageinfo.eimagetime.texthint
+msgctxt "tedtimageinfo.eimagetime.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
+#: tedtimageinfo.elatitude.buttonhint
+msgctxt "tedtimageinfo.elatitude.buttonhint"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
+
+#: tedtimageinfo.elocality.buttonhint
+msgctxt "tedtimageinfo.elocality.buttonhint"
+msgid "Find locality"
+msgstr "Procurar localidade"
+
+#: tedtimageinfo.elongitude.buttonhint
+msgctxt "tedtimageinfo.elongitude.buttonhint"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
+
+#: tedtimageinfo.etaxon.buttonhint
+msgctxt "tedtimageinfo.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr "Buscar táxon"
+
 #: tedtimageinfo.lblauthor.caption
 msgctxt "tedtimageinfo.lblauthor.caption"
 msgid "Author:"
 msgstr "Autor:"
 
-#: tedtimageinfo.lblcapture.caption
-msgctxt "tedtimageinfo.lblcapture.caption"
-msgid "Capture:"
-msgstr "Captura:"
-
 #: tedtimageinfo.lblcoordinatesprecision.caption
 msgctxt "tedtimageinfo.lblcoordinatesprecision.caption"
 msgid "Coordinates precision:"
 msgstr "Precisão da coordenada:"
-
-#: tedtimageinfo.lblegg.caption
-msgctxt "tedtimageinfo.lblegg.caption"
-msgid "Egg:"
-msgstr "Ovo:"
 
 #: tedtimageinfo.lblimagedate.caption
 msgctxt "tedtimageinfo.lblimagedate.caption"
@@ -8375,11 +8657,6 @@ msgstr "Hora da imagem:"
 msgctxt "tedtimageinfo.lblimagetype.caption"
 msgid "Image type:"
 msgstr "Tipo da imagem:"
-
-#: tedtimageinfo.lblindividual.caption
-msgctxt "tedtimageinfo.lblindividual.caption"
-msgid "Individual:"
-msgstr "Indivíduo:"
 
 #: tedtimageinfo.lbllatitude.caption
 msgctxt "tedtimageinfo.lbllatitude.caption"
@@ -8421,35 +8698,10 @@ msgctxt "tedtimageinfo.lbllongitude.caption"
 msgid "Longitude:"
 msgstr "Longitude:"
 
-#: tedtimageinfo.lblnest.caption
-msgctxt "tedtimageinfo.lblnest.caption"
-msgid "Nest:"
-msgstr "Ninho:"
-
-#: tedtimageinfo.lblnestrevision.caption
-msgctxt "tedtimageinfo.lblnestrevision.caption"
-msgid "Nest revision:"
-msgstr "Revisão de ninho:"
-
-#: tedtimageinfo.lblsighting.caption
-msgctxt "tedtimageinfo.lblsighting.caption"
-msgid "Sighting:"
-msgstr "Observação:"
-
-#: tedtimageinfo.lblspecimen.caption
-msgctxt "tedtimageinfo.lblspecimen.caption"
-msgid "Specimen:"
-msgstr "Espécime:"
-
 #: tedtimageinfo.lblsubtitle.caption
 msgctxt "tedtimageinfo.lblsubtitle.caption"
 msgid "Subtitle:"
 msgstr "Legenda:"
-
-#: tedtimageinfo.lblsurvey.caption
-msgctxt "tedtimageinfo.lblsurvey.caption"
-msgid "Survey:"
-msgstr "Amostragem:"
 
 #: tedtimageinfo.lbltaxon.caption
 msgctxt "tedtimageinfo.lbltaxon.caption"
@@ -8479,7 +8731,7 @@ msgstr "Abrir calendário"
 #: tedtindividual.ebandchangedate.texthint
 msgctxt "tedtindividual.ebandchangedate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtindividual.ebandingdate.buttonhint
 msgctxt "tedtindividual.ebandingdate.buttonhint"
@@ -8489,7 +8741,7 @@ msgstr "Abrir calendário"
 #: tedtindividual.ebandingdate.texthint
 msgctxt "tedtindividual.ebandingdate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtindividual.ebirthday.texthint
 msgctxt "tedtindividual.ebirthday.texthint"
@@ -8523,28 +8775,28 @@ msgstr "YYYY"
 
 #: tedtindividual.edoubleband.buttonhint
 msgctxt "tedtindividual.edoubleband.buttonhint"
-msgid "Find band"
-msgstr "Procurar anilha"
+msgid "Find double band"
+msgstr "Procurar anilha dupla"
 
 #: tedtindividual.efather.buttonhint
 msgctxt "tedtindividual.efather.buttonhint"
-msgid "Find individual"
-msgstr "Procurar indivíduo"
+msgid "Find father individual"
+msgstr "Procurar indivíduo pai"
 
 #: tedtindividual.elefttarsus.buttonhint
 msgctxt "tedtindividual.elefttarsus.buttonhint"
-msgid "Select colors"
-msgstr "Selecionar cores"
+msgid "Select colored bands"
+msgstr "Selecionar cores de anilhas"
 
 #: tedtindividual.elefttibia.buttonhint
 msgctxt "tedtindividual.elefttibia.buttonhint"
-msgid "Select colors"
-msgstr "Selecionar cores"
+msgid "Select colored bands"
+msgstr "Selecionar cores de anilhas"
 
 #: tedtindividual.emother.buttonhint
 msgctxt "tedtindividual.emother.buttonhint"
-msgid "Find individual"
-msgstr "Procurar indivíduo"
+msgid "Find mother individual"
+msgstr "Procurar indivíduo mãe"
 
 #: tedtindividual.enest.buttonhint
 msgctxt "tedtindividual.enest.buttonhint"
@@ -8553,18 +8805,18 @@ msgstr "Procurar ninho"
 
 #: tedtindividual.eremovedband.buttonhint
 msgctxt "tedtindividual.eremovedband.buttonhint"
-msgid "Find band"
-msgstr "Procurar anilha"
+msgid "Find removed band"
+msgstr "Procurar anilha removida"
 
 #: tedtindividual.erighttarsus.buttonhint
 msgctxt "tedtindividual.erighttarsus.buttonhint"
-msgid "Select colors"
-msgstr "Selecionar cores"
+msgid "Select colored bands"
+msgstr "Selecionar cores de anilhas"
 
 #: tedtindividual.erighttibia.buttonhint
 msgctxt "tedtindividual.erighttibia.buttonhint"
-msgid "Select colors"
-msgstr "Selecionar cores"
+msgid "Select colored bands"
+msgstr "Selecionar cores de anilhas"
 
 #: tedtindividual.etaxon.buttonhint
 msgctxt "tedtindividual.etaxon.buttonhint"
@@ -8768,7 +9020,7 @@ msgstr "Salvar"
 
 #: tedtmethod.lblacronym.caption
 msgctxt "tedtmethod.lblacronym.caption"
-msgid "Acronym: *"
+msgid "Abbreviation: *"
 msgstr "Abreviatura: *"
 
 #: tedtmethod.lbldescription.caption
@@ -8922,8 +9174,8 @@ msgstr "DD/MM/YYYY"
 
 #: tedtnest.elatitude.buttonhint
 msgctxt "tedtnest.elatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
 
 #: tedtnest.elocality.buttonhint
 msgctxt "tedtnest.elocality.buttonhint"
@@ -8932,8 +9184,8 @@ msgstr "Procurar localidade"
 
 #: tedtnest.elongitude.buttonhint
 msgctxt "tedtnest.elongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
 
 #: tedtnest.eobserver.buttonhint
 msgctxt "tedtnest.eobserver.buttonhint"
@@ -8948,12 +9200,12 @@ msgstr "Procurar projeto"
 #: tedtnest.esupportplant1.buttonhint
 msgctxt "tedtnest.esupportplant1.buttonhint"
 msgid "Find support plant taxon"
-msgstr "Procurar táxon da planta-suporte"
+msgstr "Buscar táxon da planta-suporte"
 
 #: tedtnest.esupportplant2.buttonhint
 msgctxt "tedtnest.esupportplant2.buttonhint"
 msgid "Find support plant taxon"
-msgstr "Procurar táxon da planta-suporte"
+msgstr "Buscar táxon da planta-suporte"
 
 #: tedtnest.etaxon.buttonhint
 msgctxt "tedtnest.etaxon.buttonhint"
@@ -8967,8 +9219,8 @@ msgstr "Total de dias ativos:"
 
 #: tedtnest.lblbandstatus1.caption
 msgctxt "tedtnest.lblbandstatus1.caption"
-msgid "Taxon:"
-msgstr "Táxon:"
+msgid "Taxon: *"
+msgstr "Táxon: *"
 
 #: tedtnest.lblbandstatus3.caption
 msgid "Nest encounter date:"
@@ -9041,8 +9293,8 @@ msgstr "Menor diâmetro interno:"
 
 #: tedtnest.lbllocality.caption
 msgctxt "tedtnest.lbllocality.caption"
-msgid "Locality:"
-msgstr "Localidade:"
+msgid "Locality: *"
+msgstr "Localidade: *"
 
 #: tedtnest.lblnestcover.caption
 msgctxt "tedtnest.lblnestcover.caption"
@@ -9090,13 +9342,13 @@ msgstr "Menor diâmetro da planta:"
 
 #: tedtnest.lblrequester.caption
 msgctxt "tedtnest.lblrequester.caption"
-msgid "Field number:"
-msgstr "Número de campo:"
+msgid "Field number: *"
+msgstr "Número de campo: *"
 
 #: tedtnest.lblrequester1.caption
 msgctxt "tedtnest.lblrequester1.caption"
-msgid "Observer:"
-msgstr "Observador:"
+msgid "Observer: *"
+msgstr "Observador: *"
 
 #: tedtnest.lblrequester2.caption
 msgid "Productivity:"
@@ -9148,12 +9400,12 @@ msgstr "Novo dono do ninho"
 #: tedtnestowner.eindividual.buttonhint
 msgctxt "tedtnestowner.eindividual.buttonhint"
 msgid "Find individual"
-msgstr "Procurar indivíduo"
+msgstr "Buscar indivíduo"
 
 #: tedtnestowner.lblindividual.caption
 msgctxt "tedtnestowner.lblindividual.caption"
-msgid "Individual:"
-msgstr "Indivíduo:"
+msgid "Individual: *"
+msgstr "Indivíduo: *"
 
 #: tedtnestowner.lblrole.caption
 msgctxt "tedtnestowner.lblrole.caption"
@@ -9176,8 +9428,9 @@ msgid "Parasitized by Philornis sp. larvae"
 msgstr "Parasitado por larvas de Philornis sp."
 
 #: tedtnestrevision.enidoparasite.buttonhint
-msgid "Find nidoparasite taxon"
-msgstr "Procurar táxon do nidoparasita"
+msgctxt "tedtnestrevision.enidoparasite.buttonhint"
+msgid "Find taxon"
+msgstr "Buscar táxon"
 
 #: tedtnestrevision.eobserver1.buttonhint
 msgctxt "tedtnestrevision.eobserver1.buttonhint"
@@ -9193,6 +9446,11 @@ msgstr "Procurar observador"
 msgctxt "tedtnestrevision.erevisiondate.buttonhint"
 msgid "Open calendar"
 msgstr "Abrir calendário"
+
+#: tedtnestrevision.erevisiondate.texthint
+msgctxt "tedtnestrevision.erevisiondate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtnestrevision.erevisiontime.texthint
 msgctxt "tedtnestrevision.erevisiontime.texthint"
@@ -9278,13 +9536,13 @@ msgstr "DD/MM/YYYY"
 
 #: tedtneteffort.elatitude.buttonhint
 msgctxt "tedtneteffort.elatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtneteffort.elongitude.buttonhint
 msgctxt "tedtneteffort.elongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtneteffort.enetclose1.texthint
 msgctxt "tedtneteffort.enetclose1.texthint"
@@ -9328,7 +9586,7 @@ msgstr "HH:MM"
 
 #: tedtneteffort.epermanentnet.buttonhint
 msgid "Find permanent mistnet"
-msgstr "Procurar rede permanente"
+msgstr "Buscar rede permanente"
 
 #: tedtneteffort.esurvey.buttonhint
 msgctxt "tedtneteffort.esurvey.buttonhint"
@@ -9447,13 +9705,13 @@ msgstr "Salvar"
 
 #: tedtpermanentnet.elatitude.buttonhint
 msgctxt "tedtpermanentnet.elatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtpermanentnet.elongitude.buttonhint
 msgctxt "tedtpermanentnet.elongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtpermanentnet.lbllatitude.caption
 msgctxt "tedtpermanentnet.lbllatitude.caption"
@@ -9485,20 +9743,10 @@ msgctxt "tedtpermanentnet.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
-#: tedtpermit.edispatchdate.buttonhint
-msgctxt "tedtpermit.edispatchdate.buttonhint"
-msgid "Open calendar"
-msgstr "Abrir calendário"
-
 #: tedtpermit.edispatchdate.texthint
 msgctxt "tedtpermit.edispatchdate.texthint"
 msgid "DD/MM/YYYY"
 msgstr "DD/MM/YYYY"
-
-#: tedtpermit.eexpiredate.buttonhint
-msgctxt "tedtpermit.eexpiredate.buttonhint"
-msgid "Open calendar"
-msgstr "Abrir calendário"
 
 #: tedtpermit.eexpiredate.texthint
 msgctxt "tedtpermit.eexpiredate.texthint"
@@ -9596,9 +9844,9 @@ msgctxt "tedtperson.estate.buttonhint"
 msgid "Find state"
 msgstr "Procurar estado"
 
-#: tedtperson.lblacronym.caption
-msgctxt "tedtperson.lblacronym.caption"
-msgid "Acronym: *"
+#: tedtperson.lblabbreviation.caption
+msgctxt "tedtperson.lblabbreviation.caption"
+msgid "Abbreviation: *"
 msgstr "Abreviatura: *"
 
 #: tedtperson.lbladdress1.caption
@@ -9891,6 +10139,10 @@ msgctxt "tedtsampleprep.epreparationdate.texthint"
 msgid "DD/MM/YYYY"
 msgstr "DD/MM/YYYY"
 
+#: tedtsampleprep.epreparer.buttonhint
+msgid "Find preparer"
+msgstr "Buscar preparador"
+
 #: tedtsampleprep.lblaccessionnumber.caption
 msgid "Accession number: *"
 msgstr "Número de tombo: *"
@@ -9935,8 +10187,8 @@ msgstr "Nova parcela amostral"
 
 #: tedtsamplingplot.elatitude.buttonhint
 msgctxt "tedtsamplingplot.elatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtsamplingplot.elocality.buttonhint
 msgctxt "tedtsamplingplot.elocality.buttonhint"
@@ -9945,12 +10197,12 @@ msgstr "Procurar localidade"
 
 #: tedtsamplingplot.elongitude.buttonhint
 msgctxt "tedtsamplingplot.elongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtsamplingplot.lblacronym.caption
 msgctxt "tedtsamplingplot.lblacronym.caption"
-msgid "Acronym: *"
+msgid "Abbreviation: *"
 msgstr "Abreviatura: *"
 
 #: tedtsamplingplot.lbldescription.caption
@@ -9995,7 +10247,7 @@ msgstr "Salvar"
 
 #: tedtsighting.ckaudiorecording.caption
 msgctxt "tedtsighting.ckaudiorecording.caption"
-msgid "Audio recorded"
+msgid "Recorded audio"
 msgstr "Áudio gravado"
 
 #: tedtsighting.ckcaptured.caption
@@ -10028,10 +10280,6 @@ msgctxt "tedtsighting.ckseen.caption"
 msgid "Seen"
 msgstr "Visto"
 
-#: tedtsighting.ebreedingstatus.buttonhint
-msgid "Select breeding/behavior code"
-msgstr "Selecionar código de reprodução/comportamento"
-
 #: tedtsighting.edate.buttonhint
 msgctxt "tedtsighting.edate.buttonhint"
 msgid "Open calendar"
@@ -10042,10 +10290,6 @@ msgctxt "tedtsighting.edate.texthint"
 msgid "DD/MM/YYYY"
 msgstr "DD/MM/YYYY"
 
-#: tedtsighting.edetectiontype.buttonhint
-msgid "Select detection types"
-msgstr "Selecionar tipos de detecção"
-
 #: tedtsighting.eindividual.buttonhint
 msgctxt "tedtsighting.eindividual.buttonhint"
 msgid "Find individual"
@@ -10053,28 +10297,13 @@ msgstr "Procurar indivíduo"
 
 #: tedtsighting.elatitude.buttonhint
 msgctxt "tedtsighting.elatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
-
-#: tedtsighting.elocality.buttonhint
-msgctxt "tedtsighting.elocality.buttonhint"
-msgid "Find locality"
-msgstr "Procurar localidade"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtsighting.elongitude.buttonhint
 msgctxt "tedtsighting.elongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
-
-#: tedtsighting.emethod.buttonhint
-msgctxt "tedtsighting.emethod.buttonhint"
-msgid "Find method"
-msgstr "Procurar método"
-
-#: tedtsighting.eobserver.buttonhint
-msgctxt "tedtsighting.eobserver.buttonhint"
-msgid "Find observer"
-msgstr "Procurar observador"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtsighting.esurvey.buttonhint
 msgctxt "tedtsighting.esurvey.buttonhint"
@@ -10093,8 +10322,8 @@ msgstr "HH:MM"
 
 #: tedtsighting.lbladultstally.caption
 msgctxt "tedtsighting.lbladultstally.caption"
-msgid "Number of adults:"
-msgstr "Número de adultos:"
+msgid "Nr. of adults:"
+msgstr "Nº de adultos:"
 
 #: tedtsighting.lblbreedingstatus.caption
 msgctxt "tedtsighting.lblbreedingstatus.caption"
@@ -10118,8 +10347,8 @@ msgstr "Distância (m):"
 
 #: tedtsighting.lblfemalestally.caption
 msgctxt "tedtsighting.lblfemalestally.caption"
-msgid "Number of females:"
-msgstr "Número de fêmeas:"
+msgid "Nr. of females:"
+msgstr "Nº de fêmeas:"
 
 #: tedtsighting.lblhowwasrecorded.caption
 msgctxt "tedtsighting.lblhowwasrecorded.caption"
@@ -10128,8 +10357,8 @@ msgstr "Como foi registrado:"
 
 #: tedtsighting.lblimmaturestally.caption
 msgctxt "tedtsighting.lblimmaturestally.caption"
-msgid "Number of immatures:"
-msgstr "Número de imaturos:"
+msgid "Nr. of juveniles:"
+msgstr "Nº de jovens:"
 
 #: tedtsighting.lblindividual.caption
 msgctxt "tedtsighting.lblindividual.caption"
@@ -10158,8 +10387,8 @@ msgstr "Nº da lista de Mackinnon:"
 
 #: tedtsighting.lblmalestally.caption
 msgctxt "tedtsighting.lblmalestally.caption"
-msgid "Number of males:"
-msgstr "Número de machos:"
+msgid "Nr. of males:"
+msgstr "Nº de machos:"
 
 #: tedtsighting.lblmethod.caption
 msgctxt "tedtsighting.lblmethod.caption"
@@ -10168,13 +10397,13 @@ msgstr "Método: *"
 
 #: tedtsighting.lblnewcapturestally.caption
 msgctxt "tedtsighting.lblnewcapturestally.caption"
-msgid "Number of new captures:"
-msgstr "Número de novas capturas:"
+msgid "Nr. of new captures:"
+msgstr "Nº de novas capturas:"
 
 #: tedtsighting.lblnotagedtally.caption
 msgctxt "tedtsighting.lblnotagedtally.caption"
-msgid "Number of birds not aged:"
-msgstr "Número de não etariados:"
+msgid "Nr. of birds not aged:"
+msgstr "Nº de não etariados:"
 
 #: tedtsighting.lblnotes.caption
 msgctxt "tedtsighting.lblnotes.caption"
@@ -10183,8 +10412,8 @@ msgstr "Anotações:"
 
 #: tedtsighting.lblnotsexedtally.caption
 msgctxt "tedtsighting.lblnotsexedtally.caption"
-msgid "Number of birds not sexed:"
-msgstr "Número de não sexados:"
+msgid "Nr. of birds not sexed:"
+msgstr "Nº de não sexados:"
 
 #: tedtsighting.lblquantity.caption
 msgctxt "tedtsighting.lblquantity.caption"
@@ -10193,8 +10422,8 @@ msgstr "Quantidade:"
 
 #: tedtsighting.lblrecapturestally.caption
 msgctxt "tedtsighting.lblrecapturestally.caption"
-msgid "Number of recaptures:"
-msgstr "Número de recapturas:"
+msgid "Nr. of recaptures:"
+msgstr "Nº de recapturas:"
 
 #: tedtsighting.lblrequester.caption
 msgctxt "tedtsighting.lblrequester.caption"
@@ -10218,8 +10447,8 @@ msgstr "Hora:"
 
 #: tedtsighting.lblunbandedtally.caption
 msgctxt "tedtsighting.lblunbandedtally.caption"
-msgid "Number of unbanded:"
-msgstr "Número de não marcados:"
+msgid "Nr. of unbanded:"
+msgstr "Nº de não marcados:"
 
 #: tedtsighting.sbcancel.caption
 msgctxt "tedtsighting.sbcancel.caption"
@@ -10233,17 +10462,17 @@ msgstr "Salvar"
 
 #: tedtsite.elatitude.buttonhint
 msgctxt "tedtsite.elatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtsite.elongitude.buttonhint
 msgctxt "tedtsite.elongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Edit/import coordinate"
+msgstr "Editar/importar coordenada"
 
 #: tedtsite.eparentsite.buttonhint
 msgid "Find parent toponym"
-msgstr "Procurar topônimo superior"
+msgstr "Buscar topônimo-pai"
 
 #: tedtsite.lblacronym.caption
 msgctxt "tedtsite.lblacronym.caption"
@@ -10315,8 +10544,9 @@ msgid "YYYY"
 msgstr "YYYY"
 
 #: tedtspecimen.eegg.buttonhint
+msgctxt "tedtspecimen.eegg.buttonhint"
 msgid "Find egg"
-msgstr "Procurar ovo"
+msgstr "Buscar ovo"
 
 #: tedtspecimen.eindividual.buttonhint
 msgctxt "tedtspecimen.eindividual.buttonhint"
@@ -10325,8 +10555,8 @@ msgstr "Procurar indivíduo"
 
 #: tedtspecimen.elatitude.buttonhint
 msgctxt "tedtspecimen.elatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
 
 #: tedtspecimen.elocality.buttonhint
 msgctxt "tedtspecimen.elocality.buttonhint"
@@ -10335,8 +10565,8 @@ msgstr "Procurar localidade"
 
 #: tedtspecimen.elongitude.buttonhint
 msgctxt "tedtspecimen.elongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
 
 #: tedtspecimen.enest.buttonhint
 msgctxt "tedtspecimen.enest.buttonhint"
@@ -10369,6 +10599,7 @@ msgid "Egg:"
 msgstr "Ovo:"
 
 #: tedtspecimen.lblfieldnumber.caption
+msgctxt "tedtspecimen.lblfieldnumber.caption"
 msgid "Field number: *"
 msgstr "Número de campo: *"
 
@@ -10424,13 +10655,13 @@ msgstr "DD/MM/YYYY"
 
 #: tedtsurvey.eendlatitude.buttonhint
 msgctxt "tedtsurvey.eendlatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
 
 #: tedtsurvey.eendlongitude.buttonhint
 msgctxt "tedtsurvey.eendlongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
 
 #: tedtsurvey.eendtime.texthint
 msgctxt "tedtsurvey.eendtime.texthint"
@@ -10438,14 +10669,13 @@ msgid "HH:MM"
 msgstr "HH:MM"
 
 #: tedtsurvey.eexpedition.buttonhint
-msgctxt "tedtsurvey.eexpedition.buttonhint"
 msgid "Find expedition"
-msgstr "Procurar expedição"
+msgstr "Buscar expedição"
 
 #: tedtsurvey.elatitude.buttonhint
 msgctxt "tedtsurvey.elatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
 
 #: tedtsurvey.elocality.buttonhint
 msgctxt "tedtsurvey.elocality.buttonhint"
@@ -10454,8 +10684,8 @@ msgstr "Procurar localidade"
 
 #: tedtsurvey.elongitude.buttonhint
 msgctxt "tedtsurvey.elongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
 
 #: tedtsurvey.emethod.buttonhint
 msgctxt "tedtsurvey.emethod.buttonhint"
@@ -10464,7 +10694,7 @@ msgstr "Procurar método"
 
 #: tedtsurvey.enetstation.buttonhint
 msgid "Find mistnet station"
-msgstr "Procurar estação de redes"
+msgstr "Buscar estação de redes"
 
 #: tedtsurvey.eproject.buttonhint
 msgctxt "tedtsurvey.eproject.buttonhint"
@@ -10645,13 +10875,28 @@ msgstr "Nova amostra de vegetação"
 
 #: tedtvegetation.elatitude.buttonhint
 msgctxt "tedtvegetation.elatitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
 
 #: tedtvegetation.elongitude.buttonhint
 msgctxt "tedtvegetation.elongitude.buttonhint"
-msgid "Edit coordinates in DMS format"
-msgstr "Editar coordenadas em formato GMS"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
+
+#: tedtvegetation.esampledate.buttonhint
+msgctxt "tedtvegetation.esampledate.buttonhint"
+msgid "Open calendar"
+msgstr "Abrir calendário"
+
+#: tedtvegetation.esampledate.texthint
+msgctxt "tedtvegetation.esampledate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
+#: tedtvegetation.esampletime.texthint
+msgctxt "tedtvegetation.esampletime.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
 
 #: tedtvegetation.lblcloudcover.caption
 msgctxt "tedtvegetation.lblcloudcover.caption"
@@ -10744,6 +10989,11 @@ msgstr "Cancelar"
 msgctxt "tedtvegetation.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtweatherlog.esampledate.buttonhint
+msgctxt "tedtweatherlog.esampledate.buttonhint"
+msgid "Open calendar"
+msgstr "Abrir calendário"
 
 #: tedtweatherlog.esampledate.texthint
 msgctxt "tedtweatherlog.esampledate.texthint"
@@ -11071,9 +11321,8 @@ msgid "None"
 msgstr "Nenhum"
 
 #: tfrmcustomgrid.eaddchild.texthint
-msgctxt "tfrmcustomgrid.eaddchild.texthint"
 msgid "Quick add"
-msgstr "Inclusão rápida"
+msgstr "Adição rápida"
 
 #: tfrmcustomgrid.gridaudios.columns[0].title.caption
 msgctxt "tfrmcustomgrid.gridaudios.columns[0].title.caption"
@@ -11086,7 +11335,6 @@ msgid "Time"
 msgstr "Hora"
 
 #: tfrmcustomgrid.gridaudios.columns[2].title.caption
-msgctxt "tfrmcustomgrid.gridaudios.columns[2].title.caption"
 msgid "Fullname"
 msgstr "Nome completo"
 
@@ -11109,7 +11357,6 @@ msgid "Type"
 msgstr "Tipo"
 
 #: tfrmcustomgrid.griddocs.columns[1].title.caption
-msgctxt "tfrmcustomgrid.griddocs.columns[1].title.caption"
 msgid "File path"
 msgstr "Caminho do arquivo"
 
@@ -11160,7 +11407,6 @@ msgid "Loading records..."
 msgstr "Carregando registros..."
 
 #: tfrmcustomgrid.lblclementsfilter.caption
-msgctxt "tfrmcustomgrid.lblclementsfilter.caption"
 msgid "Clements/eBird"
 msgstr "Clements/eBird"
 
@@ -11195,7 +11441,6 @@ msgid "Molt cycle"
 msgstr "Ciclo de muda"
 
 #: tfrmcustomgrid.lbldatefilter.caption
-msgctxt "tfrmcustomgrid.lbldatefilter.caption"
 msgid "Dates"
 msgstr "Datas"
 
@@ -11257,7 +11502,7 @@ msgstr "Desgaste das penas de voo"
 
 #: tfrmcustomgrid.lblhassynonymsfilter.caption
 msgid "Have synonyms"
-msgstr "Possui sinônimos"
+msgstr "Tem sinônimos"
 
 #: tfrmcustomgrid.lblhatchedfilter.caption
 msgctxt "tfrmcustomgrid.lblhatchedfilter.caption"
@@ -11285,7 +11530,6 @@ msgid "Institution"
 msgstr "Instituição"
 
 #: tfrmcustomgrid.lblmarkedfilter.caption
-msgctxt "tfrmcustomgrid.lblmarkedfilter.caption"
 msgid "Marked records"
 msgstr "Registros marcados"
 
@@ -11337,7 +11581,7 @@ msgstr "Presença de nidoparasita"
 
 #: tfrmcustomgrid.lbloutofsamplefilter.caption
 msgid "Out of sampling"
-msgstr "Fora da amostragem"
+msgstr "Fora da amostra"
 
 #: tfrmcustomgrid.lblpermittypefilter.caption
 msgid "Permit type"
@@ -11354,7 +11598,7 @@ msgstr "Presença de larvas de Philornis"
 
 #: tfrmcustomgrid.lblplantfilter.caption
 msgid "Support plant"
-msgstr "Planta suporte"
+msgstr "Planta-suporte"
 
 #: tfrmcustomgrid.lblprojectfilter.caption
 msgctxt "tfrmcustomgrid.lblprojectfilter.caption"
@@ -11378,7 +11622,7 @@ msgstr "Anilha substituída"
 #: tfrmcustomgrid.lblreportedfilter.caption
 msgctxt "tfrmcustomgrid.lblreportedfilter.caption"
 msgid "Reported"
-msgstr "Reportada"
+msgstr "Relatada"
 
 #: tfrmcustomgrid.lblsamplingplotfilter.caption
 msgctxt "tfrmcustomgrid.lblsamplingplotfilter.caption"
@@ -11395,7 +11639,6 @@ msgid "Locations"
 msgstr "Locais"
 
 #: tfrmcustomgrid.lblsiterankfilter.caption
-msgctxt "tfrmcustomgrid.lblsiterankfilter.caption"
 msgid "Site rank"
 msgstr "Nível do local"
 
@@ -11437,14 +11680,12 @@ msgid "Ranks"
 msgstr "Níveis"
 
 #: tfrmcustomgrid.lblwithcolorbandsfilter.caption
-msgctxt "tfrmcustomgrid.lblwithcolorbandsfilter.caption"
 msgid "Have colored rings"
-msgstr "Possui anilhas coloridas"
+msgstr "Tem anilhas coloridas"
 
 #: tfrmcustomgrid.lblwithrecapturesfilter.caption
-msgctxt "tfrmcustomgrid.lblwithrecapturesfilter.caption"
 msgid "Have recaptures"
-msgstr "Possui recapturas"
+msgstr "Tem recapturas"
 
 #: tfrmcustomgrid.menuitem1.caption
 msgctxt "tfrmcustomgrid.menuitem1.caption"
@@ -11462,10 +11703,9 @@ msgstr "Adicionar &nova(s) gravação(ões) de áudio"
 #: tfrmcustomgrid.pmaaudioinfo.caption
 msgctxt "tfrmcustomgrid.pmaaudioinfo.caption"
 msgid "View/&edit info"
-msgstr "Visualizar/&editar info"
+msgstr "Ver/&editar info"
 
 #: tfrmcustomgrid.pmadddocument.caption
-msgctxt "tfrmcustomgrid.pmadddocument.caption"
 msgid "Add &documents"
 msgstr "Adicionar &documentos"
 
@@ -11480,7 +11720,7 @@ msgstr "&Apagar"
 
 #: tfrmcustomgrid.pmaplayaudio.caption
 msgid "&Play selected audio"
-msgstr "&Tocar o áudio selecionado"
+msgstr "&Tocar áudio selecionado"
 
 #: tfrmcustomgrid.pmarefreshaudios.caption
 msgctxt "tfrmcustomgrid.pmarefreshaudios.caption"
@@ -11489,16 +11729,16 @@ msgstr "Atuali&zar"
 
 #: tfrmcustomgrid.pmccolumnsautoadjustwidth.caption
 msgctxt "tfrmcustomgrid.pmccolumnsautoadjustwidth.caption"
-msgid "Auto adjust columns' &width"
-msgstr "A&justar automaticamente a largura das colunas"
+msgid "Adjust columns' &width to content"
+msgstr "Ajustar co&lunas ao conteúdo"
 
 #: tfrmcustomgrid.pmccolumnsortasc.caption
 msgid "Sort column &ascending"
-msgstr "Ordenar coluna &crescente"
+msgstr "Ordenar coluna crescente"
 
 #: tfrmcustomgrid.pmccolumnsortdesc.caption
 msgid "Sort column &descending"
-msgstr "Ordenar coluna &decrescente"
+msgstr "Ordenar coluna decrescente"
 
 #: tfrmcustomgrid.pmcdel.caption
 msgctxt "tfrmcustomgrid.pmcdel.caption"
@@ -11512,10 +11752,9 @@ msgstr "&Editar"
 
 #: tfrmcustomgrid.pmchidecolumn.caption
 msgid "&Hide column"
-msgstr "E&sconder a coluna"
+msgstr "&Ocultar coluna"
 
 #: tfrmcustomgrid.pmcnewcapture.caption
-msgctxt "tfrmcustomgrid.pmcnewcapture.caption"
 msgid "New &capture"
 msgstr "Nova &captura"
 
@@ -11524,9 +11763,8 @@ msgid "New co&llector"
 msgstr "Novo co&letor"
 
 #: tfrmcustomgrid.pmcnewegg.caption
-msgctxt "tfrmcustomgrid.pmcnewegg.caption"
 msgid "New &egg"
-msgstr "Novo o&vo"
+msgstr "Novo &ovo"
 
 #: tfrmcustomgrid.pmcnewmistnet.caption
 msgid "New &mistnet"
@@ -11538,22 +11776,18 @@ msgid "New molt"
 msgstr "Nova muda"
 
 #: tfrmcustomgrid.pmcnewnest.caption
-msgctxt "tfrmcustomgrid.pmcnewnest.caption"
 msgid "New &nest"
 msgstr "Novo &ninho"
 
 #: tfrmcustomgrid.pmcnewnestowner.caption
-msgctxt "tfrmcustomgrid.pmcnewnestowner.caption"
 msgid "New nest &owner"
-msgstr "Novo d&ono do ninho"
+msgstr "Novo &dono do ninho"
 
 #: tfrmcustomgrid.pmcnewnestrevision.caption
-msgctxt "tfrmcustomgrid.pmcnewnestrevision.caption"
 msgid "New nest re&vision"
 msgstr "Nova re&visão de ninho"
 
 #: tfrmcustomgrid.pmcnewpermanentnet.caption
-msgctxt "tfrmcustomgrid.pmcnewpermanentnet.caption"
 msgid "New permanent mistnet"
 msgstr "Nova rede permanente"
 
@@ -11562,28 +11796,24 @@ msgid "New project member"
 msgstr "Novo membro do projeto"
 
 #: tfrmcustomgrid.pmcnewsampleprep.caption
-msgctxt "tfrmcustomgrid.pmcnewsampleprep.caption"
 msgid "New sample preparation"
 msgstr "Nova preparação de amostra"
 
 #: tfrmcustomgrid.pmcnewsighting.caption
-msgctxt "tfrmcustomgrid.pmcnewsighting.caption"
 msgid "New &sighting"
-msgstr "Nova &observação"
+msgstr "Nova o&bservação"
 
 #: tfrmcustomgrid.pmcnewspecimen.caption
-msgctxt "tfrmcustomgrid.pmcnewspecimen.caption"
 msgid "New spec&imen"
 msgstr "Novo espéc&ime"
 
 #: tfrmcustomgrid.pmcnewsurvey.caption
-msgctxt "tfrmcustomgrid.pmcnewsurvey.caption"
 msgid "New s&urvey"
-msgstr "Nova &amostragem"
+msgstr "Nova a&mostragem"
 
 #: tfrmcustomgrid.pmcnewsurveymember.caption
 msgid "New survey member"
-msgstr "Novo participante da amostragem"
+msgstr "Novo membro da amostragem"
 
 #: tfrmcustomgrid.pmcnewvegetation.caption
 msgctxt "tfrmcustomgrid.pmcnewvegetation.caption"
@@ -11592,7 +11822,7 @@ msgstr "Nova amostra de vegetação"
 
 #: tfrmcustomgrid.pmcnewweatherlog.caption
 msgid "New &weather log"
-msgstr "Novo log do &tempo"
+msgstr "Novo log do tempo"
 
 #: tfrmcustomgrid.pmcrecordhistory.caption
 msgctxt "tfrmcustomgrid.pmcrecordhistory.caption"
@@ -11610,7 +11840,6 @@ msgid "&Refresh"
 msgstr "Atuali&zar"
 
 #: tfrmcustomgrid.pmdadddoc.caption
-msgctxt "tfrmcustomgrid.pmdadddoc.caption"
 msgid "Add &new"
 msgstr "Adicionar &novo"
 
@@ -11626,7 +11855,7 @@ msgstr "Ver/&editar info"
 
 #: tfrmcustomgrid.pmdopendoc.caption
 msgid "&Open document/link"
-msgstr "Abrir d&ocumento/link"
+msgstr "A&brir documento/link"
 
 #: tfrmcustomgrid.pmdrefreshdocs.caption
 msgctxt "tfrmcustomgrid.pmdrefreshdocs.caption"
@@ -11635,16 +11864,16 @@ msgstr "Atuali&zar"
 
 #: tfrmcustomgrid.pmgautosizecolumns.caption
 msgctxt "tfrmcustomgrid.pmgautosizecolumns.caption"
-msgid "Auto adjust columns' &width"
-msgstr "A&justar automaticamente a largura das colunas"
+msgid "Adjust columns' &width to content"
+msgstr "Ajustar co&lunas ao conteúdo"
 
 #: tfrmcustomgrid.pmgdecreaserowheight.caption
 msgid "De&crease"
-msgstr "&Diminuir"
+msgstr "Di&minuir"
 
 #: tfrmcustomgrid.pmgdefaultrowheight.caption
 msgid "De&fault"
-msgstr "&Padrão"
+msgstr "Pa&drão"
 
 #: tfrmcustomgrid.pmgdel.caption
 msgctxt "tfrmcustomgrid.pmgdel.caption"
@@ -11658,10 +11887,9 @@ msgstr "&Editar"
 
 #: tfrmcustomgrid.pmgincreaserowheight.caption
 msgid "&Increase"
-msgstr "&Aumentar"
+msgstr "A&umentar"
 
 #: tfrmcustomgrid.pmginsert.caption
-msgctxt "tfrmcustomgrid.pmginsert.caption"
 msgid "&New record"
 msgstr "&Novo registro"
 
@@ -11682,7 +11910,7 @@ msgstr "Atuali&zar"
 
 #: tfrmcustomgrid.pmgrowheight.caption
 msgid "R&ow height"
-msgstr "A&ltura da linha"
+msgstr "Alt&ura da linha"
 
 #: tfrmcustomgrid.pmiaddimage.caption
 msgid "Add &new image(s)"
@@ -11704,7 +11932,6 @@ msgid "&Refresh"
 msgstr "Atuali&zar"
 
 #: tfrmcustomgrid.pmiviewimage.caption
-msgctxt "tfrmcustomgrid.pmiviewimage.caption"
 msgid "&View image"
 msgstr "&Visualizar imagem"
 
@@ -11837,7 +12064,7 @@ msgstr "Indivíduos"
 
 #: tfrmcustomgrid.pmprintindividualsbyparents.caption
 msgid "Individuals per parents"
-msgstr "Indivíduos pelos pais"
+msgstr "Indivíduos por pais"
 
 #: tfrmcustomgrid.pmprintindividualsbytaxon.caption
 msgid "Individuals per taxon"
@@ -11990,14 +12217,12 @@ msgid "Taxa recorded"
 msgstr "Táxons registrados"
 
 #: tfrmcustomgrid.pmprinttaxarecordedbylocality.caption
-msgctxt "tfrmcustomgrid.pmprinttaxarecordedbylocality.caption"
 msgid "Taxa recorded per locality"
-msgstr "Táxons registrados por localidade"
+msgstr "Táxon registrados por localidade"
 
 #: tfrmcustomgrid.pmrdelpermanently.caption
-msgctxt "tfrmcustomgrid.pmrdelpermanently.caption"
 msgid "&Delete permanently"
-msgstr "&Apagar permanentemente"
+msgstr "Apagar &permanentemente"
 
 #: tfrmcustomgrid.pmrrestorerecord.caption
 msgid "&Restore selected record"
@@ -12005,20 +12230,17 @@ msgstr "&Restaurar registro selecionado"
 
 #: tfrmcustomgrid.pmsgsummary.caption
 msgid "Calculating summary..."
-msgstr "Calculando sumário..."
+msgstr "Calculando resumo..."
 
 #: tfrmcustomgrid.pmtclearselection.caption
-msgctxt "tfrmcustomgrid.pmtclearselection.caption"
 msgid "&Clear selection"
-msgstr "&Limpar seleção"
+msgstr "Limpar &seleção"
 
 #: tfrmcustomgrid.pmtcolapseall.caption
-msgctxt "tfrmcustomgrid.pmtcolapseall.caption"
 msgid "Co&lapse all"
-msgstr "&Colapsar todos"
+msgstr "Co&lapsar todos"
 
 #: tfrmcustomgrid.pmtexpandall.caption
-msgctxt "tfrmcustomgrid.pmtexpandall.caption"
 msgid "E&xpand all"
 msgstr "E&xpandir todos"
 
@@ -12265,17 +12487,14 @@ msgid "Add audio recording"
 msgstr "Adicionar gravação de áudio"
 
 #: tfrmcustomgrid.sbaddchild.hint
-msgctxt "tfrmcustomgrid.sbaddchild.hint"
 msgid "New related record"
 msgstr "Novo registro relacionado"
 
 #: tfrmcustomgrid.sbadddoc.hint
-msgctxt "tfrmcustomgrid.sbadddoc.hint"
 msgid "Add document/link"
 msgstr "Adicionar documento/link"
 
 #: tfrmcustomgrid.sbaddimage.hint
-msgctxt "tfrmcustomgrid.sbaddimage.hint"
 msgid "Add image"
 msgstr "Adicionar imagem"
 
@@ -12306,17 +12525,22 @@ msgctxt "tfrmcustomgrid.sbchildverifications.hint"
 msgid "Record verifications"
 msgstr "Verificações do registro"
 
+#: tfrmcustomgrid.sbclearallfilters.hint
+msgctxt "tfrmcustomgrid.sbclearallfilters.hint"
+msgid "Clear all filters"
+msgstr "Limpar todos os filtros"
+
 #: tfrmcustomgrid.sbclearfilters.hint
 msgid "Clear all quick filters"
 msgstr "Limpar todos filtros rápidos"
 
 #: tfrmcustomgrid.sbcolumnhide.hint
 msgid "Hide the selected column"
-msgstr "Ocultar coluna selecionada"
+msgstr "Ocultar a coluna selecionada"
 
 #: tfrmcustomgrid.sbcolumnwidthautoadjust.hint
 msgid "Autoadjust the columns width"
-msgstr "Autoajustar a largura das colunas"
+msgstr "Ajustar automaticamente a largura das colunas"
 
 #: tfrmcustomgrid.sbdelaudio.hint
 msgid "Delete audio"
@@ -12328,12 +12552,10 @@ msgid "Delete selected record"
 msgstr "Apagar o registro selecionado"
 
 #: tfrmcustomgrid.sbdeldoc.hint
-msgctxt "tfrmcustomgrid.sbdeldoc.hint"
 msgid "Delete document/link"
 msgstr "Apagar documento/link"
 
 #: tfrmcustomgrid.sbdelimage.hint
-msgctxt "tfrmcustomgrid.sbdelimage.hint"
 msgid "Delete image"
 msgstr "Apagar imagem"
 
@@ -12349,17 +12571,17 @@ msgstr "Apagar o registro selecionado"
 
 #: tfrmcustomgrid.sbdocinfo.hint
 msgid "View and edit document/link info"
-msgstr "Ver e editar info do documento/link"
+msgstr "Visualizar e editar info do documento/link"
 
 #: tfrmcustomgrid.sbeditchild.hint
 msgctxt "tfrmcustomgrid.sbeditchild.hint"
 msgid "Edit selected record"
-msgstr "Editar o registro selecionado"
+msgstr "Editar registro selecionado"
 
 #: tfrmcustomgrid.sbeditrecord.hint
 msgctxt "tfrmcustomgrid.sbeditrecord.hint"
 msgid "Edit selected record"
-msgstr "Editar o registro selecionado"
+msgstr "Editar registro selecionado"
 
 #: tfrmcustomgrid.sbfirstchild.hint
 msgctxt "tfrmcustomgrid.sbfirstchild.hint"
@@ -12372,9 +12594,8 @@ msgid "First record"
 msgstr "Primeiro registro"
 
 #: tfrmcustomgrid.sbimageinfo.hint
-msgctxt "tfrmcustomgrid.sbimageinfo.hint"
 msgid "View and edit image info"
-msgstr "Visualizar e editar informações da imagem"
+msgstr "Visualizar e editar info da imagem"
 
 #: tfrmcustomgrid.sbinsertrecord.hint
 msgctxt "tfrmcustomgrid.sbinsertrecord.hint"
@@ -12396,19 +12617,16 @@ msgid "Mark/unmark all columns"
 msgstr "Marcar/desmarcar todas colunas"
 
 #: tfrmcustomgrid.sbmarkrecords.hint
-msgctxt "tfrmcustomgrid.sbmarkrecords.hint"
 msgid "Mark/unmark all records in the query"
-msgstr "Marcar/desmarcar todos registros da consulta"
+msgstr "Marcar/desmarcar todos registro da consulta"
 
 #: tfrmcustomgrid.sbmovecolumndown.hint
-msgctxt "tfrmcustomgrid.sbmovecolumndown.hint"
 msgid "Move the column position down"
-msgstr "Mover coluna para baixo"
+msgstr "Mover a coluna para baixo"
 
 #: tfrmcustomgrid.sbmovecolumnup.hint
-msgctxt "tfrmcustomgrid.sbmovecolumnup.hint"
 msgid "Move the column position up"
-msgstr "Mover coluna para cima"
+msgstr "Mover a coluna para cima"
 
 #: tfrmcustomgrid.sbnextchild.hint
 msgctxt "tfrmcustomgrid.sbnextchild.hint"
@@ -12463,21 +12681,20 @@ msgid "Refresh records"
 msgstr "Atualizar registros"
 
 #: tfrmcustomgrid.sbrestorerecord.caption
-msgctxt "tfrmcustomgrid.sbrestorerecord.caption"
 msgid "Restore selected"
 msgstr "Restaurar selecionado"
 
 #: tfrmcustomgrid.sbrowheightdecrease.hint
 msgid "Decrease the row height"
-msgstr "Diminuir altura da linha"
+msgstr "Diminuir a altura da linha"
 
 #: tfrmcustomgrid.sbrowheightdefault.hint
 msgid "Set the default row height"
-msgstr "Aplicar a altura de linha padrão"
+msgstr "Define a altura da linha padrão"
 
 #: tfrmcustomgrid.sbrowheightincrease.hint
 msgid "Increase the row height"
-msgstr "Aumentar altura da linha"
+msgstr "Aumentar a altura da linha"
 
 #: tfrmcustomgrid.sbsaverecord.caption
 msgctxt "tfrmcustomgrid.sbsaverecord.caption"
@@ -12495,7 +12712,7 @@ msgstr "Exportar registros"
 
 #: tfrmcustomgrid.sbsharemappoints.hint
 msgid "Export map points"
-msgstr "Exportar pontos"
+msgstr "Exportar pontos do mapa"
 
 #: tfrmcustomgrid.sbsharerecords.hint
 msgctxt "tfrmcustomgrid.sbsharerecords.hint"
@@ -12545,10 +12762,9 @@ msgstr "Lixeira"
 #: tfrmcustomgrid.sbshowsummary.hint
 msgctxt "tfrmcustomgrid.sbshowsummary.hint"
 msgid "Summary"
-msgstr "Sumário"
+msgstr "Resumo"
 
 #: tfrmcustomgrid.sbviewimage.hint
-msgctxt "tfrmcustomgrid.sbviewimage.hint"
 msgid "View image"
 msgstr "Visualizar imagem"
 
@@ -12590,7 +12806,7 @@ msgstr "Lixeira"
 #: tfrmcustomgrid.titlesummary.caption
 msgctxt "tfrmcustomgrid.titlesummary.caption"
 msgid "Summary"
-msgstr "Sumário"
+msgstr "Resumo"
 
 #: tfrmcustomgrid.titleviewrecord.caption
 msgctxt "tfrmcustomgrid.titleviewrecord.caption"
@@ -12621,7 +12837,6 @@ msgid "month"
 msgstr "mês"
 
 #: tfrmdashboard.lbltitleappupdate.caption
-msgctxt "tfrmdashboard.lbltitleappupdate.caption"
 msgid "Software update"
 msgstr "Atualização de software"
 
@@ -12637,11 +12852,11 @@ msgstr "Próximos aniversários"
 
 #: tfrmdashboard.lbltitlechartindividuals.caption
 msgid "Individuals recorded in the last 12 months"
-msgstr "Indivíduos registrados nos últimos 12 meses"
+msgstr "Indivíduos registrado nos últimos 12 meses"
 
 #: tfrmdashboard.lbltitlechartspecies.caption
 msgid "Species recorded in the last 12 months"
-msgstr "Espécies registradas nos últimos 12 meses"
+msgstr "Espécies registrados nos últimos 12 meses"
 
 #: tfrmdashboard.lbltitlelifers.caption
 msgctxt "tfrmdashboard.lbltitlelifers.caption"
@@ -12654,22 +12869,18 @@ msgid "Last surveys"
 msgstr "Últimas amostragens"
 
 #: tfrmdashboard.lbltitlepermitsexpiring.caption
-msgctxt "tfrmdashboard.lbltitlepermitsexpiring.caption"
 msgid "Permits expiring"
-msgstr "Licenças expirando"
+msgstr "Licenças vencendo"
 
 #: tfrmdashboard.lbltitlerevisenests.caption
-msgctxt "tfrmdashboard.lbltitlerevisenests.caption"
 msgid "Check nests"
 msgstr "Revisar ninhos"
 
 #: tfrmdashboard.linkshowmorelifers.caption
-msgctxt "tfrmdashboard.linkshowmorelifers.caption"
 msgid "Show more"
 msgstr "Mostrar mais"
 
 #: tfrmdashboard.ploading.caption
-msgctxt "tfrmdashboard.ploading.caption"
 msgid "Loading..."
 msgstr "Carregando..."
 
@@ -12678,7 +12889,6 @@ msgid "No surveys to show"
 msgstr "Nenhuma amostragem para mostrar"
 
 #: tfrmdashboard.pmrefresh.caption
-msgctxt "tfrmdashboard.pmrefresh.caption"
 msgid "Atualizar"
 msgstr "Atualizar"
 
@@ -12735,7 +12945,6 @@ msgstr ""
 "realizadas"
 
 #: tfrmdashboard.txttotalspecies.caption
-msgctxt "tfrmdashboard.txttotalspecies.caption"
 msgid ""
 "species\n"
 "recorded"
@@ -12758,7 +12967,7 @@ msgstr "Formato de destino"
 
 #: tfrmgeoconverter.ckaddunitszone.caption
 msgid "Add units/zone to the result"
-msgstr "Inclui unidades/zona no resultado"
+msgstr "Adicionar unidades/zonas"
 
 #: tfrmgeoconverter.eutmzone.texthint
 msgid "e.g.: 22J"
@@ -12812,7 +13021,7 @@ msgstr "Inverter valores"
 
 #: tfrmgeoconverter.pmtaddtogeobank.caption
 msgid "Add to Coordinates Editor"
-msgstr "Adicionar ao Editor de coordenadas"
+msgstr "Adicionar ao Editor de Coordenadas"
 
 #: tfrmgeoconverter.pmtclear.caption
 msgctxt "tfrmgeoconverter.pmtclear.caption"
@@ -12855,7 +13064,6 @@ msgid "Copy"
 msgstr "Copiar"
 
 #: tfrmgeoconverter.sbopenfile.caption
-msgctxt "tfrmgeoconverter.sbopenfile.caption"
 msgid "Open"
 msgstr "Abrir"
 
@@ -12880,7 +13088,7 @@ msgstr "Inverter valores de longitude e latitude"
 
 #: tfrmimageviewer.caption
 msgid "Image viewer"
-msgstr "Visualizador de imagens"
+msgstr "Visualizador de imagem"
 
 #: tfrmimageviewer.pmcopy.caption
 msgid "Copy image"
@@ -12922,7 +13130,7 @@ msgstr "Copiar"
 
 #: tfrmimageviewer.sbcopyimage.hint
 msgid "Copy image to clipboard"
-msgstr "Copiar imagem para área de transferência"
+msgstr "Copiar imagem para a área de transferência"
 
 #: tfrmimageviewer.sbfliphorizontal.hint
 msgid "Flip horizontally"
@@ -12963,17 +13171,17 @@ msgstr "Zoom para tamanho real"
 
 #: tfrmimageviewer.sbzoomadjust.hint
 msgid "Zoom image to fit"
-msgstr "Zoom para encaixar imagem"
+msgstr "Zoom para ajustar"
 
 #: tfrmimageviewer.sbzoomin.hint
 msgctxt "tfrmimageviewer.sbzoomin.hint"
 msgid "Zoom in"
-msgstr "Ampliar"
+msgstr "Aumentar zoom"
 
 #: tfrmimageviewer.sbzoomout.hint
 msgctxt "tfrmimageviewer.sbzoomout.hint"
 msgid "Zoom out"
-msgstr "Diminuir"
+msgstr "Diminuir zoom"
 
 #: tfrmimageviewer.tbzoom.hint
 msgctxt "tfrmimageviewer.tbzoom.hint"
@@ -13255,8 +13463,8 @@ msgstr "&Reprodução"
 
 #: tfrmmain.mmentities.caption
 msgctxt "tfrmmain.mmentities.caption"
-msgid "&Entities"
-msgstr "&Entidades"
+msgid "&Management"
+msgstr "G&estão"
 
 #: tfrmmain.mmfile.caption
 msgctxt "tfrmmain.mmfile.caption"
@@ -13285,8 +13493,8 @@ msgstr "&Indivíduos"
 
 #: tfrmmain.mmmedia.caption
 msgctxt "tfrmmain.mmmedia.caption"
-msgid "&Media"
-msgstr "&Mídias"
+msgid "M&edia"
+msgstr "Mí&dias"
 
 #: tfrmmain.mmsampling.caption
 msgctxt "tfrmmain.mmsampling.caption"
@@ -13401,31 +13609,30 @@ msgid "Home"
 msgstr "Início"
 
 #: tfrmmaintenance.caption
-msgctxt "tfrmmaintenance.caption"
 msgid "Maintenance"
 msgstr "Manutenção"
 
 #: tfrmmaintenance.cbtaxahierarchy.text
 msgctxt "tfrmmaintenance.cbtaxahierarchy.text"
 msgid "Zoological"
-msgstr "Zoológica"
+msgstr "Zoológicos"
 
 #: tfrmmaintenance.cbtaxasequence.text
 msgctxt "tfrmmaintenance.cbtaxasequence.text"
 msgid "Zoological"
-msgstr "Zoológica"
+msgstr "Zoológicos"
 
 #: tfrmmaintenance.lblrecreateimagethumbnails.caption
 msgid "Recreate image thumbnails in the database"
-msgstr "Recriar miniaturas das imagens no banco de dados"
+msgstr "Recriar miniaturas de imagens no banco de dados"
 
 #: tfrmmaintenance.lblrewritegeohierarchy.caption
 msgid "Check and correct the hierarchy of toponyms"
-msgstr "Verificar e corrigir a hierarquia de topônimos"
+msgstr "Verificar e corrigir a hierarquia dos topônimos"
 
 #: tfrmmaintenance.lblrewritegeohierarchy1.caption
 msgid "Rewrite the individuals' full name"
-msgstr "Rescrever o nome completo dos indivíduos"
+msgstr "Regerar o nome completo dos indivíduos"
 
 #: tfrmmaintenance.lblrewritetaxahierarchy.caption
 msgid "Check and correct hierarchy of taxa"
@@ -13469,7 +13676,7 @@ msgstr "Verificar"
 
 #: tfrmmaintenance.sbrewriteindividualsfullname.caption
 msgid "Rewrite"
-msgstr "Rescrever"
+msgstr "Regerar"
 
 #: tfrmmaintenance.sbrewritetaxahierarchy.caption
 msgctxt "tfrmmaintenance.sbrewritetaxahierarchy.caption"
@@ -13512,7 +13719,7 @@ msgstr "Página anterior"
 
 #: tfrmprintpreview.pmsavepdf.caption
 msgid "Save to PDF"
-msgstr "Salvar PDF"
+msgstr "Salvar para PDF"
 
 #: tfrmprintpreview.pmzoom.caption
 msgctxt "tfrmprintpreview.pmzoom.caption"
@@ -13533,11 +13740,11 @@ msgstr "Diminuir zoom"
 
 #: tfrmprintpreview.pmzoompagefit.caption
 msgid "Fit page"
-msgstr "Ajustar à página"
+msgstr "Ajustar página"
 
 #: tfrmprintpreview.pmzoompagewidth.caption
 msgid "Page width"
-msgstr "Ajustar à largura"
+msgstr "Largura da página"
 
 #: tfrmprintpreview.sbclose.caption
 msgctxt "tfrmprintpreview.sbclose.caption"
@@ -13565,7 +13772,6 @@ msgid "Print"
 msgstr "Imprimir"
 
 #: tfrmprintpreview.sbprintsettings.caption
-msgctxt "tfrmprintpreview.sbprintsettings.caption"
 msgid "Printer settings"
 msgstr "Opções da impressora"
 
@@ -13575,32 +13781,31 @@ msgid "Previous page"
 msgstr "Página anterior"
 
 #: tfrmprintpreview.sbsavepdf.caption
-msgctxt "tfrmprintpreview.sbsavepdf.caption"
 msgid "Save PDF"
 msgstr "Salvar PDF"
 
 #: tfrmprintpreview.sbzoom100.hint
 msgctxt "tfrmprintpreview.sbzoom100.hint"
 msgid "Zoom to actual size"
-msgstr "Zoom para tamanho real"
+msgstr "Zoom para o tamanho real"
 
 #: tfrmprintpreview.sbzoomadjust.hint
 msgid "Zoom page to fit"
-msgstr "Ajustar zoom da página"
+msgstr "Zoom para ajustar a página"
 
 #: tfrmprintpreview.sbzoomadjustwidth.hint
 msgid "Zoom page to fit width"
-msgstr "Ajustar zoom à largura da página"
+msgstr "Zoom para ajustar à largura da página"
 
 #: tfrmprintpreview.sbzoomin.hint
 msgctxt "tfrmprintpreview.sbzoomin.hint"
 msgid "Zoom in"
-msgstr "Ampliar"
+msgstr "Aumentar zoom"
 
 #: tfrmprintpreview.sbzoomout.hint
 msgctxt "tfrmprintpreview.sbzoomout.hint"
 msgid "Zoom out"
-msgstr "Diminuir"
+msgstr "Diminuir zoom"
 
 #: tfrmprintpreview.tbzoom.hint
 msgctxt "tfrmprintpreview.tbzoom.hint"
@@ -13700,7 +13905,6 @@ msgid "Specimens (0)"
 msgstr "Espécimes (0)"
 
 #: tfrmtaxa.lblvalidname.caption
-msgctxt "tfrmtaxa.lblvalidname.caption"
 msgid "Synonym of"
 msgstr "Sinônimo de"
 
@@ -13720,7 +13924,6 @@ msgid "Taxa recorded"
 msgstr "Táxons registrados"
 
 #: tfrmtaxa.pmprinttaxarecordedbylocality.caption
-msgctxt "tfrmtaxa.pmprinttaxarecordedbylocality.caption"
 msgid "Taxa recorded by locality"
 msgstr "Táxons registrados por localidade"
 
@@ -13734,32 +13937,26 @@ msgid "Clear search"
 msgstr "Limpar busca"
 
 #: tfrmtaxa.sbebird.hint
-msgctxt "tfrmtaxa.sbebird.hint"
 msgid "eBird"
 msgstr "eBird"
 
 #: tfrmtaxa.sbgbif.hint
-msgctxt "tfrmtaxa.sbgbif.hint"
 msgid "GBIF"
 msgstr "GBIF"
 
 #: tfrmtaxa.sbgoogleimages.hint
-msgctxt "tfrmtaxa.sbgoogleimages.hint"
 msgid "Google Images"
 msgstr "Google Imagens"
 
 #: tfrmtaxa.sbgooglescholar.hint
-msgctxt "tfrmtaxa.sbgooglescholar.hint"
 msgid "Google Scholar"
 msgstr "Google Acadêmico"
 
 #: tfrmtaxa.sbgooglesearch.hint
-msgctxt "tfrmtaxa.sbgooglesearch.hint"
 msgid "Googe Search"
-msgstr "Google Pesquisa"
+msgstr "Pesquisa do Google"
 
 #: tfrmtaxa.sbiucnredlist.hint
-msgctxt "tfrmtaxa.sbiucnredlist.hint"
 msgid "IUCN Red List"
 msgstr "Lista Vermelha da IUCN"
 
@@ -13774,9 +13971,8 @@ msgid "Export records"
 msgstr "Exportar registros"
 
 #: tfrmtaxa.sbwikiaves.hint
-msgctxt "tfrmtaxa.sbwikiaves.hint"
 msgid "WikiAves"
-msgstr "Wikiaves"
+msgstr "WikiAves"
 
 #: tlstbreedingstatus.caption
 msgid "Breeding and behavior code"

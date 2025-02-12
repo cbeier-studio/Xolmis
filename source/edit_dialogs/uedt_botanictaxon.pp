@@ -21,20 +21,20 @@ unit uedt_botanictaxon;
 interface
 
 uses
-  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls,
-  DBEditButton, atshapelinebgra;
+  Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, ExtCtrls, DBCtrls, DBEditButton, atshapelinebgra, cbs_botany;
 
 type
 
   { TedtBotanicTaxon }
 
   TedtBotanicTaxon = class(TForm)
-    eName: TDBEditButton;
-    eParentTaxon: TDBEditButton;
-    eValidName: TDBEditButton;
-    eVernacularName: TDBEdit;
-    eAuthorship: TDBEdit;
-    cbRank: TDBLookupComboBox;
+    cbRank: TComboBox;
+    eAuthorship: TEdit;
+    eVernacularName: TEdit;
+    eName: TEditButton;
+    eParentTaxon: TEditButton;
+    eValidName: TEditButton;
     dsLink: TDataSource;
     lblAuthorship: TLabel;
     lblVernacularName: TLabel;
@@ -57,21 +57,28 @@ type
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAuthorshipKeyPress(Sender: TObject; var Key: char);
     procedure eNameButtonClick(Sender: TObject);
+    procedure eNameEditingDone(Sender: TObject);
     procedure eParentTaxonButtonClick(Sender: TObject);
-    procedure eParentTaxonDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eParentTaxonKeyPress(Sender: TObject; var Key: char);
     procedure eValidNameButtonClick(Sender: TObject);
-    procedure eValidNameDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure eValidNameKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FTaxon: TBotanicTaxon;
+    FParentTaxonId, FValidId: Integer;
+    procedure SetTaxon(Value: TBotanicTaxon);
+    procedure GetRecord;
+    procedure SetRecord;
     procedure ApplyDarkMode;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Taxon: TBotanicTaxon read FTaxon write SetTaxon;
   end;
 
 var
@@ -80,7 +87,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_finddialogs, cbs_dialogs, cbs_taxonomy, cbs_validations, cbs_themes,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_finddialogs, cbs_dialogs, cbs_taxonomy, cbs_validations, cbs_getvalue,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -96,10 +103,10 @@ end;
 
 procedure TedtBotanicTaxon.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtBotanicTaxon.eAuthorshipKeyPress(Sender: TObject; var Key: char);
@@ -109,79 +116,88 @@ begin
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtBotanicTaxon.eNameButtonClick(Sender: TObject);
 begin
-  FindPlantminerDlg(eName.Field.AsString, dsLink.DataSet, 'taxon_name', 'authorship', eName);
+  FindPlantminerDlg(eName.Text, eName, eAuthorship, eName);
+end;
+
+procedure TedtBotanicTaxon.eNameEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtBotanicTaxon.eParentTaxonButtonClick(Sender: TObject);
 begin
-  FindBotanicDlg([tfAll], eParentTaxon, dsLink.DataSet, 'parent_taxon_id', 'parent_taxon_name');
+  FindBotanicDlg([tfAll], eParentTaxon, FParentTaxonId);
 end;
 
-procedure TedtBotanicTaxon.eParentTaxonDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtBotanicTaxon.eParentTaxonKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindBotanicDlg([tfAll], eParentTaxon, dsLink.DataSet, 'parent_taxon_id', 'parent_taxon_name', Key);
+    FindBotanicDlg([tfAll], eParentTaxon, FParentTaxonId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('parent_taxon_id').Clear;
-    dsLink.DataSet.FieldByName('parent_taxon_name').Clear;
+    FParentTaxonId := 0;
+    eParentTaxon.Text := EmptyStr;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtBotanicTaxon.eValidNameButtonClick(Sender: TObject);
 begin
-  FindBotanicDlg([tfAll], eValidName, dsLink.DataSet, 'valid_id', 'valid_name');
+  FindBotanicDlg([tfAll], eValidName, FValidId);
 end;
 
-procedure TedtBotanicTaxon.eValidNameDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtBotanicTaxon.eValidNameKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindBotanicDlg([tfAll], eValidName, dsLink.DataSet, 'valid_id', 'valid_name', Key);
+    FindBotanicDlg([tfAll], eValidName, FValidId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('valid_id').Clear;
-    dsLink.DataSet.FieldByName('valid_name').Clear;
+    FValidId := 0;
+    eValidName.Text := EmptyStr;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtBotanicTaxon.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtBotanicTaxon.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -190,7 +206,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not (sbSave.Enabled) then
       Exit;
 
     sbSaveClick(nil);
@@ -213,18 +230,44 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  FillComboBox(cbRank, 'taxon_ranks', 'rank_name', 'rank_seq', 'icbn');
+
   if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionTaxon)])
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionTaxon)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionTaxon)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtBotanicTaxon.GetRecord;
+var
+  aRankId: Integer;
+  FRankName: String;
+begin
+  eName.Text := FTaxon.FullName;
+  eAuthorship.Text := FTaxon.Authorship;
+  eVernacularName.Text := FTaxon.VernacularName;
+  aRankId := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', BotanicRanks[FTaxon.RankId]);
+  FRankName := GetName('taxon_ranks', 'rank_name', 'rank_id', aRankId);
+  cbRank.ItemIndex := cbRank.Items.IndexOf(FRankName);
+  FParentTaxonId := FTaxon.ParentTaxonId;
+  eParentTaxon.Text := GetName('botanic_taxa', 'taxon_name', 'taxon_id', FParentTaxonId);
+  FValidId := FTaxon.ValidId;
+  eValidName.Text := GetName('botanic_taxa', 'taxon_name', 'taxon_id', FValidId);
 end;
 
 function TedtBotanicTaxon.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('taxon_name').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('rank_id').AsInteger <> 0) then
+  //if (dsLink.DataSet.FieldByName('taxon_name').AsString <> EmptyStr) and
+  //  (dsLink.DataSet.FieldByName('rank_id').AsInteger <> 0) then
+  if (eName.Text <> EmptyStr) and
+    (cbRank.ItemIndex >= 0) then
     Result := True;
 end;
 
@@ -234,7 +277,30 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtBotanicTaxon.SetRecord;
+var
+  aRankId: Integer;
+  aRankAbbrev: String;
+begin
+  FTaxon.FullName := eName.Text;
+  FTaxon.Authorship := eAuthorship.Text;
+  FTaxon.VernacularName := eVernacularName.Text;
+  aRankId := GetKey('taxon_ranks', 'rank_id', 'rank_name', cbRank.Text);
+  aRankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', aRankId);
+  FTaxon.RankId := StringToBotanicRank(aRankAbbrev);
+  FTaxon.ParentTaxonId := FParentTaxonId;
+  FTaxon.ValidId := FValidId;
+end;
+
+procedure TedtBotanicTaxon.SetTaxon(Value: TBotanicTaxon);
+begin
+  if Assigned(Value) then
+    FTaxon := Value;
 end;
 
 function TedtBotanicTaxon.ValidateFields: Boolean;
@@ -247,12 +313,11 @@ begin
   D := dsLink.DataSet;
 
   // Campos obrigatórios
-  RequiredIsEmpty(D, tbBotanicTaxa, 'taxon_name', Msgs);
-  RequiredIsEmpty(D, tbBotanicTaxa, 'rank_id', Msgs);
+  //RequiredIsEmpty(D, tbBotanicTaxa, 'taxon_name', Msgs);
+  //RequiredIsEmpty(D, tbBotanicTaxa, 'rank_id', Msgs);
 
   // Registro duplicado
-  RecordDuplicated(tbBotanicTaxa, 'taxon_id', 'taxon_name',
-    D.FieldByName('taxon_name').AsString, D.FieldByName('taxon_id').AsInteger);
+  RecordDuplicated(tbBotanicTaxa, 'taxon_id', 'taxon_name', eName.Text, FTaxon.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

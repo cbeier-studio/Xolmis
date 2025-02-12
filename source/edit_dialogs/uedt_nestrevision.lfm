@@ -1,17 +1,16 @@
 object edtNestRevision: TedtNestRevision
   Left = 352
-  Height = 556
+  Height = 547
   Top = 33
   Width = 413
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New nest revision'
-  ClientHeight = 556
+  ClientHeight = 547
   ClientWidth = 413
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -19,7 +18,7 @@ object edtNestRevision: TedtNestRevision
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 513
+    Top = 504
     Width = 413
     Align = alTop
     LineColor = 9276813
@@ -29,7 +28,7 @@ object edtNestRevision: TedtNestRevision
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 515
+    Top = 506
     Width = 413
     Align = alTop
     AutoSize = True
@@ -54,6 +53,8 @@ object edtNestRevision: TedtNestRevision
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
       Left = 210
@@ -64,24 +65,27 @@ object edtNestRevision: TedtNestRevision
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
   end
   object sBox: TScrollBox
     Left = 0
-    Height = 513
+    Height = 504
     Top = 0
     Width = 413
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 513
+    VertScrollBar.Page = 504
     Align = alTop
+    AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 513
+    ClientHeight = 504
     ClientWidth = 413
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 513
+      Height = 504
       Top = 0
       Width = 413
       Align = alTop
@@ -89,14 +93,14 @@ object edtNestRevision: TedtNestRevision
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 513
+      ClientHeight = 504
       ClientWidth = 413
       Constraints.MinWidth = 365
       TabOrder = 0
       object pNestStage: TPanel
         Left = 0
         Height = 45
-        Top = 112
+        Top = 106
         Width = 413
         Align = alTop
         AutoSize = True
@@ -134,14 +138,11 @@ object edtNestRevision: TedtNestRevision
           ParentColor = False
           ParentFont = False
         end
-        object cbNestStage: TDBComboBox
+        object cbNestStage: TComboBox
           Left = 16
           Height = 23
           Top = 22
           Width = 182
-          Constraints.MinWidth = 120
-          DataField = 'nest_stage'
-          DataSource = dsLink
           ItemHeight = 15
           Items.Strings = (
             'Building'
@@ -152,28 +153,27 @@ object edtNestRevision: TedtNestRevision
             'Inactive'
             'Unknown'
           )
-          MaxLength = 0
+          Style = csDropDownList
           TabOrder = 0
-          OnExit = cbNestStageExit
+          OnEditingDone = eRevisionDateEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eRevisionTimeKeyPress
+          OnSelect = cbNestStageSelect
         end
-        object cbNestStatus: TDBComboBox
+        object cbNestStatus: TComboBox
           Left = 214
           Height = 23
           Top = 22
           Width = 183
-          Constraints.MinWidth = 120
-          DataField = 'nest_status'
-          DataSource = dsLink
           ItemHeight = 15
           Items.Strings = (
             'Active'
             'Inactive'
             'Unknown'
           )
-          MaxLength = 0
+          Style = csDropDownList
           TabOrder = 1
+          OnEditingDone = eRevisionDateEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eRevisionTimeKeyPress
         end
@@ -181,7 +181,7 @@ object edtNestRevision: TedtNestRevision
       object pHostEggsTally: TPanel
         Left = 0
         Height = 45
-        Top = 170
+        Top = 164
         Width = 413
         Align = alTop
         AutoSize = True
@@ -220,28 +220,20 @@ object edtNestRevision: TedtNestRevision
           ParentColor = False
           ParentFont = False
         end
-        object eHostEggsTally: TDBEdit
+        object eHostEggsTally: TSpinEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 182
-          DataField = 'host_eggs_tally'
-          DataSource = dsLink
-          Constraints.MinWidth = 120
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRevisionTimeKeyPress
         end
-        object eHostNestlingsTally: TDBEdit
+        object eHostNestlingsTally: TSpinEdit
           Left = 214
           Height = 23
           Top = 22
           Width = 183
-          DataField = 'host_nestlings_tally'
-          DataSource = dsLink
-          Constraints.MinWidth = 120
-          MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eRevisionTimeKeyPress
@@ -249,7 +241,7 @@ object edtNestRevision: TedtNestRevision
       end
       object pRevisionDate: TPanel
         Left = 0
-        Height = 48
+        Height = 45
         Top = 16
         Width = 413
         Align = alTop
@@ -262,7 +254,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 413
         ParentBackground = False
         TabOrder = 0
@@ -288,37 +280,31 @@ object edtNestRevision: TedtNestRevision
           ParentColor = False
           ParentFont = False
         end
-        object eRevisionDate: TDBEditButton
+        object eRevisionDate: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 182
-          Alignment = taLeftJustify
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 120
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
           ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          ImageIndex = 1
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           TextHint = 'DD/MM/YYYY'
-          DataField = 'revision_date'
-          DataSource = dsLink
-          CharCase = ecNormal
           OnButtonClick = eRevisionDateButtonClick
+          OnEditingDone = eRevisionDateEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRevisionTimeKeyPress
         end
-        object eRevisionTime: TDBEdit
+        object eRevisionTime: TEdit
           Left = 214
-          Height = 26
+          Height = 23
           Top = 22
           Width = 183
-          DataField = 'revision_time'
-          DataSource = dsLink
-          Constraints.MinWidth = 120
-          MaxLength = 0
           TabOrder = 1
           TextHint = 'HH:MM'
           OnKeyDown = FormKeyDown
@@ -327,8 +313,8 @@ object edtNestRevision: TedtNestRevision
       end
       object pNidoparasite: TPanel
         Left = 0
-        Height = 48
-        Top = 228
+        Height = 45
+        Top = 222
         Width = 413
         Align = alTop
         AutoSize = True
@@ -340,7 +326,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 413
         ParentBackground = False
         TabOrder = 4
@@ -355,31 +341,29 @@ object edtNestRevision: TedtNestRevision
           ParentColor = False
           ParentFont = False
         end
-        object eNidoparasite: TDBEditButton
+        object eNidoparasite: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 381
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 200
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          ButtonHint = 'Find nidoparasite taxon'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonHint = 'Find taxon'
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'nidoparasite_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eNidoparasiteButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNidoparasiteKeyPress
         end
       end
       object pObserver1: TPanel
         Left = 0
-        Height = 48
-        Top = 64
+        Height = 45
+        Top = 61
         Width = 413
         Align = alTop
         AutoSize = True
@@ -391,7 +375,7 @@ object edtNestRevision: TedtNestRevision
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 413
         ParentBackground = False
         TabOrder = 1
@@ -417,53 +401,48 @@ object edtNestRevision: TedtNestRevision
           ParentColor = False
           ParentFont = False
         end
-        object eObserver1: TDBEditButton
+        object eObserver1: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 182
-          Alignment = taLeftJustify
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 120
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
           ButtonHint = 'Find observer'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'observer_1_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eObserver1ButtonClick
+          OnEditingDone = eRevisionDateEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eObserver1KeyPress
         end
-        object eObserver2: TDBEditButton
+        object eObserver2: TEditButton
           Left = 214
-          Height = 26
+          Height = 23
           Top = 22
           Width = 183
-          Alignment = taLeftJustify
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 120
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
           ButtonHint = 'Find observer'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'observer_2_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 1
           OnButtonClick = eObserver2ButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eObserver2KeyPress
         end
       end
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 369
+        Top = 360
         Width = 413
         Align = alTop
         AutoSize = True
@@ -489,15 +468,13 @@ object edtNestRevision: TedtNestRevision
           ParentColor = False
           ParentFont = False
         end
-        object mNotes: TDBMemo
+        object mNotes: TMemo
           Left = 16
           Height = 90
           Top = 22
           Width = 381
           Align = alTop
           Constraints.MinWidth = 365
-          DataField = 'notes'
-          DataSource = dsLink
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -507,7 +484,7 @@ object edtNestRevision: TedtNestRevision
       object pPhilornis: TPanel
         Left = 0
         Height = 35
-        Top = 321
+        Top = 312
         Width = 413
         Align = alTop
         AutoSize = True
@@ -521,24 +498,21 @@ object edtNestRevision: TedtNestRevision
         ClientWidth = 413
         ParentBackground = False
         TabOrder = 6
-        object ckHasPhilornisLarvae: TDBCheckBox
+        object ckHasPhilornisLarvae: TCheckBox
           Left = 16
           Height = 19
           Top = 8
           Width = 191
-          AutoSize = True
           Caption = 'Parasitized by Philornis sp. larvae'
-          DataField = 'have_philornis_larvae'
-          DataSource = dsLink
           TabOrder = 0
-          ValueChecked = 'True'
-          ValueUnchecked = 'False'
+          OnKeyPress = eRevisionTimeKeyPress
+          OnKeyDown = FormKeyDown
         end
       end
       object pNidoparasiteEggsTally: TPanel
         Left = 0
         Height = 45
-        Top = 276
+        Top = 267
         Width = 413
         Align = alTop
         AutoSize = True
@@ -576,28 +550,20 @@ object edtNestRevision: TedtNestRevision
           ParentColor = False
           ParentFont = False
         end
-        object eNidoparasiteEggsTally: TDBEdit
+        object eNidoparasiteEggsTally: TSpinEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 182
-          DataField = 'nidoparasite_eggs_tally'
-          DataSource = dsLink
-          Constraints.MinWidth = 120
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRevisionTimeKeyPress
         end
-        object eNidoparasiteNestlingsTally: TDBEdit
+        object eNidoparasiteNestlingsTally: TSpinEdit
           Left = 214
           Height = 23
           Top = 22
           Width = 183
-          DataField = 'nidoparasite_nestlings_tally'
-          DataSource = dsLink
-          Constraints.MinWidth = 120
-          MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eRevisionTimeKeyPress

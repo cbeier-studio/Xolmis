@@ -21,36 +21,36 @@ unit uedt_individual;
 interface
 
 uses
-  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  DBCtrls, atshapelinebgra, Buttons, LCLType, DBEditButton;
+  Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, ExtCtrls, DBCtrls, atshapelinebgra, Buttons, LCLType, cbs_birds;
 
 type
 
   { TedtIndividual }
 
   TedtIndividual = class(TForm)
-    cbSex: TDBComboBox;
-    cbAge: TDBComboBox;
-    eBirthDay: TDBEdit;
-    eBirthMonth: TDBEdit;
-    eBirthYear: TDBEdit;
-    eBand: TDBEditButton;
-    eBandingDate: TDBEditButton;
-    eDoubleBand: TDBEditButton;
-    eRemovedBand: TDBEditButton;
-    eBandChangeDate: TDBEditButton;
-    eRightTarsus: TDBEditButton;
-    eLeftTarsus: TDBEditButton;
-    eRightTibia: TDBEditButton;
-    eLeftTibia: TDBEditButton;
-    eDeathDay: TDBEdit;
-    eDeathMonth: TDBEdit;
-    eDeathYear: TDBEdit;
+    cbSex: TComboBox;
+    cbAge: TComboBox;
+    eBand: TEditButton;
+    eBandingDate: TEditButton;
+    eDeathDay: TEdit;
+    eDeathMonth: TEdit;
+    eBirthYear: TEdit;
+    eBirthMonth: TEdit;
+    eBirthDay: TEdit;
+    eDeathYear: TEdit;
+    eRightTarsus: TEditButton;
+    eLeftTarsus: TEditButton;
+    eRightTibia: TEditButton;
+    eLeftTibia: TEditButton;
+    eRemovedBand: TEditButton;
+    eBandChangeDate: TEditButton;
+    eDoubleBand: TEditButton;
+    eTaxon: TEditButton;
+    eMother: TEditButton;
+    eFather: TEditButton;
+    eNest: TEditButton;
     dsLink: TDataSource;
-    eTaxon: TDBEditButton;
-    eNest: TDBEditButton;
-    eFather: TDBEditButton;
-    eMother: TDBEditButton;
     lblDoubleBand1: TLabel;
     lblTaxon: TLabel;
     lblRightTibia: TLabel;
@@ -72,8 +72,8 @@ type
     lblMother: TLabel;
     lblNest: TLabel;
     lineBottom: TShapeLineBGRA;
-    mNotes: TDBMemo;
-    mRecognizableMarks: TDBMemo;
+    mRecognizableMarkings: TMemo;
+    mNotes: TMemo;
     pBirthDate: TPanel;
     pDeathDate: TPanel;
     pBottom: TPanel;
@@ -115,19 +115,27 @@ type
     procedure eRightTarsusButtonClick(Sender: TObject);
     procedure eRightTibiaButtonClick(Sender: TObject);
     procedure eTaxonButtonClick(Sender: TObject);
+    procedure eTaxonEditingDone(Sender: TObject);
     procedure eTaxonKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FIndividual: TIndividual;
+    FTaxonId, FNestId, FFatherId, FMotherId: Integer;
+    FBandId, FDoubleBandId, FRemovedBandId: Integer;
+    procedure SetIndividual(Value: TIndividual);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Individual: TIndividual read FIndividual write SetIndividual;
   end;
 
 var
@@ -136,7 +144,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy,
+  cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_getvalue,
   cbs_validations, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -167,32 +175,39 @@ begin
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtIndividual.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtIndividual.eBandButtonClick(Sender: TObject);
 begin
-  FindDlg(tbBands, eBand, dsLink.DataSet, 'band_id', 'band_name');
+  FindDlg(tbBands, eBand, FBandId);
 end;
 
 procedure TedtIndividual.eBandChangeDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eBandChangeDate, dsLink.DataSet, 'band_change_date');
+  CalendarDlg(eBandChangeDate.Text, eBandChangeDate, Dt);
 end;
 
 procedure TedtIndividual.eBandingDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eBandingDate, dsLink.DataSet, 'banding_date');
+  CalendarDlg(eBandingDate.Text, eBandingDate, Dt);
 end;
 
 procedure TedtIndividual.eBandKeyPress(Sender: TObject; var Key: char);
@@ -202,27 +217,30 @@ begin
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbBands, eBand, dsLink.DataSet, 'band_id', 'band_name', False, Key);
+    FindDlg(tbBands, eBand, FBandId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('band_id').Clear;
-    dsLink.DataSet.FieldByName('band_name').Clear;
+    FBandId := 0;
+    eBand.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtIndividual.eDoubleBandButtonClick(Sender: TObject);
 begin
-  FindDlg(tbBands, eDoubleBand, dsLink.DataSet, 'double_band_id', 'double_band_name');
+  FindDlg(tbBands, eDoubleBand, FDoubleBandId);
 end;
 
 procedure TedtIndividual.eDoubleBandKeyPress(Sender: TObject; var Key: char);
@@ -233,27 +251,30 @@ begin
   if ((IsLetter(Key)) or (IsNumber(Key)) or (IsPunctuation(Key)) or
     (IsSeparator(Key)) or (IsSymbol(Key))) then
   begin
-    FindDlg(tbBands, eDoubleBand, dsLink.DataSet, 'double_band_id', 'double_band_name', False, Key);
+    FindDlg(tbBands, eDoubleBand, FDoubleBandId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('double_band_id').Clear;
-    dsLink.DataSet.FieldByName('double_band_name').Clear;
+    FDoubleBandId := 0;
+    eDoubleBand.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtIndividual.eFatherButtonClick(Sender: TObject);
 begin
-  FindDlg(tbIndividuals, eFather, dsLink.DataSet, 'father_id', 'father_name');
+  FindDlg(tbIndividuals, eFather, FFatherId);
 end;
 
 procedure TedtIndividual.eFatherKeyPress(Sender: TObject; var Key: char);
@@ -264,37 +285,40 @@ begin
   if ((IsLetter(Key)) or (IsNumber(Key)) or (IsPunctuation(Key)) or
     (IsSeparator(Key)) or (IsSymbol(Key))) then
   begin
-    FindDlg(tbIndividuals, eFather, dsLink.DataSet, 'father_id', 'father_name', False, Key);
+    FindDlg(tbIndividuals, eFather, FFatherId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('father_id').Clear;
-    dsLink.DataSet.FieldByName('father_name').Clear;
+    FFatherId := 0;
+    eFather.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtIndividual.eLeftTarsusButtonClick(Sender: TObject);
 begin
-  EditColorBands(dsLink.DataSet, 'left_leg_below', eLeftTarsus);
+  EditColorBands(eLeftTarsus);
 end;
 
 procedure TedtIndividual.eLeftTibiaButtonClick(Sender: TObject);
 begin
-  EditColorBands(dsLink.DataSet, 'left_leg_above', eLeftTibia);
+  EditColorBands(eLeftTibia);
 end;
 
 procedure TedtIndividual.eMotherButtonClick(Sender: TObject);
 begin
-  FindDlg(tbIndividuals, eMother, dsLink.DataSet, 'mother_id', 'mother_name');
+  FindDlg(tbIndividuals, eMother, FMotherId);
 end;
 
 procedure TedtIndividual.eMotherKeyPress(Sender: TObject; var Key: char);
@@ -305,27 +329,30 @@ begin
   if ((IsLetter(Key)) or (IsNumber(Key)) or (IsPunctuation(Key)) or
     (IsSeparator(Key)) or (IsSymbol(Key))) then
   begin
-    FindDlg(tbIndividuals, eMother, dsLink.DataSet, 'mother_id', 'mother_name', False, Key);
+    FindDlg(tbIndividuals, eMother, FMotherId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('mother_id').Clear;
-    dsLink.DataSet.FieldByName('mother_name').Clear;
+    FMotherId := 0;
+    eMother.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtIndividual.eNestButtonClick(Sender: TObject);
 begin
-  FindDlg(tbNests, eNest, dsLink.DataSet, 'nest_id', 'nest_name');
+  FindDlg(tbNests, eNest, FNestId);
 end;
 
 procedure TedtIndividual.eNestKeyPress(Sender: TObject; var Key: char);
@@ -336,27 +363,30 @@ begin
   if ((IsLetter(Key)) or (IsNumber(Key)) or (IsPunctuation(Key)) or
     (IsSeparator(Key)) or (IsSymbol(Key))) then
   begin
-    FindDlg(tbNests, eNest, dsLink.DataSet, 'nest_id', 'nest_name', False, Key);
+    FindDlg(tbNests, eNest, FNestId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('nest_id').Clear;
-    dsLink.DataSet.FieldByName('nest_name').Clear;
+    FNestId := 0;
+    eNest.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtIndividual.eRemovedBandButtonClick(Sender: TObject);
 begin
-  FindDlg(tbBands, eRemovedBand, dsLink.DataSet, 'removed_band_id', 'removed_band_name');
+  FindDlg(tbBands, eRemovedBand, FRemovedBandId);
 end;
 
 procedure TedtIndividual.eRemovedBandKeyPress(Sender: TObject; var Key: char);
@@ -367,38 +397,45 @@ begin
   if ((IsLetter(Key)) or (IsNumber(Key)) or (IsPunctuation(Key)) or
     (IsSeparator(Key)) or (IsSymbol(Key))) then
   begin
-    FindDlg(tbBands, eRemovedBand, dsLink.DataSet, 'removed_band_id', 'removed_band_name', False, Key);
+    FindDlg(tbBands, eRemovedBand, FRemovedBandId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('removed_band_id').Clear;
-    dsLink.DataSet.FieldByName('removed_band_name').Clear;
+    FRemovedBandId := 0;
+    eRemovedBand.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtIndividual.eRightTarsusButtonClick(Sender: TObject);
 begin
-  EditColorBands(dsLink.DataSet, 'right_leg_below', eRightTarsus);
+  EditColorBands(eRightTarsus);
 end;
 
 procedure TedtIndividual.eRightTibiaButtonClick(Sender: TObject);
 begin
-  EditColorBands(dsLink.DataSet, 'right_leg_above', eRightTibia);
+  EditColorBands(eRightTibia);
 end;
 
 procedure TedtIndividual.eTaxonButtonClick(Sender: TObject);
 begin
-  FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], eTaxon, dsLink.DataSet,
-    'taxon_id', 'taxon_name', True);
+  FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], eTaxon, True, FTaxonId);
+end;
+
+procedure TedtIndividual.eTaxonEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtIndividual.eTaxonKeyPress(Sender: TObject; var Key: char);
@@ -408,36 +445,33 @@ begin
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindTaxonDlg([tfSpecies, tfSubspecies, tfSubspeciesGroups], eTaxon, dsLink.DataSet,
-      'taxon_id', 'taxon_name', True, Key);
+    FindTaxonDlg([tfSpecies, tfSubspecies, tfSubspeciesGroups], eTaxon, True, FTaxonId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('taxon_id').Clear;
-    dsLink.DataSet.FieldByName('taxon_name').Clear;
+    FTaxonId := 0;
+    eTaxon.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtIndividual.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtIndividual.FormCreate(Sender: TObject);
 begin
   cbSex.Items.CommaText := rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
-  cbAge.Items.CommaText := rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeImmature + ',' +
-    rsAgeFledgling + ',' + rsAgeNestling + ',' + rsAgeFirstYear + ',' + rsAgeSecondYear + ',' +
-    rsAgeThirdYear + ',' + rsAgeFourthYear + ',' + rsAgeFifthYear;
+  cbAge.Items.CommaText := rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
+    rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
+    rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
 end;
 
 procedure TedtIndividual.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -446,7 +480,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not (sbSave.Enabled) then
       Exit;
 
     sbSaveClick(nil);
@@ -469,17 +504,84 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionIndividual)])
+  if FIsNew then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionIndividual)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionIndividual)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtIndividual.GetRecord;
+begin
+  FTaxonId := FIndividual.TaxonId;
+  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  FBandId := FIndividual.BandId;
+  eBand.Text := GetName('bands', 'full_name', 'band_id', FBandId);
+  if DateIsNull(FIndividual.BandingDate) then
+    eBandingDate.Text := EmptyStr
+  else
+    eBandingDate.Text := DateToStr(FIndividual.BandingDate);
+  FDoubleBandId := FIndividual.DoubleBandId;
+  eDoubleBand.Text := GetName('bands', 'full_name', 'band_id', FDoubleBandId);
+  FRemovedBandId := FIndividual.RemovedBandId;
+  eRemovedBand.Text := GetName('bands', 'full_name', 'band_id', FRemovedBandId);
+  if DateIsNull(FIndividual.BandChangeDate) then
+    eBandChangeDate.Text := EmptyStr
+  else
+    eBandChangeDate.Text := DateToStr(FIndividual.BandChangeDate);
+  eRightTarsus.Text := FIndividual.RightLegBelow;
+  eLeftTarsus.Text := FIndividual.LeftLegBelow;
+  eRightTibia.Text := FIndividual.RightLegAbove;
+  eLeftTibia.Text := FIndividual.LeftLegAbove;
+  if (FIndividual.BirthYear > 0) then
+  begin
+    eBirthYear.Text := IntToStr(FIndividual.BirthYear);
+    eBirthMonth.Text := IntToStr(FIndividual.BirthMonth);
+    eBirthDay.Text := IntToStr(FIndividual.BirthDay);
+  end;
+  if (FIndividual.DeathYear > 0) then
+  begin
+    eDeathYear.Text := IntToStr(FIndividual.DeathYear);
+    eDeathMonth.Text := IntToStr(FIndividual.DeathMonth);
+    eDeathDay.Text := IntToStr(FIndividual.DeathDay);
+  end;
+  case FIndividual.Sex of
+    sexMale: cbSex.ItemIndex := cbSex.Items.IndexOf(rsSexMale);
+    sexFemale: cbSex.ItemIndex := cbSex.Items.IndexOf(rsSexFemale);
+    sexUnknown: cbSex.ItemIndex := cbSex.Items.IndexOf(rsSexUnknown);
+  end;
+  case FIndividual.Age of
+    ageUnknown: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeUnknown);
+    ageAdult: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeAdult);
+    ageJuvenile: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeJuvenile);
+    ageFledgling: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFledgling);
+    ageNestling: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeNestling);
+    ageFirstYear: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFirstYear);
+    ageSecondYear: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeSecondYear);
+    ageThirdYear: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeThirdYear);
+    ageFourthYear: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFourthYear);
+    ageFifthYear: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFifthYear);
+  end;
+  FNestId := FIndividual.NestId;
+  eNest.Text := GetName('nests', 'full_name', 'nest_id', FNestId);
+  FFatherId := FIndividual.FatherId;
+  eFather.Text := GetName('individuals', 'full_name', 'individual_id', FFatherId);
+  FMotherId := FIndividual.MotherId;
+  eMother.Text := GetName('individuals', 'full_name', 'individual_id', FMotherId);
+  mRecognizableMarkings.Text := FIndividual.RecognizableMarkings;
+  mNotes.Text := FIndividual.Notes;
 end;
 
 function TedtIndividual.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('taxon_id').AsInteger <> 0) then
+  //if (dsLink.DataSet.FieldByName('taxon_id').AsInteger <> 0) then
+  if (FTaxonId > 0) then
     Result := True;
 end;
 
@@ -489,65 +591,169 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtIndividual.SetIndividual(Value: TIndividual);
+begin
+  if Assigned(Value) then
+    FIndividual := Value;
+end;
+
+procedure TedtIndividual.SetRecord;
+begin
+  FIndividual.TaxonId        := FTaxonId;
+  FIndividual.BandId         := FBandId;
+  if eBandingDate.Text = EmptyStr then
+    FIndividual.BandingDate  := NullDate
+  else
+    FIndividual.BandingDate  := StrToDate(eBandingDate.Text);
+  FIndividual.DoubleBandId   := FDoubleBandId;
+  FIndividual.RemovedBandId  := FRemovedBandId;
+  if eBandChangeDate.Text = EmptyStr then
+    FIndividual.BandChangeDate    := NullDate
+  else
+    FIndividual.BandChangeDate := StrToDate(eBandChangeDate.Text);
+  FIndividual.RightLegBelow  := eRightTarsus.Text;
+  FIndividual.LeftLegBelow   := eLeftTarsus.Text;
+  FIndividual.RightLegAbove  := eRightTibia.Text;
+  FIndividual.LeftLegAbove   := eLeftTibia.Text;
+  if eBirthYear.Text = EmptyStr then
+    FIndividual.BirthYear := 0
+  else
+    FIndividual.BirthYear      := StrToInt(eBirthYear.Text);
+  if eBirthMonth.Text = EmptyStr then
+    FIndividual.BirthMonth := 0
+  else
+    FIndividual.BirthMonth     := StrToInt(eBirthMonth.Text);
+  if eBirthDay.Text = EmptyStr then
+    FIndividual.BirthDay := 0
+  else
+    FIndividual.BirthDay       := StrToInt(eBirthDay.Text);
+  if eDeathYear.Text = EmptyStr then
+    FIndividual.DeathYear := 0
+  else
+    FIndividual.DeathYear      := StrToInt(eDeathYear.Text);
+  if eDeathMonth.Text = EmptyStr then
+    FIndividual.DeathMonth := 0
+  else
+    FIndividual.DeathMonth     := StrToInt(eDeathMonth.Text);
+  if eDeathDay.Text = EmptyStr then
+    FIndividual.DeathDay := 0
+  else
+    FIndividual.DeathDay       := StrToInt(eDeathDay.Text);
+  case cbSex.ItemIndex of
+    0: FIndividual.Sex := sexMale;
+    1: FIndividual.Sex := sexFemale;
+    2: FIndividual.Sex := sexUnknown;
+  else
+    FIndividual.Sex := sexUnknown;
+  end;
+  case cbAge.ItemIndex of
+    0: FIndividual.Age := ageUnknown;
+    1: FIndividual.Age := ageAdult;
+    2: FIndividual.Age := ageJuvenile;
+    3: FIndividual.Age := ageFledgling;
+    4: FIndividual.Age := ageNestling;
+    5: FIndividual.Age := ageFirstYear;
+    6: FIndividual.Age := ageSecondYear;
+    7: FIndividual.Age := ageThirdYear;
+    8: FIndividual.Age := ageFourthYear;
+    9: FIndividual.Age := ageFifthYear;
+  else
+    FIndividual.Age := ageUnknown;
+  end;
+  FIndividual.NestId               := FNestId;
+  FIndividual.FatherId             := FFatherId;
+  FIndividual.MotherId             := FMotherId;
+  FIndividual.RecognizableMarkings := mRecognizableMarkings.Text;
+  FIndividual.Notes                := mNotes.Text;
 end;
 
 function TedtIndividual.ValidateFields: Boolean;
 var
   Msgs: TStrings;
   DataNasc, DataOb, Hoje: TPartialDate;
-  D: TDataSet;
+  //D: TDataSet;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
+  //D := dsLink.DataSet;
 
   { Required fields }
-  RequiredIsEmpty(D, tbIndividuals, 'taxon_id', Msgs);
+  //RequiredIsEmpty(D, tbIndividuals, 'taxon_id', Msgs);
   // RequiredIsEmpty(D, tbIndividuals, 'band_id', Msgs);
 
   { Duplicated record }
-  if (D.FieldByName('band_id').AsInteger > 0) then
-    RecordDuplicated(tbIndividuals, 'individual_id', 'full_name',
-      D.FieldByName('full_name').AsString,
-      D.FieldByName('individual_id').AsInteger, Msgs);
+  //if (FBandId > 0) then
+  //  RecordDuplicated(tbIndividuals, 'individual_id', 'band_id', FBandId, FIndividual.Id, Msgs);
 
   { Foreign keys }
-  ForeignValueExists(tbZooTaxa, 'taxon_id', D.FieldByName('taxon_id').AsInteger,
-    rsCaptionTaxon, Msgs);
-  ForeignValueExists(tbBands, 'band_id', D.FieldByName('band_id').AsInteger,
-    rsCaptionBand, Msgs);
-  ForeignValueExists(tbBands, 'band_id', D.FieldByName('double_band_id').AsInteger,
-    rsCaptionDoubleBand, Msgs);
-  ForeignValueExists(tbBands, 'band_id', D.FieldByName('removed_band_id').AsInteger,
-    rsCaptionRemovedBand, Msgs);
-  ForeignValueExists(tbNests, 'nest_id', D.FieldByName('nest_id').AsInteger,
-    rsCaptionNest, Msgs);
-  ForeignValueExists(tbIndividuals, 'individual_id', D.FieldByName('father_id').AsInteger,
-    rsCaptionFather, Msgs);
-  ForeignValueExists(tbIndividuals, 'individual_id', D.FieldByName('mother_id').AsInteger,
-    rsCaptionMother, Msgs);
+  //ForeignValueExists(tbZooTaxa, 'taxon_id', D.FieldByName('taxon_id').AsInteger,
+  //  rsCaptionTaxon, Msgs);
+  //ForeignValueExists(tbBands, 'band_id', D.FieldByName('band_id').AsInteger,
+  //  rsCaptionBand, Msgs);
+  //ForeignValueExists(tbBands, 'band_id', D.FieldByName('double_band_id').AsInteger,
+  //  rsCaptionDoubleBand, Msgs);
+  //ForeignValueExists(tbBands, 'band_id', D.FieldByName('removed_band_id').AsInteger,
+  //  rsCaptionRemovedBand, Msgs);
+  //ForeignValueExists(tbNests, 'nest_id', D.FieldByName('nest_id').AsInteger,
+  //  rsCaptionNest, Msgs);
+  //ForeignValueExists(tbIndividuals, 'individual_id', D.FieldByName('father_id').AsInteger,
+  //  rsCaptionFather, Msgs);
+  //ForeignValueExists(tbIndividuals, 'individual_id', D.FieldByName('mother_id').AsInteger,
+  //  rsCaptionMother, Msgs);
 
   { Dates }
   Hoje.Today;
-  if D.FieldByName('birth_year').AsInteger > 0 then
+
+  if eBirthYear.Text <> EmptyStr then
   begin
-    DataNasc.Year := D.FieldByName('birth_year').AsInteger;
-    DataNasc.Month := D.FieldByName('birth_month').AsInteger;
-    DataNasc.Day := D.FieldByName('birth_day').AsInteger;
+    // Assemble partial birth date
+    if eBirthYear.Text = EmptyStr then
+      DataNasc.Year := 0
+    else
+      DataNasc.Year := StrToInt(eBirthYear.Text);
+    if eBirthMonth.Text = EmptyStr then
+      DataNasc.Month := 0
+    else
+      DataNasc.Month := StrToInt(eBirthMonth.Text);
+    if eBirthDay.Text = EmptyStr then
+      DataNasc.Day := 0
+    else
+      DataNasc.Day := StrToInt(eBirthDay.Text);
+    // If valid, check if birth date is a future date
     if ValidPartialDate(DataNasc, rsDateBirth, Msgs) then
       IsFuturePartialDate(DataNasc, Hoje, rsDateBirth, LowerCase(rsDateToday), Msgs);
   end;
-  if D.FieldByName('death_year').AsInteger > 0 then
+
+  if eDeathYear.Text <> EmptyStr then
   begin
-    DataOb.Year := D.FieldByName('death_year').AsInteger;
-    DataOb.Month := D.FieldByName('death_month').AsInteger;
-    DataOb.Day := D.FieldByName('death_day').AsInteger;
+    // Assemble partial death date
+    if eDeathYear.Text = EmptyStr then
+      DataOb.Year := 0
+    else
+      DataOb.Year := StrToInt(eDeathYear.Text);
+    if eDeathMonth.Text = EmptyStr then
+      DataOb.Month := 0
+    else
+      DataOb.Month := StrToInt(eDeathMonth.Text);
+    if eDeathDay.Text = EmptyStr then
+      DataOb.Day := 0
+    else
+      DataOb.Day := StrToInt(eDeathDay.Text);
+    // If valid, check if death date is a future date
     if ValidPartialDate(DataOb, rsDateDeath, Msgs) then
       IsFuturePartialDate(DataOb, Hoje, rsDateDeath, LowerCase(rsDateToday), Msgs);
   end;
-  if D.FieldByName('banding_date').AsString <> '' then
-    ValidDate(D.FieldByName('banding_date').AsString, rsCaptionDate, Msgs);
+
+  // Check if banding and band change dates are valid
+  if eBandingDate.Text <> EmptyStr then
+    ValidDate(eBandingDate.Text, rsDateBanding, Msgs);
+  if eBandChangeDate.Text <> EmptyStr then
+    ValidDate(eBandChangeDate.Text, rsDateBandChange, Msgs);
 
   if Msgs.Count > 0 then
   begin

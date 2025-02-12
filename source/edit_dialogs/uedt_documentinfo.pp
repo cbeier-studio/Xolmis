@@ -5,25 +5,25 @@ unit uedt_documentinfo;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls, dbeditbutton,
-  Character, atshapelinebgra;
+  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  ExtCtrls, DBCtrls, dbeditbutton, Character, atshapelinebgra, cbs_media;
 
 type
 
   { TedtDocumentInfo }
 
   TedtDocumentInfo = class(TForm)
-    cbDocumentType: TDBComboBox;
-    cbLicenseType: TDBComboBox;
+    cbDocumentType: TComboBox;
+    cbLicenseType: TComboBox;
     dsLink: TDataSource;
-    eDocumentPath: TDBEditButton;
-    eLicenseNotes: TDBEdit;
-    eLicenseOwner: TDBEdit;
-    eDocumentTitle: TDBEdit;
-    eLicenseUri: TDBEdit;
-    eDocumentDate: TDBEditButton;
-    eDocumentTime: TDBEdit;
-    eLicenseYear: TDBEdit;
+    eLicenseYear: TEdit;
+    eLicenseUri: TEdit;
+    eLicenseOwner: TEdit;
+    eLicenseNotes: TEdit;
+    eDocumentTitle: TEdit;
+    eDocumentTime: TEdit;
+    eDocumentDate: TEditButton;
+    eDocumentPath: TEditButton;
     lblDocumentPath: TLabel;
     lblDocumentType: TLabel;
     lblLicenseYear: TLabel;
@@ -51,17 +51,39 @@ type
     procedure cbDocumentTypeKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDocumentDateButtonClick(Sender: TObject);
+    procedure eDocumentDateEditingDone(Sender: TObject);
     procedure eDocumentPathButtonClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FDocument: TDocumentData;
+    FAuthorId, FPermitId, FProjectId, FPersonId: Integer;
+    FIndividualId, FCaptureId, FSightingId, FExpeditionId, FSurveyId: Integer;
+    FNestId, FSpecimenId, FSamplingPlotId, FMethodId: Integer;
+    procedure SetDocument(Value: TDocumentData);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Document: TDocumentData read FDocument write SetDocument;
+    property PermitId: Integer read FPermitId write FPermitId;
+    property ProjectId: Integer read FProjectId write FProjectId;
+    property PersonId: Integer read FPersonId write FPersonId;
+    property IndividualId: Integer read FIndividualId write FIndividualId;
+    property CaptureId: Integer read FCaptureId write FCaptureId;
+    property ExpeditionId: Integer read FExpeditionId write FExpeditionId;
+    property SurveyId: Integer read FSurveyId write FSurveyId;
+    property SightingId: Integer read FSightingId write FSightingId;
+    property NestId: Integer read FNestId write FNestId;
+    property SamplingPlotId: Integer read FSamplingPlotId write FSamplingPlotId;
+    property MethodId: Integer read FMethodId write FMethodId;
+    property SpecimenId: Integer read FSpecimenId write FSpecimenId;
   end;
 
 var
@@ -71,7 +93,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
-  udm_main, uDarkStyleParams;
+  cbs_getvalue, cbs_conversions, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -90,29 +112,39 @@ begin
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtDocumentInfo.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtDocumentInfo.eDocumentDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eDocumentDate, dsLink.DataSet, 'document_date');
+  CalendarDlg(eDocumentDate.Text, eDocumentDate, Dt);
+end;
+
+procedure TedtDocumentInfo.eDocumentDateEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtDocumentInfo.eDocumentPathButtonClick(Sender: TObject);
 begin
   DMM.OpenDocs.InitialDir := XSettings.LastPathUsed;
   if DMM.OpenDocs.Execute then
-    dsLink.DataSet.FieldByName('document_path').AsString := DMM.OpenDocs.FileName;
+    eDocumentPath.Text := DMM.OpenDocs.FileName;
 end;
 
 procedure TedtDocumentInfo.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -121,7 +153,7 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);
@@ -156,14 +188,31 @@ begin
   cbDocumentType.Items.Add(rsDocDatabase);
   cbDocumentType.Items.Add(rsDocGis);
   cbDocumentType.Items.Add(rsDocOther);
+
+  if not FIsNew then
+    GetRecord;
+end;
+
+procedure TedtDocumentInfo.GetRecord;
+begin
+  cbDocumentType.Text := FDocument.DocumentType;
+  eDocumentTitle.Text := FDocument.Name;
+  eDocumentDate.Text := DateToStr(FDocument.DocumentDate);
+  eDocumentTime.Text := TimeToStr(FDocument.DocumentTime);
+  eDocumentPath.Text := FDocument.FileName;
+  cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FDocument.LicenseType);
+  eLicenseYear.Text := IntToStr(FDocument.LicenseYear);
+  eLicenseOwner.Text := FDocument.LicenseOwner;
+  eLicenseNotes.Text := FDocument.LicenseNotes;
+  eLicenseUri.Text := FDocument.LicenseUri;
 end;
 
 function TedtDocumentInfo.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('document_date').IsNull = False) and
-    (dsLink.DataSet.FieldByName('document_path').AsString <> EmptyStr) then
+  if (eDocumentDate.Text <> EmptyStr) and
+    (eDocumentPath.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -173,7 +222,29 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtDocumentInfo.SetDocument(Value: TDocumentData);
+begin
+  if Assigned(Value) then
+    FDocument := Value;
+end;
+
+procedure TedtDocumentInfo.SetRecord;
+begin
+  FDocument.DocumentType := cbDocumentType.Text;
+  FDocument.Name         := eDocumentTitle.Text;
+  FDocument.DocumentDate := TextToDate(eDocumentDate.Text);
+  FDocument.DocumentTime := TextToTime(eDocumentTime.Text);
+  FDocument.FileName     := eDocumentPath.Text;
+  FDocument.LicenseType  := cbLicenseType.Text;
+  FDocument.LicenseYear  := StrToIntOrZero(eLicenseYear.Text);
+  FDocument.LicenseOwner := eLicenseOwner.Text;
+  FDocument.LicenseNotes := eLicenseNotes.Text;
+  FDocument.LicenseUri   := eLicenseUri.Text;
 end;
 
 function TedtDocumentInfo.ValidateFields: Boolean;
@@ -184,8 +255,8 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  RequiredIsEmpty(dsLink.DataSet, tbDocuments, 'document_date', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbDocuments, 'document_path', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbDocuments, 'document_date', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbDocuments, 'document_path', Msgs);
 
   if Msgs.Count > 0 then
   begin

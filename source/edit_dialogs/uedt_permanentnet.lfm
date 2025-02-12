@@ -1,24 +1,23 @@
 object edtPermanentNet: TedtPermanentNet
   Left = 352
-  Height = 327
+  Height = 301
   Top = 33
-  Width = 488
+  Width = 397
   AutoSize = True
   Caption = 'New permanent mistnet'
-  ClientHeight = 327
-  ClientWidth = 488
+  ClientHeight = 301
+  ClientWidth = 397
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 284
-    Width = 488
+    Top = 258
+    Width = 397
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -27,8 +26,8 @@ object edtPermanentNet: TedtPermanentNet
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 286
-    Width = 488
+    Top = 260
+    Width = 397
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -40,47 +39,51 @@ object edtPermanentNet: TedtPermanentNet
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 488
+    ClientWidth = 397
     TabOrder = 0
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 224
+      Width = 178
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 248
+      Left = 202
       Height = 25
       Top = 8
-      Width = 224
+      Width = 179
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
   end
   object pClient: TPanel
     Left = 0
-    Height = 284
+    Height = 258
     Top = 0
-    Width = 488
+    Width = 397
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 284
-    ClientWidth = 488
+    ClientHeight = 258
+    ClientWidth = 397
     TabOrder = 1
     object pNotes: TPanel
       Left = 0
-      Height = 141
-      Top = 127
-      Width = 488
+      Height = 118
+      Top = 124
+      Width = 397
       Align = alTop
       AutoSize = True
       BorderSpacing.Top = 16
@@ -89,15 +92,15 @@ object edtPermanentNet: TedtPermanentNet
       ChildSizing.HorizontalSpacing = 16
       ChildSizing.VerticalSpacing = 4
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 141
-      ClientWidth = 488
+      ClientHeight = 118
+      ClientWidth = 397
       ParentBackground = False
       TabOrder = 0
       object lblNotes: TLabel
         Left = 16
         Height = 20
         Top = 4
-        Width = 456
+        Width = 365
         Align = alTop
         AutoSize = False
         BorderSpacing.Top = 4
@@ -106,15 +109,13 @@ object edtPermanentNet: TedtPermanentNet
         ParentColor = False
         ParentFont = False
       end
-      object mNotes: TDBMemo
+      object mNotes: TMemo
         Left = 16
-        Height = 113
+        Height = 90
         Top = 28
-        Width = 456
+        Width = 365
         Align = alTop
-        Constraints.MinWidth = 456
-        DataField = 'notes'
-        DataSource = dsLink
+        Constraints.MinWidth = 365
         ScrollBars = ssAutoVertical
         TabOrder = 0
         OnKeyDown = FormKeyDown
@@ -125,7 +126,7 @@ object edtPermanentNet: TedtPermanentNet
       Left = 0
       Height = 46
       Top = 16
-      Width = 488
+      Width = 397
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -137,14 +138,14 @@ object edtPermanentNet: TedtPermanentNet
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
       ClientHeight = 46
-      ClientWidth = 488
+      ClientWidth = 397
       ParentBackground = False
       TabOrder = 1
       object lblNetNumber: TLabel
         Left = 16
         Height = 15
         Top = 4
-        Width = 220
+        Width = 174
         BorderSpacing.Top = 4
         Caption = 'Mistnet number: *'
         Font.Color = 6579300
@@ -152,34 +153,32 @@ object edtPermanentNet: TedtPermanentNet
         ParentFont = False
       end
       object lblNetNumber1: TLabel
-        Left = 252
+        Left = 206
         Height = 15
         Top = 4
-        Width = 220
+        Width = 175
         BorderSpacing.Top = 4
         Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
-      object eNetNumber: TDBEdit
+      object eNetNumber: TEdit
         Left = 16
         Height = 23
         Top = 23
-        Width = 220
-        DataField = 'net_number'
-        DataSource = dsLink
-        Constraints.MinWidth = 220
-        MaxLength = 0
+        Width = 174
+        NumbersOnly = True
         TabOrder = 0
+        OnEditingDone = eNetNumberEditingDone
         OnKeyDown = FormKeyDown
         OnKeyPress = eNetNumberKeyPress
       end
     end
     object pLongitudeLatitude: TPanel
       Left = 0
-      Height = 49
+      Height = 46
       Top = 62
-      Width = 488
+      Width = 397
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -190,15 +189,15 @@ object edtPermanentNet: TedtPermanentNet
       ChildSizing.ShrinkHorizontal = crsSameSize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
-      ClientHeight = 49
-      ClientWidth = 488
+      ClientHeight = 46
+      ClientWidth = 397
       ParentBackground = False
       TabOrder = 2
       object lblLongitude: TLabel
         Left = 16
         Height = 15
         Top = 4
-        Width = 220
+        Width = 174
         BorderSpacing.Top = 4
         Caption = 'Longitude: *'
         Font.Color = 6579300
@@ -206,62 +205,64 @@ object edtPermanentNet: TedtPermanentNet
         ParentFont = False
       end
       object lblLatitude: TLabel
-        Left = 252
+        Left = 206
         Height = 15
         Top = 4
-        Width = 220
+        Width = 175
         BorderSpacing.Top = 4
         Caption = 'Latitude: *'
         Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
-      object eLongitude: TDBEditButton
+      object eLongitude: TEditButton
         Left = 16
-        Height = 26
+        Height = 23
         Top = 23
-        Width = 220
-        AutoSize = True
-        Constraints.MaxHeight = 28
-        Constraints.MinWidth = 220
+        Width = 174
+        ButtonHint = 'Edit/import coordinate'
+        ButtonWidth = 23
+        Images = DMM.iEdits
+        ImageIndex = 3
+        MaxLength = 0
+        NumGlyphs = 1
         ParentShowHint = False
+        PasswordChar = #0
         ShowHint = True
+        Spacing = 0
         TabOrder = 0
-        ButtonHint = 'Edit coordinates in DMS format'
-        ButtonWidth = 24
-        ImageIndex = 3
-        Images = DMM.iEdits
-        DataField = 'longitude'
-        DataSource = dsLink
-        CharCase = ecNormal
         OnButtonClick = eLongitudeButtonClick
+        OnEditingDone = eNetNumberEditingDone
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eLongitudeKeyPress
       end
-      object eLatitude: TDBEditButton
-        Left = 252
-        Height = 26
+      object eLatitude: TEditButton
+        Left = 206
+        Height = 23
         Top = 23
-        Width = 220
-        AutoSize = True
-        Constraints.MaxHeight = 28
-        Constraints.MinWidth = 220
-        ParentShowHint = False
-        ShowHint = True
-        TabOrder = 1
-        ButtonHint = 'Edit coordinates in DMS format'
-        ButtonWidth = 24
-        ImageIndex = 3
+        Width = 175
+        ButtonHint = 'Edit/import coordinate'
+        ButtonWidth = 23
         Images = DMM.iEdits
-        DataField = 'latitude'
-        DataSource = dsLink
-        CharCase = ecNormal
+        ImageIndex = 3
+        MaxLength = 0
+        NumGlyphs = 1
+        ParentShowHint = False
+        PasswordChar = #0
+        ShowHint = True
+        Spacing = 0
+        TabOrder = 1
         OnButtonClick = eLongitudeButtonClick
+        OnEditingDone = eNetNumberEditingDone
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eLongitudeKeyPress
       end
     end
   end
   object dsLink: TDataSource
     DataSet = DMG.qPermanentNets
     OnDataChange = dsLinkDataChange
-    Left = 388
-    Top = 16
+    Left = 320
+    Top = 8
   end
 end

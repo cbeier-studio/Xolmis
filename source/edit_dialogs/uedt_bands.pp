@@ -21,27 +21,28 @@ unit uedt_bands;
 interface
 
 uses
-  Classes, SysUtils, Types, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls, StdCtrls, Buttons,
-  Character, DBEditButton, atshapelinebgra, cbs_system;
+  Classes, EditBtn, SysUtils, Types, DB, Forms, Controls, Graphics, Dialogs,
+  ExtCtrls, DBCtrls, StdCtrls, Buttons, Character, DBEditButton,
+  atshapelinebgra, cbs_system, cbs_birds;
 
 type
 
   { TedtBands }
 
   TedtBands = class(TForm)
-    cbBandColor: TDBComboBox;
-    cbBandSize: TDBComboBox;
-    cbBandSource: TDBComboBox;
-    cbBandStatus: TDBComboBox;
-    cbBandType: TDBComboBox;
-    ckReported: TDBCheckBox;
+    ckReported: TCheckBox;
+    cbBandSource: TComboBox;
+    cbBandSize: TComboBox;
+    cbBandType: TComboBox;
+    cbBandColor: TComboBox;
+    cbBandStatus: TComboBox;
     dsLink: TDataSource;
-    eBandNumber: TDBEdit;
-    ePrefix: TDBEdit;
-    eSuffix: TDBEdit;
-    eSupplier: TDBEditButton;
-    eCarrier: TDBEditButton;
-    eProject: TDBEditButton;
+    eBandNumber: TEdit;
+    ePrefix: TEdit;
+    eSuffix: TEdit;
+    eProject: TEditButton;
+    eCarrier: TEditButton;
+    eSupplier: TEditButton;
     lblBandColor: TLabel;
     lblBandNumber: TLabel;
     lblBandPrefix: TLabel;
@@ -56,7 +57,7 @@ type
     lblPlaceholder1: TLabel;
     lblProject: TLabel;
     lblSupplier: TLabel;
-    mNotes: TDBMemo;
+    mNotes: TMemo;
     pBottom: TPanel;
     pCarrier: TPanel;
     pClient: TPanel;
@@ -73,6 +74,7 @@ type
     sbSave: TButton;
     lineBottom: TShapeLineBGRA;
     procedure cbBandColorDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
+    procedure cbBandSizeEditingDone(Sender: TObject);
     procedure cbBandSizeKeyPress(Sender: TObject; var Key: char);
     procedure cbBandTypeDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -82,18 +84,24 @@ type
     procedure eProjectKeyPress(Sender: TObject; var Key: char);
     procedure eSupplierButtonClick(Sender: TObject);
     procedure eSupplierKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FBand: TBand;
+    FSupplierId, FCarrierId, FProjectId: Integer;
+    procedure SetBand(Value: TBand);
+    procedure GetRecord;
+    procedure SetRecord;
     procedure ApplyDarkMode;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Band: TBand read FBand write SetBand;
   end;
 
 var
@@ -102,7 +110,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_validations, cbs_dialogs, cbs_finddialogs, cbs_birds,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_validations, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -116,8 +124,7 @@ begin
   eProject.Images := DMM.iEditsDark;
 end;
 
-procedure TedtBands.cbBandColorDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState
-  );
+procedure TedtBands.cbBandColorDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
 var
   aColorRect: TRect;
   aTextStyle: TTextStyle;
@@ -149,6 +156,11 @@ begin
   end;
 end;
 
+procedure TedtBands.cbBandSizeEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
+end;
+
 procedure TedtBands.cbBandSizeKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
@@ -156,7 +168,10 @@ begin
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
@@ -172,22 +187,22 @@ begin
   cbBandType.Canvas.TextRect(ARect, 24, ARect.Top, cbBandType.Items[Index]);
   if Index < cbBandType.Items.Count - 1 then
     if IsDarkModeEnabled then
-      DMM.iBandTypesDark.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType)
+      DMM.iBandTypesDark.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 16, cbBandType)
     else
-      DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 20, cbBandType);
+      DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 16, cbBandType);
 end;
 
 procedure TedtBands.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtBands.eCarrierButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eCarrier, dsLink.DataSet, 'carrier_id', 'carrier_name');
+  FindDlg(tbPeople, eCarrier, FCarrierId);
 end;
 
 procedure TedtBands.eCarrierKeyPress(Sender: TObject; var Key: char);
@@ -197,26 +212,30 @@ begin
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbPeople, eCarrier, dsLink.DataSet, 'carrier_id', 'carrier_name', False, Key);
+    FindDlg(tbPeople, eCarrier, FCarrierId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('carrier_id').Clear;
+    FCarrierId := 0;
+    eCarrier.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtBands.eProjectButtonClick(Sender: TObject);
 begin
-  FindDlg(tbProjects, eProject, dsLink.DataSet, 'project_id', 'project_name');
+  FindDlg(tbProjects, eProject, FProjectId);
 end;
 
 procedure TedtBands.eProjectKeyPress(Sender: TObject; var Key: char);
@@ -226,26 +245,30 @@ begin
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbProjects, eProject, dsLink.DataSet, 'project_id', 'project_name', False, Key);
+    FindDlg(tbProjects, eProject, FProjectId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('project_id').Clear;
+    FProjectId := 0;
+    eProject.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtBands.eSupplierButtonClick(Sender: TObject);
 begin
-  FindDlg(tbInstitutions, eSupplier, dsLink.DataSet, 'supplier_id', 'supplier_name');
+  FindDlg(tbInstitutions, eSupplier, FSupplierId);
 end;
 
 procedure TedtBands.eSupplierKeyPress(Sender: TObject; var Key: char);
@@ -255,32 +278,32 @@ begin
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindDlg(tbInstitutions, eSupplier, dsLink.DataSet, 'supplier_id', 'supplier_name', False, Key);
+    FindDlg(tbInstitutions, eSupplier, FSupplierId, Key);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('supplier_id').Clear;
+    FSupplierId := 0;
+    eSupplier.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtBands.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtBands.FormCreate(Sender: TObject);
 begin
   cbBandStatus.Items.CommaText := rsBandStatusList;
   cbBandType.Items.CommaText := rsBandTypeList;
+  cbBandColor.Items.CommaText := rsBandColorList;
   cbBandSource.Items.CommaText := '"' + rsBandAcquiredFromSupplier + '","' +
     rsBandTransferBetweenBanders + '","' +
     rsBandLivingBirdBandedByOthers + '","' +
@@ -294,7 +317,8 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    //if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);
@@ -317,22 +341,70 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionBand)])
+  if FIsNew then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionBand)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionBand)]);
+    GetRecord;
+  end;
+end;
+
+procedure TedtBands.GetRecord;
+begin
+  cbBandSize.ItemIndex := cbBandSize.Items.IndexOf(FBand.Size);
+  eBandNumber.Text := IntToStr(FBand.Number);
+  ePrefix.Text := FBand.Prefix;
+  eSuffix.Text := FBand.Suffix;
+  case FBand.BandType of
+    mkButtEndBand:    cbBandType.ItemIndex := cbBandType.Items.IndexOf(rsBandOpen);
+    mkFlag:           cbBandType.ItemIndex := cbBandType.Items.IndexOf(rsBandFlag);
+    mkCollar:         cbBandType.ItemIndex := cbBandType.Items.IndexOf(rsBandNeck);
+    mkWingTag:        cbBandType.ItemIndex := cbBandType.Items.IndexOf(rsBandWingTag);
+    mkTriangularBand: cbBandType.ItemIndex := cbBandType.Items.IndexOf(rsBandTriangular);
+    mkLockOnBand:     cbBandType.ItemIndex := cbBandType.Items.IndexOf(rsBandLockOn);
+    mkRivetBand:      cbBandType.ItemIndex := cbBandType.Items.IndexOf(rsBandRivet);
+    mkClosedBand:     cbBandType.ItemIndex := cbBandType.Items.IndexOf(rsBandClosed);
+    mkOther:          cbBandType.ItemIndex := cbBandType.Items.IndexOf(rsBandOther);
+  end;
+  cbBandColor.ItemIndex := cbBandColor.Items.IndexOf(FBand.BandColor);
+  case FBand.Status of
+    bstAvailable:   cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandAvailable);
+    bstUsed:        cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandUsed);
+    bstRemoved:     cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandRemoved);
+    bstBroken:      cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandBroken);
+    bstLost:        cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandLost);
+    bstTransfered:  cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandTransfered);
+  end;
+  ckReported.Checked := FBand.Reported;
+  case FBand.Source of
+    bscAcquiredFromSupplier:      cbBandSource.ItemIndex := cbBandSource.Items.IndexOf(rsBandAcquiredFromSupplier);
+    bscTransferBetweenBanders:    cbBandSource.ItemIndex := cbBandSource.Items.IndexOf(rsBandTransferBetweenBanders);
+    bscLivingBirdBandedByOthers:  cbBandSource.ItemIndex := cbBandSource.Items.IndexOf(rsBandLivingBirdBandedByOthers);
+    bscDeadBirdBandedByOthers:    cbBandSource.ItemIndex := cbBandSource.Items.IndexOf(rsBandDeadBirdBandedByOthers);
+    bscFoundLoose:                cbBandSource.ItemIndex := cbBandSource.Items.IndexOf(rsBandFoundLoose);
+  end;
+  FSupplierId := FBand.SupplierId;
+  eSupplier.Text := GetName('institutions', 'acronym', 'institution_id', FSupplierId);
+  FCarrierId := FBand.CarrierId;
+  eCarrier.Text := GetName('people', 'full_name', 'person_id', FCarrierId);
+  FProjectId := FBand.ProjectId;
+  eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
+  mNotes.Text := FBand.Notes;
 end;
 
 function TedtBands.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('band_size').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('band_number').AsInteger <> 0) and
-    (dsLink.DataSet.FieldByName('band_type').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('band_status').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('band_source').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('supplier_id').AsInteger <> 0) then
+  if (cbBandSize.ItemIndex >= 0) and
+    (eBandNumber.Text <> EmptyStr) and
+    (cbBandType.ItemIndex >= 0) and
+    (cbBandStatus.ItemIndex >= 0) and
+    (cbBandSource.ItemIndex >= 0) and
+    (FSupplierId > 0) then
     Result := True;
 end;
 
@@ -342,7 +414,55 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtBands.SetBand(Value: TBand);
+begin
+  if Assigned(Value) then
+    FBand := Value;
+end;
+
+procedure TedtBands.SetRecord;
+begin
+  FBand.Size   := cbBandSize.Text;
+  FBand.Number := StrToInt(eBandNumber.Text);
+  FBand.Prefix := ePrefix.Text;
+  FBand.Suffix := eSuffix.Text;
+  case cbBandType.ItemIndex of
+    0: FBand.BandType := mkButtEndBand;
+    1: FBand.BandType := mkFlag;
+    2: FBand.BandType := mkCollar;
+    3: FBand.BandType := mkWingTag;
+    4: FBand.BandType := mkTriangularBand;
+    5: FBand.BandType := mkLockOnBand;
+    6: FBand.BandType := mkRivetBand;
+    7: FBand.BandType := mkClosedBand;
+    8: FBand.BandType := mkOther;
+  end;
+  FBand.BandColor := cbBandColor.Text;
+  case cbBandStatus.ItemIndex of
+    0: FBand.Status := bstAvailable;
+    1: FBand.Status := bstUsed;
+    2: FBand.Status := bstRemoved;
+    3: FBand.Status := bstTransfered;
+    4: FBand.Status := bstBroken;
+    5: FBand.Status := bstLost;
+  end;
+  FBand.Reported := ckReported.Checked;
+  case cbBandSource.ItemIndex of
+    0: FBand.Source := bscAcquiredFromSupplier;
+    1: FBand.Source := bscTransferBetweenBanders;
+    2: FBand.Source := bscLivingBirdBandedByOthers;
+    3: FBand.Source := bscDeadBirdBandedByOthers;
+    4: FBand.Source := bscFoundLoose;
+  end;
+  FBand.SupplierId := FSupplierId;
+  FBand.CarrierId  := FCarrierId;
+  FBand.ProjectId  := FProjectId;
+  FBand.Notes      := mNotes.Text;
 end;
 
 function TedtBands.ValidateFields: Boolean;
@@ -352,25 +472,25 @@ var
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
+  //D := dsLink.DataSet;
 
   // Campos obrigatórios
-  RequiredIsEmpty(D, tbBands, 'band_size', Msgs);
-  RequiredIsEmpty(D, tbBands, 'band_number', Msgs);
-  RequiredIsEmpty(D, tbBands, 'band_type', Msgs);
-  RequiredIsEmpty(D, tbBands, 'band_status', Msgs);
+  //RequiredIsEmpty(D, tbBands, 'band_size', Msgs);
+  //RequiredIsEmpty(D, tbBands, 'band_number', Msgs);
+  //RequiredIsEmpty(D, tbBands, 'band_type', Msgs);
+  //RequiredIsEmpty(D, tbBands, 'band_status', Msgs);
 
   // Registro duplicado
   //RecordDuplicated(tbBands, 'band_id', 'full_name',
   //  D.FieldByName('full_name').AsString, D.FieldByName('band_id').AsInteger);
 
   // Chaves estrangeiras
-  ForeignValueExists(tbInstitutions, 'institution_id', D.FieldByName('supplier_id').AsInteger,
-    rsCaptionSupplier, Msgs);
-  ForeignValueExists(tbProjects, 'project_id', D.FieldByName('project_id').AsInteger,
-    rsCaptionProject, Msgs);
-  ForeignValueExists(tbIndividuals, 'individual_id', D.FieldByName('individual_id').AsInteger,
-    rsCaptionIndividual, Msgs);
+  //ForeignValueExists(tbInstitutions, 'institution_id', D.FieldByName('supplier_id').AsInteger,
+  //  rsCaptionSupplier, Msgs);
+  //ForeignValueExists(tbProjects, 'project_id', D.FieldByName('project_id').AsInteger,
+  //  rsCaptionProject, Msgs);
+  //ForeignValueExists(tbIndividuals, 'individual_id', D.FieldByName('individual_id').AsInteger,
+  //  rsCaptionIndividual, Msgs);
 
   // Datas
   //if D.FieldByName('receipt_date').AsString <> '' then

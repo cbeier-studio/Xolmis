@@ -2,14 +2,15 @@ object edtSurvey: TedtSurvey
   Left = 352
   Height = 691
   Top = 33
-  Width = 416
+  Width = 413
   AutoSize = True
   Caption = 'New survey'
   ClientHeight = 691
-  ClientWidth = 416
+  ClientWidth = 413
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -17,7 +18,7 @@ object edtSurvey: TedtSurvey
     Left = 0
     Height = 2
     Top = 648
-    Width = 416
+    Width = 413
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -27,7 +28,7 @@ object edtSurvey: TedtSurvey
     Left = 0
     Height = 41
     Top = 650
-    Width = 416
+    Width = 413
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -39,62 +40,66 @@ object edtSurvey: TedtSurvey
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 416
+    ClientWidth = 413
     TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 188
+      Width = 186
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 212
+      Left = 210
       Height = 25
       Top = 8
-      Width = 188
+      Width = 187
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
   end
   object SBox: TScrollBox
     Left = 0
     Height = 648
     Top = 0
-    Width = 416
+    Width = 413
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 648
     Align = alTop
     BorderStyle = bsNone
     ClientHeight = 648
-    ClientWidth = 399
+    ClientWidth = 396
     Constraints.MinWidth = 176
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 970
+      Height = 940
       Top = 0
-      Width = 399
+      Width = 396
       Align = alTop
       AutoSize = True
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 970
-      ClientWidth = 399
+      ClientHeight = 940
+      ClientWidth = 396
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
-        Height = 48
-        Top = 232
-        Width = 399
+        Height = 45
+        Top = 224
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -105,55 +110,48 @@ object edtSurvey: TedtSurvey
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 4
         object lblLocality: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Locality: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eLocality: TDBEditButton
-          Cursor = crDefault
+        object eLocality: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 368
-          AutoSize = True
-          ButtonCursor = crDefault
+          Width = 364
           ButtonHint = 'Find locality'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 368
-          CustomEditMask = False
-          DataField = 'locality_name'
-          DataSource = dsLink
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
+          NumGlyphs = 1
           ParentShowHint = False
+          PasswordChar = #0
           ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
+          OnEditingDone = eDateEditingDone
           OnKeyDown = FormKeyDown
-          OnKeyPress = eLocalityDBEditKeyPress
+          OnKeyPress = eLocalityKeyPress
         end
       end
       object pStartEndDate: TPanel
         Left = 0
         Height = 45
-        Top = 139
-        Width = 399
+        Top = 134
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -165,14 +163,14 @@ object edtSurvey: TedtSurvey
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 2
         object lblStartTime: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Starting time:'
           Font.Color = 6579300
@@ -180,39 +178,31 @@ object edtSurvey: TedtSurvey
           ParentFont = False
         end
         object lblEndTime: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Ending time:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eStartTime: TDBEdit
+        object eStartTime: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'start_time'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           TextHint = 'HH:MM'
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
         end
-        object eEndTime: TDBEdit
-          Left = 208
+        object eEndTime: TEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'end_time'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 1
           TextHint = 'HH:MM'
           OnKeyDown = FormKeyDown
@@ -221,9 +211,9 @@ object edtSurvey: TedtSurvey
       end
       object pNetStation: TPanel
         Left = 0
-        Height = 48
-        Top = 280
-        Width = 399
+        Height = 45
+        Top = 269
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -234,55 +224,47 @@ object edtSurvey: TedtSurvey
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 5
         object lblNetStation: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Mistnet station:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eNetStation: TDBEditButton
-          Cursor = crDefault
+        object eNetStation: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 368
-          AutoSize = True
-          ButtonCursor = crDefault
+          Width = 364
           ButtonHint = 'Find mistnet station'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 368
-          CustomEditMask = False
-          DataField = 'net_station_name'
-          DataSource = dsLink
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
+          NumGlyphs = 1
           ParentShowHint = False
+          PasswordChar = #0
           ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eNetStationButtonClick
           OnKeyDown = FormKeyDown
-          OnKeyPress = eNetStationDBEditKeyPress
+          OnKeyPress = eNetStationKeyPress
         end
       end
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 826
-        Width = 399
+        Top = 796
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -293,14 +275,14 @@ object edtSurvey: TedtSurvey
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 112
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 14
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -308,15 +290,13 @@ object edtSurvey: TedtSurvey
           ParentColor = False
           ParentFont = False
         end
-        object mNotes: TDBMemo
+        object mNotes: TMemo
           Left = 16
           Height = 90
           Top = 22
-          Width = 368
+          Width = 365
           Align = alTop
-          Constraints.MinWidth = 368
-          DataField = 'notes'
-          DataSource = dsLink
+          Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -325,9 +305,9 @@ object edtSurvey: TedtSurvey
       end
       object pProject: TPanel
         Left = 0
-        Height = 48
-        Top = 328
-        Width = 399
+        Height = 45
+        Top = 314
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -338,55 +318,47 @@ object edtSurvey: TedtSurvey
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 6
         object lblProject: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Project:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eProject: TDBEditButton
-          Cursor = crDefault
+        object eProject: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 368
-          AutoSize = True
-          ButtonCursor = crDefault
+          Width = 364
           ButtonHint = 'Find project'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 368
-          CustomEditMask = False
-          DataField = 'project_name'
-          DataSource = dsLink
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
+          NumGlyphs = 1
           ParentShowHint = False
+          PasswordChar = #0
           ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eProjectButtonClick
           OnKeyDown = FormKeyDown
-          OnKeyPress = eProjectDBEditKeyPress
+          OnKeyPress = eProjectKeyPress
         end
       end
       object pMethod: TPanel
         Left = 0
-        Height = 48
-        Top = 184
-        Width = 399
+        Height = 45
+        Top = 179
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -397,335 +369,48 @@ object edtSurvey: TedtSurvey
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 3
         object lblMethod: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 364
           BorderSpacing.Top = 3
           Caption = 'Method: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eMethod: TDBEditButton
-          Cursor = crDefault
+        object eMethod: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 368
-          AutoSize = True
-          ButtonCursor = crDefault
+          Width = 364
           ButtonHint = 'Find method'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 368
-          CustomEditMask = False
-          DataField = 'method_name'
-          DataSource = dsLink
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
+          NumGlyphs = 1
           ParentShowHint = False
+          PasswordChar = #0
           ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eMethodButtonClick
+          OnEditingDone = eDateEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eMethodKeyPress
         end
       end
       object pDateDuration: TPanel
         Left = 0
-        Height = 48
-        Top = 91
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 1
-        object lblSurveyDate: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Survey date: *'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblDuration: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Duration (minutes):'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eDate: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'survey_date'
-          DataSource = dsLink
-          ImageIndex = 1
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          TextHint = 'DD/MM/YYYY'
-          OnButtonClick = eDateButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eDurationKeyPress
-        end
-        object eDuration: TDBEdit
-          Left = 208
-          Height = 26
-          Top = 22
-          Width = 176
-          DataField = 'duration'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
-          TabOrder = 1
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eDurationKeyPress
-        end
-      end
-      object pStartCoordinate: TPanel
-        Left = 0
-        Height = 48
-        Top = 376
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 7
-        object lblStartLongitude: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Longitude (initial):'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblStartLatitude: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Latitude (initial):'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eLongitude: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Edit coordinates in DMS format'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'start_longitude'
-          DataSource = dsLink
-          ImageIndex = 3
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eLongitudeButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eDurationKeyPress
-        end
-        object eLatitude: TDBEditButton
-          Cursor = crDefault
-          Left = 208
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Edit coordinates in DMS format'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'start_latitude'
-          DataSource = dsLink
-          ImageIndex = 3
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 1
-          OnButtonClick = eLongitudeButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eDurationKeyPress
-        end
-      end
-      object pEndCoordinate: TPanel
-        Left = 0
-        Height = 48
-        Top = 424
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 8
-        object lblEndLongitude: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'End longitude:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblEndLatitude: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'End latitude:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eEndLongitude: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Edit coordinates in DMS format'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'end_longitude'
-          DataSource = dsLink
-          ImageIndex = 3
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eEndLongitudeButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eDurationKeyPress
-        end
-        object eEndLatitude: TDBEditButton
-          Cursor = crDefault
-          Left = 208
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Edit coordinates in DMS format'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'end_latitude'
-          DataSource = dsLink
-          ImageIndex = 3
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 1
-          OnButtonClick = eEndLongitudeButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eDurationKeyPress
-        end
-      end
-      object pAreaDistance: TPanel
-        Left = 0
         Height = 45
-        Top = 530
-        Width = 399
+        Top = 89
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -737,14 +422,251 @@ object edtSurvey: TedtSurvey
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
+        ParentBackground = False
+        TabOrder = 1
+        object lblSurveyDate: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 174
+          BorderSpacing.Top = 3
+          Caption = 'Survey date: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblDuration: TLabel
+          Left = 206
+          Height = 15
+          Top = 3
+          Width = 174
+          BorderSpacing.Top = 3
+          Caption = 'Duration (minutes):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eDate: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 174
+          ButtonHint = 'Open calendar'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          TextHint = 'DD/MM/YYYY'
+          OnButtonClick = eDateButtonClick
+          OnEditingDone = eDateEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eDurationKeyPress
+        end
+        object eDuration: TSpinEdit
+          Left = 206
+          Height = 23
+          Top = 22
+          Width = 174
+          TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eDurationKeyPress
+        end
+      end
+      object pStartCoordinate: TPanel
+        Left = 0
+        Height = 45
+        Top = 359
+        Width = 396
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 396
+        ParentBackground = False
+        TabOrder = 7
+        object lblStartLongitude: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 174
+          BorderSpacing.Top = 3
+          Caption = 'Longitude (initial):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblStartLatitude: TLabel
+          Left = 206
+          Height = 15
+          Top = 3
+          Width = 174
+          BorderSpacing.Top = 3
+          Caption = 'Latitude (initial):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eLongitude: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 174
+          ButtonHint = 'Open coordinates editor'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eLongitudeButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLongitudeKeyPress
+        end
+        object eLatitude: TEditButton
+          Left = 206
+          Height = 23
+          Top = 22
+          Width = 174
+          ButtonHint = 'Open coordinates editor'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
+          OnButtonClick = eLongitudeButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLongitudeKeyPress
+        end
+      end
+      object pEndCoordinate: TPanel
+        Left = 0
+        Height = 45
+        Top = 404
+        Width = 396
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 396
+        ParentBackground = False
+        TabOrder = 8
+        object lblEndLongitude: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 174
+          BorderSpacing.Top = 3
+          Caption = 'End longitude:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblEndLatitude: TLabel
+          Left = 206
+          Height = 15
+          Top = 3
+          Width = 174
+          BorderSpacing.Top = 3
+          Caption = 'End latitude:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eEndLongitude: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 174
+          ButtonHint = 'Open coordinates editor'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eEndLongitudeButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLongitudeKeyPress
+        end
+        object eEndLatitude: TEditButton
+          Left = 206
+          Height = 23
+          Top = 22
+          Width = 174
+          ButtonHint = 'Open coordinates editor'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
+          OnButtonClick = eEndLongitudeButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLongitudeKeyPress
+        end
+      end
+      object pAreaDistance: TPanel
+        Left = 0
+        Height = 45
+        Top = 507
+        Width = 396
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 10
         object lblArea: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Area (ha):'
           Font.Color = 6579300
@@ -752,38 +674,32 @@ object edtSurvey: TedtSurvey
           ParentFont = False
         end
         object lblDistance: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Distance (km):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eArea: TDBEdit
+        object eArea: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'area_total'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
         end
-        object eDistance: TDBEdit
-          Left = 208
+        object eDistance: TFloatSpinEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'distance_total'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
+          DecimalPlaces = 1
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
@@ -792,8 +708,8 @@ object edtSurvey: TedtSurvey
       object pNetsTotalEffort: TPanel
         Left = 0
         Height = 45
-        Top = 575
-        Width = 399
+        Top = 552
+        Width = 396
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -805,14 +721,14 @@ object edtSurvey: TedtSurvey
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 11
         object lblNetsTotal: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Number of mistnets:'
           Font.Color = 6579300
@@ -820,45 +736,39 @@ object edtSurvey: TedtSurvey
           ParentFont = False
         end
         object lblNetEffort: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 175
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Mistnet effort (h•m²):'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eTotalNets: TDBEdit
+        object eTotalNets: TSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'nets_total'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
         end
-        object txtNetEffort: TDBText
-          Left = 208
+        object txtNetEffort: TLabel
+          Left = 206
           Height = 23
           Top = 22
-          Width = 175
-          DataField = 'net_effort'
-          DataSource = dsLink
+          Width = 174
+          Caption = 'txtNetEffort'
           Layout = tlCenter
-          ParentColor = False
         end
       end
       object pObserversSampleId: TPanel
         Left = 0
         Height = 45
-        Top = 485
-        Width = 399
+        Top = 462
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -871,14 +781,14 @@ object edtSurvey: TedtSurvey
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 9
         object lblObserversTally: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Number of observers:'
           Font.Color = 6579300
@@ -886,38 +796,30 @@ object edtSurvey: TedtSurvey
           ParentFont = False
         end
         object lblSampleId: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Sample identifier:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eObserversTally: TDBEdit
+        object eObserversTally: TSpinEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'observers_tally'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
         end
-        object eSampleId: TDBEdit
-          Left = 208
+        object eSampleId: TEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'sample_id'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
@@ -926,8 +828,8 @@ object edtSurvey: TedtSurvey
       object pHabitat: TPanel
         Left = 0
         Height = 80
-        Top = 633
-        Width = 399
+        Top = 610
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -938,14 +840,14 @@ object edtSurvey: TedtSurvey
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 80
-        ClientWidth = 399
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 12
         object lblHabitat: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Environment description:'
@@ -953,15 +855,13 @@ object edtSurvey: TedtSurvey
           ParentColor = False
           ParentFont = False
         end
-        object mHabitat: TDBMemo
+        object mHabitat: TMemo
           Left = 16
           Height = 58
           Top = 22
-          Width = 368
+          Width = 365
           Align = alTop
-          Constraints.MinWidth = 368
-          DataField = 'habitat'
-          DataSource = dsLink
+          Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -970,9 +870,9 @@ object edtSurvey: TedtSurvey
       end
       object pNetRounds: TPanel
         Left = 0
-        Height = 87
-        Top = 726
-        Width = 399
+        Height = 80
+        Top = 703
+        Width = 396
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -982,15 +882,15 @@ object edtSurvey: TedtSurvey
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 87
-        ClientWidth = 399
+        ClientHeight = 80
+        ClientWidth = 396
         ParentBackground = False
         TabOrder = 13
         object lblNetRounds: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 364
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Mistnets checking times:'
@@ -998,15 +898,13 @@ object edtSurvey: TedtSurvey
           ParentColor = False
           ParentFont = False
         end
-        object mNetRounds: TDBMemo
+        object mNetRounds: TMemo
           Left = 16
-          Height = 65
+          Height = 58
           Top = 22
-          Width = 368
+          Width = 365
           Align = alTop
-          Constraints.MinWidth = 368
-          DataField = 'net_rounds'
-          DataSource = dsLink
+          Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -1015,9 +913,9 @@ object edtSurvey: TedtSurvey
       end
       object pExpedition: TBCPanel
         Left = 13
-        Height = 62
+        Height = 60
         Top = 16
-        Width = 373
+        Width = 370
         Align = alTop
         AutoSize = True
         BorderSpacing.Left = 13
@@ -1025,6 +923,11 @@ object edtSurvey: TedtSurvey
         BorderSpacing.Bottom = 13
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
         Background.Color = 16448250
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
@@ -1063,42 +966,32 @@ object edtSurvey: TedtSurvey
           Left = 17
           Height = 15
           Top = 9
-          Width = 339
-          Align = alTop
+          Width = 336
           BorderSpacing.Bottom = 3
           Caption = 'Expedition:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eExpedition: TDBEditButton
-          Cursor = crDefault
+        object eExpedition: TEditButton
           Left = 17
-          Height = 26
-          Top = 27
-          Width = 339
-          Align = alTop
-          AutoSize = True
-          ButtonCursor = crDefault
+          Height = 23
+          Top = 28
+          Width = 336
           ButtonHint = 'Find expedition'
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          CustomEditMask = False
-          DataField = 'expedition_name'
-          DataSource = dsLink
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
-          ParentColor = False
+          NumGlyphs = 1
           ParentShowHint = False
+          PasswordChar = #0
           ShowHint = True
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eExpeditionButtonClick
           OnKeyDown = FormKeyDown
-          OnKeyPress = eExpeditionDBEditKeyPress
+          OnKeyPress = eExpeditionKeyPress
         end
       end
     end

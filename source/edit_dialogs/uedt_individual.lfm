@@ -2,15 +2,14 @@ object edtIndividual: TedtIndividual
   Left = 352
   Height = 641
   Top = 33
-  Width = 416
+  Width = 428
   AutoSize = True
   Caption = 'New individual'
   ClientHeight = 641
-  ClientWidth = 416
+  ClientWidth = 428
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -19,7 +18,7 @@ object edtIndividual: TedtIndividual
     Left = 0
     Height = 2
     Top = 598
-    Width = 416
+    Width = 428
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -29,7 +28,7 @@ object edtIndividual: TedtIndividual
     Left = 0
     Height = 41
     Top = 600
-    Width = 416
+    Width = 428
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -41,62 +40,66 @@ object edtIndividual: TedtIndividual
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 416
-    TabOrder = 0
+    ClientWidth = 428
+    TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 188
+      Width = 194
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 212
+      Left = 218
       Height = 25
       Top = 8
-      Width = 188
+      Width = 194
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
   end
   object scrollContent: TScrollBox
     Left = 0
     Height = 598
     Top = 0
-    Width = 416
+    Width = 428
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 598
     Align = alTop
     BorderStyle = bsNone
     ClientHeight = 598
-    ClientWidth = 399
+    ClientWidth = 411
     Constraints.MinWidth = 176
-    TabOrder = 1
+    TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 813
+      Height = 787
       Top = 0
-      Width = 399
+      Width = 411
       Align = alTop
       AutoSize = True
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 813
-      ClientWidth = 399
+      ClientHeight = 787
+      ClientWidth = 411
       TabOrder = 0
       object pMother: TPanel
         Left = 0
-        Height = 48
-        Top = 515
-        Width = 399
+        Height = 45
+        Top = 492
+        Width = 411
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -107,45 +110,33 @@ object edtIndividual: TedtIndividual
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
+        ClientHeight = 45
+        ClientWidth = 411
         ParentBackground = False
         TabOrder = 10
         object lblMother: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 379
           BorderSpacing.Top = 3
           Caption = 'Mother:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eMother: TDBEditButton
-          Cursor = crDefault
+        object eMother: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Find individual'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          CustomEditMask = False
-          DataField = 'mother_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
+          Width = 379
+          ButtonHint = 'Find mother individual'
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 0
           MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
+          NumGlyphs = 1
+          PasswordChar = #0
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eMotherButtonClick
@@ -155,927 +146,9 @@ object edtIndividual: TedtIndividual
       end
       object pBand: TPanel
         Left = 0
-        Height = 48
-        Top = 64
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 1
-        object lblBand: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Band:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblBandingDate: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Banding date:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eBand: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Find band'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'band_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eBandButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eBandKeyPress
-        end
-        object eBandingDate: TDBEditButton
-          Cursor = crDefault
-          Left = 208
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Open calendar'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'banding_date'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 1
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 1
-          TextHint = 'DD/MM/YYYY'
-          OnButtonClick = eBandingDateButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbSexKeyPress
-        end
-      end
-      object pTaxon: TPanel
-        Left = 0
-        Height = 48
-        Top = 16
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 0
-        object lblTaxon: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          BorderSpacing.Top = 3
-          Caption = 'Taxon: *'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eTaxon: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Find taxon'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          CustomEditMask = False
-          DataField = 'taxon_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eTaxonButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eTaxonKeyPress
-        end
-      end
-      object pNotes: TPanel
-        Left = 0
-        Height = 112
-        Top = 669
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BorderSpacing.Top = 13
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 112
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 12
-        object lblNotes: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          Align = alTop
-          BorderSpacing.Top = 3
-          Caption = 'Notes:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object mNotes: TDBMemo
-          Left = 16
-          Height = 90
-          Top = 22
-          Width = 367
-          Align = alTop
-          Constraints.MinWidth = 365
-          DataField = 'notes'
-          DataSource = dsLink
-          ScrollBars = ssAutoVertical
-          TabOrder = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
-        end
-      end
-      object pNest: TPanel
-        Left = 0
-        Height = 48
-        Top = 419
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BorderSpacing.Top = 13
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 8
-        object lblNest: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          BorderSpacing.Top = 3
-          Caption = 'Nest:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eNest: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Find nest'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          CustomEditMask = False
-          DataField = 'nest_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eNestButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eNestKeyPress
-        end
-      end
-      object pFather: TPanel
-        Left = 0
-        Height = 48
-        Top = 467
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 9
-        object lblFather: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          BorderSpacing.Top = 3
-          Caption = 'Father:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eFather: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 367
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Find individual'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          CustomEditMask = False
-          DataField = 'father_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eFatherButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eFatherKeyPress
-        end
-      end
-      object pBirthDeath: TPanel
-        Left = 0
-        Height = 44
-        Top = 317
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BorderSpacing.Top = 13
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 44
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 6
-        object lblBirthDate: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Birth date:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblDeathDate: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Death date:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object pBirthDate: TPanel
-          Left = 16
-          Height = 22
-          Top = 22
-          Width = 176
-          AutoSize = True
-          BevelOuter = bvNone
-          ChildSizing.HorizontalSpacing = 4
-          ClientHeight = 22
-          ClientWidth = 176
-          Constraints.MaxHeight = 22
-          Constraints.MinHeight = 22
-          Constraints.MinWidth = 176
-          ParentBackground = False
-          TabOrder = 0
-          object eBirthDay: TDBEdit
-            Left = 128
-            Height = 22
-            Top = 0
-            Width = 48
-            DataField = 'birth_day'
-            DataSource = dsLink
-            Align = alLeft
-            Alignment = taCenter
-            MaxLength = 0
-            TabOrder = 2
-            TextHint = 'DD'
-            OnKeyDown = FormKeyDown
-            OnKeyPress = cbSexKeyPress
-          end
-          object eBirthMonth: TDBEdit
-            Left = 76
-            Height = 22
-            Top = 0
-            Width = 48
-            DataField = 'birth_month'
-            DataSource = dsLink
-            Align = alLeft
-            Alignment = taCenter
-            MaxLength = 0
-            TabOrder = 1
-            TextHint = 'MM'
-            OnKeyDown = FormKeyDown
-            OnKeyPress = cbSexKeyPress
-          end
-          object eBirthYear: TDBEdit
-            Left = 0
-            Height = 22
-            Top = 0
-            Width = 72
-            DataField = 'birth_year'
-            DataSource = dsLink
-            Align = alLeft
-            Alignment = taCenter
-            MaxLength = 0
-            TabOrder = 0
-            TextHint = 'YYYY'
-            OnKeyDown = FormKeyDown
-            OnKeyPress = cbSexKeyPress
-          end
-        end
-        object pDeathDate: TPanel
-          Left = 208
-          Height = 22
-          Top = 22
-          Width = 176
-          AutoSize = True
-          BevelOuter = bvNone
-          ChildSizing.HorizontalSpacing = 4
-          ClientHeight = 22
-          ClientWidth = 176
-          Constraints.MaxHeight = 22
-          Constraints.MinHeight = 22
-          Constraints.MinWidth = 176
-          ParentBackground = False
-          TabOrder = 1
-          object eDeathDay: TDBEdit
-            Left = 128
-            Height = 22
-            Top = 0
-            Width = 48
-            DataField = 'death_day'
-            DataSource = dsLink
-            Align = alLeft
-            Alignment = taCenter
-            MaxLength = 0
-            TabOrder = 2
-            TextHint = 'DD'
-            OnKeyDown = FormKeyDown
-            OnKeyPress = cbSexKeyPress
-          end
-          object eDeathMonth: TDBEdit
-            Left = 76
-            Height = 22
-            Top = 0
-            Width = 48
-            DataField = 'death_month'
-            DataSource = dsLink
-            Align = alLeft
-            Alignment = taCenter
-            MaxLength = 0
-            TabOrder = 1
-            TextHint = 'MM'
-            OnKeyDown = FormKeyDown
-            OnKeyPress = cbSexKeyPress
-          end
-          object eDeathYear: TDBEdit
-            Left = 0
-            Height = 22
-            Top = 0
-            Width = 72
-            DataField = 'death_year'
-            DataSource = dsLink
-            Align = alLeft
-            Alignment = taCenter
-            MaxLength = 0
-            TabOrder = 0
-            TextHint = 'YYYY'
-            OnKeyDown = FormKeyDown
-            OnKeyPress = cbSexKeyPress
-          end
-        end
-      end
-      object pColorTarsi: TPanel
-        Left = 0
-        Height = 48
-        Top = 208
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 4
-        object lblRightTarsus: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Right tarsus (below):'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblLeftTarsus: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Left tarsus (below):'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eRightTarsus: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Select colors'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'right_leg_below'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 4
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eRightTarsusButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbSexKeyPress
-        end
-        object eLeftTarsus: TDBEditButton
-          Cursor = crDefault
-          Left = 208
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Select colors'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'left_leg_below'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 4
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 1
-          OnButtonClick = eLeftTarsusButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbSexKeyPress
-        end
-      end
-      object pRecognizableMarkings: TPanel
-        Left = 0
-        Height = 80
-        Top = 576
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BorderSpacing.Top = 13
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 80
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 11
-        object lblRecognizableMarkings: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          Align = alTop
-          BorderSpacing.Top = 3
-          Caption = 'Recognizable markings:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object mRecognizableMarks: TDBMemo
-          Left = 16
-          Height = 58
-          Top = 22
-          Width = 367
-          Align = alTop
-          Constraints.MinWidth = 365
-          DataField = 'recognizable_markings'
-          DataSource = dsLink
-          ScrollBars = ssAutoVertical
-          TabOrder = 0
-          OnKeyDown = FormKeyDown
-          OnKeyPress = FormKeyPress
-        end
-      end
-      object pColorTibiae: TPanel
-        Left = 0
-        Height = 48
-        Top = 256
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 5
-        object lblRightTibia: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Right leg (above):'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblLeftTibia: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Left leg (above):'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eRightTibia: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Select colors'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'right_leg_above'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 4
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eRightTibiaButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbSexKeyPress
-        end
-        object eLeftTibia: TDBEditButton
-          Cursor = crDefault
-          Left = 208
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Select colors'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'left_leg_above'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 4
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 1
-          OnButtonClick = eLeftTibiaButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbSexKeyPress
-        end
-      end
-      object pRemovedBand: TPanel
-        Left = 0
-        Height = 48
-        Top = 160
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 3
-        object lblRemovedBand: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Removed band:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblBandChangeDate: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Band change date:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eRemovedBand: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Find band'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'removed_band_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eRemovedBandButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eRemovedBandKeyPress
-        end
-        object eBandChangeDate: TDBEditButton
-          Cursor = crDefault
-          Left = 208
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Open calendar'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'band_change_date'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 1
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 1
-          TextHint = 'DD/MM/YYYY'
-          OnButtonClick = eBandChangeDateButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbSexKeyPress
-        end
-      end
-      object pDoubleBand: TPanel
-        Left = 0
-        Height = 48
-        Top = 112
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 2
-        object lblDoubleBand: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Double band:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblDoubleBand1: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 175
-          BorderSpacing.Top = 3
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eDoubleBand: TDBEditButton
-          Cursor = crDefault
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          ButtonCursor = crDefault
-          ButtonHint = 'Find band'
-          ButtonOnlyWhenFocused = False
-          ButtonWidth = 24
-          CharCase = ecNormal
-          Color = clDefault
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          CustomEditMask = False
-          DataField = 'double_band_name'
-          DataSource = dsLink
-          DirectInput = False
-          ImageIndex = 0
-          Images = DMM.iEdits
-          MaxLength = 0
-          ParentShowHint = False
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eDoubleBandButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eDoubleBandKeyPress
-        end
-      end
-      object pSexAge: TPanel
-        Left = 0
         Height = 45
-        Top = 361
-        Width = 399
+        Top = 61
+        Width = 411
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -1087,14 +160,784 @@ object edtIndividual: TedtIndividual
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 399
+        ClientWidth = 411
+        ParentBackground = False
+        TabOrder = 1
+        object lblBand: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 182
+          BorderSpacing.Top = 3
+          Caption = 'Band:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBandingDate: TLabel
+          Left = 214
+          Height = 15
+          Top = 3
+          Width = 181
+          BorderSpacing.Top = 3
+          Caption = 'Banding date:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eBand: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 182
+          ButtonHint = 'Find band'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eBandButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eBandKeyPress
+        end
+        object eBandingDate: TEditButton
+          Left = 214
+          Height = 23
+          Top = 22
+          Width = 181
+          ButtonHint = 'Open calendar'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 1
+          TextHint = 'DD/MM/YYYY'
+          OnButtonClick = eBandingDateButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbSexKeyPress
+        end
+      end
+      object pTaxon: TPanel
+        Left = 0
+        Height = 45
+        Top = 16
+        Width = 411
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 411
+        ParentBackground = False
+        TabOrder = 0
+        object lblTaxon: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 379
+          BorderSpacing.Top = 3
+          Caption = 'Taxon: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eTaxon: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 379
+          ButtonHint = 'Find taxon'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eTaxonButtonClick
+          OnEditingDone = eTaxonEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eTaxonKeyPress
+        end
+      end
+      object pNotes: TPanel
+        Left = 0
+        Height = 112
+        Top = 643
+        Width = 411
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Top = 13
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 112
+        ClientWidth = 411
+        ParentBackground = False
+        TabOrder = 12
+        object lblNotes: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 379
+          Align = alTop
+          BorderSpacing.Top = 3
+          Caption = 'Notes:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object mNotes: TMemo
+          Left = 16
+          Height = 90
+          Top = 22
+          Width = 379
+          Align = alTop
+          Constraints.MinWidth = 365
+          ScrollBars = ssAutoVertical
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
+        end
+      end
+      object pNest: TPanel
+        Left = 0
+        Height = 45
+        Top = 402
+        Width = 411
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Top = 13
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 411
+        ParentBackground = False
+        TabOrder = 8
+        object lblNest: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 379
+          BorderSpacing.Top = 3
+          Caption = 'Nest:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eNest: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 379
+          ButtonHint = 'Find nest'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eNestButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNestKeyPress
+        end
+      end
+      object pFather: TPanel
+        Left = 0
+        Height = 45
+        Top = 447
+        Width = 411
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 411
+        ParentBackground = False
+        TabOrder = 9
+        object lblFather: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 379
+          BorderSpacing.Top = 3
+          Caption = 'Father:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eFather: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 379
+          ButtonHint = 'Find father individual'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eFatherButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eFatherKeyPress
+        end
+      end
+      object pBirthDeath: TPanel
+        Left = 0
+        Height = 45
+        Top = 299
+        Width = 411
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Top = 13
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 411
+        ParentBackground = False
+        TabOrder = 6
+        object lblBirthDate: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 182
+          BorderSpacing.Top = 3
+          Caption = 'Birth date:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblDeathDate: TLabel
+          Left = 214
+          Height = 15
+          Top = 3
+          Width = 181
+          BorderSpacing.Top = 3
+          Caption = 'Death date:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object pBirthDate: TPanel
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 182
+          AutoSize = True
+          BevelOuter = bvNone
+          ChildSizing.HorizontalSpacing = 4
+          ChildSizing.EnlargeHorizontal = crsSameSize
+          ChildSizing.ShrinkHorizontal = crsSameSize
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 3
+          ClientHeight = 23
+          ClientWidth = 182
+          Constraints.MinHeight = 22
+          Constraints.MinWidth = 176
+          ParentBackground = False
+          TabOrder = 0
+          object eBirthYear: TEdit
+            Left = 0
+            Height = 23
+            Top = 0
+            Width = 58
+            Alignment = taCenter
+            Constraints.MaxWidth = 58
+            Constraints.MinWidth = 58
+            NumbersOnly = True
+            TabOrder = 0
+            TextHint = 'YYYY'
+            OnKeyDown = FormKeyDown
+            OnKeyPress = cbSexKeyPress
+          end
+          object eBirthMonth: TEdit
+            Left = 62
+            Height = 23
+            Top = 0
+            Width = 58
+            Alignment = taCenter
+            Constraints.MaxWidth = 58
+            Constraints.MinWidth = 58
+            NumbersOnly = True
+            TabOrder = 1
+            TextHint = 'MM'
+            OnKeyDown = FormKeyDown
+            OnKeyPress = cbSexKeyPress
+          end
+          object eBirthDay: TEdit
+            Left = 124
+            Height = 23
+            Top = 0
+            Width = 58
+            Alignment = taCenter
+            Constraints.MaxWidth = 58
+            Constraints.MinWidth = 58
+            NumbersOnly = True
+            TabOrder = 2
+            TextHint = 'DD'
+            OnKeyDown = FormKeyDown
+            OnKeyPress = cbSexKeyPress
+          end
+        end
+        object pDeathDate: TPanel
+          Left = 214
+          Height = 23
+          Top = 22
+          Width = 181
+          AutoSize = True
+          BevelOuter = bvNone
+          ChildSizing.HorizontalSpacing = 4
+          ChildSizing.EnlargeHorizontal = crsSameSize
+          ChildSizing.ShrinkHorizontal = crsSameSize
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 3
+          ClientHeight = 23
+          ClientWidth = 181
+          Constraints.MinHeight = 22
+          Constraints.MinWidth = 176
+          ParentBackground = False
+          TabOrder = 1
+          object eDeathYear: TEdit
+            Left = 0
+            Height = 23
+            Top = 0
+            Width = 58
+            Alignment = taCenter
+            Constraints.MaxWidth = 58
+            Constraints.MinWidth = 58
+            NumbersOnly = True
+            TabOrder = 0
+            TextHint = 'YYYY'
+            OnKeyDown = FormKeyDown
+            OnKeyPress = cbSexKeyPress
+          end
+          object eDeathMonth: TEdit
+            Left = 62
+            Height = 23
+            Top = 0
+            Width = 58
+            Alignment = taCenter
+            Constraints.MaxWidth = 58
+            Constraints.MinWidth = 58
+            NumbersOnly = True
+            TabOrder = 1
+            TextHint = 'MM'
+            OnKeyDown = FormKeyDown
+            OnKeyPress = cbSexKeyPress
+          end
+          object eDeathDay: TEdit
+            Left = 124
+            Height = 23
+            Top = 0
+            Width = 58
+            Alignment = taCenter
+            Constraints.MaxWidth = 58
+            Constraints.MinWidth = 58
+            NumbersOnly = True
+            TabOrder = 2
+            TextHint = 'DD'
+            OnKeyDown = FormKeyDown
+            OnKeyPress = cbSexKeyPress
+          end
+        end
+      end
+      object pColorTarsi: TPanel
+        Left = 0
+        Height = 45
+        Top = 196
+        Width = 411
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 411
+        ParentBackground = False
+        TabOrder = 4
+        object lblRightTarsus: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 182
+          BorderSpacing.Top = 3
+          Caption = 'Right tarsus (below):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblLeftTarsus: TLabel
+          Left = 214
+          Height = 15
+          Top = 3
+          Width = 181
+          BorderSpacing.Top = 3
+          Caption = 'Left tarsus (below):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eRightTarsus: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 182
+          ButtonHint = 'Select colored bands'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 4
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eRightTarsusButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbSexKeyPress
+        end
+        object eLeftTarsus: TEditButton
+          Left = 214
+          Height = 23
+          Top = 22
+          Width = 181
+          ButtonHint = 'Select colored bands'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 4
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 1
+          OnButtonClick = eLeftTarsusButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbSexKeyPress
+        end
+      end
+      object pRecognizableMarkings: TPanel
+        Left = 0
+        Height = 80
+        Top = 550
+        Width = 411
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Top = 13
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 80
+        ClientWidth = 411
+        ParentBackground = False
+        TabOrder = 11
+        object lblRecognizableMarkings: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 379
+          Align = alTop
+          BorderSpacing.Top = 3
+          Caption = 'Recognizable markings:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object mRecognizableMarkings: TMemo
+          Left = 16
+          Height = 58
+          Top = 22
+          Width = 379
+          Align = alTop
+          ScrollBars = ssAutoVertical
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
+        end
+      end
+      object pColorTibiae: TPanel
+        Left = 0
+        Height = 45
+        Top = 241
+        Width = 411
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 411
+        ParentBackground = False
+        TabOrder = 5
+        object lblRightTibia: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 182
+          BorderSpacing.Top = 3
+          Caption = 'Right leg (above):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblLeftTibia: TLabel
+          Left = 214
+          Height = 15
+          Top = 3
+          Width = 181
+          BorderSpacing.Top = 3
+          Caption = 'Left leg (above):'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eRightTibia: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 182
+          ButtonHint = 'Select colored bands'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 4
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eRightTibiaButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbSexKeyPress
+        end
+        object eLeftTibia: TEditButton
+          Left = 214
+          Height = 23
+          Top = 22
+          Width = 181
+          ButtonHint = 'Select colored bands'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 4
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 1
+          OnButtonClick = eLeftTibiaButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbSexKeyPress
+        end
+      end
+      object pRemovedBand: TPanel
+        Left = 0
+        Height = 45
+        Top = 151
+        Width = 411
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 411
+        ParentBackground = False
+        TabOrder = 3
+        object lblRemovedBand: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 182
+          BorderSpacing.Top = 3
+          Caption = 'Removed band:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBandChangeDate: TLabel
+          Left = 214
+          Height = 15
+          Top = 3
+          Width = 181
+          BorderSpacing.Top = 3
+          Caption = 'Band change date:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eRemovedBand: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 182
+          ButtonHint = 'Find removed band'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eRemovedBandButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbSexKeyPress
+        end
+        object eBandChangeDate: TEditButton
+          Left = 214
+          Height = 23
+          Top = 22
+          Width = 181
+          ButtonHint = 'Open calendar'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 1
+          TextHint = 'DD/MM/YYYY'
+          OnButtonClick = eBandChangeDateButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbSexKeyPress
+        end
+      end
+      object pDoubleBand: TPanel
+        Left = 0
+        Height = 45
+        Top = 106
+        Width = 411
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 411
+        ParentBackground = False
+        TabOrder = 2
+        object lblDoubleBand: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 182
+          BorderSpacing.Top = 3
+          Caption = 'Double band:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblDoubleBand1: TLabel
+          Left = 214
+          Height = 15
+          Top = 3
+          Width = 181
+          BorderSpacing.Top = 3
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eDoubleBand: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 182
+          ButtonHint = 'Find double band'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eDoubleBandButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eDoubleBandKeyPress
+        end
+      end
+      object pSexAge: TPanel
+        Left = 0
+        Height = 45
+        Top = 344
+        Width = 411
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 411
         ParentBackground = False
         TabOrder = 7
         object lblSex: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 182
           BorderSpacing.Top = 3
           Caption = 'Sex:'
           Font.Color = 6579300
@@ -1102,58 +945,33 @@ object edtIndividual: TedtIndividual
           ParentFont = False
         end
         object lblAge: TLabel
-          Left = 208
+          Left = 214
           Height = 15
           Top = 3
-          Width = 176
+          Width = 181
           BorderSpacing.Top = 3
           Caption = 'Age:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object cbSex: TDBComboBox
+        object cbSex: TComboBox
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          Constraints.MinWidth = 176
-          DataField = 'individual_sex'
-          DataSource = dsLink
+          Width = 182
           ItemHeight = 15
-          Items.Strings = (
-            'Macho'
-            'Fêmea'
-            'Indeterminado'
-          )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end
-        object cbAge: TDBComboBox
-          Left = 208
+        object cbAge: TComboBox
+          Left = 214
           Height = 23
           Top = 22
-          Width = 176
-          Constraints.MinWidth = 176
-          DataField = 'individual_age'
-          DataSource = dsLink
+          Width = 181
           ItemHeight = 15
-          Items.Strings = (
-            'Indeterminado'
-            'Adulto'
-            'Imaturo'
-            'Fledgling'
-            'Ninhego'
-            'Primeiro ano'
-            'Segundo ano'
-            'Terceiro ano'
-            'Quarto ano'
-            'Quinto ano'
-          )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 1
           OnKeyDown = FormKeyDown

@@ -1,25 +1,25 @@
 object edtPermit: TedtPermit
   Left = 373
-  Height = 458
+  Height = 452
   Top = 34
-  Width = 400
+  Width = 397
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New permit'
-  ClientHeight = 458
-  ClientWidth = 400
+  ClientHeight = 452
+  ClientWidth = 397
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
+  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 415
-    Width = 400
+    Top = 409
+    Width = 397
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -28,8 +28,8 @@ object edtPermit: TedtPermit
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 417
-    Width = 400
+    Top = 411
+    Width = 397
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -41,62 +41,66 @@ object edtPermit: TedtPermit
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 400
+    ClientWidth = 397
     TabOrder = 0
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 180
+      Width = 178
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 204
+      Left = 202
       Height = 25
       Top = 8
-      Width = 180
+      Width = 179
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 415
+    Height = 409
     Top = 0
-    Width = 400
+    Width = 397
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 415
+    VertScrollBar.Page = 409
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 415
-    ClientWidth = 400
+    ClientHeight = 409
+    ClientWidth = 397
     Constraints.MinWidth = 176
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 415
+      Height = 409
       Top = 0
-      Width = 400
+      Width = 397
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 415
-      ClientWidth = 400
+      ClientHeight = 409
+      ClientWidth = 397
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 287
-        Width = 400
+        Top = 281
+        Width = 397
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -106,14 +110,14 @@ object edtPermit: TedtPermit
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 112
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 4
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -121,15 +125,13 @@ object edtPermit: TedtPermit
           ParentColor = False
           ParentFont = False
         end
-        object mNotes: TDBMemo
+        object mNotes: TMemo
           Left = 16
           Height = 90
           Top = 22
-          Width = 368
+          Width = 365
           Align = alTop
           Constraints.MinWidth = 365
-          DataField = 'notes'
-          DataSource = dsLink
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -139,8 +141,8 @@ object edtPermit: TedtPermit
       object pName: TPanel
         Left = 0
         Height = 45
-        Top = 91
-        Width = 400
+        Top = 88
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -152,30 +154,27 @@ object edtPermit: TedtPermit
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 0
         object lblName: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           BorderSpacing.Top = 3
           Caption = 'Name: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eName: TDBEdit
+        object eName: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 368
-          DataField = 'permit_name'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 365
           TabOrder = 0
+          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -183,8 +182,8 @@ object edtPermit: TedtPermit
       object pDispatcher: TPanel
         Left = 0
         Height = 45
-        Top = 181
-        Width = 400
+        Top = 178
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -196,123 +195,36 @@ object edtPermit: TedtPermit
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 2
         object lblDispatcher: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           BorderSpacing.Top = 3
           Caption = 'Dispatcher: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eDispatcher: TDBEdit
+        object eDispatcher: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 368
-          DataField = 'dispatcher_name'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 365
           TabOrder = 0
+          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
       end
       object pDispatchExpireDate: TPanel
         Left = 0
-        Height = 48
-        Top = 226
-        Width = 400
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 400
-        ParentBackground = False
-        TabOrder = 3
-        object lblDispatchDate: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Dispatch date: *'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblExpireDate: TLabel
-          Left = 208
-          Height = 15
-          Top = 3
-          Width = 176
-          BorderSpacing.Top = 3
-          Caption = 'Expire date:'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eDispatchDate: TDBEditButton
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          ImageIndex = 1
-          Images = DMM.iEdits
-          TextHint = 'DD/MM/YYYY'
-          DataField = 'dispatch_date'
-          DataSource = dsLink
-          CharCase = ecNormal
-          OnButtonClick = eDispatchDateButtonClick
-        end
-        object eExpireDate: TDBEditButton
-          Left = 208
-          Height = 26
-          Top = 22
-          Width = 176
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
-          ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          ImageIndex = 1
-          Images = DMM.iEdits
-          TextHint = 'DD/MM/YYYY'
-          DataField = 'expire_date'
-          DataSource = dsLink
-          CharCase = ecNormal
-          OnButtonClick = eExpireDateButtonClick
-        end
-      end
-      object pPermitNumberType: TPanel
-        Left = 0
         Height = 45
-        Top = 136
-        Width = 400
+        Top = 223
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -324,14 +236,97 @@ object edtPermit: TedtPermit
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
+        ParentBackground = False
+        TabOrder = 3
+        object lblDispatchDate: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 174
+          BorderSpacing.Top = 3
+          Caption = 'Dispatch date: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblExpireDate: TLabel
+          Left = 206
+          Height = 15
+          Top = 3
+          Width = 175
+          BorderSpacing.Top = 3
+          Caption = 'Expire date:'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eDispatchDate: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 174
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          TextHint = 'DD/MM/YYYY'
+          OnButtonClick = eDispatchDateButtonClick
+          OnEditingDone = eNameEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNameKeyPress
+        end
+        object eExpireDate: TEditButton
+          Left = 206
+          Height = 23
+          Top = 22
+          Width = 175
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
+          TextHint = 'DD/MM/YYYY'
+          OnButtonClick = eExpireDateButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNameKeyPress
+        end
+      end
+      object pPermitNumberType: TPanel
+        Left = 0
+        Height = 45
+        Top = 133
+        Width = 397
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 1
         object lblPermitNumber: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Permit number:'
           Font.Color = 6579300
@@ -339,50 +334,43 @@ object edtPermit: TedtPermit
           ParentFont = False
         end
         object lblPermitType: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Type: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object ePermitNumber: TDBEdit
+        object ePermitNumber: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'permit_number'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 174
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
-        object cbPermitType: TDBComboBox
-          Left = 208
+        object cbPermitType: TComboBox
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          Constraints.MinWidth = 176
-          DataField = 'permit_type'
-          DataSource = dsLink
+          Width = 175
           ItemHeight = 15
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 1
+          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
       end
       object pProject: TBCPanel
         Left = 13
-        Height = 62
+        Height = 59
         Top = 16
-        Width = 374
+        Width = 371
         Align = alTop
         AutoSize = True
         BorderSpacing.Left = 13
@@ -390,6 +378,10 @@ object edtPermit: TedtPermit
         BorderSpacing.Bottom = 13
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 8
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
         Background.Color = 16448250
         Background.Gradient1.StartColor = clWhite
         Background.Gradient1.EndColor = clBlack
@@ -429,35 +421,32 @@ object edtPermit: TedtPermit
           Left = 17
           Height = 15
           Top = 9
-          Width = 340
-          Align = alTop
+          Width = 337
           BorderSpacing.Bottom = 3
           Caption = 'Project:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eProject: TDBEditButton
+        object eProject: TEditButton
           Left = 17
-          Height = 26
+          Height = 23
           Top = 27
-          Width = 340
-          Align = alTop
-          AutoSize = True
-          Color = 16448250
-          Constraints.MaxHeight = 28
-          ParentColor = False
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
+          Width = 337
           ButtonHint = 'Find project'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'project_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eProjectButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eProjectKeyPress
         end
       end
     end

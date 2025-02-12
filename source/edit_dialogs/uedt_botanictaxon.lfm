@@ -1,23 +1,22 @@
 object edtBotanicTaxon: TedtBotanicTaxon
   Left = 352
-  Height = 376
+  Height = 367
   Top = 33
   Width = 365
   AutoSize = True
   Caption = 'New taxon'
-  ClientHeight = 376
+  ClientHeight = 367
   ClientWidth = 365
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 333
+    Top = 324
     Width = 365
     Align = alTop
     LineColor = 9276813
@@ -27,7 +26,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 335
+    Top = 326
     Width = 365
     Align = alTop
     AutoSize = True
@@ -41,7 +40,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 365
-    TabOrder = 0
+    TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
@@ -52,6 +51,8 @@ object edtBotanicTaxon: TedtBotanicTaxon
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
       Left = 186
@@ -62,38 +63,41 @@ object edtBotanicTaxon: TedtBotanicTaxon
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 333
+    Height = 324
     Top = 0
     Width = 365
     HorzScrollBar.Page = 365
-    VertScrollBar.Page = 333
+    VertScrollBar.Page = 324
     Align = alTop
+    AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 333
+    ClientHeight = 324
     ClientWidth = 365
     Constraints.MinWidth = 220
-    TabOrder = 1
+    TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 333
+      Height = 324
       Top = 0
       Width = 365
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 333
+      ClientHeight = 324
       ClientWidth = 365
       Constraints.MinWidth = 365
       TabOrder = 0
       object pParentTaxon: TPanel
         Left = 0
-        Height = 49
-        Top = 219
+        Height = 46
+        Top = 216
         Width = 365
         Align = alTop
         AutoSize = True
@@ -106,10 +110,10 @@ object edtBotanicTaxon: TedtBotanicTaxon
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 365
         ParentBackground = False
-        TabOrder = 0
+        TabOrder = 4
         object lblParentTaxon: TLabel
           Left = 16
           Height = 15
@@ -121,80 +125,29 @@ object edtBotanicTaxon: TedtBotanicTaxon
           ParentColor = False
           ParentFont = False
         end
-        object eParentTaxon: TDBEditButton
+        object eParentTaxon: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 333
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 200
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
           ButtonHint = 'Find parent taxon'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'parent_taxon_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eParentTaxonButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eParentTaxonKeyPress
         end
       end
       object pName: TPanel
         Left = 0
-        Height = 49
-        Top = 16
-        Width = 365
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 49
-        ClientWidth = 365
-        ParentBackground = False
-        TabOrder = 1
-        object lblName: TLabel
-          Left = 16
-          Height = 15
-          Top = 4
-          Width = 333
-          BorderSpacing.Top = 4
-          Caption = 'Scientific name: *'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eName: TDBEditButton
-          Left = 16
-          Height = 26
-          Top = 23
-          Width = 333
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 200
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          ButtonHint = 'Check name'
-          ButtonWidth = 24
-          ImageIndex = 5
-          Images = DMM.iEdits
-          DataField = 'taxon_name'
-          DataSource = dsLink
-          CharCase = ecNormal
-          OnButtonClick = eNameButtonClick
-        end
-      end
-      object pAuthorship: TPanel
-        Left = 0
         Height = 46
-        Top = 65
+        Top = 16
         Width = 365
         Align = alTop
         AutoSize = True
@@ -209,7 +162,57 @@ object edtBotanicTaxon: TedtBotanicTaxon
         ClientHeight = 46
         ClientWidth = 365
         ParentBackground = False
-        TabOrder = 2
+        TabOrder = 0
+        object lblName: TLabel
+          Left = 16
+          Height = 15
+          Top = 4
+          Width = 333
+          BorderSpacing.Top = 4
+          Caption = 'Scientific name: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eName: TEditButton
+          Left = 16
+          Height = 23
+          Top = 23
+          Width = 333
+          ButtonHint = 'Check name on Plantminer'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 5
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eNameButtonClick
+          OnEditingDone = eNameEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eAuthorshipKeyPress
+        end
+      end
+      object pAuthorship: TPanel
+        Left = 0
+        Height = 46
+        Top = 62
+        Width = 365
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 46
+        ClientWidth = 365
+        ParentBackground = False
+        TabOrder = 1
         object lblAuthorship: TLabel
           Left = 16
           Height = 15
@@ -221,15 +224,11 @@ object edtBotanicTaxon: TedtBotanicTaxon
           ParentColor = False
           ParentFont = False
         end
-        object eAuthorship: TDBEdit
+        object eAuthorship: TEdit
           Left = 16
           Height = 23
           Top = 23
           Width = 333
-          DataField = 'authorship'
-          DataSource = dsLink
-          Constraints.MinWidth = 200
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eAuthorshipKeyPress
@@ -238,7 +237,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
       object pVernacularName: TPanel
         Left = 0
         Height = 46
-        Top = 157
+        Top = 154
         Width = 365
         Align = alTop
         AutoSize = True
@@ -265,15 +264,11 @@ object edtBotanicTaxon: TedtBotanicTaxon
           ParentColor = False
           ParentFont = False
         end
-        object eVernacularName: TDBEdit
+        object eVernacularName: TEdit
           Left = 16
           Height = 23
           Top = 23
           Width = 333
-          DataField = 'vernacular_name'
-          DataSource = dsLink
-          Constraints.MinWidth = 200
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eAuthorshipKeyPress
@@ -281,8 +276,8 @@ object edtBotanicTaxon: TedtBotanicTaxon
       end
       object pValidName: TPanel
         Left = 0
-        Height = 49
-        Top = 268
+        Height = 46
+        Top = 262
         Width = 365
         Align = alTop
         AutoSize = True
@@ -295,10 +290,10 @@ object edtBotanicTaxon: TedtBotanicTaxon
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 365
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 5
         object lblValidName: TLabel
           Left = 16
           Height = 15
@@ -310,30 +305,29 @@ object edtBotanicTaxon: TedtBotanicTaxon
           ParentColor = False
           ParentFont = False
         end
-        object eValidName: TDBEditButton
+        object eValidName: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 333
-          Constraints.MaxHeight = 29
-          Constraints.MinWidth = 200
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          ButtonHint = 'Find valid taxon'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonHint = 'Find valid name'
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'valid_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          PasswordChar = #0
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eValidNameButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eValidNameKeyPress
         end
       end
       object pRank: TPanel
         Left = 0
         Height = 46
-        Top = 111
+        Top = 108
         Width = 365
         Align = alTop
         AutoSize = True
@@ -346,7 +340,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
         ClientHeight = 46
         ClientWidth = 365
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 2
         object lblRank: TLabel
           Left = 16
           Height = 15
@@ -358,20 +352,16 @@ object edtBotanicTaxon: TedtBotanicTaxon
           ParentColor = False
           ParentFont = False
         end
-        object cbRank: TDBLookupComboBox
+        object cbRank: TComboBox
           Left = 16
           Height = 23
           Top = 23
           Width = 220
           Constraints.MinWidth = 220
-          DataField = 'rank_id'
-          DataSource = dsLink
-          KeyField = 'rank_id'
-          ListField = 'rank_name'
-          ListFieldIndex = 0
-          ListSource = DML.dsLkRanks
-          LookupCache = False
+          ItemHeight = 15
+          Style = csDropDownList
           TabOrder = 0
+          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eAuthorshipKeyPress
         end
@@ -381,7 +371,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
   object dsLink: TDataSource
     DataSet = DMG.qBotany
     OnDataChange = dsLinkDataChange
-    Left = 368
+    Left = 256
     Top = 16
   end
 end

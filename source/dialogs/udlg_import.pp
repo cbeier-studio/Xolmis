@@ -475,7 +475,8 @@ end;
 
 function TdlgImport.ValidateFields: Boolean;
 begin
-
+  Result := True;
+  { #todo : Validate values before import }
 end;
 
 end.

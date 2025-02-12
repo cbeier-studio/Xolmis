@@ -21,17 +21,17 @@ unit uedt_nestowner;
 interface
 
 uses
-  Classes, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, Buttons, DBCtrls, DBEditButton,
-  atshapelinebgra;
+  Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, ExtCtrls, Buttons, DBCtrls, DBEditButton, atshapelinebgra, cbs_breeding;
 
 type
 
   { TedtNestOwner }
 
   TedtNestOwner = class(TForm)
-    cbRole: TDBComboBox;
+    cbRole: TComboBox;
     dsLink: TDataSource;
-    eIndividual: TDBEditButton;
+    eIndividual: TEditButton;
     lblRole: TLabel;
     lblIndividual: TLabel;
     lineBottom: TShapeLineBGRA;
@@ -41,6 +41,7 @@ type
     pIndividual: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure cbRoleEditingDone(Sender: TObject);
     procedure cbRoleKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eIndividualButtonClick(Sender: TObject);
@@ -51,11 +52,19 @@ type
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FNestOwner: TNestOwner;
+    FNestId, FIndividualId: Integer;
+    procedure SetNestOwner(Value: TNestOwner);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property NestOwner: TNestOwner read FNestOwner write SetNestOwner;
+    property NestId: Integer read FNestId write FNestId;
   end;
 
 var
@@ -64,7 +73,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_getvalue,
   cbs_validations, udm_breeding, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -76,33 +85,41 @@ begin
   eIndividual.Images := DMM.iEditsDark;
 end;
 
+procedure TedtNestOwner.cbRoleEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
+end;
+
 procedure TedtNestOwner.cbRoleKeyPress(Sender: TObject; var Key: char);
 begin
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('role').Clear;
+    cbRole.ItemIndex := -1;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtNestOwner.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtNestOwner.eIndividualButtonClick(Sender: TObject);
 begin
-  FindDlg(tbIndividuals, eIndividual, dsLink.DataSet, 'individual_id', 'individual_name');
+  FindDlg(tbIndividuals, eIndividual, FIndividualId);
 end;
 
 procedure TedtNestOwner.eIndividualDBEditKeyPress(Sender: TObject; var Key: char);
@@ -112,20 +129,23 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbIndividuals, eIndividual, dsLink.DataSet, 'individual_id', 'individual_name', False, Key);
+    FindDlg(tbIndividuals, eIndividual, FIndividualId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('individual_id').Clear;
-    dsLink.DataSet.FieldByName('individual_name').Clear;
+    FIndividualId := 0;
+    eIndividual.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
@@ -164,12 +184,32 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNestOwner)])
+  FIndividualId := 0;
+
+  if FIsNew then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNestOwner)]);
+  end
   else
+  begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionNestOwner)]);
+    GetRecord;
+  end;
 
   cbRole.SetFocus;
+end;
+
+procedure TedtNestOwner.GetRecord;
+begin
+  case FNestOwner.Role of
+    nrlMale:      cbRole.ItemIndex := 0;
+    nrlFemale:    cbRole.ItemIndex := 1;
+    nrlHelper:    cbRole.ItemIndex := 2;
+    nrlOffspring: cbRole.ItemIndex := 3;
+    nrlUnknown:   cbRole.ItemIndex := 4;
+  end;
+  FIndividualId := FNestOwner.IndividualId;
+  eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FNestOwner.IndividualId);
 end;
 
 procedure TedtNestOwner.sbSaveClick(Sender: TObject);
@@ -177,15 +217,37 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOK;
+end;
+
+procedure TedtNestOwner.SetNestOwner(Value: TNestOwner);
+begin
+  if Assigned(Value) then
+    FNestOwner := Value;
+end;
+
+procedure TedtNestOwner.SetRecord;
+begin
+  case cbRole.ItemIndex of
+    0: FNestOwner.Role := nrlMale;
+    1: FNestOwner.Role := nrlFemale;
+    2: FNestOwner.Role := nrlHelper;
+    3: FNestOwner.Role := nrlOffspring;
+    4: FNestOwner.Role := nrlUnknown;
+  end;
+  FNestOwner.IndividualId := FIndividualId;
 end;
 
 function TedtNestOwner.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('role').AsString <> EmptyStr) and
-    (dsLink.DataSet.FieldByName('individual_id').AsInteger <> 0) then
+  //if (dsLink.DataSet.FieldByName('role').AsString <> EmptyStr) and
+  //  (dsLink.DataSet.FieldByName('individual_id').AsInteger <> 0) then
+  if (cbRole.ItemIndex >= 0) and
+    (FIndividualId > 0) then
     Result := True;
 end;
 
@@ -197,8 +259,8 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  RequiredIsEmpty(dsLink.DataSet, tbNestOwners, 'role', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbNestOwners, 'individual_id', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbNestOwners, 'role', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbNestOwners, 'individual_id', Msgs);
 
   if Msgs.Count > 0 then
   begin

@@ -12,8 +12,8 @@
 {"hash":157957720,"name":"tfrmmain.actnewbands.caption","sourcebytes":[38,78,101,119,32,98,97,116,99,104],"value":"&New batch"},
 {"hash":21703,"name":"tfrmmain.actinsertrecord.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":126806548,"name":"tfrmmain.actinsertrecord.hint","sourcebytes":[78,101,119,32,114,101,99,111,114,100],"value":"New record"},
-{"hash":170992931,"name":"tfrmmain.actopenresearchers.caption","sourcebytes":[38,82,101,115,101,97,114,99,104,101,114,115],"value":"&Researchers"},
 {"hash":13594483,"name":"tfrmmain.actopeninstitutions.caption","sourcebytes":[38,73,110,115,116,105,116,117,116,105,111,110,115],"value":"&Institutions"},
+{"hash":170992931,"name":"tfrmmain.actopenresearchers.caption","sourcebytes":[38,82,101,115,101,97,114,99,104,101,114,115],"value":"&Researchers"},
 {"hash":30469411,"name":"tfrmmain.actopenprojects.caption","sourcebytes":[80,114,111,38,106,101,99,116,115],"value":"Pro&jects"},
 {"hash":113852931,"name":"tfrmmain.actopenpermits.caption","sourcebytes":[38,80,101,114,109,105,116,115],"value":"&Permits"},
 {"hash":13174354,"name":"tfrmmain.actopengazetteer.caption","sourcebytes":[38,71,97,122,101,116,116,101,101,114],"value":"&Gazetteer"},
@@ -82,9 +82,9 @@
 {"hash":138872279,"name":"tfrmmain.mmsampling.caption","sourcebytes":[38,83,97,109,112,108,105,110,103],"value":"&Sampling"},
 {"hash":239861043,"name":"tfrmmain.mmindividuals.caption","sourcebytes":[38,73,110,100,105,118,105,100,117,97,108,115],"value":"&Individuals"},
 {"hash":146507479,"name":"tfrmmain.mmbreeding.caption","sourcebytes":[38,66,114,101,101,100,105,110,103],"value":"&Breeding"},
-{"hash":95454467,"name":"tfrmmain.mmentities.caption","sourcebytes":[38,69,110,116,105,116,105,101,115],"value":"&Entities"},
+{"hash":133235732,"name":"tfrmmain.mmentities.caption","sourcebytes":[38,77,97,110,97,103,101,109,101,110,116],"value":"&Management"},
 {"hash":175551,"name":"tfrmmain.mmgeo.caption","sourcebytes":[38,71,101,111],"value":"&Geo"},
 {"hash":150372329,"name":"tfrmmain.mmtaxonomy.caption","sourcebytes":[38,84,97,120,111,110,111,109,121],"value":"&Taxonomy"},
-{"hash":45333233,"name":"tfrmmain.mmmedia.caption","sourcebytes":[38,77,101,100,105,97],"value":"&Media"},
+{"hash":83671793,"name":"tfrmmain.mmmedia.caption","sourcebytes":[77,38,101,100,105,97],"value":"M&edia"},
 {"hash":2812976,"name":"tfrmmain.mmhelp.caption","sourcebytes":[38,72,101,108,112],"value":"&Help"}
 ]}

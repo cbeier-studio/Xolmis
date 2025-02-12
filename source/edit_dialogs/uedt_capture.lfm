@@ -11,7 +11,6 @@ object edtCapture: TedtCapture
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -56,6 +55,8 @@ object edtCapture: TedtCapture
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
       Left = 656
@@ -68,6 +69,8 @@ object edtCapture: TedtCapture
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
   end
   object sBox: TScrollBox
@@ -85,7 +88,7 @@ object edtCapture: TedtCapture
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1080
+      Height = 1103
       Top = 0
       Width = 775
       Align = alTop
@@ -93,13 +96,13 @@ object edtCapture: TedtCapture
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1080
+      ClientHeight = 1103
       ClientWidth = 775
       TabOrder = 0
       object pAgeEscapedStatus: TPanel
         Left = 0
         Height = 46
-        Top = 299
+        Top = 331
         Width = 775
         Align = alTop
         AutoSize = True
@@ -140,7 +143,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Status:'
           Font.Color = 6579300
@@ -148,56 +151,41 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object Label10: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
-          Width = 173
+          Width = 174
           BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object cbAge: TDBComboBox
+        object cbAge: TComboBox
           Left = 16
           Height = 23
           Top = 23
           Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'subject_age'
-          DataSource = dsLink
           ItemHeight = 15
-          Items.Strings = (
-            ''
-          )
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbAgeKeyPress
         end
-        object ckEscaped: TDBCheckBox
+        object ckEscaped: TCheckBox
           Left = 206
           Height = 23
           Top = 23
           Width = 174
-          AutoSize = True
           Caption = 'Escaped'
-          Constraints.MinWidth = 174
-          DataField = 'escaped'
-          DataSource = dsLink
           TabOrder = 1
-          ValueChecked = 'True'
-          ValueUnchecked = 'False'
+          OnKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
         end
-        object cbStatus: TDBComboBox
+        object cbStatus: TComboBox
           Left = 396
           Height = 23
           Top = 23
-          Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'subject_status'
-          DataSource = dsLink
+          Width = 173
           ItemHeight = 15
-          MaxLength = 0
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = cbStatusKeyPress
@@ -206,7 +194,7 @@ object edtCapture: TedtCapture
       object pSamples: TPanel
         Left = 0
         Height = 42
-        Top = 860
+        Top = 886
         Width = 775
         Align = alTop
         AutoSize = True
@@ -223,123 +211,91 @@ object edtCapture: TedtCapture
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 17
-        object ckBloodSample: TDBCheckBox
+        object ckBloodSample: TCheckBox
           Left = 16
           Height = 19
           Top = 0
           Width = 174
-          AutoSize = True
           Caption = 'Blood'
-          Constraints.MinWidth = 174
-          DataField = 'blood_sample'
-          DataSource = dsLink
           TabOrder = 0
-          ValueChecked = 'True'
-          ValueUnchecked = 'False'
+          OnKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
         end
-        object ckFeathers: TDBCheckBox
+        object ckFeathers: TCheckBox
           Left = 206
           Height = 19
           Top = 0
           Width = 174
-          AutoSize = True
           Caption = 'Feather(s)'
-          Constraints.MinWidth = 174
-          DataField = 'feather_sample'
-          DataSource = dsLink
           TabOrder = 1
-          ValueChecked = 'True'
-          ValueUnchecked = 'False'
+          OnKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
         end
-        object ckFeces: TDBCheckBox
+        object ckFeces: TCheckBox
           Left = 396
           Height = 19
           Top = 0
-          Width = 174
-          AutoSize = True
+          Width = 173
           Caption = 'Feces'
-          Constraints.MinWidth = 174
-          DataField = 'feces_sample'
-          DataSource = dsLink
           TabOrder = 2
-          ValueChecked = 'True'
-          ValueUnchecked = 'False'
+          OnKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
         end
-        object ckParasites: TDBCheckBox
-          Left = 586
+        object ckParasites: TCheckBox
+          Left = 585
           Height = 19
           Top = 0
           Width = 174
-          AutoSize = True
           Caption = 'Parasite(s)'
-          Constraints.MinWidth = 174
-          DataField = 'parasite_sample'
-          DataSource = dsLink
           TabOrder = 3
-          ValueChecked = 'True'
-          ValueUnchecked = 'False'
+          OnKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
         end
-        object ckAudioRecordings: TDBCheckBox
+        object ckAudioRecordings: TCheckBox
           Left = 16
           Height = 19
           Top = 23
           Width = 174
-          AutoSize = True
           Caption = 'Audio(s)'
-          Constraints.MinWidth = 174
-          DataField = 'subject_recorded'
-          DataSource = dsLink
           TabOrder = 4
-          ValueChecked = 'True'
-          ValueUnchecked = 'False'
+          OnKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
         end
-        object ckPhotos: TDBCheckBox
+        object ckPhotos: TCheckBox
           Left = 206
           Height = 19
           Top = 23
           Width = 174
-          AutoSize = True
-          Caption = 'Photos'
-          Constraints.MinWidth = 174
-          DataField = 'subject_photographed'
-          DataSource = dsLink
+          Caption = 'Photo(s)'
           TabOrder = 5
-          ValueChecked = 'True'
-          ValueUnchecked = 'False'
+          OnKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
         end
-        object ckClaw: TDBCheckBox
+        object ckClaw: TCheckBox
           Left = 396
           Height = 19
           Top = 23
-          Width = 174
-          AutoSize = True
+          Width = 173
           Caption = 'Claw'
-          Constraints.MinWidth = 174
-          DataField = 'claw_sample'
-          DataSource = dsLink
           TabOrder = 6
-          ValueChecked = 'True'
-          ValueUnchecked = 'False'
+          OnKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
         end
-        object ckWholeSpecimen: TDBCheckBox
-          Left = 586
+        object ckWholeSpecimen: TCheckBox
+          Left = 585
           Height = 19
           Top = 23
           Width = 174
-          AutoSize = True
           Caption = 'Specimen (whole)'
-          Constraints.MinWidth = 174
-          DataField = 'subject_collected'
-          DataSource = dsLink
           TabOrder = 7
-          ValueChecked = 'True'
-          ValueUnchecked = 'False'
+          OnKeyPress = eCaptureTimeKeyPress
+          OnKeyDown = FormKeyDown
         end
       end
       object pDateTimeBander: TPanel
         Left = 0
-        Height = 49
-        Top = 103
+        Height = 46
+        Top = 146
         Width = 775
         Align = alTop
         AutoSize = True
@@ -351,7 +307,7 @@ object edtCapture: TedtCapture
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 2
@@ -381,7 +337,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Bander: *'
           Font.Color = 6579300
@@ -389,7 +345,7 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object lblAnnotator: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
           Width = 174
@@ -399,91 +355,82 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object eCaptureDate: TDBEditButton
+        object eCaptureDate: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
           ButtonHint = 'Open calendar'
-          ButtonWidth = 24
-          ImageIndex = 1
+          ButtonWidth = 23
           Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           TextHint = 'DD/MM/YYYY'
-          DataField = 'capture_date'
-          DataSource = dsLink
-          CharCase = ecNormal
           OnButtonClick = eCaptureDateButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eCaptureTime: TDBEdit
+        object eCaptureTime: TEdit
           Left = 206
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
-          DataField = 'capture_time'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
           TabOrder = 1
           TextHint = 'HH:MM'
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eBander: TDBEditButton
+        object eBander: TEditButton
           Left = 396
-          Height = 26
+          Height = 23
           Top = 23
-          Width = 174
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 2
+          Width = 173
           ButtonHint = 'Find bander'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'bander_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 2
           OnButtonClick = eBanderButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eBanderKeyPress
         end
-        object eAnnotator: TDBEditButton
-          Left = 586
-          Height = 26
+        object eAnnotator: TEditButton
+          Left = 585
+          Height = 23
           Top = 23
           Width = 174
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 3
           ButtonHint = 'Find annotator'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'annotator_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 3
+          OnButtonClick = eAnnotatorButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eAnnotatorKeyPress
         end
       end
       object pSurveyLocality: TPanel
         Left = 0
-        Height = 49
-        Top = 54
+        Height = 46
+        Top = 100
         Width = 775
         Align = alTop
         AutoSize = True
@@ -495,7 +442,7 @@ object edtCapture: TedtCapture
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 1
@@ -514,54 +461,50 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 364
+          Width = 363
           BorderSpacing.Top = 4
           Caption = 'Locality: *'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eSurvey: TDBEditButton
+        object eSurvey: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 364
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 364
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          OnExit = eSurveyExit
           ButtonHint = 'Find survey'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'survey_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eSurveyButtonClick
+          OnExit = eSurveyExit
           OnKeyDown = FormKeyDown
           OnKeyPress = eSurveyKeyPress
         end
-        object eLocality: TDBEditButton
+        object eLocality: TEditButton
           Left = 396
-          Height = 26
+          Height = 23
           Top = 23
-          Width = 364
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 364
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
+          Width = 363
           ButtonHint = 'Find locality'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'locality_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
           OnButtonClick = eLocalityButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
@@ -569,8 +512,8 @@ object edtCapture: TedtCapture
       end
       object pColorBands: TPanel
         Left = 0
-        Height = 49
-        Top = 250
+        Height = 47
+        Top = 284
         Width = 775
         Align = alTop
         AutoSize = True
@@ -582,7 +525,7 @@ object edtCapture: TedtCapture
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 49
+        ClientHeight = 47
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 5
@@ -611,7 +554,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Left tarsus:'
           Font.Color = 6579300
@@ -619,7 +562,7 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object Label14: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
           Width = 174
@@ -628,26 +571,24 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object eRightTarsus: TDBEditButton
+        object eRightTarsus: TEditButton
           Left = 16
-          Height = 26
+          Height = 24
           Top = 23
           Width = 174
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          OnExit = eRightLegBelowExit
-          ButtonHint = 'Select colors'
-          ButtonWidth = 24
-          ImageIndex = 4
+          ButtonHint = 'Select colors of bands'
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'right_leg_below'
-          DataSource = dsLink
-          CharCase = ecUppercase
-          OnButtonClick = eRightLegBelowButtonClick
+          ImageIndex = 4
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 2
+          OnButtonClick = eRightTarsusButtonClick
+          OnExit = eRightTarsusExit
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -663,7 +604,7 @@ object edtCapture: TedtCapture
           Constraints.MaxHeight = 24
           Constraints.MinWidth = 174
           ParentBackground = False
-          TabOrder = 1
+          TabOrder = 0
           object shpRightBelowBand1: TShape
             Left = 0
             Height = 24
@@ -709,31 +650,29 @@ object edtCapture: TedtCapture
             Shape = stRoundSquare
           end
         end
-        object eLeftTarsus: TDBEditButton
+        object eLeftTarsus: TEditButton
           Left = 396
-          Height = 26
+          Height = 24
           Top = 23
-          Width = 174
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 2
-          OnExit = eRightLegBelowExit
-          ButtonHint = 'Select colors'
-          ButtonWidth = 24
-          ImageIndex = 4
+          Width = 173
+          ButtonHint = 'Select colors of bands'
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'left_leg_below'
-          DataSource = dsLink
-          CharCase = ecUppercase
-          OnButtonClick = eLeftLegBelowButtonClick
+          ImageIndex = 4
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 3
+          OnButtonClick = eLeftTarsusButtonClick
+          OnExit = eRightTarsusExit
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
         object pLeftBands: TPanel
-          Left = 586
+          Left = 585
           Height = 24
           Top = 23
           Width = 174
@@ -744,7 +683,7 @@ object edtCapture: TedtCapture
           Constraints.MaxHeight = 24
           Constraints.MinWidth = 174
           ParentBackground = False
-          TabOrder = 3
+          TabOrder = 1
           object shpLeftBelowBand1: TShape
             Left = 0
             Height = 24
@@ -793,8 +732,8 @@ object edtCapture: TedtCapture
       end
       object pTaxonBand: TPanel
         Left = 0
-        Height = 49
-        Top = 201
+        Height = 46
+        Top = 238
         Width = 775
         Align = alTop
         AutoSize = True
@@ -806,7 +745,7 @@ object edtCapture: TedtCapture
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 3
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 4
@@ -843,68 +782,65 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object eTaxon: TDBEditButton
+        object eTaxon: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 364
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 364
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
           ButtonHint = 'Find taxon'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
+          Constraints.MinWidth = 364
           Images = DMM.iEdits
-          DataField = 'taxon_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eTaxonButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
         end
-        object eBand: TDBEditButton
+        object eBand: TEditButton
           Left = 396
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
           ButtonHint = 'Find band'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
+          Constraints.MinWidth = 174
           Images = DMM.iEdits
-          DataField = 'band_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
           OnButtonClick = eBandButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eBandKeyPress
         end
-        object eRemovedBand: TDBEditButton
+        object eRemovedBand: TEditButton
           Left = 586
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
-          AutoSize = True
-          Constraints.MaxHeight = 35
+          ButtonHint = 'Find removed band'
+          ButtonWidth = 23
           Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 2
-          ButtonHint = 'Find band'
-          ButtonWidth = 24
-          ImageIndex = 0
           Images = DMM.iEdits
-          DataField = 'removed_band_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 2
           OnButtonClick = eRemovedBandButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eRemovedBandKeyPress
@@ -913,7 +849,7 @@ object edtCapture: TedtCapture
       object pNotes: TPanel
         Left = 0
         Height = 79
-        Top = 727
+        Top = 753
         Width = 775
         Align = alTop
         AutoSize = True
@@ -937,15 +873,13 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object mNotes: TDBMemo
+        object mNotes: TMemo
           Left = 16
           Height = 56
           Top = 23
           Width = 744
           Constraints.MinHeight = 56
           Constraints.MinWidth = 744
-          DataField = 'notes'
-          DataSource = dsLink
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -954,8 +888,8 @@ object edtCapture: TedtCapture
       end
       object pPhotographersCamera: TPanel
         Left = 0
-        Height = 49
-        Top = 907
+        Height = 46
+        Top = 933
         Width = 775
         Align = alTop
         AutoSize = True
@@ -967,7 +901,7 @@ object edtCapture: TedtCapture
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 18
@@ -997,7 +931,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Camera:'
           Font.Color = 6579300
@@ -1005,67 +939,61 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object Label58: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
-          Width = 173
+          Width = 174
           BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object ePhotographer1: TDBEditButton
+        object ePhotographer1: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
           ButtonHint = 'Find photographer'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'photographer_1_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = ePhotographer1ButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = ePhotographer1KeyPress
         end
-        object ePhotographer2: TDBEditButton
+        object ePhotographer2: TEditButton
           Left = 206
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
           ButtonHint = 'Find photographer'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'photographer_2_name'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
           OnButtonClick = ePhotographer2ButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = ePhotographer2KeyPress
         end
-        object cbCamera: TDBComboBox
+        object cbCamera: TComboBox
           Left = 396
           Height = 23
           Top = 23
-          Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'camera_name'
-          DataSource = dsLink
+          Width = 173
           ItemHeight = 15
-          MaxLength = 0
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
@@ -1106,7 +1034,7 @@ object edtCapture: TedtCapture
       object pTitleMetrics: TPanel
         Left = 0
         Height = 38
-        Top = 361
+        Top = 393
         Width = 775
         Align = alTop
         Alignment = taLeftJustify
@@ -1135,7 +1063,7 @@ object edtCapture: TedtCapture
       object pTitleCollection: TPanel
         Left = 0
         Height = 38
-        Top = 822
+        Top = 848
         Width = 775
         Align = alTop
         Alignment = taLeftJustify
@@ -1163,8 +1091,8 @@ object edtCapture: TedtCapture
       end
       object pTypeNetLongLat: TPanel
         Left = 0
-        Height = 49
-        Top = 152
+        Height = 46
+        Top = 192
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1176,7 +1104,7 @@ object edtCapture: TedtCapture
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 3
@@ -1206,7 +1134,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Longitude:'
           Font.Color = 6579300
@@ -1214,7 +1142,7 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object lblLatitude: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
           Width = 174
@@ -1224,95 +1152,85 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object cbCaptureType: TDBComboBox
+        object cbCaptureType: TComboBox
           Left = 16
           Height = 23
           Top = 23
           Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'capture_type'
-          DataSource = dsLink
           ItemHeight = 15
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbCaptureTypeKeyPress
         end
-        object eNet: TDBEditButton
+        object eNet: TEditButton
           Left = 206
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
-          OnExit = eNetExit
           ButtonHint = 'Find mistnet'
-          ButtonWidth = 24
-          ImageIndex = 0
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'net_number'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
           OnButtonClick = eNetButtonClick
+          OnExit = eNetExit
           OnKeyDown = FormKeyDown
           OnKeyPress = eNetKeyPress
         end
-        object eLongitude: TDBEditButton
+        object eLongitude: TEditButton
           Left = 396
-          Height = 26
+          Height = 23
           Top = 23
-          Width = 174
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
+          Width = 173
+          ButtonHint = 'Edit/import coordinate'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
           ParentShowHint = False
+          PasswordChar = #0
           ShowHint = True
+          Spacing = 0
           TabOrder = 2
-          OnExit = eLongitudeExit
-          ButtonHint = 'Edit coordinates in DMS format'
-          ButtonWidth = 24
-          ImageIndex = 3
-          Images = DMM.iEdits
-          DataField = 'longitude'
-          DataSource = dsLink
-          CharCase = ecNormal
           OnButtonClick = eLongitudeButtonClick
+          OnExit = eLongitudeExit
           OnKeyDown = FormKeyDown
-          OnKeyPress = eCaptureTimeKeyPress
+          OnKeyPress = eLongitudeKeyPress
         end
-        object eLatitude: TDBEditButton
-          Left = 586
-          Height = 26
+        object eLatitude: TEditButton
+          Left = 585
+          Height = 23
           Top = 23
           Width = 174
-          AutoSize = True
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 3
-          OnExit = eLongitudeExit
-          ButtonHint = 'Edit coordinates in DMS format'
-          ButtonWidth = 24
-          ImageIndex = 3
+          ButtonHint = 'Edit/import coordinate'
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'latitude'
-          DataSource = dsLink
-          CharCase = ecNormal
-          OnButtonClick = eLatitudeButtonClick
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 3
+          OnButtonClick = eLongitudeButtonClick
+          OnExit = eLongitudeExit
           OnKeyDown = FormKeyDown
-          OnKeyPress = eCaptureTimeKeyPress
+          OnKeyPress = eLongitudeKeyPress
         end
       end
       object pMetrics1: TPanel
         Left = 0
         Height = 46
-        Top = 399
+        Top = 431
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1354,7 +1272,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Subcutaneous fat:'
           Font.Color = 6579300
@@ -1362,7 +1280,7 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object lblBodyMolt: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
           Width = 174
@@ -1372,14 +1290,11 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object cbCloacalProtuberance: TDBComboBox
+        object cbCloacalProtuberance: TComboBox
           Left = 16
           Height = 23
           Top = 23
           Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'cloacal_protuberance'
-          DataSource = dsLink
           ItemHeight = 15
           Items.Strings = (
             'U'
@@ -1388,19 +1303,15 @@ object edtCapture: TedtCapture
             'M'
             'L'
           )
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object cbBroodPatch: TDBComboBox
+        object cbBroodPatch: TComboBox
           Left = 206
           Height = 23
           Top = 23
           Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'brood_patch'
-          DataSource = dsLink
           ItemHeight = 15
           Items.Strings = (
             'F'
@@ -1409,19 +1320,15 @@ object edtCapture: TedtCapture
             'W'
             'O'
           )
-          MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object cbFat: TDBComboBox
+        object cbFat: TComboBox
           Left = 396
           Height = 23
           Top = 23
-          Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'fat'
-          DataSource = dsLink
+          Width = 173
           ItemHeight = 15
           Items.Strings = (
             'N'
@@ -1433,19 +1340,15 @@ object edtCapture: TedtCapture
             'G'
             'V'
           )
-          MaxLength = 0
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object cbBodyMolt: TDBComboBox
-          Left = 586
+        object cbBodyMolt: TComboBox
+          Left = 585
           Height = 23
           Top = 23
           Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'body_molt'
-          DataSource = dsLink
           ItemHeight = 15
           Items.Strings = (
             'N'
@@ -1456,7 +1359,6 @@ object edtCapture: TedtCapture
             'A'
             'F'
           )
-          MaxLength = 0
           TabOrder = 3
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
@@ -1465,7 +1367,7 @@ object edtCapture: TedtCapture
       object pMetrics2: TPanel
         Left = 0
         Height = 46
-        Top = 445
+        Top = 477
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1507,7 +1409,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Right wing chord:'
           Font.Color = 6579300
@@ -1515,7 +1417,7 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object lblFirstSecondaryChord: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
           Width = 174
@@ -1525,33 +1427,26 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object cbFlightFeatherMolt: TDBComboBox
+        object cbFlightFeatherMolt: TComboBox
           Left = 16
           Height = 23
           Top = 23
           Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'flight_feathers_molt'
-          DataSource = dsLink
           ItemHeight = 15
           Items.Strings = (
             'N'
             'S'
             'A'
           )
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object cbFlightFeatherWear: TDBComboBox
+        object cbFlightFeatherWear: TComboBox
           Left = 206
           Height = 23
           Top = 23
           Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'flight_feathers_wear'
-          DataSource = dsLink
           ItemHeight = 15
           Items.Strings = (
             'N'
@@ -1561,33 +1456,26 @@ object edtCapture: TedtCapture
             'H'
             'X'
           )
-          MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eRightWingChord: TDBEdit
+        object eRightWingChord: TFloatSpinEdit
           Left = 396
           Height = 23
           Top = 23
-          Width = 174
-          DataField = 'right_wing_chord'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          Width = 173
+          DecimalPlaces = 1
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eFirstSecondaryChord: TDBEdit
-          Left = 586
+        object eFirstSecondaryChord: TFloatSpinEdit
+          Left = 585
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'first_secondary_chord'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          DecimalPlaces = 1
           TabOrder = 3
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
@@ -1596,7 +1484,7 @@ object edtCapture: TedtCapture
       object pMetrics3: TPanel
         Left = 0
         Height = 46
-        Top = 491
+        Top = 523
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1638,7 +1526,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Tarsus diameter:'
           Font.Color = 6579300
@@ -1646,7 +1534,7 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object lblWeight: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
           Width = 174
@@ -1656,54 +1544,41 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object eTailLength: TDBEdit
+        object eTailLength: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'tail_length'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          DecimalPlaces = 1
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eTarsusLength: TDBEdit
+        object eTarsusLength: TFloatSpinEdit
           Left = 206
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'tarsus_length'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          DecimalPlaces = 1
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eTarsusDiameter: TDBEdit
+        object eTarsusDiameter: TFloatSpinEdit
           Left = 396
           Height = 23
           Top = 23
-          Width = 174
-          DataField = 'tarsus_diameter'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          Width = 173
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eWeight: TDBEdit
-          Left = 586
+        object eWeight: TFloatSpinEdit
+          Left = 585
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'weight'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          DecimalPlaces = 1
           TabOrder = 3
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
@@ -1712,7 +1587,7 @@ object edtCapture: TedtCapture
       object pMetrics5: TPanel
         Left = 0
         Height = 46
-        Top = 583
+        Top = 615
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1754,7 +1629,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Total culmen:'
           Font.Color = 6579300
@@ -1762,7 +1637,7 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object lblPhilornisLarvae: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
           Width = 174
@@ -1772,54 +1647,41 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object eBillHeight: TDBEdit
+        object eBillHeight: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'bill_height'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          DecimalPlaces = 1
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eTotalLength: TDBEdit
+        object eTotalLength: TFloatSpinEdit
           Left = 206
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'total_length'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          DecimalPlaces = 1
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eTotalCulmen: TDBEdit
+        object eTotalCulmen: TFloatSpinEdit
           Left = 396
           Height = 23
           Top = 23
-          Width = 174
-          DataField = 'culmen_length'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          Width = 173
+          DecimalPlaces = 1
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object ePhilornisLarvae: TDBEdit
-          Left = 586
+        object ePhilornisLarvae: TSpinEdit
+          Left = 585
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'philornis_larvae_tally'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
           TabOrder = 3
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
@@ -1828,7 +1690,7 @@ object edtCapture: TedtCapture
       object pMetrics4: TPanel
         Left = 0
         Height = 46
-        Top = 537
+        Top = 569
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1870,7 +1732,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Nostril to bill tip:'
           Font.Color = 6579300
@@ -1878,7 +1740,7 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object lblBillWidth: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
           Width = 174
@@ -1888,54 +1750,42 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object eSkullLength: TDBEdit
+        object eSkullLength: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'skull_length'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          DecimalPlaces = 1
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eExposedCulmen: TDBEdit
+        object eExposedCulmen: TFloatSpinEdit
           Left = 206
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'exposed_culmen'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          DecimalPlaces = 1
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eNostrilBillTip: TDBEdit
+        object eNostrilBillTip: TFloatSpinEdit
           Left = 396
           Height = 23
           Top = 23
-          Width = 174
-          DataField = 'nostril_bill_tip'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          Width = 173
+          DecimalPlaces = 1
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eBillWidth: TDBEdit
-          Left = 586
+        object eBillWidth: TFloatSpinEdit
+          Left = 585
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'bill_width'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          DecimalPlaces = 1
           TabOrder = 3
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
@@ -1943,8 +1793,8 @@ object edtCapture: TedtCapture
       end
       object pKippMoltLimitsSkull: TPanel
         Left = 0
-        Height = 49
-        Top = 629
+        Height = 46
+        Top = 661
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1956,7 +1806,7 @@ object edtCapture: TedtCapture
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 13
@@ -1986,7 +1836,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Skull ossification:'
           Font.Color = 6579300
@@ -1994,59 +1844,51 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object Label51: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
-          Width = 173
+          Width = 174
           BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eKippsIndex: TDBEdit
+        object eKippsIndex: TFloatSpinEdit
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
-          DataField = 'kipps_index'
-          DataSource = dsLink
+          EditorEnabled = False
           ReadOnly = True
-          Constraints.MinWidth = 174
-          MaxLength = 0
-          ParentColor = True
-          TabOrder = 0
+          TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eMoltLimits: TDBEditButton
+        object eMoltLimits: TEditButton
           Left = 206
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
           ButtonHint = 'Select molt limits'
-          ButtonWidth = 24
-          ImageIndex = 7
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'molt_limits'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 7
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eMoltLimitsButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object cbSkullOssification: TDBComboBox
+        object cbSkullOssification: TComboBox
           Left = 396
           Height = 23
           Top = 23
-          Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'skull_ossification'
-          DataSource = dsLink
+          Width = 173
           ItemHeight = 15
           Items.Strings = (
             'N'
@@ -2057,16 +1899,15 @@ object edtCapture: TedtCapture
             'A'
             'F'
           )
-          MaxLength = 0
-          TabOrder = 2
+          TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
       end
       object pCycleSex: TPanel
         Left = 0
-        Height = 49
-        Top = 678
+        Height = 46
+        Top = 707
         Width = 775
         Align = alTop
         AutoSize = True
@@ -2078,7 +1919,7 @@ object edtCapture: TedtCapture
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 14
@@ -2108,7 +1949,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Sex:'
           Font.Color = 6579300
@@ -2116,7 +1957,7 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object lblHowSexed: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
           Width = 174
@@ -2126,84 +1967,72 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object eCycleCode: TDBEditButton
+        object eCycleCode: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
           ButtonHint = 'Select molt cycle code'
-          ButtonWidth = 24
-          ImageIndex = 7
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'cycle_code'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 7
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
           OnButtonClick = eCycleCodeButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eHowAged: TDBEditButton
+        object eHowAged: TEditButton
           Left = 206
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
-          ButtonHint = 'Select how was aged'
-          ButtonWidth = 24
-          ImageIndex = 7
+          ButtonHint = 'Select how individual was aged'
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'how_aged'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 7
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
           OnButtonClick = eHowAgedButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object cbSex: TDBComboBox
+        object cbSex: TComboBox
           Left = 396
           Height = 23
           Top = 23
-          Width = 174
-          Constraints.MinWidth = 174
-          DataField = 'subject_sex'
-          DataSource = dsLink
+          Width = 173
           ItemHeight = 15
-          Items.Strings = (
-            'Macho'
-            'Fêmea'
-            'Indeterminado'
-          )
-          MaxLength = 0
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end
-        object eHowSexed: TDBEditButton
-          Left = 586
-          Height = 26
+        object eHowSexed: TEditButton
+          Left = 585
+          Height = 23
           Top = 23
           Width = 174
-          Constraints.MaxHeight = 35
-          Constraints.MinWidth = 174
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 3
-          ButtonHint = 'Select how was sexed'
-          ButtonWidth = 24
-          ImageIndex = 7
+          ButtonHint = 'Select how individual was sexed'
+          ButtonWidth = 23
           Images = DMM.iEdits
-          DataField = 'how_sexed'
-          DataSource = dsLink
-          CharCase = ecNormal
+          ImageIndex = 7
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 3
           OnButtonClick = eHowSexedButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
@@ -2212,7 +2041,7 @@ object edtCapture: TedtCapture
       object pPhotosFieldNumber: TPanel
         Left = 0
         Height = 46
-        Top = 956
+        Top = 979
         Width = 775
         Align = alTop
         AutoSize = True
@@ -2243,7 +2072,7 @@ object edtCapture: TedtCapture
           Left = 206
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Last photo number:'
           Font.Color = 6579300
@@ -2251,7 +2080,7 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object Label60: TLabel
-          Left = 396
+          Left = 395
           Height = 15
           Top = 4
           Width = 174
@@ -2262,7 +2091,7 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object lblFieldNumber: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
           Width = 174
@@ -2272,34 +2101,26 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object eStartPhoto: TDBEdit
+        object eStartPhoto: TEdit
           Left = 16
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'start_photo_number'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eEndPhoto: TDBEdit
+        object eEndPhoto: TEdit
           Left = 206
           Height = 23
           Top = 23
-          Width = 174
-          DataField = 'end_photo_number'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          Width = 173
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
         object Label62: TLabel
-          Left = 396
+          Left = 395
           Height = 23
           Top = 23
           Width = 174
@@ -2309,15 +2130,11 @@ object edtCapture: TedtCapture
           ParentColor = False
           ParentFont = False
         end
-        object eFieldNumber: TDBEdit
-          Left = 586
+        object eFieldNumber: TEdit
+          Left = 585
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'field_number'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
@@ -2326,7 +2143,7 @@ object edtCapture: TedtCapture
       object pHemoglobinGlucose: TPanel
         Left = 0
         Height = 46
-        Top = 1002
+        Top = 1025
         Width = 775
         Align = alTop
         AutoSize = True
@@ -2368,7 +2185,7 @@ object edtCapture: TedtCapture
           Left = 396
           Height = 15
           Top = 4
-          Width = 174
+          Width = 173
           BorderSpacing.Top = 4
           Caption = 'Glucose (mg/dL):'
           Font.Color = 6579300
@@ -2376,53 +2193,102 @@ object edtCapture: TedtCapture
           ParentFont = False
         end
         object Label65: TLabel
-          Left = 586
+          Left = 585
           Height = 15
           Top = 4
-          Width = 173
+          Width = 174
           BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eHemoglobin: TDBEdit
+        object eHemoglobin: TFloatSpinEdit
           Left = 16
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'hemoglobin'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eHematocrit: TDBEdit
+        object eHematocrit: TFloatSpinEdit
           Left = 206
           Height = 23
           Top = 23
           Width = 174
-          DataField = 'hematocrit'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
-        object eGlucose: TDBEdit
+        object eGlucose: TFloatSpinEdit
           Left = 396
           Height = 23
           Top = 23
-          Width = 174
-          DataField = 'glucose'
-          DataSource = dsLink
-          Constraints.MinWidth = 174
-          MaxLength = 0
+          Width = 173
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
+        end
+      end
+      object pIndividual: TPanel
+        Left = 0
+        Height = 46
+        Top = 54
+        Width = 775
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 46
+        ClientWidth = 775
+        ParentBackground = False
+        TabOrder = 21
+        object lblIndividual: TLabel
+          Left = 16
+          Height = 15
+          Top = 4
+          Width = 364
+          BorderSpacing.Top = 4
+          Caption = 'Individual: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblIndividual1: TLabel
+          Left = 396
+          Height = 15
+          Top = 4
+          Width = 363
+          BorderSpacing.Top = 4
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eIndividual: TEditButton
+          Left = 16
+          Height = 23
+          Top = 23
+          Width = 364
+          ButtonHint = 'Find individual'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eIndividualButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eIndividualKeyPress
         end
       end
     end

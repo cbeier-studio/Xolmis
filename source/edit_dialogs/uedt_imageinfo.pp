@@ -21,38 +21,30 @@ unit uedt_imageinfo;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls,
-  Character, DBEditButton, atshapelinebgra;
+  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  ExtCtrls, DBCtrls, Character, DBEditButton, atshapelinebgra, cbs_media;
 
 type
 
   { TedtImageInfo }
 
   TedtImageInfo = class(TForm)
-    cbBandStatus1: TDBComboBox;
-    cbBandStatus2: TDBComboBox;
-    cbLicenseType: TDBComboBox;
+    cbLicenseType: TComboBox;
+    cbImageType: TComboBox;
+    cbCoordinatePrecision: TComboBox;
     dsLink: TDataSource;
-    eImageDate: TDBEditButton;
-    eImageTime: TDBEdit;
-    eImageFilename: TDBEditButton;
-    eLatitude: TDBEditButton;
-    eLicenseNotes: TDBEdit;
-    eLicenseOwner: TDBEdit;
-    eLicenseUri: TDBEdit;
-    eLicenseYear: TDBEdit;
-    eLongitude: TDBEditButton;
-    eTaxon: TDBEditButton;
-    eAuthor: TDBEditButton;
-    eLocality: TDBEditButton;
-    eIndividual: TDBEditButton;
-    eCapture: TDBEditButton;
-    eSurvey: TDBEditButton;
-    eSighting: TDBEditButton;
-    eNest: TDBEditButton;
-    eNestRevision: TDBEditButton;
-    eEgg: TDBEditButton;
-    eSpecimen: TDBEditButton;
+    eLocality: TEditButton;
+    eLongitude: TEditButton;
+    eLatitude: TEditButton;
+    eImageTime: TEdit;
+    eAuthor: TEditButton;
+    eImageDate: TEditButton;
+    eImageFilename: TEditButton;
+    eTaxon: TEditButton;
+    eLicenseYear: TEdit;
+    eLicenseOwner: TEdit;
+    eLicenseNotes: TEdit;
+    eLicenseUri: TEdit;
     lblLatitude: TLabel;
     lblImageDate: TLabel;
     lblLicenseNotes: TLabel;
@@ -65,20 +57,12 @@ type
     lblCoordinatesPrecision: TLabel;
     lblImageTime: TLabel;
     lblSubtitle: TLabel;
-    lblIndividual: TLabel;
-    lblCapture: TLabel;
-    lblSurvey: TLabel;
-    lblSighting: TLabel;
     lblImageFilename: TLabel;
-    lblSpecimen: TLabel;
-    lblEgg: TLabel;
-    lblNestRevision: TLabel;
-    lblNest: TLabel;
     lblAuthor: TLabel;
     lblTaxon: TLabel;
     lblLocality: TLabel;
     lineBottom: TShapeLineBGRA;
-    mSubtitle: TDBMemo;
+    mSubtitle: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
     pLicenseNotes: TPanel;
@@ -87,15 +71,7 @@ type
     pLicenseUri: TPanel;
     pSubtitle: TPanel;
     pDateTime: TPanel;
-    pIndividual: TPanel;
-    pCapture: TPanel;
-    pSurvey: TPanel;
-    pSighting: TPanel;
     pImageFilename: TPanel;
-    pSpecimen: TPanel;
-    pEgg: TPanel;
-    pNestRevision: TPanel;
-    pNest: TPanel;
     pAuthor: TPanel;
     pTaxon: TPanel;
     pLongitudeLatitude: TPanel;
@@ -107,42 +83,46 @@ type
     sbSave: TButton;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAuthorButtonClick(Sender: TObject);
-    procedure eAuthorDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure eCaptureButtonClick(Sender: TObject);
-    procedure eCaptureDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure eEggButtonClick(Sender: TObject);
-    procedure eEggDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eAuthorKeyPress(Sender: TObject; var Key: char);
     procedure eImageDateButtonClick(Sender: TObject);
+    procedure eImageDateEditingDone(Sender: TObject);
     procedure eImageFilenameButtonClick(Sender: TObject);
     procedure eImageTimeKeyPress(Sender: TObject; var Key: char);
-    procedure eIndividualButtonClick(Sender: TObject);
-    procedure eIndividualDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eLocalityButtonClick(Sender: TObject);
-    procedure eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eLocalityKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
-    procedure eNestButtonClick(Sender: TObject);
-    procedure eNestDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure eNestRevisionButtonClick(Sender: TObject);
-    procedure eNestRevisionDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure eSightingButtonClick(Sender: TObject);
-    procedure eSightingDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure eSpecimenButtonClick(Sender: TObject);
-    procedure eSpecimenDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure eSurveyButtonClick(Sender: TObject);
-    procedure eSurveyDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eTaxonButtonClick(Sender: TObject);
-    procedure eTaxonDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure eTaxonKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FImage: TImageData;
+    FAuthorId, FLocalityId, FTaxonId, FCaptureId, FIndividualId: Integer;
+    FSurveyId, FSightingId, FNestId, FNestRevisionId, FEggId: Integer;
+    FSpecimenId: Integer;
+    procedure SetImage(Value: TImageData);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property Image: TImageData read FImage write SetImage;
+    property TaxonId: Integer read FTaxonId write FTaxonId;
+    property LocalityId: Integer read FLocalityId write FLocalityId;
+    property IndividualId: Integer read FIndividualId write FIndividualId;
+    property CaptureId: Integer read FCaptureId write FCaptureId;
+    property SurveyId: Integer read FSurveyId write FSurveyId;
+    property SightingId: Integer read FSightingId write FSightingId;
+    property NestId: Integer read FNestId write FNestId;
+    property NestRevisionId: Integer read FNestRevisionId write FNestRevisionId;
+    property EggId: Integer read FEggId write FEggId;
+    property SpecimenId: Integer read FSpecimenId write FSpecimenId;
   end;
 
 var
@@ -151,8 +131,8 @@ var
 implementation
 
 uses
-  cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
-  udm_main, uDarkStyleParams;
+  cbs_global, cbs_locale, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
+  cbs_getvalue, cbs_conversions, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -167,121 +147,66 @@ begin
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
   eTaxon.Images := DMM.iEditsDark;
-  eIndividual.Images := DMM.iEditsDark;
-  eCapture.Images := DMM.iEditsDark;
-  eSurvey.Images := DMM.iEditsDark;
-  eSighting.Images := DMM.iEditsDark;
-  eNest.Images := DMM.iEditsDark;
-  eNestRevision.Images := DMM.iEditsDark;
-  eEgg.Images := DMM.iEditsDark;
-  eSpecimen.Images := DMM.iEditsDark;
 end;
 
 procedure TedtImageInfo.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtImageInfo.eAuthorButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eAuthor, dsLink.DataSet, 'author_id', 'author_name');
+  FindDlg(tbPeople, eAuthor, FAuthorId);
 end;
 
-procedure TedtImageInfo.eAuthorDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtImageInfo.eAuthorKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbPeople, eAuthor, dsLink.DataSet, 'author_id', 'author_name', False, Key);
+    FindDlg(tbPeople, eAuthor, FAuthorId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('author_id').Clear;
+    FAuthorId := 0;
+    eAuthor.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
-
-procedure TedtImageInfo.eCaptureButtonClick(Sender: TObject);
-begin
-  FindDlg(tbCaptures, eCapture, dsLink.DataSet, 'capture_id', 'capture_name');
-end;
-
-procedure TedtImageInfo.eCaptureDBEditKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
-  begin
-    FindDlg(tbCaptures, eCapture, dsLink.DataSet, 'capture_id', 'capture_name', False, Key);
-    Key := #0;
-  end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    dsLink.DataSet.FieldByName('capture_id').Clear;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
-
-procedure TedtImageInfo.eEggButtonClick(Sender: TObject);
-begin
-  FindDlg(tbEggs, eEgg, dsLink.DataSet, 'egg_id', 'egg_name');
-end;
-
-procedure TedtImageInfo.eEggDBEditKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
-  begin
-    FindDlg(tbEggs, eEgg, dsLink.DataSet, 'egg_id', 'egg_name', False, Key);
-    Key := #0;
-  end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    dsLink.DataSet.FieldByName('egg_id').Clear;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtImageInfo.eImageDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
 begin
-  CalendarDlg(eImageDate, dsLink.DataSet, 'image_date');
+  CalendarDlg(eImageDate.Text, eImageDate, Dt);
+end;
+
+procedure TedtImageInfo.eImageDateEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtImageInfo.eImageFilenameButtonClick(Sender: TObject);
 begin
   DMM.OpenImgs.InitialDir := XSettings.LastPathUsed;
   if DMM.OpenImgs.Execute then
-    dsLink.DataSet.FieldByName('image_filename').AsString := DMM.OpenImgs.FileName;
+    eImageFilename.Text := DMM.OpenImgs.FileName;
 end;
 
 procedure TedtImageInfo.eImageTimeKeyPress(Sender: TObject; var Key: char);
@@ -291,252 +216,166 @@ begin
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
-
-procedure TedtImageInfo.eIndividualButtonClick(Sender: TObject);
-begin
-  FindDlg(tbIndividuals, eIndividual, dsLink.DataSet, 'individual_id', 'individual_name');
-end;
-
-procedure TedtImageInfo.eIndividualDBEditKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
-  begin
-    FindDlg(tbIndividuals, eIndividual, dsLink.DataSet, 'individual_id', 'individual_name', False, Key);
-    Key := #0;
-  end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    dsLink.DataSet.FieldByName('individual_id').Clear;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtImageInfo.eLocalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name');
+  FindSiteDlg([gfAll], eLocality, FLocalityId);
 end;
 
-procedure TedtImageInfo.eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtImageInfo.eLocalityKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name', Key);
+    FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('locality_id').Clear;
+    FLocalityId := 0;
+    eLocality.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtImageInfo.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'longitude', 'latitude');
+  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
-procedure TedtImageInfo.eNestButtonClick(Sender: TObject);
-begin
-  FindDlg(tbNests, eNest, dsLink.DataSet, 'nest_id', 'nest_name');
-end;
-
-procedure TedtImageInfo.eNestDBEditKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
-  begin
-    FindDlg(tbNests, eNest, dsLink.DataSet, 'nest_id', 'nest_name', False, Key);
-    Key := #0;
-  end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    dsLink.DataSet.FieldByName('nest_id').Clear;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
-
-procedure TedtImageInfo.eNestRevisionButtonClick(Sender: TObject);
-begin
-  FindDlg(tbNestRevisions, eNestRevision, dsLink.DataSet, 'nest_revision_id', 'nest_revision_name');
-end;
-
-procedure TedtImageInfo.eNestRevisionDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtImageInfo.eLongitudeKeyPress(Sender: TObject; var Key: char);
+const
+  AllowedChars = ['0'..'9', ',', '.', '+', '-', #8, #13, #27];
+var
+  EditText: String;
+  PosDecimal: Integer;
+  DecimalValue: Extended;
 begin
   FormKeyPress(Sender, Key);
 
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
+  EditText := EmptyStr;
+  PosDecimal := 0;
+  DecimalValue := 0;
+
+  if not (Key in AllowedChars) then
   begin
-    FindDlg(tbNestRevisions, eNestRevision, dsLink.DataSet, 'nest_revision_id', 'nest_revision_name',
-      False, Key);
     Key := #0;
+    Exit;
   end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    dsLink.DataSet.FieldByName('nest_revision_id').Clear;
-    Key := #0;
-  end;
+
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
+    Exit;
   end;
-end;
 
-procedure TedtImageInfo.eSightingButtonClick(Sender: TObject);
-begin
-  FindDlg(tbSightings, eSighting, dsLink.DataSet, 'sighting_id', 'sighting_name');
-end;
+  if (Sender is TEdit) then
+    EditText := TEdit(Sender).Text
+  else
+  if (Sender is TEditButton) then
+    EditText := TEditButton(Sender).Text;
+  PosDecimal := Pos(FormatSettings.DecimalSeparator, EditText);
 
-procedure TedtImageInfo.eSightingDBEditKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
+  // Decimal separator
+  if (Key in [',', '.']) then
   begin
-    FindDlg(tbSightings, eSighting, dsLink.DataSet, 'sighting_id', 'sighting_name', False, Key);
-    Key := #0;
+    if (PosDecimal = 0) then
+      Key := FormatSettings.DecimalSeparator
+    else
+      Key := #0;
+    Exit;
   end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    dsLink.DataSet.FieldByName('sighting_id').Clear;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
 
-procedure TedtImageInfo.eSpecimenButtonClick(Sender: TObject);
-begin
-  FindDlg(tbSpecimens, eSpecimen, dsLink.DataSet, 'specimen_id', 'specimen_name');
-end;
+  // Numeric signal
+  if (Key in ['+', '-']) then
+  begin
+    if (Length(EditText) > 0) then
+    begin
+      if TryStrToFloat(EditText, DecimalValue) then
+      begin
+        if ((DecimalValue > 0) and (Key = '-')) or ((DecimalValue < 0) and (Key = '+')) then
+          DecimalValue := DecimalValue * -1.0;
+        EditText := FloatToStr(DecimalValue);
 
-procedure TedtImageInfo.eSpecimenDBEditKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
+        if (Sender is TEdit) then
+        begin
+          TEdit(Sender).Text := EditText;
+          TEdit(Sender).SelStart := Length(EditText);
+        end
+        else
+        if (Sender is TEditButton) then
+        begin
+          TEditButton(Sender).Text := EditText;
+          TEditButton(Sender).SelStart := Length(EditText);
+        end;
+      end;
+      Key := #0;
+    end
+    else
+    begin
+      if (Key = '+') then
+        Key := #0;
+    end;
 
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
-  begin
-    FindDlg(tbSpecimens, eSpecimen, dsLink.DataSet, 'specimen_id', 'specimen_name', False, Key);
-    Key := #0;
-  end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    dsLink.DataSet.FieldByName('specimen_id').Clear;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
-
-procedure TedtImageInfo.eSurveyButtonClick(Sender: TObject);
-begin
-  FindDlg(tbSurveys, eSurvey, dsLink.DataSet, 'survey_id', 'survey_name');
-end;
-
-procedure TedtImageInfo.eSurveyDBEditKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
-  begin
-    FindDlg(tbSurveys, eSurvey, dsLink.DataSet, 'survey_id', 'survey_name', False, Key);
-    Key := #0;
-  end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    dsLink.DataSet.FieldByName('survey_id').Clear;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
+    Exit;
   end;
 end;
 
 procedure TedtImageInfo.eTaxonButtonClick(Sender: TObject);
 begin
-  FindTaxonDlg([tfAll], eTaxon, dsLink.DataSet, 'taxon_id', 'taxon_name', True);
+  FindTaxonDlg([tfAll], eTaxon, True, FTaxonId);
 end;
 
-procedure TedtImageInfo.eTaxonDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtImageInfo.eTaxonKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindTaxonDlg([tfAll], eTaxon, dsLink.DataSet, 'taxon_id', 'taxon_name', True, Key);
+    FindTaxonDlg([tfAll], eTaxon, True, FTaxonId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('taxon_id').Clear;
+    FTaxonId := 0;
+    eTaxon.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtImageInfo.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtImageInfo.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -545,7 +384,7 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);
@@ -567,14 +406,79 @@ procedure TedtImageInfo.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  if not FIsNew then
+    GetRecord;
+end;
+
+procedure TedtImageInfo.GetRecord;
+begin
+  mSubtitle.Text := FImage.Subtitle;
+  FAuthorId := FImage.AuthorId;
+  eAuthor.Text := GetName('people', 'full_name', 'person_id', FAuthorId);
+  eImageDate.Text := DateToStr(FImage.ImageDate);
+  eImageTime.Text := TimeToStr(FImage.ImageTime);
+  case FImage.ImageType of
+    itBirdInHandFlank: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdInHandFlank);
+    itBirdInHandBelly: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdInHandBelly);
+    itBirdInHandBack: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdInHandBack);
+    itBirdInHandWing: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdInHandWing);
+    itBirdInHandTail: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdInHandTail);
+    itBirdInHandHead: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdInHandHead);
+    itBirdInHandFeet: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdInHandFeet);
+    itFreeBirdStanding: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFreeBirdStanding);
+    itFreeBirdFlying: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFreeBirdFlying);
+    itFreeBirdSwimming: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFreeBirdSwimming);
+    itFreeBirdForraging: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFreeBirdForraging);
+    itFreeBirdCopulating: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFreeBirdCopulating);
+    itFreeBirdBuildingNest: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFreeBirdBuildingNest);
+    itFreeBirdDisplaying: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFreeBirdDisplaying);
+    itFreeBirdIncubating: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFreeBirdIncubating);
+    itFreeBirdVocalizing: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFreeBirdVocalizing);
+    itFreeBirdAgonistic: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFreeBirdAgonistic);
+    itDeadBird: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsDeadBird);
+    itBirdFlock: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdFlock);
+    itBirdNest: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdNest);
+    itBirdEgg: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdEgg);
+    itBirdNestling: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdNestling);
+    itEctoparasite: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsEctoparasite);
+    itFootprint: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFootprint);
+    itFeather: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFeather);
+    itFeces: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFeces);
+    itFood: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFood);
+    itEnvironment: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsEnvironment);
+    itFieldwork: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsFieldwork);
+    itTeam: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsTeam);
+  else
+    cbImageType.ItemIndex := -1;
+  end;
+  eImageFilename.Text := FImage.Filename;
+  FLocalityId := FImage.LocalityId;
+  eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+  case FImage.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
+  end;
+  eLongitude.Text := FloatToStr(FImage.Longitude);
+  eLatitude.Text := FloatToStr(FImage.Latitude);
+  FTaxonId := FImage.TaxonId;
+  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FImage.LicenseType);
+  eLicenseYear.Text := IntToStr(FImage.LicenseYear);
+  eLicenseOwner.Text := FImage.LicenseOwner;
+  eLicenseNotes.Text := FImage.LicenseNotes;
+  eLicenseUri.Text := FImage.LicenseUri;
 end;
 
 function TedtImageInfo.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('image_date').IsNull = False) and
-    (dsLink.DataSet.FieldByName('image_filename').AsString <> EmptyStr) then
+  if (eImageDate.Text <> EmptyStr) and
+    (eImageFilename.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -584,7 +488,75 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtImageInfo.SetImage(Value: TImageData);
+begin
+  if Assigned(Value) then
+    FImage := Value;
+end;
+
+procedure TedtImageInfo.SetRecord;
+begin
+  FImage.Subtitle  := mSubtitle.Text;
+  FImage.AuthorId  := FAuthorId;
+  FImage.ImageDate := TextToDate(eImageDate.Text);
+  FImage.ImageTime := TextToTime(eImageTime.Text);
+  case cbImageType.ItemIndex of
+    0: FImage.ImageType := itBirdInHandFlank;
+    1: FImage.ImageType := itBirdInHandBelly;
+    2: FImage.ImageType := itBirdInHandBack;
+    3: FImage.ImageType := itBirdInHandWing;
+    4: FImage.ImageType := itBirdInHandTail;
+    5: FImage.ImageType := itBirdInHandHead;
+    6: FImage.ImageType := itBirdInHandFeet;
+    7: FImage.ImageType := itFreeBirdStanding;
+    8: FImage.ImageType := itFreeBirdFlying;
+    9: FImage.ImageType := itFreeBirdSwimming;
+   10: FImage.ImageType := itFreeBirdForraging;
+   11: FImage.ImageType := itFreeBirdCopulating;
+   12: FImage.ImageType := itFreeBirdBuildingNest;
+   13: FImage.ImageType := itFreeBirdDisplaying;
+   14: FImage.ImageType := itFreeBirdIncubating;
+   15: FImage.ImageType := itFreeBirdVocalizing;
+   16: FImage.ImageType := itFreeBirdAgonistic;
+   17: FImage.ImageType := itDeadBird;
+   18: FImage.ImageType := itBirdFlock;
+   19: FImage.ImageType := itBirdNest;
+   20: FImage.ImageType := itBirdEgg;
+   21: FImage.ImageType := itBirdNestling;
+   22: FImage.ImageType := itEctoparasite;
+   23: FImage.ImageType := itFootprint;
+   24: FImage.ImageType := itFeather;
+   25: FImage.ImageType := itFeces;
+   26: FImage.ImageType := itFood;
+   27: FImage.ImageType := itEnvironment;
+   28: FImage.ImageType := itFieldwork;
+   29: FImage.ImageType := itTeam;
+  else
+    FImage.ImageType := itEmpty;
+  end;
+  FImage.Filename   := eImageFilename.Text;
+  FImage.LocalityId := FLocalityId;
+  case cbCoordinatePrecision.ItemIndex of
+    0: FImage.CoordinatePrecision := cpExact;
+    1: FImage.CoordinatePrecision := cpApproximated;
+    2: FImage.CoordinatePrecision := cpReference;
+  else
+    FImage.CoordinatePrecision := cpEmpty;
+  end;
+  FImage.Longitude := StrToFloatOrZero(eLongitude.Text);
+  FImage.Latitude  := StrToFloatOrZero(eLatitude.Text);
+  FImage.TaxonId   := FTaxonId;
+
+  FImage.LicenseType  := cbLicenseType.Text;
+  FImage.LicenseYear  := StrToIntOrZero(eLicenseYear.Text);
+  FImage.LicenseOwner := eLicenseOwner.Text;
+  FImage.LicenseNotes := eLicenseNotes.Text;
+  FImage.LicenseUri   := eLicenseUri.Text;
 end;
 
 function TedtImageInfo.ValidateFields: Boolean;
@@ -595,8 +567,8 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  RequiredIsEmpty(dsLink.DataSet, tbImages, 'image_date', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbImages, 'image_filename', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbImages, 'image_date', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbImages, 'image_filename', Msgs);
 
   if Msgs.Count > 0 then
   begin

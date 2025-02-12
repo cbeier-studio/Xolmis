@@ -12,7 +12,7 @@
 {"hash":33581481,"name":"tedtnestrevision.erevisiondate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
 {"hash":5029661,"name":"tedtnestrevision.erevisiontime.texthint","sourcebytes":[72,72,58,77,77],"value":"HH:MM"},
 {"hash":198941370,"name":"tedtnestrevision.lblnidoparasite.caption","sourcebytes":[78,105,100,111,112,97,114,97,115,105,116,101,32,116,97,120,111,110,58],"value":"Nidoparasite taxon:"},
-{"hash":149995006,"name":"tedtnestrevision.enidoparasite.buttonhint","sourcebytes":[70,105,110,100,32,110,105,100,111,112,97,114,97,115,105,116,101,32,116,97,120,111,110],"value":"Find nidoparasite taxon"},
+{"hash":108945182,"name":"tedtnestrevision.enidoparasite.buttonhint","sourcebytes":[70,105,110,100,32,116,97,120,111,110],"value":"Find taxon"},
 {"hash":165316026,"name":"tedtnestrevision.lblobserver1.caption","sourcebytes":[79,98,115,101,114,118,101,114,32,49,58,32,42],"value":"Observer 1: *"},
 {"hash":161077914,"name":"tedtnestrevision.lblobserver2.caption","sourcebytes":[79,98,115,101,114,118,101,114,32,50,58],"value":"Observer 2:"},
 {"hash":77134802,"name":"tedtnestrevision.eobserver1.buttonhint","sourcebytes":[70,105,110,100,32,111,98,115,101,114,118,101,114],"value":"Find observer"},

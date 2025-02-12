@@ -151,7 +151,7 @@ begin
     tbNone:           DS := nil;
     tbBands:          DS := DMG.dsBands;
     tbGazetteer:      DS := DMG.dsGazetteer;
-    tbSamplingPlots:    DS := DMG.dsSamplingPlots;
+    tbSamplingPlots:  DS := DMG.dsSamplingPlots;
     tbPermanentNets:  DS := DMG.dsPermanentNets;
     tbInstitutions:   DS := DMG.dsInstitutions;
     tbPeople:         DS := DMG.dsPeople;

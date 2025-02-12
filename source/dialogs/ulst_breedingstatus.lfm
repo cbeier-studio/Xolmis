@@ -1,13 +1,12 @@
 object lstBreedingStatus: TlstBreedingStatus
   Left = 352
-  Height = 710
+  Height = 638
   Top = 33
   Width = 334
-  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Breeding and behavior code'
-  ClientHeight = 710
+  ClientHeight = 638
   ClientWidth = 334
   PopupMode = pmAuto
   Position = poOwnerFormCenter
@@ -17,7 +16,7 @@ object lstBreedingStatus: TlstBreedingStatus
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 669
+    Top = 597
     Width = 334
     Align = alBottom
     AutoSize = True
@@ -56,57 +55,10 @@ object lstBreedingStatus: TlstBreedingStatus
       OnKeyPress = FormKeyPress
     end
   end
-  object cklBreed: TCheckListBox
-    Left = 8
-    Height = 608
-    Top = 8
-    Width = 318
-    Align = alClient
-    BorderSpacing.Around = 8
-    Constraints.MinHeight = 608
-    Constraints.MinWidth = 318
-    Items.Strings = (
-      'Confirmed'
-      'NY - Nest with Young'
-      'NE - Nest with Eggs'
-      'FS - carrying Fecal Sac'
-      'FY - Feeding Young'
-      'CF - Carrying Food'
-      'FL - recently Fledged young'
-      'ON - Occupied Nest'
-      'UN - Used Nest'
-      'DD - Distraction Display'
-      'Confirmed/Probable'
-      'NB - Nest Building'
-      'CN - Carrying Nesting material'
-      'Probable'
-      'PE - Physiological Evidence'
-      'B - wren/woodpecker nest Building'
-      'A - Agitated behavior'
-      'N - visiting probable Nest site'
-      'C - Sourtship, display or copulation'
-      'T - Territorial defense'
-      'P - Pair in suitable habitat'
-      'M - Multiple singing birds (7+)'
-      'S7 - Singing bird present 7+ days'
-      'Possible'
-      'S - Singing bird'
-      'H - in appropriate Habitat'
-      'Observed'
-      'F - Flyover'
-    )
-    ItemHeight = 21
-    TabOrder = 1
-    OnClickCheck = cklBreedClickCheck
-    OnKeyPress = FormKeyPress
-    Data = {
-      1C00000000000000000000000000000000000000000000000000000000000000
-    }
-  end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 667
+    Top = 595
     Width = 334
     Align = alBottom
     LineColor = 9276813
@@ -116,7 +68,7 @@ object lstBreedingStatus: TlstBreedingStatus
   object pCode: TBCPanel
     Left = 8
     Height = 35
-    Top = 624
+    Top = 552
     Width = 318
     Align = alBottom
     BorderSpacing.Left = 8
@@ -155,6 +107,24 @@ object lstBreedingStatus: TlstBreedingStatus
     ParentBackground = False
     Rounding.RoundX = 8
     Rounding.RoundY = 8
+    TabOrder = 1
+  end
+  object vtBreeding: TLazVirtualStringTree
+    Left = 8
+    Height = 536
+    Top = 8
+    Width = 318
+    Align = alClient
+    BorderSpacing.Around = 8
+    DefaultText = 'Node'
+    Header.AutoSizeIndex = 0
+    Header.Columns = <>
+    Header.MainColumn = -1
     TabOrder = 2
+    TreeOptions.MiscOptions = [toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
+    OnChecked = vtBreedingChecked
+    OnGetText = vtBreedingGetText
+    OnInitChildren = vtBreedingInitChildren
+    OnInitNode = vtBreedingInitNode
   end
 end

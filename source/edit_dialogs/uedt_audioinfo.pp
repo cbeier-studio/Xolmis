@@ -5,45 +5,39 @@ unit uedt_audioinfo;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, DBCtrls, dbeditbutton,
-  Character, atshapelinebgra;
+  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, ExtCtrls, DBCtrls, dbeditbutton, Character, atshapelinebgra, cbs_media;
 
 type
 
   { TedtAudioInfo }
 
   TedtAudioInfo = class(TForm)
-    cbAudioType: TDBComboBox;
-    cbLicenseType: TDBComboBox;
-    ckPlaybackUsed: TDBCheckBox;
-    cbPrecipitation: TDBComboBox;
-    eLicenseNotes: TDBEdit;
-    eLicenseOwner: TDBEdit;
-    eLicenseUri: TDBEdit;
-    eLicenseYear: TDBEdit;
-    eSubjectsTally: TDBEdit;
-    eDistance: TDBEdit;
-    eTemperature: TDBEdit;
-    eCloudCover: TDBEdit;
-    eWindSpeed: TDBEdit;
-    eRelativeHumidity: TDBEdit;
-    eFilterModel: TDBEdit;
-    eHabitat: TDBEdit;
-    eRecordingContext: TDBEdit;
-    eRecorderModel: TDBEdit;
+    ckPlaybackUsed: TCheckBox;
+    cbLicenseType: TComboBox;
+    cbPrecipitation: TComboBox;
+    cbAudioType: TComboBox;
+    eAuthor: TEditButton;
+    eRecordingTime: TEdit;
+    eRecordingDate: TEditButton;
+    eLongitude: TEditButton;
+    eLatitude: TEditButton;
+    eLocality: TEditButton;
+    eAudioFile: TEditButton;
+    eTaxon: TEditButton;
+    eRecordingContext: TEdit;
+    eFilterModel: TEdit;
+    eMicModel: TEdit;
+    eRecorderModel: TEdit;
+    eHabitat: TEdit;
+    eLicenseNotes: TEdit;
+    eLicenseUri: TEdit;
+    eLicenseYear: TEdit;
+    eLicenseOwner: TEdit;
     dsLink: TDataSource;
-    eAuthor: TDBEditButton;
-    eRecordingDate: TDBEditButton;
-    eAudioFile: TDBEditButton;
-    eRecordingTime: TDBEdit;
-    eIndividual: TDBEditButton;
-    eLatitude: TDBEditButton;
-    eLocality: TDBEditButton;
-    eLongitude: TDBEditButton;
-    eMicModel: TDBEdit;
-    eSighting: TDBEditButton;
-    eSpecimen: TDBEditButton;
-    eTaxon: TDBEditButton;
+    eRelativeHumidity: TFloatSpinEdit;
+    eTemperature: TFloatSpinEdit;
+    eDistance: TFloatSpinEdit;
     lblHabitat: TLabel;
     lblLatitude: TLabel;
     lblDistance: TLabel;
@@ -65,10 +59,7 @@ type
     lblAudioType: TLabel;
     lblRecordingTime: TLabel;
     lblNotes1: TLabel;
-    lblIndividual: TLabel;
-    lblSighting: TLabel;
     lblAudioFile: TLabel;
-    lblSpecimen: TLabel;
     lblAuthor: TLabel;
     lblTaxon: TLabel;
     lblRecorderModel: TLabel;
@@ -76,7 +67,7 @@ type
     lblFilterModel: TLabel;
     lblLocality: TLabel;
     lineBottom: TShapeLineBGRA;
-    mSubtitle: TDBMemo;
+    mSubtitle: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
     pHabitat: TPanel;
@@ -91,10 +82,7 @@ type
     pRecordingContext: TPanel;
     pSubtitle: TPanel;
     pDateTime: TPanel;
-    pIndividual: TPanel;
-    pSighting: TPanel;
     pAudioFile: TPanel;
-    pSpecimen: TPanel;
     pAuthor: TPanel;
     pTaxon: TPanel;
     pRecorderModel: TPanel;
@@ -106,33 +94,46 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    eWindSpeed: TSpinEdit;
+    eCloudCover: TSpinEdit;
+    eSubjectsTally: TSpinEdit;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAudioFileButtonClick(Sender: TObject);
     procedure eAuthorButtonClick(Sender: TObject);
-    procedure eAuthorDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure eIndividualButtonClick(Sender: TObject);
-    procedure eIndividualDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eAuthorKeyPress(Sender: TObject; var Key: char);
     procedure eLocalityButtonClick(Sender: TObject);
-    procedure eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eLocalityKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
+    procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eRecordingDateButtonClick(Sender: TObject);
+    procedure eRecordingDateEditingDone(Sender: TObject);
     procedure eRecordingTimeKeyPress(Sender: TObject; var Key: char);
-    procedure eSightingButtonClick(Sender: TObject);
-    procedure eSightingDBEditKeyPress(Sender: TObject; var Key: char);
-    procedure eSpecimenButtonClick(Sender: TObject);
-    procedure eSpecimenDBEditKeyPress(Sender: TObject; var Key: char);
     procedure eTaxonButtonClick(Sender: TObject);
-    procedure eTaxonDBEditKeyPress(Sender: TObject; var Key: char);
+    procedure eTaxonKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FIsNew: Boolean;
+    FAudio: TAudioData;
+    FAuthorId, FLocalityId, FTaxonId, FIndividualId: Integer;
+    FSurveyId, FSightingId, FSpecimenId: Integer;
+    procedure SetAudio(Value: TAudioData);
+    procedure GetRecord;
+    procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property IsNewRecord: Boolean read FIsNew write FIsNew default False;
+    property AudioRecording: TAudioData read FAudio write SetAudio;
+    property TaxonId: Integer read FTaxonId write FTaxonId;
+    property LocalityId: Integer read FLocalityId write FLocalityId;
+    property IndividualId: Integer read FIndividualId write FIndividualId;
+    property SurveyId: Integer read FSurveyId write FSurveyId;
+    property SightingId: Integer read FSightingId write FSightingId;
+    property SpecimenId: Integer read FSpecimenId write FSpecimenId;
   end;
 
 var
@@ -142,7 +143,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
-  udm_main, uDarkStyleParams;
+  cbs_sampling, cbs_getvalue, cbs_conversions, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -157,109 +158,85 @@ begin
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
   eTaxon.Images := DMM.iEditsDark;
-  eIndividual.Images := DMM.iEditsDark;
-  eSighting.Images := DMM.iEditsDark;
-  eSpecimen.Images := DMM.iEditsDark;
 end;
 
 procedure TedtAudioInfo.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
-  if dsLink.State = dsEdit then
-    sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  else
-    sbSave.Enabled := IsRequiredFilled;
+  //if dsLink.State = dsEdit then
+  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
+  //else
+  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtAudioInfo.eAudioFileButtonClick(Sender: TObject);
 begin
   DMM.OpenAudios.InitialDir := XSettings.LastPathUsed;
   if DMM.OpenAudios.Execute then
-    dsLink.DataSet.FieldByName('audio_file').AsString := DMM.OpenAudios.FileName;
+    eAudioFile.Text := DMM.OpenAudios.FileName;
 end;
 
 procedure TedtAudioInfo.eAuthorButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eAuthor, dsLink.DataSet, 'recorder_id', 'recorder_name');
+  FindDlg(tbPeople, eAuthor, FAuthorId);
 end;
 
-procedure TedtAudioInfo.eAuthorDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtAudioInfo.eAuthorKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbPeople, eAuthor, dsLink.DataSet, 'author_id', 'author_name', False, Key);
+    FindDlg(tbPeople, eAuthor, FAuthorId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('author_id').Clear;
+    FAuthorId := 0;
+    eAuthor.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
-
-procedure TedtAudioInfo.eIndividualButtonClick(Sender: TObject);
-begin
-  FindDlg(tbIndividuals, eIndividual, dsLink.DataSet, 'individual_id', 'individual_name');
-end;
-
-procedure TedtAudioInfo.eIndividualDBEditKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
-  begin
-    FindDlg(tbIndividuals, eIndividual, dsLink.DataSet, 'individual_id', 'individual_name', False, Key);
-    Key := #0;
-  end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    dsLink.DataSet.FieldByName('individual_id').Clear;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtAudioInfo.eLocalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name');
+  FindSiteDlg([gfAll], eLocality, FLocalityId);
 end;
 
-procedure TedtAudioInfo.eLocalityDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtAudioInfo.eLocalityKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindSiteDlg([gfAll], eLocality, dsLink.DataSet, 'locality_id', 'locality_name', Key);
+    FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('locality_id').Clear;
+    FLocalityId := 0;
+    eLocality.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
@@ -269,9 +246,99 @@ begin
   GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'longitude', 'latitude');
 end;
 
-procedure TedtAudioInfo.eRecordingDateButtonClick(Sender: TObject);
+procedure TedtAudioInfo.eLongitudeKeyPress(Sender: TObject; var Key: char);
+const
+  AllowedChars = ['0'..'9', ',', '.', '+', '-', #8, #13, #27];
+var
+  EditText: String;
+  PosDecimal: Integer;
+  DecimalValue: Extended;
 begin
-  CalendarDlg(eRecordingDate, dsLink.DataSet, 'recording_date');
+  FormKeyPress(Sender, Key);
+
+  EditText := EmptyStr;
+  PosDecimal := 0;
+  DecimalValue := 0;
+
+  if not (Key in AllowedChars) then
+  begin
+    Key := #0;
+    Exit;
+  end;
+
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+    Exit;
+  end;
+
+  if (Sender is TEdit) then
+    EditText := TEdit(Sender).Text
+  else
+  if (Sender is TEditButton) then
+    EditText := TEditButton(Sender).Text;
+  PosDecimal := Pos(FormatSettings.DecimalSeparator, EditText);
+
+  // Decimal separator
+  if (Key in [',', '.']) then
+  begin
+    if (PosDecimal = 0) then
+      Key := FormatSettings.DecimalSeparator
+    else
+      Key := #0;
+    Exit;
+  end;
+
+  // Numeric signal
+  if (Key in ['+', '-']) then
+  begin
+    if (Length(EditText) > 0) then
+    begin
+      if TryStrToFloat(EditText, DecimalValue) then
+      begin
+        if ((DecimalValue > 0) and (Key = '-')) or ((DecimalValue < 0) and (Key = '+')) then
+          DecimalValue := DecimalValue * -1.0;
+        EditText := FloatToStr(DecimalValue);
+
+        if (Sender is TEdit) then
+        begin
+          TEdit(Sender).Text := EditText;
+          TEdit(Sender).SelStart := Length(EditText);
+        end
+        else
+        if (Sender is TEditButton) then
+        begin
+          TEditButton(Sender).Text := EditText;
+          TEditButton(Sender).SelStart := Length(EditText);
+        end;
+      end;
+      Key := #0;
+    end
+    else
+    begin
+      if (Key = '+') then
+        Key := #0;
+    end;
+
+    Exit;
+  end;
+end;
+
+procedure TedtAudioInfo.eRecordingDateButtonClick(Sender: TObject);
+var
+  Dt: TDate;
+begin
+  CalendarDlg(eRecordingDate.Text, eRecordingDate, Dt);
+end;
+
+procedure TedtAudioInfo.eRecordingDateEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtAudioInfo.eRecordingTimeKeyPress(Sender: TObject; var Key: char);
@@ -281,94 +348,43 @@ begin
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
-
-procedure TedtAudioInfo.eSightingButtonClick(Sender: TObject);
-begin
-  FindDlg(tbSightings, eSighting, dsLink.DataSet, 'sighting_id', 'sighting_name');
-end;
-
-procedure TedtAudioInfo.eSightingDBEditKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
-  begin
-    FindDlg(tbSightings, eSighting, dsLink.DataSet, 'sighting_id', 'sighting_name', False, Key);
-    Key := #0;
-  end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    dsLink.DataSet.FieldByName('sighting_id').Clear;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
-
-procedure TedtAudioInfo.eSpecimenButtonClick(Sender: TObject);
-begin
-  FindDlg(tbSpecimens, eSpecimen, dsLink.DataSet, 'specimen_id', 'specimen_name');
-end;
-
-procedure TedtAudioInfo.eSpecimenDBEditKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
-  begin
-    FindDlg(tbSpecimens, eSpecimen, dsLink.DataSet, 'specimen_id', 'specimen_name', False, Key);
-    Key := #0;
-  end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    dsLink.DataSet.FieldByName('specimen_id').Clear;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
 
 procedure TedtAudioInfo.eTaxonButtonClick(Sender: TObject);
 begin
-  FindTaxonDlg([tfAll], eTaxon, dsLink.DataSet, 'taxon_id', 'taxon_name', True);
+  FindTaxonDlg([tfAll], eTaxon, True, FTaxonId);
 end;
 
-procedure TedtAudioInfo.eTaxonDBEditKeyPress(Sender: TObject; var Key: char);
+procedure TedtAudioInfo.eTaxonKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
 
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindTaxonDlg([tfAll], eTaxon, dsLink.DataSet, 'taxon_id', 'taxon_name', True, Key);
+    FindTaxonDlg([tfAll], eTaxon, True, FTaxonId, Key);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
-    dsLink.DataSet.FieldByName('taxon_id').Clear;
+    FTaxonId := 0;
+    eTaxon.Clear;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
   if (Key = #13) and (XSettings.UseEnterAsTab) then
   begin
-    SelectNext(Sender as TWinControl, True, True);
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
 end;
@@ -379,7 +395,7 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);
@@ -402,20 +418,77 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  FAuthorId := 0;
+  FLocalityId := 0;
+  FTaxonId := 0;
+  FIndividualId := 0;
+  FSurveyId := 0;
+  FSightingId := 0;
+  FSpecimenId := 0;
+
   cbPrecipitation.Items.Clear;
   cbPrecipitation.Items.Add(rsPrecipitationNone);
   cbPrecipitation.Items.Add(rsPrecipitationFog);
   cbPrecipitation.Items.Add(rsPrecipitationMist);
   cbPrecipitation.Items.Add(rsPrecipitationDrizzle);
   cbPrecipitation.Items.Add(rsPrecipitationRain);
+
+  if not FIsNew then
+    GetRecord;
+end;
+
+procedure TedtAudioInfo.GetRecord;
+begin
+  mSubtitle.Text := FAudio.Subtitle;
+  FAuthorId := FAudio.AuthorId;
+  eAuthor.Text := GetName('people', 'full_name', 'person_id', FAuthorId);
+  eRecordingDate.Text := DateToStr(FAudio.RecordingDate);
+  eRecordingTime.Text := TimeToStr(FAudio.RecordingTime);
+  cbAudioType.Text := FAudio.AudioType;
+  eAudioFile.Text := FAudio.Filename;
+  FLocalityId := FAudio.LocalityId;
+  eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+  eLongitude.Text := FloatToStr(FAudio.Longitude);
+  eLatitude.Text := FloatToStr(FAudio.Latitude);
+  FTaxonId := FAudio.TaxonId;
+  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  FIndividualId := FAudio.IndividualId;
+  FSightingId := FAudio.SightingId;
+  FSpecimenId := FAudio.SpecimenId;
+  eRecorderModel.Text := FAudio.RecorderModel;
+  eMicModel.Text := FAudio.MicModel;
+  eFilterModel.Text := FAudio.FilterModel;
+  eRecordingContext.Text := FAudio.Context;
+  eSubjectsTally.Value := FAudio.SubjectsTally;
+  eDistance.Value := FAudio.Distance;
+  eTemperature.Value := FAudio.Temperature;
+  eCloudCover.Value := FAudio.CloudCover;
+  case FAudio.Precipitation of
+    wpNone:     cbPrecipitation.ItemIndex := cbPrecipitation.Items.IndexOf(rsPrecipitationNone);
+    wpFog:      cbPrecipitation.ItemIndex := cbPrecipitation.Items.IndexOf(rsPrecipitationFog);
+    wpMist:     cbPrecipitation.ItemIndex := cbPrecipitation.Items.IndexOf(rsPrecipitationMist);
+    wpDrizzle:  cbPrecipitation.ItemIndex := cbPrecipitation.Items.IndexOf(rsPrecipitationDrizzle);
+    wpRain:     cbPrecipitation.ItemIndex := cbPrecipitation.Items.IndexOf(rsPrecipitationRain);
+  else
+    cbPrecipitation.ItemIndex := -1;
+  end;
+  eWindSpeed.Value := FAudio.WindSpeedBft;
+  eRelativeHumidity.Value := FAudio.RelativeHumidity;
+  ckPlaybackUsed.Checked := FAudio.PlaybackUsed;
+  eHabitat.Text := FAudio.Habitat;
+  cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FAudio.LicenseType);
+  eLicenseYear.Text := IntToStr(FAudio.LicenseYear);
+  eLicenseOwner.Text := FAudio.LicenseOwner;
+  eLicenseNotes.Text := FAudio.LicenseNotes;
+  eLicenseUri.Text := FAudio.LicenseUri;
 end;
 
 function TedtAudioInfo.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('recording_date').IsNull = False) and
-    (dsLink.DataSet.FieldByName('audio_file').AsString <> EmptyStr) then
+  if (eRecordingDate.Text <> EmptyStr) and
+    (eAudioFile.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -425,7 +498,58 @@ begin
   if not ValidateFields then
     Exit;
 
+  SetRecord;
+
   ModalResult := mrOk;
+end;
+
+procedure TedtAudioInfo.SetAudio(Value: TAudioData);
+begin
+  if Assigned(Value) then
+    FAudio := Value;
+end;
+
+procedure TedtAudioInfo.SetRecord;
+begin
+  FAudio.Subtitle      := mSubtitle.Text;
+  FAudio.AuthorId      := FAuthorId;
+  FAudio.RecordingDate := TextToDate(eRecordingDate.Text);
+  FAudio.RecordingTime := TextToTime(eRecordingTime.Text);
+  FAudio.AudioType     := cbAudioType.Text;
+  FAudio.Filename      := eAudioFile.Text;
+  FAudio.LocalityId    := FLocalityId;
+  FAudio.Longitude     := StrToFloatOrZero(eLongitude.Text);
+  FAudio.Latitude      := StrToFloatOrZero(eLatitude.Text);
+  FAudio.TaxonId       := FTaxonId;
+  FAudio.IndividualId  := FIndividualId;
+  FAudio.SightingId    := FSightingId;
+  FAudio.SpecimenId    := FSpecimenId;
+  FAudio.RecorderModel := eRecorderModel.Text;
+  FAudio.MicModel      := eMicModel.Text;
+  FAudio.FilterModel   := eFilterModel.Text;
+  FAudio.Context       := eRecordingContext.Text;
+  FAudio.SubjectsTally := eSubjectsTally.Value;
+  FAudio.Distance      := eDistance.Value;
+  FAudio.Temperature   := eTemperature.Value;
+  FAudio.CloudCover    := eCloudCover.Value;
+  case cbPrecipitation.ItemIndex of
+    0: FAudio.Precipitation := wpNone;
+    1: FAudio.Precipitation := wpFog;
+    2: FAudio.Precipitation := wpMist;
+    3: FAudio.Precipitation := wpDrizzle;
+    4: FAudio.Precipitation := wpRain;
+  else
+    FAudio.Precipitation := wpNone;
+  end;
+  FAudio.WindSpeedBft     := eWindSpeed.Value;
+  FAudio.RelativeHumidity := eRelativeHumidity.Value;
+  FAudio.PlaybackUsed     := ckPlaybackUsed.Checked;
+  FAudio.Habitat          := eHabitat.Text;
+  FAudio.LicenseType      := cbLicenseType.Text;
+  FAudio.LicenseYear      := StrToIntOrZero(eLicenseYear.Text);
+  FAudio.LicenseOwner     := eLicenseOwner.Text;
+  FAudio.LicenseNotes     := eLicenseNotes.Text;
+  FAudio.LicenseUri       := eLicenseUri.Text;
 end;
 
 function TedtAudioInfo.ValidateFields: Boolean;
@@ -436,8 +560,8 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  RequiredIsEmpty(dsLink.DataSet, tbAudioLibrary, 'recording_date', Msgs);
-  RequiredIsEmpty(dsLink.DataSet, tbAudioLibrary, 'audio_file', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbAudioLibrary, 'recording_date', Msgs);
+  //RequiredIsEmpty(dsLink.DataSet, tbAudioLibrary, 'audio_file', Msgs);
 
   if Msgs.Count > 0 then
   begin

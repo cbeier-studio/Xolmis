@@ -125,7 +125,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
+  cbs_locale, cbs_global, cbs_users, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
   cbs_birds, cbs_fullnames, uDarkStyleParams, udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest;
 
 {$R *.lfm}
@@ -563,7 +563,18 @@ begin
         AItem.MeasureDate := aDate;
         AItem.FieldNumber := EggObject.Get('fieldNumber', '');
         AItem.TaxonId := GetKey('zoo_taxa', 'taxon_id', 'full_name', EggObject.Get('speciesName', ''));
-        AItem.EggShape := aShape;
+        case aShape of
+          'S': AItem.EggShape := esSpherical;
+          'E': AItem.EggShape := esElliptical;
+          'O': AItem.EggShape := esOval;
+          'P': AItem.EggShape := esPiriform;
+          'C': AItem.EggShape := esConical;
+          'B': AItem.EggShape := esBiconical;
+          'Y': AItem.EggShape := esCylindrical;
+          'L': AItem.EggShape := esLongitudinal;
+        else
+          AItem.EggShape := esUnknown;
+        end;
         AItem.Width := EggObject.Get('width', 0.0);
         AItem.Length := EggObject.Get('length', 0.0);
         AItem.Mass := EggObject.Get('mass', 0.0);
@@ -838,8 +849,22 @@ begin
         AItem.NestId := FNestKey;
         AItem.RevisionDate := aDate;
         AItem.RevisionTime := aTime;
-        AItem.NestStatus := aStatus;
-        AItem.NestStage := aStage;
+        case aStatus of
+          'I': AItem.NestStatus := nstInactive;
+          'A': AItem.NestStatus := nstActive;
+        else
+          AItem.NestStatus := nstUnknown;
+        end;
+        case aStage of
+          'X': AItem.NestStage := nsgInactive;
+          'C': AItem.NestStage := nsgConstruction;
+          'L': AItem.NestStage := nsgLaying;
+          'I': AItem.NestStage := nsgIncubation;
+          'H': AItem.NestStage := nsgHatching;
+          'N': AItem.NestStage := nsgNestling;
+        else
+          AItem.NestStage := nsgUnknown;
+        end;
         AItem.HostEggsTally := RevisionObject.Get('eggsHost', 0);
         AItem.HostNestlingsTally := RevisionObject.Get('nestlingsHost', 0);
         AItem.NidoparasiteEggsTally := RevisionObject.Get('eggsParasite', 0);
@@ -903,9 +928,6 @@ begin
         AItem.MackinnonListNumber := StrToInt(eMackinnonListNumber.Text);
         AItem.MethodId := FSurvey.MethodId;
         AItem.ObserverId := FObserverKey;
-        AItem.MunicipalityId := FSurvey.MunicipalityId;
-        AItem.StateId := FSurvey.StateId;
-        AItem.CountryId := FSurvey.CountryId;
 
         AItem.Insert;
       end;
@@ -1089,13 +1111,13 @@ begin
         AItem.Longitude := aLongitude;
         AItem.Latitude := aLatitude;
         AItem.HerbsProportion := VegetationObject.Get('herbsProportion', 0);
-        AItem.HerbsDistribution := VegetationObject.Get('herbsDistribution', 0);
+        AItem.HerbsDistribution := TStratumDistribution(VegetationObject.Get('herbsDistribution', 0));
         AItem.HerbsAvgHeight := VegetationObject.Get('herbsHeight', 0);
         AItem.ShrubsProportion := VegetationObject.Get('shrubsProportion', 0);
-        AItem.ShrubsDistribution := VegetationObject.Get('shrubsDistribution', 0);
+        AItem.ShrubsDistribution := TStratumDistribution(VegetationObject.Get('shrubsDistribution', 0));
         AItem.ShrubsAvgHeight := VegetationObject.Get('shrubsHeight', 0);
         AItem.TreesProportion := VegetationObject.Get('treesProportion', 0);
-        AItem.TreesDistribution := VegetationObject.Get('treesDistribution', 0);
+        AItem.TreesDistribution := TStratumDistribution(VegetationObject.Get('treesDistribution', 0));
         AItem.TreesAvgHeight := VegetationObject.Get('treesHeight', 0);
         AItem.ObserverId := FObserverKey;
 
@@ -1149,10 +1171,18 @@ begin
         AItem.SampleDate := aDate;
         AItem.SampleTime := aTime;
         AItem.CloudCover := WeatherObject.Get('cloudCover', 0);
-        AItem.Precipitation := WeatherObject.Get('precipitation', '');
+        case WeatherObject.Get('precipitation', '') of
+          'N': AItem.Precipitation := wpNone;
+          'F': AItem.Precipitation := wpFog;
+          'M': AItem.Precipitation := wpMist;
+          'D': AItem.Precipitation := wpDrizzle;
+          'R': AItem.Precipitation := wpRain;
+        else
+          AItem.Precipitation := wpEmpty;
+        end;
         AItem.Temperature := WeatherObject.Get('temperature', 0);
         AItem.WindSpeedBft := WeatherObject.Get('windSpeed', 0);
-        AItem.SampleMoment := 'M';
+        AItem.SampleMoment := wmMiddle;
         AItem.ObserverId := FObserverKey;
 
         AItem.Insert;

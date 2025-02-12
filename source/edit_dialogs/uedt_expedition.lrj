@@ -6,13 +6,10 @@
 {"hash":81166474,"name":"tedtexpedition.lbldescription.caption","sourcebytes":[68,101,115,99,114,105,112,116,105,111,110,58],"value":"Description:"},
 {"hash":159602842,"name":"tedtexpedition.lbllocality.caption","sourcebytes":[76,111,99,97,108,105,116,121,58],"value":"Locality:"},
 {"hash":143939529,"name":"tedtexpedition.elocality.buttonhint","sourcebytes":[70,105,110,100,32,108,111,99,97,108,105,116,121],"value":"Find locality"},
-{"hash":2234906,"name":"tedtexpedition.lblstartdate.caption","sourcebytes":[83,116,97,114,116,32,100,97,116,101,58,32,42],"value":"Start date: *"},
-{"hash":38292546,"name":"tedtexpedition.estartdate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
-{"hash":33581481,"name":"tedtexpedition.estartdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
 {"hash":157335306,"name":"tedtexpedition.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"},
 {"hash":57036244,"name":"tedtexpedition.eproject.buttonhint","sourcebytes":[70,105,110,100,32,112,114,111,106,101,99,116],"value":"Find project"},
+{"hash":2234906,"name":"tedtexpedition.lblstartdate.caption","sourcebytes":[83,116,97,114,116,32,100,97,116,101,58,32,42],"value":"Start date: *"},
 {"hash":180800074,"name":"tedtexpedition.lblenddate.caption","sourcebytes":[69,110,100,32,100,97,116,101,58,32,42],"value":"End date: *"},
-{"hash":101054826,"name":"tedtexpedition.lblduration.caption","sourcebytes":[68,117,114,97,116,105,111,110,32,40,100,97,121,115,41,58],"value":"Duration (days):"},
-{"hash":38292546,"name":"tedtexpedition.eenddate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
-{"hash":33581481,"name":"tedtexpedition.eenddate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"}
+{"hash":38292546,"name":"tedtexpedition.estartdate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
+{"hash":38292546,"name":"tedtexpedition.eenddate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"}
 ]}

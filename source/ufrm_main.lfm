@@ -1,14 +1,15 @@
 object frmMain: TfrmMain
-  Left = -8
-  Height = 1100
-  Top = -8
-  Width = 1940
+  Left = 0
+  Height = 898
+  Top = 0
+  Width = 1193
   Caption = 'Xolmis'
-  ClientHeight = 1061
-  ClientWidth = 1924
+  ClientHeight = 898
+  ClientWidth = 1193
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
+  LCLVersion = '4.0.0.2'
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
@@ -17,19 +18,19 @@ object frmMain: TfrmMain
   OnShow = FormShow
   object pLeftTabs: TPanel
     Left = 0
-    Height = 986
+    Height = 823
     Top = 49
-    Width = 1924
+    Width = 1193
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 986
-    ClientWidth = 1924
+    ClientHeight = 823
+    ClientWidth = 1193
     TabOrder = 0
     object PGW: TTDICardPanel
       Left = 0
-      Height = 986
+      Height = 823
       Top = 0
-      Width = 1924
+      Width = 1193
       Align = alClient
       TabOrder = 0
       TDIActions.CloseTab.Caption = 'Close Tab'
@@ -50,11 +51,11 @@ object frmMain: TfrmMain
     Left = 0
     Height = 49
     Top = 0
-    Width = 1924
+    Width = 1193
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 49
-    ClientWidth = 1924
+    ClientWidth = 1193
     Color = clBtnFace
     ParentBackground = False
     ParentColor = False
@@ -87,7 +88,7 @@ object frmMain: TfrmMain
     end
     object pSearch: TBCPanel
       AnchorSideLeft.Side = asrCenter
-      Left = 1727
+      Left = 996
       Height = 29
       Top = 10
       Width = 181
@@ -234,7 +235,7 @@ object frmMain: TfrmMain
       Left = 108
       Height = 49
       Top = 0
-      Width = 1603
+      Width = 872
       Align = alClient
       ParentColor = False
       PopupMenu = pmTabs
@@ -306,8 +307,8 @@ object frmMain: TfrmMain
   object SBar: TBCPanel
     Left = 0
     Height = 26
-    Top = 1035
-    Width = 1924
+    Top = 872
+    Width = 1193
     Align = alBottom
     AutoSize = True
     Background.Color = clBtnFace
@@ -549,7 +550,7 @@ object frmMain: TfrmMain
       Left = 117
       Height = 26
       Top = 0
-      Width = 1417
+      Width = 667
       Align = alClient
       Background.Color = clBtnFace
       Background.Gradient1.StartColor = clWhite
@@ -593,7 +594,7 @@ object frmMain: TfrmMain
       TabOrder = 3
     end
     object sbarProgress: TBCPanel
-      Left = 1534
+      Left = 784
       Height = 26
       Top = 0
       Width = 390
@@ -645,15 +646,70 @@ object frmMain: TfrmMain
         Visible = False
       end
     end
+    object sbarVersion: TBCPanel
+      Left = 1174
+      Height = 26
+      Top = 0
+      Width = 19
+      Align = alRight
+      AutoSize = True
+      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.TopBottomSpacing = 2
+      ChildSizing.HorizontalSpacing = 4
+      Background.Color = clBtnFace
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvRaised
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 1
+      Rounding.RoundY = 1
+      ShowHint = True
+      TabOrder = 5
+      object lblSbarVersion: TLabel
+        Left = 9
+        Height = 20
+        Top = 3
+        Width = 1
+        Align = alLeft
+        Layout = tlCenter
+        ShowAccelChar = False
+      end
+    end
   end
   object pEmptyTabs: TBCPanel
     AnchorSideLeft.Control = Owner
     AnchorSideLeft.Side = asrCenter
     AnchorSideTop.Control = Owner
     AnchorSideTop.Side = asrCenter
-    Left = 899
+    Left = 533
     Height = 87
-    Top = 487
+    Top = 406
     Width = 127
     AutoSize = True
     ChildSizing.LeftRightSpacing = 16
@@ -720,9 +776,9 @@ object frmMain: TfrmMain
     end
   end
   object pSplash: TPanel
-    Left = 592
+    Left = 712
     Height = 416
-    Top = 160
+    Top = 208
     Width = 376
     BevelOuter = bvNone
     ClientHeight = 416
@@ -803,26 +859,26 @@ object frmMain: TfrmMain
       ImageIndex = 1
       OnExecute = actInsertRecordExecute
     end
-    object actOpenResearchers: TAction
-      Category = 'Entities'
-      Caption = '&Researchers'
-      ImageIndex = 18
-      OnExecute = actOpenResearchersExecute
-    end
     object actOpenInstitutions: TAction
-      Category = 'Entities'
+      Category = 'Management'
       Caption = '&Institutions'
       ImageIndex = 17
       OnExecute = actOpenInstitutionsExecute
     end
+    object actOpenResearchers: TAction
+      Category = 'Management'
+      Caption = '&Researchers'
+      ImageIndex = 18
+      OnExecute = actOpenResearchersExecute
+    end
     object actOpenProjects: TAction
-      Category = 'Entities'
+      Category = 'Management'
       Caption = 'Pro&jects'
       ImageIndex = 19
       OnExecute = actOpenProjectsExecute
     end
     object actOpenPermits: TAction
-      Category = 'Entities'
+      Category = 'Management'
       Caption = '&Permits'
       ImageIndex = 20
       OnExecute = actOpenPermitsExecute
@@ -8697,6 +8753,7 @@ object frmMain: TfrmMain
       end
       object mmfExport: TMenuItem
         Action = actExport
+        Visible = False
       end
       object mmfImport: TMenuItem
         Caption = 'Import'
@@ -8827,7 +8884,7 @@ object frmMain: TfrmMain
       end
     end
     object mmEntities: TMenuItem
-      Caption = '&Entities'
+      Caption = '&Management'
       object mmeInstitutions: TMenuItem
         Action = actOpenInstitutions
       end
@@ -8872,7 +8929,7 @@ object frmMain: TfrmMain
       end
     end
     object mmMedia: TMenuItem
-      Caption = '&Media'
+      Caption = 'M&edia'
       Visible = False
       object mmmImageGallery: TMenuItem
         Action = actOpenImagesList

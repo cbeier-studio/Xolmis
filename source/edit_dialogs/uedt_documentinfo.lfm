@@ -1,23 +1,24 @@
 object edtDocumentInfo: TedtDocumentInfo
   Left = 361
-  Height = 454
+  Height = 448
   Top = 250
-  Width = 400
+  Width = 397
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'Document info'
-  ClientHeight = 454
-  ClientWidth = 400
+  ClientHeight = 448
+  ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 411
-    Width = 400
+    Top = 405
+    Width = 397
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -26,8 +27,8 @@ object edtDocumentInfo: TedtDocumentInfo
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 413
-    Width = 400
+    Top = 407
+    Width = 397
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -39,61 +40,66 @@ object edtDocumentInfo: TedtDocumentInfo
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 400
-    TabOrder = 0
+    ClientWidth = 397
+    TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
       Top = 8
-      Width = 180
+      Width = 178
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
       OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 204
+      Left = 202
       Height = 25
       Top = 8
-      Width = 180
+      Width = 179
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
     end
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 411
+    Height = 405
     Top = 0
-    Width = 400
+    Width = 397
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 411
+    VertScrollBar.Page = 405
     Align = alTop
+    AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 411
-    ClientWidth = 400
+    ClientHeight = 405
+    ClientWidth = 397
     Constraints.MinWidth = 176
-    TabOrder = 1
+    TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 411
+      Height = 405
       Top = 0
-      Width = 400
+      Width = 397
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 411
-      ClientWidth = 400
+      ClientHeight = 405
+      ClientWidth = 397
       TabOrder = 0
       object pDateTime: TPanel
         Left = 0
-        Height = 48
+        Height = 45
         Top = 106
-        Width = 400
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -104,15 +110,15 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
-        ClientWidth = 400
+        ClientHeight = 45
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 2
         object lblDocumentDate: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'Document date: *'
           Font.Color = 6579300
@@ -120,43 +126,43 @@ object edtDocumentInfo: TedtDocumentInfo
           ParentFont = False
         end
         object lblDocumentTime: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Document time:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eDocumentDate: TDBEditButton
+        object eDocumentDate: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
-          Width = 176
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 176
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 1
+          Width = 174
+          ButtonHint = 'Open calendar'
+          ButtonWidth = 23
           Images = DMM.iEdits
-          TextHint = 'DD/MM/YYYY'
-          DataField = 'document_date'
-          DataSource = dsLink
-          CharCase = ecNormal
-          OnButtonClick = eDocumentDateButtonClick
-        end
-        object eDocumentTime: TDBEdit
-          Left = 208
-          Height = 26
-          Top = 22
-          Width = 176
-          DataField = 'document_time'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
+          ImageIndex = 1
           MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          TextHint = 'DD/MM/YYYY'
+          OnButtonClick = eDocumentDateButtonClick
+          OnEditingDone = eDocumentDateEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbDocumentTypeKeyPress
+        end
+        object eDocumentTime: TEdit
+          Left = 206
+          Height = 23
+          Top = 22
+          Width = 175
           TabOrder = 1
           TextHint = 'HH:MM'
           OnKeyDown = FormKeyDown
@@ -167,7 +173,7 @@ object edtDocumentInfo: TedtDocumentInfo
         Left = 0
         Height = 45
         Top = 16
-        Width = 400
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -179,40 +185,26 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 0
         object lblDocumentType: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           BorderSpacing.Top = 3
           Caption = 'Document type:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object cbDocumentType: TDBComboBox
+        object cbDocumentType: TComboBox
           Left = 16
           Height = 23
           Top = 22
-          Width = 368
-          AutoComplete = True
-          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-          Constraints.MinWidth = 365
-          DataField = 'document_type'
-          DataSource = dsLink
+          Width = 365
           ItemHeight = 15
-          Items.Strings = (
-            'URL'
-            'Document'
-            'Spreadsheet'
-            'Presentation'
-            'PDF document'
-            'Other'
-          )
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -221,58 +213,9 @@ object edtDocumentInfo: TedtDocumentInfo
       end
       object pDocumentPath: TPanel
         Left = 0
-        Height = 48
-        Top = 154
-        Width = 400
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 48
-        ClientWidth = 400
-        ParentBackground = False
-        TabOrder = 3
-        object lblDocumentPath: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 368
-          BorderSpacing.Top = 3
-          Caption = 'Document file/URL: *'
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eDocumentPath: TDBEditButton
-          Left = 16
-          Height = 26
-          Top = 22
-          Width = 368
-          AutoSize = True
-          Constraints.MaxHeight = 28
-          Constraints.MinWidth = 365
-          TabOrder = 0
-          ButtonWidth = 24
-          ImageIndex = 6
-          Images = DMM.iEdits
-          DataField = 'document_path'
-          DataSource = dsLink
-          ReadOnly = True
-          CharCase = ecNormal
-          OnButtonClick = eDocumentPathButtonClick
-        end
-      end
-      object pDocumentTitle: TPanel
-        Left = 0
         Height = 45
-        Top = 61
-        Width = 400
+        Top = 151
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -284,29 +227,78 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
+        ParentBackground = False
+        TabOrder = 3
+        object lblDocumentPath: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
+          Caption = 'Document file/URL: *'
+          Font.Color = 6579300
+          ParentColor = False
+          ParentFont = False
+        end
+        object eDocumentPath: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 365
+          ButtonHint = 'Choose file'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 6
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eDocumentPathButtonClick
+          OnEditingDone = eDocumentDateEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = cbDocumentTypeKeyPress
+        end
+      end
+      object pDocumentTitle: TPanel
+        Left = 0
+        Height = 45
+        Top = 61
+        Width = 397
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 1
         object lblDocumentTitle: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           BorderSpacing.Top = 3
           Caption = 'Document title:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eDocumentTitle: TDBEdit
+        object eDocumentTitle: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 368
-          DataField = 'document_name'
-          DataSource = dsLink
+          Width = 365
           Constraints.MinWidth = 365
-          MaxLength = 0
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbDocumentTypeKeyPress
@@ -315,8 +307,8 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseOwner: TPanel
         Left = 0
         Height = 45
-        Top = 260
-        Width = 400
+        Top = 254
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -328,29 +320,25 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 5
         object lblLicenseOwner: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           BorderSpacing.Top = 3
           Caption = 'License owner:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eLicenseOwner: TDBEdit
+        object eLicenseOwner: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 368
-          DataField = 'license_owner'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 365
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbDocumentTypeKeyPress
@@ -359,8 +347,8 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseNotes: TPanel
         Left = 0
         Height = 45
-        Top = 305
-        Width = 400
+        Top = 299
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -372,29 +360,25 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 6
         object lblLicenseNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           BorderSpacing.Top = 3
           Caption = 'License notes:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eLicenseNotes: TDBEdit
+        object eLicenseNotes: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 368
-          DataField = 'license_notes'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 365
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbDocumentTypeKeyPress
@@ -403,8 +387,8 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseTypeYear: TPanel
         Left = 0
         Height = 45
-        Top = 215
-        Width = 400
+        Top = 209
+        Width = 397
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -417,14 +401,14 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 4
         object lblLicenseType: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 176
+          Width = 174
           BorderSpacing.Top = 3
           Caption = 'License type:'
           Font.Color = 6579300
@@ -432,40 +416,33 @@ object edtDocumentInfo: TedtDocumentInfo
           ParentFont = False
         end
         object lblLicenseYear: TLabel
-          Left = 208
+          Left = 206
           Height = 15
           Top = 3
-          Width = 176
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'License year:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object cbLicenseType: TDBComboBox
+        object cbLicenseType: TComboBox
           Left = 16
           Height = 23
           Top = 22
-          Width = 176
-          Constraints.MinWidth = 176
-          DataField = 'license_type'
-          DataSource = dsLink
+          Width = 174
           ItemHeight = 15
-          MaxLength = 0
           Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbDocumentTypeKeyPress
         end
-        object eLicenseYear: TDBEdit
-          Left = 208
+        object eLicenseYear: TEdit
+          Left = 206
           Height = 23
           Top = 22
-          Width = 176
-          DataField = 'license_year'
-          DataSource = dsLink
-          Constraints.MinWidth = 176
-          MaxLength = 0
+          Width = 175
+          NumbersOnly = True
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = cbDocumentTypeKeyPress
@@ -474,8 +451,8 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseUri: TPanel
         Left = 0
         Height = 45
-        Top = 350
-        Width = 400
+        Top = 344
+        Width = 397
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -487,29 +464,25 @@ object edtDocumentInfo: TedtDocumentInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 400
+        ClientWidth = 397
         ParentBackground = False
         TabOrder = 7
         object lblLicenseUri: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 368
+          Width = 365
           BorderSpacing.Top = 3
           Caption = 'License URL:'
           Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
-        object eLicenseUri: TDBEdit
+        object eLicenseUri: TEdit
           Left = 16
           Height = 23
           Top = 22
-          Width = 368
-          DataField = 'license_uri'
-          DataSource = dsLink
-          Constraints.MinWidth = 365
-          MaxLength = 0
+          Width = 365
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbDocumentTypeKeyPress

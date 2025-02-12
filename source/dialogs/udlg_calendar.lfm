@@ -315,6 +315,7 @@ object dlgCalendar: TdlgCalendar
         Align = alClient
         MaxValue = 999999
         TabOrder = 0
+        OnChange = eYearsChange
       end
     end
     object pDays: TBCPanel
@@ -382,6 +383,7 @@ object dlgCalendar: TdlgCalendar
         Align = alClient
         MaxValue = 999999999
         TabOrder = 0
+        OnChange = eYearsChange
       end
     end
   end
@@ -435,6 +437,7 @@ object dlgCalendar: TdlgCalendar
       BorderSpacing.Left = 8
       DateTime = 44826
       TabOrder = 0
+      OnDblClick = CalDblClick
     end
   end
   object iCalendar: TImageList

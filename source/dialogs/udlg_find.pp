@@ -1014,6 +1014,8 @@ begin
   // Close table
   if qFind.Active then
     qFind.Close;
+  //if Assigned(LocaleTablesDict) then
+  //  LocaleTablesDict.Free;
 end;
 
 procedure TdlgFind.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -1083,6 +1085,8 @@ begin
 
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  //LoadLocaleTablesDict;
 
   if FTableType = tbNone then
   begin
@@ -1345,8 +1349,8 @@ end;
 
 procedure TdlgFind.SetupFields(aKeyField, aNameField: String; aFormattedNameField: String);
 begin
-  Caption := Format('%s %s', [Caption, TableNames[FTableType]]);
-  EP.TextHint := Format(rsHintFind, [AnsiLowerCase(TableNames[FTableType])]);
+  Caption := Format('%s %s', [Caption, LocaleTablesDict[FTableType]]);
+  EP.TextHint := Format(rsHintFind, [AnsiLowerCase(LocaleTablesDict[FTableType])]);
   FKeyField := aKeyField;
   FFullNameField := aNameField;
   FFormattedNameField := aFormattedNameField;

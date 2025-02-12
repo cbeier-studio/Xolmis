@@ -94,6 +94,7 @@ type
     iPopup: TImageList;
     iSearchDark: TImageList;
     lblEmptyTabs: TLabel;
+    lblSbarVersion: TLabel;
     mmfNewDB: TMenuItem;
     mmfImportXolmisMobile: TMenuItem;
     mmhCheckUpdates: TMenuItem;
@@ -153,6 +154,7 @@ type
     mMenu: TMainMenu;
     navTabs: TATTabs;
     pEmptyTabs: TBCPanel;
+    sbarVersion: TBCPanel;
     sbClearSearch: TColorSpeedButton;
     icoSbarDatabase: TImage;
     icoSbarUser: TImage;
@@ -354,7 +356,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions, cbs_backup,
-  cbs_gis, cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
+  cbs_users, cbs_gis, cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
@@ -693,6 +695,7 @@ begin
   sbarStatus.Border.Color := clSolidBGSecondaryDark;
   sbarStatus.FontEx.Color := clTextPrimaryDark;
   sbarProgress.Border.Color := clSolidBGSecondaryDark;
+  sbarVersion.Border.Color := clSolidBGSecondaryDark;
 
   pSearch.Background.Color := clCardBGDefaultDark;
   pSearch.Border.Color := clSolidBGSecondaryDark;
@@ -712,7 +715,7 @@ begin
   // SBarTaxonomy.Caption:= TaxonomyName[ActiveTaxonomy];
 
   // Get user permissions
-  actMaintenance.Enabled := ActiveUser.Rank = 'A';
+  actMaintenance.Enabled := ActiveUser.Rank = urAdministrator;
   actExport.Enabled := ActiveUser.AllowExport;
   actImport.Enabled := ActiveUser.AllowImport;
   actPrint.Enabled := ActiveUser.AllowPrint;
@@ -888,6 +891,9 @@ begin
   // Apply dark mode if enabled
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  // Load version in status bar
+  lblSbarVersion.Caption := GetBuildInfoAsString;
 
   // Show splash screen
   pSplash.Top := 0;
@@ -1280,7 +1286,7 @@ end;
 
 procedure TfrmMain.pmaNewCaptureClick(Sender: TObject);
 begin
-  EditCapture(DMG.qCaptures, 0, True);
+  EditCapture(DMG.qCaptures, 0, 0, True);
 end;
 
 procedure TfrmMain.pmaNewEggClick(Sender: TObject);
@@ -1345,7 +1351,7 @@ end;
 
 procedure TfrmMain.pmaNewSurveyClick(Sender: TObject);
 begin
-  EditSurvey(DMG.qSurveys, True);
+  EditSurvey(DMG.qSurveys, 0, True);
 end;
 
 procedure TfrmMain.pmaNewToponymClick(Sender: TObject);

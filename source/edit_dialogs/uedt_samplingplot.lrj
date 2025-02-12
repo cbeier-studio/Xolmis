@@ -6,10 +6,10 @@
 {"hash":143939529,"name":"tedtsamplingplot.elocality.buttonhint","sourcebytes":[70,105,110,100,32,108,111,99,97,108,105,116,121],"value":"Find locality"},
 {"hash":89566314,"name":"tedtsamplingplot.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
 {"hash":75730042,"name":"tedtsamplingplot.lblname.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
-{"hash":106723002,"name":"tedtsamplingplot.lblacronym.caption","sourcebytes":[65,99,114,111,110,121,109,58,32,42],"value":"Acronym: *"},
+{"hash":59413546,"name":"tedtsamplingplot.lblacronym.caption","sourcebytes":[65,98,98,114,101,118,105,97,116,105,111,110,58,32,42],"value":"Abbreviation: *"},
 {"hash":235834570,"name":"tedtsamplingplot.lbllongitude.caption","sourcebytes":[76,111,110,103,105,116,117,100,101,58],"value":"Longitude:"},
 {"hash":185329674,"name":"tedtsamplingplot.lbllatitude.caption","sourcebytes":[76,97,116,105,116,117,100,101,58],"value":"Latitude:"},
-{"hash":12937236,"name":"tedtsamplingplot.elongitude.buttonhint","sourcebytes":[69,100,105,116,32,99,111,111,114,100,105,110,97,116,101,115,32,105,110,32,68,77,83,32,102,111,114,109,97,116],"value":"Edit coordinates in DMS format"},
-{"hash":12937236,"name":"tedtsamplingplot.elatitude.buttonhint","sourcebytes":[69,100,105,116,32,99,111,111,114,100,105,110,97,116,101,115,32,105,110,32,68,77,83,32,102,111,114,109,97,116],"value":"Edit coordinates in DMS format"},
+{"hash":110507173,"name":"tedtsamplingplot.elongitude.buttonhint","sourcebytes":[69,100,105,116,47,105,109,112,111,114,116,32,99,111,111,114,100,105,110,97,116,101],"value":"Edit/import coordinate"},
+{"hash":110507173,"name":"tedtsamplingplot.elatitude.buttonhint","sourcebytes":[69,100,105,116,47,105,109,112,111,114,116,32,99,111,111,114,100,105,110,97,116,101],"value":"Edit/import coordinate"},
 {"hash":81166474,"name":"tedtsamplingplot.lbldescription.caption","sourcebytes":[68,101,115,99,114,105,112,116,105,111,110,58],"value":"Description:"}
 ]}

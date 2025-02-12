@@ -50,6 +50,7 @@ type
     eYears: TSpinEdit;
     eMonths: TSpinEdit;
     eDays: TSpinEdit;
+    procedure CalDblClick(Sender: TObject);
     procedure eYearsChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -92,6 +93,12 @@ begin
 
   rbAdd.Images := iCalendarDark;
   rbSubtract.Images := iCalendarDark;
+end;
+
+procedure TdlgCalendar.CalDblClick(Sender: TObject);
+begin
+  if sbOK.Enabled then
+    sbOKClick(nil);
 end;
 
 procedure TdlgCalendar.eYearsChange(Sender: TObject);
