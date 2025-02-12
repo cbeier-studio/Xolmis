@@ -2016,20 +2016,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TTaxon.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM zoo_taxa');
-    Add('WHERE (taxon_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM zoo_taxa');
+      Add('WHERE (taxon_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2420,6 +2430,9 @@ procedure TTaxon.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TTaxon.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try

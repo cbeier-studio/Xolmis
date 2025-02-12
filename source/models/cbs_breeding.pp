@@ -299,7 +299,7 @@ type
 implementation
 
 uses
-  cbs_locale, cbs_users, cbs_datacolumns, cbs_validations, udm_main;
+  cbs_locale, cbs_global, cbs_users, cbs_datacolumns, cbs_validations, udm_main;
 
 { TNestRevision }
 
@@ -316,8 +316,8 @@ begin
   inherited Clear;
   FFullName := EmptyStr;
   FNestId := 0;
-  FRevisionDate := StrToDate('30/12/1500');
-  FRevisionTime := StrToTime('00:00:00');
+  FRevisionDate := NullDate;
+  FRevisionTime := NullTime;
   FObserver1Id := 0;
   FObserver2Id := 0;
   FNestStatus := nstUnknown;
@@ -354,18 +354,31 @@ procedure TNestRevision.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TNestRevision.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM nest_revisions');
-    Add('WHERE (nest_revision_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM nest_revisions');
+      Add('WHERE (nest_revision_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -483,68 +496,79 @@ begin
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
-    Clear;
-    Add('INSERT INTO nest_revisions (' +
-      'nest_id, ' +
-      'full_name, ' +
-      'revision_date, ' +
-      'revision_time, ' +
-      'observer_1_id, ' +
-      'observer_2_id, ' +
-      'nest_status, ' +
-      'host_eggs_tally, ' +
-      'host_nestlings_tally, ' +
-      'nidoparasite_eggs_tally, ' +
-      'nidoparasite_nestlings_tally, ' +
-      'nidoparasite_id, ' +
-      'have_philornis_larvae, ' +
-      'nest_stage, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':nest_id, ' +
-      ':full_name, ' +
-      'date(:revision_date), ' +
-      'time(:revision_time), ' +
-      ':observer_1_id, ' +
-      ':observer_2_id, ' +
-      ':nest_status, ' +
-      ':host_eggs_tally, ' +
-      ':host_nestlings_tally, ' +
-      ':nidoparasite_eggs_tally, ' +
-      ':nidoparasite_nestlings_tally, ' +
-      ':nidoparasite_id, ' +
-      ':have_philornis_larvae, ' +
-      ':nest_stage, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('nest_id').AsInteger := FNestId;
-    ParamByName('full_name').AsString := FFullname;
-    ParamByName('revision_date').AsString := FormatDateTime('yyyy-mm-dd', FRevisionDate);
-    ParamByName('revision_time').AsString := FormatDateTime('hh:nn', FRevisionTime);
-    ParamByName('observer_1_id').AsInteger := FObserver1Id;
-    ParamByName('observer_2_id').AsInteger := FObserver2Id;
-    ParamByName('nest_status').AsString := NestStates[FNestStatus];
-    ParamByName('host_eggs_tally').AsInteger := FHostEggsTally;
-    ParamByName('host_nestlings_tally').AsInteger := FHostNestlingsTally;
-    ParamByName('nidoparasite_eggs_tally').AsInteger := FNidoparasiteEggsTally;
-    ParamByName('nidoparasite_nestlings_tally').AsInteger := FNidoparasiteNestlingsTally;
-    ParamByName('nidoparasite_id').AsInteger := FNidoparasiteId;
-    ParamByName('have_philornis_larvae').AsBoolean := FHavePhilornisLarvae;
-    ParamByName('nest_stage').AsString := NestStages[FNestStage];
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    Transaction := DMM.sqlTrans;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO nest_revisions (' +
+        'nest_id, ' +
+        'full_name, ' +
+        'revision_date, ' +
+        'revision_time, ' +
+        'observer_1_id, ' +
+        'observer_2_id, ' +
+        'nest_status, ' +
+        'host_eggs_tally, ' +
+        'host_nestlings_tally, ' +
+        'nidoparasite_eggs_tally, ' +
+        'nidoparasite_nestlings_tally, ' +
+        'nidoparasite_id, ' +
+        'have_philornis_larvae, ' +
+        'nest_stage, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':nest_id, ' +
+        ':full_name, ' +
+        'date(:revision_date), ' +
+        'time(:revision_time), ' +
+        ':observer_1_id, ' +
+        ':observer_2_id, ' +
+        ':nest_status, ' +
+        ':host_eggs_tally, ' +
+        ':host_nestlings_tally, ' +
+        ':nidoparasite_eggs_tally, ' +
+        ':nidoparasite_nestlings_tally, ' +
+        ':nidoparasite_id, ' +
+        ':have_philornis_larvae, ' +
+        ':nest_stage, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('nest_id').AsInteger := FNestId;
+      ParamByName('full_name').AsString := FFullname;
+      ParamByName('revision_date').AsString := FormatDateTime('yyyy-mm-dd', FRevisionDate);
+      ParamByName('revision_time').AsString := FormatDateTime('hh:nn', FRevisionTime);
+      ParamByName('observer_1_id').AsInteger := FObserver1Id;
+      ParamByName('observer_2_id').AsInteger := FObserver2Id;
+      ParamByName('nest_status').AsString := NestStates[FNestStatus];
+      ParamByName('host_eggs_tally').AsInteger := FHostEggsTally;
+      ParamByName('host_nestlings_tally').AsInteger := FHostNestlingsTally;
+      ParamByName('nidoparasite_eggs_tally').AsInteger := FNidoparasiteEggsTally;
+      ParamByName('nidoparasite_nestlings_tally').AsInteger := FNidoparasiteNestlingsTally;
+      ParamByName('nidoparasite_id').AsInteger := FNidoparasiteId;
+      ParamByName('have_philornis_larvae').AsBoolean := FHavePhilornisLarvae;
+      ParamByName('nest_stage').AsString := NestStages[FNestStage];
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -590,49 +614,63 @@ procedure TNestRevision.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TNestRevision.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
-    Clear;
-    Add('UPDATE nest_revisions SET');
-    Add('  nest_id = :nest_id,');
-    Add('  full_name = :full_name,');
-    Add('  revision_date = date(:revision_date),');
-    Add('  revision_time = time(:revision_time),');
-    Add('  observer_1_id = :observer_1_id,');
-    Add('  observer_2_id = :observer_2_id,');
-    Add('  nest_status = :nest_status,');
-    Add('  host_eggs_tally = :host_eggs_tally,');
-    Add('  host_nestlings_tally = :host_nestlings_tally,');
-    Add('  nidoparasite_eggs_tally = :nidoparasite_eggs_tally,');
-    Add('  nidoparasite_nestlings_tally = :nidoparasite_nestlings_tally,');
-    Add('  nidoparasite_id = :nidoparasite_id,');
-    Add('  have_philornis_larvae = :have_philornis_larvae,');
-    Add('  nest_stage = :nest_stage,');
-    Add('  notes = :notes,');
-    Add('  user_updated = :user_updated,');
-    Add('  update_date = datetime(''now'',''subsec'')');
-    Add('WHERE (nest_revision_id = :nest_revision_id);');
-    ParamByName('nest_revision_id').AsInteger := FId;
-    ParamByName('nest_id').AsInteger := FNestId;
-    ParamByName('full_name').AsString := FFullname;
-    ParamByName('revision_date').AsString := FormatDateTime('yyyy-mm-dd', FRevisionDate);
-    ParamByName('revision_time').AsString := FormatDateTime('hh:nn', FRevisionTime);
-    ParamByName('observer_1_id').AsInteger := FObserver1Id;
-    ParamByName('observer_2_id').AsInteger := FObserver2Id;
-    ParamByName('nest_status').AsString := NestStates[FNestStatus];
-    ParamByName('host_eggs_tally').AsInteger := FHostEggsTally;
-    ParamByName('host_nestlings_tally').AsInteger := FHostNestlingsTally;
-    ParamByName('nidoparasite_eggs_tally').AsInteger := FNidoparasiteEggsTally;
-    ParamByName('nidoparasite_nestlings_tally').AsInteger := FNidoparasiteNestlingsTally;
-    ParamByName('nidoparasite_id').AsInteger := FNidoparasiteId;
-    ParamByName('have_philornis_larvae').AsBoolean := FHavePhilornisLarvae;
-    ParamByName('nest_stage').AsString := NestStages[FNestStage];
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    Transaction := DMM.sqlTrans;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE nest_revisions SET');
+      Add('  nest_id = :nest_id,');
+      Add('  full_name = :full_name,');
+      Add('  revision_date = date(:revision_date),');
+      Add('  revision_time = time(:revision_time),');
+      Add('  observer_1_id = :observer_1_id,');
+      Add('  observer_2_id = :observer_2_id,');
+      Add('  nest_status = :nest_status,');
+      Add('  host_eggs_tally = :host_eggs_tally,');
+      Add('  host_nestlings_tally = :host_nestlings_tally,');
+      Add('  nidoparasite_eggs_tally = :nidoparasite_eggs_tally,');
+      Add('  nidoparasite_nestlings_tally = :nidoparasite_nestlings_tally,');
+      Add('  nidoparasite_id = :nidoparasite_id,');
+      Add('  have_philornis_larvae = :have_philornis_larvae,');
+      Add('  nest_stage = :nest_stage,');
+      Add('  notes = :notes,');
+      Add('  user_updated = :user_updated,');
+      Add('  update_date = datetime(''now'',''subsec'')');
+      Add('WHERE (nest_revision_id = :nest_revision_id);');
+      ParamByName('nest_revision_id').AsInteger := FId;
+      ParamByName('nest_id').AsInteger := FNestId;
+      ParamByName('full_name').AsString := FFullname;
+      ParamByName('revision_date').AsString := FormatDateTime('yyyy-mm-dd', FRevisionDate);
+      ParamByName('revision_time').AsString := FormatDateTime('hh:nn', FRevisionTime);
+      ParamByName('observer_1_id').AsInteger := FObserver1Id;
+      ParamByName('observer_2_id').AsInteger := FObserver2Id;
+      ParamByName('nest_status').AsString := NestStates[FNestStatus];
+      ParamByName('host_eggs_tally').AsInteger := FHostEggsTally;
+      ParamByName('host_nestlings_tally').AsInteger := FHostNestlingsTally;
+      ParamByName('nidoparasite_eggs_tally').AsInteger := FNidoparasiteEggsTally;
+      ParamByName('nidoparasite_nestlings_tally').AsInteger := FNidoparasiteNestlingsTally;
+      ParamByName('nidoparasite_id').AsInteger := FNidoparasiteId;
+      ParamByName('have_philornis_larvae').AsBoolean := FHavePhilornisLarvae;
+      ParamByName('nest_stage').AsString := NestStages[FNestStage];
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -742,7 +780,7 @@ begin
   FEggHatched := False;
   FIndividualId := 0;
   FResearcherId := 0;
-  FMeasureDate := StrToDate('30/12/1500');
+  FMeasureDate := NullDate;
   FTaxonId := 0;
   FHostEgg := True;
   FDescription := EmptyStr;
@@ -778,18 +816,31 @@ procedure TEgg.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TEgg.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM eggs');
-    Add('WHERE (egg_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM eggs');
+      Add('WHERE (egg_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -933,124 +984,135 @@ begin
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
-    Clear;
-    Add('INSERT INTO eggs (' +
-      'field_number, ' +
-      'nest_id, ' +
-      'egg_seq, ' +
-      'egg_shape, ' +
-      'egg_width, ' +
-      'egg_length, ' +
-      'egg_mass, ' +
-      'egg_volume, ' +
-      'egg_stage, ' +
-      'eggshell_color, ' +
-      'eggshell_pattern, ' +
-      'eggshell_texture, ' +
-      'egg_hatched, ' +
-      'researcher_id, ' +
-      'individual_id, ' +
-      'measure_date, ' +
-      'taxon_id, ' +
-      'host_egg, ' +
-      'description, ' +
-      'notes, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':field_number, ' +
-      ':nest_id, ' +
-      ':egg_seq, ' +
-      ':egg_shape, ' +
-      ':egg_width, ' +
-      ':egg_length, ' +
-      ':egg_mass, ' +
-      ':egg_volume, ' +
-      ':egg_stage, ' +
-      ':eggshell_color, ' +
-      ':eggshell_pattern, ' +
-      ':eggshell_texture, ' +
-      ':egg_hatched, ' +
-      ':researcher_id, ' +
-      ':individual_id, ' +
-      'date(:measure_date), ' +
-      ':taxon_id, ' +
-      ':host_egg, ' +
-      ':description, ' +
-      ':notes, ' +
-      ':full_name, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''));');
-    ParamByName('field_number').AsString := FFieldNumber;
-    ParamByName('egg_seq').AsInteger := FEggSeq;
-    ParamByName('nest_id').AsInteger := FNestId;
-    ParamByName('egg_shape').AsString := EggShapes[FEggShape];
-    ParamByName('egg_width').AsFloat := FWidth;
-    ParamByName('egg_length').AsFloat := FLength;
-    ParamByName('egg_mass').AsFloat := FMass;
-    ParamByName('egg_volume').AsFloat := FVolume;
-    ParamByName('egg_stage').AsString := FEggStage;
-    ParamByName('eggshell_color').AsString := FEggshellColor;
-    ParamByName('eggshell_pattern').AsString := EggshellPatterns[FEggshellPattern];
-    ParamByName('eggshell_texture').AsString := EggshellTextures[FEggshellTexture];
-    ParamByName('egg_hatched').AsBoolean := FEggHatched;
-    ParamByName('researcher_id').AsInteger := FResearcherId;
-    ParamByName('individual_id').AsInteger := FIndividualId;
-    ParamByName('measure_date').AsString := FormatDateTime('yyyy-mm-dd', FMeasureDate);
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('host_egg').AsBoolean := FHostEgg;
-    ParamByName('description').AsString := FDescription;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('full_name').AsString := FFullname;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    Transaction := DMM.sqlTrans;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO eggs (' +
+        'field_number, ' +
+        'nest_id, ' +
+        'egg_seq, ' +
+        'egg_shape, ' +
+        'egg_width, ' +
+        'egg_length, ' +
+        'egg_mass, ' +
+        'egg_volume, ' +
+        'egg_stage, ' +
+        'eggshell_color, ' +
+        'eggshell_pattern, ' +
+        'eggshell_texture, ' +
+        'egg_hatched, ' +
+        'researcher_id, ' +
+        'individual_id, ' +
+        'measure_date, ' +
+        'taxon_id, ' +
+        'host_egg, ' +
+        'description, ' +
+        'notes, ' +
+        'full_name, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':field_number, ' +
+        ':nest_id, ' +
+        ':egg_seq, ' +
+        ':egg_shape, ' +
+        ':egg_width, ' +
+        ':egg_length, ' +
+        ':egg_mass, ' +
+        ':egg_volume, ' +
+        ':egg_stage, ' +
+        ':eggshell_color, ' +
+        ':eggshell_pattern, ' +
+        ':eggshell_texture, ' +
+        ':egg_hatched, ' +
+        ':researcher_id, ' +
+        ':individual_id, ' +
+        'date(:measure_date), ' +
+        ':taxon_id, ' +
+        ':host_egg, ' +
+        ':description, ' +
+        ':notes, ' +
+        ':full_name, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''));');
+      ParamByName('field_number').AsString := FFieldNumber;
+      ParamByName('egg_seq').AsInteger := FEggSeq;
+      ParamByName('nest_id').AsInteger := FNestId;
+      ParamByName('egg_shape').AsString := EggShapes[FEggShape];
+      ParamByName('egg_width').AsFloat := FWidth;
+      ParamByName('egg_length').AsFloat := FLength;
+      ParamByName('egg_mass').AsFloat := FMass;
+      ParamByName('egg_volume').AsFloat := FVolume;
+      ParamByName('egg_stage').AsString := FEggStage;
+      ParamByName('eggshell_color').AsString := FEggshellColor;
+      ParamByName('eggshell_pattern').AsString := EggshellPatterns[FEggshellPattern];
+      ParamByName('eggshell_texture').AsString := EggshellTextures[FEggshellTexture];
+      ParamByName('egg_hatched').AsBoolean := FEggHatched;
+      ParamByName('researcher_id').AsInteger := FResearcherId;
+      ParamByName('individual_id').AsInteger := FIndividualId;
+      ParamByName('measure_date').AsString := FormatDateTime('yyyy-mm-dd', FMeasureDate);
+      ParamByName('taxon_id').AsInteger := FTaxonId;
+      ParamByName('host_egg').AsBoolean := FHostEgg;
+      ParamByName('description').AsString := FDescription;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('full_name').AsString := FFullname;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
 
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE eggs SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE egg_id = :aid');
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      //// Get the taxon hierarchy
+      //if (FTaxonId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
+      //  Add('WHERE taxon_id = :ataxon');
+      //  ParamByName('ataxon').AsInteger := FTaxonId;
+      //  Open;
+      //  FOrderId := FieldByName('order_id').AsInteger;
+      //  FFamilyId := FieldByName('family_id').AsInteger;
+      //  FGenusId := FieldByName('genus_id').AsInteger;
+      //  FSpeciesId := FieldByName('species_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the taxon hierarchy
+      //Clear;
+      //Add('UPDATE eggs SET');
+      //Add('  order_id = :order_id,');
+      //Add('  family_id = :family_id,');
+      //Add('  genus_id = :genus_id,');
+      //Add('  species_id = :species_id');
+      //Add('WHERE egg_id = :aid');
+      //ParamByName('order_id').AsInteger := FOrderId;
+      //if (FFamilyId > 0) then
+      //  ParamByName('family_id').AsInteger := FFamilyId
+      //else
+      //  ParamByName('family_id').Clear;
+      //if (FGenusId > 0) then
+      //  ParamByName('genus_id').AsInteger := FGenusId
+      //else
+      //  ParamByName('genus_id').Clear;
+      //if (FSpeciesId > 0) then
+      //  ParamByName('species_id').AsInteger := FSpeciesId
+      //else
+      //  ParamByName('species_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1102,99 +1164,113 @@ procedure TEgg.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TEgg.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
-    Clear;
-    Add('UPDATE eggs SET');
-    Add('  field_number = :field_number,');
-    Add('  egg_seq = :egg_seq,');
-    Add('  nest_id = :nest_id,');
-    Add('  egg_shape = :egg_shape,');
-    Add('  egg_width = :egg_width,');
-    Add('  egg_length = :egg_length,');
-    Add('  egg_mass = :egg_mass,');
-    Add('  egg_volume = :egg_volume,');
-    Add('  egg_stage = :egg_stage,');
-    Add('  eggshell_color = :eggshell_color,');
-    Add('  eggshell_pattern = :eggshell_pattern,');
-    Add('  eggshell_texture = :eggshell_texture,');
-    Add('  egg_hatched = :egg_hatched,');
-    Add('  researcher_id = :researcher_id,');
-    Add('  individual_id = :individual_id,');
-    Add('  measure_date = date(:measute_date),');
-    Add('  taxon_id = :taxon_id,');
-    Add('  host_egg = :host_egg,');
-    Add('  description = :description,');
-    Add('  notes = :notes,');
-    Add('  full_name = :full_name,');
-    Add('  user_updated = :user_updated,');
-    Add('  update_date = datetime(''now'',''subsec'')');
-    Add('WHERE (egg_id = :egg_id);');
-    ParamByName('egg_id').AsInteger := FId;
-    ParamByName('field_number').AsString := FFieldNumber;
-    ParamByName('egg_seq').AsInteger := FEggSeq;
-    ParamByName('nest_id').AsInteger := FNestId;
-    ParamByName('egg_shape').AsString := EggShapes[FEggShape];
-    ParamByName('egg_width').AsFloat := FWidth;
-    ParamByName('egg_length').AsFloat := FLength;
-    ParamByName('egg_mass').AsFloat := FMass;
-    ParamByName('egg_volume').AsFloat := FVolume;
-    ParamByName('egg_stage').AsString := FEggStage;
-    ParamByName('eggshell_color').AsString := FEggshellColor;
-    ParamByName('eggshell_pattern').AsString := EggshellPatterns[FEggshellPattern];
-    ParamByName('eggshell_texture').AsString := EggshellTextures[FEggshellTexture];
-    ParamByName('egg_hatched').AsBoolean := FEggHatched;
-    ParamByName('researcher_id').AsInteger := FResearcherId;
-    ParamByName('individual_id').AsInteger := FIndividualId;
-    ParamByName('measure_date').AsString := FormatDateTime('yyyy-mm-dd', FMeasureDate);
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('host_egg').AsBoolean := FHostEgg;
-    ParamByName('description').AsString := FDescription;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('full_name').AsString := FFullname;
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    Transaction := DMM.sqlTrans;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE eggs SET');
+      Add('  field_number = :field_number,');
+      Add('  egg_seq = :egg_seq,');
+      Add('  nest_id = :nest_id,');
+      Add('  egg_shape = :egg_shape,');
+      Add('  egg_width = :egg_width,');
+      Add('  egg_length = :egg_length,');
+      Add('  egg_mass = :egg_mass,');
+      Add('  egg_volume = :egg_volume,');
+      Add('  egg_stage = :egg_stage,');
+      Add('  eggshell_color = :eggshell_color,');
+      Add('  eggshell_pattern = :eggshell_pattern,');
+      Add('  eggshell_texture = :eggshell_texture,');
+      Add('  egg_hatched = :egg_hatched,');
+      Add('  researcher_id = :researcher_id,');
+      Add('  individual_id = :individual_id,');
+      Add('  measure_date = date(:measute_date),');
+      Add('  taxon_id = :taxon_id,');
+      Add('  host_egg = :host_egg,');
+      Add('  description = :description,');
+      Add('  notes = :notes,');
+      Add('  full_name = :full_name,');
+      Add('  user_updated = :user_updated,');
+      Add('  update_date = datetime(''now'',''subsec'')');
+      Add('WHERE (egg_id = :egg_id);');
+      ParamByName('egg_id').AsInteger := FId;
+      ParamByName('field_number').AsString := FFieldNumber;
+      ParamByName('egg_seq').AsInteger := FEggSeq;
+      ParamByName('nest_id').AsInteger := FNestId;
+      ParamByName('egg_shape').AsString := EggShapes[FEggShape];
+      ParamByName('egg_width').AsFloat := FWidth;
+      ParamByName('egg_length').AsFloat := FLength;
+      ParamByName('egg_mass').AsFloat := FMass;
+      ParamByName('egg_volume').AsFloat := FVolume;
+      ParamByName('egg_stage').AsString := FEggStage;
+      ParamByName('eggshell_color').AsString := FEggshellColor;
+      ParamByName('eggshell_pattern').AsString := EggshellPatterns[FEggshellPattern];
+      ParamByName('eggshell_texture').AsString := EggshellTextures[FEggshellTexture];
+      ParamByName('egg_hatched').AsBoolean := FEggHatched;
+      ParamByName('researcher_id').AsInteger := FResearcherId;
+      ParamByName('individual_id').AsInteger := FIndividualId;
+      ParamByName('measure_date').AsString := FormatDateTime('yyyy-mm-dd', FMeasureDate);
+      ParamByName('taxon_id').AsInteger := FTaxonId;
+      ParamByName('host_egg').AsBoolean := FHostEgg;
+      ParamByName('description').AsString := FDescription;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('full_name').AsString := FFullname;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
 
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE eggs SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE egg_id = :aid');
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
+      ExecSQL;
+
+      //// Get the taxon hierarchy
+      //if (FTaxonId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT order_id, family_id, genus_id, species_id FROM zoo_taxa');
+      //  Add('WHERE taxon_id = :ataxon');
+      //  ParamByName('ataxon').AsInteger := FTaxonId;
+      //  Open;
+      //  FOrderId := FieldByName('order_id').AsInteger;
+      //  FFamilyId := FieldByName('family_id').AsInteger;
+      //  FGenusId := FieldByName('genus_id').AsInteger;
+      //  FSpeciesId := FieldByName('species_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the taxon hierarchy
+      //Clear;
+      //Add('UPDATE eggs SET');
+      //Add('  order_id = :order_id,');
+      //Add('  family_id = :family_id,');
+      //Add('  genus_id = :genus_id,');
+      //Add('  species_id = :species_id');
+      //Add('WHERE egg_id = :aid');
+      //ParamByName('order_id').AsInteger := FOrderId;
+      //if (FFamilyId > 0) then
+      //  ParamByName('family_id').AsInteger := FFamilyId
+      //else
+      //  ParamByName('family_id').Clear;
+      //if (FGenusId > 0) then
+      //  ParamByName('genus_id').AsInteger := FGenusId
+      //else
+      //  ParamByName('genus_id').Clear;
+      //if (FSpeciesId > 0) then
+      //  ParamByName('species_id').AsInteger := FSpeciesId
+      //else
+      //  ParamByName('species_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1333,8 +1409,8 @@ begin
   FActiveDays := 0.0;
   FNestFate := nfUnknown;
   FNestProductivity := 0;
-  FFoundDate := StrToDate('30/12/1500');
-  FLastDate := StrToDate('30/12/1500');
+  FFoundDate := NullDate;
+  FLastDate := NullDate;
   FDescription := EmptyStr;
   FNotes := EmptyStr;
 end;
@@ -1384,18 +1460,31 @@ procedure TNest.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TNest.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM nests');
-    Add('WHERE (nest_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM nests');
+      Add('WHERE (nest_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1548,210 +1637,221 @@ begin
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
-    Clear;
-    Add('INSERT INTO nests (' +
-      'field_number, ' +
-      'observer_id, ' +
-      'project_id, ' +
-      'locality_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'taxon_id, ' +
-      'nest_shape, ' +
-      'support_type, ' +
-      'support_plant_1_id, ' +
-      'support_plant_2_id, ' +
-      'other_support, ' +
-      'height_above_ground, ' +
-      'internal_max_diameter, ' +
-      'internal_min_diameter, ' +
-      'external_max_diameter, ' +
-      'external_min_diameter, ' +
-      'internal_height, ' +
-      'external_height, ' +
-      'edge_distance, ' +
-      'center_distance, ' +
-      'nest_cover, ' +
-      'plant_max_diameter, ' +
-      'plant_min_diameter, ' +
-      'plant_height, ' +
-      'plant_dbh, ' +
-      'nest_fate,' +
-      'nest_productivity, ' +
-      'found_date, ' +
-      'last_date, ' +
-      'full_name, ' +
-      'description, ' +
-      'notes, ' +
-      'construction_days, ' +
-      'incubation_days, ' +
-      'nestling_days, ' +
-      'active_days, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':field_number, ' +
-      ':observer_id, ' +
-      ':project_id, ' +
-      ':locality_id, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':taxon_id, ' +
-      ':nest_shape, ' +
-      ':support_type, ' +
-      ':support_plant_1_id, ' +
-      ':support_plant_2_id, ' +
-      ':other_support, ' +
-      ':height_above_ground, ' +
-      ':internal_max_diameter, ' +
-      ':internal_min_diameter, ' +
-      ':external_max_diameter, ' +
-      ':external_min_diameter, ' +
-      ':internal_height, ' +
-      ':external_height, ' +
-      ':edge_distance, ' +
-      ':center_distance, ' +
-      ':nest_cover, ' +
-      ':plant_max_diameter, ' +
-      ':plant_min_diameter, ' +
-      ':plant_height, ' +
-      ':plant_dbh, ' +
-      ':nest_fate,' +
-      ':nest_productivity, ' +
-      'date(:found_date), ' +
-      'date(:last_date), ' +
-      ':full_name, ' +
-      ':description, ' +
-      ':notes, ' +
-      ':construction_days, ' +
-      ':incubation_days, ' +
-      ':nestling_days, ' +
-      ':active_days, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''));');
-    ParamByName('field_number').AsString := FFieldNumber;
-    ParamByName('observer_id').AsInteger := FObserverId;
-    ParamByName('project_id').AsInteger := FProjectId;
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('longitude').AsFloat := FLongitude;
-    ParamByName('latitude').AsFloat := FLatitude;
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('nest_shape').AsString := FNestShape;
-    ParamByName('support_type').AsString := FSupportType;
-    ParamByName('support_plant_1_id').AsInteger := FSupportPlant1Id;
-    ParamByName('support_plant_2_id').AsInteger := FSupportPlant2Id;
-    ParamByName('other_support').AsString := FOtherSupport;
-    ParamByName('height_above_ground').AsFloat := FHeightAboveGround;
-    ParamByName('internal_max_diameter').AsFloat := FInternalMaxDiameter;
-    ParamByName('internal_min_diameter').AsFloat := FInternalMinDiameter;
-    ParamByName('external_max_diameter').AsFloat := FExternalMaxDiameter;
-    ParamByName('external_min_diameter').AsFloat := FExternalMinDiameter;
-    ParamByName('internal_height').AsFloat := FInternalHeight;
-    ParamByName('external_height').AsFloat := FExternalHeight;
-    ParamByName('edge_distance').AsFloat := FEdgeDistance;
-    ParamByName('center_distance').AsFloat := FCenterDistance;
-    ParamByName('nest_cover').AsFloat := FNestCover;
-    ParamByName('plant_max_diameter').AsFloat := FPlantMaxDiameter;
-    ParamByName('plant_min_diameter').AsFloat := FPlantMinDiameter;
-    ParamByName('plant_height').AsFloat := FPlantHeight;
-    ParamByName('plant_dbh').AsFloat := FPlantDbh;
-    ParamByName('nest_fate').AsString := NestFates[FNestFate];
-    ParamByName('nest_productivity').AsInteger := FNestProductivity;
-    ParamByName('found_date').AsString := FormatDateTime('yyyy-mm-dd', FFoundDate);
-    ParamByName('last_date').AsString := FormatDateTime('yyyy-mm-dd', FLastDate);
-    ParamByName('full_name').AsString := FFullName;
-    ParamByName('description').AsString := FDescription;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('construction_days').AsFloat := FConstructionDays;
-    ParamByName('incubation_days').AsFloat := FIncubationDays;
-    ParamByName('nestling_days').AsFloat := FNestlingDays;
-    ParamByName('active_days').AsFloat := FActiveDays;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    Transaction := DMM.sqlTrans;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO nests (' +
+        'field_number, ' +
+        'observer_id, ' +
+        'project_id, ' +
+        'locality_id, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'taxon_id, ' +
+        'nest_shape, ' +
+        'support_type, ' +
+        'support_plant_1_id, ' +
+        'support_plant_2_id, ' +
+        'other_support, ' +
+        'height_above_ground, ' +
+        'internal_max_diameter, ' +
+        'internal_min_diameter, ' +
+        'external_max_diameter, ' +
+        'external_min_diameter, ' +
+        'internal_height, ' +
+        'external_height, ' +
+        'edge_distance, ' +
+        'center_distance, ' +
+        'nest_cover, ' +
+        'plant_max_diameter, ' +
+        'plant_min_diameter, ' +
+        'plant_height, ' +
+        'plant_dbh, ' +
+        'nest_fate,' +
+        'nest_productivity, ' +
+        'found_date, ' +
+        'last_date, ' +
+        'full_name, ' +
+        'description, ' +
+        'notes, ' +
+        'construction_days, ' +
+        'incubation_days, ' +
+        'nestling_days, ' +
+        'active_days, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':field_number, ' +
+        ':observer_id, ' +
+        ':project_id, ' +
+        ':locality_id, ' +
+        ':longitude, ' +
+        ':latitude, ' +
+        ':taxon_id, ' +
+        ':nest_shape, ' +
+        ':support_type, ' +
+        ':support_plant_1_id, ' +
+        ':support_plant_2_id, ' +
+        ':other_support, ' +
+        ':height_above_ground, ' +
+        ':internal_max_diameter, ' +
+        ':internal_min_diameter, ' +
+        ':external_max_diameter, ' +
+        ':external_min_diameter, ' +
+        ':internal_height, ' +
+        ':external_height, ' +
+        ':edge_distance, ' +
+        ':center_distance, ' +
+        ':nest_cover, ' +
+        ':plant_max_diameter, ' +
+        ':plant_min_diameter, ' +
+        ':plant_height, ' +
+        ':plant_dbh, ' +
+        ':nest_fate,' +
+        ':nest_productivity, ' +
+        'date(:found_date), ' +
+        'date(:last_date), ' +
+        ':full_name, ' +
+        ':description, ' +
+        ':notes, ' +
+        ':construction_days, ' +
+        ':incubation_days, ' +
+        ':nestling_days, ' +
+        ':active_days, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''));');
+      ParamByName('field_number').AsString := FFieldNumber;
+      ParamByName('observer_id').AsInteger := FObserverId;
+      ParamByName('project_id').AsInteger := FProjectId;
+      ParamByName('locality_id').AsInteger := FLocalityId;
+      ParamByName('longitude').AsFloat := FLongitude;
+      ParamByName('latitude').AsFloat := FLatitude;
+      ParamByName('taxon_id').AsInteger := FTaxonId;
+      ParamByName('nest_shape').AsString := FNestShape;
+      ParamByName('support_type').AsString := FSupportType;
+      ParamByName('support_plant_1_id').AsInteger := FSupportPlant1Id;
+      ParamByName('support_plant_2_id').AsInteger := FSupportPlant2Id;
+      ParamByName('other_support').AsString := FOtherSupport;
+      ParamByName('height_above_ground').AsFloat := FHeightAboveGround;
+      ParamByName('internal_max_diameter').AsFloat := FInternalMaxDiameter;
+      ParamByName('internal_min_diameter').AsFloat := FInternalMinDiameter;
+      ParamByName('external_max_diameter').AsFloat := FExternalMaxDiameter;
+      ParamByName('external_min_diameter').AsFloat := FExternalMinDiameter;
+      ParamByName('internal_height').AsFloat := FInternalHeight;
+      ParamByName('external_height').AsFloat := FExternalHeight;
+      ParamByName('edge_distance').AsFloat := FEdgeDistance;
+      ParamByName('center_distance').AsFloat := FCenterDistance;
+      ParamByName('nest_cover').AsFloat := FNestCover;
+      ParamByName('plant_max_diameter').AsFloat := FPlantMaxDiameter;
+      ParamByName('plant_min_diameter').AsFloat := FPlantMinDiameter;
+      ParamByName('plant_height').AsFloat := FPlantHeight;
+      ParamByName('plant_dbh').AsFloat := FPlantDbh;
+      ParamByName('nest_fate').AsString := NestFates[FNestFate];
+      ParamByName('nest_productivity').AsInteger := FNestProductivity;
+      ParamByName('found_date').AsString := FormatDateTime('yyyy-mm-dd', FFoundDate);
+      ParamByName('last_date').AsString := FormatDateTime('yyyy-mm-dd', FLastDate);
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('description').AsString := FDescription;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('construction_days').AsFloat := FConstructionDays;
+      ParamByName('incubation_days').AsFloat := FIncubationDays;
+      ParamByName('nestling_days').AsFloat := FNestlingDays;
+      ParamByName('active_days').AsFloat := FActiveDays;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
 
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE nests SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  subfamily_id = :subfamily_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE nest_id = :aid');
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FSubfamilyId > 0) then
-    //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
-    //else
-    //  ParamByName('subfamily_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
-    //
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE nests SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE nest_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      //// Get the taxon hierarchy
+      //if (FTaxonId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
+      //  Add('WHERE taxon_id = :ataxon');
+      //  ParamByName('ataxon').AsInteger := FTaxonId;
+      //  Open;
+      //  FOrderId := FieldByName('order_id').AsInteger;
+      //  FFamilyId := FieldByName('family_id').AsInteger;
+      //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+      //  FGenusId := FieldByName('genus_id').AsInteger;
+      //  FSpeciesId := FieldByName('species_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the taxon hierarchy
+      //Clear;
+      //Add('UPDATE nests SET');
+      //Add('  order_id = :order_id,');
+      //Add('  family_id = :family_id,');
+      //Add('  subfamily_id = :subfamily_id,');
+      //Add('  genus_id = :genus_id,');
+      //Add('  species_id = :species_id');
+      //Add('WHERE nest_id = :aid');
+      //ParamByName('order_id').AsInteger := FOrderId;
+      //if (FFamilyId > 0) then
+      //  ParamByName('family_id').AsInteger := FFamilyId
+      //else
+      //  ParamByName('family_id').Clear;
+      //if (FSubfamilyId > 0) then
+      //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
+      //else
+      //  ParamByName('subfamily_id').Clear;
+      //if (FGenusId > 0) then
+      //  ParamByName('genus_id').AsInteger := FGenusId
+      //else
+      //  ParamByName('genus_id').Clear;
+      //if (FSpeciesId > 0) then
+      //  ParamByName('species_id').AsInteger := FSpeciesId
+      //else
+      //  ParamByName('species_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+      //
+      //// Get the site hierarchy
+      //if (FLocalityId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      //  Add('WHERE site_id = :asite');
+      //  ParamByName('ASITE').AsInteger := FLocalityId;
+      //  Open;
+      //  FCountryId := FieldByName('country_id').AsInteger;
+      //  FStateId := FieldByName('state_id').AsInteger;
+      //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the site hierarchy
+      //Clear;
+      //Add('UPDATE nests SET');
+      //Add('  country_id = :country_id,');
+      //Add('  state_id = :state_id,');
+      //Add('  municipality_id = :municipality_id');
+      //Add('WHERE nest_id = :aid');
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //if (FStateId > 0) then
+      //  ParamByName('state_id').AsInteger := FStateId
+      //else
+      //  ParamByName('state_id').Clear;
+      //if (FMunicipalityId > 0) then
+      //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+      //else
+      //  ParamByName('municipality_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1819,169 +1919,183 @@ procedure TNest.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TNest.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
-    Clear;
-    Add('UPDATE nests SET');
-    Add('  field_number = :field_number,');
-    Add('  observer_id = :observer_id,');
-    Add('  project_id = :project_id,');
-    Add('  locality_id = :locality_id,');
-    Add('  longitude = :longitude,');
-    Add('  latitude = :latitude,');
-    Add('  taxon_id = :taxon_id,');
-    Add('  nest_shape = :nest_shape,');
-    Add('  support_type = :support_type,');
-    Add('  support_plant_1_id = :support_plant_1_id,');
-    Add('  support_plant_2_id = :support_plant_2_id,');
-    Add('  other_support = :other_support,');
-    Add('  height_above_ground = :height_above_ground,');
-    Add('  internal_max_diameter = :internal_max_diameter,');
-    Add('  internal_min_diameter = :internal_min_diameter,');
-    Add('  external_max_diameter = :external_max_diameter,');
-    Add('  external_min_diameter = :external_min_diameter,');
-    Add('  internal_height = :internal_height,');
-    Add('  external_height = :external_height,');
-    Add('  edge_distance = :edge_distance,');
-    Add('  center_distance = :center_distance,');
-    Add('  nest_cover = :nest_cover,');
-    Add('  plant_max_diameter = :plant_max_diameter,');
-    Add('  plant_min_diameter = :plant_min_diameter,');
-    Add('  plant_height = :plant_height,');
-    Add('  plant_dbh = :plant_dbh,');
-    Add('  nest_fate = :nest_fate,');
-    Add('  nest_productivity = :nest_productivity,');
-    Add('  found_date = date(:found_date),');
-    Add('  last_date = date(:last_date),');
-    Add('  full_name = :full_name,');
-    Add('  description = :description,');
-    Add('  notes = :notes,');
-    Add('  construction_days = :construction_days,');
-    Add('  incubation_days = :incubation_days,');
-    Add('  nestling_days = :nestling_days,');
-    Add('  active_days = :active_days,');
-    Add('  user_updated = :user_updated,');
-    Add('  update_date = datetime(''now'',''subsec'')');
-    Add('WHERE (nest_id = :nest_id);');
-    ParamByName('nest_id').AsInteger := FId;
-    ParamByName('field_number').AsString := FFieldNumber;
-    ParamByName('observer_id').AsInteger := FObserverId;
-    ParamByName('project_id').AsInteger := FProjectId;
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('longitude').AsFloat := FLongitude;
-    ParamByName('latitude').AsFloat := FLatitude;
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('nest_shape').AsString := FNestShape;
-    ParamByName('support_type').AsString := FSupportType;
-    ParamByName('support_plant_1_id').AsInteger := FSupportPlant1Id;
-    ParamByName('support_plant_2_id').AsInteger := FSupportPlant2Id;
-    ParamByName('other_support').AsString := FOtherSupport;
-    ParamByName('height_above_ground').AsFloat := FHeightAboveGround;
-    ParamByName('internal_max_diameter').AsFloat := FInternalMaxDiameter;
-    ParamByName('internal_min_diameter').AsFloat := FInternalMinDiameter;
-    ParamByName('external_max_diameter').AsFloat := FExternalMaxDiameter;
-    ParamByName('external_min_diameter').AsFloat := FExternalMinDiameter;
-    ParamByName('internal_height').AsFloat := FInternalHeight;
-    ParamByName('external_height').AsFloat := FExternalHeight;
-    ParamByName('edge_distance').AsFloat := FEdgeDistance;
-    ParamByName('center_distance').AsFloat := FCenterDistance;
-    ParamByName('nest_cover').AsFloat := FNestCover;
-    ParamByName('plant_max_diameter').AsFloat := FPlantMaxDiameter;
-    ParamByName('plant_min_diameter').AsFloat := FPlantMinDiameter;
-    ParamByName('plant_height').AsFloat := FPlantHeight;
-    ParamByName('plant_dbh').AsFloat := FPlantDbh;
-    ParamByName('nest_fate').AsString := NestFates[FNestFate];
-    ParamByName('nest_productivity').AsInteger := FNestProductivity;
-    ParamByName('found_date').AsString := FormatDateTime('yyyy-mm-dd', FFoundDate);
-    ParamByName('last_date').AsString := FormatDateTime('yyyy-mm-dd', FLastDate);
-    ParamByName('full_name').AsString := FFullName;
-    ParamByName('description').AsString := FDescription;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('construction_days').AsFloat := FConstructionDays;
-    ParamByName('incubation_days').AsFloat := FIncubationDays;
-    ParamByName('nestling_days').AsFloat := FNestlingDays;
-    ParamByName('active_days').AsFloat := FActiveDays;
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    Transaction := DMM.sqlTrans;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE nests SET');
+      Add('  field_number = :field_number,');
+      Add('  observer_id = :observer_id,');
+      Add('  project_id = :project_id,');
+      Add('  locality_id = :locality_id,');
+      Add('  longitude = :longitude,');
+      Add('  latitude = :latitude,');
+      Add('  taxon_id = :taxon_id,');
+      Add('  nest_shape = :nest_shape,');
+      Add('  support_type = :support_type,');
+      Add('  support_plant_1_id = :support_plant_1_id,');
+      Add('  support_plant_2_id = :support_plant_2_id,');
+      Add('  other_support = :other_support,');
+      Add('  height_above_ground = :height_above_ground,');
+      Add('  internal_max_diameter = :internal_max_diameter,');
+      Add('  internal_min_diameter = :internal_min_diameter,');
+      Add('  external_max_diameter = :external_max_diameter,');
+      Add('  external_min_diameter = :external_min_diameter,');
+      Add('  internal_height = :internal_height,');
+      Add('  external_height = :external_height,');
+      Add('  edge_distance = :edge_distance,');
+      Add('  center_distance = :center_distance,');
+      Add('  nest_cover = :nest_cover,');
+      Add('  plant_max_diameter = :plant_max_diameter,');
+      Add('  plant_min_diameter = :plant_min_diameter,');
+      Add('  plant_height = :plant_height,');
+      Add('  plant_dbh = :plant_dbh,');
+      Add('  nest_fate = :nest_fate,');
+      Add('  nest_productivity = :nest_productivity,');
+      Add('  found_date = date(:found_date),');
+      Add('  last_date = date(:last_date),');
+      Add('  full_name = :full_name,');
+      Add('  description = :description,');
+      Add('  notes = :notes,');
+      Add('  construction_days = :construction_days,');
+      Add('  incubation_days = :incubation_days,');
+      Add('  nestling_days = :nestling_days,');
+      Add('  active_days = :active_days,');
+      Add('  user_updated = :user_updated,');
+      Add('  update_date = datetime(''now'',''subsec'')');
+      Add('WHERE (nest_id = :nest_id);');
+      ParamByName('nest_id').AsInteger := FId;
+      ParamByName('field_number').AsString := FFieldNumber;
+      ParamByName('observer_id').AsInteger := FObserverId;
+      ParamByName('project_id').AsInteger := FProjectId;
+      ParamByName('locality_id').AsInteger := FLocalityId;
+      ParamByName('longitude').AsFloat := FLongitude;
+      ParamByName('latitude').AsFloat := FLatitude;
+      ParamByName('taxon_id').AsInteger := FTaxonId;
+      ParamByName('nest_shape').AsString := FNestShape;
+      ParamByName('support_type').AsString := FSupportType;
+      ParamByName('support_plant_1_id').AsInteger := FSupportPlant1Id;
+      ParamByName('support_plant_2_id').AsInteger := FSupportPlant2Id;
+      ParamByName('other_support').AsString := FOtherSupport;
+      ParamByName('height_above_ground').AsFloat := FHeightAboveGround;
+      ParamByName('internal_max_diameter').AsFloat := FInternalMaxDiameter;
+      ParamByName('internal_min_diameter').AsFloat := FInternalMinDiameter;
+      ParamByName('external_max_diameter').AsFloat := FExternalMaxDiameter;
+      ParamByName('external_min_diameter').AsFloat := FExternalMinDiameter;
+      ParamByName('internal_height').AsFloat := FInternalHeight;
+      ParamByName('external_height').AsFloat := FExternalHeight;
+      ParamByName('edge_distance').AsFloat := FEdgeDistance;
+      ParamByName('center_distance').AsFloat := FCenterDistance;
+      ParamByName('nest_cover').AsFloat := FNestCover;
+      ParamByName('plant_max_diameter').AsFloat := FPlantMaxDiameter;
+      ParamByName('plant_min_diameter').AsFloat := FPlantMinDiameter;
+      ParamByName('plant_height').AsFloat := FPlantHeight;
+      ParamByName('plant_dbh').AsFloat := FPlantDbh;
+      ParamByName('nest_fate').AsString := NestFates[FNestFate];
+      ParamByName('nest_productivity').AsInteger := FNestProductivity;
+      ParamByName('found_date').AsString := FormatDateTime('yyyy-mm-dd', FFoundDate);
+      ParamByName('last_date').AsString := FormatDateTime('yyyy-mm-dd', FLastDate);
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('description').AsString := FDescription;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('construction_days').AsFloat := FConstructionDays;
+      ParamByName('incubation_days').AsFloat := FIncubationDays;
+      ParamByName('nestling_days').AsFloat := FNestlingDays;
+      ParamByName('active_days').AsFloat := FActiveDays;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
 
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE nests SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  subfamily_id = :subfamily_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE nest_id = :aid');
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FSubfamilyId > 0) then
-    //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
-    //else
-    //  ParamByName('subfamily_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
-    //
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE nests SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE nest_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
+      ExecSQL;
+
+      //// Get the taxon hierarchy
+      //if (FTaxonId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
+      //  Add('WHERE taxon_id = :ataxon');
+      //  ParamByName('ataxon').AsInteger := FTaxonId;
+      //  Open;
+      //  FOrderId := FieldByName('order_id').AsInteger;
+      //  FFamilyId := FieldByName('family_id').AsInteger;
+      //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+      //  FGenusId := FieldByName('genus_id').AsInteger;
+      //  FSpeciesId := FieldByName('species_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the taxon hierarchy
+      //Clear;
+      //Add('UPDATE nests SET');
+      //Add('  order_id = :order_id,');
+      //Add('  family_id = :family_id,');
+      //Add('  subfamily_id = :subfamily_id,');
+      //Add('  genus_id = :genus_id,');
+      //Add('  species_id = :species_id');
+      //Add('WHERE nest_id = :aid');
+      //ParamByName('order_id').AsInteger := FOrderId;
+      //if (FFamilyId > 0) then
+      //  ParamByName('family_id').AsInteger := FFamilyId
+      //else
+      //  ParamByName('family_id').Clear;
+      //if (FSubfamilyId > 0) then
+      //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
+      //else
+      //  ParamByName('subfamily_id').Clear;
+      //if (FGenusId > 0) then
+      //  ParamByName('genus_id').AsInteger := FGenusId
+      //else
+      //  ParamByName('genus_id').Clear;
+      //if (FSpeciesId > 0) then
+      //  ParamByName('species_id').AsInteger := FSpeciesId
+      //else
+      //  ParamByName('species_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+      //
+      //// Get the site hierarchy
+      //if (FLocalityId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      //  Add('WHERE site_id = :asite');
+      //  ParamByName('ASITE').AsInteger := FLocalityId;
+      //  Open;
+      //  FCountryId := FieldByName('country_id').AsInteger;
+      //  FStateId := FieldByName('state_id').AsInteger;
+      //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the site hierarchy
+      //Clear;
+      //Add('UPDATE nests SET');
+      //Add('  country_id = :country_id,');
+      //Add('  state_id = :state_id,');
+      //Add('  municipality_id = :municipality_id');
+      //Add('WHERE nest_id = :aid');
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //if (FStateId > 0) then
+      //  ParamByName('state_id').AsInteger := FStateId
+      //else
+      //  ParamByName('state_id').Clear;
+      //if (FMunicipalityId > 0) then
+      //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+      //else
+      //  ParamByName('municipality_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2134,18 +2248,31 @@ procedure TNestOwner.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TNestOwner.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM nest_owners');
-    Add('WHERE (nest_owner_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM nest_owners');
+      Add('WHERE (nest_owner_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2365,6 +2492,9 @@ procedure TNestOwner.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TNestOwner.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try

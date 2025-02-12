@@ -687,20 +687,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TSamplePrep.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM sample_preps');
-    Add('WHERE (sample_prep_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM sample_preps');
+      Add('WHERE (sample_prep_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -799,137 +809,147 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO sample_preps (' +
-      'specimen_id, ' +
-      'accession_num, ' +
-      'full_name, ' +
-      'accession_type, ' +
-      'accession_seq, ' +
-      'taxon_id, ' +
-      'individual_id, ' +
-      'nest_id, ' +
-      'egg_id, ' +
-      'preparation_date, ' +
-      'preparer_id, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':specimen_id, ' +
-      ':accession_num, ' +
-      ':full_name, ' +
-      ':accession_type, ' +
-      ':accession_seq, ' +
-      ':taxon_id, ' +
-      ':individual_id, ' +
-      ':nest_id, ' +
-      ':egg_id, ' +
-      'date(:preparation_date), ' +
-      ':preparer_id, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('specimen_id').AsInteger := FSpecimenId;
-    ParamByName('accession_num').AsString := FAccessionNum;
-    ParamByName('full_name').AsString := FFullName;
-    ParamByName('accession_type').AsString := FAccessionType;
-    ParamByName('accession_seq').AsInteger := FAccessionSeq;
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('individual_id').AsInteger := FIndividualId;
-    ParamByName('nest_id').AsInteger := FNestId;
-    ParamByName('egg_id').AsInteger := FEggId;
-    ParamByName('preparation_date').AsString := FormatDateTime('yyyy-mm-dd', FPreparationDate);
-    ParamByName('preparer_id').AsInteger := FPreparerId;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO sample_preps (' +
+        'specimen_id, ' +
+        'accession_num, ' +
+        'full_name, ' +
+        'accession_type, ' +
+        'accession_seq, ' +
+        'taxon_id, ' +
+        'individual_id, ' +
+        'nest_id, ' +
+        'egg_id, ' +
+        'preparation_date, ' +
+        'preparer_id, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':specimen_id, ' +
+        ':accession_num, ' +
+        ':full_name, ' +
+        ':accession_type, ' +
+        ':accession_seq, ' +
+        ':taxon_id, ' +
+        ':individual_id, ' +
+        ':nest_id, ' +
+        ':egg_id, ' +
+        'date(:preparation_date), ' +
+        ':preparer_id, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('specimen_id').AsInteger := FSpecimenId;
+      ParamByName('accession_num').AsString := FAccessionNum;
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('accession_type').AsString := FAccessionType;
+      ParamByName('accession_seq').AsInteger := FAccessionSeq;
+      ParamByName('taxon_id').AsInteger := FTaxonId;
+      ParamByName('individual_id').AsInteger := FIndividualId;
+      ParamByName('nest_id').AsInteger := FNestId;
+      ParamByName('egg_id').AsInteger := FEggId;
+      ParamByName('preparation_date').AsString := FormatDateTime('yyyy-mm-dd', FPreparationDate);
+      ParamByName('preparer_id').AsInteger := FPreparerId;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
 
-    //// Get the site hierarchy
-    //if (FSpecimenId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM specimens');
-    //  Add('WHERE specimen_id = :aspecimen');
-    //  ParamByName('aspecimen').AsInteger := FSpecimenId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE sample_preps SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE sample_prep_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
-    //
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE sample_preps SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  subfamily_id = :subfamily_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE sample_prep_id = :aid');
-    //if (FOrderId > 0) then
-    //  ParamByName('order_id').AsInteger := FOrderId
-    //else
-    //  ParamByName('order_id').Clear;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FSubfamilyId > 0) then
-    //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
-    //else
-    //  ParamByName('subfamily_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      //// Get the site hierarchy
+      //if (FSpecimenId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT country_id, state_id, municipality_id FROM specimens');
+      //  Add('WHERE specimen_id = :aspecimen');
+      //  ParamByName('aspecimen').AsInteger := FSpecimenId;
+      //  Open;
+      //  FCountryId := FieldByName('country_id').AsInteger;
+      //  FStateId := FieldByName('state_id').AsInteger;
+      //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the site hierarchy
+      //Clear;
+      //Add('UPDATE sample_preps SET');
+      //Add('  country_id = :country_id,');
+      //Add('  state_id = :state_id,');
+      //Add('  municipality_id = :municipality_id');
+      //Add('WHERE sample_prep_id = :aid');
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //if (FStateId > 0) then
+      //  ParamByName('state_id').AsInteger := FStateId
+      //else
+      //  ParamByName('state_id').Clear;
+      //if (FMunicipalityId > 0) then
+      //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+      //else
+      //  ParamByName('municipality_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+      //
+      //// Get the taxon hierarchy
+      //if (FTaxonId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
+      //  Add('WHERE taxon_id = :ataxon');
+      //  ParamByName('ataxon').AsInteger := FTaxonId;
+      //  Open;
+      //  FOrderId := FieldByName('order_id').AsInteger;
+      //  FFamilyId := FieldByName('family_id').AsInteger;
+      //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+      //  FGenusId := FieldByName('genus_id').AsInteger;
+      //  FSpeciesId := FieldByName('species_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the taxon hierarchy
+      //Clear;
+      //Add('UPDATE sample_preps SET');
+      //Add('  order_id = :order_id,');
+      //Add('  family_id = :family_id,');
+      //Add('  subfamily_id = :subfamily_id,');
+      //Add('  genus_id = :genus_id,');
+      //Add('  species_id = :species_id');
+      //Add('WHERE sample_prep_id = :aid');
+      //if (FOrderId > 0) then
+      //  ParamByName('order_id').AsInteger := FOrderId
+      //else
+      //  ParamByName('order_id').Clear;
+      //if (FFamilyId > 0) then
+      //  ParamByName('family_id').AsInteger := FFamilyId
+      //else
+      //  ParamByName('family_id').Clear;
+      //if (FSubfamilyId > 0) then
+      //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
+      //else
+      //  ParamByName('subfamily_id').Clear;
+      //if (FGenusId > 0) then
+      //  ParamByName('genus_id').AsInteger := FGenusId
+      //else
+      //  ParamByName('genus_id').Clear;
+      //if (FSpeciesId > 0) then
+      //  ParamByName('species_id').AsInteger := FSpeciesId
+      //else
+      //  ParamByName('species_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -972,122 +992,135 @@ procedure TSamplePrep.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TSamplePrep.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE sample_preps SET ' +
-      'specimen_id = :specimen_id, ' +
-      'accession_num = :accession_num, ' +
-      'full_name = :full_name, ' +
-      'accession_type = :accession_type, ' +
-      'accession_seq = :accession_seq, ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_id = :individual_id, ' +
-      'nest_id = :nest_id, ' +
-      'egg_id = :egg_id, ' +
-      'preparation_date = date(:preparation_date), ' +
-      'preparer_id = :preparer_id, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec'') ');
-    Add('WHERE (sample_prep_id = :sample_prep_id)');
-    ParamByName('specimen_id').AsInteger := FSpecimenId;
-    ParamByName('accession_num').AsString := FAccessionNum;
-    ParamByName('full_name').AsString := FFullName;
-    ParamByName('accession_type').AsString := FAccessionType;
-    ParamByName('accession_seq').AsInteger := FAccessionSeq;
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    ParamByName('individual_id').AsInteger := FIndividualId;
-    ParamByName('nest_id').AsInteger := FNestId;
-    ParamByName('egg_id').AsInteger := FEggId;
-    ParamByName('preparation_date').AsString := FormatDateTime('yyyy-mm-dd', FPreparationDate);
-    ParamByName('preparer_id').AsInteger := FPreparerId;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-    ParamByName('sample_prep_id').AsInteger := FId;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE sample_preps SET ' +
+        'specimen_id = :specimen_id, ' +
+        'accession_num = :accession_num, ' +
+        'full_name = :full_name, ' +
+        'accession_type = :accession_type, ' +
+        'accession_seq = :accession_seq, ' +
+        'taxon_id = :taxon_id, ' +
+        'individual_id = :individual_id, ' +
+        'nest_id = :nest_id, ' +
+        'egg_id = :egg_id, ' +
+        'preparation_date = date(:preparation_date), ' +
+        'preparer_id = :preparer_id, ' +
+        'notes = :notes, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'', ''subsec'') ');
+      Add('WHERE (sample_prep_id = :sample_prep_id)');
+      ParamByName('specimen_id').AsInteger := FSpecimenId;
+      ParamByName('accession_num').AsString := FAccessionNum;
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('accession_type').AsString := FAccessionType;
+      ParamByName('accession_seq').AsInteger := FAccessionSeq;
+      ParamByName('taxon_id').AsInteger := FTaxonId;
+      ParamByName('individual_id').AsInteger := FIndividualId;
+      ParamByName('nest_id').AsInteger := FNestId;
+      ParamByName('egg_id').AsInteger := FEggId;
+      ParamByName('preparation_date').AsString := FormatDateTime('yyyy-mm-dd', FPreparationDate);
+      ParamByName('preparer_id').AsInteger := FPreparerId;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+      ParamByName('sample_prep_id').AsInteger := FId;
 
-    //// Get the site hierarchy
-    //if (FSpecimenId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM specimens');
-    //  Add('WHERE specimen_id = :aspecimen');
-    //  ParamByName('aspecimen').AsInteger := FSpecimenId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE sample_preps SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE sample_prep_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
-    //
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE sample_preps SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  subfamily_id = :subfamily_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE sample_prep_id = :aid');
-    //if (FOrderId > 0) then
-    //  ParamByName('order_id').AsInteger := FOrderId
-    //else
-    //  ParamByName('order_id').Clear;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FSubfamilyId > 0) then
-    //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
-    //else
-    //  ParamByName('subfamily_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
+      ExecSQL;
+
+      //// Get the site hierarchy
+      //if (FSpecimenId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT country_id, state_id, municipality_id FROM specimens');
+      //  Add('WHERE specimen_id = :aspecimen');
+      //  ParamByName('aspecimen').AsInteger := FSpecimenId;
+      //  Open;
+      //  FCountryId := FieldByName('country_id').AsInteger;
+      //  FStateId := FieldByName('state_id').AsInteger;
+      //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the site hierarchy
+      //Clear;
+      //Add('UPDATE sample_preps SET');
+      //Add('  country_id = :country_id,');
+      //Add('  state_id = :state_id,');
+      //Add('  municipality_id = :municipality_id');
+      //Add('WHERE sample_prep_id = :aid');
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //if (FStateId > 0) then
+      //  ParamByName('state_id').AsInteger := FStateId
+      //else
+      //  ParamByName('state_id').Clear;
+      //if (FMunicipalityId > 0) then
+      //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+      //else
+      //  ParamByName('municipality_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+      //
+      //// Get the taxon hierarchy
+      //if (FTaxonId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
+      //  Add('WHERE taxon_id = :ataxon');
+      //  ParamByName('ataxon').AsInteger := FTaxonId;
+      //  Open;
+      //  FOrderId := FieldByName('order_id').AsInteger;
+      //  FFamilyId := FieldByName('family_id').AsInteger;
+      //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+      //  FGenusId := FieldByName('genus_id').AsInteger;
+      //  FSpeciesId := FieldByName('species_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the taxon hierarchy
+      //Clear;
+      //Add('UPDATE sample_preps SET');
+      //Add('  order_id = :order_id,');
+      //Add('  family_id = :family_id,');
+      //Add('  subfamily_id = :subfamily_id,');
+      //Add('  genus_id = :genus_id,');
+      //Add('  species_id = :species_id');
+      //Add('WHERE sample_prep_id = :aid');
+      //if (FOrderId > 0) then
+      //  ParamByName('order_id').AsInteger := FOrderId
+      //else
+      //  ParamByName('order_id').Clear;
+      //if (FFamilyId > 0) then
+      //  ParamByName('family_id').AsInteger := FFamilyId
+      //else
+      //  ParamByName('family_id').Clear;
+      //if (FSubfamilyId > 0) then
+      //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
+      //else
+      //  ParamByName('subfamily_id').Clear;
+      //if (FGenusId > 0) then
+      //  ParamByName('genus_id').AsInteger := FGenusId
+      //else
+      //  ParamByName('genus_id').Clear;
+      //if (FSpeciesId > 0) then
+      //  ParamByName('species_id').AsInteger := FSpeciesId
+      //else
+      //  ParamByName('species_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1233,20 +1266,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TSpecimen.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM specimens');
-    Add('WHERE (specimen_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM specimens');
+      Add('WHERE (specimen_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1352,168 +1395,178 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO specimens (' +
-      'field_number, ' +
-      'full_name, ' +
-      'sample_type, ' +
-      'taxon_id, ' +
-      'individual_id, ' +
-      'nest_id, ' +
-      'egg_id, ' +
-      //'collection_date, ' +
-      'collection_day, ' +
-      'collection_month, ' +
-      'collection_year, ' +
-      'locality_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':field_number, ' +
-      ':full_name, ' +
-      ':sample_type, ' +
-      ':taxon_id, ' +
-      ':individual_id, ' +
-      ':nest_id, ' +
-      ':egg_id, ' +
-      //':collection_date, ' +
-      ':collection_day, ' +
-      ':collection_month, ' +
-      ':collection_year, ' +
-      ':locality_id, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('field_number').AsString := FFieldNumber;
-    ParamByName('sample_type').AsString := FSampleType;
-    ParamByName('collection_year').AsInteger := FCollectionYear;
-    ParamByName('collection_month').AsInteger := FCollectionMonth;
-    ParamByName('collection_day').AsInteger := FCollectionDay;
-    //aDate.Year := FCollectionYear;
-    //aDate.Month := FCollectionMonth;
-    //aDate.Day := FCollectionDay;
-    //ParamByName('collective_date').AsString := aDate.ToString;
-    ParamByName('individual_id').AsInteger := FIndividualId;
-    ParamByName('nest_id').AsInteger := FNestId;
-    ParamByName('egg_id').AsInteger := FEggId;
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    if FLongitude <> 0 then
-      ParamByName('longitude').AsFloat := FLongitude
-    else
-      ParamByName('longitude').Clear;
-    if FLatitude <> 0 then
-      ParamByName('latitude').AsFloat := FLatitude
-    else
-      ParamByName('latitude').Clear;
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('full_name').AsString := FFullName;
 
-    //GetTaxonHierarchyForSpecimen(Self);
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //ParamByName('family_id').AsInteger := FFamilyId;
-    //ParamByName('genus_id').AsInteger := FGenusId;
-    //ParamByName('species_id').AsInteger := FSpeciesId;
-    //
-    //GetSiteHierarchyForSpecimen(Self);
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //ParamByName('state_id').AsInteger := FStateId;
-    //ParamByName('municipality_id').AsInteger := FMunicipalityId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO specimens (' +
+        'field_number, ' +
+        'full_name, ' +
+        'sample_type, ' +
+        'taxon_id, ' +
+        'individual_id, ' +
+        'nest_id, ' +
+        'egg_id, ' +
+        //'collection_date, ' +
+        'collection_day, ' +
+        'collection_month, ' +
+        'collection_year, ' +
+        'locality_id, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':field_number, ' +
+        ':full_name, ' +
+        ':sample_type, ' +
+        ':taxon_id, ' +
+        ':individual_id, ' +
+        ':nest_id, ' +
+        ':egg_id, ' +
+        //':collection_date, ' +
+        ':collection_day, ' +
+        ':collection_month, ' +
+        ':collection_year, ' +
+        ':locality_id, ' +
+        ':longitude, ' +
+        ':latitude, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('field_number').AsString := FFieldNumber;
+      ParamByName('sample_type').AsString := FSampleType;
+      ParamByName('collection_year').AsInteger := FCollectionYear;
+      ParamByName('collection_month').AsInteger := FCollectionMonth;
+      ParamByName('collection_day').AsInteger := FCollectionDay;
+      //aDate.Year := FCollectionYear;
+      //aDate.Month := FCollectionMonth;
+      //aDate.Day := FCollectionDay;
+      //ParamByName('collective_date').AsString := aDate.ToString;
+      ParamByName('individual_id').AsInteger := FIndividualId;
+      ParamByName('nest_id').AsInteger := FNestId;
+      ParamByName('egg_id').AsInteger := FEggId;
+      ParamByName('taxon_id').AsInteger := FTaxonId;
+      if FLongitude <> 0 then
+        ParamByName('longitude').AsFloat := FLongitude
+      else
+        ParamByName('longitude').Clear;
+      if FLatitude <> 0 then
+        ParamByName('latitude').AsFloat := FLatitude
+      else
+        ParamByName('latitude').Clear;
+      ParamByName('locality_id').AsInteger := FLocalityId;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('full_name').AsString := FFullName;
 
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+      //GetTaxonHierarchyForSpecimen(Self);
+      //ParamByName('order_id').AsInteger := FOrderId;
+      //ParamByName('family_id').AsInteger := FFamilyId;
+      //ParamByName('genus_id').AsInteger := FGenusId;
+      //ParamByName('species_id').AsInteger := FSpeciesId;
+      //
+      //GetSiteHierarchyForSpecimen(Self);
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //ParamByName('state_id').AsInteger := FStateId;
+      //ParamByName('municipality_id').AsInteger := FMunicipalityId;
 
-    ExecSQL;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
 
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('asite').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE specimens SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE specimen_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
-    //
-    //// Get the taxon hierarchy
-    //if (FTaxonId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
-    //  Add('WHERE taxon_id = :ataxon');
-    //  ParamByName('ataxon').AsInteger := FTaxonId;
-    //  Open;
-    //  FOrderId := FieldByName('order_id').AsInteger;
-    //  FFamilyId := FieldByName('family_id').AsInteger;
-    //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-    //  FGenusId := FieldByName('genus_id').AsInteger;
-    //  FSpeciesId := FieldByName('species_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the taxon hierarchy
-    //Clear;
-    //Add('UPDATE specimens SET');
-    //Add('  order_id = :order_id,');
-    //Add('  family_id = :family_id,');
-    //Add('  subfamily_id = :subfamily_id,');
-    //Add('  genus_id = :genus_id,');
-    //Add('  species_id = :species_id');
-    //Add('WHERE specimen_id = :aid');
-    //if (FOrderId > 0) then
-    //  ParamByName('order_id').AsInteger := FOrderId
-    //else
-    //  ParamByName('order_id').Clear;
-    //if (FFamilyId > 0) then
-    //  ParamByName('family_id').AsInteger := FFamilyId
-    //else
-    //  ParamByName('family_id').Clear;
-    //if (FSubfamilyId > 0) then
-    //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
-    //else
-    //  ParamByName('subfamily_id').Clear;
-    //if (FGenusId > 0) then
-    //  ParamByName('genus_id').AsInteger := FGenusId
-    //else
-    //  ParamByName('genus_id').Clear;
-    //if (FSpeciesId > 0) then
-    //  ParamByName('species_id').AsInteger := FSpeciesId
-    //else
-    //  ParamByName('species_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      //// Get the site hierarchy
+      //if (FLocalityId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      //  Add('WHERE site_id = :asite');
+      //  ParamByName('asite').AsInteger := FLocalityId;
+      //  Open;
+      //  FCountryId := FieldByName('country_id').AsInteger;
+      //  FStateId := FieldByName('state_id').AsInteger;
+      //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the site hierarchy
+      //Clear;
+      //Add('UPDATE specimens SET');
+      //Add('  country_id = :country_id,');
+      //Add('  state_id = :state_id,');
+      //Add('  municipality_id = :municipality_id');
+      //Add('WHERE specimen_id = :aid');
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //if (FStateId > 0) then
+      //  ParamByName('state_id').AsInteger := FStateId
+      //else
+      //  ParamByName('state_id').Clear;
+      //if (FMunicipalityId > 0) then
+      //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+      //else
+      //  ParamByName('municipality_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+      //
+      //// Get the taxon hierarchy
+      //if (FTaxonId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa');
+      //  Add('WHERE taxon_id = :ataxon');
+      //  ParamByName('ataxon').AsInteger := FTaxonId;
+      //  Open;
+      //  FOrderId := FieldByName('order_id').AsInteger;
+      //  FFamilyId := FieldByName('family_id').AsInteger;
+      //  FSubfamilyId := FieldByName('subfamily_id').AsInteger;
+      //  FGenusId := FieldByName('genus_id').AsInteger;
+      //  FSpeciesId := FieldByName('species_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the taxon hierarchy
+      //Clear;
+      //Add('UPDATE specimens SET');
+      //Add('  order_id = :order_id,');
+      //Add('  family_id = :family_id,');
+      //Add('  subfamily_id = :subfamily_id,');
+      //Add('  genus_id = :genus_id,');
+      //Add('  species_id = :species_id');
+      //Add('WHERE specimen_id = :aid');
+      //if (FOrderId > 0) then
+      //  ParamByName('order_id').AsInteger := FOrderId
+      //else
+      //  ParamByName('order_id').Clear;
+      //if (FFamilyId > 0) then
+      //  ParamByName('family_id').AsInteger := FFamilyId
+      //else
+      //  ParamByName('family_id').Clear;
+      //if (FSubfamilyId > 0) then
+      //  ParamByName('subfamily_id').AsInteger := FSubfamilyId
+      //else
+      //  ParamByName('subfamily_id').Clear;
+      //if (FGenusId > 0) then
+      //  ParamByName('genus_id').AsInteger := FGenusId
+      //else
+      //  ParamByName('genus_id').Clear;
+      //if (FSpeciesId > 0) then
+      //  ParamByName('species_id').AsInteger := FSpeciesId
+      //else
+      //  ParamByName('species_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1559,78 +1612,91 @@ procedure TSpecimen.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TSpecimen.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE specimens SET ' +
-      'field_number = :field_number, ' +
-      'full_name = :full_name, ' +
-      'sample_type = :sample_type, ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_id = :individual_id, ' +
-      'nest_id = :nest_id, ' +
-      'egg_id = :egg_id, ' +
-      //'collection_date, ' +
-      'collection_day = :collection_day, ' +
-      'collection_month = :collection_month, ' +
-      'collection_year = :collection_year, ' +
-      'locality_id = :locality_id, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (specimen_id = :specimen_id)');
 
-    ParamByName('field_number').AsString := FFieldNumber;
-    ParamByName('sample_type').AsString := FSampleType;
-    ParamByName('collection_year').AsInteger := FCollectionYear;
-    ParamByName('collection_month').AsInteger := FCollectionMonth;
-    ParamByName('collection_day').AsInteger := FCollectionDay;
-    //aDate.Year := FCollectionYear;
-    //aDate.Month := FCollectionMonth;
-    //aDate.Day := FCollectionDay;
-    //ParamByName('collective_date').AsString := aDate.ToString;
-    ParamByName('individual_id').AsInteger := FIndividualId;
-    ParamByName('nest_id').AsInteger := FNestId;
-    ParamByName('egg_id').AsInteger := FEggId;
-    ParamByName('taxon_id').AsInteger := FTaxonId;
-    if (FLongitude <> 0) and (FLatitude <> 0) then
-    begin
-      ParamByName('longitude').AsFloat := FLongitude;
-      ParamByName('latitude').AsFloat := FLatitude;
-    end
-    else
-    begin
-      ParamByName('longitude').Clear;
-      ParamByName('latitude').Clear;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE specimens SET ' +
+        'field_number = :field_number, ' +
+        'full_name = :full_name, ' +
+        'sample_type = :sample_type, ' +
+        'taxon_id = :taxon_id, ' +
+        'individual_id = :individual_id, ' +
+        'nest_id = :nest_id, ' +
+        'egg_id = :egg_id, ' +
+        //'collection_date, ' +
+        'collection_day = :collection_day, ' +
+        'collection_month = :collection_month, ' +
+        'collection_year = :collection_year, ' +
+        'locality_id = :locality_id, ' +
+        'longitude = :longitude, ' +
+        'latitude = :latitude, ' +
+        'notes = :notes, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'', ''subsec''), ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (specimen_id = :specimen_id)');
+
+      ParamByName('field_number').AsString := FFieldNumber;
+      ParamByName('sample_type').AsString := FSampleType;
+      ParamByName('collection_year').AsInteger := FCollectionYear;
+      ParamByName('collection_month').AsInteger := FCollectionMonth;
+      ParamByName('collection_day').AsInteger := FCollectionDay;
+      //aDate.Year := FCollectionYear;
+      //aDate.Month := FCollectionMonth;
+      //aDate.Day := FCollectionDay;
+      //ParamByName('collective_date').AsString := aDate.ToString;
+      ParamByName('individual_id').AsInteger := FIndividualId;
+      ParamByName('nest_id').AsInteger := FNestId;
+      ParamByName('egg_id').AsInteger := FEggId;
+      ParamByName('taxon_id').AsInteger := FTaxonId;
+      if (FLongitude <> 0) and (FLatitude <> 0) then
+      begin
+        ParamByName('longitude').AsFloat := FLongitude;
+        ParamByName('latitude').AsFloat := FLatitude;
+      end
+      else
+      begin
+        ParamByName('longitude').Clear;
+        ParamByName('latitude').Clear;
+      end;
+      ParamByName('locality_id').AsInteger := FLocalityId;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('full_name').AsString := FFullName;
+
+      //GetTaxonHierarchyForSpecimen(Self);
+      //ParamByName('order_id').AsInteger := FOrderId;
+      //ParamByName('family_id').AsInteger := FFamilyId;
+      //ParamByName('genus_id').AsInteger := FGenusId;
+      //ParamByName('species_id').AsInteger := FSpeciesId;
+      //
+      //GetSiteHierarchyForSpecimen(Self);
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //ParamByName('state_id').AsInteger := FStateId;
+      //ParamByName('municipality_id').AsInteger := FMunicipalityId;
+
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('specimen_id').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('full_name').AsString := FFullName;
-
-    //GetTaxonHierarchyForSpecimen(Self);
-    //ParamByName('order_id').AsInteger := FOrderId;
-    //ParamByName('family_id').AsInteger := FFamilyId;
-    //ParamByName('genus_id').AsInteger := FGenusId;
-    //ParamByName('species_id').AsInteger := FSpeciesId;
-    //
-    //GetSiteHierarchyForSpecimen(Self);
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //ParamByName('state_id').AsInteger := FStateId;
-    //ParamByName('municipality_id').AsInteger := FMunicipalityId;
-
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('specimen_id').AsInteger := FId;
-    ExecSQL;
-
   finally
     FreeAndNil(Qry);
   end;
@@ -1745,20 +1811,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TSpecimenCollector.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM specimen_collectors');
-    Add('WHERE (collector_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM specimen_collectors');
+      Add('WHERE (collector_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1898,29 +1974,39 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO specimen_colletors (' +
-      'specimen_id, ' +
-      'person_id, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':specimen_id, ' +
-      ':person_id, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('specimen_id').AsInteger := FSpecimenId;
-    ParamByName('person_id').AsInteger := FPersonId;
-    ParamByName('user_inserted').AsInteger := FUserInserted;
-//    GravaLogSQL(SQL);
-    ExecSQL;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO specimen_colletors (' +
+        'specimen_id, ' +
+        'person_id, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':specimen_id, ' +
+        ':person_id, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('specimen_id').AsInteger := FSpecimenId;
+      ParamByName('person_id').AsInteger := FPersonId;
+      ParamByName('user_inserted').AsInteger := FUserInserted;
+  //    GravaLogSQL(SQL);
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1954,28 +2040,41 @@ procedure TSpecimenCollector.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TSpecimenCollector.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE specimen_colletors SET ' +
-      'specimen_id = :specimen_id, ' +
-      'person_id = :person_id, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (collector_id = :collector_id)');
-    ParamByName('specimen_id').AsInteger := FSpecimenId;
-    ParamByName('person_id').AsInteger := FPersonId;
-    ParamByName('user_updated').AsInteger := FUserInserted;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('collector_id').AsInteger := FId;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE specimen_colletors SET ' +
+        'specimen_id = :specimen_id, ' +
+        'person_id = :person_id, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'', ''subsec''), ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (collector_id = :collector_id)');
+      ParamByName('specimen_id').AsInteger := FSpecimenId;
+      ParamByName('person_id').AsInteger := FPersonId;
+      ParamByName('user_updated').AsInteger := FUserInserted;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('collector_id').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2017,20 +2116,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TExpedition.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM expeditions');
-    Add('WHERE (expedition_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM expeditions');
+      Add('WHERE (expedition_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2124,82 +2233,92 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO expeditions (' +
-      'expedition_name, ' +
-      'start_date, ' +
-      'end_date, ' +
-      'project_id, ' +
-      'locality_id, ' +
-      'description, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':expedition_name, ' +
-      'date(:start_date), ' +
-      'date(:end_date), ' +
-      ':project_id, ' +
-      ':locality_id, ' +
-      ':description, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('expedition_name').AsString := FName;
-    if not DateIsNull(FStartDate) then
-      ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate)
-    else
-      ParamByName('start_date').Clear;
-    if not DateIsNull(FEndDate) then
-      ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate)
-    else
-      ParamByName('end_date').Clear;
-    if FProjectId > 0 then
-      ParamByName('project_id').AsInteger := FProjectId
-    else
-      ParamByName('project_id').Clear;
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('description').AsString := FDescription;
-    ParamByName('user_inserted').AsInteger := FUserInserted;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO expeditions (' +
+        'expedition_name, ' +
+        'start_date, ' +
+        'end_date, ' +
+        'project_id, ' +
+        'locality_id, ' +
+        'description, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':expedition_name, ' +
+        'date(:start_date), ' +
+        'date(:end_date), ' +
+        ':project_id, ' +
+        ':locality_id, ' +
+        ':description, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('expedition_name').AsString := FName;
+      if not DateIsNull(FStartDate) then
+        ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate)
+      else
+        ParamByName('start_date').Clear;
+      if not DateIsNull(FEndDate) then
+        ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate)
+      else
+        ParamByName('end_date').Clear;
+      if FProjectId > 0 then
+        ParamByName('project_id').AsInteger := FProjectId
+      else
+        ParamByName('project_id').Clear;
+      ParamByName('locality_id').AsInteger := FLocalityId;
+      ParamByName('description').AsString := FDescription;
+      ParamByName('user_inserted').AsInteger := FUserInserted;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
 
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE expeditions SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE expedition_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      //// Get the site hierarchy
+      //if (FLocalityId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      //  Add('WHERE site_id = :asite');
+      //  ParamByName('ASITE').AsInteger := FLocalityId;
+      //  Open;
+      //  FCountryId := FieldByName('country_id').AsInteger;
+      //  FStateId := FieldByName('state_id').AsInteger;
+      //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the site hierarchy
+      //Clear;
+      //Add('UPDATE expeditions SET');
+      //Add('  country_id = :country_id,');
+      //Add('  state_id = :state_id,');
+      //Add('  municipality_id = :municipality_id');
+      //Add('WHERE expedition_id = :aid');
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //if (FStateId > 0) then
+      //  ParamByName('state_id').AsInteger := FStateId
+      //else
+      //  ParamByName('state_id').Clear;
+      //if (FMunicipalityId > 0) then
+      //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+      //else
+      //  ParamByName('municipality_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2236,77 +2355,90 @@ procedure TExpedition.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TExpedition.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE expeditions SET ' +
-      'expedition_name = :expedition_name, ' +
-      'start_date = date(:start_date), ' +
-      'end_date = date(:end_date), ' +
-      'project_id = :project_id, ' +
-      'locality_id = :locality_id, ' +
-      'description = :description, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (expedition_id = :expedition_id)');
-    ParamByName('expedition_name').AsString := FName;
-    if not DateIsNull(FStartDate) then
-      ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate)
-    else
-      ParamByName('start_date').Clear;
-    if not DateIsNull(FEndDate) then
-      ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate)
-    else
-      ParamByName('end_date').Clear;
-    if FProjectId > 0 then
-      ParamByName('project_id').AsInteger := FProjectId
-    else
-      ParamByName('project_id').Clear;
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('description').AsString := FDescription;
-    ParamByName('user_updated').AsInteger := FUserInserted;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('expedition_id').AsInteger := FId;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE expeditions SET ' +
+        'expedition_name = :expedition_name, ' +
+        'start_date = date(:start_date), ' +
+        'end_date = date(:end_date), ' +
+        'project_id = :project_id, ' +
+        'locality_id = :locality_id, ' +
+        'description = :description, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'', ''subsec''), ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (expedition_id = :expedition_id)');
+      ParamByName('expedition_name').AsString := FName;
+      if not DateIsNull(FStartDate) then
+        ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate)
+      else
+        ParamByName('start_date').Clear;
+      if not DateIsNull(FEndDate) then
+        ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate)
+      else
+        ParamByName('end_date').Clear;
+      if FProjectId > 0 then
+        ParamByName('project_id').AsInteger := FProjectId
+      else
+        ParamByName('project_id').Clear;
+      ParamByName('locality_id').AsInteger := FLocalityId;
+      ParamByName('description').AsString := FDescription;
+      ParamByName('user_updated').AsInteger := FUserInserted;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('expedition_id').AsInteger := FId;
 
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE expeditions SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE expedition_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
+      ExecSQL;
+
+      //// Get the site hierarchy
+      //if (FLocalityId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      //  Add('WHERE site_id = :asite');
+      //  ParamByName('ASITE').AsInteger := FLocalityId;
+      //  Open;
+      //  FCountryId := FieldByName('country_id').AsInteger;
+      //  FStateId := FieldByName('state_id').AsInteger;
+      //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the site hierarchy
+      //Clear;
+      //Add('UPDATE expeditions SET');
+      //Add('  country_id = :country_id,');
+      //Add('  state_id = :state_id,');
+      //Add('  municipality_id = :municipality_id');
+      //Add('WHERE expedition_id = :aid');
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //if (FStateId > 0) then
+      //  ParamByName('state_id').AsInteger := FStateId
+      //else
+      //  ParamByName('state_id').Clear;
+      //if (FMunicipalityId > 0) then
+      //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+      //else
+      //  ParamByName('municipality_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2451,20 +2583,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TNetEffort.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM nets_effort');
-    Add('WHERE (net_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM nets_effort');
+      Add('WHERE (net_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2659,133 +2801,143 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO nets_effort (' +
-      'survey_id, ' +
-      'net_station_id, ' +
-      'permanent_net_id, ' +
-      'net_number, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'sample_date, ' +
-      'net_open_1, ' +
-      'net_close_1, ' +
-      'net_open_2, ' +
-      'net_close_2, ' +
-      'net_open_3, ' +
-      'net_close_3, ' +
-      'net_open_4, ' +
-      'net_close_4, ' +
-      'net_length, ' +
-      'net_height, ' +
-      'net_mesh, ' +
-      'full_name, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      ':net_station_id, ' +
-      ':permanent_net_id, ' +
-      ':net_number, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      'date(:sample_date), ' +
-      'time(:net_open_1), ' +
-      'time(:net_close_1), ' +
-      'time(:net_open_2), ' +
-      'time(:net_close_2), ' +
-      'time(:net_open_3), ' +
-      'time(:net_close_3), ' +
-      'time(:net_open_4), ' +
-      'time(:net_close_4), ' +
-      ':net_length, ' +
-      ':net_height, ' +
-      ':net_mesh, ' +
-      ':full_name, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''));');
-    ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
-    ParamByName('net_number').AsInteger := FNetNumber;
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    ParamByName('net_station_id').AsInteger := FNetStationId;
-    if (FPermanentNetId > 0) then
-      ParamByName('permanent_net_id').AsInteger := FPermanentNetId
-    else
-      ParamByName('permanent_net_id').Clear;
-    ParamByName('full_name').AsString := GetNetEffortFullname(FSampleDate, FNetStationId, FNetNumber);
-    if (FLongitude <> 0) and (FLatitude <> 0) then
-    begin
-      ParamByName('longitude').AsFloat := FLongitude;
-      ParamByName('latitude').AsFloat := FLatitude;
-    end
-    else
-    begin
-      ParamByName('longitude').Clear;
-      ParamByName('latitude').Clear;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO nets_effort (' +
+        'survey_id, ' +
+        'net_station_id, ' +
+        'permanent_net_id, ' +
+        'net_number, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'sample_date, ' +
+        'net_open_1, ' +
+        'net_close_1, ' +
+        'net_open_2, ' +
+        'net_close_2, ' +
+        'net_open_3, ' +
+        'net_close_3, ' +
+        'net_open_4, ' +
+        'net_close_4, ' +
+        'net_length, ' +
+        'net_height, ' +
+        'net_mesh, ' +
+        'full_name, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':survey_id, ' +
+        ':net_station_id, ' +
+        ':permanent_net_id, ' +
+        ':net_number, ' +
+        ':longitude, ' +
+        ':latitude, ' +
+        'date(:sample_date), ' +
+        'time(:net_open_1), ' +
+        'time(:net_close_1), ' +
+        'time(:net_open_2), ' +
+        'time(:net_close_2), ' +
+        'time(:net_open_3), ' +
+        'time(:net_close_3), ' +
+        'time(:net_open_4), ' +
+        'time(:net_close_4), ' +
+        ':net_length, ' +
+        ':net_height, ' +
+        ':net_mesh, ' +
+        ':full_name, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''));');
+      ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
+      ParamByName('net_number').AsInteger := FNetNumber;
+      ParamByName('survey_id').AsInteger := FSurveyId;
+      ParamByName('net_station_id').AsInteger := FNetStationId;
+      if (FPermanentNetId > 0) then
+        ParamByName('permanent_net_id').AsInteger := FPermanentNetId
+      else
+        ParamByName('permanent_net_id').Clear;
+      ParamByName('full_name').AsString := GetNetEffortFullname(FSampleDate, FNetStationId, FNetNumber);
+      if (FLongitude <> 0) and (FLatitude <> 0) then
+      begin
+        ParamByName('longitude').AsFloat := FLongitude;
+        ParamByName('latitude').AsFloat := FLatitude;
+      end
+      else
+      begin
+        ParamByName('longitude').Clear;
+        ParamByName('latitude').Clear;
+      end;
+      if (FNetLength > 0) then
+        ParamByName('net_length').AsFloat := FNetLength
+      else
+        ParamByName('net_length').Clear;
+      if (FNetHeight > 0) then
+        ParamByName('net_height').AsFloat := FNetHeight
+      else
+        ParamByName('net_height').Clear;
+      if (FNetMesh <> EmptyStr) then
+        ParamByName('net_mesh').AsString := FNetMesh
+      else
+        ParamByName('net_mesh').Clear;
+      ParamByName('notes').AsString := FNotes;
+
+      // if the field has 1 second, it is NULL
+      if FNetOpen1 <> StrToTime('00:00:01') then
+        ParamByName('net_open_1').AsString := TimeToStr(FNetOpen1)
+      else
+        ParamByName('net_open_1').Clear;
+      if FNetClose1 <> StrToTime('00:00:01') then
+        ParamByName('net_close_1').AsString := TimeToStr(FNetClose1)
+      else
+        ParamByName('net_close_1').Clear;
+
+      if FNetOpen2 <> StrToTime('00:00:01') then
+        ParamByName('net_open_2').AsString := TimeToStr(FNetOpen2)
+      else
+        ParamByName('net_open_2').Clear;
+      if FNetClose2 <> StrToTime('00:00:01') then
+        ParamByName('net_close_2').AsString := TimeToStr(FNetClose2)
+      else
+        ParamByName('net_close_2').Clear;
+
+      if FNetOpen3 <> StrToTime('00:00:01') then
+        ParamByName('net_open_3').AsString := TimeToStr(FNetOpen3)
+      else
+        ParamByName('net_open_3').Clear;
+      if FNetClose3 <> StrToTime('00:00:01') then
+        ParamByName('net_close_3').AsString := TimeToStr(FNetClose3)
+      else
+        ParamByName('net_close_3').Clear;
+
+      if FNetOpen4 <> StrToTime('00:00:01') then
+        ParamByName('net_open_4').AsString := TimeToStr(FNetOpen4)
+      else
+        ParamByName('net_open_4').Clear;
+      if FNetClose4 <> StrToTime('00:00:01') then
+        ParamByName('net_close_4').AsString := TimeToStr(FNetClose4)
+      else
+        ParamByName('net_close_4').Clear;
+
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    if (FNetLength > 0) then
-      ParamByName('net_length').AsFloat := FNetLength
-    else
-      ParamByName('net_length').Clear;
-    if (FNetHeight > 0) then
-      ParamByName('net_height').AsFloat := FNetHeight
-    else
-      ParamByName('net_height').Clear;
-    if (FNetMesh <> EmptyStr) then
-      ParamByName('net_mesh').AsString := FNetMesh
-    else
-      ParamByName('net_mesh').Clear;
-    ParamByName('notes').AsString := FNotes;
-
-    // if the field has 1 second, it is NULL
-    if FNetOpen1 <> StrToTime('00:00:01') then
-      ParamByName('net_open_1').AsString := TimeToStr(FNetOpen1)
-    else
-      ParamByName('net_open_1').Clear;
-    if FNetClose1 <> StrToTime('00:00:01') then
-      ParamByName('net_close_1').AsString := TimeToStr(FNetClose1)
-    else
-      ParamByName('net_close_1').Clear;
-
-    if FNetOpen2 <> StrToTime('00:00:01') then
-      ParamByName('net_open_2').AsString := TimeToStr(FNetOpen2)
-    else
-      ParamByName('net_open_2').Clear;
-    if FNetClose2 <> StrToTime('00:00:01') then
-      ParamByName('net_close_2').AsString := TimeToStr(FNetClose2)
-    else
-      ParamByName('net_close_2').Clear;
-
-    if FNetOpen3 <> StrToTime('00:00:01') then
-      ParamByName('net_open_3').AsString := TimeToStr(FNetOpen3)
-    else
-      ParamByName('net_open_3').Clear;
-    if FNetClose3 <> StrToTime('00:00:01') then
-      ParamByName('net_close_3').AsString := TimeToStr(FNetClose3)
-    else
-      ParamByName('net_close_3').Clear;
-
-    if FNetOpen4 <> StrToTime('00:00:01') then
-      ParamByName('net_open_4').AsString := TimeToStr(FNetOpen4)
-    else
-      ParamByName('net_open_4').Clear;
-    if FNetClose4 <> StrToTime('00:00:01') then
-      ParamByName('net_close_4').AsString := TimeToStr(FNetClose4)
-    else
-      ParamByName('net_close_4').Clear;
-
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-    ExecSQL;
-
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
   finally
     FreeAndNil(Qry);
   end;
@@ -2838,114 +2990,127 @@ procedure TNetEffort.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TNetEffort.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE nets_effort SET ' +
-      'survey_id = :survey_id, ' +
-      'net_station_id = :net_station_id, ' +
-      'permanent_net_id = :permanent_net_id, ' +
-      'net_number = :net_number, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'sample_date = :sample_date, ' +
-      'net_open_1 = :net_open_1, ' +
-      'net_close_1 = :net_close_1, ' +
-      'net_open_2 = :net_open_2, ' +
-      'net_close_2 = :net_close_2, ' +
-      'net_open_3 = :net_open_3, ' +
-      'net_close_3 = :net_close_3, ' +
-      'net_open_4 = :net_open_4, ' +
-      'net_close_4 = :net_close_4, ' +
-      'net_length = :net_length, ' +
-      'net_height = :net_height, ' +
-      'net_mesh = :net_mesh, ' +
-      'full_name = :full_name, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (net_id = :net_id)');
-    ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
-    ParamByName('net_number').AsInteger := FNetNumber;
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    ParamByName('net_station_id').AsInteger := FNetStationId;
-    if (FPermanentNetId > 0) then
-      ParamByName('permanent_net_id').AsInteger := FPermanentNetId
-    else
-      ParamByName('permanent_net_id').Clear;
-    ParamByName('full_name').AsString := GetNetEffortFullname(FSampleDate, FNetStationId, FNetNumber);
-    if (FLongitude <> 0) and (FLatitude <> 0) then
-    begin
-      ParamByName('longitude').AsFloat := FLongitude;
-      ParamByName('latitude').AsFloat := FLatitude;
-    end
-    else
-    begin
-      ParamByName('longitude').Clear;
-      ParamByName('latitude').Clear;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE nets_effort SET ' +
+        'survey_id = :survey_id, ' +
+        'net_station_id = :net_station_id, ' +
+        'permanent_net_id = :permanent_net_id, ' +
+        'net_number = :net_number, ' +
+        'longitude = :longitude, ' +
+        'latitude = :latitude, ' +
+        'sample_date = :sample_date, ' +
+        'net_open_1 = :net_open_1, ' +
+        'net_close_1 = :net_close_1, ' +
+        'net_open_2 = :net_open_2, ' +
+        'net_close_2 = :net_close_2, ' +
+        'net_open_3 = :net_open_3, ' +
+        'net_close_3 = :net_close_3, ' +
+        'net_open_4 = :net_open_4, ' +
+        'net_close_4 = :net_close_4, ' +
+        'net_length = :net_length, ' +
+        'net_height = :net_height, ' +
+        'net_mesh = :net_mesh, ' +
+        'full_name = :full_name, ' +
+        'notes = :notes, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'', ''subsec''), ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (net_id = :net_id)');
+      ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
+      ParamByName('net_number').AsInteger := FNetNumber;
+      ParamByName('survey_id').AsInteger := FSurveyId;
+      ParamByName('net_station_id').AsInteger := FNetStationId;
+      if (FPermanentNetId > 0) then
+        ParamByName('permanent_net_id').AsInteger := FPermanentNetId
+      else
+        ParamByName('permanent_net_id').Clear;
+      ParamByName('full_name').AsString := GetNetEffortFullname(FSampleDate, FNetStationId, FNetNumber);
+      if (FLongitude <> 0) and (FLatitude <> 0) then
+      begin
+        ParamByName('longitude').AsFloat := FLongitude;
+        ParamByName('latitude').AsFloat := FLatitude;
+      end
+      else
+      begin
+        ParamByName('longitude').Clear;
+        ParamByName('latitude').Clear;
+      end;
+      if (FNetLength > 0) then
+        ParamByName('net_length').AsFloat := FNetLength
+      else
+        ParamByName('net_length').Clear;
+      if (FNetHeight > 0) then
+        ParamByName('net_height').AsFloat := FNetHeight
+      else
+        ParamByName('net_height').Clear;
+      if (FNetMesh <> EmptyStr) then
+        ParamByName('net_mesh').AsString := FNetMesh
+      else
+        ParamByName('net_mesh').Clear;
+      ParamByName('notes').AsString := FNotes;
+
+      // if the field has 1 second, it is NULL
+      if FNetOpen1 <> StrToTime('00:00:01') then
+        ParamByName('net_open_1').AsString := TimeToStr(FNetOpen1)
+      else
+        ParamByName('net_open_1').Clear;
+      if FNetClose1 <> StrToTime('00:00:01') then
+        ParamByName('net_close_1').AsString := TimeToStr(FNetClose1)
+      else
+        ParamByName('net_close_1').Clear;
+
+      if FNetOpen2 <> StrToTime('00:00:01') then
+        ParamByName('net_open_2').AsString := TimeToStr(FNetOpen2)
+      else
+        ParamByName('net_open_2').Clear;
+      if FNetClose2 <> StrToTime('00:00:01') then
+        ParamByName('net_close_2').AsString := TimeToStr(FNetClose2)
+      else
+        ParamByName('net_close_2').Clear;
+
+      if FNetOpen3 <> StrToTime('00:00:01') then
+        ParamByName('net_open_3').AsString := TimeToStr(FNetOpen3)
+      else
+        ParamByName('net_open_3').Clear;
+      if FNetClose3 <> StrToTime('00:00:01') then
+        ParamByName('net_close_3').AsString := TimeToStr(FNetClose3)
+      else
+        ParamByName('net_close_3').Clear;
+
+      if FNetOpen4 <> StrToTime('00:00:01') then
+        ParamByName('net_open_4').AsString := TimeToStr(FNetOpen4)
+      else
+        ParamByName('net_open_4').Clear;
+      if FNetClose4 <> StrToTime('00:00:01') then
+        ParamByName('net_close_4').AsString := TimeToStr(FNetClose4)
+      else
+        ParamByName('net_close_4').Clear;
+
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('net_id').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    if (FNetLength > 0) then
-      ParamByName('net_length').AsFloat := FNetLength
-    else
-      ParamByName('net_length').Clear;
-    if (FNetHeight > 0) then
-      ParamByName('net_height').AsFloat := FNetHeight
-    else
-      ParamByName('net_height').Clear;
-    if (FNetMesh <> EmptyStr) then
-      ParamByName('net_mesh').AsString := FNetMesh
-    else
-      ParamByName('net_mesh').Clear;
-    ParamByName('notes').AsString := FNotes;
-
-    // if the field has 1 second, it is NULL
-    if FNetOpen1 <> StrToTime('00:00:01') then
-      ParamByName('net_open_1').AsString := TimeToStr(FNetOpen1)
-    else
-      ParamByName('net_open_1').Clear;
-    if FNetClose1 <> StrToTime('00:00:01') then
-      ParamByName('net_close_1').AsString := TimeToStr(FNetClose1)
-    else
-      ParamByName('net_close_1').Clear;
-
-    if FNetOpen2 <> StrToTime('00:00:01') then
-      ParamByName('net_open_2').AsString := TimeToStr(FNetOpen2)
-    else
-      ParamByName('net_open_2').Clear;
-    if FNetClose2 <> StrToTime('00:00:01') then
-      ParamByName('net_close_2').AsString := TimeToStr(FNetClose2)
-    else
-      ParamByName('net_close_2').Clear;
-
-    if FNetOpen3 <> StrToTime('00:00:01') then
-      ParamByName('net_open_3').AsString := TimeToStr(FNetOpen3)
-    else
-      ParamByName('net_open_3').Clear;
-    if FNetClose3 <> StrToTime('00:00:01') then
-      ParamByName('net_close_3').AsString := TimeToStr(FNetClose3)
-    else
-      ParamByName('net_close_3').Clear;
-
-    if FNetOpen4 <> StrToTime('00:00:01') then
-      ParamByName('net_open_4').AsString := TimeToStr(FNetOpen4)
-    else
-      ParamByName('net_open_4').Clear;
-    if FNetClose4 <> StrToTime('00:00:01') then
-      ParamByName('net_close_4').AsString := TimeToStr(FNetClose4)
-    else
-      ParamByName('net_close_4').Clear;
-
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('net_id').AsInteger := FId;
-
-    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -3007,20 +3172,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TVegetation.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM vegetation');
-    Add('WHERE (vegetation_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM vegetation');
+      Add('WHERE (vegetation_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3206,81 +3381,91 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO vegetation (' +
-      'survey_id, ' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'observer_id, ' +
-      'herbs_proportion, ' +
-      'herbs_distribution, ' +
-      'herbs_avg_height, ' +
-      'shrubs_proportion, ' +
-      'shrubs_distribution, ' +
-      'shrubs_avg_height, ' +
-      'trees_proportion, ' +
-      'trees_distribution, ' +
-      'trees_avg_height, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      'date(:sample_date), ' +
-      'time(:sample_time), ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':observer_id, ' +
-      ':herbs_proportion, ' +
-      ':herbs_distribution, ' +
-      ':herbs_avg_height, ' +
-      ':shrubs_proportion, ' +
-      ':shrubs_distribution, ' +
-      ':shrubs_avg_height, ' +
-      ':trees_proportion, ' +
-      ':trees_distribution, ' +
-      ':trees_avg_height, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
-    ParamByName('sample_time').AsString := FormatDateTime('hh:nn', FSampleTime);
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    if (FLongitude <> 0) and (FLatitude <> 0) then
-    begin
-      ParamByName('longitude').AsFloat := FLongitude;
-      ParamByName('latitude').AsFloat := FLatitude;
-    end
-    else
-    begin
-      ParamByName('longitude').Clear;
-      ParamByName('latitude').Clear;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO vegetation (' +
+        'survey_id, ' +
+        'sample_date, ' +
+        'sample_time, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'observer_id, ' +
+        'herbs_proportion, ' +
+        'herbs_distribution, ' +
+        'herbs_avg_height, ' +
+        'shrubs_proportion, ' +
+        'shrubs_distribution, ' +
+        'shrubs_avg_height, ' +
+        'trees_proportion, ' +
+        'trees_distribution, ' +
+        'trees_avg_height, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':survey_id, ' +
+        'date(:sample_date), ' +
+        'time(:sample_time), ' +
+        ':longitude, ' +
+        ':latitude, ' +
+        ':observer_id, ' +
+        ':herbs_proportion, ' +
+        ':herbs_distribution, ' +
+        ':herbs_avg_height, ' +
+        ':shrubs_proportion, ' +
+        ':shrubs_distribution, ' +
+        ':shrubs_avg_height, ' +
+        ':trees_proportion, ' +
+        ':trees_distribution, ' +
+        ':trees_avg_height, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
+      ParamByName('sample_time').AsString := FormatDateTime('hh:nn', FSampleTime);
+      ParamByName('survey_id').AsInteger := FSurveyId;
+      if (FLongitude <> 0) and (FLatitude <> 0) then
+      begin
+        ParamByName('longitude').AsFloat := FLongitude;
+        ParamByName('latitude').AsFloat := FLatitude;
+      end
+      else
+      begin
+        ParamByName('longitude').Clear;
+        ParamByName('latitude').Clear;
+      end;
+      ParamByName('observer_id').AsInteger := FObserverId;
+      ParamByName('notes').AsString := FNotes;
+
+      ParamByName('herbs_proportion').AsInteger := FHerbsProportion;
+      ParamByName('herbs_distribution').AsInteger := Ord(FHerbsDistribution);
+      ParamByName('herbs_avg_height').AsInteger := FHerbsAvgHeight;
+      ParamByName('shrubs_proportion').AsInteger := FShrubsProportion;
+      ParamByName('shrubs_distribution').AsInteger := Ord(FShrubsDistribution);
+      ParamByName('shrubs_avg_height').AsInteger := FShrubsAvgHeight;
+      ParamByName('trees_proportion').AsInteger := FTreesProportion;
+      ParamByName('trees_distribution').AsInteger := Ord(FTreesDistribution);
+      ParamByName('trees_avg_height').AsInteger := FTreesAvgHeight;
+
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    ParamByName('observer_id').AsInteger := FObserverId;
-    ParamByName('notes').AsString := FNotes;
-
-    ParamByName('herbs_proportion').AsInteger := FHerbsProportion;
-    ParamByName('herbs_distribution').AsInteger := Ord(FHerbsDistribution);
-    ParamByName('herbs_avg_height').AsInteger := FHerbsAvgHeight;
-    ParamByName('shrubs_proportion').AsInteger := FShrubsProportion;
-    ParamByName('shrubs_distribution').AsInteger := Ord(FShrubsDistribution);
-    ParamByName('shrubs_avg_height').AsInteger := FShrubsAvgHeight;
-    ParamByName('trees_proportion').AsInteger := FTreesProportion;
-    ParamByName('trees_distribution').AsInteger := Ord(FTreesDistribution);
-    ParamByName('trees_avg_height').AsInteger := FTreesAvgHeight;
-
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-    ExecSQL;
-
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
   finally
     FreeAndNil(Qry);
   end;
@@ -3327,66 +3512,79 @@ procedure TVegetation.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TVegetation.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE vegetation SET ' +
-      'survey_id = :survey_id, ' +
-      'sample_date = date(:sample_date), ' +
-      'sample_time = time(:sample_time), ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'observer_id = :observer_id, ' +
-      'herbs_proportion = :herbs_proportion, ' +
-      'herbs_distribution = :herbs_distribution, ' +
-      'herbs_avg_height = :herbs_avg_height, ' +
-      'shrubs_proportion = :shrubs_proportion, ' +
-      'shrubs_distribution = :shrubs_distribution, ' +
-      'shrubs_avg_height = :shrubs_avg_height, ' +
-      'trees_proportion = :trees_proportion, ' +
-      'trees_distribution = :trees_distribution, ' +
-      'trees_avg_height = :trees_avg_height, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (vegetation_id = :vegetation_id)');
-    ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
-    ParamByName('sample_time').AsString := FormatDateTime('hh:nn', FSampleTime);
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    if (FLongitude <> 0) and (FLatitude <> 0) then
-    begin
-      ParamByName('longitude').AsFloat := FLongitude;
-      ParamByName('latitude').AsFloat := FLatitude;
-    end
-    else
-    begin
-      ParamByName('longitude').Clear;
-      ParamByName('latitude').Clear;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE vegetation SET ' +
+        'survey_id = :survey_id, ' +
+        'sample_date = date(:sample_date), ' +
+        'sample_time = time(:sample_time), ' +
+        'longitude = :longitude, ' +
+        'latitude = :latitude, ' +
+        'observer_id = :observer_id, ' +
+        'herbs_proportion = :herbs_proportion, ' +
+        'herbs_distribution = :herbs_distribution, ' +
+        'herbs_avg_height = :herbs_avg_height, ' +
+        'shrubs_proportion = :shrubs_proportion, ' +
+        'shrubs_distribution = :shrubs_distribution, ' +
+        'shrubs_avg_height = :shrubs_avg_height, ' +
+        'trees_proportion = :trees_proportion, ' +
+        'trees_distribution = :trees_distribution, ' +
+        'trees_avg_height = :trees_avg_height, ' +
+        'notes = :notes, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'', ''subsec''), ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (vegetation_id = :vegetation_id)');
+      ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
+      ParamByName('sample_time').AsString := FormatDateTime('hh:nn', FSampleTime);
+      ParamByName('survey_id').AsInteger := FSurveyId;
+      if (FLongitude <> 0) and (FLatitude <> 0) then
+      begin
+        ParamByName('longitude').AsFloat := FLongitude;
+        ParamByName('latitude').AsFloat := FLatitude;
+      end
+      else
+      begin
+        ParamByName('longitude').Clear;
+        ParamByName('latitude').Clear;
+      end;
+      ParamByName('observer_id').AsInteger := FObserverId;
+      ParamByName('notes').AsString := FNotes;
+
+      ParamByName('herbs_proportion').AsInteger := FHerbsProportion;
+      ParamByName('herbs_distribution').AsInteger := Ord(FHerbsDistribution);
+      ParamByName('herbs_avg_height').AsInteger := FHerbsAvgHeight;
+      ParamByName('shrubs_proportion').AsInteger := FShrubsProportion;
+      ParamByName('shrubs_distribution').AsInteger := Ord(FShrubsDistribution);
+      ParamByName('shrubs_avg_height').AsInteger := FShrubsAvgHeight;
+      ParamByName('trees_proportion').AsInteger := FTreesProportion;
+      ParamByName('trees_distribution').AsInteger := Ord(FTreesDistribution);
+      ParamByName('trees_avg_height').AsInteger := FTreesAvgHeight;
+
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('vegetation_id').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    ParamByName('observer_id').AsInteger := FObserverId;
-    ParamByName('notes').AsString := FNotes;
-
-    ParamByName('herbs_proportion').AsInteger := FHerbsProportion;
-    ParamByName('herbs_distribution').AsInteger := Ord(FHerbsDistribution);
-    ParamByName('herbs_avg_height').AsInteger := FHerbsAvgHeight;
-    ParamByName('shrubs_proportion').AsInteger := FShrubsProportion;
-    ParamByName('shrubs_distribution').AsInteger := Ord(FShrubsDistribution);
-    ParamByName('shrubs_avg_height').AsInteger := FShrubsAvgHeight;
-    ParamByName('trees_proportion').AsInteger := FTreesProportion;
-    ParamByName('trees_distribution').AsInteger := Ord(FTreesDistribution);
-    ParamByName('trees_avg_height').AsInteger := FTreesAvgHeight;
-
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('vegetation_id').AsInteger := FId;
-
-    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -3422,20 +3620,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TSurveyMember.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM survey_team');
-    Add('WHERE (survey_member_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM survey_team');
+      Add('WHERE (survey_member_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3516,29 +3724,39 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO survey_team (' +
-      'survey_id, ' +
-      'person_id, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      ':person_id, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    ParamByName('person_id').AsInteger := FPersonId;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO survey_team (' +
+        'survey_id, ' +
+        'person_id, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':survey_id, ' +
+        ':person_id, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('survey_id').AsInteger := FSurveyId;
+      ParamByName('person_id').AsInteger := FPersonId;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3572,29 +3790,42 @@ procedure TSurveyMember.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TSurveyMember.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE survey_team SET ' +
-      'survey_id = :survey_id, ' +
-      'person_id = :person_id, ' +
-      'visitor = :visitor, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec''),' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (survey_member_id = :survey_member_id)');
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    ParamByName('person_id').AsInteger := FPersonId;
-    ParamByName('visitor').AsBoolean := FVisitor;
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE survey_team SET ' +
+        'survey_id = :survey_id, ' +
+        'person_id = :person_id, ' +
+        'visitor = :visitor, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'',''subsec''),' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (survey_member_id = :survey_member_id)');
+      ParamByName('survey_id').AsInteger := FSurveyId;
+      ParamByName('person_id').AsInteger := FPersonId;
+      ParamByName('visitor').AsBoolean := FVisitor;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3727,20 +3958,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TSurvey.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM surveys');
-    Add('WHERE (survey_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM surveys');
+      Add('WHERE (survey_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3859,176 +4100,186 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO surveys (' +
-        'survey_date, ' +
-        'start_time, ' +
-        'end_time, ' +
-        'duration, ' +
-        'method_id, ' +
-        'net_station_id, ' +
-        'expedition_id, ' +
-        'project_id, ' +
-        'locality_id, ' +
-        'sample_id, ' +
-        'start_latitude, ' +
-        'start_longitude, ' +
-        'end_latitude, ' +
-        'end_longitude, ' +
-        'observers_tally, ' +
-        'area_total, ' +
-        'distance_total, ' +
-        'nets_total, ' +
-        'habitat, ' +
-        'net_rounds, ' +
-        'full_name, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-    Add('VALUES (' +
-        'date(:survey_date), ' +
-        'time(:start_time), ' +
-        'time(:end_time), ' +
-        ':duration, ' +
-        ':method_id, ' +
-        ':net_station_id, ' +
-        ':expedition_id, ' +
-        ':project_id, ' +
-        ':locality_id, ' +
-        ':sample_id, ' +
-        ':start_latitude, ' +
-        ':start_longitude, ' +
-        ':end_latitude, ' +
-        ':end_longitude, ' +
-        ':observers_tally, ' +
-        ':area_total, ' +
-        ':distance_total, ' +
-        ':nets_total, ' +
-        ':habitat, ' +
-        ':net_rounds, ' +
-        ':full_name, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''));');
-    ParamByName('survey_date').AsString := FormatDateTime('yyyy-mm-dd', FSurveyDate);
-    ParamByName('start_time').AsString := TimeToStr(FStartTime);
-    if not TimeIsNull(FEndTime) then
-      ParamByName('end_time').AsString := TimeToStr(FEndTime)
-    else
-      ParamByName('end_time').Clear;
-    if FDuration > 0 then
-      ParamByName('duration').AsInteger := FDuration
-    else
-      ParamByName('duration').Clear;
-    ParamByName('method_id').AsInteger := FMethodId;
-    if FNetStationId > 0 then
-      ParamByName('net_station_id').AsInteger := FNetStationId
-    else
-      ParamByName('net_station_id').Clear;
-    if FExpeditionId > 0 then
-      ParamByName('expedition_id').AsInteger := FExpeditionId
-    else
-      ParamByName('expedition_id').Clear;
-    if FProjectId > 0 then
-      ParamByName('project_id').AsInteger := FProjectId
-    else
-      ParamByName('project_id').Clear;
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    if (FStartLongitude <> 0) and (FStartLatitude <> 0) then
-    begin
-      ParamByName('start_longitude').AsFloat := FStartLongitude;
-      ParamByName('start_latitude').AsFloat := FStartLatitude;
-    end
-    else
-    begin
-      ParamByName('start_longitude').Clear;
-      ParamByName('start_latitude').Clear;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO surveys (' +
+          'survey_date, ' +
+          'start_time, ' +
+          'end_time, ' +
+          'duration, ' +
+          'method_id, ' +
+          'net_station_id, ' +
+          'expedition_id, ' +
+          'project_id, ' +
+          'locality_id, ' +
+          'sample_id, ' +
+          'start_latitude, ' +
+          'start_longitude, ' +
+          'end_latitude, ' +
+          'end_longitude, ' +
+          'observers_tally, ' +
+          'area_total, ' +
+          'distance_total, ' +
+          'nets_total, ' +
+          'habitat, ' +
+          'net_rounds, ' +
+          'full_name, ' +
+          'notes, ' +
+          'user_inserted, ' +
+          'insert_date) ');
+      Add('VALUES (' +
+          'date(:survey_date), ' +
+          'time(:start_time), ' +
+          'time(:end_time), ' +
+          ':duration, ' +
+          ':method_id, ' +
+          ':net_station_id, ' +
+          ':expedition_id, ' +
+          ':project_id, ' +
+          ':locality_id, ' +
+          ':sample_id, ' +
+          ':start_latitude, ' +
+          ':start_longitude, ' +
+          ':end_latitude, ' +
+          ':end_longitude, ' +
+          ':observers_tally, ' +
+          ':area_total, ' +
+          ':distance_total, ' +
+          ':nets_total, ' +
+          ':habitat, ' +
+          ':net_rounds, ' +
+          ':full_name, ' +
+          ':notes, ' +
+          ':user_inserted, ' +
+          'datetime(''now'',''subsec''));');
+      ParamByName('survey_date').AsString := FormatDateTime('yyyy-mm-dd', FSurveyDate);
+      ParamByName('start_time').AsString := TimeToStr(FStartTime);
+      if not TimeIsNull(FEndTime) then
+        ParamByName('end_time').AsString := TimeToStr(FEndTime)
+      else
+        ParamByName('end_time').Clear;
+      if FDuration > 0 then
+        ParamByName('duration').AsInteger := FDuration
+      else
+        ParamByName('duration').Clear;
+      ParamByName('method_id').AsInteger := FMethodId;
+      if FNetStationId > 0 then
+        ParamByName('net_station_id').AsInteger := FNetStationId
+      else
+        ParamByName('net_station_id').Clear;
+      if FExpeditionId > 0 then
+        ParamByName('expedition_id').AsInteger := FExpeditionId
+      else
+        ParamByName('expedition_id').Clear;
+      if FProjectId > 0 then
+        ParamByName('project_id').AsInteger := FProjectId
+      else
+        ParamByName('project_id').Clear;
+      ParamByName('locality_id').AsInteger := FLocalityId;
+      if (FStartLongitude <> 0) and (FStartLatitude <> 0) then
+      begin
+        ParamByName('start_longitude').AsFloat := FStartLongitude;
+        ParamByName('start_latitude').AsFloat := FStartLatitude;
+      end
+      else
+      begin
+        ParamByName('start_longitude').Clear;
+        ParamByName('start_latitude').Clear;
+      end;
+      if (FEndLongitude <> 0) and (FEndLatitude <> 0) then
+      begin
+        ParamByName('end_longitude').AsFloat := FEndLongitude;
+        ParamByName('end_latitude').AsFloat := FEndLatitude;
+      end
+      else
+      begin
+        ParamByName('end_longitude').Clear;
+        ParamByName('end_latitude').Clear;
+      end;
+      if FSampleId <> EmptyStr then
+        ParamByName('sample_id').AsString := FSampleId
+      else
+        ParamByName('sample_id').Clear;
+      if FObserversTally > 0 then
+        ParamByName('observers_tally').AsInteger := FObserversTally
+      else
+        ParamByName('observers_tally').Clear;
+      if FTotalNets > 0 then
+        ParamByName('nets_total').AsInteger := FTotalNets
+      else
+        ParamByName('nets_total').Clear;
+      if FTotalArea > 0 then
+        ParamByName('area_total').AsFloat := FTotalArea
+      else
+        ParamByName('area_total').Clear;
+      if FTotalDistance > 0 then
+        ParamByName('distance_total').AsFloat := FTotalDistance
+      else
+        ParamByName('distance_total').Clear;
+      if FHabitat <> EmptyStr then
+        ParamByName('habitat').AsString := FHabitat
+      else
+        ParamByName('habitat').Clear;
+      if FNetRounds <> EmptyStr then
+        ParamByName('net_rounds').AsString := FNetRounds
+      else
+        ParamByName('net_rounds').Clear;
+      if FNotes <> EmptyStr then
+        ParamByName('notes').AsString := FNotes
+      else
+        ParamByName('notes').Clear;
+      ParamByName('full_name').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, 0, '');
+      ParamByName('user_inserted').AsInteger := FUserInserted;
+
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      //// Get the site hierarchy
+      //if (FLocalityId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      //  Add('WHERE site_id = :asite');
+      //  ParamByName('ASITE').AsInteger := FLocalityId;
+      //  Open;
+      //  FCountryId := FieldByName('country_id').AsInteger;
+      //  FStateId := FieldByName('state_id').AsInteger;
+      //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the site hierarchy
+      //Clear;
+      //Add('UPDATE surveys SET');
+      //Add('  country_id = :country_id,');
+      //Add('  state_id = :state_id,');
+      //Add('  municipality_id = :municipality_id');
+      //Add('WHERE survey_id = :aid');
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //if (FStateId > 0) then
+      //  ParamByName('state_id').AsInteger := FStateId
+      //else
+      //  ParamByName('state_id').Clear;
+      //if (FMunicipalityId > 0) then
+      //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+      //else
+      //  ParamByName('municipality_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    if (FEndLongitude <> 0) and (FEndLatitude <> 0) then
-    begin
-      ParamByName('end_longitude').AsFloat := FEndLongitude;
-      ParamByName('end_latitude').AsFloat := FEndLatitude;
-    end
-    else
-    begin
-      ParamByName('end_longitude').Clear;
-      ParamByName('end_latitude').Clear;
-    end;
-    if FSampleId <> EmptyStr then
-      ParamByName('sample_id').AsString := FSampleId
-    else
-      ParamByName('sample_id').Clear;
-    if FObserversTally > 0 then
-      ParamByName('observers_tally').AsInteger := FObserversTally
-    else
-      ParamByName('observers_tally').Clear;
-    if FTotalNets > 0 then
-      ParamByName('nets_total').AsInteger := FTotalNets
-    else
-      ParamByName('nets_total').Clear;
-    if FTotalArea > 0 then
-      ParamByName('area_total').AsFloat := FTotalArea
-    else
-      ParamByName('area_total').Clear;
-    if FTotalDistance > 0 then
-      ParamByName('distance_total').AsFloat := FTotalDistance
-    else
-      ParamByName('distance_total').Clear;
-    if FHabitat <> EmptyStr then
-      ParamByName('habitat').AsString := FHabitat
-    else
-      ParamByName('habitat').Clear;
-    if FNetRounds <> EmptyStr then
-      ParamByName('net_rounds').AsString := FNetRounds
-    else
-      ParamByName('net_rounds').Clear;
-    if FNotes <> EmptyStr then
-      ParamByName('notes').AsString := FNotes
-    else
-      ParamByName('notes').Clear;
-    ParamByName('full_name').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, 0, '');
-    ParamByName('user_inserted').AsInteger := FUserInserted;
-
-    ExecSQL;
-
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
-
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE surveys SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE survey_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -4046,160 +4297,171 @@ procedure TSurvey.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TSurvey.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    Clear;
-    Add('UPDATE gazetteer SET ' +
-      'survey_date = date(:survey_date), ' +
-      'start_time = time(:start_time), ' +
-      'end_time = time(:end_time), ' +
-      'duration = :duration, ' +
-      'method_id = :method_id, ' +
-      'net_station_id = :net_station_id, ' +
-      'expedition_id = :expedition_id, ' +
-      'project_id = :project_id, ' +
-      'locality_id = :locality_id, ' +
-      'sample_id = :sample_id, ' +
-      'start_latitude = :start_latitude, ' +
-      'start_longitude = :start_longitude, ' +
-      'end_latitude = :end_latitude, ' +
-      'end_longitude = :end_longitude, ' +
-      'observers_tally = :observers_tally, ' +
-      'area_total = :area_total, ' +
-      'distance_total = :distance_total, ' +
-      'nets_total = :nets_total, ' +
-      'habitat = :habitat, ' +
-      'net_rounds = :net_rounds, ' +
-      'full_name = :full_name, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'exported_status = :exported_status, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (survey_id = :survey_id)');
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE surveys SET ' +
+        'survey_date = date(:survey_date), ' +
+        'start_time = time(:start_time), ' +
+        'end_time = time(:end_time), ' +
+        'duration = :duration, ' +
+        'method_id = :method_id, ' +
+        'net_station_id = :net_station_id, ' +
+        'expedition_id = :expedition_id, ' +
+        'project_id = :project_id, ' +
+        'locality_id = :locality_id, ' +
+        'sample_id = :sample_id, ' +
+        'start_latitude = :start_latitude, ' +
+        'start_longitude = :start_longitude, ' +
+        'end_latitude = :end_latitude, ' +
+        'end_longitude = :end_longitude, ' +
+        'observers_tally = :observers_tally, ' +
+        'area_total = :area_total, ' +
+        'distance_total = :distance_total, ' +
+        'nets_total = :nets_total, ' +
+        'habitat = :habitat, ' +
+        'net_rounds = :net_rounds, ' +
+        'full_name = :full_name, ' +
+        'notes = :notes, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'', ''subsec''), ' +
+        'exported_status = :exported_status, ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (survey_id = :survey_id)');
 
-    ParamByName('survey_date').AsString := FormatDateTime('yyyy-mm-dd', FSurveyDate);
-    ParamByName('start_time').AsString := TimeToStr(FStartTime);
-    if not TimeIsNull(FEndTime) then
-      ParamByName('end_time').AsString := TimeToStr(FEndTime)
-    else
-      ParamByName('end_time').Clear;
-    if FDuration > 0 then
-      ParamByName('duration').AsInteger := FDuration
-    else
-      ParamByName('duration').Clear;
-    ParamByName('method_id').AsInteger := FMethodId;
-    if FNetStationId > 0 then
-      ParamByName('net_station_id').AsInteger := FNetStationId
-    else
-      ParamByName('net_station_id').Clear;
-    if FExpeditionId > 0 then
-      ParamByName('expedition_id').AsInteger := FExpeditionId
-    else
-      ParamByName('expedition_id').Clear;
-    if FProjectId > 0 then
-      ParamByName('project_id').AsInteger := FProjectId
-    else
-      ParamByName('project_id').Clear;
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    if (FStartLongitude <> 0) and (FStartLatitude <> 0) then
-    begin
-      ParamByName('start_longitude').AsFloat := FStartLongitude;
-      ParamByName('start_latitude').AsFloat := FStartLatitude;
-    end
-    else
-    begin
-      ParamByName('start_longitude').Clear;
-      ParamByName('start_latitude').Clear;
+      ParamByName('survey_date').AsString := FormatDateTime('yyyy-mm-dd', FSurveyDate);
+      ParamByName('start_time').AsString := TimeToStr(FStartTime);
+      if not TimeIsNull(FEndTime) then
+        ParamByName('end_time').AsString := TimeToStr(FEndTime)
+      else
+        ParamByName('end_time').Clear;
+      if FDuration > 0 then
+        ParamByName('duration').AsInteger := FDuration
+      else
+        ParamByName('duration').Clear;
+      ParamByName('method_id').AsInteger := FMethodId;
+      if FNetStationId > 0 then
+        ParamByName('net_station_id').AsInteger := FNetStationId
+      else
+        ParamByName('net_station_id').Clear;
+      if FExpeditionId > 0 then
+        ParamByName('expedition_id').AsInteger := FExpeditionId
+      else
+        ParamByName('expedition_id').Clear;
+      if FProjectId > 0 then
+        ParamByName('project_id').AsInteger := FProjectId
+      else
+        ParamByName('project_id').Clear;
+      ParamByName('locality_id').AsInteger := FLocalityId;
+      if (FStartLongitude <> 0) and (FStartLatitude <> 0) then
+      begin
+        ParamByName('start_longitude').AsFloat := FStartLongitude;
+        ParamByName('start_latitude').AsFloat := FStartLatitude;
+      end
+      else
+      begin
+        ParamByName('start_longitude').Clear;
+        ParamByName('start_latitude').Clear;
+      end;
+      if (FEndLongitude <> 0) and (FEndLatitude <> 0) then
+      begin
+        ParamByName('end_longitude').AsFloat := FEndLongitude;
+        ParamByName('end_latitude').AsFloat := FEndLatitude;
+      end
+      else
+      begin
+        ParamByName('end_longitude').Clear;
+        ParamByName('end_latitude').Clear;
+      end;
+      if FSampleId <> EmptyStr then
+        ParamByName('sample_id').AsString := FSampleId
+      else
+        ParamByName('sample_id').Clear;
+      if FObserversTally > 0 then
+        ParamByName('observers_tally').AsInteger := FObserversTally
+      else
+        ParamByName('observers_tally').Clear;
+      if FTotalNets > 0 then
+        ParamByName('nets_total').AsInteger := FTotalNets
+      else
+        ParamByName('nets_total').Clear;
+      if FTotalArea > 0 then
+        ParamByName('area_total').AsFloat := FTotalArea
+      else
+        ParamByName('area_total').Clear;
+      if FTotalDistance > 0 then
+        ParamByName('distance_total').AsFloat := FTotalDistance
+      else
+        ParamByName('distance_total').Clear;
+      if FHabitat <> EmptyStr then
+        ParamByName('habitat').AsString := FHabitat
+      else
+        ParamByName('habitat').Clear;
+      if FNetRounds <> EmptyStr then
+        ParamByName('net_rounds').AsString := FNetRounds
+      else
+        ParamByName('net_rounds').Clear;
+      if FNotes <> EmptyStr then
+        ParamByName('notes').AsString := FNotes
+      else
+        ParamByName('notes').Clear;
+      ParamByName('full_name').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, 0, '');
+      ParamByName('user_updated').AsInteger := FUserInserted;
+      ParamByName('exported_status').AsBoolean := FExported;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('survey_id').AsInteger := FId;
+
+      ExecSQL;
+
+      //// Get the site hierarchy
+      //if (FLocalityId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      //  Add('WHERE site_id = :asite');
+      //  ParamByName('ASITE').AsInteger := FLocalityId;
+      //  Open;
+      //  FCountryId := FieldByName('country_id').AsInteger;
+      //  FStateId := FieldByName('state_id').AsInteger;
+      //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the site hierarchy
+      //Clear;
+      //Add('UPDATE surveys SET');
+      //Add('  country_id = :country_id,');
+      //Add('  state_id = :state_id,');
+      //Add('  municipality_id = :municipality_id');
+      //Add('WHERE survey_id = :aid');
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //if (FStateId > 0) then
+      //  ParamByName('state_id').AsInteger := FStateId
+      //else
+      //  ParamByName('state_id').Clear;
+      //if (FMunicipalityId > 0) then
+      //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+      //else
+      //  ParamByName('municipality_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    if (FEndLongitude <> 0) and (FEndLatitude <> 0) then
-    begin
-      ParamByName('end_longitude').AsFloat := FEndLongitude;
-      ParamByName('end_latitude').AsFloat := FEndLatitude;
-    end
-    else
-    begin
-      ParamByName('end_longitude').Clear;
-      ParamByName('end_latitude').Clear;
-    end;
-    if FSampleId <> EmptyStr then
-      ParamByName('sample_id').AsString := FSampleId
-    else
-      ParamByName('sample_id').Clear;
-    if FObserversTally > 0 then
-      ParamByName('observers_tally').AsInteger := FObserversTally
-    else
-      ParamByName('observers_tally').Clear;
-    if FTotalNets > 0 then
-      ParamByName('nets_total').AsInteger := FTotalNets
-    else
-      ParamByName('nets_total').Clear;
-    if FTotalArea > 0 then
-      ParamByName('area_total').AsFloat := FTotalArea
-    else
-      ParamByName('area_total').Clear;
-    if FTotalDistance > 0 then
-      ParamByName('distance_total').AsFloat := FTotalDistance
-    else
-      ParamByName('distance_total').Clear;
-    if FHabitat <> EmptyStr then
-      ParamByName('habitat').AsString := FHabitat
-    else
-      ParamByName('habitat').Clear;
-    if FNetRounds <> EmptyStr then
-      ParamByName('net_rounds').AsString := FNetRounds
-    else
-      ParamByName('net_rounds').Clear;
-    if FNotes <> EmptyStr then
-      ParamByName('notes').AsString := FNotes
-    else
-      ParamByName('notes').Clear;
-    ParamByName('full_name').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, 0, '');
-    ParamByName('user_updated').AsInteger := FUserInserted;
-    ParamByName('exported_status').AsBoolean := FExported;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('survey_id').AsInteger := FId;
-
-    ExecSQL;
-
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE surveys SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE survey_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
-
   finally
     FreeAndNil(Qry);
   end;
@@ -4313,9 +4575,9 @@ begin
   FPrecipitation := wpEmpty;
   FRainfall := 0;
   FRelativeHumidity := 0;
-  FSampleDate := StrToDate('30/12/1500');
+  FSampleDate := NullDate;
   FSampleMoment := wmNone;
-  FSampleTime := StrToTime('00:00:00');
+  FSampleTime := NullTime;
   FObserverId := 0;
   FTemperature := 0;
   FWindSpeedBft := 0;
@@ -4345,20 +4607,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TWeatherLog.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM weather_logs');
-    Add('WHERE (weather_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM weather_logs');
+      Add('WHERE (weather_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -4546,65 +4818,75 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO weather_logs (' +
-      'survey_id, ' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'sample_moment, ' +
-      'observer_id, ' +
-      'cloud_cover, ' +
-      'precipitation, ' +
-      'rainfall, ' +
-      'temperature, ' +
-      'wind_speed_bft, ' +
-      'wind_speed_kmh, ' +
-      'relative_humidity, ' +
-      'atmospheric_pressure, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      'date(:sample_date), ' +
-      'time(:sample_time), ' +
-      ':sample_moment, ' +
-      ':observer_id, ' +
-      ':cloud_cover, ' +
-      ':precipitation, ' +
-      ':rainfall, ' +
-      ':temperature, ' +
-      ':wind_speed_bft, ' +
-      ':wind_speed_kmh, ' +
-      ':relative_humidity, ' +
-      ':atmospheric_pressure, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
-    ParamByName('sample_time').AsString := TimeToStr(FSampleTime);
-    ParamByName('sample_moment').AsString := WeatherSampleMoments[FSampleMoment];
-    ParamByName('observer_id').AsInteger := FObserverId;
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    ParamByName('cloud_cover').AsInteger := FCloudCover;
-    ParamByName('precipitation').AsString := PrecipitationValues[FPrecipitation];
-    ParamByName('rainfall').AsInteger := FRainfall;
-    ParamByName('temperature').AsFloat := FTemperature;
-    ParamByName('wind_speed_bft').AsInteger := FWindSpeedBft;
-    ParamByName('wind_speed_kmh').AsFloat := FWindSpeedKmH;
-    ParamByName('relative_humidity').AsFloat := FRelativeHumidity;
-    ParamByName('atmospheric_pressure').AsFloat := FAtmosphericPressure;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO weather_logs (' +
+        'survey_id, ' +
+        'sample_date, ' +
+        'sample_time, ' +
+        'sample_moment, ' +
+        'observer_id, ' +
+        'cloud_cover, ' +
+        'precipitation, ' +
+        'rainfall, ' +
+        'temperature, ' +
+        'wind_speed_bft, ' +
+        'wind_speed_kmh, ' +
+        'relative_humidity, ' +
+        'atmospheric_pressure, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':survey_id, ' +
+        'date(:sample_date), ' +
+        'time(:sample_time), ' +
+        ':sample_moment, ' +
+        ':observer_id, ' +
+        ':cloud_cover, ' +
+        ':precipitation, ' +
+        ':rainfall, ' +
+        ':temperature, ' +
+        ':wind_speed_bft, ' +
+        ':wind_speed_kmh, ' +
+        ':relative_humidity, ' +
+        ':atmospheric_pressure, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
+      ParamByName('sample_time').AsString := TimeToStr(FSampleTime);
+      ParamByName('sample_moment').AsString := WeatherSampleMoments[FSampleMoment];
+      ParamByName('observer_id').AsInteger := FObserverId;
+      ParamByName('survey_id').AsInteger := FSurveyId;
+      ParamByName('cloud_cover').AsInteger := FCloudCover;
+      ParamByName('precipitation').AsString := PrecipitationValues[FPrecipitation];
+      ParamByName('rainfall').AsInteger := FRainfall;
+      ParamByName('temperature').AsFloat := FTemperature;
+      ParamByName('wind_speed_bft').AsInteger := FWindSpeedBft;
+      ParamByName('wind_speed_kmh').AsFloat := FWindSpeedKmH;
+      ParamByName('relative_humidity').AsFloat := FRelativeHumidity;
+      ParamByName('atmospheric_pressure').AsFloat := FAtmosphericPressure;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -4649,52 +4931,65 @@ procedure TWeatherLog.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TWeatherLog.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE weather_logs SET ' +
-      'survey_id = :survey_id, ' +
-      'sample_date = date(:sample_date), ' +
-      'sample_time = time(:sample_time), ' +
-      'sample_moment = :sample_moment, ' +
-      'observer_id = :observer_id, ' +
-      'cloud_cover = :cloud_cover, ' +
-      'precipitation = :precipitation, ' +
-      'rainfall = :rainfall, ' +
-      'temperature = :temperature, ' +
-      'wind_speed_bft = :wind_speed_bft, ' +
-      'wind_speed_kmh = :wind_speed_kmh, ' +
-      'relative_humidity = :relative_humidity, ' +
-      'atmospheric_pressure = :atmospheric_pressure, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (weather_id = :weather_id)');
-    ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
-    ParamByName('sample_time').AsString := TimeToStr(FSampleTime);
-    ParamByName('sample_moment').AsString := WeatherSampleMoments[FSampleMoment];
-    ParamByName('observer_id').AsInteger := FObserverId;
-    ParamByName('survey_id').AsInteger := FSurveyId;
-    ParamByName('cloud_cover').AsInteger := FCloudCover;
-    ParamByName('precipitation').AsString := PrecipitationValues[FPrecipitation];
-    ParamByName('rainfall').AsInteger := FRainfall;
-    ParamByName('temperature').AsFloat := FTemperature;
-    ParamByName('wind_speed_bft').AsInteger := FWindSpeedBft;
-    ParamByName('wind_speed_kmh').AsFloat := FWindSpeedKmH;
-    ParamByName('relative_humidity').AsFloat := FRelativeHumidity;
-    ParamByName('atmospheric_pressure').AsFloat := FAtmosphericPressure;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('weather_id').AsInteger := FId;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE weather_logs SET ' +
+        'survey_id = :survey_id, ' +
+        'sample_date = date(:sample_date), ' +
+        'sample_time = time(:sample_time), ' +
+        'sample_moment = :sample_moment, ' +
+        'observer_id = :observer_id, ' +
+        'cloud_cover = :cloud_cover, ' +
+        'precipitation = :precipitation, ' +
+        'rainfall = :rainfall, ' +
+        'temperature = :temperature, ' +
+        'wind_speed_bft = :wind_speed_bft, ' +
+        'wind_speed_kmh = :wind_speed_kmh, ' +
+        'relative_humidity = :relative_humidity, ' +
+        'atmospheric_pressure = :atmospheric_pressure, ' +
+        'notes = :notes, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'', ''subsec''), ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (weather_id = :weather_id)');
+      ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
+      ParamByName('sample_time').AsString := TimeToStr(FSampleTime);
+      ParamByName('sample_moment').AsString := WeatherSampleMoments[FSampleMoment];
+      ParamByName('observer_id').AsInteger := FObserverId;
+      ParamByName('survey_id').AsInteger := FSurveyId;
+      ParamByName('cloud_cover').AsInteger := FCloudCover;
+      ParamByName('precipitation').AsString := PrecipitationValues[FPrecipitation];
+      ParamByName('rainfall').AsInteger := FRainfall;
+      ParamByName('temperature').AsFloat := FTemperature;
+      ParamByName('wind_speed_bft').AsInteger := FWindSpeedBft;
+      ParamByName('wind_speed_kmh').AsFloat := FWindSpeedKmH;
+      ParamByName('relative_humidity').AsFloat := FRelativeHumidity;
+      ParamByName('atmospheric_pressure').AsFloat := FAtmosphericPressure;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('weather_id').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -4740,20 +5035,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TSamplingPlot.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM sampling_plots');
-    Add('WHERE (sampling_plot_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM sampling_plots');
+      Add('WHERE (sampling_plot_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -4844,96 +5149,106 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO sampling_plots (' +
-      'full_name, ' +
-      'acronym, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'area_shape, ' +
-      //'country_id, ' +
-      //'state_id, ' +
-      //'municipality_id, ' +
-      'locality_id, ' +
-      'description, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':full_name, ' +
-      ':acronym, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':area_shape, ' +
-      //':country_id, ' +
-      //':state_id, ' +
-      //':municipality_id, ' +
-      ':locality_id, ' +
-      ':description, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('full_name').AsString := FFullName;
-    ParamByName('acronym').AsString := FAcronym;
-    if (FLongitude <> 0) and (FLatitude <> 0) then
-    begin
-      ParamByName('longitude').AsFloat := FLongitude;
-      ParamByName('latitude').AsFloat := FLatitude;
-    end
-    else
-    begin
-      ParamByName('longitude').Clear;
-      ParamByName('latitude').Clear;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO sampling_plots (' +
+        'full_name, ' +
+        'acronym, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'area_shape, ' +
+        //'country_id, ' +
+        //'state_id, ' +
+        //'municipality_id, ' +
+        'locality_id, ' +
+        'description, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':full_name, ' +
+        ':acronym, ' +
+        ':longitude, ' +
+        ':latitude, ' +
+        ':area_shape, ' +
+        //':country_id, ' +
+        //':state_id, ' +
+        //':municipality_id, ' +
+        ':locality_id, ' +
+        ':description, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('acronym').AsString := FAcronym;
+      if (FLongitude <> 0) and (FLatitude <> 0) then
+      begin
+        ParamByName('longitude').AsFloat := FLongitude;
+        ParamByName('latitude').AsFloat := FLatitude;
+      end
+      else
+      begin
+        ParamByName('longitude').Clear;
+        ParamByName('latitude').Clear;
+      end;
+      ParamByName('area_shape').AsString := FAreaShape;
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //ParamByName('state_id').AsInteger := FStateId;
+      //ParamByName('municipality_id').AsString := FMunicipalityId;
+      ParamByName('locality_id').AsInteger := FLocalityId;
+      ParamByName('description').AsString := FDescription;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      //// Get the site hierarchy
+      //if (FLocalityId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      //  Add('WHERE site_id = :asite');
+      //  ParamByName('ASITE').AsInteger := FLocalityId;
+      //  Open;
+      //  FCountryId := FieldByName('country_id').AsInteger;
+      //  FStateId := FieldByName('state_id').AsInteger;
+      //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the site hierarchy
+      //Clear;
+      //Add('UPDATE sampling_plots SET');
+      //Add('  country_id = :country_id,');
+      //Add('  state_id = :state_id,');
+      //Add('  municipality_id = :municipality_id');
+      //Add('WHERE sampling_plot_id = :aid');
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //if (FStateId > 0) then
+      //  ParamByName('state_id').AsInteger := FStateId
+      //else
+      //  ParamByName('state_id').Clear;
+      //if (FMunicipalityId > 0) then
+      //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+      //else
+      //  ParamByName('municipality_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    ParamByName('area_shape').AsString := FAreaShape;
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //ParamByName('state_id').AsInteger := FStateId;
-    //ParamByName('municipality_id').AsString := FMunicipalityId;
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('description').AsString := FDescription;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-    ExecSQL;
-
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
-
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE sampling_plots SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE sampling_plot_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -4972,86 +5287,99 @@ procedure TSamplingPlot.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TSamplingPlot.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE sampling_plots SET ' +
-      'full_name = :full_name, ' +
-      'acronym = :acronym, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'area_shape = :area_shape, ' +
-      //'country_id, ' +
-      //'state_id, ' +
-      //'municipality_id, ' +
-      'locality_id = :locality_id, ' +
-      'description = :description, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (sampling_plot_id = :sampling_plot_id)');
-    ParamByName('full_name').AsString := FFullName;
-    ParamByName('acronym').AsString := FAcronym;
-    if (FLongitude <> 0) and (FLatitude <> 0) then
-    begin
-      ParamByName('longitude').AsFloat := FLongitude;
-      ParamByName('latitude').AsFloat := FLatitude;
-    end
-    else
-    begin
-      ParamByName('longitude').Clear;
-      ParamByName('latitude').Clear;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE sampling_plots SET ' +
+        'full_name = :full_name, ' +
+        'acronym = :acronym, ' +
+        'longitude = :longitude, ' +
+        'latitude = :latitude, ' +
+        'area_shape = :area_shape, ' +
+        //'country_id, ' +
+        //'state_id, ' +
+        //'municipality_id, ' +
+        'locality_id = :locality_id, ' +
+        'description = :description, ' +
+        'notes = :notes, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'', ''subsec''), ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (sampling_plot_id = :sampling_plot_id)');
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('acronym').AsString := FAcronym;
+      if (FLongitude <> 0) and (FLatitude <> 0) then
+      begin
+        ParamByName('longitude').AsFloat := FLongitude;
+        ParamByName('latitude').AsFloat := FLatitude;
+      end
+      else
+      begin
+        ParamByName('longitude').Clear;
+        ParamByName('latitude').Clear;
+      end;
+      ParamByName('area_shape').AsString := FAreaShape;
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //ParamByName('state_id').AsInteger := FStateId;
+      //ParamByName('municipality_id').AsString := FMunicipalityId;
+      ParamByName('locality_id').AsInteger := FLocalityId;
+      ParamByName('description').AsString := FDescription;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('sampling_plot_id').AsInteger := FId;
+
+      ExecSQL;
+
+      //// Get the site hierarchy
+      //if (FLocalityId > 0) then
+      //begin
+      //  Clear;
+      //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      //  Add('WHERE site_id = :asite');
+      //  ParamByName('ASITE').AsInteger := FLocalityId;
+      //  Open;
+      //  FCountryId := FieldByName('country_id').AsInteger;
+      //  FStateId := FieldByName('state_id').AsInteger;
+      //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
+      //  Close;
+      //end;
+      //// Save the site hierarchy
+      //Clear;
+      //Add('UPDATE sampling_plots SET');
+      //Add('  country_id = :country_id,');
+      //Add('  state_id = :state_id,');
+      //Add('  municipality_id = :municipality_id');
+      //Add('WHERE sampling_plot_id = :aid');
+      //ParamByName('country_id').AsInteger := FCountryId;
+      //if (FStateId > 0) then
+      //  ParamByName('state_id').AsInteger := FStateId
+      //else
+      //  ParamByName('state_id').Clear;
+      //if (FMunicipalityId > 0) then
+      //  ParamByName('municipality_id').AsInteger := FMunicipalityId
+      //else
+      //  ParamByName('municipality_id').Clear;
+      //ParamByName('aid').AsInteger := FId;
+      //ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    ParamByName('area_shape').AsString := FAreaShape;
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //ParamByName('state_id').AsInteger := FStateId;
-    //ParamByName('municipality_id').AsString := FMunicipalityId;
-    ParamByName('locality_id').AsInteger := FLocalityId;
-    ParamByName('description').AsString := FDescription;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('sampling_plot_id').AsInteger := FId;
-
-    ExecSQL;
-
-    //// Get the site hierarchy
-    //if (FLocalityId > 0) then
-    //begin
-    //  Clear;
-    //  Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-    //  Add('WHERE site_id = :asite');
-    //  ParamByName('ASITE').AsInteger := FLocalityId;
-    //  Open;
-    //  FCountryId := FieldByName('country_id').AsInteger;
-    //  FStateId := FieldByName('state_id').AsInteger;
-    //  FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    //  Close;
-    //end;
-    //// Save the site hierarchy
-    //Clear;
-    //Add('UPDATE sampling_plots SET');
-    //Add('  country_id = :country_id,');
-    //Add('  state_id = :state_id,');
-    //Add('  municipality_id = :municipality_id');
-    //Add('WHERE sampling_plot_id = :aid');
-    //ParamByName('country_id').AsInteger := FCountryId;
-    //if (FStateId > 0) then
-    //  ParamByName('state_id').AsInteger := FStateId
-    //else
-    //  ParamByName('state_id').Clear;
-    //if (FMunicipalityId > 0) then
-    //  ParamByName('municipality_id').AsInteger := FMunicipalityId
-    //else
-    //  ParamByName('municipality_id').Clear;
-    //ParamByName('aid').AsInteger := FId;
-    //ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -5153,20 +5481,30 @@ var
   Qry: TSQLQuery;
 begin
   if FId = 0 then
-    Exit;
+    raise Exception.CreateFmt('TPermanentNet.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM permanent_nets');
-    Add('WHERE (permanent_net_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM permanent_nets');
+      Add('WHERE (permanent_net_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -5254,49 +5592,59 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO permanent_nets (' +
-      'sampling_plot_id, ' +
-      'net_number, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'notes, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':sampling_plot_id, ' +
-      ':net_number, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':notes, ' +
-      ':full_name, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('sampling_plot_id').AsInteger := FNetStationId;
-    ParamByName('full_name').AsString := FFullName;
-    ParamByName('net_number').AsInteger := FNetNumber;
-    if (FLongitude <> 0) and (FLatitude <> 0) then
-    begin
-      ParamByName('longitude').AsFloat := FLongitude;
-      ParamByName('latitude').AsFloat := FLatitude;
-    end
-    else
-    begin
-      ParamByName('longitude').Clear;
-      ParamByName('latitude').Clear;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO permanent_nets (' +
+        'sampling_plot_id, ' +
+        'net_number, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'notes, ' +
+        'full_name, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':sampling_plot_id, ' +
+        ':net_number, ' +
+        ':longitude, ' +
+        ':latitude, ' +
+        ':notes, ' +
+        ':full_name, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('sampling_plot_id').AsInteger := FNetStationId;
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('net_number').AsInteger := FNetNumber;
+      if (FLongitude <> 0) and (FLatitude <> 0) then
+      begin
+        ParamByName('longitude').AsFloat := FLongitude;
+        ParamByName('latitude').AsFloat := FLatitude;
+      end
+      else
+      begin
+        ParamByName('longitude').Clear;
+        ParamByName('latitude').Clear;
+      end;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-    ExecSQL;
-
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
   finally
     FreeAndNil(Qry);
   end;
@@ -5333,44 +5681,57 @@ procedure TPermanentNet.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TPermanentNet.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE permanent_nets SET ' +
-      'sampling_plot_id = :sampling_plot_id, ' +
-      'net_number = :net_number, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'notes = :notes, ' +
-      'full_name = :full_name, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (permanent_net_id = :permanent_net_id)');
-    ParamByName('sampling_plot_id').AsInteger := FNetStationId;
-    ParamByName('full_name').AsString := FFullName;
-    ParamByName('net_number').AsInteger := FNetNumber;
-    if (FLongitude <> 0) and (FLatitude <> 0) then
-    begin
-      ParamByName('longitude').AsFloat := FLongitude;
-      ParamByName('latitude').AsFloat := FLatitude;
-    end
-    else
-    begin
-      ParamByName('longitude').Clear;
-      ParamByName('latitude').Clear;
-    end;
-    ParamByName('notes').AsString := FNotes;
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('permanent_net_id').AsInteger := FId;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE permanent_nets SET ' +
+        'sampling_plot_id = :sampling_plot_id, ' +
+        'net_number = :net_number, ' +
+        'longitude = :longitude, ' +
+        'latitude = :latitude, ' +
+        'notes = :notes, ' +
+        'full_name = :full_name, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'', ''subsec''), ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (permanent_net_id = :permanent_net_id)');
+      ParamByName('sampling_plot_id').AsInteger := FNetStationId;
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('net_number').AsInteger := FNetNumber;
+      if (FLongitude <> 0) and (FLatitude <> 0) then
+      begin
+        ParamByName('longitude').AsFloat := FLongitude;
+        ParamByName('latitude').AsFloat := FLatitude;
+      end
+      else
+      begin
+        ParamByName('longitude').Clear;
+        ParamByName('latitude').Clear;
+      end;
+      ParamByName('notes').AsString := FNotes;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('permanent_net_id').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -5458,18 +5819,31 @@ procedure TMethod.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TMethod.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM methods');
-    Add('WHERE (method_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM methods');
+      Add('WHERE (method_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -5626,6 +6000,9 @@ procedure TMethod.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TMethod.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try

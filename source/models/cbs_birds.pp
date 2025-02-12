@@ -719,13 +719,23 @@ begin
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM band_history');
-    Add('WHERE (event_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM band_history');
+      Add('WHERE (event_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -803,47 +813,57 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO band_history (' +
-      'band_id, ' +
-      'event_date, ' +
-      'notes, ' +
-      'event_type, ' +
-      'supplier_id, ' +
-      'order_number, ' +
-      'requester_id, ' +
-      'sender_id, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':band_id, ' +
-      'date(:event_date), ' +
-      ':notes, ' +
-      ':event_type, ' +
-      ':supplier_id, ' +
-      ':order_number, ' +
-      ':requester_id, ' +
-      ':sender_id, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('band_id').AsInteger := FBandId;
-    SetDateParam(ParamByName('event_date'), FEventDate);
-    SetStrParam(ParamByName('notes'), FNotes);
-    SetStrParam(ParamByName('event_type'), BandEventStr[FEventType]);
-    SetForeignParam(ParamByName('supplier_id'), FSupplierId);
-    SetIntParam(ParamByName('order_number'), FOrderNumber);
-    SetForeignParam(ParamByName('requester_id'), FRequesterId);
-    SetForeignParam(ParamByName('sender_id'), FSenderId);
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO band_history (' +
+        'band_id, ' +
+        'event_date, ' +
+        'notes, ' +
+        'event_type, ' +
+        'supplier_id, ' +
+        'order_number, ' +
+        'requester_id, ' +
+        'sender_id, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':band_id, ' +
+        'date(:event_date), ' +
+        ':notes, ' +
+        ':event_type, ' +
+        ':supplier_id, ' +
+        ':order_number, ' +
+        ':requester_id, ' +
+        ':sender_id, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('band_id').AsInteger := FBandId;
+      SetDateParam(ParamByName('event_date'), FEventDate);
+      SetStrParam(ParamByName('notes'), FNotes);
+      SetStrParam(ParamByName('event_type'), BandEventStr[FEventType]);
+      SetForeignParam(ParamByName('supplier_id'), FSupplierId);
+      SetIntParam(ParamByName('order_number'), FOrderNumber);
+      SetForeignParam(ParamByName('requester_id'), FRequesterId);
+      SetForeignParam(ParamByName('sender_id'), FSenderId);
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -938,33 +958,43 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE band_history SET ' +
-      'band_id = :band_id, ' +
-      'event_date = date(:event_date), ' +
-      'notes = :notes, ' +
-      'event_type = :event_type, ' +
-      'supplier_id = :supplier_id, ' +
-      'order_number = :order_number, ' +
-      'requester_id = :requester_id, ' +
-      'sender_id = :sender_id, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (event_id = :event_id)');
-    ParamByName('band_id').AsInteger := FBandId;
-    SetDateParam(ParamByName('event_date'), FEventDate);
-    SetStrParam(ParamByName('notes'), FNotes);
-    SetStrParam(ParamByName('event_type'), BandEventStr[FEventType]);
-    SetForeignParam(ParamByName('supplier_id'), FSupplierId);
-    SetIntParam(ParamByName('order_number'), FOrderNumber);
-    SetForeignParam(ParamByName('requester_id'), FRequesterId);
-    SetForeignParam(ParamByName('sender_id'), FSenderId);
-    //ParamByName('marked_status').AsBoolean := FMarked;
-    //ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-    ParamByName('event_id').AsInteger := FId;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE band_history SET ' +
+        'band_id = :band_id, ' +
+        'event_date = date(:event_date), ' +
+        'notes = :notes, ' +
+        'event_type = :event_type, ' +
+        'supplier_id = :supplier_id, ' +
+        'order_number = :order_number, ' +
+        'requester_id = :requester_id, ' +
+        'sender_id = :sender_id, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'',''subsec'') ');
+      Add('WHERE (event_id = :event_id)');
+      ParamByName('band_id').AsInteger := FBandId;
+      SetDateParam(ParamByName('event_date'), FEventDate);
+      SetStrParam(ParamByName('notes'), FNotes);
+      SetStrParam(ParamByName('event_type'), BandEventStr[FEventType]);
+      SetForeignParam(ParamByName('supplier_id'), FSupplierId);
+      SetIntParam(ParamByName('order_number'), FOrderNumber);
+      SetForeignParam(ParamByName('requester_id'), FRequesterId);
+      SetForeignParam(ParamByName('sender_id'), FSenderId);
+      //ParamByName('marked_status').AsBoolean := FMarked;
+      //ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+      ParamByName('event_id').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1065,13 +1095,23 @@ begin
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM sightings');
-    Add('WHERE (sighting_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM sightings');
+      Add('WHERE (sighting_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1202,121 +1242,131 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO sightings (' +
-      'survey_id, ' +
-      'individual_id, ' +
-      'sighting_date, ' +
-      'sighting_time, ' +
-      'locality_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'method_id, ' +
-      'mackinnon_list_num, ' +
-      'observer_id, ' +
-      'taxon_id, ' +
-      'subjects_tally, ' +
-      'subject_distance, ' +
-      'subject_seen, ' +
-      'subject_heard, ' +
-      'subject_photographed, ' +
-      'subject_recorded, ' +
-      'subject_captured, ' +
-      'males_tally, ' +
-      'females_tally, ' +
-      'not_sexed_tally, ' +
-      'adults_tally, ' +
-      'immatures_tally, ' +
-      'not_aged_tally, ' +
-      'new_captures_tally, ' +
-      'recaptures_tally, ' +
-      'unbanded_tally, ' +
-      'detection_type, ' +
-      'breeding_status, ' +
-      'not_surveying, ' +
-      'ebird_available, ' +
-      'full_name, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      ':individual_id, ' +
-      'date(:sighting_date), ' +
-      'time(:sighting_time), ' +
-      ':locality_id, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':method_id, ' +
-      ':mackinnon_list_num, ' +
-      ':observer_id, ' +
-      ':taxon_id, ' +
-      ':subjects_tally, ' +
-      ':subject_distance, ' +
-      ':subject_seen, ' +
-      ':subject_heard, ' +
-      ':subject_photographed, ' +
-      ':subject_recorded, ' +
-      ':subject_captured, ' +
-      ':males_tally, ' +
-      ':females_tally, ' +
-      ':not_sexed_tally, ' +
-      ':adults_tally, ' +
-      ':immatures_tally, ' +
-      ':not_aged_tally, ' +
-      ':new_captures_tally, ' +
-      ':recaptures_tally, ' +
-      ':unbanded_tally, ' +
-      ':detection_type, ' +
-      ':breeding_status, ' +
-      ':not_surveying, ' +
-      ':ebird_available, ' +
-      ':full_name, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
 
-    SetForeignParam(ParamByName('survey_id'), FSurveyId);
-    SetForeignParam(ParamByName('individual_id'), FIndividualId);
-    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-    SetDateParam(ParamByName('sighting_date'), FSightingDate);
-    SetTimeParam(ParamByName('sighting_time'), FSightingTime);
-    SetForeignParam(ParamByName('locality_id'), FLocalityId);
-    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-    SetForeignParam(ParamByName('method_id'), FMethodId);
-    SetIntParam(ParamByName('mackinnon_list_num'), FMackinnonListNumber);
-    SetForeignParam(ParamByName('observer_id'), FObserverId);
-    SetIntParam(ParamByName('subjects_tally'), FSubjectTally);
-    SetFloatParam(ParamByName('subject_distance'), FSubjectDistance);
-    ParamByName('subject_captured').AsBoolean := FSubjectCaptured;
-    ParamByName('subject_seen').AsBoolean := FSubjectSeen;
-    ParamByName('subject_heard').AsBoolean := FSubjectHeard;
-    ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
-    ParamByName('subject_recorded').AsBoolean := FSubjectRecorded;
-    SetStrParam(ParamByName('males_tally'), FMalesTally);
-    SetStrParam(ParamByName('females_tally'), FFemalesTally);
-    SetStrParam(ParamByName('not_sexed_tally'), FNotSexedTally);
-    SetStrParam(ParamByName('adults_tally'), FAdultsTally);
-    SetStrParam(ParamByName('immatures_tally'), FImmatureTally);
-    SetStrParam(ParamByName('not_aged_tally'), FNotAgedTally);
-    SetIntParam(ParamByName('new_captures_tally'), FNewCapturesTally);
-    SetIntParam(ParamByName('recaptures_tally'), FRecapturesTally);
-    SetIntParam(ParamByName('unbanded_tally'), FUnbandedTally);
-    SetStrParam(ParamByName('detection_type'), FDetectionType);
-    SetStrParam(ParamByName('breeding_status'), FBreedingStatus);
-    ParamByName('not_surveying').AsBoolean := FNotSurveying;
-    ParamByName('ebird_available').AsBoolean := FIsOnEbird;
-    SetStrParam(ParamByName('notes'), FNotes);
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO sightings (' +
+        'survey_id, ' +
+        'individual_id, ' +
+        'sighting_date, ' +
+        'sighting_time, ' +
+        'locality_id, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'method_id, ' +
+        'mackinnon_list_num, ' +
+        'observer_id, ' +
+        'taxon_id, ' +
+        'subjects_tally, ' +
+        'subject_distance, ' +
+        'subject_seen, ' +
+        'subject_heard, ' +
+        'subject_photographed, ' +
+        'subject_recorded, ' +
+        'subject_captured, ' +
+        'males_tally, ' +
+        'females_tally, ' +
+        'not_sexed_tally, ' +
+        'adults_tally, ' +
+        'immatures_tally, ' +
+        'not_aged_tally, ' +
+        'new_captures_tally, ' +
+        'recaptures_tally, ' +
+        'unbanded_tally, ' +
+        'detection_type, ' +
+        'breeding_status, ' +
+        'not_surveying, ' +
+        'ebird_available, ' +
+        'full_name, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':survey_id, ' +
+        ':individual_id, ' +
+        'date(:sighting_date), ' +
+        'time(:sighting_time), ' +
+        ':locality_id, ' +
+        ':longitude, ' +
+        ':latitude, ' +
+        ':method_id, ' +
+        ':mackinnon_list_num, ' +
+        ':observer_id, ' +
+        ':taxon_id, ' +
+        ':subjects_tally, ' +
+        ':subject_distance, ' +
+        ':subject_seen, ' +
+        ':subject_heard, ' +
+        ':subject_photographed, ' +
+        ':subject_recorded, ' +
+        ':subject_captured, ' +
+        ':males_tally, ' +
+        ':females_tally, ' +
+        ':not_sexed_tally, ' +
+        ':adults_tally, ' +
+        ':immatures_tally, ' +
+        ':not_aged_tally, ' +
+        ':new_captures_tally, ' +
+        ':recaptures_tally, ' +
+        ':unbanded_tally, ' +
+        ':detection_type, ' +
+        ':breeding_status, ' +
+        ':not_surveying, ' +
+        ':ebird_available, ' +
+        ':full_name, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
 
-    ExecSQL;
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetDateParam(ParamByName('sighting_date'), FSightingDate);
+      SetTimeParam(ParamByName('sighting_time'), FSightingTime);
+      SetForeignParam(ParamByName('locality_id'), FLocalityId);
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetForeignParam(ParamByName('method_id'), FMethodId);
+      SetIntParam(ParamByName('mackinnon_list_num'), FMackinnonListNumber);
+      SetForeignParam(ParamByName('observer_id'), FObserverId);
+      SetIntParam(ParamByName('subjects_tally'), FSubjectTally);
+      SetFloatParam(ParamByName('subject_distance'), FSubjectDistance);
+      ParamByName('subject_captured').AsBoolean := FSubjectCaptured;
+      ParamByName('subject_seen').AsBoolean := FSubjectSeen;
+      ParamByName('subject_heard').AsBoolean := FSubjectHeard;
+      ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
+      ParamByName('subject_recorded').AsBoolean := FSubjectRecorded;
+      SetStrParam(ParamByName('males_tally'), FMalesTally);
+      SetStrParam(ParamByName('females_tally'), FFemalesTally);
+      SetStrParam(ParamByName('not_sexed_tally'), FNotSexedTally);
+      SetStrParam(ParamByName('adults_tally'), FAdultsTally);
+      SetStrParam(ParamByName('immatures_tally'), FImmatureTally);
+      SetStrParam(ParamByName('not_aged_tally'), FNotAgedTally);
+      SetIntParam(ParamByName('new_captures_tally'), FNewCapturesTally);
+      SetIntParam(ParamByName('recaptures_tally'), FRecapturesTally);
+      SetIntParam(ParamByName('unbanded_tally'), FUnbandedTally);
+      SetStrParam(ParamByName('detection_type'), FDetectionType);
+      SetStrParam(ParamByName('breeding_status'), FBreedingStatus);
+      ParamByName('not_surveying').AsBoolean := FNotSurveying;
+      ParamByName('ebird_available').AsBoolean := FIsOnEbird;
+      SetStrParam(ParamByName('notes'), FNotes);
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1387,84 +1437,94 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE sightings SET ' +
-      'survey_id = :survey_id, ' +
-      'individual_id = :individual_id, ' +
-      'sighting_date = date(:sighting_date), ' +
-      'sighting_time = time(:sighting_time), ' +
-      'locality_id = :locality_id, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'method_id = :method_id, ' +
-      'mackinnon_list_num = :mackinnon_list_num, ' +
-      'observer_id = :observer_id, ' +
-      'taxon_id = :taxon_id, ' +
-      'subjects_tally = :subjects_tally, ' +
-      'subject_distance = :subject_distance, ' +
-      'subject_seen = :subject_seen, ' +
-      'subject_heard = :subject_heard, ' +
-      'subject_photographed = :subject_photographed, ' +
-      'subject_recorded = :subject_recorded, ' +
-      'subject_captured = :subject_captured, ' +
-      'males_tally = :males_tally, ' +
-      'females_tally = :females_tally, ' +
-      'not_sexed_tally = :not_sexed_tally, ' +
-      'adults_tally = :adults_tally, ' +
-      'immatures_tally = :immatures_tally, ' +
-      'not_aged_tally = :not_aged_tally, ' +
-      'new_captures_tally = :new_captures_tally, ' +
-      'recaptures_tally = :recaptures_tally, ' +
-      'unbanded_tally = :unbanded_tally, ' +
-      'detection_type = :detection_type, ' +
-      'breeding_status = :breeding_status, ' +
-      'not_surveying = :not_surveying, ' +
-      'ebird_available = :ebird_available, ' +
-      'full_name = :full_name, ' +
-      'notes = :notes, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (sighting_id = :sighting_id)');
 
-    SetForeignParam(ParamByName('survey_id'), FSurveyId);
-    SetForeignParam(ParamByName('individual_id'), FIndividualId);
-    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-    SetDateParam(ParamByName('sighting_date'), FSightingDate);
-    SetTimeParam(ParamByName('sighting_time'), FSightingTime);
-    SetForeignParam(ParamByName('locality_id'), FLocalityId);
-    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-    SetForeignParam(ParamByName('method_id'), FMethodId);
-    SetIntParam(ParamByName('mackinnon_list_num'), FMackinnonListNumber);
-    SetForeignParam(ParamByName('observer_id'), FObserverId);
-    SetIntParam(ParamByName('subjects_tally'), FSubjectTally);
-    SetFloatParam(ParamByName('subject_distance'), FSubjectDistance);
-    ParamByName('subject_captured').AsBoolean := FSubjectCaptured;
-    ParamByName('subject_seen').AsBoolean := FSubjectSeen;
-    ParamByName('subject_heard').AsBoolean := FSubjectHeard;
-    ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
-    ParamByName('subject_recorded').AsBoolean := FSubjectRecorded;
-    SetStrParam(ParamByName('males_tally'), FMalesTally);
-    SetStrParam(ParamByName('females_tally'), FFemalesTally);
-    SetStrParam(ParamByName('not_sexed_tally'), FNotSexedTally);
-    SetStrParam(ParamByName('adults_tally'), FAdultsTally);
-    SetStrParam(ParamByName('immatures_tally'), FImmatureTally);
-    SetStrParam(ParamByName('not_aged_tally'), FNotAgedTally);
-    SetIntParam(ParamByName('new_captures_tally'), FNewCapturesTally);
-    SetIntParam(ParamByName('recaptures_tally'), FRecapturesTally);
-    SetIntParam(ParamByName('unbanded_tally'), FUnbandedTally);
-    SetStrParam(ParamByName('detection_type'), FDetectionType);
-    SetStrParam(ParamByName('breeding_status'), FBreedingStatus);
-    ParamByName('not_surveying').AsBoolean := FNotSurveying;
-    ParamByName('ebird_available').AsBoolean := FIsOnEbird;
-    SetStrParam(ParamByName('notes'), FNotes);
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('sighting_id').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE sightings SET ' +
+        'survey_id = :survey_id, ' +
+        'individual_id = :individual_id, ' +
+        'sighting_date = date(:sighting_date), ' +
+        'sighting_time = time(:sighting_time), ' +
+        'locality_id = :locality_id, ' +
+        'longitude = :longitude, ' +
+        'latitude = :latitude, ' +
+        'method_id = :method_id, ' +
+        'mackinnon_list_num = :mackinnon_list_num, ' +
+        'observer_id = :observer_id, ' +
+        'taxon_id = :taxon_id, ' +
+        'subjects_tally = :subjects_tally, ' +
+        'subject_distance = :subject_distance, ' +
+        'subject_seen = :subject_seen, ' +
+        'subject_heard = :subject_heard, ' +
+        'subject_photographed = :subject_photographed, ' +
+        'subject_recorded = :subject_recorded, ' +
+        'subject_captured = :subject_captured, ' +
+        'males_tally = :males_tally, ' +
+        'females_tally = :females_tally, ' +
+        'not_sexed_tally = :not_sexed_tally, ' +
+        'adults_tally = :adults_tally, ' +
+        'immatures_tally = :immatures_tally, ' +
+        'not_aged_tally = :not_aged_tally, ' +
+        'new_captures_tally = :new_captures_tally, ' +
+        'recaptures_tally = :recaptures_tally, ' +
+        'unbanded_tally = :unbanded_tally, ' +
+        'detection_type = :detection_type, ' +
+        'breeding_status = :breeding_status, ' +
+        'not_surveying = :not_surveying, ' +
+        'ebird_available = :ebird_available, ' +
+        'full_name = :full_name, ' +
+        'notes = :notes, ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'',''subsec'') ');
+      Add('WHERE (sighting_id = :sighting_id)');
 
-    ExecSQL;
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetDateParam(ParamByName('sighting_date'), FSightingDate);
+      SetTimeParam(ParamByName('sighting_time'), FSightingTime);
+      SetForeignParam(ParamByName('locality_id'), FLocalityId);
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetForeignParam(ParamByName('method_id'), FMethodId);
+      SetIntParam(ParamByName('mackinnon_list_num'), FMackinnonListNumber);
+      SetForeignParam(ParamByName('observer_id'), FObserverId);
+      SetIntParam(ParamByName('subjects_tally'), FSubjectTally);
+      SetFloatParam(ParamByName('subject_distance'), FSubjectDistance);
+      ParamByName('subject_captured').AsBoolean := FSubjectCaptured;
+      ParamByName('subject_seen').AsBoolean := FSubjectSeen;
+      ParamByName('subject_heard').AsBoolean := FSubjectHeard;
+      ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
+      ParamByName('subject_recorded').AsBoolean := FSubjectRecorded;
+      SetStrParam(ParamByName('males_tally'), FMalesTally);
+      SetStrParam(ParamByName('females_tally'), FFemalesTally);
+      SetStrParam(ParamByName('not_sexed_tally'), FNotSexedTally);
+      SetStrParam(ParamByName('adults_tally'), FAdultsTally);
+      SetStrParam(ParamByName('immatures_tally'), FImmatureTally);
+      SetStrParam(ParamByName('not_aged_tally'), FNotAgedTally);
+      SetIntParam(ParamByName('new_captures_tally'), FNewCapturesTally);
+      SetIntParam(ParamByName('recaptures_tally'), FRecapturesTally);
+      SetIntParam(ParamByName('unbanded_tally'), FUnbandedTally);
+      SetStrParam(ParamByName('detection_type'), FDetectionType);
+      SetStrParam(ParamByName('breeding_status'), FBreedingStatus);
+      ParamByName('not_surveying').AsBoolean := FNotSurveying;
+      ParamByName('ebird_available').AsBoolean := FIsOnEbird;
+      SetStrParam(ParamByName('notes'), FNotes);
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('sighting_id').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1721,13 +1781,23 @@ begin
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM molts');
-    Add('WHERE (molt_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM molts');
+      Add('WHERE (molt_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2805,13 +2875,23 @@ begin
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM captures');
-    Add('WHERE (capture_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM captures');
+      Add('WHERE (capture_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3074,196 +3154,205 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO captures (' +
-      'survey_id, ' +
-      'full_name, ' +
-      'taxon_id, ' +
-      'individual_id, ' +
-      'capture_date, ' +
-      'capture_time, ' +
-      'locality_id, ' +
-      'net_station_id, ' +
-      'net_id, ' +
-      'latitude, ' +
-      'longitude, ' +
-      'bander_id, ' +
-      'annotator_id, ' +
-      'subject_status, ' +
-      'capture_type, ' +
-      'subject_sex, ' +
-      'how_sexed, ' +
-      'band_id, ' +
-      'weight, ' +
-      'tarsus_length, ' +
-      'tarsus_diameter, ' +
-      'exposed_culmen, ' +
-      'bill_width, ' +
-      'bill_height, ' +
-      'nostril_bill_tip, ' +
-      'skull_length, ' +
-      'right_wing_chord, ' +
-      'first_secondary_chord, ' +
-      'tail_length, ' +
-      'fat, ' +
-      'brood_patch, ' +
-      'cloacal_protuberance, ' +
-      'body_molt, ' +
-      'flight_feathers_molt, ' +
-      'flight_feathers_wear, ' +
-      'molt_limits, ' +
-      'cycle_code, ' +
-      'how_aged, ' +
-      'skull_ossification, ' +
-      'kipps_index, ' +
-      'glucose, ' +
-      'hemoglobin, ' +
-      'hematocrit, ' +
-      'blood_sample, ' +
-      'feather_sample, ' +
-      'subject_photographed, ' +
-      'photographer_1_id, ' +
-      'photographer_2_id, ' +
-      'start_photo_number, ' +
-      'end_photo_number, ' +
-      'camera_name, ' +
-      'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
-      'escaped, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date)');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      ':full_name, ' +
-      ':taxon_id, ' +
-      ':individual_id, ' +
-      'date(:capture_date), ' +
-      'time(:capture_time), ' +
-      ':locality_id, ' +
-      ':net_station_id, ' +
-      ':net_id, ' +
-      ':latitude, ' +
-      ':longitude, ' +
-      ':bander_id, ' +
-      ':annotator_id, ' +
-      ':subject_status, ' +
-      ':capture_type, ' +
-      ':subject_sex, ' +
-      ':how_sexed, ' +
-      ':band_id, ' +
-      ':weight, ' +
-      ':tarsus_length, ' +
-      ':tarsus_diameter, ' +
-      ':exposed_culmen, ' +
-      ':bill_width, ' +
-      ':bill_height, ' +
-      ':nostril_bill_tip, ' +
-      ':skull_length, ' +
-      ':right_wing_chord, ' +
-      ':first_secondary_chord, ' +
-      ':tail_length, ' +
-      ':fat, ' +
-      ':brood_patch, ' +
-      ':cloacal_protuberance, ' +
-      ':body_molt, ' +
-      ':flight_feathers_molt, ' +
-      ':flight_feathers_wear, ' +
-      ':molt_limits, ' +
-      ':cycle_code, ' +
-      ':how_aged, ' +
-      ':skull_ossification, ' +
-      ':kipps_index, ' +
-      ':glucose, ' +
-      ':hemoglobin, ' +
-      ':hematocrit, ' +
-      ':blood_sample, ' +
-      ':feather_sample, ' +
-      ':subject_photographed, ' +
-      ':photographer_1_id, ' +
-      ':photographer_2_id, ' +
-      ':start_photo_number, ' +
-      ':end_photo_number, ' +
-      ':camera_name, ' +
-      ':removed_band_id, ' +
-      ':right_leg_below, ' +
-      ':left_leg_below, ' +
-      ':escaped, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
 
-    FFullName := GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex],
-      CaptureTypeStr[FCaptureType], FCycleCode, False);
-    SetForeignParam(ParamByName('survey_id'), FSurveyId);
-    SetStrParam(ParamByName('full_name'), FFullName);
-    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-    SetForeignParam(ParamByName('individual_id'), FIndividualId);
-    SetDateParam(ParamByName('capture_date'), FCaptureDate);
-    SetTimeParam(ParamByName('capture_time'), FCaptureTime);
-    SetForeignParam(ParamByName('locality_id'), FLocalityId);
-    SetForeignParam(ParamByName('net_station_id'), FNetStationId);
-    SetForeignParam(ParamByName('net_id'), FNetId);
-    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-    SetForeignParam(ParamByName('bander_id'), FBanderId);
-    SetForeignParam(ParamByName('annotator_id'), FAnnotatorId);
-    SetStrParam(ParamByName('subject_status'), SubjectStatusStr[FSubjectStatus]);
-    SetStrParam(ParamByName('capture_type'), CaptureTypeStr[FCaptureType]);
-    SetStrParam(ParamByName('subject_sex'), Sexes[FSubjectSex]);
-    SetStrParam(ParamByName('how_sexed'), FHowSexed);
-    SetForeignParam(ParamByName('band_id'), FBandId);
-    SetFloatParam(ParamByName('weight'), FWeight);
-    SetFloatParam(ParamByName('tarsus_length'), FTarsusLength);
-    SetFloatParam(ParamByName('tarsus_diameter'), FTarsusDiameter);
-    SetFloatParam(ParamByName('exposed_culmen'), FExposedCulmen);
-    SetFloatParam(ParamByName('bill_width'), FBillWidth);
-    SetFloatParam(ParamByName('bill_height'), FBillHeight);
-    SetFloatParam(ParamByName('nostril_bill_tip'), FNostrilBillTip);
-    SetFloatParam(ParamByName('skull_length'), FSkullLength);
-    SetFloatParam(ParamByName('right_wing_chord'), FRightWingChord);
-    SetFloatParam(ParamByName('first_secondary_chord'), FFirstSecondaryChord);
-    SetFloatParam(ParamByName('tail_length'), FTailLength);
-    SetStrParam(ParamByName('fat'), FFat);
-    SetStrParam(ParamByName('brood_patch'), FBroodPatch);
-    SetStrParam(ParamByName('cloacal_protuberance'), FCloacalProtuberance);
-    SetStrParam(ParamByName('body_molt'), FBodyMolt);
-    SetStrParam(ParamByName('flight_feathers_molt'), FFlightFeathersMolt);
-    SetStrParam(ParamByName('flight_feathers_wear'), FFlightFeathersWear);
-    SetStrParam(ParamByName('molt_limits'), FMoltLimits);
-    SetStrParam(ParamByName('cycle_code'), FCycleCode);
-    SetStrParam(ParamByName('how_aged'), FHowAged);
-    SetStrParam(ParamByName('skull_ossification'), FSkullOssification);
-    SetFloatParam(ParamByName('kipps_index'), FKippsIndex);
-    SetFloatParam(ParamByName('glucose'), FGlucose);
-    SetFloatParam(ParamByName('hemoglobin'), FHemoglobin);
-    SetFloatParam(ParamByName('hematocrit'), FHematocrit);
-    ParamByName('blood_sample').AsBoolean := FBloodSample;
-    ParamByName('feather_sample').AsBoolean := FFeatherSample;
-    SetForeignParam(ParamByName('photographer_1_id'), FPhotographer1Id);
-    SetForeignParam(ParamByName('photographer_2_id'), FPhotographer2Id);
-    if (FPhotographer1Id > 0) then
-      FSubjectPhotographed := True;
-    ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
-    SetStrParam(ParamByName('start_photo_number'), FStartPhotoNumber);
-    SetStrParam(ParamByName('end_photo_number'), FEndPhotoNumber);
-    SetStrParam(ParamByName('camera_name'), FCameraName);
-    SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
-    SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
-    SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
-    ParamByName('escaped').AsBoolean := FEscaped;
-    SetStrParam(ParamByName('notes'), FNotes);
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO captures (' +
+        'survey_id, ' +
+        'full_name, ' +
+        'taxon_id, ' +
+        'individual_id, ' +
+        'capture_date, ' +
+        'capture_time, ' +
+        'locality_id, ' +
+        'net_station_id, ' +
+        'net_id, ' +
+        'latitude, ' +
+        'longitude, ' +
+        'bander_id, ' +
+        'annotator_id, ' +
+        'subject_status, ' +
+        'capture_type, ' +
+        'subject_sex, ' +
+        'how_sexed, ' +
+        'band_id, ' +
+        'weight, ' +
+        'tarsus_length, ' +
+        'tarsus_diameter, ' +
+        'exposed_culmen, ' +
+        'bill_width, ' +
+        'bill_height, ' +
+        'nostril_bill_tip, ' +
+        'skull_length, ' +
+        'right_wing_chord, ' +
+        'first_secondary_chord, ' +
+        'tail_length, ' +
+        'fat, ' +
+        'brood_patch, ' +
+        'cloacal_protuberance, ' +
+        'body_molt, ' +
+        'flight_feathers_molt, ' +
+        'flight_feathers_wear, ' +
+        'molt_limits, ' +
+        'cycle_code, ' +
+        'how_aged, ' +
+        'skull_ossification, ' +
+        'kipps_index, ' +
+        'glucose, ' +
+        'hemoglobin, ' +
+        'hematocrit, ' +
+        'blood_sample, ' +
+        'feather_sample, ' +
+        'subject_photographed, ' +
+        'photographer_1_id, ' +
+        'photographer_2_id, ' +
+        'start_photo_number, ' +
+        'end_photo_number, ' +
+        'camera_name, ' +
+        'removed_band_id, ' +
+        'right_leg_below, ' +
+        'left_leg_below, ' +
+        'escaped, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date)');
+      Add('VALUES (' +
+        ':survey_id, ' +
+        ':full_name, ' +
+        ':taxon_id, ' +
+        ':individual_id, ' +
+        'date(:capture_date), ' +
+        'time(:capture_time), ' +
+        ':locality_id, ' +
+        ':net_station_id, ' +
+        ':net_id, ' +
+        ':latitude, ' +
+        ':longitude, ' +
+        ':bander_id, ' +
+        ':annotator_id, ' +
+        ':subject_status, ' +
+        ':capture_type, ' +
+        ':subject_sex, ' +
+        ':how_sexed, ' +
+        ':band_id, ' +
+        ':weight, ' +
+        ':tarsus_length, ' +
+        ':tarsus_diameter, ' +
+        ':exposed_culmen, ' +
+        ':bill_width, ' +
+        ':bill_height, ' +
+        ':nostril_bill_tip, ' +
+        ':skull_length, ' +
+        ':right_wing_chord, ' +
+        ':first_secondary_chord, ' +
+        ':tail_length, ' +
+        ':fat, ' +
+        ':brood_patch, ' +
+        ':cloacal_protuberance, ' +
+        ':body_molt, ' +
+        ':flight_feathers_molt, ' +
+        ':flight_feathers_wear, ' +
+        ':molt_limits, ' +
+        ':cycle_code, ' +
+        ':how_aged, ' +
+        ':skull_ossification, ' +
+        ':kipps_index, ' +
+        ':glucose, ' +
+        ':hemoglobin, ' +
+        ':hematocrit, ' +
+        ':blood_sample, ' +
+        ':feather_sample, ' +
+        ':subject_photographed, ' +
+        ':photographer_1_id, ' +
+        ':photographer_2_id, ' +
+        ':start_photo_number, ' +
+        ':end_photo_number, ' +
+        ':camera_name, ' +
+        ':removed_band_id, ' +
+        ':right_leg_below, ' +
+        ':left_leg_below, ' +
+        ':escaped, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
 
-    ExecSQL;
+      FFullName := GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex],
+        CaptureTypeStr[FCaptureType], FCycleCode, False);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
+      SetStrParam(ParamByName('full_name'), FFullName);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetDateParam(ParamByName('capture_date'), FCaptureDate);
+      SetTimeParam(ParamByName('capture_time'), FCaptureTime);
+      SetForeignParam(ParamByName('locality_id'), FLocalityId);
+      SetForeignParam(ParamByName('net_station_id'), FNetStationId);
+      SetForeignParam(ParamByName('net_id'), FNetId);
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetForeignParam(ParamByName('bander_id'), FBanderId);
+      SetForeignParam(ParamByName('annotator_id'), FAnnotatorId);
+      SetStrParam(ParamByName('subject_status'), SubjectStatusStr[FSubjectStatus]);
+      SetStrParam(ParamByName('capture_type'), CaptureTypeStr[FCaptureType]);
+      SetStrParam(ParamByName('subject_sex'), Sexes[FSubjectSex]);
+      SetStrParam(ParamByName('how_sexed'), FHowSexed);
+      SetForeignParam(ParamByName('band_id'), FBandId);
+      SetFloatParam(ParamByName('weight'), FWeight);
+      SetFloatParam(ParamByName('tarsus_length'), FTarsusLength);
+      SetFloatParam(ParamByName('tarsus_diameter'), FTarsusDiameter);
+      SetFloatParam(ParamByName('exposed_culmen'), FExposedCulmen);
+      SetFloatParam(ParamByName('bill_width'), FBillWidth);
+      SetFloatParam(ParamByName('bill_height'), FBillHeight);
+      SetFloatParam(ParamByName('nostril_bill_tip'), FNostrilBillTip);
+      SetFloatParam(ParamByName('skull_length'), FSkullLength);
+      SetFloatParam(ParamByName('right_wing_chord'), FRightWingChord);
+      SetFloatParam(ParamByName('first_secondary_chord'), FFirstSecondaryChord);
+      SetFloatParam(ParamByName('tail_length'), FTailLength);
+      SetStrParam(ParamByName('fat'), FFat);
+      SetStrParam(ParamByName('brood_patch'), FBroodPatch);
+      SetStrParam(ParamByName('cloacal_protuberance'), FCloacalProtuberance);
+      SetStrParam(ParamByName('body_molt'), FBodyMolt);
+      SetStrParam(ParamByName('flight_feathers_molt'), FFlightFeathersMolt);
+      SetStrParam(ParamByName('flight_feathers_wear'), FFlightFeathersWear);
+      SetStrParam(ParamByName('molt_limits'), FMoltLimits);
+      SetStrParam(ParamByName('cycle_code'), FCycleCode);
+      SetStrParam(ParamByName('how_aged'), FHowAged);
+      SetStrParam(ParamByName('skull_ossification'), FSkullOssification);
+      SetFloatParam(ParamByName('kipps_index'), FKippsIndex);
+      SetFloatParam(ParamByName('glucose'), FGlucose);
+      SetFloatParam(ParamByName('hemoglobin'), FHemoglobin);
+      SetFloatParam(ParamByName('hematocrit'), FHematocrit);
+      ParamByName('blood_sample').AsBoolean := FBloodSample;
+      ParamByName('feather_sample').AsBoolean := FFeatherSample;
+      SetForeignParam(ParamByName('photographer_1_id'), FPhotographer1Id);
+      SetForeignParam(ParamByName('photographer_2_id'), FPhotographer2Id);
+      if (FPhotographer1Id > 0) then
+        FSubjectPhotographed := True;
+      ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
+      SetStrParam(ParamByName('start_photo_number'), FStartPhotoNumber);
+      SetStrParam(ParamByName('end_photo_number'), FEndPhotoNumber);
+      SetStrParam(ParamByName('camera_name'), FCameraName);
+      SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
+      SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
+      SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
+      ParamByName('escaped').AsBoolean := FEscaped;
+      SetStrParam(ParamByName('notes'), FNotes);
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
 
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3361,159 +3450,168 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE captures SET ' +
-      'survey_id = :survey_id, ' +
-      'full_name = :full_name, ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_id = :individual_id, ' +
-      'project_id = :project_id, ' +
-      'capture_date = date(:capture_date), ' +
-      'capture_time = time(:capture_time), ' +
-      'locality_id = :locality_id, ' +
-      'net_station_id = :net_station_id, ' +
-      'net_id = :net_id, ' +
-      'latitude = :latitude, ' +
-      'longitude = :longitude, ' +
-      'bander_id = :bander_id, ' +
-      'annotator_id = :annotator_id, ' +
-      'subject_status = :subject_status, ' +
-      'capture_type = :capture_type, ' +
-      'subject_sex = :subject_sex, ' +
-      'how_sexed = :how_sexed, ' +
-      'band_id = :band_id, ' +
-      'weight = :weight, ' +
-      'tarsus_length = :tarsus_length, ' +
-      'tarsus_diameter = :tarsus_diameter, ' +
-      'culmen_length = :culmen_length, ' +
-      'exposed_culmen = :exposed_culmen, ' +
-      'bill_width = :bill_width, ' +
-      'bill_height = :bill_height, ' +
-      'nostril_bill_tip = :nostril_bill_tip, ' +
-      'skull_length = :skull_length, ' +
-      'right_wing_chord = :right_wing_chord, ' +
-      'first_secondary_chord = :first_secondary_chord, ' +
-      'tail_length = :tail_length, ' +
-      'fat = :fat, ' +
-      'brood_patch = :brood_patch, ' +
-      'cloacal_protuberance = :cloacal_protuberance, ' +
-      'body_molt = :body_molt, ' +
-      'flight_feathers_molt = :flight_feathers_molt, ' +
-      'flight_feathers_wear = :fligth_feathers_wear, ' +
-      'molt_limits = :molt_limits, ' +
-      'cycle_code = :cycle_code, ' +
-      'subject_age = :subject_age, ' +
-      'how_aged = :how_aged, ' +
-      'skull_ossification = :skull_ossification, ' +
-      'halux_length_total = :halux_length_total, ' +
-      'halux_length_finger = :halux_length_finger, ' +
-      'halux_length_claw = :halux_length_claw, ' +
-      'central_retrix_length = :central_retrix_length, ' +
-      'external_retrix_length = :external_retrix_length, ' +
-      'total_length = :total_length, ' +
-      'feather_mites = :feather_mites, ' +
-      'philornis_larvae_tally = :philornis_larvae_tally, ' +
-      'kipps_index = :kipps_index, ' +
-      'glucose = :glucose, ' +
-      'hemoglobin = :hemoglobin, ' +
-      'hematocrit = :hematocrit, ' +
-      'field_number = :field_number, ' +
-      'blood_sample = :blood_sample, ' +
-      'feather_sample = :feather_sample, ' +
-      'claw_sample = :claw_sample, ' +
-      'feces_sample = :feces_sample, ' +
-      'parasite_sample = :parasite_sample, ' +
-      'subject_collected = :subject_collected, ' +
-      'subject_recorded = :subject_recorded, ' +
-      'subject_photographed = :subject_photographed, ' +
-      'photographer_1_id = :photographer_1_id, ' +
-      'photographer_2_id = :photographer_2_id, ' +
-      'start_photo_number = :start_photo_number, ' +
-      'end_photo_number = :end_photo_number, ' +
-      'camera_name = :camera_name, ' +
-      'removed_band_id = :removed_band_id, ' +
-      'right_leg_below = :right_leg_below, ' +
-      'left_leg_below = :left_leg_below, ' +
-      'right_leg_above = :right_leg_above, ' +
-      'left_leg_above = :left_leg_above, ' +
-      'escaped = :escaped, ' +
-      'needs_review = :needs_review, ' +
-      'notes = :notes, ' +
-      'exported_status = :exported_status, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'')');
-    Add('WHERE (capture_id = :capture_id)');
 
-    FFullName := GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex],
-      CaptureTypeStr[FCaptureType], FCycleCode, False);
-    SetForeignParam(ParamByName('survey_id'), FSurveyId);
-    SetStrParam(ParamByName('full_name'), FFullName);
-    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-    SetForeignParam(ParamByName('individual_id'), FIndividualId);
-    SetDateParam(ParamByName('capture_date'), FCaptureDate);
-    SetTimeParam(ParamByName('capture_time'), FCaptureTime);
-    SetForeignParam(ParamByName('locality_id'), FLocalityId);
-    SetForeignParam(ParamByName('net_station_id'), FNetStationId);
-    SetForeignParam(ParamByName('net_id'), FNetId);
-    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-    SetForeignParam(ParamByName('bander_id'), FBanderId);
-    SetForeignParam(ParamByName('annotator_id'), FAnnotatorId);
-    SetStrParam(ParamByName('subject_status'), SubjectStatusStr[FSubjectStatus]);
-    SetStrParam(ParamByName('capture_type'), CaptureTypeStr[FCaptureType]);
-    SetStrParam(ParamByName('subject_sex'), Sexes[FSubjectSex]);
-    SetStrParam(ParamByName('how_sexed'), FHowSexed);
-    SetForeignParam(ParamByName('band_id'), FBandId);
-    SetFloatParam(ParamByName('weight'), FWeight);
-    SetFloatParam(ParamByName('tarsus_length'), FTarsusLength);
-    SetFloatParam(ParamByName('tarsus_diameter'), FTarsusDiameter);
-    SetFloatParam(ParamByName('exposed_culmen'), FExposedCulmen);
-    SetFloatParam(ParamByName('bill_width'), FBillWidth);
-    SetFloatParam(ParamByName('bill_height'), FBillHeight);
-    SetFloatParam(ParamByName('nostril_bill_tip'), FNostrilBillTip);
-    SetFloatParam(ParamByName('skull_length'), FSkullLength);
-    SetFloatParam(ParamByName('right_wing_chord'), FRightWingChord);
-    SetFloatParam(ParamByName('first_secondary_chord'), FFirstSecondaryChord);
-    SetFloatParam(ParamByName('tail_length'), FTailLength);
-    SetStrParam(ParamByName('fat'), FFat);
-    SetStrParam(ParamByName('brood_patch'), FBroodPatch);
-    SetStrParam(ParamByName('cloacal_protuberance'), FCloacalProtuberance);
-    SetStrParam(ParamByName('body_molt'), FBodyMolt);
-    SetStrParam(ParamByName('flight_feathers_molt'), FFlightFeathersMolt);
-    SetStrParam(ParamByName('flight_feathers_wear'), FFlightFeathersWear);
-    SetStrParam(ParamByName('molt_limits'), FMoltLimits);
-    SetStrParam(ParamByName('cycle_code'), FCycleCode);
-    SetStrParam(ParamByName('how_aged'), FHowAged);
-    SetStrParam(ParamByName('skull_ossification'), FSkullOssification);
-    SetFloatParam(ParamByName('kipps_index'), FKippsIndex);
-    SetFloatParam(ParamByName('glucose'), FGlucose);
-    SetFloatParam(ParamByName('hemoglobin'), FHemoglobin);
-    SetFloatParam(ParamByName('hematocrit'), FHematocrit);
-    ParamByName('blood_sample').AsBoolean := FBloodSample;
-    ParamByName('feather_sample').AsBoolean := FFeatherSample;
-    SetForeignParam(ParamByName('photographer_1_id'), FPhotographer1Id);
-    SetForeignParam(ParamByName('photographer_2_id'), FPhotographer2Id);
-    if (FPhotographer1Id > 0) then
-      FSubjectPhotographed := True;
-    ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
-    SetStrParam(ParamByName('start_photo_number'), FStartPhotoNumber);
-    SetStrParam(ParamByName('end_photo_number'), FEndPhotoNumber);
-    SetStrParam(ParamByName('camera_name'), FCameraName);
-    SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
-    SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
-    SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
-    ParamByName('escaped').AsBoolean := FEscaped;
-    SetStrParam(ParamByName('notes'), FNotes);
-    ParamByName('needs_review').AsBoolean := FNeedsReview;
-    ParamByName('exported_status').AsBoolean := FExported;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('capture_id').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE captures SET ' +
+        'survey_id = :survey_id, ' +
+        'full_name = :full_name, ' +
+        'taxon_id = :taxon_id, ' +
+        'individual_id = :individual_id, ' +
+        'project_id = :project_id, ' +
+        'capture_date = date(:capture_date), ' +
+        'capture_time = time(:capture_time), ' +
+        'locality_id = :locality_id, ' +
+        'net_station_id = :net_station_id, ' +
+        'net_id = :net_id, ' +
+        'latitude = :latitude, ' +
+        'longitude = :longitude, ' +
+        'bander_id = :bander_id, ' +
+        'annotator_id = :annotator_id, ' +
+        'subject_status = :subject_status, ' +
+        'capture_type = :capture_type, ' +
+        'subject_sex = :subject_sex, ' +
+        'how_sexed = :how_sexed, ' +
+        'band_id = :band_id, ' +
+        'weight = :weight, ' +
+        'tarsus_length = :tarsus_length, ' +
+        'tarsus_diameter = :tarsus_diameter, ' +
+        'culmen_length = :culmen_length, ' +
+        'exposed_culmen = :exposed_culmen, ' +
+        'bill_width = :bill_width, ' +
+        'bill_height = :bill_height, ' +
+        'nostril_bill_tip = :nostril_bill_tip, ' +
+        'skull_length = :skull_length, ' +
+        'right_wing_chord = :right_wing_chord, ' +
+        'first_secondary_chord = :first_secondary_chord, ' +
+        'tail_length = :tail_length, ' +
+        'fat = :fat, ' +
+        'brood_patch = :brood_patch, ' +
+        'cloacal_protuberance = :cloacal_protuberance, ' +
+        'body_molt = :body_molt, ' +
+        'flight_feathers_molt = :flight_feathers_molt, ' +
+        'flight_feathers_wear = :fligth_feathers_wear, ' +
+        'molt_limits = :molt_limits, ' +
+        'cycle_code = :cycle_code, ' +
+        'subject_age = :subject_age, ' +
+        'how_aged = :how_aged, ' +
+        'skull_ossification = :skull_ossification, ' +
+        'halux_length_total = :halux_length_total, ' +
+        'halux_length_finger = :halux_length_finger, ' +
+        'halux_length_claw = :halux_length_claw, ' +
+        'central_retrix_length = :central_retrix_length, ' +
+        'external_retrix_length = :external_retrix_length, ' +
+        'total_length = :total_length, ' +
+        'feather_mites = :feather_mites, ' +
+        'philornis_larvae_tally = :philornis_larvae_tally, ' +
+        'kipps_index = :kipps_index, ' +
+        'glucose = :glucose, ' +
+        'hemoglobin = :hemoglobin, ' +
+        'hematocrit = :hematocrit, ' +
+        'field_number = :field_number, ' +
+        'blood_sample = :blood_sample, ' +
+        'feather_sample = :feather_sample, ' +
+        'claw_sample = :claw_sample, ' +
+        'feces_sample = :feces_sample, ' +
+        'parasite_sample = :parasite_sample, ' +
+        'subject_collected = :subject_collected, ' +
+        'subject_recorded = :subject_recorded, ' +
+        'subject_photographed = :subject_photographed, ' +
+        'photographer_1_id = :photographer_1_id, ' +
+        'photographer_2_id = :photographer_2_id, ' +
+        'start_photo_number = :start_photo_number, ' +
+        'end_photo_number = :end_photo_number, ' +
+        'camera_name = :camera_name, ' +
+        'removed_band_id = :removed_band_id, ' +
+        'right_leg_below = :right_leg_below, ' +
+        'left_leg_below = :left_leg_below, ' +
+        'right_leg_above = :right_leg_above, ' +
+        'left_leg_above = :left_leg_above, ' +
+        'escaped = :escaped, ' +
+        'needs_review = :needs_review, ' +
+        'notes = :notes, ' +
+        'exported_status = :exported_status, ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'',''subsec'')');
+      Add('WHERE (capture_id = :capture_id)');
 
-    ExecSQL;
+      FFullName := GetCaptureFullname(FCaptureDate, FTaxonId, FBandId, Sexes[FSubjectSex],
+        CaptureTypeStr[FCaptureType], FCycleCode, False);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
+      SetStrParam(ParamByName('full_name'), FFullName);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetDateParam(ParamByName('capture_date'), FCaptureDate);
+      SetTimeParam(ParamByName('capture_time'), FCaptureTime);
+      SetForeignParam(ParamByName('locality_id'), FLocalityId);
+      SetForeignParam(ParamByName('net_station_id'), FNetStationId);
+      SetForeignParam(ParamByName('net_id'), FNetId);
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetForeignParam(ParamByName('bander_id'), FBanderId);
+      SetForeignParam(ParamByName('annotator_id'), FAnnotatorId);
+      SetStrParam(ParamByName('subject_status'), SubjectStatusStr[FSubjectStatus]);
+      SetStrParam(ParamByName('capture_type'), CaptureTypeStr[FCaptureType]);
+      SetStrParam(ParamByName('subject_sex'), Sexes[FSubjectSex]);
+      SetStrParam(ParamByName('how_sexed'), FHowSexed);
+      SetForeignParam(ParamByName('band_id'), FBandId);
+      SetFloatParam(ParamByName('weight'), FWeight);
+      SetFloatParam(ParamByName('tarsus_length'), FTarsusLength);
+      SetFloatParam(ParamByName('tarsus_diameter'), FTarsusDiameter);
+      SetFloatParam(ParamByName('exposed_culmen'), FExposedCulmen);
+      SetFloatParam(ParamByName('bill_width'), FBillWidth);
+      SetFloatParam(ParamByName('bill_height'), FBillHeight);
+      SetFloatParam(ParamByName('nostril_bill_tip'), FNostrilBillTip);
+      SetFloatParam(ParamByName('skull_length'), FSkullLength);
+      SetFloatParam(ParamByName('right_wing_chord'), FRightWingChord);
+      SetFloatParam(ParamByName('first_secondary_chord'), FFirstSecondaryChord);
+      SetFloatParam(ParamByName('tail_length'), FTailLength);
+      SetStrParam(ParamByName('fat'), FFat);
+      SetStrParam(ParamByName('brood_patch'), FBroodPatch);
+      SetStrParam(ParamByName('cloacal_protuberance'), FCloacalProtuberance);
+      SetStrParam(ParamByName('body_molt'), FBodyMolt);
+      SetStrParam(ParamByName('flight_feathers_molt'), FFlightFeathersMolt);
+      SetStrParam(ParamByName('flight_feathers_wear'), FFlightFeathersWear);
+      SetStrParam(ParamByName('molt_limits'), FMoltLimits);
+      SetStrParam(ParamByName('cycle_code'), FCycleCode);
+      SetStrParam(ParamByName('how_aged'), FHowAged);
+      SetStrParam(ParamByName('skull_ossification'), FSkullOssification);
+      SetFloatParam(ParamByName('kipps_index'), FKippsIndex);
+      SetFloatParam(ParamByName('glucose'), FGlucose);
+      SetFloatParam(ParamByName('hemoglobin'), FHemoglobin);
+      SetFloatParam(ParamByName('hematocrit'), FHematocrit);
+      ParamByName('blood_sample').AsBoolean := FBloodSample;
+      ParamByName('feather_sample').AsBoolean := FFeatherSample;
+      SetForeignParam(ParamByName('photographer_1_id'), FPhotographer1Id);
+      SetForeignParam(ParamByName('photographer_2_id'), FPhotographer2Id);
+      if (FPhotographer1Id > 0) then
+        FSubjectPhotographed := True;
+      ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
+      SetStrParam(ParamByName('start_photo_number'), FStartPhotoNumber);
+      SetStrParam(ParamByName('end_photo_number'), FEndPhotoNumber);
+      SetStrParam(ParamByName('camera_name'), FCameraName);
+      SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
+      SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
+      SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
+      ParamByName('escaped').AsBoolean := FEscaped;
+      SetStrParam(ParamByName('notes'), FNotes);
+      ParamByName('needs_review').AsBoolean := FNeedsReview;
+      ParamByName('exported_status').AsBoolean := FExported;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('capture_id').AsInteger := FId;
 
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3806,13 +3904,23 @@ begin
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM individuals');
-    Add('WHERE (individual_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM individuals');
+      Add('WHERE (individual_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3955,129 +4063,138 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO individuals (' +
-      'taxon_id, ' +
-      'individual_sex, ' +
-      'individual_age, ' +
-      'nest_id, ' +
-      'birth_date, ' +
-      'birth_day, ' +
-      'birth_month, ' +
-      'birth_year, ' +
-      'banding_date, ' +
-      'band_change_date, ' +
-      'band_id, ' +
-      'double_band_id, ' +
-      'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
-      'right_leg_above, ' +
-      'left_leg_above, ' +
-      'father_id, ' +
-      'mother_id, ' +
-      'death_date, ' +
-      'death_day, ' +
-      'death_month, ' +
-      'death_year, ' +
-      'recognizable_markings, ' +
-      'notes, ' +
-      'formatted_name, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'insert_date)');
-    Add('VALUES (' +
-      ':taxon_id, ' +
-      ':individual_sex, ' +
-      ':individual_age, ' +
-      ':nest_id, ' +
-      ':birth_date, ' +
-      ':birth_day, ' +
-      ':birth_month, ' +
-      ':birth_year, ' +
-      'date(:banding_date), ' +
-      'date(:band_change_date), ' +
-      ':band_id, ' +
-      ':double_band_id, ' +
-      ':removed_band_id, ' +
-      ':right_leg_below, ' +
-      ':left_leg_below, ' +
-      ':right_leg_above, ' +
-      ':left_leg_above, ' +
-      ':father_id, ' +
-      ':mother_id, ' +
-      ':death_date, ' +
-      ':death_day, ' +
-      ':death_month, ' +
-      ':death_year, ' +
-      ':recognizable_markings, ' +
-      ':notes, ' +
-      ':formatted_name, ' +
-      ':full_name, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
 
-    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-    SetStrParam(ParamByName('individual_sex'), Sexes[FSex]);
-    SetStrParam(ParamByName('individual_age'), Ages[FAge]);
-    SetForeignParam(ParamByName('nest_id'), FNestId);
-    if FBirthYear > 0 then
-    begin
-      ParamByName('birth_year').AsInteger := FBirthYear;
-      ParamByName('birth_month').AsInteger := FBirthMonth;
-      ParamByName('birth_day').AsInteger := FBirthDay;
-      Birth.Encode(FBirthYear, FBirthMonth, FBirthDay, '.');
-      SetStrParam(ParamByName('birth_date'), Birth.ToString);
-    end
-    else
-    begin
-      ParamByName('birth_year').Clear;
-      ParamByName('birth_month').Clear;
-      ParamByName('birth_day').Clear;
-      ParamByName('birth_date').Clear;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO individuals (' +
+        'taxon_id, ' +
+        'individual_sex, ' +
+        'individual_age, ' +
+        'nest_id, ' +
+        'birth_date, ' +
+        'birth_day, ' +
+        'birth_month, ' +
+        'birth_year, ' +
+        'banding_date, ' +
+        'band_change_date, ' +
+        'band_id, ' +
+        'double_band_id, ' +
+        'removed_band_id, ' +
+        'right_leg_below, ' +
+        'left_leg_below, ' +
+        'right_leg_above, ' +
+        'left_leg_above, ' +
+        'father_id, ' +
+        'mother_id, ' +
+        'death_date, ' +
+        'death_day, ' +
+        'death_month, ' +
+        'death_year, ' +
+        'recognizable_markings, ' +
+        'notes, ' +
+        'formatted_name, ' +
+        'full_name, ' +
+        'user_inserted, ' +
+        'insert_date)');
+      Add('VALUES (' +
+        ':taxon_id, ' +
+        ':individual_sex, ' +
+        ':individual_age, ' +
+        ':nest_id, ' +
+        ':birth_date, ' +
+        ':birth_day, ' +
+        ':birth_month, ' +
+        ':birth_year, ' +
+        'date(:banding_date), ' +
+        'date(:band_change_date), ' +
+        ':band_id, ' +
+        ':double_band_id, ' +
+        ':removed_band_id, ' +
+        ':right_leg_below, ' +
+        ':left_leg_below, ' +
+        ':right_leg_above, ' +
+        ':left_leg_above, ' +
+        ':father_id, ' +
+        ':mother_id, ' +
+        ':death_date, ' +
+        ':death_day, ' +
+        ':death_month, ' +
+        ':death_year, ' +
+        ':recognizable_markings, ' +
+        ':notes, ' +
+        ':formatted_name, ' +
+        ':full_name, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetStrParam(ParamByName('individual_sex'), Sexes[FSex]);
+      SetStrParam(ParamByName('individual_age'), Ages[FAge]);
+      SetForeignParam(ParamByName('nest_id'), FNestId);
+      if FBirthYear > 0 then
+      begin
+        ParamByName('birth_year').AsInteger := FBirthYear;
+        ParamByName('birth_month').AsInteger := FBirthMonth;
+        ParamByName('birth_day').AsInteger := FBirthDay;
+        Birth.Encode(FBirthYear, FBirthMonth, FBirthDay, '.');
+        SetStrParam(ParamByName('birth_date'), Birth.ToString);
+      end
+      else
+      begin
+        ParamByName('birth_year').Clear;
+        ParamByName('birth_month').Clear;
+        ParamByName('birth_day').Clear;
+        ParamByName('birth_date').Clear;
+      end;
+      SetForeignParam(ParamByName('band_id'), FBandId);
+      SetForeignParam(ParamByName('double_band_id'), FDoubleBandId);
+      SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
+      SetDateParam(ParamByName('banding_date'), FBandingDate);
+      SetDateParam(ParamByName('band_change_date'), FBandChangeDate);
+      SetStrParam(ParamByName('recognizable_markings'), FRecognizableMarkings);
+      SetStrParam(ParamByName('notes'), FNotes);
+      SetForeignParam(ParamByName('father_id'), FFatherId);
+      SetForeignParam(ParamByName('mother_id'), FMotherId);
+      if FDeathYear > 0 then
+      begin
+        ParamByName('death_year').AsInteger := FDeathYear;
+        ParamByName('death_month').AsInteger := FDeathMonth;
+        ParamByName('death_day').AsInteger := FDeathDay;
+        Death.Encode(FDeathYear, FDeathMonth, FDeathDay, '.');
+        SetStrParam(ParamByName('death_date'), Death.ToString);
+      end
+      else
+      begin
+        ParamByName('death_year').Clear;
+        ParamByName('death_month').Clear;
+        ParamByName('death_day').Clear;
+        ParamByName('death_date').Clear;
+      end;
+      SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], True));
+      FFullName := GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], False);
+      SetStrParam(ParamByName('full_name'), FFullName);
+      SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
+      SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
+      SetStrParam(ParamByName('right_leg_above'), FRightLegAbove);
+      SetStrParam(ParamByName('left_leg_above'), FLeftLegAbove);
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    SetForeignParam(ParamByName('band_id'), FBandId);
-    SetForeignParam(ParamByName('double_band_id'), FDoubleBandId);
-    SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
-    SetDateParam(ParamByName('banding_date'), FBandingDate);
-    SetDateParam(ParamByName('band_change_date'), FBandChangeDate);
-    SetStrParam(ParamByName('recognizable_markings'), FRecognizableMarkings);
-    SetStrParam(ParamByName('notes'), FNotes);
-    SetForeignParam(ParamByName('father_id'), FFatherId);
-    SetForeignParam(ParamByName('mother_id'), FMotherId);
-    if FDeathYear > 0 then
-    begin
-      ParamByName('death_year').AsInteger := FDeathYear;
-      ParamByName('death_month').AsInteger := FDeathMonth;
-      ParamByName('death_day').AsInteger := FDeathDay;
-      Death.Encode(FDeathYear, FDeathMonth, FDeathDay, '.');
-      SetStrParam(ParamByName('death_date'), Death.ToString);
-    end
-    else
-    begin
-      ParamByName('death_year').Clear;
-      ParamByName('death_month').Clear;
-      ParamByName('death_day').Clear;
-      ParamByName('death_date').Clear;
-    end;
-    SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], True));
-    FFullName := GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], False);
-    SetStrParam(ParamByName('full_name'), FFullName);
-    SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
-    SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
-    SetStrParam(ParamByName('right_leg_above'), FRightLegAbove);
-    SetStrParam(ParamByName('left_leg_above'), FLeftLegAbove);
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-    ExecSQL;
-
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
-
   finally
     FreeAndNil(Qry);
   end;
@@ -4142,98 +4259,107 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE individuals SET ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_sex = :individual_sex, ' +
-      'individual_age = :individual_age, ' +
-      'nest_id = :nest_id, ' +
-      'birth_date = :birth_date, ' +
-      'birth_day = :birth_day, ' +
-      'birth_month = :birth_month, ' +
-      'birth_year = :birth_year, ' +
-      'banding_date = date(:banding_date), ' +
-      'band_change_date = date(:band_change_date), ' +
-      'band_id = :band_id, ' +
-      'double_band_id = :double_band_id, ' +
-      'removed_band_id = :removed_band_id, ' +
-      'right_leg_below = :right_leg_below, ' +
-      'left_leg_below = :left_leg_below, ' +
-      'right_leg_above = :right_leg_above, ' +
-      'left_leg_above = :left_leg_above, ' +
-      'father_id = :father_id, ' +
-      'mother_id = :mother_id, ' +
-      'death_date = :death_date, ' +
-      'death_day = :death_day, ' +
-      'death_month = :death_month, ' +
-      'death_year = :death_year, ' +
-      'recognizable_markings = :recognizable_markings, ' +
-      'notes = :notes, ' +
-      'formatted_name = :formatted_name, ' +
-      'full_name = :full_name, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'')');
-    Add('WHERE (individual_id = :individual_id)');
 
-    SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-    SetStrParam(ParamByName('individual_sex'), Sexes[FSex]);
-    SetStrParam(ParamByName('individual_age'), Ages[FAge]);
-    SetForeignParam(ParamByName('nest_id'), FNestId);
-    if FBirthYear > 0 then
-    begin
-      ParamByName('birth_year').AsInteger := FBirthYear;
-      ParamByName('birth_month').AsInteger := FBirthMonth;
-      ParamByName('birth_day').AsInteger := FBirthDay;
-      Birth.Encode(FBirthYear, FBirthMonth, FBirthDay, '.');
-      SetStrParam(ParamByName('birth_date'), Birth.ToString);
-    end
-    else
-    begin
-      ParamByName('birth_year').Clear;
-      ParamByName('birth_month').Clear;
-      ParamByName('birth_day').Clear;
-      ParamByName('birth_date').Clear;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE individuals SET ' +
+        'taxon_id = :taxon_id, ' +
+        'individual_sex = :individual_sex, ' +
+        'individual_age = :individual_age, ' +
+        'nest_id = :nest_id, ' +
+        'birth_date = :birth_date, ' +
+        'birth_day = :birth_day, ' +
+        'birth_month = :birth_month, ' +
+        'birth_year = :birth_year, ' +
+        'banding_date = date(:banding_date), ' +
+        'band_change_date = date(:band_change_date), ' +
+        'band_id = :band_id, ' +
+        'double_band_id = :double_band_id, ' +
+        'removed_band_id = :removed_band_id, ' +
+        'right_leg_below = :right_leg_below, ' +
+        'left_leg_below = :left_leg_below, ' +
+        'right_leg_above = :right_leg_above, ' +
+        'left_leg_above = :left_leg_above, ' +
+        'father_id = :father_id, ' +
+        'mother_id = :mother_id, ' +
+        'death_date = :death_date, ' +
+        'death_day = :death_day, ' +
+        'death_month = :death_month, ' +
+        'death_year = :death_year, ' +
+        'recognizable_markings = :recognizable_markings, ' +
+        'notes = :notes, ' +
+        'formatted_name = :formatted_name, ' +
+        'full_name = :full_name, ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'',''subsec'')');
+      Add('WHERE (individual_id = :individual_id)');
+
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetStrParam(ParamByName('individual_sex'), Sexes[FSex]);
+      SetStrParam(ParamByName('individual_age'), Ages[FAge]);
+      SetForeignParam(ParamByName('nest_id'), FNestId);
+      if FBirthYear > 0 then
+      begin
+        ParamByName('birth_year').AsInteger := FBirthYear;
+        ParamByName('birth_month').AsInteger := FBirthMonth;
+        ParamByName('birth_day').AsInteger := FBirthDay;
+        Birth.Encode(FBirthYear, FBirthMonth, FBirthDay, '.');
+        SetStrParam(ParamByName('birth_date'), Birth.ToString);
+      end
+      else
+      begin
+        ParamByName('birth_year').Clear;
+        ParamByName('birth_month').Clear;
+        ParamByName('birth_day').Clear;
+        ParamByName('birth_date').Clear;
+      end;
+      SetForeignParam(ParamByName('band_id'), FBandId);
+      SetForeignParam(ParamByName('double_band_id'), FDoubleBandId);
+      SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
+      SetDateParam(ParamByName('banding_date'), FBandingDate);
+      SetDateParam(ParamByName('band_change_date'), FBandChangeDate);
+      SetStrParam(ParamByName('recognizable_markings'), FRecognizableMarkings);
+      SetStrParam(ParamByName('notes'), FNotes);
+      SetForeignParam(ParamByName('father_id'), FFatherId);
+      SetForeignParam(ParamByName('mother_id'), FMotherId);
+      if FDeathYear > 0 then
+      begin
+        ParamByName('death_year').AsInteger := FDeathYear;
+        ParamByName('death_month').AsInteger := FDeathMonth;
+        ParamByName('death_day').AsInteger := FDeathDay;
+        Death.Encode(FDeathYear, FDeathMonth, FDeathDay, '.');
+        SetStrParam(ParamByName('death_date'), Death.ToString);
+      end
+      else
+      begin
+        ParamByName('death_year').Clear;
+        ParamByName('death_month').Clear;
+        ParamByName('death_day').Clear;
+        ParamByName('death_date').Clear;
+      end;
+      SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], True));
+      FFullName := GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], False);
+      SetStrParam(ParamByName('full_name'), FFullName);
+      SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
+      SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
+      SetStrParam(ParamByName('right_leg_above'), FRightLegAbove);
+      SetStrParam(ParamByName('left_leg_above'), FLeftLegAbove);
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('individual_id').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    SetForeignParam(ParamByName('band_id'), FBandId);
-    SetForeignParam(ParamByName('double_band_id'), FDoubleBandId);
-    SetForeignParam(ParamByName('removed_band_id'), FRemovedBandId);
-    SetDateParam(ParamByName('banding_date'), FBandingDate);
-    SetDateParam(ParamByName('band_change_date'), FBandChangeDate);
-    SetStrParam(ParamByName('recognizable_markings'), FRecognizableMarkings);
-    SetStrParam(ParamByName('notes'), FNotes);
-    SetForeignParam(ParamByName('father_id'), FFatherId);
-    SetForeignParam(ParamByName('mother_id'), FMotherId);
-    if FDeathYear > 0 then
-    begin
-      ParamByName('death_year').AsInteger := FDeathYear;
-      ParamByName('death_month').AsInteger := FDeathMonth;
-      ParamByName('death_day').AsInteger := FDeathDay;
-      Death.Encode(FDeathYear, FDeathMonth, FDeathDay, '.');
-      SetStrParam(ParamByName('death_date'), Death.ToString);
-    end
-    else
-    begin
-      ParamByName('death_year').Clear;
-      ParamByName('death_month').Clear;
-      ParamByName('death_day').Clear;
-      ParamByName('death_date').Clear;
-    end;
-    SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], True));
-    FFullName := GetIndividualFullname(FTaxonId, FBandId, FRightLegBelow, FLeftLegBelow, Sexes[FSex], False);
-    SetStrParam(ParamByName('full_name'), FFullName);
-    SetStrParam(ParamByName('right_leg_below'), FRightLegBelow);
-    SetStrParam(ParamByName('left_leg_below'), FLeftLegBelow);
-    SetStrParam(ParamByName('right_leg_above'), FRightLegAbove);
-    SetStrParam(ParamByName('left_leg_above'), FLeftLegAbove);
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('individual_id').AsInteger := FId;
-
-    ExecSQL;
-
   finally
     FreeAndNil(Qry);
   end;
@@ -4402,13 +4528,23 @@ begin
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM bands');
-    Add('WHERE (band_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM bands');
+      Add('WHERE (band_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -4525,64 +4661,75 @@ begin
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
-    Clear;
-    Add('INSERT INTO bands (' +
-      'band_size, ' +
-      'band_number, ' +
-      'band_status, ' +
-      'band_type, ' +
-      'band_prefix, ' +
-      'band_suffix, ' +
-      'band_color, ' +
-      'band_source, ' +
-      'supplier_id, ' +
-      'carrier_id, ' +
-      'project_id, ' +
-      'notes, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':band_size, ' +
-      ':band_number, ' +
-      ':band_status, ' +
-      ':band_type, ' +
-      ':band_prefix, ' +
-      ':band_suffix, ' +
-      ':band_color, ' +
-      ':band_source, ' +
-      ':supplier_id, ' +
-      ':carrier_id, ' +
-      ':project_id, ' +
-      ':notes, ' +
-      ':full_name, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''));');
+    Transaction := DMM.sqlTrans;
 
-    SetStrParam(ParamByName('band_size'), FSize);
-    SetIntParam(ParamByName('band_number'), FNumber);
-    SetStrParam(ParamByName('band_status'), BandStatusStr[FStatus]);
-    SetStrParam(ParamByName('band_type'), MarkTypesStr[FBandType]);
-    SetStrParam(ParamByName('band_prefix'), FPrefix);
-    SetStrParam(ParamByName('band_suffix'), FSuffix);
-    SetStrParam(ParamByName('band_color'), FBandColor);
-    SetStrParam(ParamByName('band_source'), BandSourceStr[FSource]);
-    SetForeignParam(ParamByName('supplier_id'), FSupplierId);
-    SetForeignParam(ParamByName('carrier_id'), FCarrierId);
-    SetForeignParam(ParamByName('project_id'), FProjectId);
-    FFullName := GetBandFullname(FSize, FNumber, FSupplierId);
-    SetStrParam(ParamByName('full_name'), FFullName);
-    SetStrParam(ParamByName('notes'), FNotes);
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO bands (' +
+        'band_size, ' +
+        'band_number, ' +
+        'band_status, ' +
+        'band_type, ' +
+        'band_prefix, ' +
+        'band_suffix, ' +
+        'band_color, ' +
+        'band_source, ' +
+        'supplier_id, ' +
+        'carrier_id, ' +
+        'project_id, ' +
+        'notes, ' +
+        'full_name, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':band_size, ' +
+        ':band_number, ' +
+        ':band_status, ' +
+        ':band_type, ' +
+        ':band_prefix, ' +
+        ':band_suffix, ' +
+        ':band_color, ' +
+        ':band_source, ' +
+        ':supplier_id, ' +
+        ':carrier_id, ' +
+        ':project_id, ' +
+        ':notes, ' +
+        ':full_name, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''));');
 
-    ExecSQL;
+      SetStrParam(ParamByName('band_size'), FSize);
+      SetIntParam(ParamByName('band_number'), FNumber);
+      SetStrParam(ParamByName('band_status'), BandStatusStr[FStatus]);
+      SetStrParam(ParamByName('band_type'), MarkTypesStr[FBandType]);
+      SetStrParam(ParamByName('band_prefix'), FPrefix);
+      SetStrParam(ParamByName('band_suffix'), FSuffix);
+      SetStrParam(ParamByName('band_color'), FBandColor);
+      SetStrParam(ParamByName('band_source'), BandSourceStr[FSource]);
+      SetForeignParam(ParamByName('supplier_id'), FSupplierId);
+      SetForeignParam(ParamByName('carrier_id'), FCarrierId);
+      SetForeignParam(ParamByName('project_id'), FProjectId);
+      FFullName := GetBandFullname(FSize, FNumber, FSupplierId);
+      SetStrParam(ParamByName('full_name'), FFullName);
+      SetStrParam(ParamByName('notes'), FNotes);
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -4635,47 +4782,58 @@ begin
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
-    Clear;
-    Add('UPDATE bands SET ' +
-      'band_size = :band_size, ' +
-      'band_number = :band_number, ' +
-      'band_status = :band_status, ' +
-      'band_type = :band_type, ' +
-      'band_prefix = :band_prefix, ' +
-      'band_suffix = :band_suffix, ' +
-      'band_color = :band_color, ' +
-      'band_source = :band_source, ' +
-      'supplier_id = :supplier_id, ' +
-      'carrier_id = :carrier_id, ' +
-      'project_id = :project_id, ' +
-      'notes = :notes, ' +
-      'full_name = :full_name, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (band_id = :band_id)');
+    Transaction := DMM.sqlTrans;
 
-    SetStrParam(ParamByName('band_size'), FSize);
-    SetIntParam(ParamByName('band_number'), FNumber);
-    SetStrParam(ParamByName('band_status'), BandStatusStr[FStatus]);
-    SetStrParam(ParamByName('band_type'), MarkTypesStr[FBandType]);
-    SetStrParam(ParamByName('band_prefix'), FPrefix);
-    SetStrParam(ParamByName('band_suffix'), FSuffix);
-    SetStrParam(ParamByName('band_color'), FBandColor);
-    SetStrParam(ParamByName('band_source'), BandSourceStr[FSource]);
-    SetForeignParam(ParamByName('supplier_id'), FSupplierId);
-    SetForeignParam(ParamByName('carrier_id'), FCarrierId);
-    SetForeignParam(ParamByName('project_id'), FProjectId);
-    FFullName := GetBandFullname(FSize, FNumber, FSupplierId);
-    SetStrParam(ParamByName('full_name'), FFullName);
-    SetStrParam(ParamByName('notes'), FNotes);
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('band_id').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE bands SET ' +
+        'band_size = :band_size, ' +
+        'band_number = :band_number, ' +
+        'band_status = :band_status, ' +
+        'band_type = :band_type, ' +
+        'band_prefix = :band_prefix, ' +
+        'band_suffix = :band_suffix, ' +
+        'band_color = :band_color, ' +
+        'band_source = :band_source, ' +
+        'supplier_id = :supplier_id, ' +
+        'carrier_id = :carrier_id, ' +
+        'project_id = :project_id, ' +
+        'notes = :notes, ' +
+        'full_name = :full_name, ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'',''subsec'') ');
+      Add('WHERE (band_id = :band_id)');
 
-    ExecSQL;
+      SetStrParam(ParamByName('band_size'), FSize);
+      SetIntParam(ParamByName('band_number'), FNumber);
+      SetStrParam(ParamByName('band_status'), BandStatusStr[FStatus]);
+      SetStrParam(ParamByName('band_type'), MarkTypesStr[FBandType]);
+      SetStrParam(ParamByName('band_prefix'), FPrefix);
+      SetStrParam(ParamByName('band_suffix'), FSuffix);
+      SetStrParam(ParamByName('band_color'), FBandColor);
+      SetStrParam(ParamByName('band_source'), BandSourceStr[FSource]);
+      SetForeignParam(ParamByName('supplier_id'), FSupplierId);
+      SetForeignParam(ParamByName('carrier_id'), FCarrierId);
+      SetForeignParam(ParamByName('project_id'), FProjectId);
+      FFullName := GetBandFullname(FSize, FNumber, FSupplierId);
+      SetStrParam(ParamByName('full_name'), FFullName);
+      SetStrParam(ParamByName('notes'), FNotes);
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('band_id').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;

@@ -369,8 +369,8 @@ begin
   inherited Clear;
   FTitle := EmptyStr;
   FShortTitle := EmptyStr;
-  FStartDate := StrToDate('30/12/1500');
-  FEndDate := StrToDate('30/12/1500');
+  FStartDate := NullDate;
+  FEndDate := NullDate;
   FWebsiteUri := EmptyStr;
   FEmailAddress := EmptyStr;
   FContactName := EmptyStr;
@@ -395,18 +395,31 @@ procedure TProject.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TProject.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM projects');
-    Add('WHERE (project_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM projects');
+      Add('WHERE (project_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -601,6 +614,9 @@ procedure TProject.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TProject.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -789,18 +805,31 @@ procedure TInstitution.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TInstitution.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM institutions');
-    Add('WHERE (institution_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM institutions');
+      Add('WHERE (institution_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1020,6 +1049,9 @@ procedure TInstitution.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TInstitution.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -1310,18 +1342,31 @@ procedure TPerson.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TPerson.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM people');
-    Add('WHERE (person_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM people');
+      Add('WHERE (person_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1651,6 +1696,9 @@ procedure TPerson.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TPerson.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -1839,18 +1887,31 @@ procedure TProjectMember.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TProjectMember.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM project_team');
-    Add('WHERE (project_member_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM project_team');
+      Add('WHERE (project_member_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2001,6 +2062,9 @@ procedure TProjectMember.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TProjectMember.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -2155,18 +2219,31 @@ procedure TPermit.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TPermit.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM legal');
-    Add('WHERE (permit_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM legal');
+      Add('WHERE (permit_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2358,6 +2435,9 @@ procedure TPermit.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TPermit.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try

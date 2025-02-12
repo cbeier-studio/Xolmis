@@ -71,7 +71,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_validations, udm_main;
+uses cbs_global, cbs_validations, cbs_locale, udm_main;
 
 { TUser }
 
@@ -185,18 +185,31 @@ procedure TUser.Delete;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TUser.Delete: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('DELETE FROM users');
-    Add('WHERE (user_id = :aid)');
 
-    ParamByName('aid').AsInteger := FId;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM users');
+      Add('WHERE (user_id = :aid)');
 
-    ExecSQL;
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -250,49 +263,59 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('INSERT INTO users (' +
-      'full_name, ' +
-      'user_name, ' +
-      //'user_password, ' +
-      'user_rank, ' +
-      'allow_collection_edit, ' +
-      'allow_print, ' +
-      'allow_export, ' +
-      'allow_import, ' +
-      'uuid, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':full_name, ' +
-      ':user_name, ' +
-      //':user_password, ' +
-      ':user_rank, ' +
-      ':allow_collection_edit, ' +
-      ':allow_print, ' +
-      ':allow_export, ' +
-      ':allow_import, ' +
-      ':uuid, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
-    ParamByName('full_name').AsString := FFullName;
-    ParamByName('user_name').AsString := FUserName;
-    ParamByName('uuid').AsString := FGuid;
-    ParamByName('user_rank').AsString := UserRankStr[FRank];
-    ParamByName('allow_collection_edit').AsBoolean := FAllowManageCollection;
-    ParamByName('allow_print').AsBoolean := FAllowPrint;
-    ParamByName('allow_export').AsBoolean := FAllowExport;
-    ParamByName('allow_import').AsBoolean := FAllowImport;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('INSERT INTO users (' +
+        'full_name, ' +
+        'user_name, ' +
+        //'user_password, ' +
+        'user_rank, ' +
+        'allow_collection_edit, ' +
+        'allow_print, ' +
+        'allow_export, ' +
+        'allow_import, ' +
+        'uuid, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        ':full_name, ' +
+        ':user_name, ' +
+        //':user_password, ' +
+        ':user_rank, ' +
+        ':allow_collection_edit, ' +
+        ':allow_print, ' +
+        ':allow_export, ' +
+        ':allow_import, ' +
+        ':uuid, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''))');
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('user_name').AsString := FUserName;
+      ParamByName('uuid').AsString := FGuid;
+      ParamByName('user_rank').AsString := UserRankStr[FRank];
+      ParamByName('allow_collection_edit').AsBoolean := FAllowManageCollection;
+      ParamByName('allow_print').AsBoolean := FAllowPrint;
+      ParamByName('allow_export').AsBoolean := FAllowExport;
+      ParamByName('allow_import').AsBoolean := FAllowImport;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
@@ -373,48 +396,61 @@ procedure TUser.Update;
 var
   Qry: TSQLQuery;
 begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TUser.Update: %s.', [rsErrorEmptyId]);
+
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Clear;
-    Add('UPDATE users SET ' +
-      'full_name = :full_name, ' +
-      'user_name = :user_name, ' +
-      //'user_password = :user_password, ' +
-      'user_rank = :user_rank, ' +
-      'allow_collection_edit = :allow_collection_edit, ' +
-      'allow_print = :allow_print, ' +
-      'allow_export = :allow_export, ' +
-      'allow_import = :allow_import, ' +
-      'uuid = :uuid, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_inserted = :user_inserted, ' +
-      'insert_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (user_id = :user_id)');
-    ParamByName('full_name').AsString := FFullName;
-    ParamByName('user_name').AsString := FUserName;
-    ParamByName('uuid').AsString := FGuid;
-    ParamByName('user_rank').AsString := UserRankStr[FRank];
-    ParamByName('allow_collection_edit').AsBoolean := FAllowManageCollection;
-    ParamByName('allow_print').AsBoolean := FAllowPrint;
-    ParamByName('allow_export').AsBoolean := FAllowExport;
-    ParamByName('allow_import').AsBoolean := FAllowImport;
-    ParamByName('marked_status').AsBoolean := FMarked;
-    ParamByName('active_status').AsBoolean := FActive;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-    ParamByName('user_id').AsInteger := FId;
 
-    ExecSQL;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE users SET ' +
+        'full_name = :full_name, ' +
+        'user_name = :user_name, ' +
+        //'user_password = :user_password, ' +
+        'user_rank = :user_rank, ' +
+        'allow_collection_edit = :allow_collection_edit, ' +
+        'allow_print = :allow_print, ' +
+        'allow_export = :allow_export, ' +
+        'allow_import = :allow_import, ' +
+        'uuid = :uuid, ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status, ' +
+        'user_inserted = :user_inserted, ' +
+        'insert_date = datetime(''now'',''subsec'') ');
+      Add('WHERE (user_id = :user_id)');
+      ParamByName('full_name').AsString := FFullName;
+      ParamByName('user_name').AsString := FUserName;
+      ParamByName('uuid').AsString := FGuid;
+      ParamByName('user_rank').AsString := UserRankStr[FRank];
+      ParamByName('allow_collection_edit').AsBoolean := FAllowManageCollection;
+      ParamByName('allow_print').AsBoolean := FAllowPrint;
+      ParamByName('allow_export').AsBoolean := FAllowExport;
+      ParamByName('allow_import').AsBoolean := FAllowImport;
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+      ParamByName('user_id').AsInteger := FId;
 
-    // Get the autoincrement key inserted
-    Clear;
-    Add('SELECT last_insert_rowid()');
-    Open;
-    FId := Fields[0].AsInteger;
-    Close;
+      ExecSQL;
+
+      // Get the autoincrement key inserted
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
