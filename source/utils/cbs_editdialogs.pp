@@ -44,7 +44,7 @@ uses
   function EditNestRevision(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditEgg(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditExpedition(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
-  function EditSurvey(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditSurvey(aDataSet: TDataSet; aExpedition: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditSurveyMember(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditNetEffort(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditWeatherLog(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
@@ -78,6 +78,7 @@ var
 begin
   LogInfo('OPEN EDIT DIALOG: Method');
   Application.CreateForm(TedtMethod, edtMethod);
+  FOldRecord := nil;
   with edtMethod do
   try
     dsLink.DataSet := aDataSet;
@@ -145,6 +146,7 @@ var
 begin
   LogInfo('OPEN EDIT DIALOG: Gazetteer');
   Application.CreateForm(TedtSite, edtSite);
+  FOldRecord := nil;
   with edtSite do
   try
     dsLink.DataSet := aDataSet;
@@ -220,6 +222,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Sampling plot');
   Application.CreateForm(TedtSamplingPlot, edtSamplingPlot);
+  FOldRecord := nil;
   with edtSamplingPlot do
   try
     dsLink.DataSet := aDataSet;
@@ -303,6 +306,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Permanent net');
   Application.CreateForm(TedtPermanentNet, edtPermanentNet);
+  FOldRecord := nil;
   with edtPermanentNet do
   try
     dsLink.DataSet := aDataSet;
@@ -385,6 +389,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Institution');
   Application.CreateForm(TedtInstitution, edtInstitution);
+  FOldRecord := nil;
   with edtInstitution do
   try
     dsLink.DataSet := aDataSet;
@@ -467,6 +472,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Person');
   Application.CreateForm(TedtPerson, edtPerson);
+  FOldRecord := nil;
   with edtPerson do
   try
     dsLink.DataSet := aDataSet;
@@ -549,6 +555,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Project');
   Application.CreateForm(TedtProject, edtProject);
+  FOldRecord := nil;
   with edtProject do
   try
     dsLink.DataSet := aDataSet;
@@ -669,6 +676,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Permit');
   Application.CreateForm(TedtPermit, edtPermit);
+  FOldRecord := nil;
   with edtPermit do
   try
     dsLink.DataSet := aDataSet;
@@ -752,6 +760,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Botanic taxon');
   Application.CreateForm(TedtBotanicTaxon, edtBotanicTaxon);
+  FOldRecord := nil;
   with edtBotanicTaxon do
   try
     dsLink.DataSet := aDataSet;
@@ -834,6 +843,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Band');
   Application.CreateForm(TedtBands, edtBands);
+  FOldRecord := nil;
   with edtBands do
   try
     dsLink.DataSet := aDataSet;
@@ -916,6 +926,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Individual');
   Application.CreateForm(TedtIndividual, edtIndividual);
+  FOldRecord := nil;
   with edtIndividual do
   try
     dsLink.DataSet := aDataSet;
@@ -998,6 +1009,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Capture');
   edtCapture := TedtCapture.Create(nil);
+  FOldRecord := nil;
   with edtCapture do
   try
     dsLink.DataSet := aDataSet;
@@ -1120,6 +1132,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Nest');
   Application.CreateForm(TedtNest, edtNest);
+  FOldRecord := nil;
   with edtNest do
   try
     dsLink.DataSet := aDataSet;
@@ -1202,6 +1215,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Nest owner');
   Application.CreateForm(TedtNestOwner, edtNestOwner);
+  FOldRecord := nil;
   with edtNestOwner do
   try
     dsLink.DataSet := aDataSet;
@@ -1285,6 +1299,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Nest revision');
   Application.CreateForm(TedtNestRevision, edtNestRevision);
+  FOldRecord := nil;
   with edtNestRevision do
   try
     dsLink.DataSet := aDataSet;
@@ -1368,6 +1383,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Egg');
   Application.CreateForm(TedtEgg, edtEgg);
+  FOldRecord := nil;
   with edtEgg do
   try
     dsLink.DataSet := aDataSet;
@@ -1453,6 +1469,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Expedition');
   Application.CreateForm(TedtExpedition, edtExpedition);
+  FOldRecord := nil;
   with edtExpedition do
   try
     dsLink.DataSet := aDataSet;
@@ -1522,7 +1539,7 @@ begin
   //  aDataSet.Close;
 end;
 
-function EditSurvey(aDataSet: TDataSet; IsNew: Boolean): Boolean;
+function EditSurvey(aDataSet: TDataSet; aExpedition: Integer; IsNew: Boolean): Boolean;
 var
   //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TSurvey;
@@ -1538,6 +1555,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Survey');
   Application.CreateForm(TedtSurvey, edtSurvey);
+  FOldRecord := nil;
   with edtSurvey do
   try
     dsLink.DataSet := aDataSet;
@@ -1555,6 +1573,7 @@ begin
       EditSourceStr := rsEditedByForm;
     end;
     Survey := FRecord;
+    ExpeditionId := aExpedition;
     Result := ShowModal = mrOk;
     if Result then
     begin
@@ -1621,6 +1640,7 @@ begin
 
   Result := False;
   MemberKey := 0;
+  FOldRecord := nil;
 
   if FindDlg(tbPeople, nil, MemberKey) then
   begin
@@ -1703,6 +1723,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Net effort');
   Application.CreateForm(TedtNetEffort, edtNetEffort);
+  FOldRecord := nil;
   with edtNetEffort do
   try
     dsLink.DataSet := aDataSet;
@@ -1785,6 +1806,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Weather log');
   Application.CreateForm(TedtWeatherLog, edtWeatherLog);
+  FOldRecord := nil;
   with edtWeatherLog do
   try
     dsLink.DataSet := aDataSet;
@@ -1867,6 +1889,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Sighting');
   Application.CreateForm(TedtSighting, edtSighting);
+  FOldRecord := nil;
   with edtSighting do
   try
     dsLink.DataSet := aDataSet;
@@ -1952,6 +1975,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Specimen');
   Application.CreateForm(TedtSpecimen, edtSpecimen);
+  FOldRecord := nil;
   with edtSpecimen do
   try
     dsLink.DataSet := aDataSet;
@@ -2074,6 +2098,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Sample prep');
   Application.CreateForm(TedtSamplePrep, edtSamplePrep);
+  FOldRecord := nil;
   with edtSamplePrep do
   try
     dsLink.DataSet := aDataSet;
@@ -2218,6 +2243,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Image');
   Application.CreateForm(TedtImageInfo, edtImageInfo);
+  FOldRecord := nil;
   with edtImageInfo do
   try
     edtImageInfo.dsLink.DataSet := aDataSet;
@@ -2360,6 +2386,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Audio');
   Application.CreateForm(TedtAudioInfo, edtAudioInfo);
+  FOldRecord := nil;
   with edtAudioInfo do
   try
     edtAudioInfo.dsLink.DataSet := aDataSet;
@@ -2476,6 +2503,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Document');
   Application.CreateForm(TedtDocumentInfo, edtDocumentInfo);
+  FOldRecord := nil;
   with edtDocumentInfo do
   try
     edtDocumentInfo.dsLink.DataSet := aDataSet;
@@ -2618,6 +2646,7 @@ begin
 
   LogInfo('OPEN EDIT DIALOG: Vegetation');
   Application.CreateForm(TedtVegetation, edtVegetation);
+  FOldRecord := nil;
   with edtVegetation do
   try
     dsLink.DataSet := aDataSet;

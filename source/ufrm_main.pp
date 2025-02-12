@@ -695,6 +695,7 @@ begin
   sbarStatus.Border.Color := clSolidBGSecondaryDark;
   sbarStatus.FontEx.Color := clTextPrimaryDark;
   sbarProgress.Border.Color := clSolidBGSecondaryDark;
+  sbarVersion.Border.Color := clSolidBGSecondaryDark;
 
   pSearch.Background.Color := clCardBGDefaultDark;
   pSearch.Border.Color := clSolidBGSecondaryDark;
@@ -1350,7 +1351,7 @@ end;
 
 procedure TfrmMain.pmaNewSurveyClick(Sender: TObject);
 begin
-  EditSurvey(DMG.qSurveys, True);
+  EditSurvey(DMG.qSurveys, 0, True);
 end;
 
 procedure TfrmMain.pmaNewToponymClick(Sender: TObject);

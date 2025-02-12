@@ -939,6 +939,7 @@ type
     procedure pmcNewSamplePrepClick(Sender: TObject);
     procedure pmcNewSightingClick(Sender: TObject);
     procedure pmcNewSpecimenClick(Sender: TObject);
+    procedure pmcNewSurveyClick(Sender: TObject);
     procedure pmcNewSurveyMemberClick(Sender: TObject);
     procedure pmcNewVegetationClick(Sender: TObject);
     procedure pmcNewWeatherLogClick(Sender: TObject);
@@ -1490,8 +1491,8 @@ begin
   FCounterLabel.Left := 5;
   FCounterLabel.BorderSpacing.Left := 8;
   FCounterLabel.BorderSpacing.Right := 8;
-  FCounterLabel.BorderSpacing.Top := 4;
-  FCounterLabel.BorderSpacing.Bottom := 4;
+  FCounterLabel.BorderSpacing.Top := 2;
+  FCounterLabel.BorderSpacing.Bottom := 2;
   FCounterLabel.Font.Style := [fsBold];
   FCounterLabel.Font.Color := $00FAEBE8;
   FCounterLabel.AutoSize := True;
@@ -4123,7 +4124,7 @@ begin
         SQLConnection := DMM.sqlCon;
         Clear;
 
-        Add('UPDATE surveys INTO expedition_id = :aexpedition WHERE survey_id = :asurvey');
+        Add('UPDATE surveys SET expedition_id = :aexpedition WHERE survey_id = :asurvey');
         ParamByName('AEXPEDITION').AsInteger := DBG.DataSource.DataSet.FieldByName('expedition_id').AsInteger;
         ParamByName('ASURVEY').AsInteger := aSurvey;
 
@@ -6798,6 +6799,13 @@ begin
   //EditSpecimen(DMI.qSpecimens, True);
 end;
 
+procedure TfrmCustomGrid.pmcNewSurveyClick(Sender: TObject);
+begin
+  EditSurvey(DMS.qSurveys, dsLink.DataSet.FieldByName('expedition_id').AsInteger, True);
+
+  UpdateChildButtons(DMS.qSurveys);
+end;
+
 procedure TfrmCustomGrid.pmcNewSurveyMemberClick(Sender: TObject);
 begin
   EditSurveyMember(DMS.qSurveyTeam, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
@@ -8692,6 +8700,8 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbEditRecordClick(Sender: TObject);
+var
+  needsRefresh: Boolean;
 begin
   if Working then
     Exit;
@@ -8702,37 +8712,40 @@ begin
       //tbNone: ;
       //tbUsers: ;
       //tbRecordHistory: ;
-      tbGazetteer:     EditSite(dsLink.DataSet);
-      tbSamplingPlots: EditSamplingPlot(dsLink.DataSet);
+      tbGazetteer:     needsRefresh := EditSite(dsLink.DataSet);
+      tbSamplingPlots: needsRefresh := EditSamplingPlot(dsLink.DataSet);
       //tbPermanentNets: ;
-      tbInstitutions:  EditInstitution(dsLink.DataSet);
-      tbPeople:        EditPerson(dsLink.DataSet);
-      tbProjects:      EditProject(dsLink.DataSet);
+      tbInstitutions:  needsRefresh := EditInstitution(dsLink.DataSet);
+      tbPeople:        needsRefresh := EditPerson(dsLink.DataSet);
+      tbProjects:      needsRefresh := EditProject(dsLink.DataSet);
       //tbProjectTeams: ;
-      tbPermits:       EditPermit(dsLink.DataSet);
+      tbPermits:       needsRefresh := EditPermit(dsLink.DataSet);
       tbTaxonRanks: ;
       //tbZooTaxa: ;
-      tbBotanicTaxa:   EditBotanicTaxon(dsLink.DataSet);
-      tbBands:         EditBand(dsLink.DataSet);
+      tbBotanicTaxa:   needsRefresh := EditBotanicTaxon(dsLink.DataSet);
+      tbBands:         needsRefresh := EditBand(dsLink.DataSet);
       //tbBandHistory: ;
-      tbIndividuals:   EditIndividual(dsLink.DataSet);
-      tbCaptures:      EditCapture(dsLink.DataSet);
-      tbMolts:         EditMolt(dsLink.DataSet);
-      tbNests:         EditNest(dsLink.DataSet);
-      tbNestOwners:    EditNestOwner(dsLink.DataSet);
-      tbNestRevisions: EditNestRevision(dsLink.DataSet);
-      tbEggs:          EditEgg(dsLink.DataSet);
-      tbMethods:       EditMethod(dsLink.DataSet);
-      tbExpeditions:   EditExpedition(dsLink.DataSet);
-      tbSurveys:       EditSurvey(dsLink.DataSet);
+      tbIndividuals:   needsRefresh := EditIndividual(dsLink.DataSet);
+      tbCaptures:      needsRefresh := EditCapture(dsLink.DataSet);
+      tbMolts:         needsRefresh := EditMolt(dsLink.DataSet);
+      tbNests:         needsRefresh := EditNest(dsLink.DataSet);
+      tbNestOwners:    needsRefresh := EditNestOwner(dsLink.DataSet);
+      tbNestRevisions: needsRefresh := EditNestRevision(dsLink.DataSet);
+      tbEggs:          needsRefresh := EditEgg(dsLink.DataSet);
+      tbMethods:       needsRefresh := EditMethod(dsLink.DataSet);
+      tbExpeditions:   needsRefresh := EditExpedition(dsLink.DataSet);
+      tbSurveys:       needsRefresh := EditSurvey(dsLink.DataSet);
       //tbSurveyTeams: ;
       //tbNetsEffort: ;
-      tbSightings:     EditSighting(dsLink.DataSet);
-      tbSpecimens:     EditSpecimen(dsLink.DataSet);
+      tbSightings:     needsRefresh := EditSighting(dsLink.DataSet);
+      tbSpecimens:     needsRefresh := EditSpecimen(dsLink.DataSet);
       //tbSamplePreps: ;
       //tbImages: ;
       //tbAudioLibrary: ;
     end;
+
+    if needsRefresh then
+      UpdateFilterPanels;
   finally
     Working := False;
   end;
@@ -8777,6 +8790,8 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbInsertRecordClick(Sender: TObject);
+var
+  needsRefresh: Boolean;
 begin
   if Working then
     Exit;
@@ -8787,37 +8802,40 @@ begin
       //tbNone: ;
       //tbUsers: ;
       //tbRecordHistory: ;
-      tbGazetteer:     EditSite(dsLink.DataSet, True);
-      tbSamplingPlots: EditSamplingPlot(dsLink.DataSet, True);
+      tbGazetteer:     needsRefresh := EditSite(dsLink.DataSet, True);
+      tbSamplingPlots: needsRefresh := EditSamplingPlot(dsLink.DataSet, True);
       //tbPermanentNets: ;
-      tbInstitutions:  EditInstitution(dsLink.DataSet, True);
-      tbPeople:        EditPerson(dsLink.DataSet, True);
-      tbProjects:      EditProject(dsLink.DataSet, True);
+      tbInstitutions:  needsRefresh := EditInstitution(dsLink.DataSet, True);
+      tbPeople:        needsRefresh := EditPerson(dsLink.DataSet, True);
+      tbProjects:      needsRefresh := EditProject(dsLink.DataSet, True);
       //tbProjectTeams: ;
-      tbPermits:       EditPermit(dsLink.DataSet, 0, True);
+      tbPermits:       needsRefresh := EditPermit(dsLink.DataSet, 0, True);
       tbTaxonRanks: ;
       //tbZooTaxa: ;
-      tbBotanicTaxa:   EditBotanicTaxon(dsLink.DataSet, True);
-      tbBands:         EditBand(dsLink.DataSet, True);
+      tbBotanicTaxa:   needsRefresh := EditBotanicTaxon(dsLink.DataSet, True);
+      tbBands:         needsRefresh := EditBand(dsLink.DataSet, True);
       //tbBandHistory: ;
-      tbIndividuals:   EditIndividual(dsLink.DataSet, True);
-      tbCaptures:      EditCapture(dsLink.DataSet, 0, 0, True);
-      tbMolts:         EditMolt(dsLink.DataSet, 0, True);
-      tbNests:         EditNest(dsLink.DataSet, True);
-      tbNestOwners:    EditNestOwner(dsLink.DataSet, 0, True);
-      tbNestRevisions: EditNestRevision(dsLink.DataSet, 0, True);
-      tbEggs:          EditEgg(dsLink.DataSet, 0, True);
-      tbMethods:       EditMethod(dsLink.DataSet, True);
-      tbExpeditions:   EditExpedition(dsLink.DataSet, True);
-      tbSurveys:       EditSurvey(dsLink.DataSet, True);
+      tbIndividuals:   needsRefresh := EditIndividual(dsLink.DataSet, True);
+      tbCaptures:      needsRefresh := EditCapture(dsLink.DataSet, 0, 0, True);
+      tbMolts:         needsRefresh := EditMolt(dsLink.DataSet, 0, True);
+      tbNests:         needsRefresh := EditNest(dsLink.DataSet, True);
+      tbNestOwners:    needsRefresh := EditNestOwner(dsLink.DataSet, 0, True);
+      tbNestRevisions: needsRefresh := EditNestRevision(dsLink.DataSet, 0, True);
+      tbEggs:          needsRefresh := EditEgg(dsLink.DataSet, 0, True);
+      tbMethods:       needsRefresh := EditMethod(dsLink.DataSet, True);
+      tbExpeditions:   needsRefresh := EditExpedition(dsLink.DataSet, True);
+      tbSurveys:       needsRefresh := EditSurvey(dsLink.DataSet, 0, True);
       //tbSurveyTeams: ;
       //tbNetsEffort: ;
-      tbSightings:     EditSighting(dsLink.DataSet, 0, True);
-      tbSpecimens:     EditSpecimen(dsLink.DataSet, True);
+      tbSightings:     needsRefresh := EditSighting(dsLink.DataSet, 0, True);
+      tbSpecimens:     needsRefresh := EditSpecimen(dsLink.DataSet, True);
       //tbSamplePreps: ;
       //tbImages: ;
       //tbAudioLibrary: ;
     end;
+
+    if needsRefresh then
+      UpdateFilterPanels;
   finally
     Working := False;
   end;

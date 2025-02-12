@@ -9675,6 +9675,7 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = 'New s&urvey'
       ImageIndex = 6
       Visible = False
+      OnClick = pmcNewSurveyClick
     end
     object pmcNewSurveyMember: TMenuItem
       Caption = 'New survey member'

@@ -121,6 +121,7 @@ type
     FSurvey: TSurvey;
     FExpeditionId, FMethodId, FLocalityId, FSamplingPlotId, FProjectId: Integer;
     procedure SetSurvey(Value: TSurvey);
+    procedure SetExpeditionId(Value: Integer);
     procedure GetRecord;
     procedure SetRecord;
     procedure GetFullName;
@@ -131,6 +132,7 @@ type
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property Survey: TSurvey read FSurvey write SetSurvey;
+    property ExpeditionId: Integer read FExpeditionId write SetExpeditionId;
   end;
 
 var
@@ -603,6 +605,15 @@ begin
   ModalResult := mrOk;
 end;
 
+procedure TedtSurvey.SetExpeditionId(Value: Integer);
+begin
+  if Value > 0 then
+  begin
+    FExpeditionId := Value;
+    FSurvey.ExpeditionId := Value;
+  end;
+end;
+
 procedure TedtSurvey.SetRecord;
 begin
   FSurvey.ExpeditionId   := FExpeditionId;
@@ -614,10 +625,10 @@ begin
   FSurvey.LocalityId     := FLocalityId;
   FSurvey.NetStationId   := FSamplingPlotId;
   FSurvey.ProjectId      := FProjectId;
-  FSurvey.StartLongitude := StrToFloat(eLongitude.Text);
-  FSurvey.StartLatitude  := StrToFloat(eLatitude.Text);
-  FSurvey.EndLongitude   := StrToFloat(eEndLongitude.Text);
-  FSurvey.EndLatitude    := StrToFloat(eEndLatitude.Text);
+  FSurvey.StartLongitude := StrToFloatDef(eLongitude.Text, 0.0);
+  FSurvey.StartLatitude  := StrToFloatDef(eLatitude.Text, 0.0);
+  FSurvey.EndLongitude   := StrToFloatDef(eEndLongitude.Text, 0.0);
+  FSurvey.EndLatitude    := StrToFloatDef(eEndLatitude.Text, 0.0);
   FSurvey.ObserversTally := eObserversTally.Value;
   FSurvey.SampleId       := eSampleId.Text;
   FSurvey.TotalArea      := eArea.Value;
@@ -674,10 +685,14 @@ begin
     ValidDate(eDate.Text, rsCaptionDate, Msgs);
 
   // Geographical coordinates
-  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
-  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
-  ValueInRange(StrToFloat(eEndLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
-  ValueInRange(StrToFloat(eEndLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+  if eLongitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  if eLatitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+  if eEndLongitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eEndLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  if eEndLatitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eEndLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   if Msgs.Count > 0 then
   begin
