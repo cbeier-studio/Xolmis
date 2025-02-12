@@ -612,8 +612,12 @@ type
     qMethods: TSQLQuery;
     qNestsexternal_max_diameter: TFloatField;
     qNestsexternal_min_diameter: TFloatField;
+    qNestsfamily_id: TLongintField;
+    qNestsgenus_id: TLongintField;
     qNestsinternal_max_diameter: TFloatField;
     qNestsinternal_min_diameter: TFloatField;
+    qNestsorder_id: TLongintField;
+    qNestsspecies_id: TLongintField;
     qNeststaxon_formatted_name: TStringField;
     qPeoplegender: TStringField;
     qPeopletitle_treatment: TStringField;
