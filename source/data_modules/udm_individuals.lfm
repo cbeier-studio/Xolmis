@@ -1892,6 +1892,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesfamily_id: TLongintField
       FieldKind = fkData
@@ -1901,6 +1902,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesgenus_id: TLongintField
       FieldKind = fkData
@@ -1910,6 +1912,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesspecies_id: TLongintField
       FieldKind = fkData
@@ -1919,6 +1922,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturessurvey_name: TStringField
       FieldKind = fkData
@@ -1928,6 +1932,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 100
     end
     object qCapturescountry_id: TLongintField
@@ -1938,6 +1943,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesstate_id: TLongintField
       FieldKind = fkData
@@ -1947,6 +1953,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesmunicipality_id: TLongintField
       FieldKind = fkData
@@ -1956,6 +1963,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -2696,6 +2704,7 @@ object DMI: TDMI
       Visible = False
     end
     object qMoltssurvey_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'survey_name'
       Index = 2
@@ -2728,6 +2737,7 @@ object DMI: TDMI
       Visible = False
     end
     object qMoltstaxon_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'taxon_name'
       Index = 5
@@ -2749,6 +2759,7 @@ object DMI: TDMI
       Visible = False
     end
     object qMoltsindividual_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'individual_name'
       Index = 7
@@ -3531,6 +3542,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qMoltsfamily_id: TLongintField
       FieldKind = fkData
@@ -3540,6 +3552,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qMoltsgenus_id: TLongintField
       FieldKind = fkData
@@ -3549,6 +3562,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qMoltsspecies_id: TLongintField
       FieldKind = fkData
@@ -3558,6 +3572,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qMoltsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -4124,6 +4139,7 @@ object DMI: TDMI
       Visible = False
     end
     object qSightingssurvey_name: TStringField
+      DisplayWidth = 25
       FieldKind = fkData
       FieldName = 'survey_name'
       Index = 2
@@ -4168,6 +4184,7 @@ object DMI: TDMI
       Visible = False
     end
     object qSightingslocality_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'locality_name'
       Index = 6
@@ -4217,6 +4234,7 @@ object DMI: TDMI
       Visible = False
     end
     object qSightingsmethod_name: TStringField
+      DisplayWidth = 25
       FieldKind = fkData
       FieldName = 'method_name'
       Index = 10
@@ -4250,6 +4268,7 @@ object DMI: TDMI
       Visible = False
     end
     object qSightingsobserver_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'observer_name'
       Index = 13
@@ -4271,6 +4290,7 @@ object DMI: TDMI
       Visible = False
     end
     object qSightingstaxon_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'taxon_name'
       Index = 15
@@ -4282,6 +4302,7 @@ object DMI: TDMI
       Size = 100
     end
     object qSightingstaxon_formatted_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'taxon_formatted_name'
       Index = 16
@@ -4304,6 +4325,7 @@ object DMI: TDMI
       Visible = False
     end
     object qSightingsindividual_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'individual_name'
       Index = 18
@@ -4583,6 +4605,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsfamily_id: TLongintField
       FieldKind = fkData
@@ -4592,6 +4615,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsgenus_id: TLongintField
       FieldKind = fkData
@@ -4601,6 +4625,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsspecies_id: TLongintField
       FieldKind = fkData
@@ -4610,6 +4635,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingscountry_id: TLongintField
       FieldKind = fkData
@@ -4619,6 +4645,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsstate_id: TLongintField
       FieldKind = fkData
@@ -4628,6 +4655,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsmunicipality_id: TLongintField
       FieldKind = fkData
@@ -4637,6 +4665,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -5248,6 +5277,7 @@ object DMI: TDMI
       Size = 100
     end
     object qNeststaxon_formatted_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'taxon_formatted_name'
       Index = 4
@@ -5255,6 +5285,7 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 250
     end
     object qNestslocality_id: TLongintField
@@ -5700,6 +5731,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qNestsfamily_id: TLongintField
       FieldKind = fkData
@@ -5709,6 +5741,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qNestsgenus_id: TLongintField
       FieldKind = fkData
@@ -5718,6 +5751,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qNestsspecies_id: TLongintField
       FieldKind = fkData
@@ -5727,6 +5761,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qNestscountry_id: TLongintField
       FieldKind = fkData
@@ -5736,6 +5771,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qNestsstate_id: TLongintField
       FieldKind = fkData
@@ -5745,6 +5781,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qNestsmunicipality_id: TLongintField
       FieldKind = fkData
@@ -5754,6 +5791,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qNestsuser_inserted: TLongintField
       FieldKind = fkData
@@ -6384,6 +6422,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSpecimensfamily_id: TLongintField
       FieldKind = fkData
@@ -6393,6 +6432,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSpecimensgenus_id: TLongintField
       FieldKind = fkData
@@ -6402,6 +6442,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSpecimensspecies_id: TLongintField
       FieldKind = fkData
@@ -6411,6 +6452,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSpecimenscountry_id: TLongintField
       FieldKind = fkData
@@ -6420,6 +6462,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSpecimensstate_id: TLongintField
       FieldKind = fkData
@@ -6429,6 +6472,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSpecimensmunicipality_id: TLongintField
       FieldKind = fkData
@@ -6438,6 +6482,7 @@ object DMI: TDMI
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSpecimensuser_inserted: TLongintField
       DisplayLabel = 'Created by'

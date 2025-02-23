@@ -1155,6 +1155,7 @@ object DMB: TDMB
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qEggsfamily_id: TLongintField
       FieldKind = fkData
@@ -1164,6 +1165,7 @@ object DMB: TDMB
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qEggsgenus_id: TLongintField
       FieldKind = fkData
@@ -1173,6 +1175,7 @@ object DMB: TDMB
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qEggsspecies_id: TLongintField
       FieldKind = fkData
@@ -1182,6 +1185,7 @@ object DMB: TDMB
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qEggsuser_inserted: TLongintField
       DisplayLabel = 'Created by'

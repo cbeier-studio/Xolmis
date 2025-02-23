@@ -959,6 +959,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsfamily_id: TLongintField
       FieldKind = fkData
@@ -968,6 +969,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsgenus_id: TLongintField
       FieldKind = fkData
@@ -977,6 +979,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsspecies_id: TLongintField
       FieldKind = fkData
@@ -986,6 +989,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingscountry_id: TLongintField
       FieldKind = fkData
@@ -995,6 +999,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsstate_id: TLongintField
       FieldKind = fkData
@@ -1004,6 +1009,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsmunicipality_id: TLongintField
       FieldKind = fkData
@@ -1013,6 +1019,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSightingsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -2019,6 +2026,7 @@ object DMS: TDMS
       Visible = False
     end
     object qCapturessurvey_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'survey_name'
       Index = 2
@@ -2063,6 +2071,7 @@ object DMS: TDMS
       Visible = False
     end
     object qCaptureslocality_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'locality_name'
       Index = 6
@@ -2212,6 +2221,7 @@ object DMS: TDMS
       Size = 100
     end
     object qCapturestaxon_formatted_name: TStringField
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'taxon_formatted_name'
       Index = 19
@@ -3000,6 +3010,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesfamily_id: TLongintField
       FieldKind = fkData
@@ -3009,6 +3020,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesgenus_id: TLongintField
       FieldKind = fkData
@@ -3018,6 +3030,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesspecies_id: TLongintField
       FieldKind = fkData
@@ -3027,6 +3040,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturescountry_id: TLongintField
       FieldKind = fkData
@@ -3036,6 +3050,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesstate_id: TLongintField
       FieldKind = fkData
@@ -3045,6 +3060,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesmunicipality_id: TLongintField
       FieldKind = fkData
@@ -3054,6 +3070,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qCapturesuser_inserted: TLongintField
       DisplayLabel = 'Created by'
@@ -4280,6 +4297,7 @@ object DMS: TDMS
     end
     object qWeatherLogssample_moment: TStringField
       DisplayLabel = 'Moment'
+      DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'sample_moment'
       Index = 4
@@ -5092,6 +5110,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSurveyscountry_name: TStringField
       DisplayLabel = 'Country'
@@ -5114,6 +5133,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSurveysstate_name: TStringField
       DisplayLabel = 'State'
@@ -5136,6 +5156,7 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qSurveysmunicipality_name: TStringField
       DisplayLabel = 'Municipality'
@@ -5324,6 +5345,7 @@ object DMS: TDMS
     end
     object qSurveysfull_name: TStringField
       DisplayLabel = 'Full name'
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'full_name'
       Index = 33
