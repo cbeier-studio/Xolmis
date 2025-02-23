@@ -132,7 +132,7 @@ uses
   uedt_recverification, ufrm_imageviewer, uthread_dashboard, ufrm_printpreview,
   cbs_print, uedt_audioinfo, uedt_documentinfo, udlg_import, udlg_importxmobile,
   uedt_vegetation, ufrm_taxa, udlg_exportpreview, cbs_users, cbs_media, 
-cbs_setparam;
+cbs_setparam, uedt_collector, uedt_surveymember, uedt_projectmember;
 
 {$R *.res}
 

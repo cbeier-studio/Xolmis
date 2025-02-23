@@ -127,6 +127,7 @@ type
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eMalesTallyKeyPress(Sender: TObject; var Key: char);
     procedure eMethodButtonClick(Sender: TObject);
+    procedure eMethodEditingDone(Sender: TObject);
     procedure eMethodKeyPress(Sender: TObject; var Key: char);
     procedure eObserverButtonClick(Sender: TObject);
     procedure eObserverKeyPress(Sender: TObject; var Key: char);
@@ -440,6 +441,11 @@ begin
   FindDlg(tbMethods, eMethod, FMethodId);
 end;
 
+procedure TedtSighting.eMethodEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
+end;
+
 procedure TedtSighting.eMethodKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
@@ -623,7 +629,8 @@ begin
     eLongitude.Text := FloatToStr(FSighting.Longitude);
     eLatitude.Text := FloatToStr(FSighting.Latitude);
   end;
-  eDate.Text := DateToStr(FSighting.SightingDate);
+  if not DateIsNull(FSighting.SightingDate) then
+    eDate.Text := DateToStr(FSighting.SightingDate);
   if (FSighting.SightingTime <> NullTime) then
     eTime.Text := FormatDateTime('hh:nn', FSighting.SightingTime);
   FTaxonId := FSighting.TaxonId;
@@ -683,17 +690,17 @@ begin
   FSighting.ObserverId          := FObserverId;
   FSighting.MethodId            := FMethodId;
   FSighting.LocalityId          := FLocalityId;
-  FSighting.Longitude           := StrToFloat(eLongitude.Text);
-  FSighting.Latitude            := StrToFloat(eLatitude.Text);
-  FSighting.SightingDate        := StrToDate(eDate.Text);
-  FSighting.SightingTime        := StrToTime(eTime.Text);
+  FSighting.Longitude           := StrToFloatDef(eLongitude.Text, 0.0);
+  FSighting.Latitude            := StrToFloatDef(eLatitude.Text, 0.0);
+  FSighting.SightingDate        := StrToDateDef(eDate.Text, NullDate);
+  FSighting.SightingTime        := StrToTimeDef(eTime.Text, NullTime);
   FSighting.TaxonId             := FTaxonId;
   FSighting.IndividualId        := FIndividualId;
   FSighting.SubjectTally        := eQuantity.Value;
   FSighting.SubjectDistance     := eDistance.Value;
   FSighting.DetectionType       := eDetectionType.Text;
   FSighting.BreedingStatus      := eBreedingStatus.Text;
-  FSighting.MackinnonListNumber := StrToInt(eMackinnonListNumber.Text);
+  FSighting.MackinnonListNumber := StrToIntDef(eMackinnonListNumber.Text, 0);
   FSighting.SubjectCaptured     := ckCaptured.Checked;
   FSighting.SubjectSeen         := ckSeen.Checked;
   FSighting.SubjectHeard        := ckHeard.Checked;
@@ -739,8 +746,8 @@ begin
     ValidDate(eDate.Text, rsCaptionDate, Msgs);
 
   // Geographical coordinates
-  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
-  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+  ValueInRange(StrToFloatDef(eLongitude.Text, 0.0), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  ValueInRange(StrToFloatDef(eLatitude.Text, 0.0), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   if Msgs.Count > 0 then
   begin

@@ -1,0 +1,8 @@
+{"version":1,"strings":[
+{"hash":201516498,"name":"tedtprojectmember.caption","sourcebytes":[65,100,100,32,112,114,111,106,101,99,116,32,109,101,109,98,101,114],"value":"Add project member"},
+{"hash":19260666,"name":"tedtprojectmember.lblperson.caption","sourcebytes":[82,101,115,101,97,114,99,104,101,114,58,32,42],"value":"Researcher: *"},
+{"hash":267345746,"name":"tedtprojectmember.eperson.buttonhint","sourcebytes":[70,105,110,100,32,114,101,115,101,97,114,99,104,101,114],"value":"Find researcher"},
+{"hash":93294530,"name":"tedtprojectmember.ckmanager.caption","sourcebytes":[80,114,111,106,101,99,116,32,109,97,110,97,103,101,114],"value":"Project manager"},
+{"hash":366789,"name":"tedtprojectmember.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tedtprojectmember.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+]}

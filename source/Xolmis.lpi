@@ -166,7 +166,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="409"/>
+      <BuildNr Value="410"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -481,9 +481,6 @@
       </Item>
       <Item>
         <PackageName Value="SynEditDsgn"/>
-      </Item>
-      <Item>
-        <PackageName Value="dclibx"/>
       </Item>
       <Item>
         <PackageName Value="fpexif_pkg"/>
@@ -1234,7 +1231,6 @@
         <ComponentName Value="frmPrintPreview"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="screens\ufrm_taxa.pp"/>
@@ -1254,6 +1250,25 @@
       <Unit>
         <Filename Value="data\cbs_setparam.pp"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_collector.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtCollector"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_surveymember.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtSurveyMember"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_projectmember.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtProjectMember"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
     <Debugger>

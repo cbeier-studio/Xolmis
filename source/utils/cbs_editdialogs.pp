@@ -68,7 +68,8 @@ uses
   uedt_survey, uedt_samplingplot, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
   uedt_nest, uedt_egg, uedt_molt, uedt_nestrevision, uedt_neteffort, uedt_permanentnet, uedt_sighting,
   uedt_method, uedt_weatherlog, uedt_project, uedt_permit, uedt_specimen, uedt_sampleprep, uedt_nestowner,
-  uedt_imageinfo, uedt_audioinfo, uedt_documentinfo, uedt_vegetation, uedt_database;
+  uedt_imageinfo, uedt_audioinfo, uedt_documentinfo, uedt_vegetation, uedt_database, uedt_collector,
+  uedt_projectmember, uedt_surveymember;
 
 function EditMethod(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
@@ -120,6 +121,8 @@ begin
         WriteRecHistory(tbMethods, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -188,6 +191,8 @@ begin
         WriteRecHistory(tbGazetteer, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -269,6 +274,8 @@ begin
         WriteRecHistory(tbSamplingPlots, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -353,6 +360,8 @@ begin
         WriteRecHistory(tbPermanentNets, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -436,6 +445,8 @@ begin
         WriteRecHistory(tbInstitutions, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -519,6 +530,8 @@ begin
         WriteRecHistory(tbPeople, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -602,6 +615,8 @@ begin
         WriteRecHistory(tbProjects, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -624,40 +639,73 @@ end;
 
 function EditProjectMember(aDataSet: TDataSet; aProject: Integer; IsNew: Boolean): Boolean;
 var
-  MemberKey: Integer;
-  CloseQueryAfter: Boolean;
+  FRecord, FOldRecord: TProjectMember;
+  lstDiff: TStrings;
+  D: String;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
-
-  Result := False;
-
-  if FindDlg(tbPeople, nil, MemberKey) then
-  begin
-    try
-      if IsNew then
-      begin
-        aDataSet.Insert;
-        EditSourceStr := rsInsertedByForm;
-      end else
-      begin
-        aDataSet.Edit;
-        EditSourceStr := rsEditedByForm;
-      end;
-      aDataSet.FieldByName('person_id').AsInteger := MemberKey;
-      aDataSet.Post;
-      Result := True;
-    except
-      aDataSet.Cancel;
+  LogInfo('OPEN EDIT DIALOG: Project member');
+  Application.CreateForm(TedtProjectMember, edtProjectMember);
+  FOldRecord := nil;
+  with edtProjectMember do
+  try
+    dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
+    if IsNew then
+    begin
+      FRecord := TProjectMember.Create();
+      EditSourceStr := rsInsertedByForm;
+    end else
+    begin
+      FOldRecord := TProjectMember.Create(aDataSet.FieldByName('project_member_id').AsInteger);
+      FRecord := TProjectMember.Create(aDataSet.FieldByName('project_member_id').AsInteger);
+      EditSourceStr := rsEditedByForm;
     end;
-  end;
+    ProjectMember := FRecord;
+    ProjectId := aProject;
+    Result := ShowModal = mrOk;
+    if Result then
+    begin
+      ProjectMember.Save;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if ProjectMember.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbProjectTeams, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbProjectTeams, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      if not aDataSet.Active then
+        Exit;
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('project_member_id', ProjectMember.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+
+    end;
+  finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
+    FRecord.Free;
+    FreeAndNil(edtProjectMember);
+    LogInfo('CLOSE EDIT DIALOG: Project member');
+  end;
 end;
 
 function EditPermit(aDataSet: TDataSet; aProject: Integer; IsNew: Boolean): Boolean;
@@ -724,6 +772,8 @@ begin
         WriteRecHistory(tbPermits, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -807,6 +857,8 @@ begin
         WriteRecHistory(tbBotanicTaxa, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -890,6 +942,8 @@ begin
         WriteRecHistory(tbBands, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -973,6 +1027,8 @@ begin
         WriteRecHistory(tbIndividuals, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -1059,6 +1115,8 @@ begin
         WriteRecHistory(tbCaptures, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -1179,6 +1237,8 @@ begin
         WriteRecHistory(tbNests, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -1263,6 +1323,8 @@ begin
         WriteRecHistory(tbNestOwners, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -1347,6 +1409,8 @@ begin
         WriteRecHistory(tbNestRevisions, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -1431,6 +1495,8 @@ begin
         WriteRecHistory(tbEggs, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -1519,6 +1585,8 @@ begin
         WriteRecHistory(tbExpeditions, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -1603,6 +1671,8 @@ begin
         WriteRecHistory(tbSurveys, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -1625,47 +1695,40 @@ end;
 
 function EditSurveyMember(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
-  MemberKey: Integer;
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TSurveyMember;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
-  Result := False;
-  MemberKey := 0;
+  LogInfo('OPEN EDIT DIALOG: Survey member');
+  Application.CreateForm(TedtSurveyMember, edtSurveyMember);
   FOldRecord := nil;
-
-  if FindDlg(tbPeople, nil, MemberKey) then
-  begin
-    try
-      if IsNew then
-      begin
-        FRecord := TSurveyMember.Create();
-        //aDataSet.Insert;
-        EditSourceStr := rsInsertedByForm;
-      end else
-      begin
-        FOldRecord := TSurveyMember.Create(aDataSet.FieldByName('survey_member_id').AsInteger);
-        FRecord := TSurveyMember.Create(aDataSet.FieldByName('survey_member_id').AsInteger);
-        //aDataSet.Edit;
-        EditSourceStr := rsEditedByForm;
-      end;
-      FRecord.PersonId := MemberKey;
-      FRecord.Save;
+  with edtSurveyMember do
+  try
+    dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
+    if IsNew then
+    begin
+      FRecord := TSurveyMember.Create();
+      EditSourceStr := rsInsertedByForm;
+    end else
+    begin
+      FOldRecord := TSurveyMember.Create(aDataSet.FieldByName('survey_member_id').AsInteger);
+      FRecord := TSurveyMember.Create(aDataSet.FieldByName('survey_member_id').AsInteger);
+      EditSourceStr := rsEditedByForm;
+    end;
+    SurveyMember := FRecord;
+    SurveyId := aSurvey;
+    Result := ShowModal = mrOk;
+    if Result then
+    begin
+      SurveyMember.Save;
 
       { Save changes to the record history }
       if Assigned(FOldRecord) then
       begin
         lstDiff := TStringList.Create;
         try
-          if FRecord.Diff(FOldRecord, lstDiff) then
+          if SurveyMember.Diff(FOldRecord, lstDiff) then
           begin
             for D in lstDiff do
               WriteRecHistory(tbSurveyTeams, haEdited, FOldRecord.Id,
@@ -1681,30 +1744,24 @@ begin
         WriteRecHistory(tbSurveyTeams, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('survey_member_id', FRecord.Id, []);
+        aDataSet.Locate('survey_member_id', SurveyMember.Id, []);
       finally
         aDataSet.EnableControls;
       end;
 
-      //aDataSet.FieldByName('person_id').AsInteger := MemberKey;
-      //aDataSet.Post;
-      aDataSet.Refresh;
-      Result := True;
-    //except
-    //  aDataSet.Cancel;
-    //end;
-    finally
-      if Assigned(FOldRecord) then
-        FreeAndNil(FOldRecord);
-      FRecord.Free;
     end;
+  finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
+    FRecord.Free;
+    FreeAndNil(edtSurveyMember);
+    LogInfo('CLOSE EDIT DIALOG: Survey member');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditNetEffort(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
@@ -1770,6 +1827,8 @@ begin
         WriteRecHistory(tbNetsEffort, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -1853,6 +1912,8 @@ begin
         WriteRecHistory(tbWeatherLogs, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -1939,6 +2000,8 @@ begin
         WriteRecHistory(tbSightings, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -2024,6 +2087,8 @@ begin
         WriteRecHistory(tbSpecimens, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -2046,40 +2111,73 @@ end;
 
 function EditCollector(aDataSet: TDataSet; aSpecimen: Integer; IsNew: Boolean): Boolean;
 var
-  MemberKey: Integer;
-  CloseQueryAfter: Boolean;
+  FRecord, FOldRecord: TSpecimenCollector;
+  lstDiff: TStrings;
+  D: String;
 begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
-
-  Result := False;
-
-  if FindDlg(tbPeople, nil, MemberKey) then
-  begin
-    try
-      if IsNew then
-      begin
-        aDataSet.Insert;
-        EditSourceStr := rsInsertedByForm;
-      end else
-      begin
-        aDataSet.Edit;
-        EditSourceStr := rsEditedByForm;
-      end;
-      aDataSet.FieldByName('person_id').AsInteger := MemberKey;
-      aDataSet.Post;
-      Result := True;
-    except
-      aDataSet.Cancel;
+  LogInfo('OPEN EDIT DIALOG: Specimen collector');
+  Application.CreateForm(TedtCollector, edtCollector);
+  FOldRecord := nil;
+  with edtCollector do
+  try
+    dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
+    if IsNew then
+    begin
+      FRecord := TSpecimenCollector.Create();
+      EditSourceStr := rsInsertedByForm;
+    end else
+    begin
+      FOldRecord := TSpecimenCollector.Create(aDataSet.FieldByName('collector_id').AsInteger);
+      FRecord := TSpecimenCollector.Create(aDataSet.FieldByName('collector_id').AsInteger);
+      EditSourceStr := rsEditedByForm;
     end;
-  end;
+    SpecimenCollector := FRecord;
+    SpecimenId := aSpecimen;
+    Result := ShowModal = mrOk;
+    if Result then
+    begin
+      SpecimenCollector.Save;
 
-  if CloseQueryAfter then
-    aDataSet.Close;
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if SpecimenCollector.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbSpecimenCollectors, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbSpecimenCollectors, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      if not aDataSet.Active then
+        Exit;
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('collector_id', SpecimenCollector.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+
+    end;
+  finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
+    FRecord.Free;
+    FreeAndNil(edtCollector);
+    LogInfo('CLOSE EDIT DIALOG: Specimen collector');
+  end;
 end;
 
 function EditSamplePrep(aDataSet: TDataSet; aSpecimen: Integer; IsNew: Boolean): Boolean;
@@ -2118,6 +2216,7 @@ begin
       EditSourceStr := rsEditedByForm;
     end;
     SamplePrep := FRecord;
+    SpecimenId := aSpecimen;
     Result := ShowModal = mrOk;
     if Result then
     begin
@@ -2147,6 +2246,8 @@ begin
         WriteRecHistory(tbSamplePreps, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -2350,6 +2451,8 @@ begin
         WriteRecHistory(tbImages, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -2467,6 +2570,8 @@ begin
         WriteRecHistory(tbAudioLibrary, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -2610,6 +2715,8 @@ begin
         WriteRecHistory(tbDocuments, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
@@ -2693,6 +2800,8 @@ begin
         WriteRecHistory(tbVegetation, haCreated, 0, '', '', '', rsInsertedByForm);
 
       // Go to record
+      if not aDataSet.Active then
+        Exit;
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, Buttons, DBCtrls, DBEditButton, atshapelinebgra, cbs_breeding;
+  StdCtrls, ExtCtrls, Buttons, DBCtrls, atshapelinebgra, cbs_breeding;
 
 type
 
@@ -161,7 +161,7 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    if not (dsLink.State in [dsInsert, dsEdit]) then
+    if not sbSave.Enabled then
       Exit;
 
     sbSaveClick(nil);

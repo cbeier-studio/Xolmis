@@ -1,0 +1,7 @@
+{"version":1,"strings":[
+{"hash":109953346,"name":"tedtcollector.caption","sourcebytes":[65,100,100,32,99,111,108,108,101,99,116,111,114],"value":"Add collector"},
+{"hash":235957914,"name":"tedtcollector.lblcollector.caption","sourcebytes":[67,111,108,108,101,99,116,111,114,58,32,42],"value":"Collector: *"},
+{"hash":57525746,"name":"tedtcollector.ecollector.buttonhint","sourcebytes":[70,105,110,100,32,99,111,108,108,101,99,116,111,114],"value":"Find collector"},
+{"hash":366789,"name":"tedtcollector.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tedtcollector.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+]}

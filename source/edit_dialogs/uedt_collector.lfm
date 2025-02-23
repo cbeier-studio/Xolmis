@@ -1,0 +1,141 @@
+object edtCollector: TedtCollector
+  Left = 414
+  Height = 120
+  Top = 250
+  Width = 397
+  AutoSize = True
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Add collector'
+  ClientHeight = 120
+  ClientWidth = 397
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  object pContent: TPanel
+    Left = 0
+    Height = 77
+    Top = 0
+    Width = 397
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.TopBottomSpacing = 16
+    ClientHeight = 77
+    ClientWidth = 397
+    TabOrder = 0
+    object pCollector: TPanel
+      Left = 0
+      Height = 45
+      Top = 16
+      Width = 397
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Top = 8
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 45
+      ClientWidth = 397
+      ParentBackground = False
+      TabOrder = 0
+      object lblCollector: TLabel
+        Left = 16
+        Height = 15
+        Top = 3
+        Width = 365
+        BorderSpacing.Top = 3
+        Caption = 'Collector: *'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eCollector: TEditButton
+        Left = 16
+        Height = 23
+        Top = 22
+        Width = 365
+        ButtonHint = 'Find collector'
+        ButtonWidth = 23
+        Constraints.MinWidth = 365
+        Images = DMM.iEdits
+        ImageIndex = 0
+        MaxLength = 0
+        NumGlyphs = 1
+        ParentShowHint = False
+        PasswordChar = #0
+        ShowHint = True
+        Spacing = 0
+        TabOrder = 0
+        OnButtonClick = eCollectorButtonClick
+        OnEditingDone = eCollectorEditingDone
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eCollectorKeyPress
+      end
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 77
+    Width = 397
+    Align = alTop
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 41
+    Top = 79
+    Width = 397
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 41
+    ClientWidth = 397
+    TabOrder = 1
+    object sbSave: TButton
+      Left = 16
+      Height = 25
+      Top = 8
+      Width = 178
+      Caption = 'Save'
+      Constraints.MinWidth = 120
+      Enabled = False
+      TabOrder = 0
+      OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+    object sbCancel: TButton
+      Left = 202
+      Height = 25
+      Top = 8
+      Width = 179
+      Caption = 'Cancel'
+      Constraints.MinWidth = 120
+      ModalResult = 2
+      TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+  end
+  object dsLink: TDataSource
+    DataSet = DMG.qSampleCollectors
+    OnDataChange = dsLinkDataChange
+    Left = 296
+    Top = 16
+  end
+end

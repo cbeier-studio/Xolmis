@@ -56,6 +56,7 @@ type
     gridDocs: TDBGrid;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
+    pmrRefresh: TMenuItem;
     pmPrintMolts: TMenuItem;
     pmcNewVegetation: TMenuItem;
     pgChild6: TPage;
@@ -768,6 +769,7 @@ type
     Separator31: TMenuItem;
     Separator32: TMenuItem;
     Separator33: TMenuItem;
+    Separator34: TMenuItem;
     SeparatorPrint: TMenuItem;
     Separator5: TShapeLineBGRA;
     Separator6: TMenuItem;
@@ -964,6 +966,7 @@ type
     procedure pmPrintSamplingPlotsByLocalityClick(Sender: TObject);
     procedure pmPrintSamplingPlotsClick(Sender: TObject);
     procedure pmPrintSightingsByObserverClick(Sender: TObject);
+    procedure pmrRefreshClick(Sender: TObject);
     procedure pmtClearSelectionClick(Sender: TObject);
     procedure pmtColapseAllClick(Sender: TObject);
     procedure pmtExpandAllClick(Sender: TObject);
@@ -7075,6 +7078,22 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.pmrRefreshClick(Sender: TObject);
+begin
+  if Working then
+    Exit;
+
+  Working := True;
+  try
+    if not dsRecycle.DataSet.Active then
+      dsRecycle.DataSet.Open;
+    dsRecycle.DataSet.Refresh;
+    UpdateButtons(dsLink.DataSet);
+  finally
+    Working := False;
+  end;
+end;
+
 procedure TfrmCustomGrid.pmtClearSelectionClick(Sender: TObject);
 begin
   TBaseVirtualTree(pmTree.PopupComponent).ClearChecked;
@@ -8613,6 +8632,7 @@ begin
   Working := True;
   try
     DeleteRecord(FTableType, dsLink.DataSet);
+    dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
   finally
     Working := False;
@@ -8643,7 +8663,10 @@ begin
       //tbPermanentNets: ;
       //tbInstitutions: ;
       //tbPeople: ;
-      tbProjects: ;
+      tbProjects:
+        case nbChilds.PageIndex of
+          0: EditProjectMember(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger);
+        end;
       //tbProjectTeams: ;
       //tbPermits: ;
       //tbTaxonRanks: ;
@@ -8672,7 +8695,7 @@ begin
       //tbMethods: ;
       tbExpeditions:
         case nbChilds.PageIndex of
-          0: EditSurvey(DMS.qSurveys);
+          0: EditSurvey(DMS.qSurveys, dsLink.DataSet.FieldByName('expedition_id').AsInteger);
         end;
       tbSurveys:
         case nbChilds.PageIndex of
@@ -8681,13 +8704,15 @@ begin
           2: EditWeatherLog(DMS.qWeatherLogs, dsLink.DataSet.FieldByName('survey_id').AsInteger);
           3: EditCapture(DMS.qCaptures, dsLink.DataSet.FieldByName('survey_id').AsInteger);
           4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName('survey_id').AsInteger);
+          5: EditVegetation(DMS.qVegetation, dsLink.DataSet.FieldByName('survey_id').AsInteger);
         end;
       //tbSurveyTeams: ;
       //tbNetsEffort: ;
       tbSightings: ;
       tbSpecimens:
         case nbChilds.PageIndex of
-          0: EditSamplePrep(DMG.qSamplePreps, dsLink.DataSet.FieldByName('specimen_id').AsInteger);
+          0: EditCollector(DMG.qSampleCollectors, dsLink.DataSet.FieldByName('specimen_id').AsInteger);
+          1: EditSamplePrep(DMG.qSamplePreps, dsLink.DataSet.FieldByName('specimen_id').AsInteger);
         end;
       //tbSamplePreps: ;
       //tbImages: ;

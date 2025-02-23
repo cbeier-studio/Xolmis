@@ -3187,7 +3187,8 @@ begin
   LogDebug(Format('Record %d from %s set inactive', [aKeyValue, TableNames[aTable]]));
   {$ENDIF}
   try
-    DMM.sqlTrans.StartTransaction;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
     Qry := TSQLQuery.Create(DMM.sqlCon);
     with Qry, SQL do
     try

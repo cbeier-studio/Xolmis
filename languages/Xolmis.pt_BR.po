@@ -308,6 +308,7 @@ msgid "Collection year"
 msgstr "Ano de coleta"
 
 #: cbs_datacolumns.rsccollector
+msgctxt "cbs_datacolumns.rsccollector"
 msgid "Collector"
 msgstr "Coletor"
 
@@ -1924,6 +1925,7 @@ msgid "Vernacular name(s)"
 msgstr "Nome(s) vernacular(es)"
 
 #: cbs_datacolumns.rscvisitor
+msgctxt "cbs_datacolumns.rscvisitor"
 msgid "Visitor"
 msgstr "Visitante"
 
@@ -2345,6 +2347,11 @@ msgctxt "cbs_locale.rscaptionclose"
 msgid "Close"
 msgstr "Fechar"
 
+#: cbs_locale.rscaptioncollector
+msgctxt "cbs_locale.rscaptioncollector"
+msgid "Collector"
+msgstr "Coletor"
+
 #: cbs_locale.rscaptioncountry
 msgctxt "cbs_locale.rscaptioncountry"
 msgid "Country"
@@ -2530,6 +2537,10 @@ msgctxt "cbs_locale.rscaptionproject"
 msgid "Project"
 msgstr "Projeto"
 
+#: cbs_locale.rscaptionprojectmember
+msgid "Project member"
+msgstr "Membro do projeto"
+
 #: cbs_locale.rscaptionrank
 msgctxt "cbs_locale.rscaptionrank"
 msgid "Rank"
@@ -2589,6 +2600,10 @@ msgstr "Fornecedor"
 msgctxt "cbs_locale.rscaptionsurvey"
 msgid "Survey"
 msgstr "Amostragem"
+
+#: cbs_locale.rscaptionsurveymember
+msgid "Survey member"
+msgstr "Membro da amostragem"
 
 #: cbs_locale.rscaptiontaxon
 msgctxt "cbs_locale.rscaptiontaxon"
@@ -4518,12 +4533,8 @@ msgid "Unpreparing..."
 msgstr "Despreparando..."
 
 #: cbs_locale.rspromptbackupnow
-msgid ""
-"The automatic backup will start now and may take several minutes.\n"
-"Do you want to proceed with the backup?"
-msgstr ""
-"O backup automático irá iniciar agora e pode demorar vários minutos.\n"
-"Você deseja continuar com o backup?"
+msgid "The automatic backup will start now and may take several minutes. Do you want to proceed with the backup?"
+msgstr "O backup automático irá iniciar agora e pode demorar vários minutos. Você deseja continuar com o backup?"
 
 #: cbs_locale.rsqualifieronlyingenus
 msgctxt "cbs_locale.rsqualifieronlyingenus"
@@ -8282,6 +8293,29 @@ msgctxt "tedtcapture.sbsave.caption"
 msgid "Salvar"
 msgstr "Salvar"
 
+#: tedtcollector.caption
+msgid "Add collector"
+msgstr "Adicionar coletor"
+
+#: tedtcollector.ecollector.buttonhint
+msgctxt "tedtcollector.ecollector.buttonhint"
+msgid "Find collector"
+msgstr "Buscar coletor"
+
+#: tedtcollector.lblcollector.caption
+msgid "Collector: *"
+msgstr "Coletor: *"
+
+#: tedtcollector.sbcancel.caption
+msgctxt "tedtcollector.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tedtcollector.sbsave.caption
+msgctxt "tedtcollector.sbsave.caption"
+msgid "Save"
+msgstr "Salvar"
+
 #: tedtdatabase.ckremotedb.caption
 msgid "Remote database"
 msgstr "Banco de dados remoto"
@@ -10082,6 +10116,34 @@ msgctxt "tedtproject.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtprojectmember.caption
+msgid "Add project member"
+msgstr "Adicionar membro do projeto"
+
+#: tedtprojectmember.ckmanager.caption
+msgid "Project manager"
+msgstr "Gerente do projeto"
+
+#: tedtprojectmember.eperson.buttonhint
+msgctxt "tedtprojectmember.eperson.buttonhint"
+msgid "Find researcher"
+msgstr "Buscar pesquisador"
+
+#: tedtprojectmember.lblperson.caption
+msgctxt "tedtprojectmember.lblperson.caption"
+msgid "Researcher: *"
+msgstr "Pesquisador: *"
+
+#: tedtprojectmember.sbcancel.caption
+msgctxt "tedtprojectmember.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tedtprojectmember.sbsave.caption
+msgctxt "tedtprojectmember.sbsave.caption"
+msgid "Save"
+msgstr "Salvar"
+
 #: tedtrecverification.caption
 msgid "New record verification"
 msgstr "Nova verificação do registro"
@@ -10097,6 +10159,7 @@ msgid "DD/MM/YYYY"
 msgstr "DD/MM/YYYY"
 
 #: tedtrecverification.eresearcher.buttonhint
+msgctxt "tedtrecverification.eresearcher.buttonhint"
 msgid "Find researcher"
 msgstr "Buscar pesquisador"
 
@@ -10111,6 +10174,7 @@ msgid "Notes:"
 msgstr "Anotações:"
 
 #: tedtrecverification.lblresearcher.caption
+msgctxt "tedtrecverification.lblresearcher.caption"
 msgid "Researcher: *"
 msgstr "Pesquisador: *"
 
@@ -10818,6 +10882,35 @@ msgstr "Cancelar"
 
 #: tedtsurvey.sbsave.caption
 msgctxt "tedtsurvey.sbsave.caption"
+msgid "Save"
+msgstr "Salvar"
+
+#: tedtsurveymember.caption
+msgid "Add survey member"
+msgstr "Adicionar membro da amostragem"
+
+#: tedtsurveymember.ckvisitor.caption
+msgctxt "tedtsurveymember.ckvisitor.caption"
+msgid "Visitor"
+msgstr "Visitante"
+
+#: tedtsurveymember.eperson.buttonhint
+msgctxt "tedtsurveymember.eperson.buttonhint"
+msgid "Find researcher"
+msgstr "Buscar pesquisador"
+
+#: tedtsurveymember.lblperson.caption
+msgctxt "tedtsurveymember.lblperson.caption"
+msgid "Researcher: *"
+msgstr "Pesquisador: *"
+
+#: tedtsurveymember.sbcancel.caption
+msgctxt "tedtsurveymember.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tedtsurveymember.sbsave.caption
+msgctxt "tedtsurveymember.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
@@ -12223,6 +12316,11 @@ msgstr "Táxon registrados por localidade"
 #: tfrmcustomgrid.pmrdelpermanently.caption
 msgid "&Delete permanently"
 msgstr "Apagar &permanentemente"
+
+#: tfrmcustomgrid.pmrrefresh.caption
+msgctxt "tfrmcustomgrid.pmrrefresh.caption"
+msgid "Refresh"
+msgstr "Atualizar"
 
 #: tfrmcustomgrid.pmrrestorerecord.caption
 msgid "&Restore selected record"

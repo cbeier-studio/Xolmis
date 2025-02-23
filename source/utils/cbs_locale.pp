@@ -270,7 +270,7 @@ uses
     rsLoadingJSONFile = 'Loading JSON file...';
 
     { Backup messages }
-    rsPromptBackupNow = 'The automatic backup will start now and may take several minutes.' + LineEnding +
+    rsPromptBackupNow = 'The automatic backup will start now and may take several minutes. ' +
       'Do you want to proceed with the backup?';
     rsCreatingBackup = 'Creating backup...';
     rsCompressingBackup = 'Compressing backup...';
@@ -948,6 +948,9 @@ uses
     rsCaptionWeatherLogEntry = 'Weather log entry';
     rsCaptionParentSite = 'Parent toponym';
     rsCaptionVegetation = 'Vegetation sample';
+    rsCaptionSurveyMember = 'Survey member';
+    rsCaptionCollector = 'Collector';
+    rsCaptionProjectMember = 'Project member';
 
 implementation
 

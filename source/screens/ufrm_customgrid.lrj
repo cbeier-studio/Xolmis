@@ -290,6 +290,7 @@
 {"hash":179055749,"name":"tfrmcustomgrid.pmcdel.caption","sourcebytes":[38,68,101,108,101,116,101],"value":"&Delete"},
 {"hash":17735412,"name":"tfrmcustomgrid.pmrrestorerecord.caption","sourcebytes":[38,82,101,115,116,111,114,101,32,115,101,108,101,99,116,101,100,32,114,101,99,111,114,100],"value":"&Restore selected record"},
 {"hash":194166921,"name":"tfrmcustomgrid.pmrdelpermanently.caption","sourcebytes":[38,68,101,108,101,116,101,32,112,101,114,109,97,110,101,110,116,108,121],"value":"&Delete permanently"},
+{"hash":146640072,"name":"tfrmcustomgrid.pmrrefresh.caption","sourcebytes":[82,101,102,114,101,115,104],"value":"Refresh"},
 {"hash":143478044,"name":"tfrmcustomgrid.pmmmarkall.caption","sourcebytes":[38,77,97,114,107,32,97,108,108],"value":"&Mark all"},
 {"hash":124017252,"name":"tfrmcustomgrid.pmminvertmarked.caption","sourcebytes":[38,73,110,118,101,114,116,32,109,97,114,107,101,100],"value":"&Invert marked"},
 {"hash":145138460,"name":"tfrmcustomgrid.pmmunmarkall.caption","sourcebytes":[38,85,110,109,97,114,107,32,97,108,108],"value":"&Unmark all"},

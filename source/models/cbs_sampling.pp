@@ -1979,7 +1979,7 @@ begin
       DMM.sqlTrans.StartTransaction;
     try
       Clear;
-      Add('INSERT INTO specimen_colletors (' +
+      Add('INSERT INTO specimen_collectors (' +
         'specimen_id, ' +
         'person_id, ' +
         'user_inserted, ' +
@@ -2053,7 +2053,7 @@ begin
       DMM.sqlTrans.StartTransaction;
     try
       Clear;
-      Add('UPDATE specimen_colletors SET ' +
+      Add('UPDATE specimen_collectors SET ' +
         'specimen_id = :specimen_id, ' +
         'person_id = :person_id, ' +
         'user_updated = :user_updated, ' +
@@ -3669,7 +3669,7 @@ begin
         'datetime(update_date, ''localtime'') AS update_date, ' +
         'exported_status, ' +
         'marked_status, ' +
-        'active_status' +
+        'active_status ' +
       'FROM survey_team');
     Add('WHERE survey_member_id = :cod');
     ParamByName('COD').AsInteger := aKey;

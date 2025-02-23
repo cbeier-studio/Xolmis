@@ -288,10 +288,15 @@ end;
 
 procedure TedtVegetation.GetRecord;
 begin
-  eSampleDate.Text := DateToStr(FVegetation.SampleDate);
-  eSampleTime.Text := TimeToStr(FVegetation.SampleTime);
-  eLongitude.Text := FloatToStr(FVegetation.Longitude);
-  eLatitude.Text := FloatToStr(FVegetation.Latitude);
+  if not DateIsNull(FVegetation.SampleDate) then
+    eSampleDate.Text := DateToStr(FVegetation.SampleDate);
+  if not TimeIsNull(FVegetation.SampleTime) then
+    eSampleTime.Text := TimeToStr(FVegetation.SampleTime);
+  if (FVegetation.Longitude <> 0.0) and (FVegetation.Latitude <> 0.0) then
+  begin
+    eLongitude.Text := FloatToStr(FVegetation.Longitude);
+    eLatitude.Text := FloatToStr(FVegetation.Latitude);
+  end;
   cbHerbsDistribution.ItemIndex := Ord(FVegetation.HerbsDistribution);
   eHerbsProportion.Value := FVegetation.HerbsProportion;
   eHerbsAvgHeight.Value := FVegetation.HerbsAvgHeight;
