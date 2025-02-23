@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="136">
+      <ExcludedIdentifiers Count="139">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -160,6 +160,9 @@
         <Item134 Value="tedtNetEffort.txtTotalOpenTime.Caption"/>
         <Item135 Value="tedtSurvey.txtNetEffort.Caption"/>
         <Item136 Value="tedtEgg.txtVolume.Caption"/>
+        <Item137 Value="tedtProjectMember.Caption"/>
+        <Item138 Value="tedtSurveyMember.Caption"/>
+        <Item139 Value="tedtCollector.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>

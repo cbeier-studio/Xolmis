@@ -50,6 +50,7 @@ uses
     rsTitleCaptures = 'Captures';
     rsTitleBands = 'Bands';
     rsTitleIndividuals = 'Individuals';
+    rsTitleFeathersAndMolt = 'Feathers and molt';
     rsTitleMolts = 'Molts';
     rsTitleNests = 'Nests';
     rsTitleNestOwners = 'Owners';
@@ -59,6 +60,10 @@ uses
     rsTitleResearchers = 'Researchers';
     rsTitleProjects = 'Projects';
     rsTitleProjectMembers = 'Project members';
+    rsTitleProjectGoals = 'Project goals';
+    rsTitleProjectChronograms = 'Project chronograms';
+    rsTitleProjectBudgets = 'Project budgets';
+    rsTitleProjectExpenses = 'Project expenses';
     rsTitleTeam = 'Team';
     rsTitlePermits = 'Permits';
     rsTitleGazetteer = 'Gazetteer';

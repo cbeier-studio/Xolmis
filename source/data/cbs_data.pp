@@ -62,6 +62,10 @@ const
   procedure CreatePermitsTable(Connection: TSQLConnector);
   procedure CreateProjectsTable(Connection: TSQLConnector);
   procedure CreateProjectTeamTable(Connection: TSQLConnector);
+  procedure CreateProjectGoalsTable(connection: TSQLConnector);
+  procedure CreateProjectChronogramsTable(connection: TSQLConnector);
+  procedure CreateProjectBudgetsTable(connection: TSQLConnector);
+  procedure CreateProjectExpensesTable(connection: TSQLConnector);
   procedure CreateExpeditionsTable(Connection: TSQLConnector);
   procedure CreateSurveysTable(Connection: TSQLConnector);
   procedure CreateSurveyTeamTable(Connection: TSQLConnector);
@@ -73,6 +77,7 @@ const
   procedure CreateIndividualsTable(Connection: TSQLConnector);
   procedure CreateSightingsTable(Connection: TSQLConnector);
   procedure CreateCapturesTable(Connection: TSQLConnector);
+  procedure CreateFeathersTable(connection: TSQLConnector);
   procedure CreateMoltsTable(Connection: TSQLConnector);
   procedure CreateNestsTable(Connection: TSQLConnector);
   procedure CreateNestOwnersTable(Connection: TSQLConnector);
@@ -300,7 +305,7 @@ begin
   try
     dlgProgress.Title := rsTitleCreateDatabase;
     dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := 46; // Number of tables and views to create
+    dlgProgress.Max := 50; // Number of tables and views to create
     dlgProgress.Position := 0;
     dlgProgress.Show;
     Application.ProcessMessages;
@@ -422,6 +427,26 @@ begin
         CreateProjectTeamTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectGoals, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateProjectGoalsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectChronograms, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateProjectChronogramsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectBudgets, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateProjectBudgetsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectExpenses, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateProjectExpensesTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsCaptionExpeditions, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateExpeditionsTable(Conn);
@@ -477,9 +502,9 @@ begin
         CreateCapturesTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
-        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleMolts, dlgProgress.Position + 1, dlgProgress.Max]);
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleFeathersAndMolt, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
-        CreateMoltsTable(Conn);
+        CreateFeathersTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNests, dlgProgress.Position + 1, dlgProgress.Max]);
@@ -1346,13 +1371,90 @@ begin
     'project_id        INTEGER  REFERENCES projects (project_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
     'person_id         INTEGER  NOT NULL REFERENCES people (person_id) ON UPDATE CASCADE,' +
     'project_manager   BOOLEAN  DEFAULT (0),' +
-    'ser_inserted     INTEGER,' +
+    'institution_id    INTEGER  REFERENCES institutions (institution_id) ON UPDATE CASCADE,' +
+    'user_inserted     INTEGER,' +
     'user_updated      INTEGER,' +
     'insert_date       DATETIME,' +
     'update_date       DATETIME,' +
     'exported_status   BOOLEAN  DEFAULT (0),' +
     'marked_status     BOOLEAN  DEFAULT (0),' +
     'active_status     BOOLEAN  DEFAULT (1)' +
+  ');');
+end;
+
+procedure CreateProjectGoalsTable(connection: TSQLConnector);
+begin
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_goals (
+    'goal_id          INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
+    'project_id       INTEGER     REFERENCES projects (project_id) ON UPDATE CASCADE,' +
+    'goal_description TEXT,' +
+    'goal_status      VARCHAR (5),' +
+    'user_inserted    INTEGER,' +
+    'user_updated     INTEGER,' +
+    'insert_date      DATETIME,' +
+    'update_date      DATETIME,' +
+    'exported_status  BOOLEAN     DEFAULT (0),' +
+    'marked_status    BOOLEAN     DEFAULT (0),' +
+    'active_status    BOOLEAN     DEFAULT (1)' +
+  ');');
+end;
+
+procedure CreateProjectChronogramsTable(connection: TSQLConnector);
+begin
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_chronograms (' +
+    'chronogram_id   INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
+    'project_id      INTEGER     REFERENCES projects (project_id) ON UPDATE CASCADE,' +
+    'description     TEXT,' +
+    'start_date      DATE,' +
+    'target_date     DATE,' +
+    'end_date        DATE,' +
+    'goal_id         INTEGER     REFERENCES project_goals (goal_id) ON UPDATE CASCADE,' +
+    'progress_status VARCHAR (5),' +
+    'user_inserted   INTEGER,' +
+    'user_updated    INTEGER,' +
+    'insert_date     DATETIME,' +
+    'update_date     DATETIME,' +
+    'exported_status BOOLEAN     DEFAULT (0),' +
+    'marked_status   BOOLEAN     DEFAULT (0),' +
+    'active_status   BOOLEAN     DEFAULT (1)' +
+  ');');
+end;
+
+procedure CreateProjectBudgetsTable(connection: TSQLConnector);
+begin
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_budgets (' +
+    'budget_id       INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
+    'project_id      INTEGER      REFERENCES projects (project_id) ON UPDATE CASCADE,' +
+    'funding_source  VARCHAR (60),' +
+    'rubric          VARCHAR (60) NOT NULL,' +
+    'item_name       VARCHAR (60),' +
+    'amount          REAL,' +
+    'user_inserted   INTEGER,' +
+    'user_updated    INTEGER,' +
+    'insert_date     DATETIME,' +
+    'update_date     DATETIME,' +
+    'exported_status BOOLEAN      DEFAULT (0),' +
+    'marked_status   BOOLEAN      DEFAULT (0),' +
+    'active_status   BOOLEAN      DEFAULT (1)' +
+  ');');
+end;
+
+procedure CreateProjectExpensesTable(connection: TSQLConnector);
+begin
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_expenses (' +
+    'expense_id       INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
+    'project_id       INTEGER      REFERENCES projects (project_id) ON UPDATE CASCADE,' +
+    'budget_id        INTEGER      REFERENCES project_budgets (budget_id) ON UPDATE CASCADE,' +
+    'item_description VARCHAR (60) NOT NULL,' +
+    'expense_date     DATE,' +
+    'amount           REAL,' +
+    'user_inserted    INTEGER,' +
+    'user_updated     INTEGER,' +
+    'insert_date      DATETIME,' +
+    'update_date      DATETIME,' +
+    'exported_status  BOOLEAN      DEFAULT (0),' +
+    'marked_status    BOOLEAN      DEFAULT (0),' +
+    'active_status    BOOLEAN      DEFAULT (1)' +
   ');');
 end;
 
@@ -1860,6 +1962,42 @@ begin
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_type_band ON captures (' +
     'capture_type,' +
     'band_id' +
+  ');');
+end;
+
+procedure CreateFeathersTable(connection: TSQLConnector);
+begin
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS feathers (' +
+    'feather_id       INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
+    'sample_date      DATE        NOT NULL,' +
+    'sample_time      TIME,' +
+    'taxon_id         INTEGER     REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE NOT NULL,' +
+    'locality_id      INTEGER     REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
+    'individual_id    INTEGER     REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
+    'capture_id       INTEGER     REFERENCES captures (capture_id) ON UPDATE CASCADE,' +
+    'sighting_id      INTEGER     REFERENCES sightings (sighting_id) ON UPDATE CASCADE,' +
+    'observer_id      INTEGER     REFERENCES people (person_id) ON UPDATE CASCADE,' +
+    'source_type      VARCHAR (5),' +
+    'symmetrical      VARCHAR (5),' +
+    'feather_trait    VARCHAR (5),' +
+    'feather_number   INTEGER,' +
+    'body_side        VARCHAR (5),' +
+    'grown_percent    REAL,' +
+    'feather_length   REAL,' +
+    'feather_area     REAL,' +
+    'feather_mass     REAL,' +
+    'rachis_width     REAL,' +
+    'growth_bar_width REAL,' +
+    'barb_density     REAL,' +
+    'feather_age      VARCHAR (5),' +
+    'notes            TEXT,' +
+    'user_inserted    INTEGER,' +
+    'user_updated     INTEGER,' +
+    'insert_date      DATETIME,' +
+    'update_date      DATETIME,' +
+    'exported_status  BOOLEAN     DEFAULT (0),' +
+    'marked_status    BOOLEAN     DEFAULT (0),' +
+    'active_status    BOOLEAN     DEFAULT (1)' +
   ');');
 end;
 
