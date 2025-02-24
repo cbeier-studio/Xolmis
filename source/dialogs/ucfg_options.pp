@@ -235,7 +235,7 @@ procedure TcfgOptions.sbNewBackupClick(Sender: TObject);
 begin
   GravaStat(Name, TComponent(Sender).Name, 'click');
 
-  NewBackup;
+  VacuumIntoBackup; //NewBackup;
 end;
 
 procedure TcfgOptions.eAttachmentsPathChange(Sender: TObject);

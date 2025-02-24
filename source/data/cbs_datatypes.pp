@@ -1152,7 +1152,7 @@ begin
   GUIDEndian := ideLittle;
   UserName := EmptyStr;
   Password := EmptyStr;
-  LastBackup := StrToDateTime('30/01/1500 00:00:00');
+  LastBackup := StrToDateTime('30/12/1500 00:00:00');
 end;
 
 procedure TDBParams.LoadParams;

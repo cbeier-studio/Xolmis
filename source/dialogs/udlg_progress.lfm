@@ -1,25 +1,25 @@
 object dlgProgress: TdlgProgress
   Left = 352
-  Height = 160
+  Height = 165
   Top = 33
   Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Xolmis'
-  ClientHeight = 160
+  ClientHeight = 165
   ClientWidth = 400
   Constraints.MaxWidth = 500
   Constraints.MinHeight = 160
   Constraints.MinWidth = 400
-  OnClose = FormClose
-  OnShow = FormShow
   PopupMode = pmAuto
   Position = poMainFormCenter
+  OnClose = FormClose
+  OnShow = FormShow
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 115
+    Top = 123
     Width = 400
     Align = alTop
     AutoSize = True
@@ -40,14 +40,14 @@ object dlgProgress: TdlgProgress
       Caption = 'Cancel'
       Images = iButtons
       ImageIndex = 0
-      OnClick = sbCancelClick
       TabOrder = 0
+      OnClick = sbCancelClick
     end
   end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 113
+    Top = 121
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -56,7 +56,7 @@ object dlgProgress: TdlgProgress
   end
   object pClient: TPanel
     Left = 0
-    Height = 113
+    Height = 121
     Top = 0
     Width = 400
     Align = alTop
@@ -65,7 +65,7 @@ object dlgProgress: TdlgProgress
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.VerticalSpacing = 8
-    ClientHeight = 113
+    ClientHeight = 121
     ClientWidth = 400
     ParentBackground = False
     TabOrder = 1

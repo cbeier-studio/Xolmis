@@ -810,17 +810,17 @@ begin
     1:
     begin
       if DaysBetween(Now, ConexaoDB.LastBackup) >= 1 then
-        NewBackup;
+        VacuumIntoBackup; // NewBackup;
     end;
     2:
     begin
       if DaysBetween(Now, ConexaoDB.LastBackup) >= 7 then
-        NewBackup;
+        VacuumIntoBackup; // NewBackup;
     end;
     3:
     begin
       if DaysBetween(Now, ConexaoDB.LastBackup) >= 30 then
-        NewBackup;
+        VacuumIntoBackup; // NewBackup;
     end;
   end;
 

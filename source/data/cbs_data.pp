@@ -1384,7 +1384,7 @@ end;
 
 procedure CreateProjectGoalsTable(connection: TSQLConnector);
 begin
-  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_goals (
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_goals (' +
     'goal_id          INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'project_id       INTEGER     REFERENCES projects (project_id) ON UPDATE CASCADE,' +
     'goal_description TEXT,' +

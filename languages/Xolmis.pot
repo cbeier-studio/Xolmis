@@ -5203,6 +5203,10 @@ msgstr ""
 msgid "Expired permits"
 msgstr ""
 
+#: cbs_locale.rstitlefeathersandmolt
+msgid "Feathers and molt"
+msgstr ""
+
 #: cbs_locale.rstitlegazetteer
 msgctxt "cbs_locale.rstitlegazetteer"
 msgid "Gazetteer"
@@ -5327,6 +5331,22 @@ msgstr ""
 
 #: cbs_locale.rstitleprofilepicture
 msgid "Profile picture"
+msgstr ""
+
+#: cbs_locale.rstitleprojectbudgets
+msgid "Project budgets"
+msgstr ""
+
+#: cbs_locale.rstitleprojectchronograms
+msgid "Project chronograms"
+msgstr ""
+
+#: cbs_locale.rstitleprojectexpenses
+msgid "Project expenses"
+msgstr ""
+
+#: cbs_locale.rstitleprojectgoals
+msgid "Project goals"
 msgstr ""
 
 #: cbs_locale.rstitleprojectmembers
@@ -8267,10 +8287,6 @@ msgctxt "tedtcapture.sbsave.caption"
 msgid "Salvar"
 msgstr ""
 
-#: tedtcollector.caption
-msgid "Add collector"
-msgstr ""
-
 #: tedtcollector.ecollector.buttonhint
 msgctxt "tedtcollector.ecollector.buttonhint"
 msgid "Find collector"
@@ -10090,10 +10106,6 @@ msgctxt "tedtproject.sbsave.caption"
 msgid "Save"
 msgstr ""
 
-#: tedtprojectmember.caption
-msgid "Add project member"
-msgstr ""
-
 #: tedtprojectmember.ckmanager.caption
 msgid "Project manager"
 msgstr ""
@@ -10857,10 +10869,6 @@ msgstr ""
 #: tedtsurvey.sbsave.caption
 msgctxt "tedtsurvey.sbsave.caption"
 msgid "Save"
-msgstr ""
-
-#: tedtsurveymember.caption
-msgid "Add survey member"
 msgstr ""
 
 #: tedtsurveymember.ckvisitor.caption
