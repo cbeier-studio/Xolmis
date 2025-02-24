@@ -3383,7 +3383,8 @@ msgid "Error in year digits (%d). Send this issue to the Support."
 msgstr ""
 
 #: cbs_locale.rserroroptimizingdatabase
-msgid "An error occurred while optimizing the database."
+#, object-pascal-format
+msgid "An error occurred while optimizing the database: %s"
 msgstr ""
 
 #: cbs_locale.rserrorpopulatingtables
@@ -3435,6 +3436,11 @@ msgstr ""
 #: cbs_locale.rserrorupgradingdatabaseschema
 #, object-pascal-format
 msgid "Error while upgrading the database schema: %s"
+msgstr ""
+
+#: cbs_locale.rserrorvacuumingdatabase
+#, object-pascal-format
+msgid "An error occurred while vacuuming the database: %s"
 msgstr ""
 
 #: cbs_locale.rserrorwritingadminpassword
@@ -4940,8 +4946,16 @@ msgstr ""
 msgid "The database file was created successfully!"
 msgstr ""
 
+#: cbs_locale.rssuccessfuldatabaseoptimization
+msgid "The selected database was optimized!"
+msgstr ""
+
 #: cbs_locale.rssuccessfuldatabaseupgrade
 msgid "The database schema was upgraded successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfuldatabasevacuum
+msgid "The selected database was vacuumed!"
 msgstr ""
 
 #: cbs_locale.rssuccessfulimport
@@ -5859,6 +5873,10 @@ msgstr ""
 #: tcfgdatabase.mmtestconnection.caption
 msgctxt "tcfgdatabase.mmtestconnection.caption"
 msgid "Test connection"
+msgstr ""
+
+#: tcfgdatabase.mmvacuumdb.caption
+msgid "Vacuum database"
 msgstr ""
 
 #: tcfgdatabase.pmgdelete.caption

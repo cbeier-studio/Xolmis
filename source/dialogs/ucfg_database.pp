@@ -34,6 +34,7 @@ type
     iconDB: TImageList;
     iButtons: TImageList;
     lineBottom: TShapeLineBGRA;
+    mmVacuumDB: TMenuItem;
     mmOptimizeDB: TMenuItem;
     pmNewDatabase: TMenuItem;
     pmNewConnection: TMenuItem;
@@ -67,6 +68,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure mmOptimizeDBClick(Sender: TObject);
     procedure mmTestConnectionClick(Sender: TObject);
+    procedure mmVacuumDBClick(Sender: TObject);
     procedure pmNewConnectionClick(Sender: TObject);
     procedure pmNewDatabaseClick(Sender: TObject);
     procedure sbCloseClick(Sender: TObject);
@@ -126,6 +128,11 @@ begin
   Conn.LoadParams;
 
   Conn.Optimize;
+
+  if not DMM.sysCon.Connected then
+    DMM.sysCon.Open;
+  if not DMM.qsConn.Active then
+    DMM.qsConn.Open;
 end;
 
 procedure TcfgDatabase.mmTestConnectionClick(Sender: TObject);
@@ -139,6 +146,21 @@ begin
     MsgDlg(rsTitleConnectionTest, rsSuccessfulConnectionTest, mtInformation)
   else
     MsgDlg(rsTitleConnectionTest, rsErrorConnectingDatabase, mtError);
+
+  if not DMM.sysCon.Connected then
+    DMM.sysCon.Open;
+  if not DMM.qsConn.Active then
+    DMM.qsConn.Open;
+end;
+
+procedure TcfgDatabase.mmVacuumDBClick(Sender: TObject);
+var
+  Conn: TDBParams;
+begin
+  Conn.Name := dsConn.DataSet.FieldByName('connection_name').AsString;
+  Conn.LoadParams;
+
+  Conn.Vacuum;
 
   if not DMM.sysCon.Connected then
     DMM.sysCon.Open;

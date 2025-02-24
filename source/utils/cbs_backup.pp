@@ -24,7 +24,7 @@ uses
   { System }
   Classes, SysUtils, Zipper, lazfileutils, LCLIntf, fileutil,
   { VCL }
-  Forms, Controls, Dialogs, ComCtrls,
+  Forms, Controls, Dialogs,
   { Data }
   SQLDB, sqlite3conn, sqlite3backup,
   { Forms }
@@ -183,7 +183,7 @@ begin
       dlgProgress.Text := rsPreparingBackup;
       dlgProgress.Min := 0;
       dlgProgress.Max := 100;
-      dlgProgress.PBar.Style := pbstMarquee;
+      dlgProgress.Indeterminate := True;
 
       if not (DirectoryExists(XSettings.BackupFolder)) then
         CreateDir(XSettings.BackupFolder);
@@ -216,7 +216,7 @@ begin
 
       if FileExists(tmpName) then
       begin
-        dlgProgress.PBar.Style := pbstNormal;
+        dlgProgress.Indeterminate := False;
         dlgProgress.Text := rsCompressingBackup;
         zipName := ChangeFileExt(tmpName, '.zip');
         {$IFDEF DEBUG}
@@ -253,6 +253,7 @@ begin
     finally
       dlgProgress.Position := 100;
       dlgProgress.Text := rsProgressFinishing;
+      Application.ProcessMessages;
       {$IFDEF DEBUG}
       LogDebug('FINISH Backup: ' + bkpName);
       {$ENDIF}

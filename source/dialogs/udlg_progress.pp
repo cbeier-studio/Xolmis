@@ -44,7 +44,7 @@ type
   private
     sTitle, sText: String;
     vMin, vMax, vPosition: Integer;
-    bAllowCancel: Boolean;
+    bAllowCancel, bIndeterminate: Boolean;
     procedure ApplyDarkMode;
     procedure SetTitle(aTitle: String);
     procedure SetText(aText: String);
@@ -52,6 +52,7 @@ type
     procedure SetMax(aMax: Integer);
     procedure SetPosition(aValue: Integer);
     procedure SetAllowCancel(aValue: Boolean);
+    procedure SetIndeterminate(aValue: Boolean);
   public
     property Title: String read sTitle write SetTitle;
     property Text: String read sText write SetText;
@@ -59,6 +60,7 @@ type
     property Max: Integer read vMax write SetMax default 100;
     property Position: Integer read vPosition write SetPosition default 0;
     property AllowCancel: Boolean read bAllowCancel write SetAllowCancel default True;
+    property Indeterminate: Boolean read bIndeterminate write SetIndeterminate default False;
   end;
 
 var
@@ -134,6 +136,15 @@ begin
   bAllowCancel := aValue;
   lineBottom.Visible := bAllowCancel;
   pBottom.Visible := bAllowCancel;
+end;
+
+procedure TdlgProgress.SetIndeterminate(aValue: Boolean);
+begin
+  bIndeterminate := aValue;
+  if bIndeterminate then
+    PBar.Style := pbstMarquee
+  else
+    PBar.Style := pbstNormal;
 end;
 
 end.

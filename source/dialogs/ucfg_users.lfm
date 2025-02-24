@@ -10,7 +10,6 @@ object cfgUsers: TcfgUsers
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.1'
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -73,7 +72,7 @@ object cfgUsers: TcfgUsers
       Columns = <      
         item
           Title.Caption = 'Username'
-          Width = 156
+          Width = 154
           FieldName = 'user_name'
         end      
         item
@@ -84,10 +83,11 @@ object cfgUsers: TcfgUsers
             'Visitante'
           )
           Title.Caption = 'Access level'
-          Width = 156
+          Width = 154
           FieldName = 'user_rank'
         end>
       DataSource = dsUsers
+      DefaultRowHeight = 24
       FixedCols = 0
       Options = [dgTitles, dgColumnResize, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgCellHints, dgTruncCellHints, dgCellEllipsis, dgThumbTracking]
       PopupMenu = pmGrid
@@ -143,7 +143,7 @@ object cfgUsers: TcfgUsers
         Left = 17
         Height = 26
         Top = 9
-        Width = 28
+        Width = 34
         Align = alLeft
         AutoSize = True
         BorderSpacing.Bottom = 6
@@ -154,10 +154,10 @@ object cfgUsers: TcfgUsers
         OnClick = sbNewClick
       end
       object sbEdit: TSpeedButton
-        Left = 49
+        Left = 55
         Height = 26
         Top = 9
-        Width = 28
+        Width = 34
         Align = alLeft
         AutoSize = True
         BorderSpacing.Right = 13
@@ -169,11 +169,11 @@ object cfgUsers: TcfgUsers
         OnClick = sbEditClick
       end
       object sbChangePassword: TSpeedButton
-        Left = 105
+        Left = 117
         Height = 26
         Hint = 'Change password'
         Top = 9
-        Width = 28
+        Width = 34
         Align = alLeft
         AutoSize = True
         BorderSpacing.Left = 13
@@ -186,10 +186,10 @@ object cfgUsers: TcfgUsers
         OnClick = sbChangePasswordClick
       end
       object sbDelete: TSpeedButton
-        Left = 267
+        Left = 261
         Height = 26
         Top = 9
-        Width = 28
+        Width = 34
         Align = alRight
         AutoSize = True
         BorderSpacing.Left = 13
@@ -201,7 +201,7 @@ object cfgUsers: TcfgUsers
         OnClick = sbDeleteClick
       end
       object Separator7: TShapeLineBGRA
-        Left = 90
+        Left = 102
         Height = 26
         Top = 9
         Width = 2
@@ -212,7 +212,7 @@ object cfgUsers: TcfgUsers
         LineWidth = 1
       end
       object Separator8: TShapeLineBGRA
-        Left = 252
+        Left = 246
         Height = 26
         Top = 9
         Width = 2
@@ -223,11 +223,11 @@ object cfgUsers: TcfgUsers
         LineWidth = 1
       end
       object sbRefreshRecords: TSpeedButton
-        Left = 211
+        Left = 199
         Height = 26
         Hint = 'Refresh records'
         Top = 9
-        Width = 28
+        Width = 34
         Align = alRight
         AutoSize = True
         BorderSpacing.Left = 13

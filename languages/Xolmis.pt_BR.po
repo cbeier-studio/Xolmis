@@ -3401,8 +3401,9 @@ msgid "Error in year digits (%d). Send this issue to the Support."
 msgstr "Erro nos dígitos do ano (%d). Comunique o problema ao Suporte."
 
 #: cbs_locale.rserroroptimizingdatabase
-msgid "An error occurred while optimizing the database."
-msgstr "Um erro ocorreu ao otimizar o banco de dados."
+#, object-pascal-format
+msgid "An error occurred while optimizing the database: %s"
+msgstr "Um erro ocorreu ao otimizar o banco de dados: %s"
 
 #: cbs_locale.rserrorpopulatingtables
 #, object-pascal-format
@@ -3454,6 +3455,11 @@ msgstr "Um erro ocorreu durante a atualização da senha do Admin."
 #, object-pascal-format
 msgid "Error while upgrading the database schema: %s"
 msgstr "Erro atualizando o esquema do banco de dados: %s"
+
+#: cbs_locale.rserrorvacuumingdatabase
+#, object-pascal-format
+msgid "An error occurred while vacuuming the database: %s"
+msgstr "Um erro ocorreu ao aspirar o banco de dados: %s"
 
 #: cbs_locale.rserrorwritingadminpassword
 #, object-pascal-format
@@ -4966,9 +4972,17 @@ msgstr "Conexão ao banco de dados foi bem sucedida!"
 msgid "The database file was created successfully!"
 msgstr "O arquivo de banco de dados foi criado com sucesso!"
 
+#: cbs_locale.rssuccessfuldatabaseoptimization
+msgid "The selected database was optimized!"
+msgstr "O banco de dados selecionado foi otimizado!"
+
 #: cbs_locale.rssuccessfuldatabaseupgrade
 msgid "The database schema was upgraded successfully!"
 msgstr "O esquema do banco de dados foi atualizado com sucesso!"
+
+#: cbs_locale.rssuccessfuldatabasevacuum
+msgid "The selected database was vacuumed!"
+msgstr "O banco de dados selecionado foi aspirado!"
 
 #: cbs_locale.rssuccessfulimport
 msgctxt "cbs_locale.rssuccessfulimport"
@@ -5886,6 +5900,10 @@ msgstr "Otimizar banco de dados"
 msgctxt "tcfgdatabase.mmtestconnection.caption"
 msgid "Test connection"
 msgstr "Testar conexão"
+
+#: tcfgdatabase.mmvacuumdb.caption
+msgid "Vacuum database"
+msgstr "Aspirar banco de dados"
 
 #: tcfgdatabase.pmgdelete.caption
 msgctxt "tcfgdatabase.pmgdelete.caption"

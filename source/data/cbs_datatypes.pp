@@ -53,6 +53,7 @@ type
     procedure Optimize;
     procedure SetLastBackup;
     function TestConnection: Boolean;
+    procedure Vacuum;
   end;
 
 type
@@ -1231,9 +1232,11 @@ begin
       uCon.Open;
       uCon.ExecuteDirect('PRAGMA optimize;');
       uCon.Close;
+
+      MsgDlg(rsTitleInformation, rsSuccessfulDatabaseOptimization, mtInformation);
     except
       on E: Exception do
-        MsgDlg(rsTitleError, rsErrorOptimizingDatabase, mtError);
+        MsgDlg(rsTitleError, Format(rsErrorOptimizingDatabase, [E.Message]), mtError);
     end;
   finally
     FreeAndNil(uTrans);
@@ -1281,6 +1284,36 @@ begin
 
   //if Result then
   //  MsgDlg(rsTitleConnectionTest, rsSuccessfulConnectionTest, mtInformation);
+end;
+
+procedure TDBParams.Vacuum;
+var
+  uCon: TSQLConnector;
+  uTrans: TSQLTransaction;
+begin
+  uCon := TSQLConnector.Create(nil);
+  uTrans := TSQLTransaction.Create(uCon);
+  try
+    LoadDatabaseParams(Self.Name, uCon);
+
+    try
+      uTrans.Action := caCommitRetaining;
+      uCon.Transaction := uTrans;
+      uCon.Open;
+      uCon.ExecuteDirect('END TRANSACTION;');
+      uCon.ExecuteDirect('VACUUM;');
+      uCon.ExecuteDirect('BEGIN TRANSACTION;');
+      uCon.Close;
+
+      MsgDlg(rsTitleInformation, rsSuccessfulDatabaseVacuum, mtInformation);
+    except
+      on E: Exception do
+        MsgDlg(rsTitleError, Format(rsErrorVacuumingDatabase, [E.Message]), mtError);
+    end;
+  finally
+    FreeAndNil(uTrans);
+    FreeAndNil(uCon);
+  end;
 end;
 
 end.

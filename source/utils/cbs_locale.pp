@@ -170,7 +170,8 @@ uses
     rsErrorUpdatingAdminPassword = 'An error occurred while updating the Admin password.';
     rsErrorCheckingUpdates = 'An error occurred while checking for updates.';
     rsErrorReportNotFound = 'Report template not found: %s';
-    rsErrorOptimizingDatabase = 'An error occurred while optimizing the database.';
+    rsErrorOptimizingDatabase = 'An error occurred while optimizing the database: %s';
+    rsErrorVacuumingDatabase = 'An error occurred while vacuuming the database: %s';
     rsErrorCreatingUser = 'An error occurred while creating the user: %s';
     rsErrorWritingAdminPassword = 'An error occurred while writing the Admin user password: %s';
     rsErrorEmptyId = 'ID is empty';
@@ -214,6 +215,8 @@ uses
     rsSuccessfulDatabaseCreation = 'The database file was created successfully!';
     rsSuccessfulDatabaseUpgrade = 'The database schema was upgraded successfully!';
     rsSuccessfulUpdateAdminPassword = 'The Admin password was updated successfully!';
+    rsSuccessfulDatabaseOptimization = 'The selected database was optimized!';
+    rsSuccessfulDatabaseVacuum = 'The selected database was vacuumed!';
 
     { Deletion messages }
     rsDeleteConnectionTitle = 'Delete connection';
