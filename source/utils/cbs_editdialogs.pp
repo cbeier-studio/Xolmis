@@ -33,6 +33,10 @@ uses
   function EditPerson(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditProject(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditProjectMember(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditProjectGoal(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditProjectActivity(aDataSet: TDataSet; aProject: Integer = 0; aGoal: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditProjectRubric(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditProjectExpense(aDataSet: TDataSet; aProject: Integer = 0; aRubric: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditPermit(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditBotanicTaxon(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditBand(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
@@ -69,7 +73,8 @@ uses
   uedt_nest, uedt_egg, uedt_molt, uedt_nestrevision, uedt_neteffort, uedt_permanentnet, uedt_sighting,
   uedt_method, uedt_weatherlog, uedt_project, uedt_permit, uedt_specimen, uedt_sampleprep, uedt_nestowner,
   uedt_imageinfo, uedt_audioinfo, uedt_documentinfo, uedt_vegetation, uedt_database, uedt_collector,
-  uedt_projectmember, uedt_surveymember;
+  uedt_projectmember, uedt_surveymember, uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
+  uedt_projectexpense;
 
 function EditMethod(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
@@ -705,6 +710,294 @@ begin
     FRecord.Free;
     FreeAndNil(edtProjectMember);
     LogInfo('CLOSE EDIT DIALOG: Project member');
+  end;
+end;
+
+function EditProjectGoal(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
+var
+  FRecord, FOldRecord: TProjectGoal;
+  lstDiff: TStrings;
+  D: String;
+begin
+  LogInfo('OPEN EDIT DIALOG: Project goal');
+  Application.CreateForm(TedtProjectGoal, edtProjectGoal);
+  FOldRecord := nil;
+  with edtProjectGoal do
+  try
+    dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
+    if IsNew then
+    begin
+      FRecord := TProjectGoal.Create();
+      EditSourceStr := rsInsertedByForm;
+    end else
+    begin
+      FOldRecord := TProjectGoal.Create(aDataSet.FieldByName('goal_id').AsInteger);
+      FRecord := TProjectGoal.Create(aDataSet.FieldByName('goal_id').AsInteger);
+      EditSourceStr := rsEditedByForm;
+    end;
+    ProjectGoal := FRecord;
+    ProjectId := aProject;
+    Result := ShowModal = mrOk;
+    if Result then
+    begin
+      ProjectGoal.Save;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if ProjectGoal.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbProjectGoals, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbProjectGoals, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      if not aDataSet.Active then
+        Exit;
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('goal_id', ProjectGoal.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+
+    end;
+  finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
+    FRecord.Free;
+    FreeAndNil(edtProjectGoal);
+    LogInfo('CLOSE EDIT DIALOG: Project goal');
+  end;
+end;
+
+function EditProjectActivity(aDataSet: TDataSet; aProject: Integer = 0; aGoal: Integer = 0; IsNew: Boolean = False): Boolean;
+var
+  FRecord, FOldRecord: TProjectActivity;
+  lstDiff: TStrings;
+  D: String;
+begin
+  LogInfo('OPEN EDIT DIALOG: Project activity');
+  Application.CreateForm(TedtProjectActivity, edtProjectActivity);
+  FOldRecord := nil;
+  with edtProjectActivity do
+  try
+    dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
+    if IsNew then
+    begin
+      FRecord := TProjectActivity.Create();
+      EditSourceStr := rsInsertedByForm;
+    end else
+    begin
+      FOldRecord := TProjectActivity.Create(aDataSet.FieldByName('chronogram_id').AsInteger);
+      FRecord := TProjectActivity.Create(aDataSet.FieldByName('chronogram_id').AsInteger);
+      EditSourceStr := rsEditedByForm;
+    end;
+    ProjectActivity := FRecord;
+    ProjectId := aProject;
+    if aGoal > 0 then
+      GoalId := aGoal;
+    Result := ShowModal = mrOk;
+    if Result then
+    begin
+      ProjectActivity.Save;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if ProjectActivity.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbProjectChronograms, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbProjectChronograms, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      if not aDataSet.Active then
+        Exit;
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('chronogram_id', ProjectActivity.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+
+    end;
+  finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
+    FRecord.Free;
+    FreeAndNil(edtProjectActivity);
+    LogInfo('CLOSE EDIT DIALOG: Project activity');
+  end;
+end;
+
+function EditProjectRubric(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
+var
+  FRecord, FOldRecord: TProjectRubric;
+  lstDiff: TStrings;
+  D: String;
+begin
+  LogInfo('OPEN EDIT DIALOG: Project rubric');
+  Application.CreateForm(TedtProjectRubric, edtProjectRubric);
+  FOldRecord := nil;
+  with edtProjectRubric do
+  try
+    dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
+    if IsNew then
+    begin
+      FRecord := TProjectRubric.Create();
+      EditSourceStr := rsInsertedByForm;
+    end else
+    begin
+      FOldRecord := TProjectRubric.Create(aDataSet.FieldByName('budget_id').AsInteger);
+      FRecord := TProjectRubric.Create(aDataSet.FieldByName('budget_id').AsInteger);
+      EditSourceStr := rsEditedByForm;
+    end;
+    ProjectRubric := FRecord;
+    ProjectId := aProject;
+    Result := ShowModal = mrOk;
+    if Result then
+    begin
+      ProjectRubric.Save;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if ProjectRubric.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbProjectBudgets, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbProjectBudgets, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      if not aDataSet.Active then
+        Exit;
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('budget_id', ProjectRubric.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+
+    end;
+  finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
+    FRecord.Free;
+    FreeAndNil(edtProjectRubric);
+    LogInfo('CLOSE EDIT DIALOG: Project rubric');
+  end;
+end;
+
+function EditProjectExpense(aDataSet: TDataSet; aProject: Integer = 0; aRubric: Integer = 0; IsNew: Boolean = False): Boolean;
+var
+  FRecord, FOldRecord: TProjectExpense;
+  lstDiff: TStrings;
+  D: String;
+begin
+  LogInfo('OPEN EDIT DIALOG: Project expense');
+  Application.CreateForm(TedtProjectExpense, edtProjectExpense);
+  FOldRecord := nil;
+  with edtProjectExpense do
+  try
+    dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
+    if IsNew then
+    begin
+      FRecord := TProjectExpense.Create();
+      EditSourceStr := rsInsertedByForm;
+    end else
+    begin
+      FOldRecord := TProjectExpense.Create(aDataSet.FieldByName('expense_id').AsInteger);
+      FRecord := TProjectExpense.Create(aDataSet.FieldByName('expense_id').AsInteger);
+      EditSourceStr := rsEditedByForm;
+    end;
+    ProjectExpense := FRecord;
+    ProjectId := aProject;
+    if aRubric > 0 then
+      RubricId := aRubric;
+    Result := ShowModal = mrOk;
+    if Result then
+    begin
+      ProjectExpense.Save;
+
+      { Save changes to the record history }
+      if Assigned(FOldRecord) then
+      begin
+        lstDiff := TStringList.Create;
+        try
+          if ProjectExpense.Diff(FOldRecord, lstDiff) then
+          begin
+            for D in lstDiff do
+              WriteRecHistory(tbProjectExpenses, haEdited, FOldRecord.Id,
+                ExtractDelimited(1, D, [';']),
+                ExtractDelimited(2, D, [';']),
+                ExtractDelimited(3, D, [';']), EditSourceStr);
+          end;
+        finally
+          FreeAndNil(lstDiff);
+        end;
+      end
+      else
+        WriteRecHistory(tbProjectExpenses, haCreated, 0, '', '', '', rsInsertedByForm);
+
+      // Go to record
+      if not aDataSet.Active then
+        Exit;
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('expense_id', ProjectExpense.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+
+    end;
+  finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
+    FRecord.Free;
+    FreeAndNil(edtProjectExpense);
+    LogInfo('CLOSE EDIT DIALOG: Project expense');
   end;
 end;
 

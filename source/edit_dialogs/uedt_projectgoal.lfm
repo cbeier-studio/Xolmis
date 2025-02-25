@@ -1,0 +1,186 @@
+object edtProjectGoal: TedtProjectGoal
+  Left = 414
+  Height = 240
+  Top = 250
+  Width = 397
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'New project goal'
+  ClientHeight = 240
+  ClientWidth = 397
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 197
+    Width = 397
+    Align = alTop
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 41
+    Top = 199
+    Width = 397
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 41
+    ClientWidth = 397
+    TabOrder = 1
+    object sbSave: TButton
+      Left = 16
+      Height = 25
+      Top = 8
+      Width = 178
+      Caption = 'Save'
+      Constraints.MinWidth = 120
+      Enabled = False
+      TabOrder = 0
+      OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+    object sbCancel: TButton
+      Left = 202
+      Height = 25
+      Top = 8
+      Width = 179
+      Caption = 'Cancel'
+      Constraints.MinWidth = 120
+      ModalResult = 2
+      TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+  end
+  object pContent: TPanel
+    Left = 0
+    Height = 197
+    Top = 0
+    Width = 397
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.TopBottomSpacing = 16
+    ClientHeight = 197
+    ClientWidth = 397
+    TabOrder = 0
+    object pDescription: TPanel
+      Left = 0
+      Height = 112
+      Top = 16
+      Width = 397
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Top = 8
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 112
+      ClientWidth = 397
+      ParentBackground = False
+      TabOrder = 0
+      object lblDescription: TLabel
+        Left = 16
+        Height = 15
+        Top = 3
+        Width = 365
+        Align = alTop
+        BorderSpacing.Top = 3
+        Caption = 'Description: *'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object mDescription: TMemo
+        Left = 16
+        Height = 90
+        Top = 22
+        Width = 365
+        Align = alTop
+        Constraints.MinWidth = 365
+        ScrollBars = ssAutoVertical
+        TabOrder = 0
+        OnEditingDone = mDescriptionEditingDone
+        OnKeyDown = FormKeyDown
+        OnKeyPress = FormKeyPress
+      end
+    end
+    object pStatus: TPanel
+      Left = 0
+      Height = 45
+      Top = 136
+      Width = 397
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Top = 8
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 45
+      ClientWidth = 397
+      ParentBackground = False
+      TabOrder = 1
+      object lblStatus: TLabel
+        Left = 16
+        Height = 15
+        Top = 3
+        Width = 174
+        BorderSpacing.Top = 3
+        Caption = 'Status: *'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object lblStatus1: TLabel
+        Left = 206
+        Height = 15
+        Top = 3
+        Width = 175
+        BorderSpacing.Top = 3
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object cbStatus: TComboBox
+        Left = 16
+        Height = 23
+        Top = 22
+        Width = 174
+        Constraints.MinWidth = 120
+        ItemHeight = 15
+        Style = csDropDownList
+        TabOrder = 0
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbStatusKeyPress
+      end
+    end
+  end
+  object dsLink: TDataSource
+    DataSet = DMG.qProjectGoals
+    OnDataChange = dsLinkDataChange
+    Left = 324
+    Top = 52
+  end
+end

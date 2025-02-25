@@ -14,5 +14,8 @@
 {"hash":33581481,"name":"tedtproject.eenddate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
 {"hash":194645850,"name":"tedtproject.lblwebsite.caption","sourcebytes":[87,101,98,115,105,116,101,58],"value":"Website:"},
 {"hash":138641338,"name":"tedtproject.lblemail.caption","sourcebytes":[69,45,109,97,105,108,58],"value":"E-mail:"},
-{"hash":57575946,"name":"tedtproject.lblcontactname.caption","sourcebytes":[67,111,110,116,97,99,116,32,112,101,114,115,111,110,58],"value":"Contact person:"}
+{"hash":57575946,"name":"tedtproject.lblcontactname.caption","sourcebytes":[67,111,110,116,97,99,116,32,112,101,114,115,111,110,58],"value":"Contact person:"},
+{"hash":251571018,"name":"tedtproject.lblprotocolnumber.caption","sourcebytes":[80,114,111,116,111,99,111,108,32,110,117,109,98,101,114,58],"value":"Protocol number:"},
+{"hash":6909946,"name":"tedtproject.lblmaingoal.caption","sourcebytes":[77,97,105,110,32,103,111,97,108,58],"value":"Main goal:"},
+{"hash":93364842,"name":"tedtproject.lblrisks.caption","sourcebytes":[82,105,115,107,115,58],"value":"Risks:"}
 ]}

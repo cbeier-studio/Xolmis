@@ -84,6 +84,8 @@ type
     procedure FindPermanentNets(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindPermits(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindProjects(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindProjectGoals(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindProjectRubrics(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindSamplePreps(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindSightings(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindSpecimens(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
@@ -685,6 +687,65 @@ begin
       fvReset:
         begin
           Add('WHERE (permit_name ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
+procedure TdlgFind.FindProjectGoals(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador:= GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT goal_id, goal_description FROM project_goals ');
+    case aFilter of
+      fvNone:
+        { nothing } ;
+      fvReset:
+        begin
+          Add('WHERE (goal_description ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
+procedure TdlgFind.FindProjectRubrics(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador:= GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT budget_id, ');
+    Add('CASE');
+    Add('   WHEN TRIM(COALESCE(item_name, '''')) = '''' THEN rubric');
+    Add('   ELSE rubric || '': '' || item_name');
+    Add('END AS rubric_item');
+    Add('FROM project_budgets ');
+    case aFilter of
+      fvNone:
+        { nothing } ;
+      fvReset:
+        begin
+          Add('WHERE (rubric_item ' + Operador + ' :VALPARAM) ');
           Add('AND (active_status = 1)');
         end;
       fvAll:
@@ -1315,10 +1376,12 @@ begin
       tbNests:          FindNests(aSQL, aFilter, aCriteria);
       tbNestRevisions:  FindNestRevisions(aSQL, aFilter, aCriteria);
       tbEggs:           FindEggs(aSQL, aFilter, aCriteria);
-      tbSamplingPlots:    FindSamplingPlots(aSQL, aFilter, aCriteria);
+      tbSamplingPlots:  FindSamplingPlots(aSQL, aFilter, aCriteria);
       tbTaxonRanks:     FindTaxonRanks(aSQL, aFilter, aCriteria);
       tbZooTaxa:        FindTaxa(aSQL, aFilter, aCriteria);
       tbProjects:       FindProjects(aSQL, aFilter, aCriteria);
+      tbProjectBudgets: FindProjectRubrics(aSQL, aFilter, aCriteria);
+      tbProjectGoals:   FindProjectGoals(aSQL, aFilter, aCriteria);
       tbInstitutions:   FindInstitutions(aSQL, aFilter, aCriteria);
       tbPeople:         FindPeople(aSQL, aFilter, aCriteria);
       tbSurveys:        FindSurveys(aSQL, aFilter, aCriteria);
@@ -1388,7 +1451,7 @@ begin
       tbNests:          SetupResult('nest_id', 'full_name');
       tbNestRevisions:  SetupResult('nest_revision_id', 'full_name');
       tbEggs:           SetupResult('egg_id', 'full_name');
-      tbSamplingPlots:    SetupResult('sampling_plot_id', 'full_name');
+      tbSamplingPlots:  SetupResult('sampling_plot_id', 'full_name');
       tbTaxonRanks:     SetupResult('rank_id', 'rank_name');
       tbZooTaxa:
       begin
@@ -1398,6 +1461,8 @@ begin
           SetupResult('taxon_id', 'full_name');
       end;
       tbProjects:       SetupResult('project_id', 'project_title');
+      tbProjectGoals:   SetupResult('goal_id', 'goal_description');
+      tbProjectBudgets: SetupResult('budget_id', 'rubric_item');
       tbInstitutions:   SetupResult('institution_id', 'full_name');
       tbPeople:         SetupResult('person_id', 'full_name');
       tbExpeditions:    SetupResult('expedition_id', 'expedition_name');

@@ -1,0 +1,343 @@
+object edtProjectActivity: TedtProjectActivity
+  Left = 414
+  Height = 338
+  Top = 250
+  Width = 397
+  AutoSize = True
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'New activity'
+  ClientHeight = 338
+  ClientWidth = 397
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 295
+    Width = 397
+    Align = alTop
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 41
+    Top = 297
+    Width = 397
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 41
+    ClientWidth = 397
+    TabOrder = 1
+    object sbSave: TButton
+      Left = 16
+      Height = 25
+      Top = 8
+      Width = 178
+      Caption = 'Save'
+      Constraints.MinWidth = 120
+      Enabled = False
+      TabOrder = 0
+      OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+    object sbCancel: TButton
+      Left = 202
+      Height = 25
+      Top = 8
+      Width = 179
+      Caption = 'Cancel'
+      Constraints.MinWidth = 120
+      ModalResult = 2
+      TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+  end
+  object pContent: TPanel
+    Left = 0
+    Height = 295
+    Top = 0
+    Width = 397
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.TopBottomSpacing = 16
+    ClientHeight = 295
+    ClientWidth = 397
+    TabOrder = 0
+    object pDescription: TPanel
+      Left = 0
+      Height = 112
+      Top = 16
+      Width = 397
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Top = 8
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 112
+      ClientWidth = 397
+      ParentBackground = False
+      TabOrder = 0
+      object lblDescription: TLabel
+        Left = 16
+        Height = 15
+        Top = 3
+        Width = 365
+        Align = alTop
+        BorderSpacing.Top = 3
+        Caption = 'Description: *'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object mDescription: TMemo
+        Left = 16
+        Height = 90
+        Top = 22
+        Width = 365
+        Align = alTop
+        Constraints.MinWidth = 365
+        ScrollBars = ssAutoVertical
+        TabOrder = 0
+        OnEditingDone = mDescriptionEditingDone
+        OnKeyDown = FormKeyDown
+        OnKeyPress = FormKeyPress
+      end
+    end
+    object pStatusStartDate: TPanel
+      Left = 0
+      Height = 45
+      Top = 136
+      Width = 397
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Top = 8
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 45
+      ClientWidth = 397
+      ParentBackground = False
+      TabOrder = 1
+      object lblStatus: TLabel
+        Left = 16
+        Height = 15
+        Top = 3
+        Width = 174
+        BorderSpacing.Top = 3
+        Caption = 'Status: *'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object lblStartDate: TLabel
+        Left = 206
+        Height = 15
+        Top = 3
+        Width = 175
+        BorderSpacing.Top = 3
+        Caption = 'Start date:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object cbStatus: TComboBox
+        Left = 16
+        Height = 23
+        Top = 22
+        Width = 174
+        Constraints.MinWidth = 150
+        ItemHeight = 15
+        Style = csDropDownList
+        TabOrder = 0
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbStatusKeyPress
+      end
+      object eStartDate: TEditButton
+        Left = 206
+        Height = 23
+        Top = 22
+        Width = 175
+        ButtonHint = 'Open calendar'
+        ButtonWidth = 23
+        Images = DMM.iEdits
+        ImageIndex = 1
+        MaxLength = 0
+        NumGlyphs = 1
+        ParentShowHint = False
+        PasswordChar = #0
+        ShowHint = True
+        Spacing = 0
+        TabOrder = 1
+        TextHint = 'DD/MM/YYYY'
+        OnButtonClick = eStartDateButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbStatusKeyPress
+      end
+    end
+    object pGoal: TPanel
+      Left = 0
+      Height = 45
+      Top = 234
+      Width = 397
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Top = 8
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 45
+      ClientWidth = 397
+      ParentBackground = False
+      TabOrder = 3
+      object lblGoal: TLabel
+        Left = 16
+        Height = 15
+        Top = 3
+        Width = 365
+        BorderSpacing.Top = 3
+        Caption = 'Goal:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eGoal: TEditButton
+        Left = 16
+        Height = 23
+        Top = 22
+        Width = 365
+        ButtonHint = 'Find goal'
+        ButtonWidth = 23
+        Constraints.MinWidth = 365
+        Images = DMM.iEdits
+        ImageIndex = 0
+        MaxLength = 0
+        NumGlyphs = 1
+        ParentShowHint = False
+        PasswordChar = #0
+        ShowHint = True
+        Spacing = 0
+        TabOrder = 0
+        OnButtonClick = eGoalButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eGoalKeyPress
+      end
+    end
+    object pTargetEndDate: TPanel
+      Left = 0
+      Height = 45
+      Top = 181
+      Width = 397
+      Align = alTop
+      AutoSize = True
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 45
+      ClientWidth = 397
+      ParentBackground = False
+      TabOrder = 2
+      object lblTargetDate: TLabel
+        Left = 16
+        Height = 15
+        Top = 3
+        Width = 174
+        BorderSpacing.Top = 3
+        Caption = 'Target date:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object lblEndDate: TLabel
+        Left = 206
+        Height = 15
+        Top = 3
+        Width = 175
+        BorderSpacing.Top = 3
+        Caption = 'End date:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eTargetDate: TEditButton
+        Left = 16
+        Height = 23
+        Top = 22
+        Width = 174
+        ButtonHint = 'Open calendar'
+        ButtonWidth = 23
+        Images = DMM.iEdits
+        ImageIndex = 1
+        MaxLength = 0
+        NumGlyphs = 1
+        ParentShowHint = False
+        PasswordChar = #0
+        ShowHint = True
+        Spacing = 0
+        TabOrder = 0
+        TextHint = 'DD/MM/YYYY'
+        OnButtonClick = eTargetDateButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbStatusKeyPress
+      end
+      object eEndDate: TEditButton
+        Left = 206
+        Height = 23
+        Top = 22
+        Width = 175
+        ButtonHint = 'Open calendar'
+        ButtonWidth = 23
+        Images = DMM.iEdits
+        ImageIndex = 1
+        MaxLength = 0
+        NumGlyphs = 1
+        ParentShowHint = False
+        PasswordChar = #0
+        ShowHint = True
+        Spacing = 0
+        TabOrder = 1
+        TextHint = 'DD/MM/YYYY'
+        OnButtonClick = eEndDateButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = cbStatusKeyPress
+      end
+    end
+  end
+  object dsLink: TDataSource
+    DataSet = DMG.qProjectChronogram
+    OnDataChange = dsLinkDataChange
+    Left = 288
+    Top = 56
+  end
+end

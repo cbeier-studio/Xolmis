@@ -56,6 +56,10 @@ type
     gridDocs: TDBGrid;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
+    pmcNewProjectGoal: TMenuItem;
+    pmcNewChronogramActivity: TMenuItem;
+    pmcNewBudgetItem: TMenuItem;
+    pmcNewExpense: TMenuItem;
     pmrRefresh: TMenuItem;
     pmPrintMolts: TMenuItem;
     pmcNewVegetation: TMenuItem;
@@ -928,15 +932,19 @@ type
     procedure pmcColumnSortAscClick(Sender: TObject);
     procedure pmcColumnSortDescClick(Sender: TObject);
     procedure pmcHideColumnClick(Sender: TObject);
+    procedure pmcNewBudgetItemClick(Sender: TObject);
     procedure pmcNewCaptureClick(Sender: TObject);
+    procedure pmcNewChronogramActivityClick(Sender: TObject);
     procedure pmcNewCollectorClick(Sender: TObject);
     procedure pmcNewEggClick(Sender: TObject);
+    procedure pmcNewExpenseClick(Sender: TObject);
     procedure pmcNewMistnetClick(Sender: TObject);
     procedure pmcNewMoltClick(Sender: TObject);
     procedure pmcNewNestClick(Sender: TObject);
     procedure pmcNewNestOwnerClick(Sender: TObject);
     procedure pmcNewNestRevisionClick(Sender: TObject);
     procedure pmcNewPermanentNetClick(Sender: TObject);
+    procedure pmcNewProjectGoalClick(Sender: TObject);
     procedure pmcNewProjectMemberClick(Sender: TObject);
     procedure pmcNewSamplePrepClick(Sender: TObject);
     procedure pmcNewSightingClick(Sender: TObject);
@@ -2838,7 +2846,7 @@ begin
     tbNests:         ClearNestFilters;
     tbNestRevisions: ClearNestRevisionFilters;
     tbEggs:          ClearEggFilters;
-    tbSamplingPlots:   ClearSamplingPlotFilters;
+    tbSamplingPlots: ClearSamplingPlotFilters;
     tbTaxonRanks:    ClearTaxonRankFilters;
     tbZooTaxa:       ClearZooTaxaFilters;
     tbProjects:      ClearProjectFilters;
@@ -3000,8 +3008,8 @@ begin
       end;
     tbProjects:
       begin
-        Titles := [rsTitleProjectMembers];
-        Counts := [0];
+        Titles := [rsTitleProjectMembers, rsTitleGoals, rsTitleChronogram, rsTitleBudget, rsTitleExpenses];
+        Counts := [0, 0, 0, 0, 0];
       end;
   end;
 
@@ -6315,9 +6323,21 @@ procedure TfrmCustomGrid.OpenProjectChilds;
 begin
   AddGridColumns(tbProjectTeams, gridChild1);
   dsLink1.DataSet.Open;
+  AddGridColumns(tbProjectGoals, gridChild2);
+  dsLink2.DataSet.Open;
+  AddGridColumns(tbProjectChronograms, gridChild3);
+  dsLink3.DataSet.Open;
+  AddGridColumns(tbProjectBudgets, gridChild4);
+  dsLink4.DataSet.Open;
+  AddGridColumns(tbProjectExpenses, gridChild5);
+  dsLink5.DataSet.Open;
   if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
   begin
     (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
+    (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
   end;
 end;
 
@@ -6703,6 +6723,13 @@ begin
   AddGridColumns(FTableType, DBG);
 end;
 
+procedure TfrmCustomGrid.pmcNewBudgetItemClick(Sender: TObject);
+begin
+  EditProjectRubric(DMG.qProjectBudget, dsLink.DataSet.FieldByName('project_id').AsInteger, True);
+
+  UpdateChildButtons(DMG.qProjectBudget);
+end;
+
 procedure TfrmCustomGrid.pmcNewCaptureClick(Sender: TObject);
 begin
   case FTableType of
@@ -6713,6 +6740,13 @@ begin
   end;
 
   UpdateChildBar;
+end;
+
+procedure TfrmCustomGrid.pmcNewChronogramActivityClick(Sender: TObject);
+begin
+  EditProjectActivity(DMG.qProjectChronogram, dsLink.DataSet.FieldByName('project_id').AsInteger, 0, True);
+
+  UpdateChildButtons(DMG.qProjectChronogram);
 end;
 
 procedure TfrmCustomGrid.pmcNewCollectorClick(Sender: TObject);
@@ -6727,6 +6761,13 @@ begin
   EditEgg(DMB.qEggs, dsLink.DataSet.FieldByName('nest_id').AsInteger, True);
 
   UpdateChildButtons(DMB.qEggs);
+end;
+
+procedure TfrmCustomGrid.pmcNewExpenseClick(Sender: TObject);
+begin
+  EditProjectExpense(DMG.qProjectExpenses, dsLink.DataSet.FieldByName('project_id').AsInteger, 0, True);
+
+  UpdateChildButtons(DMG.qProjectExpenses);
 end;
 
 procedure TfrmCustomGrid.pmcNewMistnetClick(Sender: TObject);
@@ -6769,6 +6810,13 @@ begin
   EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('net_station_id').AsInteger, True);
 
   UpdateChildButtons(DMG.qPermanentNets);
+end;
+
+procedure TfrmCustomGrid.pmcNewProjectGoalClick(Sender: TObject);
+begin
+  EditProjectGoal(DMG.qProjectGoals, dsLink.DataSet.FieldByName('project_id').AsInteger, True);
+
+  UpdateChildButtons(DMG.qProjectGoals);
 end;
 
 procedure TfrmCustomGrid.pmcNewProjectMemberClick(Sender: TObject);
@@ -7977,7 +8025,7 @@ end;
 procedure TfrmCustomGrid.PrepareCanvasProjects(var Column: TColumn; var sender: TObject);
 begin
   if (Column.FieldName = 'start_date') or
-    (Column.FieldName = 'net_number') then
+    (Column.FieldName = 'protocol_number') then
   begin
     {$IFDEF MSWINDOWS}
     TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
@@ -8514,7 +8562,14 @@ begin
       //tbPermanentNets: ;
       //tbInstitutions: ;
       //tbPeople: ;
-      tbProjects: ;
+      tbProjects:
+        case nbChilds.PageIndex of
+          0: DeleteRecord(tbProjectTeams, DMG.qProjectTeam);
+          1: DeleteRecord(tbProjectGoals, DMG.qProjectGoals);
+          2: DeleteRecord(tbProjectChronograms, DMG.qProjectChronogram);
+          3: DeleteRecord(tbProjectBudgets, DMG.qProjectBudget);
+          4: DeleteRecord(tbProjectExpenses, DMG.qProjectExpenses);
+        end;
       //tbProjectTeams: ;
       //tbPermits: ;
       //tbTaxonRanks: ;
@@ -8552,13 +8607,15 @@ begin
           2: DeleteRecord(tbWeatherLogs, DMS.qWeatherLogs);
           3: DeleteRecord(tbCaptures, DMS.qCaptures);
           4: DeleteRecord(tbSightings, DMS.qSightings);
+          5: DeleteRecord(tbVegetation, DMS.qVegetation);
         end;
       //tbSurveyTeams: ;
       //tbNetsEffort: ;
       tbSightings: ;
       tbSpecimens:
         case nbChilds.PageIndex of
-          0: DeleteRecord(tbSamplePreps, DMG.qSamplePreps);
+          0: DeleteRecord(tbSpecimenCollectors, DMG.qSampleCollectors);
+          1: DeleteRecord(tbSamplePreps, DMG.qSamplePreps);
         end;
       //tbSamplePreps: ;
       //tbImages: ;
@@ -8666,6 +8723,10 @@ begin
       tbProjects:
         case nbChilds.PageIndex of
           0: EditProjectMember(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger);
+          1: EditProjectGoal(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger);
+          2: EditProjectActivity(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger);
+          3: EditProjectRubric(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger);
+          4: EditProjectExpense(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger);
         end;
       //tbProjectTeams: ;
       //tbPermits: ;
@@ -9141,6 +9202,7 @@ begin
     2: ExportDlg(dsLink3.DataSet);
     3: ExportDlg(dsLink4.DataSet);
     4: ExportDlg(dsLink5.DataSet);
+    5: ExportDlg(dsLink6.DataSet);
   end;
 end;
 
@@ -10285,7 +10347,13 @@ begin
         False, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('short_title', 'Short title', sdtText, Crit,
         False, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('protocol_number', 'Protocol number', sdtText, Crit,
+        False, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('contact_name', 'Contact', sdtText, Crit,
+        False, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('main_goal', 'Main goal', sdtText, Crit,
+        False, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('risks', 'Risks', sdtText, Crit,
         False, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('project_abstract', 'Abstract', sdtText, Crit,
         False, aValue));
@@ -11374,7 +11442,7 @@ begin
     tbProjects:       SetGridProjects;
     tbPermits:        SetGridPermits;
     tbGazetteer:      SetGridGazetteer;
-    tbSamplingPlots:    SetGridSamplingPlots;
+    tbSamplingPlots:  SetGridSamplingPlots;
     tbTaxonRanks:     SetGridTaxonRanks;
     tbBotanicTaxa:    SetGridBotanicTaxa;
     tbZooTaxa: ;
@@ -11746,7 +11814,15 @@ begin
   nbChilds.PageIndex := 0;
   FChildTable := tbProjectTeams;
   dsLink1.DataSet := DMG.qProjectTeam;
+  dsLink2.DataSet := DMG.qProjectGoals;
+  dsLink3.DataSet := DMG.qProjectChronogram;
+  dsLink4.DataSet := DMG.qProjectBudget;
+  dsLink5.DataSet := DMG.qProjectExpenses;
   pmcNewProjectMember.Visible := True;
+  pmcNewProjectGoal.Visible := True;
+  pmcNewChronogramActivity.Visible := True;
+  pmcNewBudgetItem.Visible := True;
+  pmcNewExpense.Visible := True;
   sbShowSummary.Visible := True;
 
   pmPrintProjects.Visible := True;
@@ -12658,12 +12734,7 @@ begin
   begin
     for PanelTab in PanelTabs do
       PanelTab.UpdateCounter(0);
-    //pChildCount1.Visible := False;
-    //pChildCount2.Visible := False;
-    //pChildCount3.Visible := False;
-    //pChildCount4.Visible := False;
-    //pChildCount5.Visible := False;
-    //pChildCount6.Visible := False;
+
     Exit;
   end;
 
@@ -12675,13 +12746,6 @@ begin
     tbSamplingPlots:
     begin
       PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      //if dsLink1.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-      //  pChildCount1.Visible := True;
-      //end
-      //else
-      //  pChildCount1.Visible := False;
     end;
     //tbPermanentNets: ;
     //tbInstitutions: ;
@@ -12689,13 +12753,10 @@ begin
     tbProjects:
     begin
       PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      //if dsLink1.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-      //  pChildCount1.Visible := True;
-      //end
-      //else
-      //  pChildCount1.Visible := False;
+      PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+      PanelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+      PanelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
+      PanelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
     end;
     //tbProjectTeams: ;
     //tbPermits: ;
@@ -12711,45 +12772,6 @@ begin
       PanelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
       PanelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
       PanelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
-      //if dsLink1.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-      //  pChildCount1.Visible := True;
-      //end
-      //else
-      //  pChildCount1.Visible := False;
-      //
-      //if dsLink2.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
-      //  pChildCount2.Visible := True;
-      //end
-      //else
-      //  pChildCount2.Visible := False;
-      //
-      //if dsLink3.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount3.Caption := IntToStr(dsLink3.DataSet.RecordCount);
-      //  pChildCount3.Visible := True;
-      //end
-      //else
-      //  pChildCount3.Visible := False;
-      //
-      //if dsLink4.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount4.Caption := IntToStr(dsLink4.DataSet.RecordCount);
-      //  pChildCount4.Visible := True;
-      //end
-      //else
-      //  pChildCount4.Visible := False;
-      //
-      //if dsLink5.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount5.Caption := IntToStr(dsLink5.DataSet.RecordCount);
-      //  pChildCount5.Visible := True;
-      //end
-      //else
-      //  pChildCount5.Visible := False;
     end;
     //tbCaptures: ;
     //tbMolts: ;
@@ -12758,29 +12780,6 @@ begin
       PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
       PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
       PanelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-      //if dsLink1.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-      //  pChildCount1.Visible := True;
-      //end
-      //else
-      //  pChildCount1.Visible := False;
-      //
-      //if dsLink2.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
-      //  pChildCount2.Visible := True;
-      //end
-      //else
-      //  pChildCount2.Visible := False;
-      //
-      //if dsLink3.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount3.Caption := IntToStr(dsLink3.DataSet.RecordCount);
-      //  pChildCount3.Visible := True;
-      //end
-      //else
-      //  pChildCount3.Visible := False;
     end;
     //tbNestRevisions: ;
     //tbEggs: ;
@@ -12788,13 +12787,6 @@ begin
     tbExpeditions:
     begin
       PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      //if dsLink1.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-      //  pChildCount1.Visible := True;
-      //end
-      //else
-      //  pChildCount1.Visible := False;
     end;
     tbSurveys:
     begin
@@ -12804,53 +12796,6 @@ begin
       PanelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
       PanelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
       PanelTabs[5].UpdateCounter(dsLink6.DataSet.RecordCount);
-      //if dsLink1.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-      //  pChildCount1.Visible := True;
-      //end
-      //else
-      //  pChildCount1.Visible := False;
-      //
-      //if dsLink2.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
-      //  pChildCount2.Visible := True;
-      //end
-      //else
-      //  pChildCount2.Visible := False;
-      //
-      //if dsLink3.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount3.Caption := IntToStr(dsLink3.DataSet.RecordCount);
-      //  pChildCount3.Visible := True;
-      //end
-      //else
-      //  pChildCount3.Visible := False;
-      //
-      //if dsLink4.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount4.Caption := IntToStr(dsLink4.DataSet.RecordCount);
-      //  pChildCount4.Visible := True;
-      //end
-      //else
-      //  pChildCount4.Visible := False;
-      //
-      //if dsLink5.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount5.Caption := IntToStr(dsLink5.DataSet.RecordCount);
-      //  pChildCount5.Visible := True;
-      //end
-      //else
-      //  pChildCount5.Visible := False;
-      //
-      //if dsLink6.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount6.Caption := IntToStr(dsLink6.DataSet.RecordCount);
-      //  pChildCount6.Visible := True;
-      //end
-      //else
-      //  pChildCount6.Visible := False;
     end;
     //tbSurveyTeams: ;
     //tbNetsEffort: ;
@@ -12859,21 +12804,6 @@ begin
     begin
       PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
       PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-      //if dsLink1.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount1.Caption := IntToStr(dsLink1.DataSet.RecordCount);
-      //  pChildCount1.Visible := True;
-      //end
-      //else
-      //  pChildCount1.Visible := False;
-      //
-      //if dsLink2.DataSet.RecordCount > 0 then
-      //begin
-      //  lblChildCount2.Caption := IntToStr(dsLink2.DataSet.RecordCount);
-      //  pChildCount2.Visible := True;
-      //end
-      //else
-      //  pChildCount2.Visible := False;
     end;
     //tbSamplePreps: ;
     //tbImages: ;
@@ -12905,7 +12835,13 @@ begin
     //tbPeople: ;
     tbProjects:
     begin
-      DS := dsLink1;
+      case nbChilds.PageIndex of
+        0: DS := dsLink1;
+        1: DS := dsLink2;
+        2: DS := dsLink3;
+        3: DS := dsLink4;
+        4: DS := dsLink5;
+      end;
     end;
     //tbProjectTeams: ;
     //tbPermits: ;

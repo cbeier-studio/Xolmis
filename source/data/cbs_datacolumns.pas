@@ -487,6 +487,17 @@ resourcestring
   rscRecorderModel = 'Recorder model';
   rscMicModel = 'Microphone model';
   rscFilterModel = 'Filter model';
+  rscProtocolNr = 'Protocol nr.';
+  rscMainGoal = 'Main goal';
+  rscRisks = 'Risks';
+  rscTargetDate = 'Target date';
+  rscGoalID = 'Goal ID';
+  rscGoal = 'Goal';
+  rscFundingSource = 'Funding source';
+  rscRubric = 'Rubric';
+  rscItem = 'Item';
+  rscAmount = 'Amount';
+  rscBudgetID = 'Budget ID';
 
 
   procedure SummaryBands(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
@@ -519,6 +530,10 @@ resourcestring
   procedure TranslatePeople(aDataSet: TDataSet);
   procedure TranslateProjects(aDataSet: TDataSet);
   procedure TranslateProjectTeams(aDataSet: TDataSet);
+  procedure TranslateProjectGoals(aDataSet: TDataSet);
+  procedure TranslateProjectChronograms(aDataSet: TDataSet);
+  procedure TranslateProjectBudgets(aDataSet: TDataSet);
+  procedure TranslateProjectExpenses(aDataSet: TDataSet);
   procedure TranslatePermits(aDataSet: TDataSet);
   procedure TranslateGazetteer(aDataSet: TDataSet);
   procedure TranslateSamplingPlots(aDataSet: TDataSet);
@@ -903,6 +918,9 @@ begin
         'contact_name':           Fields[i].DisplayLabel := rscContactPerson;
         'project_file':           Fields[i].DisplayLabel := rscProjectFile;
         'contract_file':          Fields[i].DisplayLabel := rscContractFile;
+        'protocol_number':        Fields[i].DisplayLabel := rscProtocolNr;
+        'main_goal':              Fields[i].DisplayLabel := rscMainGoal;
+        'risks':                  Fields[i].DisplayLabel := rscRisks;
         'project_abstract':       Fields[i].DisplayLabel := rscAbstract;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'project_id':             Fields[i].DisplayLabel := rscId;
@@ -933,6 +951,116 @@ begin
         'person_acronym':         Fields[i].DisplayLabel := rscAcronym;
         'project_manager':        Fields[i].DisplayLabel := rscManager;
         'project_member_id':      Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateProjectGoals(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'project_id':             Fields[i].DisplayLabel := rscProjectID;
+        'goal_description':       Fields[i].DisplayLabel := rscDescription;
+        'goal_status':            Fields[i].DisplayLabel := rscStatus;
+        'goal_id':                Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateProjectChronograms(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'project_id':             Fields[i].DisplayLabel := rscProjectID;
+        'description':            Fields[i].DisplayLabel := rscDescription;
+        'start_date':             Fields[i].DisplayLabel := rscStartDate;
+        'target_date':            Fields[i].DisplayLabel := rscTargetDate;
+        'end_date':               Fields[i].DisplayLabel := rscEndDate;
+        'goal_id':                Fields[i].DisplayLabel := rscGoalID;
+        'goal_description':       Fields[i].DisplayLabel := rscGoal;
+        'progress_status':        Fields[i].DisplayLabel := rscStatus;
+        'chronogram_id':          Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateProjectBudgets(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'project_id':             Fields[i].DisplayLabel := rscProjectID;
+        'funding_source':         Fields[i].DisplayLabel := rscFundingSource;
+        'rubric':                 Fields[i].DisplayLabel := rscRubric;
+        'item_name':              Fields[i].DisplayLabel := rscItem;
+        'amount':                 Fields[i].DisplayLabel := rscAmount;
+        'budget_id':              Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateProjectExpenses(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'project_id':             Fields[i].DisplayLabel := rscProjectID;
+        'budget_id':              Fields[i].DisplayLabel := rscBudgetID;
+        'rubric':                 Fields[i].DisplayLabel := rscRubric;
+        'item_description':       Fields[i].DisplayLabel := rscItem;
+        'expense_date':           Fields[i].DisplayLabel := rscDate;
+        'amount':                 Fields[i].DisplayLabel := rscAmount;
+        'expense_id':             Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
         'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
         'insert_date':            Fields[i].DisplayLabel := rscInsertDate;

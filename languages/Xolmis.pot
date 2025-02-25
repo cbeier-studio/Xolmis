@@ -82,6 +82,10 @@ msgstr ""
 msgid "Altitude"
 msgstr ""
 
+#: cbs_datacolumns.rscamount
+msgid "Amount"
+msgstr ""
+
 #: cbs_datacolumns.rscannotator
 msgid "Annotator"
 msgstr ""
@@ -201,6 +205,10 @@ msgstr ""
 #: cbs_datacolumns.rscbroodpatch
 msgctxt "cbs_datacolumns.rscbroodpatch"
 msgid "Brood patch"
+msgstr ""
+
+#: cbs_datacolumns.rscbudgetid
+msgid "Budget ID"
 msgstr ""
 
 #: cbs_datacolumns.rscbuildingdays
@@ -639,6 +647,10 @@ msgstr ""
 msgid "Full name (formatted)"
 msgstr ""
 
+#: cbs_datacolumns.rscfundingsource
+msgid "Funding source"
+msgstr ""
+
 #: cbs_datacolumns.rscgc1
 msgid "GC1"
 msgstr ""
@@ -693,6 +705,14 @@ msgstr ""
 
 #: cbs_datacolumns.rscglucose
 msgid "Glucose"
+msgstr ""
+
+#: cbs_datacolumns.rscgoal
+msgid "Goal"
+msgstr ""
+
+#: cbs_datacolumns.rscgoalid
+msgid "Goal ID"
 msgstr ""
 
 #: cbs_datacolumns.rscgrowthbarwidth
@@ -836,6 +856,10 @@ msgstr ""
 msgid "Is in eBird"
 msgstr ""
 
+#: cbs_datacolumns.rscitem
+msgid "Item"
+msgstr ""
+
 #: cbs_datacolumns.rsckippsdistance
 msgid "Kipp's distance"
 msgstr ""
@@ -910,6 +934,10 @@ msgstr ""
 
 #: cbs_datacolumns.rscmackinnonlist
 msgid "Mackinnon list"
+msgstr ""
+
+#: cbs_datacolumns.rscmaingoal
+msgid "Main goal"
 msgstr ""
 
 #: cbs_datacolumns.rscmainrank
@@ -1457,6 +1485,10 @@ msgstr ""
 msgid "% of trees"
 msgstr ""
 
+#: cbs_datacolumns.rscprotocolnr
+msgid "Protocol nr."
+msgstr ""
+
 #: cbs_datacolumns.rscquantphilornislarvae
 msgid "# Philornis larvae"
 msgstr ""
@@ -1561,8 +1593,17 @@ msgstr ""
 msgid "Right wing chord"
 msgstr ""
 
+#: cbs_datacolumns.rscrisks
+msgid "Risks"
+msgstr ""
+
 #: cbs_datacolumns.rscrole
 msgid "Role"
+msgstr ""
+
+#: cbs_datacolumns.rscrubric
+msgctxt "cbs_datacolumns.rscrubric"
+msgid "Rubric"
 msgstr ""
 
 #: cbs_datacolumns.rscs1
@@ -1807,6 +1848,10 @@ msgstr ""
 msgid "Tail length"
 msgstr ""
 
+#: cbs_datacolumns.rsctargetdate
+msgid "Target date"
+msgstr ""
+
 #: cbs_datacolumns.rsctarsusdiameter
 msgid "Tarsus diameter"
 msgstr ""
@@ -2003,6 +2048,36 @@ msgstr ""
 #, object-pascal-format
 msgctxt "cbs_locale.rsactiverecordduplicated"
 msgid "A record with the same %s value already exists (%s)."
+msgstr ""
+
+#: cbs_locale.rsactivityblocked
+msgid "Blocked"
+msgstr ""
+
+#: cbs_locale.rsactivitycanceled
+msgctxt "cbs_locale.rsactivitycanceled"
+msgid "Canceled"
+msgstr ""
+
+#: cbs_locale.rsactivitydelayed
+msgid "Delayed"
+msgstr ""
+
+#: cbs_locale.rsactivitydone
+msgid "Done"
+msgstr ""
+
+#: cbs_locale.rsactivityinprogress
+msgid "In progress"
+msgstr ""
+
+#: cbs_locale.rsactivityneedsreview
+msgctxt "cbs_locale.rsactivityneedsreview"
+msgid "Needs review"
+msgstr ""
+
+#: cbs_locale.rsactivitytodo
+msgid "To do"
 msgstr ""
 
 #: cbs_locale.rsadminuser
@@ -2533,8 +2608,25 @@ msgctxt "cbs_locale.rscaptionproject"
 msgid "Project"
 msgstr ""
 
+#: cbs_locale.rscaptionprojectactivity
+msgid "Activity"
+msgstr ""
+
+#: cbs_locale.rscaptionprojectexpense
+msgid "Expense"
+msgstr ""
+
+#: cbs_locale.rscaptionprojectgoal
+msgid "Project goal"
+msgstr ""
+
 #: cbs_locale.rscaptionprojectmember
 msgid "Project member"
+msgstr ""
+
+#: cbs_locale.rscaptionprojectrubric
+msgctxt "cbs_locale.rscaptionprojectrubric"
+msgid "Rubric"
 msgstr ""
 
 #: cbs_locale.rscaptionrank
@@ -3672,6 +3764,19 @@ msgstr ""
 
 #: cbs_locale.rsgenderlist
 msgid "he/him,she/her,they/them"
+msgstr ""
+
+#: cbs_locale.rsgoalcanceled
+msgctxt "cbs_locale.rsgoalcanceled"
+msgid "Canceled"
+msgstr ""
+
+#: cbs_locale.rsgoalpending
+msgid "Pending"
+msgstr ""
+
+#: cbs_locale.rsgoalreached
+msgid "Reached"
 msgstr ""
 
 #: cbs_locale.rsguestuser
@@ -5154,6 +5259,10 @@ msgctxt "cbs_locale.rstitlebotanictaxa"
 msgid "Botanic taxa"
 msgstr ""
 
+#: cbs_locale.rstitlebudget
+msgid "Budget"
+msgstr ""
+
 #: cbs_locale.rstitlecaptures
 msgctxt "cbs_locale.rstitlecaptures"
 msgid "Captures"
@@ -5162,6 +5271,10 @@ msgstr ""
 #: cbs_locale.rstitlecaution
 msgctxt "cbs_locale.rstitlecaution"
 msgid "Caution!"
+msgstr ""
+
+#: cbs_locale.rstitlechronogram
+msgid "Chronogram"
 msgstr ""
 
 #: cbs_locale.rstitlecollectors
@@ -5213,6 +5326,10 @@ msgctxt "cbs_locale.rstitleerror"
 msgid "Error"
 msgstr ""
 
+#: cbs_locale.rstitleexpenses
+msgid "Expenses"
+msgstr ""
+
 #: cbs_locale.rstitleexpiredpermits
 msgid "Expired permits"
 msgstr ""
@@ -5224,6 +5341,10 @@ msgstr ""
 #: cbs_locale.rstitlegazetteer
 msgctxt "cbs_locale.rstitlegazetteer"
 msgid "Gazetteer"
+msgstr ""
+
+#: cbs_locale.rstitlegoals
+msgid "Goals"
 msgstr ""
 
 #: cbs_locale.rstitlehistory
@@ -10089,7 +10210,12 @@ msgid "E-mail:"
 msgstr ""
 
 #: tedtproject.lblenddate.caption
+msgctxt "tedtproject.lblenddate.caption"
 msgid "End date:"
+msgstr ""
+
+#: tedtproject.lblmaingoal.caption
+msgid "Main goal:"
 msgstr ""
 
 #: tedtproject.lblnotes.caption
@@ -10097,11 +10223,20 @@ msgctxt "tedtproject.lblnotes.caption"
 msgid "Notes:"
 msgstr ""
 
+#: tedtproject.lblprotocolnumber.caption
+msgid "Protocol number:"
+msgstr ""
+
+#: tedtproject.lblrisks.caption
+msgid "Risks:"
+msgstr ""
+
 #: tedtproject.lblshorttitle.caption
 msgid "Short title: *"
 msgstr ""
 
 #: tedtproject.lblstartdate.caption
+msgctxt "tedtproject.lblstartdate.caption"
 msgid "Start date:"
 msgstr ""
 
@@ -10121,6 +10256,158 @@ msgstr ""
 
 #: tedtproject.sbsave.caption
 msgctxt "tedtproject.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtprojectactivity.caption
+msgid "New activity"
+msgstr ""
+
+#: tedtprojectactivity.eenddate.buttonhint
+msgctxt "tedtprojectactivity.eenddate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tedtprojectactivity.eenddate.texthint
+msgctxt "tedtprojectactivity.eenddate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtprojectactivity.egoal.buttonhint
+msgid "Find goal"
+msgstr ""
+
+#: tedtprojectactivity.estartdate.buttonhint
+msgctxt "tedtprojectactivity.estartdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tedtprojectactivity.estartdate.texthint
+msgctxt "tedtprojectactivity.estartdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtprojectactivity.etargetdate.buttonhint
+msgctxt "tedtprojectactivity.etargetdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tedtprojectactivity.etargetdate.texthint
+msgctxt "tedtprojectactivity.etargetdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtprojectactivity.lbldescription.caption
+msgctxt "tedtprojectactivity.lbldescription.caption"
+msgid "Description: *"
+msgstr ""
+
+#: tedtprojectactivity.lblenddate.caption
+msgctxt "tedtprojectactivity.lblenddate.caption"
+msgid "End date:"
+msgstr ""
+
+#: tedtprojectactivity.lblgoal.caption
+msgctxt "tedtprojectactivity.lblgoal.caption"
+msgid "Goal:"
+msgstr ""
+
+#: tedtprojectactivity.lblstartdate.caption
+msgctxt "tedtprojectactivity.lblstartdate.caption"
+msgid "Start date:"
+msgstr ""
+
+#: tedtprojectactivity.lblstatus.caption
+msgctxt "tedtprojectactivity.lblstatus.caption"
+msgid "Status: *"
+msgstr ""
+
+#: tedtprojectactivity.lbltargetdate.caption
+msgctxt "tedtprojectactivity.lbltargetdate.caption"
+msgid "Target date:"
+msgstr ""
+
+#: tedtprojectactivity.sbcancel.caption
+msgctxt "tedtprojectactivity.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtprojectactivity.sbsave.caption
+msgctxt "tedtprojectactivity.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtprojectexpense.caption
+msgctxt "tedtprojectexpense.caption"
+msgid "New expense"
+msgstr ""
+
+#: tedtprojectexpense.edate.buttonhint
+msgctxt "tedtprojectexpense.edate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tedtprojectexpense.edate.texthint
+msgctxt "tedtprojectexpense.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtprojectexpense.erubric.buttonhint
+msgid "Find rubric"
+msgstr ""
+
+#: tedtprojectexpense.lblamount.caption
+msgctxt "tedtprojectexpense.lblamount.caption"
+msgid "Amount:"
+msgstr ""
+
+#: tedtprojectexpense.lbldate.caption
+msgctxt "tedtprojectexpense.lbldate.caption"
+msgid "Date:"
+msgstr ""
+
+#: tedtprojectexpense.lblitem.caption
+msgctxt "tedtprojectexpense.lblitem.caption"
+msgid "Item description:"
+msgstr ""
+
+#: tedtprojectexpense.lblrubric.caption
+msgctxt "tedtprojectexpense.lblrubric.caption"
+msgid "Rubric: *"
+msgstr ""
+
+#: tedtprojectexpense.sbcancel.caption
+msgctxt "tedtprojectexpense.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtprojectexpense.sbsave.caption
+msgctxt "tedtprojectexpense.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtprojectgoal.caption
+msgctxt "tedtprojectgoal.caption"
+msgid "New project goal"
+msgstr ""
+
+#: tedtprojectgoal.lbldescription.caption
+msgctxt "tedtprojectgoal.lbldescription.caption"
+msgid "Description: *"
+msgstr ""
+
+#: tedtprojectgoal.lblstatus.caption
+msgctxt "tedtprojectgoal.lblstatus.caption"
+msgid "Status: *"
+msgstr ""
+
+#: tedtprojectgoal.sbcancel.caption
+msgctxt "tedtprojectgoal.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtprojectgoal.sbsave.caption
+msgctxt "tedtprojectgoal.sbsave.caption"
 msgid "Save"
 msgstr ""
 
@@ -10145,6 +10432,40 @@ msgstr ""
 
 #: tedtprojectmember.sbsave.caption
 msgctxt "tedtprojectmember.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtprojectrubric.caption
+msgid "New rubric"
+msgstr ""
+
+#: tedtprojectrubric.lblamount.caption
+msgctxt "tedtprojectrubric.lblamount.caption"
+msgid "Amount:"
+msgstr ""
+
+#: tedtprojectrubric.lblfundingsource.caption
+msgctxt "tedtprojectrubric.lblfundingsource.caption"
+msgid "Funding source: *"
+msgstr ""
+
+#: tedtprojectrubric.lblitem.caption
+msgctxt "tedtprojectrubric.lblitem.caption"
+msgid "Item:"
+msgstr ""
+
+#: tedtprojectrubric.lblrubric.caption
+msgctxt "tedtprojectrubric.lblrubric.caption"
+msgid "Rubric: *"
+msgstr ""
+
+#: tedtprojectrubric.sbcancel.caption
+msgctxt "tedtprojectrubric.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtprojectrubric.sbsave.caption
+msgctxt "tedtprojectrubric.sbsave.caption"
 msgid "Save"
 msgstr ""
 
@@ -11848,8 +12169,16 @@ msgstr ""
 msgid "&Hide column"
 msgstr ""
 
+#: tfrmcustomgrid.pmcnewbudgetitem.caption
+msgid "New budget item"
+msgstr ""
+
 #: tfrmcustomgrid.pmcnewcapture.caption
 msgid "New &capture"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewchronogramactivity.caption
+msgid "New chronogram activity"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewcollector.caption
@@ -11858,6 +12187,11 @@ msgstr ""
 
 #: tfrmcustomgrid.pmcnewegg.caption
 msgid "New &egg"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewexpense.caption
+msgctxt "tfrmcustomgrid.pmcnewexpense.caption"
+msgid "New expense"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewmistnet.caption
@@ -11884,6 +12218,11 @@ msgstr ""
 #: tfrmcustomgrid.pmcnewpermanentnet.caption
 msgctxt "tfrmcustomgrid.pmcnewpermanentnet.caption"
 msgid "New permanent mistnet"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewprojectgoal.caption
+msgctxt "tfrmcustomgrid.pmcnewprojectgoal.caption"
+msgid "New project goal"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewprojectmember.caption

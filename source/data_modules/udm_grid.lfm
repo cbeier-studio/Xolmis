@@ -1,7 +1,7 @@
 object DMG: TDMG
   OnCreate = DataModuleCreate
   OldCreateOrder = False
-  Height = 630
+  Height = 648
   HorizontalOffset = 477
   VerticalOffset = 194
   Width = 861
@@ -13425,7 +13425,7 @@ object DMG: TDMG
     FieldDefs = <    
       item
         Name = 'project_id'
-        DataType = ftAutoInc
+        DataType = ftInteger
         Precision = -1
       end    
       item
@@ -13469,19 +13469,23 @@ object DMG: TDMG
         Size = 100
       end    
       item
-        Name = 'project_file'
+        Name = 'protocol_number'
         DataType = ftString
         Precision = -1
-        Size = 200
-      end    
-      item
-        Name = 'contract_file'
-        DataType = ftString
-        Precision = -1
-        Size = 200
+        Size = 30
       end    
       item
         Name = 'project_abstract'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'main_goal'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'risks'
         DataType = ftMemo
         Precision = -1
       end    
@@ -13637,36 +13641,50 @@ object DMG: TDMG
       Required = False
       Size = 100
     end
-    object qProjectsproject_file: TStringField
-      DisplayLabel = 'Project file path'
+    object qProjectsprotocol_number: TStringField
+      DisplayLabel = 'Protocol nr.'
+      DisplayWidth = 15
       FieldKind = fkData
-      FieldName = 'project_file'
+      FieldName = 'protocol_number'
       Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
-      Size = 200
+      Size = 30
     end
-    object qProjectscontract_file: TStringField
-      DisplayLabel = 'Contract file'
+    object qProjectsmain_goal: TMemoField
+      DisplayLabel = 'Main goal'
+      DisplayWidth = 40
       FieldKind = fkData
-      FieldName = 'contract_file'
+      FieldName = 'main_goal'
       Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
-      Size = 200
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qProjectsrisks: TMemoField
+      DisplayLabel = 'Risks'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'risks'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
     end
     object qProjectsproject_abstract: TMemoField
       DisplayLabel = 'Abstract'
       DisplayWidth = 60
       FieldKind = fkData
       FieldName = 'project_abstract'
-      Index = 10
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -13679,7 +13697,7 @@ object DMG: TDMG
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 11
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -13691,7 +13709,7 @@ object DMG: TDMG
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'project_id'
-      Index = 12
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -13701,7 +13719,7 @@ object DMG: TDMG
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 13
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -13712,7 +13730,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 14
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -13724,7 +13742,7 @@ object DMG: TDMG
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 15
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -13736,7 +13754,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 16
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -13748,7 +13766,7 @@ object DMG: TDMG
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 17
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -13761,7 +13779,7 @@ object DMG: TDMG
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 18
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -14217,7 +14235,7 @@ object DMG: TDMG
     Params = <>
     Macros = <>
     Left = 544
-    Top = 415
+    Top = 251
     object qPermitsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -17064,7 +17082,7 @@ object DMG: TDMG
   object dsPermits: TDataSource
     DataSet = qPermits
     Left = 610
-    Top = 415
+    Top = 251
   end
   object dsSpecimens: TDataSource
     DataSet = qSpecimens
@@ -18914,5 +18932,980 @@ object DMG: TDMG
     DataSet = qSampleCollectors
     Left = 602
     Top = 143
+  end
+  object qProjectGoals: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'goal_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'goal_description'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'goal_status'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT *'
+      'FROM project_goals'
+      'WHERE (active_status = 1)'
+      '  AND (project_id = :project_id)'
+      ''
+    )
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'project_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsProjects
+    Left = 544
+    Top = 422
+    object qProjectGoalsmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectGoalsproject_id: TLongintField
+      DisplayLabel = 'Project ID'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectGoalsgoal_description: TMemoField
+      DisplayLabel = 'Description'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'goal_description'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qProjectGoalsgoal_status: TStringField
+      DisplayLabel = 'Status'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'goal_status'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qProjectGoalsgoal_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'goal_id'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qProjectGoalsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectGoalsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectGoalsinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectGoalsupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectGoalsexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectGoalsactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qProjectChronogram: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'chronogram_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'description'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'start_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'target_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'end_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'goal_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'progress_status'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'goal_description'
+        DataType = ftMemo
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT pc.*,'
+      '  pg.goal_description AS goal_description'
+      'FROM project_chronograms AS pc'
+      'LEFT JOIN project_goals AS pg ON pc.goal_id = pg.goal_id'
+      'WHERE (pc.active_status = 1)'
+      '  AND (pc.project_id = :project_id)'
+      ''
+    )
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'project_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsProjects
+    Left = 544
+    Top = 478
+    object qProjectChronogrammarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectChronogramproject_id: TLongintField
+      DisplayLabel = 'Project ID'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectChronogramdescription: TMemoField
+      DisplayLabel = 'Description'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'description'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qProjectChronogramstart_date: TDateField
+      DisplayLabel = 'Start date'
+      FieldKind = fkData
+      FieldName = 'start_date'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectChronogramtarget_date: TDateField
+      DisplayLabel = 'Target date'
+      FieldKind = fkData
+      FieldName = 'target_date'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectChronogramend_date: TDateField
+      DisplayLabel = 'End date'
+      FieldKind = fkData
+      FieldName = 'end_date'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectChronogramgoal_id: TLongintField
+      DisplayLabel = 'Goal ID'
+      FieldKind = fkData
+      FieldName = 'goal_id'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectChronogramgoal_description: TMemoField
+      DisplayLabel = 'Goal'
+      FieldKind = fkData
+      FieldName = 'goal_description'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qProjectChronogramprogress_status: TStringField
+      DisplayLabel = 'Progress'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'progress_status'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qProjectChronogramchronogram_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'chronogram_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qProjectChronogramuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectChronogramuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectChronograminsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectChronogramupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectChronogramexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectChronogramactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qProjectBudget: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'budget_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'funding_source'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'rubric'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'item_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'amount'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT *'
+      'FROM project_budgets'
+      'WHERE (active_status = 1)'
+      '  AND (project_id = :project_id)'
+      ''
+    )
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'project_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsProjects
+    Left = 544
+    Top = 531
+    object qProjectBudgetmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectBudgetproject_id: TLongintField
+      DisplayLabel = 'Project ID'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectBudgetfunding_source: TStringField
+      DisplayLabel = 'Funding source'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'funding_source'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qProjectBudgetrubric: TStringField
+      DisplayLabel = 'Rubric'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'rubric'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 60
+    end
+    object qProjectBudgetitem_name: TStringField
+      DisplayLabel = 'Item'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'item_name'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qProjectBudgetamount: TFloatField
+      DisplayLabel = 'Amount'
+      FieldKind = fkData
+      FieldName = 'amount'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qProjectBudgetbudget_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'budget_id'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qProjectBudgetuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectBudgetuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectBudgetinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectBudgetupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectBudgetexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectBudgetactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qProjectExpenses: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'expense_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'budget_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'item_description'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'expense_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'amount'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'rubric'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT px.*,'
+      '  pb.rubric AS rubric'
+      'FROM project_expenses AS px'
+      'LEFT JOIN project_budgets AS pb ON px.budget_id = pb.budget_id'
+      'WHERE (px.active_status = 1)'
+      '  AND (px.project_id = :project_id)'
+      ''
+    )
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'project_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsProjects
+    Left = 544
+    Top = 584
+    object qProjectExpensesmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectExpensesproject_id: TLongintField
+      DisplayLabel = 'Project ID'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesbudget_id: TLongintField
+      DisplayLabel = 'Budget ID'
+      FieldKind = fkData
+      FieldName = 'budget_id'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesrubric: TStringField
+      DisplayLabel = 'Rubric'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'rubric'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qProjectExpensesitem_description: TStringField
+      DisplayLabel = 'Item'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'item_description'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 60
+    end
+    object qProjectExpensesexpense_date: TDateField
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'expense_date'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectExpensesamount: TFloatField
+      DisplayLabel = 'Amount'
+      FieldKind = fkData
+      FieldName = 'amount'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qProjectExpensesexpense_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'expense_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qProjectExpensesuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectExpensesactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
   end
 end

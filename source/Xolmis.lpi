@@ -169,7 +169,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="412"/>
+      <BuildNr Value="413"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1270,6 +1270,35 @@
         <Filename Value="edit_dialogs\uedt_projectmember.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtProjectMember"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_projectgoal.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtProjectGoal"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_projectactivity.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtProjectActivity"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_projectrubric.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtProjectRubric"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_projectexpense.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtProjectExpense"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>

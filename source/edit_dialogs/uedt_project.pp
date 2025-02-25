@@ -31,6 +31,7 @@ type
 
   TedtProject = class(TForm)
     dsLink: TDataSource;
+    eProtocolNumber: TEdit;
     eTitle: TEdit;
     eShortTitle: TEdit;
     eWebsite: TEdit;
@@ -38,10 +39,14 @@ type
     eContactName: TEdit;
     eStartDate: TEditButton;
     eEndDate: TEditButton;
+    lblRisks: TLabel;
+    lblMainGoal: TLabel;
+    lblProtocolNumber1: TLabel;
     lblStartDate: TLabel;
     lblEndDate: TLabel;
     lblShortTitle: TLabel;
     lblContactName: TLabel;
+    lblProtocolNumber: TLabel;
     lblWebsite: TLabel;
     lblEmail: TLabel;
     lblNotes: TLabel;
@@ -49,12 +54,17 @@ type
     lblTitle: TLabel;
     lineBottom: TShapeLineBGRA;
     mAbstract: TMemo;
+    mRisks: TMemo;
+    mMainGoal: TMemo;
     mNotes: TMemo;
+    pMainGoal: TPanel;
+    pRisks: TPanel;
     pStartEndDate: TPanel;
     pBottom: TPanel;
     pClient: TPanel;
     pNotes: TPanel;
     pAbstract: TPanel;
+    pProtocol: TPanel;
     pTitle: TPanel;
     pShortTitle: TPanel;
     pContactName: TPanel;
@@ -181,6 +191,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionProject)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 
@@ -195,6 +206,9 @@ begin
   eWebsite.Text := FProject.WebsiteUri;
   eEmail.Text := FProject.EmailAddress;
   eContactName.Text := FProject.ContactName;
+  eProtocolNumber.Text := FProject.ProtocolNumber;
+  mMainGoal.Text := FProject.MainGoal;
+  mRisks.Text := FProject.Risks;
   mAbstract.Text := FProject.ProjectAbstract;
   mNotes.Text := FProject.Notes;
 end;
@@ -234,6 +248,9 @@ begin
   FProject.WebsiteUri      := eWebsite.Text;
   FProject.EmailAddress    := eEmail.Text;
   FProject.ContactName     := eContactName.Text;
+  FProject.ProtocolNumber  := eProtocolNumber.Text;
+  FProject.MainGoal        := mMainGoal.Text;
+  FProject.Risks           := mRisks.Text;
   FProject.ProjectAbstract := mAbstract.Text;
   FProject.Notes           := mNotes.Text;
 end;

@@ -1,0 +1,9 @@
+{"version":1,"strings":[
+{"hash":127849571,"name":"tedtprojectrubric.caption","sourcebytes":[78,101,119,32,114,117,98,114,105,99],"value":"New rubric"},
+{"hash":366789,"name":"tedtprojectrubric.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tedtprojectrubric.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":210580218,"name":"tedtprojectrubric.lblfundingsource.caption","sourcebytes":[70,117,110,100,105,110,103,32,115,111,117,114,99,101,58,32,42],"value":"Funding source: *"},
+{"hash":160380314,"name":"tedtprojectrubric.lblrubric.caption","sourcebytes":[82,117,98,114,105,99,58,32,42],"value":"Rubric: *"},
+{"hash":138855738,"name":"tedtprojectrubric.lblamount.caption","sourcebytes":[65,109,111,117,110,116,58],"value":"Amount:"},
+{"hash":5286922,"name":"tedtprojectrubric.lblitem.caption","sourcebytes":[73,116,101,109,58],"value":"Item:"}
+]}

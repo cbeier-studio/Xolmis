@@ -7,7 +7,6 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1243
   ParentFont = True
-  LCLVersion = '4.0.0.2'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -78,7 +77,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            348
+            344
           )
         end
       end
@@ -7929,7 +7928,7 @@ object frmCustomGrid: TfrmCustomGrid
       Cursor = crVSplit
       Left = 8
       Height = 4
-      Top = 366
+      Top = 312
       Width = 706
       Align = alBottom
       ResizeAnchor = akBottom
@@ -8719,7 +8718,7 @@ object frmCustomGrid: TfrmCustomGrid
     object pChildsBar: TBCPanel
       Left = 8
       Height = 42
-      Top = 320
+      Top = 324
       Width = 706
       Align = alBottom
       AutoSize = True
@@ -9695,6 +9694,30 @@ object frmCustomGrid: TfrmCustomGrid
       ImageIndex = 22
       Visible = False
       OnClick = pmcNewVegetationClick
+    end
+    object pmcNewProjectGoal: TMenuItem
+      Caption = 'New project goal'
+      ImageIndex = 23
+      Visible = False
+      OnClick = pmcNewProjectGoalClick
+    end
+    object pmcNewChronogramActivity: TMenuItem
+      Caption = 'New chronogram activity'
+      ImageIndex = 26
+      Visible = False
+      OnClick = pmcNewChronogramActivityClick
+    end
+    object pmcNewBudgetItem: TMenuItem
+      Caption = 'New budget item'
+      ImageIndex = 24
+      Visible = False
+      OnClick = pmcNewBudgetItemClick
+    end
+    object pmcNewExpense: TMenuItem
+      Caption = 'New expense'
+      ImageIndex = 25
+      Visible = False
+      OnClick = pmcNewExpenseClick
     end
   end
   object dsLink: TDataSource

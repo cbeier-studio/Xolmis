@@ -94,7 +94,11 @@ type
     tbImages,
     tbAudioLibrary,
     tbDocuments,
-    tbVegetation);
+    tbVegetation,
+    tbProjectGoals,
+    tbProjectChronograms,
+    tbProjectBudgets,
+    tbProjectExpenses);
 
   TTablesDictionary = specialize TFPGMap<String, TTableType>;
   TLocaleTablesDictionary = specialize TFPGMap<TTableType, String>;
@@ -102,7 +106,8 @@ type
 const
   TableAliases: array [TTableType] of String = ('',
     'u','rh','rv','g','pl','pn','it','p','pj','pt','l','r','z','bt','b','bh','i','c','m',
-    'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','snd','doc','veg');
+    'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','snd','doc','veg',
+    'pg','pc','pb','px');
   TableNames: array [TTableType] of String = ('',
     'users',
     'record_history',
@@ -140,7 +145,11 @@ const
     'images',
     'audio_library',
     'documents',
-    'vegetation');
+    'vegetation',
+    'project_goals',
+    'project_chronograms',
+    'project_budgets',
+    'project_expenses');
 
 type
   TCriteriaType = (crNone,
@@ -425,12 +434,16 @@ begin
   TablesDict.Add(rsTitleResearchers, tbPeople);
   TablesDict.Add(rsTitleProjects, tbProjects);
   TablesDict.Add(rsTitleProjectMembers, tbProjectTeams);
+  TablesDict.Add(rsTitleProjectGoals, tbProjectGoals);
+  TablesDict.Add(rsTitleProjectChronograms, tbProjectChronograms);
+  TablesDict.Add(rsTitleProjectBudgets, tbProjectBudgets);
+  TablesDict.Add(rsTitleProjectExpenses, tbProjectExpenses);
   TablesDict.Add(rsTitlePermits, tbPermits);
   TablesDict.Add(rsTitleBotanicTaxa, tbBotanicTaxa);
   TablesDict.Add(rsTitleTaxonRanks, tbTaxonRanks);
   TablesDict.Add(rsTitleZooTaxa, tbZooTaxa);
   TablesDict.Add(rsTitleBands, tbBands);
-  //tbBandHistory,
+  TablesDict.Add(rsTitleBandHistory, tbBandHistory);
   TablesDict.Add(rsTitleIndividuals, tbIndividuals);
   TablesDict.Add(rsTitleCaptures, tbCaptures);
   TablesDict.Add(rsTitleMolts, tbMolts);
@@ -449,9 +462,9 @@ begin
   TablesDict.Add(rsTitleCollectors, tbSpecimenCollectors);
   TablesDict.Add(rsTitleSamplePreps, tbSamplePreps);
   TablesDict.Add(rsTitleVegetation, tbVegetation);
-  //tbImages,
-  //tbAudioLibrary,
-  //tbDocuments,
+  TablesDict.Add(rsTitleImages, tbImages);
+  TablesDict.Add(rsTitleAudioLibrary, tbAudioLibrary);
+  TablesDict.Add(rsTitleDocuments, tbDocuments);
 end;
 
 procedure LoadLocaleTablesDict;
@@ -471,12 +484,16 @@ begin
   LocaleTablesDict.Add(tbPeople, rsTitleResearchers);
   LocaleTablesDict.Add(tbProjects, rsTitleProjects);
   LocaleTablesDict.Add(tbProjectTeams, rsTitleProjectMembers);
+  LocaleTablesDict.Add(tbProjectGoals, rsTitleProjectGoals);
+  LocaleTablesDict.Add(tbProjectChronograms, rsTitleProjectChronograms);
+  LocaleTablesDict.Add(tbProjectBudgets, rsTitleProjectBudgets);
+  LocaleTablesDict.Add(tbProjectExpenses, rsTitleProjectExpenses);
   LocaleTablesDict.Add(tbPermits, rsTitlePermits);
   LocaleTablesDict.Add(tbBotanicTaxa, rsTitleBotanicTaxa);
   LocaleTablesDict.Add(tbTaxonRanks, rsTitleTaxonRanks);
   LocaleTablesDict.Add(tbZooTaxa, rsTitleZooTaxa);
   LocaleTablesDict.Add(tbBands, rsTitleBands);
-  //tbBandHistory,
+  LocaleTablesDict.Add(tbBandHistory, rsTitleBandHistory);
   LocaleTablesDict.Add(tbIndividuals, rsTitleIndividuals);
   LocaleTablesDict.Add(tbCaptures, rsTitleCaptures);
   LocaleTablesDict.Add(tbMolts, rsTitleMolts);
@@ -495,9 +512,9 @@ begin
   LocaleTablesDict.Add(tbSpecimenCollectors, rsTitleCollectors);
   LocaleTablesDict.Add(tbSamplePreps, rsTitleSamplePreps);
   LocaleTablesDict.Add(tbVegetation, rsTitleVegetation);
-  //tbImages,
-  //tbAudioLibrary,
-  //tbDocuments,
+  LocaleTablesDict.Add(tbImages, rsTitleImages);
+  LocaleTablesDict.Add(tbAudioLibrary, rsTitleAudioLibrary);
+  LocaleTablesDict.Add(tbDocuments, rsTitleDocuments);
 end;
 
 { TTableInfo }

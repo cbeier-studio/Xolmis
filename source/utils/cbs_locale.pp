@@ -61,9 +61,13 @@ uses
     rsTitleProjects = 'Projects';
     rsTitleProjectMembers = 'Project members';
     rsTitleProjectGoals = 'Project goals';
+    rsTitleGoals = 'Goals';
     rsTitleProjectChronograms = 'Project chronograms';
+    rsTitleChronogram = 'Chronogram';
     rsTitleProjectBudgets = 'Project budgets';
+    rsTitleBudget = 'Budget';
     rsTitleProjectExpenses = 'Project expenses';
+    rsTitleExpenses = 'Expenses';
     rsTitleTeam = 'Team';
     rsTitlePermits = 'Permits';
     rsTitleGazetteer = 'Gazetteer';
@@ -791,6 +795,19 @@ uses
     rsGenderList = 'he/him,she/her,they/them';
     rsTreatmentList = 'Mr.,Sir,Mrs.,Miss,Ms.,Madam,B./BS.,M./MSc.,Dr./PhD.';
 
+    { Project }
+    rsGoalPending = 'Pending';
+    rsGoalReached = 'Reached';
+    rsGoalCanceled = 'Canceled';
+
+    rsActivityToDo = 'To do';
+    rsActivityInProgress = 'In progress';
+    rsActivityDone = 'Done';
+    rsActivityCanceled = 'Canceled';
+    rsActivityDelayed = 'Delayed';
+    rsActivityNeedsReview = 'Needs review';
+    rsActivityBlocked = 'Blocked';
+
     { Sampling moments }
     rsMomentStart = 'Start';
     rsMomentMiddle = 'Middle';
@@ -959,6 +976,10 @@ uses
     rsCaptionSurveyMember = 'Survey member';
     rsCaptionCollector = 'Collector';
     rsCaptionProjectMember = 'Project member';
+    rsCaptionProjectGoal = 'Project goal';
+    rsCaptionProjectActivity = 'Activity';
+    rsCaptionProjectRubric = 'Rubric';
+    rsCaptionProjectExpense = 'Expense';
 
 implementation
 
