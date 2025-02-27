@@ -19103,6 +19103,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qProjectGoalsgoal_statusGetText
+      OnSetText = qProjectGoalsgoal_statusSetText
       Size = 5
     end
     object qProjectGoalsgoal_id: TLongintField
@@ -19386,6 +19388,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qProjectChronogramprogress_statusGetText
+      OnSetText = qProjectChronogramprogress_statusSetText
       Size = 5
     end
     object qProjectChronogramchronogram_id: TLongintField

@@ -242,6 +242,7 @@ type
     procedure actImportCoordinatesExecute(Sender: TObject);
     procedure actImportEbirdExecute(Sender: TObject);
     procedure actImportNestsExecute(Sender: TObject);
+    procedure actImportWizardExecute(Sender: TObject);
     procedure actImportXolmisMobileExecute(Sender: TObject);
     procedure actInsertRecordExecute(Sender: TObject);
     procedure actLogoffExecute(Sender: TObject);
@@ -360,7 +361,7 @@ uses
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
-  udlg_importxmobile,
+  udlg_importxmobile, udlg_import,
   ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance, ufrm_taxa;
 
 {$R *.lfm}
@@ -476,6 +477,17 @@ begin
     ShowModal;
   finally
     FreeAndNil(dlgImportNests);
+  end;
+end;
+
+procedure TfrmMain.actImportWizardExecute(Sender: TObject);
+begin
+  dlgImport := TdlgImport.Create(nil);
+  with dlgImport do
+  try
+    ShowModal;
+  finally
+    FreeAndNil(dlgImport);
   end;
 end;
 

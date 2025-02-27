@@ -205,6 +205,8 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionProjectActivity)]);
+    if FGoalId > 0 then
+      eGoal.Text := GetName('project_goals', 'goal_description', 'goal_id', FGoalId);
   end
   else
   begin

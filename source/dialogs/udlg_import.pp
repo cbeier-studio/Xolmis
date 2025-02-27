@@ -242,13 +242,15 @@ begin
   if Assigned(FFieldMap) then
     FFieldMap.Free;
   if Assigned(TablesDict) then
-    TablesDict.Free;
+    FreeAndNil(TablesDict);
 end;
 
 procedure TdlgImport.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  LoadTargetTables;
 end;
 
 function TdlgImport.IsRequiredFilledSource: Boolean;

@@ -11,7 +11,6 @@ object dlgImport: TdlgImport
   ClientWidth = 560
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -52,7 +51,6 @@ object dlgImport: TdlgImport
       BorderSpacing.Left = 16
       Caption = '&Cancel'
       TabOrder = 0
-      Visible = False
       OnClick = sbCancelClick
     end
     object sbNext: TButton
@@ -313,12 +311,12 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 235
+              Width = 233
             end          
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Search table'
-              Width = 235
+              Width = 233
             end          
             item
               SizePriority = 0
@@ -334,8 +332,8 @@ object dlgImport: TdlgImport
             64
             154
             60
-            235
-            235
+            233
+            233
             120
           )
           Cells = (

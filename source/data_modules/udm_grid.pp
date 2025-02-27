@@ -1308,6 +1308,14 @@ type
     procedure qNestsnest_shapeSetText(Sender: TField; const aText: string);
     procedure qNestssupport_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qNestssupport_typeSetText(Sender: TField; const aText: string);
+    procedure qProjectChronogramprogress_statusGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qProjectChronogramprogress_statusSetText(Sender: TField;
+      const aText: string);
+    procedure qProjectGoalsgoal_statusGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qProjectGoalsgoal_statusSetText(Sender: TField;
+      const aText: string);
     procedure qSamplingPlotsAfterCancel(DataSet: TDataSet);
     procedure qSamplingPlotsAfterPost(DataSet: TDataSet);
     procedure qSamplingPlotsBeforeEdit(DataSet: TDataSet);
@@ -3679,6 +3687,84 @@ begin
   else
   if aText = rsPermitOther then
     Sender.AsString := 'O';
+end;
+
+procedure TDMG.qProjectChronogramprogress_statusGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'T': aText := rsActivityToDo;
+    'P': aText := rsActivityInProgress;
+    'F': aText := rsActivityDone;
+    'C': aText := rsActivityCanceled;
+    'D': aText := rsActivityDelayed;
+    'R': aText := rsActivityNeedsReview;
+    'B': aText := rsActivityBlocked;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qProjectChronogramprogress_statusSetText(Sender: TField;
+  const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsActivityToDo then
+    Sender.AsString := 'T'
+  else
+  if aText = rsActivityInProgress then
+    Sender.AsString := 'P'
+  else
+  if aText = rsActivityDone then
+    Sender.AsString := 'F'
+  else
+  if aText = rsActivityCanceled then
+    Sender.AsString := 'C'
+  else
+  if aText = rsActivityDelayed then
+    Sender.AsString := 'D'
+  else
+  if aText = rsActivityNeedsReview then
+    Sender.AsString := 'R'
+  else
+  if aText = rsActivityBlocked then
+    Sender.AsString := 'B';
+end;
+
+procedure TDMG.qProjectGoalsgoal_statusGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'P': aText := rsGoalPending;
+    'R': aText := rsGoalReached;
+    'C': aText := rsGoalCanceled;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qProjectGoalsgoal_statusSetText(Sender: TField;
+  const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsGoalPending then
+    Sender.AsString := 'P'
+  else
+  if aText = rsGoalReached then
+    Sender.AsString := 'R'
+  else
+  if aText = rsGoalCanceled then
+    Sender.AsString := 'C';
 end;
 
 procedure TDMG.qProjectsAfterCancel(DataSet: TDataSet);

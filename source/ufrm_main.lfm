@@ -9,7 +9,6 @@ object frmMain: TfrmMain
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
-  LCLVersion = '4.0.0.2'
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
@@ -1061,6 +1060,7 @@ object frmMain: TfrmMain
     object actImportWizard: TAction
       Category = 'Import'
       Caption = 'Import &wizard'
+      OnExecute = actImportWizardExecute
     end
     object actDBNew: TAction
       Category = 'File'

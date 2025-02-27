@@ -178,6 +178,8 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionProjectExpense)]);
+    if FRubricId > 0 then
+      eRubric.Text := GetName('project_budgets', 'rubric', 'budget_id', FRubricId);
   end
   else
   begin
