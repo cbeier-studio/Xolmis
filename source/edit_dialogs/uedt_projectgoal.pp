@@ -179,6 +179,7 @@ end;
 
 procedure TedtProjectGoal.SetRecord;
 begin
+  FGoal.ProjectId := FProjectId;
   FGoal.Description := mDescription.Text;
   case cbStatus.ItemIndex of
     0: FGoal.Status := gstPending;

@@ -224,6 +224,7 @@ end;
 
 procedure TedtProjectExpense.SetRecord;
 begin
+  FExpense.ProjectId   := FProjectId;
   FExpense.BudgetId    := FRubricId;
   FExpense.Description := eItem.Text;
   FExpense.ExpenseDate := TextToDate(eDate.Text);

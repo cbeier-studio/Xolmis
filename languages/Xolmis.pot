@@ -10069,6 +10069,7 @@ msgid "Instagram:"
 msgstr ""
 
 #: tedtperson.lblinstitution.caption
+msgctxt "tedtperson.lblinstitution.caption"
 msgid "Institution:"
 msgstr ""
 
@@ -10259,10 +10260,6 @@ msgctxt "tedtproject.sbsave.caption"
 msgid "Save"
 msgstr ""
 
-#: tedtprojectactivity.caption
-msgid "New activity"
-msgstr ""
-
 #: tedtprojectactivity.eenddate.buttonhint
 msgctxt "tedtprojectactivity.eenddate.buttonhint"
 msgid "Open calendar"
@@ -10337,11 +10334,6 @@ msgctxt "tedtprojectactivity.sbsave.caption"
 msgid "Save"
 msgstr ""
 
-#: tedtprojectexpense.caption
-msgctxt "tedtprojectexpense.caption"
-msgid "New expense"
-msgstr ""
-
 #: tedtprojectexpense.edate.buttonhint
 msgctxt "tedtprojectexpense.edate.buttonhint"
 msgid "Open calendar"
@@ -10386,11 +10378,6 @@ msgctxt "tedtprojectexpense.sbsave.caption"
 msgid "Save"
 msgstr ""
 
-#: tedtprojectgoal.caption
-msgctxt "tedtprojectgoal.caption"
-msgid "New project goal"
-msgstr ""
-
 #: tedtprojectgoal.lbldescription.caption
 msgctxt "tedtprojectgoal.lbldescription.caption"
 msgid "Description: *"
@@ -10415,9 +10402,19 @@ msgstr ""
 msgid "Project manager"
 msgstr ""
 
+#: tedtprojectmember.einstitution.buttonhint
+msgctxt "tedtprojectmember.einstitution.buttonhint"
+msgid "Find institution"
+msgstr ""
+
 #: tedtprojectmember.eperson.buttonhint
 msgctxt "tedtprojectmember.eperson.buttonhint"
 msgid "Find researcher"
+msgstr ""
+
+#: tedtprojectmember.lblinstitution.caption
+msgctxt "tedtprojectmember.lblinstitution.caption"
+msgid "Institution:"
 msgstr ""
 
 #: tedtprojectmember.lblperson.caption
@@ -10433,10 +10430,6 @@ msgstr ""
 #: tedtprojectmember.sbsave.caption
 msgctxt "tedtprojectmember.sbsave.caption"
 msgid "Save"
-msgstr ""
-
-#: tedtprojectrubric.caption
-msgid "New rubric"
 msgstr ""
 
 #: tedtprojectrubric.lblamount.caption
@@ -12178,6 +12171,7 @@ msgid "New &capture"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewchronogramactivity.caption
+msgctxt "tfrmcustomgrid.pmcnewchronogramactivity.caption"
 msgid "New chronogram activity"
 msgstr ""
 
@@ -12191,6 +12185,11 @@ msgstr ""
 
 #: tfrmcustomgrid.pmcnewexpense.caption
 msgctxt "tfrmcustomgrid.pmcnewexpense.caption"
+msgid "New expense"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewexpensefromrubric.caption
+msgctxt "tfrmcustomgrid.pmcnewexpensefromrubric.caption"
 msgid "New expense"
 msgstr ""
 
@@ -12218,6 +12217,11 @@ msgstr ""
 #: tfrmcustomgrid.pmcnewpermanentnet.caption
 msgctxt "tfrmcustomgrid.pmcnewpermanentnet.caption"
 msgid "New permanent mistnet"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewprojectactivityfromgoal.caption
+msgctxt "tfrmcustomgrid.pmcnewprojectactivityfromgoal.caption"
+msgid "New chronogram activity"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewprojectgoal.caption

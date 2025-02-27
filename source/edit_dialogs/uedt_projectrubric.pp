@@ -173,6 +173,7 @@ end;
 
 procedure TedtProjectRubric.SetRecord;
 begin
+  FRubric.ProjectId     := FProjectId;
   FRubric.FundingSource := eFundingSource.Text;
   FRubric.Rubric        := eRubric.Text;
   FRubric.ItemName      := eItem.Text;

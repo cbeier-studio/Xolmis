@@ -56,6 +56,8 @@ type
     gridDocs: TDBGrid;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
+    pmcNewExpenseFromRubric: TMenuItem;
+    pmcNewProjectActivityFromGoal: TMenuItem;
     pmcNewProjectGoal: TMenuItem;
     pmcNewChronogramActivity: TMenuItem;
     pmcNewBudgetItem: TMenuItem;
@@ -938,12 +940,14 @@ type
     procedure pmcNewCollectorClick(Sender: TObject);
     procedure pmcNewEggClick(Sender: TObject);
     procedure pmcNewExpenseClick(Sender: TObject);
+    procedure pmcNewExpenseFromRubricClick(Sender: TObject);
     procedure pmcNewMistnetClick(Sender: TObject);
     procedure pmcNewMoltClick(Sender: TObject);
     procedure pmcNewNestClick(Sender: TObject);
     procedure pmcNewNestOwnerClick(Sender: TObject);
     procedure pmcNewNestRevisionClick(Sender: TObject);
     procedure pmcNewPermanentNetClick(Sender: TObject);
+    procedure pmcNewProjectActivityFromGoalClick(Sender: TObject);
     procedure pmcNewProjectGoalClick(Sender: TObject);
     procedure pmcNewProjectMemberClick(Sender: TObject);
     procedure pmcNewSamplePrepClick(Sender: TObject);
@@ -954,6 +958,7 @@ type
     procedure pmcNewVegetationClick(Sender: TObject);
     procedure pmcNewWeatherLogClick(Sender: TObject);
     procedure pmdRefreshDocsClick(Sender: TObject);
+    procedure pmGridChildPopup(Sender: TObject);
     procedure pmiRefreshImagesClick(Sender: TObject);
     procedure pmmInvertMarkedClick(Sender: TObject);
     procedure pmmMarkAllClick(Sender: TObject);
@@ -1654,6 +1659,10 @@ begin
           FParentForm.ChildTable := tbProjectTeams;
           FParentForm.eAddChild.Visible := True;
         end;
+        1: FParentForm.ChildTable := tbProjectGoals;
+        2: FParentForm.ChildTable := tbProjectChronograms;
+        3: FParentForm.ChildTable := tbProjectBudgets;
+        4: FParentForm.ChildTable := tbProjectExpenses;
       end;
   end;
 
@@ -5288,6 +5297,10 @@ begin
     tbProjects:
       case nbChilds.PageIndex of
         0: Result := dsLink1.DataSet;
+        1: Result := dsLink2.DataSet;
+        2: Result := dsLink3.DataSet;
+        3: Result := dsLink4.DataSet;
+        4: Result := dsLink5.DataSet;
       end;
     tbIndividuals:
       case nbChilds.PageIndex of
@@ -6770,6 +6783,14 @@ begin
   UpdateChildButtons(DMG.qProjectExpenses);
 end;
 
+procedure TfrmCustomGrid.pmcNewExpenseFromRubricClick(Sender: TObject);
+begin
+  EditProjectExpense(DMG.qProjectExpenses, dsLink.DataSet.FieldByName('project_id').AsInteger,
+    dsLink4.DataSet.FieldByName('budget_id').AsInteger, True);
+
+  UpdateChildButtons(DMG.qProjectExpenses);
+end;
+
 procedure TfrmCustomGrid.pmcNewMistnetClick(Sender: TObject);
 begin
   EditNetEffort(DMS.qNetsEffort, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
@@ -6810,6 +6831,14 @@ begin
   EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('net_station_id').AsInteger, True);
 
   UpdateChildButtons(DMG.qPermanentNets);
+end;
+
+procedure TfrmCustomGrid.pmcNewProjectActivityFromGoalClick(Sender: TObject);
+begin
+  EditProjectActivity(DMG.qProjectChronogram, dsLink.DataSet.FieldByName('project_id').AsInteger,
+    dsLink2.DataSet.FieldByName('goal_id').AsInteger, True);
+
+  UpdateChildButtons(DMG.qProjectChronogram);
 end;
 
 procedure TfrmCustomGrid.pmcNewProjectGoalClick(Sender: TObject);
@@ -6884,6 +6913,12 @@ begin
     Exit;
 
   qDocs.Refresh;
+end;
+
+procedure TfrmCustomGrid.pmGridChildPopup(Sender: TObject);
+begin
+  pmcNewProjectActivityFromGoal.Visible := (ChildTable = tbProjectGoals) and (dsLink2.DataSet.RecordCount > 0);
+  pmcNewExpenseFromRubric.Visible := (ChildTable = tbProjectBudgets) and (dsLink4.DataSet.RecordCount > 0);
 end;
 
 procedure TfrmCustomGrid.pmiRefreshImagesClick(Sender: TObject);

@@ -16,16 +16,21 @@ type
     ckManager: TCheckBox;
     dsLink: TDataSource;
     ePerson: TEditButton;
+    eInstitution: TEditButton;
     lblPerson: TLabel;
+    lblInstitution: TLabel;
     lineBottom: TShapeLineBGRA;
     pBottom: TPanel;
     pContent: TPanel;
     pPerson: TPanel;
     pManager: TPanel;
+    pInstitution: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
     procedure ckManagerKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
+    procedure eInstitutionButtonClick(Sender: TObject);
+    procedure eInstitutionKeyPress(Sender: TObject; var Key: char);
     procedure ePersonButtonClick(Sender: TObject);
     procedure ePersonEditingDone(Sender: TObject);
     procedure ePersonKeyPress(Sender: TObject; var Key: char);
@@ -36,7 +41,7 @@ type
   private
     FIsNew: Boolean;
     FMember: TProjectMember;
-    FProjectId, FMemberId: Integer;
+    FProjectId, FMemberId, FInstitutionId: Integer;
     procedure SetMember(Value: TProjectMember);
     procedure GetRecord;
     procedure SetRecord;
@@ -65,6 +70,7 @@ uses
 procedure TedtProjectMember.ApplyDarkMode;
 begin
   ePerson.Images := DMM.iEditsDark;
+  eInstitution.Images := DMM.iEditsDark;
 end;
 
 procedure TedtProjectMember.ckManagerKeyPress(Sender: TObject; var Key: char);
@@ -88,6 +94,39 @@ begin
   //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
   //else
   //  sbSave.Enabled := IsRequiredFilled;
+end;
+
+procedure TedtProjectMember.eInstitutionButtonClick(Sender: TObject);
+begin
+  FindDlg(tbInstitutions, eInstitution, FInstitutionId);
+end;
+
+procedure TedtProjectMember.eInstitutionKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
+  begin
+    FindDlg(tbInstitutions, eInstitution, FInstitutionId, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD = Backspace }
+  if (Key = #8) then
+  begin
+    FInstitutionId := 0;
+    eInstitution.Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
 end;
 
 procedure TedtProjectMember.ePersonButtonClick(Sender: TObject);
@@ -177,6 +216,8 @@ begin
   FMemberId := FMember.PersonId;
   ePerson.Text := GetName('people', 'full_name', 'person_id', FMember.PersonId);
   ckManager.Checked := FMember.IsProjectManager;
+  FInstitutionId := FMember.InstitutionId;
+  eInstitution.Text := GetName('institutions', 'acronym', 'institution_id', FMember.InstitutionId);
 end;
 
 function TedtProjectMember.IsRequiredFilled: Boolean;
@@ -208,6 +249,7 @@ begin
   FMember.ProjectId := FProjectId;
   FMember.PersonId := FMemberId;
   FMember.IsProjectManager := ckManager.Checked;
+  FMember.InstitutionId := FInstitutionId;
 end;
 
 function TedtProjectMember.ValidateFields: Boolean;

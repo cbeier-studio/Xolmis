@@ -269,6 +269,7 @@ end;
 
 procedure TedtProjectActivity.SetRecord;
 begin
+  FActivity.ProjectId := FProjectId;
   FActivity.Description := mDescription.Text;
   case cbStatus.ItemIndex of
     0: FActivity.Status := astToDo;

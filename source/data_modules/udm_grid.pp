@@ -680,6 +680,8 @@ type
     qProjectsmain_goal: TMemoField;
     qProjectsprotocol_number: TStringField;
     qProjectsrisks: TMemoField;
+    qProjectTeaminstitution_id: TLongintField;
+    qProjectTeaminstitution_name: TStringField;
     qSampleCollectors: TSQLQuery;
     qSampleCollectorsactive_status: TBooleanField;
     qSampleCollectorscollector_id: TLongintField;

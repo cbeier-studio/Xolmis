@@ -9836,12 +9836,25 @@ object frmCustomGrid: TfrmCustomGrid
   end
   object pmGridChild: TPopupMenu
     Images = iButtons
+    OnPopup = pmGridChildPopup
     Left = 56
     Top = 456
     object pmcEdit: TMenuItem
       Caption = '&Edit'
       ImageIndex = 2
       OnClick = sbEditChildClick
+    end
+    object pmcNewProjectActivityFromGoal: TMenuItem
+      Caption = 'New chronogram activity'
+      ImageIndex = 0
+      Visible = False
+      OnClick = pmcNewProjectActivityFromGoalClick
+    end
+    object pmcNewExpenseFromRubric: TMenuItem
+      Caption = 'New expense'
+      ImageIndex = 0
+      Visible = False
+      OnClick = pmcNewExpenseFromRubricClick
     end
     object Separator13: TMenuItem
       Caption = '-'

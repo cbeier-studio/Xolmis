@@ -85,6 +85,7 @@ type
     FProjectId: Integer;
     FPersonId: Integer;
     FProjectManager: Boolean;
+    FInstitutionId: Integer;
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
@@ -102,6 +103,7 @@ type
     property ProjectId: Integer read FProjectId write FProjectId;
     property PersonId: Integer read FPersonId write FPersonId;
     property IsProjectManager: Boolean read FProjectManager write FProjectManager;
+    property InstitutionId: Integer read FInstitutionId write FInstitutionId;
   end;
 
   TGoalStatus = (gstPending, gstReached, gstCanceled);
@@ -2071,6 +2073,7 @@ begin
   FProjectId := 0;
   FPersonId := 0;
   FProjectManager := False;
+  FInstitutionId := 0;
 end;
 
 procedure TProjectMember.Copy(aFrom: TProjectMember);
@@ -2078,6 +2081,7 @@ begin
   FProjectId := aFrom.ProjectId;
   FPersonId := aFrom.PersonId;
   FProjectManager := aFrom.IsProjectManager;
+  FInstitutionId := aFrom.InstitutionId;
 end;
 
 procedure TProjectMember.Delete;
@@ -2128,6 +2132,7 @@ begin
       'project_id, ' +
       'person_id, ' +
       'project_manager, ' +
+      'institution_id, ' +
       'user_inserted, ' +
       'user_updated, ' +
       'datetime(insert_date, ''localtime'') AS insert_date, ' +
@@ -2160,6 +2165,7 @@ begin
     FProjectId := FieldByName('project_id').AsInteger;
     FPersonId := FieldByName('person_id').AsInteger;
     FProjectManager := FieldByName('project_manager').AsBoolean;
+    FInstitutionId := FieldByName('institution_id').AsInteger;
     FUserInserted := FieldByName('user_inserted').AsInteger;
     FUserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
@@ -2198,18 +2204,21 @@ begin
         'project_id, ' +
         'person_id, ' +
         'project_manager, ' +
+        'institution_id, ' +
         'user_inserted, ' +
         'insert_date) ');
       Add('VALUES (' +
         ':project_id, ' +
         ':person_id, ' +
         ':project_manager, ' +
+        ':institution_id, ' +
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
       ParamByName('project_id').AsInteger := FProjectId;
       ParamByName('person_id').AsInteger := FPersonId;
       ParamByName('project_manager').AsBoolean := FProjectManager;
+      ParamByName('institution_id').AsInteger := FInstitutionId;
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -2248,6 +2257,7 @@ begin
     JSONObject.Add('Project', FProjectId);
     JSONObject.Add('Person', FPersonId);
     JSONObject.Add('Is project manager', FProjectManager);
+    JSONObject.Add('Institution', FInstitutionId);
 
     Result := JSONObject.AsJSON;
   finally
@@ -2276,6 +2286,7 @@ begin
         'project_id = :project_id, ' +
         'person_id = :person_id, ' +
         'project_manager = :project_manager, ' +
+        'institution_id = :institution_id, ' +
         'user_updated = :user_updated, ' +
         'update_date = datetime(''now'',''subsec'') ');
       Add('WHERE (project_member_id = :project_member_id)');
@@ -2283,6 +2294,7 @@ begin
       ParamByName('project_id').AsInteger := FProjectId;
       ParamByName('person_id').AsInteger := FPersonId;
       ParamByName('project_manager').AsBoolean := FProjectManager;
+      ParamByName('institution_id').AsInteger := FInstitutionId;
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('project_member_id').AsInteger := FId;
 

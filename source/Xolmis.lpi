@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="139">
+      <ExcludedIdentifiers Count="143">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -163,13 +163,17 @@
         <Item137 Value="tedtProjectMember.Caption"/>
         <Item138 Value="tedtSurveyMember.Caption"/>
         <Item139 Value="tedtCollector.Caption"/>
+        <Item140 Value="tedtProjectGoal.Caption"/>
+        <Item141 Value="tedtProjectActivity.Caption"/>
+        <Item142 Value="tedtProjectRubric.Caption"/>
+        <Item143 Value="tedtProjectExpense.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="413"/>
+      <BuildNr Value="414"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>

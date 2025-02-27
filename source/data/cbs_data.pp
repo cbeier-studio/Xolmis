@@ -1346,8 +1346,9 @@ begin
     'website_uri      VARCHAR (200),' +
     'email_addr       VARCHAR (100),' +
     'contact_name     VARCHAR (100),' +
-    'project_file     VARCHAR (200),' +
-    'contract_file    VARCHAR (200),' +
+    'protocol_number  VARCHAR (30),' +
+    'main_goal        TEXT,' +
+    'risks            TEXT,' +
     'project_abstract TEXT,' +
     'notes            TEXT,' +
     'user_inserted    INTEGER,' +

@@ -13793,7 +13793,7 @@ object DMG: TDMG
     FieldDefs = <    
       item
         Name = 'project_member_id'
-        DataType = ftAutoInc
+        DataType = ftInteger
         Precision = -1
       end    
       item
@@ -13809,6 +13809,11 @@ object DMG: TDMG
       item
         Name = 'project_manager'
         DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'institution_id'
+        DataType = ftInteger
         Precision = -1
       end    
       item
@@ -13847,10 +13852,28 @@ object DMG: TDMG
         Precision = -1
       end    
       item
+        Name = 'person_acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'person_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
         Name = 'person_color'
         DataType = ftString
         Precision = -1
         Size = 30
+      end    
+      item
+        Name = 'institution_name'
+        DataType = ftString
+        Precision = -1
+        Size = 15
       end>
     AfterCancel = qProjectTeamAfterCancel
     AfterPost = qProjectTeamAfterPost
@@ -13862,9 +13885,11 @@ object DMG: TDMG
       'SELECT pt.*,'
       '  p.acronym AS person_acronym,'
       '  p.full_name AS person_name,'
-      '  p.profile_color AS person_color'
+      '  p.profile_color AS person_color,'
+      '  it.acronym AS institution_name'
       'FROM project_team AS pt'
       'LEFT JOIN people AS p ON pt.person_id = p.person_id'
+      'LEFT JOIN institutions AS it ON pt.institution_id = it.institution_id'
       'WHERE (pt.active_status = 1)'
       '  AND (pt.project_id = :project_id)'
       ''
@@ -13874,12 +13899,14 @@ object DMG: TDMG
       '  project_id,'
       '  person_id,'
       '  project_manager,'
+      '  institution_id,'
       '  user_inserted,'
       '  insert_date)'
       'VALUES ('
       '  :project_id,'
       '  :person_id,'
       '  :project_manager,'
+      '  :institution_id,'
       '  :user_inserted,'
       '  datetime(''now'',''subsec''))'
     )
@@ -13888,6 +13915,7 @@ object DMG: TDMG
       '  project_id = :project_id,'
       '  person_id = :person_id,'
       '  project_manager = :project_manager,'
+      '  institution_id = :institution_id,'
       '  user_updated = :user_updated,'
       '  update_date = datetime(''now'',''subsec''),'
       '  exported_status = :exported_status,'
@@ -13976,11 +14004,31 @@ object DMG: TDMG
       Required = False
       DisplayValues = 'True;False'
     end
+    object qProjectTeaminstitution_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'institution_id'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectTeaminstitution_name: TStringField
+      FieldKind = fkData
+      FieldName = 'institution_name'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
     object qProjectTeamproject_member_id: TAutoIncField
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'project_member_id'
-      Index = 6
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -13990,7 +14038,7 @@ object DMG: TDMG
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 7
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -14001,7 +14049,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 8
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -14013,7 +14061,7 @@ object DMG: TDMG
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 9
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -14025,7 +14073,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 10
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -14037,7 +14085,7 @@ object DMG: TDMG
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 11
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -14050,7 +14098,7 @@ object DMG: TDMG
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 12
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -14062,7 +14110,7 @@ object DMG: TDMG
       DisplayLabel = 'Profile color'
       FieldKind = fkData
       FieldName = 'person_color'
-      Index = 13
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -19034,7 +19082,7 @@ object DMG: TDMG
     end
     object qProjectGoalsgoal_description: TMemoField
       DisplayLabel = 'Description'
-      DisplayWidth = 30
+      DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'goal_description'
       Index = 2

@@ -950,6 +950,8 @@ begin
         'person_name':            Fields[i].DisplayLabel := rscPerson;
         'person_acronym':         Fields[i].DisplayLabel := rscAcronym;
         'project_manager':        Fields[i].DisplayLabel := rscManager;
+        'institution_id':         Fields[i].DisplayLabel := rscInstitutionID;
+        'institution_name':       Fields[i].DisplayLabel := rscInstitution;
         'project_member_id':      Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
         'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;

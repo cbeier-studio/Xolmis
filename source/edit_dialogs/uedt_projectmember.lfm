@@ -1,13 +1,13 @@
 object edtProjectMember: TedtProjectMember
   Left = 414
-  Height = 147
+  Height = 200
   Top = 250
   Width = 397
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Add project member'
-  ClientHeight = 147
+  ClientHeight = 200
   ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
@@ -17,7 +17,7 @@ object edtProjectMember: TedtProjectMember
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 104
+    Top = 157
     Width = 397
     Align = alTop
     LineColor = 9276813
@@ -26,14 +26,14 @@ object edtProjectMember: TedtProjectMember
   end
   object pContent: TPanel
     Left = 0
-    Height = 104
+    Height = 157
     Top = 0
     Width = 397
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 104
+    ClientHeight = 157
     ClientWidth = 397
     TabOrder = 0
     object pPerson: TPanel
@@ -115,11 +115,61 @@ object edtProjectMember: TedtProjectMember
         OnKeyDown = FormKeyDown
       end
     end
+    object pInstitution: TPanel
+      Left = 0
+      Height = 45
+      Top = 96
+      Width = 397
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Top = 8
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 45
+      ClientWidth = 397
+      ParentBackground = False
+      TabOrder = 2
+      object lblInstitution: TLabel
+        Left = 16
+        Height = 15
+        Top = 3
+        Width = 365
+        BorderSpacing.Top = 3
+        Caption = 'Institution:'
+        Font.Color = 6579300
+        ParentColor = False
+        ParentFont = False
+      end
+      object eInstitution: TEditButton
+        Left = 16
+        Height = 23
+        Top = 22
+        Width = 365
+        ButtonHint = 'Find institution'
+        ButtonWidth = 23
+        Constraints.MinWidth = 365
+        Images = DMM.iEdits
+        ImageIndex = 0
+        MaxLength = 0
+        NumGlyphs = 1
+        ParentShowHint = False
+        PasswordChar = #0
+        ShowHint = True
+        Spacing = 0
+        TabOrder = 0
+        OnButtonClick = eInstitutionButtonClick
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eInstitutionKeyPress
+      end
+    end
   end
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 106
+    Top = 159
     Width = 397
     Align = alTop
     AutoSize = True

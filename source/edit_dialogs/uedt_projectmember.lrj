@@ -3,6 +3,8 @@
 {"hash":19260666,"name":"tedtprojectmember.lblperson.caption","sourcebytes":[82,101,115,101,97,114,99,104,101,114,58,32,42],"value":"Researcher: *"},
 {"hash":267345746,"name":"tedtprojectmember.eperson.buttonhint","sourcebytes":[70,105,110,100,32,114,101,115,101,97,114,99,104,101,114],"value":"Find researcher"},
 {"hash":93294530,"name":"tedtprojectmember.ckmanager.caption","sourcebytes":[80,114,111,106,101,99,116,32,109,97,110,97,103,101,114],"value":"Project manager"},
+{"hash":248475418,"name":"tedtprojectmember.lblinstitution.caption","sourcebytes":[73,110,115,116,105,116,117,116,105,111,110,58],"value":"Institution:"},
+{"hash":114304686,"name":"tedtprojectmember.einstitution.buttonhint","sourcebytes":[70,105,110,100,32,105,110,115,116,105,116,117,116,105,111,110],"value":"Find institution"},
 {"hash":366789,"name":"tedtprojectmember.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtprojectmember.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
 ]}
