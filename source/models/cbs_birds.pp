@@ -814,9 +814,9 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO band_history (' +
         'band_id, ' +
@@ -859,11 +859,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+      //DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_setparam"><element name="SetCoordinateParam"><short>Set longitude and latitude to their respective <var>TParam</var>.</short><descr>If both, longitude and latitude, are equal to zero, clear the <var>TParam</var>.
+</descr>
+      </element><element name="SetDateParam"><short>Set a date value to a <var>TParam</var>.</short><descr>If date is equal to <var>NullDate</var>, clear the <var>TParam</var>.
+</descr>
+      </element><element name="SetFloatParam"><short>Set a float value to a <var>TParam</var>.</short><descr>If the float value is equal to zero, clear the <var>TParam</var>.
+</descr>
+      </element><element name="SetForeignParam"><short>Set a foreign key value to a <var>TParam</var>.</short><descr>If the foreign key is equal to zero, clear the <var>TParam</var>.
+</descr>
+      </element><element name="SetIntParam"><short>Set an integer value to a <var>TParam</var>.</short><descr>If the integer value is equal to zero, clear the <var>TParam</var>.
+</descr>
+      </element><element name="SetStrParam"><short>Set a string value to a <var>TParam</var>.</short><descr>If the string value is equal to <var>EmptyStr</var>, clear the <var>TParam</var>.
+</descr>
+      </element><element name="SetTimeParam"><short>Set a time value to a <var>TParam</var>.</short><descr>If the time value is equal to <var>NullTime</var>, clear the <var>TParam</var>.
+</descr>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

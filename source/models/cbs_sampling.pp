@@ -587,7 +587,8 @@ type
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_users, cbs_validations, cbs_getvalue, cbs_fullnames, cbs_datacolumns, udm_main;
+  cbs_locale, cbs_global, cbs_users, cbs_validations, cbs_getvalue, cbs_fullnames, cbs_datacolumns,
+  cbs_setparam, udm_main;
 
 function AuthorListToString(aAuthors: TAuthors): String;
 var
@@ -2852,75 +2853,26 @@ begin
         ':notes, ' +
         ':user_inserted, ' +
         'datetime(''now'',''subsec''));');
-      ParamByName('sample_date').AsString := FormatDateTime('yyyy-mm-dd', FSampleDate);
+      SetDateParam(ParamByName('sample_date'), FSampleDate);
       ParamByName('net_number').AsInteger := FNetNumber;
       ParamByName('survey_id').AsInteger := FSurveyId;
       ParamByName('net_station_id').AsInteger := FNetStationId;
-      if (FPermanentNetId > 0) then
-        ParamByName('permanent_net_id').AsInteger := FPermanentNetId
-      else
-        ParamByName('permanent_net_id').Clear;
+      SetForeignParam(ParamByName('permanent_net_id'), FPermanentNetId);
       ParamByName('full_name').AsString := GetNetEffortFullname(FSampleDate, FNetStationId, FNetNumber);
-      if (FLongitude <> 0) and (FLatitude <> 0) then
-      begin
-        ParamByName('longitude').AsFloat := FLongitude;
-        ParamByName('latitude').AsFloat := FLatitude;
-      end
-      else
-      begin
-        ParamByName('longitude').Clear;
-        ParamByName('latitude').Clear;
-      end;
-      if (FNetLength > 0) then
-        ParamByName('net_length').AsFloat := FNetLength
-      else
-        ParamByName('net_length').Clear;
-      if (FNetHeight > 0) then
-        ParamByName('net_height').AsFloat := FNetHeight
-      else
-        ParamByName('net_height').Clear;
-      if (FNetMesh <> EmptyStr) then
-        ParamByName('net_mesh').AsString := FNetMesh
-      else
-        ParamByName('net_mesh').Clear;
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetFloatParam(ParamByName('net_length'), FNetLength);
+      SetFloatParam(ParamByName('net_height'), FNetHeight);
+      SetStrParam(ParamByName('net_mesh'), FNetMesh);
       ParamByName('notes').AsString := FNotes;
 
-      // if the field has 0 second, it is NULL
-      if FNetOpen1 <> StrToTime('00:00:00') then
-        ParamByName('net_open_1').AsString := TimeToStr(FNetOpen1)
-      else
-        ParamByName('net_open_1').Clear;
-      if FNetClose1 <> StrToTime('00:00:00') then
-        ParamByName('net_close_1').AsString := TimeToStr(FNetClose1)
-      else
-        ParamByName('net_close_1').Clear;
-
-      if FNetOpen2 <> StrToTime('00:00:00') then
-        ParamByName('net_open_2').AsString := TimeToStr(FNetOpen2)
-      else
-        ParamByName('net_open_2').Clear;
-      if FNetClose2 <> StrToTime('00:00:00') then
-        ParamByName('net_close_2').AsString := TimeToStr(FNetClose2)
-      else
-        ParamByName('net_close_2').Clear;
-
-      if FNetOpen3 <> StrToTime('00:00:00') then
-        ParamByName('net_open_3').AsString := TimeToStr(FNetOpen3)
-      else
-        ParamByName('net_open_3').Clear;
-      if FNetClose3 <> StrToTime('00:00:00') then
-        ParamByName('net_close_3').AsString := TimeToStr(FNetClose3)
-      else
-        ParamByName('net_close_3').Clear;
-
-      if FNetOpen4 <> StrToTime('00:00:00') then
-        ParamByName('net_open_4').AsString := TimeToStr(FNetOpen4)
-      else
-        ParamByName('net_open_4').Clear;
-      if FNetClose4 <> StrToTime('00:00:00') then
-        ParamByName('net_close_4').AsString := TimeToStr(FNetClose4)
-      else
-        ParamByName('net_close_4').Clear;
+      SetTimeParam(ParamByName('net_open_1'), FNetOpen1);
+      SetTimeParam(ParamByName('net_close_1'), FNetClose1);
+      SetTimeParam(ParamByName('net_open_2'), FNetOpen2);
+      SetTimeParam(ParamByName('net_close_2'), FNetClose2);
+      SetTimeParam(ParamByName('net_open_3'), FNetOpen3);
+      SetTimeParam(ParamByName('net_close_3'), FNetClose3);
+      SetTimeParam(ParamByName('net_open_4'), FNetOpen4);
+      SetTimeParam(ParamByName('net_close_4'), FNetClose4);
 
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 

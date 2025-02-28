@@ -85,9 +85,9 @@ type
     procedure sbCancelClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
-    CodSupplier, CodProject, CodCarrier, CodSender, CodRequester: Integer;
+    FSupplierId, FProjectId, FCarrierId, FSenderId, FRequesterId: Integer;
     DtRec, DtPed: TDate;
-    function ValidateData(aInitial, aFinal: Integer; aSupplier: String): Boolean;
+    function ValidateData(aInitial, aFinal: Integer): Boolean;
     procedure AddBandsBatch;
     procedure ApplyDarkMode;
   public
@@ -101,309 +101,180 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_users,
-  cbs_validations, cbs_themes, udm_main, udlg_progress, uDarkStyleParams;
+  cbs_birds, cbs_conversions, cbs_fullnames, cbs_validations, cbs_themes,
+  udm_main, udlg_progress, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TbatchBands }
 
 procedure TbatchBands.AddBandsBatch;
-const
-  // Open, Flag, Neck, Wing tag, Trinagular, Lock on, Rivet, Closed, Other
-  BandTypes: array of Char = ('A', 'F', 'N', 'W', 'T', 'L', 'R', 'C', 'O');
-  // Acquired, Transfer, Living bird, Dead bird, Loose
-  SourceTypes: array of Char = ('A', 'T', 'L', 'D', 'F');
-  // Order, Receive, Transfer, Retrieve, Report, Use, Discharge
-  EventTypes: array of Char = ('O', 'C', 'T', 'R', 'P', 'U', 'D');
 var
+  FRecord: TBand;
+  FHistory: TBandHistory;
+  FBandType: TMarkType;
+  FBandSource: TBandSource;
+  FEvent: TBandEvent;
   Ini, Fim: Integer;
   i: Integer;
-  dtP, dtR, Nome, Tipo, Orig, Forn: String;
-  Qry: TSQLQuery;
+  FFullName: String;
 begin
+  FRecord := TBand.Create();
+  FHistory := TBandHistory.Create();
   Ini := eStartNumber.Value;
   Fim := eEndNumber.Value;
-  if CodSupplier > 0 then
-    Forn := GetName('institutions', 'acronym', 'institution_id', CodSupplier)
-  else
-    Forn := EmptyStr;
-  Tipo := BandTypes[cbBandType.ItemIndex];
-  Orig := SourceTypes[cbBandSource.ItemIndex];
-  if (Trim(eOrderDate.Text) <> '') then
-    dtP := FormatDateTime('yyyy-mm-dd', StrToDate(eOrderDate.Text));
-  if (Trim(eReceiptDate.Text) <> '') then
-    dtR := FormatDateTime('yyyy-mm-dd', StrToDate(eReceiptDate.Text));
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  case cbBandType.ItemIndex of
+    0: FBandType := mkButtEndBand;
+    1: FBandType := mkFlag;
+    2: FBandType := mkCollar;
+    3: FBandType := mkWingTag;
+    4: FBandType := mkTriangularBand;
+    5: FBandType := mkLockOnBand;
+    6: FBandType := mkRivetBand;
+    7: FBandType := mkClosedBand;
+    8: FBandType := mkOther;
+  end;
+  case cbBandSource.ItemIndex of
+    0: FBandSource := bscAcquiredFromSupplier;
+    1: FBandSource := bscTransferBetweenBanders;
+    2: FBandSource := bscLivingBirdBandedByOthers;
+    3: FBandSource := bscDeadBirdBandedByOthers;
+    4: FBandSource := bscFoundLoose;
+  end;
+  case cbBandSource.ItemIndex of
+    0: FEvent := bevOrder;
+    1: FEvent := bevTransfer;
+    2: FEvent := bevRetrieve;
+    3: FEvent := bevRetrieve;
+    4: FEvent := bevRetrieve;
+  end;
+
+  // Progress dialog
+  dlgProgress := TdlgProgress.Create(nil);
+  dlgProgress.Show;
+  dlgProgress.Title := rsTitleNewBandsBatch;
+  dlgProgress.Text := rsProgressNewBandsBatch;
+  dlgProgress.Min := Ini - 1;
+  dlgProgress.Max := Fim;
+  Application.ProcessMessages;
+
   try
-    Qry.Database := DMM.sqlCon;
-    DMM.sqlTrans.StartTransaction;
-    // Progress dialog
-    dlgProgress := TdlgProgress.Create(nil);
-    dlgProgress.Show;
-    dlgProgress.Title := rsTitleNewBandsBatch;
-    dlgProgress.Text := rsProgressNewBandsBatch;
-    dlgProgress.Min := Ini - 1;
-    dlgProgress.Max := Fim;
-
-    Parar := False;
-    for i := Ini to Fim do
-    begin
-      if Parar then
-        Break;
-
-      Nome := Format('%s %d %s', [cbBandSize.Text, i, Forn]);
-      Nome := Trim(Nome);
-
-      if not RecordExists(tbBands, 'full_name', Nome) then
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Parar := False;
+      for i := Ini to Fim do
       begin
-        with Qry, SQL do
+        if Parar then
+          Break;
+
+        FRecord.Clear;
+        FHistory.Clear;
+
+        FFullName := GetBandFullname(cbBandSize.Text, i, FSupplierId);
+
+        if not RecordExists(tbBands, 'full_name', FFullName) then
         begin
-          Clear;
-          Add('INSERT INTO bands (full_name, band_size, band_number, band_status, supplier_id,');
-          Add('band_type, band_source,');
-          if (Trim(eProject.Text) <> '') then
-            Add('project_id,');
-          if (Trim(eCarrier.Text) <> '') then
-            Add('carrier_id,');
-          //if (Trim(eSender.Text) <> '') then
-          //  Add('sender_id,');
-          Add('band_reported, user_inserted, insert_date) ');
-          Add('VALUES (:aname, :asize, :anumber, ''D'', :asupplier,');
-          //if (Trim(eOrderDate.Text) <> '') then
-          //  Add('date(:orderdate),');
-          //if (Trim(eReceiptDate.Text) <> '') then
-          //  Add('date(:receiptdate),');
-          Add(':atype, :asource,');
-          //if (Trim(eOrderNumber.Text) <> '') then
-          //  Add(':aorder,');
-          if (Trim(eProject.Text) <> '') then
-            Add(':aproject,');
-          //if (Trim(eRequester.Text) <> '') then
-          //  Add(':arequester,');
-          if (Trim(eCarrier.Text) <> '') then
-            Add(':acarrier,');
-          //if (Trim(eSender.Text) <> '') then
-          //  Add(':asender,');
-          Add('0, :auser, datetime(''now'',''localtime''));');
-          ParamByName('ANAME').AsString := Nome;
-          ParamByName('ASIZE').AsString := cbBandSize.Text;
-          ParamByName('ANUMBER').AsInteger := i;
-          ParamByName('ASUPPLIER').AsInteger := CodSupplier;
-          //ParamByName('ORDERDATE').AsString := dtP;
-          //ParamByName('RECEIPTDATE').AsString := dtR;
-          ParamByName('ATYPE').AsString := Tipo;
-          ParamByName('ASOURCE').AsString := Orig;
-          //ParamByName('AORDER').AsString := eOrderNumber.Text;
-          ParamByName('APROJECT').AsInteger := CodProject;
-          //ParamByName('AREQUESTER').AsInteger := CodRequester;
-          ParamByName('ACARRIER').AsInteger := CodCarrier;
-          //ParamByName('ASENDER').AsInteger := CodSender;
-          //ParamByName('NI').AsInteger := NumInt;
-          ParamByName('AUSER').AsInteger := ActiveUser.Id;
-          {$IFDEF DEBUG}
-          LogSQL(SQL);
-          {$ENDIF}
-          ExecSQL;
-        end;
+          FRecord.Size := cbBandSize.Text;
+          FRecord.BandType := FBandType;
+          FRecord.Number := i;
+          FRecord.SupplierId := FSupplierId;
+          FRecord.Source := FBandSource;
+          FRecord.ProjectId := FProjectId;
+          FRecord.CarrierId := FCarrierId;
 
-        { Write the band history }
-        case cbBandSource.ItemIndex of
-        0:
-          begin
-            // Order
-            with Qry, SQL do
+          FRecord.Insert;
+
+          { Write the band history }
+          case FEvent of
+          bevOrder:
             begin
-              Clear;
-              Add('INSERT INTO band_history (band_id, event_type, event_date, ');
-              if (Trim(eOrderNumber.Text) <> '') then
-                Add('order_number,');
-              if (Trim(eSupplier.Text) <> '') then
-                Add('supplier_id,');
-              if (Trim(eRequester.Text) <> '') then
-                Add('requester_id,');
-              Add('user_inserted, insert_date) ');
-              Add('VALUES (:aband, :aevent, :adate, ');
-              if (Trim(eOrderNumber.Text) <> '') then
-                Add(':aorder, ');
-              if (Trim(eSupplier.Text) <> '') then
-                Add(':asupplier, ');
-              if (Trim(eRequester.Text) <> '') then
-                Add(':arequester, ');
-              Add(':auser, datetime(''now'',''localtime''));');
+              FHistory.BandId := FRecord.Id;
+              FHistory.EventType := FEvent;
+              FHistory.EventDate := TextToDate(eOrderDate.Text);
+              FHistory.OrderNumber := StrToIntDef(eOrderNumber.Text, 0);
+              FHistory.SupplierId := FSupplierId;
+              FHistory.RequesterId := FRequesterId;
 
-              ParamByName('ABAND').AsInteger := GetLastInsertedKey(tbBands);
-              ParamByName('AEVENT').AsString := 'O';
-              ParamByName('ADATE').AsString := dtP;
-              if (Trim(eOrderNumber.Text) <> '') then
-                ParamByName('AORDER').AsString := eOrderNumber.Text;
-              if (Trim(eSupplier.Text) <> '') then
-                ParamByName('ASUPPLIER').AsInteger := CodSupplier;
-              if (Trim(eRequester.Text) <> '') then
-                ParamByName('AREQUESTER').AsInteger := CodRequester;
-              ParamByName('AUSER').AsInteger := ActiveUser.Id;
-              {$IFDEF DEBUG}
-              LogSQL(SQL);
-              {$ENDIF}
-              ExecSQL;
+              FHistory.Insert;
 
               // Receive
               if (Trim(eReceiptDate.Text) <> '') then
               begin
-                Clear;
-                Add('INSERT INTO band_history (band_id, event_type, event_date, ');
-                if (Trim(eOrderNumber.Text) <> '') then
-                  Add('order_number,');
-                if (Trim(eSupplier.Text) <> '') then
-                  Add('supplier_id,');
-                if (Trim(eRequester.Text) <> '') then
-                  Add('requester_id,');
-                Add('user_inserted, insert_date) ');
-                Add('VALUES (:aband, :aevent, :adate, ');
-                if (Trim(eOrderNumber.Text) <> '') then
-                  Add(':aorder, ');
-                if (Trim(eSupplier.Text) <> '') then
-                  Add(':asupplier, ');
-                if (Trim(eRequester.Text) <> '') then
-                  Add(':arequester, ');
-                Add(':auser, datetime(''now'',''localtime''));');
+                FHistory.Clear;
 
-                ParamByName('ABAND').AsInteger := GetLastInsertedKey(tbBands);
-                ParamByName('AEVENT').AsString := 'C';
-                ParamByName('ADATE').AsString := dtR;
-                if (Trim(eOrderNumber.Text) <> '') then
-                  ParamByName('AORDER').AsString := eOrderNumber.Text;
-                if (Trim(eSupplier.Text) <> '') then
-                  ParamByName('ASUPPLIER').AsInteger := CodSupplier;
-                if (Trim(eRequester.Text) <> '') then
-                  ParamByName('AREQUESTER').AsInteger := CodRequester;
-                ParamByName('AUSER').AsInteger := ActiveUser.Id;
-                {$IFDEF DEBUG}
-                LogSQL(SQL);
-                {$ENDIF}
-                ExecSQL;
+                FHistory.BandId := FRecord.Id;
+                FHistory.EventType := bevReceive;
+                FHistory.EventDate := TextToDate(eReceiptDate.Text);
+                FHistory.OrderNumber := StrToIntDef(eOrderNumber.Text, 0);
+                FHistory.SupplierId := FSupplierId;
+                FHistory.RequesterId := FRequesterId;
+
+                FHistory.Insert;
               end;
             end;
-          end;
-        1:
-          begin
-            // Transfer
-            with Qry, SQL do
+          bevTransfer:
             begin
-              Clear;
-              Add('INSERT INTO band_history (band_id, event_type, event_date, ');
-              if (Trim(eOrderNumber.Text) <> '') then
-                Add('order_number,');
-              if (Trim(eSupplier.Text) <> '') then
-                Add('supplier_id,');
-              if (Trim(eSender.Text) <> '') then
-                Add('sender_id,');
-              if (Trim(eRequester.Text) <> '') then
-                Add('requester_id,');
-              Add('user_inserted, insert_date) ');
-              Add('VALUES (:aband, :aevent, :adate, ');
-              if (Trim(eOrderNumber.Text) <> '') then
-                Add(':aorder, ');
-              if (Trim(eSupplier.Text) <> '') then
-                Add(':asupplier, ');
-              if (Trim(eSender.Text) <> '') then
-                Add(':asender,');
-              if (Trim(eRequester.Text) <> '') then
-                Add(':arequester, ');
-              Add(':auser, datetime(''now'',''localtime''));');
+              FHistory.BandId := FRecord.Id;
+              FHistory.EventType := FEvent;
+              FHistory.EventDate := TextToDate(eOrderDate.Text);
+              FHistory.OrderNumber := StrToIntDef(eOrderNumber.Text, 0);
+              FHistory.SupplierId := FSupplierId;
+              FHistory.SenderId := FSenderId;
+              FHistory.RequesterId := FRequesterId;
 
-              ParamByName('ABAND').AsInteger := GetLastInsertedKey(tbBands);
-              ParamByName('AEVENT').AsString := 'T';
-              ParamByName('ADATE').AsString := dtP;
-              if (Trim(eOrderNumber.Text) <> '') then
-                ParamByName('AORDER').AsString := eOrderNumber.Text;
-              if (Trim(eSupplier.Text) <> '') then
-                ParamByName('ASUPPLIER').AsInteger := CodSupplier;
-              if (Trim(eSender.Text) <> '') then
-                ParamByName('ASENDER').AsInteger := CodSender;
-              if (Trim(eRequester.Text) <> '') then
-                ParamByName('AREQUESTER').AsInteger := CodRequester;
-              ParamByName('AUSER').AsInteger := ActiveUser.Id;
-              {$IFDEF DEBUG}
-              LogSQL(SQL);
-              {$ENDIF}
-              ExecSQL;
+              FHistory.Insert;
             end;
-          end;
-        2..4:
-          begin
-            // Retrieve
-            with Qry, SQL do
+          bevRetrieve:
             begin
-              Clear;
-              Add('INSERT INTO band_history (band_id, event_type, event_date, ');
-              if (Trim(eOrderNumber.Text) <> '') then
-                Add('order_number,');
-              if (Trim(eSupplier.Text) <> '') then
-                Add('supplier_id,');
-              if (Trim(eRequester.Text) <> '') then
-                Add('requester_id,');
-              Add('user_inserted, insert_date) ');
-              Add('VALUES (:aband, :aevent, :adate, ');
-              if (Trim(eOrderNumber.Text) <> '') then
-                Add(':aorder, ');
-              if (Trim(eSupplier.Text) <> '') then
-                Add(':asupplier, ');
-              if (Trim(eRequester.Text) <> '') then
-                Add(':arequester, ');
-              Add(':auser, datetime(''now'',''localtime''));');
+              FHistory.BandId := FRecord.Id;
+              FHistory.EventType := FEvent;
+              FHistory.EventDate := TextToDate(eOrderDate.Text);
+              FHistory.OrderNumber := StrToIntDef(eOrderNumber.Text, 0);
+              FHistory.SupplierId := FSupplierId;
+              FHistory.RequesterId := FRequesterId;
 
-              ParamByName('ABAND').AsInteger := GetLastInsertedKey(tbBands);
-              ParamByName('AEVENT').AsString := 'R';
-              ParamByName('ADATE').AsString := dtP;
-              if (Trim(eOrderNumber.Text) <> '') then
-                ParamByName('AORDER').AsString := eOrderNumber.Text;
-              if (Trim(eSupplier.Text) <> '') then
-                ParamByName('ASUPPLIER').AsInteger := CodSupplier;
-              if (Trim(eRequester.Text) <> '') then
-                ParamByName('AREQUESTER').AsInteger := CodRequester;
-              ParamByName('AUSER').AsInteger := ActiveUser.Id;
-              {$IFDEF DEBUG}
-              LogSQL(SQL);
-              {$ENDIF}
-              ExecSQL;
+              FHistory.Insert;
             end;
           end;
         end;
+
+        dlgProgress.Position := i;
       end;
 
-      dlgProgress.Position := i;
+      if Parar then
+      begin
+        DMM.sqlTrans.RollbackRetaining;
+        MsgDlg(rsTitleNewBandsBatch, rsBatchCanceledByUser, mtWarning);
+      end
+      else
+      begin
+        DMM.sqlTrans.CommitRetaining;
+        MsgDlg(rsTitleNewBandsBatch, rsSuccessfulNewBatch, mtInformation);
+      end;
+      Sleep(300);
+      dlgProgress.Close;
+      FreeAndNil(dlgProgress);
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
 
-    if Parar then
-    begin
-      DMM.sqlTrans.Rollback;
-      MsgDlg(rsTitleNewBandsBatch, rsBatchCanceledByUser, mtWarning);
-    end
-    else
-    begin
-      DMM.sqlTrans.CommitRetaining;
-      MsgDlg(rsTitleNewBandsBatch, rsSuccessfulNewBatch, mtInformation);
-    end;
-    FreeAndNil(Qry);
-    Sleep(300);
-    dlgProgress.Close;
-    FreeAndNil(dlgProgress);
-  except
-    DMM.sqlTrans.Rollback;
-    FreeAndNil(Qry);
+  finally
+    FHistory.Free;
+    FRecord.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
     end;
-    raise;
   end;
 end;
 
 procedure TbatchBands.ApplyDarkMode;
 begin
-  pEdit.Color := clVioletBG1Dark;
+  //pEdit.Color := clVioletBG1Dark;
 
   eProject.Images := DMM.iEditsDark;
   eOrderDate.Images := DMM.iEditsDark;
@@ -417,7 +288,7 @@ end;
 procedure TbatchBands.cbBandSizeChange(Sender: TObject);
 begin
   if (cbBandSize.ItemIndex >= 0) and (cbBandType.ItemIndex >= 0) and (cbBandSource.ItemIndex >= 0) and
-    (eStartNumber.Text <> '') and (eEndNumber.Text <> '') and (CodSupplier > 0) and (CodRequester > 0) then
+    (eStartNumber.Text <> '') and (eEndNumber.Text <> '') and (FSupplierId > 0) and (FRequesterId > 0) then
     sbSave.Enabled := True
   else
     sbSave.Enabled := False;
@@ -432,31 +303,31 @@ begin
   begin
     if eSupplier.Focused then
     begin
-      FindDlg(tbInstitutions, eSupplier, CodSupplier, Key);
+      FindDlg(tbInstitutions, eSupplier, FSupplierId, Key);
       Key := #0;
     end
     else
     if eRequester.Focused then
     begin
-      FindDlg(tbPeople, eRequester, CodRequester, Key);
+      FindDlg(tbPeople, eRequester, FRequesterId, Key);
       Key := #0;
     end
     else
     if eCarrier.Focused then
     begin
-      FindDlg(tbPeople, eCarrier, CodCarrier, Key);
+      FindDlg(tbPeople, eCarrier, FCarrierId, Key);
       Key := #0;
     end
     else
     if eSender.Focused then
     begin
-      FindDlg(tbPeople, eSender, CodSender, Key);
+      FindDlg(tbPeople, eSender, FSenderId, Key);
       Key := #0;
     end
     else
     if eProject.Focused then
     begin
-      FindDlg(tbProjects, eProject, CodProject, Key);
+      FindDlg(tbProjects, eProject, FProjectId, Key);
       Key := #0;
     end;
   end;
@@ -466,35 +337,35 @@ begin
     if eSupplier.Focused then
     begin
       eSupplier.Clear;
-      CodSupplier := 0;
+      FSupplierId := 0;
       Key := #0;
     end
     else
     if eRequester.Focused then
     begin
       eRequester.Clear;
-      CodRequester := 0;
+      FRequesterId := 0;
       Key := #0;
     end
     else
     if eCarrier.Focused then
     begin
       eCarrier.Clear;
-      CodCarrier := 0;
+      FCarrierId := 0;
       Key := #0;
     end
     else
     if eSender.Focused then
     begin
       eSender.Clear;
-      CodSender := 0;
+      FSenderId := 0;
       Key := #0;
     end
     else
     if eProject.Focused then
     begin
       eProject.Clear;
-      CodProject := 0;
+      FProjectId := 0;
       Key := #0;
     end;
   end;
@@ -523,7 +394,7 @@ end;
 
 procedure TbatchBands.eCarrierButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eCarrier, CodCarrier);
+  FindDlg(tbPeople, eCarrier, FCarrierId);
 end;
 
 procedure TbatchBands.eOrderDateButtonClick(Sender: TObject);
@@ -535,7 +406,7 @@ end;
 
 procedure TbatchBands.eProjectButtonClick(Sender: TObject);
 begin
-  FindDlg(tbProjects, eProject, CodProject);
+  FindDlg(tbProjects, eProject, FProjectId);
 end;
 
 procedure TbatchBands.eReceiptDateButtonClick(Sender: TObject);
@@ -547,17 +418,17 @@ end;
 
 procedure TbatchBands.eRequesterButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eRequester, CodRequester);
+  FindDlg(tbPeople, eRequester, FRequesterId);
 end;
 
 procedure TbatchBands.eSenderButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eSender, CodSender);
+  FindDlg(tbPeople, eSender, FSenderId);
 end;
 
 procedure TbatchBands.eSupplierButtonClick(Sender: TObject);
 begin
-  FindDlg(tbInstitutions, eSupplier, CodSupplier);
+  FindDlg(tbInstitutions, eSupplier, FSupplierId);
 end;
 
 procedure TbatchBands.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -590,7 +461,7 @@ begin
 
   { Load default values }
   // Supplier initial value: CEMAVE
-  CodSupplier := GetKey('institutions', 'institution_id', 'acronym', 'CEMAVE');
+  FSupplierId := GetKey('institutions', 'institution_id', 'acronym', 'CEMAVE');
   eSupplier.Text := 'CEMAVE';
   // Type initial value: Butt-end
   cbBandType.Items.CommaText := rsBandTypeList;
@@ -613,16 +484,11 @@ end;
 procedure TbatchBands.sbSaveClick(Sender: TObject);
 var
   Ini, Fim: Integer;
-  Forn: String;
 begin
   Ini := eStartNumber.Value;
   Fim := eEndNumber.Value;
-  if CodSupplier > 0 then
-    Forn := GetName('institutions', 'acronym', 'institution_id', CodSupplier)
-  else
-    Forn := EmptyStr;
 
-  if not ValidateData(Ini, Fim, Forn) then
+  if not ValidateData(Ini, Fim) then
     Exit;
 
   AddBandsBatch;
@@ -630,7 +496,7 @@ begin
   batchBands.ModalResult := mrOk;
 end;
 
-function TbatchBands.ValidateData(aInitial, aFinal: Integer; aSupplier: String): Boolean;
+function TbatchBands.ValidateData(aInitial, aFinal: Integer): Boolean;
 var
   Msgs: TStrings;
   // nome: String;

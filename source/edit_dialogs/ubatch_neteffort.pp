@@ -108,8 +108,6 @@ procedure TbatchNetEffort.AddNetsBatch;
 var
   FRecord: TNetEffort;
   FNetCopy: TNetEffort;
-  Qry: TSQLQuery;
-  strSurveyDate: String;
   i: Integer;
   Ini, Fim: Integer;
 begin
@@ -122,145 +120,51 @@ begin
     if not DMM.sqlTrans.Active then
       DMM.sqlTrans.StartTransaction;
     try
-      //strSurveyDate := FormatDateTime('yyyy-mm-dd', aSurvey.SurveyDate);
-      //Qry := TSQLQuery.Create(DMM.sqlCon);
-      //with Qry, SQL do
-      //try
-      //  Database := DMM.sqlCon;
-      //  Clear;
-      //  Add('INSERT INTO nets_effort (net_id, survey_id, net_number, full_name, sample_date, ');
-      //  if not (eOpenTime1.Text = EmptyStr) then
-      //    Add('net_open_1, ');
-      //  if not (eCloseTime1.Text = EmptyStr) then
-      //    Add('net_close_1, ');
-      //  if not (eOpenTime2.Text = EmptyStr) then
-      //    Add('net_open_2, ');
-      //  if not (eCloseTime2.Text = EmptyStr) then
-      //    Add('net_close_2, ');
-      //  if not (eOpenTime3.Text = EmptyStr) then
-      //    Add('net_open_3, ');
-      //  if not (eCloseTime3.Text = EmptyStr) then
-      //    Add('net_close_3, ');
-      //  Add('net_length, net_height, net_mesh, ');
-      //  if SurveyId > 0 then
-      //    Add('permanent_net_id, latitude, longitude, ');
-      //  Add('data_owner, user_inserted, insert_date) ');
-      //  Add('VALUES (:ni, :asurvey, :anet, :aname, :adate, ');
-      //  if not (eOpenTime1.Text = EmptyStr) then
-      //    Add('time(:opentime1), ');
-      //  if not (eCloseTime1.Text = EmptyStr) then
-      //    Add('time(:closetime1), ');
-      //  if not (eOpenTime2.Text = EmptyStr) then
-      //    Add('time(:opentime2), ');
-      //  if not (eCloseTime2.Text = EmptyStr) then
-      //    Add('time(:closetime2), ');
-      //  if not (eOpenTime3.Text = EmptyStr) then
-      //    Add('time(:opentime3), ');
-      //  if not (eCloseTime3.Text = EmptyStr) then
-      //    Add('time(:closetime3), ');
-      //  if not (eOpenTime4.Text = EmptyStr) then
-      //    Add('time(:opentime4), ');
-      //  if not (eCloseTime4.Text = EmptyStr) then
-      //    Add('time(:closetime4), ');
-      //  Add(':alength, :aheight, :amesh, ');
-      //  if SurveyId > 0 then
-      //  begin
-      //    Add('(SELECT permanent_net_id FROM nets_effort WHERE (survey_id = :asurvey) AND (net_number = :anet)), ');
-      //    Add('(SELECT latitude FROM nets_effort WHERE (survey_id = :asurvey) AND (net_number = :anet)), ');
-      //    Add('(SELECT longitude FROM nets_effort WHERE (survey_id = :asurvey) AND (net_number = :anet)), ');
-      //  end;
-      //  Add(':auser, datetime(''now'',''localtime''));');
-      //  {$IFDEF DEBUG}
-      //  LogSQL(SQL);
-      //  {$ENDIF}
+      for i := Ini to Fim do
+      begin
+        FRecord.Clear;
+        FNetCopy.Clear;
 
-        for i := Ini to Fim do
+        FRecord.SurveyId := SurveyId;
+        FRecord.NetStationId := aSurvey.NetStationId;
+        if fromSurveyId > 0 then
         begin
-          FRecord.Clear;
-          FNetCopy.Clear;
-
-          FRecord.SurveyId := SurveyId;
-          FRecord.NetStationId := aSurvey.NetStationId;
-          if fromSurveyId > 0 then
+          if FNetCopy.Find(fromSurveyId, IntToStr(i)) then
           begin
-            if FNetCopy.Find(fromSurveyId, IntToStr(i)) then
-            begin
-              FRecord.PermanentNetId := FNetCopy.PermanentNetId;
-              FRecord.Longitude := FNetCopy.Longitude;
-              FRecord.Latitude := FNetCopy.Latitude;
-            end;
+            FRecord.PermanentNetId := FNetCopy.PermanentNetId;
+            FRecord.Longitude := FNetCopy.Longitude;
+            FRecord.Latitude := FNetCopy.Latitude;
           end;
-          FRecord.NetNumber := i;
-          //FRecord.FullName := Format('%s %3.3d', [aSurvey.FullName, i]);
-          FRecord.SampleDate := aSurvey.SurveyDate;
-          if not (eOpenTime1.Text = EmptyStr) then
-            FRecord.NetOpen1 := eOpenTime1.Time;
-          if not (eCloseTime1.Text = EmptyStr) then
-            FRecord.NetClose1 := eCloseTime1.Time;
-          if not (eOpenTime2.Text = EmptyStr) then
-            FRecord.NetOpen2 := eOpenTime2.Time;
-          if not (eCloseTime2.Text = EmptyStr) then
-            FRecord.NetClose2 := eCloseTime2.Time;
-          if not (eOpenTime3.Text = EmptyStr) then
-            FRecord.NetOpen3 := eOpenTime3.Time;
-          if not (eCloseTime3.Text = EmptyStr) then
-            FRecord.NetClose3 := eCloseTime3.Time;
-          if not (eOpenTime4.Text = EmptyStr) then
-            FRecord.NetOpen4 := eOpenTime4.Time;
-          if not (eCloseTime4.Text = EmptyStr) then
-            FRecord.NetClose4 := eCloseTime4.Time;
-          if eNetLength.Value > 0.0 then
-            FRecord.NetLength := eNetLength.Value;
-          if eNetHeight.Value > 0.0 then
-            FRecord.NetHeight := eNetHeight.Value;
-          if cbNetMesh.ItemIndex > 0 then
-            FRecord.NetMesh := cbNetMesh.Text;
-
-          FRecord.Insert;
-
-          //ParamByName('ASURVEY').AsInteger := SurveyId;
-          //ParamByName('ANET').AsInteger := i;
-          //ParamByName('ANAME').AsString := Format('%s %3.3d', [aSurvey.FullName, i]);
-          //ParamByName('ADATE').AsString := strSurveyDate;
-          //if not (eOpenTime1.Text = EmptyStr) then
-          //  ParamByName('OPENTIME1').AsString := TimeToStr(eOpenTime1.Time);
-          //if not (eCloseTime1.Text = EmptyStr) then
-          //  ParamByName('CLOSETIME1').AsString := TimeToStr(eCloseTime1.Time);
-          //if not (eOpenTime2.Text = EmptyStr) then
-          //  ParamByName('OPENTIME2').AsString := TimeToStr(eOpenTime2.Time);
-          //if not (eCloseTime2.Text = EmptyStr) then
-          //  ParamByName('CLOSETIME2').AsString := TimeToStr(eCloseTime2.Time);
-          //if not (eOpenTime3.Text = EmptyStr) then
-          //  ParamByName('OPENTIME3').AsString := TimeToStr(eOpenTime3.Time);
-          //if not (eCloseTime3.Text = EmptyStr) then
-          //  ParamByName('CLOSETIME3').AsString := TimeToStr(eCloseTime3.Time);
-          //if not (eOpenTime4.Text = EmptyStr) then
-          //  ParamByName('OPENTIME4').AsString := TimeToStr(eOpenTime4.Time);
-          //if not (eCloseTime4.Text = EmptyStr) then
-          //  ParamByName('CLOSETIME4').AsString := TimeToStr(eCloseTime4.Time);
-          //if eNetLength.Value = 0.0 then
-          //  ParamByName('ALENGTH').Clear
-          //else
-          //  ParamByName('ALENGTH').AsFloat := eNetLength.Value;
-          //if eNetHeight.Value = 0.0 then
-          //  ParamByName('AHEIGHT').Clear
-          //else
-          //  ParamByName('AHEIGHT').AsFloat := eNetHeight.Value;
-          //if cbNetMesh.Text = EmptyStr then
-          //  ParamByName('AMESH').Clear
-          //else
-          //  ParamByName('AMESH').AsString := cbNetMesh.Text;
-          //ParamByName('AUSER').AsInteger := ActiveUser.Id;
-          //
-          //ExecSQL;
-          //
-          //{ WriteRecHistory causa ERRO "database schema is locked" }
-          //WriteRecHistory(tbNetsEffort, haCreated, 0, '', '', '', rsInsertedByBatch);
         end;
-      //finally
-      //  FreeAndNil(Qry);
-      //  FreeAndNil(aSurvey);
-      //end;
+        FRecord.NetNumber := i;
+        //FRecord.FullName := Format('%s %3.3d', [aSurvey.FullName, i]);
+        FRecord.SampleDate := aSurvey.SurveyDate;
+        if not (eOpenTime1.Text = EmptyStr) then
+          FRecord.NetOpen1 := eOpenTime1.Time;
+        if not (eCloseTime1.Text = EmptyStr) then
+          FRecord.NetClose1 := eCloseTime1.Time;
+        if not (eOpenTime2.Text = EmptyStr) then
+          FRecord.NetOpen2 := eOpenTime2.Time;
+        if not (eCloseTime2.Text = EmptyStr) then
+          FRecord.NetClose2 := eCloseTime2.Time;
+        if not (eOpenTime3.Text = EmptyStr) then
+          FRecord.NetOpen3 := eOpenTime3.Time;
+        if not (eCloseTime3.Text = EmptyStr) then
+          FRecord.NetClose3 := eCloseTime3.Time;
+        if not (eOpenTime4.Text = EmptyStr) then
+          FRecord.NetOpen4 := eOpenTime4.Time;
+        if not (eCloseTime4.Text = EmptyStr) then
+          FRecord.NetClose4 := eCloseTime4.Time;
+        if eNetLength.Value > 0.0 then
+          FRecord.NetLength := eNetLength.Value;
+        if eNetHeight.Value > 0.0 then
+          FRecord.NetHeight := eNetHeight.Value;
+        if cbNetMesh.ItemIndex > 0 then
+          FRecord.NetMesh := cbNetMesh.Text;
+
+        FRecord.Insert;
+      end;
+
       DMM.sqlTrans.CommitRetaining;
     except
       DMM.sqlTrans.RollbackRetaining;
