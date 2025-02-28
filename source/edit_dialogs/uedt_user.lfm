@@ -11,7 +11,7 @@ object edtUser: TedtUser
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  OnClose = FormClose
+  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -42,6 +42,7 @@ object edtUser: TedtUser
       Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
+      OnClick = sbSaveClick
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end

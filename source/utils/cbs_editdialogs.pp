@@ -2579,10 +2579,14 @@ begin
     if Result then
     begin
       if IsNew then
+      begin
         if ChangeUserPassword(IsNew) then
           DMM.qUsers.Post
         else
           DMM.qUsers.Cancel;
+      end
+      else
+        DMM.qUsers.Post;
     end
     else
       DMM.qUsers.Cancel;

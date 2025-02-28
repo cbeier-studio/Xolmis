@@ -96,6 +96,8 @@ end;
 procedure TcfgUsers.sbDeleteClick(Sender: TObject);
 begin
   DeleteRecord(tbUsers, dsUsers.DataSet);
+
+  dsUsers.DataSet.Refresh;
 end;
 
 procedure TcfgUsers.FormKeyPress(Sender: TObject; var Key: char);

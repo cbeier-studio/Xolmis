@@ -52,10 +52,10 @@ type
     sbSave: TButton;
     procedure dsUserDataChange(Sender: TObject; Field: TField);
     procedure eUsernameKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure sbSaveClick(Sender: TObject);
   private
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
@@ -95,11 +95,6 @@ begin
   end;
 end;
 
-procedure TedtUser.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
-end;
-
 procedure TedtUser.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   { SAVE = Ctrl + S }
@@ -126,14 +121,18 @@ end;
 
 procedure TedtUser.FormShow(Sender: TObject);
 begin
-  if dsUser.State = dsInsert then
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionUser)])
-  else
-    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionUser)]);
-
   cbUserRank.Items.CommaText := rsStandardUser + ',' + rsAdminUser + ',' + rsGuestUser;
 
   cbUserRank.ItemIndex := cbUserRank.Items.IndexOf(dsUser.DataSet.FieldByName(cbUserRank.DataField).DisplayText);
+
+  if dsUser.State = dsInsert then
+  begin
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionUser)]);
+  end
+  else
+  begin
+    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionUser)]);
+  end;
 end;
 
 function TedtUser.IsRequiredFilled: Boolean;
@@ -145,8 +144,14 @@ begin
     Result := True;
 end;
 
+procedure TedtUser.sbSaveClick(Sender: TObject);
+begin
+  ModalResult := mrOK;
+end;
+
 function TedtUser.ValidateFields: Boolean;
 begin
+  Result := True;
 
 end;
 

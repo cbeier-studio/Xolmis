@@ -130,6 +130,7 @@ type
     procedure qsConnBeforePost(DataSet: TDataSet);
     procedure qsConndatabase_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qsConndatabase_typeSetText(Sender: TField; const aText: string);
+    procedure qUsersAfterCancel(DataSet: TDataSet);
     procedure qUsersAfterInsert(DataSet: TDataSet);
     procedure qUsersAfterPost(DataSet: TDataSet);
     procedure qUsersBeforeEdit(DataSet: TDataSet);
@@ -291,9 +292,19 @@ begin
   end;
 end;
 
+procedure TDMM.qUsersAfterCancel(DataSet: TDataSet);
+begin
+  if Assigned(OldUser) then
+    FreeAndNil(OldUser);
+end;
+
 procedure TDMM.qUsersAfterInsert(DataSet: TDataSet);
 begin
   DataSet.FieldByName('user_rank').AsString := 'S';
+  DataSet.FieldByName('allow_collection_edit').AsBoolean := True;
+  DataSet.FieldByName('allow_print').AsBoolean := True;
+  DataSet.FieldByName('allow_export').AsBoolean := True;
+  DataSet.FieldByName('allow_import').AsBoolean := True;
 end;
 
 procedure TDMM.qUsersAfterPost(DataSet: TDataSet);

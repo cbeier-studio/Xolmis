@@ -1191,7 +1191,6 @@
         <ComponentName Value="cfgUsers"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="screens\ufrm_customgrid.pp"/>

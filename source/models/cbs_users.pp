@@ -71,7 +71,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_validations, cbs_locale, udm_main;
+uses cbs_global, cbs_validations, cbs_locale, cbs_datacolumns, udm_main;
 
 { TUser }
 
@@ -82,19 +82,19 @@ begin
   Result := False;
   R := EmptyStr;
 
-  if FieldValuesDiff('Nome', aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Nome de usu'#225'rio', aOld.UserName, FUserName, R) then
+  if FieldValuesDiff(rscUsername, aOld.UserName, FUserName, R) then
     aList.Add(R);
-  if FieldValuesDiff('Tipo', aOld.Rank, FRank, R) then
+  if FieldValuesDiff(rscType, aOld.Rank, FRank, R) then
     aList.Add(R);
-  if FieldValuesDiff('Gerenciar acervo', aOld.AllowManageCollection, FAllowManageCollection, R) then
+  if FieldValuesDiff(rscManageCollection, aOld.AllowManageCollection, FAllowManageCollection, R) then
     aList.Add(R);
-  if FieldValuesDiff('Imprimir relat'#243'rios', aOld.AllowPrint, FAllowPrint, R) then
+  if FieldValuesDiff(rscPrintReports, aOld.AllowPrint, FAllowPrint, R) then
     aList.Add(R);
-  if FieldValuesDiff('Exportar dados', aOld.AllowExport, FAllowExport, R) then
+  if FieldValuesDiff(rscExportData, aOld.AllowExport, FAllowExport, R) then
     aList.Add(R);
-  if FieldValuesDiff('Importar dados', aOld.AllowImport, FAllowImport, R) then
+  if FieldValuesDiff(rscImportData, aOld.AllowImport, FAllowImport, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;
@@ -194,9 +194,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('DELETE FROM users');
       Add('WHERE (user_id = :aid)');
@@ -205,11 +205,11 @@ begin
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -264,9 +264,9 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO users (' +
         'full_name, ' +
@@ -311,11 +311,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -405,9 +405,9 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE users SET ' +
         'full_name = :full_name, ' +
@@ -439,18 +439,11 @@ begin
 
       ExecSQL;
 
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;

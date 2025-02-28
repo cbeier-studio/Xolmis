@@ -160,6 +160,7 @@ object DMM: TDMM
         DataType = ftBoolean
         Precision = -1
       end>
+    AfterCancel = qUsersAfterCancel
     AfterInsert = qUsersAfterInsert
     AfterPost = qUsersAfterPost
     BeforeEdit = qUsersBeforeEdit
