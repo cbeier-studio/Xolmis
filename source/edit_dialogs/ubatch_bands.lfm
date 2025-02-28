@@ -99,7 +99,7 @@ object batchBands: TbatchBands
         Top = 3
         Width = 176
         BorderSpacing.Top = 3
-        Caption = 'Size:'
+        Caption = 'Size: *'
         ParentFont = False
       end
       object lblBandType: TLabel
@@ -108,7 +108,7 @@ object batchBands: TbatchBands
         Top = 3
         Width = 176
         BorderSpacing.Top = 3
-        Caption = 'Type:'
+        Caption = 'Type: *'
         ParentFont = False
       end
       object cbBandSize: TComboBox
@@ -195,7 +195,7 @@ object batchBands: TbatchBands
         Top = 3
         Width = 176
         BorderSpacing.Top = 3
-        Caption = 'Start number:'
+        Caption = 'Start number: *'
         ParentFont = False
       end
       object lblEndNumber: TLabel
@@ -204,7 +204,7 @@ object batchBands: TbatchBands
         Top = 3
         Width = 176
         BorderSpacing.Top = 3
-        Caption = 'Final number:'
+        Caption = 'Final number: *'
         ParentFont = False
       end
       object eStartNumber: TSpinEdit
@@ -310,7 +310,7 @@ object batchBands: TbatchBands
         Top = 3
         Width = 176
         BorderSpacing.Top = 3
-        Caption = 'Source:'
+        Caption = 'Source: *'
         ParentFont = False
       end
       object lblOrderNumber: TLabel
@@ -458,7 +458,7 @@ object batchBands: TbatchBands
         Top = 3
         Width = 368
         BorderSpacing.Top = 3
-        Caption = 'Supplier:'
+        Caption = 'Supplier: *'
         ParentFont = False
       end
       object eSupplier: TEditButton
@@ -478,6 +478,7 @@ object batchBands: TbatchBands
         Spacing = 0
         TabOrder = 0
         OnButtonClick = eSupplierButtonClick
+        OnChange = cbBandSizeChange
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
       end
@@ -507,7 +508,7 @@ object batchBands: TbatchBands
         Top = 3
         Width = 368
         BorderSpacing.Top = 3
-        Caption = 'Requester:'
+        Caption = 'Requester: *'
         ParentFont = False
       end
       object eRequester: TEditButton
@@ -527,6 +528,7 @@ object batchBands: TbatchBands
         Spacing = 0
         TabOrder = 0
         OnButtonClick = eRequesterButtonClick
+        OnChange = cbBandSizeChange
         OnKeyDown = FormKeyDown
         OnKeyPress = cbBandSizeKeyPress
       end

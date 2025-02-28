@@ -417,7 +417,7 @@ end;
 procedure TbatchBands.cbBandSizeChange(Sender: TObject);
 begin
   if (cbBandSize.ItemIndex >= 0) and (cbBandType.ItemIndex >= 0) and (cbBandSource.ItemIndex >= 0) and
-    (eStartNumber.Text <> '') and (eEndNumber.Text <> '') then
+    (eStartNumber.Text <> '') and (eEndNumber.Text <> '') and (CodSupplier > 0) and (CodRequester > 0) then
     sbSave.Enabled := True
   else
     sbSave.Enabled := False;

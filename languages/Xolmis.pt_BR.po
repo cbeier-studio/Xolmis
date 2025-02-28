@@ -5775,17 +5775,19 @@ msgid "Find institution"
 msgstr "Procurar instituição"
 
 #: tbatchbands.lblbandsize.caption
-msgid "Size:"
-msgstr "Tamanho:"
+msgctxt "tbatchbands.lblbandsize.caption"
+msgid "Size: *"
+msgstr "Tamanho: *"
 
 #: tbatchbands.lblbandsource.caption
-msgid "Source:"
-msgstr "Origem:"
+msgctxt "tbatchbands.lblbandsource.caption"
+msgid "Source: *"
+msgstr "Origem: *"
 
 #: tbatchbands.lblbandtype.caption
 msgctxt "tbatchbands.lblbandtype.caption"
-msgid "Type:"
-msgstr "Tipo:"
+msgid "Type: *"
+msgstr "Tipo: *"
 
 #: tbatchbands.lblcarrier.caption
 msgctxt "tbatchbands.lblcarrier.caption"
@@ -5794,8 +5796,8 @@ msgstr "Portador:"
 
 #: tbatchbands.lblendnumber.caption
 msgctxt "tbatchbands.lblendnumber.caption"
-msgid "Final number:"
-msgstr "Número final:"
+msgid "Final number: *"
+msgstr "Número final: *"
 
 #: tbatchbands.lblorderdate.caption
 msgid "Order date:"
@@ -5816,8 +5818,8 @@ msgstr "Data de recebimento:"
 
 #: tbatchbands.lblrequester.caption
 msgctxt "tbatchbands.lblrequester.caption"
-msgid "Requester:"
-msgstr "Solicitante:"
+msgid "Requester: *"
+msgstr "Solicitante: *"
 
 #: tbatchbands.lblsender.caption
 msgctxt "tbatchbands.lblsender.caption"
@@ -5826,13 +5828,13 @@ msgstr "Remetente:"
 
 #: tbatchbands.lblstartnumber.caption
 msgctxt "tbatchbands.lblstartnumber.caption"
-msgid "Start number:"
-msgstr "Número inicial:"
+msgid "Start number: *"
+msgstr "Número inicial: *"
 
 #: tbatchbands.lblsupplier.caption
 msgctxt "tbatchbands.lblsupplier.caption"
-msgid "Supplier:"
-msgstr "Fornecedor:"
+msgid "Supplier: *"
+msgstr "Fornecedor: *"
 
 #: tbatchbands.sbcancel.caption
 msgctxt "tbatchbands.sbcancel.caption"
@@ -5934,8 +5936,8 @@ msgstr "Selecionar amostragem para copiar redes"
 
 #: tbatchneteffort.lblclosetime1.caption
 msgctxt "tbatchneteffort.lblclosetime1.caption"
-msgid "Closing time 1:"
-msgstr "Hora de fechamento 1:"
+msgid "Closing time 1: *"
+msgstr "Hora de fechamento 1: *"
 
 #: tbatchneteffort.lblclosetime2.caption
 msgctxt "tbatchneteffort.lblclosetime2.caption"
@@ -5954,8 +5956,8 @@ msgstr "Hora de fechamento 4:"
 
 #: tbatchneteffort.lblendnumber.caption
 msgctxt "tbatchneteffort.lblendnumber.caption"
-msgid "Final number:"
-msgstr "Número final:"
+msgid "Final number: *"
+msgstr "Número final: *"
 
 #: tbatchneteffort.lblnetheight.caption
 msgid "Mistnet height:"
@@ -5972,8 +5974,8 @@ msgstr "Tamanho da malha:"
 
 #: tbatchneteffort.lblopentime1.caption
 msgctxt "tbatchneteffort.lblopentime1.caption"
-msgid "Opening time 1:"
-msgstr "Hora de abertura 1:"
+msgid "Opening time 1: *"
+msgstr "Hora de abertura 1: *"
 
 #: tbatchneteffort.lblopentime2.caption
 msgctxt "tbatchneteffort.lblopentime2.caption"
@@ -5992,12 +5994,16 @@ msgstr "Hora de abertura 4:"
 
 #: tbatchneteffort.lblstartnumber.caption
 msgctxt "tbatchneteffort.lblstartnumber.caption"
-msgid "Start number:"
-msgstr "Número inicial:"
+msgid "Start number: *"
+msgstr "Número inicial: *"
 
 #: tbatchneteffort.lblsurvey.caption
 msgid "Copy mistnets from survey:"
 msgstr "Copiar redes da amostragem:"
+
+#: tbatchneteffort.lblsurveyinfo.caption
+msgid "If a survey is selected, it will copy permanent mistnet, longitude and latitude from the respective mistnet number."
+msgstr "Se uma amostragem for selecionada, isso copiará rede permanente, longitude e latitude do respectivo número de rede."
 
 #: tbatchneteffort.sbcancel.caption
 msgctxt "tbatchneteffort.sbcancel.caption"

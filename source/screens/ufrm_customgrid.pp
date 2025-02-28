@@ -8573,10 +8573,13 @@ begin
   batchNetEffort := TbatchNetEffort.Create(nil);
   with batchNetEffort do
   try
+    SurveyId := dsLink.DataSet.FieldByName('survey_id').AsInteger;
     ShowModal;
   finally
     FreeAndNil(batchNetEffort);
   end;
+
+  GetChildDataSet.Refresh;
 end;
 
 procedure TfrmCustomGrid.sbAudioInfoClick(Sender: TObject);

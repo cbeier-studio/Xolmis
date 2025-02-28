@@ -5749,16 +5749,18 @@ msgid "Find institution"
 msgstr ""
 
 #: tbatchbands.lblbandsize.caption
-msgid "Size:"
+msgctxt "tbatchbands.lblbandsize.caption"
+msgid "Size: *"
 msgstr ""
 
 #: tbatchbands.lblbandsource.caption
-msgid "Source:"
+msgctxt "tbatchbands.lblbandsource.caption"
+msgid "Source: *"
 msgstr ""
 
 #: tbatchbands.lblbandtype.caption
 msgctxt "tbatchbands.lblbandtype.caption"
-msgid "Type:"
+msgid "Type: *"
 msgstr ""
 
 #: tbatchbands.lblcarrier.caption
@@ -5768,7 +5770,7 @@ msgstr ""
 
 #: tbatchbands.lblendnumber.caption
 msgctxt "tbatchbands.lblendnumber.caption"
-msgid "Final number:"
+msgid "Final number: *"
 msgstr ""
 
 #: tbatchbands.lblorderdate.caption
@@ -5790,7 +5792,7 @@ msgstr ""
 
 #: tbatchbands.lblrequester.caption
 msgctxt "tbatchbands.lblrequester.caption"
-msgid "Requester:"
+msgid "Requester: *"
 msgstr ""
 
 #: tbatchbands.lblsender.caption
@@ -5800,12 +5802,12 @@ msgstr ""
 
 #: tbatchbands.lblstartnumber.caption
 msgctxt "tbatchbands.lblstartnumber.caption"
-msgid "Start number:"
+msgid "Start number: *"
 msgstr ""
 
 #: tbatchbands.lblsupplier.caption
 msgctxt "tbatchbands.lblsupplier.caption"
-msgid "Supplier:"
+msgid "Supplier: *"
 msgstr ""
 
 #: tbatchbands.sbcancel.caption
@@ -5908,7 +5910,7 @@ msgstr ""
 
 #: tbatchneteffort.lblclosetime1.caption
 msgctxt "tbatchneteffort.lblclosetime1.caption"
-msgid "Closing time 1:"
+msgid "Closing time 1: *"
 msgstr ""
 
 #: tbatchneteffort.lblclosetime2.caption
@@ -5928,7 +5930,7 @@ msgstr ""
 
 #: tbatchneteffort.lblendnumber.caption
 msgctxt "tbatchneteffort.lblendnumber.caption"
-msgid "Final number:"
+msgid "Final number: *"
 msgstr ""
 
 #: tbatchneteffort.lblnetheight.caption
@@ -5946,7 +5948,7 @@ msgstr ""
 
 #: tbatchneteffort.lblopentime1.caption
 msgctxt "tbatchneteffort.lblopentime1.caption"
-msgid "Opening time 1:"
+msgid "Opening time 1: *"
 msgstr ""
 
 #: tbatchneteffort.lblopentime2.caption
@@ -5966,11 +5968,15 @@ msgstr ""
 
 #: tbatchneteffort.lblstartnumber.caption
 msgctxt "tbatchneteffort.lblstartnumber.caption"
-msgid "Start number:"
+msgid "Start number: *"
 msgstr ""
 
 #: tbatchneteffort.lblsurvey.caption
 msgid "Copy mistnets from survey:"
+msgstr ""
+
+#: tbatchneteffort.lblsurveyinfo.caption
+msgid "If a survey is selected, it will copy permanent mistnet, longitude and latitude from the respective mistnet number."
 msgstr ""
 
 #: tbatchneteffort.sbcancel.caption

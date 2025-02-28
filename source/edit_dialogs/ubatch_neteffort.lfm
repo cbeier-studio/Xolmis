@@ -1,24 +1,23 @@
 object batchNetEffort: TbatchNetEffort
   Left = 352
-  Height = 454
+  Height = 498
   Top = 33
   Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New series of mistnets'
-  ClientHeight = 454
+  ClientHeight = 498
   ClientWidth = 400
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.1'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 411
+    Top = 455
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -28,7 +27,7 @@ object batchNetEffort: TbatchNetEffort
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 413
+    Top = 457
     Width = 400
     Align = alTop
     AutoSize = True
@@ -67,16 +66,15 @@ object batchNetEffort: TbatchNetEffort
   end
   object pEdit: TPanel
     Left = 0
-    Height = 411
+    Height = 455
     Top = 0
     Width = 400
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 411
+    ClientHeight = 455
     ClientWidth = 400
-    Color = 16444392
     Constraints.MinHeight = 360
     ParentBackground = False
     ParentColor = False
@@ -84,10 +82,11 @@ object batchNetEffort: TbatchNetEffort
     object pNetSize: TPanel
       Left = 0
       Height = 45
-      Top = 305
+      Top = 349
       Width = 400
       Align = alTop
       AutoSize = True
+      BorderSpacing.Top = 8
       BevelOuter = bvNone
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.HorizontalSpacing = 16
@@ -128,6 +127,8 @@ object batchNetEffort: TbatchNetEffort
         Constraints.MinWidth = 176
         DecimalPlaces = 1
         TabOrder = 0
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
       object eNetHeight: TFloatSpinEdit
         Left = 208
@@ -137,12 +138,14 @@ object batchNetEffort: TbatchNetEffort
         Constraints.MinWidth = 176
         DecimalPlaces = 1
         TabOrder = 1
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
     end
     object pFromToNumber: TPanel
       Left = 0
       Height = 45
-      Top = 80
+      Top = 116
       Width = 400
       Align = alTop
       AutoSize = True
@@ -164,7 +167,7 @@ object batchNetEffort: TbatchNetEffort
         Top = 3
         Width = 176
         BorderSpacing.Top = 3
-        Caption = 'Start number:'
+        Caption = 'Start number: *'
         ParentColor = False
       end
       object lblEndNumber: TLabel
@@ -173,7 +176,7 @@ object batchNetEffort: TbatchNetEffort
         Top = 3
         Width = 176
         BorderSpacing.Top = 3
-        Caption = 'Final number:'
+        Caption = 'Final number: *'
         ParentColor = False
       end
       object eStartNumber: TSpinEdit
@@ -186,6 +189,9 @@ object batchNetEffort: TbatchNetEffort
         MinValue = 1
         TabOrder = 0
         Value = 1
+        OnEditingDone = eStartNumberEditingDone
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
       object eEndNumber: TSpinEdit
         Left = 208
@@ -197,12 +203,15 @@ object batchNetEffort: TbatchNetEffort
         MinValue = 1
         TabOrder = 1
         Value = 1
+        OnEditingDone = eStartNumberEditingDone
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
     end
     object pNetMesh: TPanel
       Left = 0
       Height = 45
-      Top = 350
+      Top = 394
       Width = 400
       Align = alTop
       AutoSize = True
@@ -256,12 +265,14 @@ object batchNetEffort: TbatchNetEffort
         )
         Style = csDropDownList
         TabOrder = 0
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
     end
     object pOpenCloseTime1: TPanel
       Left = 0
       Height = 45
-      Top = 125
+      Top = 161
       Width = 400
       Align = alTop
       AutoSize = True
@@ -283,7 +294,7 @@ object batchNetEffort: TbatchNetEffort
         Top = 3
         Width = 176
         BorderSpacing.Top = 3
-        Caption = 'Opening time 1:'
+        Caption = 'Opening time 1: *'
         ParentColor = False
       end
       object lblCloseTime1: TLabel
@@ -292,7 +303,7 @@ object batchNetEffort: TbatchNetEffort
         Top = 3
         Width = 176
         BorderSpacing.Top = 3
-        Caption = 'Closing time 1:'
+        Caption = 'Closing time 1: *'
         ParentColor = False
       end
       object eOpenTime1: TTimeEdit
@@ -312,6 +323,9 @@ object batchNetEffort: TbatchNetEffort
         Spacing = 0
         TabOrder = 0
         TextHint = 'HH:MM'
+        OnEditingDone = eStartNumberEditingDone
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
       object eCloseTime1: TTimeEdit
         Left = 208
@@ -330,12 +344,15 @@ object batchNetEffort: TbatchNetEffort
         Spacing = 0
         TabOrder = 1
         TextHint = 'HH:MM'
+        OnEditingDone = eStartNumberEditingDone
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
     end
     object pOpenCloseTime2: TPanel
       Left = 0
       Height = 45
-      Top = 170
+      Top = 206
       Width = 400
       Align = alTop
       AutoSize = True
@@ -386,6 +403,8 @@ object batchNetEffort: TbatchNetEffort
         Spacing = 0
         TabOrder = 0
         TextHint = 'HH:MM'
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
       object eCloseTime2: TTimeEdit
         Left = 208
@@ -404,12 +423,14 @@ object batchNetEffort: TbatchNetEffort
         Spacing = 0
         TabOrder = 1
         TextHint = 'HH:MM'
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
     end
     object pOpenCloseTime3: TPanel
       Left = 0
       Height = 45
-      Top = 215
+      Top = 251
       Width = 400
       Align = alTop
       AutoSize = True
@@ -460,6 +481,8 @@ object batchNetEffort: TbatchNetEffort
         Spacing = 0
         TabOrder = 0
         TextHint = 'HH:MM'
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
       object eCloseTime3: TTimeEdit
         Left = 208
@@ -478,11 +501,13 @@ object batchNetEffort: TbatchNetEffort
         Spacing = 0
         TabOrder = 1
         TextHint = 'HH:MM'
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
     end
     object pSurvey: TBCPanel
       Left = 13
-      Height = 59
+      Height = 95
       Top = 8
       Width = 374
       Align = alTop
@@ -522,7 +547,7 @@ object batchNetEffort: TbatchNetEffort
       FontEx.ShadowOffsetX = 5
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
-      ParentBackground = False
+      ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       TabOrder = 6
@@ -545,7 +570,7 @@ object batchNetEffort: TbatchNetEffort
         BorderSpacing.Bottom = 6
         ButtonHint = 'Select survey to copy mistnets from'
         ButtonWidth = 23
-        Color = clWhite
+        Color = clDefault
         Images = DMM.iEdits
         ImageIndex = 0
         MaxLength = 0
@@ -559,11 +584,25 @@ object batchNetEffort: TbatchNetEffort
         OnKeyDown = FormKeyDown
         OnKeyPress = eSurveyKeyPress
       end
+      object lblSurveyInfo: TLabel
+        Left = 17
+        Height = 30
+        Top = 56
+        Width = 340
+        Align = alTop
+        BorderSpacing.Bottom = 3
+        Caption = 'If a survey is selected, it will copy permanent mistnet, longitude and latitude from the respective mistnet number.'
+        Font.Color = 6579300
+        Font.Height = -12
+        ParentColor = False
+        ParentFont = False
+        WordWrap = True
+      end
     end
     object pOpenCloseTime4: TPanel
       Left = 0
       Height = 45
-      Top = 260
+      Top = 296
       Width = 400
       Align = alTop
       AutoSize = True
@@ -614,6 +653,8 @@ object batchNetEffort: TbatchNetEffort
         Spacing = 0
         TabOrder = 0
         TextHint = 'HH:MM'
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
       object eCloseTime4: TTimeEdit
         Left = 208
@@ -632,6 +673,8 @@ object batchNetEffort: TbatchNetEffort
         Spacing = 0
         TabOrder = 1
         TextHint = 'HH:MM'
+        OnKeyDown = FormKeyDown
+        OnKeyPress = eStartNumberKeyPress
       end
     end
   end

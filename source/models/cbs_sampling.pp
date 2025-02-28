@@ -2802,9 +2802,9 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO nets_effort (' +
         'survey_id, ' +
@@ -2885,39 +2885,39 @@ begin
         ParamByName('net_mesh').Clear;
       ParamByName('notes').AsString := FNotes;
 
-      // if the field has 1 second, it is NULL
-      if FNetOpen1 <> StrToTime('00:00:01') then
+      // if the field has 0 second, it is NULL
+      if FNetOpen1 <> StrToTime('00:00:00') then
         ParamByName('net_open_1').AsString := TimeToStr(FNetOpen1)
       else
         ParamByName('net_open_1').Clear;
-      if FNetClose1 <> StrToTime('00:00:01') then
+      if FNetClose1 <> StrToTime('00:00:00') then
         ParamByName('net_close_1').AsString := TimeToStr(FNetClose1)
       else
         ParamByName('net_close_1').Clear;
 
-      if FNetOpen2 <> StrToTime('00:00:01') then
+      if FNetOpen2 <> StrToTime('00:00:00') then
         ParamByName('net_open_2').AsString := TimeToStr(FNetOpen2)
       else
         ParamByName('net_open_2').Clear;
-      if FNetClose2 <> StrToTime('00:00:01') then
+      if FNetClose2 <> StrToTime('00:00:00') then
         ParamByName('net_close_2').AsString := TimeToStr(FNetClose2)
       else
         ParamByName('net_close_2').Clear;
 
-      if FNetOpen3 <> StrToTime('00:00:01') then
+      if FNetOpen3 <> StrToTime('00:00:00') then
         ParamByName('net_open_3').AsString := TimeToStr(FNetOpen3)
       else
         ParamByName('net_open_3').Clear;
-      if FNetClose3 <> StrToTime('00:00:01') then
+      if FNetClose3 <> StrToTime('00:00:00') then
         ParamByName('net_close_3').AsString := TimeToStr(FNetClose3)
       else
         ParamByName('net_close_3').Clear;
 
-      if FNetOpen4 <> StrToTime('00:00:01') then
+      if FNetOpen4 <> StrToTime('00:00:00') then
         ParamByName('net_open_4').AsString := TimeToStr(FNetOpen4)
       else
         ParamByName('net_open_4').Clear;
-      if FNetClose4 <> StrToTime('00:00:01') then
+      if FNetClose4 <> StrToTime('00:00:00') then
         ParamByName('net_close_4').AsString := TimeToStr(FNetClose4)
       else
         ParamByName('net_close_4').Clear;
@@ -2933,11 +2933,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
