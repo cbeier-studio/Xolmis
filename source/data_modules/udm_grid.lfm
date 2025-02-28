@@ -16938,11 +16938,10 @@ object DMG: TDMG
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT valid_id, full_name, formatted_name FROM zoo_taxa'
-      'WHERE (valid_id = :taxon_id) AND (active_status = 1)'
+      'WHERE (zoo_taxa.valid_id = :taxon_id) AND (active_status = 1)'
       'ORDER BY full_name ASC'
       ''
     )
-    Options = [sqoAutoApplyUpdates]
     Params = <    
       item
         DataType = ftUnknown
@@ -17005,11 +17004,10 @@ object DMG: TDMG
     SQL.Strings = (
       'SELECT full_name, formatted_name'
       'FROM zoo_taxa'
-      'WHERE (parent_taxon_id = :taxon_id) AND (active_status = 1)'
+      'WHERE (zoo_taxa.parent_taxon_id = :taxon_id) AND (active_status = 1)'
       'ORDER BY full_name ASC'
       ''
     )
-    Options = [sqoAutoApplyUpdates]
     Params = <    
       item
         DataType = ftUnknown
@@ -17146,12 +17144,6 @@ object DMG: TDMG
     DataSet = qBotany
     Left = 776
     Top = 35
-  end
-  object dsTaxa: TDataSource
-    AutoEdit = False
-    DataSet = qTaxa
-    Left = 776
-    Top = 90
   end
   object dsAudio: TDataSource
     DataSet = qAudio
@@ -19959,5 +19951,11 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+  end
+  object dsTaxa: TDataSource
+    AutoEdit = False
+    DataSet = qTaxa
+    Left = 776
+    Top = 88
   end
 end

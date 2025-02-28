@@ -8424,8 +8424,94 @@ end;
 
 procedure TfrmCustomGrid.sbAddChildClick(Sender: TObject);
 begin
-  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
-    pmAddChild.Popup(X, Y);
+  if Working then
+    Exit;
+
+  if not pChild.Visible then
+  begin
+    with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
+      pmAddChild.Popup(X, Y);
+  end
+  else
+  begin
+    Working := True;
+    try
+      case FTableType of
+        //tbNone: ;
+        //tbUsers: ;
+        //tbRecordHistory: ;
+        //tbGazetteer: ;
+        tbSamplingPlots:
+          case nbChilds.PageIndex of
+            0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('net_station_id').AsInteger, True);
+          end;
+        //tbPermanentNets: ;
+        //tbInstitutions: ;
+        //tbPeople: ;
+        tbProjects:
+          case nbChilds.PageIndex of
+            0: EditProjectMember(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger, True);
+            1: EditProjectGoal(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger, True);
+            2: EditProjectActivity(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger, 0, True);
+            3: EditProjectRubric(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger, True);
+            4: EditProjectExpense(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger, 0, True);
+          end;
+        //tbProjectTeams: ;
+        //tbPermits: ;
+        //tbTaxonRanks: ;
+        //tbZooTaxa: ;
+        //tbBotanicTaxa: ;
+        //tbBands: ;
+        //tbBandHistory: ;
+        tbIndividuals:
+          case nbChilds.PageIndex of
+            0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger, 0, True);
+            1: EditMolt(DMI.qMolts, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
+            2: EditSighting(DMI.qSightings, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
+            //3: EditNest(DMI.qNests, False);
+            //4: EditSpecimen(DMI.qSpecimens, False);
+          end;
+        //tbCaptures: ;
+        //tbMolts: ;
+        tbNests:
+          case nbChilds.PageIndex of
+            0: EditNestOwner(DMB.qNestOwners, dsLink.DataSet.FieldByName('nest_id').AsInteger, True);
+            1: EditNestRevision(DMB.qNestRevisions, dsLink.DataSet.FieldByName('nest_id').AsInteger, True);
+            2: EditEgg(DMB.qEggs, dsLink.DataSet.FieldByName('nest_id').AsInteger, True);
+          end;
+        //tbNestRevisions: ;
+        //tbEggs: ;
+        //tbMethods: ;
+        tbExpeditions:
+          case nbChilds.PageIndex of
+            0: EditSurvey(DMS.qSurveys, dsLink.DataSet.FieldByName('expedition_id').AsInteger, True);
+          end;
+        tbSurveys:
+          case nbChilds.PageIndex of
+            0: EditSurveyMember(DMS.qSurveyTeam, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
+            1: EditNetEffort(DMS.qNetsEffort, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
+            2: EditWeatherLog(DMS.qWeatherLogs, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
+            3: EditCapture(DMS.qCaptures, 0, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
+            4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
+            5: EditVegetation(DMS.qVegetation, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
+          end;
+        //tbSurveyTeams: ;
+        //tbNetsEffort: ;
+        tbSightings: ;
+        tbSpecimens:
+          case nbChilds.PageIndex of
+            0: EditCollector(DMG.qSampleCollectors, dsLink.DataSet.FieldByName('specimen_id').AsInteger, True);
+            1: EditSamplePrep(DMG.qSamplePreps, dsLink.DataSet.FieldByName('specimen_id').AsInteger, True);
+          end;
+        //tbSamplePreps: ;
+        //tbImages: ;
+        //tbAudioLibrary: ;
+      end;
+    finally
+      UpdateChildBar;
+      Working := False;
+    end;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbAddDocClick(Sender: TObject);

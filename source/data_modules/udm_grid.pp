@@ -30,6 +30,7 @@ type
   { TDMG }
 
   TDMG = class(TDataModule)
+    dsTaxa: TDataSource;
     dsBandHistory: TDataSource;
     dsIndividuals: TDataSource;
     dsInstitutions: TDataSource;
@@ -50,7 +51,6 @@ type
     dsSpecimens: TDataSource;
     dsSamplePreps: TDataSource;
     dsBotany: TDataSource;
-    dsTaxa: TDataSource;
     dsAudio: TDataSource;
     dsDocuments: TDataSource;
     dsMolts: TDataSource;

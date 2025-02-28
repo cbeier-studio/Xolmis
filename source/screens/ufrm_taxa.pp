@@ -145,6 +145,9 @@ uses
 
 procedure TfrmTaxa.ApplyDarkMode;
 begin
+  pEmptyQuery.Color := Color;
+  imgEmptyQuery.Images := iButtonsDark;
+
   pSearch.Background.Color := clCardBGDefaultDark;
   pSearch.Border.Color := clSolidBGSecondaryDark;
   pSearch.ParentBackground := True;
@@ -446,13 +449,22 @@ begin
     if not (gdSelected in AState) then
     begin
       if aRank = trSpecies then
-        TDBGrid(Sender).Canvas.Font.Color := clNavy;
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Font.Color := $00FFCD60
+        else
+          TDBGrid(Sender).Canvas.Font.Color := clNavy;
 
       if aRank in [trMonotypicGroup, trPolitypicGroup, trForm, trSpuh, trHybrid, trIntergrade, trDomestic, trSlash] then
-        TDBGrid(Sender).Canvas.Font.Color := clGreen;
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Font.Color := $005FCB6C
+        else
+          TDBGrid(Sender).Canvas.Font.Color := clGreen;
 
       if (TDBGrid(Sender).Columns[1].Field.AsInteger > 0) then
-        TDBGrid(Sender).Canvas.Font.Color := $00646464;
+        if IsDarkModeEnabled then
+          TDBGrid(Sender).Canvas.Font.Color := $009F9F9F
+        else
+          TDBGrid(Sender).Canvas.Font.Color := $00646464;
     end;
   end;
 end;
@@ -673,12 +685,12 @@ end;
 
 procedure TfrmTaxa.txtValidNameMouseEnter(Sender: TObject);
 begin
-  TLabel(Sender).Font.Style := txtValidName.Font.Style + [fsUnderline];
+  TDBText(Sender).Font.Style := txtValidName.Font.Style + [fsUnderline];
 end;
 
 procedure TfrmTaxa.txtValidNameMouseLeave(Sender: TObject);
 begin
-  TLabel(Sender).Font.Style := txtValidName.Font.Style - [fsUnderline];
+  TDBText(Sender).Font.Style := txtValidName.Font.Style - [fsUnderline];
 end;
 
 end.

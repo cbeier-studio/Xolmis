@@ -992,6 +992,12 @@ begin
       DMG := TDMG.Create(Application);
     Application.ProcessMessages;
 
+    { Update splash screen }
+    lblLoading.Caption := rsLoading;
+    imgSplash.ImageIndex := 5;
+    imgSplash.ImageWidth := 128;
+    Application.ProcessMessages;
+
     { Load the start page }
     case XSettings.StartPage of
       0: actOpenExpeditionsExecute(nil);
@@ -1038,9 +1044,6 @@ begin
     XSettings.SaveToFile;
 
     pSplash.Visible := False;
-    lblLoading.Caption := rsLoading;
-    imgSplash.ImageIndex := 5;
-    imgSplash.ImageWidth := 128;
   end
   else
   begin
