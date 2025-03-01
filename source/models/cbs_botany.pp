@@ -22,7 +22,7 @@ unit cbs_botany;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StrUtils, fpjson, Generics.Collections, cbs_record_types;
+  Classes, SysUtils, DB, SQLDB, StrUtils, fpjson, fgl, DateUtils, cbs_record_types;
 
 type
   TQualifier = (qfNone, qfSpuh, qfConfer, qfAffinis, qfQuestion);
@@ -59,6 +59,8 @@ type
     brForm, brSubform,
     {Special ranks}
     brCultivarGroup, brCultivar, brGrex, brHybrid);
+
+  TBotanicRankMap = specialize TFPGMap<String, TBotanicRank>;
 
 const
   Qualifiers: array[TQualifier] of String = ('', 'sp.', 'cf.', 'aff.', '?');
@@ -108,7 +110,7 @@ type
   end;
 
 var
-  BotanicRankDict: specialize TDictionary<String, TBotanicRank>;
+  BotanicRankDict: TBotanicRankMap;
 
   function StringToQualifier(const aStr: String): TQualifier;
   function FormattedPlantName(aSciName: TBotanicName; Formatted: Boolean = False): String;
@@ -271,7 +273,7 @@ begin
   if Assigned(BotanicRankDict) then
     Exit;
 
-  BotanicRankDict := specialize TDictionary<string, TBotanicRank>.Create;
+  BotanicRankDict := TBotanicRankMap.Create;
   BotanicRankDict.Add('R.', brRealm);
   BotanicRankDict.Add('SR.', brSubrealm);
   BotanicRankDict.Add('K.', brKingdom);
@@ -316,13 +318,58 @@ end;
 
 function StringToBotanicRank(const aRankStr: String): TBotanicRank;
 begin
-  InitBotanicRankDict;
+  //InitBotanicRankDict;
 
-  if not BotanicRankDict.TryGetValue(aRankStr, Result) then
+  case aRankStr of
+    'R.':             Result := brRealm;
+    'SR.':            Result := brSubrealm;
+    'K.':             Result := brKingdom;
+    'sk.':            Result := brSubkingdom;
+    'SPh.':           Result := brSuperphylum;
+    'ph.':            Result := brPhylum;
+    'subph.':         Result := brSubphylum;
+    'sc.':            Result := brSuperclass;
+    'c.':             Result := brClass;
+    'subc.':          Result := brSubclass;
+    'superod.':       Result := brSuperorder;
+    'ord.':           Result := brOrder;
+    'subord.':        Result := brSuborder;
+    'infraord.':      Result := brInfraorder;
+    'superfam.':      Result := brSuperfamily;
+    'epifam.':        Result := brEpifamily;
+    'fam.':           Result := brFamily;
+    'subfam.':        Result := brSubfamily;
+    'infrafam.':      Result := brInfrafamily;
+    'tr.':            Result := brTribe;
+    'subtr.':         Result := brSubtribe;
+    'infratr.':       Result := brInfratribe;
+    'superg.':        Result := brSupergenus;
+    'g.':             Result := brGenus;
+    'subg.':          Result := brSubgenus;
+    'sect.':          Result := brSection;
+    'subsect.':       Result := brSubsection;
+    'ser.':           Result := brSeries;
+    'subser.':        Result := brSubseries;
+    'supersp.':       Result := brSuperspecies;
+    'sp.':            Result := brSpecies;
+    'subsp.':         Result := brSubspecies;
+    'var.':           Result := brVariety;
+    'subvar.':        Result := brSubvariety;
+    'f.':             Result := brForm;
+    'subf.':          Result := brSubform;
+    'cultivar group': Result := brCultivarGroup;
+    'cultivar':       Result := brCultivar;
+    'grex':           Result := brGrex;
+    'hybrid':         Result := brHybrid;
+  else
     raise Exception.CreateFmt('Invalid Botanic Rank: %s', [aRankStr]);
+  end;
 
-  if Assigned(BotanicRankDict) then
-    BotanicRankDict.Free;
+  //if not BotanicRankDict.TryGetData(Trim(aRankStr), Result) then
+  //  raise Exception.CreateFmt('Invalid Botanic Rank: %s', [aRankStr]);
+
+  //if Assigned(BotanicRankDict) then
+  //  BotanicRankDict.Free;
 end;
 
 { TBotanicTaxon }
@@ -426,6 +473,7 @@ end;
 procedure TBotanicTaxon.LoadFromDataSet(aDataSet: TDataSet);
 var
   FRankAbbrev: String;
+  InsertTimeStamp, UpdateTimeStamp: TDateTime;
 begin
   if not aDataSet.Active then
     Exit;
@@ -447,8 +495,19 @@ begin
     FOrderId := FieldByName('order_id').AsInteger;
     FUserInserted := FieldByName('user_inserted').AsInteger;
     FUserUpdated := FieldByName('user_updated').AsInteger;
-    FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUpdateDate := FieldByName('update_date').AsDateTime;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    if not (FieldByName('insert_date').IsNull) then
+      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
+        FInsertDate := InsertTimeStamp
+      else
+        FInsertDate := FieldByName('insert_date').AsDateTime;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    if not (FieldByName('update_date').IsNull) then
+      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
+        FUpdateDate := UpdateTimeStamp
+      else
+        FUpdateDate := FieldByName('update_date').AsDateTime;
     FExported := FieldByName('exported_status').AsBoolean;
     FMarked := FieldByName('marked_status').AsBoolean;
     FActive := FieldByName('active_status').AsBoolean;
@@ -645,7 +704,7 @@ begin
         ParamByName('valid_id').AsInteger := FValidId
       else
         ParamByName('valid_id').Clear;
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('taxon_id').AsInteger := FId;
 
       ExecSQL;

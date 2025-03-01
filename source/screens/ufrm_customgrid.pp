@@ -1297,6 +1297,7 @@ type
     procedure UpdateImageButtons(aDataSet: TDataSet);
     procedure UpdateAudioButtons(aDataSet: TDataSet);
     procedure UpdateDocButtons(aDataSet: TDataSet);
+    procedure UpdateRecycleButtons(aDataset: TDataSet);
 
     procedure UpdateFilterPanels;
     procedure UpdateFilterPanelsBands;
@@ -4108,23 +4109,7 @@ end;
 
 procedure TfrmCustomGrid.dsRecycleStateChange(Sender: TObject);
 begin
-  case dsRecycle.State of
-    dsInactive:
-    begin
-      sbRestoreRecord.Enabled := False;
-      sbDelPermanently.Enabled := False;
-    end;
-    dsBrowse:
-    begin
-      sbRestoreRecord.Enabled := (qRecycle.RecordCount > 0);
-      sbDelPermanently.Enabled := (qRecycle.RecordCount > 0);
-    end;
-    dsEdit, dsInsert:
-    begin
-      sbRestoreRecord.Enabled := False;
-      sbDelPermanently.Enabled := False;
-    end;
-  end;
+  UpdateRecycleButtons(qRecycle);
 end;
 
 procedure TfrmCustomGrid.eAddChildEnter(Sender: TObject);
@@ -7171,6 +7156,7 @@ begin
     if not dsRecycle.DataSet.Active then
       dsRecycle.DataSet.Open;
     dsRecycle.DataSet.Refresh;
+    UpdateRecycleButtons(dsRecycle.DataSet);
     UpdateButtons(dsLink.DataSet);
   finally
     Working := False;
@@ -8802,6 +8788,7 @@ begin
       FreeAndNil(Qry);
     end;
   end;
+  UpdateRecycleButtons(dsRecycle.DataSet);
   Working := False;
 end;
 
@@ -8815,6 +8802,8 @@ begin
     DeleteRecord(FTableType, dsLink.DataSet);
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
+    dsRecycle.DataSet.Refresh;
+    UpdateRecycleButtons(dsRecycle.DataSet);
   finally
     Working := False;
   end;
@@ -9283,8 +9272,12 @@ begin
 
   Working := True;
   try
-    RestoreRecord(FTableType, dsLink.DataSet);
+    RestoreRecord(FTableType, dsRecycle.DataSet);
+    dsRecycle.DataSet.Refresh;
+    UpdateRecycleButtons(dsRecycle.DataSet);
+    dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
+    dbgRecycle.Refresh;
   finally
     Working := False;
   end;
@@ -13140,6 +13133,27 @@ begin
   pmiDelImage.Enabled := sbDelImage.Enabled;
   pmiViewImage.Enabled := sbViewImage.Enabled;
   pmiRefreshImages.Enabled := sbViewImage.Enabled;
+end;
+
+procedure TfrmCustomGrid.UpdateRecycleButtons(aDataset: TDataSet);
+begin
+  case aDataset.State of
+    dsInactive:
+    begin
+      sbRestoreRecord.Enabled := False;
+      sbDelPermanently.Enabled := False;
+    end;
+    dsBrowse:
+    begin
+      sbRestoreRecord.Enabled := (aDataset.RecordCount > 0);
+      sbDelPermanently.Enabled := (aDataset.RecordCount > 0);
+    end;
+    dsEdit, dsInsert:
+    begin
+      sbRestoreRecord.Enabled := False;
+      sbDelPermanently.Enabled := False;
+    end;
+  end;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanels;

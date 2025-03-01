@@ -205,7 +205,9 @@ begin
         Application.ProcessMessages;
 
         DMM.sqlCon.ExecuteDirect('END TRANSACTION');
+        Sleep(200);
         DMM.sqlCon.ExecuteDirect('VACUUM INTO ' + QuotedStr(tmpName));
+        Sleep(200);
         DMM.sqlCon.ExecuteDirect('BEGIN TRANSACTION');
 
         //DMM.sqlTrans.CommitRetaining;

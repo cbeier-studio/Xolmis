@@ -3325,14 +3325,16 @@ begin
   {$IFDEF DEBUG}
   LogDebug(Format('Record %d from %s set inactive', [aKeyValue, TableNames[aTable]]));
   {$ENDIF}
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
   try
+    MacroCheck := True;
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+
     if not DMM.sqlTrans.Active then
       DMM.sqlTrans.StartTransaction;
-    Qry := TSQLQuery.Create(DMM.sqlCon);
-    with Qry, SQL do
     try
-      MacroCheck := True;
-      DataBase := DMM.sqlCon;
       Clear;
       Add('UPDATE %tabname');
       Add('SET active_status = 0,');
@@ -3348,14 +3350,15 @@ begin
       LogSQL(SQL);
       {$ENDIF}
       ExecSQL;
-    finally
-      FreeAndNil(Qry);
+
+      WriteRecHistory(aTable, haDeleted, aKeyValue);
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    WriteRecHistory(aTable, haDeleted, aKeyValue);
-    DMM.sqlTrans.CommitRetaining;
-  except
-    DMM.sqlTrans.RollbackRetaining;
-    raise;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -3372,17 +3375,20 @@ begin
   aKeyField := GetPrimaryKey(aDataSet);
   aKeyValue := aDataSet.FieldByName(aKeyField).AsInteger;
 
-  {$IFDEF DEBUG}
-  LogDebug(Format('Record %d from %s set active', [aKeyValue, TableNames[aTable]]));
-  {$ENDIF}
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
   try
-    DMM.sqlTrans.StartTransaction;
-    WriteRecHistory(aTable, haRestored, aKeyValue);
-    Qry := TSQLQuery.Create(DMM.sqlCon);
-    with Qry, SQL do
+    MacroCheck := True;
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    {$IFDEF DEBUG}
+    LogDebug(Format('Record %d from %s set active', [aKeyValue, TableNames[aTable]]));
+    {$ENDIF}
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
     try
-      MacroCheck := True;
-      DataBase := DMM.sqlCon;
+      WriteRecHistory(aTable, haRestored, aKeyValue);
+
       Clear;
       Add('UPDATE %tabname');
       Add('SET active_status = 1,');
@@ -3397,13 +3403,18 @@ begin
       LogSQL(SQL);
       {$ENDIF}
       ExecSQL;
-    finally
-      FreeAndNil(Qry);
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      on E: Exception do
+      begin
+        LogError(Format('Error restoring record %d in %s: %s', [aKeyValue, TableNames[aTable], E.Message]));
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
     end;
-    DMM.sqlTrans.CommitRetaining;
-  except
-    DMM.sqlTrans.RollbackRetaining;
-    raise;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

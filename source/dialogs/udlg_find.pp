@@ -1199,9 +1199,9 @@ begin
 
   sbOptions.Visible := FTableType = tbBands;
 
-  if (FFormattedNameField <> EmptyStr) then
-    uList.Columns[0].FieldName := FFormattedNameField
-  else
+  //if (FFormattedNameField <> EmptyStr) then
+  //  uList.Columns[0].FieldName := FFormattedNameField
+  //else
     uList.Columns[0].FieldName := FFullNameField;
 end;
 

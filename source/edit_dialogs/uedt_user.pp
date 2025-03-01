@@ -132,6 +132,7 @@ begin
   else
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionUser)]);
+    eUsername.Enabled := False;
   end;
 end;
 

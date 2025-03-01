@@ -121,7 +121,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Width = 333
           BorderSpacing.Top = 4
           Caption = 'Parent taxon:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -170,7 +169,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Width = 333
           BorderSpacing.Top = 4
           Caption = 'Scientific name: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -220,7 +218,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Width = 333
           BorderSpacing.Top = 4
           Caption = 'Authorship:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -260,7 +257,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Width = 333
           BorderSpacing.Top = 4
           Caption = 'Vernacular name:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -301,7 +297,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Width = 333
           BorderSpacing.Top = 4
           Caption = 'Valid name:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -348,7 +343,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Width = 220
           BorderSpacing.Top = 4
           Caption = 'Taxonomic rank: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

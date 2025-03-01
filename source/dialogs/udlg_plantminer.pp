@@ -192,7 +192,7 @@ begin
         'replaced synonym', if a name was a synonym and was replaced by an accepted name.
         'not full name' if a name was not binomial. }
       OriginalSearch := Obj.Get('original.search');
-      Obj.Free;
+      //Obj.Free;
       Result := True;
     end;
   finally

@@ -11,7 +11,6 @@ object edtUser: TedtUser
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -105,7 +104,6 @@ object edtUser: TedtUser
         Width = 250
         BorderSpacing.Top = 5
         Caption = 'Username: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -147,7 +145,6 @@ object edtUser: TedtUser
         Width = 368
         BorderSpacing.Top = 5
         Caption = 'Full name:'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -189,7 +186,6 @@ object edtUser: TedtUser
         Width = 250
         BorderSpacing.Top = 5
         Caption = 'Access level: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -239,7 +235,6 @@ object edtUser: TedtUser
         Width = 116
         BorderSpacing.Top = 5
         Caption = 'Permissions:'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
