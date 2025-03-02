@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, DBCtrls, Character, DBEditButton, atshapelinebgra, cbs_sampling;
+  ExtCtrls, Character, atshapelinebgra, cbs_sampling;
 
 type
 
@@ -296,6 +296,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSamplingPlot)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 
@@ -384,8 +385,10 @@ begin
   //  rsCaptionLocality, Msgs);
 
   // Geographical coordinates
-  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
-  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+  if eLongitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  if eLatitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
   //CoordenadaIsOk(cdsConsulta, 'longitude', maLongitude, Msgs);
   //CoordenadaIsOk(cdsConsulta, 'latitude', maLatitude, Msgs);
 

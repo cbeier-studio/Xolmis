@@ -430,7 +430,7 @@ type
   TPermanentNet = class(TXolmisRecord)
   protected
     FFullName: String;
-    FNetStationId: Integer;
+    FSamplingPlotId: Integer;
     FNetNumber: Integer;
     FLongitude: Extended;
     FLatitude: Extended;
@@ -450,7 +450,7 @@ type
     function Find(const FieldName: String; const Value: Variant): Boolean;
   published
     property FullName: String read FFullName write FFullName;
-    property NetStationId: Integer read FNetStationId write FNetStationId;
+    property SamplingPlotId: Integer read FSamplingPlotId write FSamplingPlotId;
     property NetNumber: Integer read FNetNumber write FNetNumber;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
@@ -5102,9 +5102,9 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO sampling_plots (' +
         'full_name, ' +
@@ -5196,11 +5196,11 @@ begin
       //ParamByName('aid').AsInteger := FId;
       //ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -5248,9 +5248,9 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE sampling_plots SET ' +
         'full_name = :full_name, ' +
@@ -5288,7 +5288,7 @@ begin
       ParamByName('locality_id').AsInteger := FLocalityId;
       ParamByName('description').AsString := FDescription;
       ParamByName('notes').AsString := FNotes;
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('marked_status').AsBoolean := FMarked;
       ParamByName('active_status').AsBoolean := FActive;
       ParamByName('sampling_plot_id').AsInteger := FId;
@@ -5327,11 +5327,11 @@ begin
       //ParamByName('aid').AsInteger := FId;
       //ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -5411,7 +5411,7 @@ procedure TPermanentNet.Clear;
 begin
   inherited Clear;
   FFullName := EmptyStr;
-  FNetStationId := 0;
+  FSamplingPlotId := 0;
   FNetNumber := 0;
   FLatitude := 0.0;
   FLongitude := 0.0;
@@ -5421,7 +5421,7 @@ end;
 procedure TPermanentNet.Copy(aFrom: TPermanentNet);
 begin
   FFullName := aFrom.FullName;
-  FNetStationId := aFrom.NetStationId;
+  FSamplingPlotId := aFrom.SamplingPlotId;
   FNetNumber := aFrom.NetNumber;
   FLatitude := aFrom.Latitude;
   FLongitude := aFrom.Longitude;
@@ -5509,7 +5509,7 @@ begin
   begin
     FId := FieldByName('permanent_net_id').AsInteger;
     FFullName := FieldByName('full_name').AsString;
-    FNetStationId := FieldByName('net_station_id').AsInteger;
+    FSamplingPlotId := FieldByName('sampling_plot_id').AsInteger;
     FNetNumber := FieldByName('net_number').AsInteger;
     FLatitude := FieldByName('latitude').AsFloat;
     FLongitude := FieldByName('longitude').AsFloat;
@@ -5545,9 +5545,9 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO permanent_nets (' +
         'sampling_plot_id, ' +
@@ -5567,7 +5567,7 @@ begin
         ':full_name, ' +
         ':user_inserted, ' +
         'datetime(''now'',''subsec''))');
-      ParamByName('sampling_plot_id').AsInteger := FNetStationId;
+      ParamByName('sampling_plot_id').AsInteger := FSamplingPlotId;
       ParamByName('full_name').AsString := FFullName;
       ParamByName('net_number').AsInteger := FNetNumber;
       if (FLongitude <> 0) and (FLatitude <> 0) then
@@ -5592,11 +5592,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -5617,7 +5617,7 @@ begin
   JSONObject := TJSONObject.Create;
   try
     JSONObject.Add('Name', FFullName);
-    JSONObject.Add('Net station', FNetStationId);
+    JSONObject.Add('Net station', FSamplingPlotId);
     JSONObject.Add('Net number', FNetNumber);
     JSONObject.Add('Longitude', FLongitude);
     JSONObject.Add('Latitude', FLatitude);
@@ -5642,9 +5642,9 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE permanent_nets SET ' +
         'sampling_plot_id = :sampling_plot_id, ' +
@@ -5658,7 +5658,7 @@ begin
         'marked_status = :marked_status, ' +
         'active_status = :active_status');
       Add('WHERE (permanent_net_id = :permanent_net_id)');
-      ParamByName('sampling_plot_id').AsInteger := FNetStationId;
+      ParamByName('sampling_plot_id').AsInteger := FSamplingPlotId;
       ParamByName('full_name').AsString := FFullName;
       ParamByName('net_number').AsInteger := FNetNumber;
       if (FLongitude <> 0) and (FLatitude <> 0) then
@@ -5679,11 +5679,11 @@ begin
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;

@@ -40,7 +40,7 @@ object edtPermanentNet: TedtPermanentNet
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 397
-    TabOrder = 0
+    TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
@@ -78,7 +78,7 @@ object edtPermanentNet: TedtPermanentNet
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 258
     ClientWidth = 397
-    TabOrder = 1
+    TabOrder = 0
     object pNotes: TPanel
       Left = 0
       Height = 118
@@ -95,7 +95,7 @@ object edtPermanentNet: TedtPermanentNet
       ClientHeight = 118
       ClientWidth = 397
       ParentBackground = False
-      TabOrder = 0
+      TabOrder = 2
       object lblNotes: TLabel
         Left = 16
         Height = 20
@@ -105,7 +105,6 @@ object edtPermanentNet: TedtPermanentNet
         AutoSize = False
         BorderSpacing.Top = 4
         Caption = 'Notes:'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -140,7 +139,7 @@ object edtPermanentNet: TedtPermanentNet
       ClientHeight = 46
       ClientWidth = 397
       ParentBackground = False
-      TabOrder = 1
+      TabOrder = 0
       object lblNetNumber: TLabel
         Left = 16
         Height = 15
@@ -148,7 +147,6 @@ object edtPermanentNet: TedtPermanentNet
         Width = 174
         BorderSpacing.Top = 4
         Caption = 'Mistnet number: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -192,7 +190,7 @@ object edtPermanentNet: TedtPermanentNet
       ClientHeight = 46
       ClientWidth = 397
       ParentBackground = False
-      TabOrder = 2
+      TabOrder = 1
       object lblLongitude: TLabel
         Left = 16
         Height = 15
@@ -200,7 +198,6 @@ object edtPermanentNet: TedtPermanentNet
         Width = 174
         BorderSpacing.Top = 4
         Caption = 'Longitude: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -211,7 +208,6 @@ object edtPermanentNet: TedtPermanentNet
         Width = 175
         BorderSpacing.Top = 4
         Caption = 'Latitude: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end

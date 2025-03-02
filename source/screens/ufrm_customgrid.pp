@@ -6813,7 +6813,7 @@ end;
 
 procedure TfrmCustomGrid.pmcNewPermanentNetClick(Sender: TObject);
 begin
-  EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('net_station_id').AsInteger, True);
+  EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('sampling_plot_id').AsInteger, True);
 
   UpdateChildButtons(DMG.qPermanentNets);
 end;
@@ -8429,7 +8429,7 @@ begin
         //tbGazetteer: ;
         tbSamplingPlots:
           case nbChilds.PageIndex of
-            0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('net_station_id').AsInteger, True);
+            0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('sampling_plot_id').AsInteger, True);
           end;
         //tbPermanentNets: ;
         //tbInstitutions: ;
@@ -8828,7 +8828,7 @@ begin
       //tbGazetteer: ;
       tbSamplingPlots:
         case nbChilds.PageIndex of
-          0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('net_station_id').AsInteger);
+          0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('sampling_plot_id').AsInteger);
         end;
       //tbPermanentNets: ;
       //tbInstitutions: ;

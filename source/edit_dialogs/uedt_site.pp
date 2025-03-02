@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, RTTICtrls, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, DBCtrls, StdCtrls, Character, DBEditButton, atshapelinebgra, cbs_gis;
+  ExtCtrls, StdCtrls, Character, atshapelinebgra, cbs_gis;
 
 type
 
@@ -65,6 +65,7 @@ type
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAltitudeKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
+    procedure eNameEditingDone(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
     procedure eParentSiteButtonClick(Sender: TObject);
     procedure eParentSiteDBEditKeyPress(Sender: TObject; var Key: char);
@@ -208,6 +209,11 @@ begin
   GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
+procedure TedtSite.eNameEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
+end;
+
 procedure TedtSite.eNameKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
@@ -315,6 +321,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionToponym)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 
@@ -351,7 +358,8 @@ begin
     eLongitude.Text := FloatToStr(FSite.Longitude);
     eLatitude.Text := FloatToStr(FSite.Latitude);
   end;
-  eAltitude.Text := FloatToStr(FSite.Altitude);
+  if FSite.Altitude <> 0 then
+    eAltitude.Text := FloatToStr(FSite.Altitude);
   FParentSiteId := FSite.ParentSiteId;
   eParentSite.Text := GetName('gazetteer', 'site_name', 'site_id', FSite.ParentSiteId);
   eFullname.Text := FSite.FullName;

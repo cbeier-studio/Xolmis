@@ -352,6 +352,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Top = 23
           Width = 220
           Constraints.MinWidth = 220
+          DropDownCount = 12
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0

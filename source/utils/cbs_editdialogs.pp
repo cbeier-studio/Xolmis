@@ -253,30 +253,39 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      SamplingPlot.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        SamplingPlot.Save;
+      //  aDataSet.Post
+      //else
+      //  aDataSet.Cancel;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if SamplingPlot.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbSamplingPlots, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if SamplingPlot.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbSamplingPlots, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbSamplingPlots, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbSamplingPlots, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -336,33 +345,43 @@ begin
       EditSourceStr := rsEditedByForm;
     end;
     PermanentNet := FRecord;
+    SamplingPlotId := aNetStation;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      PermanentNet.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        PermanentNet.Save;
+      //  aDataSet.Post
+      //else
+      //  aDataSet.Cancel;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if PermanentNet.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbPermanentNets, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if PermanentNet.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbPermanentNets, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbPermanentNets, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbPermanentNets, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then

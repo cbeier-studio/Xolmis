@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  DBCtrls, StdCtrls, DBEditButton, atshapelinebgra, cbs_sampling;
+  StdCtrls, atshapelinebgra, cbs_sampling;
 
 type
 
@@ -59,6 +59,7 @@ type
   private
     FIsNew: Boolean;
     FNet: TPermanentNet;
+    FSamplingPlotId: Integer;
     procedure SetPermanentNet(Value: TPermanentNet);
     procedure GetRecord;
     procedure SetRecord;
@@ -69,6 +70,7 @@ type
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property PermanentNet: TPermanentNet read FNet write SetPermanentNet;
+    property SamplingPlotId: Integer read FSamplingPlotId write FSamplingPlotId;
   end;
 
 var
@@ -251,14 +253,18 @@ end;
 
 procedure TedtPermanentNet.GetFullName;
 begin
-  FNet.FullName := GetPermanentNetFullName(FNet.NetStationId, FNet.NetNumber);
+  FNet.FullName := GetPermanentNetFullName(FNet.SamplingPlotId, FNet.NetNumber);
 end;
 
 procedure TedtPermanentNet.GetRecord;
 begin
-  eNetNumber.Text := IntToStr(FNet.NetNumber);
-  eLongitude.Text := FloatToStr(FNet.Longitude);
-  eLatitude.Text := FloatToStr(FNet.Latitude);
+  if FNet.NetNumber > 0 then
+    eNetNumber.Text := IntToStr(FNet.NetNumber);
+  if (FNet.Longitude <> 0) and (FNet.Latitude <> 0) then
+  begin
+    eLongitude.Text := FloatToStr(FNet.Longitude);
+    eLatitude.Text := FloatToStr(FNet.Latitude);
+  end;
   mNotes.Text := FNet.Notes;
 end;
 
@@ -294,6 +300,7 @@ end;
 
 procedure TedtPermanentNet.SetRecord;
 begin
+  FNet.SamplingPlotId := FSamplingPlotId;
   FNet.NetNumber := StrToInt(eNetNumber.Text);
   FNet.Longitude := StrToFloat(eLongitude.Text);
   FNet.Latitude := StrToFloat(eLatitude.Text);
@@ -315,8 +322,10 @@ begin
   //RequiredIsEmpty(dsLink.DataSet, tbPermanentNets, 'net_number', Msgs);
 
   // Geographical coordinates
-  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
-  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+  if (eLongitude.Text <> EmptyStr) then
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  if (eLatitude.Text <> EmptyStr) then
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
   //CoordenadaIsOk(DSP.DataSet, 'longitude', maLongitude, Msgs);
   //CoordenadaIsOk(DSP.DataSet, 'latitude', maLatitude, Msgs);
 

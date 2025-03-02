@@ -524,9 +524,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO botanic_taxa (' +
         'taxon_name, ' +
@@ -620,11 +620,11 @@ begin
       ParamByName('aid').AsInteger := FId;
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -675,9 +675,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE botanic_taxa SET ' +
         'taxon_name = :taxon_name, ' +
@@ -756,11 +756,11 @@ begin
       ParamByName('aid').AsInteger := FId;
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;

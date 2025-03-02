@@ -1738,74 +1738,74 @@ begin
 end;
 
 function TSite.Diff(aOld: TSite; var aList: TStrings): Boolean;
-var
-  PropList: PPropList;
-  PropCount, I: Integer;
-  PropInfo: PPropInfo;
-  OldValue, NewValue, FriendlyName: string;
-begin
-  Result := False;
-
-  InitSitePropsDict;
-
-  PropCount := GetPropList(Self.ClassInfo, tkProperties, @PropList);
-  try
-    for I := 0 to PropCount - 1 do
-    begin
-      PropInfo := PropList^[I];
-      OldValue := GetPropValue(aOld, PropInfo, True);
-      NewValue := GetPropValue(Self, PropInfo, True);
-      if OldValue <> NewValue then
-      begin
-        if not SitePropsDict.TryGetData(PropInfo^.Name, FriendlyName) then
-          FriendlyName := PropInfo^.Name;
-        aList.Add(Format('%s;%s;%s', [FriendlyName, OldValue, NewValue]));
-        Result := True;
-      end;
-    end;
-  finally
-    if Assigned(SitePropsDict) then
-      SitePropsDict.Free;
-    FreeMem(PropList);
-  end;
 //var
-//  R: String;
+//  PropList: PPropList;
+//  PropCount, I: Integer;
+//  PropInfo: PPropInfo;
+//  OldValue, NewValue, FriendlyName: string;
 //begin
 //  Result := False;
-//  R := EmptyStr;
 //
-//  if FieldValuesDiff(rscSiteName, aOld.Name, FName, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscAcronym, aOld.Abbreviation, FAbbreviation, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscType, aOld.Rank, FRank, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscParentSiteId, aOld.ParentSiteId, FParentSiteId, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscEBirdName, aOld.EbirdName, FEbirdName, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscAltitude, aOld.Altitude, FAltitude, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscMunicipalityID, aOld.MunicipalityId, FMunicipalityId, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscStateID, aOld.StateId, FStateId, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscCountryID, aOld.CountryId, FCountryId, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscLanguage, aOld.Language, FLanguage, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
-//    aList.Add(R);
-//  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-//    aList.Add(R);
+//  InitSitePropsDict;
 //
-//  Result := aList.Count > 0;
+//  PropCount := GetPropList(Self.ClassInfo, tkProperties, @PropList);
+//  try
+//    for I := 0 to PropCount - 1 do
+//    begin
+//      PropInfo := PropList^[I];
+//      OldValue := GetPropValue(aOld, PropInfo, True);
+//      NewValue := GetPropValue(Self, PropInfo, True);
+//      if OldValue <> NewValue then
+//      begin
+//        if not SitePropsDict.TryGetData(PropInfo^.Name, FriendlyName) then
+//          FriendlyName := PropInfo^.Name;
+//        aList.Add(Format('%s;%s;%s', [FriendlyName, OldValue, NewValue]));
+//        Result := True;
+//      end;
+//    end;
+//  finally
+//    if Assigned(SitePropsDict) then
+//      SitePropsDict.Free;
+//    FreeMem(PropList);
+//  end;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+
+  if FieldValuesDiff(rscSiteName, aOld.Name, FName, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscAcronym, aOld.Abbreviation, FAbbreviation, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscType, aOld.Rank, FRank, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscParentSiteId, aOld.ParentSiteId, FParentSiteId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscEBirdName, aOld.EbirdName, FEbirdName, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscAltitude, aOld.Altitude, FAltitude, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscMunicipalityID, aOld.MunicipalityId, FMunicipalityId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscStateID, aOld.StateId, FStateId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscCountryID, aOld.CountryId, FCountryId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscLanguage, aOld.Language, FLanguage, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    aList.Add(R);
+
+  Result := aList.Count > 0;
 end;
 
 function TSite.Find(const FieldName: String; const Value: Variant): Boolean;
