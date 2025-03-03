@@ -6112,6 +6112,7 @@ msgid "Xolmis - Manage connections"
 msgstr ""
 
 #: tcfgdatabase.mmoptimizedb.caption
+msgctxt "tcfgdatabase.mmoptimizedb.caption"
 msgid "Optimize database"
 msgstr ""
 
@@ -6366,6 +6367,7 @@ msgid "Create backup"
 msgstr ""
 
 #: tcfgoptions.sbrestorebackup.caption
+msgctxt "tcfgoptions.sbrestorebackup.caption"
 msgid "Restore"
 msgstr ""
 
@@ -14310,52 +14312,65 @@ msgstr ""
 msgid "Maintenance"
 msgstr ""
 
-#: tfrmmaintenance.cbtaxahierarchy.text
-msgctxt "tfrmmaintenance.cbtaxahierarchy.text"
-msgid "Zoological"
+#: tfrmmaintenance.lblcleartemporaryfiles.caption
+msgid "Clear cache and temporary files."
 msgstr ""
 
-#: tfrmmaintenance.cbtaxasequence.text
-msgctxt "tfrmmaintenance.cbtaxasequence.text"
-msgid "Zoological"
+#: tfrmmaintenance.lbldatabasebackup.caption
+msgid "Create and restore database backups."
+msgstr ""
+
+#: tfrmmaintenance.lbldatabaseintegrity.caption
+msgid "Check database integrity and try to fix it, if possible."
+msgstr ""
+
+#: tfrmmaintenance.lbldiagnostic.caption
+msgid "Run a diagnostic of Xolmis app."
+msgstr ""
+
+#: tfrmmaintenance.lblfactoryreset.caption
+msgid "Reset settings to factory defaults. Data will NOT be affected."
+msgstr ""
+
+#: tfrmmaintenance.lblmanagelogs.caption
+msgid "Manage log files."
+msgstr ""
+
+#: tfrmmaintenance.lbloptimizedatabase.caption
+msgid "Reindex and optimize the database."
 msgstr ""
 
 #: tfrmmaintenance.lblrecreateimagethumbnails.caption
-msgid "Recreate image thumbnails in the database"
+msgid "Recreate image thumbnails in the database."
 msgstr ""
 
-#: tfrmmaintenance.lblrewritegeohierarchy.caption
-msgid "Check and correct the hierarchy of toponyms"
+#: tfrmmaintenance.lblsettingsbackup.caption
+msgid "Create and restore settings backups."
 msgstr ""
 
-#: tfrmmaintenance.lblrewritegeohierarchy1.caption
-msgid "Rewrite the individuals' full name"
+#: tfrmmaintenance.sbbackupdatabase.caption
+msgctxt "tfrmmaintenance.sbbackupdatabase.caption"
+msgid "Backup"
 msgstr ""
 
-#: tfrmmaintenance.lblrewritetaxahierarchy.caption
-msgid "Check and correct hierarchy of taxa"
+#: tfrmmaintenance.sbbackupsettings.caption
+msgctxt "tfrmmaintenance.sbbackupsettings.caption"
+msgid "Backup"
 msgstr ""
 
-#: tfrmmaintenance.lblrewritetaxasequence.caption
-msgid "Review taxa sequence"
+#: tfrmmaintenance.sbcheckdatabaseintegrity.caption
+msgctxt "tfrmmaintenance.sbcheckdatabaseintegrity.caption"
+msgid "Check"
 msgstr ""
 
-#: tfrmmaintenance.lbltitlegeohierarchy.caption
-msgctxt "tfrmmaintenance.lbltitlegeohierarchy.caption"
-msgid "Hierarchies"
+#: tfrmmaintenance.sbclearlogs.caption
+msgctxt "tfrmmaintenance.sbclearlogs.caption"
+msgid "Clear"
 msgstr ""
 
-#: tfrmmaintenance.lbltitlegeohierarchy1.caption
-msgid "Full names"
-msgstr ""
-
-#: tfrmmaintenance.lbltitleimagethumbnails.caption
-msgid "Thumbnails"
-msgstr ""
-
-#: tfrmmaintenance.lbltitletaxahierarchy.caption
-msgctxt "tfrmmaintenance.lbltitletaxahierarchy.caption"
-msgid "Hierarchies"
+#: tfrmmaintenance.sbcleartemporaryfiles.caption
+msgctxt "tfrmmaintenance.sbcleartemporaryfiles.caption"
+msgid "Clear"
 msgstr ""
 
 #: tfrmmaintenance.sbclose.caption
@@ -14363,26 +14378,68 @@ msgctxt "tfrmmaintenance.sbclose.caption"
 msgid "Close"
 msgstr ""
 
+#: tfrmmaintenance.sbdiagnostic.caption
+msgid "Run"
+msgstr ""
+
+#: tfrmmaintenance.sbfactoryreset.caption
+msgid "Reset"
+msgstr ""
+
+#: tfrmmaintenance.sboptimizedatabase.caption
+msgid "Optimize"
+msgstr ""
+
 #: tfrmmaintenance.sbrecreateimagethumbnails.caption
 msgid "Recreate"
 msgstr ""
 
-#: tfrmmaintenance.sbrewritegeohierarchy.caption
-msgctxt "tfrmmaintenance.sbrewritegeohierarchy.caption"
-msgid "Check"
+#: tfrmmaintenance.sbrestoredatabase.caption
+msgctxt "tfrmmaintenance.sbrestoredatabase.caption"
+msgid "Restore"
 msgstr ""
 
-#: tfrmmaintenance.sbrewriteindividualsfullname.caption
-msgid "Rewrite"
+#: tfrmmaintenance.sbrestoresettings.caption
+msgctxt "tfrmmaintenance.sbrestoresettings.caption"
+msgid "Restore"
 msgstr ""
 
-#: tfrmmaintenance.sbrewritetaxahierarchy.caption
-msgctxt "tfrmmaintenance.sbrewritetaxahierarchy.caption"
-msgid "Check"
+#: tfrmmaintenance.titlecleartemporaryfiles.caption
+msgid "Clear temporary files"
 msgstr ""
 
-#: tfrmmaintenance.sbrewritetaxasequence.caption
-msgid "Review"
+#: tfrmmaintenance.titledatabasebackup.caption
+msgid "Database backup"
+msgstr ""
+
+#: tfrmmaintenance.titledatabaseintegrity.caption
+msgid "Database integrity"
+msgstr ""
+
+#: tfrmmaintenance.titlediagnostic.caption
+msgid "Diagnostic"
+msgstr ""
+
+#: tfrmmaintenance.titlefactoryreset.caption
+msgid "Factory reset"
+msgstr ""
+
+#: tfrmmaintenance.titlemanagelogs.caption
+msgid "Manage logs"
+msgstr ""
+
+#: tfrmmaintenance.titleoptimizedatabase.caption
+msgctxt "tfrmmaintenance.titleoptimizedatabase.caption"
+msgid "Optimize database"
+msgstr ""
+
+#: tfrmmaintenance.titlerecreatethumbnails.caption
+msgctxt "tfrmmaintenance.titlerecreatethumbnails.caption"
+msgid "Recreate thumbnails"
+msgstr ""
+
+#: tfrmmaintenance.titlesettingsbackup.caption
+msgid "Settings backup"
 msgstr ""
 
 #: tfrmprintpreview.caption
