@@ -498,6 +498,14 @@ resourcestring
   rscItem = 'Item';
   rscAmount = 'Amount';
   rscBudgetID = 'Budget ID';
+  rscSymmetry = 'Symmetry';
+  rscFeatherTrait = 'Feather trait';
+  rscFeatherNumber = 'Feather number';
+  rscBodySide = 'Body side';
+  rscPercentGrown = 'Percent grown';
+  rscArea = 'Area';
+  rscRachisWidth = 'Rachis width';
+  rscBarbDensity = 'Barb density';
 
 
   procedure SummaryBands(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
@@ -549,6 +557,7 @@ resourcestring
   procedure TranslateIndividuals(aDataSet: TDataSet);
   procedure TranslateCaptures(aDataSet: TDataSet);
   procedure TranslateMolts(aDataSet: TDataSet);
+  procedure TranslateFeathers(aDataSet: TDataSet);
   procedure TranslateNests(aDataSet: TDataSet);
   procedure TranslateNestOwners(aDataSet: TDataSet);
   procedure TranslateNestRevisions(aDataSet: TDataSet);
@@ -1809,6 +1818,60 @@ begin
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'molt_id':                Fields[i].DisplayLabel := rscId;
+        'order_id':               Fields[i].DisplayLabel := rscOrderID;
+        'family_id':              Fields[i].DisplayLabel := rscFamilyID;
+        'genus_id':               Fields[i].DisplayLabel := rscGenusID;
+        'species_id':             Fields[i].DisplayLabel := rscSpeciesID;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateFeathers(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'sample_date':            Fields[i].DisplayLabel := rscDate;
+        'sample_time':            Fields[i].DisplayLabel := rscTime;
+        'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
+        'taxon_name':             Fields[i].DisplayLabel := rscTaxon;
+        'locality_id':            Fields[i].DisplayLabel := rscLocalityID;
+        'locality_name':          Fields[i].DisplayLabel := rscLocality;
+        'individual_id':          Fields[i].DisplayLabel := rscIndividualID;
+        'individual_name':        Fields[i].DisplayLabel := rscIndividual;
+        'capture_id':             Fields[i].DisplayLabel := rscCaptureID;
+        'capture_name':           Fields[i].DisplayLabel := rscCaptureID;
+        'sighting_id':            Fields[i].DisplayLabel := rscSightingID;
+        'sighting_name':          Fields[i].DisplayLabel := rscSighting;
+        'observer_id':            Fields[i].DisplayLabel := rscObserverID;
+        'observer_name':          Fields[i].DisplayLabel := rscObserver;
+        'source_type':            Fields[i].DisplayLabel := rscSource;
+        'symmetrical':            Fields[i].DisplayLabel := rscSymmetry;
+        'feather_trait':          Fields[i].DisplayLabel := rscFeatherTrait;
+        'feather_number':         Fields[i].DisplayLabel := rscFeatherNumber;
+        'body_side':              Fields[i].DisplayLabel := rscBodySide;
+        'grown_percent':          Fields[i].DisplayLabel := rscPercentGrown;
+        'feather_length':         Fields[i].DisplayLabel := rscLength;
+        'feather_area':           Fields[i].DisplayLabel := rscArea;
+        'feather_mass':           Fields[i].DisplayLabel := rscMass;
+        'rachis_width':           Fields[i].DisplayLabel := rscRachisWidth;
+        'growth_bar_width':       Fields[i].DisplayLabel := rscGrowthBarWidth;
+        'barb_density':           Fields[i].DisplayLabel := rscBarbDensity;
+        'feather_age':            Fields[i].DisplayLabel := rscAge;
+        'notes':                  Fields[i].DisplayLabel := rscNotes;
+        'feather_id':             Fields[i].DisplayLabel := rscId;
         'order_id':               Fields[i].DisplayLabel := rscOrderID;
         'family_id':              Fields[i].DisplayLabel := rscFamilyID;
         'genus_id':               Fields[i].DisplayLabel := rscGenusID;

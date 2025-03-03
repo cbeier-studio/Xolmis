@@ -2677,8 +2677,8 @@ object DMI: TDMI
     Macros = <>
     DataSource = DMG.dsIndividuals
     Sequence.FieldName = 'molt_id'
-    Left = 40
-    Top = 102
+    Left = 272
+    Top = 56
     object qMoltsmarked_status: TBooleanField
       Alignment = taCenter
       DisplayLabel = 'Marked'
@@ -3654,8 +3654,8 @@ object DMI: TDMI
   end
   object dsMolts: TDataSource
     DataSet = qMolts
-    Left = 144
-    Top = 102
+    Left = 376
+    Top = 56
   end
   object qSightings: TSQLQuery
     PacketRecords = -1
@@ -6561,5 +6561,794 @@ object DMI: TDMI
     DataSet = qSpecimens
     Left = 144
     Top = 329
+  end
+  object qFeathers: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'feather_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sample_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'sample_time'
+        DataType = ftTime
+        Precision = -1
+      end    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'locality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'capture_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sighting_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'observer_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'source_type'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'symmetrical'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'feather_trait'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'feather_number'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'body_side'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'grown_percent'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'feather_length'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'feather_area'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'feather_mass'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'rachis_width'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'growth_bar_width'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'barb_density'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'feather_age'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'order_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'family_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'genus_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'species_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'observer_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'capture_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'sighting_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT ft.*,'
+      '  z.full_name AS taxon_name,'
+      '  z.order_id AS order_id,'
+      '  z.family_id AS family_id,'
+      '  z.genus_id AS genus_id,'
+      '  z.species_id AS species_id,'
+      '  i.full_name AS individual_name,'
+      '  p.acronym AS observer_name,'
+      '  c.full_name AS capture_name,'
+      '  st.full_name AS sighting_name,'
+      '  g.site_name AS locality_name'
+      'FROM feathers AS ft'
+      'LEFT JOIN zoo_taxa AS z ON ft.taxon_id = z.taxon_id'
+      'LEFT JOIN individuals AS i ON ft.individual_id = i.individual_id'
+      'LEFT JOIN people AS p ON ft.observer_id = p.person_id'
+      'LEFT JOIN captures AS c ON ft.capture_id = c.capture_id'
+      'LEFT JOIN sightings AS st ON ft.sighting_id = st.sighting_id'
+      'LEFT JOIN gazetteer AS g ON ft.locality_id = g.site_id'
+      'WHERE (ft.individual_id = :individual_id)'
+      '  AND (ft.active_status = 1)'
+      ''
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO feathers ('
+      '  sample_date,'
+      '  sample_time,'
+      '  taxon_id,'
+      '  locality_id,'
+      '  individual_id,'
+      '  capture_id,'
+      '  sighting_id,'
+      '  observer_id,'
+      '  source_type,'
+      '  symmetrical,'
+      '  feather_trait,'
+      '  feather_number,'
+      '  body_side,'
+      '  grown_percent,'
+      '  feather_length,'
+      '  feather_area,'
+      '  feather_mass,'
+      '  rachis_width,'
+      '  growth_bar_width,'
+      '  barb_density,'
+      '  feather_age,'
+      '  notes,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  date(:sample_date),'
+      '  time(:sample_time),'
+      '  :taxon_id,'
+      '  :locality_id,'
+      '  :individual_id,'
+      '  :capture_id,'
+      '  :sighting_id,'
+      '  :observer_id,'
+      '  :source_type,'
+      '  :symmetrical,'
+      '  :feather_trait,'
+      '  :feather_number,'
+      '  :body_side,'
+      '  :grown_percent,'
+      '  :feather_length,'
+      '  :feather_area,'
+      '  :feather_mass,'
+      '  :rachis_width,'
+      '  :growth_bar_width,'
+      '  :barb_density,'
+      '  :feather_age,'
+      '  :notes,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+    )
+    UpdateSQL.Strings = (
+      'UPDATE feathers SET'
+      '  sample_date = date(:sample_date),'
+      '  sample_time = time(:sample_time),'
+      '  taxon_id = :taxon_id,'
+      '  locality_id = :locality_id,'
+      '  individual_id = :individual_id,'
+      '  capture_id = :capture_id,'
+      '  sighting_id = :sighting_id,'
+      '  observer_id = :observer_id,'
+      '  source_type = :source_type,'
+      '  symmetrical = :symmetrical,'
+      '  feather_trait = :feather_trait,'
+      '  feather_number = :feather_number,'
+      '  body_side = :body_side,'
+      '  grown_percent = :grown_percent,'
+      '  feather_length = :feather_length,'
+      '  feather_area = :feather_area,'
+      '  feather_mass = :feather_mass,'
+      '  rachis_width = :rachis_width,'
+      '  growth_bar_width = :growth_bar_width,'
+      '  barb_density = :barb_density,'
+      '  feather_age = :feather_age,'
+      '  notes = :notes,'
+      '  user_updated = :user_updated,'
+      '  update_date = :update_date,'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (feather_id = :feather_id)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'individual_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = DMG.dsIndividuals
+    Sequence.FieldName = 'molt_id'
+    Left = 40
+    Top = 104
+    object qFeathersmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qFeatherssample_date: TDateField
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'sample_date'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qFeatherssample_time: TTimeField
+      DisplayLabel = 'Time'
+      FieldKind = fkData
+      FieldName = 'sample_time'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qFeatherstaxon_id: TLongintField
+      DisplayLabel = 'Taxon ID'
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Visible = False
+    end
+    object qFeatherstaxon_name: TStringField
+      DisplayLabel = 'Taxon'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qFeatherslocality_id: TLongintField
+      DisplayLabel = 'Locality ID'
+      FieldKind = fkData
+      FieldName = 'locality_id'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeatherslocality_name: TStringField
+      DisplayLabel = 'Locality'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'locality_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qFeathersindividual_id: TLongintField
+      DisplayLabel = 'Individual ID'
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeathersindividual_name: TStringField
+      DisplayLabel = 'Individual'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'individual_name'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 120
+    end
+    object qFeatherscapture_id: TLongintField
+      DisplayLabel = 'Capture ID'
+      FieldKind = fkData
+      FieldName = 'capture_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeatherscapture_name: TStringField
+      DisplayLabel = 'Capture'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'capture_name'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 120
+    end
+    object qFeatherssighting_id: TLongintField
+      DisplayLabel = 'Sighting ID'
+      FieldKind = fkData
+      FieldName = 'sighting_id'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeatherssighting_name: TStringField
+      DisplayLabel = 'Sighting'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'sighting_name'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qFeathersobserver_id: TLongintField
+      DisplayLabel = 'Observer ID'
+      FieldKind = fkData
+      FieldName = 'observer_id'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeathersobserver_name: TStringField
+      DisplayLabel = 'Observer'
+      FieldKind = fkData
+      FieldName = 'observer_name'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 10
+    end
+    object qFeatherssource_type: TStringField
+      DisplayLabel = 'Source'
+      FieldKind = fkData
+      FieldName = 'source_type'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qFeatherssymmetrical: TStringField
+      DisplayLabel = 'Symmetrical'
+      FieldKind = fkData
+      FieldName = 'symmetrical'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qFeathersfeather_trait: TStringField
+      DisplayLabel = 'Feather trait'
+      FieldKind = fkData
+      FieldName = 'feather_trait'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qFeathersfeather_number: TLongintField
+      DisplayLabel = 'Feather number'
+      FieldKind = fkData
+      FieldName = 'feather_number'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qFeathersbody_side: TStringField
+      DisplayLabel = 'Body side'
+      FieldKind = fkData
+      FieldName = 'body_side'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qFeathersgrown_percent: TFloatField
+      DisplayLabel = 'Percent grown'
+      FieldKind = fkData
+      FieldName = 'grown_percent'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qFeathersfeather_length: TFloatField
+      DisplayLabel = 'Length'
+      FieldKind = fkData
+      FieldName = 'feather_length'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qFeathersfeather_area: TFloatField
+      DisplayLabel = 'Area'
+      FieldKind = fkData
+      FieldName = 'feather_area'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qFeathersfeather_mass: TFloatField
+      DisplayLabel = 'Mass'
+      FieldKind = fkData
+      FieldName = 'feather_mass'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qFeathersrachis_width: TFloatField
+      DisplayLabel = 'Rachis width'
+      FieldKind = fkData
+      FieldName = 'rachis_width'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qFeathersgrowth_bar_width: TFloatField
+      DisplayLabel = 'Growth bar width'
+      FieldKind = fkData
+      FieldName = 'growth_bar_width'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qFeathersbarb_density: TFloatField
+      DisplayLabel = 'Barb density'
+      FieldKind = fkData
+      FieldName = 'barb_density'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qFeathersfeather_age: TStringField
+      DisplayLabel = 'Feather age'
+      FieldKind = fkData
+      FieldName = 'feather_age'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qFeathersnotes: TMemoField
+      DisplayLabel = 'Notes'
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qFeathersfeather_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'feather_id'
+      Index = 29
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qFeathersorder_id: TLongintField
+      DisplayLabel = 'Order ID'
+      FieldKind = fkData
+      FieldName = 'order_id'
+      Index = 30
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeathersfamily_id: TLongintField
+      DisplayLabel = 'Family ID'
+      FieldKind = fkData
+      FieldName = 'family_id'
+      Index = 31
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeathersgenus_id: TLongintField
+      DisplayLabel = 'Genus ID'
+      FieldKind = fkData
+      FieldName = 'genus_id'
+      Index = 32
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeathersspecies_id: TLongintField
+      DisplayLabel = 'Species ID'
+      FieldKind = fkData
+      FieldName = 'species_id'
+      Index = 33
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeathersuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 34
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeathersuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 35
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeathersinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeathersupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 37
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qFeathersexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 38
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qFeathersactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 39
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsFeathers: TDataSource
+    DataSet = qFeathers
+    Left = 144
+    Top = 104
   end
 end

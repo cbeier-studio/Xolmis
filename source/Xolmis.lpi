@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="143">
+      <ExcludedIdentifiers Count="144">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -167,13 +167,14 @@
         <Item141 Value="tedtProjectActivity.Caption"/>
         <Item142 Value="tedtProjectRubric.Caption"/>
         <Item143 Value="tedtProjectExpense.Caption"/>
+        <Item144 Value="tedtFeather.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="418"/>
+      <BuildNr Value="419"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1301,6 +1302,13 @@
         <Filename Value="edit_dialogs\uedt_projectexpense.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtProjectExpense"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_feather.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtFeather"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>

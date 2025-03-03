@@ -56,6 +56,8 @@ type
     gridDocs: TDBGrid;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
+    pmcNewFeather: TMenuItem;
+    pmPrintFeathers: TMenuItem;
     pmcNewExpenseFromRubric: TMenuItem;
     pmcNewProjectActivityFromGoal: TMenuItem;
     pmcNewProjectGoal: TMenuItem;
@@ -107,6 +109,7 @@ type
     qDocsupdate_date: TDateTimeField;
     qDocsuser_inserted: TLongintField;
     qDocsuser_updated: TLongintField;
+    qImagesfeather_id: TLongintField;
     sbAddDoc: TSpeedButton;
     sbClearAllFilters: TSpeedButton;
     sbDocInfo: TSpeedButton;
@@ -941,6 +944,7 @@ type
     procedure pmcNewEggClick(Sender: TObject);
     procedure pmcNewExpenseClick(Sender: TObject);
     procedure pmcNewExpenseFromRubricClick(Sender: TObject);
+    procedure pmcNewFeatherClick(Sender: TObject);
     procedure pmcNewMistnetClick(Sender: TObject);
     procedure pmcNewMoltClick(Sender: TObject);
     procedure pmcNewNestClick(Sender: TObject);
@@ -1127,6 +1131,7 @@ type
     procedure ClearCaptureFilters;
     procedure ClearEggFilters;
     procedure ClearExpeditionFilters;
+    procedure ClearFeatherFilters;
     procedure ClearGazetteerFilters;
     procedure ClearIndividualFilters;
     procedure ClearInstitutionFilters;
@@ -1154,6 +1159,7 @@ type
     procedure GetCaptureFilters;
     procedure GetEggFilters;
     procedure GetExpeditionFilters;
+    procedure GetFeatherFilters;
     procedure GetGazetteerFilters;
     procedure GetIndividualFilters;
     procedure GetInstitutionFilters;
@@ -1187,6 +1193,7 @@ type
     procedure PrepareCanvasCaptures(var Column: TColumn; var sender: TObject);
     procedure PrepareCanvasEggs(var Column: TColumn; var sender: TObject);
     procedure PrepareCanvasExpeditions(var Column: TColumn; var sender: TObject);
+    procedure PrepareCanvasFeathers(var Column: TColumn; var sender: TObject);
     procedure PrepareCanvasIndividuals(var Column: TColumn; var sender: TObject);
     procedure PrepareCanvasInstitutions(var Column: TColumn; var sender: TObject);
     procedure PrepareCanvasMolts(var Column: TColumn; var sender: TObject);
@@ -1213,6 +1220,7 @@ type
     procedure SetColumnsCaptures(var aGrid: TDBGrid);
     procedure SetColumnsEggs(var aGrid: TDBGrid);
     procedure SetColumnsExpeditions(var aGrid: TDBGrid);
+    procedure SetColumnsFeathers(var aGrid: TDBGrid);
     procedure SetColumnsGazetteer(var aGrid: TDBGrid);
     procedure SetColumnsIndividuals(var aGrid: TDBGrid);
     procedure SetColumnsInstitutions(var aGrid: TDBGrid);
@@ -1238,6 +1246,8 @@ type
     procedure SetGridBotanicTaxa;
     procedure SetGridCaptures;
     procedure SetGridEggs;
+    procedure SetGridExpeditions;
+    procedure SetGridFeathers;
     procedure SetGridGazetteer;
     procedure SetGridIndividuals;
     procedure SetGridInstitutions;
@@ -1245,11 +1255,10 @@ type
     procedure SetGridMolts;
     procedure SetGridNestRevisions;
     procedure SetGridNests;
-    procedure SetGridExpeditions;
-    procedure SetGridSamplingPlots;
     procedure SetGridPeople;
     procedure SetGridPermits;
     procedure SetGridProjects;
+    procedure SetGridSamplingPlots;
     procedure SetGridSightings;
     procedure SetGridSpecimens;
     procedure SetGridSurveys;
@@ -1269,6 +1278,7 @@ type
     function SearchCaptures(aValue: String): Boolean;
     function SearchEggs(aValue: String): Boolean;
     function SearchExpeditions(aValue: String): Boolean;
+    function SearchFeathers(aValue: String): Boolean;
     function SearchGazetteer(aValue: String): Boolean;
     function SearchIndividuals(aValue: String): Boolean;
     function SearchInstitutions(aValue: String): Boolean;
@@ -1305,6 +1315,7 @@ type
     procedure UpdateFilterPanelsCaptures;
     procedure UpdateFilterPanelsEggs;
     procedure UpdateFilterPanelsExpeditions;
+    procedure UpdateFilterPanelsFeathers;
     procedure UpdateFilterPanelsGazetteer;
     procedure UpdateFilterPanelsIndividuals;
     procedure UpdateFilterPanelsInstitutions;
@@ -1603,7 +1614,7 @@ begin
     tbIndividuals:
       case FParentForm.nbChilds.PageIndex of
         0: FParentForm.ChildTable := tbCaptures;
-        1: FParentForm.ChildTable := tbMolts;
+        1: FParentForm.ChildTable := tbFeathers;
         2: FParentForm.ChildTable := tbSightings;
         3: FParentForm.ChildTable := tbNests;
         4: FParentForm.ChildTable := tbSpecimens;
@@ -2697,6 +2708,26 @@ begin
   FProjectKeyFilter := 0;
 end;
 
+procedure TfrmCustomGrid.ClearFeatherFilters;
+begin
+  lblCountSiteFilter.Caption := rsNoneSelected;
+  tvSiteFilter.ClearChecked;
+
+  lblCountTaxonFilter.Caption := rsNoneSelected;
+  tvTaxaFilter.ClearChecked;
+
+  lblCountDateFilter.Caption := rsNoneSelectedFemale;
+  tvDateFilter.ClearChecked;
+
+  eStartTimeFilter.Clear;
+  eEndTimeFilter.Clear;
+
+  ePersonFilter.Clear;
+  FPersonKeyFilter := 0;
+  eIndividualFilter.Clear;
+  FIndividualKeyFilter := 0;
+end;
+
 procedure TfrmCustomGrid.ClearGazetteerFilters;
 begin
   lblCountSiteFilter.Caption := rsNoneSelected;
@@ -2875,6 +2906,7 @@ begin
     tbIndividuals:   ClearIndividualFilters;
     tbCaptures:      ClearCaptureFilters;
     tbMolts:         ClearMoltFilters;
+    tbFeathers:      ClearFeatherFilters;
     //tbImages: ;
     //tbAudioLibrary: ;
   end;
@@ -2988,7 +3020,7 @@ begin
   case FTableType of
     tbIndividuals:
       begin
-        Titles := [rsTitleCaptures, rsTitleMolts, rsTitleSightings, rsTitleNests, rsTitleSpecimens];
+        Titles := [rsTitleCaptures, rsCaptionFeathers, rsTitleSightings, rsTitleNests, rsTitleSpecimens];
         Counts := [0, 0, 0, 0, 0];
       end;
     tbNests:
@@ -3698,7 +3730,7 @@ begin
           aTable := tbCaptures
         else
         if Sender = gridChild2 then
-          aTable := tbMolts
+          aTable := tbFeathers
         else
         if Sender = gridChild3 then
           aTable := tbSightings
@@ -3750,7 +3782,19 @@ begin
       tbProjects:
       begin
         if Sender = gridChild1 then
-          aTable := tbProjectTeams;
+          aTable := tbProjectTeams
+        else
+        if Sender = gridChild2 then
+          aTable := tbProjectGoals
+        else
+        if Sender = gridChild3 then
+          aTable := tbProjectChronograms
+        else
+        if Sender = gridChild4 then
+          aTable := tbProjectBudgets
+        else
+        if Sender = gridChild5 then
+          aTable := tbProjectExpenses;
       end;
     end;
   end;
@@ -3762,6 +3806,7 @@ begin
     tbIndividuals:    PrepareCanvasIndividuals(Column, sender);
     tbCaptures:       PrepareCanvasCaptures(Column, sender);
     tbMolts:          PrepareCanvasMolts(Column, sender);
+    tbFeathers:       PrepareCanvasFeathers(Column, Sender);
     tbNests:          PrepareCanvasNests(Column, sender);
     //tbNestOwners: ;
     tbNestRevisions:  PrepareCanvasNestRevisions(Column, sender);
@@ -4736,6 +4781,8 @@ begin
   if qRecycle.Active then
     qRecycle.Close;
 
+  if Assigned(dsLink6.DataSet) then
+    dsLink6.DataSet.Close;
   if Assigned(dsLink5.DataSet) then
     dsLink5.DataSet.Close;
   if Assigned(dsLink4.DataSet) then
@@ -4909,13 +4956,13 @@ begin
     {$ENDIF}
 
     case FTableType of
-      tbIndividuals:  OpenIndividualChilds;
-      tbNests:        OpenNestChilds;
-      tbExpeditions:  OpenExpeditionChilds;
-      tbSurveys:      OpenSurveyChilds;
-      tbSpecimens:    OpenSpecimenChilds;
+      tbIndividuals:    OpenIndividualChilds;
+      tbNests:          OpenNestChilds;
+      tbExpeditions:    OpenExpeditionChilds;
+      tbSurveys:        OpenSurveyChilds;
+      tbSpecimens:      OpenSpecimenChilds;
       tbSamplingPlots:  OpenSamplingPlotChilds;
-      tbProjects:     OpenProjectChilds;
+      tbProjects:       OpenProjectChilds;
     end;
     //SetGridColumns(FChildTable, dbgChild);
     Application.ProcessMessages;
@@ -5446,6 +5493,36 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.GetFeatherFilters;
+var
+  sf: Integer;
+begin
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
+  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+
+  if ePersonFilter.Text <> EmptyStr then
+    PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
+
+  if eStartTimeFilter.Text <> EmptyStr then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    if eEndTimeFilter.Text <> EmptyStr then
+      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('sample_time', 'Time', sdtTime,
+        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)))
+    else
+      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('sample_time', 'Time', sdtTime,
+        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
+  end;
+
+  if FIndividualKeyFilter > 0 then
+  begin
+    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
+    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('individual_id', 'Individual', sdtInteger,
+      crEqual, False, IntToStr(FIndividualKeyFilter)));
+  end;
+end;
+
 procedure TfrmCustomGrid.GetFilters;
 var
   sf: Integer;
@@ -5497,6 +5574,7 @@ begin
     tbIndividuals:   GetIndividualFilters;
     tbCaptures:      GetCaptureFilters;
     tbMolts:         GetMoltFilters;
+    tbFeathers:      GetFeatherFilters;
     tbImages: ;
     tbAudioLibrary: ;
   end;
@@ -6195,6 +6273,9 @@ begin
       LogError('Field not found: ' + gridColumns.Cells[2, i]);
     end;
   end;
+  {$IFDEF DEBUG}
+  LogDebug('gridColumns loaded: ' + IntToStr(gridColumns.RowCount));
+  {$ENDIF}
 end;
 
 procedure TfrmCustomGrid.LoadRecordColumns;
@@ -6283,7 +6364,7 @@ procedure TfrmCustomGrid.OpenIndividualChilds;
 begin
   AddGridColumns(tbCaptures, gridChild1);
   dsLink1.DataSet.Open;
-  AddGridColumns(tbMolts, gridChild2);
+  AddGridColumns(tbFeathers, gridChild2);
   dsLink2.DataSet.Open;
   AddGridColumns(tbSightings, gridChild3);
   dsLink3.DataSet.Open;
@@ -6776,6 +6857,13 @@ begin
   UpdateChildButtons(DMG.qProjectExpenses);
 end;
 
+procedure TfrmCustomGrid.pmcNewFeatherClick(Sender: TObject);
+begin
+  EditFeather(DMI.qFeathers, dsLink.DataSet.FieldByName('individual_id').AsInteger, 0, 0, True);
+
+  UpdateChildButtons(DMI.qFeathers);
+end;
+
 procedure TfrmCustomGrid.pmcNewMistnetClick(Sender: TObject);
 begin
   EditNetEffort(DMS.qNetsEffort, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
@@ -7208,6 +7296,7 @@ begin
       2: DS := dsLink3.DataSet;
       3: DS := dsLink4.DataSet;
       4: DS := dsLink5.DataSet;
+      5: DS := dsLink6.DataSet;
     end;
     AddVerification(FTableType, FChildTable, DS.FieldByName(GetPrimaryKey(DS)).AsInteger);
   end;
@@ -7761,6 +7850,24 @@ end;
 procedure TfrmCustomGrid.PrepareCanvasExpeditions(var Column: TColumn; var sender: TObject);
 begin
   if Column.FieldName = 'start_date' then
+  begin
+    {$IFDEF MSWINDOWS}
+    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
+    {$ELSE}
+    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
+    {$ENDIF}
+  end;
+end;
+
+procedure TfrmCustomGrid.PrepareCanvasFeathers(var Column: TColumn;
+  var sender: TObject);
+begin
+  if Column.FieldName = 'taxon_name' then
+  begin
+    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+  end
+  else
+  if Column.FieldName = 'sample_date' then
   begin
     {$IFDEF MSWINDOWS}
     TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
@@ -8452,7 +8559,7 @@ begin
         tbIndividuals:
           case nbChilds.PageIndex of
             0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger, 0, True);
-            1: EditMolt(DMI.qMolts, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
+            1: EditFeather(DMI.qFeathers, dsLink.DataSet.FieldByName('individual_id').AsInteger, 0, 0, True);
             2: EditSighting(DMI.qSightings, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
             //3: EditNest(DMI.qNests, False);
             //4: EditSpecimen(DMI.qSpecimens, False);
@@ -8605,6 +8712,7 @@ begin
     2: aDataSet := gridChild3.DataSource.DataSet;
     3: aDataSet := gridChild4.DataSource.DataSet;
     4: aDataSet := gridChild5.DataSource.DataSet;
+    5: aDataSet := gridChild6.DataSource.DataSet;
   end;
   aKeyField := GetPrimaryKey(aDataSet);
 
@@ -8690,7 +8798,7 @@ begin
       tbIndividuals:
         case nbChilds.PageIndex of
           0: DeleteRecord(tbCaptures, DMI.qCaptures);
-          1: DeleteRecord(tbMolts, DMI.qMolts);
+          1: DeleteRecord(tbFeathers, DMI.qFeathers);
           2: DeleteRecord(tbSightings, DMI.qSightings);
           3: DeleteRecord(tbNests, DMI.qNests);
           4: DeleteRecord(tbSpecimens, DMI.qSpecimens);
@@ -8851,7 +8959,7 @@ begin
       tbIndividuals:
         case nbChilds.PageIndex of
           0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger);
-          1: EditMolt(DMI.qMolts, dsLink.DataSet.FieldByName('individual_id').AsInteger);
+          1: EditFeather(DMI.qFeathers, dsLink.DataSet.FieldByName('individual_id').AsInteger);
           2: EditSighting(DMI.qSightings, dsLink.DataSet.FieldByName('individual_id').AsInteger);
           3: EditNest(DMI.qNests, False);
           //4: EditSpecimen(DMI.qSpecimens, False);
@@ -9239,6 +9347,7 @@ begin
       2: DS := dsLink3.DataSet;
       3: DS := dsLink4.DataSet;
       4: DS := dsLink5.DataSet;
+      5: DS := dsLink6.DataSet;
     end;
     if not DS.Active then
       DS.Open;
@@ -9395,7 +9504,7 @@ begin
     tbNests:         Result := SearchNests(aValue);
     tbNestRevisions: Result := SearchNestRevisions(aValue);
     tbEggs:          Result := SearchEggs(aValue);
-    tbSamplingPlots:   Result := SearchSamplingPlots(aValue);
+    tbSamplingPlots: Result := SearchSamplingPlots(aValue);
     tbTaxonRanks:    Result := SearchTaxonRanks(aValue);
     tbZooTaxa:       Result := SearchZooTaxa(aValue);
     tbProjects:      Result := SearchProjects(aValue);
@@ -9414,6 +9523,7 @@ begin
     tbIndividuals:   Result := SearchIndividuals(aValue);
     tbCaptures:      Result := SearchCaptures(aValue);
     tbMolts:         Result := SearchMolts(aValue);
+    tbFeathers:      Result := SearchFeathers(aValue);
     tbImages: ;
     tbAudioLibrary: ;
   end;
@@ -9764,6 +9874,73 @@ begin
       FSearch.Fields[g].Fields.Add(TSearchField.Create('locality_name', 'Locality', sdtText, Crit,
         True, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('description', 'Description', sdtText, Crit,
+        False, aValue));
+    end;
+  end;
+
+  GetFilters;
+
+  Result := FSearch.RunSearch > 0;
+end;
+
+function TfrmCustomGrid.SearchFeathers(aValue: String): Boolean;
+var
+  i, g: Integer;
+  dt: TDateTime;
+  Crit: TCriteriaType;
+  m, y: String;
+begin
+  Result := False;
+
+  Crit := crLike;
+  aValue := Trim(aValue);
+
+  if aValue <> EmptyStr then
+  begin
+    if ExecRegExpr('^=.+$', aValue) then
+    begin
+      Crit := crEqual;
+      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
+    end
+    else
+    if ExecRegExpr('^:.+$', aValue) then
+    begin
+      Crit := crStartLike;
+      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+    end;
+
+    if TryStrToInt(aValue, i) then
+    begin
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('feather_id', 'Feather (ID)', sdtInteger, crEqual,
+        False, aValue));
+    end
+    else
+    if TryStrToDate(aValue, dt) then
+    begin
+      aValue := FormatDateTime('yyyy-mm-dd', dt);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('sample_date', 'Date', sdtDate, crEqual,
+        False, aValue));
+    end
+    else
+    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+    begin
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      m := ExtractDelimited(1, aValue, ['/']);
+      y := ExtractDelimited(2, aValue, ['/']);
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('sample_date', 'Date', sdtMonthYear, crEqual,
+        False, y + '-' + m));
+    end
+    else
+    begin
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('taxon_name', 'Taxon', sdtText, Crit,
+        False, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('locality_name', 'Locality', sdtText, Crit,
+        True, aValue));
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('observer_name', 'Observer', sdtText, Crit,
         False, aValue));
     end;
   end;
@@ -11052,6 +11229,27 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.SetColumnsFeathers(var aGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    ColumnByFieldname('feather_id').ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName('sample_date').Visible then
+      ColumnByFieldName('sample_date').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('taxon_name').Visible then
+      ColumnByFieldName('taxon_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('observer_name').Visible then
+      ColumnByFieldName('observer_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('locality_name').Visible then
+      ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('sighting_name').Visible then
+      ColumnByFieldname('sighting_name').ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName('individual_name').Visible then
+      ColumnByFieldname('individual_name').ButtonStyle := cbsEllipsis;
+  end;
+end;
+
 procedure TfrmCustomGrid.SetColumnsGazetteer(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
@@ -11567,6 +11765,7 @@ begin
     tbIndividuals:    SetGridIndividuals;
     tbCaptures:       SetGridCaptures;
     tbMolts:          SetGridMolts;
+    tbFeathers:       SetGridFeathers;
     tbNests:          SetGridNests;
     tbNestRevisions:  SetGridNestRevisions;
     tbEggs:           SetGridEggs;
@@ -11646,7 +11845,7 @@ begin
     tbProjects:       SetColumnsProjects(aGrid);
     tbPermits:        SetColumnsPermits(aGrid);
     tbGazetteer:      SetColumnsGazetteer(aGrid);
-    tbSamplingPlots:    SetColumnsSamplingPlots(aGrid);
+    tbSamplingPlots:  SetColumnsSamplingPlots(aGrid);
     tbPermanentNets:  SetColumnsPermanentNets(aGrid);
     tbTaxonRanks:     SetColumnsTaxonRanks(aGrid);
     tbBotanicTaxa:    SetColumnsBotanicTaxa(aGrid);
@@ -11655,6 +11854,7 @@ begin
     tbIndividuals:    SetColumnsIndividuals(aGrid);
     tbCaptures:       SetColumnsCaptures(aGrid);
     tbMolts:          SetColumnsMolts(aGrid);
+    tbFeathers:       SetColumnsFeathers(aGrid);
     tbNests:          SetColumnsNests(aGrid);
     tbNestOwners:     SetColumnsNestOwners(aGrid);
     tbNestRevisions:  SetColumnsNestRevisions(aGrid);
@@ -11720,6 +11920,18 @@ begin
   sbShowDocs.Visible := True;
 end;
 
+procedure TfrmCustomGrid.SetGridFeathers;
+begin
+  Caption := rsCaptionFeathers;
+  FSearch.DataSet := DMG.qFeathers;
+  AddSortedField('sample_date', sdDescending);
+
+  sbRecordVerifications.Visible := True;
+  sbShowImages.Visible := True;
+
+  pmPrintFeathers.Visible := True;
+end;
+
 procedure TfrmCustomGrid.SetGridGazetteer;
 begin
   Caption := rsTitleGazetteer;
@@ -11757,12 +11969,12 @@ begin
     DMI := TDMI.Create(nil);
   FChildTable := tbCaptures;
   dsLink1.DataSet := DMI.qCaptures;
-  dsLink2.DataSet := DMI.qMolts;
+  dsLink2.DataSet := DMI.qFeathers;
   dsLink3.DataSet := DMI.qSightings;
   dsLink4.DataSet := DMI.qNests;
   dsLink5.DataSet := DMI.qSpecimens;
   pmcNewCapture.Visible := True;
-  pmcNewMolt.Visible := True;
+  pmcNewFeather.Visible := True;
   pmcNewSighting.Visible := True;
   pmcNewNest.Visible := True;
   pmcNewSpecimen.Visible := True;
@@ -12090,6 +12302,7 @@ begin
       tbIndividuals:    Add('WHERE (img.active_status = 1) AND (img.individual_id = :individual_id)');
       tbCaptures:       Add('WHERE (img.active_status = 1) AND (img.capture_id = :capture_id)');
       //tbMolts: ;
+      tbFeathers:       Add('WHERE (img.active_status = 1) AND (img.feather_id = :feather_id)');
       tbNests:          Add('WHERE (img.active_status = 1) AND (img.nest_id = :nest_id)');
       //tbNestOwners: ;
       tbNestRevisions:  Add('WHERE (img.active_status = 1) AND (img.nest_revision_id = :nest_revision_id)');
@@ -12219,6 +12432,14 @@ begin
       qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
       lblRecycleId.DataField := 'molt_id';
       lblRecycleName.DataField := 'full_name';
+    end;
+    tbFeathers:
+    begin
+      qRecycle.MacroByName('FID').AsString := 'feather_id';
+      qRecycle.MacroByName('FNAME').AsString := 'feather_trait';
+      qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+      lblRecycleId.DataField := 'feather_id';
+      lblRecycleName.DataField := 'feather_trait';
     end;
     tbNests:
     begin
@@ -12356,7 +12577,7 @@ begin
       tbRecordHistory: ;
       tbRecordVerifications: ;
       tbGazetteer:          SummaryGazetteer(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
-      tbSamplingPlots:        SummarySamplingPlots(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbSamplingPlots:      SummarySamplingPlots(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbPermanentNets: ;
       tbInstitutions:       SummaryInstitutions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbPeople:             SummaryPeople(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
@@ -12371,6 +12592,7 @@ begin
       tbIndividuals:        SummaryIndividuals(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbCaptures:           SummaryCaptures(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbMolts: ;
+      tbFeathers: ;
       tbNests:              SummaryNests(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
       tbNestOwners: ;
       tbNestRevisions:      SummaryNestRevisions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
@@ -13171,6 +13393,7 @@ begin
     tbIndividuals:    UpdateFilterPanelsIndividuals;
     tbCaptures:       UpdateFilterPanelsCaptures;
     tbMolts:          UpdateFilterPanelsMolts;
+    tbFeathers:       UpdateFilterPanelsFeathers;
     tbNests:          UpdateFilterPanelsNests;
     tbNestRevisions:  UpdateFilterPanelsNestRevisions;
     tbEggs:           UpdateFilterPanelsEggs;
@@ -13281,6 +13504,19 @@ begin
   pDatesFilters.Visible := True;
   LoadDateTreeData(FTableType, tvDateFilter);
   pProjectFilter.Visible := True;
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsFeathers;
+begin
+  pTaxonFilters.Visible := True;
+  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
+  pDatesFilters.Visible := True;
+  LoadDateTreeData(FTableType, tvDateFilter);
+  pSiteFilters.Visible := True;
+  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+  pIndividualFilter.Visible := True;
+  pPersonFilter.Visible := True;
+  pTimeFilters.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsGazetteer;

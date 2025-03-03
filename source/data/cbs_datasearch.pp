@@ -64,6 +64,8 @@ uses
     aSorting: String = ''; aDirection: String = '');
   procedure SetMoltsSQL(const aSQL: TStrings; aFilter: TFilterValue;
     aSorting: String = ''; aDirection: String = '');
+  procedure SetFeathersSQL(const aSQL: TStrings; aFilter: TFilterValue;
+    aSorting: String = ''; aDirection: String = '');
   procedure SetTaxonRanksSQL(const aSQL: TStrings; aFilter: TFilterValue;
     aSorting: String = ''; aDirection: String = '');
   procedure SetPeopleSQL(const aSQL: TStrings; aFilter: TFilterValue;
@@ -391,6 +393,11 @@ begin
     tbMolts:
       begin
         SetMoltsSQL(aSQL, fvNone);
+        //aAlias := TableAliases[aTable] + '.';
+      end;
+    tbFeathers:
+      begin
+        SetFeathersSQL(aSQL, fvNone);
         //aAlias := TableAliases[aTable] + '.';
       end;
     tbImages:
@@ -1452,6 +1459,56 @@ begin
         Add('WHERE (m.active_status = 1) AND (m.marked_status = 1)');
       fvDeleted:
         Add('WHERE (m.active_status = 0)');
+    end;
+    if Trim(aSorting) <> '' then
+    begin
+      if aDirection = '' then
+        AD := 'ASC'
+      else
+        AD := aDirection;
+      Add('ORDER BY ' + aSorting + {' COLLATE pt_BR ' +} AD);
+    end;
+  end;
+end;
+
+procedure SetFeathersSQL(
+  const aSQL: TStrings; aFilter: TFilterValue; aSorting: String; aDirection: String
+  );
+var
+  AD: String;
+begin
+  with aSQL do
+  begin
+    Clear;
+    Add('SELECT ft.*,');
+    Add('  z.full_name AS taxon_name,');
+    Add('  z.order_id AS order_id,');
+    Add('  z.family_id AS family_id,');
+    Add('  z.genus_id AS genus_id,');
+    Add('  z.species_id AS species_id,');
+    Add('  i.full_name AS individual_name,');
+    Add('  p.acronym AS observer_name,');
+    Add('  c.full_name AS capture_name,');
+    Add('  st.full_name AS sighting_name,');
+    Add('  g.site_name AS locality_name');
+    Add('FROM feathers AS ft');
+    Add('LEFT JOIN zoo_taxa AS z ON ft.taxon_id = z.taxon_id');
+    Add('LEFT JOIN individuals AS i ON ft.individual_id = i.individual_id');
+    Add('LEFT JOIN people AS p ON ft.observer_id = p.person_id');
+    Add('LEFT JOIN captures AS c ON ft.capture_id = c.capture_id');
+    Add('LEFT JOIN sightings AS st ON ft.sighting_id = st.sighting_id');
+    Add('LEFT JOIN gazetteer AS g ON ft.locality_id = g.site_id ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        Add('WHERE (ft.feather_id = -1) AND (ft.active_status = 1)');
+      fvAll:
+        Add('WHERE (ft.active_status = 1)');
+      fvMarked:
+        Add('WHERE (ft.active_status = 1) AND (ft.marked_status = 1)');
+      fvDeleted:
+        Add('WHERE (ft.active_status = 0)');
     end;
     if Trim(aSorting) <> '' then
     begin

@@ -580,6 +580,87 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  TFeatherDataSource = (fdsUnknown, fdsCapture, fdsSighting, fdsPhoto);
+  TSymmetry = (symUnknown, symSymmetrical, symAsymmetrical);
+  TFeatherTrait = (ftrBody, ftrPrimary, ftrSecondary, ftrRectrix, ftrPrimaryCovert, ftrGreatCovert,
+    ftrMedianCovert, ftrLesserCovert, ftrCarpalCovert, ftrAlula);
+  TBodySide = (bsdNotApplicable, bsdRight, bsdLeft);
+  TFeatherAge = (fageUnknown, fageNestling, fageFledgling, fageAdult, fageFirstYear, fageSecondYear, fageThirdYear,
+    fageFourthYear, fageFifthYear);
+
+const
+  FeatherDataSourceStr: array[TFeatherDataSource] of String = ('U', 'C', 'S', 'P');
+  SymmetryStr: array[TSymmetry] of String = ('U', 'S', 'A');
+  FeatherTraitStr: array[TFeatherTrait] of String = ('B', 'P', 'S', 'R', 'PC', 'GC', 'MC', 'LC', 'CC', 'AL');
+  BodySideStr: array[TBodySide] of String = ('NA', 'R', 'L');
+  FeatherAgeStr: array[TFeatherAge] of String = ('U', 'N', 'F', 'A', 'Y', 'S', 'T', '4', '5');
+
+type
+
+  { TFeather }
+
+  TFeather = class(TXolmisRecord)
+  protected
+    FSampleDate: TDate;
+    FSampleTime: TTime;
+    FTaxonId: Integer;
+    FLocalityId: Integer;
+    FIndividualId: Integer;
+    FCaptureId: Integer;
+    FSightingId: Integer;
+    FObserverId: Integer;
+    FSourceType: TFeatherDataSource;
+    FSymmetrical: TSymmetry;
+    FFeatherTrait: TFeatherTrait;
+    FFeatherNumber: Integer;
+    FBodySide: TBodySide;
+    FPercentGrown: Double;
+    FFeatherLength: Double;
+    FFeatherArea: Double;
+    FFeatherMass: Double;
+    FRachisWidth: Double;
+    FGrowthBarWidth: Double;
+    FBarbDensity: Double;
+    FFeatherAge: TFeatherAge;
+    FNotes: String;
+  public
+    constructor Create(aValue: Integer = 0);
+    procedure Clear; override;
+    procedure GetData(aKey: Integer);
+    procedure LoadFromDataSet(aDataSet: TDataSet);
+    function Diff(aOld: TFeather; var aList: TStrings): Boolean;
+    procedure Insert;
+    procedure Update;
+    procedure Save;
+    procedure Delete;
+    procedure Copy(aFrom: TFeather);
+    function ToJSON: String;
+    function Find(const FieldName: String; const Value: Variant): Boolean;
+  published
+    property SampleDate: TDate read FSampleDate write FSampleDate;
+    property SampleTime: TTime read FSampleTime write FSampleTime;
+    property TaxonId: Integer read FTaxonId write FTaxonId;
+    property LocalityId: Integer read FLocalityId write FLocalityId;
+    property IndividualId: Integer read FIndividualId write FIndividualId;
+    property CaptureId: Integer read FCaptureId write FCaptureId;
+    property SightingId: Integer read FSightingId write FSightingId;
+    property ObserverId: Integer read FObserverId write FObserverId;
+    property SourceType: TFeatherDataSource read FSourceType write FSourceType;
+    property Symmetrical: TSymmetry read FSymmetrical write FSymmetrical;
+    property FeatherTrait: TFeatherTrait read FFeatherTrait write FFeatherTrait;
+    property FeatherNumber: Integer read FFeatherNumber write FFeatherNumber;
+    property BodySide: TBodySide read FBodySide write FBodySide;
+    property PercentGrown: Double read FPercentGrown write FPercentGrown;
+    property FeatherLength: Double read FFeatherLength write FFeatherLength;
+    property FeatherArea: Double read FFeatherArea write FFeatherArea;
+    property FeatherMass: Double read FFeatherMass write FFeatherMass;
+    property RachisWidth: Double read FRachisWidth write FRachisWidth;
+    property GrowthBarWidth: Double read FGrowthBarWidth write FGrowthBarWidth;
+    property BarbDensity: Double read FBarbDensity write FBarbDensity;
+    property FeatherAge: TFeatherAge read FFeatherAge write FFeatherAge;
+    property Notes: String read FNotes write FNotes;
+  end;
+
 type
 
   { TSighting }
@@ -2295,9 +2376,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE molts SET ' +
         'survey_id = :survey_id, ' +
@@ -2432,16 +2513,16 @@ begin
       ParamByName('marked_status').AsBoolean := FMarked;
       ParamByName('active_status').AsBoolean := FActive;
       ParamByName('exported_status').AsBoolean := FExported;
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('molt_id').AsInteger := FId;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2682,6 +2763,595 @@ begin
   end;
 end;
 
+{ TFeather }
+
+constructor TFeather.Create(aValue: Integer);
+begin
+  if aValue > 0 then
+    GetData(aValue)
+  else
+    Clear;
+end;
+
+procedure TFeather.Clear;
+begin
+  inherited Clear;
+  FSampleDate := NullDate;
+  FSampleTime := NullTime;
+  FTaxonId := 0;
+  FLocalityId := 0;
+  FIndividualId := 0;
+  FCaptureId := 0;
+  FSightingId := 0;
+  FObserverId := 0;
+  FSourceType := fdsUnknown;
+  FSymmetrical := symUnknown;
+  FFeatherTrait := ftrBody;
+  FFeatherNumber := 0;
+  FBodySide := bsdNotApplicable;
+  FPercentGrown := 0.0;
+  FFeatherLength := 0.0;
+  FFeatherArea := 0.0;
+  FFeatherMass := 0.0;
+  FRachisWidth := 0.0;
+  FGrowthBarWidth := 0.0;
+  FBarbDensity := 0.0;
+  FFeatherAge := fageUnknown;
+  FNotes := EmptyStr;
+end;
+
+procedure TFeather.Copy(aFrom: TFeather);
+begin
+  FSampleDate := aFrom.SampleDate;
+  FSampleTime := aFrom.SampleTime;
+  FTaxonId := aFrom.TaxonId;
+  FLocalityId := aFrom.LocalityId;
+  FIndividualId := aFrom.IndividualId;
+  FCaptureId := aFrom.CaptureId;
+  FSightingId := aFrom.SightingId;
+  FObserverId := aFrom.ObserverId;
+  FSourceType := aFrom.SourceType;
+  FSymmetrical := aFrom.Symmetrical;
+  FFeatherTrait := aFrom.FeatherTrait;
+  FFeatherNumber := aFrom.FeatherNumber;
+  FBodySide := aFrom.BodySide;
+  FPercentGrown := aFrom.PercentGrown;
+  FFeatherLength := aFrom.FeatherLength;
+  FFeatherArea := aFrom.FeatherArea;
+  FFeatherMass := aFrom.FeatherMass;
+  FRachisWidth := aFrom.RachisWidth;
+  FGrowthBarWidth := aFrom.GrowthBarWidth;
+  FBarbDensity := aFrom.BarbDensity;
+  FFeatherAge := aFrom.FeatherAge;
+  FNotes := aFrom.Notes;
+end;
+
+procedure TFeather.Delete;
+var
+  Qry: TSQLQuery;
+begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TFeather.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
+      Clear;
+      Add('DELETE FROM feathers');
+      Add('WHERE (feather_id = :aid)');
+
+      ParamByName('aid').AsInteger := FId;
+
+      ExecSQL;
+
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TFeather.Diff(aOld: TFeather; var aList: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+
+  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscTime, aOld.SampleTime, FSampleTime, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscCaptureID, aOld.CaptureId, FCaptureId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscSource, aOld.SourceType, FSourceType, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscSymmetry, aOld.Symmetrical, FSymmetrical, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscFeatherTrait, aOld.FeatherTrait, FFeatherTrait, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscFeatherNumber, aOld.FeatherNumber, FFeatherNumber, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscBodySide, aOld.BodySide, FBodySide, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscPercentGrown, aOld.PercentGrown, FPercentGrown, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscLength, aOld.FeatherLength, FFeatherLength, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscArea, aOld.FeatherArea, FFeatherArea, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscMass, aOld.FeatherMass, FFeatherMass, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscRachisWidth, aOld.RachisWidth, FRachisWidth, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscGrowthBarWidth, aOld.GrowthBarWidth, FGrowthBarWidth, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscBarbDensity, aOld.BarbDensity, FBarbDensity, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscAge, aOld.FeatherAge, FFeatherAge, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    aList.Add(R);
+
+  Result := aList.Count > 0;
+end;
+
+function TFeather.Find(const FieldName: String; const Value: Variant): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Result := False;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    SQLTransaction := DMM.sqlTrans;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+      'feather_id, ' +
+      'sample_date, ' +
+      'sample_time, ' +
+      'taxon_id, ' +
+      'locality_id, ' +
+      'individual_id, ' +
+      'capture_id, ' +
+      'sighting_id, ' +
+      'observer_id, ' +
+      'source_type, ' +
+      'symmetrical, ' +
+      'feather_trait, ' +
+      'feather_number, ' +
+      'body_side, ' +
+      'grown_percent, ' +
+      'feather_length, ' +
+      'feather_area, ' +
+      'feather_mass, ' +
+      'rachis_width, ' +
+      'growth_bar_width, ' +
+      'barb_density, ' +
+      'feather_age, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'insert_date, ' +
+      'update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM feathers');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      LoadFromDataSet(Qry);
+
+      Result := True;
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TFeather.GetData(aKey: Integer);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT ' +
+      'feather_id, ' +
+      'sample_date, ' +
+      'sample_time, ' +
+      'taxon_id, ' +
+      'locality_id, ' +
+      'individual_id, ' +
+      'capture_id, ' +
+      'sighting_id, ' +
+      'observer_id, ' +
+      'source_type, ' +
+      'symmetrical, ' +
+      'feather_trait, ' +
+      'feather_number, ' +
+      'body_side, ' +
+      'grown_percent, ' +
+      'feather_length, ' +
+      'feather_area, ' +
+      'feather_mass, ' +
+      'rachis_width, ' +
+      'growth_bar_width, ' +
+      'barb_density, ' +
+      'feather_age, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'insert_date, ' +
+      'update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM feathers');
+    Add('WHERE feather_id = :cod');
+    ParamByName('COD').AsInteger := aKey;
+    Open;
+    if RecordCount > 0 then
+      LoadFromDataSet(Qry);
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TFeather.Insert;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
+      Clear;
+      Add('INSERT INTO feathers (' +
+        'sample_date, ' +
+        'sample_time, ' +
+        'taxon_id, ' +
+        'locality_id, ' +
+        'individual_id, ' +
+        'capture_id, ' +
+        'sighting_id, ' +
+        'observer_id, ' +
+        'source_type, ' +
+        'symmetrical, ' +
+        'feather_trait, ' +
+        'feather_number, ' +
+        'body_side, ' +
+        'grown_percent, ' +
+        'feather_length, ' +
+        'feather_area, ' +
+        'feather_mass, ' +
+        'rachis_width, ' +
+        'growth_bar_width, ' +
+        'barb_density, ' +
+        'feather_age, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+      Add('VALUES (' +
+        'date(:sample_date), ' +
+        'time(:sample_time), ' +
+        ':taxon_id, ' +
+        ':locality_id, ' +
+        ':individual_id, ' +
+        ':capture_id, ' +
+        ':sighting_id, ' +
+        ':observer_id, ' +
+        ':source_type, ' +
+        ':symmetrical, ' +
+        ':feather_trait, ' +
+        ':feather_number, ' +
+        ':body_side, ' +
+        ':grown_percent, ' +
+        ':feather_length, ' +
+        ':feather_area, ' +
+        ':feather_mass, ' +
+        ':rachis_width, ' +
+        ':growth_bar_width, ' +
+        ':barb_density, ' +
+        ':feather_age, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'', ''subsec''))');
+
+      SetDateParam(ParamByName('sample_date'), FSampleDate);
+      SetTimeParam(ParamByName('sample_time'), FSampleTime);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('locality_id'), FLocalityId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('capture_id'), FCaptureId);
+      SetForeignParam(ParamByName('sighting_id'), FSightingId);
+      SetForeignParam(ParamByName('observer_id'), FObserverId);
+      ParamByName('source_type').AsString := FeatherDataSourceStr[FSourceType];
+      ParamByName('symmetrical').AsString := SymmetryStr[FSymmetrical];
+      ParamByName('feather_trait').AsString := FeatherTraitStr[FFeatherTrait];
+      SetIntParam(ParamByName('feather_number'), FFeatherNumber);
+      ParamByName('body_side').AsString := BodySideStr[FBodySide];
+      ParamByName('grown_percent').AsFloat := FPercentGrown;
+      SetFloatParam(ParamByName('feather_length'), FFeatherLength);
+      SetFloatParam(ParamByName('feather_area'), FFeatherArea);
+      SetFloatParam(ParamByName('feather_mass'), FFeatherMass);
+      SetFloatParam(ParamByName('rachis_width'), FRachisWidth);
+      SetFloatParam(ParamByName('growth_bar_width'), FGrowthBarWidth);
+      SetFloatParam(ParamByName('barb_density'), FBarbDensity);
+      ParamByName('feather_age').AsString := FeatherAgeStr[FFeatherAge];
+      SetStrParam(ParamByName('notes'), FNotes);
+      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+      ExecSQL;
+
+      // Get the record ID
+      Clear;
+      Add('SELECT last_insert_rowid()');
+      Open;
+      FId := Fields[0].AsInteger;
+      Close;
+
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TFeather.LoadFromDataSet(aDataSet: TDataSet);
+begin
+  if not aDataSet.Active then
+    Exit;
+
+  with aDataSet do
+  begin
+    FId := FieldByName('feather_id').AsInteger;
+    FSampleDate := FieldByName('sample_date').AsDateTime;
+    FSampleTime := FieldByName('sample_time').AsDateTime;
+    FTaxonId := FieldByName('taxon_id').AsInteger;
+    FLocalityId := FieldByName('locality_id').AsInteger;
+    FIndividualId := FieldByName('individual_id').AsInteger;
+    FCaptureId := FieldByName('capture_id').AsInteger;
+    FSightingId := FieldByName('sighting_id').AsInteger;
+    FObserverId := FieldByName('observer_id').AsInteger;
+    case FieldByName('source_type').AsString of
+      'U': FSourceType := fdsUnknown;
+      'C': FSourceType := fdsCapture;
+      'S': FSourceType := fdsSighting;
+      'P': FSourceType := fdsPhoto;
+    else
+      FSourceType := fdsUnknown;
+    end;
+    case FieldByName('symmetrical').AsString of
+      'U': FSymmetrical := symUnknown;
+      'S': FSymmetrical := symSymmetrical;
+      'A': FSymmetrical := symAsymmetrical;
+    else
+      FSymmetrical := symUnknown;
+    end;
+    case FieldByName('feather_trait').AsString of
+      'B': FFeatherTrait := ftrBody;
+      'P': FFeatherTrait := ftrPrimary;
+      'S': FFeatherTrait := ftrSecondary;
+      'R': FFeatherTrait := ftrRectrix;
+      'PC': FFeatherTrait := ftrPrimaryCovert;
+      'GC': FFeatherTrait := ftrGreatCovert;
+      'MC': FFeatherTrait := ftrMedianCovert;
+      'LC': FFeatherTrait := ftrLesserCovert;
+      'CC': FFeatherTrait := ftrCarpalCovert;
+      'AL': FFeatherTrait := ftrAlula;
+    end;
+    FFeatherNumber := FieldByName('feather_number').AsInteger;
+    case FieldByName('body_side').AsString of
+      'NA': FBodySide := bsdNotApplicable;
+      'R': FBodySide := bsdRight;
+      'L': FBodySide := bsdLeft;
+    else
+      FBodySide := bsdNotApplicable;
+    end;
+    FPercentGrown := FieldByName('grown_percent').AsFloat;
+    FFeatherLength := FieldByName('feather_length').AsFloat;
+    FFeatherArea := FieldByName('feather_area').AsFloat;
+    FFeatherMass := FieldByName('feather_mass').AsFloat;
+    FRachisWidth := FieldByName('rachis_width').AsFloat;
+    FGrowthBarWidth := FieldByName('growth_bar_width').AsFloat;
+    FBarbDensity := FieldByName('barb_density').AsFloat;
+    case FieldByName('feather_age').AsString of
+      'U': FFeatherAge := fageUnknown;
+      'N': FFeatherAge := fageNestling;
+      'F': FFeatherAge := fageFledgling;
+      'A': FFeatherAge := fageAdult;
+      'Y': FFeatherAge := fageFirstYear;
+      'S': FFeatherAge := fageSecondYear;
+      'T': FFeatherAge := fageThirdYear;
+      '4': FFeatherAge := fageFourthYear;
+      '5': FFeatherAge := fageFifthYear;
+    else
+      FFeatherAge := fageUnknown;
+    end;
+    FNotes := FieldByName('notes').AsString;
+    FUserInserted := FieldByName('user_inserted').AsInteger;
+    FUserUpdated := FieldByName('user_updated').AsInteger;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), FInsertDate);
+    GetTimeStamp(FieldByName('update_date'), FUpdateDate);
+    FExported := FieldByName('exported_status').AsBoolean;
+    FMarked := FieldByName('marked_status').AsBoolean;
+    FActive := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TFeather.Save;
+begin
+  if FId = 0 then
+    Insert
+  else
+    Update;
+end;
+
+function TFeather.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('Date', FSampleDate);
+    JSONObject.Add('Time', FSampleTime);
+    JSONObject.Add('Taxon', FTaxonId);
+    JSONObject.Add('Locality', FLocalityId);
+    JSONObject.Add('Individual', FIndividualId);
+    JSONObject.Add('Capture', FCaptureId);
+    JSONObject.Add('Sighting', FSightingId);
+    JSONObject.Add('Observer', FObserverId);
+    JSONObject.Add('Source', FeatherDataSourceStr[FSourceType]);
+    JSONObject.Add('Symmetry', SymmetryStr[FSymmetrical]);
+    JSONObject.Add('Feather trait', FeatherTraitStr[FFeatherTrait]);
+    JSONObject.Add('Feather number', FFeatherNumber);
+    JSONObject.Add('Body side', BodySideStr[FBodySide]);
+    JSONObject.Add('Percent grown', FPercentGrown);
+    JSONObject.Add('Length', FFeatherLength);
+    JSONObject.Add('Area', FFeatherArea);
+    JSONObject.Add('Mass', FFeatherMass);
+    JSONObject.Add('Rachis width', FRachisWidth);
+    JSONObject.Add('Growth bar width', FGrowthBarWidth);
+    JSONObject.Add('Barb density', FBarbDensity);
+    JSONObject.Add('Age', FeatherAgeStr[FFeatherAge]);
+    JSONObject.Add('Notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+procedure TFeather.Update;
+var
+  Qry: TSQLQuery;
+begin
+  if FId = 0 then
+    raise Exception.CreateFmt('TFeather.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
+      Clear;
+      Add('UPDATE feathers SET ' +
+        'sample_date = date(:sample_date), ' +
+        'sample_time = time(:sample_time), ' +
+        'taxon_id = :taxon_id, ' +
+        'locality_id = :locality_id, ' +
+        'individual_id = :individual_id, ' +
+        'capture_id = :capture_id, ' +
+        'sighting_id = :sighting_id, ' +
+        'observer_id = :observer_id, ' +
+        'source_type = :source_type, ' +
+        'symmetrical = :symmetrical, ' +
+        'feather_trait = :feather_trait, ' +
+        'feather_number = :feather_number, ' +
+        'body_side = :body_size, ' +
+        'grown_percent = :grown_percent, ' +
+        'feather_length = :feather_length, ' +
+        'feather_area = :feather_area, ' +
+        'feather_mass = :feather_mass, ' +
+        'rachis_width = :rachis_width, ' +
+        'growth_bar_width = :growth_bar_width, ' +
+        'barb_density = :barb_density, ' +
+        'feather_age = :feather_age, ' +
+        'notes = :notes, ' +
+        'exported_status = :exported_status, ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'',''subsec'') ');
+      Add('WHERE (feather_id = :feather_id)');
+
+      SetDateParam(ParamByName('sample_date'), FSampleDate);
+      SetTimeParam(ParamByName('sample_time'), FSampleTime);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('locality_id'), FLocalityId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('capture_id'), FCaptureId);
+      SetForeignParam(ParamByName('sighting_id'), FSightingId);
+      SetForeignParam(ParamByName('observer_id'), FObserverId);
+      ParamByName('source_type').AsString := FeatherDataSourceStr[FSourceType];
+      ParamByName('symmetrical').AsString := SymmetryStr[FSymmetrical];
+      ParamByName('feather_trait').AsString := FeatherTraitStr[FFeatherTrait];
+      SetIntParam(ParamByName('feather_number'), FFeatherNumber);
+      ParamByName('body_side').AsString := BodySideStr[FBodySide];
+      ParamByName('grown_percent').AsFloat := FPercentGrown;
+      SetFloatParam(ParamByName('feather_length'), FFeatherLength);
+      SetFloatParam(ParamByName('feather_area'), FFeatherArea);
+      SetFloatParam(ParamByName('feather_mass'), FFeatherMass);
+      SetFloatParam(ParamByName('rachis_width'), FRachisWidth);
+      SetFloatParam(ParamByName('growth_bar_width'), FGrowthBarWidth);
+      SetFloatParam(ParamByName('barb_density'), FBarbDensity);
+      ParamByName('feather_age').AsString := FeatherAgeStr[FFeatherAge];
+      SetStrParam(ParamByName('notes'), FNotes);
+      ParamByName('marked_status').AsBoolean := FMarked;
+      ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('exported_status').AsBoolean := FExported;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
+      ParamByName('feather_id').AsInteger := FId;
+
+      ExecSQL;
+
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 { TCapture }
 
 constructor TCapture.Create(aValue: Integer);
@@ -2876,9 +3546,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('DELETE FROM captures');
       Add('WHERE (capture_id = :aid)');
@@ -2887,11 +3557,11 @@ begin
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;

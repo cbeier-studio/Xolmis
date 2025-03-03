@@ -69,6 +69,7 @@ type
   procedure LoadSightingDateTree(aSQL: TStrings);
   procedure LoadCaptureDateTree(aSQL: TStrings);
   procedure LoadMoltDateTree(aSQL: TStrings);
+  procedure LoadFeatherDateTree(aSQL: TStrings);
   procedure LoadExpeditionDateTree(aSQL: TStrings);
   procedure LoadSurveyDateTree(aSQL: TStrings);
   procedure LoadIndividualDateTree(aSQL: TStrings);
@@ -262,6 +263,20 @@ begin
           Add('JOIN TaxaDetails AS f ON z.family_id = f.taxon_id');
           Add('JOIN TaxaDetails AS o ON z.order_id = o.taxon_id');
           Add('WHERE (m.active_status = 1)');
+        end;
+      tbFeathers:
+        begin
+          Add('SELECT ft.taxon_id, z.species_id, z.family_id, z.order_id,');
+          Add('  s.full_name AS species_name,');
+          Add('  f.full_name AS family_name,');
+          Add('  o.full_name AS order_name,');
+          Add('  z.sort_num AS sort_num');
+          Add('FROM feathers AS ft');
+          Add('JOIN TaxaDetails AS z ON ft.taxon_id = z.taxon_id');
+          Add('JOIN TaxaDetails AS s ON z.species_id = s.taxon_id');
+          Add('JOIN TaxaDetails AS f ON z.family_id = f.taxon_id');
+          Add('JOIN TaxaDetails AS o ON z.order_id = o.taxon_id');
+          Add('WHERE (ft.active_status = 1)');
         end;
       tbSightings:
         begin
@@ -491,6 +506,15 @@ begin
   aSQL.Add('FROM molts AS m WHERE (m.active_status = 1)');
 end;
 
+procedure LoadFeatherDateTree(aSQL: TStrings);
+begin
+  aSQL.Add('SELECT ');
+  aSQL.Add('strftime(''%Y'', ft.sample_date) AS ano,');
+  aSQL.Add('strftime(''%m'', ft.sample_date) AS mes,');
+  aSQL.Add('strftime(''%d'', ft.sample_date) AS dia');
+  aSQL.Add('FROM feathers AS ft WHERE (ft.active_status = 1)');
+end;
+
 procedure LoadExpeditionDateTree(aSQL: TStrings);
 begin
   aSQL.Add('SELECT ');
@@ -642,6 +666,7 @@ begin
       tbIndividuals:   LoadIndividualDateTree(Q);
       tbCaptures:      LoadCaptureDateTree(Q);
       tbMolts:         LoadMoltDateTree(Q);
+      tbFeathers:      LoadFeatherDateTree(Q);
       tbImages: ;
       tbAudioLibrary: ;
     end;
@@ -992,6 +1017,19 @@ begin
           Add('JOIN SiteDetails AS s ON g.state_id = s.site_id');
           Add('JOIN SiteDetails AS p ON g.country_id = p.site_id');
           Add('WHERE (c.active_status = 1)');
+        end;
+      tbFeathers:
+        begin
+          Add('SELECT ft.locality_id, g.municipality_id, g.state_id, g.country_id,');
+          Add('   m.site_name AS municipality_name,');
+          Add('   s.site_name AS state_name,');
+          Add('   p.site_name AS country_name');
+          Add('FROM feathers AS ft');
+          Add('JOIN SiteDetails AS g ON ft.locality_id = g.site_id');
+          Add('JOIN SiteDetails AS m ON g.municipality_id = m.site_id');
+          Add('JOIN SiteDetails AS s ON g.state_id = s.site_id');
+          Add('JOIN SiteDetails AS p ON g.country_id = p.site_id');
+          Add('WHERE (ft.active_status = 1)');
         end;
       //tbImages: ;
       //tbAudioLibrary: ;
@@ -2108,7 +2146,11 @@ begin
         aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('photographer_2_id', 'Photographer 2', sdtInteger,
           crEqual, False, IntToStr(aKey)));
       end;
-    tbMolts: ;
+    tbFeathers:
+      begin
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('observer_id', 'Observer', sdtInteger,
+          crEqual, False, IntToStr(aKey)));
+      end;
     tbImages: ;
     tbAudioLibrary: ;
   end;

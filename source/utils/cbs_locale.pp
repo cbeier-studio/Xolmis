@@ -540,6 +540,30 @@ uses
     rsPhotographed = 'Photographed';
     rsAudioRecorded = 'Audio recorded';
 
+    { Feathers }
+    rsFeatherUnknown = 'Unknown';
+    rsFeatherCapture = 'Capture';
+    rsFeatherSighting = 'Sighting';
+    rsFeatherPhoto = 'Photo';
+
+    rsSymmetrical = 'Symmetrical';
+    rsAsymmetrical = 'Asymmetrical';
+
+    rsTraitBody = 'Body';
+    rsTraitPrimary = 'Primary';
+    rsTraitSecondary = 'Secondary';
+    rsTraitRectrix = 'Rectrix';
+    rsTraitPrimaryCovert = 'Primary Covert';
+    rsTraitGreatCovert = 'Great Covert';
+    rsTraitMedianCovert = 'Median Covert';
+    rsTraitLesserCovert = 'Lesser Covert';
+    rsTraitCarpalCovert = 'Carpal Covert';
+    rsTraitAlula = 'Alula';
+
+    rsNotApplicable = 'Not applicable';
+    rsSideRight = 'Right';
+    rsSideLeft = 'Left';
+
     { Image types }
     rsBirdInHandFlank = 'Bird in hand - flank';
     rsBirdInHandBelly = 'Bird in hand - belly';
@@ -980,6 +1004,7 @@ uses
     rsCaptionProjectActivity = 'Activity';
     rsCaptionProjectRubric = 'Rubric';
     rsCaptionProjectExpense = 'Expense';
+    rsCaptionFeathers = 'Feathers';
 
 implementation
 

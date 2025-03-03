@@ -96,6 +96,10 @@ msgstr "Anotador"
 msgid "Annotator ID"
 msgstr "Anotador ID"
 
+#: cbs_datacolumns.rscarea
+msgid "Area"
+msgstr "Área"
+
 #: cbs_datacolumns.rscareaha
 msgid "Area (ha)"
 msgstr "Área (ha)"
@@ -161,6 +165,10 @@ msgctxt "cbs_datacolumns.rscbandingdate"
 msgid "Banding date"
 msgstr "Data de anilhamento"
 
+#: cbs_datacolumns.rscbarbdensity
+msgid "Barb density"
+msgstr "Densidade de barbas"
+
 #: cbs_datacolumns.rscbillheight
 msgid "Bill height"
 msgstr "Altura do bico"
@@ -195,6 +203,10 @@ msgstr "Sangue"
 msgctxt "cbs_datacolumns.rscbodymolt"
 msgid "Body molt"
 msgstr "Muda do corpo"
+
+#: cbs_datacolumns.rscbodyside
+msgid "Body side"
+msgstr "Lado do corpo"
 
 #: cbs_datacolumns.rscbotanicalcode
 msgid "ICBN"
@@ -592,10 +604,18 @@ msgstr "Pai ID"
 msgid "Feather mites"
 msgstr "Ácaros das penas"
 
+#: cbs_datacolumns.rscfeathernumber
+msgid "Feather number"
+msgstr "Nº da pena"
+
 #: cbs_datacolumns.rscfeathers
 msgctxt "cbs_datacolumns.rscfeathers"
 msgid "Feathers"
 msgstr "Penas"
+
+#: cbs_datacolumns.rscfeathertrait
+msgid "Feather trait"
+msgstr "Trato de penas"
 
 #: cbs_datacolumns.rscfeces
 msgctxt "cbs_datacolumns.rscfeces"
@@ -1349,6 +1369,10 @@ msgstr "PC8"
 msgid "PC9"
 msgstr "PC9"
 
+#: cbs_datacolumns.rscpercentgrown
+msgid "Percent grown"
+msgstr "Percentual crescido"
+
 #: cbs_datacolumns.rscpermanentnet
 msgid "Permanent net"
 msgstr "Rede permanente"
@@ -1522,6 +1546,10 @@ msgstr "R5"
 #: cbs_datacolumns.rscr6
 msgid "R6"
 msgstr "R6"
+
+#: cbs_datacolumns.rscrachiswidth
+msgid "Rachis width"
+msgstr "Largura da raque"
 
 #: cbs_datacolumns.rscrainfallmm
 msgid "Rainfall (mm)"
@@ -1842,6 +1870,10 @@ msgstr "Amostragem"
 msgid "Survey ID"
 msgstr "Amostragem ID"
 
+#: cbs_datacolumns.rscsymmetry
+msgid "Symmetry"
+msgstr "Simetria"
+
 #: cbs_datacolumns.rsctable
 msgid "Table"
 msgstr "Tabela"
@@ -2141,6 +2173,10 @@ msgctxt "cbs_locale.rsapproximatedcoordinate"
 msgid "Approximated"
 msgstr "Aproximada"
 
+#: cbs_locale.rsasymmetrical
+msgid "Asymmetrical"
+msgstr "Assimétrica"
+
 #: cbs_locale.rsaudiorecorded
 msgctxt "cbs_locale.rsaudiorecorded"
 msgid "Audio recorded"
@@ -2414,6 +2450,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #: cbs_locale.rscaptioncapture
+msgctxt "cbs_locale.rscaptioncapture"
 msgid "Capture"
 msgstr "Captura"
 
@@ -2471,6 +2508,11 @@ msgstr "Família"
 msgctxt "cbs_locale.rscaptionfather"
 msgid "Father"
 msgstr "Pai"
+
+#: cbs_locale.rscaptionfeathers
+msgctxt "cbs_locale.rscaptionfeathers"
+msgid "Feathers"
+msgstr "Penas"
 
 #: cbs_locale.rscaptionfind
 msgctxt "cbs_locale.rscaptionfind"
@@ -3597,6 +3639,25 @@ msgctxt "cbs_locale.rsfeather"
 msgid "Feather"
 msgstr "Pena"
 
+#: cbs_locale.rsfeathercapture
+msgctxt "cbs_locale.rsfeathercapture"
+msgid "Capture"
+msgstr "Captura"
+
+#: cbs_locale.rsfeatherphoto
+msgid "Photo"
+msgstr "Foto"
+
+#: cbs_locale.rsfeathersighting
+msgctxt "cbs_locale.rsfeathersighting"
+msgid "Sighting"
+msgstr "Observação"
+
+#: cbs_locale.rsfeatherunknown
+msgctxt "cbs_locale.rsfeatherunknown"
+msgid "Unknown"
+msgstr "Indeterminada"
+
 #: cbs_locale.rsfeces
 msgctxt "cbs_locale.rsfeces"
 msgid "Feces"
@@ -4412,6 +4473,10 @@ msgstr "nenhuma selecionada"
 msgid "No records found!"
 msgstr "Nenhum registro encontrado!"
 
+#: cbs_locale.rsnotapplicable
+msgid "Not applicable"
+msgstr "Não aplicável"
+
 #: cbs_locale.rsnotestr
 msgctxt "cbs_locale.rsnotestr"
 msgid "Note"
@@ -4953,6 +5018,14 @@ msgctxt "cbs_locale.rssexunknown"
 msgid "Unknown"
 msgstr "Indeterminado"
 
+#: cbs_locale.rssideleft
+msgid "Left"
+msgstr "Esquerda"
+
+#: cbs_locale.rssideright
+msgid "Right"
+msgstr "Direita"
+
 #: cbs_locale.rsskullossification
 msgctxt "cbs_locale.rsskullossification"
 msgid "skull ossification"
@@ -5186,6 +5259,10 @@ msgstr "Barranco"
 #: cbs_locale.rssupportrockcliff
 msgid "Rock/Cliff"
 msgstr "Rocha/Penhasco"
+
+#: cbs_locale.rssymmetrical
+msgid "Symmetrical"
+msgstr "Simétrica"
 
 #: cbs_locale.rssynonym
 msgctxt "cbs_locale.rssynonym"
@@ -5646,6 +5723,47 @@ msgstr "%s %d de %d %s"
 msgctxt "cbs_locale.rstotalresearchers"
 msgid "%d researcher(s)"
 msgstr "%d pesquisador(es)"
+
+#: cbs_locale.rstraitalula
+msgctxt "cbs_locale.rstraitalula"
+msgid "Alula"
+msgstr "Álula"
+
+#: cbs_locale.rstraitbody
+msgid "Body"
+msgstr "Corpo"
+
+#: cbs_locale.rstraitcarpalcovert
+msgid "Carpal Covert"
+msgstr "Coberteira Carpal"
+
+#: cbs_locale.rstraitgreatcovert
+msgid "Great Covert"
+msgstr "Grande Coberteira"
+
+#: cbs_locale.rstraitlessercovert
+msgid "Lesser Covert"
+msgstr "Coberteira menor"
+
+#: cbs_locale.rstraitmediancovert
+msgid "Median Covert"
+msgstr "Coberteira média"
+
+#: cbs_locale.rstraitprimary
+msgid "Primary"
+msgstr "Primária"
+
+#: cbs_locale.rstraitprimarycovert
+msgid "Primary Covert"
+msgstr "Coberteira da primária"
+
+#: cbs_locale.rstraitrectrix
+msgid "Rectrix"
+msgstr "Retriz"
+
+#: cbs_locale.rstraitsecondary
+msgid "Secondary"
+msgstr "Secundária"
 
 #: cbs_locale.rstreatmentlist
 msgid "Mr.,Sir,Mrs.,Miss,Ms.,Madam,B./BS.,M./MSc.,Dr./PhD."
@@ -8656,6 +8774,7 @@ msgid "Individual hatched:"
 msgstr "Indivíduo eclodido:"
 
 #: tedtegg.lbllength.caption
+msgctxt "tedtegg.lbllength.caption"
 msgid "Length:"
 msgstr "Comprimento:"
 
@@ -8703,6 +8822,7 @@ msgid "Volume:"
 msgstr "Volume:"
 
 #: tedtegg.lblweight.caption
+msgctxt "tedtegg.lblweight.caption"
 msgid "Mass:"
 msgstr "Massa:"
 
@@ -8775,6 +8895,131 @@ msgstr "Cancelar"
 
 #: tedtexpedition.sbsave.caption
 msgctxt "tedtexpedition.sbsave.caption"
+msgid "Save"
+msgstr "Salvar"
+
+#: tedtfeather.edate.buttonhint
+msgctxt "tedtfeather.edate.buttonhint"
+msgid "Open calendar"
+msgstr "Abrir calendário"
+
+#: tedtfeather.edate.texthint
+msgctxt "tedtfeather.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
+#: tedtfeather.elocality.buttonhint
+msgctxt "tedtfeather.elocality.buttonhint"
+msgid "Find locality"
+msgstr "Procurar localidade"
+
+#: tedtfeather.eobserver.buttonhint
+msgctxt "tedtfeather.eobserver.buttonhint"
+msgid "Find observer"
+msgstr "Procurar observador"
+
+#: tedtfeather.etaxon.buttonhint
+msgctxt "tedtfeather.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr "Procurar táxon"
+
+#: tedtfeather.etime.texthint
+msgctxt "tedtfeather.etime.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
+#: tedtfeather.lblarea.caption
+msgid "Area:"
+msgstr "Área:"
+
+#: tedtfeather.lblbarbdensity.caption
+msgid "Barb density:"
+msgstr "Densidade de barbas:"
+
+#: tedtfeather.lblbodyside.caption
+msgid "Side:"
+msgstr "Lado:"
+
+#: tedtfeather.lblfeatherage.caption
+msgid "Feather age:"
+msgstr "Idade da pena:"
+
+#: tedtfeather.lblfeathernumber.caption
+msgid "Feather number:"
+msgstr "Nº da pena:"
+
+#: tedtfeather.lblfeathertrait.caption
+msgid "Feather trait:"
+msgstr "Trato de penas:"
+
+#: tedtfeather.lblgrowthbarwidth.caption
+msgctxt "tedtfeather.lblgrowthbarwidth.caption"
+msgid "Growth bar width:"
+msgstr "Largura da barra de crescimento:"
+
+#: tedtfeather.lbllength.caption
+msgctxt "tedtfeather.lbllength.caption"
+msgid "Length:"
+msgstr "Comprimento:"
+
+#: tedtfeather.lbllocality.caption
+msgctxt "tedtfeather.lbllocality.caption"
+msgid "Locality: *"
+msgstr "Localidade: *"
+
+#: tedtfeather.lblmass.caption
+msgctxt "tedtfeather.lblmass.caption"
+msgid "Mass:"
+msgstr "Massa:"
+
+#: tedtfeather.lblnotes.caption
+msgctxt "tedtfeather.lblnotes.caption"
+msgid "Notes:"
+msgstr "Anotações:"
+
+#: tedtfeather.lblobserver.caption
+msgctxt "tedtfeather.lblobserver.caption"
+msgid "Observer:"
+msgstr "Observador:"
+
+#: tedtfeather.lblpercentgrown.caption
+msgid "% grown:"
+msgstr "% crescido:"
+
+#: tedtfeather.lblrachiswidth.caption
+msgid "Rachis width:"
+msgstr "Largura da raque:"
+
+#: tedtfeather.lblsampledate.caption
+msgctxt "tedtfeather.lblsampledate.caption"
+msgid "Date: *"
+msgstr "Data: *"
+
+#: tedtfeather.lblsampletime.caption
+msgctxt "tedtfeather.lblsampletime.caption"
+msgid "Time:"
+msgstr "Hora:"
+
+#: tedtfeather.lblsource.caption
+msgid "Source:"
+msgstr "Origem:"
+
+#: tedtfeather.lblsymmetry.caption
+msgid "Symmetry:"
+msgstr "Simetria:"
+
+#: tedtfeather.lbltaxon.caption
+msgctxt "tedtfeather.lbltaxon.caption"
+msgid "Taxon: *"
+msgstr "Táxon: *"
+
+#: tedtfeather.sbcancel.caption
+msgctxt "tedtfeather.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tedtfeather.sbsave.caption
+msgctxt "tedtfeather.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
@@ -12224,6 +12469,10 @@ msgctxt "tfrmcustomgrid.pmcnewexpensefromrubric.caption"
 msgid "New expense"
 msgstr "Nova despesa"
 
+#: tfrmcustomgrid.pmcnewfeather.caption
+msgid "New feather"
+msgstr "Nova pena"
+
 #: tfrmcustomgrid.pmcnewmistnet.caption
 msgid "New &mistnet"
 msgstr "Nova &rede"
@@ -12511,6 +12760,11 @@ msgstr "Expedições por localidade"
 #: tfrmcustomgrid.pmprintexpeditionsbyproject.caption
 msgid "Expeditions per project"
 msgstr "Expedições por projeto"
+
+#: tfrmcustomgrid.pmprintfeathers.caption
+msgctxt "tfrmcustomgrid.pmprintfeathers.caption"
+msgid "Feathers"
+msgstr "Penas"
 
 #: tfrmcustomgrid.pmprintgazetteer.caption
 msgctxt "tfrmcustomgrid.pmprintgazetteer.caption"
@@ -13801,6 +14055,10 @@ msgstr "O&vos"
 msgctxt "tfrmmain.actopenexpeditions.caption"
 msgid "Expeditions"
 msgstr "Expedições"
+
+#: tfrmmain.actopenfeathers.caption
+msgid "&Feathers"
+msgstr "&Penas"
 
 #: tfrmmain.actopengazetteer.caption
 msgctxt "tfrmmain.actopengazetteer.caption"

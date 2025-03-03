@@ -43,6 +43,8 @@ uses
   function EditIndividual(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditCapture(aDataSet: TDataSet; aIndividual: Integer = 0; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditMolt(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditFeather(aDataSet: TDataSet; aIndividual: Integer = 0; aCapture: Integer = 0;
+    aSighting: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditNest(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditNestOwner(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditNestRevision(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
@@ -74,7 +76,7 @@ uses
   uedt_method, uedt_weatherlog, uedt_project, uedt_permit, uedt_specimen, uedt_sampleprep, uedt_nestowner,
   uedt_imageinfo, uedt_audioinfo, uedt_documentinfo, uedt_vegetation, uedt_database, uedt_collector,
   uedt_projectmember, uedt_surveymember, uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
-  uedt_projectexpense;
+  uedt_projectexpense, uedt_feather;
 
 function EditMethod(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
@@ -3174,6 +3176,85 @@ begin
 
   if CloseQueryAfter then
     aDataSet.Close;
+end;
+
+function EditFeather(aDataSet: TDataSet; aIndividual: Integer; aCapture: Integer; aSighting: Integer;
+  IsNew: Boolean): Boolean;
+var
+  FRecord, FOldRecord: TFeather;
+  lstDiff: TStrings;
+  D: String;
+begin
+  LogInfo('OPEN EDIT DIALOG: Feather');
+  Application.CreateForm(TedtFeather, edtFeather);
+  FOldRecord := nil;
+  with edtFeather do
+  try
+    dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
+    if IsNew then
+    begin
+      FRecord := TFeather.Create();
+      EditSourceStr := rsInsertedByForm;
+    end else
+    begin
+      FOldRecord := TFeather.Create(aDataSet.FieldByName('feather_id').AsInteger);
+      FRecord := TFeather.Create(aDataSet.FieldByName('feather_id').AsInteger);
+      EditSourceStr := rsEditedByForm;
+    end;
+    Feather := FRecord;
+    Result := ShowModal = mrOk;
+    if Result then
+    begin
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Feather.Save;
+
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Feather.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbFeathers, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
+          end;
+        end
+        else
+          WriteRecHistory(tbFeathers, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
+
+      // Go to record
+      if not aDataSet.Active then
+        Exit;
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate('feather_id', Feather.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
+  finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
+    FRecord.Free;
+    FreeAndNil(edtFeather);
+    LogInfo('CLOSE EDIT DIALOG: Feather');
+  end;
 end;
 
 end.

@@ -58,6 +58,7 @@
 {"hash":22602163,"name":"tfrmmain.actmanageusers.caption","sourcebytes":[77,97,110,97,103,101,32,38,117,115,101,114,115],"value":"Manage &users"},
 {"hash":87418310,"name":"tfrmmain.actlogoff.caption","sourcebytes":[76,111,103,111,102,102],"value":"Logoff"},
 {"hash":4710148,"name":"tfrmmain.actexit.caption","sourcebytes":[69,38,120,105,116],"value":"E&xit"},
+{"hash":193644115,"name":"tfrmmain.actopenfeathers.caption","sourcebytes":[38,70,101,97,116,104,101,114,115],"value":"&Feathers"},
 {"hash":110481474,"name":"tfrmmain.pmtclosetab.caption","sourcebytes":[38,67,108,111,115,101,32,116,97,98],"value":"&Close tab"},
 {"hash":83616611,"name":"tfrmmain.pmtcloseallothertabs.caption","sourcebytes":[67,108,111,115,101,32,97,108,108,32,38,111,116,104,101,114,32,116,97,98,115],"value":"Close all &other tabs"},
 {"hash":74498499,"name":"tfrmmain.pmtclosealltabs.caption","sourcebytes":[67,108,111,115,101,32,38,97,108,108,32,116,97,98,115],"value":"Close &all tabs"},

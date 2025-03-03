@@ -30,6 +30,7 @@ type
   { TDMG }
 
   TDMG = class(TDataModule)
+    dsFeathers: TDataSource;
     dsTaxa: TDataSource;
     dsBandHistory: TDataSource;
     dsIndividuals: TDataSource;
@@ -345,6 +346,46 @@ type
     qExpeditionsupdate_date: TDateTimeField;
     qExpeditionsuser_inserted: TLongintField;
     qExpeditionsuser_updated: TLongintField;
+    qFeathersactive_status: TBooleanField;
+    qFeathersbarb_density: TFloatField;
+    qFeathersbody_side: TStringField;
+    qFeatherscapture_id: TLongintField;
+    qFeatherscapture_name: TStringField;
+    qFeathersexported_status: TBooleanField;
+    qFeathersfamily_id: TLongintField;
+    qFeathersfeather_age: TStringField;
+    qFeathersfeather_area: TFloatField;
+    qFeathersfeather_id: TLongintField;
+    qFeathersfeather_length: TFloatField;
+    qFeathersfeather_mass: TFloatField;
+    qFeathersfeather_number: TLongintField;
+    qFeathersfeather_trait: TStringField;
+    qFeathersgenus_id: TLongintField;
+    qFeathersgrown_percent: TFloatField;
+    qFeathersgrowth_bar_width: TFloatField;
+    qFeathersindividual_id: TLongintField;
+    qFeathersindividual_name: TStringField;
+    qFeathersinsert_date: TDateTimeField;
+    qFeatherslocality_id: TLongintField;
+    qFeatherslocality_name: TStringField;
+    qFeathersmarked_status: TBooleanField;
+    qFeathersnotes: TMemoField;
+    qFeathersobserver_id: TLongintField;
+    qFeathersobserver_name: TStringField;
+    qFeathersorder_id: TLongintField;
+    qFeathersrachis_width: TFloatField;
+    qFeatherssample_date: TDateField;
+    qFeatherssample_time: TTimeField;
+    qFeatherssighting_id: TLongintField;
+    qFeatherssighting_name: TStringField;
+    qFeatherssource_type: TStringField;
+    qFeathersspecies_id: TLongintField;
+    qFeatherssymmetrical: TStringField;
+    qFeatherstaxon_id: TLongintField;
+    qFeatherstaxon_name: TStringField;
+    qFeathersupdate_date: TDateTimeField;
+    qFeathersuser_inserted: TLongintField;
+    qFeathersuser_updated: TLongintField;
     qGazetteeractive_status: TBooleanField;
     qGazetteeraltitude: TFloatField;
     qGazetteercountry_id: TLongintField;
@@ -493,6 +534,7 @@ type
     qMethodsuser_updated: TLongintField;
     qMolts: TSQLQuery;
     qImages: TSQLQuery;
+    qFeathers: TSQLQuery;
     qMoltsactive_status: TBooleanField;
     qMoltsal1_molt: TFloatField;
     qMoltsal2_molt: TFloatField;
@@ -1247,6 +1289,13 @@ type
     procedure qExpeditionsBeforeEdit(DataSet: TDataSet);
     procedure qExpeditionsBeforePost(DataSet: TDataSet);
     procedure qExpeditionsend_dateValidate(Sender: TField);
+    procedure qFeathersAfterCancel(DataSet: TDataSet);
+    procedure qFeathersAfterPost(DataSet: TDataSet);
+    procedure qFeathersBeforeEdit(DataSet: TDataSet);
+    procedure qFeathersBeforePost(DataSet: TDataSet);
+    procedure qFeathersfeather_ageGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qFeathersfeather_ageSetText(Sender: TField; const aText: string);
     procedure qGazetteerAfterCancel(DataSet: TDataSet);
     procedure qGazetteerAfterPost(DataSet: TDataSet);
     procedure qGazetteerBeforeEdit(DataSet: TDataSet);
@@ -1404,6 +1453,7 @@ type
     OldIndividual: TIndividual;
     OldCapture: TCapture;
     OldMolt: TMolt;
+    OldFeather: TFeather;
     OldSpecimen: TSpecimen;
     OldSamplePrep: TSamplePrep;
     OldCollector: TSpecimenCollector;
@@ -1487,6 +1537,7 @@ begin
   TranslateIndividuals(qIndividuals);
   TranslateCaptures(qCaptures);
   TranslateMolts(qMolts);
+  TranslateFeathers(qFeathers);
   TranslateNests(qNests);
   TranslateNestRevisions(qNestRevisions);
   TranslateEggs(qEggs);
@@ -2456,6 +2507,111 @@ begin
 
   if Sender.AsDateTime < Sender.DataSet.FieldByName('start_date').AsDateTime then
     raise EInvalidDateRange.CreateFmt(rsInvalidDateRange, [rsDateEnd, rsDateStart]);
+end;
+
+procedure TDMG.qFeathersAfterCancel(DataSet: TDataSet);
+begin
+  if Assigned(OldFeather) then
+    FreeAndNil(OldFeather);
+end;
+
+procedure TDMG.qFeathersAfterPost(DataSet: TDataSet);
+var
+  NewFeather: TFeather;
+  lstDiff: TStrings;
+  D: String;
+begin
+  { Save changes to the record history }
+  if Assigned(OldFeather) then
+  begin
+    NewFeather := TFeather.Create;
+    NewFeather.LoadFromDataSet(DataSet);
+    lstDiff := TStringList.Create;
+    try
+      if NewFeather.Diff(OldFeather, lstDiff) then
+      begin
+        for D in lstDiff do
+          WriteRecHistory(tbFeathers, haEdited, OldFeather.Id,
+            ExtractDelimited(1, D, [';']),
+            ExtractDelimited(2, D, [';']),
+            ExtractDelimited(3, D, [';']), EditSourceStr);
+      end;
+    finally
+      FreeAndNil(NewFeather);
+      FreeAndNil(OldFeather);
+      FreeAndNil(lstDiff);
+    end;
+  end
+  else
+    WriteRecHistory(tbFeathers, haCreated, 0, '', '', '', rsInsertedByForm);
+end;
+
+procedure TDMG.qFeathersBeforeEdit(DataSet: TDataSet);
+begin
+  OldFeather := TFeather.Create(DataSet.FieldByName('feather_id').AsInteger);
+end;
+
+procedure TDMG.qFeathersBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+end;
+
+procedure TDMG.qFeathersfeather_ageGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'U': aText := rsAgeUnknown;
+    'A': aText := rsAgeAdult;
+    'J': aText := rsAgeJuvenile;
+    'F': aText := rsAgeFledgling;
+    'N': aText := rsAgeNestling;
+    'Y': aText := rsAgeFirstYear;
+    'S': aText := rsAgeSecondYear;
+    'T': aText := rsAgeThirdYear;
+    '4': aText := rsAgeFourthYear;
+    '5': aText := rsAgeFifthYear;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qFeathersfeather_ageSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsAgeUnknown then
+    Sender.AsString := 'U'
+  else
+  if aText = rsAgeAdult then
+    Sender.AsString := 'A'
+  else
+  if aText = rsAgeJuvenile then
+    Sender.AsString := 'J'
+  else
+  if aText = rsAgeFledgling then
+    Sender.AsString := 'F'
+  else
+  if aText = rsAgeNestling then
+    Sender.AsString := 'N'
+  else
+  if aText = rsAgeFirstYear then
+    Sender.AsString := 'Y'
+  else
+  if aText = rsAgeSecondYear then
+    Sender.AsString := 'S'
+  else
+  if aText = rsAgeThirdYear then
+    Sender.AsString := 'T'
+  else
+  if aText = rsAgeFourthYear then
+    Sender.AsString := '4'
+  else
+  if aText = rsAgeFifthYear then
+    Sender.AsString := '5';
 end;
 
 procedure TDMG.qGazetteerAfterCancel(DataSet: TDataSet);

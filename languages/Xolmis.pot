@@ -94,6 +94,10 @@ msgstr ""
 msgid "Annotator ID"
 msgstr ""
 
+#: cbs_datacolumns.rscarea
+msgid "Area"
+msgstr ""
+
 #: cbs_datacolumns.rscareaha
 msgid "Area (ha)"
 msgstr ""
@@ -159,6 +163,10 @@ msgctxt "cbs_datacolumns.rscbandingdate"
 msgid "Banding date"
 msgstr ""
 
+#: cbs_datacolumns.rscbarbdensity
+msgid "Barb density"
+msgstr ""
+
 #: cbs_datacolumns.rscbillheight
 msgid "Bill height"
 msgstr ""
@@ -192,6 +200,10 @@ msgstr ""
 #: cbs_datacolumns.rscbodymolt
 msgctxt "cbs_datacolumns.rscbodymolt"
 msgid "Body molt"
+msgstr ""
+
+#: cbs_datacolumns.rscbodyside
+msgid "Body side"
 msgstr ""
 
 #: cbs_datacolumns.rscbotanicalcode
@@ -590,9 +602,17 @@ msgstr ""
 msgid "Feather mites"
 msgstr ""
 
+#: cbs_datacolumns.rscfeathernumber
+msgid "Feather number"
+msgstr ""
+
 #: cbs_datacolumns.rscfeathers
 msgctxt "cbs_datacolumns.rscfeathers"
 msgid "Feathers"
+msgstr ""
+
+#: cbs_datacolumns.rscfeathertrait
+msgid "Feather trait"
 msgstr ""
 
 #: cbs_datacolumns.rscfeces
@@ -1347,6 +1367,10 @@ msgstr ""
 msgid "PC9"
 msgstr ""
 
+#: cbs_datacolumns.rscpercentgrown
+msgid "Percent grown"
+msgstr ""
+
 #: cbs_datacolumns.rscpermanentnet
 msgid "Permanent net"
 msgstr ""
@@ -1519,6 +1543,10 @@ msgstr ""
 
 #: cbs_datacolumns.rscr6
 msgid "R6"
+msgstr ""
+
+#: cbs_datacolumns.rscrachiswidth
+msgid "Rachis width"
 msgstr ""
 
 #: cbs_datacolumns.rscrainfallmm
@@ -1840,6 +1868,10 @@ msgstr ""
 msgid "Survey ID"
 msgstr ""
 
+#: cbs_datacolumns.rscsymmetry
+msgid "Symmetry"
+msgstr ""
+
 #: cbs_datacolumns.rsctable
 msgid "Table"
 msgstr ""
@@ -2139,6 +2171,10 @@ msgctxt "cbs_locale.rsapproximatedcoordinate"
 msgid "Approximated"
 msgstr ""
 
+#: cbs_locale.rsasymmetrical
+msgid "Asymmetrical"
+msgstr ""
+
 #: cbs_locale.rsaudiorecorded
 msgctxt "cbs_locale.rsaudiorecorded"
 msgid "Audio recorded"
@@ -2410,6 +2446,7 @@ msgid "Cancel"
 msgstr ""
 
 #: cbs_locale.rscaptioncapture
+msgctxt "cbs_locale.rscaptioncapture"
 msgid "Capture"
 msgstr ""
 
@@ -2466,6 +2503,11 @@ msgstr ""
 #: cbs_locale.rscaptionfather
 msgctxt "cbs_locale.rscaptionfather"
 msgid "Father"
+msgstr ""
+
+#: cbs_locale.rscaptionfeathers
+msgctxt "cbs_locale.rscaptionfeathers"
+msgid "Feathers"
 msgstr ""
 
 #: cbs_locale.rscaptionfind
@@ -3579,6 +3621,25 @@ msgctxt "cbs_locale.rsfeather"
 msgid "Feather"
 msgstr ""
 
+#: cbs_locale.rsfeathercapture
+msgctxt "cbs_locale.rsfeathercapture"
+msgid "Capture"
+msgstr ""
+
+#: cbs_locale.rsfeatherphoto
+msgid "Photo"
+msgstr ""
+
+#: cbs_locale.rsfeathersighting
+msgctxt "cbs_locale.rsfeathersighting"
+msgid "Sighting"
+msgstr ""
+
+#: cbs_locale.rsfeatherunknown
+msgctxt "cbs_locale.rsfeatherunknown"
+msgid "Unknown"
+msgstr ""
+
 #: cbs_locale.rsfeces
 msgctxt "cbs_locale.rsfeces"
 msgid "Feces"
@@ -4392,6 +4453,10 @@ msgstr ""
 msgid "No records found!"
 msgstr ""
 
+#: cbs_locale.rsnotapplicable
+msgid "Not applicable"
+msgstr ""
+
 #: cbs_locale.rsnotestr
 msgctxt "cbs_locale.rsnotestr"
 msgid "Note"
@@ -4927,6 +4992,14 @@ msgctxt "cbs_locale.rssexunknown"
 msgid "Unknown"
 msgstr ""
 
+#: cbs_locale.rssideleft
+msgid "Left"
+msgstr ""
+
+#: cbs_locale.rssideright
+msgid "Right"
+msgstr ""
+
 #: cbs_locale.rsskullossification
 msgctxt "cbs_locale.rsskullossification"
 msgid "skull ossification"
@@ -5159,6 +5232,10 @@ msgstr ""
 
 #: cbs_locale.rssupportrockcliff
 msgid "Rock/Cliff"
+msgstr ""
+
+#: cbs_locale.rssymmetrical
+msgid "Symmetrical"
 msgstr ""
 
 #: cbs_locale.rssynonym
@@ -5619,6 +5696,47 @@ msgstr ""
 #, object-pascal-format
 msgctxt "cbs_locale.rstotalresearchers"
 msgid "%d researcher(s)"
+msgstr ""
+
+#: cbs_locale.rstraitalula
+msgctxt "cbs_locale.rstraitalula"
+msgid "Alula"
+msgstr ""
+
+#: cbs_locale.rstraitbody
+msgid "Body"
+msgstr ""
+
+#: cbs_locale.rstraitcarpalcovert
+msgid "Carpal Covert"
+msgstr ""
+
+#: cbs_locale.rstraitgreatcovert
+msgid "Great Covert"
+msgstr ""
+
+#: cbs_locale.rstraitlessercovert
+msgid "Lesser Covert"
+msgstr ""
+
+#: cbs_locale.rstraitmediancovert
+msgid "Median Covert"
+msgstr ""
+
+#: cbs_locale.rstraitprimary
+msgid "Primary"
+msgstr ""
+
+#: cbs_locale.rstraitprimarycovert
+msgid "Primary Covert"
+msgstr ""
+
+#: cbs_locale.rstraitrectrix
+msgid "Rectrix"
+msgstr ""
+
+#: cbs_locale.rstraitsecondary
+msgid "Secondary"
 msgstr ""
 
 #: cbs_locale.rstreatmentlist
@@ -8630,6 +8748,7 @@ msgid "Individual hatched:"
 msgstr ""
 
 #: tedtegg.lbllength.caption
+msgctxt "tedtegg.lbllength.caption"
 msgid "Length:"
 msgstr ""
 
@@ -8677,6 +8796,7 @@ msgid "Volume:"
 msgstr ""
 
 #: tedtegg.lblweight.caption
+msgctxt "tedtegg.lblweight.caption"
 msgid "Mass:"
 msgstr ""
 
@@ -8749,6 +8869,131 @@ msgstr ""
 
 #: tedtexpedition.sbsave.caption
 msgctxt "tedtexpedition.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tedtfeather.edate.buttonhint
+msgctxt "tedtfeather.edate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tedtfeather.edate.texthint
+msgctxt "tedtfeather.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtfeather.elocality.buttonhint
+msgctxt "tedtfeather.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtfeather.eobserver.buttonhint
+msgctxt "tedtfeather.eobserver.buttonhint"
+msgid "Find observer"
+msgstr ""
+
+#: tedtfeather.etaxon.buttonhint
+msgctxt "tedtfeather.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr ""
+
+#: tedtfeather.etime.texthint
+msgctxt "tedtfeather.etime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtfeather.lblarea.caption
+msgid "Area:"
+msgstr ""
+
+#: tedtfeather.lblbarbdensity.caption
+msgid "Barb density:"
+msgstr ""
+
+#: tedtfeather.lblbodyside.caption
+msgid "Side:"
+msgstr ""
+
+#: tedtfeather.lblfeatherage.caption
+msgid "Feather age:"
+msgstr ""
+
+#: tedtfeather.lblfeathernumber.caption
+msgid "Feather number:"
+msgstr ""
+
+#: tedtfeather.lblfeathertrait.caption
+msgid "Feather trait:"
+msgstr ""
+
+#: tedtfeather.lblgrowthbarwidth.caption
+msgctxt "tedtfeather.lblgrowthbarwidth.caption"
+msgid "Growth bar width:"
+msgstr ""
+
+#: tedtfeather.lbllength.caption
+msgctxt "tedtfeather.lbllength.caption"
+msgid "Length:"
+msgstr ""
+
+#: tedtfeather.lbllocality.caption
+msgctxt "tedtfeather.lbllocality.caption"
+msgid "Locality: *"
+msgstr ""
+
+#: tedtfeather.lblmass.caption
+msgctxt "tedtfeather.lblmass.caption"
+msgid "Mass:"
+msgstr ""
+
+#: tedtfeather.lblnotes.caption
+msgctxt "tedtfeather.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtfeather.lblobserver.caption
+msgctxt "tedtfeather.lblobserver.caption"
+msgid "Observer:"
+msgstr ""
+
+#: tedtfeather.lblpercentgrown.caption
+msgid "% grown:"
+msgstr ""
+
+#: tedtfeather.lblrachiswidth.caption
+msgid "Rachis width:"
+msgstr ""
+
+#: tedtfeather.lblsampledate.caption
+msgctxt "tedtfeather.lblsampledate.caption"
+msgid "Date: *"
+msgstr ""
+
+#: tedtfeather.lblsampletime.caption
+msgctxt "tedtfeather.lblsampletime.caption"
+msgid "Time:"
+msgstr ""
+
+#: tedtfeather.lblsource.caption
+msgid "Source:"
+msgstr ""
+
+#: tedtfeather.lblsymmetry.caption
+msgid "Symmetry:"
+msgstr ""
+
+#: tedtfeather.lbltaxon.caption
+msgctxt "tedtfeather.lbltaxon.caption"
+msgid "Taxon: *"
+msgstr ""
+
+#: tedtfeather.sbcancel.caption
+msgctxt "tedtfeather.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtfeather.sbsave.caption
+msgctxt "tedtfeather.sbsave.caption"
 msgid "Save"
 msgstr ""
 
@@ -12199,6 +12444,11 @@ msgctxt "tfrmcustomgrid.pmcnewexpensefromrubric.caption"
 msgid "New expense"
 msgstr ""
 
+#: tfrmcustomgrid.pmcnewfeather.caption
+msgctxt "tfrmcustomgrid.pmcnewfeather.caption"
+msgid "New feather"
+msgstr ""
+
 #: tfrmcustomgrid.pmcnewmistnet.caption
 msgid "New &mistnet"
 msgstr ""
@@ -12487,6 +12737,11 @@ msgstr ""
 
 #: tfrmcustomgrid.pmprintexpeditionsbyproject.caption
 msgid "Expeditions per project"
+msgstr ""
+
+#: tfrmcustomgrid.pmprintfeathers.caption
+msgctxt "tfrmcustomgrid.pmprintfeathers.caption"
+msgid "Feathers"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintgazetteer.caption
@@ -13766,6 +14021,10 @@ msgstr ""
 #: tfrmmain.actopenexpeditions.caption
 msgctxt "tfrmmain.actopenexpeditions.caption"
 msgid "Expeditions"
+msgstr ""
+
+#: tfrmmain.actopenfeathers.caption
+msgid "&Feathers"
 msgstr ""
 
 #: tfrmmain.actopengazetteer.caption

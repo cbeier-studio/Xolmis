@@ -7,7 +7,6 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1243
   ParentFont = True
-  LCLVersion = '4.0.0.2'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -78,7 +77,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            348
+            344
           )
         end
       end
@@ -6518,11 +6517,11 @@ object frmCustomGrid: TfrmCustomGrid
           Rounding.RoundY = 8
           TabOrder = 1
           object sbClearFilters: TSpeedButton
-            Left = 388
+            Left = 382
             Height = 26
             Hint = 'Clear all quick filters'
             Top = 8
-            Width = 28
+            Width = 34
             Align = alRight
             AutoSize = True
             BorderSpacing.Left = 10
@@ -9617,6 +9616,12 @@ object frmCustomGrid: TfrmCustomGrid
       ImageIndex = 19
       Visible = False
       OnClick = pmcNewMoltClick
+    end
+    object pmcNewFeather: TMenuItem
+      Caption = 'New feather'
+      ImageIndex = 19
+      Visible = False
+      OnClick = pmcNewFeatherClick
     end
     object pmcNewNest: TMenuItem
       Caption = 'New &nest'
@@ -23175,6 +23180,11 @@ object frmCustomGrid: TfrmCustomGrid
         Precision = -1
       end    
       item
+        Name = 'feather_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
         Name = 'locality_id'
         DataType = ftInteger
         Precision = -1
@@ -23234,41 +23244,6 @@ object frmCustomGrid: TfrmCustomGrid
       item
         Name = 'latitude'
         DataType = ftFloat
-        Precision = -1
-      end    
-      item
-        Name = 'order_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'family_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'genus_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'species_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'country_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'state_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'municipality_id'
-        DataType = ftInteger
         Precision = -1
       end    
       item
@@ -23423,6 +23398,7 @@ object frmCustomGrid: TfrmCustomGrid
       '  img.taxon_id,'
       '  img.individual_id,'
       '  img.capture_id,'
+      '  img.feather_id,'
       '  img.locality_id,'
       '  img.author_id,'
       '  img.survey_id,'
@@ -23481,6 +23457,7 @@ object frmCustomGrid: TfrmCustomGrid
       '  taxon_id,'
       '  individual_id,'
       '  capture_id,'
+      '  feather_id,'
       '  locality_id,'
       '  author_id,'
       '  survey_id,'
@@ -23512,6 +23489,7 @@ object frmCustomGrid: TfrmCustomGrid
       '  :taxon_id,'
       '  :individual_id,'
       '  :capture_id,'
+      '  :feather_id,'
       '  :locality_id,'
       '  :author_id,'
       '  :survey_id,'
@@ -23545,6 +23523,7 @@ object frmCustomGrid: TfrmCustomGrid
       '  taxon_id = :taxon_id,'
       '  individual_id = :individual_id,'
       '  capture_id = :capture_id,'
+      '  feather_id = :feather_id,'
       '  locality_id = :locality_id,'
       '  author_id = :author_id,'
       '  survey_id = :survey_id,'
@@ -23674,10 +23653,20 @@ object frmCustomGrid: TfrmCustomGrid
       Required = False
       Size = 120
     end
+    object qImagesfeather_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'feather_id'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
     object qImageslocality_id: TLongintField
       FieldKind = fkData
       FieldName = 'locality_id'
-      Index = 10
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23686,7 +23675,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslocality_name: TStringField
       FieldKind = fkData
       FieldName = 'locality_name'
-      Index = 11
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -23696,7 +23685,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesauthor_id: TLongintField
       FieldKind = fkData
       FieldName = 'author_id'
-      Index = 12
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23705,7 +23694,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesauthor_name: TStringField
       FieldKind = fkData
       FieldName = 'author_name'
-      Index = 13
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -23715,7 +23704,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagessurvey_id: TLongintField
       FieldKind = fkData
       FieldName = 'survey_id'
-      Index = 14
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23724,7 +23713,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagessurvey_name: TStringField
       FieldKind = fkData
       FieldName = 'survey_name'
-      Index = 15
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -23734,7 +23723,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagessighting_id: TLongintField
       FieldKind = fkData
       FieldName = 'sighting_id'
-      Index = 16
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23743,7 +23732,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagessighting_name: TStringField
       FieldKind = fkData
       FieldName = 'sighting_name'
-      Index = 17
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -23753,7 +23742,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesnest_id: TLongintField
       FieldKind = fkData
       FieldName = 'nest_id'
-      Index = 18
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23762,7 +23751,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesnest_name: TStringField
       FieldKind = fkData
       FieldName = 'nest_name'
-      Index = 19
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -23772,7 +23761,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesnest_revision_id: TLongintField
       FieldKind = fkData
       FieldName = 'nest_revision_id'
-      Index = 20
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23781,7 +23770,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesrevision_name: TStringField
       FieldKind = fkData
       FieldName = 'revision_name'
-      Index = 21
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -23791,7 +23780,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesegg_id: TLongintField
       FieldKind = fkData
       FieldName = 'egg_id'
-      Index = 22
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23800,7 +23789,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesegg_name: TStringField
       FieldKind = fkData
       FieldName = 'egg_name'
-      Index = 23
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -23810,7 +23799,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesspecimen_id: TLongintField
       FieldKind = fkData
       FieldName = 'specimen_id'
-      Index = 24
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23819,7 +23808,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesspecimen_name: TStringField
       FieldKind = fkData
       FieldName = 'specimen_name'
-      Index = 25
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -23829,7 +23818,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesimage_filename: TStringField
       FieldKind = fkData
       FieldName = 'image_filename'
-      Index = 26
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23839,7 +23828,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagescoordinate_precision: TStringField
       FieldKind = fkData
       FieldName = 'coordinate_precision'
-      Index = 27
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23849,7 +23838,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslongitude: TFloatField
       FieldKind = fkData
       FieldName = 'longitude'
-      Index = 28
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23859,7 +23848,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslatitude: TFloatField
       FieldKind = fkData
       FieldName = 'latitude'
-      Index = 29
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23869,7 +23858,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslicense_type: TStringField
       FieldKind = fkData
       FieldName = 'license_type'
-      Index = 30
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23878,7 +23867,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslicense_year: TLongintField
       FieldKind = fkData
       FieldName = 'license_year'
-      Index = 31
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23887,7 +23876,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslicense_uri: TStringField
       FieldKind = fkData
       FieldName = 'license_uri'
-      Index = 32
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23897,7 +23886,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslicense_notes: TStringField
       FieldKind = fkData
       FieldName = 'license_notes'
-      Index = 33
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23907,7 +23896,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslicense_owner: TStringField
       FieldKind = fkData
       FieldName = 'license_owner'
-      Index = 34
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23917,7 +23906,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagessubtitle: TMemoField
       FieldKind = fkData
       FieldName = 'subtitle'
-      Index = 35
+      Index = 36
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23928,7 +23917,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesimage_thumbnail: TBlobField
       FieldKind = fkData
       FieldName = 'image_thumbnail'
-      Index = 36
+      Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23937,7 +23926,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesuser_inserted: TLongintField
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 37
+      Index = 38
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23946,7 +23935,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesuser_updated: TLongintField
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 38
+      Index = 39
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23955,7 +23944,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesinsert_date: TDateTimeField
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 39
+      Index = 40
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23964,7 +23953,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesupdate_date: TDateTimeField
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 40
+      Index = 41
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23973,7 +23962,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesexported_status: TBooleanField
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 41
+      Index = 42
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23983,7 +23972,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesmarked_status: TBooleanField
       FieldKind = fkData
       FieldName = 'marked_status'
-      Index = 42
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -23993,7 +23982,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesactive_status: TBooleanField
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 43
+      Index = 44
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -24224,6 +24213,11 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pmPrintMolts: TMenuItem
       Caption = 'Molts'
+      Enabled = False
+      Visible = False
+    end
+    object pmPrintFeathers: TMenuItem
+      Caption = 'Feathers'
       Enabled = False
       Visible = False
     end

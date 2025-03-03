@@ -1127,6 +1127,12 @@ object frmMain: TfrmMain
       Caption = 'E&xit'
       OnExecute = actExitExecute
     end
+    object actOpenFeathers: TAction
+      Category = 'Individuals'
+      Caption = '&Feathers'
+      ImageIndex = 13
+      OnExecute = actOpenFeathersExecute
+    end
   end
   object bStatusBar: TImageList
     Scaled = True
@@ -8869,6 +8875,9 @@ object frmMain: TfrmMain
       end
       object mmiMolts: TMenuItem
         Action = actOpenMolts
+      end
+      object mmiFeathers: TMenuItem
+        Action = actOpenFeathers
       end
     end
     object mmBreeding: TMenuItem

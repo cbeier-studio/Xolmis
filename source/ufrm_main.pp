@@ -49,6 +49,7 @@ type
     actImportCoordinates: TAction;
     actImportXolmisMobile: TAction;
     actDBNew: TAction;
+    actOpenFeathers: TAction;
     actMaintenance: TAction;
     actOpenBandHistory: TAction;
     actOpenTaxonRanks: TAction;
@@ -95,6 +96,7 @@ type
     iSearchDark: TImageList;
     lblEmptyTabs: TLabel;
     lblSbarVersion: TLabel;
+    mmiFeathers: TMenuItem;
     mmfNewDB: TMenuItem;
     mmfImportXolmisMobile: TMenuItem;
     mmhCheckUpdates: TMenuItem;
@@ -255,6 +257,7 @@ type
     procedure actOpenCapturesExecute(Sender: TObject);
     procedure actOpenEggsExecute(Sender: TObject);
     procedure actOpenExpeditionsExecute(Sender: TObject);
+    procedure actOpenFeathersExecute(Sender: TObject);
     procedure actOpenGazetteerExecute(Sender: TObject);
     procedure actOpenIndividualsExecute(Sender: TObject);
     procedure actOpenInstitutionsExecute(Sender: TObject);
@@ -343,6 +346,7 @@ var
   fIndividuals: TfrmCustomGrid;
   fCaptures: TfrmCustomGrid;
   fMolts: TfrmCustomGrid;
+  fFeathers: TfrmCustomGrid;
   fNests: TfrmCustomGrid;
   fNestRevisions: TfrmCustomGrid;
   fEggs: TfrmCustomGrid;
@@ -577,6 +581,11 @@ end;
 procedure TfrmMain.actOpenExpeditionsExecute(Sender: TObject);
 begin
   OpenForm(Sender, fExpeditions, tbExpeditions, rsCaptionExpeditions, actOpenExpeditions.ImageIndex);
+end;
+
+procedure TfrmMain.actOpenFeathersExecute(Sender: TObject);
+begin
+  OpenForm(Sender, fFeathers, tbFeathers, rsCaptionFeathers, actOpenFeathers.ImageIndex);
 end;
 
 procedure TfrmMain.actOpenGazetteerExecute(Sender: TObject);
