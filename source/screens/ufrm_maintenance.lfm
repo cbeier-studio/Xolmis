@@ -299,10 +299,10 @@ object frmMaintenance: TfrmMaintenance
         Width = 25
         Anchors = [akTop, akRight]
         DisabledImageIndex = 10
-        Enabled = False
         Flat = True
         Images = iIcons
         ImageIndex = 9
+        OnClick = sbCheckDatabaseIntegrityClick
       end
     end
     object pOptimizeDatabase: TBCPanel
@@ -411,10 +411,10 @@ object frmMaintenance: TfrmMaintenance
         Width = 25
         Anchors = [akTop, akRight]
         DisabledImageIndex = 10
-        Enabled = False
         Flat = True
         Images = iIcons
         ImageIndex = 9
+        OnClick = sbOptimizeDatabaseClick
       end
     end
     object pSettingsBackup: TBCPanel
@@ -649,10 +649,10 @@ object frmMaintenance: TfrmMaintenance
         Width = 25
         Anchors = [akTop, akRight]
         DisabledImageIndex = 10
-        Enabled = False
         Flat = True
         Images = iIcons
         ImageIndex = 9
+        OnClick = sbFactoryResetClick
       end
     end
     object pManageLogs: TBCPanel
@@ -871,10 +871,10 @@ object frmMaintenance: TfrmMaintenance
         Width = 25
         Anchors = [akTop, akRight]
         DisabledImageIndex = 10
-        Enabled = False
         Flat = True
         Images = iIcons
         ImageIndex = 9
+        OnClick = sbClearTemporaryFilesClick
       end
     end
     object pDiagnostic: TBCPanel

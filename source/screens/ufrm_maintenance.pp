@@ -91,6 +91,10 @@ type
     procedure btnRecreateImageThumbnailsClick(Sender: TObject);
     procedure btnRestoreDatabaseClick(Sender: TObject);
     procedure sbBackupSettingsClick(Sender: TObject);
+    procedure sbCheckDatabaseIntegrityClick(Sender: TObject);
+    procedure sbClearTemporaryFilesClick(Sender: TObject);
+    procedure sbFactoryResetClick(Sender: TObject);
+    procedure sbOptimizeDatabaseClick(Sender: TObject);
     procedure sbRestoreSettingsClick(Sender: TObject);
   private
     procedure ApplyDarkMode;
@@ -303,6 +307,59 @@ begin
   BackupSettings;
 end;
 
+procedure TfrmMaintenance.sbCheckDatabaseIntegrityClick(Sender: TObject);
+begin
+  ConexaoDB.IntegrityCheck;
+end;
+
+procedure TfrmMaintenance.sbClearTemporaryFilesClick(Sender: TObject);
+var
+  FileInfo: TSearchRec;
+  Dir, FilePath: string;
+begin
+  Dir := ConcatPaths([AppDataDir, 'map-cache\']);
+
+  // Check if directory exists
+  if not DirectoryExists(Dir) then
+    raise Exception.CreateFmt(rsErrorFolderNotFound, [Dir]);
+
+  // Find files in directory
+  if FindFirst(IncludeTrailingPathDelimiter(Dir) + '*', faAnyFile, FileInfo) = 0 then
+  try
+    repeat
+      // Ignore "." and ".."
+      if (FileInfo.Name <> '.') and (FileInfo.Name <> '..') then
+      begin
+        FilePath := IncludeTrailingPathDelimiter(Dir) + FileInfo.Name;
+
+        // Check if is a file and delete it
+        if (FileInfo.Attr and faDirectory) = 0 then
+        begin
+          if not DeleteFile(FilePath) then
+            raise Exception.CreateFmt(rsErrorDeletingFile, [FilePath]);
+        end;
+      end;
+    until FindNext(FileInfo) <> 0;
+  finally
+    FindClose(FileInfo);
+  end;
+
+  MsgDlg(rsTitleInformation, rsSuccessfulClearTemporaryFiles, mtInformation)
+end;
+
+procedure TfrmMaintenance.sbFactoryResetClick(Sender: TObject);
+begin
+  if MsgDlg(rsTitleConfirmation, rsFactoryResetPrompt, mtConfirmation) then
+  begin
+    XSettings.Reset;
+  end;
+end;
+
+procedure TfrmMaintenance.sbOptimizeDatabaseClick(Sender: TObject);
+begin
+  ConexaoDB.Optimize;
+end;
+
 procedure TfrmMaintenance.sbRestoreSettingsClick(Sender: TObject);
 begin
   OpenDlg.InitialDir := XSettings.BackupFolder;
@@ -322,6 +379,9 @@ procedure TfrmMaintenance.btnClearLogsClick(Sender: TObject);
 var
   FLog: String;
 begin
+  if not MsgDlg(rsTitleConfirmation, rsClearLogsPrompt, mtConfirmation) then
+    Exit;
+
   FLog := ConcatPaths([AppDataDir, LogFile]);
   if FileExists(FLog) then
     DeleteFile(FLog);

@@ -2825,6 +2825,10 @@ msgctxt "cbs_locale.rscheckupdates"
 msgid "Check updates"
 msgstr "Verificar atualizações"
 
+#: cbs_locale.rsclearlogsprompt
+msgid "Do you really want to delete all log files?"
+msgstr "Deseja realmente apagar todos os arquivos de log?"
+
 #: cbs_locale.rscloacalprotuberance
 msgctxt "cbs_locale.rscloacalprotuberance"
 msgid "cloacal protuberance"
@@ -3402,18 +3406,19 @@ msgctxt "cbs_locale.rserrorbackupnotfound"
 msgid "Backup file not found: %s"
 msgstr "Arquivo de backup não encontrado: %s"
 
+#: cbs_locale.rserrorcheckingintegritydatabase
+#, object-pascal-format
+msgid "An error occurred while checking integrity of the database: %s"
+msgstr "Um erro ocorreu ao verificar a integridade do banco de dados: %s"
+
 #: cbs_locale.rserrorcheckingupdates
 msgid "An error occurred while checking for updates."
 msgstr "Ocorreu um erro ao verificar atualizações."
 
 #: cbs_locale.rserrorconnectingdatabase
 msgctxt "cbs_locale.rserrorconnectingdatabase"
-msgid ""
-"Unable to connect to database.\n"
-"Check if the connection settings and the database path are correct."
-msgstr ""
-"Não foi possível conectar ao banco de dados.\n"
-"Verifique se as opções da conexão e o caminho do banco de dados estão corretos."
+msgid "Unable to connect to database. Check if the connection settings and the database path are correct."
+msgstr "Não foi possível conectar ao banco de dados. Verifique se as opções da conexão e o caminho do banco de dados estão corretos."
 
 #: cbs_locale.rserrorconnectionnotfound
 #, object-pascal-format
@@ -3448,12 +3453,8 @@ msgstr "Índice de campo do registro CSV não existe!"
 
 #: cbs_locale.rserrordatabasecorrupted
 msgctxt "cbs_locale.rserrordatabasecorrupted"
-msgid ""
-"The database file is corrupted.\n"
-"Restoring a database backup is recommended."
-msgstr ""
-"O banco de dados parece estar corrompido.\n"
-"É recomendado restaurar um backup do banco de dados."
+msgid "The database file is corrupted. Restoring a database backup is recommended."
+msgstr "O banco de dados parece estar corrompido. É recomendado restaurar um backup do banco de dados."
 
 #: cbs_locale.rserrordatabasecreation
 msgid "The database file was not created."
@@ -3462,17 +3463,18 @@ msgstr "O arquivo de banco de dados não foi criado."
 #: cbs_locale.rserrordatabasenotfound
 #, object-pascal-format
 msgctxt "cbs_locale.rserrordatabasenotfound"
-msgid ""
-"Database file not found:\n"
-"%s"
-msgstr ""
-"Arquivo de banco de dados não encontrado:\n"
-"%s"
+msgid "Database file not found: %s"
+msgstr "Arquivo de banco de dados não encontrado: %s"
 
 #: cbs_locale.rserrordatabasesweep
 msgctxt "cbs_locale.rserrordatabasesweep"
 msgid "Error running database Sweep and Analyze"
 msgstr "Erro executando Sweep e Analyze do banco de dados"
+
+#: cbs_locale.rserrordeletingfile
+#, object-pascal-format
+msgid "Error deleting file %s."
+msgstr "Erro apagando o arquivo %s."
 
 #: cbs_locale.rserroremptyfieldname
 msgid "Error loading field info: the field name is blank."
@@ -3484,18 +3486,19 @@ msgstr "ID está vazia"
 
 #: cbs_locale.rserrorexporting
 #, object-pascal-format
-msgid ""
-"An error occurred exporting:\n"
-"%s"
-msgstr ""
-"Ocorreu um erro exportando:\n"
-"%s"
+msgid "An error occurred exporting: %s"
+msgstr "Ocorreu um erro exportando: %s"
 
 #: cbs_locale.rserrorfilenotfound
 #, object-pascal-format
 msgctxt "cbs_locale.rserrorfilenotfound"
 msgid "File %s not found."
 msgstr "Arquivo %s não encontrado."
+
+#: cbs_locale.rserrorfoldernotfound
+#, object-pascal-format
+msgid "Directory %s not found."
+msgstr "Diretório %s não encontrado."
 
 #: cbs_locale.rserrorfound
 #, object-pascal-format
@@ -3511,12 +3514,8 @@ msgstr "Erro gerando mapa."
 #: cbs_locale.rserrorhelpnotfound
 #, object-pascal-format
 msgctxt "cbs_locale.rserrorhelpnotfound"
-msgid ""
-"Check if the help files are in the folder:\n"
-"%s"
-msgstr ""
-"Verifique se os arquivos de ajuda estão na pasta:\n"
-"%s"
+msgid "Check if the help files are in the folder: %s"
+msgstr "Verifique se os arquivos de ajuda estão na pasta: %s"
 
 #: cbs_locale.rserrorimportfinished
 msgid "An error occurred while importing."
@@ -3525,12 +3524,8 @@ msgstr "Ocorreu um erro na importação."
 #: cbs_locale.rserrorimporting
 #, object-pascal-format
 msgctxt "cbs_locale.rserrorimporting"
-msgid ""
-"An error occurred importing:\n"
-"%s"
-msgstr ""
-"Um erro ocorreu ao importar:\n"
-"%s"
+msgid "An error occurred importing: %s"
+msgstr "Um erro ocorreu ao importar: %s"
 
 #: cbs_locale.rserrorinvaliddate
 msgctxt "cbs_locale.rserrorinvaliddate"
@@ -3642,6 +3637,10 @@ msgstr "Nenhum campo selecionado para exportar!"
 msgctxt "cbs_locale.rsexportfinished"
 msgid "Export to %s: Finished!"
 msgstr "Exportar para %s: Concluído!"
+
+#: cbs_locale.rsfactoryresetprompt
+msgid "Do you really want to reset settings to factory defaults?"
+msgstr "Deseja realmente retornar as configurações aos padrões de fábrica?"
 
 #: cbs_locale.rsfeather
 msgctxt "cbs_locale.rsfeather"
@@ -5163,6 +5162,10 @@ msgctxt "cbs_locale.rssuccessfulbackup"
 msgid "Backup file created successfully: %s"
 msgstr "Arquivo de backup criado com sucesso: %s"
 
+#: cbs_locale.rssuccessfulcleartemporaryfiles
+msgid "The temporary files were deleted!"
+msgstr "Os arquivos temporários foram apagados!"
+
 #: cbs_locale.rssuccessfulconnectiontest
 msgid "Connection to database was successful!"
 msgstr "Conexão ao banco de dados foi bem sucedida!"
@@ -5170,6 +5173,10 @@ msgstr "Conexão ao banco de dados foi bem sucedida!"
 #: cbs_locale.rssuccessfuldatabasecreation
 msgid "The database file was created successfully!"
 msgstr "O arquivo de banco de dados foi criado com sucesso!"
+
+#: cbs_locale.rssuccessfuldatabaseintegritycheck
+msgid "The selected database integrity is OK!"
+msgstr "A integridade do banco de dados selecionado está OK!"
 
 #: cbs_locale.rssuccessfuldatabaseoptimization
 msgid "The selected database was optimized!"
@@ -14855,4 +14862,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

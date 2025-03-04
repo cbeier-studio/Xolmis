@@ -145,20 +145,20 @@ uses
     rsErrorCreatingSystemDatabase = 'Unable to create the system database.';
     rsErrorTableNotFound = 'Table ''%s'' not found.';
     rsErrorDatabaseSweep = 'Error running database Sweep and Analyze';
+    rsErrorDeletingFile = 'Error deleting file %s.';
     rsErrorCreateFolder = 'Not able to create folder:';
     rsErrorTitleHelpNotFound = 'Help files not found!';
-    rsErrorHelpNotFound = 'Check if the help files are in the folder:' + LineEnding + '%s';
+    rsErrorHelpNotFound = 'Check if the help files are in the folder: %s';
     rsErrorInvalidDate = 'Invalid date. Check if it was typed correctly.';
-    rsErrorConnectingDatabase = 'Unable to connect to database.' + LineEnding +
-      'Check if the connection settings and the database path are correct.';
+    rsErrorConnectingDatabase = 'Unable to connect to database. Check if the connection settings and the database path are correct.';
     rsErrorGeneratingMap = 'Error generating map.';
+    rsErrorFolderNotFound = 'Directory %s not found.';
     rsErrorFileNotFound = 'File %s not found.';
-    rsErrorImporting = 'An error occurred importing:' + LineEnding + '%s';
+    rsErrorImporting = 'An error occurred importing: %s';
     rsErrorImportFinished = 'An error occurred while importing.';
-    rsErrorExporting = 'An error occurred exporting:' + LineEnding + '%s';
-    rsErrorDatabaseNotFound = 'Database file not found:' + LineEnding + '%s';
-    rsErrorDatabaseCorrupted = 'The database file is corrupted.' + LineEnding +
-      'Restoring a database backup is recommended.';
+    rsErrorExporting = 'An error occurred exporting: %s';
+    rsErrorDatabaseNotFound = 'Database file not found: %s';
+    rsErrorDatabaseCorrupted = 'The database file is corrupted. Restoring a database backup is recommended.';
     rsErrorCreatingDatabaseSchema = 'Error while creating the database schema: %s';
     rsErrorUpgradingDatabaseSchema = 'Error while upgrading the database schema: %s';
     rsErrorPopulatingTables = 'Error while populating the tables: %s';
@@ -176,6 +176,7 @@ uses
     rsErrorReportNotFound = 'Report template not found: %s';
     rsErrorOptimizingDatabase = 'An error occurred while optimizing the database: %s';
     rsErrorVacuumingDatabase = 'An error occurred while vacuuming the database: %s';
+    rsErrorCheckingIntegrityDatabase = 'An error occurred while checking integrity of the database: %s';
     rsErrorCreatingUser = 'An error occurred while creating the user: %s';
     rsErrorWritingAdminPassword = 'An error occurred while writing the Admin user password: %s';
     rsErrorEmptyId = 'ID is empty';
@@ -221,6 +222,7 @@ uses
     rsSuccessfulUpdateAdminPassword = 'The Admin password was updated successfully!';
     rsSuccessfulDatabaseOptimization = 'The selected database was optimized!';
     rsSuccessfulDatabaseVacuum = 'The selected database was vacuumed!';
+    rsSuccessfulDatabaseIntegrityCheck = 'The selected database integrity is OK!';
 
     { Deletion messages }
     rsDeleteConnectionTitle = 'Delete connection';
@@ -323,6 +325,9 @@ uses
     rsRewriteFullnamesPrompt = 'Do you really want to rewrite all individuals'' full names?' + LineEnding +
       'Once completed, this operation cannot be undone.';
     rsActionCannotBeUndone = 'This action cannot be undone.';
+    rsFactoryResetPrompt = 'Do you really want to reset settings to factory defaults?';
+    rsClearLogsPrompt = 'Do you really want to delete all log files?';
+    rsSuccessfulClearTemporaryFiles = 'The temporary files were deleted!';
 
     { Authentication messages }
     rsInvalidLogin = 'User not found.';

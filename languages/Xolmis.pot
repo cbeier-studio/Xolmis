@@ -2821,6 +2821,10 @@ msgctxt "cbs_locale.rscheckupdates"
 msgid "Check updates"
 msgstr ""
 
+#: cbs_locale.rsclearlogsprompt
+msgid "Do you really want to delete all log files?"
+msgstr ""
+
 #: cbs_locale.rscloacalprotuberance
 msgctxt "cbs_locale.rscloacalprotuberance"
 msgid "cloacal protuberance"
@@ -3396,15 +3400,18 @@ msgctxt "cbs_locale.rserrorbackupnotfound"
 msgid "Backup file not found: %s"
 msgstr ""
 
+#: cbs_locale.rserrorcheckingintegritydatabase
+#, object-pascal-format
+msgid "An error occurred while checking integrity of the database: %s"
+msgstr ""
+
 #: cbs_locale.rserrorcheckingupdates
 msgid "An error occurred while checking for updates."
 msgstr ""
 
 #: cbs_locale.rserrorconnectingdatabase
 msgctxt "cbs_locale.rserrorconnectingdatabase"
-msgid ""
-"Unable to connect to database.\n"
-"Check if the connection settings and the database path are correct."
+msgid "Unable to connect to database. Check if the connection settings and the database path are correct."
 msgstr ""
 
 #: cbs_locale.rserrorconnectionnotfound
@@ -3440,9 +3447,7 @@ msgstr ""
 
 #: cbs_locale.rserrordatabasecorrupted
 msgctxt "cbs_locale.rserrordatabasecorrupted"
-msgid ""
-"The database file is corrupted.\n"
-"Restoring a database backup is recommended."
+msgid "The database file is corrupted. Restoring a database backup is recommended."
 msgstr ""
 
 #: cbs_locale.rserrordatabasecreation
@@ -3452,14 +3457,17 @@ msgstr ""
 #: cbs_locale.rserrordatabasenotfound
 #, object-pascal-format
 msgctxt "cbs_locale.rserrordatabasenotfound"
-msgid ""
-"Database file not found:\n"
-"%s"
+msgid "Database file not found: %s"
 msgstr ""
 
 #: cbs_locale.rserrordatabasesweep
 msgctxt "cbs_locale.rserrordatabasesweep"
 msgid "Error running database Sweep and Analyze"
+msgstr ""
+
+#: cbs_locale.rserrordeletingfile
+#, object-pascal-format
+msgid "Error deleting file %s."
 msgstr ""
 
 #: cbs_locale.rserroremptyfieldname
@@ -3472,15 +3480,18 @@ msgstr ""
 
 #: cbs_locale.rserrorexporting
 #, object-pascal-format
-msgid ""
-"An error occurred exporting:\n"
-"%s"
+msgid "An error occurred exporting: %s"
 msgstr ""
 
 #: cbs_locale.rserrorfilenotfound
 #, object-pascal-format
 msgctxt "cbs_locale.rserrorfilenotfound"
 msgid "File %s not found."
+msgstr ""
+
+#: cbs_locale.rserrorfoldernotfound
+#, object-pascal-format
+msgid "Directory %s not found."
 msgstr ""
 
 #: cbs_locale.rserrorfound
@@ -3497,9 +3508,7 @@ msgstr ""
 #: cbs_locale.rserrorhelpnotfound
 #, object-pascal-format
 msgctxt "cbs_locale.rserrorhelpnotfound"
-msgid ""
-"Check if the help files are in the folder:\n"
-"%s"
+msgid "Check if the help files are in the folder: %s"
 msgstr ""
 
 #: cbs_locale.rserrorimportfinished
@@ -3509,9 +3518,7 @@ msgstr ""
 #: cbs_locale.rserrorimporting
 #, object-pascal-format
 msgctxt "cbs_locale.rserrorimporting"
-msgid ""
-"An error occurred importing:\n"
-"%s"
+msgid "An error occurred importing: %s"
 msgstr ""
 
 #: cbs_locale.rserrorinvaliddate
@@ -3623,6 +3630,10 @@ msgstr ""
 #, object-pascal-format
 msgctxt "cbs_locale.rsexportfinished"
 msgid "Export to %s: Finished!"
+msgstr ""
+
+#: cbs_locale.rsfactoryresetprompt
+msgid "Do you really want to reset settings to factory defaults?"
 msgstr ""
 
 #: cbs_locale.rsfeather
@@ -5137,12 +5148,20 @@ msgctxt "cbs_locale.rssuccessfulbackup"
 msgid "Backup file created successfully: %s"
 msgstr ""
 
+#: cbs_locale.rssuccessfulcleartemporaryfiles
+msgid "The temporary files were deleted!"
+msgstr ""
+
 #: cbs_locale.rssuccessfulconnectiontest
 msgid "Connection to database was successful!"
 msgstr ""
 
 #: cbs_locale.rssuccessfuldatabasecreation
 msgid "The database file was created successfully!"
+msgstr ""
+
+#: cbs_locale.rssuccessfuldatabaseintegritycheck
+msgid "The selected database integrity is OK!"
 msgstr ""
 
 #: cbs_locale.rssuccessfuldatabaseoptimization

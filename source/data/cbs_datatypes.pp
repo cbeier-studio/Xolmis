@@ -49,6 +49,7 @@ type
     Password: String;
     LastBackup: TDateTime;
     procedure Clear;
+    procedure IntegrityCheck;
     procedure LoadParams;
     procedure Optimize;
     procedure SetLastBackup;
@@ -386,7 +387,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_conversions, cbs_datasearch, cbs_dialogs, udm_main;
+uses cbs_locale, cbs_global, cbs_conversions, cbs_datasearch, cbs_dialogs, udm_main, udlg_validate;
 
 function CampoByName(const aCampoName: String): TTableFieldType;
 var
@@ -1175,6 +1176,60 @@ begin
   UserName := EmptyStr;
   Password := EmptyStr;
   LastBackup := StrToDateTime('30/12/1500 00:00:00');
+end;
+
+procedure TDBParams.IntegrityCheck;
+var
+  uCon: TSQLConnector;
+  uTrans: TSQLTransaction;
+  Qry: TSQLQuery;
+begin
+  uCon := TSQLConnector.Create(nil);
+  uTrans := TSQLTransaction.Create(uCon);
+  Qry := TSQLQuery.Create(nil);
+  try
+    LoadDatabaseParams(Self.Name, uCon);
+
+    try
+      uTrans.Action := caCommitRetaining;
+      uCon.Transaction := uTrans;
+      uCon.Open;
+      Qry.SQLConnection := uCon;
+      Qry.SQLTransaction := uTrans;
+
+      Qry.SQL.Clear;
+      Qry.SQL.Add('PRAGMA integrity_check;');
+      Qry.Open;
+      Qry.First;
+      if Qry.Fields[0].AsString = 'ok' then
+      begin
+        MsgDlg(rsTitleInformation, rsSuccessfulDatabaseIntegrityCheck, mtInformation);
+      end
+      else
+      begin
+        dlgValidate := TdlgValidate.Create(nil);
+        try
+          while not Qry.EOF do
+          begin
+            dlgValidate.Lista.Add(Qry.Fields[0].AsString);
+            Qry.Next;
+          end;
+          dlgValidate.ShowModal;
+        finally
+          FreeAndNil(dlgValidate);
+        end;
+      end;
+      Qry.Close;
+      uCon.Close;
+    except
+      on E: Exception do
+        MsgDlg(rsTitleError, Format(rsErrorCheckingIntegrityDatabase, [E.Message]), mtError);
+    end;
+  finally
+    FreeAndNil(Qry);
+    FreeAndNil(uTrans);
+    FreeAndNil(uCon);
+  end;
 end;
 
 procedure TDBParams.LoadParams;
