@@ -65,7 +65,6 @@ type
     pClearTemporaryFiles: TBCPanel;
     pDiagnostic: TBCPanel;
     sbClose: TButton;
-    btnRecreateImageThumbnails: TBitBtn;
     sbDiagnostic: TSpeedButton;
     sbOptimizeDatabase: TSpeedButton;
     sbClearTemporaryFiles: TSpeedButton;
@@ -76,16 +75,6 @@ type
     sbRestoreDatabase: TSpeedButton;
     sbBackupDatabase: TSpeedButton;
     sbCheckDatabaseIntegrity: TSpeedButton;
-    btnRestoreDatabase: TBitBtn;
-    btnBackupDatabase: TBitBtn;
-    btnCheckDatabaseIntegrity: TBitBtn;
-    btnOptimizeDatabase: TBitBtn;
-    btnRestoreSettings: TBitBtn;
-    btnFactoryReset: TBitBtn;
-    btnClearLogs: TBitBtn;
-    btnClearTemporaryFiles: TBitBtn;
-    btnDiagnostic: TBitBtn;
-    btnBackupSettings: TBitBtn;
     sbRecreateImageThumbnails: TSpeedButton;
     titleRecreateThumbnails: TLabel;
     titleDatabaseBackup: TLabel;
@@ -101,6 +90,8 @@ type
     procedure btnClearLogsClick(Sender: TObject);
     procedure btnRecreateImageThumbnailsClick(Sender: TObject);
     procedure btnRestoreDatabaseClick(Sender: TObject);
+    procedure sbBackupSettingsClick(Sender: TObject);
+    procedure sbRestoreSettingsClick(Sender: TObject);
   private
     procedure ApplyDarkMode;
     procedure CheckDatabaseBackup;
@@ -307,6 +298,19 @@ begin
   CheckThumbnails;
 end;
 
+procedure TfrmMaintenance.sbBackupSettingsClick(Sender: TObject);
+begin
+  BackupSettings;
+end;
+
+procedure TfrmMaintenance.sbRestoreSettingsClick(Sender: TObject);
+begin
+  OpenDlg.InitialDir := XSettings.BackupFolder;
+  if OpenDlg.Execute then
+    if RestoreSettings(OpenDlg.FileName) then
+      XSettings.LoadFromFile;
+end;
+
 procedure TfrmMaintenance.btnBackupDatabaseClick(Sender: TObject);
 begin
   VacuumIntoBackup; //NewBackup;
@@ -334,7 +338,7 @@ begin
   if not MsgDlg(rsTitleRestore, rsRestoreBackupPrompt, mtConfirmation) then
     Exit;
 
-  OpenDlg.InitialDir:= XSettings.BackupFolder;
+  OpenDlg.InitialDir := XSettings.BackupFolder;
   if OpenDlg.Execute then
     RestoreBackup(OpenDlg.FileName);
 end;

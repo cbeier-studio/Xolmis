@@ -14362,61 +14362,6 @@ msgctxt "tfrmmain.sbhome.hint"
 msgid "Home"
 msgstr "Início"
 
-#: tfrmmaintenance.btnbackupdatabase.caption
-msgctxt "tfrmmaintenance.btnbackupdatabase.caption"
-msgid "Backup"
-msgstr "Backup"
-
-#: tfrmmaintenance.btnbackupsettings.caption
-msgctxt "tfrmmaintenance.btnbackupsettings.caption"
-msgid "Backup"
-msgstr "Backup"
-
-#: tfrmmaintenance.btncheckdatabaseintegrity.caption
-msgctxt "tfrmmaintenance.btncheckdatabaseintegrity.caption"
-msgid "Check"
-msgstr "Verificar"
-
-#: tfrmmaintenance.btnclearlogs.caption
-msgctxt "tfrmmaintenance.btnclearlogs.caption"
-msgid "Clear"
-msgstr "Limpar"
-
-#: tfrmmaintenance.btncleartemporaryfiles.caption
-msgctxt "tfrmmaintenance.btncleartemporaryfiles.caption"
-msgid "Clear"
-msgstr "Limpar"
-
-#: tfrmmaintenance.btndiagnostic.caption
-msgctxt "tfrmmaintenance.btndiagnostic.caption"
-msgid "Run"
-msgstr "Executar"
-
-#: tfrmmaintenance.btnfactoryreset.caption
-msgctxt "tfrmmaintenance.btnfactoryreset.caption"
-msgid "Reset"
-msgstr "Restaurar"
-
-#: tfrmmaintenance.btnoptimizedatabase.caption
-msgctxt "tfrmmaintenance.btnoptimizedatabase.caption"
-msgid "Optimize"
-msgstr "Otimizar"
-
-#: tfrmmaintenance.btnrecreateimagethumbnails.caption
-msgctxt "tfrmmaintenance.btnrecreateimagethumbnails.caption"
-msgid "Recreate"
-msgstr "Recriar"
-
-#: tfrmmaintenance.btnrestoredatabase.caption
-msgctxt "tfrmmaintenance.btnrestoredatabase.caption"
-msgid "Restore"
-msgstr "Restaurar"
-
-#: tfrmmaintenance.btnrestoresettings.caption
-msgctxt "tfrmmaintenance.btnrestoresettings.caption"
-msgid "Restore"
-msgstr "Restaurar"
-
 #: tfrmmaintenance.caption
 msgid "Maintenance"
 msgstr "Manutenção"
@@ -14910,3 +14855,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

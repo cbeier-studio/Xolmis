@@ -37,6 +37,9 @@ uses
   procedure ZipperProgress(Sender: TObject; const Pct: Double);
   procedure RunStartupBackup;
 
+  function BackupSettings: Boolean;
+  function RestoreSettings(aFilename: String): Boolean;
+
 implementation
 
 uses cbs_locale, cbs_global, cbs_dialogs, udlg_progress;
@@ -410,6 +413,98 @@ begin
     dlgProgress.Position := Round(Pct);
     Application.ProcessMessages;
   end;
+end;
+
+function BackupSettings: Boolean;
+var
+  zipPath, zipName, colsPath, settingsPath, FilePath, TargetPath: String;
+  fzip: TZipper;
+  FileInfo: TSearchRec;
+begin
+  Result := False;
+
+  if not (DirectoryExists(XSettings.BackupFolder)) then
+    CreateDir(XSettings.BackupFolder);
+
+  settingsPath := ConcatPaths([AppDataDir, DefaultSettingsFile]);
+  zipName := Format('backup_settings_%s.zip', [FormatDateTime('yyyyMMdd_HHmm', Now)]);
+  zipPath := ConcatPaths([XSettings.BackupFolder, zipName]);
+  colsPath := ConcatPaths([AppDataDir, 'columns\']);
+  {$IFDEF DEBUG}
+  LogDebug('START Compressing settings backup: ' + zipName);
+  {$ENDIF}
+
+  //F_Main.Taskbar.ProgressMaxValue := 100;
+  fzip := TZipper.Create;
+  try
+    //fzip.OnProgress := @ZipperProgress;
+    fzip.FileName := zipPath;
+    try
+      fzip.Entries.AddFileEntry(settingsPath, ExtractFileName(settingsPath));
+      if FindFirstUTF8(ConcatPaths([colsPath, '*']), faAnyFile, FileInfo) = 0 then
+      try
+        repeat
+          // Ignore "." e ".."
+          if (FileInfo.Name <> '.') and (FileInfo.Name <> '..') then
+          begin
+            FilePath := colsPath + FileInfo.Name;
+            TargetPath := 'columns\' + FileInfo.Name;
+            fzip.Entries.AddFileEntry(FilePath, TargetPath);
+          end;
+        until FindNextUTF8(FileInfo) <> 0;
+      finally
+        FindCloseUTF8(FileInfo);
+      end;
+      fzip.ZipAllFiles;
+    except
+      raise;
+    end;
+  finally
+    fzip.Free;
+  end;
+  //CopyFile(zipName, bkpName);
+  //DeleteFile(PChar(tmpName));
+  //DeleteFile(PChar(zipName));
+  {$IFDEF DEBUG}
+  LogDebug('FINISH Compressing settings backup: ' + zipName);
+  {$ENDIF}
+
+  if FileExists(zipPath) then
+  begin
+    Result := True;
+    MsgDlg(rsTitleBackup, Format(rsSuccessfulBackup, [zipName]), mtInformation)
+  end
+  else
+    MsgDlg(rsTitleBackup, rsErrorBackupFailed, mtError);
+end;
+
+function RestoreSettings(aFilename: String): Boolean;
+var
+  fzip: TUnZipper;
+  targetPath: String;
+begin
+  Result := False;
+
+  if not FileExists(aFilename) then
+    Exit;
+
+  targetPath := AppDataDir;
+
+  fzip := TUnZipper.Create;
+  try
+    fzip.FileName := aFilename;
+    fzip.OutputPath := TargetPath;
+    try
+      fzip.UnZipAllFiles;
+    except
+      raise;
+    end;
+  finally
+    fzip.Free;
+  end;
+
+  Result := True;
+  MsgDlg(rsTitleRestore, Format(rsSuccessfulRestore, [ExtractFileName(aFilename)]), mtInformation);
 end;
 
 end.
