@@ -401,6 +401,9 @@ uses
     rsHintFind = 'Find %s...';
     rsHintNewDatabase = 'Create an empty database file';
     rsHintOpenDatabase = 'Select an existing database file';
+    rsHintBackupDisabled = 'Automatic backup disabled';
+    rsHintBackupEnabledNotDone = 'Automatic backup not done';
+    rsHintBackupEnabledDone = 'Automatic backup done';
 
     { Filtering }
     rsFilterAnd = 'and ';
@@ -1005,6 +1008,8 @@ uses
     rsCaptionProjectRubric = 'Rubric';
     rsCaptionProjectExpense = 'Expense';
     rsCaptionFeathers = 'Feathers';
+    rsCaptionEnabled = 'Enabled';
+    rsCaptionDisabled = 'Disabled';
 
 implementation
 

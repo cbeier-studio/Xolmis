@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, DateUtils,
-  attabs, atshapelinebgra, BCPanel;
+  DB, SQLDB, attabs, atshapelinebgra, BCPanel;
 
 type
 
@@ -31,8 +31,6 @@ type
   TfrmMaintenance = class(TForm)
     icoRecreateImageThumbnails: TImage;
     icoDatabaseBackup: TImage;
-    icoCheckDatabaseIntegrity: TImage;
-    icoCheckOptimizeDatabase: TImage;
     icoDatabaseIntegrity: TImage;
     icoOptimizeDatabase: TImage;
     icoSettingsBackup: TImage;
@@ -40,7 +38,6 @@ type
     icoManageLogs: TImage;
     icoClearTemporaryFiles: TImage;
     icoDiagnostic: TImage;
-    icoCheckDatabaseBackup: TImage;
     iIcons: TImageList;
     iCheck: TImageList;
     iIconsDark: TImageList;
@@ -68,17 +65,28 @@ type
     pClearTemporaryFiles: TBCPanel;
     pDiagnostic: TBCPanel;
     sbClose: TButton;
-    sbRecreateImageThumbnails: TBitBtn;
-    sbRestoreDatabase: TBitBtn;
-    sbBackupDatabase: TBitBtn;
-    sbCheckDatabaseIntegrity: TBitBtn;
-    sbOptimizeDatabase: TBitBtn;
-    sbRestoreSettings: TBitBtn;
-    sbFactoryReset: TBitBtn;
-    sbClearLogs: TBitBtn;
-    sbClearTemporaryFiles: TBitBtn;
-    sbDiagnostic: TBitBtn;
-    sbBackupSettings: TBitBtn;
+    btnRecreateImageThumbnails: TBitBtn;
+    sbDiagnostic: TSpeedButton;
+    sbOptimizeDatabase: TSpeedButton;
+    sbClearTemporaryFiles: TSpeedButton;
+    sbClearLogs: TSpeedButton;
+    sbFactoryReset: TSpeedButton;
+    sbRestoreSettings: TSpeedButton;
+    sbBackupSettings: TSpeedButton;
+    sbRestoreDatabase: TSpeedButton;
+    sbBackupDatabase: TSpeedButton;
+    sbCheckDatabaseIntegrity: TSpeedButton;
+    btnRestoreDatabase: TBitBtn;
+    btnBackupDatabase: TBitBtn;
+    btnCheckDatabaseIntegrity: TBitBtn;
+    btnOptimizeDatabase: TBitBtn;
+    btnRestoreSettings: TBitBtn;
+    btnFactoryReset: TBitBtn;
+    btnClearLogs: TBitBtn;
+    btnClearTemporaryFiles: TBitBtn;
+    btnDiagnostic: TBitBtn;
+    btnBackupSettings: TBitBtn;
+    sbRecreateImageThumbnails: TSpeedButton;
     titleRecreateThumbnails: TLabel;
     titleDatabaseBackup: TLabel;
     titleDatabaseIntegrity: TLabel;
@@ -89,13 +97,16 @@ type
     titleClearTemporaryFiles: TLabel;
     titleDiagnostic: TLabel;
     procedure FormShow(Sender: TObject);
-    procedure sbBackupDatabaseClick(Sender: TObject);
-    procedure sbClearLogsClick(Sender: TObject);
-    procedure sbRecreateImageThumbnailsClick(Sender: TObject);
-    procedure sbRestoreDatabaseClick(Sender: TObject);
+    procedure btnBackupDatabaseClick(Sender: TObject);
+    procedure btnClearLogsClick(Sender: TObject);
+    procedure btnRecreateImageThumbnailsClick(Sender: TObject);
+    procedure btnRestoreDatabaseClick(Sender: TObject);
   private
     procedure ApplyDarkMode;
     procedure CheckDatabaseBackup;
+    procedure CheckSystemLogs;
+    procedure CheckTemporaryFiles;
+    procedure CheckThumbnails;
   public
 
   end;
@@ -106,8 +117,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_backup, cbs_blobs, cbs_graphics, cbs_data,
-  cbs_themes, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_dialogs, cbs_backup, cbs_blobs, cbs_system, cbs_data,
+  cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -115,19 +126,28 @@ uses
 
 procedure TfrmMaintenance.ApplyDarkMode;
 begin
-  icoDatabaseBackup.Images := iIconsDark;
-  icoDatabaseIntegrity.Images := iIconsDark;
-  icoOptimizeDatabase.Images := iIconsDark;
+  icoDatabaseBackup.Images := iCheckDark;
+  icoDatabaseIntegrity.Images := iCheckDark;
+  icoOptimizeDatabase.Images := iCheckDark;
+
   icoSettingsBackup.Images := iIconsDark;
   icoFactoryReset.Images := iIconsDark;
-  icoManageLogs.Images := iIconsDark;
+  icoManageLogs.Images := iCheckDark;
   icoClearTemporaryFiles.Images := iIconsDark;
   icoDiagnostic.Images := iIconsDark;
   icoRecreateImageThumbnails.Images := iIconsDark;
 
-  icoCheckDatabaseBackup.Images := iCheckDark;
-  icoCheckDatabaseIntegrity.Images := iCheckDark;
-  icoCheckOptimizeDatabase.Images := iCheckDark;
+  sbBackupDatabase.Images := iIconsDark;
+  sbRestoreDatabase.Images := iIconsDark;
+  sbCheckDatabaseIntegrity.Images := iIconsDark;
+  sbOptimizeDatabase.Images := iIconsDark;
+  sbBackupSettings.Images := iIconsDark;
+  sbRestoreSettings.Images := iIconsDark;
+  sbFactoryReset.Images := iIconsDark;
+  sbClearLogs.Images := iIconsDark;
+  sbClearTemporaryFiles.Images := iIconsDark;
+  sbDiagnostic.Images := iIconsDark;
+  sbRecreateImageThumbnails.Images := iIconsDark;
 
   pDatabaseBackup.Background.Color := clSolidBGBaseDark;
   pDatabaseBackup.Border.Color := clSystemSolidNeutralFGDark;
@@ -161,60 +181,140 @@ end;
 
 procedure TfrmMaintenance.CheckDatabaseBackup;
 begin
-  icoCheckDatabaseBackup.ImageIndex := 0;
-  icoCheckDatabaseBackup.Hint := 'Automatic backup: ENABLED and DONE';
+  icoDatabaseBackup.ImageIndex := 0;
+  icoDatabaseBackup.Hint := rsHintBackupEnabledDone;
+  lblDatabaseBackup.Caption := rsCaptionEnabled;
 
   ConexaoDB.LoadParams;
 
   case XSettings.AutomaticBackup of
     0:
     begin
-      icoCheckDatabaseBackup.ImageIndex := 1;
-      icoCheckDatabaseBackup.Hint := 'Automatic backup: DISABLED';
+      icoDatabaseBackup.ImageIndex := 1;
+      icoDatabaseBackup.Hint := rsHintBackupDisabled;
+      lblDatabaseBackup.Caption := rsCaptionDisabled;
     end;
     1:
     begin
       if DaysBetween(Now, ConexaoDB.LastBackup) >= 1 then
       begin
-        icoCheckDatabaseBackup.ImageIndex := 1;
-        icoCheckDatabaseBackup.Hint := 'Automatic backup: ENABLED and NOT DONE';
+        icoDatabaseBackup.ImageIndex := 1;
+        icoDatabaseBackup.Hint := rsHintBackupEnabledNotDone;
       end;
     end;
     2:
     begin
       if DaysBetween(Now, ConexaoDB.LastBackup) >= 7 then
       begin
-        icoCheckDatabaseBackup.ImageIndex := 1;
-        icoCheckDatabaseBackup.Hint := 'Automatic backup: ENABLED and NOT DONE';
+        icoDatabaseBackup.ImageIndex := 1;
+        icoDatabaseBackup.Hint := rsHintBackupEnabledNotDone;
       end;
     end;
     3:
     begin
       if DaysBetween(Now, ConexaoDB.LastBackup) >= 30 then
       begin
-        icoCheckDatabaseBackup.ImageIndex := 1;
-        icoCheckDatabaseBackup.Hint := 'Automatic backup: ENABLED and NOT DONE';
+        icoDatabaseBackup.ImageIndex := 1;
+        icoDatabaseBackup.Hint := rsHintBackupEnabledNotDone;
       end;
     end;
   end;
 end;
 
-procedure TfrmMaintenance.FormShow(Sender: TObject);
+procedure TfrmMaintenance.CheckSystemLogs;
 begin
+  if XSettings.AllowWriteLogs then
+  begin
+    icoManageLogs.ImageIndex := 0;
+    icoManageLogs.Hint := rsCaptionEnabled
+  end
+  else
+  begin
+    icoManageLogs.ImageIndex := 1;
+    icoManageLogs.Hint := rsCaptionDisabled;
+  end;
+
+  lblManageLogs.Caption := GetFileSizeReadable(ConcatPaths([AppDataDir, LogFile]));
+end;
+
+procedure TfrmMaintenance.CheckTemporaryFiles;
+const
+  KB = 1024;         // 1 KB = 1024 bytes
+  MB = 1024 * KB;    // 1 MB = 1024 KB
+  GB = 1024 * MB;    // 1 GB = 1024 MB
+var
+  SizeInBytes: Int64;
+begin
+  SizeInBytes := GetDirectorySize(ConcatPaths([AppDataDir, 'map-cache']));
+
+  if SizeInBytes >= GB then
+    lblClearTemporaryFiles.Caption := Format('%.2f GB', [SizeInBytes / GB])
+  else if SizeInBytes >= MB then
+    lblClearTemporaryFiles.Caption := Format('%.2f MB', [SizeInBytes / MB])
+  else if SizeInBytes >= KB then
+    lblClearTemporaryFiles.Caption := Format('%.2f KB', [SizeInBytes / KB])
+  else
+    lblClearTemporaryFiles.Caption := Format('%d bytes', [SizeInBytes]);
+end;
+
+procedure TfrmMaintenance.CheckThumbnails;
+var
+  Qry: TSQLQuery;
+  ImageCounter: Integer;
+begin
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    SQLTransaction := DMM.sqlTrans;
+
+    Add('SELECT COUNT(image_id) AS counter FROM images');
+    Add('WHERE (image_filename NOTNULL)');
+    Open;
+    ImageCounter := FieldByName('counter').AsInteger;
+    Close;
+
+    lblRecreateImageThumbnails.Caption := IntToStr(ImageCounter) + ' ' + LowerCase(rsCaptionImages);
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TfrmMaintenance.FormShow(Sender: TObject);
+//var
+//  ScreenScale: Single;
+  //IconWidth: Integer;
+begin
+  //ScreenScale := Screen.PixelsPerInch / 96;
+  //IconWidth := Round(iIcons.Width * ScreenScale);
+
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  //icoDatabaseBackup.ImageWidth := IconWidth;
+  //icoDatabaseIntegrity.ImageWidth := IconWidth;
+  //icoOptimizeDatabase.ImageWidth := IconWidth;
+  //icoSettingsBackup.ImageWidth := IconWidth;
+  //icoFactoryReset.ImageWidth := IconWidth;
+  //icoManageLogs.ImageWidth := IconWidth;
+  //icoClearTemporaryFiles.ImageWidth := IconWidth;
+  //icoDiagnostic.ImageWidth := IconWidth;
+  //icoRecreateImageThumbnails.ImageWidth := IconWidth;
+
   CheckDatabaseBackup;
+  CheckSystemLogs;
+  CheckTemporaryFiles;
+  CheckThumbnails;
 end;
 
-procedure TfrmMaintenance.sbBackupDatabaseClick(Sender: TObject);
+procedure TfrmMaintenance.btnBackupDatabaseClick(Sender: TObject);
 begin
   VacuumIntoBackup; //NewBackup;
 
   CheckDatabaseBackup;
 end;
 
-procedure TfrmMaintenance.sbClearLogsClick(Sender: TObject);
+procedure TfrmMaintenance.btnClearLogsClick(Sender: TObject);
 var
   FLog: String;
 begin
@@ -223,13 +323,13 @@ begin
     DeleteFile(FLog);
 end;
 
-procedure TfrmMaintenance.sbRecreateImageThumbnailsClick(Sender: TObject);
+procedure TfrmMaintenance.btnRecreateImageThumbnailsClick(Sender: TObject);
 begin
   if MsgDlg(rsTitleRecreateThumbnails, rsRecreateThumbnailsPrompt, mtConfirmation) then
     RecreateThumbnails;
 end;
 
-procedure TfrmMaintenance.sbRestoreDatabaseClick(Sender: TObject);
+procedure TfrmMaintenance.btnRestoreDatabaseClick(Sender: TObject);
 begin
   if not MsgDlg(rsTitleRestore, rsRestoreBackupPrompt, mtConfirmation) then
     Exit;

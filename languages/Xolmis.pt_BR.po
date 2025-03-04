@@ -2474,6 +2474,11 @@ msgctxt "cbs_locale.rscaptiondate"
 msgid "Date"
 msgstr "Data"
 
+#: cbs_locale.rscaptiondisabled
+msgctxt "cbs_locale.rscaptiondisabled"
+msgid "Disabled"
+msgstr "Desabilitado(a)"
+
 #: cbs_locale.rscaptiondistrict
 msgctxt "cbs_locale.rscaptiondistrict"
 msgid "District"
@@ -2488,6 +2493,10 @@ msgstr "Anilha dupla"
 msgctxt "cbs_locale.rscaptionegg"
 msgid "Egg"
 msgstr "Ovo"
+
+#: cbs_locale.rscaptionenabled
+msgid "Enabled"
+msgstr "Habilitado(a)"
 
 #: cbs_locale.rscaptionexpedition
 msgctxt "cbs_locale.rscaptionexpedition"
@@ -3871,6 +3880,18 @@ msgstr "Ouvido"
 #: cbs_locale.rshintaddexistingsurvey
 msgid "Add existing survey"
 msgstr "Adicionar amostragem existente"
+
+#: cbs_locale.rshintbackupdisabled
+msgid "Automatic backup disabled"
+msgstr "Backup automático desabilitado"
+
+#: cbs_locale.rshintbackupenableddone
+msgid "Automatic backup done"
+msgstr "Backup automático realizado"
+
+#: cbs_locale.rshintbackupenablednotdone
+msgid "Automatic backup not done"
+msgstr "Backup automático não realizado"
 
 #: cbs_locale.rshintcheckuncheckall
 msgctxt "cbs_locale.rshintcheckuncheckall"
@@ -14341,17 +14362,64 @@ msgctxt "tfrmmain.sbhome.hint"
 msgid "Home"
 msgstr "Início"
 
+#: tfrmmaintenance.btnbackupdatabase.caption
+msgctxt "tfrmmaintenance.btnbackupdatabase.caption"
+msgid "Backup"
+msgstr "Backup"
+
+#: tfrmmaintenance.btnbackupsettings.caption
+msgctxt "tfrmmaintenance.btnbackupsettings.caption"
+msgid "Backup"
+msgstr "Backup"
+
+#: tfrmmaintenance.btncheckdatabaseintegrity.caption
+msgctxt "tfrmmaintenance.btncheckdatabaseintegrity.caption"
+msgid "Check"
+msgstr "Verificar"
+
+#: tfrmmaintenance.btnclearlogs.caption
+msgctxt "tfrmmaintenance.btnclearlogs.caption"
+msgid "Clear"
+msgstr "Limpar"
+
+#: tfrmmaintenance.btncleartemporaryfiles.caption
+msgctxt "tfrmmaintenance.btncleartemporaryfiles.caption"
+msgid "Clear"
+msgstr "Limpar"
+
+#: tfrmmaintenance.btndiagnostic.caption
+msgctxt "tfrmmaintenance.btndiagnostic.caption"
+msgid "Run"
+msgstr "Executar"
+
+#: tfrmmaintenance.btnfactoryreset.caption
+msgctxt "tfrmmaintenance.btnfactoryreset.caption"
+msgid "Reset"
+msgstr "Restaurar"
+
+#: tfrmmaintenance.btnoptimizedatabase.caption
+msgctxt "tfrmmaintenance.btnoptimizedatabase.caption"
+msgid "Optimize"
+msgstr "Otimizar"
+
+#: tfrmmaintenance.btnrecreateimagethumbnails.caption
+msgctxt "tfrmmaintenance.btnrecreateimagethumbnails.caption"
+msgid "Recreate"
+msgstr "Recriar"
+
+#: tfrmmaintenance.btnrestoredatabase.caption
+msgctxt "tfrmmaintenance.btnrestoredatabase.caption"
+msgid "Restore"
+msgstr "Restaurar"
+
+#: tfrmmaintenance.btnrestoresettings.caption
+msgctxt "tfrmmaintenance.btnrestoresettings.caption"
+msgid "Restore"
+msgstr "Restaurar"
+
 #: tfrmmaintenance.caption
 msgid "Maintenance"
 msgstr "Manutenção"
-
-#: tfrmmaintenance.lblcleartemporaryfiles.caption
-msgid "Clear cache and temporary files."
-msgstr "Limpar cache e arquivos temporários."
-
-#: tfrmmaintenance.lbldatabasebackup.caption
-msgid "Create and restore database backups."
-msgstr "Criar e restaurar backups do banco de dados."
 
 #: tfrmmaintenance.lbldatabaseintegrity.caption
 msgid "Check database integrity and try to fix it, if possible."
@@ -14362,47 +14430,39 @@ msgid "Run a diagnostic of Xolmis app."
 msgstr "Rodar um diagnóstico do Xolmis."
 
 #: tfrmmaintenance.lblfactoryreset.caption
-msgid "Reset settings to factory defaults. Data will NOT be affected."
-msgstr "Restaurar configurações para os padrões de fábrica. Os dados NÃO serão afetados."
-
-#: tfrmmaintenance.lblmanagelogs.caption
-msgid "Manage log files."
-msgstr "Gerenciar arquivos de log."
+msgid "Data will NOT be affected."
+msgstr "Os dados NÃO serão afetados."
 
 #: tfrmmaintenance.lbloptimizedatabase.caption
 msgid "Reindex and optimize the database."
 msgstr "Reindexar e otimizar o banco de dados."
 
-#: tfrmmaintenance.lblrecreateimagethumbnails.caption
-msgid "Recreate image thumbnails in the database."
-msgstr "Recriar miniaturas de imagens no banco de dados."
-
 #: tfrmmaintenance.lblsettingsbackup.caption
 msgid "Create and restore settings backups."
 msgstr "Criar e restaurar backups das configurações."
 
-#: tfrmmaintenance.sbbackupdatabase.caption
-msgctxt "tfrmmaintenance.sbbackupdatabase.caption"
+#: tfrmmaintenance.sbbackupdatabase.hint
+msgctxt "tfrmmaintenance.sbbackupdatabase.hint"
 msgid "Backup"
 msgstr "Backup"
 
-#: tfrmmaintenance.sbbackupsettings.caption
-msgctxt "tfrmmaintenance.sbbackupsettings.caption"
+#: tfrmmaintenance.sbbackupsettings.hint
+msgctxt "tfrmmaintenance.sbbackupsettings.hint"
 msgid "Backup"
 msgstr "Backup"
 
-#: tfrmmaintenance.sbcheckdatabaseintegrity.caption
-msgctxt "tfrmmaintenance.sbcheckdatabaseintegrity.caption"
+#: tfrmmaintenance.sbcheckdatabaseintegrity.hint
+msgctxt "tfrmmaintenance.sbcheckdatabaseintegrity.hint"
 msgid "Check"
 msgstr "Verificar"
 
-#: tfrmmaintenance.sbclearlogs.caption
-msgctxt "tfrmmaintenance.sbclearlogs.caption"
+#: tfrmmaintenance.sbclearlogs.hint
+msgctxt "tfrmmaintenance.sbclearlogs.hint"
 msgid "Clear"
 msgstr "Limpar"
 
-#: tfrmmaintenance.sbcleartemporaryfiles.caption
-msgctxt "tfrmmaintenance.sbcleartemporaryfiles.caption"
+#: tfrmmaintenance.sbcleartemporaryfiles.hint
+msgctxt "tfrmmaintenance.sbcleartemporaryfiles.hint"
 msgid "Clear"
 msgstr "Limpar"
 
@@ -14411,29 +14471,33 @@ msgctxt "tfrmmaintenance.sbclose.caption"
 msgid "Close"
 msgstr "Fechar"
 
-#: tfrmmaintenance.sbdiagnostic.caption
+#: tfrmmaintenance.sbdiagnostic.hint
+msgctxt "tfrmmaintenance.sbdiagnostic.hint"
 msgid "Run"
-msgstr "Rodar"
+msgstr "Executar"
 
-#: tfrmmaintenance.sbfactoryreset.caption
+#: tfrmmaintenance.sbfactoryreset.hint
+msgctxt "tfrmmaintenance.sbfactoryreset.hint"
 msgid "Reset"
 msgstr "Restaurar"
 
-#: tfrmmaintenance.sboptimizedatabase.caption
+#: tfrmmaintenance.sboptimizedatabase.hint
+msgctxt "tfrmmaintenance.sboptimizedatabase.hint"
 msgid "Optimize"
 msgstr "Otimizar"
 
-#: tfrmmaintenance.sbrecreateimagethumbnails.caption
+#: tfrmmaintenance.sbrecreateimagethumbnails.hint
+msgctxt "tfrmmaintenance.sbrecreateimagethumbnails.hint"
 msgid "Recreate"
 msgstr "Recriar"
 
-#: tfrmmaintenance.sbrestoredatabase.caption
-msgctxt "tfrmmaintenance.sbrestoredatabase.caption"
+#: tfrmmaintenance.sbrestoredatabase.hint
+msgctxt "tfrmmaintenance.sbrestoredatabase.hint"
 msgid "Restore"
 msgstr "Restaurar"
 
-#: tfrmmaintenance.sbrestoresettings.caption
-msgctxt "tfrmmaintenance.sbrestoresettings.caption"
+#: tfrmmaintenance.sbrestoresettings.hint
+msgctxt "tfrmmaintenance.sbrestoresettings.hint"
 msgid "Restore"
 msgstr "Restaurar"
 
@@ -14458,8 +14522,8 @@ msgid "Factory reset"
 msgstr "Restauração de fábrica"
 
 #: tfrmmaintenance.titlemanagelogs.caption
-msgid "Manage logs"
-msgstr "Gerenciar logs"
+msgid "System logs"
+msgstr "Logs do sistema"
 
 #: tfrmmaintenance.titleoptimizedatabase.caption
 msgctxt "tfrmmaintenance.titleoptimizedatabase.caption"

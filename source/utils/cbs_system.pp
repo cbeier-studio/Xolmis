@@ -23,7 +23,7 @@ interface
 
 uses
   { System }
-  Classes, SysUtils, Variants, DateUtils, RegExpr, LCLIntf, LCLType,
+  Classes, SysUtils, Variants, DateUtils, RegExpr, LCLIntf, LCLType, LazFileUtils,
   { Winapi }
   {$IFDEF MSWINDOWS} Windows, DwmApi, Messages,{$ENDIF}
   { VCL }
@@ -90,6 +90,8 @@ type
   procedure SetRoundedCorners(const TheHandle: HWND; const CornerType: TRoundedWindowCornerType);
   {$ENDIF}
   function IsControlInVisibleArea(Control: TControl): Boolean;
+  function GetFileSizeReadable(const FileName: string): string;
+  function GetDirectorySize(const Dir: string): Int64;
 
   procedure AbreForm(aClasseForm: TComponentClass; aForm: TForm);
 
@@ -103,7 +105,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_validations, udm_main, udlg_rechistory, udlg_recverifications, uedt_recverification;
+uses cbs_global, cbs_locale, cbs_validations, udm_main, udlg_rechistory, udlg_recverifications, uedt_recverification;
 
 procedure PositionWindow(const aPos: TDialogPosition; aForm: TForm);
 begin
@@ -251,6 +253,66 @@ begin
   //ControlRect.BottomRight := Control.Parent.ScreenToClient(Control.ClientToScreen(ControlRect.BottomRight));
   // Check if the child control if within the visible are of the parent control
   Result := ParentRect.IntersectsWith(ControlRect);
+end;
+
+function GetFileSizeReadable(const FileName: string): string;
+const
+  KB = 1024;         // 1 KB = 1024 bytes
+  MB = 1024 * KB;    // 1 MB = 1024 KB
+  GB = 1024 * MB;    // 1 GB = 1024 MB
+var
+  FileSizeInBytes: Int64;
+begin
+  if not FileExists(FileName) then
+    raise Exception.CreateFmt(rsErrorFileNotFound, [FileName]);
+
+  FileSizeInBytes := FileSizeUtf8(FileName);
+
+  if FileSizeInBytes >= GB then
+    Result := Format('%.2f GB', [FileSizeInBytes / GB])
+  else if FileSizeInBytes >= MB then
+    Result := Format('%.2f MB', [FileSizeInBytes / MB])
+  else if FileSizeInBytes >= KB then
+    Result := Format('%.2f KB', [FileSizeInBytes / KB])
+  else
+    Result := Format('%d bytes', [FileSizeInBytes]);
+end;
+
+function GetDirectorySize(const Dir: string): Int64;
+var
+  Info: TSearchRec;
+  SizeInBytes: Int64;
+begin
+  SizeInBytes := 0;
+
+  // Verificar se o diretório existe
+  if not DirectoryExistsUTF8(Dir) then
+    raise Exception.CreateFmt('O diretório "%s" não foi encontrado.', [Dir]);
+
+  // Procurar por arquivos no diretório
+  if FindFirstUTF8(IncludeTrailingPathDelimiter(Dir) + '*', faAnyFile, Info) = 0 then
+  try
+    repeat
+      // Ignorar "." e ".."
+      if (Info.Name <> '.') and (Info.Name <> '..') then
+      begin
+        if (Info.Attr and faDirectory) <> 0 then
+        begin
+          // Se for subdiretório, chama recursivamente
+          SizeInBytes := SizeInBytes + GetDirectorySize(IncludeTrailingPathDelimiter(Dir) + Info.Name);
+        end
+        else
+        begin
+          // Adicionar o tamanho do arquivo
+          SizeInBytes := SizeInBytes + Info.Size;
+        end;
+      end;
+    until FindNextUTF8(Info) <> 0;
+  finally
+    FindCloseUTF8(Info);
+  end;
+
+  Result := SizeInBytes;
 end;
 
 { TPartialDate }
