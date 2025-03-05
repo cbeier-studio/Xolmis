@@ -12314,6 +12314,10 @@ msgstr "Presença de larvas de Philornis"
 msgid "Support plant"
 msgstr "Planta-suporte"
 
+#: tfrmcustomgrid.lblprojectbalance.caption
+msgid "Project balance:"
+msgstr "Saldo do projeto:"
+
 #: tfrmcustomgrid.lblprojectfilter.caption
 msgctxt "tfrmcustomgrid.lblprojectfilter.caption"
 msgid "Project"
@@ -12337,6 +12341,10 @@ msgstr "Anilha substituída"
 msgctxt "tfrmcustomgrid.lblreportedfilter.caption"
 msgid "Reported"
 msgstr "Relatada"
+
+#: tfrmcustomgrid.lblrubricbalance.caption
+msgid "Rubric balance:"
+msgstr "Saldo da rubrica:"
 
 #: tfrmcustomgrid.lblsamplingplotfilter.caption
 msgctxt "tfrmcustomgrid.lblsamplingplotfilter.caption"
@@ -13480,6 +13488,10 @@ msgstr "Exportar registros"
 msgctxt "tfrmcustomgrid.sbshowaudio.hint"
 msgid "Audio recordings"
 msgstr "Gravações de áudio"
+
+#: tfrmcustomgrid.sbshowchildsidepanel.hint
+msgid "Show/hide details panel"
+msgstr "Mostrar/ocultar painel de detalhes"
 
 #: tfrmcustomgrid.sbshowcolumns.hint
 msgctxt "tfrmcustomgrid.sbshowcolumns.hint"

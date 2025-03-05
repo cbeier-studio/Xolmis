@@ -11,6 +11,7 @@ object frmMaintenance: TfrmMaintenance
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.0.0.2'
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0

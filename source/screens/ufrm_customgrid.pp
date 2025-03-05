@@ -47,6 +47,10 @@ type
   { TfrmCustomGrid }
 
   TfrmCustomGrid = class(TForm)
+    lblProjectBalance: TLabel;
+    lblRubricBalance: TLabel;
+    txtProjectBalance: TLabel;
+    pChildRightPanel: TBCPanel;
     DropAudios: TDropFileTarget;
     DropDocs: TDropFileTarget;
     DropImages: TDropFileTarget;
@@ -112,6 +116,7 @@ type
     qImagesfeather_id: TLongintField;
     sbAddDoc: TSpeedButton;
     sbClearAllFilters: TSpeedButton;
+    sbShowChildSidePanel: TSpeedButton;
     sbDocInfo: TSpeedButton;
     sbDelDoc: TSpeedButton;
     sbOpenDoc: TSpeedButton;
@@ -835,6 +840,7 @@ type
     tvDateFilter: TLazVirtualStringTree;
     tvSiteFilter: TLazVirtualStringTree;
     tvTaxaFilter: TLazVirtualStringTree;
+    txtRubricBalance: TLabel;
     procedure DBGColEnter(Sender: TObject);
     procedure DBGColExit(Sender: TObject);
     procedure DBGContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
@@ -1053,6 +1059,7 @@ type
     procedure sbShareChildClick(Sender: TObject);
     procedure sbShareMapPointsClick(Sender: TObject);
     procedure sbShareRecordsClick(Sender: TObject);
+    procedure sbShowChildSidePanelClick(Sender: TObject);
     procedure sbShowRecordClick(Sender: TObject);
     procedure sbViewImageClick(Sender: TObject);
     procedure SetFilters(Sender: TObject);
@@ -1302,6 +1309,7 @@ type
     procedure UpdateChildBar;
     procedure UpdateChildButtons(aDataSet: TDataSet);
     procedure UpdateChildCount;
+    procedure UpdateChildRightPanel;
     procedure UpdateChildStatus;
     procedure UpdateGridTitles(aGrid: TDBGrid; aSearch: TCustomSearch);
     procedure UpdateImageButtons(aDataSet: TDataSet);
@@ -1608,6 +1616,8 @@ begin
 
   FParentForm.eAddChild.Visible := False;
   FParentForm.sbAddNetsBatch.Visible := False;
+  FParentForm.sbShowChildSidePanel.Visible := False;
+  FParentForm.pChildRightPanel.Visible := False;
 
   // Set the child table
   case FParentForm.TableType of
@@ -1673,7 +1683,13 @@ begin
         end;
         1: FParentForm.ChildTable := tbProjectGoals;
         2: FParentForm.ChildTable := tbProjectChronograms;
-        3: FParentForm.ChildTable := tbProjectBudgets;
+        3:
+        begin
+          FParentForm.ChildTable := tbProjectBudgets;
+          FParentForm.sbShowChildSidePanel.Visible := True;
+          FParentForm.pChildRightPanel.Visible := FParentForm.sbShowChildSidePanel.Down;
+          FParentForm.UpdateChildRightPanel;
+        end;
         4: FParentForm.ChildTable := tbProjectExpenses;
       end;
   end;
@@ -1936,6 +1952,8 @@ begin
   pChildStatus.Border.Color := clCardBGSecondaryDark;
   pChildsBar.Background.Color := clCardBGDefaultDark;
   pChildsBar.Border.Color := clCardBGSecondaryDark;
+  pChildRightPanel.Background.Color := clSolidBGSecondaryDark;
+  pChildRightPanel.Border.Color := clCardBGSecondaryDark;
   //pChildTag1.Background.Color := clCardBGSecondaryDark;
   //pChildTag1.Border.Color := clSolidBGTertiaryDark;
   //pChildTag1.Color := clCardBGDefaultDark;
@@ -1990,6 +2008,7 @@ begin
   sbPriorChild.Images := iButtonsDark;
   sbNextChild.Images := iButtonsDark;
   sbLastChild.Images := iButtonsDark;
+  sbShowChildSidePanel.Images := iButtonsDark;
   sbShowRecord.Images := iButtonsDark;
   sbShowQuickFilters.Images := iButtonsDark;
   sbShowImages.Images := iButtonsDark;
@@ -4102,6 +4121,8 @@ end;
 procedure TfrmCustomGrid.dsLink4DataChange(Sender: TObject; Field: TField);
 begin
   UpdateChildCount;
+  if FChildTable = tbProjectBudgets then
+    UpdateChildRightPanel;
 end;
 
 procedure TfrmCustomGrid.dsLink4StateChange(Sender: TObject);
@@ -4140,6 +4161,7 @@ begin
     RefreshMap;
 
   UpdateChildBar;
+  UpdateChildRightPanel;
 end;
 
 procedure TfrmCustomGrid.dsLinkStateChange(Sender: TObject);
@@ -8544,10 +8566,10 @@ begin
         tbProjects:
           case nbChilds.PageIndex of
             0: EditProjectMember(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger, True);
-            1: EditProjectGoal(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger, True);
-            2: EditProjectActivity(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger, 0, True);
-            3: EditProjectRubric(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger, True);
-            4: EditProjectExpense(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger, 0, True);
+            1: EditProjectGoal(DMG.qProjectGoals, dsLink.DataSet.FieldByName('project_id').AsInteger, True);
+            2: EditProjectActivity(DMG.qProjectChronogram, dsLink.DataSet.FieldByName('project_id').AsInteger, 0, True);
+            3: EditProjectRubric(DMG.qProjectBudget, dsLink.DataSet.FieldByName('project_id').AsInteger, True);
+            4: EditProjectExpense(DMG.qProjectExpenses, dsLink.DataSet.FieldByName('project_id').AsInteger, 0, True);
           end;
         //tbProjectTeams: ;
         //tbPermits: ;
@@ -8944,10 +8966,10 @@ begin
       tbProjects:
         case nbChilds.PageIndex of
           0: EditProjectMember(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger);
-          1: EditProjectGoal(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger);
-          2: EditProjectActivity(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger);
-          3: EditProjectRubric(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger);
-          4: EditProjectExpense(DMG.qProjectTeam, dsLink.DataSet.FieldByName('project_id').AsInteger);
+          1: EditProjectGoal(DMG.qProjectGoals, dsLink.DataSet.FieldByName('project_id').AsInteger);
+          2: EditProjectActivity(DMG.qProjectChronogram, dsLink.DataSet.FieldByName('project_id').AsInteger);
+          3: EditProjectRubric(DMG.qProjectBudget, dsLink.DataSet.FieldByName('project_id').AsInteger);
+          4: EditProjectExpense(DMG.qProjectExpenses, dsLink.DataSet.FieldByName('project_id').AsInteger);
         end;
       //tbProjectTeams: ;
       //tbPermits: ;
@@ -9461,6 +9483,12 @@ end;
 procedure TfrmCustomGrid.sbShareRecordsClick(Sender: TObject);
 begin
   ExportDlg(dsLink.DataSet);
+end;
+
+procedure TfrmCustomGrid.sbShowChildSidePanelClick(Sender: TObject);
+begin
+  pChildRightPanel.Visible := sbShowChildSidePanel.Down;
+  UpdateChildRightPanel;
 end;
 
 procedure TfrmCustomGrid.sbShowRecordClick(Sender: TObject);
@@ -13150,6 +13178,15 @@ begin
   end;
 
   UpdateChildStatus;
+end;
+
+procedure TfrmCustomGrid.UpdateChildRightPanel;
+begin
+  if FTableType = tbProjects then
+  begin
+    txtProjectBalance.Caption := FormatFloat(maskTwoDecimal, GetProjectBalance(dsLink.DataSet.FieldByName('project_id').AsInteger));
+    txtRubricBalance.Caption := FormatFloat(maskTwoDecimal, GetRubricBalance(dsLink4.DataSet.FieldByName('budget_id').AsInteger));
+  end;
 end;
 
 procedure TfrmCustomGrid.UpdateChildStatus;

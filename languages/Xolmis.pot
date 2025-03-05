@@ -12301,6 +12301,10 @@ msgstr ""
 msgid "Support plant"
 msgstr ""
 
+#: tfrmcustomgrid.lblprojectbalance.caption
+msgid "Project balance:"
+msgstr ""
+
 #: tfrmcustomgrid.lblprojectfilter.caption
 msgctxt "tfrmcustomgrid.lblprojectfilter.caption"
 msgid "Project"
@@ -12323,6 +12327,10 @@ msgstr ""
 #: tfrmcustomgrid.lblreportedfilter.caption
 msgctxt "tfrmcustomgrid.lblreportedfilter.caption"
 msgid "Reported"
+msgstr ""
+
+#: tfrmcustomgrid.lblrubricbalance.caption
+msgid "Rubric balance:"
 msgstr ""
 
 #: tfrmcustomgrid.lblsamplingplotfilter.caption
@@ -13469,6 +13477,10 @@ msgstr ""
 #: tfrmcustomgrid.sbshowaudio.hint
 msgctxt "tfrmcustomgrid.sbshowaudio.hint"
 msgid "Audio recordings"
+msgstr ""
+
+#: tfrmcustomgrid.sbshowchildsidepanel.hint
+msgid "Show/hide details panel"
 msgstr ""
 
 #: tfrmcustomgrid.sbshowcolumns.hint

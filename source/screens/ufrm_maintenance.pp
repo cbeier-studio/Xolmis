@@ -260,8 +260,8 @@ begin
   Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
 
     Add('SELECT COUNT(image_id) AS counter FROM images');
     Add('WHERE (image_filename NOTNULL)');
