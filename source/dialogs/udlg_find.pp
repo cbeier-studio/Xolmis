@@ -1166,10 +1166,12 @@ begin
     tbNests:          SetupFields('nest_id', 'full_name');
     tbNestRevisions:  SetupFields('nest_revision_id', 'full_name');
     tbEggs:           SetupFields('egg_id', 'full_name');
-    tbSamplingPlots:    SetupFields('sampling_plot_id', 'full_name');
+    tbSamplingPlots:  SetupFields('sampling_plot_id', 'full_name');
     tbTaxonRanks:     SetupFields('rank_id', 'rank_name');
     tbZooTaxa:        SetupFields('zoo_taxa', 'full_name', 'formatted_name');
     tbProjects:       SetupFields('project_id', 'project_title');
+    tbProjectBudgets: SetupFields('budget_id', 'rubric_item');
+    tbProjectGoals:   SetupFields('goal_id', 'goal_description');
     tbInstitutions:   SetupFields('institution_id', 'full_name');
     tbPeople:         SetupFields('person_id', 'full_name');
     tbExpeditions:    SetupFields('expedition_id', 'expedition_name');

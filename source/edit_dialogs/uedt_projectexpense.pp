@@ -192,7 +192,7 @@ end;
 procedure TedtProjectExpense.GetRecord;
 begin
   FRubricId := FExpense.BudgetId;
-  eRubric.Text := GetName('project_budgets', 'rubric', 'budget_id', FRubricId);
+  eRubric.Text := GetNameConcat('project_budgets', 'rubric', 'item_name', 'budget_id', FRubricId);
   eItem.Text := FExpense.Description;
   if not DateIsNull(FExpense.ExpenseDate) then
     eDate.Text := DateToStr(FExpense.ExpenseDate);

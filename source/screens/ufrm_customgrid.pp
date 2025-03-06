@@ -6877,6 +6877,7 @@ begin
     dsLink4.DataSet.FieldByName('budget_id').AsInteger, True);
 
   UpdateChildButtons(DMG.qProjectExpenses);
+  UpdateChildRightPanel;
 end;
 
 procedure TfrmCustomGrid.pmcNewFeatherClick(Sender: TObject);
@@ -8624,6 +8625,7 @@ begin
       end;
     finally
       UpdateChildBar;
+      UpdateChildRightPanel;
       Working := False;
     end;
   end;
@@ -9024,6 +9026,7 @@ begin
     end;
   finally
     UpdateChildBar;
+    UpdateChildRightPanel;
     Working := False;
   end;
 end;
@@ -9074,7 +9077,10 @@ begin
     end;
 
     if needsRefresh then
+    begin
       UpdateFilterPanels;
+      UpdateChildRightPanel;
+    end;
   finally
     Working := False;
   end;
@@ -9164,7 +9170,10 @@ begin
     end;
 
     if needsRefresh then
+    begin
       UpdateFilterPanels;
+      UpdateChildRightPanel;
+    end;
   finally
     Working := False;
   end;

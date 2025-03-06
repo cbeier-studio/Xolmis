@@ -109,8 +109,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_themes, cbs_gis,
-  cbs_taxonomy, cbs_conversions, cbs_getvalue, cbs_fullnames, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_gis,
+  cbs_taxonomy, cbs_conversions, cbs_getvalue, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

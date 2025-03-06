@@ -11,11 +11,11 @@ object dlgGeoEditor: TdlgGeoEditor
   ClientWidth = 722
   Constraints.MinHeight = 205
   Constraints.MinWidth = 349
-  OnKeyPress = FormKeyPress
-  OnShow = FormShow
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
+  LCLVersion = '4.0.0.2'
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -197,8 +197,8 @@ object dlgGeoEditor: TdlgGeoEditor
             Width = 50
             Align = alLeft
             MaxValue = 180
-            OnEditingDone = eLongDegEditingDone
             TabOrder = 0
+            OnEditingDone = eLongDegEditingDone
           end
           object eLongMin: TSpinEdit
             Left = 140
@@ -207,8 +207,8 @@ object dlgGeoEditor: TdlgGeoEditor
             Width = 50
             Align = alLeft
             MaxValue = 60
-            OnEditingDone = eLongDegEditingDone
             TabOrder = 1
+            OnEditingDone = eLongDegEditingDone
           end
           object eLongSec: TFloatSpinEdit
             Left = 198
@@ -217,8 +217,8 @@ object dlgGeoEditor: TdlgGeoEditor
             Width = 61
             Align = alLeft
             MaxValue = 60
-            OnEditingDone = eLongDegEditingDone
             TabOrder = 2
+            OnEditingDone = eLongDegEditingDone
           end
           object cbLongHem: TComboBox
             Left = 267
@@ -299,8 +299,8 @@ object dlgGeoEditor: TdlgGeoEditor
             Width = 50
             Align = alLeft
             MaxValue = 90
-            OnEditingDone = eLongDegEditingDone
             TabOrder = 0
+            OnEditingDone = eLongDegEditingDone
           end
           object eLatMin: TSpinEdit
             Left = 139
@@ -309,8 +309,8 @@ object dlgGeoEditor: TdlgGeoEditor
             Width = 50
             Align = alLeft
             MaxValue = 60
-            OnEditingDone = eLongDegEditingDone
             TabOrder = 1
+            OnEditingDone = eLongDegEditingDone
           end
           object eLatSec: TFloatSpinEdit
             Left = 197
@@ -319,8 +319,8 @@ object dlgGeoEditor: TdlgGeoEditor
             Width = 61
             Align = alLeft
             MaxValue = 60
-            OnEditingDone = eLongDegEditingDone
             TabOrder = 2
+            OnEditingDone = eLongDegEditingDone
           end
           object cbLatHem: TComboBox
             Left = 266

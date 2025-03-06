@@ -11,7 +11,6 @@ object edtProjectActivity: TedtProjectActivity
   ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -175,6 +174,7 @@ object edtProjectActivity: TedtProjectActivity
         ItemHeight = 15
         Style = csDropDownList
         TabOrder = 0
+        OnEditingDone = mDescriptionEditingDone
         OnKeyDown = FormKeyDown
         OnKeyPress = cbStatusKeyPress
       end

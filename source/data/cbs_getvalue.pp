@@ -25,6 +25,7 @@ uses
 
   function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
   function GetName(aTable, aNameField, aKeyField: String; aKeyValue: Integer): String;
+  function GetNameConcat(aTable, aNameField1, aNameField2, aKeyField: String; aKeyValue: Integer): String;
   function GetLatLong(aTable, aLongField, aLatField, aNameField, aKeyField: String;
     aKeyValue: Integer; var aMapPoint: TMapPoint): Boolean;
   function GetRankFromSite(aSiteKey: Integer): String;
@@ -103,6 +104,39 @@ begin
       if not(IsEmpty) then
       begin
         Result := FieldByName(aNameField).AsString;
+      end;
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
+  end;
+end;
+
+function GetNameConcat(aTable, aNameField1, aNameField2, aKeyField: String; aKeyValue: Integer): String;
+var
+  Qry: TSQLQuery;
+begin
+  Result := EmptyStr;
+
+  if aKeyValue > 0 then
+  begin
+    Qry := TSQLQuery.Create(DMM.sqlCon);
+    with Qry, SQL do
+    try
+      MacroCheck := True;
+      DataBase := DMM.sqlCon;
+      Clear;
+      Add('SELECT %field1, %field2 FROM %tabname WHERE %keyf = :keyv');
+      MacroByName('field1').Value := aNameField1;
+      MacroByName('field2').Value := aNameField2;
+      MacroByName('TABNAME').Value := aTable;
+      MacroByName('KEYF').Value := aKeyField;
+      ParamByName('KEYV').AsInteger := aKeyValue;
+      // GravaLogSQL(SQL);
+      Open;
+      if not(IsEmpty) then
+      begin
+        Result := Trim(FieldByName(aNameField1).AsString + ' ' + FieldByName(aNameField2).AsString);
       end;
       Close;
     finally
