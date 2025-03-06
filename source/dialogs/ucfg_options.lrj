@@ -10,7 +10,7 @@
 {"hash":157470037,"name":"tcfgoptions.lblstartpage.caption","sourcebytes":[83,116,97,114,116,32,112,97,103,101],"value":"Start page"},
 {"hash":193790965,"name":"tcfgoptions.lbltitleappearance.caption","sourcebytes":[65,112,112,101,97,114,97,110,99,101],"value":"Appearance"},
 {"hash":29300803,"name":"tcfgoptions.lbluseconditionalformatting.caption","sourcebytes":[85,115,101,32,99,111,110,100,105,116,105,111,110,97,108,32,102,111,114,109,97,116,116,105,110,103,32,105,110,32,103,114,105,100,115],"value":"Use conditional formatting in grids"},
-{"hash":32483923,"name":"tcfgoptions.lblshowoutliers.caption","sourcebytes":[83,104,111,119,32,111,117,116,108,105,101,114,32,109,101,97,115,117,114,101,109,101,110,116,115,32,105,110,32,99,97,112,116,117,114,101,115],"value":"Show outlier measurements in captures"},
+{"hash":120407843,"name":"tcfgoptions.lblshowoutliers.caption","sourcebytes":[72,105,103,104,108,105,103,104,116,32,111,117,116,108,105,101,114,32,109,101,97,115,117,114,101,109,101,110,116,115,32,105,110,32,99,97,112,116,117,114,101,115],"value":"Highlight outlier measurements in captures"},
 {"hash":5958709,"name":"tcfgoptions.lblselectedtheme.caption","sourcebytes":[84,104,101,109,101],"value":"Theme"},
 {"hash":96157427,"name":"tcfgoptions.lblselectedthemerestart.caption","sourcebytes":[88,111,108,109,105,115,32,110,101,101,100,32,116,111,32,98,101,32,114,101,115,116,97,114,116,101,100,32,116,111,32,97,112,112,108,121,32,99,104,97,110,103,101,115],"value":"Xolmis need to be restarted to apply changes"},
 {"hash":46008942,"name":"tcfgoptions.lbltitlecollection.caption","sourcebytes":[67,111,108,108,101,99,116,105,111,110],"value":"Collection"},

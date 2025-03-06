@@ -295,51 +295,51 @@ begin
   icoStartupBackup.Images := iIconsDark;
   icoOpenAfterExport.Images := iIconsDark;
 
-  pStartPage.Background.Color := clCardBGDefaultDark;
+  pStartPage.Background.Color := clSolidBGSecondaryDark;
   pStartPage.Border.Color := clSystemSolidNeutralFGDark;
-  pEnterAsTab.Background.Color := clCardBGDefaultDark;
+  pEnterAsTab.Background.Color := clSolidBGSecondaryDark;
   pEnterAsTab.Border.Color := clSystemSolidNeutralFGDark;
-  pConfirmCancel.Background.Color := clCardBGDefaultDark;
+  pConfirmCancel.Background.Color := clSolidBGSecondaryDark;
   pConfirmCancel.Border.Color := clSystemSolidNeutralFGDark;
-  pClearDeleted.Background.Color := clCardBGDefaultDark;
+  pClearDeleted.Background.Color := clSolidBGSecondaryDark;
   pClearDeleted.Border.Color := clSystemSolidNeutralFGDark;
-  pCheckUpdates.Background.Color := clCardBGDefaultDark;
+  pCheckUpdates.Background.Color := clSolidBGSecondaryDark;
   pCheckUpdates.Border.Color := clSystemSolidNeutralFGDark;
-  pSelectedTheme.Background.Color := clCardBGDefaultDark;
+  pSelectedTheme.Background.Color := clSolidBGSecondaryDark;
   pSelectedTheme.Border.Color := clSystemSolidNeutralFGDark;
-  pUseConditionalFormatting.Background.Color := clCardBGDefaultDark;
+  pUseConditionalFormatting.Background.Color := clSolidBGSecondaryDark;
   pUseConditionalFormatting.Border.Color := clSystemSolidNeutralFGDark;
-  pShowOutliers.Background.Color := clCardBGDefaultDark;
+  pShowOutliers.Background.Color := clSolidBGSecondaryDark;
   pShowOutliers.Border.Color := clSystemSolidNeutralFGDark;
-  pVernacularNames.Background.Color := clCardBGDefaultDark;
+  pVernacularNames.Background.Color := clSolidBGSecondaryDark;
   pVernacularNames.Border.Color := clSystemSolidNeutralFGDark;
-  pMainTaxonomy.Background.Color := clCardBGDefaultDark;
+  pMainTaxonomy.Background.Color := clSolidBGSecondaryDark;
   pMainTaxonomy.Border.Color := clSystemSolidNeutralFGDark;
-  pShowSynonyms.Background.Color := clCardBGDefaultDark;
+  pShowSynonyms.Background.Color := clSolidBGSecondaryDark;
   pShowSynonyms.Border.Color := clSystemSolidNeutralFGDark;
-  pImagesPath.Background.Color := clCardBGDefaultDark;
+  pImagesPath.Background.Color := clSolidBGSecondaryDark;
   pImagesPath.Border.Color := clSystemSolidNeutralFGDark;
-  pAudiosPath.Background.Color := clCardBGDefaultDark;
+  pAudiosPath.Background.Color := clSolidBGSecondaryDark;
   pAudiosPath.Border.Color := clSystemSolidNeutralFGDark;
-  pAttachmentsPath.Background.Color := clCardBGDefaultDark;
+  pAttachmentsPath.Background.Color := clSolidBGSecondaryDark;
   pAttachmentsPath.Border.Color := clSystemSolidNeutralFGDark;
-  pOpenAfterExport.Background.Color := clCardBGDefaultDark;
+  pOpenAfterExport.Background.Color := clSolidBGSecondaryDark;
   pOpenAfterExport.Border.Color := clSystemSolidNeutralFGDark;
-  pRememberConnection.Background.Color := clCardBGDefaultDark;
+  pRememberConnection.Background.Color := clSolidBGSecondaryDark;
   pRememberConnection.Border.Color := clSystemSolidNeutralFGDark;
-  pRememberUser.Background.Color := clCardBGDefaultDark;
+  pRememberUser.Background.Color := clSolidBGSecondaryDark;
   pRememberUser.Border.Color := clSystemSolidNeutralFGDark;
-  pAllowWriteLog.Background.Color := clCardBGDefaultDark;
+  pAllowWriteLog.Background.Color := clSolidBGSecondaryDark;
   pAllowWriteLog.Border.Color := clSystemSolidNeutralFGDark;
-  pAllowUsageData.Background.Color := clCardBGDefaultDark;
+  pAllowUsageData.Background.Color := clSolidBGSecondaryDark;
   pAllowUsageData.Border.Color := clSystemSolidNeutralFGDark;
-  pPrivacyTerms.Background.Color := clCardBGDefaultDark;
+  pPrivacyTerms.Background.Color := clSolidBGSecondaryDark;
   pPrivacyTerms.Border.Color := clSystemSolidNeutralFGDark;
-  pBackupPath.Background.Color := clCardBGDefaultDark;
+  pBackupPath.Background.Color := clSolidBGSecondaryDark;
   pBackupPath.Border.Color := clSystemSolidNeutralFGDark;
-  pStartupBackup.Background.Color := clCardBGDefaultDark;
+  pStartupBackup.Background.Color := clSolidBGSecondaryDark;
   pStartupBackup.Border.Color := clSystemSolidNeutralFGDark;
-  pManageBackups.Background.Color := clCardBGDefaultDark;
+  pManageBackups.Background.Color := clSolidBGSecondaryDark;
   pManageBackups.Border.Color := clSystemSolidNeutralFGDark;
 
   tsEnterAsTab.Color := pEnterAsTab.Background.Color;
@@ -396,6 +396,49 @@ begin
 
   //SBox.VertScrollBar.Position := 0;
   tvMenu.Selected := tvMenu.Items.GetFirstNode;
+  tvMenu.Items[0].Text := rsSettingsGeneral;
+  tvMenu.Items[1].Text := rsSettingsAppearance;
+  tvMenu.Items[2].Text := rsSettingsCollection;
+  tvMenu.Items[3].Text := rsSettingsMedia;
+  tvMenu.Items[4].Text := rsSettingsSecurityAndPrivacy;
+  tvMenu.Items[5].Text := rsSettingsBackup;
+
+  cbStartPage.Items.Clear;
+  cbStartPage.Items.Add(rsCaptionExpeditions);
+  cbStartPage.Items.Add(rsTitleSurveys);
+  cbStartPage.Items.Add(rsTitleSightings);
+  cbStartPage.Items.Add(rsTitleSpecimens);
+  cbStartPage.Items.Add(rsTitleBands);
+  cbStartPage.Items.Add(rsTitleIndividuals);
+  cbStartPage.Items.Add(rsTitleCaptures);
+  cbStartPage.Items.Add(rsTitleNests);
+  cbStartPage.Items.Add(rsTitleResearchers);
+  cbStartPage.Items.Add(rsTitleProjects);
+  cbStartPage.Items.Add(rsTitlePermits);
+  cbStartPage.Items.Add(rsTitleGazetteer);
+  cbStartPage.Items.Add(rsTitleCoordinateConverter);
+
+  cbClearDeleted.Items[0] := rsNever;
+
+  cbCheckUpdates.Items.Clear;
+  cbCheckUpdates.Items.Add(rsNever);
+  cbCheckUpdates.Items.Add(rsDaily);
+  cbCheckUpdates.Items.Add(rsWeekly);
+  cbCheckUpdates.Items.Add(rsMonthly);
+
+  cbSelectedTheme.Items.Clear;
+  cbSelectedTheme.Items.Add(rsDefault);
+  cbSelectedTheme.Items.Add(rsAuto);
+  cbSelectedTheme.Items.Add(rsDark);
+  cbSelectedTheme.Items.Add(rsLight);
+
+  cbVernacularNames.Items.Clear;
+  cbVernacularNames.Items.Add(rsEnglish);
+  cbVernacularNames.Items.Add(rsPortuguese);
+  cbVernacularNames.Items.Add(rsSpanish);
+
+  cbStartupBackup.Items.Assign(cbCheckUpdates.Items);
+
   pManageBackups.Enabled := not (ActiveUser.IsVisitor);
 
   LoadConfig;

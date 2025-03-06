@@ -2185,6 +2185,10 @@ msgctxt "cbs_locale.rsauthorship"
 msgid "Authorship"
 msgstr ""
 
+#: cbs_locale.rsauto
+msgid "Auto"
+msgstr ""
+
 #: cbs_locale.rsbandacquiredfromsupplier
 msgid "Acquired from supplier"
 msgstr ""
@@ -2964,6 +2968,14 @@ msgctxt "cbs_locale.rscyclenotselected"
 msgid "No item were selected in one or more columns."
 msgstr ""
 
+#: cbs_locale.rsdaily
+msgid "Daily"
+msgstr ""
+
+#: cbs_locale.rsdark
+msgid "Dark"
+msgstr ""
+
 #: cbs_locale.rsdatebandchange
 msgctxt "cbs_locale.rsdatebandchange"
 msgid "Band change date"
@@ -3096,6 +3108,10 @@ msgstr ""
 #: cbs_locale.rsdecompressingbackup
 msgctxt "cbs_locale.rsdecompressingbackup"
 msgid "Decompressing backup..."
+msgstr ""
+
+#: cbs_locale.rsdefault
+msgid "Default"
 msgstr ""
 
 #: cbs_locale.rsdeleteconnectionprompt
@@ -3377,6 +3393,11 @@ msgstr ""
 #: cbs_locale.rseggunknown
 msgctxt "cbs_locale.rseggunknown"
 msgid "Unknown"
+msgstr ""
+
+#: cbs_locale.rsenglish
+msgctxt "cbs_locale.rsenglish"
+msgid "English"
 msgstr ""
 
 #: cbs_locale.rsenvironment
@@ -4132,6 +4153,10 @@ msgctxt "cbs_locale.rslibreofficenotfound"
 msgid "LibreOffice not found!"
 msgstr ""
 
+#: cbs_locale.rslight
+msgid "Light"
+msgstr ""
+
 #: cbs_locale.rsline
 #, object-pascal-format
 msgctxt "cbs_locale.rsline"
@@ -4329,6 +4354,10 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
+#: cbs_locale.rsmonthly
+msgid "Monthly"
+msgstr ""
+
 #: cbs_locale.rsmoreselected
 #, object-pascal-format
 msgctxt "cbs_locale.rsmoreselected"
@@ -4451,6 +4480,10 @@ msgstr ""
 #: cbs_locale.rsnestunknown
 msgctxt "cbs_locale.rsnestunknown"
 msgid "Unknown"
+msgstr ""
+
+#: cbs_locale.rsnever
+msgid "Never"
 msgstr ""
 
 #: cbs_locale.rsnewdatabase
@@ -4578,6 +4611,11 @@ msgstr ""
 
 #: cbs_locale.rsplumages
 msgid "\"U - Unknown plumage\",\"J - Juvenal plumage\",\"S - Supplemental plumage\",\"F - Formative plumage\",\"B - Basic plumage\",\"A - Alternate plumage\""
+msgstr ""
+
+#: cbs_locale.rsportuguese
+msgctxt "cbs_locale.rsportuguese"
+msgid "Portuguese"
 msgstr ""
 
 #: cbs_locale.rspostbeforecloseprompt
@@ -5009,6 +5047,36 @@ msgctxt "cbs_locale.rsselectcoordinatestypes"
 msgid "Select the origin and destination coordinate types."
 msgstr ""
 
+#: cbs_locale.rssettingsappearance
+msgctxt "cbs_locale.rssettingsappearance"
+msgid "Appearance"
+msgstr ""
+
+#: cbs_locale.rssettingsbackup
+msgctxt "cbs_locale.rssettingsbackup"
+msgid "Backup and restore"
+msgstr ""
+
+#: cbs_locale.rssettingscollection
+msgctxt "cbs_locale.rssettingscollection"
+msgid "Collection"
+msgstr ""
+
+#: cbs_locale.rssettingsgeneral
+msgctxt "cbs_locale.rssettingsgeneral"
+msgid "General"
+msgstr ""
+
+#: cbs_locale.rssettingsmedia
+msgctxt "cbs_locale.rssettingsmedia"
+msgid "Media"
+msgstr ""
+
+#: cbs_locale.rssettingssecurityandprivacy
+msgctxt "cbs_locale.rssettingssecurityandprivacy"
+msgid "Security and privacy"
+msgstr ""
+
 #: cbs_locale.rssexfemale
 msgctxt "cbs_locale.rssexfemale"
 msgid "Female"
@@ -5040,6 +5108,11 @@ msgstr ""
 #: cbs_locale.rssourcereference
 msgctxt "cbs_locale.rssourcereference"
 msgid "Reference source"
+msgstr ""
+
+#: cbs_locale.rsspanish
+msgctxt "cbs_locale.rsspanish"
+msgid "Spanish"
 msgstr ""
 
 #: cbs_locale.rsspecimenblood
@@ -5838,6 +5911,10 @@ msgctxt "cbs_locale.rswasmisspelled"
 msgid "was misspelled"
 msgstr ""
 
+#: cbs_locale.rsweekly
+msgid "Weekly"
+msgstr ""
+
 #: cbs_locale.rswrongcoordinates
 msgid "Wrong coordinates"
 msgstr ""
@@ -6337,7 +6414,7 @@ msgid "Xolmis need to be restarted to apply changes"
 msgstr ""
 
 #: tcfgoptions.lblshowoutliers.caption
-msgid "Show outlier measurements in captures"
+msgid "Highlight outlier measurements in captures"
 msgstr ""
 
 #: tcfgoptions.lblshowsynonyms.caption
@@ -6353,18 +6430,22 @@ msgid "Create backup when Xolmis closes"
 msgstr ""
 
 #: tcfgoptions.lbltitleappearance.caption
+msgctxt "tcfgoptions.lbltitleappearance.caption"
 msgid "Appearance"
 msgstr ""
 
 #: tcfgoptions.lbltitlebackup.caption
+msgctxt "tcfgoptions.lbltitlebackup.caption"
 msgid "Backup and restore"
 msgstr ""
 
 #: tcfgoptions.lbltitlecollection.caption
+msgctxt "tcfgoptions.lbltitlecollection.caption"
 msgid "Collection"
 msgstr ""
 
 #: tcfgoptions.lbltitleinterface.caption
+msgctxt "tcfgoptions.lbltitleinterface.caption"
 msgid "General"
 msgstr ""
 
@@ -6374,6 +6455,7 @@ msgid "Media"
 msgstr ""
 
 #: tcfgoptions.lbltitlesecurity.caption
+msgctxt "tcfgoptions.lbltitlesecurity.caption"
 msgid "Security and privacy"
 msgstr ""
 
@@ -14655,14 +14737,17 @@ msgid "Rank ID"
 msgstr ""
 
 #: tfrmtaxa.label2.caption
+msgctxt "tfrmtaxa.label2.caption"
 msgid "English"
 msgstr ""
 
 #: tfrmtaxa.label3.caption
+msgctxt "tfrmtaxa.label3.caption"
 msgid "Spanish"
 msgstr ""
 
 #: tfrmtaxa.label4.caption
+msgctxt "tfrmtaxa.label4.caption"
 msgid "Portuguese"
 msgstr ""
 

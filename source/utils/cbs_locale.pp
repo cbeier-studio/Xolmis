@@ -472,6 +472,27 @@ uses
     rsLine = 'Line: %d';
     rsTotalResearchers = '%d researcher(s)';
 
+    { Settings }
+    rsSettingsGeneral = 'General';
+    rsSettingsAppearance = 'Appearance';
+    rsSettingsCollection = 'Collection';
+    rsSettingsMedia = 'Media';
+    rsSettingsSecurityAndPrivacy = 'Security and privacy';
+    rsSettingsBackup = 'Backup and restore';
+    rsNever = 'Never';
+    rsDaily = 'Daily';
+    rsWeekly = 'Weekly';
+    rsMonthly = 'Monthly';
+    rsDefault = 'Default';
+    rsAuto = 'Auto';
+    rsDark = 'Dark';
+    rsLight = 'Light';
+
+    { Languages }
+    rsEnglish = 'English';
+    rsPortuguese = 'Portuguese';
+    rsSpanish = 'Spanish';
+
     { Geographical coordinates }
     rsLatitude = 'Latitude';
     rsLongitude = 'Longitude';

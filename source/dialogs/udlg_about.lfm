@@ -149,7 +149,7 @@ object dlgAbout: TdlgAbout
       Width = 275
       Align = alTop
       BorderSpacing.Bottom = 16
-      Caption = '© 2020-2024 Christian Beier'
+      Caption = '© 2020-2025 Christian Beier'
       ParentColor = False
     end
     object linkWebsite: TATLabelLink
@@ -497,6 +497,7 @@ object dlgAbout: TdlgAbout
       Font.Height = -12
       ParentColor = False
       ParentFont = False
+      WordWrap = True
     end
   end
   object iButtons: TImageList

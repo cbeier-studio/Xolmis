@@ -2187,6 +2187,10 @@ msgctxt "cbs_locale.rsauthorship"
 msgid "Authorship"
 msgstr "Autoria"
 
+#: cbs_locale.rsauto
+msgid "Auto"
+msgstr "Auto"
+
 #: cbs_locale.rsbandacquiredfromsupplier
 msgid "Acquired from supplier"
 msgstr "Adquirida do fornecedor"
@@ -2968,6 +2972,14 @@ msgctxt "cbs_locale.rscyclenotselected"
 msgid "No item were selected in one or more columns."
 msgstr "Nenhum item selecionado em uma ou mais colunas."
 
+#: cbs_locale.rsdaily
+msgid "Daily"
+msgstr "Diariamente"
+
+#: cbs_locale.rsdark
+msgid "Dark"
+msgstr "Escuro"
+
 #: cbs_locale.rsdatebandchange
 msgctxt "cbs_locale.rsdatebandchange"
 msgid "Band change date"
@@ -3101,6 +3113,10 @@ msgstr "Ponto"
 msgctxt "cbs_locale.rsdecompressingbackup"
 msgid "Decompressing backup..."
 msgstr "Descompactando backup..."
+
+#: cbs_locale.rsdefault
+msgid "Default"
+msgstr "Padrão"
 
 #: cbs_locale.rsdeleteconnectionprompt
 msgctxt "cbs_locale.rsdeleteconnectionprompt"
@@ -3384,6 +3400,11 @@ msgstr "Listras"
 msgctxt "cbs_locale.rseggunknown"
 msgid "Unknown"
 msgstr "Indeterminada"
+
+#: cbs_locale.rsenglish
+msgctxt "cbs_locale.rsenglish"
+msgid "English"
+msgstr "Inglês"
 
 #: cbs_locale.rsenvironment
 msgctxt "cbs_locale.rsenvironment"
@@ -4138,6 +4159,10 @@ msgctxt "cbs_locale.rslibreofficenotfound"
 msgid "LibreOffice not found!"
 msgstr "LibreOffice não encontrado!"
 
+#: cbs_locale.rslight
+msgid "Light"
+msgstr "Claro"
+
 #: cbs_locale.rsline
 #, object-pascal-format
 msgctxt "cbs_locale.rsline"
@@ -4335,6 +4360,10 @@ msgstr "Meio"
 msgid "Start"
 msgstr "Início"
 
+#: cbs_locale.rsmonthly
+msgid "Monthly"
+msgstr "Mensalmente"
+
 #: cbs_locale.rsmoreselected
 #, object-pascal-format
 msgctxt "cbs_locale.rsmoreselected"
@@ -4458,6 +4487,10 @@ msgstr "Sucesso"
 msgctxt "cbs_locale.rsnestunknown"
 msgid "Unknown"
 msgstr "Indeterminada"
+
+#: cbs_locale.rsnever
+msgid "Never"
+msgstr "Nunca"
 
 #: cbs_locale.rsnewdatabase
 msgctxt "cbs_locale.rsnewdatabase"
@@ -4587,6 +4620,11 @@ msgstr "A pesquisa no Plantminer funciona somente para Gêneros e Espécies."
 #: cbs_locale.rsplumages
 msgid "\"U - Unknown plumage\",\"J - Juvenal plumage\",\"S - Supplemental plumage\",\"F - Formative plumage\",\"B - Basic plumage\",\"A - Alternate plumage\""
 msgstr "\"U - Plumagem indeterminada\",\"J - Plumagem juvenil\",\"S - Plumagem suplementar\",\"F - Plumagem formativa\",\"B - Plumagem básica\",\"A - Plumagem alterna\""
+
+#: cbs_locale.rsportuguese
+msgctxt "cbs_locale.rsportuguese"
+msgid "Portuguese"
+msgstr "Português"
 
 #: cbs_locale.rspostbeforecloseprompt
 msgctxt "cbs_locale.rspostbeforecloseprompt"
@@ -5023,6 +5061,36 @@ msgctxt "cbs_locale.rsselectcoordinatestypes"
 msgid "Select the origin and destination coordinate types."
 msgstr "Selecione o formato de coordenadas de origem e de destino."
 
+#: cbs_locale.rssettingsappearance
+msgctxt "cbs_locale.rssettingsappearance"
+msgid "Appearance"
+msgstr "Aparência"
+
+#: cbs_locale.rssettingsbackup
+msgctxt "cbs_locale.rssettingsbackup"
+msgid "Backup and restore"
+msgstr "Backup e restauração"
+
+#: cbs_locale.rssettingscollection
+msgctxt "cbs_locale.rssettingscollection"
+msgid "Collection"
+msgstr "Coleção"
+
+#: cbs_locale.rssettingsgeneral
+msgctxt "cbs_locale.rssettingsgeneral"
+msgid "General"
+msgstr "Geral"
+
+#: cbs_locale.rssettingsmedia
+msgctxt "cbs_locale.rssettingsmedia"
+msgid "Media"
+msgstr "Mídias"
+
+#: cbs_locale.rssettingssecurityandprivacy
+msgctxt "cbs_locale.rssettingssecurityandprivacy"
+msgid "Security and privacy"
+msgstr "Segurança e privacidade"
+
 #: cbs_locale.rssexfemale
 msgctxt "cbs_locale.rssexfemale"
 msgid "Female"
@@ -5055,6 +5123,11 @@ msgstr "ossificação craniana"
 msgctxt "cbs_locale.rssourcereference"
 msgid "Reference source"
 msgstr "Fonte de referência"
+
+#: cbs_locale.rsspanish
+msgctxt "cbs_locale.rsspanish"
+msgid "Spanish"
+msgstr "Espanhol"
 
 #: cbs_locale.rsspecimenblood
 msgctxt "cbs_locale.rsspecimenblood"
@@ -5852,6 +5925,10 @@ msgctxt "cbs_locale.rswasmisspelled"
 msgid "was misspelled"
 msgstr "grafia incorreta"
 
+#: cbs_locale.rsweekly
+msgid "Weekly"
+msgstr "Semanalmente"
+
 #: cbs_locale.rswrongcoordinates
 msgid "Wrong coordinates"
 msgstr "Coordenadas erradas"
@@ -6351,8 +6428,8 @@ msgid "Xolmis need to be restarted to apply changes"
 msgstr "Xolmis precisa ser reiniciado para aplicar as mudanças"
 
 #: tcfgoptions.lblshowoutliers.caption
-msgid "Show outlier measurements in captures"
-msgstr "Mostrar medidas outlier nas capturas"
+msgid "Highlight outlier measurements in captures"
+msgstr "Destacar medidas atípicas nas capturas"
 
 #: tcfgoptions.lblshowsynonyms.caption
 msgid "Show synonyms in search results"
@@ -6367,18 +6444,22 @@ msgid "Create backup when Xolmis closes"
 msgstr "Criar backup quando o Xolmis encerrar"
 
 #: tcfgoptions.lbltitleappearance.caption
+msgctxt "tcfgoptions.lbltitleappearance.caption"
 msgid "Appearance"
 msgstr "Aparência"
 
 #: tcfgoptions.lbltitlebackup.caption
+msgctxt "tcfgoptions.lbltitlebackup.caption"
 msgid "Backup and restore"
 msgstr "Backup e restauração"
 
 #: tcfgoptions.lbltitlecollection.caption
+msgctxt "tcfgoptions.lbltitlecollection.caption"
 msgid "Collection"
 msgstr "Coleção"
 
 #: tcfgoptions.lbltitleinterface.caption
+msgctxt "tcfgoptions.lbltitleinterface.caption"
 msgid "General"
 msgstr "Geral"
 
@@ -6388,6 +6469,7 @@ msgid "Media"
 msgstr "Mídias"
 
 #: tcfgoptions.lbltitlesecurity.caption
+msgctxt "tcfgoptions.lbltitlesecurity.caption"
 msgid "Security and privacy"
 msgstr "Segurança e privacidade"
 
@@ -13993,7 +14075,7 @@ msgstr "&Gerenciar conexões"
 #: tfrmmain.actexit.caption
 msgctxt "tfrmmain.actexit.caption"
 msgid "E&xit"
-msgstr "Sai&r"
+msgstr "Fecha&r"
 
 #: tfrmmain.actexport.caption
 msgctxt "tfrmmain.actexport.caption"
@@ -14676,14 +14758,17 @@ msgid "Rank ID"
 msgstr "Nível ID"
 
 #: tfrmtaxa.label2.caption
+msgctxt "tfrmtaxa.label2.caption"
 msgid "English"
 msgstr "Inglês"
 
 #: tfrmtaxa.label3.caption
+msgctxt "tfrmtaxa.label3.caption"
 msgid "Spanish"
 msgstr "Espanhol"
 
 #: tfrmtaxa.label4.caption
+msgctxt "tfrmtaxa.label4.caption"
 msgid "Portuguese"
 msgstr "Português"
 
