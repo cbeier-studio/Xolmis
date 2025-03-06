@@ -104,7 +104,9 @@ var
 
 implementation
 
-uses Clipbrd, cbs_global, uDarkStyleParams, FPImage, FPCanvas, FPImgCanv;
+uses
+  Clipbrd, cbs_global, cbs_locale, uDarkStyleParams, FPImage, FPCanvas, FPImgCanv,
+  fpeMetadata, fpeGlobal, fpeTags, fpeExifData;
 
 {$R *.lfm}
 
@@ -178,12 +180,63 @@ end;
 procedure TfrmImageViewer.LoadImage;
 var
   FPath: String;
+  imgExif: TImgInfo;
+  imgOrientation: TExifOrientation;
 begin
   FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName('image_filename').AsString, XSettings.ImagesFolder);
   if not FileExists(FPath) then
-    Exit;
+    raise Exception.CreateFmt(rsErrorFileNotFound, [FPath]);
+
+  { Load image EXIF data }
+  imgExif := TImgInfo.Create;
+  with imgExif do
+  try
+    LoadFromFile(FPath);
+    if HasEXIF then
+    begin
+      imgOrientation := ExifData.ImgOrientation;
+    end;
+  finally
+    FreeAndNil(imgExif);
+  end;
 
   FOriginal.LoadFromFile(FPath);
+  case imgOrientation of
+    eoUnknown: ;            // Unknown - do nothing
+    eoNormal: ;             // Horizontal - No rotation required
+    eoMirrorHor:                         // Flip horizontal
+      begin
+        FOriginal.HorizontalFlip;
+      end;
+    eoRotate180:                         // Rotate 180 CW
+      begin
+        FOriginal.HorizontalFlip;
+        FOriginal.VerticalFlip;
+      end;
+    eoMirrorVert:                        // Rotate 180 CW and flip horizontal (Flip vertical)
+      begin
+        FOriginal.VerticalFlip;
+      end;
+    eoMirrorHorRot270:                   // Rotate 270 CW and flip horizontal
+      begin
+        FOriginal.HorizontalFlip;
+        BGRAReplace(FOriginal, FOriginal.RotateCCW);
+      end;
+    eoRotate90:                          // Rotate 90 CW
+      begin
+        BGRAReplace(FOriginal, FOriginal.RotateCW);
+      end;
+    eoMirrorHorRot90:                    // Rotate 90 CW and flip horizontal
+      begin
+        FOriginal.HorizontalFlip;
+        BGRAReplace(FOriginal, FOriginal.RotateCW);
+      end;
+    eoRotate270:                         // Rotate 270 CW
+      begin
+        BGRAReplace(FOriginal, FOriginal.RotateCCW);
+      end;
+  end;
+
   FOrigWidth := FOriginal.Width;
   FOrigHeight := FOriginal.Height;
   lblSize.Caption := Format('%d × %d px', [FOrigWidth, FOrigHeight]);

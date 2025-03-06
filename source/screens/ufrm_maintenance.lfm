@@ -11,7 +11,6 @@ object frmMaintenance: TfrmMaintenance
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
@@ -249,9 +248,9 @@ object frmMaintenance: TfrmMaintenance
         Width = 24
         AutoSize = True
         Center = True
-        ImageIndex = 1
+        ImageIndex = 6
         ImageWidth = 24
-        Images = iCheck
+        Images = iIcons
         Proportional = True
       end
       object lblDatabaseIntegrity: TLabel
@@ -363,7 +362,7 @@ object frmMaintenance: TfrmMaintenance
         Center = True
         ImageIndex = 1
         ImageWidth = 24
-        Images = iCheck
+        Images = iIcons
         Proportional = True
       end
       object lblOptimizeDatabase: TLabel
