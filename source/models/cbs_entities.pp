@@ -419,7 +419,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_users, cbs_global, cbs_validations, cbs_datacolumns;
+uses cbs_locale, cbs_users, cbs_global, cbs_validations, cbs_datacolumns, cbs_setparam;
 
 procedure InitProjectActivityPropsDict;
 begin
@@ -702,9 +702,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO projects (' +
         'project_title, ' +
@@ -739,16 +739,16 @@ begin
 
       ParamByName('project_title').AsString := FTitle;
       ParamByName('short_title').AsString := FShortTitle;
-      ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate);
-      ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate);
-      ParamByName('website_uri').AsString := FWebsiteUri;
-      ParamByName('email_addr').AsString := FEmailAddress;
-      ParamByName('contact_name').AsString := FContactName;
-      ParamByName('protocol_number').AsString := FProtocolNumber;
-      ParamByName('main_goal').AsString := FMainGoal;
-      ParamByName('risks').AsString := FRisks;
-      ParamByName('project_abstract').AsString := FAbstract;
-      ParamByName('notes').AsString := FNotes;
+      SetDateParam(ParamByName('start_date'), FStartDate);
+      SetDateParam(ParamByName('end_date'), FEndDate);
+      SetStrParam(ParamByName('website_uri'), FWebsiteUri);
+      SetStrParam(ParamByName('email_addr'), FEmailAddress);
+      SetStrParam(ParamByName('contact_name'), FContactName);
+      SetStrParam(ParamByName('protocol_number'), FProtocolNumber);
+      SetStrParam(ParamByName('main_goal'), FMainGoal);
+      SetStrParam(ParamByName('risks'), FRisks);
+      SetStrParam(ParamByName('project_abstract'), FAbstract);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -760,11 +760,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -816,9 +816,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE projects SET ' +
         'project_title = :project_title, ' +
@@ -839,26 +839,26 @@ begin
 
       ParamByName('project_title').AsString := FTitle;
       ParamByName('short_title').AsString := FShortTitle;
-      ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate);
-      ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate);
-      ParamByName('website_uri').AsString := FWebsiteUri;
-      ParamByName('email_addr').AsString := FEmailAddress;
-      ParamByName('contact_name').AsString := FContactName;
-      ParamByName('protocol_number').AsString := FProtocolNumber;
-      ParamByName('main_goal').AsString := FMainGoal;
-      ParamByName('risks').AsString := FRisks;
-      ParamByName('project_abstract').AsString := FAbstract;
-      ParamByName('notes').AsString := FNotes;
+      SetDateParam(ParamByName('start_date'), FStartDate);
+      SetDateParam(ParamByName('end_date'), FEndDate);
+      SetStrParam(ParamByName('website_uri'), FWebsiteUri);
+      SetStrParam(ParamByName('email_addr'), FEmailAddress);
+      SetStrParam(ParamByName('contact_name'), FContactName);
+      SetStrParam(ParamByName('protocol_number'), FProtocolNumber);
+      SetStrParam(ParamByName('main_goal'), FMainGoal);
+      SetStrParam(ParamByName('risks'), FRisks);
+      SetStrParam(ParamByName('project_abstract'), FAbstract);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('project_id').AsInteger := FId;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1130,9 +1130,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO institutions (' +
         'full_name, ' +
@@ -1169,26 +1169,17 @@ begin
 
       ParamByName('full_name').AsString := FFullName;
       ParamByName('acronym').AsString := FAcronym;
-      ParamByName('address_1').AsString := FAddress1;
-      ParamByName('address_2').AsString := FAddress2;
-      ParamByName('neighborhood').AsString := FNeighborhood;
-      ParamByName('zip_code').AsString := FZipCode;
-      if (FCountryId > 0) then
-        ParamByName('country_id').AsInteger := FCountryId
-      else
-        ParamByName('country_id').Clear;
-      if (FStateId > 0) then
-        ParamByName('state_id').AsInteger := FStateId
-      else
-        ParamByName('state_id').Clear;
-      if (FMunicipalityId > 0) then
-        ParamByName('municipality_id').AsInteger := FMunicipalityId
-      else
-        ParamByName('municipality_id').Clear;
-      ParamByName('manager_name').AsString := FManagerName;
-      ParamByName('email_addr').AsString := FEmail;
-      ParamByName('phone_num').AsString := FPhone;
-      ParamByName('notes').AsString := FNotes;
+      SetStrParam(ParamByName('address_1'), FAddress1);
+      SetStrParam(ParamByName('address_2'), FAddress2);
+      SetStrParam(ParamByName('neighborhood'), FNeighborhood);
+      SetStrParam(ParamByName('zip_code'), FZipCode);
+      SetForeignParam(ParamByName('country_id'), FCountryId);
+      SetForeignParam(ParamByName('state_id'), FStateId);
+      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
+      SetStrParam(ParamByName('manager_name'), FManagerName);
+      SetStrParam(ParamByName('email_addr'), FEmail);
+      SetStrParam(ParamByName('phone_num'), FPhone);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -1200,11 +1191,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1257,9 +1248,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE institutions SET ' +
         'full_name = :full_name, ' +
@@ -1281,36 +1272,27 @@ begin
 
       ParamByName('full_name').AsString := FFullName;
       ParamByName('acronym').AsString := FAcronym;
-      ParamByName('address_1').AsString := FAddress1;
-      ParamByName('address_2').AsString := FAddress2;
-      ParamByName('neighborhood').AsString := FNeighborhood;
-      ParamByName('zip_code').AsString := FZipCode;
-      if (FCountryId > 0) then
-        ParamByName('country_id').AsInteger := FCountryId
-      else
-        ParamByName('country_id').Clear;
-      if (FStateId > 0) then
-        ParamByName('state_id').AsInteger := FStateId
-      else
-        ParamByName('state_id').Clear;
-      if (FMunicipalityId > 0) then
-        ParamByName('municipality_id').AsInteger := FMunicipalityId
-      else
-        ParamByName('municipality_id').Clear;
-      ParamByName('manager_name').AsString := FManagerName;
-      ParamByName('email_addr').AsString := FEmail;
-      ParamByName('phone_num').AsString := FPhone;
-      ParamByName('notes').AsString := FNotes;
+      SetStrParam(ParamByName('address_1'), FAddress1);
+      SetStrParam(ParamByName('address_2'), FAddress2);
+      SetStrParam(ParamByName('neighborhood'), FNeighborhood);
+      SetStrParam(ParamByName('zip_code'), FZipCode);
+      SetForeignParam(ParamByName('country_id'), FCountryId);
+      SetForeignParam(ParamByName('state_id'), FStateId);
+      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
+      SetStrParam(ParamByName('manager_name'), FManagerName);
+      SetStrParam(ParamByName('email_addr'), FEmail);
+      SetStrParam(ParamByName('phone_num'), FPhone);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('institution_id').AsInteger := FId;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1709,9 +1691,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO people (' +
         'full_name, ' +
@@ -1781,44 +1763,32 @@ begin
       ParamByName('full_name').AsString := FFullName;
       ParamByName('acronym').AsString := FAcronym;
       ParamByName('citation').AsString := FCitation;
-      ParamByName('title_treatment').AsString := FTitleTreatment;
-      ParamByName('national_id_card').AsString := FIdDocument1;
-      ParamByName('social_security_number').AsString := FIdDocument2;
-      ParamByName('gender').AsString := FGender;
-      ParamByName('birth_date').AsString := FormatDateTime('yyyy-mm-dd', FBirthDate);
-      ParamByName('death_date').AsString := FormatDateTime('yyyy-mm-dd', FDeathDate);
-      ParamByName('email_addr').AsString := FEmail;
-      ParamByName('phone_1').AsString := FPhone1;
-      ParamByName('phone_2').AsString := FPhone2;
-      ParamByName('address_1').AsString := FAddress1;
-      ParamByName('address_2').AsString := FAddress2;
-      ParamByName('neighborhood').AsString := FNeighborhood;
-      ParamByName('zip_code').AsString := FZipCode;
-      if (FCountryId > 0) then
-        ParamByName('country_id').AsInteger := FCountryId
-      else
-        ParamByName('country_id').Clear;
-      if (FStateId > 0) then
-        ParamByName('state_id').AsInteger := FStateId
-      else
-        ParamByName('state_id').Clear;
-      if (FMunicipalityId > 0) then
-        ParamByName('municipality_id').AsInteger := FMunicipalityId
-      else
-        ParamByName('municipality_id').Clear;
-      if (FInstitutionId > 0) then
-        ParamByName('institution_id').AsInteger := FInstitutionId
-      else
-        ParamByName('institution_id').Clear;
-      ParamByName('department').AsString := FDepartment;
-      ParamByName('job_role').AsString := FJobRole;
-      ParamByName('lattes_uri').AsString := FLattesUri;
-      ParamByName('orcid_uri').AsString := FOrcidUri;
-      ParamByName('twitter_uri').AsString := FTwitterUri;
-      ParamByName('instagram_uri').AsString := FInstagramUri;
-      ParamByName('website_uri').AsString := FWebsiteUri;
-      ParamByName('profile_color').AsString := FProfileColor;
-      ParamByName('notes').AsString := FNotes;
+      SetStrParam(ParamByName('title_treatment'), FTitleTreatment);
+      SetStrParam(ParamByName('national_id_card'), FIdDocument1);
+      SetStrParam(ParamByName('social_security_number'), FIdDocument2);
+      SetStrParam(ParamByName('gender'), FGender);
+      SetDateParam(ParamByName('birth_date'), FBirthDate);
+      SetDateParam(ParamByName('death_date'), FDeathDate);
+      SetStrParam(ParamByName('email_addr'), FEmail);
+      SetStrParam(ParamByName('phone_1'), FPhone1);
+      SetStrParam(ParamByName('phone_2'), FPhone2);
+      SetStrParam(ParamByName('address_1'), FAddress1);
+      SetStrParam(ParamByName('address_2'), FAddress2);
+      SetStrParam(ParamByName('neighborhood'), FNeighborhood);
+      SetStrParam(ParamByName('zip_code'), FZipCode);
+      SetForeignParam(ParamByName('country_id'), FCountryId);
+      SetForeignParam(ParamByName('state_id'), FStateId);
+      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
+      SetForeignParam(ParamByName('institution_id'), FInstitutionId);
+      SetStrParam(ParamByName('department'), FDepartment);
+      SetStrParam(ParamByName('job_role'), FJobRole);
+      SetStrParam(ParamByName('lattes_uri'), FLattesUri);
+      SetStrParam(ParamByName('orcid_uri'), FOrcidUri);
+      SetStrParam(ParamByName('twitter_uri'), FTwitterUri);
+      SetStrParam(ParamByName('instagram_uri'), FInstagramUri);
+      SetStrParam(ParamByName('website_uri'), FWebsiteUri);
+      SetStrParam(ParamByName('profile_color'), FProfileColor);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -1830,11 +1800,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1904,9 +1874,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE people SET ' +
         'full_name = :full_name, ' +
@@ -1945,54 +1915,42 @@ begin
       ParamByName('full_name').AsString := FFullName;
       ParamByName('acronym').AsString := FAcronym;
       ParamByName('citation').AsString := FCitation;
-      ParamByName('title_treatment').AsString := FTitleTreatment;
-      ParamByName('national_id_card').AsString := FIdDocument1;
-      ParamByName('social_security_number').AsString := FIdDocument2;
-      ParamByName('gender').AsString := FGender;
-      ParamByName('birth_date').AsString := FormatDateTime('yyyy-mm-dd', FBirthDate);
-      ParamByName('death_date').AsString := FormatDateTime('yyyy-mm-dd', FDeathDate);
-      ParamByName('email_addr').AsString := FEmail;
-      ParamByName('phone_1').AsString := FPhone1;
-      ParamByName('phone_2').AsString := FPhone2;
-      ParamByName('address_1').AsString := FAddress1;
-      ParamByName('address_2').AsString := FAddress2;
-      ParamByName('neighborhood').AsString := FNeighborhood;
-      ParamByName('zip_code').AsString := FZipCode;
-      if (FCountryId > 0) then
-        ParamByName('country_id').AsInteger := FCountryId
-      else
-        ParamByName('country_id').Clear;
-      if (FStateId > 0) then
-        ParamByName('state_id').AsInteger := FStateId
-      else
-        ParamByName('state_id').Clear;
-      if (FMunicipalityId > 0) then
-        ParamByName('municipality_id').AsInteger := FMunicipalityId
-      else
-        ParamByName('municipality_id').Clear;
-      if (FInstitutionId > 0) then
-        ParamByName('institution_id').AsInteger := FInstitutionId
-      else
-        ParamByName('institution_id').Clear;
-      ParamByName('department').AsString := FDepartment;
-      ParamByName('job_role').AsString := FJobRole;
-      ParamByName('lattes_uri').AsString := FLattesUri;
-      ParamByName('orcid_uri').AsString := FOrcidUri;
-      ParamByName('twitter_uri').AsString := FTwitterUri;
-      ParamByName('instagram_uri').AsString := FInstagramUri;
-      ParamByName('website_uri').AsString := FWebsiteUri;
-      ParamByName('profile_color').AsString := FProfileColor;
-      ParamByName('notes').AsString := FNotes;
+      SetStrParam(ParamByName('title_treatment'), FTitleTreatment);
+      SetStrParam(ParamByName('national_id_card'), FIdDocument1);
+      SetStrParam(ParamByName('social_security_number'), FIdDocument2);
+      SetStrParam(ParamByName('gender'), FGender);
+      SetDateParam(ParamByName('birth_date'), FBirthDate);
+      SetDateParam(ParamByName('death_date'), FDeathDate);
+      SetStrParam(ParamByName('email_addr'), FEmail);
+      SetStrParam(ParamByName('phone_1'), FPhone1);
+      SetStrParam(ParamByName('phone_2'), FPhone2);
+      SetStrParam(ParamByName('address_1'), FAddress1);
+      SetStrParam(ParamByName('address_2'), FAddress2);
+      SetStrParam(ParamByName('neighborhood'), FNeighborhood);
+      SetStrParam(ParamByName('zip_code'), FZipCode);
+      SetForeignParam(ParamByName('country_id'), FCountryId);
+      SetForeignParam(ParamByName('state_id'), FStateId);
+      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
+      SetForeignParam(ParamByName('institution_id'), FInstitutionId);
+      SetStrParam(ParamByName('department'), FDepartment);
+      SetStrParam(ParamByName('job_role'), FJobRole);
+      SetStrParam(ParamByName('lattes_uri'), FLattesUri);
+      SetStrParam(ParamByName('orcid_uri'), FOrcidUri);
+      SetStrParam(ParamByName('twitter_uri'), FTwitterUri);
+      SetStrParam(ParamByName('instagram_uri'), FInstagramUri);
+      SetStrParam(ParamByName('website_uri'), FWebsiteUri);
+      SetStrParam(ParamByName('profile_color'), FProfileColor);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('person_id').AsInteger := FId;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2196,9 +2154,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO project_team (' +
         'project_id, ' +
@@ -2218,7 +2176,7 @@ begin
       ParamByName('project_id').AsInteger := FProjectId;
       ParamByName('person_id').AsInteger := FPersonId;
       ParamByName('project_manager').AsBoolean := FProjectManager;
-      ParamByName('institution_id').AsInteger := FInstitutionId;
+      SetForeignParam(ParamByName('institution_id'), FInstitutionId);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -2230,11 +2188,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2278,9 +2236,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE project_team SET ' +
         'project_id = :project_id, ' +
@@ -2294,17 +2252,17 @@ begin
       ParamByName('project_id').AsInteger := FProjectId;
       ParamByName('person_id').AsInteger := FPersonId;
       ParamByName('project_manager').AsBoolean := FProjectManager;
-      ParamByName('institution_id').AsInteger := FInstitutionId;
+      SetForeignParam(ParamByName('institution_id'), FInstitutionId);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('project_member_id').AsInteger := FId;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2471,9 +2429,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO project_goals (' +
         'project_id, ' +
@@ -2506,11 +2464,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2590,9 +2548,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE project_goals SET ' +
         'project_id = :project_id, ' +
@@ -2614,11 +2572,11 @@ begin
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2819,9 +2777,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO project_chronograms (' +
         'project_id, ' +
@@ -2844,12 +2802,12 @@ begin
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
-      ParamByName('project_id').AsInteger := FProjectId;
+      SetForeignParam(ParamByName('project_id'), FProjectId);
       ParamByName('description').AsString := FDescription;
-      ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate);
-      ParamByName('target_date').AsString := FormatDateTime('yyyy-mm-dd', FTargetDate);
-      ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate);
-      ParamByName('goal_id').AsInteger := FGoalId;
+      SetDateParam(ParamByName('start_date'), FStartDate);
+      SetDateParam(ParamByName('target_date'), FTargetDate);
+      SetDateParam(ParamByName('end_date'), FEndDate);
+      SetForeignParam(ParamByName('goal_id'), FGoalId);
       case FStatus of
         astToDo:        ParamByName('progress_status').AsString := 'T';
         astInProgress:  ParamByName('progress_status').AsString := 'P';
@@ -2870,11 +2828,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2969,9 +2927,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE project_chronograms SET ' +
         'project_id = :project_id, ' +
@@ -2985,12 +2943,12 @@ begin
         'update_date = datetime(''now'',''subsec'') ');
       Add('WHERE (chronogram_id = :chronogram_id)');
 
-      ParamByName('project_id').AsInteger := FProjectId;
+      SetForeignParam(ParamByName('project_id'), FProjectId);
       ParamByName('description').AsString := FDescription;
-      ParamByName('start_date').AsString := FormatDateTime('yyyy-mm-dd', FStartDate);
-      ParamByName('target_date').AsString := FormatDateTime('yyyy-mm-dd', FTargetDate);
-      ParamByName('end_date').AsString := FormatDateTime('yyyy-mm-dd', FEndDate);
-      ParamByName('goal_id').AsInteger := FGoalId;
+      SetDateParam(ParamByName('start_date'), FStartDate);
+      SetDateParam(ParamByName('target_date'), FTargetDate);
+      SetDateParam(ParamByName('end_date'), FEndDate);
+      SetForeignParam(ParamByName('goal_id'), FGoalId);
       case FStatus of
         astToDo:        ParamByName('progress_status').AsString := 'T';
         astInProgress:  ParamByName('progress_status').AsString := 'P';
@@ -3005,11 +2963,11 @@ begin
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3188,9 +3146,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO project_budgets (' +
         'project_id, ' +
@@ -3210,10 +3168,10 @@ begin
         'datetime(''now'', ''subsec''))');
 
       ParamByName('project_id').AsInteger := FProjectId;
-      ParamByName('funding_source').AsString := FFundingSource;
-      ParamByName('rubric').AsString := FRubric;
-      ParamByName('item_name').AsString := FItemName;
-      ParamByName('amount').AsFloat := FAmount;
+      SetStrParam(ParamByName('funding_source'), FFundingSource);
+      SetStrParam(ParamByName('rubric'), FRubric);
+      SetStrParam(ParamByName('item_name'), FItemName);
+      SetFloatParam(ParamByName('amount'), FAmount);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -3225,11 +3183,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3309,9 +3267,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE project_budgets SET ' +
         'project_id = :project_id, ' +
@@ -3324,20 +3282,20 @@ begin
       Add('WHERE (budget_id = :budget_id)');
 
       ParamByName('project_id').AsInteger := FProjectId;
-      ParamByName('funding_source').AsString := FFundingSource;
-      ParamByName('rubric').AsString := FRubric;
-      ParamByName('item_name').AsString := FItemName;
-      ParamByName('amount').AsFloat := FAmount;
+      SetStrParam(ParamByName('funding_source'), FFundingSource);
+      SetStrParam(ParamByName('rubric'), FRubric);
+      SetStrParam(ParamByName('item_name'), FItemName);
+      SetFloatParam(ParamByName('amount'), FAmount);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('budget_id').AsInteger := FId;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3516,9 +3474,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO project_expenses (' +
         'project_id, ' +
@@ -3538,10 +3496,10 @@ begin
         'datetime(''now'', ''subsec''))');
 
       ParamByName('project_id').AsInteger := FProjectId;
-      ParamByName('budget_id').AsInteger := FBudgetId;
-      ParamByName('item_description').AsString := FDescription;
-      ParamByName('expense_date').AsString := FormatDateTime('yyyy-mm-dd', FExpenseDate);
-      ParamByName('amount').AsFloat := FAmount;
+      SetForeignParam(ParamByName('budget_id'), FBudgetId);
+      SetStrParam(ParamByName('item_description'), FDescription);
+      SetDateParam(ParamByName('expense_date'), FExpenseDate);
+      SetFloatParam(ParamByName('amount'), FAmount);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -3553,11 +3511,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3638,9 +3596,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE project_expenses SET ' +
         'project_id = :project_id, ' +
@@ -3653,20 +3611,20 @@ begin
       Add('WHERE (expense_id = :expense_id)');
 
       ParamByName('project_id').AsInteger := FProjectId;
-      ParamByName('budget_id').AsInteger := FBudgetId;
-      ParamByName('item_description').AsString := FDescription;
-      ParamByName('expense_date').AsString := FormatDateTime('yyyy-mm-dd', FExpenseDate);
-      ParamByName('amount').AsFloat := FAmount;
+      SetForeignParam(ParamByName('budget_id'), FBudgetId);
+      SetStrParam(ParamByName('item_description'), FDescription);
+      SetDateParam(ParamByName('expense_date'), FExpenseDate);
+      SetFloatParam(ParamByName('amount'), FAmount);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('expense_id').AsInteger := FId;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -3910,9 +3868,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO legal (' +
         'project_id, ' +
@@ -3939,18 +3897,15 @@ begin
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
-      if (FProjectId > 0) then
-        ParamByName('project_id').AsInteger := FProjectId
-      else
-        ParamByName('project_id').Clear;
-      ParamByName('permit_name').AsString := FName;
-      ParamByName('permit_number').AsString := FNumber;
-      ParamByName('permit_type').AsString := FPermitType;
-      ParamByName('dispatcher_name').AsString := FDispatcher;
-      ParamByName('dispatch_date').AsString := FormatDateTime('yyyy-mm-dd', FDispatchDate);
-      ParamByName('expire_date').AsString := FormatDateTime('yyyy-mm-dd', FExpireDate);
-      ParamByName('notes').AsString := FNotes;
-      ParamByName('permit_filename').AsString := FFileName;
+      SetForeignParam(ParamByName('project_id'), FProjectId);
+      SetStrParam(ParamByName('permit_name'), FName);
+      SetStrParam(ParamByName('permit_number'), FNumber);
+      SetStrParam(ParamByName('permit_type'), FPermitType);
+      SetStrParam(ParamByName('dispatcher_name'), FDispatcher);
+      SetDateParam(ParamByName('dispatch_date'), FDispatchDate);
+      SetDateParam(ParamByName('expire_date'), FExpireDate);
+      SetStrParam(ParamByName('notes'), FNotes);
+      SetStrParam(ParamByName('permit_filename'), FFileName);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -3962,11 +3917,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -4015,9 +3970,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE legal SET ' +
         'project_id = :project_id, ' +
@@ -4033,28 +3988,25 @@ begin
         'update_date = datetime(''now'',''subsec'') ');
       Add('WHERE (permit_id = :permit_id)');
 
-      if (FProjectId > 0) then
-        ParamByName('project_id').AsInteger := FProjectId
-      else
-        ParamByName('project_id').Clear;
-      ParamByName('permit_name').AsString := FName;
-      ParamByName('permit_number').AsString := FNumber;
-      ParamByName('permit_type').AsString := FPermitType;
-      ParamByName('dispatcher_name').AsString := FDispatcher;
-      ParamByName('dispatch_date').AsString := FormatDateTime('yyyy-mm-dd', FDispatchDate);
-      ParamByName('expire_date').AsString := FormatDateTime('yyyy-mm-dd', FExpireDate);
-      ParamByName('notes').AsString := FNotes;
-      ParamByName('permit_filename').AsString := FFileName;
+      SetForeignParam(ParamByName('project_id'), FProjectId);
+      SetStrParam(ParamByName('permit_name'), FName);
+      SetStrParam(ParamByName('permit_number'), FNumber);
+      SetStrParam(ParamByName('permit_type'), FPermitType);
+      SetStrParam(ParamByName('dispatcher_name'), FDispatcher);
+      SetDateParam(ParamByName('dispatch_date'), FDispatchDate);
+      SetDateParam(ParamByName('expire_date'), FExpireDate);
+      SetStrParam(ParamByName('notes'), FNotes);
+      SetStrParam(ParamByName('permit_filename'), FFileName);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('permit_id').AsInteger := FId;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;

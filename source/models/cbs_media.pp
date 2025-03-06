@@ -323,7 +323,7 @@ type
 
 implementation
 
-uses cbs_global, cbs_locale, cbs_validations, cbs_datacolumns, cbs_users, udm_main;
+uses cbs_global, cbs_locale, cbs_validations, cbs_datacolumns, cbs_setparam, cbs_users, udm_main;
 
 { TImageData }
 
@@ -616,9 +616,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO images (' +
         'image_date, ' +
@@ -677,8 +677,8 @@ begin
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
-      ParamByName('image_date').AsString := FormatDateTime('yyyy-MM-dd', FImageDate);
-      ParamByName('image_time').AsString := TimeToStr(FImageTime);
+      SetDateParam(ParamByName('image_date'), FImageDate);
+      SetTimeParam(ParamByName('image_time'), FImageTime);
       ParamByName('image_type').AsString := ImageTypeStr[FImageType];
       ParamByName('image_filename').AsString := FFilename;
       if FFilename <> EmptyStr then
@@ -687,67 +687,25 @@ begin
       end
       else
         ParamByName('image_thumbnail').Clear;
-      ParamByName('subtitle').AsString := FSubtitle;
-      if (FAuthorId <> 0) then
-        ParamByName('author_id').AsInteger := FAuthorId
-      else
-        ParamByName('author_id').Clear;
-      if (FLocalityId > 0) then
-        ParamByName('locality_id').AsInteger := FLocalityId
-      else
-        ParamByName('locality_id').Clear;
+      SetStrParam(ParamByName('subtitle'), FSubtitle);
+      SetForeignParam(ParamByName('author_id'), FAuthorId);
+      SetForeignParam(ParamByName('locality_id'), FLocalityId);
       ParamByName('coordinate_precision').AsString := CoordinatePrecisionStr[FCoordinatePrecision];
-      if (FLongitude <> 0) and (FLatitude <> 0) then
-      begin
-        ParamByName('longitude').AsFloat := FLongitude;
-        ParamByName('latitude').AsFloat := FLatitude;
-      end
-      else
-      begin
-        ParamByName('longitude').Clear;
-        ParamByName('latitude').Clear;
-      end;
-      if (FTaxonId <> 0) then
-        ParamByName('taxon_id').AsInteger := FTaxonId
-      else
-        ParamByName('taxon_id').Clear;
-      if (FIndividualId > 0) then
-        ParamByName('individual_id').AsInteger := FIndividualId
-      else
-        ParamByName('individual_id').Clear;
-      if (FCaptureId <> 0) then
-        ParamByName('capture_id').AsInteger := FCaptureId
-      else
-        ParamByName('capture_id').Clear;
-      if (FSightingId > 0) then
-        ParamByName('sighting_id').AsInteger := FSightingId
-      else
-        ParamByName('sighting_id').Clear;
-      if (FSpecimenId <> 0) then
-        ParamByName('specimen_id').AsInteger := FSpecimenId
-      else
-        ParamByName('specimen_id').Clear;
-      if (FSurveyId > 0) then
-        ParamByName('survey_id').AsInteger := FSurveyId
-      else
-        ParamByName('survey_id').Clear;
-      if (FNestId <> 0) then
-        ParamByName('nest_id').AsInteger := FNestId
-      else
-        ParamByName('nest_id').Clear;
-      if (FNestRevisionId <> 0) then
-        ParamByName('nest_revision_id').AsInteger := FNestRevisionId
-      else
-        ParamByName('nest_revision_id').Clear;
-      if (FEggId <> 0) then
-        ParamByName('egg_id').AsInteger := FEggId
-      else
-        ParamByName('egg_id').Clear;
-      ParamByName('license_type').AsString := FLicenseType;
-      ParamByName('license_year').AsInteger := FLicenseYear;
-      ParamByName('license_owner').AsString := FLicenseOwner;
-      ParamByName('license_notes').AsString := FLicenseNotes;
-      ParamByName('license_uri').AsString := FLicenseUri;
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('capture_id'), FCaptureId);
+      SetForeignParam(ParamByName('sighting_id'), FSightingId);
+      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
+      SetForeignParam(ParamByName('nest_id'), FNestId);
+      SetForeignParam(ParamByName('nest_revision_id'), FNestRevisionId);
+      SetForeignParam(ParamByName('egg_id'), FEggId);
+      SetStrParam(ParamByName('license_type'), FLicenseType);
+      SetIntParam(ParamByName('license_year'), FLicenseYear);
+      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
+      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
+      SetStrParam(ParamByName('license_uri'), FLicenseUri);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -759,11 +717,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -919,9 +877,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE images SET ' +
         'image_date = date(:image_date), ' +
@@ -954,86 +912,44 @@ begin
       Add('WHERE (image_id = :image_id)');
 
       ParamByName('image_id').AsInteger := FId;
-      ParamByName('image_date').AsString := FormatDateTime('yyyy-MM-dd', FImageDate);
-      ParamByName('image_time').AsString := TimeToStr(FImageTime);
+      SetDateParam(ParamByName('image_date'), FImageDate);
+      SetTimeParam(ParamByName('image_time'), FImageTime);
       ParamByName('image_type').AsString := ImageTypeStr[FImageType];
       ParamByName('image_filename').AsString := FFilename;
       if FFilename <> EmptyStr then
       begin
-        { #todo : Update image thumbnail using Params }
+        { #todo : Insert image thumbnail using Params }
       end
       else
         ParamByName('image_thumbnail').Clear;
-      ParamByName('subtitle').AsString := FSubtitle;
-      if (FAuthorId <> 0) then
-        ParamByName('author_id').AsInteger := FAuthorId
-      else
-        ParamByName('author_id').Clear;
-      if (FLocalityId > 0) then
-        ParamByName('locality_id').AsInteger := FLocalityId
-      else
-        ParamByName('locality_id').Clear;
+      SetStrParam(ParamByName('subtitle'), FSubtitle);
+      SetForeignParam(ParamByName('author_id'), FAuthorId);
+      SetForeignParam(ParamByName('locality_id'), FLocalityId);
       ParamByName('coordinate_precision').AsString := CoordinatePrecisionStr[FCoordinatePrecision];
-      if (FLongitude <> 0) and (FLatitude <> 0) then
-      begin
-        ParamByName('longitude').AsFloat := FLongitude;
-        ParamByName('latitude').AsFloat := FLatitude;
-      end
-      else
-      begin
-        ParamByName('longitude').Clear;
-        ParamByName('latitude').Clear;
-      end;
-      if (FTaxonId <> 0) then
-        ParamByName('taxon_id').AsInteger := FTaxonId
-      else
-        ParamByName('taxon_id').Clear;
-      if (FIndividualId > 0) then
-        ParamByName('individual_id').AsInteger := FIndividualId
-      else
-        ParamByName('individual_id').Clear;
-      if (FCaptureId <> 0) then
-        ParamByName('capture_id').AsInteger := FCaptureId
-      else
-        ParamByName('capture_id').Clear;
-      if (FSightingId > 0) then
-        ParamByName('sighting_id').AsInteger := FSightingId
-      else
-        ParamByName('sighting_id').Clear;
-      if (FSpecimenId <> 0) then
-        ParamByName('specimen_id').AsInteger := FSpecimenId
-      else
-        ParamByName('specimen_id').Clear;
-      if (FSurveyId > 0) then
-        ParamByName('survey_id').AsInteger := FSurveyId
-      else
-        ParamByName('survey_id').Clear;
-      if (FNestId <> 0) then
-        ParamByName('nest_id').AsInteger := FNestId
-      else
-        ParamByName('nest_id').Clear;
-      if (FNestRevisionId <> 0) then
-        ParamByName('nest_revision_id').AsInteger := FNestRevisionId
-      else
-        ParamByName('nest_revision_id').Clear;
-      if (FEggId <> 0) then
-        ParamByName('egg_id').AsInteger := FEggId
-      else
-        ParamByName('egg_id').Clear;
-      ParamByName('license_type').AsString := FLicenseType;
-      ParamByName('license_year').AsInteger := FLicenseYear;
-      ParamByName('license_owner').AsString := FLicenseOwner;
-      ParamByName('license_notes').AsString := FLicenseNotes;
-      ParamByName('license_uri').AsString := FLicenseUri;
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('capture_id'), FCaptureId);
+      SetForeignParam(ParamByName('sighting_id'), FSightingId);
+      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
+      SetForeignParam(ParamByName('nest_id'), FNestId);
+      SetForeignParam(ParamByName('nest_revision_id'), FNestRevisionId);
+      SetForeignParam(ParamByName('egg_id'), FEggId);
+      SetStrParam(ParamByName('license_type'), FLicenseType);
+      SetIntParam(ParamByName('license_year'), FLicenseYear);
+      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
+      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
+      SetStrParam(ParamByName('license_uri'), FLicenseUri);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1390,9 +1306,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO audio_library (' +
         'full_name, ' +
@@ -1467,51 +1383,21 @@ begin
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
-      ParamByName('recording_date').AsString := FormatDateTime('yyyy-MM-dd', FRecordingDate);
-      ParamByName('recording_time').AsString := TimeToStr(FRecordingTime);
+      SetDateParam(ParamByName('recording_date'), FRecordingDate);
+      SetTimeParam(ParamByName('recording_time'), FRecordingTime);
       ParamByName('audio_type').AsString := FAudioType;
 
       ParamByName('audio_file').AsString := FFilename;
-      ParamByName('subtitle').AsString := FSubtitle;
-      //if (FAuthorId <> 0) then
-      //  ParamByName('author_id').AsInteger := FAuthorId
-      //else
-      //  ParamByName('author_id').Clear;
-      if (FLocalityId > 0) then
-        ParamByName('locality_id').AsInteger := FLocalityId
-      else
-        ParamByName('locality_id').Clear;
+      SetStrParam(ParamByName('subtitle'), FSubtitle);
+      //SetForeignParam(ParamByName('author_id'), FAuthorId);
+      SetForeignParam(ParamByName('locality_id'), FLocalityId);
       ParamByName('coordinate_precision').AsString := CoordinatePrecisionStr[FCoordinatePrecision];
-      if (FLongitude <> 0) and (FLatitude <> 0) then
-      begin
-        ParamByName('longitude').AsFloat := FLongitude;
-        ParamByName('latitude').AsFloat := FLatitude;
-      end
-      else
-      begin
-        ParamByName('longitude').Clear;
-        ParamByName('latitude').Clear;
-      end;
-      if (FTaxonId <> 0) then
-        ParamByName('taxon_id').AsInteger := FTaxonId
-      else
-        ParamByName('taxon_id').Clear;
-      if (FIndividualId > 0) then
-        ParamByName('individual_id').AsInteger := FIndividualId
-      else
-        ParamByName('individual_id').Clear;
-      if (FSightingId > 0) then
-        ParamByName('sighting_id').AsInteger := FSightingId
-      else
-        ParamByName('sighting_id').Clear;
-      if (FSpecimenId <> 0) then
-        ParamByName('specimen_id').AsInteger := FSpecimenId
-      else
-        ParamByName('specimen_id').Clear;
-      if (FSurveyId > 0) then
-        ParamByName('survey_id').AsInteger := FSurveyId
-      else
-        ParamByName('survey_id').Clear;
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('sighting_id'), FSightingId);
+      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
       ParamByName('temperature').AsFloat := FTemperature;
       ParamByName('cloud_cover').AsInteger := FCloudCover;
       case FPrecipitation of
@@ -1525,20 +1411,20 @@ begin
       end;
       ParamByName('relative_humidity').AsFloat := FRelativeHumidity;
       ParamByName('wind_speed').AsInteger := FWindSpeedBft;
-      ParamByName('subjects_tally').AsInteger := FSubjectsTally;
+      SetIntParam(ParamByName('subjects_tally'), FSubjectsTally);
       ParamByName('distance').AsFloat := FDistance;
-      ParamByName('recording_context').AsString := FContext;
-      ParamByName('habitat').AsString := FHabitat;
+      SetStrParam(ParamByName('recording_context'), FContext);
+      SetStrParam(ParamByName('habitat'), FHabitat);
       ParamByName('playback_used').AsBoolean := FPlaybackUsed;
-      ParamByName('recorder_model').AsString := FRecorderModel;
-      ParamByName('mic_model').AsString := FMicModel;
-      ParamByName('filter_model').AsString := FFilterModel;
-      ParamByName('notes').AsString := FNotes;
-      ParamByName('license_type').AsString := FLicenseType;
-      ParamByName('license_year').AsInteger := FLicenseYear;
-      ParamByName('license_owner').AsString := FLicenseOwner;
-      ParamByName('license_notes').AsString := FLicenseNotes;
-      ParamByName('license_uri').AsString := FLicenseUri;
+      SetStrParam(ParamByName('recorder_model'), FRecorderModel);
+      SetStrParam(ParamByName('mic_model'), FMicModel);
+      SetStrParam(ParamByName('filter_model'), FFilterModel);
+      SetStrParam(ParamByName('notes'), FNotes);
+      SetStrParam(ParamByName('license_type'), FLicenseType);
+      SetIntParam(ParamByName('license_year'), FLicenseYear);
+      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
+      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
+      SetStrParam(ParamByName('license_uri'), FLicenseUri);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -1550,11 +1436,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1708,9 +1594,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE audio_library SET ' +
         'full_name = :full_name, ' +
@@ -1751,79 +1637,57 @@ begin
       Add('WHERE (audio_id = :audio_id)');
 
       ParamByName('audio_id').AsInteger := FId;
-      ParamByName('recording_date').AsString := FormatDateTime('yyyy-MM-dd', FRecordingDate);
-      ParamByName('recording_time').AsString := TimeToStr(FRecordingTime);
+      SetDateParam(ParamByName('recording_date'), FRecordingDate);
+      SetTimeParam(ParamByName('recording_time'), FRecordingTime);
       ParamByName('audio_type').AsString := FAudioType;
 
       ParamByName('audio_file').AsString := FFilename;
-      ParamByName('subtitle').AsString := FSubtitle;
-      if (FAuthorId <> 0) then
-        ParamByName('recorder_id').AsInteger := FAuthorId
-      else
-        ParamByName('recorder_id').Clear;
-      if (FLocalityId > 0) then
-        ParamByName('locality_id').AsInteger := FLocalityId
-      else
-        ParamByName('locality_id').Clear;
+      SetStrParam(ParamByName('subtitle'), FSubtitle);
+      //SetForeignParam(ParamByName('author_id'), FAuthorId);
+      SetForeignParam(ParamByName('locality_id'), FLocalityId);
       ParamByName('coordinate_precision').AsString := CoordinatePrecisionStr[FCoordinatePrecision];
-      if (FLongitude <> 0) and (FLatitude <> 0) then
-      begin
-        ParamByName('longitude').AsFloat := FLongitude;
-        ParamByName('latitude').AsFloat := FLatitude;
-      end
-      else
-      begin
-        ParamByName('longitude').Clear;
-        ParamByName('latitude').Clear;
-      end;
-      if (FTaxonId <> 0) then
-        ParamByName('taxon_id').AsInteger := FTaxonId
-      else
-        ParamByName('taxon_id').Clear;
-      if (FIndividualId > 0) then
-        ParamByName('individual_id').AsInteger := FIndividualId
-      else
-        ParamByName('individual_id').Clear;
-      if (FSightingId > 0) then
-        ParamByName('sighting_id').AsInteger := FSightingId
-      else
-        ParamByName('sighting_id').Clear;
-      if (FSpecimenId <> 0) then
-        ParamByName('specimen_id').AsInteger := FSpecimenId
-      else
-        ParamByName('specimen_id').Clear;
-      if (FSurveyId > 0) then
-        ParamByName('survey_id').AsInteger := FSurveyId
-      else
-        ParamByName('survey_id').Clear;
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('sighting_id'), FSightingId);
+      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
       ParamByName('temperature').AsFloat := FTemperature;
       ParamByName('cloud_cover').AsInteger := FCloudCover;
-      ParamByName('precipitation').AsString := PrecipitationValues[FPrecipitation];
+      case FPrecipitation of
+        wpNone:     ParamByName('precipitation').AsString := 'N';
+        wpFog:      ParamByName('precipitation').AsString := 'F';
+        wpMist:     ParamByName('precipitation').AsString := 'M';
+        wpDrizzle:  ParamByName('precipitation').AsString := 'D';
+        wpRain:     ParamByName('precipitation').AsString := 'R';
+      else
+        ParamByName('precipitation').Clear;
+      end;
       ParamByName('relative_humidity').AsFloat := FRelativeHumidity;
       ParamByName('wind_speed').AsInteger := FWindSpeedBft;
-      ParamByName('subjects_tally').AsInteger := FSubjectsTally;
+      SetIntParam(ParamByName('subjects_tally'), FSubjectsTally);
       ParamByName('distance').AsFloat := FDistance;
-      ParamByName('recording_context').AsString := FContext;
-      ParamByName('habitat').AsString := FHabitat;
+      SetStrParam(ParamByName('recording_context'), FContext);
+      SetStrParam(ParamByName('habitat'), FHabitat);
       ParamByName('playback_used').AsBoolean := FPlaybackUsed;
-      ParamByName('recorder_model').AsString := FRecorderModel;
-      ParamByName('mic_model').AsString := FMicModel;
-      ParamByName('filter_model').AsString := FFilterModel;
-      ParamByName('notes').AsString := FNotes;
-      ParamByName('license_type').AsString := FLicenseType;
-      ParamByName('license_year').AsInteger := FLicenseYear;
-      ParamByName('license_owner').AsString := FLicenseOwner;
-      ParamByName('license_notes').AsString := FLicenseNotes;
-      ParamByName('license_uri').AsString := FLicenseUri;
+      SetStrParam(ParamByName('recorder_model'), FRecorderModel);
+      SetStrParam(ParamByName('mic_model'), FMicModel);
+      SetStrParam(ParamByName('filter_model'), FFilterModel);
+      SetStrParam(ParamByName('notes'), FNotes);
+      SetStrParam(ParamByName('license_type'), FLicenseType);
+      SetIntParam(ParamByName('license_year'), FLicenseYear);
+      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
+      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
+      SetStrParam(ParamByName('license_uri'), FLicenseUri);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2110,9 +1974,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO documents (' +
         'permit_id, ' +
@@ -2165,64 +2029,28 @@ begin
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
-      ParamByName('document_date').AsString := FormatDateTime('yyyy-MM-dd', FDocumentDate);
-      ParamByName('document_time').AsString := TimeToStr(FDocumentTime);
+      SetDateParam(ParamByName('document_date'), FDocumentDate);
+      SetTimeParam(ParamByName('document_time'), FDocumentTime);
       ParamByName('document_name').AsString := FName;
       ParamByName('document_type').AsString := FDocumentType;
       ParamByName('document_path').AsString := FFilename;
-      if (FPermitId <> 0) then
-        ParamByName('permit_id').AsInteger := FPermitId
-      else
-        ParamByName('permit_id').Clear;
-      if (FProjectId > 0) then
-        ParamByName('project_id').AsInteger := FProjectId
-      else
-        ParamByName('project_id').Clear;
-      if (FPersonId <> 0) then
-        ParamByName('person_id').AsInteger := FPersonId
-      else
-        ParamByName('person_id').Clear;
-      if (FIndividualId > 0) then
-        ParamByName('individual_id').AsInteger := FIndividualId
-      else
-        ParamByName('individual_id').Clear;
-      if (FCaptureId <> 0) then
-        ParamByName('capture_id').AsInteger := FCaptureId
-      else
-        ParamByName('capture_id').Clear;
-      if (FSightingId > 0) then
-        ParamByName('sighting_id').AsInteger := FSightingId
-      else
-        ParamByName('sighting_id').Clear;
-      if (FSpecimenId <> 0) then
-        ParamByName('specimen_id').AsInteger := FSpecimenId
-      else
-        ParamByName('specimen_id').Clear;
-      if (FExpeditionId <> 0) then
-        ParamByName('expedition_id').AsInteger := FExpeditionId
-      else
-        ParamByName('expedition_id').Clear;
-      if (FSurveyId > 0) then
-        ParamByName('survey_id').AsInteger := FSurveyId
-      else
-        ParamByName('survey_id').Clear;
-      if (FNestId <> 0) then
-        ParamByName('nest_id').AsInteger := FNestId
-      else
-        ParamByName('nest_id').Clear;
-      if (FSamplingPlotId <> 0) then
-        ParamByName('net_station_id').AsInteger := FSamplingPlotId
-      else
-        ParamByName('net_station_id').Clear;
-      if (FMethodId <> 0) then
-        ParamByName('method_id').AsInteger := FMethodId
-      else
-        ParamByName('method_id').Clear;
-      ParamByName('license_type').AsString := FLicenseType;
-      ParamByName('license_year').AsInteger := FLicenseYear;
-      ParamByName('license_owner').AsString := FLicenseOwner;
-      ParamByName('license_notes').AsString := FLicenseNotes;
-      ParamByName('license_uri').AsString := FLicenseUri;
+      SetForeignParam(ParamByName('permit_id'), FPermitId);
+      SetForeignParam(ParamByName('project_id'), FProjectId);
+      SetForeignParam(ParamByName('person_id'), FPersonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('capture_id'), FCaptureId);
+      SetForeignParam(ParamByName('sighting_id'), FSightingId);
+      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
+      SetForeignParam(ParamByName('expedition_id'), FExpeditionId);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
+      SetForeignParam(ParamByName('nest_id'), FNestId);
+      SetForeignParam(ParamByName('net_station_id'), FSamplingPlotId);
+      SetForeignParam(ParamByName('method_id'), FMethodId);
+      SetStrParam(ParamByName('license_type'), FLicenseType);
+      SetIntParam(ParamByName('license_year'), FLicenseYear);
+      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
+      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
+      SetStrParam(ParamByName('license_uri'), FLicenseUri);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -2234,11 +2062,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2353,9 +2181,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE documents SET ' +
         'permit_id = :permit_id, ' +
@@ -2386,64 +2214,28 @@ begin
         'active_status = :active_status');
       Add('WHERE (document_id = :document_id)');
 
-      ParamByName('document_date').AsString := FormatDateTime('yyyy-MM-dd', FDocumentDate);
-      ParamByName('document_time').AsString := TimeToStr(FDocumentTime);
+      SetDateParam(ParamByName('document_date'), FDocumentDate);
+      SetTimeParam(ParamByName('document_time'), FDocumentTime);
       ParamByName('document_name').AsString := FName;
       ParamByName('document_type').AsString := FDocumentType;
       ParamByName('document_path').AsString := FFilename;
-      if (FPermitId <> 0) then
-        ParamByName('permit_id').AsInteger := FPermitId
-      else
-        ParamByName('permit_id').Clear;
-      if (FProjectId > 0) then
-        ParamByName('project_id').AsInteger := FProjectId
-      else
-        ParamByName('project_id').Clear;
-      if (FPersonId <> 0) then
-        ParamByName('person_id').AsInteger := FPersonId
-      else
-        ParamByName('person_id').Clear;
-      if (FIndividualId > 0) then
-        ParamByName('individual_id').AsInteger := FIndividualId
-      else
-        ParamByName('individual_id').Clear;
-      if (FCaptureId <> 0) then
-        ParamByName('capture_id').AsInteger := FCaptureId
-      else
-        ParamByName('capture_id').Clear;
-      if (FSightingId > 0) then
-        ParamByName('sighting_id').AsInteger := FSightingId
-      else
-        ParamByName('sighting_id').Clear;
-      if (FSpecimenId <> 0) then
-        ParamByName('specimen_id').AsInteger := FSpecimenId
-      else
-        ParamByName('specimen_id').Clear;
-      if (FExpeditionId <> 0) then
-        ParamByName('expedition_id').AsInteger := FExpeditionId
-      else
-        ParamByName('expedition_id').Clear;
-      if (FSurveyId > 0) then
-        ParamByName('survey_id').AsInteger := FSurveyId
-      else
-        ParamByName('survey_id').Clear;
-      if (FNestId <> 0) then
-        ParamByName('nest_id').AsInteger := FNestId
-      else
-        ParamByName('nest_id').Clear;
-      if (FSamplingPlotId <> 0) then
-        ParamByName('net_station_id').AsInteger := FSamplingPlotId
-      else
-        ParamByName('net_station_id').Clear;
-      if (FMethodId <> 0) then
-        ParamByName('method_id').AsInteger := FMethodId
-      else
-        ParamByName('method_id').Clear;
-      ParamByName('license_type').AsString := FLicenseType;
-      ParamByName('license_year').AsInteger := FLicenseYear;
-      ParamByName('license_owner').AsString := FLicenseOwner;
-      ParamByName('license_notes').AsString := FLicenseNotes;
-      ParamByName('license_uri').AsString := FLicenseUri;
+      SetForeignParam(ParamByName('permit_id'), FPermitId);
+      SetForeignParam(ParamByName('project_id'), FProjectId);
+      SetForeignParam(ParamByName('person_id'), FPersonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('capture_id'), FCaptureId);
+      SetForeignParam(ParamByName('sighting_id'), FSightingId);
+      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
+      SetForeignParam(ParamByName('expedition_id'), FExpeditionId);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
+      SetForeignParam(ParamByName('nest_id'), FNestId);
+      SetForeignParam(ParamByName('net_station_id'), FSamplingPlotId);
+      SetForeignParam(ParamByName('method_id'), FMethodId);
+      SetStrParam(ParamByName('license_type'), FLicenseType);
+      SetIntParam(ParamByName('license_year'), FLicenseYear);
+      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
+      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
+      SetStrParam(ParamByName('license_uri'), FLicenseUri);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('marked_status').AsBoolean := FMarked;
       ParamByName('active_status').AsBoolean := FActive;
@@ -2451,11 +2243,11 @@ begin
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;

@@ -121,7 +121,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_users, cbs_getvalue, cbs_validations, cbs_datacolumns, udm_main;
+uses cbs_locale, cbs_users, cbs_getvalue, cbs_validations, cbs_datacolumns, cbs_setparam, udm_main;
 
 function IsInfraspecific(aTaxonRank: Integer): Boolean;
 var
@@ -550,18 +550,12 @@ begin
         'datetime(''now'', ''subsec''))');
 
       ParamByName('taxon_name').AsString := FFullName;
-      ParamByName('authorship').AsString := FAuthorship;
-      ParamByName('formatted_name').AsString := FFormattedName;
-      ParamByName('vernacular_name').AsString := FVernacularName;
+      SetStrParam(ParamByName('authorship'), FAuthorship);
+      SetStrParam(ParamByName('formatted_name'), FFormattedName);
+      SetStrParam(ParamByName('vernacular_name'), FVernacularName);
       ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', BotanicRanks[FRankId]);
-      if (FParentTaxonId > 0) then
-        ParamByName('parent_taxon_id').AsInteger := FParentTaxonId
-      else
-        ParamByName('parent_taxon_id').Clear;
-      if (FValidId > 0) then
-        ParamByName('valid_id').AsInteger := FValidId
-      else
-        ParamByName('valid_id').Clear;
+      SetForeignParam(ParamByName('parent_taxon_id'), FParentTaxonId);
+      SetForeignParam(ParamByName('valid_id'), FValidId);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -601,22 +595,10 @@ begin
       Add('  genus_id = :genus_id,');
       Add('  species_id = :species_id');
       Add('WHERE taxon_id = :aid');
-      if (FOrderId > 0) then
-        ParamByName('order_id').AsInteger := FOrderId
-      else
-        ParamByName('order_id').Clear;
-      if (FFamilyId > 0) then
-        ParamByName('family_id').AsInteger := FFamilyId
-      else
-        ParamByName('family_id').Clear;
-      if (FGenusId > 0) then
-        ParamByName('genus_id').AsInteger := FGenusId
-      else
-        ParamByName('genus_id').Clear;
-      if (FSpeciesId > 0) then
-        ParamByName('species_id').AsInteger := FSpeciesId
-      else
-        ParamByName('species_id').Clear;
+      SetForeignParam(ParamByName('order_id'), FOrderId);
+      SetForeignParam(ParamByName('family_id'), FFamilyId);
+      SetForeignParam(ParamByName('genus_id'), FGenusId);
+      SetForeignParam(ParamByName('species_id'), FSpeciesId);
       ParamByName('aid').AsInteger := FId;
       ExecSQL;
 
@@ -692,18 +674,12 @@ begin
       Add('WHERE (taxon_id = :taxon_id)');
 
       ParamByName('taxon_name').AsString := FFullName;
-      ParamByName('authorship').AsString := FAuthorship;
-      ParamByName('formatted_name').AsString := FFormattedName;
-      ParamByName('vernacular_name').AsString := FVernacularName;
-      ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', BotanicRanks[FRankId]);;
-      if (FParentTaxonId > 0) then
-        ParamByName('parent_taxon_id').AsInteger := FParentTaxonId
-      else
-        ParamByName('parent_taxon_id').Clear;
-      if (FValidId > 0) then
-        ParamByName('valid_id').AsInteger := FValidId
-      else
-        ParamByName('valid_id').Clear;
+      SetStrParam(ParamByName('authorship'), FAuthorship);
+      SetStrParam(ParamByName('formatted_name'), FFormattedName);
+      SetStrParam(ParamByName('vernacular_name'), FVernacularName);
+      ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', BotanicRanks[FRankId]);
+      SetForeignParam(ParamByName('parent_taxon_id'), FParentTaxonId);
+      SetForeignParam(ParamByName('valid_id'), FValidId);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('taxon_id').AsInteger := FId;
 
@@ -737,22 +713,10 @@ begin
       Add('  genus_id = :genus_id,');
       Add('  species_id = :species_id');
       Add('WHERE taxon_id = :aid');
-      if (FOrderId > 0) then
-        ParamByName('order_id').AsInteger := FOrderId
-      else
-        ParamByName('order_id').Clear;
-      if (FFamilyId > 0) then
-        ParamByName('family_id').AsInteger := FFamilyId
-      else
-        ParamByName('family_id').Clear;
-      if (FGenusId > 0) then
-        ParamByName('genus_id').AsInteger := FGenusId
-      else
-        ParamByName('genus_id').Clear;
-      if (FSpeciesId > 0) then
-        ParamByName('species_id').AsInteger := FSpeciesId
-      else
-        ParamByName('species_id').Clear;
+      SetForeignParam(ParamByName('order_id'), FOrderId);
+      SetForeignParam(ParamByName('family_id'), FFamilyId);
+      SetForeignParam(ParamByName('genus_id'), FGenusId);
+      SetForeignParam(ParamByName('species_id'), FSpeciesId);
       ParamByName('aid').AsInteger := FId;
       ExecSQL;
 

@@ -105,27 +105,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Method.Save;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Method.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Method.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbMethods, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Method.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbMethods, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbMethods, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbMethods, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -175,27 +184,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Site.Save;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Site.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Site.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbGazetteer, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Site.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbGazetteer, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbGazetteer, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbGazetteer, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -220,18 +238,10 @@ end;
 
 function EditSamplingPlot(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TSamplingPlot;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Sampling plot');
   Application.CreateForm(TedtSamplingPlot, edtSamplingPlot);
   FOldRecord := nil;
@@ -242,13 +252,11 @@ begin
     if IsNew then
     begin
       FRecord := TSamplingPlot.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TSamplingPlot.Create(aDataSet.FieldByName('sampling_plot_id').AsInteger);
       FRecord := TSamplingPlot.Create(aDataSet.FieldByName('sampling_plot_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     SamplingPlot := FRecord;
@@ -259,9 +267,6 @@ begin
         DMM.sqlTrans.StartTransaction;
       try
         SamplingPlot.Save;
-      //  aDataSet.Post
-      //else
-      //  aDataSet.Cancel;
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -308,25 +313,14 @@ begin
     FreeAndNil(edtSamplingPlot);
     LogInfo('CLOSE EDIT DIALOG: Sampling plot');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditPermanentNet(aDataSet: TDataSet; aNetStation: Integer; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TPermanentNet;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Permanent net');
   Application.CreateForm(TedtPermanentNet, edtPermanentNet);
   FOldRecord := nil;
@@ -337,13 +331,11 @@ begin
     if IsNew then
     begin
       FRecord := TPermanentNet.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TPermanentNet.Create(aDataSet.FieldByName('permanent_net_id').AsInteger);
       FRecord := TPermanentNet.Create(aDataSet.FieldByName('permanent_net_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     PermanentNet := FRecord;
@@ -355,9 +347,6 @@ begin
         DMM.sqlTrans.StartTransaction;
       try
         PermanentNet.Save;
-      //  aDataSet.Post
-      //else
-      //  aDataSet.Cancel;
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -403,25 +392,14 @@ begin
     FreeAndNil(edtPermanentNet);
     LogInfo('CLOSE EDIT DIALOG: Permanent net');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditInstitution(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TInstitution;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Institution');
   Application.CreateForm(TedtInstitution, edtInstitution);
   FOldRecord := nil;
@@ -432,43 +410,47 @@ begin
     if IsNew then
     begin
       FRecord := TInstitution.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TInstitution.Create(aDataSet.FieldByName('institution_id').AsInteger);
       FRecord := TInstitution.Create(aDataSet.FieldByName('institution_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Institution := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Institution.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Institution.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Institution.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbInstitutions, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Institution.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbInstitutions, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbInstitutions, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbInstitutions, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -488,25 +470,14 @@ begin
     FreeAndNil(edtInstitution);
     LogInfo('CLOSE EDIT DIALOG: Institution');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditPerson(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TPerson;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Person');
   Application.CreateForm(TedtPerson, edtPerson);
   FOldRecord := nil;
@@ -517,43 +488,47 @@ begin
     if IsNew then
     begin
       FRecord := TPerson.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TPerson.Create(aDataSet.FieldByName('person_id').AsInteger);
       FRecord := TPerson.Create(aDataSet.FieldByName('person_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Person := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Person.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Person.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Person.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbPeople, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Person.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbPeople, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbPeople, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbPeople, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -573,25 +548,14 @@ begin
     FreeAndNil(edtPerson);
     LogInfo('CLOSE EDIT DIALOG: Person');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditProject(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TProject;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Project');
   Application.CreateForm(TedtProject, edtProject);
   FOldRecord := nil;
@@ -602,43 +566,47 @@ begin
     if IsNew then
     begin
       FRecord := TProject.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TProject.Create(aDataSet.FieldByName('project_id').AsInteger);
       FRecord := TProject.Create(aDataSet.FieldByName('project_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Project := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Project.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Project.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Project.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbProjects, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Project.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbProjects, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbProjects, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbProjects, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -658,9 +626,6 @@ begin
     FreeAndNil(edtProject);
     LogInfo('CLOSE EDIT DIALOG: Project');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditProjectMember(aDataSet: TDataSet; aProject: Integer; IsNew: Boolean): Boolean;
@@ -691,27 +656,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      ProjectMember.Save;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        ProjectMember.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if ProjectMember.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbProjectTeams, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if ProjectMember.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbProjectTeams, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbProjectTeams, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbProjectTeams, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -762,27 +736,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      ProjectGoal.Save;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        ProjectGoal.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if ProjectGoal.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbProjectGoals, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if ProjectGoal.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbProjectGoals, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbProjectGoals, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbProjectGoals, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -835,27 +818,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      ProjectActivity.Save;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        ProjectActivity.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if ProjectActivity.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbProjectChronograms, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if ProjectActivity.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbProjectChronograms, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbProjectChronograms, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbProjectChronograms, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -906,27 +898,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      ProjectRubric.Save;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        ProjectRubric.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if ProjectRubric.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbProjectBudgets, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if ProjectRubric.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbProjectBudgets, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbProjectBudgets, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbProjectBudgets, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -979,27 +980,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      ProjectExpense.Save;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        ProjectExpense.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if ProjectExpense.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbProjectExpenses, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if ProjectExpense.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbProjectExpenses, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbProjectExpenses, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbProjectExpenses, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -1024,18 +1034,10 @@ end;
 
 function EditPermit(aDataSet: TDataSet; aProject: Integer; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TPermit;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Permit');
   Application.CreateForm(TedtPermit, edtPermit);
   FOldRecord := nil;
@@ -1046,13 +1048,11 @@ begin
     if IsNew then
     begin
       FRecord := TPermit.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TPermit.Create(aDataSet.FieldByName('permit_id').AsInteger);
       FRecord := TPermit.Create(aDataSet.FieldByName('permit_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Permit := FRecord;
@@ -1060,30 +1060,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Permit.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Permit.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Permit.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbPermits, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Permit.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbPermits, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbPermits, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbPermits, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -1103,25 +1109,14 @@ begin
     FreeAndNil(edtPermit);
     LogInfo('CLOSE EDIT DIALOG: Permit');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditBotanicTaxon(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TBotanicTaxon;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Botanic taxon');
   Application.CreateForm(TedtBotanicTaxon, edtBotanicTaxon);
   FOldRecord := nil;
@@ -1132,43 +1127,47 @@ begin
     if IsNew then
     begin
       FRecord := TBotanicTaxon.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TBotanicTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
       FRecord := TBotanicTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Taxon := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Taxon.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Taxon.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Taxon.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbBotanicTaxa, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Taxon.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbBotanicTaxa, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbBotanicTaxa, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbBotanicTaxa, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -1188,25 +1187,14 @@ begin
     FreeAndNil(edtBotanicTaxon);
     LogInfo('CLOSE EDIT DIALOG: Botanic taxon');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditBand(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TBand;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Band');
   Application.CreateForm(TedtBands, edtBands);
   FOldRecord := nil;
@@ -1217,43 +1205,47 @@ begin
     if IsNew then
     begin
       FRecord := TBand.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TBand.Create(aDataSet.FieldByName('band_id').AsInteger);
       FRecord := TBand.Create(aDataSet.FieldByName('band_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Band := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Band.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Band.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Band.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbBands, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Band.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbBands, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbBands, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbBands, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -1273,25 +1265,14 @@ begin
     FreeAndNil(edtBands);
     LogInfo('CLOSE EDIT DIALOG: Band');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditIndividual(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TIndividual;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Individual');
   Application.CreateForm(TedtIndividual, edtIndividual);
   FOldRecord := nil;
@@ -1302,43 +1283,47 @@ begin
     if IsNew then
     begin
       FRecord := TIndividual.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TIndividual.Create(aDataSet.FieldByName('individual_id').AsInteger);
       FRecord := TIndividual.Create(aDataSet.FieldByName('individual_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Individual := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Individual.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Individual.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Individual.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbIndividuals, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Individual.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbIndividuals, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbIndividuals, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbIndividuals, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -1358,25 +1343,14 @@ begin
     FreeAndNil(edtIndividual);
     LogInfo('CLOSE EDIT DIALOG: Individual');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditCapture(aDataSet: TDataSet; aIndividual: Integer; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TCapture;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Capture');
   edtCapture := TedtCapture.Create(nil);
   FOldRecord := nil;
@@ -1387,13 +1361,11 @@ begin
     if IsNew then
     begin
       FRecord := TCapture.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TCapture.Create(aDataSet.FieldByName('capture_id').AsInteger);
       FRecord := TCapture.Create(aDataSet.FieldByName('capture_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Capture := FRecord;
@@ -1403,30 +1375,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Capture.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Capture.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Capture.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbCaptures, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Capture.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbCaptures, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbCaptures, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbCaptures, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -1446,9 +1424,6 @@ begin
     FreeAndNil(edtCapture);
     LogInfo('CLOSE EDIT DIALOG: Capture');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditMolt(aDataSet: TDataSet; aIndividual: Integer; IsNew: Boolean): Boolean;
@@ -1490,18 +1465,10 @@ end;
 
 function EditNest(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TNest;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Nest');
   Application.CreateForm(TedtNest, edtNest);
   FOldRecord := nil;
@@ -1512,43 +1479,47 @@ begin
     if IsNew then
     begin
       FRecord := TNest.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TNest.Create(aDataSet.FieldByName('nest_id').AsInteger);
       FRecord := TNest.Create(aDataSet.FieldByName('nest_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Nest := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Nest.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Nest.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Nest.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbNests, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Nest.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbNests, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbNests, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbNests, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -1568,25 +1539,14 @@ begin
     FreeAndNil(edtNest);
     LogInfo('CLOSE EDIT DIALOG: Nest');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditNestOwner(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
-//  CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TNestOwner;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Nest owner');
   Application.CreateForm(TedtNestOwner, edtNestOwner);
   FOldRecord := nil;
@@ -1597,13 +1557,11 @@ begin
     if IsNew then
     begin
       FRecord := TNestOwner.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TNestOwner.Create(aDataSet.FieldByName('nest_owner_id').AsInteger);
       FRecord := TNestOwner.Create(aDataSet.FieldByName('nest_owner_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     NestOwner := FRecord;
@@ -1611,30 +1569,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      NestOwner.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        NestOwner.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if NestOwner.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbNestOwners, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if NestOwner.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbNestOwners, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbNestOwners, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbNestOwners, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -1654,25 +1618,14 @@ begin
     FreeAndNil(edtNestOwner);
     LogInfo('CLOSE EDIT DIALOG: Nest owner');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditNestRevision(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TNestRevision;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Nest revision');
   Application.CreateForm(TedtNestRevision, edtNestRevision);
   FOldRecord := nil;
@@ -1683,13 +1636,11 @@ begin
     if IsNew then
     begin
       FRecord := TNestRevision.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TNestRevision.Create(aDataSet.FieldByName('nest_revision_id').AsInteger);
       FRecord := TNestRevision.Create(aDataSet.FieldByName('nest_revision_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     NestRevision := FRecord;
@@ -1697,30 +1648,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      NestRevision.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        NestRevision.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if NestRevision.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbNestRevisions, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if NestRevision.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbNestRevisions, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbNestRevisions, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbNestRevisions, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -1740,25 +1697,14 @@ begin
     FreeAndNil(edtNestRevision);
     LogInfo('CLOSE EDIT DIALOG: Nest revision');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditEgg(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TEgg;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Egg');
   Application.CreateForm(TedtEgg, edtEgg);
   FOldRecord := nil;
@@ -1769,13 +1715,11 @@ begin
     if IsNew then
     begin
       FRecord := TEgg.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TEgg.Create(aDataSet.FieldByName('egg_id').AsInteger);
       FRecord := TEgg.Create(aDataSet.FieldByName('egg_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Egg := FRecord;
@@ -1783,30 +1727,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Egg.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Egg.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Egg.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbEggs, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Egg.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbEggs, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbEggs, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbEggs, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -1826,25 +1776,14 @@ begin
     FreeAndNil(edtEgg);
     LogInfo('CLOSE EDIT DIALOG: Egg');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditExpedition(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TExpedition;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   Result := False;
 
   LogInfo('OPEN EDIT DIALOG: Expedition');
@@ -1857,46 +1796,47 @@ begin
     if IsNew then
     begin
       FRecord := TExpedition.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TExpedition.Create(aDataSet.FieldByName('expedition_id').AsInteger);
       FRecord := TExpedition.Create(aDataSet.FieldByName('expedition_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Expedition := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Expedition.Save;
-    //begin
-    //  aDataSet.Post;
-    //  Result := True;
-    //end
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Expedition.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Expedition.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbExpeditions, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Expedition.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbExpeditions, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbExpeditions, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbExpeditions, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -1916,25 +1856,14 @@ begin
     FreeAndNil(edtExpedition);
     LogInfo('CLOSE EDIT DIALOG: Expedition');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditSurvey(aDataSet: TDataSet; aExpedition: Integer; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TSurvey;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Survey');
   Application.CreateForm(TedtSurvey, edtSurvey);
   FOldRecord := nil;
@@ -1945,13 +1874,11 @@ begin
     if IsNew then
     begin
       FRecord := TSurvey.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TSurvey.Create(aDataSet.FieldByName('survey_id').AsInteger);
       FRecord := TSurvey.Create(aDataSet.FieldByName('survey_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Survey := FRecord;
@@ -1959,30 +1886,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Survey.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Survey.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Survey.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbSurveys, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Survey.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbSurveys, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbSurveys, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbSurveys, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -2002,9 +1935,6 @@ begin
     FreeAndNil(edtSurvey);
     LogInfo('CLOSE EDIT DIALOG: Survey');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditSurveyMember(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
@@ -2035,27 +1965,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      SurveyMember.Save;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        SurveyMember.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if SurveyMember.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbSurveyTeams, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if SurveyMember.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbSurveyTeams, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbSurveyTeams, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbSurveyTeams, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -2080,18 +2019,10 @@ end;
 
 function EditNetEffort(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TNetEffort;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Net effort');
   Application.CreateForm(TedtNetEffort, edtNetEffort);
   FOldRecord := nil;
@@ -2102,43 +2033,47 @@ begin
     if IsNew then
     begin
       FRecord := TNetEffort.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TNetEffort.Create(aDataSet.FieldByName('net_id').AsInteger);
       FRecord := TNetEffort.Create(aDataSet.FieldByName('net_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     NetEffort := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      NetEffort.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        NetEffort.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if NetEffort.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbNetsEffort, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if NetEffort.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbNetsEffort, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbNetsEffort, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbNetsEffort, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -2158,25 +2093,14 @@ begin
     FreeAndNil(edtNetEffort);
     LogInfo('CLOSE EDIT DIALOG: Net effort');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditWeatherLog(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TWeatherLog;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Weather log');
   Application.CreateForm(TedtWeatherLog, edtWeatherLog);
   FOldRecord := nil;
@@ -2187,43 +2111,47 @@ begin
     if IsNew then
     begin
       FRecord := TWeatherLog.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TWeatherLog.Create(aDataSet.FieldByName('weather_id').AsInteger);
       FRecord := TWeatherLog.Create(aDataSet.FieldByName('weather_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     WeatherLog := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      WeatherLog.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        WeatherLog.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if WeatherLog.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbWeatherLogs, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if WeatherLog.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbWeatherLogs, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbWeatherLogs, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbWeatherLogs, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -2243,25 +2171,14 @@ begin
     FreeAndNil(edtWeatherLog);
     LogInfo('CLOSE EDIT DIALOG: Weather log');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditSighting(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TSighting;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Sighting');
   Application.CreateForm(TedtSighting, edtSighting);
   FOldRecord := nil;
@@ -2274,13 +2191,11 @@ begin
     if IsNew then
     begin
       FRecord := TSighting.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TSighting.Create(aDataSet.FieldByName('sighting_id').AsInteger);
       FRecord := TSighting.Create(aDataSet.FieldByName('sighting_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Sighting := FRecord;
@@ -2288,30 +2203,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Sighting.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Sighting.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Sighting.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbSightings, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Sighting.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbSightings, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbSightings, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbSightings, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -2331,25 +2252,14 @@ begin
     FreeAndNil(edtSighting);
     LogInfo('CLOSE EDIT DIALOG: Sighting');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditSpecimen(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TSpecimen;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Specimen');
   Application.CreateForm(TedtSpecimen, edtSpecimen);
   FOldRecord := nil;
@@ -2357,48 +2267,50 @@ begin
   try
     dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
-    //if aDataSet <> DMG.qSpecimens then
-    //  pSurvey.Visible := True;
     if IsNew then
     begin
       FRecord := TSpecimen.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TSpecimen.Create(aDataSet.FieldByName('specimen_id').AsInteger);
       FRecord := TSpecimen.Create(aDataSet.FieldByName('specimen_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Specimen := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Specimen.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Specimen.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Specimen.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbSpecimens, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Specimen.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbSpecimens, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbSpecimens, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbSpecimens, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -2418,9 +2330,6 @@ begin
     FreeAndNil(edtSpecimen);
     LogInfo('CLOSE EDIT DIALOG: Specimen');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditCollector(aDataSet: TDataSet; aSpecimen: Integer; IsNew: Boolean): Boolean;
@@ -2451,27 +2360,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      SpecimenCollector.Save;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        SpecimenCollector.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if SpecimenCollector.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbSpecimenCollectors, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if SpecimenCollector.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbSpecimenCollectors, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbSpecimenCollectors, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbSpecimenCollectors, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -2496,18 +2414,10 @@ end;
 
 function EditSamplePrep(aDataSet: TDataSet; aSpecimen: Integer; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TSamplePrep;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Sample prep');
   Application.CreateForm(TedtSamplePrep, edtSamplePrep);
   FOldRecord := nil;
@@ -2515,18 +2425,14 @@ begin
   try
     dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
-    //if aDataSet <> DMG.qSamplePreps then
-    //  pSurvey.Visible := True;
     if IsNew then
     begin
       FRecord := TSamplePrep.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TSamplePrep.Create(aDataSet.FieldByName('sample_prep_id').AsInteger);
       FRecord := TSamplePrep.Create(aDataSet.FieldByName('sample_prep_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     SamplePrep := FRecord;
@@ -2534,30 +2440,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      SamplePrep.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        SamplePrep.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if SamplePrep.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbSamplePreps, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if SamplePrep.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbSamplePreps, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbSamplePreps, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbSamplePreps, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -2577,9 +2489,6 @@ begin
     FreeAndNil(edtSamplePrep);
     LogInfo('CLOSE EDIT DIALOG: Sample prep');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditUser(IsNew: Boolean): Boolean;
@@ -2648,18 +2557,10 @@ end;
 
 function EditImageInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TImageData;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Image');
   Application.CreateForm(TedtImageInfo, edtImageInfo);
   FOldRecord := nil;
@@ -2667,18 +2568,14 @@ begin
   try
     edtImageInfo.dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
-    //if aDataSet <> DMG.qSamplePreps then
-    //  pSurvey.Visible := True;
     if IsNew then
     begin
       FRecord := TImageData.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TImageData.Create(aDataSet.FieldByName('image_id').AsInteger);
       FRecord := TImageData.Create(aDataSet.FieldByName('image_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Image := FRecord;
@@ -2743,30 +2640,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Image.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Image.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Image.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbImages, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Image.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbImages, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbImages, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbImages, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -2786,25 +2689,14 @@ begin
     FreeAndNil(edtImageInfo);
     LogInfo('CLOSE EDIT DIALOG: Image');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditAudioInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TAudioData;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Audio');
   Application.CreateForm(TedtAudioInfo, edtAudioInfo);
   FOldRecord := nil;
@@ -2812,18 +2704,14 @@ begin
   try
     edtAudioInfo.dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
-    //if aDataSet <> DMG.qSamplePreps then
-    //  pSurvey.Visible := True;
     if IsNew then
     begin
       FRecord := TAudioData.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TAudioData.Create(aDataSet.FieldByName('audio_id').AsInteger);
       FRecord := TAudioData.Create(aDataSet.FieldByName('audio_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     AudioRecording := FRecord;
@@ -2862,30 +2750,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      AudioRecording.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        AudioRecording.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if AudioRecording.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbAudioLibrary, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if AudioRecording.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbAudioLibrary, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbAudioLibrary, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbAudioLibrary, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -2905,25 +2799,14 @@ begin
     FreeAndNil(edtAudioInfo);
     LogInfo('CLOSE EDIT DIALOG: Audio');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditDocInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TDocumentData;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Document');
   Application.CreateForm(TedtDocumentInfo, edtDocumentInfo);
   FOldRecord := nil;
@@ -2931,18 +2814,14 @@ begin
   try
     edtDocumentInfo.dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
-    //if aDataSet <> DMG.qSamplePreps then
-    //  pSurvey.Visible := True;
     if IsNew then
     begin
       FRecord := TDocumentData.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TDocumentData.Create(aDataSet.FieldByName('document_id').AsInteger);
       FRecord := TDocumentData.Create(aDataSet.FieldByName('document_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Document := FRecord;
@@ -3007,30 +2886,36 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Document.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Document.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Document.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbDocuments, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Document.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbDocuments, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbDocuments, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbDocuments, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -3050,25 +2935,14 @@ begin
     FreeAndNil(edtDocumentInfo);
     LogInfo('CLOSE EDIT DIALOG: Document');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditVegetation(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
-  //CloseQueryAfter: Boolean;
   FRecord, FOldRecord: TVegetation;
   lstDiff: TStrings;
   D: String;
 begin
-  //CloseQueryAfter := False;
-  //if not aDataSet.Active then
-  //begin
-  //  aDataSet.Open;
-  //  CloseQueryAfter := True;
-  //end;
-
   LogInfo('OPEN EDIT DIALOG: Vegetation');
   Application.CreateForm(TedtVegetation, edtVegetation);
   FOldRecord := nil;
@@ -3079,43 +2953,47 @@ begin
     if IsNew then
     begin
       FRecord := TVegetation.Create();
-      //aDataSet.Insert;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
       FOldRecord := TVegetation.Create(aDataSet.FieldByName('vegetation_id').AsInteger);
       FRecord := TVegetation.Create(aDataSet.FieldByName('vegetation_id').AsInteger);
-      //aDataSet.Edit;
       EditSourceStr := rsEditedByForm;
     end;
     Vegetation := FRecord;
     Result := ShowModal = mrOk;
     if Result then
     begin
-      Vegetation.Save;
-    //  aDataSet.Post
-    //else
-    //  aDataSet.Cancel;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        Vegetation.Save;
 
-      { Save changes to the record history }
-      if Assigned(FOldRecord) then
-      begin
-        lstDiff := TStringList.Create;
-        try
-          if Vegetation.Diff(FOldRecord, lstDiff) then
-          begin
-            for D in lstDiff do
-              WriteRecHistory(tbVegetation, haEdited, FOldRecord.Id,
-                ExtractDelimited(1, D, [';']),
-                ExtractDelimited(2, D, [';']),
-                ExtractDelimited(3, D, [';']), EditSourceStr);
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          lstDiff := TStringList.Create;
+          try
+            if Vegetation.Diff(FOldRecord, lstDiff) then
+            begin
+              for D in lstDiff do
+                WriteRecHistory(tbVegetation, haEdited, FOldRecord.Id,
+                  ExtractDelimited(1, D, [';']),
+                  ExtractDelimited(2, D, [';']),
+                  ExtractDelimited(3, D, [';']), EditSourceStr);
+            end;
+          finally
+            FreeAndNil(lstDiff);
           end;
-        finally
-          FreeAndNil(lstDiff);
-        end;
-      end
-      else
-        WriteRecHistory(tbVegetation, haCreated, 0, '', '', '', rsInsertedByForm);
+        end
+        else
+          WriteRecHistory(tbVegetation, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
 
       // Go to record
       if not aDataSet.Active then
@@ -3135,9 +3013,6 @@ begin
     FreeAndNil(edtVegetation);
     LogInfo('CLOSE EDIT DIALOG: Vegetation');
   end;
-
-  //if CloseQueryAfter then
-  //  aDataSet.Close;
 end;
 
 function EditConnection(aDataSet: TDataSet; IsNew: Boolean): Boolean;

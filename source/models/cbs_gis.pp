@@ -267,7 +267,9 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_users, cbs_conversions, cbs_validations, cbs_datacolumns, udm_main, udlg_geoeditor;
+uses
+  cbs_locale, cbs_global, cbs_users, cbs_conversions, cbs_validations, cbs_datacolumns, cbs_setparam,
+  udm_main, udlg_geoeditor;
 
 procedure InitSitePropsDict;
 begin
@@ -1439,9 +1441,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO gazetteer (' +
         'site_name, ' +
@@ -1481,40 +1483,19 @@ begin
         'datetime(''now'', ''subsec''))');
 
       ParamByName('site_name').AsString := FName;
-      ParamByName('site_acronym').AsString := FAbbreviation;
-      if (FLongitude <> 0.0) and (FLatitude <> 0.0) then
-      begin
-        ParamByName('longitude').AsFloat := FLongitude;
-        ParamByName('latitude').AsFloat := FLatitude;
-      end
-      else
-      begin
-        ParamByName('longitude').Clear;
-        ParamByName('latitude').Clear;
-      end;
-      if (FAltitude <> 0.0) then
-        ParamByName('altitude').AsFloat := FAltitude
-      else
-        ParamByName('altitude').Clear;
+      SetStrParam(ParamByName('site_acronym'), FAbbreviation);
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetFloatParam(ParamByName('altitude'), FAltitude);
       ParamByName('site_rank').AsString := SiteRankStr[FRank];
-      if (FParentSiteId > 0) then
-        ParamByName('parent_site_id').AsInteger := FParentSiteId
-      else
-        ParamByName('parent_site_id').Clear;
+      SetForeignParam(ParamByName('parent_site_id'), FParentSiteId);
       ParamByName('country_id').AsInteger := FCountryId;
-      if (FStateId > 0) then
-        ParamByName('state_id').AsInteger := FStateId
-      else
-        ParamByName('state_id').Clear;
-      if (FMunicipalityId > 0) then
-        ParamByName('municipality_id').AsInteger := FMunicipalityId
-      else
-        ParamByName('municipality_id').Clear;
-      ParamByName('ebird_name').AsString := FEbirdName;
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('language').AsString := FLanguage;
-      ParamByName('description').AsString := FDescription;
-      ParamByName('notes').AsString := FNotes;
+      SetForeignParam(ParamByName('state_id'), FStateId);
+      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
+      SetStrParam(ParamByName('ebird_name'), FEbirdName);
+      SetStrParam(ParamByName('full_name'), FFullName);
+      SetStrParam(ParamByName('language'), FLanguage);
+      SetStrParam(ParamByName('description'), FDescription);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -1552,22 +1533,16 @@ begin
       Add('  municipality_id = :municipality_id');
       Add('WHERE site_id = :aid');
       ParamByName('country_id').AsInteger := FCountryId;
-      if (FStateId > 0) then
-        ParamByName('state_id').AsInteger := FStateId
-      else
-        ParamByName('state_id').Clear;
-      if (FMunicipalityId > 0) then
-        ParamByName('municipality_id').AsInteger := FMunicipalityId
-      else
-        ParamByName('municipality_id').Clear;
+      SetForeignParam(ParamByName('state_id'), FStateId);
+      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
       ParamByName('aid').AsInteger := FId;
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -1622,9 +1597,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE gazetteer SET ' +
         'site_name = :site_name, ' +
@@ -1649,40 +1624,19 @@ begin
       Add('WHERE (site_id = :site_id)');
 
       ParamByName('site_name').AsString := FName;
-      ParamByName('site_acronym').AsString := FAbbreviation;
-      if (FLongitude <> 0) and (FLatitude <> 0) then
-      begin
-        ParamByName('longitude').AsFloat := FLongitude;
-        ParamByName('latitude').AsFloat := FLatitude;
-      end
-      else
-      begin
-        ParamByName('longitude').Clear;
-        ParamByName('latitude').Clear;
-      end;
-      if (FAltitude <> 0) then
-        ParamByName('altitude').AsFloat := FAltitude
-      else
-        ParamByName('altitude').Clear;
+      SetStrParam(ParamByName('site_acronym'), FAbbreviation);
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetFloatParam(ParamByName('altitude'), FAltitude);
       ParamByName('site_rank').AsString := SiteRankStr[FRank];
-      if (FParentSiteId > 0) then
-        ParamByName('parent_site_id').AsInteger := FParentSiteId
-      else
-        ParamByName('parent_site_id').Clear;
+      SetForeignParam(ParamByName('parent_site_id'), FParentSiteId);
       ParamByName('country_id').AsInteger := FCountryId;
-      if (FStateId > 0) then
-        ParamByName('state_id').AsInteger := FStateId
-      else
-        ParamByName('state_id').Clear;
-      if (FMunicipalityId > 0) then
-        ParamByName('municipality_id').AsInteger := FMunicipalityId
-      else
-        ParamByName('municipality_id').Clear;
-      ParamByName('ebird_name').AsString := FEbirdName;
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('language').AsString := FLanguage;
-      ParamByName('description').AsString := FDescription;
-      ParamByName('notes').AsString := FNotes;
+      SetForeignParam(ParamByName('state_id'), FStateId);
+      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
+      SetStrParam(ParamByName('ebird_name'), FEbirdName);
+      SetStrParam(ParamByName('full_name'), FFullName);
+      SetStrParam(ParamByName('language'), FLanguage);
+      SetStrParam(ParamByName('description'), FDescription);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('marked_status').AsBoolean := FMarked;
       ParamByName('active_status').AsBoolean := FActive;
@@ -1716,22 +1670,16 @@ begin
       Add('  municipality_id = :municipality_id');
       Add('WHERE site_id = :aid');
       ParamByName('country_id').AsInteger := FCountryId;
-      if (FStateId > 0) then
-        ParamByName('state_id').AsInteger := FStateId
-      else
-        ParamByName('state_id').Clear;
-      if (FMunicipalityId > 0) then
-        ParamByName('municipality_id').AsInteger := FMunicipalityId
-      else
-        ParamByName('municipality_id').Clear;
+      SetForeignParam(ParamByName('state_id'), FStateId);
+      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
       ParamByName('aid').AsInteger := FId;
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2116,9 +2064,9 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('INSERT INTO poi_library (' +
         'sample_date, ' +
@@ -2135,8 +2083,8 @@ begin
         'user_inserted, ' +
         'insert_date) ');
       Add('VALUES (' +
-        ':sample_date, ' +
-        ':sample_time, ' +
+        'date(:sample_date), ' +
+        'time(:sample_time), ' +
         ':poi_name, ' +
         ':longitude, ' +
         ':latitude, ' +
@@ -2149,40 +2097,16 @@ begin
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
-      ParamByName('sample_date').AsDateTime := FSampleDate;
-      ParamByName('sample_time').AsDateTime := FSampleTime;
+      SetDateParam(ParamByName('sample_date'), FSampleDate);
+      SetTimeParam(ParamByName('sample_time'), FSampleTime);
       ParamByName('poi_name').AsString := FPoiName;
-      if (FLongitude <> 0) and (FLatitude <> 0) then
-      begin
-        ParamByName('longitude').AsFloat := FLongitude;
-        ParamByName('latitude').AsFloat := FLatitude;
-      end
-      else
-      begin
-        ParamByName('longitude').Clear;
-        ParamByName('latitude').Clear;
-      end;
-      if (FAltitude <> 0) then
-        ParamByName('altitude').AsFloat := FAltitude
-      else
-        ParamByName('altitude').Clear;
-      if (FObserverId > 0) then
-        ParamByName('observer_id').AsInteger := FObserverId
-      else
-        ParamByName('observer_id').Clear;
-      ParamByName('taxon_id').AsInteger := FTaxonId;
-      if (FIndividualId > 0) then
-        ParamByName('individual_id').AsInteger := FIndividualId
-      else
-        ParamByName('individual_id').Clear;
-      if (FSightingId > 0) then
-        ParamByName('sighting_id').AsInteger := FSightingId
-      else
-        ParamByName('sighting_id').Clear;
-      if (FSurveyId > 0) then
-        ParamByName('survey_id').AsInteger := FSurveyId
-      else
-        ParamByName('survey_id').Clear;
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetFloatParam(ParamByName('altitude'), FAltitude);
+      SetForeignParam(ParamByName('observer_id'), FObserverId);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('sighting_id'), FSightingId);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -2194,11 +2118,11 @@ begin
       FId := Fields[0].AsInteger;
       Close;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
@@ -2249,13 +2173,13 @@ begin
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
+    //if not DMM.sqlTrans.Active then
+    //  DMM.sqlTrans.StartTransaction;
+    //try
       Clear;
       Add('UPDATE poi_library SET ' +
-        'sample_date = :sample_date, ' +
-        'sample_time = :sample_time, ' +
+        'sample_date = date(:sample_date), ' +
+        'sample_time = time(:sample_time), ' +
         'poi_name = :poi_name, ' +
         'longitude = :longitude, ' +
         'latitude = :latitude, ' +
@@ -2271,40 +2195,16 @@ begin
         'active_status = :active_status');
       Add('WHERE (poi_id = :poi_id)');
 
-      ParamByName('sample_date').AsDateTime := FSampleDate;
-      ParamByName('sample_time').AsDateTime := FSampleTime;
+      SetDateParam(ParamByName('sample_date'), FSampleDate);
+      SetTimeParam(ParamByName('sample_time'), FSampleTime);
       ParamByName('poi_name').AsString := FPoiName;
-      if (FLongitude <> 0) and (FLatitude <> 0) then
-      begin
-        ParamByName('longitude').AsFloat := FLongitude;
-        ParamByName('latitude').AsFloat := FLatitude;
-      end
-      else
-      begin
-        ParamByName('longitude').Clear;
-        ParamByName('latitude').Clear;
-      end;
-      if (FAltitude <> 0) then
-        ParamByName('altitude').AsFloat := FAltitude
-      else
-        ParamByName('altitude').Clear;
-      if (FObserverId > 0) then
-        ParamByName('observer_id').AsInteger := FObserverId
-      else
-        ParamByName('observer_id').Clear;
-      ParamByName('taxon_id').AsInteger := FTaxonId;
-      if (FIndividualId > 0) then
-        ParamByName('individual_id').AsInteger := FIndividualId
-      else
-        ParamByName('individual_id').Clear;
-      if (FSightingId > 0) then
-        ParamByName('sighting_id').AsInteger := FSightingId
-      else
-        ParamByName('sighting_id').Clear;
-      if (FSurveyId > 0) then
-        ParamByName('survey_id').AsInteger := FSurveyId
-      else
-        ParamByName('survey_id').Clear;
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
+      SetFloatParam(ParamByName('altitude'), FAltitude);
+      SetForeignParam(ParamByName('observer_id'), FObserverId);
+      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
+      SetForeignParam(ParamByName('individual_id'), FIndividualId);
+      SetForeignParam(ParamByName('sighting_id'), FSightingId);
+      SetForeignParam(ParamByName('survey_id'), FSurveyId);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('marked_status').AsBoolean := FMarked;
       ParamByName('active_status').AsBoolean := FActive;
@@ -2312,11 +2212,11 @@ begin
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    //  DMM.sqlTrans.CommitRetaining;
+    //except
+    //  DMM.sqlTrans.RollbackRetaining;
+    //  raise;
+    //end;
   finally
     FreeAndNil(Qry);
   end;
