@@ -108,6 +108,7 @@ type
     procedure lblLinkSpecimensClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
+    procedure SplitRightMoved(Sender: TObject);
     procedure TimerDataTimer(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
     procedure txtValidNameClick(Sender: TObject);
@@ -257,10 +258,10 @@ end;
 
 procedure TfrmTaxa.FormResize(Sender: TObject);
 begin
-  pEmptyQuery.Left := pToolbar.Left;
-  pEmptyQuery.Width := Width - gridTaxa.Width;
-  pEmptyQuery.Top := gridTaxa.Top;
-  pEmptyQuery.Height := gridTaxa.Height;
+  //pEmptyQuery.Left := pToolbar.Left;
+  //pEmptyQuery.Width := Width - gridTaxa.Width;
+  //pEmptyQuery.Top := gridTaxa.Top;
+  //pEmptyQuery.Height := gridTaxa.Height;
 end;
 
 procedure TfrmTaxa.FormShow(Sender: TObject);
@@ -276,6 +277,18 @@ begin
   dsLink.DataSet.Open;
   dsSynonyms.DataSet.Open;
   dsChilds.DataSet.Open;
+
+  SplitRightMoved(nil);
+
+  pEmptyQuery.AnchorSideLeft.Side := asrRight;
+  pEmptyQuery.AnchorSideLeft.Control := SplitRight;
+  pEmptyQuery.AnchorSideRight.Side := asrRight;
+  pEmptyQuery.AnchorSideRight.Control := pSideToolbar;
+  pEmptyQuery.AnchorSideTop.Control := gridTaxa;
+  pEmptyQuery.AnchorSideBottom.Side := asrBottom;
+  pEmptyQuery.AnchorSideBottom.Control := gridTaxa;
+  pEmptyQuery.Anchors := [akLeft, akRight, akTop, akBottom];
+  pEmptyQuery.BringToFront;
 end;
 
 procedure TfrmTaxa.GetCapturesCount;
@@ -607,6 +620,11 @@ begin
   end
   else
     Search(FSearchString);
+end;
+
+procedure TfrmTaxa.SplitRightMoved(Sender: TObject);
+begin
+  pSearch.Width := gridTaxa.Width - pSearch.BorderSpacing.Left - pSearch.BorderSpacing.Right;
 end;
 
 procedure TfrmTaxa.TimerDataTimer(Sender: TObject);

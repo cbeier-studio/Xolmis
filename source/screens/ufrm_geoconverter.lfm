@@ -10,31 +10,46 @@ object frmGeoConverter: TfrmGeoConverter
   OnResize = FormResize
   OnShow = FormShow
   object SplitSynEdit: TSplitter
+    AnchorSideTop.Control = PBar
+    AnchorSideTop.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 793
     Height = 712
     Top = 8
     Width = 6
+    Align = alNone
+    Anchors = [akTop, akBottom]
     AutoSnap = False
     Color = 16250871
     MinSize = 250
     ParentColor = False
   end
   object PBar: TProgressBar
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
     Left = 0
     Height = 8
     Top = 0
     Width = 1193
-    Align = alTop
+    Anchors = [akTop, akLeft, akRight]
     Step = 1
     TabOrder = 1
     Visible = False
   end
   object pLeft: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = PBar
+    AnchorSideTop.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 0
     Height = 712
     Top = 8
     Width = 311
-    Align = alLeft
+    Anchors = [akTop, akLeft, akBottom]
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
@@ -46,7 +61,7 @@ object frmGeoConverter: TfrmGeoConverter
     ParentBackground = False
     ParentColor = False
     TabOrder = 2
-    object Label1: TLabel
+    object lblOptions: TLabel
       Left = 16
       Height = 28
       Top = 208
@@ -286,7 +301,7 @@ object frmGeoConverter: TfrmGeoConverter
         Layout = tlCenter
         ParentColor = False
       end
-      object Panel2: TPanel
+      object pNorthSouth: TPanel
         Left = 127
         Height = 19
         Top = 9
@@ -444,7 +459,7 @@ object frmGeoConverter: TfrmGeoConverter
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       TabOrder = 4
-      object Label2: TLabel
+      object lblUseFormat: TLabel
         Left = 17
         Height = 15
         Top = 9
@@ -455,7 +470,7 @@ object frmGeoConverter: TfrmGeoConverter
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label3: TLabel
+      object lblFormatInfo: TLabel
         Left = 17
         Height = 15
         Top = 28
@@ -522,11 +537,18 @@ object frmGeoConverter: TfrmGeoConverter
     end
   end
   object pConvertFrom: TPanel
+    AnchorSideLeft.Control = pLeft
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = PBar
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = SplitSynEdit
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 311
     Height = 712
     Top = 8
     Width = 482
-    Align = alLeft
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BevelOuter = bvNone
     ClientHeight = 712
     ClientWidth = 482
@@ -1160,11 +1182,19 @@ object frmGeoConverter: TfrmGeoConverter
     end
   end
   object pConverted: TPanel
+    AnchorSideLeft.Control = SplitSynEdit
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = PBar
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 799
     Height = 712
     Top = 8
     Width = 394
-    Align = alClient
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BevelOuter = bvNone
     ClientHeight = 712
     ClientWidth = 394

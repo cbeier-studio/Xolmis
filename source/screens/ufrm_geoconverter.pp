@@ -39,16 +39,16 @@ type
     icoConverter: TImage;
     iButtons: TImageList;
     imgSBarDark: TImageList;
-    Label2: TLabel;
-    Label3: TLabel;
+    lblUseFormat: TLabel;
+    lblFormatInfo: TLabel;
     lblLineCol: TLabel;
     lblUTMHemisphere: TLabel;
     lblUTMZone: TLabel;
     pmfSwapValues: TMenuItem;
-    Panel2: TPanel;
+    pNorthSouth: TPanel;
     pConvertFromToolbar: TBCPanel;
     imgSBar: TImageList;
-    Label1: TLabel;
+    lblOptions: TLabel;
     pConverted: TPanel;
     pConvertFrom: TPanel;
     pConvertedToolbar: TBCPanel;
@@ -139,7 +139,8 @@ end;
 
 procedure TfrmGeoConverter.FormResize(Sender: TObject);
 begin
-  pConvertFrom.Width := ((ClientWidth - pLeft.Width) div 2) - (SplitSynEdit.Width div 2);
+  SplitSynEdit.Left := pLeft.Width + ((ClientWidth - pLeft.Width) div 2) - (SplitSynEdit.Width div 2);
+  //pConvertFrom.Width := ((ClientWidth - pLeft.Width) div 2) - (SplitSynEdit.Width div 2);
 end;
 
 procedure TfrmGeoConverter.FormShow(Sender: TObject);
@@ -461,7 +462,7 @@ begin
   pUtmZone.Border.Color := clCardBGSecondaryDark;
   pUtmHemisphere.Background.Color := clCardBGDefaultDark;
   pUtmHemisphere.Border.Color := clCardBGSecondaryDark;
-  Panel2.Color := clCardBGDefaultDark;
+  pNorthSouth.Color := clCardBGDefaultDark;
   pAddUnitsZone.Background.Color := clCardBGDefaultDark;
   pAddUnitsZone.Border.Color := clCardBGSecondaryDark;
   pCaretPos.Background.Color := clCardBGDefaultDark;

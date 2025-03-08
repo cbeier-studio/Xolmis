@@ -16,11 +16,17 @@ object frmCustomGrid: TfrmCustomGrid
   OnResize = FormResize
   OnShow = FormShow
   object pSide: TPanel
-    Left = 728
+    AnchorSideLeft.Control = SplitRight
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = pSideToolbar
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 729
     Height = 614
     Top = 0
     Width = 464
-    Align = alRight
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BevelOuter = bvNone
     ClientHeight = 614
     ClientWidth = 464
@@ -69,7 +75,7 @@ object frmCustomGrid: TfrmCustomGrid
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRowSizing, goThumbTracking, goSmoothScroll, goFixedColSizing, goCellEllipsis]
           ParentShowHint = False
           RowCount = 1
-          ScrollBars = ssAutoVertical
+          ScrollBars = ssVertical
           ShowHint = True
           TabOrder = 0
           TitleStyle = tsNative
@@ -77,7 +83,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            344
+            327
           )
         end
       end
@@ -7897,27 +7903,37 @@ object frmCustomGrid: TfrmCustomGrid
     end
   end
   object SplitRight: TSplitter
+    AnchorSideTop.Control = Owner
     AnchorSideRight.Control = pSide
-    Left = 722
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 723
     Height = 614
     Top = 0
     Width = 6
-    Align = alRight
+    Align = alNone
+    Anchors = [akTop, akBottom]
     ResizeAnchor = akRight
+    ResizeStyle = rsLine
     Visible = False
     OnMoved = SplitRightMoved
   end
   object pClient: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = SplitRight
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 0
     Height = 614
     Top = 0
-    Width = 722
-    Align = alClient
+    Width = 723
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 8
     ChildSizing.TopBottomSpacing = 8
     ClientHeight = 614
-    ClientWidth = 722
+    ClientWidth = 723
     Color = 16250871
     ParentBackground = False
     ParentColor = False
@@ -7928,8 +7944,8 @@ object frmCustomGrid: TfrmCustomGrid
       Cursor = crVSplit
       Left = 8
       Height = 4
-      Top = 312
-      Width = 706
+      Top = 316
+      Width = 707
       Align = alBottom
       ResizeAnchor = akBottom
       Visible = False
@@ -7938,12 +7954,12 @@ object frmCustomGrid: TfrmCustomGrid
     object pChild: TPanel
       Left = 8
       Height = 236
-      Top = 370
-      Width = 706
+      Top = 320
+      Width = 707
       Align = alBottom
       BevelOuter = bvNone
       ClientHeight = 236
-      ClientWidth = 706
+      ClientWidth = 707
       ParentBackground = False
       TabOrder = 1
       Visible = False
@@ -7951,7 +7967,7 @@ object frmCustomGrid: TfrmCustomGrid
         Left = 0
         Height = 40
         Top = 0
-        Width = 706
+        Width = 707
         Align = alTop
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 4
@@ -8015,7 +8031,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbEditChildClick
         end
         object sbDelChild: TSpeedButton
-          Left = 651
+          Left = 652
           Height = 30
           Hint = 'Delete selected record'
           Top = 5
@@ -8061,7 +8077,7 @@ object frmCustomGrid: TfrmCustomGrid
           LineWidth = 1
         end
         object Separator16: TShapeLineBGRA
-          Left = 627
+          Left = 628
           Height = 30
           Top = 5
           Width = 4
@@ -8113,7 +8129,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbAddNetsBatchClick
         end
         object sbShowChildSidePanel: TSpeedButton
-          Left = 573
+          Left = 574
           Height = 30
           Hint = 'Show/hide details panel'
           Top = 5
@@ -8140,7 +8156,7 @@ object frmCustomGrid: TfrmCustomGrid
         Left = 0
         Height = 164
         Top = 40
-        Width = 560
+        Width = 561
         PageIndex = 0
         Align = alClient
         TabOrder = 1
@@ -8149,14 +8165,13 @@ object frmCustomGrid: TfrmCustomGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 560
+            Width = 561
             Align = alClient
             Color = clWindow
             Columns = <>
             DataSource = dsLink1
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgAnyButtonCanSelect, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
             PopupMenu = pmGridChild
-            Scrollbars = ssAutoBoth
             TabOrder = 0
             TitleImageList = iHeaders
             TitleStyle = tsNative
@@ -8176,14 +8191,13 @@ object frmCustomGrid: TfrmCustomGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 704
+            Width = 561
             Align = alClient
             Color = clWindow
             Columns = <>
             DataSource = dsLink2
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgAnyButtonCanSelect, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
             PopupMenu = pmGridChild
-            Scrollbars = ssAutoBoth
             TabOrder = 0
             TitleImageList = iHeaders
             TitleStyle = tsNative
@@ -8203,14 +8217,13 @@ object frmCustomGrid: TfrmCustomGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 704
+            Width = 561
             Align = alClient
             Color = clWindow
             Columns = <>
             DataSource = dsLink3
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgAnyButtonCanSelect, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
             PopupMenu = pmGridChild
-            Scrollbars = ssAutoBoth
             TabOrder = 0
             TitleImageList = iHeaders
             TitleStyle = tsNative
@@ -8230,14 +8243,13 @@ object frmCustomGrid: TfrmCustomGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 704
+            Width = 561
             Align = alClient
             Color = clWindow
             Columns = <>
             DataSource = dsLink4
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgAnyButtonCanSelect, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
             PopupMenu = pmGridChild
-            Scrollbars = ssAutoBoth
             TabOrder = 0
             TitleImageList = iHeaders
             TitleStyle = tsNative
@@ -8257,14 +8269,13 @@ object frmCustomGrid: TfrmCustomGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 698
+            Width = 561
             Align = alClient
             Color = clWindow
             Columns = <>
             DataSource = dsLink5
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgAnyButtonCanSelect, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
             PopupMenu = pmGridChild
-            Scrollbars = ssAutoBoth
             TabOrder = 0
             TitleImageList = iHeaders
             TitleStyle = tsNative
@@ -8284,14 +8295,13 @@ object frmCustomGrid: TfrmCustomGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 698
+            Width = 561
             Align = alClient
             Color = clWindow
             Columns = <>
             DataSource = dsLink6
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgAnyButtonCanSelect, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
             PopupMenu = pmGridChild
-            Scrollbars = ssAutoBoth
             TabOrder = 0
             TitleImageList = iHeaders
             TitleStyle = tsNative
@@ -8312,7 +8322,7 @@ object frmCustomGrid: TfrmCustomGrid
         Left = 0
         Height = 32
         Top = 204
-        Width = 706
+        Width = 707
         Align = alBottom
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 4
@@ -8362,7 +8372,7 @@ object frmCustomGrid: TfrmCustomGrid
           ParentFont = False
         end
         object sbFirstChild: TSpeedButton
-          Left = 582
+          Left = 583
           Height = 24
           Hint = 'First record'
           Top = 4
@@ -8381,7 +8391,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbFirstChildClick
         end
         object sbPriorChild: TSpeedButton
-          Left = 608
+          Left = 609
           Height = 24
           Hint = 'Previous record'
           Top = 4
@@ -8399,7 +8409,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbPriorChildClick
         end
         object sbNextChild: TSpeedButton
-          Left = 634
+          Left = 635
           Height = 24
           Hint = 'Next record'
           Top = 4
@@ -8417,7 +8427,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbNextChildClick
         end
         object sbLastChild: TSpeedButton
-          Left = 660
+          Left = 661
           Height = 24
           Hint = 'Last record'
           Top = 4
@@ -8436,7 +8446,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbLastChildClick
         end
         object sbRefreshChild: TSpeedButton
-          Left = 536
+          Left = 537
           Height = 24
           Hint = 'Refresh related records'
           Top = 4
@@ -8456,7 +8466,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbRefreshChildClick
         end
         object sbChildVerifications: TSpeedButton
-          Left = 452
+          Left = 453
           Height = 24
           Hint = 'Record verifications'
           Top = 4
@@ -8476,7 +8486,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbChildVerificationsClick
         end
         object sbChildHistory: TSpeedButton
-          Left = 486
+          Left = 487
           Height = 24
           Hint = 'View record history'
           Top = 4
@@ -8497,7 +8507,7 @@ object frmCustomGrid: TfrmCustomGrid
         end
       end
       object pChildRightPanel: TBCPanel
-        Left = 560
+        Left = 561
         Height = 164
         Top = 40
         Width = 146
@@ -8585,7 +8595,7 @@ object frmCustomGrid: TfrmCustomGrid
       Left = 8
       Height = 40
       Top = 8
-      Width = 706
+      Width = 707
       Align = alTop
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 4
@@ -8626,7 +8636,7 @@ object frmCustomGrid: TfrmCustomGrid
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 2
       object sbDelRecord: TSpeedButton
-        Left = 652
+        Left = 653
         Height = 32
         Hint = 'Delete selected record'
         Top = 4
@@ -8694,7 +8704,7 @@ object frmCustomGrid: TfrmCustomGrid
         LineWidth = 1
       end
       object Separator8: TShapeLineBGRA
-        Left = 628
+        Left = 629
         Height = 32
         Top = 4
         Width = 4
@@ -8764,7 +8774,7 @@ object frmCustomGrid: TfrmCustomGrid
         OnClick = sbPrintClick
       end
       object sbSaveRecord: TBitBtn
-        Left = 381
+        Left = 382
         Height = 32
         Hint = 'Save changes'
         Top = 4
@@ -8783,7 +8793,7 @@ object frmCustomGrid: TfrmCustomGrid
         OnClick = sbSaveRecordClick
       end
       object sbCancelRecord: TBitBtn
-        Left = 464
+        Left = 465
         Height = 32
         Hint = 'Cancel editing'
         Top = 4
@@ -8802,7 +8812,7 @@ object frmCustomGrid: TfrmCustomGrid
         OnClick = sbCancelRecordClick
       end
       object sbClearAllFilters: TSpeedButton
-        Left = 574
+        Left = 575
         Height = 32
         Hint = 'Clear all filters'
         Top = 4
@@ -8825,8 +8835,8 @@ object frmCustomGrid: TfrmCustomGrid
     object pChildsBar: TBCPanel
       Left = 8
       Height = 42
-      Top = 324
-      Width = 706
+      Top = 564
+      Width = 707
       Align = alBottom
       AutoSize = True
       BorderSpacing.Left = 8
@@ -9028,9 +9038,9 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pGrid: TBCPanel
       Left = 8
-      Height = 264
+      Height = 268
       Top = 48
-      Width = 706
+      Width = 707
       Align = alClient
       Background.Color = 15066599
       Background.Gradient1.StartColor = clWhite
@@ -9067,9 +9077,9 @@ object frmCustomGrid: TfrmCustomGrid
       TabOrder = 4
       object DBG: TDBGrid
         Left = 0
-        Height = 232
+        Height = 236
         Top = 0
-        Width = 706
+        Width = 707
         Align = alClient
         Color = clWindow
         Columns = <>
@@ -9079,7 +9089,6 @@ object frmCustomGrid: TfrmCustomGrid
         Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgCellEllipsis, dgRowHighlight, dgThumbTracking, dgDisplayMemoText]
         OptionsExtra = [dgeCheckboxColumn]
         PopupMenu = pmGrid
-        Scrollbars = ssAutoBoth
         TabOrder = 0
         TitleImageList = iHeaders
         TitleStyle = tsNative
@@ -9102,8 +9111,8 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Side = asrBottom
         Left = 0
         Height = 32
-        Top = 232
-        Width = 706
+        Top = 236
+        Width = 707
         Align = alBottom
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 4
@@ -9153,7 +9162,7 @@ object frmCustomGrid: TfrmCustomGrid
           ParentFont = False
         end
         object sbFirstRecord: TSpeedButton
-          Left = 582
+          Left = 583
           Height = 24
           Hint = 'First record'
           Top = 4
@@ -9172,7 +9181,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbFirstRecordClick
         end
         object sbPriorRecord: TSpeedButton
-          Left = 608
+          Left = 609
           Height = 24
           Hint = 'Previous record'
           Top = 4
@@ -9190,7 +9199,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbPriorRecordClick
         end
         object sbNextRecord: TSpeedButton
-          Left = 634
+          Left = 635
           Height = 24
           Hint = 'Next record'
           Top = 4
@@ -9208,7 +9217,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbNextRecordClick
         end
         object sbLastRecord: TSpeedButton
-          Left = 660
+          Left = 661
           Height = 24
           Hint = 'Last record'
           Top = 4
@@ -9227,7 +9236,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbLastRecordClick
         end
         object sbRefreshRecords: TSpeedButton
-          Left = 536
+          Left = 537
           Height = 24
           Hint = 'Refresh records'
           Top = 4
@@ -9246,7 +9255,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbRefreshRecordsClick
         end
         object sbRecordVerifications: TSpeedButton
-          Left = 452
+          Left = 453
           Height = 24
           Hint = 'Record verifications'
           Top = 4
@@ -9266,7 +9275,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbRecordVerificationsClick
         end
         object sbRecordHistory: TSpeedButton
-          Left = 486
+          Left = 487
           Height = 24
           Hint = 'View record history'
           Top = 4
@@ -9293,7 +9302,7 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Side = asrCenter
         Left = 281
         Height = 103
-        Top = 65
+        Top = 67
         Width = 145
         AutoSize = True
         ChildSizing.LeftRightSpacing = 16

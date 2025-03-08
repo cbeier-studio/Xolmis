@@ -13,11 +13,17 @@ object frmTaxa: TfrmTaxa
   OnResize = FormResize
   OnShow = FormShow
   object gridTaxa: TDBGrid
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = pTop
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = SplitRight
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 0
     Height = 584
     Top = 52
     Width = 320
-    Align = alLeft
+    Anchors = [akTop, akLeft, akRight, akBottom]
     AutoFillColumns = True
     Color = clWindow
     Columns = <    
@@ -45,11 +51,15 @@ object frmTaxa: TfrmTaxa
     OnPrepareCanvas = gridTaxaPrepareCanvas
   end
   object pTop: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
     Left = 0
     Height = 52
     Top = 0
     Width = 1179
-    Align = alTop
+    Anchors = [akTop, akLeft, akRight]
     BevelOuter = bvNone
     ClientHeight = 52
     ClientWidth = 1179
@@ -272,11 +282,17 @@ object frmTaxa: TfrmTaxa
     end
   end
   object pSideToolbar: TPanel
+    AnchorSideTop.Control = pTop
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 1129
     Height = 584
     Top = 52
     Width = 50
-    Align = alRight
+    Anchors = [akTop, akRight, akBottom]
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 8
@@ -436,18 +452,32 @@ object frmTaxa: TfrmTaxa
     end
   end
   object SplitRight: TSplitter
+    AnchorSideTop.Control = pTop
+    AnchorSideTop.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 320
     Height = 584
     Top = 52
     Width = 6
-    Visible = False
+    Align = alNone
+    Anchors = [akTop, akBottom]
+    ResizeStyle = rsLine
+    OnMoved = SplitRightMoved
   end
   object pContent: TPanel
+    AnchorSideLeft.Control = SplitRight
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = pTop
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = pSideToolbar
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 326
     Height = 584
     Top = 52
     Width = 803
-    Align = alClient
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BevelOuter = bvNone
     ClientHeight = 584
     ClientWidth = 803
