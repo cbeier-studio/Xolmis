@@ -299,6 +299,24 @@ uses
       'Do you want to download it now?';
     rsIsUpToDate = 'You are running the most recent version!';
 
+    { Notification messages }
+    rsSoftwareUpdateNotification = 'Software update';
+    rsNestsToCheckNotification = 'Nests to check';
+    rsNestsToCheckMessage = 'Some nests were not checked recently.';
+    rsBandRunningOutNotification = 'Band running out';
+    rsBandRunnedOutNotification = 'Band runned out';
+    rsBirthdayNotification = 'Birthday';
+    rsActivityDueDateNotification = 'Activity due date';
+    rsPermitDueDateNotification = 'Permit due date';
+    rsPeriodicReportNotification = 'Periodic report';
+    rsSevereWeatherAlert = 'Severe weather alert';
+    rsRemindLaterAction = 'Remind later';
+    rsUpdateNowAction = 'Update now';
+    rsViewRecordsAction = 'View records';
+    rsViewAlertAction = 'View alert';
+    rsViewReportAction = 'View report';
+    rsIgnoreAction = 'Ignore';
+
     { Cancel messages }
     rsPostBeforeClosePrompt = 'There are unsaved changes. Do you want to save it?';
     rsDiscardChangesTitle = 'Discard changes';

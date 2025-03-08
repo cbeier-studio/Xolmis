@@ -1212,7 +1212,6 @@
         <ComponentName Value="frmDashboard"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="screens\ufrm_geoconverter.pp"/>
@@ -1220,7 +1219,6 @@
         <ComponentName Value="frmGeoConverter"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceBaseClassname Value=""/>
       </Unit>
       <Unit>
         <Filename Value="screens\ufrm_imageviewer.pp"/>

@@ -1,8 +1,11 @@
 {"version":1,"strings":[
 {"hash":100021251,"name":"tfrmmain.caption","sourcebytes":[88,111,108,109,105,115],"value":"Xolmis"},
+{"hash":216013555,"name":"tfrmmain.titlenotifications.caption","sourcebytes":[78,111,116,105,102,105,99,97,116,105,111,110,115],"value":"Notifications"},
+{"hash":63035718,"name":"tfrmmain.lblemptynotifications.caption","sourcebytes":[65,108,108,32,116,97,107,101,110,32,99,97,114,101,32,111,102],"value":"All taken care of"},
 {"hash":94079128,"name":"tfrmmain.esearch.texthint","sourcebytes":[83,101,97,114,99,104],"value":"Search"},
 {"hash":54079704,"name":"tfrmmain.sbclearsearch.hint","sourcebytes":[67,108,101,97,114,32,115,101,97,114,99,104],"value":"Clear search"},
 {"hash":325173,"name":"tfrmmain.sbhome.hint","sourcebytes":[72,111,109,101],"value":"Home"},
+{"hash":142360674,"name":"tfrmmain.sbnotifications.hint","sourcebytes":[78,111,116,105,102,105,99,97,116,105,111,110,32,67,101,110,116,101,114],"value":"Notification Center"},
 {"hash":133929972,"name":"tfrmmain.lblemptytabs.caption","sourcebytes":[65,108,108,32,116,97,98,115,32,97,114,101,32,99,108,111,115,101,100],"value":"All tabs are closed"},
 {"hash":230860389,"name":"tfrmmain.lblloading.caption","sourcebytes":[87,101,108,99,111,109,101],"value":"Welcome"},
 {"hash":189142243,"name":"tfrmmain.actopenexpeditions.caption","sourcebytes":[69,120,112,101,100,105,116,105,111,110,115],"value":"Expeditions"},

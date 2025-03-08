@@ -13744,6 +13744,7 @@ msgid "Atualizar"
 msgstr "Atualizar"
 
 #: tfrmdashboard.ptitlenotificationcenter.caption
+msgctxt "tfrmdashboard.ptitlenotificationcenter.caption"
 msgid "Notifications"
 msgstr "Notificações"
 
@@ -13824,18 +13825,20 @@ msgstr "Adicionar unidades/zonas"
 msgid "e.g.: 22J"
 msgstr "p.ex.: 22J"
 
-#: tfrmgeoconverter.label1.caption
-msgctxt "tfrmgeoconverter.label1.caption"
+#: tfrmgeoconverter.lblformatinfo.caption
+msgctxt "tfrmgeoconverter.lblformatinfo.caption"
+msgid "longitude (X axis); latitude (Y axis)"
+msgstr "longitude (eixo X); latitude (eixo Y)"
+
+#: tfrmgeoconverter.lbloptions.caption
+msgctxt "tfrmgeoconverter.lbloptions.caption"
 msgid "Options"
 msgstr "Opções"
 
-#: tfrmgeoconverter.label2.caption
+#: tfrmgeoconverter.lbluseformat.caption
+msgctxt "tfrmgeoconverter.lbluseformat.caption"
 msgid "Use this format:"
 msgstr "Use este formato:"
-
-#: tfrmgeoconverter.label3.caption
-msgid "longitude (X axis); latitude (Y axis)"
-msgstr "longitude (eixo X); latitude (eixo Y)"
 
 #: tfrmgeoconverter.lblutmhemisphere.caption
 msgid "Hemisphere:"
@@ -14301,6 +14304,10 @@ msgctxt "tfrmmain.esearch.texthint"
 msgid "Search"
 msgstr "Pesquisar"
 
+#: tfrmmain.lblemptynotifications.caption
+msgid "All taken care of"
+msgstr "Tudo resolvido"
+
 #: tfrmmain.lblemptytabs.caption
 msgctxt "tfrmmain.lblemptytabs.caption"
 msgid "All tabs are closed"
@@ -14462,6 +14469,16 @@ msgstr "Limpar busca"
 msgctxt "tfrmmain.sbhome.hint"
 msgid "Home"
 msgstr "Início"
+
+#: tfrmmain.sbnotifications.hint
+msgctxt "tfrmmain.sbnotifications.hint"
+msgid "Notification Center"
+msgstr "Cental de notificações"
+
+#: tfrmmain.titlenotifications.caption
+msgctxt "tfrmmain.titlenotifications.caption"
+msgid "Notifications"
+msgstr "Notificações"
 
 #: tfrmmaintenance.caption
 msgid "Maintenance"

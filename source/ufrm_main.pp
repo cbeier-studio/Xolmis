@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons,
-  ActnList, ExtCtrls, StdCtrls, atTabs, atshapelinebgra, BCPanel, BCButton, ColorSpeedButton, DateUtils,
+  ActnList, ExtCtrls, StdCtrls, atTabs, BCPanel, BCTypes, ColorSpeedButton, DateUtils,
   DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory,
   cbs_datatypes, Types, ImgList;
 
@@ -88,12 +88,17 @@ type
     AppEvents: TApplicationProperties;
     bStatusBarDark: TImageList;
     icoEmptyTabs: TImage;
+    icoEmptyNotifications: TImage;
     iMenuDark: TImageList;
     iPopupDark: TImageList;
     iSearch: TImageList;
     iMenu: TImageList;
     iPopup: TImageList;
     iSearchDark: TImageList;
+    lblEmptyNotifications: TLabel;
+    pEmptyNotifications: TBCPanel;
+    pNotificationList: TPanel;
+    titleNotifications: TLabel;
     lblEmptyTabs: TLabel;
     lblSbarVersion: TLabel;
     mmiFeathers: TMenuItem;
@@ -155,6 +160,8 @@ type
     mmTaxonomy: TMenuItem;
     mMenu: TMainMenu;
     navTabs: TATTabs;
+    pTitleNotifications: TPanel;
+    pNotifications: TPanel;
     pEmptyTabs: TBCPanel;
     sbarVersion: TBCPanel;
     sbClearSearch: TColorSpeedButton;
@@ -203,7 +210,9 @@ type
     bStatusBar: TImageList;
     pLeftTabs: TPanel;
     sbHome: TSpeedButton;
+    sbNotifications: TSpeedButton;
     sbInsertRecord: TSpeedButton;
+    scrollNotifications: TScrollBox;
     Separator1: TMenuItem;
     Separator11: TMenuItem;
     Separator12: TMenuItem;
@@ -229,6 +238,7 @@ type
     Separator8: TMenuItem;
     Separator9: TMenuItem;
     PGW: TTDICardPanel;
+    sbBackNotifications: TSpeedButton;
     TimerScreen: TTimer;
     TimerAnimSearch: TTimer;
     TimerFind: TTimer;
@@ -311,8 +321,10 @@ type
     procedure pmtCloseAllOtherTabsClick(Sender: TObject);
     procedure pmtCloseAllTabsClick(Sender: TObject);
     procedure pmtCloseTabClick(Sender: TObject);
+    procedure sbBackNotificationsClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
     procedure sbHomeClick(Sender: TObject);
+    procedure sbNotificationsClick(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
     procedure TimerScreenTimer(Sender: TObject);
   private
@@ -327,7 +339,8 @@ type
     procedure CloseAllTabs(ClosePinned: Boolean = False; ExceptIndex: Integer = -1);
     procedure ApplyDarkMode;
   public
-    procedure CarregaPref;
+    procedure ApplyFormSettings;
+    procedure RefreshNotifications;
     procedure UpdateStatusBar;
     procedure UpdateMenu(aTab: TPage);
   end;
@@ -525,7 +538,7 @@ begin
       {$IFDEF DEBUG}
       LogDebug(Format('User changed from %d to %d', [OldUser.Id, ActiveUser.Id]));
       {$ENDIF}
-      CarregaPref;
+      ApplyFormSettings;
     end;
   finally
     FreeAndNil(OldUser);
@@ -672,7 +685,7 @@ procedure TfrmMain.actSettingsExecute(Sender: TObject);
 begin
   AbreForm(TcfgOptions, cfgOptions);
 
-  CarregaPref;
+  ApplyFormSettings;
 end;
 
 procedure TfrmMain.actViewBandsBalanceExecute(Sender: TObject);
@@ -702,10 +715,16 @@ begin
   pEmptyTabs.Background.Color := clCardBGDefaultDark;
   pEmptyTabs.Border.Color := clSolidBGSecondaryDark;
   pEmptyTabs.ParentBackground := True;
+  icoEmptyNotifications.Images := iPopupDark;
+  pEmptyNotifications.Background.Color := clCardBGDefaultDark;
+  pEmptyNotifications.Border.Color := clSolidBGSecondaryDark;
+  pEmptyNotifications.ParentBackground := True;
 
   mMenu.Images := iMenuDark;
   pmTabs.Images := iPopupDark;
   pmAddMenu.Images := DMM.iAddMenuDark;
+  sbNotifications.Images := iMenuDark;
+  sbBackNotifications.Images := iMenuDark;
 
   icoSbarDatabase.Images := bStatusBarDark;
   icoSbarUser.Images := bStatusBarDark;
@@ -729,7 +748,7 @@ begin
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
 end;
 
-procedure TfrmMain.CarregaPref;
+procedure TfrmMain.ApplyFormSettings;
 begin
   // Update active taxonomy
   ActiveTaxonomy := XSettings.Taxonomy;
@@ -894,6 +913,8 @@ begin
 
   if Assigned(TablesDict) then
     TablesDict.Free;
+
+  DestroyNotificationList;
 end;
 
 procedure TfrmMain.FormKeyPress(Sender: TObject; var Key: char);
@@ -930,6 +951,9 @@ begin
   begin
     navTabs.OptScalePercents := (OldPPI * 100) div 96;
   end;
+
+  { Initialize notification system }
+  CreateNotificationList;
 
   { Check if there are connections available }
   DMM.qsConn.Open;
@@ -994,7 +1018,7 @@ begin
   if not Application.Terminated then
   begin
     { Apply the active user settings }
-    CarregaPref;
+    ApplyFormSettings;
 
     { Load data module for the main forms }
     if not Assigned(DMG) then
@@ -1398,6 +1422,132 @@ begin
   navTabs.DeleteTab(navTabs.TabIndex, True, False);
 end;
 
+procedure TfrmMain.RefreshNotifications;
+var
+  i: Integer;
+  B: TBCPanel;
+  N, S: TLabel;
+  SB: TSpeedButton;
+begin
+  //pNotificationList.BeginUpdate;
+  try
+    pNotificationList.AutoSize := False;
+    pEmptyNotifications.Visible := XNotifications.Count = 0;
+
+    // Clear notification list
+    for i := (pNotificationList.ComponentCount - 1) downto 0 do
+      if pNotificationList.Components[i] is TBCPanel then
+        pNotificationList.Components[i].Free;
+
+    // Do not create notification cards if list is empty
+    if XNotifications.Count = 0 then
+      Exit;
+
+    // Create notification cards
+    for i := 0 to XNotifications.Count - 1 do
+    begin
+      // Create card
+      B := TBCPanel.Create(pNotificationList);
+      with B do
+      begin
+        Top := pNotificationList.Height;
+        //Height := 24;
+        Align := alTop;
+        Caption := EmptyStr;
+        BorderBCStyle := bpsBorder;
+        Border.Style := TBCBorderStyle.bboSolid;
+        Rounding.RoundX := 8;
+        Rounding.RoundY := 8;
+        if IsDarkModeEnabled then
+        begin
+          Border.Color := clSolidBGSecondaryLight;
+          Background.Color := clCardBGDefaultLight;
+        end
+        else
+        begin
+          Border.Color := clCardBGSecondaryDark;
+          Background.Color := clCardBGDefaultDark;
+        end;
+        ParentBackground := True;
+        ChildSizing.TopBottomSpacing := 8;
+        ChildSizing.LeftRightSpacing := 8;
+        ChildSizing.HorizontalSpacing := 8;
+        //BorderSpacing.Bottom := 2;
+        B.Parent := pNotificationList;
+      end;
+
+      // Create card title
+      N := TLabel.Create(B);
+      with N do
+      begin
+        //Align := alClient;
+        Layout := tlCenter;
+        Caption := XNotifications[i].Title;
+        Font.Style := Font.Style + [fsBold];
+        N.Parent := B;
+        AnchorSide[akTop].Side := asrTop;
+        AnchorSide[akTop].Control := B;
+        AnchorSide[akLeft].Side := asrLeft;
+        AnchorSide[akLeft].Control := B;
+        Anchors := [akTop, akLeft];
+      end;
+
+      // Create message
+      S := TLabel.Create(B);
+      with S do
+      begin
+        //Align := alClient;
+        Layout := tlCenter;
+        Caption := XNotifications[i].Message;
+        S.Parent := B;
+        AnchorSide[akTop].Side := asrBottom;
+        AnchorSide[akTop].Control := N;
+        AnchorSide[akLeft].Side := asrLeft;
+        AnchorSide[akLeft].Control := B;
+        AnchorSide[akRight].Side := asrRight;
+        AnchorSide[akRight].Control := B;
+        Anchors := [akTop, akLeft, akRight];
+        WordWrap := True;
+      end;
+
+      // Create dismiss button
+      SB := TSpeedButton.Create(B);
+      with SB do
+      begin
+        Tag := i;
+        if IsDarkModeEnabled then
+          Images := iSearchDark
+        else
+          Images := iSearch;
+        ImageIndex := 1;
+        Flat := True;
+        SB.Parent := B;
+        AnchorSide[akTop].Side := asrTop;
+        AnchorSide[akTop].Control := N;
+        AnchorSide[akRight].Side := asrRight;
+        AnchorSide[akRight].Control := B;
+        Anchors := [akTop, akRight];
+        AutoSize := True;
+      end;
+
+      // Create action buttons
+
+
+
+      B.AutoSize := True;
+    end;
+  finally
+    pNotificationList.AutoSize := True;
+    //pNotificationList.EndUpdate;
+  end;
+end;
+
+procedure TfrmMain.sbBackNotificationsClick(Sender: TObject);
+begin
+  sbNotifications.Down := False;
+  pNotifications.Visible := False;
+end;
+
 procedure TfrmMain.sbClearSearchClick(Sender: TObject);
 begin
   {$IFDEF DEBUG}
@@ -1439,6 +1589,11 @@ begin
   //    navTabs.TabIndex := i;
   //    Break;
   //  end;
+end;
+
+procedure TfrmMain.sbNotificationsClick(Sender: TObject);
+begin
+  pNotifications.Visible := sbNotifications.Down;
 end;
 
 procedure TfrmMain.TimerFindTimer(Sender: TObject);

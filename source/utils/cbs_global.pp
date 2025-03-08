@@ -22,7 +22,7 @@ interface
 
 uses
   { System }
-  Classes, SysUtils, Variants, DateUtils, LCLIntf, lazfileutils, FileUtil, jsonconf,
+  Classes, SysUtils, Variants, DateUtils, LCLIntf, lazfileutils, FileUtil, jsonconf, fgl,
   { VCL }
   Forms, Controls, Dialogs, Menus, Buttons, Graphics,
   { Data }
@@ -202,16 +202,47 @@ type
     property CbroVersion: String read FCbroVersion;
   end;
 
+type
+  TNotificationPriority = (npRegular, npImportant);
+  TNotificationCategory = (ncMessage, ncAlert, ncSystem);
+
+  { TNotification }
+
+  TNotification = class
+  private
+    FTitle: String;
+    FMessage: String;
+    FCategory: TNotificationCategory;
+    FPriority: TNotificationPriority;
+    FIsRead: Boolean;
+    FIsVisible: Boolean;
+  public
+    constructor Create(const ATitle, AMessage: String; ACategory: TNotificationCategory; APriority: TNotificationPriority);
+    procedure MarkAsRead;
+    procedure Dismiss;
+
+    property Title: String read FTitle;
+    property Message: String read FMessage;
+    property Category: TNotificationCategory read FCategory;
+    property Priority: TNotificationPriority read FPriority;
+    property IsRead: Boolean read FIsRead;
+    property IsVisible: Boolean read FIsVisible;
+  end;
+
+  TNotificationList = specialize TFPGObjectList<TNotification>;
+
 
 var
   Finalizado: Boolean;
   ConexaoDB: TDBParams;
   XSettings: TXolmisSettings;
+  XNotifications: TNotificationList;
 
 var
   Opening, Working, Closing: Boolean;
   Parar: Boolean;
   IsRunning: Boolean;
+  FNotificationsNeedUpdate: Boolean;
   MsgValor: String;
   EditSourceStr: String;
   OldPPI: Integer;
@@ -244,6 +275,14 @@ var
   procedure LoadDatabaseParams(aConnectionName: String; aConnector: TSQLConnector);
   function ConnectDatabase: Boolean;
   procedure CloseDatabase;
+
+  { Notification system }
+  procedure CreateNotificationList;
+  procedure DestroyNotificationList;
+  procedure DismissNotification(AIndex: Integer);
+  procedure NewNotification(const ATitle, AMessage: String; APriority: TNotificationPriority);
+  procedure NewAlert(const ATitle, AMessage: String; APriority: TNotificationPriority);
+  procedure NewSystemNotification(const ATitle, AMessage: String; APriority: TNotificationPriority);
 
 
 implementation
@@ -587,6 +626,65 @@ begin
   end;
 end;
 
+{ ---------------------------------------------------------------------------------------- }
+{ Notification system }
+{ ---------------------------------------------------------------------------------------- }
+
+procedure CreateNotificationList;
+begin
+  FNotificationsNeedUpdate := False;
+
+  XNotifications := TNotificationList.Create;
+
+  // Add notifications to the list
+end;
+
+procedure DestroyNotificationList;
+begin
+  if Assigned(XNotifications) then
+    XNotifications.Free;
+end;
+
+procedure DismissNotification(AIndex: Integer);
+begin
+  XNotifications[AIndex].Dismiss;
+
+  FNotificationsNeedUpdate := True;
+end;
+
+procedure NewNotification(const ATitle, AMessage: String; APriority: TNotificationPriority);
+var
+  ANotification: TNotification;
+begin
+  ANotification := TNotification.Create(ATitle, AMessage, ncMessage, APriority);
+
+  XNotifications.Add(ANotification);
+
+  FNotificationsNeedUpdate := True;
+end;
+
+procedure NewAlert(const ATitle, AMessage: String; APriority: TNotificationPriority);
+var
+  ANotification: TNotification;
+begin
+  ANotification := TNotification.Create(ATitle, AMessage, ncAlert, APriority);
+
+  XNotifications.Add(ANotification);
+
+  FNotificationsNeedUpdate := True;
+end;
+
+procedure NewSystemNotification(const ATitle, AMessage: String; APriority: TNotificationPriority);
+var
+  ANotification: TNotification;
+begin
+  ANotification := TNotification.Create(ATitle, AMessage, ncSystem, APriority);
+
+  XNotifications.Add(ANotification);
+
+  FNotificationsNeedUpdate := True;
+end;
+
 { TXolmisSettings }
 
 procedure TXolmisSettings.SetFileName(aValue: String);
@@ -760,6 +858,30 @@ end;
 procedure TXolmisSettings.Delete(aSection, aKey: String);
 begin
   FConfig.DeleteValue('/' + aSection + '/' + aKey);
+end;
+
+{ TNotification }
+
+constructor TNotification.Create(const ATitle, AMessage: string; ACategory: TNotificationCategory;
+    APriority: TNotificationPriority);
+begin
+  FTitle := ATitle;
+  FMessage := AMessage;
+  FCategory := ACategory;
+  FPriority := APriority;
+  FIsRead := False;
+  FIsVisible := True;
+end;
+
+procedure TNotification.Dismiss;
+begin
+  FIsRead := True;
+  FIsVisible := False;
+end;
+
+procedure TNotification.MarkAsRead;
+begin
+  FIsRead := True;
 end;
 
 end.
