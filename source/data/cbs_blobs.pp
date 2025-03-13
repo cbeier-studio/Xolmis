@@ -74,8 +74,7 @@ begin
 
   if not (FileExists(aFileName)) then
   begin
-    LogError(Format(rsImageNotFound, [aFileName]));
-    Exit;
+    raise EFileNotFoundException.CreateFmt(rsImageNotFound, [aFileName]);
   end;
 
   long := 500.0;
@@ -174,10 +173,9 @@ begin
     ext := UpperCase(ExtractFileExt(FileName));
     if (ext <> '.BMP') and (ext <> '.JPG') and (ext <> '.JPEG') then
     begin
-      raise EAccessViolation.Create('Formato de imagem n'#227'o suportado!' + LineEnding +
-        'Formatos suportados: JPEG e Bitmap.');
-      Abort;
+      raise ENotSupportedException.Create(rsErrorImageNotSupported);
     end;
+
     try
       Jpg := TJpegImage.Create;
       MS := TMemoryStream.Create;
@@ -441,6 +439,7 @@ begin
   dlgProgress.Text := rsProgressPreparing;
   Application.ProcessMessages;
 
+  LogEvent(leaStart, 'Recreate image thumbnails');
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -501,26 +500,22 @@ begin
         begin
           DMM.sqlTrans.RollbackRetaining;
           MsgDlg(rsTitleRecreateThumbnails, rsBatchCanceledByUser, mtWarning);
-          {$IFDEF DEBUG}
           LogDebug('Thumbnails remake canceled by user');
-          {$ENDIF}
         end
         else
         begin
-          {$IFDEF DEBUG}
           LogDebug('Thumbnails remake successful');
-          {$ENDIF}
           dlgProgress.Text := rsProgressFinishing;
           Application.ProcessMessages;
           DMM.sqlTrans.CommitRetaining;
           MsgDlg(rsTitleRecreateThumbnails, rsSuccessfulRecreateThumbnails, mtInformation);
         end;
       except
-        {$IFDEF DEBUG}
-        LogDebug('Error remaking thumbnails');
-        {$ENDIF}
-        DMM.sqlTrans.RollbackRetaining;
-        raise;
+        on E: Exception do
+        begin
+          DMM.sqlTrans.RollbackRetaining;
+          MsgDlg(rsTitleError, Format('Error remaking thumbnails: %s', [E.Message]), mtError);
+        end;
       end;
     end
     else
@@ -534,11 +529,13 @@ begin
     FreeAndNil(Qry);
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
+    LogEvent(leaFinish, 'Recreate image thumbnails');
   end;
 end;
 
 procedure ViewImage(aDataSet: TDataSet);
 begin
+  LogEvent(leaOpen, 'Image viewer');
   frmImageViewer := TfrmImageViewer.Create(nil);
   with frmImageViewer do
   try
@@ -546,6 +543,7 @@ begin
     ShowModal;
   finally
     FreeAndNil(frmImageViewer);
+    LogEvent(leaClose, 'Image viewer');
   end;
 end;
 

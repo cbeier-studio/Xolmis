@@ -184,7 +184,7 @@ begin
   evLog.FileName := ConcatPaths([AppDataDir, LogFile]);
   evLog.Active := True;
 
-  LogInfo('STARTING... =========================================');
+  LogEvent(leaStarting, '=========================================');
   if logFull then
     LogWarning('Log file reached the max size');
 
@@ -198,9 +198,7 @@ begin
   {$ENDIF} 
   sqliteLibLoader.Enabled := True;
   sqliteLibLoader.LoadLibrary;
-  {$IFDEF DEBUG}
   LogDebug('SQLite library loaded: ' + sqliteLibLoader.LibraryName);
-  {$ENDIF}
 
   OpenSystemDatabase;
 
@@ -225,6 +223,7 @@ begin
   sqlCon.Close;
   sysCon.Close;
 
+  LogEvent(leaEnd, '-----------------------------------------');
   evLog.Active := False;
 end;
 
@@ -403,16 +402,16 @@ begin
   case EventType of
     detCustom: ;
     detPrepare: ;
-    detExecute: EventName := 'Execute';
+    detExecute: LogEvent(leaExecute, Msg);
     detFetch: ;
-    detCommit: EventName := 'Commit';
-    detRollBack: EventName := 'RollBack';
-    detParamValue: EventName := 'ParamValue';
-    detActualSQL: EventName := 'ActualSQL';
+    detCommit: LogEvent(leaCommit, Msg);
+    detRollBack: LogEvent(leaRollback, Msg);
+    detParamValue: LogInfo(Msg);
+    detActualSQL: LogInfo(Msg);
   end;
 
-  if EventName <> EmptyStr then
-    LogEvent(EventName, Msg);
+  //if EventName <> EmptyStr then
+  //  LogEvent(EventName, Msg);
 end;
 
 procedure TDMM.sysConBeforeConnect(Sender: TObject);
@@ -442,9 +441,7 @@ begin
   if not Application.Terminated then
   begin
     sysCon.Open;
-    {$IFDEF DEBUG}
     LogDebug('System database connected: ' + sysCon.DatabaseName);
-    {$ENDIF}
   end;
 end;
 

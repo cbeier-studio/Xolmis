@@ -60,7 +60,7 @@ begin
 
   if not FileExists(ConexaoDB.Database) then
   begin
-    raise Exception.Create(Format(rsErrorDatabaseNotFound, [ConexaoDB.Database]));
+    raise EFileNotFoundException.CreateFmt(rsErrorDatabaseNotFound, [ConexaoDB.Database]);
     // Abort;
   end;
 
@@ -82,9 +82,7 @@ begin
       dlgProgress.Max := 100;
       //F_Main.Taskbar.ProgressMaxValue := 100;
       //F_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
-      {$IFDEF DEBUG}
-      LogDebug('START Backup: ' + ConexaoDB.Database + ' -> ' + tmpName);
-      {$ENDIF}
+      LogEvent(leaStart, 'Backup: ' + ConexaoDB.Database + ' -> ' + tmpName);
       Application.ProcessMessages;
       BckConn := TSQLite3Connection.Create(nil);
       BckTrans := TSQLTransaction.Create(BckConn);
@@ -114,9 +112,7 @@ begin
       begin
         dlgProgress.Text := rsCompressingBackup;
         zipName := ChangeFileExt(tmpName, '.zip');
-        {$IFDEF DEBUG}
-        LogDebug('START Compressing backup: ' + ExtractFileName(zipName));
-        {$ENDIF}
+        LogEvent(leaStart, 'Compressing backup: ' + ExtractFileName(zipName));
         dlgProgress.Max := 100;
         dlgProgress.Position := 0;
         //F_Main.Taskbar.ProgressMaxValue := 100;
@@ -130,9 +126,7 @@ begin
         CopyFile(zipName, bkpName);
         DeleteFile(PChar(tmpName));
         DeleteFile(PChar(zipName));
-        {$IFDEF DEBUG}
-        LogDebug('FINISH Compressing backup: ' + ExtractFileName(zipName));
-        {$ENDIF}
+        LogEvent(leaFinish, 'Compressing backup: ' + ExtractFileName(zipName));
 
         if FileExists(bkpName) then
         begin
@@ -145,9 +139,7 @@ begin
     finally
       dlgProgress.Position := 100;
       dlgProgress.Text := rsProgressFinishing;
-      {$IFDEF DEBUG}
-      LogDebug('FINISH Backup: ' + bkpName);
-      {$ENDIF}
+      LogEvent(leaFinish, 'Backup: ' + bkpName);
       //F_Main.Cursor := crDefault;
       //F_Main.Taskbar.ProgressState := TTaskBarProgressState.None;
       dlgProgress.Close;
@@ -174,7 +166,7 @@ begin
 
   if not FileExists(ConexaoDB.Database) then
   begin
-    raise Exception.Create(Format(rsErrorDatabaseNotFound, [ConexaoDB.Database]));
+    raise EFileNotFoundException.CreateFmt(rsErrorDatabaseNotFound, [ConexaoDB.Database]);
     // Abort;
   end;
 
@@ -197,9 +189,7 @@ begin
 
       //F_Main.Taskbar.ProgressMaxValue := 100;
       //F_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
-      {$IFDEF DEBUG}
-      LogDebug('START Backup: ' + ConexaoDB.Database + ' -> ' + tmpName);
-      {$ENDIF}
+      LogEvent(leaStart, 'Backup: ' + ConexaoDB.Database + ' -> ' + tmpName);
       Application.ProcessMessages;
 
       try
@@ -224,9 +214,7 @@ begin
         dlgProgress.Indeterminate := False;
         dlgProgress.Text := rsCompressingBackup;
         zipName := ChangeFileExt(tmpName, '.zip');
-        {$IFDEF DEBUG}
-        LogDebug('START Compressing backup: ' + ExtractFileName(zipName));
-        {$ENDIF}
+        LogEvent(leaStart, 'Compressing backup: ' + ExtractFileName(zipName));
         dlgProgress.Max := 100;
         dlgProgress.Position := 0;
         //F_Main.Taskbar.ProgressMaxValue := 100;
@@ -242,9 +230,7 @@ begin
         CopyFile(zipName, bkpName);
         DeleteFile(PChar(tmpName));
         DeleteFile(PChar(zipName));
-        {$IFDEF DEBUG}
-        LogDebug('FINISH Compressing backup: ' + ExtractFileName(zipName));
-        {$ENDIF}
+        LogEvent(leaFinish, 'Compressing backup: ' + ExtractFileName(zipName));
 
         if FileExists(bkpName) then
         begin
@@ -259,9 +245,7 @@ begin
       dlgProgress.Position := 100;
       dlgProgress.Text := rsProgressFinishing;
       Application.ProcessMessages;
-      {$IFDEF DEBUG}
-      LogDebug('FINISH Backup: ' + bkpName);
-      {$ENDIF}
+      LogEvent(leaFinish, 'Backup: ' + bkpName);
       //F_Main.Cursor := crDefault;
       //F_Main.Taskbar.ProgressState := TTaskBarProgressState.None;
       dlgProgress.Close;
@@ -286,7 +270,7 @@ begin
 
   if not FileExists(aFilename) then
   begin
-    raise Exception.Create(Format(rsErrorBackupNotFound, [aFilename]));
+    raise EFileNotFoundException.CreateFmt(rsErrorBackupNotFound, [aFilename]);
   end;
 
   DMM.sqlCon.Close;
@@ -300,9 +284,7 @@ begin
       dlgProgress.Text := rsPreparingRestore;
       dlgProgress.Min := 0;
       dlgProgress.Max := 100;
-      {$IFDEF DEBUG}
-      LogDebug('START Restore backup: ' + aFilename + ' --> ' + DMM.sqlCon.DatabaseName);
-      {$ENDIF}
+      LogEvent(leaStart, 'Restore backup: ' + aFilename + ' --> ' + DMM.sqlCon.DatabaseName);
       //F_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
       Application.ProcessMessages;
         //F_Main.Cursor := crHourGlass;
@@ -311,9 +293,7 @@ begin
           dlgProgress.Text := rsDecompressingBackup;
           bkpName := TempDir + ChangeFileExt(ExtractFileName(aFilename), '.sbk');
           zipped := True;
-          {$IFDEF DEBUG}
-          LogDebug('START Decompressing backup: ' + aFilename);
-          {$ENDIF}
+          LogEvent(leaStart, 'Decompressing backup: ' + aFilename);
           dlgProgress.Max := 100;
           //F_Main.Taskbar.ProgressMaxValue := 100;
           fzip := TUnZipper.Create;
@@ -324,9 +304,7 @@ begin
           finally
             fzip.Free;
           end;
-          {$IFDEF DEBUG}
-          LogDebug('FINISH Decompressing backup: ' + aFilename);
-          {$ENDIF}
+          LogEvent(leaFinish, 'Decompressing backup: ' + aFilename);
         end;
 
         if FileExists(bkpName) then
@@ -364,9 +342,7 @@ begin
     finally
       dlgProgress.Position := 100;
       dlgProgress.Text := rsProgressFinishing;
-      {$IFDEF DEBUG}
-      LogDebug('FINISH Restore backup: ' + aFilename);
-      {$ENDIF}
+      LogEvent(leaFinish, 'Restore backup: ' + aFilename);
       //F_Main.Cursor := crDefault;
       //F_Main.Taskbar.ProgressState := TTaskBarProgressState.None;
       dlgProgress.Close;
@@ -430,9 +406,7 @@ begin
   zipName := Format('backup_settings_%s.zip', [FormatDateTime('yyyyMMdd_HHmm', Now)]);
   zipPath := ConcatPaths([XSettings.BackupFolder, zipName]);
   colsPath := ConcatPaths([AppDataDir, 'columns\']);
-  {$IFDEF DEBUG}
-  LogDebug('START Compressing settings backup: ' + zipName);
-  {$ENDIF}
+  LogEvent(leaStart, 'Compressing settings backup: ' + zipName);
 
   //F_Main.Taskbar.ProgressMaxValue := 100;
   fzip := TZipper.Create;
@@ -465,9 +439,7 @@ begin
   //CopyFile(zipName, bkpName);
   //DeleteFile(PChar(tmpName));
   //DeleteFile(PChar(zipName));
-  {$IFDEF DEBUG}
-  LogDebug('FINISH Compressing settings backup: ' + zipName);
-  {$ENDIF}
+  LogEvent(leaFinish, 'Compressing settings backup: ' + zipName);
 
   if FileExists(zipPath) then
   begin

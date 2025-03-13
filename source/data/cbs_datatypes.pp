@@ -661,7 +661,7 @@ var
 begin
   if (aFieldName = EmptyStr) and (FieldName = EmptyStr) then
   begin
-    raise Exception.Create(rsErrorEmptyFieldName);
+    raise EArgumentException.Create(rsErrorEmptyFieldName);
     Exit;
   end;
   FieldName := aFieldName;
@@ -1103,9 +1103,9 @@ begin
 
   //FDataSet.RefreshSQL.Text := FDataSet.SQL.Text;
 
-  {$IFDEF DEBUG}
-  LogSQL(FDataSet.SQL);
-  {$ENDIF}
+  //{$IFDEF DEBUG}
+  //LogSQL(FDataSet.SQL);
+  //{$ENDIF}
 end;
 
 procedure TCustomSearch.Reset;

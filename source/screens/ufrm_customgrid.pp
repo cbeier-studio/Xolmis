@@ -811,7 +811,6 @@ type
     Separator2: TMenuItem;
     Separator3: TMenuItem;
     Separator4: TMenuItem;
-    SplitRight: TSplitter;
     cpSide: TNotebook;
     pSide: TPanel;
     cardQuickFilters: TPage;
@@ -4826,9 +4825,7 @@ begin
   //  tvTaxaFilter.EndUpdate;
   //end;
 
-  {$IFDEF DEBUG}
-  LogDebug('CLOSE: ' + Caption);
-  {$ENDIF}
+  LogEvent(leaClose, Caption);
 
   CloseAction := caFree;
 end;
@@ -4921,7 +4918,7 @@ end;
 
 procedure TfrmCustomGrid.FormResize(Sender: TObject);
 begin
-  pSide.Width := Round((ClientWidth - SplitRight.Width - pSideToolbar.Width) * FSidePanelFactor);
+  pSide.Width := Round((ClientWidth - pSideToolbar.Width) * FSidePanelFactor);
 end;
 
 procedure TfrmCustomGrid.FormShow(Sender: TObject);
@@ -4939,7 +4936,7 @@ begin
   { Resize panels }
   pSide.Visible := False;
   scrollFilter.VertScrollBar.Position := 0;
-  FSidePanelFactor := pSide.Width / (ClientWidth - SplitRight.Width - pSideToolbar.Width);
+  FSidePanelFactor := pSide.Width / (ClientWidth - pSideToolbar.Width);
   FChildPanelFactor := 0.4;
   pChild.Height := Round((pClient.Height - SplitChild.Height) * FChildPanelFactor);
   Application.ProcessMessages;
@@ -9503,7 +9500,7 @@ end;
 procedure TfrmCustomGrid.sbShowRecordClick(Sender: TObject);
 begin
   pSide.Visible := (Sender as TSpeedButton).Down;
-  SplitRight.Visible := pSide.Visible;
+  //SplitRight.Visible := pSide.Visible;
 
   if (Sender as TSpeedButton).Down then
     cpSide.PageIndex := (Sender as TSpeedButton).Tag;
@@ -11075,9 +11072,9 @@ begin
   begin
     qAudios.SQL.Add('ORDER BY snd.recording_date, snd.recording_time ASC');
     qAudios.DataSource := dsLink;
-    {$IFDEF DEBUG}
-    LogSQL(qAudios.SQL);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogSQL(qAudios.SQL);
+    //{$ENDIF}
     qAudios.Open;
   end;
 end;
@@ -11769,9 +11766,9 @@ begin
   begin
     qDocs.SQL.Add('ORDER BY document_date, document_time ASC');
     qDocs.DataSource := dsLink;
-    {$IFDEF DEBUG}
-    LogSQL(qDocs.SQL);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogSQL(qDocs.SQL);
+    //{$ENDIF}
     qDocs.Open;
   end;
 end;
@@ -12363,9 +12360,9 @@ begin
   begin
     qImages.SQL.Add('ORDER BY img.image_date, img.image_time ASC');
     qImages.DataSource := dsLink;
-    {$IFDEF DEBUG}
-    LogSQL(qImages.SQL);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogSQL(qImages.SQL);
+    //{$ENDIF}
     qImages.Open;
   end;
 end;
@@ -12564,7 +12561,7 @@ begin
     OldSidePanel := FSidePanel;
   FSidePanel := aValue;
   pSide.Visible := FSidePanel;
-  SplitRight.Visible := pSide.Visible;
+  //SplitRight.Visible := pSide.Visible;
 end;
 
 procedure TfrmCustomGrid.SetSideIndex(aValue: Integer);
@@ -12597,7 +12594,7 @@ end;
 
 procedure TfrmCustomGrid.SplitRightMoved(Sender: TObject);
 begin
-  FSidePanelFactor := pSide.Width / (ClientWidth - SplitRight.Width);
+  FSidePanelFactor := pSide.Width / (ClientWidth);
 end;
 
 procedure TfrmCustomGrid.Summary;

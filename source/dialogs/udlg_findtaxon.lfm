@@ -9,6 +9,7 @@ object dlgFindTaxon: TdlgFindTaxon
   ClientHeight = 268
   ClientWidth = 317
   PopupMode = pmAuto
+  LCLVersion = '4.0.0.2'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown

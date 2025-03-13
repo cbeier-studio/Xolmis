@@ -86,9 +86,13 @@ const
 
 type
   THistoryAction = (haCreated, haEdited, haDeleted, haRestored);
+  TLogEventAction = (leaStarting, leaEnd, leaStart, leaFinish, leaOpen, leaClose, leaActiveTab,
+    leaExecute, leaCommit, leaRollback);
 
 const
   HistoryActions: array [THistoryAction] of String = ('I', 'U', 'D', 'R');
+  LogEventActions: array[TLogEventAction] of String = ('STARTING', 'END', 'START', 'FINISH', 'OPEN', 'CLOSE',
+    'ACTIVE TAB', 'EXECUTE', 'COMMIT', 'ROLLBACK');
 
 type
 
@@ -248,11 +252,9 @@ var
   OldPPI: Integer;
 
   { System logging }
-  procedure LogEvent(aAction, Msg: String);
-  {$IFDEF DEBUG}
+  procedure LogEvent(aAction: TLogEventAction; Msg: String);
   procedure LogDebug(Msg: String);
   procedure LogSQL(aSQL: TStrings);
-  {$ENDIF}
   procedure LogError(Msg: String);
   procedure LogWarning(Msg: String);
   procedure LogInfo(Msg: String);
@@ -294,25 +296,29 @@ uses
 { System logging }
 { ---------------------------------------------------------------------------------------- }
 
-procedure LogEvent(aAction, Msg: String);
+procedure LogEvent(aAction: TLogEventAction; Msg: String);
 begin
   if not XSettings.AllowWriteLogs then
     Exit;
 
-  DMM.evLog.Debug(aAction + '|' + Msg);
+  DMM.evLog.Debug(LogEventActions[aAction] + ' | ' + Msg);
 end;
 
-{$IFDEF DEBUG}
 procedure LogDebug(Msg: String);
 begin
+  if not XSettings.AllowWriteLogs then
+    Exit;
+
   DMM.evLog.Debug(Msg);
 end;
 
 procedure LogSQL(aSQL: TStrings);
 begin
+  if not XSettings.AllowWriteLogs then
+    Exit;
+
   DMM.evLog.Debug(TrimList(aSQL));
 end;
-{$ENDIF}
 
 procedure LogError(Msg: String);
 begin
@@ -339,6 +345,10 @@ begin
 end;
 
 function CheckLogsFull: Boolean;
+const
+  KB = 1024;         // 1 KB = 1024 bytes
+  MB = 1024 * KB;    // 1 MB = 1024 KB
+  GB = 1024 * MB;    // 1 GB = 1024 MB
 var
   Logs: TStringList;
   oldLog, currLog: String;
@@ -356,10 +366,11 @@ begin
     try
       { If the log file is bigger than 10 MB }
       LogSize := FileSize(currLog);
-      LogSizeMB := (LogSize / 1000000);
+      LogSizeMB := (LogSize / MB);
       if (Round(LogSizeMB)) >= 10 then
       begin
         Result := True;
+        LogWarning('Log file reached maximum size of 10 MB');
         Logs.Assign(FindAllFiles(AppDataDir, 'xlmslog-old*.txt'));
         oldLog := ConcatPaths([AppDataDir, Format('xlmslog-old-%d.txt', [Logs.Count + 1])]);
         RenameFile(currLog, oldLog);
@@ -404,9 +415,9 @@ begin
     ParamByName('NEWVALUE').AsString := aNewValue;
     ParamByName('NOTE').AsString := aNote;
 
-    {$IFDEF DEBUG}
-    LogSQL(SQL);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogSQL(SQL);
+    //{$ENDIF}
 
     ExecSQL;
   finally
@@ -492,20 +503,16 @@ function DatabaseConfig: Boolean;
 begin
   Result := False;
 
+  LogEvent(leaOpen, 'Manage connections');
   Application.CreateForm(TcfgDatabase, cfgDatabase);
   with cfgDatabase do
   try
-    {$IFDEF DEBUG}
-    LogDebug('OPEN: Manage connections');
-    {$ENDIF}
     GravaStat(Name, '', 'open');
     if ShowModal = mrOK then
       Result := True;
   finally
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE: Manage connections');
-    {$ENDIF}
     FreeAndNil(cfgDatabase);
+    LogEvent(leaClose, 'Manage connections');
   end;
 end;
 
@@ -560,9 +567,7 @@ begin
       end;
   end;
   //aConnector.CheckConnectionDef;
-  {$IFDEF DEBUG}
   LogDebug('Database params loaded: ' + aConnector.DatabaseName);
-  {$ENDIF}
 end;
 
 function ConnectDatabase: Boolean;
@@ -580,9 +585,7 @@ begin
       try
         if not DMM.sqlCon.Connected then
           DMM.sqlCon.Open;
-        {$IFDEF DEBUG}
         LogDebug('Database connected');
-        {$ENDIF}
       except
         Result := False;
         raise EDatabaseError.Create(rsErrorConnectingDatabase);
@@ -609,20 +612,16 @@ function NewDatabase: Boolean;
 begin
   Result := False;
 
+  LogEvent(leaOpen, 'New database');
   Application.CreateForm(TdlgNewDatabase, dlgNewDatabase);
   with dlgNewDatabase do
   try
-    {$IFDEF DEBUG}
-    LogDebug('OPEN: New database');
-    {$ENDIF}
     GravaStat(Name, '', 'open');
     if ShowModal = mrOK then
       Result := True;
   finally
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE: New database');
-    {$ENDIF}
     FreeAndNil(dlgNewDatabase);
+    LogEvent(leaClose, 'New database');
   end;
 end;
 

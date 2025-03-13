@@ -84,7 +84,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Method');
+  LogEvent(leaOpen, 'Method edit dialog');
   Application.CreateForm(TedtMethod, edtMethod);
   FOldRecord := nil;
   with edtMethod do
@@ -153,7 +153,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtMethod);
-    LogInfo('CLOSE EDIT DIALOG: Method');
+    LogEvent(leaClose, 'Method edit dialog');
   end;
 end;
 
@@ -163,7 +163,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Gazetteer');
+  LogEvent(leaOpen, 'Gazetteer edit dialog');
   Application.CreateForm(TedtSite, edtSite);
   FOldRecord := nil;
   with edtSite do
@@ -232,7 +232,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSite);
-    LogInfo('CLOSE EDIT DIALOG: Gazetteer');
+    LogEvent(leaClose, 'Gazetteer edit dialog');
   end;
 end;
 
@@ -242,7 +242,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Sampling plot');
+  LogEvent(leaOpen, 'Sampling plot edit dialog');
   Application.CreateForm(TedtSamplingPlot, edtSamplingPlot);
   FOldRecord := nil;
   with edtSamplingPlot do
@@ -311,7 +311,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSamplingPlot);
-    LogInfo('CLOSE EDIT DIALOG: Sampling plot');
+    LogEvent(leaClose, 'Sampling plot edit dialog');
   end;
 end;
 
@@ -321,7 +321,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Permanent net');
+  LogEvent(leaOpen, 'Permanent net edit dialog');
   Application.CreateForm(TedtPermanentNet, edtPermanentNet);
   FOldRecord := nil;
   with edtPermanentNet do
@@ -390,7 +390,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtPermanentNet);
-    LogInfo('CLOSE EDIT DIALOG: Permanent net');
+    LogEvent(leaClose, 'Permanent net edit dialog');
   end;
 end;
 
@@ -400,7 +400,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Institution');
+  LogEvent(leaOpen, 'Institution edit dialog');
   Application.CreateForm(TedtInstitution, edtInstitution);
   FOldRecord := nil;
   with edtInstitution do
@@ -468,7 +468,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtInstitution);
-    LogInfo('CLOSE EDIT DIALOG: Institution');
+    LogEvent(leaClose, 'Institution edit dialog');
   end;
 end;
 
@@ -478,7 +478,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Person');
+  LogEvent(leaOpen, 'Person edit dialog');
   Application.CreateForm(TedtPerson, edtPerson);
   FOldRecord := nil;
   with edtPerson do
@@ -546,7 +546,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtPerson);
-    LogInfo('CLOSE EDIT DIALOG: Person');
+    LogEvent(leaClose, 'Person edit dialog');
   end;
 end;
 
@@ -556,7 +556,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Project');
+  LogEvent(leaOpen, 'Project edit dialog');
   Application.CreateForm(TedtProject, edtProject);
   FOldRecord := nil;
   with edtProject do
@@ -624,7 +624,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtProject);
-    LogInfo('CLOSE EDIT DIALOG: Project');
+    LogEvent(leaClose, 'Project edit dialog');
   end;
 end;
 
@@ -634,7 +634,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Project member');
+  LogEvent(leaOpen, 'Project member edit dialog');
   Application.CreateForm(TedtProjectMember, edtProjectMember);
   FOldRecord := nil;
   with edtProjectMember do
@@ -704,7 +704,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtProjectMember);
-    LogInfo('CLOSE EDIT DIALOG: Project member');
+    LogEvent(leaClose, 'Project member edit dialog');
   end;
 end;
 
@@ -714,7 +714,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Project goal');
+  LogEvent(leaOpen, 'Project goal edit dialog');
   Application.CreateForm(TedtProjectGoal, edtProjectGoal);
   FOldRecord := nil;
   with edtProjectGoal do
@@ -784,7 +784,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtProjectGoal);
-    LogInfo('CLOSE EDIT DIALOG: Project goal');
+    LogEvent(leaClose, 'Project goal edit dialog');
   end;
 end;
 
@@ -794,7 +794,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Project activity');
+  LogEvent(leaOpen, 'Project activity edit dialog');
   Application.CreateForm(TedtProjectActivity, edtProjectActivity);
   FOldRecord := nil;
   with edtProjectActivity do
@@ -866,7 +866,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtProjectActivity);
-    LogInfo('CLOSE EDIT DIALOG: Project activity');
+    LogEvent(leaClose, 'Project activity edit dialog');
   end;
 end;
 
@@ -876,7 +876,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Project rubric');
+  LogEvent(leaOpen, 'Project rubric edit dialog');
   Application.CreateForm(TedtProjectRubric, edtProjectRubric);
   FOldRecord := nil;
   with edtProjectRubric do
@@ -946,7 +946,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtProjectRubric);
-    LogInfo('CLOSE EDIT DIALOG: Project rubric');
+    LogEvent(leaClose, 'Project rubric edit dialog');
   end;
 end;
 
@@ -956,7 +956,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Project expense');
+  LogEvent(leaOpen, 'Project expense edit dialog');
   Application.CreateForm(TedtProjectExpense, edtProjectExpense);
   FOldRecord := nil;
   with edtProjectExpense do
@@ -1028,7 +1028,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtProjectExpense);
-    LogInfo('CLOSE EDIT DIALOG: Project expense');
+    LogEvent(leaClose, 'Project expense edit dialog');
   end;
 end;
 
@@ -1038,7 +1038,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Permit');
+  LogEvent(leaOpen, 'Permit edit dialog');
   Application.CreateForm(TedtPermit, edtPermit);
   FOldRecord := nil;
   with edtPermit do
@@ -1107,7 +1107,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtPermit);
-    LogInfo('CLOSE EDIT DIALOG: Permit');
+    LogEvent(leaClose, 'Permit edit dialog');
   end;
 end;
 
@@ -1117,7 +1117,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Botanic taxon');
+  LogEvent(leaOpen, 'Botanical taxon edit dialog');
   Application.CreateForm(TedtBotanicTaxon, edtBotanicTaxon);
   FOldRecord := nil;
   with edtBotanicTaxon do
@@ -1185,7 +1185,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtBotanicTaxon);
-    LogInfo('CLOSE EDIT DIALOG: Botanic taxon');
+    LogEvent(leaClose, 'Botanical taxon edit dialog');
   end;
 end;
 
@@ -1195,7 +1195,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Band');
+  LogEvent(leaOpen, 'Band edit dialog');
   Application.CreateForm(TedtBands, edtBands);
   FOldRecord := nil;
   with edtBands do
@@ -1263,7 +1263,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtBands);
-    LogInfo('CLOSE EDIT DIALOG: Band');
+    LogEvent(leaClose, 'Band edit dialog');
   end;
 end;
 
@@ -1273,7 +1273,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Individual');
+  LogEvent(leaOpen, 'Individual edit dialog');
   Application.CreateForm(TedtIndividual, edtIndividual);
   FOldRecord := nil;
   with edtIndividual do
@@ -1341,7 +1341,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtIndividual);
-    LogInfo('CLOSE EDIT DIALOG: Individual');
+    LogEvent(leaClose, 'Individual edit dialog');
   end;
 end;
 
@@ -1351,7 +1351,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Capture');
+  LogEvent(leaOpen, 'Capture edit dialog');
   edtCapture := TedtCapture.Create(nil);
   FOldRecord := nil;
   with edtCapture do
@@ -1422,7 +1422,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtCapture);
-    LogInfo('CLOSE EDIT DIALOG: Capture');
+    LogEvent(leaClose, 'Capture edit dialog');
   end;
 end;
 
@@ -1469,7 +1469,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Nest');
+  LogEvent(leaOpen, 'Nest edit dialog');
   Application.CreateForm(TedtNest, edtNest);
   FOldRecord := nil;
   with edtNest do
@@ -1537,7 +1537,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtNest);
-    LogInfo('CLOSE EDIT DIALOG: Nest');
+    LogEvent(leaClose, 'Nest edit dialog');
   end;
 end;
 
@@ -1547,7 +1547,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Nest owner');
+  LogEvent(leaOpen, 'Nest owner edit dialog');
   Application.CreateForm(TedtNestOwner, edtNestOwner);
   FOldRecord := nil;
   with edtNestOwner do
@@ -1616,7 +1616,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtNestOwner);
-    LogInfo('CLOSE EDIT DIALOG: Nest owner');
+    LogEvent(leaClose, 'Nest owner edit dialog');
   end;
 end;
 
@@ -1626,7 +1626,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Nest revision');
+  LogEvent(leaOpen, 'Nest revision edit dialog');
   Application.CreateForm(TedtNestRevision, edtNestRevision);
   FOldRecord := nil;
   with edtNestRevision do
@@ -1695,7 +1695,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtNestRevision);
-    LogInfo('CLOSE EDIT DIALOG: Nest revision');
+    LogEvent(leaClose, 'Nest revision edit dialog');
   end;
 end;
 
@@ -1705,7 +1705,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Egg');
+  LogEvent(leaOpen, 'Egg edit dialog');
   Application.CreateForm(TedtEgg, edtEgg);
   FOldRecord := nil;
   with edtEgg do
@@ -1774,7 +1774,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtEgg);
-    LogInfo('CLOSE EDIT DIALOG: Egg');
+    LogEvent(leaClose, 'Egg edit dialog');
   end;
 end;
 
@@ -1786,7 +1786,7 @@ var
 begin
   Result := False;
 
-  LogInfo('OPEN EDIT DIALOG: Expedition');
+  LogEvent(leaOpen, 'Expedition edit dialog');
   Application.CreateForm(TedtExpedition, edtExpedition);
   FOldRecord := nil;
   with edtExpedition do
@@ -1854,7 +1854,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtExpedition);
-    LogInfo('CLOSE EDIT DIALOG: Expedition');
+    LogEvent(leaClose, 'Expedition edit dialog');
   end;
 end;
 
@@ -1864,7 +1864,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Survey');
+  LogEvent(leaOpen, 'Survey edit dialog');
   Application.CreateForm(TedtSurvey, edtSurvey);
   FOldRecord := nil;
   with edtSurvey do
@@ -1933,7 +1933,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSurvey);
-    LogInfo('CLOSE EDIT DIALOG: Survey');
+    LogEvent(leaClose, 'Survey edit dialog');
   end;
 end;
 
@@ -1943,7 +1943,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Survey member');
+  LogEvent(leaOpen, 'Survey member edit dialog');
   Application.CreateForm(TedtSurveyMember, edtSurveyMember);
   FOldRecord := nil;
   with edtSurveyMember do
@@ -2013,7 +2013,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSurveyMember);
-    LogInfo('CLOSE EDIT DIALOG: Survey member');
+    LogEvent(leaClose, 'Survey member edit dialog');
   end;
 end;
 
@@ -2023,7 +2023,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Net effort');
+  LogEvent(leaOpen, 'Net effort edit dialog');
   Application.CreateForm(TedtNetEffort, edtNetEffort);
   FOldRecord := nil;
   with edtNetEffort do
@@ -2091,7 +2091,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtNetEffort);
-    LogInfo('CLOSE EDIT DIALOG: Net effort');
+    LogEvent(leaClose, 'Net effort edit dialog');
   end;
 end;
 
@@ -2101,7 +2101,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Weather log');
+  LogEvent(leaOpen, 'Weather log edit dialog');
   Application.CreateForm(TedtWeatherLog, edtWeatherLog);
   FOldRecord := nil;
   with edtWeatherLog do
@@ -2169,7 +2169,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtWeatherLog);
-    LogInfo('CLOSE EDIT DIALOG: Weather log');
+    LogEvent(leaClose, 'Weather log edit dialog');
   end;
 end;
 
@@ -2179,7 +2179,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Sighting');
+  LogEvent(leaOpen, 'Sighting edit dialog');
   Application.CreateForm(TedtSighting, edtSighting);
   FOldRecord := nil;
   with edtSighting do
@@ -2250,7 +2250,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSighting);
-    LogInfo('CLOSE EDIT DIALOG: Sighting');
+    LogEvent(leaClose, 'Sighting edit dialog');
   end;
 end;
 
@@ -2260,7 +2260,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Specimen');
+  LogEvent(leaOpen, 'Specimen edit dialog');
   Application.CreateForm(TedtSpecimen, edtSpecimen);
   FOldRecord := nil;
   with edtSpecimen do
@@ -2328,7 +2328,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSpecimen);
-    LogInfo('CLOSE EDIT DIALOG: Specimen');
+    LogEvent(leaClose, 'Specimen edit dialog');
   end;
 end;
 
@@ -2338,7 +2338,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Specimen collector');
+  LogEvent(leaOpen, 'Specimen collector edit dialog');
   Application.CreateForm(TedtCollector, edtCollector);
   FOldRecord := nil;
   with edtCollector do
@@ -2408,7 +2408,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtCollector);
-    LogInfo('CLOSE EDIT DIALOG: Specimen collector');
+    LogEvent(leaClose, 'Specimen collector edit dialog');
   end;
 end;
 
@@ -2418,7 +2418,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Sample prep');
+  LogEvent(leaOpen, 'Sample prep edit dialog');
   Application.CreateForm(TedtSamplePrep, edtSamplePrep);
   FOldRecord := nil;
   with edtSamplePrep do
@@ -2487,12 +2487,13 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtSamplePrep);
-    LogInfo('CLOSE EDIT DIALOG: Sample prep');
+    LogEvent(leaClose, 'Sample prep edit dialog');
   end;
 end;
 
 function EditUser(IsNew: Boolean): Boolean;
 begin
+  LogEvent(leaOpen, 'User edit dialog');
   Application.CreateForm(TedtUser, edtUser);
   with edtUser do
   try
@@ -2522,6 +2523,7 @@ begin
       DMM.qUsers.Cancel;
   finally
     FreeAndNil(edtUser);
+    LogEvent(leaClose, 'User edit dialog');
   end;
 end;
 
@@ -2533,6 +2535,7 @@ begin
     if not UserLogin(DMM.qUsers.FieldByName('user_id').AsInteger) then
       Exit;
 
+  LogEvent(leaOpen, 'Change password dialog');
   Application.CreateForm(TdlgChangePassword, dlgChangePassword);
   with dlgChangePassword do
   try
@@ -2552,6 +2555,7 @@ begin
     end;
   finally
     FreeAndNil(dlgChangePassword);
+    LogEvent(leaClose, 'Change password dialog');
   end;
 end;
 
@@ -2561,7 +2565,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Image');
+  LogEvent(leaOpen, 'Image edit dialog');
   Application.CreateForm(TedtImageInfo, edtImageInfo);
   FOldRecord := nil;
   with edtImageInfo do
@@ -2687,7 +2691,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtImageInfo);
-    LogInfo('CLOSE EDIT DIALOG: Image');
+    LogEvent(leaClose, 'Image edit dialog');
   end;
 end;
 
@@ -2697,7 +2701,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Audio');
+  LogEvent(leaOpen, 'Audio edit dialog');
   Application.CreateForm(TedtAudioInfo, edtAudioInfo);
   FOldRecord := nil;
   with edtAudioInfo do
@@ -2797,7 +2801,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtAudioInfo);
-    LogInfo('CLOSE EDIT DIALOG: Audio');
+    LogEvent(leaClose, 'Audio edit dialog');
   end;
 end;
 
@@ -2807,7 +2811,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Document');
+  LogEvent(leaOpen, 'Document edit dialog');
   Application.CreateForm(TedtDocumentInfo, edtDocumentInfo);
   FOldRecord := nil;
   with edtDocumentInfo do
@@ -2933,7 +2937,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtDocumentInfo);
-    LogInfo('CLOSE EDIT DIALOG: Document');
+    LogEvent(leaClose, 'Document edit dialog');
   end;
 end;
 
@@ -2943,7 +2947,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Vegetation');
+  LogEvent(leaOpen, 'Vegetation edit dialog');
   Application.CreateForm(TedtVegetation, edtVegetation);
   FOldRecord := nil;
   with edtVegetation do
@@ -3011,7 +3015,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtVegetation);
-    LogInfo('CLOSE EDIT DIALOG: Vegetation');
+    LogEvent(leaClose, 'Vegetation edit dialog');
   end;
 end;
 
@@ -3026,6 +3030,7 @@ begin
     CloseQueryAfter := True;
   end;
 
+  LogEvent(leaOpen, 'Connection edit dialog');
   edtDatabase := TedtDatabase.Create(Application);
   with edtDatabase do
   try
@@ -3047,6 +3052,7 @@ begin
       aDataSet.Cancel;
   finally
     FreeAndNil(edtDatabase);
+    LogEvent(leaClose, 'Connection edit dialog');
   end;
 
   if CloseQueryAfter then
@@ -3060,7 +3066,7 @@ var
   lstDiff: TStrings;
   D: String;
 begin
-  LogInfo('OPEN EDIT DIALOG: Feather');
+  LogEvent(leaOpen, 'Feather edit dialog');
   Application.CreateForm(TedtFeather, edtFeather);
   FOldRecord := nil;
   with edtFeather do
@@ -3128,7 +3134,7 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FreeAndNil(edtFeather);
-    LogInfo('CLOSE EDIT DIALOG: Feather');
+    LogEvent(leaClose, 'Feather edit dialog');
   end;
 end;
 

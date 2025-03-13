@@ -314,9 +314,9 @@ begin
     if Pos('ORDER BY', TSQLQuery(FDataSource.DataSet).SQL.Text) > 0 then
       TSQLQuery(FDataSource.DataSet).SQL.Delete(TSQLQuery(FDataSource.DataSet).SQL.Count - 1);
     TSQLQuery(FDataSource.DataSet).SQL.Add('ORDER BY b.band_status ASC, b.band_size ASC, b.band_number ASC');
-    {$IFDEF DEBUG}
-    LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
+    //{$ENDIF}
     FDataSource.DataSet.Open;
   end
   else
@@ -326,9 +326,9 @@ begin
     if Pos('ORDER BY', TSQLQuery(FDataSource.DataSet).SQL.Text) > 0 then
       TSQLQuery(FDataSource.DataSet).SQL.Delete(TSQLQuery(FDataSource.DataSet).SQL.Count - 1);
     TSQLQuery(FDataSource.DataSet).SQL.Add('ORDER BY carrier_name ASC, b.band_size ASC, b.band_number ASC');
-    {$IFDEF DEBUG}
-    LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
+    //{$ENDIF}
     FDataSource.DataSet.Open;
   end;
 

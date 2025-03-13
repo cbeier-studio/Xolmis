@@ -2101,6 +2101,10 @@ msgstr "Atrasada"
 msgid "Done"
 msgstr "Finalizada"
 
+#: cbs_locale.rsactivityduedatenotification
+msgid "Activity due date"
+msgstr "Vencimento de atividade"
+
 #: cbs_locale.rsactivityinprogress
 msgid "In progress"
 msgstr "Em progresso"
@@ -2306,6 +2310,14 @@ msgstr "Removida"
 msgid "Rivet"
 msgstr "Parafusada"
 
+#: cbs_locale.rsbandrunnedoutnotification
+msgid "Band runned out"
+msgstr "Anilha acabou"
+
+#: cbs_locale.rsbandrunningoutnotification
+msgid "Band running out"
+msgstr "Anilha acabando"
+
 #: cbs_locale.rsbandstatuslist
 msgctxt "cbs_locale.rsbandstatuslist"
 msgid "Available,Used,Removed,Transfered,Broken,Lost"
@@ -2398,6 +2410,10 @@ msgstr "Ninho"
 msgctxt "cbs_locale.rsbirdnestling"
 msgid "Nestling"
 msgstr "Ninhego"
+
+#: cbs_locale.rsbirthdaynotification
+msgid "Birthday"
+msgstr "Aniversário"
 
 #: cbs_locale.rsbodymolt
 msgctxt "cbs_locale.rsbodymolt"
@@ -3510,6 +3526,10 @@ msgstr "ID está vazia"
 msgid "An error occurred exporting: %s"
 msgstr "Ocorreu um erro exportando: %s"
 
+#: cbs_locale.rserrorfieldsandvaluesdiffer
+msgid "The length of field and value lists do not match."
+msgstr "O tamanho das listas de campos e valores não correspondem."
+
 #: cbs_locale.rserrorfilenotfound
 #, object-pascal-format
 msgctxt "cbs_locale.rserrorfilenotfound"
@@ -3537,6 +3557,10 @@ msgstr "Erro gerando mapa."
 msgctxt "cbs_locale.rserrorhelpnotfound"
 msgid "Check if the help files are in the folder: %s"
 msgstr "Verifique se os arquivos de ajuda estão na pasta: %s"
+
+#: cbs_locale.rserrorimagenotsupported
+msgid "Image format not supported! Supported formats: JPEG and Bitmap."
+msgstr "Formato de imagem não suportado! Formatos suportados: JPEG e Bitmap."
 
 #: cbs_locale.rserrorimportfinished
 msgid "An error occurred while importing."
@@ -3619,6 +3643,11 @@ msgstr "Erro atualizando o esquema do banco de dados: %s"
 #, object-pascal-format
 msgid "An error occurred while vacuuming the database: %s"
 msgstr "Um erro ocorreu ao aspirar o banco de dados: %s"
+
+#: cbs_locale.rserrorvalidatingpassword
+#, object-pascal-format
+msgid "Error validating password: %s"
+msgstr "Erro validando senha: %s"
 
 #: cbs_locale.rserrorwritingadminpassword
 #, object-pascal-format
@@ -3961,6 +3990,10 @@ msgstr "\"Diferenças físicas\",\"B - placa de incubação\",\"C - protuberânc
 msgctxt "cbs_locale.rsidentifier"
 msgid "Identifier"
 msgstr "Identificador"
+
+#: cbs_locale.rsignoreaction
+msgid "Ignore"
+msgstr "Ignorar"
 
 #: cbs_locale.rsimagenotfound
 #, object-pascal-format
@@ -4478,6 +4511,14 @@ msgstr "Ciscado"
 msgid "Sphere"
 msgstr "Esfera"
 
+#: cbs_locale.rsneststocheckmessage
+msgid "Some nests were not checked recently."
+msgstr "Alguns ninhos não foram revisados recentemente."
+
+#: cbs_locale.rsneststochecknotification
+msgid "Nests to check"
+msgstr "Ninhos a revisar"
+
 #: cbs_locale.rsnestsuccess
 msgctxt "cbs_locale.rsnestsuccess"
 msgid "Success"
@@ -4581,6 +4622,10 @@ msgctxt "cbs_locale.rspartialdateempty"
 msgid "At least the year of %s must be entered."
 msgstr "No mínimo o ano da %s deve ser informado."
 
+#: cbs_locale.rsperiodicreportnotification
+msgid "Periodic report"
+msgstr "Relatório periódico"
+
 #: cbs_locale.rspermitbanding
 msgctxt "cbs_locale.rspermitbanding"
 msgid "Banding Permit"
@@ -4590,6 +4635,10 @@ msgstr "Licença de anilhamento"
 msgctxt "cbs_locale.rspermitcollection"
 msgid "Collection Permit"
 msgstr "Licença de coleta"
+
+#: cbs_locale.rspermitduedatenotification
+msgid "Permit due date"
+msgstr "Vencimento de licença"
 
 #: cbs_locale.rspermitentry
 msgid "Entry Permit"
@@ -4833,6 +4882,10 @@ msgstr "Apagar permanentemente"
 msgctxt "cbs_locale.rsreferencecoordinate"
 msgid "Reference coordinate"
 msgstr "Coordenada de referência"
+
+#: cbs_locale.rsremindlateraction
+msgid "Remind later"
+msgstr "Lembrar depois"
 
 #: cbs_locale.rsreplacedsynonym
 msgctxt "cbs_locale.rsreplacedsynonym"
@@ -5091,6 +5144,10 @@ msgctxt "cbs_locale.rssettingssecurityandprivacy"
 msgid "Security and privacy"
 msgstr "Segurança e privacidade"
 
+#: cbs_locale.rssevereweatheralert
+msgid "Severe weather alert"
+msgstr "Alerta de clima severo"
+
 #: cbs_locale.rssexfemale
 msgctxt "cbs_locale.rssexfemale"
 msgid "Female"
@@ -5118,6 +5175,11 @@ msgstr "Direita"
 msgctxt "cbs_locale.rsskullossification"
 msgid "skull ossification"
 msgstr "ossificação craniana"
+
+#: cbs_locale.rssoftwareupdatenotification
+msgctxt "cbs_locale.rssoftwareupdatenotification"
+msgid "Software update"
+msgstr "Atualização de software"
 
 #: cbs_locale.rssourcereference
 msgctxt "cbs_locale.rssourcereference"
@@ -5881,6 +5943,11 @@ msgctxt "cbs_locale.rsupdatednewversion"
 msgid "New version: %s"
 msgstr "Nova versão: %s"
 
+#: cbs_locale.rsupdatenowaction
+msgctxt "cbs_locale.rsupdatenowaction"
+msgid "Update now"
+msgstr "Atualizar agora"
+
 #: cbs_locale.rsupdatesumcaptures
 msgctxt "cbs_locale.rsupdatesumcaptures"
 msgid "The sum of new captures, recaptures, and unmarked individuals does not match the total count. Update it?"
@@ -5919,6 +5986,18 @@ msgstr "Versão %s (%s)"
 msgctxt "cbs_locale.rsversionstr"
 msgid "Version %s"
 msgstr "Versão %s"
+
+#: cbs_locale.rsviewalertaction
+msgid "View alert"
+msgstr "Ver alerta"
+
+#: cbs_locale.rsviewrecordsaction
+msgid "View records"
+msgstr "Ver registros"
+
+#: cbs_locale.rsviewreportaction
+msgid "View report"
+msgstr "Ver relatório"
 
 #: cbs_locale.rswasmisspelled
 msgctxt "cbs_locale.rswasmisspelled"
@@ -13688,6 +13767,7 @@ msgid "month"
 msgstr "mês"
 
 #: tfrmdashboard.lbltitleappupdate.caption
+msgctxt "tfrmdashboard.lbltitleappupdate.caption"
 msgid "Software update"
 msgstr "Atualização de software"
 
@@ -13753,6 +13833,7 @@ msgid "Remember later"
 msgstr "Lembrar depois"
 
 #: tfrmdashboard.sbupdatenow.caption
+msgctxt "tfrmdashboard.sbupdatenow.caption"
 msgid "Update now"
 msgstr "Atualizar agora"
 

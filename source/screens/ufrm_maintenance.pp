@@ -321,7 +321,7 @@ begin
 
   // Check if directory exists
   if not DirectoryExists(Dir) then
-    raise Exception.CreateFmt(rsErrorFolderNotFound, [Dir]);
+    raise EDirectoryNotFoundException.CreateFmt(rsErrorFolderNotFound, [Dir]);
 
   // Find files in directory
   if FindFirst(IncludeTrailingPathDelimiter(Dir) + '*', faAnyFile, FileInfo) = 0 then

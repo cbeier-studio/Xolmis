@@ -185,7 +185,7 @@ var
 begin
   FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName('image_filename').AsString, XSettings.ImagesFolder);
   if not FileExists(FPath) then
-    raise Exception.CreateFmt(rsErrorFileNotFound, [FPath]);
+    raise EFileNotFoundException.CreateFmt(rsErrorFileNotFound, [FPath]);
 
   { Load image EXIF data }
   imgExif := TImgInfo.Create;

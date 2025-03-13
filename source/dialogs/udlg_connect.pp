@@ -322,8 +322,12 @@ begin
       end;
       uTrans.CommitRetaining;
     except
-      uTrans.RollbackRetaining;
-      raise;
+      on E: Exception do
+      begin
+        uTrans.RollbackRetaining;
+        LogError(Format(rsErrorValidatingPassword, [E.Message]));
+        MsgDlg('', Format(rsErrorValidatingPassword, [E.Message]), mtError);
+      end;
     end;
   finally
     if uCon.Connected then

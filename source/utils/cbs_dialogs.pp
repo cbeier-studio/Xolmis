@@ -139,6 +139,7 @@ end;
 
 procedure ValidateDlg(aList: TStrings);
 begin
+  LogEvent(leaOpen, 'Validation dialog');
   dlgValidate := TdlgValidate.Create(nil);
   with dlgValidate do
   try
@@ -146,6 +147,7 @@ begin
     ShowModal;
   finally
     FreeAndNil(dlgValidate);
+    LogEvent(leaClose, 'Validation dialog');
   end;
 end;
 
@@ -160,9 +162,7 @@ begin
     Exit;
   end;
 
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Plantminer');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Plantminer');
   dlgPlantminer := TdlgPlantminer.Create(nil);
   with dlgPlantminer do
   try
@@ -177,9 +177,7 @@ begin
     end;
   finally
     FreeAndNil(dlgPlantminer);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Plantminer');
-    {$ENDIF}
+    LogEvent(leaOpen, 'Plantminer');
   end;
 end;
 
@@ -193,9 +191,7 @@ begin
     Exit;
   end;
 
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Plantminer');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Plantminer');
   dlgPlantminer := TdlgPlantminer.Create(nil);
   with dlgPlantminer do
   try
@@ -209,9 +205,7 @@ begin
     end;
   finally
     FreeAndNil(dlgPlantminer);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Plantminer');
-    {$ENDIF}
+    LogEvent(leaClose, 'Plantminer');
   end;
 end;
 
@@ -231,9 +225,7 @@ begin
       MsgDlg('', Format(rsMaxCollectorsReached, [aLimit]), mtInformation);
       Exit;
     end;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Find (author)');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Find (author)');
   dlgFind := TdlgFind.Create(nil);
   with dlgFind do
   try
@@ -258,9 +250,7 @@ begin
     end;
   finally
     FreeAndNil(dlgFind);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Find (author)');
-    {$ENDIF}
+    LogEvent(leaClose, 'Find (author)');
   end;
 end;
 
@@ -271,9 +261,7 @@ var
   Coles: TAuthors;
   PControl: TPoint;
 begin
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Authorship');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Authorship dialog');
   dlgAuthorship := TdlgAuthorship.Create(nil);
   with dlgAuthorship do
   try
@@ -293,9 +281,7 @@ begin
     end;
   finally
     FreeAndNil(dlgAuthorship);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Authorship');
-    {$ENDIF}
+    LogEvent(leaClose, 'Authorship dialog');
   end;
 end;
 
@@ -303,9 +289,7 @@ procedure EditColorBands(aDataset: TDataset; aTextField: String; aControl: TCont
 var
   PControl: TPoint;
 begin
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Color bands');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Color bands dialog');
   dlgColorBands := TdlgColorBands.Create(nil);
   with dlgColorBands do
   try
@@ -321,9 +305,7 @@ begin
     end;
   finally
     FreeAndNil(dlgColorBands);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Color bands');
-    {$ENDIF}
+    LogEvent(leaClose, 'Color bands dialog');
   end;
 end;
 
@@ -331,9 +313,7 @@ procedure EditColorBands(aControl: TControl; aLimit: Integer = 4);
 var
   PControl: TPoint;
 begin
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Color bands');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Color bands dialog');
   dlgColorBands := TdlgColorBands.Create(nil);
   with dlgColorBands do
   try
@@ -349,9 +329,7 @@ begin
     end;
   finally
     FreeAndNil(dlgColorBands);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Color bands');
-    {$ENDIF}
+    LogEvent(leaClose, 'Color bands dialog');
   end;
 end;
 
@@ -360,9 +338,7 @@ var
   PControl: TPoint;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Calendar');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Calendar dialog');
   dlgCalendar := TdlgCalendar.Create(nil);
   with dlgCalendar do
   try
@@ -380,9 +356,7 @@ begin
     end;
   finally
     FreeAndNil(dlgCalendar);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Calendar');
-    {$ENDIF}
+    LogEvent(leaClose, 'Calendar dialog');
   end;
 end;
 
@@ -391,9 +365,7 @@ var
   PControl: TPoint;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Calendar');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Calendar dialog');
   dlgCalendar := TdlgCalendar.Create(nil);
   with dlgCalendar do
   try
@@ -410,18 +382,14 @@ begin
     end;
   finally
     FreeAndNil(dlgCalendar);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Calendar');
-    {$ENDIF}
+    LogEvent(leaClose, 'Calendar dialog');
   end;
 end;
 
 function MoltLimitsDialog(aLimits: String; aDataset: TDataset; aCampo: String): Boolean;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN LIST: Molt limits');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Molt limits list');
   lstMoltLimits := TlstMoltLimits.Create(nil);
   with lstMoltLimits do
   try
@@ -435,18 +403,14 @@ begin
     end;
   finally
     FreeAndNil(lstMoltLimits);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE LIST: Molt limits');
-    {$ENDIF}
+    LogEvent(leaClose, 'Molt limits list');
   end;
 end;
 
 function MoltLimitsDialog(aEdit: TEditButton): Boolean;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN LIST: Molt limits');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Molt limits list');
   lstMoltLimits := TlstMoltLimits.Create(nil);
   with lstMoltLimits do
   try
@@ -459,18 +423,14 @@ begin
     end;
   finally
     FreeAndNil(lstMoltLimits);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE LIST: Molt limits');
-    {$ENDIF}
+    LogEvent(leaClose, 'Molt limits list');
   end;
 end;
 
 function HowAgedDialog(aEdit: TEditButton): Boolean;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN LIST: How aged/sexed');
-  {$ENDIF}
+  LogEvent(leaOpen, 'How aged/sexed list');
   lstHowSexedAged := TlstHowSexedAged.Create(nil);
   with lstHowSexedAged do
   try
@@ -482,18 +442,14 @@ begin
     end;
   finally
     FreeAndNil(lstHowSexedAged);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE LIST: How aged/sexed');
-    {$ENDIF}
+    LogEvent(leaClose, 'How aged/sexed list');
   end;
 end;
 
 function HowAgedDialog(aHowAged: String; aDataset: TDataset; aCampo: String): Boolean;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN LIST: How aged/sexed');
-  {$ENDIF}
+  LogEvent(leaOpen, 'How aged/sexed list');
   lstHowSexedAged := TlstHowSexedAged.Create(nil);
   with lstHowSexedAged do
   try
@@ -507,18 +463,14 @@ begin
     end;
   finally
     FreeAndNil(lstHowSexedAged);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE LIST: How aged/sexed');
-    {$ENDIF}
+    LogEvent(leaClose, 'How aged/sexed list');
   end;
 end;
 
 function MoltCycleDialog(aCycle: String; aDataset: TDataset; aCampo: String): Boolean;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN LIST: Molt cycle');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Molt cycle dialog');
   lstCycleCode := TlstCycleCode.Create(nil);
   with lstCycleCode do
   try
@@ -532,18 +484,14 @@ begin
     end;
   finally
     FreeAndNil(lstCycleCode);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE LIST: Molt cycle');
-    {$ENDIF}
+    LogEvent(leaClose, 'Molt cycle dialog');
   end;
 end;
 
 function MoltCycleDialog(aEdit: TEditButton): Boolean;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN LIST: Molt cycle');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Molt cycle dialog');
   lstCycleCode := TlstCycleCode.Create(nil);
   with lstCycleCode do
   try
@@ -556,18 +504,14 @@ begin
     end;
   finally
     FreeAndNil(lstCycleCode);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE LIST: Molt cycle');
-    {$ENDIF}
+    LogEvent(leaClose, 'Molt cycle dialog');
   end;
 end;
 
 function DetectionDialog(aDetect: String; aDataset: TDataset; aCampo: String): Boolean;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN LIST: Detection code');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Detection code list');
   lstDetectionType := TlstDetectionType.Create(nil);
   with lstDetectionType do
   try
@@ -581,18 +525,14 @@ begin
     end;
   finally
     FreeAndNil(lstDetectionType);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE LIST: Detection code');
-    {$ENDIF}
+    LogEvent(leaClose, 'Detection code list');
   end;
 end;
 
 function DetectionDialog(aEdit: TEditButton): Boolean;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN LIST: Detection code');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Detection code list');
   lstDetectionType := TlstDetectionType.Create(nil);
   with lstDetectionType do
   try
@@ -605,18 +545,14 @@ begin
     end;
   finally
     FreeAndNil(lstDetectionType);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE LIST: Detection code');
-    {$ENDIF}
+    LogEvent(leaClose, 'Detection code list');
   end;
 end;
 
 function BreedingDialog(aBreeding: String; aDataset: TDataset; aCampo: String): Boolean;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN LIST: Breeding code');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Breeding code list');
   lstBreedingStatus := TlstBreedingStatus.Create(nil);
   with lstBreedingStatus do
   try
@@ -630,18 +566,14 @@ begin
     end;
   finally
     FreeAndNil(lstBreedingStatus);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE LIST: Breeding code');
-    {$ENDIF}
+    LogEvent(leaClose, 'Breeding code list');
   end;
 end;
 
 function BreedingDialog(aEdit: TEditButton): Boolean;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN LIST: Breeding code');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Breeding code list');
   lstBreedingStatus := TlstBreedingStatus.Create(nil);
   with lstBreedingStatus do
   try
@@ -654,14 +586,13 @@ begin
     end;
   finally
     FreeAndNil(lstBreedingStatus);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE LIST: Breeding code');
-    {$ENDIF}
+    LogEvent(leaClose, 'Breeding code list');
   end;
 end;
 
 procedure ExportDlg(aDataSet: TDataSet);
 begin
+  LogEvent(leaOpen, 'Export dialog');
   dlgExport := TdlgExport.Create(nil);
   with dlgExport do
   try
@@ -669,6 +600,7 @@ begin
     ShowModal;
   finally
     FreeAndNil(dlgExport);
+    LogEvent(leaClose, 'Export dialog');
   end;
 end;
 

@@ -180,6 +180,9 @@ uses
     rsErrorCreatingUser = 'An error occurred while creating the user: %s';
     rsErrorWritingAdminPassword = 'An error occurred while writing the Admin user password: %s';
     rsErrorEmptyId = 'ID is empty';
+    rsErrorImageNotSupported = 'Image format not supported! Supported formats: JPEG and Bitmap.';
+    rsErrorValidatingPassword = 'Error validating password: %s';
+    rsErrorFieldsAndValuesDiffer = 'The length of field and value lists do not match.';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';

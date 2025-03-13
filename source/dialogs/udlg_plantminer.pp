@@ -277,9 +277,7 @@ begin
     RegPM := Get(LinkPM + ExtNome);
     RegPM := StringReplace(RegPM, '[', '', [rfReplaceAll]);
     RegPM := StringReplace(RegPM, ']', '', [rfReplaceAll]);
-    {$IFDEF DEBUG}
     LogDebug('Plantminer GET request: ' + RegPM);
-    {$ENDIF}
     if PM.GetData(RegPM) then
     begin
       with VL do
@@ -324,9 +322,7 @@ begin
           EndUpdate;
         end;
       end;
-      {$IFDEF DEBUG}
       LogDebug('Plantminer GET response: JSON successfully loaded');
-      {$ENDIF}
     end
     else
       LogError('Invalid Plantminer JSON response');

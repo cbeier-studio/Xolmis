@@ -248,9 +248,7 @@ end;
 
 procedure TdlgFindTaxon.sbOptionsClick(Sender: TObject);
 begin
-  {$IFDEF DEBUG}
   LogDebug('Search cleared');
-  {$ENDIF}
   if qFind.Active then
     qFind.Close;
   uList.Enabled := False;
@@ -354,7 +352,7 @@ begin
       end;
 
       {$IFDEF DEBUG}
-      LogSQL(SQL);
+      //LogSQL(SQL);
       LogDebug('VALPARAM = ' + aValor);
       {$ENDIF}
       Open;
@@ -375,9 +373,9 @@ begin
     begin
       Close;
       SetSelect(SQL, fvMarked, crNone);
-      {$IFDEF DEBUG}
-      LogSQL(SQL);
-      {$ENDIF}
+      //{$IFDEF DEBUG}
+      //LogSQL(SQL);
+      //{$ENDIF}
       Open;
     end;
   end;
@@ -390,9 +388,9 @@ begin
     begin
       Close;
       SetSelect(SQL, fvAll, crNone);
-      {$IFDEF DEBUG}
-      LogSQL(SQL);
-      {$ENDIF}
+      //{$IFDEF DEBUG}
+      //LogSQL(SQL);
+      //{$ENDIF}
       Open;
     end;
   end;

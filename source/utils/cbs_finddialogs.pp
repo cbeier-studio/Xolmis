@@ -61,9 +61,7 @@ var
   PControl: TPoint;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug(Format('OPEN DIALOG: Find (%s)', [TableNames[aTable]]));
-  {$ENDIF}
+  LogEvent(leaOpen, Format('Find (%s) dialog', [TableNames[aTable]]));
   dlgFind := TdlgFind.Create(nil);
   with dlgFind do
   try
@@ -98,9 +96,7 @@ begin
     end;
   finally
     FreeAndNil(dlgFind);
-    {$IFDEF DEBUG}
-    LogDebug(Format('CLOSE DIALOG: Find (%s)', [TableNames[aTable]]));
-    {$ENDIF}
+    LogEvent(leaClose, Format('Find (%s) dialog', [TableNames[aTable]]));
   end;
 end;
 
@@ -110,9 +106,7 @@ var
   PControl: TPoint;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug(Format('OPEN DIALOG: Find (%s)', [TableNames[aTable]]));
-  {$ENDIF}
+  LogEvent(leaOpen, Format('Find (%s) dialog', [TableNames[aTable]]));
   dlgFind := TdlgFind.Create(nil);
   with dlgFind do
   try
@@ -139,9 +133,7 @@ begin
     end;
   finally
     FreeAndNil(dlgFind);
-    {$IFDEF DEBUG}
-    LogDebug(Format('CLOSE DIALOG: Find (%s)', [TableNames[aTable]]));
-    {$ENDIF}
+    LogEvent(leaClose, Format('Find (%s) dialog', [TableNames[aTable]]));
   end;
 end;
 
@@ -151,9 +143,7 @@ var
   PControl: TPoint;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Find taxon');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Find taxon dialog');
   dlgFindTaxon := TdlgFindTaxon.Create(nil);
   with dlgFindTaxon do
   try
@@ -181,9 +171,7 @@ begin
     end;
   finally
     FreeAndNil(dlgFindTaxon);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Find taxon');
-    {$ENDIF}
+    LogEvent(leaClose, 'Find taxon dialog');
   end;
 end;
 
@@ -193,9 +181,7 @@ var
   PControl: TPoint;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Find taxon');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Find taxon dialog');
   dlgFindTaxon := TdlgFindTaxon.Create(nil);
   with dlgFindTaxon do
   try
@@ -216,9 +202,7 @@ begin
     end;
   finally
     FreeAndNil(dlgFindTaxon);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Find taxon');
-    {$ENDIF}
+    LogEvent(leaClose, 'Find taxon dialog');
   end;
 end;
 
@@ -226,9 +210,8 @@ function FindTaxonKey(const aFilter: TTaxonFilters; aControl: TControl; var aRes
 var
   PControl: TPoint;
 begin
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Find taxon');
-  {$ENDIF}
+  Result := False;
+  LogEvent(leaOpen, 'Find taxon (key) dialog');
   dlgFindTaxon := TdlgFindTaxon.Create(nil);
   with dlgFindTaxon do
   try
@@ -246,9 +229,7 @@ begin
       Result := False;
   finally
     FreeAndNil(dlgFindTaxon);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Find taxon');
-    {$ENDIF}
+    LogEvent(leaClose, 'Find taxon (key) dialog');
   end;
 end;
 
@@ -256,9 +237,8 @@ function FindTaxonName(const aFilter: TTaxonFilters; aControl: TControl; var aRe
 var
   PControl: TPoint;
 begin
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Find taxon');
-  {$ENDIF}
+  Result := False;
+  LogEvent(leaOpen, 'Find taxon (name) dialog');
   dlgFindTaxon := TdlgFindTaxon.Create(nil);
   with dlgFindTaxon do
   try
@@ -276,9 +256,7 @@ begin
       Result := False;
   finally
     FreeAndNil(dlgFindTaxon);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Find taxon');
-    {$ENDIF}
+    LogEvent(leaClose, 'Find taxon (name) dialog');
   end;
 end;
 
@@ -287,9 +265,7 @@ var
   PControl: TPoint;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Find (botanic_taxa)');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Find (botanic_taxa) dialog');
   dlgFind := TdlgFind.Create(nil);
   with dlgFind do
   try
@@ -313,9 +289,7 @@ begin
     end;
   finally
     FreeAndNil(dlgFind);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Find (botanic_taxa)');
-    {$ENDIF}
+    LogEvent(leaClose, 'Find (botanic_taxa) dialog');
   end;
 end;
 
@@ -325,9 +299,7 @@ var
   PControl: TPoint;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Find (botanic_taxa)');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Find (botanic_taxa) dialog');
   dlgFind := TdlgFind.Create(nil);
   with dlgFind do
   try
@@ -351,9 +323,7 @@ begin
     end;
   finally
     FreeAndNil(dlgFind);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Find (botanic_taxa)');
-    {$ENDIF}
+    LogEvent(leaClose, 'Find (botanic_taxa) dialog');
   end;
 end;
 
@@ -362,9 +332,7 @@ procedure FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; var aCod: 
 var
   PControl: TPoint;
 begin
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Find (gazetteer)');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Find (gazetteer) dialog');
   dlgFind := TdlgFind.Create(nil);
   with dlgFind do
   try
@@ -390,9 +358,7 @@ begin
     end;
   finally
     FreeAndNil(dlgFind);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Find (gazetteer)');
-    {$ENDIF}
+    LogEvent(leaClose, 'Find (gazetteer) dialog');
   end;
 end;
 
@@ -401,9 +367,7 @@ procedure FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; aDataset: 
 var
   PControl: TPoint;
 begin
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Find (gazetteer)');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Find (gazetteer) dialog');
   dlgFind := TdlgFind.Create(nil);
   with dlgFind do
   try
@@ -423,9 +387,7 @@ begin
     end;
   finally
     FreeAndNil(dlgFind);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Find (gazetteer)');
-    {$ENDIF}
+    LogEvent(leaClose, 'Find (gazetteer) dialog');
   end;
 end;
 

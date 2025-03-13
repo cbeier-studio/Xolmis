@@ -106,8 +106,6 @@ const
   function GetFieldDisplayName(const aTableType: TTableType; aFieldName: String): String;
   //function GetPrimaryKey(const aTableName: String): String; overload;
   function GetPrimaryKey(const aDataSet: TDataSet): String; overload;
-  function IncNumInterno(aUser: Integer): Integer;
-  procedure GravaNumInterno(aUser: Integer; aNum: Integer);
   function TableIsEmpty(aTableName: String): Boolean;
   function TableExists(aTableName: String): Boolean;
   function GetLastInsertedKey(const aTable: String): Integer; overload;
@@ -163,7 +161,8 @@ begin
     newFile := not FileExists(aFilename);
 
     if newFile then
-    begin
+    try
+      LogEvent(leaStart, Format('Create system database: %s', [aFileName]));
       { Create the database and the tables }
       try
         DMM.sysCon.DatabaseName := aFilename;
@@ -187,6 +186,9 @@ begin
         DMM.sysTrans.RollbackRetaining;
         LogError('Unable to create the system database');
       end;
+
+    finally
+      LogEvent(leaFinish, 'Create system database');
     end;
   except
     LogError('Unable to check if system database file exists');
@@ -299,6 +301,7 @@ begin
   //if DMM.sqlCon.Connected then
   //  DMM.sqlCon.Close;
 
+  LogEvent(leaStart, Format('Create database: %s', [aFilename]));
   dlgProgress := TdlgProgress.Create(nil);
   Conn := TSQLConnector.Create(nil);
   Trans := TSQLTransaction.Create(nil);
@@ -319,9 +322,9 @@ begin
     Trans.Action := caRollbackRetaining;
 
 
-    {$IFDEF DEBUG}
-    LogDebug('Creating database: ' + aFilename);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogDebug('Creating database: ' + aFilename);
+    //{$ENDIF}
     try
       //Result := CopyFile(ConcatPaths([AppDataDir, 'XolmisDB_template.sqlite3']), aFilename, False, True);
       //
@@ -606,6 +609,7 @@ begin
         dlgProgress.Text := rsProgressPopulatingTables;
         dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
         Application.ProcessMessages;
+        LogDebug('Populating database');
         DMM.scriptUserDBInit.DataBase := Conn;
         DMM.scriptUserDBInit.Transaction := Conn.Transaction;
         DMM.scriptUserDBInit.ExecuteScript;
@@ -633,6 +637,7 @@ begin
       dlgProgress.Text := rsProgressFinishing;
       dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
       Application.ProcessMessages;
+      LogDebug('Adding database metadata');
       WriteDatabaseMetadata(Conn, 'name', aName);
       WriteDatabaseMetadata(Conn, 'author', aAuthor);
       WriteDatabaseMetadata(Conn, 'description', aDescription);
@@ -644,6 +649,7 @@ begin
       // Optimize the database
       dlgProgress.Text := rsProgressOptimizingDatabase;
       Application.ProcessMessages;
+      LogDebug('Optimize database');
       case ConexaoDB.Manager of
         dbSqlite:   Conn.ExecuteDirect('PRAGMA optimize;');
         dbFirebird: ;
@@ -675,6 +681,7 @@ begin
     FreeAndNil(Conn);
     if Assigned(dlgProgress) then
       FreeAndNil(dlgProgress);
+    LogEvent(leaFinish, 'Create database');
   end;
 end;
 
@@ -691,6 +698,7 @@ begin
   if not DMM.sqlCon.Connected then
     DMM.sqlCon.Open;
 
+  LogEvent(leaStart, 'Upgrade database schema');
   DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = off;');
 
   if not DMM.sqlTrans.Active then
@@ -700,14 +708,14 @@ begin
     try
       //if OldVersion < 2 then
       //begin
-      //
+      //  LogDebug(Format('Upgrading database to version %d', [OldVersion]));
       //
       //  Result := True;
       //end;
 
       //if OldVersion < 3 then
       //begin
-      //
+      //  LogDebug(Format('Upgrading database to version %d', [OldVersion]));
       //
       //  Result := True;
       //end;
@@ -730,6 +738,7 @@ begin
 
   finally
     DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = on;');
+    LogEvent(leaFinish, 'Upgrade database schema');
   end;
 
   if Result then
@@ -801,6 +810,7 @@ end;
 procedure CreateDBMetadataTable(Connection: TSQLConnector);
 begin
   { Create table "db_metadata" }
+  LogDebug('Creating db_metadata table');
   case ConexaoDB.Manager of
     dbSqlite, dbPostgre, dbMaria:
     begin
@@ -814,6 +824,7 @@ end;
 
 procedure CreateUsersTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating users table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS users (' +
     'user_id               INTEGER      PRIMARY KEY AUTOINCREMENT,' +
     'full_name             VARCHAR (60) NOT NULL,' +
@@ -841,6 +852,7 @@ end;
 
 procedure CreateRecordHistoryTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating record_history table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS record_history (' +
     'event_id     INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'event_date   DATETIME,' +
@@ -868,6 +880,7 @@ end;
 
 procedure CreateRecordVerificationsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating record_verifications table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS record_verifications (' +
     'verification_id     INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'table_name          VARCHAR (40) NOT NULL,' +
@@ -881,6 +894,7 @@ end;
 
 procedure CreateTaxonRanksTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating taxon_ranks table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS taxon_ranks (' +
     'rank_id         INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'rank_seq        INTEGER      NOT NULL,' +
@@ -912,6 +926,7 @@ end;
 
 procedure CreateZooTaxaTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating zoo_taxa table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS zoo_taxa (' +
     'taxon_id               INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'full_name              VARCHAR (100) NOT NULL UNIQUE,' +
@@ -1036,6 +1051,7 @@ end;
 
 procedure CreateBotanicTaxaTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating botanic_taxa table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS botanic_taxa (' +
     'taxon_id        INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'taxon_name      VARCHAR (100) NOT NULL UNIQUE,' +
@@ -1093,6 +1109,7 @@ end;
 
 procedure CreateMethodsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating methods table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS methods (' +
     'method_id       INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'method_name     VARCHAR (100) UNIQUE NOT NULL,' +
@@ -1119,6 +1136,7 @@ end;
 
 procedure CreateGazetteerTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating gazetteer table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS gazetteer (' +
     'site_id         INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'site_name       VARCHAR (60)  NOT NULL,' +
@@ -1181,6 +1199,7 @@ end;
 
 procedure CreateInstitutionsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating institutions table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS institutions (' +
     'institution_id  INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'full_name       VARCHAR (100) NOT NULL UNIQUE,' +
@@ -1212,6 +1231,7 @@ end;
 
 procedure CreatePeopleTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating people table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS people (' +
     'person_id              INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'full_name              VARCHAR (100) NOT NULL,' +
@@ -1268,6 +1288,7 @@ end;
 
 procedure CreateSamplingPlotsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating sampling_plots table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS sampling_plots (' +
     'sampling_plot_id INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'full_name        VARCHAR (100) NOT NULL UNIQUE,' +
@@ -1293,6 +1314,7 @@ end;
 
 procedure CreatePermanentNetsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating permanent_nets table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS permanent_nets (' +
     'permanent_net_id INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'net_station_id   INTEGER       NOT NULL REFERENCES sampling_plots (sampling_plot_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
@@ -1313,6 +1335,7 @@ end;
 
 procedure CreatePermitsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating legal table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS legal (' +
     'permit_id       INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'project_id      INTEGER       REFERENCES projects (project_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
@@ -1337,6 +1360,7 @@ end;
 
 procedure CreateProjectsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating projects table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS projects (' +
     'project_id       INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'project_title    VARCHAR (150) NOT NULL UNIQUE,' +
@@ -1367,6 +1391,7 @@ end;
 
 procedure CreateProjectTeamTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating project_team table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_team (' +
     'project_member_id INTEGER  UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'project_id        INTEGER  REFERENCES projects (project_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
@@ -1385,6 +1410,7 @@ end;
 
 procedure CreateProjectGoalsTable(connection: TSQLConnector);
 begin
+  LogDebug('Creating project_goals table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_goals (' +
     'goal_id          INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'project_id       INTEGER     REFERENCES projects (project_id) ON UPDATE CASCADE,' +
@@ -1402,6 +1428,7 @@ end;
 
 procedure CreateProjectChronogramsTable(connection: TSQLConnector);
 begin
+  LogDebug('Creating project_chronograms table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_chronograms (' +
     'chronogram_id   INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'project_id      INTEGER     REFERENCES projects (project_id) ON UPDATE CASCADE,' +
@@ -1423,6 +1450,7 @@ end;
 
 procedure CreateProjectBudgetsTable(connection: TSQLConnector);
 begin
+  LogDebug('Creating project_budgets table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_budgets (' +
     'budget_id       INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'project_id      INTEGER      REFERENCES projects (project_id) ON UPDATE CASCADE,' +
@@ -1442,6 +1470,7 @@ end;
 
 procedure CreateProjectExpensesTable(connection: TSQLConnector);
 begin
+  LogDebug('Creating project_expenses table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_expenses (' +
     'expense_id       INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'project_id       INTEGER      REFERENCES projects (project_id) ON UPDATE CASCADE,' +
@@ -1461,6 +1490,7 @@ end;
 
 procedure CreateExpeditionsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating expeditions table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS expeditions (' +
     'expedition_id   INTEGER       PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'expedition_name VARCHAR (150) NOT NULL,' +
@@ -1489,6 +1519,7 @@ end;
 
 procedure CreateSurveysTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating surveys table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS surveys (' +
     'survey_id                INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_date              DATE          NOT NULL,' +
@@ -1536,6 +1567,7 @@ end;
 
 procedure CreateSurveyTeamTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating survey_team table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS survey_team (' +
     'survey_member_id INTEGER  UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_id        INTEGER,' +
@@ -1553,6 +1585,7 @@ end;
 
 procedure CreateNetsEffortTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating nets_effort table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nets_effort (' +
     'net_id           INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_id        INTEGER,' +
@@ -1594,6 +1627,7 @@ end;
 
 procedure CreateWeatherLogsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating weather_logs table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS weather_logs (' +
     'weather_id           INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'survey_id            INTEGER,' +
@@ -1622,6 +1656,7 @@ end;
 
 procedure CreateVegetationTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating vegetation table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS vegetation (' +
     'vegetation_id       INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,' +
     'survey_id           INTEGER,' +
@@ -1652,6 +1687,7 @@ end;
 
 procedure CreateBandsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating bands table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS bands (' +
     'band_id         INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'band_size       VARCHAR (5),' +
@@ -1698,6 +1734,7 @@ end;
 
 procedure CreateBandHistoryTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating band_history table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS band_history (' +
     'event_id        INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'band_id         INTEGER  REFERENCES bands (band_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
@@ -1724,6 +1761,7 @@ end;
 
 procedure CreateIndividualsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating individuals table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS individuals (' +
     'individual_id         INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'formatted_name        VARCHAR (150),' +
@@ -1779,6 +1817,7 @@ end;
 
 procedure CreateSightingsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating sightings table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS sightings (' +
     'sighting_id          INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_id            INTEGER,' +
@@ -1845,6 +1884,7 @@ end;
 
 procedure CreateCapturesTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating captures table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS captures (' +
     'capture_id             INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_id              INTEGER,' +
@@ -1968,6 +2008,7 @@ end;
 
 procedure CreateFeathersTable(connection: TSQLConnector);
 begin
+  LogDebug('Creating feathers table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS feathers (' +
     'feather_id       INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'sample_date      DATE        NOT NULL,' +
@@ -2004,6 +2045,7 @@ end;
 
 procedure CreateMoltsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating molts table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS molts (' +
     'molt_id         INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'survey_id       INTEGER,' +
@@ -2083,6 +2125,7 @@ end;
 
 procedure CreateNestsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating nests table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nests (' +
     'nest_id               INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'field_number          VARCHAR (20)  UNIQUE NOT NULL,' +
@@ -2146,6 +2189,7 @@ end;
 
 procedure CreateNestOwnersTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating nest_owners table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nest_owners (' +
     'nest_owner_id   INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'nest_id         INTEGER     REFERENCES nests (nest_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
@@ -2163,6 +2207,7 @@ end;
 
 procedure CreateNestRevisionsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating nest_revisions table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nest_revisions (' +
     'nest_revision_id             INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'nest_id                      INTEGER       REFERENCES nests (nest_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
@@ -2192,6 +2237,7 @@ end;
 
 procedure CreateEggsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating eggs table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS eggs (' +
     'egg_id           INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'nest_id          INTEGER       REFERENCES nests (nest_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
@@ -2231,6 +2277,7 @@ end;
 
 procedure CreateSpecimensTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating specimens table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS specimens (' +
     'specimen_id      INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'field_number     VARCHAR (20),' +
@@ -2280,6 +2327,7 @@ end;
 
 procedure CreateSpecimenCollectorsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating specimen_collectors table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS specimen_collectors (' +
     'collector_id    INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'specimen_id     INTEGER,' +
@@ -2297,6 +2345,7 @@ end;
 
 procedure CreateSamplePrepsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating sample_preps table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS sample_preps (' +
     'sample_prep_id   INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'specimen_id      INTEGER       REFERENCES specimens ON DELETE CASCADE ON UPDATE CASCADE,' +
@@ -2335,6 +2384,7 @@ end;
 
 procedure CreatePoiLibraryTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating poi_library table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS poi_library (' +
     'poi_id          INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'sample_date     DATE         NOT NULL,' +
@@ -2360,6 +2410,7 @@ end;
 
 procedure CreateImagesTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating images table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS images (' +
     'image_id             INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'image_date           DATE,' +
@@ -2406,6 +2457,7 @@ end;
 
 procedure CreateDocumentsTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating documents table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS documents (' +
     'document_id     INTEGER       PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,' +
     'permit_id       INTEGER       REFERENCES legal (permit_id) ON DELETE CASCADE,' +
@@ -2442,6 +2494,7 @@ end;
 
 procedure CreateAudioLibraryTable(Connection: TSQLConnector);
 begin
+  LogDebug('Creating audio_library table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS audio_library (' +
     'audio_id          INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'full_name         VARCHAR (100),' +
@@ -2496,6 +2549,7 @@ end;
 
 procedure CreateNextBirthdaysView(Connection: TSQLConnector);
 begin
+  LogDebug('Creating get_next_birthdays view');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_next_birthdays AS ' +
     'SELECT full_name, ' +
       'birth_date, ' +
@@ -2509,6 +2563,7 @@ end;
 
 procedure CreateLastSurveysView(Connection: TSQLConnector);
 begin
+  LogDebug('Creating get_last_surveys view');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_last_surveys AS ' +
     'SELECT a.survey_date, ' +
       'a.start_longitude, ' +
@@ -2524,6 +2579,7 @@ end;
 
 procedure CreateLastLifersView(Connection: TSQLConnector);
 begin
+  LogDebug('Creating get_last_lifers view');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_last_lifers AS ' +
     'WITH FirstRecords AS ( ' +
       'SELECT taxon_id, ' +
@@ -2552,6 +2608,7 @@ end;
 
 procedure CreateExpiredPermitsView(Connection: TSQLConnector);
 begin
+  LogDebug('Creating get_expired_permits view');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_expired_permits AS ' +
     'SELECT permit_name, ' +
       'expire_date, ' +
@@ -2564,6 +2621,7 @@ end;
 
 procedure CreateBandsLeftoverView(Connection: TSQLConnector);
 begin
+  LogDebug('Creating get_bands_leftover view');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_bands_leftover AS ' +
     'WITH BandSizes AS ( ' +
       'SELECT band_size, ' +
@@ -2608,6 +2666,7 @@ end;
 
 procedure CreateBandsRunningOutView(Connection: TSQLConnector);
 begin
+  LogDebug('Creating get_bands_running_out view');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_bands_running_out AS ' +
     'WITH grupos AS ( ' +
       'SELECT date(capture_date) AS capture_date, ' +
@@ -2665,6 +2724,7 @@ end;
 
 procedure CreateAvgExpeditionDurationView(Connection: TSQLConnector);
 begin
+  LogDebug('Creating get_average_expedition_duration view');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_average_expedition_duration AS ' +
     'WITH grupos ( ' +
       'capture_date, ' +
@@ -2698,6 +2758,7 @@ var
   Usage: TElapsedTimer;
   {$ENDIF}
 begin
+  LogDebug('Populating zoo_taxa table');
   FS := DefaultSQLFormatSettings;
   i := 0;
 
@@ -2991,48 +3052,6 @@ begin
   end;
 end;
 
-function IncNumInterno(aUser: Integer): Integer;
-var
-  i: Integer;
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Clear;
-    Add('SELECT last_internal_id FROM users WHERE user_id = :auser');
-    ParamByName('USER').AsInteger := aUser;
-    Open;
-    i := Fields[0].AsInteger;
-    Close;
-    inc(i, 1);
-  finally
-    FreeAndNil(Qry);
-  end;
-  Result := i;
-end;
-
-procedure GravaNumInterno(aUser: Integer; aNum: Integer);
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Clear;
-    Add('UPDATE users');
-    Add('SET last_internal_id = :lastcode');
-    Add('WHERE user_id = :auser');
-    ParamByName('LASTCODE').AsInteger := aNum;
-    ParamByName('USER').AsInteger := aUser;
-    ExecSQL;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
 function TableIsEmpty(aTableName: String): Boolean;
 var
   Qry: TSQLQuery;
@@ -3140,15 +3159,26 @@ begin
     ExecSQL;
   finally
     FreeAndNil(Qry);
+    LogInfo(Format('Deleted all record from %s table', [TableNames[aTableType]]));
   end;
 end;
 
 procedure ClearDeleted(OlderThan: Integer);
+const
+  TableSequence: array of String = ('audio_library', 'documents', 'images', 'band_history', 'weather_logs',
+    'vegetation', 'survey_team', 'specimen_collectors', 'sample_preps', 'project_team', 'project_expenses',
+    'project_budgets', 'project_chronograms', 'project_goals', 'poi_library', 'nets_effort', 'permanent_nets',
+    'nest_owners', 'nest_revisions', 'eggs', 'feathers', 'nests', 'captures', 'sightings', 'surveys',
+    'expeditions', 'specimens', 'bands', 'individuals', 'sampling_plots', 'projects', 'legal', 'people',
+    'institutions', 'gazetteer', 'botanic_taxa', 'methods', 'zoo_taxa', 'taxon_ranks');
 var
   Qry: TSQLQuery;
+  i: Integer;
 begin
   if OlderThan = 0 then
     Exit;
+
+  LogEvent(leaStart, 'Clear deleted records');
 
   if OlderThan < 0 then
     OlderThan := XSettings.ClearDeletedPeriod * 30;
@@ -3156,61 +3186,37 @@ begin
   if not DMM.sqlCon.Connected then
     DMM.sqlCon.Open;
 
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
   try
-    Qry := TSQLQuery.Create(DMM.sqlCon);
-    with Qry, SQL do
-    try
-      MacroCheck := True;
-      DataBase := DMM.sqlCon;
-      Transaction := DMM.sqlTrans;
+    MacroCheck := True;
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    if not DMM.sqlTrans.Active then
       DMM.sqlTrans.StartTransaction;
-      Clear;
-      Add('DELETE FROM specimens WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM surveys WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM behavior WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM images WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM individuals WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM captures WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM permanent_nets WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM net_stations WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM nests WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM audio_library WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM botanic_taxa WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM gazetteer WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM institutions WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM methods WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM people WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM projects WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM taxon_ranks WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      Add('DELETE FROM zoo_taxa WHERE (active_status = 0) AND (date(update_date) = ' +
-        'date(''now'',''localtime'', :olderthan)));');
-      ParamByName('OLDERTHAN').AsString := '-' + IntToStr(OlderThan) + ' days';
-      ExecSQL;
-    finally
-      FreeAndNil(Qry);
+    try
+      for i := 0 to High(TableSequence) do
+      begin
+        Clear;
+        // Delete if update_date is lesser or equal to calculated date, and is inactive
+        Add('DELETE FROM %table_name');
+        Add('WHERE (active_status = 0)');
+        Add('AND (date(update_date) <= date(''now'',''localtime'', :olderthan)))');
+
+        MacroByName('table_name').Value := TableSequence[i];
+        ParamByName('olderthan').AsString := '-' + IntToStr(OlderThan) + ' days';
+        ExecSQL;
+      end;
+
+      DMM.sqlTrans.CommitRetaining;
+      XSettings.LastClearDeleted := DateOf(Now);
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
-    DMM.sqlTrans.CommitRetaining;
-    XSettings.LastClearDeleted := DateOf(Now);
-  except
-    DMM.sqlTrans.RollbackRetaining;
-    raise;
+  finally
+    FreeAndNil(Qry);
+    LogEvent(leaFinish, 'Clear deleted records');
   end;
 end;
 
@@ -3322,9 +3328,7 @@ begin
   aKeyField := GetPrimaryKey(aDataSet);
   aKeyValue := aDataSet.FieldByName(aKeyField).AsInteger;
 
-  {$IFDEF DEBUG}
   LogDebug(Format('Record %d from %s set inactive', [aKeyValue, TableNames[aTable]]));
-  {$ENDIF}
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -3346,9 +3350,9 @@ begin
       ParamByName('AUSER').DataType := ftInteger;
       ParamByName('AUSER').AsInteger := ActiveUser.Id;
       ParamByName('COD').AsInteger := aKeyValue;
-      {$IFDEF DEBUG}
-      LogSQL(SQL);
-      {$ENDIF}
+      //{$IFDEF DEBUG}
+      //LogSQL(SQL);
+      //{$ENDIF}
       ExecSQL;
 
       WriteRecHistory(aTable, haDeleted, aKeyValue);
@@ -3381,9 +3385,7 @@ begin
     MacroCheck := True;
     DataBase := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    {$IFDEF DEBUG}
     LogDebug(Format('Record %d from %s set active', [aKeyValue, TableNames[aTable]]));
-    {$ENDIF}
     if not DMM.sqlTrans.Active then
       DMM.sqlTrans.StartTransaction;
     try
@@ -3399,9 +3401,9 @@ begin
       MacroByName('KEYF').Value := aKeyField;
       ParamByName('AUSER').AsInteger := ActiveUser.Id;
       ParamByName('COD').AsInteger := aKeyValue;
-      {$IFDEF DEBUG}
-      LogSQL(SQL);
-      {$ENDIF}
+      //{$IFDEF DEBUG}
+      //LogSQL(SQL);
+      //{$ENDIF}
       ExecSQL;
 
       DMM.sqlTrans.CommitRetaining;
@@ -3423,9 +3425,7 @@ procedure MarkRecord(aTableName, aFieldName: String; aKeyValue: Integer);
 var
   Qry: TSQLQuery;
 begin
-  {$IFDEF DEBUG}
   LogDebug(Format('Record %d from %s set marked', [aKeyValue, aTableName]));
-  {$ENDIF}
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -3438,9 +3438,9 @@ begin
     MacroByName('TABNAME').Value := aTableName;
     MacroByName('KEYF').Value := aFieldName;
     ParamByName('KEYV').AsInteger := aKeyValue;
-    {$IFDEF DEBUG}
-    LogSQL(SQL);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogSQL(SQL);
+    //{$ENDIF}
     ExecSQL;
   finally
     FreeAndNil(Qry);
@@ -3452,9 +3452,7 @@ procedure UnmarkRecord(aTableName, aFieldName: String; aKeyValue: Integer);
 var
   Qry: TSQLQuery;
 begin
-  {$IFDEF DEBUG}
   LogDebug(Format('Record %d from %s set unmarked', [aKeyValue, aTableName]));
-  {$ENDIF}
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -3467,9 +3465,9 @@ begin
     MacroByName('TABNAME').Value := aTableName;
     MacroByName('KEYF').Value := aFieldName;
     ParamByName('KEYV').AsInteger := aKeyValue;
-    {$IFDEF DEBUG}
-    LogSQL(SQL);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogSQL(SQL);
+    //{$ENDIF}
     ExecSQL;
   finally
     FreeAndNil(Qry);
@@ -3611,9 +3609,7 @@ procedure QueueRecord(aTableName, aFieldName: String; aKeyValue: Integer);
 var
   Qry: TSQLQuery;
 begin
-  {$IFDEF DEBUG}
   LogDebug(Format('Record %d from %s set queued', [aKeyValue, aTableName]));
-  {$ENDIF}
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -3638,9 +3634,7 @@ procedure UnqueueRecord(aTableName, aFieldName: String; aKeyValue: Integer);
 var
   Qry: TSQLQuery;
 begin
-  {$IFDEF DEBUG}
   LogDebug(Format('Record %d from %s set unqueued', [aKeyValue, aTableName]));
-  {$ENDIF}
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -3663,9 +3657,7 @@ var
   Dt: String;
   Qry: TSQLQuery;
 begin
-  {$IFDEF DEBUG}
   LogDebug(Format('Update band status: %d', [aBand]));
-  {$ENDIF}
   Dt := FormatDateTime('yyyy-mm-dd', aDate);
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
@@ -3697,9 +3689,7 @@ var
   Dt: String;
   Qry: TSQLQuery;
 begin
-  {$IFDEF DEBUG}
   LogDebug(Format('Update individual: %d', [aIndividual]));
-  {$ENDIF}
   Dt := FormatDateTime('yyyy-mm-dd', aDate);
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
@@ -3727,9 +3717,7 @@ var
   Dt: String;
   Qry: TSQLQuery;
 begin
-  {$IFDEF DEBUG}
   LogDebug(Format('Change individual %d band from %d to %d', [aIndividual, aRemovedBand, aNewBand]));
-  {$ENDIF}
   Dt := FormatDateTime('yyyy-mm-dd', aDate);
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
@@ -3785,9 +3773,7 @@ begin
       Exit;
 
   aDataSet.Cancel;
-  {$IFDEF DEBUG}
   LogDebug('Canceled editing');
-  {$ENDIF}
 
   if aFocusControl.CanSetFocus then
     aFocusControl.SetFocus;

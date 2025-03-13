@@ -8,11 +8,12 @@ object dlgAuthorship: TdlgAuthorship
   Caption = 'Sort authors'
   ClientHeight = 232
   ClientWidth = 440
+  PopupMode = pmAuto
+  ShowInTaskBar = stNever
+  LCLVersion = '4.0.0.2'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow
-  PopupMode = pmAuto
-  ShowInTaskBar = stNever
   object pBottom: TPanel
     Left = 0
     Height = 33
@@ -35,9 +36,9 @@ object dlgAuthorship: TdlgAuthorship
       Align = alRight
       Caption = 'Apply'
       Font.Name = 'Segoe UI Semibold'
-      OnClick = sbOKClick
       ParentFont = False
       TabOrder = 0
+      OnClick = sbOKClick
     end
     object sbCancel: TBitBtn
       Left = 302
@@ -46,8 +47,8 @@ object dlgAuthorship: TdlgAuthorship
       Width = 130
       Align = alRight
       Caption = 'Cancel'
-      OnClick = sbCancelClick
       TabOrder = 1
+      OnClick = sbCancelClick
     end
     object lblTotal: TLabel
       Left = 8
@@ -86,10 +87,10 @@ object dlgAuthorship: TdlgAuthorship
       Flat = True
       Images = iButtons
       ImageIndex = 2
-      OnClick = sbDelClick
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbDelClick
     end
     object sbUp: TSpeedButton
       Left = 8
@@ -103,10 +104,10 @@ object dlgAuthorship: TdlgAuthorship
       Flat = True
       Images = iButtons
       ImageIndex = 6
-      OnClick = sbUpClick
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbUpClick
     end
     object sbDown: TSpeedButton
       Left = 8
@@ -120,10 +121,10 @@ object dlgAuthorship: TdlgAuthorship
       Flat = True
       Images = iButtons
       ImageIndex = 4
-      OnClick = sbDownClick
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbDownClick
     end
     object sbAdd: TSpeedButton
       Left = 8
@@ -136,10 +137,10 @@ object dlgAuthorship: TdlgAuthorship
       Flat = True
       Images = iButtons
       ImageIndex = 0
-      OnClick = sbAddClick
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbAddClick
     end
   end
   object lbColetor: TListBox

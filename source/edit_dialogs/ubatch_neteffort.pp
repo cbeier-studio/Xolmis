@@ -111,6 +111,7 @@ var
   i: Integer;
   Ini, Fim: Integer;
 begin
+  LogEvent(leaStart, 'Add batch of nets');
   FRecord := TNetEffort.Create();
   Ini := eStartNumber.Value;
   Fim := eEndNumber.Value;
@@ -175,6 +176,7 @@ begin
     FRecord.Free;
     aSurvey.Free;
     FNetCopy.Free;
+    LogEvent(leaFinish, 'Add batch of nets');
   end;
 end;
 

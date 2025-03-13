@@ -386,6 +386,7 @@ begin
     Exit;
   end;
 
+  LogEvent(leaStart, Format('Import eBird file: %s', [aCSVFile]));
   Parar := False;
   dlgProgress := TdlgProgress.Create(nil);
   dlgProgress.Show;
@@ -496,6 +497,7 @@ begin
     FreeAndNil(CSV);
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
+    LogEvent(leaFinish, 'Import eBird file');
   end;
 end;
 
@@ -628,6 +630,7 @@ begin
     Exit;
   end;
 
+  LogEvent(leaStart, Format('Import banding file: %s', [aCSVFile]));
   Parar := False;
   if not Assigned(aProgressBar) then
   begin
@@ -970,6 +973,7 @@ begin
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
     end;
+    LogEvent(leaFinish, 'Import banding file');
   end;
 end;
 
@@ -991,6 +995,7 @@ begin
     Exit;
   end;
 
+  LogEvent(leaStart, Format('Import banding journal: %s', [aCSVFile]));
   Parar := False;
   if not Assigned(aProgressBar) then
   begin
@@ -1388,6 +1393,7 @@ begin
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
     end;
+    LogEvent(leaFinish, 'Import banding journal')
   end;
 end;
 
@@ -1407,6 +1413,7 @@ begin
     Exit;
   end;
 
+  LogEvent(leaStart, Format('Import banding effort: %s', [aCSVFile]));
   Parar := False;
   if not Assigned(aProgressBar) then
   begin
@@ -1591,6 +1598,7 @@ begin
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
     end;
+    LogEvent(leaFinish, 'Import banding effort')
   end;
 end;
 
@@ -1608,6 +1616,7 @@ begin
     Exit;
   end;
 
+  LogEvent(leaStart, Format('Import nests file: %s', [aCSVFile]));
   Parar := False;
   if not Assigned(aProgressBar) then
   begin
@@ -1759,6 +1768,7 @@ begin
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
     end;
+    LogEvent(leaFinish, 'Import nests file');
   end;
 end;
 
@@ -1777,6 +1787,7 @@ begin
     Exit;
   end;
 
+  LogEvent(leaStart, Format('Import nest revisions: %s', [aCSVFile]));
   Parar := False;
   if not Assigned(aProgressBar) then
   begin
@@ -1923,6 +1934,7 @@ begin
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
     end;
+    LogEvent(leaFinish, 'Import nest revisions');
   end;
 end;
 
@@ -1941,6 +1953,7 @@ begin
     Exit;
   end;
 
+  LogEvent(leaStart, Format('Import eggs file: %s', [aCSVFile]));
   Parar := False;
   if not Assigned(aProgressBar) then
   begin
@@ -2106,6 +2119,7 @@ begin
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
     end;
+    LogEvent(leaFinish, 'Import eggs file');
   end;
 end;
 

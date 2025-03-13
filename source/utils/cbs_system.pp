@@ -169,15 +169,11 @@ begin
   Opening := True;
   Application.CreateForm(aClasseForm, aForm);
   try
-    {$IFDEF DEBUG}
-    LogDebug('OPEN: ' + aForm.Caption);
-    {$ENDIF}
+    LogEvent(leaOpen, aForm.Caption);
     GravaStat(aForm.Name, '', 'open');
     aForm.ShowModal;
   finally
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE: ' + aForm.Caption);
-    {$ENDIF}
+    LogEvent(leaClose, aForm.Caption);
     FreeAndNil(aForm);
     Opening := False;
   end;
@@ -189,6 +185,7 @@ begin
     Exit;
 
   Opening := True;
+  LogEvent(leaOpen, 'Record history');
   dlgRecHistory := TdlgRecHistory.Create(nil);
   with dlgRecHistory do
   try
@@ -199,6 +196,7 @@ begin
     ShowModal;
   finally
     FreeAndNil(dlgRecHistory);
+    LogEvent(leaClose, 'Record history');
     Opening := False;
   end;
 end;
@@ -209,6 +207,7 @@ begin
     Exit;
 
   Opening := True;
+  LogEvent(leaOpen, 'Record verifications');
   dlgRecVerifications := TdlgRecVerifications.Create(nil);
   with dlgRecVerifications do
   try
@@ -219,6 +218,7 @@ begin
     ShowModal;
   finally
     FreeAndNil(dlgRecVerifications);
+    LogEvent(leaClose, 'Record verifications');
     Opening := False;
   end;
 end;
@@ -227,6 +227,7 @@ function AddVerification(aTable, aChild: TTableType; aKey: Integer): Boolean;
 begin
   Result := False;
 
+  LogEvent(leaOpen, 'Add verification dialog');
   edtRecVerification := TedtRecVerification.Create(nil);
   with edtRecVerification do
   try
@@ -237,6 +238,7 @@ begin
     Result := ShowModal = mrOk;
   finally
     FreeAndNil(edtRecVerification);
+    LogEvent(leaClose, 'Add verification dialog');
   end;
 end;
 
@@ -264,7 +266,7 @@ var
   FileSizeInBytes: Int64;
 begin
   if not FileExists(FileName) then
-    raise Exception.CreateFmt(rsErrorFileNotFound, [FileName]);
+    raise EFileNotFoundException.CreateFmt(rsErrorFileNotFound, [FileName]);
 
   FileSizeInBytes := FileSizeUtf8(FileName);
 
@@ -287,7 +289,7 @@ begin
 
   // Verificar se o diretório existe
   if not DirectoryExistsUTF8(Dir) then
-    raise Exception.CreateFmt('O diretório "%s" não foi encontrado.', [Dir]);
+    raise EDirectoryNotFoundException.CreateFmt(rsErrorFolderNotFound, [Dir]);
 
   // Procurar por arquivos no diretório
   if FindFirstUTF8(IncludeTrailingPathDelimiter(Dir) + '*', faAnyFile, Info) = 0 then

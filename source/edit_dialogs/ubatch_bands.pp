@@ -119,6 +119,7 @@ var
   i: Integer;
   FFullName: String;
 begin
+  LogEvent(leaStart, 'Add batch of bands');
   FRecord := TBand.Create();
   FHistory := TBandHistory.Create();
   Ini := eStartNumber.Value;
@@ -269,6 +270,7 @@ begin
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
     end;
+    LogEvent(leaFinish, 'Add batch of bands');
   end;
 end;
 

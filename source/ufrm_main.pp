@@ -374,7 +374,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions, cbs_backup,
-  cbs_users, cbs_gis, cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
+  cbs_data, cbs_users, cbs_gis, cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
@@ -844,6 +844,12 @@ begin
   lblLoading.Caption := rsClosing;
   pSplash.Visible := True;
 
+  { Clear deleted records }
+  if XSettings.ClearDeletedPeriod > 0 then
+  begin
+    ClearDeleted(XSettings.ClearDeletedPeriod * 30);
+  end;
+
   { Run backup }
   case XSettings.AutomaticBackup of
     0: ;
@@ -864,7 +870,7 @@ begin
     end;
   end;
 
-  LogInfo('END -----------------------------------------');
+  //LogInfo('END -----------------------------------------');
   if Assigned(XSettings) then
   begin
     XSettings.AppTerminatedOk := True;
@@ -1080,7 +1086,7 @@ begin
   end
   else
   begin
-    LogInfo('END -----------------------------------------');
+    LogEvent(leaEnd, '-----------------------------------------');
     if Assigned(XSettings) then
       XSettings.Free;
     if Assigned(ActiveUser) then
@@ -1115,9 +1121,7 @@ begin
   begin
     aPage := PGW.ActivePageComponent;
     ActiveGrid := TTDIPage(PGW.ActivePageComponent).FormInPage as TfrmCustomGrid;
-    {$IFDEF DEBUG}
-    LogInfo('ACTIVE TAB:' + aPage.Caption);
-    {$ENDIF}
+    LogEvent(leaActiveTab, aPage.Caption);
     case TTableType(aPage.Tag) of
       //tbNone: ;
       tbGazetteer:      ActiveQuery := DMG.qGazetteer;
@@ -1260,9 +1264,7 @@ begin
   aForm := TfrmCustomGrid.Create(Application);
   aForm.Caption := aCaption;
   aForm.TableType := aTableType;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN: ' + aForm.Caption);
-  {$ENDIF}
+  LogEvent(leaOpen, aForm.Caption);
   PGW.ShowFormInPage(aForm, aIcon);
   Application.ProcessMessages;
   PGW.ActivePageComponent.Tag := Ord(aTableType);
@@ -1307,9 +1309,7 @@ begin
   sbarStatus.Caption := Format(rsLoadingForm, [LowerCase(aCaption)]);
   Application.CreateForm(aFormClass, aForm);
   aForm.Caption := aCaption;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN: ' + aForm.Caption);
-  {$ENDIF}
+  LogEvent(leaOpen, aForm.Caption);
   PGW.ShowFormInPage(aForm);
   navTabs.AddTab(PGW.PageIndex, PGW.ActivePageComponent.Caption);
   navTabs.TabIndex := navTabs.TabCount - 1;
@@ -1550,9 +1550,7 @@ end;
 
 procedure TfrmMain.sbClearSearchClick(Sender: TObject);
 begin
-  {$IFDEF DEBUG}
   LogDebug('Search cleared');
-  {$ENDIF}
 
   eSearch.Clear;
   if eSearch.CanSetFocus then
@@ -1616,9 +1614,7 @@ begin
     Exit;
 
   OldPPI := Self.PixelsPerInch;
-  {$IFDEF DEBUG}
   LogDebug('DPI changed: ' + IntToStr(OldPPI) + '; Monitor: ' + IntToStr(Self.Monitor.MonitorNum));
-  {$ENDIF}
   //Self.PixelsPerInch := OldPPI;
   //Self.AutoScale;
   if Self.PixelsPerInch <> 96 then

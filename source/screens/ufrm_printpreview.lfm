@@ -7,9 +7,10 @@ object frmPrintPreview: TfrmPrintPreview
   Caption = 'Print preview'
   ClientHeight = 604
   ClientWidth = 883
-  OnShow = FormShow
   PopupMode = pmAuto
   Position = poDefault
+  LCLVersion = '4.0.0.2'
+  OnShow = FormShow
   object pToolbar: TPanel
     Left = 0
     Height = 32
@@ -108,11 +109,11 @@ object frmPrintPreview: TfrmPrintPreview
       Width = 126
       Max = 200
       Min = 10
-      OnChange = tbZoomChange
       Position = 100
       ShowSelRange = False
       TickMarks = tmBoth
       TickStyle = tsNone
+      OnChange = tbZoomChange
       Align = alRight
       TabOrder = 0
     end
@@ -244,10 +245,10 @@ object frmPrintPreview: TfrmPrintPreview
       Images = iButtons
       ImageIndex = 22
       ImageWidth = 20
-      OnClick = sbFirstPageClick
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbFirstPageClick
     end
     object sbPriorPage: TSpeedButton
       Left = 32
@@ -263,10 +264,10 @@ object frmPrintPreview: TfrmPrintPreview
       Images = iButtons
       ImageIndex = 10
       ImageWidth = 20
-      OnClick = sbPriorPageClick
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbPriorPageClick
     end
     object sbNextPage: TSpeedButton
       Left = 93
@@ -282,10 +283,10 @@ object frmPrintPreview: TfrmPrintPreview
       Images = iButtons
       ImageIndex = 8
       ImageWidth = 20
-      OnClick = sbNextPageClick
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbNextPageClick
     end
     object sbLastPage: TSpeedButton
       Left = 117
@@ -302,10 +303,10 @@ object frmPrintPreview: TfrmPrintPreview
       Images = iButtons
       ImageIndex = 24
       ImageWidth = 20
-      OnClick = sbLastPageClick
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbLastPageClick
     end
   end
   object frPreview: TfrPreview

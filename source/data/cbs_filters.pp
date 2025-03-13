@@ -342,9 +342,9 @@ begin
 
     Add('GROUP BY z.order_id, z.family_id, z.species_id');
     Add('ORDER BY sort_num ASC');
-    {$IFDEF DEBUG}
-    LogSQL(SQL);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogSQL(SQL);
+    //{$ENDIF}
     Open;
     if RecordCount > 0 then
     try
@@ -673,9 +673,9 @@ begin
 
     Q.Add('GROUP BY ano, mes, dia');
     Q.Add('ORDER BY ano DESC, mes ASC, dia ASC');
-    {$IFDEF DEBUG}
-    LogDebug(Qry.SQL.Text);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogDebug(Qry.SQL.Text);
+    //{$ENDIF}
     Qry.Open;
 
     if Qry.RecordCount > 0 then
@@ -1045,9 +1045,9 @@ begin
     else
       SQL.Add('GROUP BY g.country_id, g.state_id, g.municipality_id');
     SQL.Add('ORDER BY country_name ASC, state_name ASC, municipality_name ASC');
-    {$IFDEF DEBUG}
-    LogDebug(SQL.Text);
-    {$ENDIF}
+    //{$IFDEF DEBUG}
+    //LogDebug(SQL.Text);
+    //{$ENDIF}
     Open;
     if RecordCount > 0 then
     try

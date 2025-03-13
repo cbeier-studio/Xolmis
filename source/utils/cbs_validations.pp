@@ -763,7 +763,7 @@ begin
 
   // Check if fields and values match
   if Length(FieldsSet) <> Length(ValuesSet) then
-    raise Exception.Create('O número de campos e valores não correspondem.');
+    raise EArgumentException.Create(rsErrorFieldsAndValuesDiffer);
 
   // Start SQL query command
   SQLText := 'SELECT count(*) AS record_exists FROM %table WHERE ';

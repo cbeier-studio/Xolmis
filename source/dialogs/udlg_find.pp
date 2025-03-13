@@ -1223,9 +1223,9 @@ begin
     begin
       Close;
       SetSelect(SQL, fvMarked, crNone);
-      {$IFDEF DEBUG}
-      LogSQL(SQL);
-      {$ENDIF}
+      //{$IFDEF DEBUG}
+      //LogSQL(SQL);
+      //{$ENDIF}
       Open;
     end;
   end;
@@ -1238,9 +1238,9 @@ begin
     begin
       Close;
       SetSelect(SQL, fvAll, crNone);
-      {$IFDEF DEBUG}
-      LogSQL(SQL);
-      {$ENDIF}
+      //{$IFDEF DEBUG}
+      //LogSQL(SQL);
+      //{$ENDIF}
       Open;
     end;
   end;
@@ -1331,7 +1331,7 @@ begin
       end;
 
       {$IFDEF DEBUG}
-      LogSQL(SQL);
+      //LogSQL(SQL);
       LogDebug('SQL: VALPARAM = ' + aValue);
       {$ENDIF}
       Open;

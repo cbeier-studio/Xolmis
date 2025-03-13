@@ -261,6 +261,7 @@ begin
     Exit;
   end;
 
+  LogEvent(leaStart, 'Convert coordinates');
   try
     PBar.Position := 0;
     PBar.Max := seConvertFrom.Lines.Count;
@@ -352,6 +353,7 @@ begin
     PBar.Position := 0;
     //frm_Main.Taskbar.ProgressState := TTaskBarProgressState.None;
     //frm_Main.Taskbar.ProgressValue := 0;
+    LogEvent(leaFinish, 'Convert coordinates');
   end;
 
   UpdateButtons;

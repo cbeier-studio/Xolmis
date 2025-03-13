@@ -169,9 +169,7 @@ begin
   begin
     if (SBAdd.Enabled) then
     begin
-      {$IFDEF DEBUG}
-      LogDebug('OPEN DIALOG: Find (people)');
-      {$ENDIF}
+      LogEvent(leaOpen, 'Find (people)');
       dlgFind := TdlgFind.Create(nil);
       with dlgFind do
         try
@@ -190,9 +188,7 @@ begin
           end;
         finally
           FreeAndNil(dlgFind);
-          {$IFDEF DEBUG}
-          LogDebug('CLOSE DIALOG: Find (people)');
-          {$ENDIF}
+          LogEvent(leaClose, 'Find (people)');
         end;
       lbColetor.SetFocus;
       HabilitaBotoes;
@@ -226,9 +222,7 @@ var
   PControl: TPoint;
 begin
   GravaStat(Name, 'sbAdd', 'click');
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: Find (people)');
-  {$ENDIF}
+  LogEvent(leaOpen, 'Find (people)');
   dlgFind := TdlgFind.Create(nil);
   with dlgFind do
   try
@@ -246,9 +240,7 @@ begin
     end;
   finally
     FreeAndNil(dlgFind);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: Find (people)');
-    {$ENDIF}
+    LogEvent(leaClose, 'Find (people)');
   end;
   lbColetor.SetFocus;
   HabilitaBotoes;

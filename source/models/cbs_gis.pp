@@ -717,9 +717,7 @@ begin
 
     // Save the XML document to file
     WriteXMLFile(Doc, aFileName);
-    {$IFDEF DEBUG}
     LogDebug('Exported KML file: ' + aFileName);
-    {$ENDIF}
   finally
     Doc.Free;
   end;
@@ -1097,12 +1095,10 @@ function GeoEditorDlg(aDMS: String; aAxis: TMapAxis; aControl: TControl; var aDe
 //  PControl: TPoint;
 begin
   Result := False;
-  {$IFDEF DEBUG}
   if aAxis = maLatitude then
-    LogDebug('OPEN DIALOG: GeoEditor (Latitude)')
+    LogEvent(leaOpen, 'GeoEditor (Latitude)')
   else
-    LogDebug('OPEN DIALOG: GeoEditor (Longitude)');
-  {$ENDIF}
+    LogEvent(leaOpen, 'GeoEditor (Longitude)');
   dlgGeoEditor := TdlgGeoEditor.Create(nil);
   with dlgGeoEditor do
   try
@@ -1117,9 +1113,7 @@ begin
     end;
   finally
     FreeAndNil(dlgGeoEditor);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: GeoEditor');
-    {$ENDIF}
+    LogEvent(leaClose, 'GeoEditor');
   end;
 end;
 
@@ -1128,12 +1122,10 @@ function GeoEditorDlg(aDMS: TDMS; aAxis: TMapAxis; aControl: TControl; var aDeci
 //  PControl: TPoint;
 begin
   Result := False;
-  {$IFDEF DEBUG}
   if aAxis = maLatitude then
-    LogDebug('OPEN DIALOG: GeoEditor (Latitude)')
+    LogEvent(leaOpen, 'GeoEditor (Latitude)')
   else
-    LogDebug('OPEN DIALOG: GeoEditor (Longitude)');
-  {$ENDIF}
+    LogEvent(leaOpen, 'GeoEditor (Longitude)');
 
   dlgGeoEditor := TdlgGeoEditor.Create(nil);
   with dlgGeoEditor do
@@ -1151,9 +1143,7 @@ begin
     end;
   finally
     FreeAndNil(dlgGeoEditor);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: GeoEditor');
-    {$ENDIF}
+    LogEvent(leaClose, 'GeoEditor');
   end;
 end;
 
@@ -1162,9 +1152,7 @@ function GeoEditorDlg(aControl: TControl; aDataSet: TDataSet; LongitudeField, La
 //  PControl: TPoint;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: GeoEditor');
-  {$ENDIF}
+  LogEvent(leaOpen, 'GeoEditor');
 
   dlgGeoEditor := TdlgGeoEditor.Create(nil);
   with dlgGeoEditor do
@@ -1189,18 +1177,14 @@ begin
     end;
   finally
     FreeAndNil(dlgGeoEditor);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: GeoEditor');
-    {$ENDIF}
+    LogEvent(leaClose, 'GeoEditor');
   end;
 end;
 
 function GeoEditorDlg(aControl: TControl; LongitudeEdit, LatitudeEdit: TCustomEditButton): Boolean;
 begin
   Result := False;
-  {$IFDEF DEBUG}
-  LogDebug('OPEN DIALOG: GeoEditor');
-  {$ENDIF}
+  LogEvent(leaOpen, 'GeoEditor');
 
   dlgGeoEditor := TdlgGeoEditor.Create(nil);
   with dlgGeoEditor do
@@ -1224,9 +1208,7 @@ begin
     end;
   finally
     FreeAndNil(dlgGeoEditor);
-    {$IFDEF DEBUG}
-    LogDebug('CLOSE DIALOG: GeoEditor');
-    {$ENDIF}
+    LogEvent(leaClose, 'GeoEditor');
   end;
 end;
 
