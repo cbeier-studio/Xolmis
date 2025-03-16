@@ -26,6 +26,7 @@ uses
   function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
   function GetName(aTable, aNameField, aKeyField: String; aKeyValue: Integer): String;
   function GetNameConcat(aTable, aNameField1, aNameField2, aKeyField: String; aKeyValue: Integer): String;
+  function GetFieldValue(aTable, aField, aKeyField: String; aKeyValue: Integer): Variant;
   function GetLatLong(aTable, aLongField, aLatField, aNameField, aKeyField: String;
     aKeyValue: Integer; var aMapPoint: TMapPoint): Boolean;
   function GetRankFromSite(aSiteKey: Integer): String;
@@ -33,6 +34,7 @@ uses
   function GetRank(const aKey: Integer): TZooRank;
   function GetProjectBalance(const aProjectId: Integer): Double;
   function GetRubricBalance(const aRubricId: Integer): Double;
+  function GetNextCollectorSeq(aSpecimenId: Integer): Integer;
 
   procedure GetTimeStamp(aField: TField; aTimeStampField: TDateTime);
 
@@ -142,6 +144,37 @@ begin
     finally
       FreeAndNil(Qry);
     end;
+  end;
+end;
+
+function GetFieldValue(aTable, aField, aKeyField: String; aKeyValue: Integer): Variant;
+var
+  Qry: TSQLQuery;
+begin
+  Result := Null;
+  if (aKeyValue = 0) then
+    Exit;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+    DataBase := DMM.sqlCon;
+    Add('SELECT %afield FROM %atable WHERE %akeyfield = :keyv');
+
+    MacroByName('afield').Value := aField;
+    MacroByName('atable').Value := aTable;
+    MacroByName('akeyfield').Value := aKeyField;
+
+    ParamByName('keyv').AsInteger := aKeyValue;
+    Open;
+
+    if not IsEmpty then
+      Result := FieldByName(aField).Value;
+
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -394,7 +427,8 @@ begin
     Add('GROUP BY pb.project_id');
     ParamByName('project_id').AsInteger := aProjectId;
     Open;
-    Result := FieldByName('total_balance').AsFloat;
+    if RecordCount > 0 then
+      Result := FieldByName('total_balance').AsFloat;
     Close;
   finally
     FreeAndNil(Qry);
@@ -425,7 +459,37 @@ begin
     Add('GROUP BY pb.budget_id, pb.amount');
     ParamByName('budget_id').AsInteger := aRubricId;
     Open;
-    Result := FieldByName('item_balance').AsFloat;
+    if RecordCount > 0 then
+      Result := FieldByName('item_balance').AsFloat;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetNextCollectorSeq(aSpecimenId: Integer): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Result := 0;
+
+  if aSpecimenId = 0 then
+    Exit;
+
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('SELECT');
+    Add('    max(collector_seq) AS seq');
+    Add('FROM specimen_collectors');
+    Add('WHERE specimen_id = :specimen_id');
+    ParamByName('specimen_id').AsInteger := aSpecimenId;
+    Open;
+    if RecordCount > 0 then
+      Result := FieldByName('seq').AsInteger + 1;
     Close;
   finally
     FreeAndNil(Qry);

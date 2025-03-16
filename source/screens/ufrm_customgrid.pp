@@ -882,7 +882,7 @@ type
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure dsLinkStateChange(Sender: TObject);
     procedure dsRecycleStateChange(Sender: TObject);
-    procedure eAddChildEnter(Sender: TObject);
+    procedure eAddChildClick(Sender: TObject);
     procedure eAddChildKeyPress(Sender: TObject; var Key: char);
     procedure eCycleCodeFilterButtonClick(Sender: TObject);
     procedure eCycleCodeFilterKeyPress(Sender: TObject; var Key: char);
@@ -1215,6 +1215,8 @@ type
     procedure PrepareCanvasSpecimens(var Column: TColumn; var sender: TObject);
     procedure PrepareCanvasSurveys(var Column: TColumn; var sender: TObject);
 
+    procedure QuickAddChild(aInitialValue: String = '');
+
     procedure RefreshMap;
     procedure RefreshMapSurvey;
 
@@ -1375,7 +1377,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
   cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print, cbs_users,
-  cbs_validations, udlg_progress, udlg_exportpreview,
+  cbs_validations, cbs_setparam, udlg_progress, udlg_exportpreview,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
 
@@ -4178,105 +4180,15 @@ begin
   UpdateRecycleButtons(qRecycle);
 end;
 
-procedure TfrmCustomGrid.eAddChildEnter(Sender: TObject);
-var
-  aSurvey: Integer;
-  Qry: TSQLQuery;
+procedure TfrmCustomGrid.eAddChildClick(Sender: TObject);
 begin
-  aSurvey := 0;
-
-  if (FTableType = tbExpeditions) and (FChildTable = tbSurveys) then
-  begin
-    if FindDlg(tbSurveys, eAddChild, aSurvey) then
-    begin
-      Qry := TSQLQuery.Create(DMM.sqlCon);
-      with Qry, SQL do
-      try
-        SQLConnection := DMM.sqlCon;
-        Clear;
-
-        Add('UPDATE surveys SET expedition_id = :aexpedition WHERE survey_id = :asurvey');
-        ParamByName('AEXPEDITION').AsInteger := DBG.DataSource.DataSet.FieldByName('expedition_id').AsInteger;
-        ParamByName('ASURVEY').AsInteger := aSurvey;
-
-        ExecSQL;
-      finally
-        FreeAndNil(Qry);
-      end;
-    end;
-  end;
+  QuickAddChild;
 end;
 
 procedure TfrmCustomGrid.eAddChildKeyPress(Sender: TObject; var Key: char);
-var
-  P: Integer;
 begin
-  // <ENTER/RETURN> Key
-  if Key = #13 then
-  begin
-    case FTableType of
-      tbSurveys:
-      begin
-        case FChildTable of
-          tbSurveyTeams:
-          begin
-            P := GetKey('people', 'person_id', 'acronym', AnsiUpperCase(eAddChild.Text));
-            if P > 0 then
-            begin
-              dsLink1.DataSet.Append;
-              dsLink1.DataSet.FieldByName('person_id').AsInteger := P;
-              //TabBperson_name.AsWideString := GetName('people', 'full_name', 'person_id', P);
-              dsLink1.DataSet.Post;
-              eAddChild.Clear;
-
-              UpdateChildButtons(dsLink1.DataSet);
-            end;
-          end;
-          tbSightings: ;
-        end;
-      end;
-      tbProjects:
-      begin
-        case FChildTable of
-          tbProjectTeams:
-          begin
-            P := GetKey('people', 'person_id', 'acronym', AnsiUpperCase(eAddChild.Text));
-            if P > 0 then
-            begin
-              dsLink1.DataSet.Append;
-              dsLink1.DataSet.FieldByName('person_id').AsInteger := P;
-              //TabBperson_name.AsWideString := GetName('people', 'full_name', 'person_id', P);
-              dsLink1.DataSet.Post;
-              eAddChild.Clear;
-
-              UpdateChildButtons(dsLink1.DataSet);
-            end;
-          end;
-        end;
-      end;
-      tbSpecimens:
-      begin
-        case FChildTable of
-          tbSpecimenCollectors:
-          begin
-            P := GetKey('people', 'person_id', 'acronym', AnsiUpperCase(eAddChild.Text));
-            if P > 0 then
-            begin
-              dsLink1.DataSet.Append;
-              dsLink1.DataSet.FieldByName('person_id').AsInteger := P;
-              //TabBperson_name.AsWideString := GetName('people', 'full_name', 'person_id', P);
-              dsLink1.DataSet.Post;
-              eAddChild.Clear;
-
-              UpdateChildButtons(dsLink1.DataSet);
-            end;
-          end;
-          //tbSamplePreps: ;
-        end;
-      end;
-    end;
-    Key := #0;
-  end;
+  QuickAddChild(Key);
+  Key := #0;
 end;
 
 procedure TfrmCustomGrid.eCycleCodeFilterButtonClick(Sender: TObject);
@@ -8393,6 +8305,145 @@ begin
   { #todo : Image types SetText }
 end;
 
+procedure TfrmCustomGrid.QuickAddChild(aInitialValue: String);
+var
+  aSurvey, aPerson, aInstitution: Integer;
+  aInst: Variant;
+  Qry: TSQLQuery;
+begin
+  aSurvey := 0;
+
+  case FTableType of
+    tbExpeditions:
+    begin
+      case FChildTable of
+        tbSurveys:
+        begin
+          if FindDlg(tbSurveys, eAddChild, aSurvey, aInitialValue) then
+          begin
+            Qry := TSQLQuery.Create(DMM.sqlCon);
+            with Qry, SQL do
+            try
+              SQLConnection := DMM.sqlCon;
+              Clear;
+
+              Add('UPDATE surveys SET expedition_id = :aexpedition WHERE survey_id = :asurvey');
+              ParamByName('AEXPEDITION').AsInteger := DBG.DataSource.DataSet.FieldByName('expedition_id').AsInteger;
+              ParamByName('ASURVEY').AsInteger := aSurvey;
+
+              ExecSQL;
+            finally
+              FreeAndNil(Qry);
+            end;
+
+            eAddChild.Clear;
+            dsLink1.DataSet.Refresh;
+          end;
+        end;
+      end;
+    end;
+    tbProjects:
+    begin
+      case FChildTable of
+        tbProjectTeams:
+        begin
+          if FindDlg(tbPeople, eAddChild, aPerson, aInitialValue) then
+          begin
+            Qry := TSQLQuery.Create(DMM.sqlCon);
+            with Qry, SQL do
+            try
+              SQLConnection := DMM.sqlCon;
+              SQLTransaction := DMM.sqlTrans;
+              Clear;
+
+              Add('INSERT INTO project_team (' +
+                'project_id, ' +
+                'person_id, ' +
+                'project_manager, ' +
+                'institution_id, ' +
+                'user_inserted, ' +
+                'insert_date)');
+              Add('VALUES (' +
+                ':project_id, ' +
+                ':person_id, ' +
+                ':project_manager, ' +
+                ':institution_id, ' +
+                ':user_inserted, ' +
+                'datetime(''now'', ''subsec''))');
+
+              SetForeignParam(ParamByName('project_id'), dsLink.DataSet.FieldByName('project_id').AsInteger);
+              SetForeignParam(ParamByName('person_id'), aPerson);
+              ParamByName('project_manager').AsBoolean := False;
+              aInst := GetFieldValue('people', 'institution_id', 'person_id', aPerson);
+              if aInst <> Null then
+              begin
+                aInstitution := aInst;
+                SetForeignParam(ParamByName('institution_id'), aInstitution);
+              end;
+              ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+              ExecSQL;
+            finally
+              FreeAndNil(Qry);
+            end;
+
+            eAddChild.Clear;
+            dsLink1.DataSet.Refresh;
+          end;
+        end;
+        tbProjectGoals: ;
+        tbProjectChronograms: ;
+        tbProjectBudgets: ;
+        tbProjectExpenses: ;
+      end;
+    end;
+    tbSpecimens:
+    begin
+      case FChildTable of
+        tbSpecimenCollectors:
+        begin
+          if FindDlg(tbPeople, eAddChild, aPerson, aInitialValue) then
+          begin
+            Qry := TSQLQuery.Create(DMM.sqlCon);
+            with Qry, SQL do
+            try
+              SQLConnection := DMM.sqlCon;
+              SQLTransaction := DMM.sqlTrans;
+              Clear;
+
+              Add('INSERT INTO specimen_collectors (' +
+                'specimen_id, ' +
+                'person_id, ' +
+                'collector_seq, ' +
+                'user_inserted, ' +
+                'insert_date)');
+              Add('VALUES (' +
+                ':specimen_id, ' +
+                ':person_id, ' +
+                ':collector_seq, ' +
+                ':user_inserted, ' +
+                'datetime(''now'', ''subsec''))');
+
+              SetForeignParam(ParamByName('specimen_id'), dsLink.DataSet.FieldByName('specimen_id').AsInteger);
+              SetForeignParam(ParamByName('person_id'), aPerson);
+              ParamByName('collector_seq').AsInteger := GetNextCollectorSeq(dsLink.DataSet.FieldByName('specimen_id').AsInteger);
+              ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+              ExecSQL;
+            finally
+              FreeAndNil(Qry);
+            end;
+
+            eAddChild.Clear;
+            dsLink1.DataSet.Refresh;
+          end;
+        end;
+        tbSamplePreps: ;
+      end;
+    end;
+  end;
+end;
+
 procedure TfrmCustomGrid.RefreshMap;
 var
   poi: TGpsPoint;
@@ -9075,6 +9126,7 @@ begin
 
     if needsRefresh then
     begin
+      UpdateButtons(dsLink.DataSet);
       UpdateFilterPanels;
       UpdateChildRightPanel;
     end;
@@ -9168,6 +9220,7 @@ begin
 
     if needsRefresh then
     begin
+      UpdateButtons(dsLink.DataSet);
       UpdateFilterPanels;
       UpdateChildRightPanel;
     end;

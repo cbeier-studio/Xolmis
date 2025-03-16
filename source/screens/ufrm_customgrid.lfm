@@ -8044,7 +8044,7 @@ object frmCustomGrid: TfrmCustomGrid
           TabOrder = 0
           TextHint = 'Quick add'
           Visible = False
-          OnEnter = eAddChildEnter
+          OnClick = eAddChildClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eAddChildKeyPress
         end

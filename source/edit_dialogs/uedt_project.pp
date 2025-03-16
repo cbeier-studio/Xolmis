@@ -243,8 +243,10 @@ procedure TedtProject.SetRecord;
 begin
   FProject.Title           := eTitle.Text;
   FProject.ShortTitle      := eShortTitle.Text;
-  FProject.StartDate       := StrToDate(eStartDate.Text);
-  FProject.EndDate         := StrToDate(eEndDate.Text);
+  if Trim(eStartDate.Text) <> EmptyStr then
+    FProject.StartDate     := StrToDate(eStartDate.Text);
+  if Trim(eEndDate.Text) <> EmptyStr then
+    FProject.EndDate       := StrToDate(eEndDate.Text);
   FProject.WebsiteUri      := eWebsite.Text;
   FProject.EmailAddress    := eEmail.Text;
   FProject.ContactName     := eContactName.Text;
@@ -273,9 +275,9 @@ begin
     eTitle.Text, FProject.Id);
 
   // Dates
-  if eStartDate.Text <> EmptyStr then
+  if Trim(eStartDate.Text) <> EmptyStr then
     ValidDate(eStartDate.Text, rsDateStart, Msgs);
-  if eEndDate.Text <> EmptyStr then
+  if Trim(eEndDate.Text) <> EmptyStr then
     ValidDate(eEndDate.Text, rsDateEnd, Msgs);
 
   //if (D.FieldByName('start_date').AsString <> '') then
