@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, DBCtrls, atshapelinebgra, DBEditButton, cbs_entities;
+  StdCtrls, ExtCtrls, atshapelinebgra, cbs_entities;
 
 type
 

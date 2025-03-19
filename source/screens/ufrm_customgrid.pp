@@ -1612,7 +1612,10 @@ begin
     Self.IsActive := True;
   end;
   //splitChild.Visible := pChild.Visible;
-  Self.Background.Color := $00E0C0C0;
+  if IsDarkModeEnabled then
+    Self.Background.Color := clVioletBG1Dark
+  else
+    Self.Background.Color := $00E0C0C0;
   FCounterBadge.Color := Self.Background.Color;
 
   FParentForm.eAddChild.Visible := False;
@@ -1642,7 +1645,7 @@ begin
         begin
           FParentForm.ChildTable := tbSurveys;
           FParentForm.eAddChild.Visible := True;
-          FParentForm.eAddChild.TextHint := rsHintAddExistingSurvey;
+          //FParentForm.eAddChild.TextHint := rsHintAddExistingSurvey;
         end;
       end;
     tbSurveys:
@@ -5486,7 +5489,7 @@ begin
     tbNests:         GetNestFilters;
     tbNestRevisions: GetNestRevisionFilters;
     tbEggs:          GetEggFilters;
-    tbSamplingPlots:   GetSamplingPlotFilters;
+    tbSamplingPlots: GetSamplingPlotFilters;
     tbTaxonRanks:    GetTaxonRankFilters;
     tbZooTaxa:       GetZooTaxaFilters;
     tbProjects:      GetProjectFilters;
@@ -5535,8 +5538,8 @@ const
 var
   sf: Integer;
 begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 
   if cbSexFilter.ItemIndex > 0 then
@@ -7111,6 +7114,7 @@ var
   Qry, qObservers: TSQLQuery;
   aSurvey: Integer;
 begin
+  aSurvey := 0;
   if not FindDlg(tbSurveys, nil, aSurvey) then
     Exit;
 
@@ -7363,10 +7367,8 @@ end;
 
 procedure TfrmCustomGrid.PrepareCanvasCaptures(var Column: TColumn; var sender: TObject);
 var
-  z: Extended;
   aTaxon: Integer;
 begin
-  z := 0;
   aTaxon := 0;
 
   if (Column.FieldName = 'taxon_name') then
@@ -8312,6 +8314,8 @@ var
   Qry: TSQLQuery;
 begin
   aSurvey := 0;
+  aPerson := 0;
+  aInstitution := 0;
 
   case FTableType of
     tbExpeditions:
@@ -8321,23 +8325,82 @@ begin
         begin
           if FindDlg(tbSurveys, eAddChild, aSurvey, aInitialValue) then
           begin
-            Qry := TSQLQuery.Create(DMM.sqlCon);
-            with Qry, SQL do
+            if not DMM.sqlTrans.Active then
+              DMM.sqlTrans.StartTransaction;
             try
-              SQLConnection := DMM.sqlCon;
-              Clear;
+              Qry := TSQLQuery.Create(DMM.sqlCon);
+              with Qry, SQL do
+              try
+                SQLConnection := DMM.sqlCon;
+                Clear;
 
-              Add('UPDATE surveys SET expedition_id = :aexpedition WHERE survey_id = :asurvey');
-              ParamByName('AEXPEDITION').AsInteger := DBG.DataSource.DataSet.FieldByName('expedition_id').AsInteger;
-              ParamByName('ASURVEY').AsInteger := aSurvey;
+                Add('UPDATE surveys SET expedition_id = :aexpedition WHERE survey_id = :asurvey');
+                ParamByName('AEXPEDITION').AsInteger := DBG.DataSource.DataSet.FieldByName('expedition_id').AsInteger;
+                ParamByName('ASURVEY').AsInteger := aSurvey;
 
-              ExecSQL;
-            finally
-              FreeAndNil(Qry);
+                ExecSQL;
+              finally
+                FreeAndNil(Qry);
+              end;
+
+              eAddChild.Clear;
+              dsLink1.DataSet.Refresh;
+              DMM.sqlTrans.CommitRetaining;
+            except
+              DMM.sqlTrans.RollbackRetaining;
+              raise;
             end;
+          end;
+        end;
+      end;
+    end;
+    tbSurveys:
+    begin
+      case FChildTable of
+        tbSurveyTeams:
+        begin
+          if FindDlg(tbPeople, eAddChild, aPerson, aInitialValue) then
+          begin
+            if not DMM.sqlTrans.Active then
+              DMM.sqlTrans.StartTransaction;
+            try
+              Qry := TSQLQuery.Create(DMM.sqlCon);
+              with Qry, SQL do
+              try
+                SQLConnection := DMM.sqlCon;
+                SQLTransaction := DMM.sqlTrans;
+                Clear;
 
-            eAddChild.Clear;
-            dsLink1.DataSet.Refresh;
+                Add('INSERT INTO survey_team (' +
+                  'survey_id, ' +
+                  'person_id, ' +
+                  'visitor, ' +
+                  'user_inserted, ' +
+                  'insert_date)');
+                Add('VALUES (' +
+                  ':survey_id, ' +
+                  ':person_id, ' +
+                  ':visitor, ' +
+                  ':user_inserted, ' +
+                  'datetime(''now'', ''subsec''))');
+
+                SetForeignParam(ParamByName('survey_id'), dsLink.DataSet.FieldByName('survey_id').AsInteger);
+                SetForeignParam(ParamByName('person_id'), aPerson);
+                ParamByName('visitor').AsBoolean := False;
+                ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+                ExecSQL;
+              finally
+                FreeAndNil(Qry);
+              end;
+
+              eAddChild.Clear;
+              dsLink1.DataSet.Refresh;
+              DMM.sqlTrans.CommitRetaining;
+            except
+              DMM.sqlTrans.RollbackRetaining;
+              raise;
+            end;
           end;
         end;
       end;
@@ -8349,46 +8412,54 @@ begin
         begin
           if FindDlg(tbPeople, eAddChild, aPerson, aInitialValue) then
           begin
-            Qry := TSQLQuery.Create(DMM.sqlCon);
-            with Qry, SQL do
+            if not DMM.sqlTrans.Active then
+              DMM.sqlTrans.StartTransaction;
             try
-              SQLConnection := DMM.sqlCon;
-              SQLTransaction := DMM.sqlTrans;
-              Clear;
+              Qry := TSQLQuery.Create(DMM.sqlCon);
+              with Qry, SQL do
+              try
+                SQLConnection := DMM.sqlCon;
+                SQLTransaction := DMM.sqlTrans;
+                Clear;
 
-              Add('INSERT INTO project_team (' +
-                'project_id, ' +
-                'person_id, ' +
-                'project_manager, ' +
-                'institution_id, ' +
-                'user_inserted, ' +
-                'insert_date)');
-              Add('VALUES (' +
-                ':project_id, ' +
-                ':person_id, ' +
-                ':project_manager, ' +
-                ':institution_id, ' +
-                ':user_inserted, ' +
-                'datetime(''now'', ''subsec''))');
+                Add('INSERT INTO project_team (' +
+                  'project_id, ' +
+                  'person_id, ' +
+                  'project_manager, ' +
+                  'institution_id, ' +
+                  'user_inserted, ' +
+                  'insert_date)');
+                Add('VALUES (' +
+                  ':project_id, ' +
+                  ':person_id, ' +
+                  ':project_manager, ' +
+                  ':institution_id, ' +
+                  ':user_inserted, ' +
+                  'datetime(''now'', ''subsec''))');
 
-              SetForeignParam(ParamByName('project_id'), dsLink.DataSet.FieldByName('project_id').AsInteger);
-              SetForeignParam(ParamByName('person_id'), aPerson);
-              ParamByName('project_manager').AsBoolean := False;
-              aInst := GetFieldValue('people', 'institution_id', 'person_id', aPerson);
-              if aInst <> Null then
-              begin
-                aInstitution := aInst;
-                SetForeignParam(ParamByName('institution_id'), aInstitution);
+                SetForeignParam(ParamByName('project_id'), dsLink.DataSet.FieldByName('project_id').AsInteger);
+                SetForeignParam(ParamByName('person_id'), aPerson);
+                ParamByName('project_manager').AsBoolean := False;
+                aInst := GetFieldValue('people', 'institution_id', 'person_id', aPerson);
+                if aInst <> Null then
+                begin
+                  aInstitution := aInst;
+                  SetForeignParam(ParamByName('institution_id'), aInstitution);
+                end;
+                ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+                ExecSQL;
+              finally
+                FreeAndNil(Qry);
               end;
-              ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-              ExecSQL;
-            finally
-              FreeAndNil(Qry);
+              eAddChild.Clear;
+              dsLink1.DataSet.Refresh;
+              DMM.sqlTrans.CommitRetaining;
+            except
+              DMM.sqlTrans.RollbackRetaining;
+              raise;
             end;
-
-            eAddChild.Clear;
-            dsLink1.DataSet.Refresh;
           end;
         end;
         tbProjectGoals: ;
@@ -8404,38 +8475,46 @@ begin
         begin
           if FindDlg(tbPeople, eAddChild, aPerson, aInitialValue) then
           begin
-            Qry := TSQLQuery.Create(DMM.sqlCon);
-            with Qry, SQL do
+            if not DMM.sqlTrans.Active then
+              DMM.sqlTrans.StartTransaction;
             try
-              SQLConnection := DMM.sqlCon;
-              SQLTransaction := DMM.sqlTrans;
-              Clear;
+              Qry := TSQLQuery.Create(DMM.sqlCon);
+              with Qry, SQL do
+              try
+                SQLConnection := DMM.sqlCon;
+                SQLTransaction := DMM.sqlTrans;
+                Clear;
 
-              Add('INSERT INTO specimen_collectors (' +
-                'specimen_id, ' +
-                'person_id, ' +
-                'collector_seq, ' +
-                'user_inserted, ' +
-                'insert_date)');
-              Add('VALUES (' +
-                ':specimen_id, ' +
-                ':person_id, ' +
-                ':collector_seq, ' +
-                ':user_inserted, ' +
-                'datetime(''now'', ''subsec''))');
+                Add('INSERT INTO specimen_collectors (' +
+                  'specimen_id, ' +
+                  'person_id, ' +
+                  'collector_seq, ' +
+                  'user_inserted, ' +
+                  'insert_date)');
+                Add('VALUES (' +
+                  ':specimen_id, ' +
+                  ':person_id, ' +
+                  ':collector_seq, ' +
+                  ':user_inserted, ' +
+                  'datetime(''now'', ''subsec''))');
 
-              SetForeignParam(ParamByName('specimen_id'), dsLink.DataSet.FieldByName('specimen_id').AsInteger);
-              SetForeignParam(ParamByName('person_id'), aPerson);
-              ParamByName('collector_seq').AsInteger := GetNextCollectorSeq(dsLink.DataSet.FieldByName('specimen_id').AsInteger);
-              ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+                SetForeignParam(ParamByName('specimen_id'), dsLink.DataSet.FieldByName('specimen_id').AsInteger);
+                SetForeignParam(ParamByName('person_id'), aPerson);
+                ParamByName('collector_seq').AsInteger := GetNextCollectorSeq(dsLink.DataSet.FieldByName('specimen_id').AsInteger);
+                ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-              ExecSQL;
-            finally
-              FreeAndNil(Qry);
+                ExecSQL;
+              finally
+                FreeAndNil(Qry);
+              end;
+
+              eAddChild.Clear;
+              dsLink1.DataSet.Refresh;
+              DMM.sqlTrans.CommitRetaining;
+            except
+              DMM.sqlTrans.RollbackRetaining;
+              raise;
             end;
-
-            eAddChild.Clear;
-            dsLink1.DataSet.Refresh;
           end;
         end;
         tbSamplePreps: ;
@@ -8632,8 +8711,8 @@ begin
             0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger, 0, True);
             1: EditFeather(DMI.qFeathers, dsLink.DataSet.FieldByName('individual_id').AsInteger, 0, 0, True);
             2: EditSighting(DMI.qSightings, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
-            //3: EditNest(DMI.qNests, False);
-            //4: EditSpecimen(DMI.qSpecimens, False);
+            //3: EditNest(DMI.qNests, True);
+            4: EditSpecimen(DMI.qSpecimens, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
           end;
         //tbCaptures: ;
         //tbMolts: ;
@@ -9034,7 +9113,7 @@ begin
           1: EditFeather(DMI.qFeathers, dsLink.DataSet.FieldByName('individual_id').AsInteger);
           2: EditSighting(DMI.qSightings, dsLink.DataSet.FieldByName('individual_id').AsInteger);
           3: EditNest(DMI.qNests, False);
-          //4: EditSpecimen(DMI.qSpecimens, False);
+          4: EditSpecimen(DMI.qSpecimens, dsLink.DataSet.FieldByName('individual_id').AsInteger);
         end;
       //tbCaptures: ;
       //tbMolts: ;
@@ -9212,7 +9291,7 @@ begin
       //tbSurveyTeams: ;
       //tbNetsEffort: ;
       tbSightings:     needsRefresh := EditSighting(dsLink.DataSet, 0, True);
-      tbSpecimens:     needsRefresh := EditSpecimen(dsLink.DataSet, True);
+      tbSpecimens:     needsRefresh := EditSpecimen(dsLink.DataSet, 0, True);
       //tbSamplePreps: ;
       //tbImages: ;
       //tbAudioLibrary: ;

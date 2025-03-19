@@ -21,7 +21,7 @@ unit uedt_site;
 interface
 
 uses
-  Classes, EditBtn, RTTICtrls, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
+  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
   ExtCtrls, StdCtrls, Character, atshapelinebgra, cbs_gis;
 
 type

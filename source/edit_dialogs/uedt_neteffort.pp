@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs, DateUtils,
-  ExtCtrls, DBCtrls, Character, StdCtrls, DBEditButton, atshapelinebgra,
+  ExtCtrls, Character, StdCtrls, atshapelinebgra,
   BCPanel, cbs_sampling;
 
 type
@@ -117,6 +117,7 @@ type
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property NetEffort: TNetEffort read FNetEffort write SetNetEffort;
+    property SurveyId: Integer read FSurveyId write FSurveyId;
   end;
 
 var
@@ -431,22 +432,34 @@ begin
   FPermanentNetId := FNetEffort.PermanentNetId;
   ePermanentNet.Text := GetName('permanent_nets', 'full_name', 'permanent_net_id', FPermanentNetId);
   eNetNumber.Text := IntToStr(FNetEffort.NetNumber);
-  eLongitude.Text := FloatToStr(FNetEffort.Longitude);
-  eLatitude.Text := FloatToStr(FNetEffort.Latitude);
+  if (FNetEffort.Longitude <> 0.0) and (FNetEffort.Latitude <> 0.0) then
+  begin
+    eLongitude.Text := FloatToStr(FNetEffort.Longitude);
+    eLatitude.Text := FloatToStr(FNetEffort.Latitude);
+  end;
   eNetLength.Value := FNetEffort.NetLength;
   eNetHeight.Value := FNetEffort.NetHeight;
   cbNetMesh.ItemIndex := cbNetMesh.Items.IndexOf(FNetEffort.NetMesh);
   txtNetArea.Caption := FloatToStr(FNetEffort.NetArea);
-  eDate.Text := DateToStr(FNetEffort.SampleDate);
+  if not DateIsNull(FNetEffort.SampleDate) then
+    eDate.Text := DateToStr(FNetEffort.SampleDate);
   txtTotalOpenTime.Caption := FloatToStr(FNetEffort.TotalOpenTime);
-  eNetOpen1.Text := TimeToStr(FNetEffort.NetOpen1);
-  eNetClose1.Text := TimeToStr(FNetEffort.NetClose1);
-  eNetOpen2.Text := TimeToStr(FNetEffort.NetOpen2);
-  eNetClose2.Text := TimeToStr(FNetEffort.NetClose2);
-  eNetOpen3.Text := TimeToStr(FNetEffort.NetOpen3);
-  eNetClose3.Text := TimeToStr(FNetEffort.NetClose3);
-  eNetOpen4.Text := TimeToStr(FNetEffort.NetOpen4);
-  eNetClose4.Text := TimeToStr(FNetEffort.NetClose4);
+  if not TimeIsNull(FNetEffort.NetOpen1) then
+    eNetOpen1.Text := FormatDateTime('hh:nn', FNetEffort.NetOpen1);
+  if not TimeIsNull(FNetEffort.NetClose1) then
+    eNetClose1.Text := FormatDateTime('hh:nn', FNetEffort.NetClose1);
+  if not TimeIsNull(FNetEffort.NetOpen2) then
+    eNetOpen2.Text := FormatDateTime('hh:nn', FNetEffort.NetOpen2);
+  if not TimeIsNull(FNetEffort.NetClose2) then
+    eNetClose2.Text := FormatDateTime('hh:nn', FNetEffort.NetClose2);
+  if not TimeIsNull(FNetEffort.NetOpen3) then
+    eNetOpen3.Text := FormatDateTime('hh:nn', FNetEffort.NetOpen3);
+  if not TimeIsNull(FNetEffort.NetClose3) then
+    eNetClose3.Text := FormatDateTime('hh:nn', FNetEffort.NetClose3);
+  if not TimeIsNull(FNetEffort.NetOpen4) then
+    eNetOpen4.Text := FormatDateTime('hh:nn', FNetEffort.NetOpen4);
+  if not TimeIsNull(FNetEffort.NetClose4) then
+    eNetClose4.Text := FormatDateTime('hh:nn', FNetEffort.NetClose4);
   mNotes.Text := FNetEffort.Notes;
 end;
 

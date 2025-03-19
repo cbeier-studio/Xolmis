@@ -6,7 +6,7 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, EditBtn, ExtCtrls, Spin, SysUtils, Forms,
-  Controls, Graphics, StdCtrls, DBCtrls, Dialogs, dbeditbutton, cbs_sampling;
+  Controls, Graphics, StdCtrls, Dialogs, cbs_sampling;
 
 type
 
@@ -67,6 +67,7 @@ type
     procedure eLongitudeButtonClick(Sender: TObject);
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eSampleDateButtonClick(Sender: TObject);
+    procedure eSampleDateEditingDone(Sender: TObject);
     procedure eSampleTimeKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -75,6 +76,7 @@ type
   private
     FIsNew: Boolean;
     FVegetation: TVegetation;
+    FSurveyId: Integer;
     procedure SetVegetation(Value: TVegetation);
     procedure GetRecord;
     procedure SetRecord;
@@ -84,6 +86,7 @@ type
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property Vegetation: TVegetation read FVegetation write SetVegetation;
+    property SurveyId: Integer read FSurveyId write FSurveyId;
   end;
 
 var
@@ -208,6 +211,11 @@ begin
   CalendarDlg(eSampleDate, dsLink.DataSet, 'sample_date');
 end;
 
+procedure TedtVegetation.eSampleDateEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
+end;
+
 procedure TedtVegetation.eSampleTimeKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
@@ -275,14 +283,20 @@ begin
   cbShrubsDistribution.Items.Assign(cbHerbsDistribution.Items);
   cbTreesDistribution.Items.Assign(cbHerbsDistribution.Items);
 
-  if dsLink.State = dsInsert then
+  if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionVegetation)]);
+    if not DateIsNull(FVegetation.SampleDate) then
+      eSampleDate.Text := DateToStr(FVegetation.SampleDate);
+    cbHerbsDistribution.ItemIndex := 0;
+    cbShrubsDistribution.ItemIndex := 0;
+    cbTreesDistribution.ItemIndex := 0;
   end
   else
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionVegetation)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 
@@ -291,7 +305,7 @@ begin
   if not DateIsNull(FVegetation.SampleDate) then
     eSampleDate.Text := DateToStr(FVegetation.SampleDate);
   if not TimeIsNull(FVegetation.SampleTime) then
-    eSampleTime.Text := TimeToStr(FVegetation.SampleTime);
+    eSampleTime.Text := FormatDateTime('hh:nn', FVegetation.SampleTime);
   if (FVegetation.Longitude <> 0.0) and (FVegetation.Latitude <> 0.0) then
   begin
     eLongitude.Text := FloatToStr(FVegetation.Longitude);
@@ -313,7 +327,10 @@ function TedtVegetation.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsLink.DataSet.FieldByName('sample_date').IsNull = False) then
+  if (eSampleDate.Text <> EmptyStr) and
+    (cbHerbsDistribution.ItemIndex >= 0) and
+    (cbShrubsDistribution.ItemIndex >= 0) and
+    (cbTreesDistribution.ItemIndex >= 0) then
     Result := True;
 end;
 
@@ -330,10 +347,14 @@ end;
 
 procedure TedtVegetation.SetRecord;
 begin
+  FVegetation.SurveyId           := FSurveyId;
   FVegetation.SampleDate         := StrToDate(eSampleDate.Text);
-  FVegetation.SampleTime         := StrToTime(eSampleTime.Text);
-  FVegetation.Longitude          := StrToFloat(eLongitude.Text);
-  FVegetation.Latitude           := StrToFloat(eLatitude.Text);
+  if eSampleTime.Text <> EmptyStr then
+    FVegetation.SampleTime         := StrToTime(eSampleTime.Text);
+  if eLongitude.Text <> EmptyStr then
+    FVegetation.Longitude          := StrToFloat(eLongitude.Text);
+  if eLatitude.Text <> EmptyStr then
+    FVegetation.Latitude           := StrToFloat(eLatitude.Text);
   FVegetation.HerbsDistribution  := TStratumDistribution(cbHerbsDistribution.ItemIndex);
   FVegetation.HerbsProportion    := eHerbsProportion.Value;
   FVegetation.HerbsAvgHeight     := eHerbsAvgHeight.Value;
@@ -388,11 +409,14 @@ begin
 
   // Date and time
   ValidDate(eSampleDate.Text, rscDate, Msgs);
-  ValidTime(eSampleTime.Text, rscTime, Msgs);
+  if eSampleTime.Text <> EmptyStr then
+    ValidTime(eSampleTime.Text, rscTime, Msgs);
 
   // Geographical coordinates
-  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
-  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+  if eLongitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  if eLatitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
   //CoordenadaIsOk(dsLink.DataSet, 'longitude', maLongitude, Msgs);
   //CoordenadaIsOk(dsLink.DataSet, 'latitude', maLatitude, Msgs);
 

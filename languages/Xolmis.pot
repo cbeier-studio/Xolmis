@@ -8927,6 +8927,11 @@ msgctxt "tedtegg.emeasuredate.texthint"
 msgid "DD/MM/YYYY"
 msgstr ""
 
+#: tedtegg.enest.buttonhint
+msgctxt "tedtegg.enest.buttonhint"
+msgid "Find nest"
+msgstr ""
+
 #: tedtegg.eobserver.buttonhint
 msgctxt "tedtegg.eobserver.buttonhint"
 msgid "Find observer"
@@ -8957,6 +8962,11 @@ msgstr ""
 
 #: tedtegg.lblmeasuredate.caption
 msgid "Measurement date:"
+msgstr ""
+
+#: tedtegg.lblnest.caption
+msgctxt "tedtegg.lblnest.caption"
+msgid "Nest:"
 msgstr ""
 
 #: tedtegg.lblnotes.caption
@@ -10044,6 +10054,11 @@ msgctxt "tedtnestrevision.ckhasphilornislarvae.caption"
 msgid "Parasitized by Philornis sp. larvae"
 msgstr ""
 
+#: tedtnestrevision.enest.buttonhint
+msgctxt "tedtnestrevision.enest.buttonhint"
+msgid "Find nest"
+msgstr ""
+
 #: tedtnestrevision.enidoparasite.buttonhint
 msgctxt "tedtnestrevision.enidoparasite.buttonhint"
 msgid "Find taxon"
@@ -10082,6 +10097,11 @@ msgstr ""
 #: tedtnestrevision.lblhostnestlingstally.caption
 msgctxt "tedtnestrevision.lblhostnestlingstally.caption"
 msgid "Number of nestlings (host):"
+msgstr ""
+
+#: tedtnestrevision.lblnest.caption
+msgctxt "tedtnestrevision.lblnest.caption"
+msgid "Nest:"
 msgstr ""
 
 #: tedtnestrevision.lblneststage.caption
@@ -11796,17 +11816,17 @@ msgstr ""
 
 #: tedtvegetation.lblsamplemoment.caption
 msgctxt "tedtvegetation.lblsamplemoment.caption"
-msgid "Distribution:"
+msgid "Distribution: *"
 msgstr ""
 
 #: tedtvegetation.lblsamplemoment1.caption
 msgctxt "tedtvegetation.lblsamplemoment1.caption"
-msgid "Distribution:"
+msgid "Distribution: *"
 msgstr ""
 
 #: tedtvegetation.lblsamplemoment2.caption
 msgctxt "tedtvegetation.lblsamplemoment2.caption"
-msgid "Distribution:"
+msgid "Distribution: *"
 msgstr ""
 
 #: tedtvegetation.lblsampletime.caption

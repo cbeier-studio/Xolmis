@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, DB, SQLDB, Forms, Controls, Graphics,
-  Dialogs, Character, DateUtils, ExtCtrls, StdCtrls, DBCtrls, DBEditButton,
+  Dialogs, Character, DateUtils, ExtCtrls, StdCtrls,
   atshapelinebgra, cbs_birds;
 
 type
@@ -1122,7 +1122,8 @@ begin
   eSurvey.Text := GetName('surveys', 'full_name', 'survey_id', FSurveyId);
   FLocalityId := FCapture.LocalityId;
   eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
-  eCaptureDate.Text := DateToStr(FCapture.CaptureDate);
+  if not DateIsNull(FCapture.CaptureDate) then
+    eCaptureDate.Text := DateToStr(FCapture.CaptureDate);
   if (FCapture.CaptureTime <> NullTime) then
     eCaptureTime.Text := FormatDateTime('hh:nn', FCapture.CaptureTime);
   FBanderId := FCapture.BanderId;
@@ -1135,6 +1136,8 @@ begin
     cptSameDay:     cbCaptureType.ItemIndex := cbCaptureType.Items.IndexOf(rsCaptureSameDay);
     cptChangeBand:  cbCaptureType.ItemIndex := cbCaptureType.Items.IndexOf(rsCaptureChangeBand);
     cptUnbanded:    cbCaptureType.ItemIndex := cbCaptureType.Items.IndexOf(rsCaptureUnbanded);
+  else
+    cbCaptureType.ItemIndex := -1;
   end;
   FNetId := FCapture.NetId;
   eNet.Text := GetName('nets_effort', 'net_number', 'net_id', FNetId);
@@ -1162,6 +1165,8 @@ begin
     ageThirdYear:   cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeThirdYear);
     ageFourthYear:  cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFourthYear);
     ageFifthYear:   cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFifthYear);
+  else
+    cbAge.ItemIndex := -1;
   end;
   ckEscaped.Checked := FCapture.Escaped;
   case FCapture.SubjectStatus of
@@ -1170,6 +1175,8 @@ begin
     sstWingSprain:  cbStatus.ItemIndex := cbStatus.Items.IndexOf(rsStatusWingSprain);
     sstStressed:    cbStatus.ItemIndex := cbStatus.Items.IndexOf(rsStatusStressed);
     sstDead:        cbStatus.ItemIndex := cbStatus.Items.IndexOf(rsStatusDead);
+  else
+    cbStatus.ItemIndex := -1;
   end;
   cbCloacalProtuberance.ItemIndex := cbCloacalProtuberance.Items.IndexOf(FCapture.CloacalProtuberance);
   cbBroodPatch.ItemIndex := cbBroodPatch.Items.IndexOf(FCapture.BroodPatch);
@@ -1200,6 +1207,8 @@ begin
     sexUnknown: cbSex.ItemIndex := cbSex.Items.IndexOf(rsSexUnknown);
     sexMale:    cbSex.ItemIndex := cbSex.Items.IndexOf(rsSexMale);
     sexFemale:  cbSex.ItemIndex := cbSex.Items.IndexOf(rsSexFemale);
+  else
+    cbSex.ItemIndex := -1;
   end;
   eHowSexed.Text := FCapture.HowSexed;
   mNotes.Text := FCapture.Notes;

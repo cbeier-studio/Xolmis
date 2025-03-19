@@ -8941,6 +8941,11 @@ msgctxt "tedtegg.emeasuredate.texthint"
 msgid "DD/MM/YYYY"
 msgstr "DD/MM/AAAA"
 
+#: tedtegg.enest.buttonhint
+msgctxt "tedtegg.enest.buttonhint"
+msgid "Find nest"
+msgstr "Procurar ninho"
+
 #: tedtegg.eobserver.buttonhint
 msgctxt "tedtegg.eobserver.buttonhint"
 msgid "Find observer"
@@ -8972,6 +8977,11 @@ msgstr "Comprimento:"
 #: tedtegg.lblmeasuredate.caption
 msgid "Measurement date:"
 msgstr "Data de medição:"
+
+#: tedtegg.lblnest.caption
+msgctxt "tedtegg.lblnest.caption"
+msgid "Nest:"
+msgstr "Ninho:"
 
 #: tedtegg.lblnotes.caption
 msgctxt "tedtegg.lblnotes.caption"
@@ -10058,6 +10068,11 @@ msgctxt "tedtnestrevision.ckhasphilornislarvae.caption"
 msgid "Parasitized by Philornis sp. larvae"
 msgstr "Parasitado por larvas de Philornis sp."
 
+#: tedtnestrevision.enest.buttonhint
+msgctxt "tedtnestrevision.enest.buttonhint"
+msgid "Find nest"
+msgstr "Procurar ninho"
+
 #: tedtnestrevision.enidoparasite.buttonhint
 msgctxt "tedtnestrevision.enidoparasite.buttonhint"
 msgid "Find taxon"
@@ -10097,6 +10112,11 @@ msgstr "Nº de ovos (hospedeiro):"
 msgctxt "tedtnestrevision.lblhostnestlingstally.caption"
 msgid "Number of nestlings (host):"
 msgstr "Nº de ninhegos (hospedeiro):"
+
+#: tedtnestrevision.lblnest.caption
+msgctxt "tedtnestrevision.lblnest.caption"
+msgid "Nest:"
+msgstr "Ninho:"
 
 #: tedtnestrevision.lblneststage.caption
 msgid "Stage: *"
@@ -11809,18 +11829,24 @@ msgid "Date: *"
 msgstr "Data: *"
 
 #: tedtvegetation.lblsamplemoment.caption
+#, fuzzy
+#| msgid "Distribution:"
 msgctxt "tedtvegetation.lblsamplemoment.caption"
-msgid "Distribution:"
+msgid "Distribution: *"
 msgstr "Distribuição:"
 
 #: tedtvegetation.lblsamplemoment1.caption
+#, fuzzy
+#| msgid "Distribution:"
 msgctxt "tedtvegetation.lblsamplemoment1.caption"
-msgid "Distribution:"
+msgid "Distribution: *"
 msgstr "Distribuição:"
 
 #: tedtvegetation.lblsamplemoment2.caption
+#, fuzzy
+#| msgid "Distribution:"
 msgctxt "tedtvegetation.lblsamplemoment2.caption"
-msgid "Distribution:"
+msgid "Distribution: *"
 msgstr "Distribuição:"
 
 #: tedtvegetation.lblsampletime.caption
@@ -15057,3 +15083,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

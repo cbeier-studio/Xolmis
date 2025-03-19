@@ -86,7 +86,7 @@ type
     procedure sbSaveClick(Sender: TObject);
   private
     FSupplierId, FProjectId, FCarrierId, FSenderId, FRequesterId: Integer;
-    DtRec, DtPed: TDate;
+    //DtRec, DtPed: TDate;
     function ValidateData(aInitial, aFinal: Integer): Boolean;
     procedure AddBandsBatch;
     procedure ApplyDarkMode;
@@ -100,8 +100,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_users,
-  cbs_birds, cbs_conversions, cbs_fullnames, cbs_validations, cbs_themes,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
+  cbs_birds, cbs_conversions, cbs_fullnames, cbs_validations,
   udm_main, udlg_progress, uDarkStyleParams;
 
 {$R *.lfm}

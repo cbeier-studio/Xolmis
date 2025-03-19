@@ -21,8 +21,8 @@ unit uedt_egg;
 interface
 
 uses
-  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, StdCtrls, DBCtrls, DateUtils, Character, DBEditButton,
+  BCPanel, Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics,
+  Dialogs, ExtCtrls, StdCtrls, DateUtils, Character,
   atshapelinebgra, cbs_breeding;
 
 type
@@ -34,6 +34,7 @@ type
     cbShape: TComboBox;
     cbShellPattern: TComboBox;
     cbShellTexture: TComboBox;
+    eNest: TEditButton;
     eStage: TEdit;
     eShellColor: TEdit;
     eMeasureDate: TEditButton;
@@ -45,6 +46,8 @@ type
     eWidth: TFloatSpinEdit;
     eLength: TFloatSpinEdit;
     eEggSeq: TSpinEdit;
+    lblNest: TLabel;
+    pNest: TBCPanel;
     txtVolume: TLabel;
     lblFieldNumber1: TLabel;
     lblLength: TLabel;
@@ -90,6 +93,8 @@ type
     procedure eIndividualButtonClick(Sender: TObject);
     procedure eIndividualKeyPress(Sender: TObject; var Key: char);
     procedure eMeasureDateButtonClick(Sender: TObject);
+    procedure eNestButtonClick(Sender: TObject);
+    procedure eNestKeyPress(Sender: TObject; var Key: char);
     procedure eObserverButtonClick(Sender: TObject);
     procedure eObserverKeyPress(Sender: TObject; var Key: char);
     procedure eTaxonButtonClick(Sender: TObject);
@@ -123,7 +128,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_validations, cbs_getvalue,
-  udm_main, uDarkStyleParams;
+  cbs_themes, udm_main, udm_breeding, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -131,6 +136,10 @@ uses
 
 procedure TedtEgg.ApplyDarkMode;
 begin
+  pNest.Background.Color := clSolidBGSecondaryDark;
+  pNest.Border.Color := clSystemSolidNeutralFGDark;
+
+  eNest.Images := DMM.iEditsDark;
   eMeasureDate.Images := DMM.iEditsDark;
   eTaxon.Images := DMM.iEditsDark;
   eObserver.Images := DMM.iEditsDark;
@@ -203,6 +212,39 @@ var
   Dt: TDate;
 begin
   CalendarDlg(eMeasureDate.Text, eMeasureDate, Dt);
+end;
+
+procedure TedtEgg.eNestButtonClick(Sender: TObject);
+begin
+  FindDlg(tbNests, eNest, FNestId);
+end;
+
+procedure TedtEgg.eNestKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
+  begin
+    FindDlg(tbNests, eNest, FNestId, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD = Backspace }
+  if (Key = #8) then
+  begin
+    FNestId := 0;
+    eNest.Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
 end;
 
 procedure TedtEgg.eObserverButtonClick(Sender: TObject);
@@ -306,6 +348,8 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  pNest.Visible := FNestId = 0;
+
   with cbShape.Items do
   begin
     Clear;
@@ -349,14 +393,19 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionEgg)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 
 procedure TedtEgg.GetRecord;
 begin
+  FNestId := FEgg.NestId;
+  if pNest.Visible then
+    eNest.Text := GetName('nests', 'full_name', 'nest_id', FNestId);
   eFieldNumber.Text := FEgg.FieldNumber;
   eEggSeq.Value := FEgg.EggSeq;
-  eMeasureDate.Text := DateToStr(FEgg.MeasureDate);
+  if not DateIsNull(FEgg.MeasureDate) then
+    eMeasureDate.Text := DateToStr(FEgg.MeasureDate);
   FTaxonId := FEgg.TaxonId;
   eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
   FObserverId := FEgg.ResearcherId;
@@ -444,6 +493,7 @@ end;
 
 procedure TedtEgg.SetRecord;
 begin
+  FEgg.NestId       := FNestId;
   FEgg.FieldNumber  := eFieldNumber.Text;
   FEgg.EggSeq       := eEggSeq.Value;
   FEgg.MeasureDate  := StrToDate(eMeasureDate.Text);

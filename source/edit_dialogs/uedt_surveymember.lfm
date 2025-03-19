@@ -82,7 +82,7 @@ object edtSurveyMember: TedtSurveyMember
         Spacing = 0
         TabOrder = 0
         OnButtonClick = ePersonButtonClick
-        OnEditingDone = ePersonEditingDone
+        OnChange = ePersonChange
         OnKeyDown = FormKeyDown
         OnKeyPress = ePersonKeyPress
       end

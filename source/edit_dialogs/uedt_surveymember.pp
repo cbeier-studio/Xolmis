@@ -27,7 +27,7 @@ type
     procedure ckVisitorKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure ePersonButtonClick(Sender: TObject);
-    procedure ePersonEditingDone(Sender: TObject);
+    procedure ePersonChange(Sender: TObject);
     procedure ePersonKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -95,7 +95,7 @@ begin
   FindDlg(tbPeople, ePerson, FMemberId);
 end;
 
-procedure TedtSurveyMember.ePersonEditingDone(Sender: TObject);
+procedure TedtSurveyMember.ePersonChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

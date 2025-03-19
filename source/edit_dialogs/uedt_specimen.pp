@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, LResources, Forms, Controls, Graphics,
-  Dialogs, StdCtrls, ExtCtrls, DBCtrls, DBEditButton, DB, DateUtils,
+  Dialogs, StdCtrls, ExtCtrls, DB, DateUtils,
   atshapelinebgra, cbs_sampling;
 
 type
@@ -105,6 +105,7 @@ type
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property Specimen: TSpecimen read FSpecimen write SetSpecimen;
+    property IndividualId: Integer read FIndividualId write FIndividualId;
   end;
 
 var

@@ -21,8 +21,8 @@ unit uedt_nestrevision;
 interface
 
 uses
-  Classes, EditBtn, Spin, SysUtils, Character, DB, Forms, Controls, Graphics,
-  Dialogs, ExtCtrls, DBCtrls, StdCtrls, DateUtils, DBEditButton,
+  BCPanel, Classes, EditBtn, Spin, SysUtils, Character, DB, Forms, Controls,
+  Graphics, Dialogs, ExtCtrls, StdCtrls, DateUtils,
   atshapelinebgra, cbs_breeding;
 
 type
@@ -33,6 +33,7 @@ type
     ckHasPhilornisLarvae: TCheckBox;
     cbNestStage: TComboBox;
     cbNestStatus: TComboBox;
+    eNest: TEditButton;
     eRevisionTime: TEdit;
     eRevisionDate: TEditButton;
     eObserver1: TEditButton;
@@ -40,6 +41,7 @@ type
     eNidoparasite: TEditButton;
     dsLink: TDataSource;
     lblHostNestlingsTally: TLabel;
+    lblNest: TLabel;
     lblNestStage: TLabel;
     lblNestStatus: TLabel;
     lblNidoparasiteEggsTally: TLabel;
@@ -56,6 +58,7 @@ type
     pBottom: TPanel;
     pContent: TPanel;
     pHostEggsTally: TPanel;
+    pNest: TBCPanel;
     pNidoparasiteEggsTally: TPanel;
     pNestStage: TPanel;
     pPhilornis: TPanel;
@@ -72,6 +75,8 @@ type
     eNidoparasiteNestlingsTally: TSpinEdit;
     procedure cbNestStageSelect(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
+    procedure eNestButtonClick(Sender: TObject);
+    procedure eNestKeyPress(Sender: TObject; var Key: char);
     procedure eNidoparasiteButtonClick(Sender: TObject);
     procedure eNidoparasiteKeyPress(Sender: TObject; var Key: char);
     procedure eObserver1ButtonClick(Sender: TObject);
@@ -109,7 +114,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_getvalue,
-  cbs_fullnames, cbs_validations, udm_breeding, udm_main, uDarkStyleParams;
+  cbs_themes, cbs_validations, udm_breeding, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -117,6 +122,10 @@ uses
 
 procedure TedtNestRevision.ApplyDarkMode;
 begin
+  pNest.Background.Color := clSolidBGSecondaryDark;
+  pNest.Border.Color := clSystemSolidNeutralFGDark;
+
+  eNest.Images := DMM.iEditsDark;
   eRevisionDate.Images := DMM.iEditsDark;
   eObserver1.Images := DMM.iEditsDark;
   eObserver2.Images := DMM.iEditsDark;
@@ -135,6 +144,39 @@ begin
   //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
   //else
   //  sbSave.Enabled := IsRequiredFilled;
+end;
+
+procedure TedtNestRevision.eNestButtonClick(Sender: TObject);
+begin
+  FindDlg(tbNests, eNest, FNestId);
+end;
+
+procedure TedtNestRevision.eNestKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
+  begin
+    FindDlg(tbNests, eNest, FNestId, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD = Backspace }
+  if (Key = #8) then
+  begin
+    FNestId := 0;
+    eNest.Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
 end;
 
 procedure TedtNestRevision.eNidoparasiteButtonClick(Sender: TObject);
@@ -300,6 +342,8 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  pNest.Visible := FNestId = 0;
+
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNestRevision)]);
@@ -308,6 +352,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionNestRevision)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 
   sBox.VertScrollBar.Position := 0;
@@ -317,8 +362,13 @@ end;
 
 procedure TedtNestRevision.GetRecord;
 begin
-  eRevisionDate.Text := DateToStr(FRevision.RevisionDate);
-  eRevisionTime.Text := TimeToStr(FRevision.RevisionTime);
+  FNestId := FRevision.NestId;
+  if pNest.Visible then
+    eNest.Text := GetName('nests', 'full_name', 'nest_id', FNestId);
+  if not DateIsNull(FRevision.RevisionDate) then
+    eRevisionDate.Text := DateToStr(FRevision.RevisionDate);
+  if not TimeIsNull(FRevision.RevisionTime) then
+    eRevisionTime.Text := FormatDateTime('hh:nn', FRevision.RevisionTime);
   FObserver1Id := FRevision.Observer1Id;
   eObserver1.Text := GetName('people', 'acronym', 'person_id', FRevision.Observer1Id);
   FObserver2Id := FRevision.Observer2Id;
@@ -374,6 +424,7 @@ end;
 
 procedure TedtNestRevision.SetRecord;
 begin
+  FRevision.NestId := FNestId;
   FRevision.RevisionDate := StrToDate(eRevisionDate.Text);
   FRevision.RevisionTime := StrToTime(eRevisionTime.Text);
   FRevision.Observer1Id  := FObserver1Id;

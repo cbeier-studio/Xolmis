@@ -24,5 +24,7 @@
 {"hash":46459626,"name":"tedtegg.lbllength.caption","sourcebytes":[76,101,110,103,116,104,58],"value":"Length:"},
 {"hash":89566314,"name":"tedtegg.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
 {"hash":243965684,"name":"tedtegg.ckhatched.caption","sourcebytes":[72,97,116,99,104,101,100],"value":"Hatched"},
-{"hash":66253242,"name":"tedtegg.lblshelltexture.caption","sourcebytes":[69,103,103,115,104,101,108,108,32,116,101,120,116,117,114,101,58],"value":"Eggshell texture:"}
+{"hash":66253242,"name":"tedtegg.lblshelltexture.caption","sourcebytes":[69,103,103,115,104,101,108,108,32,116,101,120,116,117,114,101,58],"value":"Eggshell texture:"},
+{"hash":5556858,"name":"tedtegg.lblnest.caption","sourcebytes":[78,101,115,116,58],"value":"Nest:"},
+{"hash":73859492,"name":"tedtegg.enest.buttonhint","sourcebytes":[70,105,110,100,32,110,101,115,116],"value":"Find nest"}
 ]}

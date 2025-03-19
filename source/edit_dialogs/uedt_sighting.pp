@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, Character, DBCtrls, StdCtrls, DBEditButton, atshapelinebgra,
+  ExtCtrls, Character, StdCtrls, atshapelinebgra,
   BCPanel, cbs_birds;
 
 type
@@ -603,6 +603,8 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  pSurvey.Visible := FSurveyId = 0;
+
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSighting)]);
@@ -611,6 +613,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSighting)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 

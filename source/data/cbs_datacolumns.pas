@@ -2056,6 +2056,7 @@ begin
         'measure_date':           Fields[i].DisplayLabel := rscDate;
         'researcher_id':          Fields[i].DisplayLabel := rscResearcherID;
         'researcher_name':        Fields[i].DisplayLabel := rscResearcher;
+        'host_egg':               Fields[i].DisplayLabel := rscHostEgg;
         'description':            Fields[i].DisplayLabel := rscDescription;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
@@ -3977,6 +3978,17 @@ begin
       'egg_hatched':
       begin
         Add('SELECT ' + QuotedStr(rscHatched) + ' AS name, SUM(e.egg_hatched) AS tally');
+        Add('FROM eggs AS e');
+        if aWhereText <> EmptyStr then
+          AddText(aWhereText)
+        else
+          Add('WHERE e.active_status = 1');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'host_egg':
+      begin
+        Add('SELECT ' + QuotedStr(rscHostEgg) + ' AS name, SUM(e.host_egg) AS tally');
         Add('FROM eggs AS e');
         if aWhereText <> EmptyStr then
           AddText(aWhereText)

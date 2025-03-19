@@ -1394,7 +1394,7 @@ end;
 
 procedure TfrmMain.pmaNewSpecimenClick(Sender: TObject);
 begin
-  EditSpecimen(DMG.qSpecimens, True);
+  EditSpecimen(DMG.qSpecimens, 0, True);
 end;
 
 procedure TfrmMain.pmaNewSurveyClick(Sender: TObject);

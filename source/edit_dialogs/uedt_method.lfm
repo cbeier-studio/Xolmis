@@ -11,7 +11,7 @@ object edtMethod: TedtMethod
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.1'
+  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow

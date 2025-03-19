@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, DBCtrls, DBEditButton, DB, Character, DateUtils,
+  StdCtrls, ExtCtrls, DB, Character, DateUtils,
   atshapelinebgra, cbs_sampling;
 
 type
@@ -264,7 +264,8 @@ begin
     'G':   cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleGonads);
     'M':   cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleStomach);
   end;
-  ePreparationDate.Text := DateToStr(FSamplePrep.PreparationDate);
+  if not DateIsNull(FSamplePrep.PreparationDate) then
+    ePreparationDate.Text := DateToStr(FSamplePrep.PreparationDate);
   FPreparerId := FSamplePrep.PreparerId;
   ePreparer.Text := GetName('people', 'full_name', 'person_id', FPreparerId);
   mNotes.Text := FSamplePrep.Notes;

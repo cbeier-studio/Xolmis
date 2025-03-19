@@ -40,7 +40,7 @@ type
     sbSave: TButton;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eCollectorButtonClick(Sender: TObject);
-    procedure eCollectorEditingDone(Sender: TObject);
+    procedure eCollectorChange(Sender: TObject);
     procedure eCollectorKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -93,7 +93,7 @@ begin
   FindDlg(tbPeople, eCollector, FCollectorId);
 end;
 
-procedure TedtCollector.eCollectorEditingDone(Sender: TObject);
+procedure TedtCollector.eCollectorChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

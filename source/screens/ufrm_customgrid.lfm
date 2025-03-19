@@ -100,7 +100,7 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alClient
           BorderStyle = bsNone
           ClientHeight = 515
-          ClientWidth = 464
+          ClientWidth = 447
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel
@@ -260,6 +260,7 @@ object frmCustomGrid: TfrmCustomGrid
                 Header.MainColumn = -1
                 Images = DMM.iTrees
                 PopupMenu = pmTree
+                ScrollBarOptions.AlwaysVisible = True
                 ScrollBarOptions.ScrollBars = ssVertical
                 TabOrder = 1
                 TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes, toAutoChangeScale]
@@ -7927,7 +7928,7 @@ object frmCustomGrid: TfrmCustomGrid
       Cursor = crVSplit
       Left = 8
       Height = 4
-      Top = 316
+      Top = 366
       Width = 713
       Align = alBottom
       ResizeAnchor = akBottom
@@ -7937,7 +7938,7 @@ object frmCustomGrid: TfrmCustomGrid
     object pChild: TPanel
       Left = 8
       Height = 236
-      Top = 320
+      Top = 370
       Width = 713
       Align = alBottom
       BevelOuter = bvNone
@@ -8818,7 +8819,7 @@ object frmCustomGrid: TfrmCustomGrid
     object pChildsBar: TBCPanel
       Left = 8
       Height = 42
-      Top = 564
+      Top = 320
       Width = 713
       Align = alBottom
       AutoSize = True
@@ -9021,7 +9022,7 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pGrid: TBCPanel
       Left = 8
-      Height = 268
+      Height = 264
       Top = 48
       Width = 713
       Align = alClient
@@ -9060,7 +9061,7 @@ object frmCustomGrid: TfrmCustomGrid
       TabOrder = 4
       object DBG: TDBGrid
         Left = 0
-        Height = 236
+        Height = 232
         Top = 0
         Width = 713
         Align = alClient
@@ -9094,7 +9095,7 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Side = asrBottom
         Left = 0
         Height = 32
-        Top = 236
+        Top = 232
         Width = 713
         Align = alBottom
         ChildSizing.LeftRightSpacing = 16
@@ -9285,7 +9286,7 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Side = asrCenter
         Left = 284
         Height = 103
-        Top = 67
+        Top = 65
         Width = 145
         AutoSize = True
         ChildSizing.LeftRightSpacing = 16

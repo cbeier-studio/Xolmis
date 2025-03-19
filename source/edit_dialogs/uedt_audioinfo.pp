@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, DBCtrls, dbeditbutton, Character, atshapelinebgra, cbs_media;
+  StdCtrls, ExtCtrls, Character, atshapelinebgra, cbs_media;
 
 type
 

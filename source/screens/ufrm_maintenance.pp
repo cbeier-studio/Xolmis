@@ -112,7 +112,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_backup, cbs_blobs, cbs_system, cbs_data,
+  cbs_locale, cbs_global, cbs_dialogs, cbs_backup, cbs_blobs, cbs_system,
   cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}

@@ -21,7 +21,7 @@ unit uedt_method;
 interface
 
 uses
-  Classes, SysUtils, DB, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls, StdCtrls,
+  Classes, SysUtils, DB, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
   atshapelinebgra, cbs_sampling;
 
 type

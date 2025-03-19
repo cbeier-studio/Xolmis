@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, MaskEdit, Spin, SysUtils, DB, LResources, Forms, Controls,
-  Graphics, Dialogs, ExtCtrls, DBCtrls, StdCtrls, DBEditButton, atshapelinebgra,
+  Graphics, Dialogs, ExtCtrls, StdCtrls, atshapelinebgra,
   cbs_sampling;
 
 type
@@ -79,6 +79,7 @@ type
   private
     FIsNew: Boolean;
     FWeather: TWeatherLog;
+    FSurveyId: Integer;
     procedure SetWeather(Value: TWeatherLog);
     procedure GetRecord;
     procedure SetRecord;
@@ -88,6 +89,7 @@ type
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property WeatherLog: TWeatherLog read FWeather write SetWeather;
+    property SurveyId: Integer read FSurveyId write FSurveyId;
   end;
 
 var
@@ -172,21 +174,26 @@ begin
                                      rsPrecipitationDrizzle + ',' +
                                      rsPrecipitationRain;
 
-  if IsNewRecord then
+  if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionWeatherLogEntry)]);
+    if not DateIsNull(FWeather.SampleDate) then
+      eSampleDate.Text := DateToStr(FWeather.SampleDate);
   end
   else
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionWeatherLogEntry)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 
 procedure TedtWeatherLog.GetRecord;
 begin
-  eSampleDate.Text := DateToStr(FWeather.SampleDate);
-  eSampleTime.Text := TimeToStr(FWeather.SampleTime);
+  if not DateIsNull(FWeather.SampleDate) then
+    eSampleDate.Text := DateToStr(FWeather.SampleDate);
+  if not TimeIsNull(FWeather.SampleTime) then
+    eSampleTime.Text := FormatDateTime('hh:nn', FWeather.SampleTime);
   case FWeather.SampleMoment of
     wmStart:  cbSampleMoment.ItemIndex := 0;
     wmMiddle: cbSampleMoment.ItemIndex := 1;
@@ -237,6 +244,7 @@ end;
 
 procedure TedtWeatherLog.SetRecord;
 begin
+  FWeather.SurveyId := FSurveyId;
   FWeather.SampleDate := StrToDate(eSampleDate.Text);
   FWeather.SampleTime := StrToTime(eSampleTime.Text);
   case cbSampleMoment.ItemIndex of

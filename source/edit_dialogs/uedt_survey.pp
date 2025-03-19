@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, Character, DB, SQLDB, Forms, Controls, Graphics,
-  Dialogs, ExtCtrls, StdCtrls, DBCtrls, DBEditButton, atshapelinebgra, BCPanel, cbs_sampling;
+  Dialogs, ExtCtrls, StdCtrls, atshapelinebgra, BCPanel, cbs_sampling;
 
 type
 
@@ -150,8 +150,8 @@ uses
 
 procedure TedtSurvey.ApplyDarkMode;
 begin
-  pExpedition.Background.Color := clCardBGDefaultDark;
-  pExpedition.Border.Color := clCardBGSecondaryDark;
+  pExpedition.Background.Color := clSolidBGSecondaryDark;
+  pExpedition.Border.Color := clSystemSolidNeutralFGDark;
 
   eExpedition.Images := DMM.iEditsDark;
   eDate.Images := DMM.iEditsDark;
@@ -524,7 +524,9 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if dsLink.State = dsInsert then
+  pExpedition.Visible := FExpeditionId = 0;
+
+  if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSurvey)]);
   end
@@ -532,6 +534,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSurvey)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 

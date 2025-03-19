@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, Buttons, DBCtrls, atshapelinebgra, cbs_breeding;
+  StdCtrls, ExtCtrls, Buttons, atshapelinebgra, cbs_breeding;
 
 type
 
@@ -41,7 +41,7 @@ type
     pIndividual: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
-    procedure cbRoleEditingDone(Sender: TObject);
+    procedure cbRoleChange(Sender: TObject);
     procedure cbRoleKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eIndividualButtonClick(Sender: TObject);
@@ -85,7 +85,7 @@ begin
   eIndividual.Images := DMM.iEditsDark;
 end;
 
-procedure TedtNestOwner.cbRoleEditingDone(Sender: TObject);
+procedure TedtNestOwner.cbRoleChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;
@@ -201,6 +201,7 @@ end;
 
 procedure TedtNestOwner.GetRecord;
 begin
+  FNestOwner.NestId := FNestId;
   case FNestOwner.Role of
     nrlMale:      cbRole.ItemIndex := 0;
     nrlFemale:    cbRole.ItemIndex := 1;
@@ -230,6 +231,7 @@ end;
 
 procedure TedtNestOwner.SetRecord;
 begin
+  FNestOwner.NestId := FNestId;
   case cbRole.ItemIndex of
     0: FNestOwner.Role := nrlMale;
     1: FNestOwner.Role := nrlFemale;

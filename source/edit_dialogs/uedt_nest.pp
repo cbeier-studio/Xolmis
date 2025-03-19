@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, Character, DB, Forms, Controls, Graphics,
-  Dialogs, StdCtrls, ExtCtrls, DBCtrls, DBEditButton, atshapelinebgra,
+  Dialogs, StdCtrls, ExtCtrls, atshapelinebgra,
   cbs_breeding;
 
 type
@@ -605,16 +605,21 @@ begin
     nfSuccess:  cbNestFate.ItemIndex := cbNestFate.Items.IndexOf(rsNestSuccess);
     nfUnknown:  cbNestFate.ItemIndex := cbNestFate.Items.IndexOf(rsNestUnknown);
   end;
-  eFoundDate.Text := DateToStr(FNest.FoundDate);
-  eLastDate.Text := DateToStr(FNest.LastDate);
+  if not DateIsNull(FNest.FoundDate) then
+    eFoundDate.Text := DateToStr(FNest.FoundDate);
+  if not DateIsNull(FNest.LastDate) then
+    eLastDate.Text := DateToStr(FNest.LastDate);
   FProjectId := FNest.ProjectId;
   eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
   FObserverId := FNest.ObserverId;
   eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
   FLocalityId := FNest.LocalityId;
   eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
-  eLongitude.Text := FloatToStr(FNest.Longitude);
-  eLatitude.Text := FloatToStr(FNest.Latitude);
+  if (FNest.Longitude <> 0) and (FNest.Latitude <> 0) then
+  begin
+    eLongitude.Text := FloatToStr(FNest.Longitude);
+    eLatitude.Text := FloatToStr(FNest.Latitude);
+  end;
   mDescription.Text := FNest.Description;
   eProductivity.Value := FNest.NestProductivity;
   case FNest.NestShape of
@@ -688,15 +693,15 @@ begin
     Exit;
 
   // Workaround to not post zero value when it is null
-  with dsLink.DataSet do
-  begin
-    if (FieldByName('longitude').AsFloat = 0.0) and (FieldByName('latitude').AsFloat = 0.0)
-    then
-    begin
-      FieldByName('longitude').Clear;
-      FieldByName('latitude').Clear;
-    end;
-  end;
+  //with dsLink.DataSet do
+  //begin
+  //  if (FieldByName('longitude').AsFloat = 0.0) and (FieldByName('latitude').AsFloat = 0.0)
+  //  then
+  //  begin
+  //    FieldByName('longitude').Clear;
+  //    FieldByName('latitude').Clear;
+  //  end;
+  //end;
 
   SetRecord;
 
@@ -718,13 +723,17 @@ begin
     1: FNest.NestFate := nfSuccess;
     2: FNest.NestFate := nfUnknown;
   end;
-  FNest.FoundDate         := StrToDate(eFoundDate.Text);
-  FNest.LastDate          := StrToDate(eLastDate.Text);
+  if eFoundDate.Text <> EmptyStr then
+    FNest.FoundDate         := StrToDate(eFoundDate.Text);
+  if eLastDate.Text <> EmptyStr then
+    FNest.LastDate          := StrToDate(eLastDate.Text);
   FNest.ProjectId         := FProjectId;
   FNest.ObserverId        := FObserverId;
   FNest.LocalityId        := FLocalityId;
-  FNest.Longitude         := StrToFloat(eLongitude.Text);
-  FNest.Latitude          := StrToFloat(eLatitude.Text);
+  if eLongitude.Text <> EmptyStr then
+    FNest.Longitude         := StrToFloat(eLongitude.Text);
+  if eLatitude.Text <> EmptyStr then
+    FNest.Latitude          := StrToFloat(eLatitude.Text);
   FNest.Description       := mDescription.Text;
   FNest.NestProductivity  := eProductivity.Value;
   case cbNestShape.ItemIndex of
@@ -807,8 +816,10 @@ begin
     ValidDate(eLastDate.Text, rsDateLast, Msgs);
 
   // Geographical coordinates
-  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
-  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+  if eLongitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  if eLatitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   if Msgs.Count > 0 then
   begin

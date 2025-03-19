@@ -1032,6 +1032,7 @@ object DMB: TDMB
       DisplayValues = 'True;False'
     end
     object qEggshost_egg: TBooleanField
+      DisplayLabel = 'Host egg'
       FieldKind = fkData
       FieldName = 'host_egg'
       Index = 16

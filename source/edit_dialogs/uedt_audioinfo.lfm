@@ -9,7 +9,6 @@ object edtAudioInfo: TedtAudioInfo
   ClientWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow

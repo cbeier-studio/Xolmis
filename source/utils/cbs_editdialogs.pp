@@ -21,7 +21,7 @@ unit cbs_editdialogs;
 interface
 
 uses
-  Classes, SysUtils, Forms, DB, SQLDB, StrUtils, System.UITypes, cbs_datatypes;
+  Classes, SysUtils, Forms, DB, SQLDB, StrUtils, System.UITypes, Variants, cbs_datatypes;
 
   function EditConnection(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
 
@@ -56,7 +56,7 @@ uses
   function EditWeatherLog(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditVegetation(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditSighting(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditSpecimen(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditSpecimen(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditCollector(aDataSet: TDataSet; aSpecimen: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditSamplePrep(aDataSet: TDataSet; aSpecimen: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditImageInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean = False): Boolean;
@@ -68,7 +68,7 @@ uses
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_permissions, cbs_finddialogs, cbs_dialogs, cbs_gis, cbs_sampling, cbs_botany,
+  cbs_locale, cbs_global, cbs_permissions, cbs_getvalue, cbs_dialogs, cbs_gis, cbs_sampling, cbs_botany,
   cbs_breeding, cbs_birds, cbs_entities, cbs_media,
   udm_main, udm_grid, udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
   uedt_survey, uedt_samplingplot, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
@@ -2041,6 +2041,7 @@ begin
       EditSourceStr := rsEditedByForm;
     end;
     NetEffort := FRecord;
+    SurveyId := aSurvey;
     Result := ShowModal = mrOk;
     if Result then
     begin
@@ -2111,6 +2112,8 @@ begin
     if IsNew then
     begin
       FRecord := TWeatherLog.Create();
+      if aSurvey > 0 then
+        FRecord.SampleDate := VarToDateTime(GetFieldValue('surveys', 'survey_date', 'survey_id', aSurvey));
       EditSourceStr := rsInsertedByForm;
     end else
     begin
@@ -2119,6 +2122,7 @@ begin
       EditSourceStr := rsEditedByForm;
     end;
     WeatherLog := FRecord;
+    SurveyId := aSurvey;
     Result := ShowModal = mrOk;
     if Result then
     begin
@@ -2254,7 +2258,7 @@ begin
   end;
 end;
 
-function EditSpecimen(aDataSet: TDataSet; IsNew: Boolean): Boolean;
+function EditSpecimen(aDataSet: TDataSet; aIndividual: Integer; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TSpecimen;
   lstDiff: TStrings;
@@ -2278,6 +2282,7 @@ begin
       EditSourceStr := rsEditedByForm;
     end;
     Specimen := FRecord;
+    IndividualId := aIndividual;
     Result := ShowModal = mrOk;
     if Result then
     begin
@@ -2957,6 +2962,8 @@ begin
     if IsNew then
     begin
       FRecord := TVegetation.Create();
+      if aSurvey > 0 then
+        FRecord.SampleDate := VarToDateTime(GetFieldValue('surveys', 'survey_date', 'survey_id', aSurvey));
       EditSourceStr := rsInsertedByForm;
     end else
     begin
@@ -2965,6 +2972,7 @@ begin
       EditSourceStr := rsEditedByForm;
     end;
     Vegetation := FRecord;
+    SurveyId := aSurvey;
     Result := ShowModal = mrOk;
     if Result then
     begin
@@ -3084,6 +3092,9 @@ begin
       EditSourceStr := rsEditedByForm;
     end;
     Feather := FRecord;
+    IndividualId := aIndividual;
+    CaptureId := aCapture;
+    SightingId := aSighting;
     Result := ShowModal = mrOk;
     if Result then
     begin

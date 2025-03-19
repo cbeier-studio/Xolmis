@@ -1158,7 +1158,7 @@ begin
       Add('  egg_hatched = :egg_hatched,');
       Add('  researcher_id = :researcher_id,');
       Add('  individual_id = :individual_id,');
-      Add('  measure_date = date(:measute_date),');
+      Add('  measure_date = date(:measure_date),');
       Add('  taxon_id = :taxon_id,');
       Add('  host_egg = :host_egg,');
       Add('  description = :description,');

@@ -597,7 +597,7 @@ end;
 
 procedure TdlgImportXMobile.ImportInventories;
 var
-  p, j, t: Integer;
+  p, j: Integer;
 begin
   nbPages.PageIndex := 1;
 
@@ -738,7 +738,7 @@ end;
 
 procedure TdlgImportXMobile.ImportNests;
 var
-  p, j, t: Integer;
+  p, j: Integer;
 begin
   nbPages.PageIndex := 1;
 

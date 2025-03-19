@@ -302,8 +302,15 @@ procedure TedtPermanentNet.SetRecord;
 begin
   FNet.SamplingPlotId := FSamplingPlotId;
   FNet.NetNumber := StrToInt(eNetNumber.Text);
-  FNet.Longitude := StrToFloat(eLongitude.Text);
-  FNet.Latitude := StrToFloat(eLatitude.Text);
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text <> EmptyStr) then
+  begin
+    FNet.Longitude := StrToFloat(eLongitude.Text);
+    FNet.Latitude := StrToFloat(eLatitude.Text);
+  end else
+  begin
+    FNet.Longitude := 0;
+    FNet.Latitude := 0;
+  end;
   FNet.Notes := mNotes.Text;
 
   GetFullName;
