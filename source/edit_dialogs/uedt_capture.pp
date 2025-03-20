@@ -21,15 +21,16 @@ unit uedt_capture;
 interface
 
 uses
-  Classes, EditBtn, Spin, SysUtils, DB, SQLDB, Forms, Controls, Graphics,
-  Dialogs, Character, DateUtils, ExtCtrls, StdCtrls,
-  atshapelinebgra, cbs_birds;
+  Buttons, Classes, EditBtn, Spin, SysUtils, DB, SQLDB, Forms, Controls,
+  Graphics, Dialogs, Character, DateUtils, ExtCtrls, StdCtrls, atshapelinebgra,
+  cbs_birds;
 
 type
 
   { TedtCapture }
 
   TedtCapture = class(TForm)
+    btnNewIndividual: TBitBtn;
     cbCamera: TComboBox;
     ckEscaped: TCheckBox;
     ckBloodSample: TCheckBox;
@@ -201,6 +202,7 @@ type
     shpRightBelowBand3: TShape;
     shpRightBelowBand4: TShape;
     ePhilornisLarvae: TSpinEdit;
+    procedure btnNewIndividualClick(Sender: TObject);
     procedure cbAgeKeyPress(Sender: TObject; var Key: char);
     procedure cbCaptureTypeKeyPress(Sender: TObject; var Key: char);
     procedure cbSexKeyPress(Sender: TObject; var Key: char);
@@ -218,6 +220,7 @@ type
     procedure eHowAgedButtonClick(Sender: TObject);
     procedure eHowSexedButtonClick(Sender: TObject);
     procedure eIndividualButtonClick(Sender: TObject);
+    procedure eIndividualEditingDone(Sender: TObject);
     procedure eIndividualKeyPress(Sender: TObject; var Key: char);
     procedure eLeftTarsusButtonClick(Sender: TObject);
     procedure eLocalityButtonClick(Sender: TObject);
@@ -254,19 +257,18 @@ type
     FSurveyId, FLocalityId, FNetId, FTaxonId, FBandId, FRemovedBandId: Integer;
     FBanderId, FAnnotatorId, FPhotographer1Id, FPhotographer2Id: Integer;
     procedure SetCapture(Value: TCapture);
-    procedure SetIndividualId(Value: Integer);
     procedure GetRecord;
     procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
-    procedure AssembleFullName;
     procedure PaintColorBands(aLeg: TBodyPart);
     procedure GetCameras;
+    procedure GetIndividualData;
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property Capture: TCapture read FCapture write SetCapture;
-    property IndividualId: Integer read FIndividualId write SetIndividualId;
+    property IndividualId: Integer read FIndividualId write FIndividualId;
     property SurveyId: Integer read FSurveyId write FSurveyId;
   end;
 
@@ -277,7 +279,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_taxonomy,
-  cbs_validations, cbs_fullnames, udm_main, uDarkStyleParams;
+  cbs_validations, cbs_fullnames, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -285,6 +287,8 @@ uses
 
 procedure TedtCapture.ApplyDarkMode;
 begin
+  eIndividual.Images := DMM.iEditsDark;
+  btnNewIndividual.Images := DMM.iEditsDark;
   eSurvey.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eCaptureDate.Images := DMM.iEditsDark;
@@ -306,26 +310,9 @@ begin
   ePhotographer2.Images := DMM.iEditsDark;
 end;
 
-procedure TedtCapture.AssembleFullName;
-var
-  Tax, Ani: Integer;
-  Sex, Natur, Cycle: String;
-  dt: TDate;
+procedure TedtCapture.btnNewIndividualClick(Sender: TObject);
 begin
-  if dsLink.DataSet.FieldByName('capture_date').IsNull then
-    Exit;
-
-  with dsLink.DataSet do
-  begin
-    Ani := FieldByName('band_id').AsInteger;
-    Tax := FieldByName('taxon_id').AsInteger;
-    Sex := FieldByName('subject_sex').AsString;
-    Natur := FieldByName('capture_type').AsString;
-    Cycle := FieldByName('cycle_code').AsString;
-    dt := FieldByName('capture_date').AsDateTime;
-
-    FieldByName('full_name').AsString := GetCaptureFullname(dt, Tax, Ani, Sex, Natur, Cycle, False);
-  end;
+  EditIndividual(DMG.qIndividuals, True);
 end;
 
 procedure TedtCapture.cbAgeKeyPress(Sender: TObject; var Key: char);
@@ -555,7 +542,13 @@ end;
 
 procedure TedtCapture.eIndividualButtonClick(Sender: TObject);
 begin
-  FindDlg(tbIndividuals, eIndividual, FIndividualId);
+  if FindDlg(tbIndividuals, eIndividual, FIndividualId) then
+    GetIndividualData;
+end;
+
+procedure TedtCapture.eIndividualEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtCapture.eIndividualKeyPress(Sender: TObject; var Key: char);
@@ -565,7 +558,8 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbIndividuals, eIndividual, FIndividualId, Key);
+    if FindDlg(tbIndividuals, eIndividual, FIndividualId, Key) then
+      GetIndividualData;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -769,6 +763,9 @@ begin
   begin
     if GetLatLong('nets_effort', 'longitude', 'latitude', 'full_name', 'net_id', FNetId, NetCoord) then
     begin
+      if (NetCoord.X = 0) and (NetCoord.Y = 0) then
+        Exit;
+
       if (eLongitude.Text = EmptyStr) then
         eLongitude.Text := FloatToStr(NetCoord.X);
       if (eLatitude.Text = EmptyStr) then
@@ -1063,11 +1060,24 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionCapture)]);
+    if not DateIsNull(FCapture.CaptureDate) then
+      eCaptureDate.Text := DateToStr(FCapture.CaptureDate);
+    if FCapture.LocalityId > 0 then
+    begin
+      FLocalityId := FCapture.LocalityId;
+      eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+    end;
+    if FCapture.SurveyId > 0 then
+    begin
+      FSurveyId := FCapture.SurveyId;
+      eSurvey.Text := GetName('surveys', 'full_name', 'survey_id', FSurveyId);
+    end;
   end
   else
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionCapture)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 
   sBox.VertScrollBar.Position := 0;
@@ -1111,6 +1121,49 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TedtCapture.GetIndividualData;
+var
+  FIndividual: TIndividual;
+begin
+  if FIndividualId = 0 then
+    Exit;
+
+  FIndividual := TIndividual.Create(FIndividualId);
+  try
+    FTaxonId := FIndividual.TaxonId;
+    eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+    FBandId := FIndividual.BandId;
+    eBand.Text := GetName('bands', 'full_name', 'band_id', FBandId);
+    eRightTarsus.Text := FIndividual.RightLegBelow;
+    eLeftTarsus.Text := FIndividual.LeftLegBelow;
+    FCapture.SubjectAge := FIndividual.Age;
+    case FCapture.SubjectAge of
+      ageUnknown:     cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeUnknown);
+      ageNestling:    cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeNestling);
+      ageFledgling:   cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFledgling);
+      ageJuvenile:    cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeJuvenile);
+      ageAdult:       cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeAdult);
+      ageFirstYear:   cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFirstYear);
+      ageSecondYear:  cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeSecondYear);
+      ageThirdYear:   cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeThirdYear);
+      ageFourthYear:  cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFourthYear);
+      ageFifthYear:   cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFifthYear);
+    else
+      cbAge.ItemIndex := -1;
+    end;
+    FCapture.SubjectSex := FIndividual.Sex;
+    case FCapture.SubjectSex of
+      sexUnknown: cbSex.ItemIndex := cbSex.Items.IndexOf(rsSexUnknown);
+      sexMale:    cbSex.ItemIndex := cbSex.Items.IndexOf(rsSexMale);
+      sexFemale:  cbSex.ItemIndex := cbSex.Items.IndexOf(rsSexFemale);
+    else
+      cbSex.ItemIndex := -1;
+    end;
+  finally
+    FIndividual.Free;
   end;
 end;
 
@@ -1239,13 +1292,27 @@ function TedtCapture.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (FLocalityId > 0) and
-    (FBanderId > 0) and
-    (FAnnotatorId > 0) and
-    (eCaptureDate.Text <> EmptyStr) and
-    (cbCaptureType.ItemIndex >= 0) and
-    ((cbCaptureType.Text <> rsCaptureUnbanded) and (FBandId <> 0)) then
-    Result := True;
+  if pIndividual.Visible then
+  begin
+    if (FLocalityId > 0) and
+      (FBanderId > 0) and
+      (FAnnotatorId > 0) and
+      (eCaptureDate.Text <> EmptyStr) and
+      (cbCaptureType.ItemIndex >= 0) and
+      ((cbCaptureType.Text <> rsCaptureUnbanded) and (FBandId > 0)) and
+      (FIndividualId > 0) then
+      Result := True;
+  end
+  else
+  begin
+    if (FLocalityId > 0) and
+      (FBanderId > 0) and
+      (FAnnotatorId > 0) and
+      (eCaptureDate.Text <> EmptyStr) and
+      (cbCaptureType.ItemIndex >= 0) and
+      ((cbCaptureType.Text <> rsCaptureUnbanded) and (FBandId > 0)) then
+      Result := True;
+  end;
 
   if (cbCaptureType.Text = rsCaptureUnbanded) then
     lblBand.Caption := rsCaptionBand + ':'
@@ -1373,18 +1440,6 @@ begin
     Exit;
 
   SetRecord;
-  AssembleFullName;
-
-  // Workaround to not post zero value when it is null
-  with dsLink.DataSet do
-  begin
-    if (FieldByName('longitude').AsFloat = 0.0) and (FieldByName('latitude').AsFloat = 0.0)
-    then
-    begin
-      FieldByName('longitude').Clear;
-      FieldByName('latitude').Clear;
-    end;
-  end;
 
   ModalResult := mrOk;
 end;
@@ -1393,13 +1448,6 @@ procedure TedtCapture.SetCapture(Value: TCapture);
 begin
   if Assigned(Value) then
     FCapture := Value;
-end;
-
-procedure TedtCapture.SetIndividualId(Value: Integer);
-begin
-  FIndividualId := Value;
-  if FCapture.IndividualId <> FIndividualId then
-    FCapture.IndividualId := Value;
 end;
 
 procedure TedtCapture.SetRecord;
@@ -1437,10 +1485,10 @@ begin
   FCapture.LeftLegBelow  := eLeftTarsus.Text;
   case cbAge.ItemIndex of
     0: FCapture.SubjectAge := ageUnknown;
-    1: FCapture.SubjectAge := ageNestling;
-    2: FCapture.SubjectAge := ageFledgling;
-    3: FCapture.SubjectAge := ageJuvenile;
-    4: FCapture.SubjectAge := ageAdult;
+    1: FCapture.SubjectAge := ageAdult;
+    2: FCapture.SubjectAge := ageJuvenile;
+    3: FCapture.SubjectAge := ageFledgling;
+    4: FCapture.SubjectAge := ageNestling;
     5: FCapture.SubjectAge := ageFirstYear;
     6: FCapture.SubjectAge := ageSecondYear;
     7: FCapture.SubjectAge := ageThirdYear;
@@ -1483,9 +1531,9 @@ begin
   FCapture.CycleCode            := eCycleCode.Text;
   FCapture.HowAged              := eHowAged.Text;
   case cbSex.ItemIndex of
-    0: FCapture.SubjectSex := sexUnknown;
-    1: FCapture.SubjectSex := sexMale;
-    2: FCapture.SubjectSex := sexFemale;
+    0: FCapture.SubjectSex := sexMale;
+    1: FCapture.SubjectSex := sexFemale;
+    2: FCapture.SubjectSex := sexUnknown;
   else
     FCapture.SubjectSex := sexUnknown;
   end;

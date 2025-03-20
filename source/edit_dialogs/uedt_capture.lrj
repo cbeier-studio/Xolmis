@@ -90,5 +90,6 @@
 {"hash":9235306,"name":"tedtcapture.lblhematocrit.caption","sourcebytes":[72,101,109,97,116,111,99,114,105,116,32,40,109,109,194,179,41,58],"value":"Hematocrit (mm\u00B3):"},
 {"hash":168304554,"name":"tedtcapture.lblglucose.caption","sourcebytes":[71,108,117,99,111,115,101,32,40,109,103,47,100,76,41,58],"value":"Glucose (mg/dL):"},
 {"hash":201126026,"name":"tedtcapture.lblindividual.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,58,32,42],"value":"Individual: *"},
-{"hash":78213836,"name":"tedtcapture.eindividual.buttonhint","sourcebytes":[70,105,110,100,32,105,110,100,105,118,105,100,117,97,108],"value":"Find individual"}
+{"hash":78213836,"name":"tedtcapture.eindividual.buttonhint","sourcebytes":[70,105,110,100,32,105,110,100,105,118,105,100,117,97,108],"value":"Find individual"},
+{"hash":207141516,"name":"tedtcapture.btnnewindividual.caption","sourcebytes":[78,101,119,32,105,110,100,105,118,105,100,117,97,108],"value":"New individual"}
 ]}

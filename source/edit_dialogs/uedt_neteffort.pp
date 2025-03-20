@@ -93,6 +93,7 @@ type
     procedure eLongitudeButtonClick(Sender: TObject);
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eNetLengthEditingDone(Sender: TObject);
+    procedure eNetNumberEditingDone(Sender: TObject);
     procedure eNetNumberKeyPress(Sender: TObject; var Key: char);
     procedure ePermanentNetButtonClick(Sender: TObject);
     procedure ePermanentNetKeyPress(Sender: TObject; var Key: char);
@@ -286,6 +287,11 @@ begin
   AutoCalcFields;
 end;
 
+procedure TedtNetEffort.eNetNumberEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
+end;
+
 procedure TedtNetEffort.eNetNumberKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
@@ -412,11 +418,14 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionMistnet)]);
+    if not DateIsNull(FNetEffort.SampleDate) then
+      eDate.Text := DateToStr(FNetEffort.SampleDate);
   end
   else
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionMistnet)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 
@@ -520,27 +529,27 @@ begin
   if eNetOpen2.Text <> EmptyStr then
     FNetEffort.NetOpen2     := StrToTime(eNetOpen2.Text)
   else
-    FNetEffort.NetOpen2     := StrToTime('00:00:01');
+    FNetEffort.NetOpen2     := StrToTime('00:00:00');
   if eNetClose2.Text <> EmptyStr then
     FNetEffort.NetClose2    := StrToTime(eNetClose2.Text)
   else
-    FNetEffort.NetClose2     := StrToTime('00:00:01');
+    FNetEffort.NetClose2     := StrToTime('00:00:00');
   if eNetOpen3.Text <> EmptyStr then
     FNetEffort.NetOpen3     := StrToTime(eNetOpen3.Text)
   else
-    FNetEffort.NetOpen3     := StrToTime('00:00:01');
+    FNetEffort.NetOpen3     := StrToTime('00:00:00');
   if eNetClose3.Text <> EmptyStr then
     FNetEffort.NetClose3    := StrToTime(eNetClose3.Text)
   else
-    FNetEffort.NetClose3     := StrToTime('00:00:01');
+    FNetEffort.NetClose3     := StrToTime('00:00:00');
   if eNetOpen4.Text <> EmptyStr then
     FNetEffort.NetOpen4     := StrToTime(eNetOpen4.Text)
   else
-    FNetEffort.NetOpen4     := StrToTime('00:00:01');
+    FNetEffort.NetOpen4     := StrToTime('00:00:00');
   if eNetClose4.Text <> EmptyStr then
     FNetEffort.NetClose4    := StrToTime(eNetClose4.Text)
   else
-    FNetEffort.NetClose4     := StrToTime('00:00:01');
+    FNetEffort.NetClose4     := StrToTime('00:00:00');
   FNetEffort.Notes          := mNotes.Text;
 
   GetFullName;
@@ -562,8 +571,10 @@ begin
   //RequiredIsEmpty(dsLink.Dataset, tbPermanentNets, 'net_close_1', Msgs);
 
   // Geographical coordinates
-  ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
-  ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+  if eLongitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  if eLatitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
   //CoordenadaIsOk(DSIO.Dataset, 'longitude', maLongitude, Msgs);
   //CoordenadaIsOk(DSIO.Dataset, 'latitude', maLatitude, Msgs);
 
@@ -571,12 +582,18 @@ begin
   ValidDate(eDate.Text, rscDate, Msgs);
   ValidTime(eNetOpen1.Text, rscOpenTime1, Msgs);
   ValidTime(eNetClose1.Text, rscCloseTime1, Msgs);
-  ValidTime(eNetOpen2.Text, rscOpenTime2, Msgs);
-  ValidTime(eNetClose2.Text, rscCloseTime2, Msgs);
-  ValidTime(eNetOpen3.Text, rscOpenTime3, Msgs);
-  ValidTime(eNetClose3.Text, rscCloseTime3, Msgs);
-  ValidTime(eNetOpen4.Text, rscOpenTime4, Msgs);
-  ValidTime(eNetClose4.Text, rscCloseTime4, Msgs);
+  if eNetOpen2.Text <> EmptyStr then
+    ValidTime(eNetOpen2.Text, rscOpenTime2, Msgs);
+  if eNetClose2.Text <> EmptyStr then
+    ValidTime(eNetClose2.Text, rscCloseTime2, Msgs);
+  if eNetOpen3.Text <> EmptyStr then
+    ValidTime(eNetOpen3.Text, rscOpenTime3, Msgs);
+  if eNetClose3.Text <> EmptyStr then
+    ValidTime(eNetClose3.Text, rscCloseTime3, Msgs);
+  if eNetOpen4.Text <> EmptyStr then
+    ValidTime(eNetOpen4.Text, rscOpenTime4, Msgs);
+  if eNetClose4.Text <> EmptyStr then
+    ValidTime(eNetClose4.Text, rscCloseTime4, Msgs);
 
   if Msgs.Count > 0 then
   begin

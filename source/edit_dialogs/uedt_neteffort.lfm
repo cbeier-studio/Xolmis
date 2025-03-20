@@ -10,7 +10,6 @@ object edtNetEffort: TedtNetEffort
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -160,6 +159,7 @@ object edtNetEffort: TedtNetEffort
           Width = 175
           NumbersOnly = True
           TabOrder = 1
+          OnEditingDone = eNetNumberEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNetNumberKeyPress
         end
@@ -442,6 +442,7 @@ object edtNetEffort: TedtNetEffort
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eDateButtonClick
+          OnEditingDone = eNetNumberEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNetNumberKeyPress
         end
@@ -502,7 +503,7 @@ object edtNetEffort: TedtNetEffort
           Width = 174
           TabOrder = 0
           TextHint = 'HH:MM'
-          OnEditingDone = eNetLengthEditingDone
+          OnEditingDone = eNetNumberEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNetNumberKeyPress
         end
@@ -513,7 +514,7 @@ object edtNetEffort: TedtNetEffort
           Width = 175
           TabOrder = 1
           TextHint = 'HH:MM'
-          OnEditingDone = eNetLengthEditingDone
+          OnEditingDone = eNetNumberEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNetNumberKeyPress
         end

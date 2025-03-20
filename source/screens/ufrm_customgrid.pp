@@ -9135,7 +9135,7 @@ begin
           0: EditSurveyMember(DMS.qSurveyTeam, dsLink.DataSet.FieldByName('survey_id').AsInteger);
           1: EditNetEffort(DMS.qNetsEffort, dsLink.DataSet.FieldByName('survey_id').AsInteger);
           2: EditWeatherLog(DMS.qWeatherLogs, dsLink.DataSet.FieldByName('survey_id').AsInteger);
-          3: EditCapture(DMS.qCaptures, dsLink.DataSet.FieldByName('survey_id').AsInteger);
+          3: EditCapture(DMS.qCaptures, 0, dsLink.DataSet.FieldByName('survey_id').AsInteger);
           4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName('survey_id').AsInteger);
           5: EditVegetation(DMS.qVegetation, dsLink.DataSet.FieldByName('survey_id').AsInteger);
         end;

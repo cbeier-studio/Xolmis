@@ -608,6 +608,18 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSighting)]);
+    if not DateIsNull(FSighting.SightingDate) then
+      eDate.Text := DateToStr(FSighting.SightingDate);
+    if FSighting.MethodId > 0 then
+    begin
+      FMethodId := FSighting.MethodId;
+      eMethod.Text := GetName('methods', 'method_name', 'method_id', FMethodId);
+    end;
+    if FSighting.LocalityId > 0 then
+    begin
+      FLocalityId := FSighting.LocalityId;
+      eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+    end;
   end
   else
   begin

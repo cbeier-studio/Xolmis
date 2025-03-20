@@ -3867,6 +3867,7 @@ begin
         'flight_feathers_wear, ' +
         'molt_limits, ' +
         'cycle_code, ' +
+        'subject_age, ' +
         'how_aged, ' +
         'skull_ossification, ' +
         'kipps_index, ' +
@@ -3926,6 +3927,7 @@ begin
         ':flight_feathers_wear, ' +
         ':molt_limits, ' +
         ':cycle_code, ' +
+        ':subject_age, ' +
         ':how_aged, ' +
         ':skull_ossification, ' +
         ':kipps_index, ' +
@@ -3986,6 +3988,7 @@ begin
       SetStrParam(ParamByName('flight_feathers_wear'), FFlightFeathersWear);
       SetStrParam(ParamByName('molt_limits'), FMoltLimits);
       SetStrParam(ParamByName('cycle_code'), FCycleCode);
+      SetStrParam(ParamByName('subject_age'), Ages[FSubjectAge]);
       SetStrParam(ParamByName('how_aged'), FHowAged);
       SetStrParam(ParamByName('skull_ossification'), FSkullOssification);
       SetFloatParam(ParamByName('kipps_index'), FKippsIndex);
@@ -4162,7 +4165,7 @@ begin
         'cloacal_protuberance = :cloacal_protuberance, ' +
         'body_molt = :body_molt, ' +
         'flight_feathers_molt = :flight_feathers_molt, ' +
-        'flight_feathers_wear = :fligth_feathers_wear, ' +
+        'flight_feathers_wear = :flight_feathers_wear, ' +
         'molt_limits = :molt_limits, ' +
         'cycle_code = :cycle_code, ' +
         'subject_age = :subject_age, ' +
@@ -4247,6 +4250,7 @@ begin
       SetStrParam(ParamByName('flight_feathers_wear'), FFlightFeathersWear);
       SetStrParam(ParamByName('molt_limits'), FMoltLimits);
       SetStrParam(ParamByName('cycle_code'), FCycleCode);
+      SetStrParam(ParamByName('subject_age'), Ages[FSubjectAge]);
       SetStrParam(ParamByName('how_aged'), FHowAged);
       SetStrParam(ParamByName('skull_ossification'), FSkullOssification);
       SetFloatParam(ParamByName('kipps_index'), FKippsIndex);

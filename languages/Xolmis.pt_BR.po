@@ -8364,6 +8364,12 @@ msgctxt "tedtbotanictaxon.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtcapture.btnnewindividual.caption
+#, fuzzy
+msgctxt "tedtcapture.btnnewindividual.caption"
+msgid "New individual"
+msgstr "Novo indivíduo"
+
 #: tedtcapture.ckaudiorecordings.caption
 msgid "Audio(s)"
 msgstr "Áudio(s)"

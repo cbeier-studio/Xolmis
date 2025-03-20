@@ -1361,6 +1361,12 @@ begin
     if IsNew then
     begin
       FRecord := TCapture.Create();
+      if aSurvey > 0 then
+      begin
+        FRecord.CaptureDate := VarToDateTime(GetFieldValue('surveys', 'survey_date', 'survey_id', aSurvey));
+        FRecord.LocalityId := GetFieldValue('surveys', 'locality_id', 'survey_id', aSurvey);
+        FRecord.SurveyId := aSurvey;
+      end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
@@ -2033,6 +2039,8 @@ begin
     if IsNew then
     begin
       FRecord := TNetEffort.Create();
+      if aSurvey > 0 then
+        FRecord.SampleDate := VarToDateTime(GetFieldValue('surveys', 'survey_date', 'survey_id', aSurvey));
       EditSourceStr := rsInsertedByForm;
     end else
     begin
@@ -2195,6 +2203,12 @@ begin
     if IsNew then
     begin
       FRecord := TSighting.Create();
+      if aSurvey > 0 then
+      begin
+        FRecord.SightingDate := VarToDateTime(GetFieldValue('surveys', 'survey_date', 'survey_id', aSurvey));
+        FRecord.MethodId := GetFieldValue('surveys', 'method_id', 'survey_id', aSurvey);
+        FRecord.LocalityId := GetFieldValue('surveys', 'locality_id', 'survey_id', aSurvey);
+      end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin

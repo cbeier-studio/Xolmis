@@ -955,7 +955,7 @@ begin
       SetForeignParam(ParamByName('egg_id'), FEggId);
       SetDateParam(ParamByName('preparation_date'), FPreparationDate);
       SetForeignParam(ParamByName('preparer_id'), FPreparerId);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+      ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('sample_prep_id').AsInteger := FId;
 
       ExecSQL;

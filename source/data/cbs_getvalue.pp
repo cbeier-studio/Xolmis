@@ -483,7 +483,7 @@ begin
     Transaction := DMM.sqlTrans;
     Clear;
     Add('SELECT');
-    Add('    max(collector_seq) AS seq');
+    Add('    COALESCE(max(collector_seq), 0) AS seq');
     Add('FROM specimen_collectors');
     Add('WHERE specimen_id = :specimen_id');
     ParamByName('specimen_id').AsInteger := aSpecimenId;
