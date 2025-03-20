@@ -893,6 +893,7 @@ procedure TdlgImportXMobile.ImportSpeciesList;
 var
   AItem: TSighting;
   aTaxonKey, p, j, k: Integer;
+  sTime: String;
   Qry: TSQLQuery;
 begin
   if Parar then
@@ -908,6 +909,7 @@ begin
     for j := 0 to SpeciesArray.Count - 1 do
     begin
       Inc(p);
+      sTime := EmptyStr;
       AItem.Clear;
 
       SpeciesObject := SpeciesArray.Objects[j];
@@ -924,6 +926,10 @@ begin
         AItem.NotSurveying := SpeciesObject.Get('isOutOfInventory', 0) = 1;
         AItem.SubjectTally := SpeciesObject.Get('count', 0);
         AItem.SightingDate := FSurvey.SurveyDate;
+        sTime := SpeciesObject.Get('sampleTime', '');
+        if sTime = 'null' then
+          sTime := '00:00:00';
+        AItem.SightingTime := StrToTime(sTime);
         AItem.LocalityId := FSurvey.LocalityId;
         AItem.MackinnonListNumber := StrToInt(eMackinnonListNumber.Text);
         AItem.MethodId := FSurvey.MethodId;

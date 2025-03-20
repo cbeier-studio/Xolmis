@@ -8365,7 +8365,6 @@ msgid "Save"
 msgstr "Salvar"
 
 #: tedtcapture.btnnewindividual.caption
-#, fuzzy
 msgctxt "tedtcapture.btnnewindividual.caption"
 msgid "New individual"
 msgstr "Novo indivíduo"
@@ -11835,25 +11834,19 @@ msgid "Date: *"
 msgstr "Data: *"
 
 #: tedtvegetation.lblsamplemoment.caption
-#, fuzzy
-#| msgid "Distribution:"
 msgctxt "tedtvegetation.lblsamplemoment.caption"
 msgid "Distribution: *"
-msgstr "Distribuição:"
+msgstr "Distribuição: *"
 
 #: tedtvegetation.lblsamplemoment1.caption
-#, fuzzy
-#| msgid "Distribution:"
 msgctxt "tedtvegetation.lblsamplemoment1.caption"
 msgid "Distribution: *"
-msgstr "Distribuição:"
+msgstr "Distribuição: *"
 
 #: tedtvegetation.lblsamplemoment2.caption
-#, fuzzy
-#| msgid "Distribution:"
 msgctxt "tedtvegetation.lblsamplemoment2.caption"
 msgid "Distribution: *"
-msgstr "Distribuição:"
+msgstr "Distribuição: *"
 
 #: tedtvegetation.lblsampletime.caption
 msgctxt "tedtvegetation.lblsampletime.caption"
@@ -15089,4 +15082,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

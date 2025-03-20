@@ -10,7 +10,6 @@ object dlgImportXMobile: TdlgImportXMobile
   ClientWidth = 560
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
