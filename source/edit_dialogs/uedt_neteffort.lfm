@@ -74,7 +74,6 @@ object edtNetEffort: TedtNetEffort
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -117,7 +116,6 @@ object edtNetEffort: TedtNetEffort
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Permanent mistnet:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -128,7 +126,6 @@ object edtNetEffort: TedtNetEffort
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Mistnet number: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -190,7 +187,6 @@ object edtNetEffort: TedtNetEffort
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -201,7 +197,6 @@ object edtNetEffort: TedtNetEffort
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -273,7 +268,6 @@ object edtNetEffort: TedtNetEffort
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Mistnet length (m):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -284,7 +278,6 @@ object edtNetEffort: TedtNetEffort
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Mistnet height (m):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -337,7 +330,6 @@ object edtNetEffort: TedtNetEffort
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Mesh size:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -348,7 +340,6 @@ object edtNetEffort: TedtNetEffort
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Mistnet area (m²):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -379,7 +370,10 @@ object edtNetEffort: TedtNetEffort
           Top = 22
           Width = 175
           Caption = 'txtNetArea'
+          Font.Height = -12
+          Font.Style = [fsBold]
           Layout = tlCenter
+          ParentFont = False
         end
       end
       object pDateTotalTime: TPanel
@@ -409,7 +403,6 @@ object edtNetEffort: TedtNetEffort
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Survey date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -420,7 +413,6 @@ object edtNetEffort: TedtNetEffort
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Total open time (h):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -452,7 +444,10 @@ object edtNetEffort: TedtNetEffort
           Top = 22
           Width = 175
           Caption = 'txtTotalOpenTime'
+          Font.Height = -12
+          Font.Style = [fsBold]
           Layout = tlCenter
+          ParentFont = False
         end
       end
       object pNetOpenClose1: TPanel
@@ -481,7 +476,6 @@ object edtNetEffort: TedtNetEffort
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Opening time 1: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -492,7 +486,6 @@ object edtNetEffort: TedtNetEffort
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Closing time 1: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -545,7 +538,6 @@ object edtNetEffort: TedtNetEffort
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Opening time 2:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -556,7 +548,6 @@ object edtNetEffort: TedtNetEffort
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Closing time 2:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -609,7 +600,6 @@ object edtNetEffort: TedtNetEffort
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Opening time 3:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -620,7 +610,6 @@ object edtNetEffort: TedtNetEffort
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Closing time 3:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -705,7 +694,6 @@ object edtNetEffort: TedtNetEffort
           Width = 337
           BorderSpacing.Bottom = 3
           Caption = 'Survey:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -757,7 +745,6 @@ object edtNetEffort: TedtNetEffort
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Opening time 4:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -768,7 +755,6 @@ object edtNetEffort: TedtNetEffort
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Closing time 4:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

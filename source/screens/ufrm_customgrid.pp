@@ -6874,9 +6874,9 @@ procedure TfrmCustomGrid.pmcNewSightingClick(Sender: TObject);
 begin
   case FTableType of
     tbIndividuals:
-      EditSighting(DMI.qSightings, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
+      EditSighting(DMI.qSightings, 0, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
     tbSurveys:
-      EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
+      EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName('survey_id').AsInteger, 0, True);
   end;
 
   UpdateChildBar;
@@ -8710,7 +8710,7 @@ begin
           case nbChilds.PageIndex of
             0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger, 0, True);
             1: EditFeather(DMI.qFeathers, dsLink.DataSet.FieldByName('individual_id').AsInteger, 0, 0, True);
-            2: EditSighting(DMI.qSightings, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
+            2: EditSighting(DMI.qSightings, 0, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
             //3: EditNest(DMI.qNests, True);
             4: EditSpecimen(DMI.qSpecimens, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
           end;
@@ -8735,7 +8735,7 @@ begin
             1: EditNetEffort(DMS.qNetsEffort, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
             2: EditWeatherLog(DMS.qWeatherLogs, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
             3: EditCapture(DMS.qCaptures, 0, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
-            4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
+            4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName('survey_id').AsInteger, 0, True);
             5: EditVegetation(DMS.qVegetation, dsLink.DataSet.FieldByName('survey_id').AsInteger, True);
           end;
         //tbSurveyTeams: ;
@@ -9089,7 +9089,6 @@ begin
         case nbChilds.PageIndex of
           0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName('sampling_plot_id').AsInteger);
         end;
-      //tbPermanentNets: ;
       //tbInstitutions: ;
       //tbPeople: ;
       tbProjects:
@@ -9100,7 +9099,6 @@ begin
           3: EditProjectRubric(DMG.qProjectBudget, dsLink.DataSet.FieldByName('project_id').AsInteger);
           4: EditProjectExpense(DMG.qProjectExpenses, dsLink.DataSet.FieldByName('project_id').AsInteger);
         end;
-      //tbProjectTeams: ;
       //tbPermits: ;
       //tbTaxonRanks: ;
       //tbZooTaxa: ;
@@ -9111,20 +9109,18 @@ begin
         case nbChilds.PageIndex of
           0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger);
           1: EditFeather(DMI.qFeathers, dsLink.DataSet.FieldByName('individual_id').AsInteger);
-          2: EditSighting(DMI.qSightings, dsLink.DataSet.FieldByName('individual_id').AsInteger);
+          2: EditSighting(DMI.qSightings, 0, dsLink.DataSet.FieldByName('individual_id').AsInteger);
           3: EditNest(DMI.qNests, False);
           4: EditSpecimen(DMI.qSpecimens, dsLink.DataSet.FieldByName('individual_id').AsInteger);
         end;
       //tbCaptures: ;
-      //tbMolts: ;
+      //tbFeathers: ;
       tbNests:
         case nbChilds.PageIndex of
           0: EditNestOwner(DMB.qNestOwners, dsLink.DataSet.FieldByName('nest_id').AsInteger);
           1: EditNestRevision(DMB.qNestRevisions, dsLink.DataSet.FieldByName('nest_id').AsInteger);
           2: EditEgg(DMB.qEggs, dsLink.DataSet.FieldByName('nest_id').AsInteger);
         end;
-      //tbNestRevisions: ;
-      //tbEggs: ;
       //tbMethods: ;
       tbExpeditions:
         case nbChilds.PageIndex of
@@ -9139,15 +9135,12 @@ begin
           4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName('survey_id').AsInteger);
           5: EditVegetation(DMS.qVegetation, dsLink.DataSet.FieldByName('survey_id').AsInteger);
         end;
-      //tbSurveyTeams: ;
-      //tbNetsEffort: ;
       tbSightings: ;
       tbSpecimens:
         case nbChilds.PageIndex of
           0: EditCollector(DMG.qSampleCollectors, dsLink.DataSet.FieldByName('specimen_id').AsInteger);
           1: EditSamplePrep(DMG.qSamplePreps, dsLink.DataSet.FieldByName('specimen_id').AsInteger);
         end;
-      //tbSamplePreps: ;
       //tbImages: ;
       //tbAudioLibrary: ;
     end;
@@ -9173,11 +9166,9 @@ begin
       //tbRecordHistory: ;
       tbGazetteer:     needsRefresh := EditSite(dsLink.DataSet);
       tbSamplingPlots: needsRefresh := EditSamplingPlot(dsLink.DataSet);
-      //tbPermanentNets: ;
       tbInstitutions:  needsRefresh := EditInstitution(dsLink.DataSet);
       tbPeople:        needsRefresh := EditPerson(dsLink.DataSet);
       tbProjects:      needsRefresh := EditProject(dsLink.DataSet);
-      //tbProjectTeams: ;
       tbPermits:       needsRefresh := EditPermit(dsLink.DataSet);
       tbTaxonRanks: ;
       //tbZooTaxa: ;
@@ -9187,6 +9178,7 @@ begin
       tbIndividuals:   needsRefresh := EditIndividual(dsLink.DataSet);
       tbCaptures:      needsRefresh := EditCapture(dsLink.DataSet);
       tbMolts:         needsRefresh := EditMolt(dsLink.DataSet);
+      tbFeathers:      needsRefresh := EditFeather(dsLink.DataSet);
       tbNests:         needsRefresh := EditNest(dsLink.DataSet);
       tbNestOwners:    needsRefresh := EditNestOwner(dsLink.DataSet);
       tbNestRevisions: needsRefresh := EditNestRevision(dsLink.DataSet);
@@ -9194,11 +9186,8 @@ begin
       tbMethods:       needsRefresh := EditMethod(dsLink.DataSet);
       tbExpeditions:   needsRefresh := EditExpedition(dsLink.DataSet);
       tbSurveys:       needsRefresh := EditSurvey(dsLink.DataSet);
-      //tbSurveyTeams: ;
-      //tbNetsEffort: ;
       tbSightings:     needsRefresh := EditSighting(dsLink.DataSet);
       tbSpecimens:     needsRefresh := EditSpecimen(dsLink.DataSet);
-      //tbSamplePreps: ;
       //tbImages: ;
       //tbAudioLibrary: ;
     end;
@@ -9267,11 +9256,9 @@ begin
       //tbRecordHistory: ;
       tbGazetteer:     needsRefresh := EditSite(dsLink.DataSet, True);
       tbSamplingPlots: needsRefresh := EditSamplingPlot(dsLink.DataSet, True);
-      //tbPermanentNets: ;
       tbInstitutions:  needsRefresh := EditInstitution(dsLink.DataSet, True);
       tbPeople:        needsRefresh := EditPerson(dsLink.DataSet, True);
       tbProjects:      needsRefresh := EditProject(dsLink.DataSet, True);
-      //tbProjectTeams: ;
       tbPermits:       needsRefresh := EditPermit(dsLink.DataSet, 0, True);
       tbTaxonRanks: ;
       //tbZooTaxa: ;
@@ -9281,6 +9268,7 @@ begin
       tbIndividuals:   needsRefresh := EditIndividual(dsLink.DataSet, True);
       tbCaptures:      needsRefresh := EditCapture(dsLink.DataSet, 0, 0, True);
       tbMolts:         needsRefresh := EditMolt(dsLink.DataSet, 0, True);
+      tbFeathers:      needsRefresh := EditFeather(dsLink.DataSet, 0, 0, 0, True);
       tbNests:         needsRefresh := EditNest(dsLink.DataSet, True);
       tbNestOwners:    needsRefresh := EditNestOwner(dsLink.DataSet, 0, True);
       tbNestRevisions: needsRefresh := EditNestRevision(dsLink.DataSet, 0, True);
@@ -9288,11 +9276,8 @@ begin
       tbMethods:       needsRefresh := EditMethod(dsLink.DataSet, True);
       tbExpeditions:   needsRefresh := EditExpedition(dsLink.DataSet, True);
       tbSurveys:       needsRefresh := EditSurvey(dsLink.DataSet, 0, True);
-      //tbSurveyTeams: ;
-      //tbNetsEffort: ;
-      tbSightings:     needsRefresh := EditSighting(dsLink.DataSet, 0, True);
+      tbSightings:     needsRefresh := EditSighting(dsLink.DataSet, 0, 0, True);
       tbSpecimens:     needsRefresh := EditSpecimen(dsLink.DataSet, 0, True);
-      //tbSamplePreps: ;
       //tbImages: ;
       //tbAudioLibrary: ;
     end;

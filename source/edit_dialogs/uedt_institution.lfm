@@ -10,7 +10,6 @@ object edtInstitution: TedtInstitution
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -121,7 +120,6 @@ object edtInstitution: TedtInstitution
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'Municipality:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -172,7 +170,6 @@ object edtInstitution: TedtInstitution
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'Name: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -213,7 +210,6 @@ object edtInstitution: TedtInstitution
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Acronym: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -264,7 +260,6 @@ object edtInstitution: TedtInstitution
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'Address detail:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -304,7 +299,6 @@ object edtInstitution: TedtInstitution
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'Address:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -344,7 +338,6 @@ object edtInstitution: TedtInstitution
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Telephone:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -395,7 +388,6 @@ object edtInstitution: TedtInstitution
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Postal code:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -444,7 +436,6 @@ object edtInstitution: TedtInstitution
           Align = alTop
           BorderSpacing.Top = 4
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -487,7 +478,6 @@ object edtInstitution: TedtInstitution
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'Neighborhood:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -527,7 +517,6 @@ object edtInstitution: TedtInstitution
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'State:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -578,7 +567,6 @@ object edtInstitution: TedtInstitution
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'Country:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -630,7 +618,6 @@ object edtInstitution: TedtInstitution
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'Contact person:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -670,7 +657,6 @@ object edtInstitution: TedtInstitution
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'E-mail:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

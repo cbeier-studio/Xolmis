@@ -1293,9 +1293,22 @@ type
     procedure qFeathersAfterPost(DataSet: TDataSet);
     procedure qFeathersBeforeEdit(DataSet: TDataSet);
     procedure qFeathersBeforePost(DataSet: TDataSet);
+    procedure qFeathersbody_sideGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qFeathersbody_sideSetText(Sender: TField; const aText: string);
     procedure qFeathersfeather_ageGetText(Sender: TField;
       var aText: string; DisplayText: Boolean);
     procedure qFeathersfeather_ageSetText(Sender: TField; const aText: string);
+    procedure qFeathersfeather_traitGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qFeathersfeather_traitSetText(Sender: TField; const aText: string
+      );
+    procedure qFeatherssource_typeGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qFeatherssource_typeSetText(Sender: TField; const aText: string);
+    procedure qFeatherssymmetricalGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qFeatherssymmetricalSetText(Sender: TField; const aText: string);
     procedure qGazetteerAfterCancel(DataSet: TDataSet);
     procedure qGazetteerAfterPost(DataSet: TDataSet);
     procedure qGazetteerBeforeEdit(DataSet: TDataSet);
@@ -2556,6 +2569,36 @@ begin
   SetRecordDateUser(DataSet);
 end;
 
+procedure TDMG.qFeathersbody_sideGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+   'NA': aText := rsNotApplicable;
+    'R': aText := rsSideRight;
+    'L': aText := rsSideLeft;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qFeathersbody_sideSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsNotApplicable then
+    Sender.AsString := 'NA'
+  else
+  if aText = rsSideRight then
+    Sender.AsString := 'R'
+  else
+  if aText = rsSideLeft then
+    Sender.AsString := 'L';
+end;
+
 procedure TDMG.qFeathersfeather_ageGetText(Sender: TField;
   var aText: string; DisplayText: Boolean);
 begin
@@ -2612,6 +2655,133 @@ begin
   else
   if aText = rsAgeFifthYear then
     Sender.AsString := '5';
+end;
+
+procedure TDMG.qFeathersfeather_traitGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'U': aText := rsFeatherUnknown;
+    'P': aText := rsTraitPrimary;
+    'S': aText := rsTraitSecondary;
+    'R': aText := rsTraitRectrix;
+   'AL': aText := rsTraitAlula;
+   'CC': aText := rsTraitCarpalCovert;
+   'GC': aText := rsTraitGreatCovert;
+   'PC': aText := rsTraitPrimaryCovert;
+   'MC': aText := rsTraitMedianCovert;
+   'LC': aText := rsTraitLesserCovert;
+    'B': aText := rsTraitBody;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qFeathersfeather_traitSetText(Sender: TField; const aText: string
+  );
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsFeatherUnknown then
+    Sender.AsString := 'U'
+  else
+  if aText = rsTraitPrimary then
+    Sender.AsString := 'P'
+  else
+  if aText = rsTraitSecondary then
+    Sender.AsString := 'S'
+  else
+  if aText = rsTraitRectrix then
+    Sender.AsString := 'R'
+  else
+  if aText = rsTraitAlula then
+    Sender.AsString := 'AL'
+  else
+  if aText = rsTraitCarpalCovert then
+    Sender.AsString := 'CC'
+  else
+  if aText = rsTraitGreatCovert then
+    Sender.AsString := 'GC'
+  else
+  if aText = rsTraitPrimaryCovert then
+    Sender.AsString := 'PC'
+  else
+  if aText = rsTraitMedianCovert then
+    Sender.AsString := 'MC'
+  else
+  if aText = rsTraitLesserCovert then
+    Sender.AsString := 'LC'
+  else
+  if aText = rsTraitBody then
+    Sender.AsString := 'B';
+end;
+
+procedure TDMG.qFeatherssource_typeGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'U': aText := rsFeatherUnknown;
+    'C': aText := rsFeatherCapture;
+    'S': aText := rsFeatherSighting;
+    'P': aText := rsFeatherPhoto;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qFeatherssource_typeSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsFeatherUnknown then
+    Sender.AsString := 'U'
+  else
+  if aText = rsFeatherCapture then
+    Sender.AsString := 'C'
+  else
+  if aText = rsFeatherSighting then
+    Sender.AsString := 'S'
+  else
+  if aText = rsFeatherPhoto then
+    Sender.AsString := 'P';
+end;
+
+procedure TDMG.qFeatherssymmetricalGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'U': aText := rsFeatherUnknown;
+    'S': aText := rsSymmetrical;
+    'A': aText := rsAsymmetrical;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qFeatherssymmetricalSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsFeatherUnknown then
+    Sender.AsString := 'U'
+  else
+  if aText = rsSymmetrical then
+    Sender.AsString := 'S'
+  else
+  if aText = rsAsymmetrical then
+    Sender.AsString := 'A';
 end;
 
 procedure TDMG.qGazetteerAfterCancel(DataSet: TDataSet);

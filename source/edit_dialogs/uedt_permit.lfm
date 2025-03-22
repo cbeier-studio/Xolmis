@@ -11,7 +11,6 @@ object edtPermit: TedtPermit
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -121,7 +120,6 @@ object edtPermit: TedtPermit
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -164,7 +162,6 @@ object edtPermit: TedtPermit
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Name: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -205,7 +202,6 @@ object edtPermit: TedtPermit
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Dispatcher: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -246,7 +242,6 @@ object edtPermit: TedtPermit
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Dispatch date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -257,7 +252,6 @@ object edtPermit: TedtPermit
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Expire date:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -329,7 +323,6 @@ object edtPermit: TedtPermit
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Permit number:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -340,7 +333,6 @@ object edtPermit: TedtPermit
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Type: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -424,7 +416,6 @@ object edtPermit: TedtPermit
           Width = 337
           BorderSpacing.Bottom = 3
           Caption = 'Project:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

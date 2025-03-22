@@ -10,7 +10,6 @@ object edtSurvey: TedtSurvey
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -121,7 +120,6 @@ object edtSurvey: TedtSurvey
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Locality: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -173,7 +171,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Starting time:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -184,7 +181,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Ending time:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -235,7 +231,6 @@ object edtSurvey: TedtSurvey
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Mistnet station:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -286,7 +281,6 @@ object edtSurvey: TedtSurvey
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -329,7 +323,6 @@ object edtSurvey: TedtSurvey
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Project:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -380,7 +373,6 @@ object edtSurvey: TedtSurvey
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Method: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -432,7 +424,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Survey date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -443,7 +434,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Duration (minutes):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -505,7 +495,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Longitude (initial):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -516,7 +505,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Latitude (initial):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -587,7 +575,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'End longitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -598,7 +585,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'End latitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -669,7 +655,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Area (ha):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -680,7 +665,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Distance (km):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -731,7 +715,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Number of mistnets:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -742,7 +725,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Mistnet effort (h•m²):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -791,7 +773,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Number of observers:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -802,7 +783,6 @@ object edtSurvey: TedtSurvey
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Sample identifier:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -851,7 +831,6 @@ object edtSurvey: TedtSurvey
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Environment description:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -894,7 +873,6 @@ object edtSurvey: TedtSurvey
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Mistnets checking times:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -969,7 +947,6 @@ object edtSurvey: TedtSurvey
           Width = 336
           BorderSpacing.Bottom = 3
           Caption = 'Expedition:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

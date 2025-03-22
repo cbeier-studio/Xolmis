@@ -11,7 +11,6 @@ object edtProjectExpense: TedtProjectExpense
   ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -64,7 +63,6 @@ object edtProjectExpense: TedtProjectExpense
         Width = 365
         BorderSpacing.Top = 3
         Caption = 'Rubric: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -117,7 +115,6 @@ object edtProjectExpense: TedtProjectExpense
         Width = 174
         BorderSpacing.Top = 3
         Caption = 'Date:'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -128,7 +125,6 @@ object edtProjectExpense: TedtProjectExpense
         Width = 175
         BorderSpacing.Top = 3
         Caption = 'Amount:'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -189,7 +185,6 @@ object edtProjectExpense: TedtProjectExpense
         Width = 365
         BorderSpacing.Top = 3
         Caption = 'Item description:'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end

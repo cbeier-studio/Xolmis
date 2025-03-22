@@ -55,7 +55,7 @@ uses
   function EditNetEffort(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditWeatherLog(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditVegetation(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditSighting(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditSighting(aDataSet: TDataSet; aSurvey: Integer = 0; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditSpecimen(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditCollector(aDataSet: TDataSet; aSpecimen: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditSamplePrep(aDataSet: TDataSet; aSpecimen: Integer = 0; IsNew: Boolean = False): Boolean;
@@ -1367,6 +1367,12 @@ begin
         FRecord.LocalityId := GetFieldValue('surveys', 'locality_id', 'survey_id', aSurvey);
         FRecord.SurveyId := aSurvey;
       end;
+      if aIndividual > 0 then
+      begin
+        FRecord.TaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', aIndividual);
+        FRecord.BandId := GetFieldValue('individuals', 'band_id', 'individual_id', aIndividual);
+        FRecord.IndividualId := aIndividual;
+      end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
@@ -1721,6 +1727,10 @@ begin
     if IsNew then
     begin
       FRecord := TEgg.Create();
+      if aNest > 0 then
+      begin
+        FRecord.TaxonId := GetFieldValue('nests', 'taxon_id', 'nest_id', aNest);
+      end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
@@ -2185,7 +2195,7 @@ begin
   end;
 end;
 
-function EditSighting(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
+function EditSighting(aDataSet: TDataSet; aSurvey: Integer; aIndividual: Integer; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TSighting;
   lstDiff: TStrings;
@@ -2209,6 +2219,10 @@ begin
         FRecord.MethodId := GetFieldValue('surveys', 'method_id', 'survey_id', aSurvey);
         FRecord.LocalityId := GetFieldValue('surveys', 'locality_id', 'survey_id', aSurvey);
       end;
+      if aIndividual > 0 then
+      begin
+        FRecord.TaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', aIndividual);
+      end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
@@ -2218,6 +2232,7 @@ begin
     end;
     Sighting := FRecord;
     SurveyId := aSurvey;
+    IndividualId := aIndividual;
     Result := ShowModal = mrOk;
     if Result then
     begin
@@ -2288,6 +2303,11 @@ begin
     if IsNew then
     begin
       FRecord := TSpecimen.Create();
+      if aIndividual > 0 then
+      begin
+        FRecord.IndividualId := aIndividual;
+        FRecord.TaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', aIndividual);
+      end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
@@ -3087,6 +3107,7 @@ var
   FRecord, FOldRecord: TFeather;
   lstDiff: TStrings;
   D: String;
+  aTime: Variant;
 begin
   LogEvent(leaOpen, 'Feather edit dialog');
   Application.CreateForm(TedtFeather, edtFeather);
@@ -3098,6 +3119,28 @@ begin
     if IsNew then
     begin
       FRecord := TFeather.Create();
+      if aIndividual > 0 then
+        FRecord.TaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', aIndividual);
+      if aCapture > 0 then
+      begin
+        FRecord.TaxonId := GetFieldValue('captures', 'taxon_id', 'capture_id', aCapture);
+        FRecord.SampleDate := VarToDateTime(GetFieldValue('captures', 'capture_date', 'capture_id', aCapture));
+        aTime := GetFieldValue('captures', 'capture_time', 'capture_id', aCapture);
+        if aTime <> Null then
+          FRecord.SampleTime := VarToDateTime(aTime);
+        FRecord.LocalityId := GetFieldValue('captures', 'locality_id', 'capture_id', aCapture);
+        FRecord.ObserverId := GetFieldValue('captures', 'bander_id', 'capture_id', aCapture);
+      end;
+      if aSighting > 0 then
+      begin
+        FRecord.TaxonId := GetFieldValue('sightings', 'taxon_id', 'sighting_id', aSighting);
+        FRecord.SampleDate := VarToDateTime(GetFieldValue('sightings', 'sighting_date', 'sighting_id', aSighting));
+        aTime := GetFieldValue('sightings', 'sighting_time', 'sighting_id', aSighting);
+        if aTime <> Null then
+          FRecord.SampleTime := VarToDateTime(aTime);
+        FRecord.LocalityId := GetFieldValue('sightings', 'locality_id', 'sighting_id', aSighting);
+        FRecord.ObserverId := GetFieldValue('sightings', 'observer_id', 'sighting_id', aSighting);
+      end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin

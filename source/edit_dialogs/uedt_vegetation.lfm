@@ -10,7 +10,6 @@ object edtVegetation: TedtVegetation
   ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -120,7 +119,6 @@ object edtVegetation: TedtVegetation
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -163,7 +161,6 @@ object edtVegetation: TedtVegetation
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -174,7 +171,6 @@ object edtVegetation: TedtVegetation
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Time:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -237,7 +233,6 @@ object edtVegetation: TedtVegetation
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Distribution: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -281,7 +276,6 @@ object edtVegetation: TedtVegetation
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Proportion (%):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -292,7 +286,6 @@ object edtVegetation: TedtVegetation
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Average height (cm):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -345,7 +338,6 @@ object edtVegetation: TedtVegetation
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -356,7 +348,6 @@ object edtVegetation: TedtVegetation
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -493,7 +484,6 @@ object edtVegetation: TedtVegetation
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Distribution: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -537,7 +527,6 @@ object edtVegetation: TedtVegetation
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Proportion (%):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -548,7 +537,6 @@ object edtVegetation: TedtVegetation
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Average height (cm):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -633,7 +621,6 @@ object edtVegetation: TedtVegetation
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Distribution: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -676,7 +663,6 @@ object edtVegetation: TedtVegetation
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Proportion (%):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -687,7 +673,6 @@ object edtVegetation: TedtVegetation
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Average height (cm):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

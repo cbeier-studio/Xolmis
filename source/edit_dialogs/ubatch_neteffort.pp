@@ -183,7 +183,7 @@ end;
 procedure TbatchNetEffort.ApplyDarkMode;
 begin
   //pEdit.Color := clVioletBG1Dark;
-  pSurvey.Background.Color := clCardBGDefaultDark;
+  pSurvey.Background.Color := clSolidBGSecondaryDark;
   pSurvey.Border.Color := clSystemSolidNeutralFGDark;
   pSurvey.Color := pEdit.Color;
   lblSurveyInfo.Font.Color := $009F9F9F;

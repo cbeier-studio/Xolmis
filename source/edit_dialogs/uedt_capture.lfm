@@ -11,6 +11,7 @@ object edtCapture: TedtCapture
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.0.0.2'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -125,7 +126,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Age:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -135,7 +135,6 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -146,7 +145,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Status:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -156,7 +154,6 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -318,7 +315,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Capture date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -329,7 +325,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Capture time:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -340,7 +335,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Bander: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -351,7 +345,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Annotator: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -456,7 +449,6 @@ object edtCapture: TedtCapture
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'Survey:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -467,7 +459,6 @@ object edtCapture: TedtCapture
           Width = 363
           BorderSpacing.Top = 4
           Caption = 'Locality: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -540,7 +531,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Right tarsus:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -550,7 +540,6 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -561,7 +550,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Left tarsus:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -571,7 +559,6 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -760,7 +747,6 @@ object edtCapture: TedtCapture
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'Taxon:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -771,7 +757,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Band:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -782,7 +767,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Removed band:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -873,7 +857,6 @@ object edtCapture: TedtCapture
           Width = 744
           BorderSpacing.Top = 4
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -916,7 +899,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Photographer 1:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -927,7 +909,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Photographer 2:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -938,7 +919,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Camera:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -948,7 +928,6 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1119,7 +1098,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Type: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1130,7 +1108,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Mistnet:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1141,7 +1118,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Longitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1152,7 +1128,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Latitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1258,7 +1233,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Cloacal protuberance:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1269,7 +1243,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Brood patch:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1280,7 +1253,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Subcutaneous fat:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1291,7 +1263,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Body molt:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1395,7 +1366,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Flight feathers molt:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1406,7 +1376,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Flight feathers wear:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1417,7 +1386,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Right wing chord:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1428,7 +1396,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'First secondary chord:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1512,7 +1479,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Tail length:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1523,7 +1489,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Tarsus length:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1534,7 +1499,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Tarsus diameter:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1545,7 +1509,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Weight:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1615,7 +1578,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Bill height:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1626,7 +1588,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Total length:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1637,7 +1598,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Total culmen:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1648,7 +1608,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Philornis larvae quantity:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1718,7 +1677,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Skull length:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1729,7 +1687,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Exposed culmen:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1740,7 +1697,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Nostril to bill tip:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1751,7 +1707,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Bill width:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1822,7 +1777,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Kipp''s Index:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1833,7 +1787,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Molt limits:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1844,7 +1797,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Skull ossification:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1854,7 +1806,6 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1935,7 +1886,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Molt cycle:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1946,7 +1896,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'How was aged:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1957,7 +1906,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Sex:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1968,7 +1916,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'How was sexed:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -2069,7 +2016,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'First photo number:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -2080,7 +2026,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Last photo number:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -2091,7 +2036,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Constraints.MinWidth = 172
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -2102,7 +2046,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Field number:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -2171,7 +2114,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Hemoglobin (g/dL):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -2182,7 +2124,6 @@ object edtCapture: TedtCapture
           Width = 174
           BorderSpacing.Top = 4
           Caption = 'Hematocrit (mm³):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -2193,7 +2134,6 @@ object edtCapture: TedtCapture
           Width = 173
           BorderSpacing.Top = 4
           Caption = 'Glucose (mg/dL):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -2261,7 +2201,6 @@ object edtCapture: TedtCapture
           Width = 364
           BorderSpacing.Top = 4
           Caption = 'Individual: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -2271,7 +2210,6 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 363
           BorderSpacing.Top = 4
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

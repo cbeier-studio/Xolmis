@@ -107,7 +107,6 @@ object edtProjectRubric: TedtProjectRubric
         Width = 365
         BorderSpacing.Top = 3
         Caption = 'Funding source: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -149,7 +148,6 @@ object edtProjectRubric: TedtProjectRubric
         Width = 365
         BorderSpacing.Top = 3
         Caption = 'Rubric: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -190,7 +188,6 @@ object edtProjectRubric: TedtProjectRubric
         Width = 174
         BorderSpacing.Top = 3
         Caption = 'Amount:'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -240,7 +237,6 @@ object edtProjectRubric: TedtProjectRubric
         Width = 365
         BorderSpacing.Top = 3
         Caption = 'Item:'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end

@@ -153,6 +153,7 @@ type
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property Sighting: TSighting read FSighting write SetSighting;
     property SurveyId: Integer read FSurveyId write FSurveyId;
+    property IndividualId: Integer read FIndividualId write FIndividualId;
   end;
 
 var
@@ -170,8 +171,8 @@ uses
 
 procedure TedtSighting.ApplyDarkMode;
 begin
-  pSurvey.Background.Color := clCardBGDefaultDark;
-  pSurvey.Border.Color := clCardBGSecondaryDark;
+  pSurvey.Background.Color := clSolidBGSecondaryDark;
+  pSurvey.Border.Color := clSystemSolidNeutralFGDark;
 
   eSurvey.Images := DMM.iEditsDark;
   eObserver.Images := DMM.iEditsDark;
@@ -604,6 +605,7 @@ begin
     ApplyDarkMode;
 
   pSurvey.Visible := FSurveyId = 0;
+  pIndividual.Visible := FIndividualId = 0;
 
   if FIsNew then
   begin
@@ -619,6 +621,11 @@ begin
     begin
       FLocalityId := FSighting.LocalityId;
       eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+    end;
+    if FSighting.TaxonId > 0 then
+    begin
+      FTaxonId := FSighting.TaxonId;
+      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
     end;
   end
   else

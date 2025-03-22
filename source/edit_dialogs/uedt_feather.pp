@@ -331,9 +331,28 @@ begin
   cbFeatherAge.Items.Add(rsAgeFourthYear);
   cbFeatherAge.Items.Add(rsAgeFifthYear);
 
-  if dsLink.State = dsInsert then
+  if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSurvey)]);
+    if not DateIsNull(FFeather.SampleDate) then
+      eDate.Text := DateToStr(FFeather.SampleDate);
+    if not TimeIsNull(FFeather.SampleTime) then
+      eTime.Text := TimeToStr(FFeather.SampleTime);
+    if FFeather.TaxonId > 0 then
+    begin
+      FTaxonId := FFeather.TaxonId;
+      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+    end;
+    if FFeather.LocalityId > 0 then
+    begin
+      FLocalityId := FFeather.LocalityId;
+      eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+    end;
+    if FFeather.ObserverId > 0 then
+    begin
+      FObserverId := FFeather.ObserverId;
+      eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+    end;
   end
   else
   begin

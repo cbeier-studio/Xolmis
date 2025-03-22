@@ -10,7 +10,6 @@ object edtEgg: TedtEgg
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -119,7 +118,6 @@ object edtEgg: TedtEgg
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Field number:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -129,7 +127,6 @@ object edtEgg: TedtEgg
           Top = 3
           Width = 175
           BorderSpacing.Top = 3
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -169,7 +166,6 @@ object edtEgg: TedtEgg
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Egg number: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -180,7 +176,6 @@ object edtEgg: TedtEgg
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Measurement date:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -239,7 +234,6 @@ object edtEgg: TedtEgg
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Taxon: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -288,7 +282,6 @@ object edtEgg: TedtEgg
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Observer: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -337,7 +330,6 @@ object edtEgg: TedtEgg
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Individual hatched:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -387,7 +379,6 @@ object edtEgg: TedtEgg
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Shape:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -398,7 +389,6 @@ object edtEgg: TedtEgg
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Phase:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -447,7 +437,6 @@ object edtEgg: TedtEgg
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Eggshell color:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -458,7 +447,6 @@ object edtEgg: TedtEgg
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Eggshell pattern:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -509,7 +497,6 @@ object edtEgg: TedtEgg
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Mass:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -520,7 +507,6 @@ object edtEgg: TedtEgg
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Volume:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -539,7 +525,10 @@ object edtEgg: TedtEgg
           Top = 22
           Width = 175
           Caption = 'txtVolume'
+          Font.Height = -12
+          Font.Style = [fsBold]
           Layout = tlCenter
+          ParentFont = False
         end
       end
       object pLength: TPanel
@@ -568,7 +557,6 @@ object edtEgg: TedtEgg
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Width:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -579,7 +567,6 @@ object edtEgg: TedtEgg
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Length:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -629,7 +616,6 @@ object edtEgg: TedtEgg
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -700,7 +686,6 @@ object edtEgg: TedtEgg
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Eggshell texture:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -710,7 +695,6 @@ object edtEgg: TedtEgg
           Top = 3
           Width = 175
           BorderSpacing.Top = 3
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -784,7 +768,6 @@ object edtEgg: TedtEgg
           Width = 337
           BorderSpacing.Bottom = 3
           Caption = 'Nest:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

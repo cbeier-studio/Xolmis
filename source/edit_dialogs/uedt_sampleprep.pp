@@ -225,7 +225,7 @@ begin
   cbSampleType.Items.Add(rsSampleGonads);
   cbSampleType.Items.Add(rsSampleStomach);
 
-  if dsLink.State = dsInsert then
+  if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionEgg)]);
   end

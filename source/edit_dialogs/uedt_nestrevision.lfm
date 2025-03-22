@@ -11,7 +11,6 @@ object edtNestRevision: TedtNestRevision
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -124,7 +123,6 @@ object edtNestRevision: TedtNestRevision
           Width = 182
           BorderSpacing.Top = 3
           Caption = 'Stage: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -135,7 +133,6 @@ object edtNestRevision: TedtNestRevision
           Width = 183
           BorderSpacing.Top = 3
           Caption = 'Status: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -206,7 +203,6 @@ object edtNestRevision: TedtNestRevision
           Width = 182
           BorderSpacing.Top = 3
           Caption = 'Number of eggs (host):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -217,7 +213,6 @@ object edtNestRevision: TedtNestRevision
           Width = 183
           BorderSpacing.Top = 3
           Caption = 'Number of nestlings (host):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -266,7 +261,6 @@ object edtNestRevision: TedtNestRevision
           Width = 182
           BorderSpacing.Top = 3
           Caption = 'Nest revision date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -277,7 +271,6 @@ object edtNestRevision: TedtNestRevision
           Width = 183
           BorderSpacing.Top = 3
           Caption = 'Nest revision time:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -338,7 +331,6 @@ object edtNestRevision: TedtNestRevision
           Width = 381
           BorderSpacing.Top = 3
           Caption = 'Nidoparasite taxon:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -387,7 +379,6 @@ object edtNestRevision: TedtNestRevision
           Width = 182
           BorderSpacing.Top = 3
           Caption = 'Observer 1: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -398,7 +389,6 @@ object edtNestRevision: TedtNestRevision
           Width = 183
           BorderSpacing.Top = 3
           Caption = 'Observer 2:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -465,7 +455,6 @@ object edtNestRevision: TedtNestRevision
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -536,7 +525,6 @@ object edtNestRevision: TedtNestRevision
           Width = 182
           BorderSpacing.Top = 3
           Caption = 'Number of nidoparasite eggs:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -547,7 +535,6 @@ object edtNestRevision: TedtNestRevision
           Width = 183
           BorderSpacing.Top = 3
           Caption = 'Number of nidoparasite nestlings:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -628,7 +615,6 @@ object edtNestRevision: TedtNestRevision
           Width = 353
           BorderSpacing.Bottom = 3
           Caption = 'Nest:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

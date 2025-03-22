@@ -11,7 +11,6 @@ object edtSpecimen: TedtSpecimen
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -122,7 +121,6 @@ object edtSpecimen: TedtSpecimen
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -165,7 +163,6 @@ object edtSpecimen: TedtSpecimen
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Field number: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -176,7 +173,6 @@ object edtSpecimen: TedtSpecimen
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Type: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -244,7 +240,6 @@ object edtSpecimen: TedtSpecimen
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Individual:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -295,7 +290,6 @@ object edtSpecimen: TedtSpecimen
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Collection date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -305,7 +299,6 @@ object edtSpecimen: TedtSpecimen
           Top = 3
           Width = 173
           BorderSpacing.Top = 3
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -393,7 +386,6 @@ object edtSpecimen: TedtSpecimen
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Taxon: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -444,7 +436,6 @@ object edtSpecimen: TedtSpecimen
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Nest:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -494,7 +485,6 @@ object edtSpecimen: TedtSpecimen
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Egg:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -544,7 +534,6 @@ object edtSpecimen: TedtSpecimen
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Locality: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -596,7 +585,6 @@ object edtSpecimen: TedtSpecimen
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -607,7 +595,6 @@ object edtSpecimen: TedtSpecimen
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

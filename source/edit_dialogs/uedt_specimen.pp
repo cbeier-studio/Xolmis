@@ -458,9 +458,19 @@ begin
   cbSampleType.Items.Add(rsSpecimenFeces);
   cbSampleType.Items.Add(rsSpecimenRegurgite);
 
-  if dsLink.State = dsInsert then
+  if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionEgg)]);
+    if FSpecimen.TaxonId > 0 then
+    begin
+      FTaxonId := FSpecimen.TaxonId;
+      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+    end;
+    if FSpecimen.IndividualId > 0 then
+    begin
+      FIndividualId := FSpecimen.IndividualId;
+      eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+    end;
   end
   else
   begin

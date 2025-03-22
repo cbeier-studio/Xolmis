@@ -1072,6 +1072,16 @@ begin
       FSurveyId := FCapture.SurveyId;
       eSurvey.Text := GetName('surveys', 'full_name', 'survey_id', FSurveyId);
     end;
+    if FCapture.TaxonId > 0 then
+    begin
+      FTaxonId := FCapture.TaxonId;
+      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+    end;
+    if FCapture.BandId > 0 then
+    begin
+      FBandId := FCapture.BandId;
+      eBand.Text := GetName('bands', 'full_name', 'band_id', FBandId);
+    end;
   end
   else
   begin

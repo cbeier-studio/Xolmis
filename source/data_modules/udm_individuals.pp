@@ -511,6 +511,22 @@ type
     procedure qCapturessubject_statusGetText(Sender: TField; var aText: string;
       DisplayText: Boolean);
     procedure qCapturessubject_statusSetText(Sender: TField; const aText: string);
+    procedure qFeathersbody_sideGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qFeathersbody_sideSetText(Sender: TField; const aText: string);
+    procedure qFeathersfeather_ageGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qFeathersfeather_ageSetText(Sender: TField; const aText: string);
+    procedure qFeathersfeather_traitGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qFeathersfeather_traitSetText(Sender: TField; const aText: string
+      );
+    procedure qFeatherssource_typeGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qFeatherssource_typeSetText(Sender: TField; const aText: string);
+    procedure qFeatherssymmetricalGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qFeatherssymmetricalSetText(Sender: TField; const aText: string);
     procedure qImagesAfterInsert(DataSet: TDataSet);
     procedure qImagesBeforePost(DataSet: TDataSet);
     procedure qImagescoordinate_precisionGetText(Sender: TField; var aText: string;
@@ -537,6 +553,9 @@ type
     procedure qSpecimensAfterPost(DataSet: TDataSet);
     procedure qSpecimensBeforeEdit(DataSet: TDataSet);
     procedure qSpecimensBeforePost(DataSet: TDataSet);
+    procedure qSpecimenssample_typeGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qSpecimenssample_typeSetText(Sender: TField; const aText: string);
   private
     OldCapture: TCapture;
     OldSighting: TSighting;
@@ -808,6 +827,221 @@ begin
   else
   if aText = rsStatusDead then
     Sender.AsString := 'D';
+end;
+
+procedure TDMI.qFeathersbody_sideGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+   'NA': aText := rsNotApplicable;
+    'R': aText := rsSideRight;
+    'L': aText := rsSideLeft;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qFeathersbody_sideSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsNotApplicable then
+    Sender.AsString := 'NA'
+  else
+  if aText = rsSideRight then
+    Sender.AsString := 'R'
+  else
+  if aText = rsSideLeft then
+    Sender.AsString := 'L';
+end;
+
+procedure TDMI.qFeathersfeather_ageGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'U': aText := rsAgeUnknown;
+    'A': aText := rsAgeAdult;
+    'J': aText := rsAgeJuvenile;
+    'F': aText := rsAgeFledgling;
+    'N': aText := rsAgeNestling;
+    'Y': aText := rsAgeFirstYear;
+    'S': aText := rsAgeSecondYear;
+    'T': aText := rsAgeThirdYear;
+    '4': aText := rsAgeFourthYear;
+    '5': aText := rsAgeFifthYear;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qFeathersfeather_ageSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsAgeUnknown then
+    Sender.AsString := 'U'
+  else
+  if aText = rsAgeAdult then
+    Sender.AsString := 'A'
+  else
+  if aText = rsAgeJuvenile then
+    Sender.AsString := 'J'
+  else
+  if aText = rsAgeFledgling then
+    Sender.AsString := 'F'
+  else
+  if aText = rsAgeNestling then
+    Sender.AsString := 'N'
+  else
+  if aText = rsAgeFirstYear then
+    Sender.AsString := 'Y'
+  else
+  if aText = rsAgeSecondYear then
+    Sender.AsString := 'S'
+  else
+  if aText = rsAgeThirdYear then
+    Sender.AsString := 'T'
+  else
+  if aText = rsAgeFourthYear then
+    Sender.AsString := '4'
+  else
+  if aText = rsAgeFifthYear then
+    Sender.AsString := '5';
+end;
+
+procedure TDMI.qFeathersfeather_traitGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'U': aText := rsFeatherUnknown;
+    'P': aText := rsTraitPrimary;
+    'S': aText := rsTraitSecondary;
+    'R': aText := rsTraitRectrix;
+   'AL': aText := rsTraitAlula;
+   'CC': aText := rsTraitCarpalCovert;
+   'GC': aText := rsTraitGreatCovert;
+   'PC': aText := rsTraitPrimaryCovert;
+   'MC': aText := rsTraitMedianCovert;
+   'LC': aText := rsTraitLesserCovert;
+    'B': aText := rsTraitBody;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qFeathersfeather_traitSetText(Sender: TField; const aText: string
+  );
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsFeatherUnknown then
+    Sender.AsString := 'U'
+  else
+  if aText = rsTraitPrimary then
+    Sender.AsString := 'P'
+  else
+  if aText = rsTraitSecondary then
+    Sender.AsString := 'S'
+  else
+  if aText = rsTraitRectrix then
+    Sender.AsString := 'R'
+  else
+  if aText = rsTraitAlula then
+    Sender.AsString := 'AL'
+  else
+  if aText = rsTraitCarpalCovert then
+    Sender.AsString := 'CC'
+  else
+  if aText = rsTraitGreatCovert then
+    Sender.AsString := 'GC'
+  else
+  if aText = rsTraitPrimaryCovert then
+    Sender.AsString := 'PC'
+  else
+  if aText = rsTraitMedianCovert then
+    Sender.AsString := 'MC'
+  else
+  if aText = rsTraitLesserCovert then
+    Sender.AsString := 'LC'
+  else
+  if aText = rsTraitBody then
+    Sender.AsString := 'B';
+end;
+
+procedure TDMI.qFeatherssource_typeGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'U': aText := rsFeatherUnknown;
+    'C': aText := rsFeatherCapture;
+    'S': aText := rsFeatherSighting;
+    'P': aText := rsFeatherPhoto;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qFeatherssource_typeSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsFeatherUnknown then
+    Sender.AsString := 'U'
+  else
+  if aText = rsFeatherCapture then
+    Sender.AsString := 'C'
+  else
+  if aText = rsFeatherSighting then
+    Sender.AsString := 'S'
+  else
+  if aText = rsFeatherPhoto then
+    Sender.AsString := 'P';
+end;
+
+procedure TDMI.qFeatherssymmetricalGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'U': aText := rsFeatherUnknown;
+    'S': aText := rsSymmetrical;
+    'A': aText := rsAsymmetrical;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qFeatherssymmetricalSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsFeatherUnknown then
+    Sender.AsString := 'U'
+  else
+  if aText = rsSymmetrical then
+    Sender.AsString := 'S'
+  else
+  if aText = rsAsymmetrical then
+    Sender.AsString := 'A';
 end;
 
 procedure TDMI.qImagesAfterInsert(DataSet: TDataSet);
@@ -1253,6 +1487,100 @@ begin
 
   if not DataSet.FieldByName('locality_id').IsNull then
     GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+end;
+
+procedure TDMI.qSpecimenssample_typeGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  if Sender.AsString = 'WS' then
+    aText := rsSpecimenCarcassWhole
+  else
+  if Sender.AsString = 'PS' then
+    aText := rsSpecimenCarcassPartial
+  else
+  if Sender.AsString = 'N' then
+    aText := rsSpecimenNest
+  else
+  if Sender.AsString = 'B' then
+    aText := rsSpecimenBones
+  else
+  if Sender.AsString = 'E' then
+    aText := rsSpecimenEgg
+  else
+  if Sender.AsString = 'P' then
+    aText := rsSpecimenParasites
+  else
+  if Sender.AsString = 'F' then
+    aText := rsSpecimenFeathers
+  else
+  if Sender.AsString = 'BS' then
+    aText := rsSpecimenBlood
+  else
+  if Sender.AsString = 'C' then
+    aText := rsSpecimenClaw
+  else
+  if Sender.AsString = 'S' then
+    aText := rsSpecimenSwab
+  else
+  if Sender.AsString = 'T' then
+    aText := rsSpecimenTissues
+  else
+  if Sender.AsString = 'D' then
+    aText := rsSpecimenFeces
+  else
+  if Sender.AsString = 'R' then
+    aText := rsSpecimenRegurgite;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qSpecimenssample_typeSetText(Sender: TField; const aText: string
+  );
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsSpecimenCarcassWhole then
+    Sender.AsString := 'WS'
+  else
+  if aText = rsSpecimenCarcassPartial then
+    Sender.AsString := 'PS'
+  else
+  if aText = rsSpecimenNest then
+    Sender.AsString := 'N'
+  else
+  if aText = rsSpecimenBones then
+    Sender.AsString := 'B'
+  else
+  if aText = rsSpecimenEgg then
+    Sender.AsString := 'E'
+  else
+  if aText = rsSpecimenParasites then
+    Sender.AsString := 'P'
+  else
+  if aText = rsSpecimenFeathers then
+    Sender.AsString := 'F'
+  else
+  if aText = rsSpecimenBlood then
+    Sender.AsString := 'BS'
+  else
+  if aText = rsSpecimenClaw then
+    Sender.AsString := 'C'
+  else
+  if aText = rsSpecimenSwab then
+    Sender.AsString := 'S'
+  else
+  if aText = rsSpecimenTissues then
+    Sender.AsString := 'T'
+  else
+  if aText = rsSpecimenFeces then
+    Sender.AsString := 'D'
+  else
+  if aText = rsSpecimenRegurgite then
+    Sender.AsString := 'R';
 end;
 
 end.

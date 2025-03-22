@@ -49,7 +49,6 @@ object edtNestOwner: TedtNestOwner
         Width = 224
         BorderSpacing.Top = 3
         Caption = 'Role: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -98,7 +97,6 @@ object edtNestOwner: TedtNestOwner
         Width = 365
         BorderSpacing.Top = 3
         Caption = 'Individual: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end

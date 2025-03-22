@@ -50,7 +50,6 @@ object edtCollector: TedtCollector
         Width = 365
         BorderSpacing.Top = 3
         Caption = 'Collector: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end

@@ -60,7 +60,6 @@ object edtSurveyMember: TedtSurveyMember
         Width = 365
         BorderSpacing.Top = 3
         Caption = 'Researcher: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end

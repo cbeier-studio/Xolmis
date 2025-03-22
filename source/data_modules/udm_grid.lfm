@@ -20471,6 +20471,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qFeatherssource_typeGetText
+      OnSetText = qFeatherssource_typeSetText
       Size = 5
     end
     object qFeatherssymmetrical: TStringField
@@ -20482,6 +20484,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qFeatherssymmetricalGetText
+      OnSetText = qFeatherssymmetricalSetText
       Size = 5
     end
     object qFeathersfeather_trait: TStringField
@@ -20493,6 +20497,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qFeathersfeather_traitGetText
+      OnSetText = qFeathersfeather_traitSetText
       Size = 5
     end
     object qFeathersfeather_number: TLongintField
@@ -20514,6 +20520,8 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qFeathersbody_sideGetText
+      OnSetText = qFeathersbody_sideSetText
       Size = 5
     end
     object qFeathersgrown_percent: TFloatField

@@ -11,7 +11,6 @@ object edtFeather: TedtFeather
   ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -78,7 +77,6 @@ object edtFeather: TedtFeather
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Locality: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -130,7 +128,6 @@ object edtFeather: TedtFeather
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Source:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -141,7 +138,6 @@ object edtFeather: TedtFeather
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Symmetry:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -194,7 +190,6 @@ object edtFeather: TedtFeather
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -237,7 +232,6 @@ object edtFeather: TedtFeather
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Taxon: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -289,7 +283,6 @@ object edtFeather: TedtFeather
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -300,7 +293,6 @@ object edtFeather: TedtFeather
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Time:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -363,7 +355,6 @@ object edtFeather: TedtFeather
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Feather trait:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -374,7 +365,6 @@ object edtFeather: TedtFeather
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Feather number:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -425,7 +415,6 @@ object edtFeather: TedtFeather
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Side:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -436,7 +425,6 @@ object edtFeather: TedtFeather
           Width = 175
           BorderSpacing.Top = 3
           Caption = '% grown:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -487,7 +475,6 @@ object edtFeather: TedtFeather
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Mass:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -498,7 +485,6 @@ object edtFeather: TedtFeather
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Rachis width:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -549,7 +535,6 @@ object edtFeather: TedtFeather
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Growth bar width:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -560,7 +545,6 @@ object edtFeather: TedtFeather
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Barb density:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -611,7 +595,6 @@ object edtFeather: TedtFeather
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Length:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -622,7 +605,6 @@ object edtFeather: TedtFeather
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Area:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -673,7 +655,6 @@ object edtFeather: TedtFeather
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Observer:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -724,7 +705,6 @@ object edtFeather: TedtFeather
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Feather age:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

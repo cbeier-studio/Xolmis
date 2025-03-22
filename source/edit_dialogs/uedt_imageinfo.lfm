@@ -11,7 +11,6 @@ object edtImageInfo: TedtImageInfo
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -123,7 +122,6 @@ object edtImageInfo: TedtImageInfo
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Locality:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -174,7 +172,6 @@ object edtImageInfo: TedtImageInfo
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Author:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -223,7 +220,6 @@ object edtImageInfo: TedtImageInfo
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Subtitle:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -266,7 +262,6 @@ object edtImageInfo: TedtImageInfo
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Image date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -277,7 +272,6 @@ object edtImageInfo: TedtImageInfo
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Image time:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -340,7 +334,6 @@ object edtImageInfo: TedtImageInfo
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Image type:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -382,7 +375,6 @@ object edtImageInfo: TedtImageInfo
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Coordinates precision:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -424,7 +416,6 @@ object edtImageInfo: TedtImageInfo
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -435,7 +426,6 @@ object edtImageInfo: TedtImageInfo
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -507,7 +497,6 @@ object edtImageInfo: TedtImageInfo
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Taxon:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -558,7 +547,6 @@ object edtImageInfo: TedtImageInfo
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Image file: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -611,7 +599,6 @@ object edtImageInfo: TedtImageInfo
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'License type:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -622,7 +609,6 @@ object edtImageInfo: TedtImageInfo
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'License year:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -673,7 +659,6 @@ object edtImageInfo: TedtImageInfo
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'License owner:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -713,7 +698,6 @@ object edtImageInfo: TedtImageInfo
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'License notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -753,7 +737,6 @@ object edtImageInfo: TedtImageInfo
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'License URL:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

@@ -232,7 +232,7 @@ begin
 
   FillComboBox(cbRank, 'taxon_ranks', 'rank_name', 'rank_seq', 'icbn');
 
-  if dsLink.State = dsInsert then
+  if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionTaxon)]);
   end

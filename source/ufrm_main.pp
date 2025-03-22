@@ -1389,7 +1389,7 @@ end;
 
 procedure TfrmMain.pmaNewSightingClick(Sender: TObject);
 begin
-  EditSighting(DMG.qSightings, 0, True);
+  EditSighting(DMG.qSightings, 0, 0, True);
 end;
 
 procedure TfrmMain.pmaNewSpecimenClick(Sender: TObject);

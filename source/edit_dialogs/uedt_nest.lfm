@@ -10,7 +10,6 @@ object edtNest: TedtNest
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -120,7 +119,6 @@ object edtNest: TedtNest
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Locality: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -170,7 +168,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Field number: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -181,7 +178,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Fate:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -238,7 +234,6 @@ object edtNest: TedtNest
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Taxon: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -288,7 +283,6 @@ object edtNest: TedtNest
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -330,7 +324,6 @@ object edtNest: TedtNest
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Project:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -379,7 +372,6 @@ object edtNest: TedtNest
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Observer: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -429,7 +421,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Nest encounter date:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -440,7 +431,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Last date:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -509,7 +499,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -520,7 +509,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -588,7 +576,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Support type:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -599,7 +586,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Height at ground level:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -665,7 +651,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Plant height:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -676,7 +661,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Stem thickness (DBH):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -727,7 +711,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Greater plant diameter:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -738,7 +721,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Lesser plant diameter:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -790,7 +772,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Productivity:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -801,7 +782,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Nest shape:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -863,7 +843,6 @@ object edtNest: TedtNest
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Nest description:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -906,7 +885,6 @@ object edtNest: TedtNest
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Support plant 1:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -956,7 +934,6 @@ object edtNest: TedtNest
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Other support:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -996,7 +973,6 @@ object edtNest: TedtNest
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Support plant 2:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1046,7 +1022,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Days building:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1057,7 +1032,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Days incubating:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1108,7 +1082,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Nestling-days:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1119,7 +1092,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Total active-days:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1171,7 +1143,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Lesser internal diameter:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1182,7 +1153,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Greater internal diameter:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1231,7 +1201,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Distance from plant edge:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1242,7 +1211,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Distance from plant center:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1293,7 +1261,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Internal height:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1304,7 +1271,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'External height:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1353,7 +1319,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Cover (%):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1404,7 +1369,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Lesser external diameter:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1415,7 +1379,6 @@ object edtNest: TedtNest
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Greater external diameter:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

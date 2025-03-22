@@ -6213,6 +6213,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qSpecimenssample_typeGetText
+      OnSetText = qSpecimenssample_typeSetText
       Size = 5
     end
     object qSpecimenscollection_date: TDateField
@@ -6225,17 +6227,17 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
-    object qSpecimenscollection_day: TLongintField
-      DisplayLabel = 'Collection day'
+    object qSpecimenscollection_year: TLongintField
+      DisplayLabel = 'Collection year'
       FieldKind = fkData
-      FieldName = 'collection_day'
+      FieldName = 'collection_year'
       Index = 6
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSpecimenscollection_month: TLongintField
       DisplayLabel = 'Collection month'
@@ -6246,18 +6248,16 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
-    object qSpecimenscollection_year: TLongintField
-      DisplayLabel = 'Collection year'
+    object qSpecimenscollection_day: TLongintField
+      DisplayLabel = 'Collection day'
       FieldKind = fkData
-      FieldName = 'collection_year'
+      FieldName = 'collection_day'
       Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
     end
     object qSpecimenslocality_id: TLongintField
       DisplayLabel = 'Locality (Id)'
@@ -7078,6 +7078,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qFeatherssource_typeGetText
+      OnSetText = qFeatherssource_typeSetText
       Size = 5
     end
     object qFeatherssymmetrical: TStringField
@@ -7089,6 +7091,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qFeatherssymmetricalGetText
+      OnSetText = qFeatherssymmetricalSetText
       Size = 5
     end
     object qFeathersfeather_trait: TStringField
@@ -7100,6 +7104,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qFeathersfeather_traitGetText
+      OnSetText = qFeathersfeather_traitSetText
       Size = 5
     end
     object qFeathersfeather_number: TLongintField
@@ -7121,6 +7127,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qFeathersbody_sideGetText
+      OnSetText = qFeathersbody_sideSetText
       Size = 5
     end
     object qFeathersgrown_percent: TFloatField
@@ -7209,6 +7217,8 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      OnGetText = qFeathersfeather_ageGetText
+      OnSetText = qFeathersfeather_ageSetText
       Size = 5
     end
     object qFeathersnotes: TMemoField

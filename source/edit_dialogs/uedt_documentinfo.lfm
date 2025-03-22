@@ -10,7 +10,6 @@ object edtDocumentInfo: TedtDocumentInfo
   ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -121,7 +120,6 @@ object edtDocumentInfo: TedtDocumentInfo
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Document date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -132,7 +130,6 @@ object edtDocumentInfo: TedtDocumentInfo
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Document time:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -195,7 +192,6 @@ object edtDocumentInfo: TedtDocumentInfo
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Document type:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -237,7 +233,6 @@ object edtDocumentInfo: TedtDocumentInfo
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Document file/URL: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -289,7 +284,6 @@ object edtDocumentInfo: TedtDocumentInfo
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Document title:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -330,7 +324,6 @@ object edtDocumentInfo: TedtDocumentInfo
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'License owner:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -370,7 +363,6 @@ object edtDocumentInfo: TedtDocumentInfo
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'License notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -411,7 +403,6 @@ object edtDocumentInfo: TedtDocumentInfo
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'License type:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -422,7 +413,6 @@ object edtDocumentInfo: TedtDocumentInfo
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'License year:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -474,7 +464,6 @@ object edtDocumentInfo: TedtDocumentInfo
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'License URL:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

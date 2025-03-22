@@ -125,7 +125,7 @@ end;
 
 procedure TedtMethod.FormShow(Sender: TObject);
 begin
-  if IsNewRecord then
+  if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionMethod)]);
   end

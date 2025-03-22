@@ -51,7 +51,6 @@ object edtRecVerification: TedtRecVerification
         Width = 368
         BorderSpacing.Top = 3
         Caption = 'Researcher: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -101,7 +100,6 @@ object edtRecVerification: TedtRecVerification
         Align = alTop
         BorderSpacing.Top = 4
         Caption = 'Notes:'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -143,7 +141,6 @@ object edtRecVerification: TedtRecVerification
         Width = 176
         BorderSpacing.Top = 3
         Caption = 'Date: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -154,7 +151,6 @@ object edtRecVerification: TedtRecVerification
         Width = 176
         BorderSpacing.Top = 3
         Caption = 'Status: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end

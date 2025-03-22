@@ -11,7 +11,6 @@ object edtProject: TedtProject
   PopupMode = pmAuto
   Position = poScreenCenter
   ShowInTaskBar = stNever
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -122,7 +121,6 @@ object edtProject: TedtProject
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -165,7 +163,6 @@ object edtProject: TedtProject
           Width = 372
           BorderSpacing.Top = 3
           Caption = 'Title: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -206,7 +203,6 @@ object edtProject: TedtProject
           Width = 372
           BorderSpacing.Top = 3
           Caption = 'Short title: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -247,7 +243,6 @@ object edtProject: TedtProject
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Abstract:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -289,7 +284,6 @@ object edtProject: TedtProject
           Width = 178
           BorderSpacing.Top = 3
           Caption = 'Start date:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -300,7 +294,6 @@ object edtProject: TedtProject
           Width = 178
           BorderSpacing.Top = 3
           Caption = 'End date:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -373,7 +366,6 @@ object edtProject: TedtProject
           Width = 372
           BorderSpacing.Top = 3
           Caption = 'Website:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -413,7 +405,6 @@ object edtProject: TedtProject
           Width = 372
           BorderSpacing.Top = 3
           Caption = 'E-mail:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -453,7 +444,6 @@ object edtProject: TedtProject
           Width = 372
           BorderSpacing.Top = 3
           Caption = 'Contact person:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -493,7 +483,6 @@ object edtProject: TedtProject
           Width = 178
           BorderSpacing.Top = 3
           Caption = 'Protocol number:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -503,7 +492,6 @@ object edtProject: TedtProject
           Top = 3
           Width = 178
           BorderSpacing.Top = 3
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -543,7 +531,6 @@ object edtProject: TedtProject
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Main goal:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -585,7 +572,6 @@ object edtProject: TedtProject
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Risks:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

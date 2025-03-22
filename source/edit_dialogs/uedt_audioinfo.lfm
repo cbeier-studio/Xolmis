@@ -119,7 +119,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'Locality:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -170,7 +169,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'Author:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -219,7 +217,6 @@ object edtAudioInfo: TedtAudioInfo
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Subtitle:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -262,7 +259,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Recording date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -273,7 +269,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Recording time:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -336,7 +331,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'Recording type:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -378,7 +372,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -389,7 +382,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -461,7 +453,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'Taxon:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -512,7 +503,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'Recording file: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -565,7 +555,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'Recorder model:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -605,7 +594,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'Microphone model:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -645,7 +633,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'Filter model:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -685,7 +672,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 176
           BorderSpacing.Top = 3
           Caption = '# individuals:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -696,7 +682,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Distance (m):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -746,7 +731,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Relative humidity (%):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -756,7 +740,6 @@ object edtAudioInfo: TedtAudioInfo
           Top = 3
           Width = 175
           BorderSpacing.Top = 3
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -808,7 +791,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Precipitation:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -819,7 +801,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Wind speed (bft):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -871,7 +852,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'Temperature (°C):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -882,7 +862,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'Cloud cover (%):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -933,7 +912,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'Context of the recording:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -973,7 +951,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'Habitat:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1014,7 +991,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 176
           BorderSpacing.Top = 3
           Caption = 'License type:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1025,7 +1001,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'License year:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1077,7 +1052,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'License owner:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1117,7 +1091,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'License notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1157,7 +1130,6 @@ object edtAudioInfo: TedtAudioInfo
           Width = 367
           BorderSpacing.Top = 3
           Caption = 'License URL:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

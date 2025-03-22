@@ -10,7 +10,6 @@ object edtExpedition: TedtExpedition
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -120,7 +119,6 @@ object edtExpedition: TedtExpedition
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Name: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -160,7 +158,6 @@ object edtExpedition: TedtExpedition
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Description:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -203,7 +200,6 @@ object edtExpedition: TedtExpedition
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Locality:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -255,7 +251,6 @@ object edtExpedition: TedtExpedition
           Width = 365
           BorderSpacing.Top = 3
           Caption = 'Project:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -306,7 +301,6 @@ object edtExpedition: TedtExpedition
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Start date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -317,7 +311,6 @@ object edtExpedition: TedtExpedition
           Width = 175
           BorderSpacing.Top = 3
           Caption = 'End date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

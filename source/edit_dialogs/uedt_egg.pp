@@ -388,6 +388,11 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionEgg)]);
+    if FEgg.TaxonId > 0 then
+    begin
+      FTaxonId := FEgg.TaxonId;
+      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+    end;
   end
   else
   begin

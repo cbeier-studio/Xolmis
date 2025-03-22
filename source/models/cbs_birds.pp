@@ -3295,7 +3295,7 @@ begin
         'symmetrical = :symmetrical, ' +
         'feather_trait = :feather_trait, ' +
         'feather_number = :feather_number, ' +
-        'body_side = :body_size, ' +
+        'body_side = :body_side, ' +
         'grown_percent = :grown_percent, ' +
         'feather_length = :feather_length, ' +
         'feather_area = :feather_area, ' +

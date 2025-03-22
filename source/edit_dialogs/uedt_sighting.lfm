@@ -123,7 +123,6 @@ object edtSighting: TedtSighting
           AutoSize = False
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -166,7 +165,6 @@ object edtSighting: TedtSighting
           Width = 194
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -177,7 +175,6 @@ object edtSighting: TedtSighting
           Width = 194
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -248,7 +245,6 @@ object edtSighting: TedtSighting
           Width = 194
           BorderSpacing.Top = 3
           Caption = 'Date: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -259,7 +255,6 @@ object edtSighting: TedtSighting
           Width = 194
           BorderSpacing.Top = 3
           Caption = 'Time:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -322,7 +317,6 @@ object edtSighting: TedtSighting
           Width = 194
           BorderSpacing.Top = 3
           Caption = 'Quantity:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -333,7 +327,6 @@ object edtSighting: TedtSighting
           Width = 194
           BorderSpacing.Top = 3
           Caption = 'Distance (m):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -383,7 +376,6 @@ object edtSighting: TedtSighting
           Width = 194
           BorderSpacing.Top = 3
           Caption = 'Mackinnon list number:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -434,7 +426,6 @@ object edtSighting: TedtSighting
           Width = 194
           BorderSpacing.Top = 3
           Caption = 'Detection type:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -445,7 +436,6 @@ object edtSighting: TedtSighting
           Width = 194
           BorderSpacing.Top = 3
           Caption = 'Breeding/behavior code:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -515,7 +505,6 @@ object edtSighting: TedtSighting
           Width = 124
           BorderSpacing.Top = 3
           Caption = 'Nr. of new captures:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -526,7 +515,6 @@ object edtSighting: TedtSighting
           Width = 124
           BorderSpacing.Top = 3
           Caption = 'Nr. of recaptures:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -537,7 +525,6 @@ object edtSighting: TedtSighting
           Width = 124
           BorderSpacing.Top = 3
           Caption = 'Nr. of unbanded:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -595,7 +582,6 @@ object edtSighting: TedtSighting
           Width = 404
           BorderSpacing.Top = 3
           Caption = 'Locality: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -646,7 +632,6 @@ object edtSighting: TedtSighting
           Width = 404
           BorderSpacing.Top = 3
           Caption = 'Observer:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -696,7 +681,6 @@ object edtSighting: TedtSighting
           Width = 404
           BorderSpacing.Top = 3
           Caption = 'Method: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -748,7 +732,6 @@ object edtSighting: TedtSighting
           Width = 404
           BorderSpacing.Top = 3
           Caption = 'Taxon: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -800,7 +783,6 @@ object edtSighting: TedtSighting
           Width = 404
           BorderSpacing.Top = 3
           Caption = 'Individual:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -852,7 +834,6 @@ object edtSighting: TedtSighting
           Width = 194
           BorderSpacing.Top = 3
           Caption = 'How was recorded:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -945,7 +926,6 @@ object edtSighting: TedtSighting
           Width = 124
           BorderSpacing.Top = 3
           Caption = 'Nr. of males:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -956,7 +936,6 @@ object edtSighting: TedtSighting
           Width = 124
           BorderSpacing.Top = 3
           Caption = 'Nr. of females:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -967,7 +946,6 @@ object edtSighting: TedtSighting
           Width = 124
           BorderSpacing.Top = 3
           Caption = 'Nr. of birds not sexed:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1026,7 +1004,6 @@ object edtSighting: TedtSighting
           Width = 124
           BorderSpacing.Top = 3
           Caption = 'Nr. of adults:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1037,7 +1014,6 @@ object edtSighting: TedtSighting
           Width = 124
           BorderSpacing.Top = 3
           Caption = 'Nr. of juveniles:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1048,7 +1024,6 @@ object edtSighting: TedtSighting
           Width = 124
           BorderSpacing.Top = 3
           Caption = 'Nr. of birds not aged:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1177,7 +1152,6 @@ object edtSighting: TedtSighting
           Width = 376
           BorderSpacing.Bottom = 3
           Caption = 'Survey:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

@@ -104,7 +104,6 @@ object edtProjectGoal: TedtProjectGoal
         Align = alTop
         BorderSpacing.Top = 3
         Caption = 'Description: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -149,7 +148,6 @@ object edtProjectGoal: TedtProjectGoal
         Width = 174
         BorderSpacing.Top = 3
         Caption = 'Status: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end

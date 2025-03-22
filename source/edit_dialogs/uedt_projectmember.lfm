@@ -60,7 +60,6 @@ object edtProjectMember: TedtProjectMember
         Width = 365
         BorderSpacing.Top = 3
         Caption = 'Researcher: *'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end
@@ -139,7 +138,6 @@ object edtProjectMember: TedtProjectMember
         Width = 365
         BorderSpacing.Top = 3
         Caption = 'Institution:'
-        Font.Color = 6579300
         ParentColor = False
         ParentFont = False
       end

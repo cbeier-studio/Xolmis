@@ -121,7 +121,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Municipality:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -172,7 +171,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Name: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -213,7 +211,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Abbreviation: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -223,7 +220,6 @@ object edtPerson: TedtPerson
           Top = 3
           Width = 174
           BorderSpacing.Top = 3
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -264,7 +260,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Address detail:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -304,7 +299,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Address:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -345,7 +339,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Lattes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -356,7 +349,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Orcid:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -406,7 +398,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Postal code:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -416,7 +407,6 @@ object edtPerson: TedtPerson
           Top = 3
           Width = 174
           BorderSpacing.Top = 3
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -455,7 +445,6 @@ object edtPerson: TedtPerson
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -498,7 +487,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Neighborhood:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -538,7 +526,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'State:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -589,7 +576,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Country:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -640,7 +626,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Department:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -680,7 +665,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Role:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -720,7 +704,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Citation: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -761,7 +744,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Date of birth:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -772,7 +754,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Date of death:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -845,7 +826,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'RG:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -856,7 +836,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'CPF:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -905,7 +884,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Telephone:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -916,7 +894,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Mobile phone:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -966,7 +943,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'E-mail:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1007,7 +983,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Institution:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1058,7 +1033,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'X (Twitter):'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1069,7 +1043,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Instagram:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1118,7 +1091,6 @@ object edtPerson: TedtPerson
           Width = 364
           BorderSpacing.Top = 3
           Caption = 'Website:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1260,7 +1232,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Treatment:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -1271,7 +1242,6 @@ object edtPerson: TedtPerson
           Width = 174
           BorderSpacing.Top = 3
           Caption = 'Gender:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end

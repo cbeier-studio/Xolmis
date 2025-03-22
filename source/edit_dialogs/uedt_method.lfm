@@ -11,7 +11,6 @@ object edtMethod: TedtMethod
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -119,7 +118,6 @@ object edtMethod: TedtMethod
           Width = 372
           BorderSpacing.Top = 4
           Caption = 'Name: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -159,7 +157,6 @@ object edtMethod: TedtMethod
           Width = 372
           BorderSpacing.Top = 4
           Caption = 'Method name on eBird:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -199,7 +196,6 @@ object edtMethod: TedtMethod
           Width = 220
           BorderSpacing.Top = 4
           Caption = 'Abbreviation: *'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
@@ -240,7 +236,6 @@ object edtMethod: TedtMethod
           Align = alTop
           BorderSpacing.Top = 4
           Caption = 'Description:'
-          Font.Color = 6579300
           ParentColor = False
           ParentFont = False
         end
